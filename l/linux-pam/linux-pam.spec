@@ -1,6 +1,6 @@
 Name: linux-pam
-Version: 1.6.1
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
@@ -22,7 +22,7 @@ Url: https://github.com/linux-pam
 %define	set_pam_name()	%global pam_name %(n='%{1}'; s="${n#pam_}"; [ "$n" = "$s" ] && echo -n "$n" || echo -n "pam%{_pam_name_suffix}_$s")
 
 # Linux-PAM modules directory.
-%define	_pam_modules_dir	/%_lib/security
+%define	_pam_modules_dir	%_libdir/security
 
 # Linux-PAM library soname suffix.
 %define _pam_so_suffix		%{nil}
@@ -33,12 +33,12 @@ Url: https://github.com/linux-pam
 # git://git.altlinux.org/gears/l/linux-pam.git
 Source: %name-%version-%release.tar
 
-%define helperdir /sbin
+%define helperdir %_sbindir
 %define _pamdir %_sysconfdir/pam.d
 %define _secdir %_sysconfdir/security
-%define docdir %_docdir/Linux-PAM-%version
+%define docdir %_docdir/Linux-PAM
 
-BuildRequires: rpm-build >= 0:4.0.4-alt55
+BuildRequires: meson >= 0.62.0, rpm-build >= 0:4.0.4-alt55
 
 # Required for pam_conv1.
 BuildRequires: flex
@@ -58,7 +58,7 @@ BuildRequires: docbook5-schemas docbook5-style-xsl xsltproc w3m
 %package -n %libpam
 Summary: Shared libraries for running PAM-based software
 Group: System/Libraries
-PreReq: pam-common
+Requires(pre): pam-common
 Provides: libpam(include), libpam(substack), libpam(optional_module)
 Provides: libpam = %version-%release
 Obsoletes: libpam
@@ -163,81 +163,17 @@ This packages contains RPM macros for packaging PAM modules.
 %setup -n %name-%version-%release
 cp -p alt/pam_listfile.c modules/pam_listfile/
 
-find -type f \( -name .cvsignore -o -name \*~ -o -name \*.orig \) -delete
-
 %build
-./autogen.sh
-%configure \
-	--libdir=/%_lib \
-	--sbindir=/sbin \
-	--includedir=%_includedir/security \
-	--docdir=%docdir \
-	--disable-prelude \
-	--disable-unix \
-	--enable-Werror \
-	%{subst_enable lastlog} \
-	%{subst_enable selinux} \
-	%{subst_enable audit} \
-	%{subst_enable nls} \
-	%{subst_enable static} \
-	#
-%make_build \
-	pkgconfigdir=%_pkgconfigdir \
-	sepermitlockdir=%_lockdir/sepermit \
-	servicedir=%_unitdir \
-	#
+%meson -Dwerror=true -Dpam_unix=disabled \
+       %{subst_enable_meson_feature lastlog pam_lastlog} \
+       %{subst_enable_meson_feature selinux selinux} \
+       %{subst_enable_meson_feature audit audit} \
+       %{subst_enable_meson_feature nls i18n} \
+       #
+%__meson_build -v
 
 %install
-%makeinstall_std \
-	pkgconfigdir=%_pkgconfigdir \
-	sepermitlockdir=%_lockdir/sepermit \
-	servicedir=%_unitdir \
-	#
-
-# Relocate development libraries from /%_lib/ to %_libdir/.
-mkdir -p %buildroot%_libdir
-mv %buildroot/%_lib/*.*a %buildroot%_libdir/
-/sbin/ldconfig -nv %buildroot/%_lib
-for f in %buildroot/%_lib/*.so; do
-	t=$(readlink -v "$f")
-	ln -s ../../%_lib/"$t" "%buildroot%_libdir/${f##*/}"
-	rm -f "$f"
-done
-rm -f %buildroot%_pam_modules_dir/*.la
-
-# Make sure that no module exports symbols beyond standard set.
->check.log
-for f in %buildroot%_pam_modules_dir/pam*.so; do
-	readelf -Ws "$f" |
-		grep -w GLOBAL |
-		grep -Ewv 'UND|pam_sm_(acct_mgmt|authenticate|chauthtok|close_session|open_session|setcred)'  ||
-			continue
-	echo "ERROR: ${f##*/} exports symbol(s) beyond standard set." >&2
-	echo "${f##*/}" >>check.log
-done
-! [ -s check.log ] || exit 1
-
-# Make sure that no shared object has undefined symbols.
->check.log
-for f in %buildroot/%_lib/lib*.so.0 %buildroot%_pam_modules_dir/pam*.so; do
-	LD_LIBRARY_PATH="%buildroot/%_lib" ldd -r "$f" 2>&1 >/dev/null |
-		tee -a check.log
-done
-! [ -s check.log ] || exit 1
-
-# Make sure that none of the modules pull in threading libraries.
->check.log
-for f in %buildroot%_pam_modules_dir/pam*.so; do
-	# except pam_userdb
-	[ "${f##*/}" != pam_userdb.so ] ||
-		continue
-	LD_LIBRARY_PATH="%buildroot/%_lib" ldd -r "$f" 2>&1 |
-		fgrep -q libpthread ||
-			continue
-	echo "ERROR: ${f##*/} pulls in libpthread." >&2
-	echo "${f##*/}" >>check.log
-done
-! [ -s check.log ] || exit 1
+%__meson_install
 
 # pam_limits configuration
 install -pm644 alt/50-defaults.conf \
@@ -257,12 +193,6 @@ install -pm644 alt/sepermit.conf %buildroot%_tmpfilesdir/
 %endif # enabled selinux
 
 # Documentation
-mkdir -p %buildroot%docdir/modules
-for f in modules/pam_*/README; do
-	d="${f%%/*}"
-	[ -s "$d/Makefile" ] || continue
-	install -pm644 "$f" "%buildroot%docdir/modules/${d##*/}"
-done
 mkdir -p %buildroot%docdir/html
 mv %buildroot%docdir/*.html %buildroot%docdir/html/
 install -pm644 alt/PAM-Policy.ALT AUTHORS NEWS Copyright %buildroot%docdir/
@@ -281,11 +211,11 @@ done
 %define _unpackaged_files_terminate_build 1
 
 %check
-%make_build -k check VERBOSE=1
+%__meson_test -v
 
 %files -n %libpam
 %config %_sysconfdir/buildreqs/packages/substitute.d/%libpam
-/%_lib/*.so.*
+%_libdir/*.so.*
 %_pam_modules_dir/pam_deny.so
 %_pam_modules_dir/pam_permit.so
 %dir %docdir
@@ -352,6 +282,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Thu Oct 24 2024 Dmitry V. Levin <ldv@altlinux.org> 1.7.0-alt1
+- v1.6.1 -> v1.7.0.
+
 * Wed Sep 25 2024 Egor Ignatov <egori@altlinux.org> 1.6.1-alt2
 - Fix FTBFS: backport upstream patches to fix build with new audit.
 

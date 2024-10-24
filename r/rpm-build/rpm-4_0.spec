@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.201
+Version: 4.0.4.202
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -402,6 +402,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sun Oct 20 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.202-alt1
+- tree-wide: Made sure PAM modules under /usr are treated correctly.
+- brp-compress: Dropped the "ls -l | awk field 11" hack.
+
 * Thu Jun 20 2024 Alexey Shabalin <shaba@altlinux.org> 4.0.4.201-alt1
 - Moved all systemd macros to rpm-macros-systemd package.
 
