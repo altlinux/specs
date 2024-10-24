@@ -48,8 +48,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -430,6 +430,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 
 
 %changelog
+* Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
+- 1.2.6
+
 * Tue Oct 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1.1
 - E2K: ftbfs workaround by ilyakurdyukov@
 
