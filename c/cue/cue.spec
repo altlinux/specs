@@ -1,6 +1,6 @@
 %global import_path github.com/cue-lang/cue
 Name:    cue
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Validate and define text-based and dynamic configuration
@@ -61,6 +61,9 @@ go test -v -run='!(^TestGenerate$)' ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Oct 24 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.10.1-alt1
+- new version 0.10.1
+
 * Mon Aug 19 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.10.0-alt1
 - new version 0.10.0
 
