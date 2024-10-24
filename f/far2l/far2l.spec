@@ -3,7 +3,7 @@
 
 Name: far2l
 Version: 2.6.3
-Release: alt2
+Release: alt3
 
 Summary: Linux port of FAR v2
 
@@ -52,6 +52,7 @@ BuildRequires: libX11-devel
 %filter_from_requires /^gnustep-Backbone$/d
 %filter_from_requires /^git-diff-highlight$/d
 %filter_from_requires /^plasma5-kde-cli-tools/d
+%filter_from_requires /^kde-cli-tools/d
 
 %description
 Linux port of FAR v2.
@@ -95,8 +96,11 @@ Used code from projects:
 %_man1dir/far2l.*
 
 %changelog
+* Thu Oct 24 2024 Anton Midyukov <antohami@altlinux.org> 2.6.3-alt3
+- skip optional dependency on kde-cli-tools
+
 * Mon Oct 21 2024 Anton Midyukov <antohami@altlinux.org> 2.6.3-alt2
-- Fix build with libfmt 11 (add upstream patches)
+- Fix build with libfmt 11 (add upstream patches)	
 
 * Fri Jul 26 2024 Anton Midyukov <antohami@altlinux.org> 2.6.3-alt1
 - new version (2.6.3) with rpmgs script
