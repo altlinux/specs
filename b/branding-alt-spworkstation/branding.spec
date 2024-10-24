@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt6
+Release: alt7
 Epoch: 1
 Url: https://altsp.su
 
@@ -271,6 +271,9 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
+%triggerin bootsplash -- branding-alt-spworkstation-bootsplash < 1:10-alt7
+subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
+
 #notes
 %post notes
 if ! [ -e %_datadir/alt-notes/license.all.html ]; then
@@ -325,6 +328,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Oct 24 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt7
+- bootsplash: set plymouth theme to bgrt-alt, when upgrade package
+  branding-alt-spworkstation-bootsplash < 1:10-alt7
+
 * Mon Oct 14 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt6
 - Update system-logo.png
 
