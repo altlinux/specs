@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 57
+%define ver_major 58
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -17,7 +17,7 @@ Release: alt1
 
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: https://github.com/GSConnect//%name
 
 %{?_disable_webextension:BuildArch: noarch}
@@ -63,8 +63,8 @@ sed -i 's|\(^#!/usr/bin/\)env -S \(gjs -m\)|\1\2|' src/gsconnect-preferences \
 
 %build
 %meson \
-    %{?_disable_webextension:-Dwebextension=false} \
-    %{?_disable_installed_tests:-Dinstalled_tests=false}
+    %{subst_enable_meson_bool webextension webextension} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %meson_build
 
 %install
@@ -99,6 +99,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Fri Oct 25 2024 Yuri N. Sedunov <aris@altlinux.org> 58-alt1
+- 58 (gnome-47 supported)
+
 * Wed Apr 17 2024 Yuri N. Sedunov <aris@altlinux.org> 57-alt1
 - 57
 
