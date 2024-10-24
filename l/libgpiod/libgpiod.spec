@@ -1,6 +1,6 @@
 Name: libgpiod
-Version: 2.1.1
-Release: alt1.1
+Version: 2.1.3
+Release: alt1
 
 Summary: Linux GPIO interacting library
 License: LGPL-2.1
@@ -113,6 +113,9 @@ This package contains Python bindings for libgpiod.
 %python3_sitelibdir/gpiod-*.dist-info
 
 %changelog
+* Thu Oct 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
+- 2.1.3 released
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1.1
 - NMU: added missing build dependency on setuptools.
 
