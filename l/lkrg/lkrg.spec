@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lkrg
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Linux Kernel Runtime Guard module
@@ -177,6 +177,9 @@ test $1 -eq 1 && ! test -s %_sysconfdir/lkrg-logger.conf && lkrg-keygen > %_sysc
 %_unitdir/lkrg-logger.service
 
 %changelog
+* Thu Oct 24 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.9-alt1
+- Update to v0.9.9
+
 * Mon Apr 01 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.8-alt1
 - Build lkrg 0.9.8 as main package from kernel-source-lkrg (thx vt@)
 - Build kernel-source-lkrg as subpackage
