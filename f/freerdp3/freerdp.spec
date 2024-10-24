@@ -11,8 +11,8 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.8.0
-Release: alt2
+Version: 3.9.0
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -449,6 +449,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Tue Oct 22 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version.
+
 * Fri Oct 11 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
 - freerdp-shadow-cli: added /on-connect and /on-disconnect scripts support.
 - freerdp-shadow-cli: add connection script examples.
