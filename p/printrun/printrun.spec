@@ -1,5 +1,5 @@
 Name:     printrun
-Version:  2.1.0
+Version:  2.2.0
 Release:  alt1
 Epoch:    1
 Summary:  RepRap printer interface and tools
@@ -154,6 +154,9 @@ mv %buildroot%_datadir/{metainfo,appdata}
 %_datadir/appdata/plater.appdata.xml
 
 %changelog
+* Sun Oct 20 2024 Andrey Cherepanov <cas@altlinux.org> 1:2.2.0-alt1
+- New version.
+
 * Mon May 27 2024 Andrey Cherepanov <cas@altlinux.org> 1:2.1.0-alt1
 - New version.
 
