@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 Summary: Software library for X-Ray data analysis
 License: MIT
@@ -49,7 +49,7 @@ Requires: %name
 %add_pyproject_deps_runtime_filter 'hdf5plugin$'
 %add_pyproject_deps_runtime_filter 'pyopencl$'
 %add_pyproject_deps_runtime_filter 'bitshuffle$'
-%pyproject_runtimedeps_metadata -- --extra full
+%pyproject_runtimedeps_metadata_extra full
 
 %description -n %name+full
 Extra 'full' for %pypi_name.
@@ -85,11 +85,9 @@ This package contains examples for %pypi_name.
 %prep
 %setup
 %autopatch -p1
+%python3_fix_shebang .
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
-# Fix shebangs
-grep -rlE '#!/usr/bin/(env )?python$' | xargs subst 's|^#!/usr/bin/\(env \)\?python$|#!/usr/bin/python3|'
 
 %build
 %pyproject_build
@@ -147,6 +145,9 @@ cp -a examples %buildroot%python3_sitelibdir/silx/
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 2.1.2-alt1
+- 2.1.1 -> 2.1.2.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 2.1.1-alt1
 - 2.1.0 -> 2.1.1.
 
