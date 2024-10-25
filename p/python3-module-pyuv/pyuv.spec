@@ -1,8 +1,11 @@
 %define oname pyuv
 
+# depends on unmaintained nose
+%def_without check
+
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt4
+Release: alt5
 Summary: Python interface for libuv
 License: MIT
 Group: Development/Python3
@@ -71,7 +74,7 @@ ln -s ../objects.inv docs/
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python3 setup.py test
+# depends on unmaintained nose
 
 %files
 %doc AUTHORS ChangeLog *.rst TODO examples
@@ -85,6 +88,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt5
+- Disabled check (see #50996).
+
 * Mon Dec 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt4
 - Fixed build with python3.11.
 
