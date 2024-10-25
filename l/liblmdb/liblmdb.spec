@@ -2,7 +2,7 @@
 %def_with check
 
 Name: liblmdb
-Version: 0.9.32
+Version: 0.9.33
 Release: alt1
 
 Summary: Symas Lightning Memory-Mapped Database
@@ -83,6 +83,12 @@ make -C %name test
 %_man1dir/mdb_*
 
 %changelog
+* Fri Oct 25 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.9.33-alt1
+- Updated to 0.9.33.
+- Major fixes from upstream:
+  + mdb_page_search: fix error code when DBI record is missing (ITS#9037);
+  + Fix meta page usage by read only tools (ITS#10212).
+
 * Mon Mar 11 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.9.32-alt1
 - Updated to 0.9.32.
 - Add lmdb.pc pkg-config file from Fedora to development subpackages.
