@@ -5,13 +5,15 @@
 
 Name: git-branchless
 Version: 0.10.0
-Release: alt1
+Release: alt2
 Summary: High-velocity, monorepo-scale workflow for Git
 License: MIT or Apache-2.0
 Group: Development/Tools
 Url: https://github.com/arxanas/git-branchless
 
 Source: %name-%version.tar
+Patch: git-branchless-0.10.0-alt-nix-loongarch64.patch
+
 BuildRequires: git
 BuildRequires: pkgconfig(libgit2)
 BuildRequires: pkgconfig(sqlite3)
@@ -42,6 +44,10 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 strip = false
 EOF
 sed -i '/rusqlite/s/"bundled",\?//' Cargo.toml
+
+%patch -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/nix/.cargo-checksum.json
 
 %build
 cargo build %_smp_mflags --offline --release --all-features
@@ -74,6 +80,9 @@ cargo test --release -- \
 %_man1dir/git-branchless*.1*
 
 %changelog
+* Thu Oct 24 2024 Ilya Sorochan <k0tran@altlinux.org> 0.10.0-alt2
+- Add patch for nix crate to work on loongarch64.
+
 * Tue Oct 15 2024 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
 - Update to v0.10.0 (2024-10-14).
 - spec: Build with vendored libgit2(1.8.1) as our libgit2(1.7.2) is too old.
