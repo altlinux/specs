@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.11
+Version: 1.15.12
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Oct 25 2024 Mikhail Efremov <sem@altlinux.org> 1.15.12-alt1
+- preinstall.d/05-initrd-fsck.sh: Add shebang.
+
 * Fri Oct 25 2024 Mikhail Efremov <sem@altlinux.org> 1.15.11-alt1
 - preinstall: Add initrd feature fsck by default.
 
