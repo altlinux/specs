@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define oname shapely
+%define mod_name %oname
 
 %def_with check
 # Need module numpydoc and bootstrapped package
@@ -8,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.6
-Release: alt1
+Release: alt2
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -20,12 +21,13 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython libnumpy-py3-devel
-BuildRequires: python3-module-packaging
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
-BuildRequires: xvfb-run
-BuildRequires: python3-module-matplotlib
+%endif
 %if_with doc
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxcontrib-websupport
@@ -68,6 +70,13 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+# workaround for versioneer
+rm versioneer.py
+grep -qsF ' export-subst' .gitattributes || exit 1
+vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
+echo 'def get_versions():return {"version": "%version"}' > "$vers_f"
+echo 'def get_cmdclass(): return {}' > versioneer.py
+echo 'def get_version(): return "%version"' >> versioneer.py
 
 %if_with doc
 %prepare_sphinx3 .
@@ -76,15 +85,11 @@ sed -i 's/sphinx-apidoc/sphinx-apidoc-3/' docs/Makefile
 %endif
 
 %build
-export LC_ALL=en_US.UTF-8
 %add_optflags -fno-strict-aliasing
-
-%python3_build
+%pyproject_build
 
 %install
-export LC_ALL=en_US.UTF-8
-
-%python3_install
+%pyproject_install
 
 %if_with doc
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
@@ -93,18 +98,13 @@ export LC_ALL=en_US.UTF-8
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
-%if_with check
 %check
-export LC_ALL=en_US.UTF-8
-export PYTHONPATH="${PWD}/_stub:%buildroot%python3_sitelibdir"
-
-xvfb-run python3 setup.py test
-python3 setup.py build_ext -i
-py.test3 -vv
-%endif
+# .github/workflows/tests.yml
+%pyproject_run -- pytest -vra --pyargs %mod_name.tests
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %if_with doc
 %exclude %python3_sitelibdir/*/pickle
 %endif
@@ -118,6 +118,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 2.0.6-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Fri Sep 13 2024 Anton Midyukov <antohami@altlinux.org> 2.0.6-alt1
 - New version 2.0.6.
 
