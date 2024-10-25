@@ -1,23 +1,27 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name yelp-encodings
+%define mod_name yelp_encodings
 
-%define oname yelp_encodings
+%def_with check
 
-Name:           python3-module-yelp-encodings
-Version:        1.0.0
-Release:        alt1
-Summary:        String encodings invented and maintained by yelp.
-Group:          Development/Python3
-License:        Unlicense
-URL:            https://pypi.python.org/pypi/yelp_encodings
-
-BuildArch:      noarch
-
-# https://github.com/Yelp/yelp_encodings.git
+Name: python3-module-%pypi_name
+Version: 2.0.0
+Release: alt1
+Summary: String encodings invented and maintained by yelp
+License: Unlicense
+Group: Development/Python3
+Url: https://pypi.org/project/yelp-encodings/
+Vcs: https://github.com/Yelp/yelp_encodings
+BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3(pytest)
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 yelp_encodings contains an 'internet' encoding which is appropriate
@@ -27,23 +31,31 @@ This is most often useful for logging bad requests.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile requirements_dev.txt
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+# .github/workflows/build.yaml
+%pyproject_run_pytest -vra tests
 
 %files
-%doc UNLICENSE
 %doc README.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py3*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.0.0 -> 2.0.0.
+
 * Tue Jul 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.0-alt1
 - Updated to upstream version 1.0.0.
 - Disabled building module for python-2.
