@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt8
+Release: alt9
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -44,6 +44,7 @@ Patch24: %name-1.32.0-testfix.patch
 Patch25: %name-1.32.0-testfix_alt.patch
 Patch26: %name-1.32.0-addrfix.patch
 Patch27: %name-1.32.0-qt6-library.patch
+Patch28: %name-1.32.0-wrapper-args.patch
 
 Requires: dm-tool
 Requires: lightdm-greeter
@@ -288,6 +289,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri Oct 25 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt9
+- Fix: Invoke session wrapper with splitted arguments (closes: 51809).
+
 * Mon Sep 23 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt8
 - Make locale read error a non-fatal error with a warning message.
 - Support reading of /etc/locale.conf prior to /etc/sysconfig/i18n.
