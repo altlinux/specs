@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: A tiny CSS parser
@@ -16,9 +16,7 @@ VCS: https://github.com/Kozea/tinycss2.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-# submodule
-# tests/css-parsing-tests from https://github.com/SimonSapin/css-parsing-tests
-Source1: css-parsing-tests.tar
+Source1: modules.tar
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
@@ -58,6 +56,9 @@ CSS modules.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0.
+
 * Thu Apr 25 2024 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.1 -> 1.3.0.
 
