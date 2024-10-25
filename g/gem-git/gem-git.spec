@@ -1,12 +1,12 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
-%def_enable    devel
+%def_disable   devel
 %define        gemname git
 
 Name:          gem-git
-Version:       1.19.1
+Version:       2.3.0
 Release:       alt1
 Summary:       Ruby/Git is a Ruby library that can be used to create
 License:       MIT
@@ -19,18 +19,18 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(bump) >= 0.10
-BuildRequires: gem(create_github_release) >= 0.2
+BuildRequires: gem(create_github_release) >= 1.4
 BuildRequires: gem(minitar) >= 0.9
 BuildRequires: gem(mocha) >= 1.11.2
-BuildRequires: gem(rake) >= 13.0
-BuildRequires: gem(test-unit) >= 3.3
-BuildRequires: gem(redcarpet) >= 3.5
+BuildRequires: gem(rake) >= 13.1
+BuildRequires: gem(test-unit) >= 3.3.5
+BuildRequires: gem(redcarpet) >= 3.6
 BuildRequires: gem(yard) >= 0.9
 BuildRequires: gem(yardstick) >= 0.9
+BuildRequires: gem(activesupport) >= 5.0
 BuildRequires: gem(addressable) >= 2.8
+BuildRequires: gem(process_executer) >= 1.1
 BuildRequires: gem(rchardet) >= 1.8
-BuildConflicts: gem(bump) >= 1
 BuildConflicts: gem(create_github_release) >= 2
 BuildConflicts: gem(minitar) >= 1
 BuildConflicts: gem(mocha) >= 3
@@ -39,20 +39,24 @@ BuildConflicts: gem(test-unit) >= 4
 BuildConflicts: gem(redcarpet) >= 4
 BuildConflicts: gem(yardstick) >= 1
 BuildConflicts: gem(addressable) >= 3
+BuildConflicts: gem(process_executer) >= 2
 BuildConflicts: gem(rchardet) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency mocha >= 1.11.2,mocha < 2
+%ruby_use_gem_dependency test-unit >= 3.3.5,test-unit < 4
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
-%ruby_use_gem_dependency create_github_release >= 1.0.0,create_github_release < 2
+Requires:      gem(activesupport) >= 5.0
 Requires:      gem(addressable) >= 2.8
+Requires:      gem(process_executer) >= 1.1
 Requires:      gem(rchardet) >= 1.8
 Requires:      git-core
 Conflicts:     gem(addressable) >= 3
+Conflicts:     gem(process_executer) >= 2
 Conflicts:     gem(rchardet) >= 2
-Provides:      gem(git) = 1.19.1
+Provides:      gem(git) = 2.3.0
 
 
 %description
@@ -62,14 +66,14 @@ repositories by wrapping system calls to the git binary.
 
 %if_enabled    doc
 %package       -n gem-git-doc
-Version:       1.19.1
+Version:       2.3.0
 Release:       alt1
 Summary:       Ruby/Git is a Ruby library that can be used to create documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета git
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(git) = 1.19.1
+Requires:      gem(git) = 2.3.0
 
 %description   -n gem-git-doc
 Ruby/Git is a Ruby library that can be used to create documentation
@@ -85,24 +89,22 @@ repositories by wrapping system calls to the git binary.
 
 %if_enabled    devel
 %package       -n gem-git-devel
-Version:       1.19.1
+Version:       2.3.0
 Release:       alt1
 Summary:       Ruby/Git is a Ruby library that can be used to create development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета git
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(git) = 1.19.1
-Requires:      gem(bump) >= 0.10
-Requires:      gem(create_github_release) >= 0.2
+Requires:      gem(git) = 2.3.0
+Requires:      gem(create_github_release) >= 1.4
 Requires:      gem(minitar) >= 0.9
 Requires:      gem(mocha) >= 1.11.2
-Requires:      gem(rake) >= 13.0
-Requires:      gem(test-unit) >= 3.3
-Requires:      gem(redcarpet) >= 3.5
+Requires:      gem(rake) >= 13.1
+Requires:      gem(test-unit) >= 3.3.5
+Requires:      gem(redcarpet) >= 3.6
 Requires:      gem(yard) >= 0.9
 Requires:      gem(yardstick) >= 0.9
-Conflicts:     gem(bump) >= 1
 Conflicts:     gem(create_github_release) >= 2
 Conflicts:     gem(minitar) >= 1
 Conflicts:     gem(mocha) >= 3
@@ -153,6 +155,9 @@ repositories by wrapping system calls to the git binary.
 
 
 %changelog
+* Wed Oct 23 2024 Pavel Skrylev <majioa@altlinux.org> 2.3.0-alt1
+- ^ 1.19.1 -> 2.3.0
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 1.19.1-alt1
 - ^ 1.18.0 -> 1.19.1
 

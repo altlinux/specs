@@ -6,7 +6,7 @@
 
 Name:          gem-glu
 Version:       8.3.0
-Release:       alt2
+Release:       alt3
 Summary:       Glu bindings for the opengl gem, split into a separate gem because of Glu deprecation
 License:       MIT
 Group:         Development/Ruby
@@ -24,12 +24,13 @@ BuildRequires: gem(rake-compiler-dock) >= 0.6.0
 BuildRequires: gem(hoe) >= 3.16
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
-BuildConflicts: gem(hoe) >= 4
+BuildConflicts: gem(hoe) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
+%ruby_use_gem_dependency hoe >= 4.0,hoe < 5
 Provides:      gem(glu) = 8.3.0
 
 
@@ -41,7 +42,7 @@ deprecation.
 %if_enabled    doc
 %package       -n gem-glu-doc
 Version:       8.3.0
-Release:       alt2
+Release:       alt3
 Summary:       Glu bindings for the opengl gem, split into a separate gem because of Glu deprecation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета glu
 Group:         Development/Documentation
@@ -61,7 +62,7 @@ deprecation documentation files.
 %if_enabled    devel
 %package       -n gem-glu-devel
 Version:       8.3.0
-Release:       alt2
+Release:       alt3
 Summary:       Glu bindings for the opengl gem, split into a separate gem because of Glu deprecation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета glu
 Group:         Development/Ruby
@@ -75,7 +76,7 @@ Requires:      gem(rake-compiler-dock) >= 0.6.0
 Requires:      gem(hoe) >= 3.16
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
-Conflicts:     gem(hoe) >= 4
+Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-glu-devel
 Glu bindings for the opengl gem, split into a separate gem because of Glu
@@ -118,6 +119,10 @@ deprecation development package.
 
 
 %changelog
+* Wed Oct 23 2024 Pavel Skrylev <majioa@altlinux.org> 8.3.0-alt3
+- ! fixed dep to hoe gem
+- ! fixed README format
+
 * Mon Aug 05 2024 Pavel Skrylev <majioa@altlinux.org> 8.3.0-alt2
 - ! spec with some new styles
 - * restored lost libraric binary

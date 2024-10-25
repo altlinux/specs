@@ -5,7 +5,7 @@
 %define        gemname standard-performance
 
 Name:          gem-standard-performance
-Version:       1.3.1
+Version:       1.5.0
 Release:       alt1
 Summary:       Standard Ruby Plugin providing configuration for rubocop-performance
 License:       MIT
@@ -36,27 +36,31 @@ Requires:      gem(lint_roller) >= 1.1
 Requires:      gem(rubocop-performance) >= 1.11.3
 Conflicts:     gem(lint_roller) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
-Provides:      gem(standard-performance) = 1.3.1
+Provides:      gem(standard-performance) = 1.5.0
 
 
 %description
-Standard Ruby Plugin providing configuration for rubocop-performance
+Standard Ruby Plugin providing configuration for
+rubocop-performance
 
 
 %if_enabled    doc
 %package       -n gem-standard-performance-doc
-Version:       1.3.1
+Version:       1.5.0
 Release:       alt1
 Summary:       Standard Ruby Plugin providing configuration for rubocop-performance documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета standard-performance
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(standard-performance) = 1.3.1
+Requires:      gem(standard-performance) = 1.5.0
 
 %description   -n gem-standard-performance-doc
 Standard Ruby Plugin providing configuration for rubocop-performance
 documentation files.
+
+Standard Ruby Plugin providing configuration for
+rubocop-performance
 
 %description   -n gem-standard-performance-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета standard-performance.
@@ -65,14 +69,14 @@ documentation files.
 
 %if_enabled    devel
 %package       -n gem-standard-performance-devel
-Version:       1.3.1
+Version:       1.5.0
 Release:       alt1
 Summary:       Standard Ruby Plugin providing configuration for rubocop-performance development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета standard-performance
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(standard-performance) = 1.3.1
+Requires:      gem(standard-performance) = 1.5.0
 Requires:      gem(rake) >= 0
 Requires:      gem(minitest) >= 0
 Requires:      gem(standard) >= 0
@@ -82,6 +86,9 @@ Requires:      gem(mocktail) >= 0
 %description   -n gem-standard-performance-devel
 Standard Ruby Plugin providing configuration for rubocop-performance development
 package.
+
+Standard Ruby Plugin providing configuration for
+rubocop-performance
 
 %description   -n gem-standard-performance-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета standard-performance.
@@ -118,5 +125,8 @@ package.
 
 
 %changelog
+* Fri Oct 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.5.0-alt1
+- ^ 1.3.1 -> 1.5.0
+
 * Wed Apr 17 2024 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
 - + packaged gem with Ruby Policy 2.0
