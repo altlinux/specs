@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20240322
+Version: 20240927
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -165,7 +165,7 @@ cd tests
 [ $? -eq 0 ] || exit 1
 
 # misc tests
-#./run-misc-tests.sh %buildroot%_bindir %version
+#./run-misc-tests.sh %%buildroot%%_bindir %%version
 
 %files
 %doc documents/changes.txt source/compiler/new_table.txt
@@ -173,6 +173,9 @@ cd tests
 %_man1dir/*
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 20240927-alt1
+- 20240927
+
 * Fri Jul 05 2024 Alexey Shabalin <shaba@altlinux.org> 20240322-alt1
 - 20240322
 
