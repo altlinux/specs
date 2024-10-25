@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.2.4
+Version:  5.2.5
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -36,6 +36,8 @@ Requires: netavark >= 1.6.0 aardvark-dns
 Requires: oci-runtime
 Requires: xz
 Requires: shadow-submap
+Obsoletes: %name-quadlet <= 4.4.0
+Provides: %name-quadlet = %EVR
 
 %description
 %summary.
@@ -185,6 +187,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.5-alt1
+- New version 5.2.5 (Fixes: CVE-2024-9675, CVE-2024-9676).
+
 * Tue Oct 08 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.4-alt1
 - New version 5.2.4 (Fixes: CVE-2024-9407, CVE-2024-9341).
 
