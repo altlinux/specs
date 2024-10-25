@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.15.10
-Release: alt2
+Version: 1.15.11
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Oct 25 2024 Mikhail Efremov <sem@altlinux.org> 1.15.11-alt1
+- preinstall: Add initrd feature fsck by default.
+
 * Tue Oct 15 2024 Anton Midyukov <antohami@altlinux.org> 1.15.10-alt2
 - steps/notes-license.desktop: fix typo in Name[ru]
 
