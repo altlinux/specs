@@ -8,7 +8,7 @@
 
 %global v_major 19
 %global v_majmin %v_major.1
-%global v_full %v_majmin.1
+%global v_full %v_majmin.2
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -1504,6 +1504,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Fri Oct 25 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.2-alt0.1
+- Update to 19.1.2.
+
 * Wed Oct 02 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.1-alt0.1
 - Update to 19.1.1.
 - loongarch64: remove merged patches.
