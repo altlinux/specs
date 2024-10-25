@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.115.3
-Release: alt1
+Release: alt2
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
@@ -18,6 +18,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: clean_coverage_usage.py
+Patch: %name-%version-alt.patch
 
 # Some packages require fastapi-slim, but it's fastapi with the no installed
 # certain requirements.
@@ -58,6 +59,7 @@ The key features are:
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -85,6 +87,9 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 25 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.3-alt2
+- Built with python-multipart >= 0.0.13.
+
 * Wed Oct 23 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.3-alt1
 - Updated to 0.115.3.
 

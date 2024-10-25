@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name python-multipart
-%define mod_name multipart
+%define mod_name python_multipart
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.12
+Version: 0.0.14
 Release: alt1
 
 Summary: A streaming multipart parser for Python
@@ -52,9 +52,15 @@ python-multipart is an Apache2 licensed streaming multipart parser for Python.
 %files
 %doc README.md LICENSE.txt
 %python3_sitelibdir/%mod_name/
+# Packs mod directory for alternate scheme for importing multipart,
+# which is a wrap for python_multipart
+%python3_sitelibdir/multipart/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 25 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.14-alt1
+- Updated to 0.0.14.
+
 * Mon Sep 30 2024 Anton Zhukharev <ancieg@altlinux.org> 0.0.12-alt1
 - Updated to 0.0.12.
 
