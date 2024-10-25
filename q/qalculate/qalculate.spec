@@ -4,9 +4,12 @@
 
 %def_without static
 
+%define sover 23
+%define libname libqalculate%sover
+
 Name: qalculate
-Version: 4.1.1
-Release: alt2
+Version: 5.3.0
+Release: alt1
 Summary: A very versatile desktop calculator
 Group: Office
 License: GPL-2.0+
@@ -24,19 +27,16 @@ It is small and simple to use but with much power and versatility
 underneath. Features include customizable functions, units, arbitrary
 precision, plotting.
 
-%package -n lib%name
+%package -n %libname
 Summary: libqalculate libraries
 Group: System/Libraries
 Requires: %name-common >= %EVR
-
-%description -n lib%name
+%description -n %libname
 Qalculate libraries.
 
 %package -n lib%name-devel
 Summary: libqalculate development package
 Group: Development/C
-Requires: lib%name = %EVR
-
 %description -n lib%name-devel
 The libqalculate package contains the header files needed for developing
 applications that use libqalculate. Install libqalculate-devel if
@@ -47,7 +47,6 @@ you want to develop applications using libqalculate.
 Summary: libqalculate static library
 Group: Development/C
 Requires: lib%name-devel = %EVR
-
 %description -n lib%name-devel-static
 This package contains static version of libqalculate. Install
 libqalculate-devel-static if you want to develop applications statically linked
@@ -63,11 +62,10 @@ This package contains common files used by qalculate frontends.
 
 %prep
 %setup -q -n lib%name-%version
+%autoreconf
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-
-%autoreconf
 
 %configure \
 	--enable-defs2doc
@@ -89,8 +87,9 @@ rm -f %buildroot%_libdir/*.a
 
 %find_lang --output=%name.lang lib%name
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n %libname
+%_libdir/libqalculate.so.%sover
+%_libdir/libqalculate.so.*
 
 %files -n lib%name-devel
 %_includedir/lib%name
@@ -113,6 +112,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
 * Mon Jul 18 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt2
 - Move requires to gnuplot binary from library to application
 

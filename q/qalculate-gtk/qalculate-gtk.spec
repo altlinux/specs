@@ -6,8 +6,8 @@
 %define shortname qalculate
 
 Name: qalculate-gtk
-Version: 4.1.1
-Release: alt2
+Version: 5.3.0
+Release: alt1
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
 License: GPL-2.0+
@@ -33,13 +33,12 @@ A GTK+ graphical interface for Qalculate!
 
 %prep
 %setup
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
+%autoreconf
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-
-%autoreconf
 %configure --disable-rpath --enable-static=no
 %make_build
 
@@ -68,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
 * Mon Jul 18 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt2
 - Move requires to gnuplot binary from library to application
 
