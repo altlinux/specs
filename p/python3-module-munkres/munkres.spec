@@ -1,21 +1,30 @@
 %define oname munkres
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.6
-Release: alt4.git20131103.3
+Version: 1.1.4
+Release: alt1
 Summary: Munkres algorithm for the Assignment Problem
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/munkres/
+URL: https://pypi.org/project/munkres
+VCS: https://github.com/bmc/munkres
 
-# https://github.com/bmc/munkres.git
 Source: %name-%version.tar
+# Fixes test error on i586
+# https://github.com/bmc/munkres/pull/41
+Patch: 380a0d593a0569a761c4a035edaa4414c3b4b31d.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-# A copy of the imp module that was removed in Python 3.12.
-# It shouldn't be used, should use `importlib.metadata` instead.
-BuildRequires: python3-module-zombie-imp
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -26,21 +35,27 @@ useful for solving the Assignment Problem.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 %oname.py
+%pyproject_run_pytest
 
 %files
-%doc CHANGELOG *.md
-%python3_sitelibdir/*
+%doc *.md
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt1
+- Build new version.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.6-alt4.git20131103.3
 - NMU: Added zombie-imp to BuildRequires.
 
