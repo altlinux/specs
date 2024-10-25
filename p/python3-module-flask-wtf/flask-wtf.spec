@@ -1,16 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 %define oname flask-wtf
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Simple integration of Flask and WTForms
+
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/Flask-WTF/
+Url: https://pypi.org/project/Flask-WTF
 Vcs: https://github.com/wtforms/flask-wtf
 
 BuildArch: noarch
@@ -49,6 +49,9 @@ Recaptcha integration.
 %python3_sitelibdir/flask_wtf-%version.dist-info/
 
 %changelog
+* Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.2-alt1
+- Automatically updated to 1.2.2.
+
 * Mon Dec 18 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
 - Updated to 1.2.1.
 - Removed docs and pickles subpackages.
