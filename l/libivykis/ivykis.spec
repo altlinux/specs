@@ -4,7 +4,7 @@
 
 Summary: Library for asynchronous I/O readiness notification
 Name: libivykis
-Version: 0.43.1
+Version: 0.43.2
 Release: alt1
 
 License: LGPLv2+
@@ -86,6 +86,9 @@ make DESTDIR=%buildroot install
 %endif
 
 %changelog
+* Fri Oct 25 2024 L.A. Kostis <lakostis@altlinux.ru> 0.43.2-alt1
+- 0.43.2.
+
 * Thu Jun 20 2024 L.A. Kostis <lakostis@altlinux.ru> 0.43.1-alt1
 - 0.43.1.
 - Added missing obsoletes to fix conflict with previous
