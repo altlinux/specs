@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname scour
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 0.38.2
-Release: alt1
+Release: alt2
 
 Summary: Scour SVG Optimizer
 
@@ -16,6 +17,8 @@ Url: https://pypi.python.org/pypi/scour/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-six
@@ -31,26 +34,28 @@ Web deployment.
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%python3_fix_shebang .
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+# see .travis.yml and tox.ini
+%pyproject_run -- python test_scour.py
 
 %files
 %doc *.md
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 0.38.2-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 0.38.2-alt1
 - Automatically updated to 0.38.2.
 
