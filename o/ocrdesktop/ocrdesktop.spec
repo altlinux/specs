@@ -3,7 +3,7 @@
 
 Name:    ocrdesktop
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Accessiblity tool for use the current window with OCR technique 
 License: GPL
@@ -12,6 +12,7 @@ URL:     https://github.com/chrys87/ocrdesktop
 Source: %name-%version.tar
 Requires: tesseract-langpack-en
 Requires: tesseract-langpack-ru
+Requires: libwnck3-gir
 
 BuildRequires(pre): rpm-build-python3
 BuildArch: noarch
@@ -45,5 +46,8 @@ install -m 644 ./%name.1.gz %buildroot%_man1dir/
  %_datadir/doc/%name/*
 
 %changelog
+* Thu Oct 24 2024 Artem Semenov <savoptik@altlinux.org> 3.0-alt2
+- Added req to libwnck3-gir (ALT bug: 51815)
+
 * Mon Oct 14 2024 Artem Semenov <savoptik@altlinux.org> 3.0-alt1
 - Initial build for Sisyphus (ALT bug: 50788)
