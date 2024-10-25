@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: tpm2-pkcs11
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 Summary: PKCS#11 interface for TPM 2.0 hardware
 Group: System/Configuration/Hardware
@@ -91,6 +91,9 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
+- New version 1.9.1.
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 
