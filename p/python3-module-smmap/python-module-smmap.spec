@@ -1,8 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define oname smmap
+%define mod_name %oname
+
+%def_with check
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary:  Sliding window memory map manager
 
@@ -17,7 +21,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.4
-BuildRequires: python3-module-coverage
+# build backend and its deps
+BuildRequires: python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 A pure python implementation of a sliding window memory map manager
@@ -36,20 +44,25 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
-python3 setup.py test
+# .github/workflows/pythonpackage.yml
+%pyproject_run_pytest -vra
 
 %files
 %doc README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
+- migrated from removed setuptools' test command (see #50996).
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt1
 - new version 5.0.1 (with rpmrb script)
 
@@ -68,9 +81,9 @@ python3 setup.py test
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt2
-- NMU: remove %ubt from release
+- NMU: remove %%ubt from release
 
-* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1%ubt
+* Fri May 25 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.3-alt1%%ubt
 - Updated to upstream version 2.0.3.
 
 * Fri Feb 02 2018 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1.git20150107.1.1.1
