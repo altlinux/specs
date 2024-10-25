@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: Library and command line tool for interacting with Bugzilla
@@ -27,6 +27,7 @@ BuildRequires: python3(wheel)
 %if_with check
 # deps
 BuildRequires: python3(requests)
+BuildRequires: python3(responses)
 
 BuildRequires: python3(pytest)
 %endif
@@ -60,6 +61,9 @@ line: create or edit bugs, various queries, etc.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
 - 2.3.0 -> 3.2.0.
 - Modernized packaging.
