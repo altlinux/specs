@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: autoconf-archive
-Version: 2023.02.20
+Version: 2024.10.16
 Release: alt1
 Summary: The Autoconf Macro Archive
 
@@ -61,6 +61,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 2024.10.16-alt1
+- 2024.10.16
+
 * Fri Mar 24 2023 Alexey Shabalin <shaba@altlinux.org> 2023.02.20-alt1
 - 2023.02.20
 
