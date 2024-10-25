@@ -3,10 +3,12 @@
 %define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
+# control vendoring, enable bootstrap to bundle dependencies
+%def_without bootstrap
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 70.3.0
+Version: 75.1.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -18,16 +20,16 @@ Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata_extra core
 Requires: python3-module-pkg_resources = %EVR
 # setuptools has commands for doing binary builds; for them to work always:
 Requires: python3-dev
 Provides: python3-module-distribute = %EVR
-
+%if_with bootstrap
 # hide bundled packages
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
+%endif
 %add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
-%add_findprov_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
 
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -37,6 +39,7 @@ BuildRequires: /dev/shm
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
 %add_pyproject_deps_check_filter pytest-perf
+%pyproject_builddeps_metadata_extra core
 %pyproject_builddeps_metadata_extra test
 %endif
 
@@ -49,7 +52,7 @@ Summary: Package Discovery and Resource Access for Python3 libraries
 Group: Development/Python3
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata_extra core
 # Not separated yet:
 Conflicts: python3-module-%pypi_name < 39.2.0-alt3
 
@@ -86,9 +89,6 @@ Provides the seed package for virtualenv(packaged as wheel).
 %setup
 %autopatch -p1
 
-# never unbundle vendored packages
-# built wheel being installed into virtualenv will lack of unbundled packages
-
 # Remove bundled exes
 # today's paths containing *.exe
 # setuptools/
@@ -102,7 +102,22 @@ sed -i '/^tag_build =.*/d;/^tag_date = 1/d' setup.cfg
 %pyproject_deps_resync_metadata
 
 %build
+# build upstream version of a wheel (vendored dependencies),
+# that wheel is installed by virtualenv into venv,
+# otherwise dependencies of setuptools are not available in venv
 %pyproject_build
+
+mkdir ./dist_venv
+cp -a -t ./dist_venv ./dist/{setuptools-%version-*.whl,.wheeltracker}
+
+%if_without bootstrap
+# clean up setuptools' build directory, otherwise its _vendor is packaged
+rm -r ./build
+# build altlinux version of a wheel (unvendored dependencies),
+# setuptools 71.0.0 + prefer installed dependencies
+rm -r setuptools/_vendor
+%pyproject_build
+%endif
 
 %install
 %pyproject_install
@@ -113,13 +128,39 @@ mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
+# 71.0.1 includes tests again
+pushd %buildroot%python3_sitelibdir/
+rm -r \
+  ./setuptools/tests \
+  ./setuptools/_distutils/tests \
+  ./pkg_resources/tests \
+  ./pkg_resources/api_tests.txt \
+%if_with bootstrap
+  ./setuptools/_vendor/importlib_resources/tests \
+%endif
+
+popd
+
 # package a built wheel (will be used within venv created by virtualenv)
-built_wheel=$(cat ./dist/.wheeltracker) || \
+built_wheel="$(cat ./dist_venv/.wheeltracker)" ||
         { echo Make sure you built a pyproject ; exit 1 ; }
 mkdir -p "%buildroot%system_wheels_path"
-cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
+cp -t "%buildroot%system_wheels_path/" "./dist_venv/$built_wheel"
 
 %check
+# avoid rebuilding setuptools' wheel
+built_wheel="$(cat ./dist/.wheeltracker)" ||
+        { echo Make sure you built a pyproject ; exit 1 ; }
+export PRE_BUILT_SETUPTOOLS_WHEEL="$(realpath "./dist/$built_wheel")"
+%if_without bootstrap
+# some tests depend on presence of the vendored dependencies
+export NO_VENDOR=1
+# to allow virtualenv's venv use globally installed packages
+export VIRTUALENV_SYSTEM_SITE_PACKAGES=1
+# to make pip install built wheel of setuptools and ignore the globally
+# installed one of the same version (see setuptools/tests/fixtures.py::venv)
+export PIP_IGNORE_INSTALLED=1
+%endif
 %pyproject_run_pytest -vra
 
 %files
@@ -144,6 +185,10 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Thu Sep 26 2024 Stanislav Levin <slev@altlinux.org> 1:75.1.0-alt1
+- 70.3.0 -> 75.1.0
+  + debundled dependencies of system setuptools
+
 * Wed Jul 10 2024 Stanislav Levin <slev@altlinux.org> 1:70.3.0-alt1
 - 70.2.0 -> 70.3.0.
 
