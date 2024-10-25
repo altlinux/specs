@@ -1,6 +1,6 @@
 %define mversion	7
 %define dversion	%mversion.1.1
-%define drelease	38
+%define drelease	39
 %define qlev		Q16HDRI
 %define mgkdir		ImageMagick
 %define soname		10
@@ -273,6 +273,10 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Fri Oct 25 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.39-alt1
+- 7.1.1.38 -> 7.1.1.39
+- added fix from the upstream to high resolution undo (closes: #51750)
+
 * Wed Sep 18 2024 Anton Farygin <rider@altlinux.ru> 7.1.1.38-alt1
 - 7.1.1.36 -> 7.1.1.38
 
