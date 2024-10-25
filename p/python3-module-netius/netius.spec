@@ -1,27 +1,28 @@
-%define oname netius
+%define _unpackaged_files_terminate_build 1
+%define pypi_name netius
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 1.17.52
-Release: alt2.1
+%def_with check
 
+Name: python3-module-%pypi_name
+Version: 1.20.0
+Release: alt1
 Summary: Fast and readable async non-blocking network apps
-
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/netius/
-
-# https://github.com/hivesolutions/netius.git
-# Source-url: https://pypi.io/packages/source/n/%oname/%oname-%version.tar.gz
-Source: %name-%version.tar
-
+Url: https://pypi.org/project/netius/
+Vcs: https://github.com/hivesolutions/netius
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
 BuildRequires: python3-module-pytest
-# A copy of the imp module that was removed in Python 3.12.
-# It shouldn't be used, should use `importlib.metadata` instead.
-BuildRequires: python3-module-zombie-imp
-%py3_provides %oname
+%endif
 
 %description
 Netius is a Python network library that can be used for the rapid
@@ -29,42 +30,35 @@ creation of asynchronous non-blocking servers and clients. It has no
 dependencies, it's cross-platform, and brings some sample netius-powered
 servers out of the box, namely a production-ready WSGI server.
 
-%package tests
-Summary: Tests and examples for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description tests
-Netius is a Python network library that can be used for the rapid
-creation of asynchronous non-blocking servers and clients. It has no
-dependencies, it's cross-platform, and brings some sample netius-powered
-servers out of the box, namely a production-ready WSGI server.
-
-This package contains tests and examples for %oname.
-
 %prep
 %setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+# link to system ca bundle, wheel resolves it and makes a copy
+ln -sf /etc/pki/tls/certs/ca-bundle.crt \
+    %buildroot/%python3_sitelibdir/%mod_name/base/extras/net.ca
 
 %check
-python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*/test
 %exclude %python3_sitelibdir/*/examples
 
-%files tests
-%python3_sitelibdir/*/test
-%python3_sitelibdir/*/examples
-
 %changelog
+* Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 1.20.0-alt1
+- 1.17.52 -> 1.20.0.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.17.52-alt2.1
 - NMU: Added zombie-imp to BuildRequires.
 
