@@ -1,8 +1,10 @@
 %define oname serpent
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 1.41
-Release: alt1
+Release: alt2
 Summary: Serializer for literal Python expressions
 License: MIT
 Group: Development/Python3
@@ -15,9 +17,11 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+%if_with check
 BuildRequires: python3-module-attrs
-BuildRequires: python3-module-flake8
 BuildRequires: python3-module-pytz
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Serpent is a simple serialization library based on ast.literal_eval.
@@ -36,7 +40,8 @@ machines (over the network for instance) and de-serialize it there.
 %pyproject_install
 
 %check
-python3 setup.py test
+# .github/workflows/main-ci.yml
+%pyproject_run_pytest -vra tests
 
 %files
 %doc README.md
@@ -45,6 +50,9 @@ python3 setup.py test
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 1.41-alt2
+- Migrated from removed setuptools' test command (see #50996).
+
 * Sat Apr 15 2023 Anton Midyukov <antohami@altlinux.org> 1.41-alt1
 - Updated to upstream version 1.41
 
