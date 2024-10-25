@@ -1,5 +1,5 @@
 Name: novnc
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: VNC client using HTML5 (Web Sockets, Canvas) with encryption support
 
@@ -52,6 +52,9 @@ install -m 644 docs/novnc_proxy.1 %buildroot%_man1dir/
 %_man1dir/*.1*
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Fri Sep 15 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

@@ -1,6 +1,6 @@
 
 Name: websockify
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: WebSocket to TCP proxy/bridge
 Group: Networking/Other
@@ -60,6 +60,9 @@ install -m 644 docs/websockify.1 %buildroot%_man1dir
 %_man1dir/%name.1*
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Fri Sep 15 2023 Alexey Shabalin <shaba@altlinux.org> 0.11.0-alt1
 - 0.11.0
 - drop python2 package
