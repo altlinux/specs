@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 6.3.0
 Release: alt1
 
 Summary: Coordination library for distributed systems
@@ -15,7 +15,7 @@ Url: https://pypi.org/project/tooz
 Source: %oname-%version.tar
 Source1: %oname.watch
 
-Patch: remove-distutils-for-python-3.12.patch
+Patch: 2e666107fdaf3ea7de0688eee0432fc3981803be.patch
 
 BuildArch: noarch
 
@@ -36,16 +36,15 @@ BuildRequires: python3-module-oslo.serialization >= 1.10.0
 BuildRequires: python3-module-testtools >= 1.4.0
 BuildRequires: python3-module-coverage >= 3.6
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-pifpaf >= 0.10.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-ddt >= 1.2.1
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-etcd3
 BuildRequires: python3-module-etcd3gw
 BuildRequires: python3-module-zake
 BuildRequires: python3-module-sysv_ipc
 BuildRequires: python3-module-pymemcache
 BuildRequires: python3-module-pymysql
+BuildRequires: python3-module-pifpaf >= 0.10.0
 %endif
 
 %if_with docs
@@ -78,7 +77,7 @@ Documentation for Coordination library.
 
 %prep
 %setup -n %oname-%version
-%patch -p2
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv %oname.egg-info
@@ -124,6 +123,9 @@ export TOOZ_TEST_URL="ipc://"
 %endif
 
 %changelog
+* Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt1
+- Automatically updated to 6.3.0.
+
 * Wed Oct 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 - Spec refactoring.
