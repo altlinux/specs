@@ -1,6 +1,6 @@
 Name: python3-module-qpageview
 Version: 0.6.2
-Release: alt1
+Release: alt2
 
 Summary: page-based viewer widget for Qt5/PyQt5
 
@@ -34,15 +34,16 @@ page-based viewer widget for Qt5/PyQt5.
 %python3_install
 
 %check
-# will failed with LANG=C
-export LANG=en_US.UTF8
-%python3_check test
+# upstream doesn't provide tests suite
 
 %files
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 0.6.2-alt2
+- Disabled check (see #50996).
+
 * Wed Jan 25 2023 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
 - initial build for ALT Sisyphus
 
