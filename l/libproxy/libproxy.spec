@@ -8,7 +8,7 @@
 %def_with duktape
 
 Name: libproxy
-Version: 0.5.8
+Version: 0.5.9
 Release: alt1
 Summary: A library that provides automatic proxy configuration management
 
@@ -138,6 +138,9 @@ Development docs package for %name libraries.
 %_defaultdocdir/libproxy-1.0
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.9-alt1
+- New version 0.5.9.
+
 * Wed Jul 24 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.8-alt1
 - New version 0.5.8.
 
