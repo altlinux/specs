@@ -11,7 +11,7 @@
 
 Name: %bin_name
 Version: 3.4.23
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -29,6 +29,7 @@ Requires: alterator-browser-gui-common
 Requires: alterator-common >= 2.9-alt0.14
 Requires: alterator-icons
 Provides: alterator-browser
+Obsoletes: alterator-browser
 Provides: alterator-browser-x11
 Provides: alterator-browser-qt-light = 2.8-alt1
 Obsoletes: alterator-browser-qt-light < 2.8-alt1
@@ -83,6 +84,9 @@ __EOF__
 
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.23-alt2
+- obsolete alterator-browser (bug#51411)
+
 * Wed Oct 23 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.23-alt1
 - don't force compobox popup extra height
 
