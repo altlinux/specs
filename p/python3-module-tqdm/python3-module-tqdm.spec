@@ -4,7 +4,7 @@
 
 Name: python3-module-tqdm
 Version: 4.66.5
-Release: alt1
+Release: alt2
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -41,6 +41,7 @@ just wrap any iterable with tqdm(iterable), and you're done!
 
 %prep
 %setup
+sed -ie 's/timeout = 30/timeout = 60/' pyproject.toml
 
 %build
 %pyproject_build
@@ -59,6 +60,9 @@ just wrap any iterable with tqdm(iterable), and you're done!
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Oct 25 2024 Ilya Sorochan <k0tran@altlinux.org> 4.66.5-alt2
+- fix tests on risc-v (increase pytest timeout)
+
 * Mon Aug 05 2024 Anton Vyatkin <toni@altlinux.org> 4.66.5-alt1
 - new version 4.66.5
 
