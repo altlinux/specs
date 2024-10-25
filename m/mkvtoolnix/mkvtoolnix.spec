@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 87.0
+Version: 88.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -93,7 +93,7 @@ rm -rf lib/nlohmann-json lib/pugixml lib/utf8-cpp
 
 %build
 %if_enabled qt
-export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_includedir/qt6/QtWidgets -I%_includedir/qt6/QtGui -I%_includedir/qt6/QtNetwork -I%_includedir/qt6/QtConcurrent -I%_includedir/qt6/QtMultimedia"
+export CXXFLAGS="$CXXFLAGS -I%_includedir/qt6 -I%_includedir/qt6/QtCore -I%_includedir/qt6/QtWidgets -I%_includedir/qt6/QtGui -I%_includedir/qt6/QtNetwork -I%_includedir/qt6/QtConcurrent -I%_includedir/qt6/QtMultimedia -I%_includedir/qt6/QtDBus"
 %endif
 ./autogen.sh
 %configure \
@@ -161,6 +161,10 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Fri Oct 25 2024 L.A. Kostis <lakostis@altlinux.ru> 88.0-alt1
+- 88.0.
+- BR: fix QtDBus deps.
+
 * Wed Sep 11 2024 L.A. Kostis <lakostis@altlinux.ru> 87.0-alt1
 - 87.0.
 
