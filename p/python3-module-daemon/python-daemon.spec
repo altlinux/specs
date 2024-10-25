@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Summary: Library to implement a well-behaved Unix daemon process
 License: Apache-2.0
@@ -52,6 +52,9 @@ instance as a context manager to enter a daemon state.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 3.0.1 -> 3.1.0.
+
 * Wed May 10 2023 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
 - 2.3.0 -> 3.0.1.
 
