@@ -8,7 +8,7 @@ language.
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Python FTP server library
@@ -126,6 +126,9 @@ cp -fR docs/_build/man/* %buildroot%_man1dir
 %endif
 
 %changelog
+* Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+
 * Tue Sep 24 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
