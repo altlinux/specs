@@ -3,16 +3,15 @@
 %def_enable bcrelay
 
 Name: pptpd
-Version: 1.4.0
-Release: alt4
+Version: 1.5.0
+Release: alt1
 
 Summary: A PPTP server daemon
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 
 Url: http://www.poptop.org
-
-#http://heanet.dl.sourceforge.net/sourceforge/poptop/%name-%version.tar.gz
+Vcs: https://git.code.sf.net/p/poptop/git
 Source: %name-%version.tar
 Source1: pptpd.init
 Source2: pptpd.sysconfig
@@ -39,14 +38,9 @@ protocols.
 %setup -q
 %patch -p1
 
-# configure.in is actually configure.ac
-mv configure.in configure.ac
-
-# Automake 1.13 compatibility
-sed -i -e 's/AM_CONFIG_HEADER/AC_CONFIG_HEADER/' configure.ac 
-
 # remove 'missing' script to prevent warnings
 rm -f missing
+rm -f compile
 
 %build
 
@@ -83,6 +77,9 @@ install -pD -m644 %SOURCE3 %buildroot%_unitdir/%name.service
 %doc AUTHORS NEWS README* TODO samples tools ChangeLog* html
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Mon Aug 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt4
 - upstream snapshot 3b7a80c3b63a9f9388991299f76c245bb900875e
 - fixed build with ppp-2.5.0 (thx floppym at gentoo.org)
