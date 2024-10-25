@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usbutils
-Version: 017
+Version: 018
 Release: alt1
 
 Summary: Linux USB utilities
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/linux-usb/
@@ -13,7 +13,9 @@ Vcs: https://github.com/gregkh/usbutils.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: pkgconfig(libusb-1.0) >= 1.0.14
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.60.0
+BuildRequires: pkgconfig(libusb-1.0) >= 1.0.22
 BuildRequires: pkgconfig(libudev) >= 196
 
 %description
@@ -25,12 +27,11 @@ the USB bus.
 %patch -p1
 
 %build
-%autoreconf
-%configure --datadir=%_datadir/misc
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall
+%meson_install
 rm -f %buildroot%_bindir/lsusb.py
 rm -f %buildroot%_pkgconfigdir/*.pc
 
@@ -41,6 +42,9 @@ rm -f %buildroot%_pkgconfigdir/*.pc
 %doc NEWS README.md
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 018-alt1
+- New version 018.
+
 * Fri Dec 01 2023 Alexey Shabalin <shaba@altlinux.org> 017-alt1
 - New version 017.
 
