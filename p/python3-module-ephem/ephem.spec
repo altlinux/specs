@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.5
-Release: alt2
+Version: 4.1.6
+Release: alt1
 
 Summary: Compute positions of the planets and stars
 License: MIT
@@ -12,7 +12,7 @@ Group: Development/Python
 URL: https://pypi.org/project/ephem
 VCS: https://github.com/brandon-rhodes/pyephem
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -53,6 +53,9 @@ sed -i '1{/env python/d}' ephem/tests/test_*.py
 %exclude %python3_sitelibdir/%pypi_name/tests
 
 %changelog
+* Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.6-alt1
+- Build new version.
+
 * Thu Aug 01 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.5-alt2
 - fixed license (Closes: #51018)
 - built with check
