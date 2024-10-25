@@ -11,8 +11,8 @@
 %endif
 
 Name: ravada
-Version: 2.3.0
-Release: alt2
+Version: 2.3.1
+Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -115,9 +115,9 @@ install -p -m644 etc/%name.conf %buildroot%_sysconfdir/%name.conf
 install -p -m644 etc/rvd_front.conf.example %buildroot%_sysconfdir/rvd_front.conf
 mkdir -p %buildroot%_unitdir
 install -p -m644 etc/systemd/*.service %buildroot%_unitdir
-mkdir -p %buildroot%_docdir/%name
-cp -aR sql %buildroot%_docdir/%name
-rm -f %buildroot%_docdir/%name/sql/mysql/Makefile
+mkdir -p %buildroot%_datadir/%name
+cp -aR sql %buildroot%_datadir/%name
+rm -f %buildroot%_datadir/%name/sql/mysql/Makefile
 
 mkdir -p %buildroot%_bindir
 cat > %buildroot%_bindir/kvm-spice <<_EOF
@@ -187,11 +187,14 @@ fi
 %_datadir/%name
 %_localstatedir/%name
 %_unitdir/*.service
-%_docdir/%name
 %config(noreplace)%_sysconfdir/%name.conf
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Oct 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.3.1-alt1
+- 2.3.1
+- fix misplaced sql files (ALT #51792)
+
 * Tue Sep 24 2024 Anton Farygin <rider@altlinux.ru> 2.3.0-alt2
 - use the ImageMagick version check instead of checking
   the version of the branch to fix Magick perl module name
