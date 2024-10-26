@@ -3,7 +3,7 @@
 
 Name:    rabbitvcs
 Version: 0.19.0.21.git6f2da1b
-Release: alt2
+Release: alt2.1
 
 Summary: Graphical user interface to version control systems
 License: GPLv2+
@@ -35,6 +35,7 @@ BuildRequires: python3-module-dbus
 BuildRequires: python3-module-configobj
 BuildRequires: python3-module-pysvn
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
 BuildRequires: libgtk4-gir-devel
 %endif
 
@@ -174,6 +175,9 @@ py.test-3 %name/tests/test_rabbitvcs.py::RabbitVCSTest
 %_datadir/nemo-python/extensions/*.py
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.19.0.21.git6f2da1b-alt2.1
+- NMU: fixed FTBFS.
+
 * Wed Jul 24 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.19.0.21.git6f2da1b-alt2
 - Rebuild with fixed test
 
