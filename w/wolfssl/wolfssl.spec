@@ -1,7 +1,7 @@
 %define sover 42
 
 Name: wolfssl
-Version: 5.7.0
+Version: 5.7.4
 Release: alt1
 
 Summary: Embedded SSL/TLS Library
@@ -38,7 +38,8 @@ This package contains the header files and development libraries for %name.
 %autoreconf
 %configure \
 	--enable-distro \
-	--enable-writedup
+	--enable-writedup \
+	--disable-option-checking
 %make_build
 
 %install
@@ -58,6 +59,9 @@ This package contains the header files and development libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Oct 26 2024 Nazarov Denis <nenderus@altlinux.org> 5.7.4-alt1
+- New version 5.7.4.
+
 * Tue Mar 26 2024 Nazarov Denis <nenderus@altlinux.org> 5.7.0-alt1
 - New version 5.7.0.
 
