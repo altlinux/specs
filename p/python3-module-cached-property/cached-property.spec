@@ -1,21 +1,30 @@
 %define oname cached-property
 %define modname cached_property
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.5.2
+Version: 2.0.1
 Release: alt1
 
 Summary: A decorator for caching properties in classes.
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/pydanny/cached-property
+URL: https://pypi.org/project/cached-property
+VCS: https://github.com/pydanny/cached-property
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-distribute
+
+%if_with check
+BuildRequires: python3-module-freezegun
+%endif
 
 %description
 A decorator for caching properties in classes.
@@ -24,18 +33,25 @@ A decorator for caching properties in classes.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
-%doc LICENSE AUTHORS.rst README.rst HISTORY.rst CONTRIBUTING.rst
+%doc LICENSE *.md
 %python3_sitelibdir/%modname.*
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%modname-%version.dist-info
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
+- Automatically updated to 2.0.1.
+- Built with check.
+
 * Sun Sep 27 2020 Grigory Ustinov <grenka@altlinux.org> 1.5.2-alt1
 - Automatically updated to 1.5.2.
 - Drop python2 support.
