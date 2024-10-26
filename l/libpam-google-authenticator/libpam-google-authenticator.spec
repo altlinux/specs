@@ -1,10 +1,10 @@
 %define 	projname google-authenticator
 Name:           libpam-%{projname}
-Version:        1.09
+Version:        1.10
 Release:        alt1
 Summary:        One-time passcode support using open standards
 #Summary(ru_RU.UTF8): 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/google/google-authenticator-libpam
 Packager: 	Alexei Mezin <alexvm@altlinux.org>
 Vendor: 	ALT Linux Team
@@ -43,13 +43,13 @@ algorithm specified in RFC 4226 and the Time-based One-time Password
 
 %build
 %autoreconf -i
-%configure --libdir=/%_lib
+%configure --libdir=/%_libdir
 %make 
 
 %install
 ##rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
-rm $RPM_BUILD_ROOT/%{_lib}/security/pam_google_authenticator.la
+rm $RPM_BUILD_ROOT/%{_libdir}/security/pam_google_authenticator.la
 
 %files
 ##%_libdir/security/pam_google_authenticator.so
@@ -63,6 +63,10 @@ rm $RPM_BUILD_ROOT/%{_lib}/security/pam_google_authenticator.la
 
 
 %changelog
+* Sat Oct 26 2024 Alexei Mezin <alexvm@altlinux.org> 1.10-alt1
+- New version
+- Minor spec fixes
+
 * Tue Jul 13 2021 Alexei Mezin <alexvm@altlinux.org> 1.09-alt1
 - New version
 
