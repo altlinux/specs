@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 45
+%define ver_major 46
 %define ver_minor %nil
 %define tag_ver release-%ver_major
 #-%ver_minor
@@ -17,10 +17,11 @@ Group: Development/Other
 License: LGPL-2.0-or-later and Unicode
 Url: https://github.com/unicode-org/cldr
 
+Vcs: https://github.com/unicode-org/cldr.git
+
 %if_disabled snapshot
 Source: %url/archive/%tag_ver.zip
 %else
-Vcs: https://github.com/unicode-org/cldr.git
 Source: cldr-%version.tar
 %endif
 
@@ -105,6 +106,9 @@ done
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt1
+- 46
+
 * Sun Apr 21 2024 Yuri N. Sedunov <aris@altlinux.org> 45-alt1
 - 45
 

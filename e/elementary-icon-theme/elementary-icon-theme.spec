@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 8.0
+%define ver_major 8.1
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -13,9 +13,8 @@ License: GPL-3.0
 Url: https://github.com/elementary/icons
 
 Vcs: https://github.com/elementary/icons.git
+
 Source: %url/archive/%version/icons-%version.tar.gz
-# missing icon
-Source1: video-x-generic16.svg
 
 BuildArch: noarch
 
@@ -31,10 +30,8 @@ and its desktop environment: Pantheon.
 %prep
 %setup -n icons-%version
 
-[ -f mimes/16/video-x-generic.svg ] || cp %SOURCE1 mimes/16/video-x-generic.svg
-
 %build
-%meson %{?_disable_palettes:-Dpalettes=false}
+%meson %{subst_enable_meson_bool palettes palettes}
 %meson_build
 
 %install
@@ -50,6 +47,9 @@ and its desktop environment: Pantheon.
 %doc README*
 
 %changelog
+* Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
+- 8.1.0
+
 * Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - 8.0.0
 

@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: amberol
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A small and simple sound and music player that is well integrated with GNOME
@@ -22,7 +22,6 @@ Source: https://gitlab.gnome.org/World/amberol/-/archive/%version/%name-%version
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
-Patch1: %name-0.10.3-alt-vendored-nix-loongarch64-support.patch
 
 %define glib_ver 2.76
 %define gtk_ver 4.14
@@ -38,7 +37,7 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-audio-1.0)
-BuildRequires: pkgconfig(gstreamer-player-1.0)
+BuildRequires: pkgconfig(gstreamer-play-1.0)
 BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0)
 BuildRequires: pkgconfig(gstreamer-bad-audio-1.0)
@@ -59,12 +58,6 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-#%%patch1 -p1
-
-# allow patching vendored rust code
-#sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-#        ./vendor/nix/.cargo-checksum.json
-
 %build
 %meson
 %meson_build
@@ -83,11 +76,14 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
-%_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc CHANGES* README*
 
 
 %changelog
+* Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.2-alt1
+- 2024.2
+
 * Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.1-alt1
 - 2024.1
 
