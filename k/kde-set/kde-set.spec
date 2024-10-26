@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.4
+Version: 24.01.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -61,7 +61,7 @@ Requires: kf6-baloo
 Requires: polkit-kde-agent kio-extras plasma6-breeze powerdevil plasma-systemmonitor
 Requires: drkonqi milou systemsettings plasma6-integration
 Requires: ark konsole gwenview okular kwrite kwalletmanager
-Requires: kcalc kde5-kross-python
+Requires: kcalc kross-python
 #
 Requires: plasma5-breeze plasma5-integration
 %description -n kde-small
@@ -91,11 +91,11 @@ Requires: plasma-disks
 %if_enabled qtwebengine
 Requires: khelpcenter
 %endif
-Requires: kde5-kolourpaint kde5-kio-audiocd kgpg
+Requires: kolourpaint kio-audiocd kgpg
 Requires: kmenuedit kgamma plasma-thunderbolt
-Requires: kfind filelight kde5-kcharselect kde5-kteatime spectacle
+Requires: kfind filelight kcharselect kteatime spectacle
 Requires: kamera kdenetwork-filesharing ktorrent
-Requires: kde5-kio-zeroconf kde5-sweeper
+Requires: kio-zeroconf sweeper
 %description -n kde
 %summary
 
@@ -115,12 +115,12 @@ Requires: plasma-workspace-wallpapers
 Requires: kwrited
 Requires: ksystemlog
 Requires: krdc
-Requires: kde5-kcron kruler ffmpegthumbs
+Requires: kcron kruler ffmpegthumbs
 Requires: kdeconnect
 Requires: krfb
-Requires: kde5-kdf
+Requires: kdf
 Requires: kid3-ui-kde5
-Requires: kde5-graphics-thumbnailers
+Requires: kdegraphics-thumbnailers
 #
 Requires: plasma5-oxygen
 %description -n kde-big
@@ -138,17 +138,17 @@ Requires: kde-printing
 Requires: kde-scanning
 #
 Requires: plasma-discover-maxi
-Requires: kde5-keditbookmarks
-Requires: kde5-kfloppy kde5-ktimer
-Requires: kde5-dragon
-Requires: kde5-kmousetool kde5-kmag
-Requires: kde5-juk kde5-kmouth
+Requires: keditbookmarks
+Requires: ktimer
+Requires: dragon
+Requires: kmousetool kmag
+Requires: juk kmouth
 Requires: kdenlive
-Requires: k3b kde5-kwave konversation
+Requires: k3b kwave konversation
 %if_enabled qtwebengine
 Requires: digikam
 %endif
-Requires: kde5-kdebugsettings
+Requires: kdebugsettings
 %description -n kde-maxi
 %summary
 
@@ -160,12 +160,12 @@ Obsoletes: kde5-somedevel < %EVR
 Requires: kde-runtime
 #
 Requires: kate
-Requires: kde5-dolphin-plugins
-Requires: kde5-lokalize kde5-okteta kde5-kapptemplate kde5-dev-scripts kde5-kompare
-Requires: kde5-sdk-thumbnailers kde5-poxml kde5-umbrello
-Requires: kde5-kcachegrind
+Requires: dolphin-plugins
+Requires: lokalize kde5-okteta kapptemplate kde-dev-scripts kompare
+Requires: kdesdk-thumbnailers poxml kde5-umbrello
+Requires: kcachegrind
 %if_enabled qtwebengine
-Requires: kde5-kimagemapeditor
+Requires: kimagemapeditor
 %endif
 %description -n kde-somedevel
 %summary
@@ -224,7 +224,11 @@ Provides: kde5-scanning = %EVR
 Obsoletes: kde5-scanning < %EVR
 Requires: kde-runtime
 #
-Requires: kde5-skanpage
+%if_enabled qtwebengine
+Requires: skanpage
+%else
+Requires: skanlite
+%endif
 Requires: hplip-sane libsane-gphoto2 sane
 %description -n kde-scanning
 KDE image scanning support applications.
@@ -267,6 +271,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.5-alt1
+- update for Apps
+
 * Wed Oct 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.4-alt1
 - update for Apps
 

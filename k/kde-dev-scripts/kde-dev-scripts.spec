@@ -1,0 +1,74 @@
+%define rname kde-dev-scripts
+
+%add_findreq_skiplist %_K6bin/kdedoc
+%add_findreq_skiplist %_K6bin/package_crystalsvg
+%add_findreq_skiplist %_K6bin/kde-systemsettings-tree.py
+%filter_from_requires /^cvs$/d
+
+Name: %rname
+Version: 24.08.2
+Release: alt1
+%K6init
+
+Group: Graphical desktop/KDE
+Summary: Various development scripts
+Url: http://www.kde.org
+License: BSD-2-Clause
+
+BuildArch: noarch
+
+Provides:  kde5-dev-scripts = %EVR
+Obsoletes: kde5-dev-scripts < %EVR
+
+Source: %rname-%version.tar
+
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: graphviz perl-XML-DOM perl-podlators rpm-build-python rpm-build-python3 ruby ruby-stdlibs
+BuildRequires: kf6-kdoctools kf6-kdoctools-devel
+
+%description
+%summary.
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K6build \
+    -DQT_MAJOR_VERSION=6 \
+    #
+
+%install
+%K6install
+%K6install_move data uncrustify
+
+# fix shebang
+sed -i \
+  -e "s|^#![[:space:]]*/usr/bin/env python$|#!%{__python3}|g" \
+  %buildroot/%_K6bin/*
+
+# fix scripts for strong /usr/lib/rpm/find-requires
+for f in  %buildroot/%_K6bin/*
+do
+    file $f | grep -q shell || continue
+    grep -q ^=head $f || continue
+    mv "$f" "$f.tmp"
+    awk 'BEGIN{found=0;} /^=head/ {if (found==0){print "cat <<\\__EOF__";found=1;};} {print} END{if (found!=0) print "__EOF__";}' <"$f.tmp" >"$f"
+    rm -f "$f.tmp"
+    chmod a+x $f
+done
+
+
+%find_lang %name --with-kde --all-name
+
+%files -f %name.lang
+%doc LICENSES/* README
+%_bindir/*
+%_K6bin/*
+%_K6data/uncrustify/
+
+
+%changelog
+* Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- initial build
+

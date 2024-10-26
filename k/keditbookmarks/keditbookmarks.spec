@@ -1,0 +1,75 @@
+%define rname keditbookmarks
+
+%define kbookmarkmodel_private_sover 6
+%define libkbookmarkmodel_private libkbookmarkmodel_private%kbookmarkmodel_private_sover
+
+Name: %rname
+Version: 24.08.2
+Release: alt1
+%K6init
+
+Group: Graphical desktop/KDE
+Summary: Utility to edit KDE bookmarks
+Url: http://www.kde.org
+License: LGPL-2.0-or-later
+
+Provides: kde5-keditbookmarks = %EVR
+Obsoletes: kde5-keditbookmarks < %EVR
+
+Source: %rname-%version.tar
+
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: kf6-kdoctools-devel kf6-kiconthemes-devel kf6-kio-devel
+BuildRequires: kf6-kparts-devel kf6-ktextwidgets-devel kf6-kwindowsystem-devel
+BuildRequires: kf6-kconfigwidgets-devel
+
+%description
+Utility to edit KDE bookmarks.
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kde-common
+Provides: kde5-keditbookmarks-common = %EVR
+Obsoletes: kde5-keditbookmarks-common < %EVR
+%description common
+%name common package
+
+%package -n %libkbookmarkmodel_private
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libkbookmarkmodel_private
+%name library.
+
+%prep
+%setup -n %rname-%version
+
+%build
+%K6build
+
+%install
+%K6install
+%find_lang %name --with-kde --all-name
+
+%files common -f %name.lang
+%doc COPYING*
+%_datadir/qlogging-categories6/*.*categories
+
+%files
+%_K6bin/kbookmarkmerger
+%_K6bin/keditbookmarks
+%_K6xdgapp/org.kde.keditbookmarks.desktop
+%_K6cfg/keditbookmarks.kcfg
+
+%files -n %libkbookmarkmodel_private
+%_K6lib/libkbookmarkmodel_private.so.%kbookmarkmodel_private_sover
+%_K6lib/libkbookmarkmodel_private.so.*
+
+
+%changelog
+* Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- initial build
+

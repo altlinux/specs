@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.3
+Version: 6.0.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -80,7 +80,7 @@ Obsoletes: kde5-video-player-2-dragon < %EVR
 Provides: kde-video-player = %EVR
 Provides: kde-video-player-dragon = %EVR
 Requires: kde-common
-Requires: kde5-dragon
+Requires: dragon
 %description -n kde-video-player-2-dragon
 %summary
 
@@ -119,7 +119,7 @@ Obsoletes: kde5-video-player-5-haruna < %EVR
 Provides: kde-video-player = %EVR
 Provides: kde-video-player-haruna = %EVR
 Requires: kde-common
-Requires: kde5-haruna
+Requires: haruna
 %description -n kde-video-player-5-haruna
 %summary
 
@@ -133,19 +133,6 @@ Provides: kde-volume-control = %EVR
 Provides: kde-volume-control-dummy = %EVR
 Requires: kde-common
 %description -n kde-volume-control-0-dummy
-%summary
-
-%package -n kde-volume-control-2-alsa
-Group: Graphical desktop/KDE
-Summary: KMix volume control
-Provides: kde5-volume-control-2-alsa = %EVR
-Obsoletes: kde5-volume-control-2-alsa < %EVR
-#
-Provides: kde-volume-control = %EVR
-Provides: kde-volume-control-kmix = %EVR
-Requires: kde-common
-Requires: kde5-kmix
-%description -n kde-volume-control-2-alsa
 %summary
 
 %package -n kde-volume-control-6-pulseaudio
@@ -240,7 +227,7 @@ Obsoletes: kde5-audio-player-2-elisa < %EVR
 Provides: kde-audio-player = %EVR
 Provides: kde-audio-player-elisa = %EVR
 Requires: kde-common
-Requires: kde5-elisa
+Requires: elisa
 %description -n kde-audio-player-2-elisa
 %summary
 
@@ -280,7 +267,7 @@ Provides: kde-messenger-client-mix = %EVR
 Requires: kde-common
 #Requires: choqok
 #Requires: jami
-#Requires: kde5-konversation
+#Requires: konversation
 %ifnarch armh ppc64le aarch64
 #Requires: telegram-desktop
 %endif
@@ -352,7 +339,6 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-video-player-5-haruna
 
 %files -n kde-volume-control-0-dummy
-%files -n kde-volume-control-2-alsa
 %files -n kde-volume-control-6-pulseaudio
 %files -n kde-volume-control-7-pipewire
 
@@ -377,6 +363,12 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.5-alt1
+- update requires for Apps
+
+* Fri Oct 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.4-alt1
+- drop volume-control-alsa
+
 * Wed Oct 02 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.3-alt1
 - update for PIM
 
