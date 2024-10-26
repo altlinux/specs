@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.32.7
+Version: 1.32.8
 Release: alt1
 Epoch: 1
 
@@ -21,6 +21,9 @@ Summary: MPEG audio player
 Group: Sound
 License: GPL-2.0 and LGPL-2.1
 Url: http://www.%name.org
+
+#Vcs: svn://scm.orgis.org/mpg123/trunk
+Vcs: https://github.com/madebr/mpg123.git
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: mp3license
@@ -125,6 +128,10 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.8-alt1
+- 1.32.8 (security update, see
+  https://sourceforge.net/p/mpg123/bugs/322/)
+
 * Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.7-alt1
 - 1.32.7
 
