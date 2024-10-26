@@ -1,28 +1,25 @@
-# Unpackaged files in buildroot should terminate build
-%define _unpackaged_files_terminate_build 1
-
 %define pypi_name Twisted
-%define major 22.10
+%define major 24.7
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt3
+Release: alt1
 
 Summary: An asynchronous networking framework written in Python
 
 Group: Development/Python3
 License: MIT
-Url: http://twistedmatrix.com/trac/wiki/TwistedCore
+URL: https://pypi.org/project/Twisted
 
-# Source-url: https://twistedmatrix.com/Releases/Twisted/%major/Twisted-%version.tar.bz2
 Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-zope.interface python3-module-incremental
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-incremental
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-fancy-pypi-readme
 
 Requires: %prefx3-logger = %EVR
 Obsoletes: %prefx3-lore <= %EVR
@@ -289,13 +286,13 @@ Unit tests for Twisted Core.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 # README.ALT
 cp %SOURCE1 README.ALT-ru_RU.UTF-8
 
 %install
-%python3_install
+%pyproject_install
 
 # iocpreactor is a win32 reactor, so we can delete it
 rm -rv %buildroot%python3_sitelibdir/twisted/internet/iocpreactor
@@ -327,7 +324,7 @@ ln -s trial %buildroot%_bindir/trial-3
 %files
 %doc LICENSE NEWS.rst README.rst
 %doc README.ALT-ru_RU.UTF-8
-%python3_sitelibdir/Twisted*.egg-info
+%python3_sitelibdir/twisted-%version.dist-info
 %dir %python3_sitelibdir/twisted/
 %python3_sitelibdir/twisted/*.py
 %python3_sitelibdir/twisted/__pycache__/
@@ -516,6 +513,9 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 24.7.0-alt1
+- Build new version.
+
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 22.10.0-alt3
 - remove obsoleted gobject using (see ALT bug #41092)
 
