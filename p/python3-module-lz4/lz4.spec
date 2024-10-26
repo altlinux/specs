@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: LZ4 Bindings for Python
 
@@ -26,7 +26,6 @@ BuildRequires: liblz4-devel
 
 %if_with check
 BuildRequires: /proc
-BuildRequires: python3(future)
 BuildRequires: python3(psutil)
 BuildRequires: python3(pytest_cov)
 BuildRequires: python3(tox)
@@ -63,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/lz4/
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.3-alt1.1
+- NMU: Removed extra build dependency on future module.
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 4.3.3-alt1
 - new version 4.3.3 (with rpmrb script)
 
