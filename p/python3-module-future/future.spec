@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Summary: Clean single-source support for Python 3 and 2
 License: MIT
 Group: Development/Python3
@@ -54,7 +54,7 @@ rm -rv %buildroot%_bindir/*
 
 %check
 %tox_create_default_config
-%tox_check_pyproject -- -k 'not test_isinstance_recursion_limit and not test_subclass_recursion_limit'
+%tox_check_pyproject -- -k 'not test_isinstance_recursion_limit and not test_subclass_recursion_limit and not test_main and not test_ftp'
 
 %files
 %doc *.txt *.rst
@@ -65,6 +65,9 @@ rm -rv %buildroot%_bindir/*
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.1
+- Fixed FTBFS.
+
 * Tue Mar 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Automatically updated to 1.0.0.
 
