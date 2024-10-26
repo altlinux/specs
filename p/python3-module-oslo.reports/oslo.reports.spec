@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: OpenStack Oslo reports library
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/oslo.reports
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: a25f36fa6620ee3f90a37599e41dac311a49c452.patch
 
 BuildArch: noarch
 
@@ -79,6 +81,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -123,6 +126,9 @@ install -pDm 644 man/osloreports.1 %buildroot%_man1dir/osloreports.1
 %endif
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+
 * Tue May 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
