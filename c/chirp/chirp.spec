@@ -5,7 +5,7 @@
 
 Name: chirp
 Version: 20240910
-Release: alt1
+Release: alt1.1
 Summary: A tool for programming two-way radio equipment
 
 Group: Communications
@@ -23,7 +23,6 @@ BuildRequires: python3(wheel)
 
 %if_disabled check
 %else
-BuildRequires: python3(future)
 BuildRequires: python3(libxml2)
 BuildRequires: python3(requests)
 BuildRequires: python3(serial)
@@ -98,6 +97,9 @@ find chirp/locale -type d -mindepth 1 -maxdepth 1 -exec cp -r {} %buildroot/%_da
 %_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 20240910-alt1.1
+- NMU: Removed extra build dependency on future module.
+
 * Tue Sep 10 2024 Anton Midyukov <antohami@altlinux.org> 20240910-alt1
 - new snapshot
 
