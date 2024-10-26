@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.0
-Release: alt2.1
+Release: alt3
 
 Summary: stestr is parallel Python test runner
 
@@ -33,7 +33,6 @@ BuildRequires: python3-module-voluptuous
 %endif
 
 %if_with check
-BuildRequires: python3-module-future
 BuildRequires: python3-module-ddt
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-tomlkit
@@ -112,6 +111,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc LICENSE html
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt3
+- Removed extra build dependency on future module.
+
 * Fri May 17 2024 Stanislav Levin <slev@altlinux.org> 4.1.0-alt2.1
 - NMU: fixed FTBFS (Pytest 8.2.0).
 
