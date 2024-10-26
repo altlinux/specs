@@ -1,6 +1,6 @@
 Name: libcmis
 Version: 0.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: A C++ client library for the CMIS interface
 License: GPLv2+ or LGPLv2+ or MPL-1.1
@@ -9,6 +9,7 @@ Group: System/Libraries
 Url: https://github.com/tdf/libcmis
 Source: %name-%version.tar
 Patch: %name-0.4.1-alt2.1.patch
+Patch1: libcmis-0.6.2-upstream-fix-build-with-boost-1.86.0.patch
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libcurl)
@@ -45,6 +46,7 @@ command line.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 touch ChangeLog
@@ -71,6 +73,9 @@ mkdir -p m4
 %_man1dir/*.1*
 
 %changelog
+* Sat Oct 26 2024 Ivan A. Melnikov <iv@altlinux.org> 0.6.2-alt1.1
+- NMU: backport upstream fix for building with boost 1.86.0
+
 * Thu Dec 07 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.2-alt1
 - Update to upstream v0.6.2
 
