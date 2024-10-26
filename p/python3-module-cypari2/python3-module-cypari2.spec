@@ -1,19 +1,21 @@
 %define  modulename cypari2
 
 Name:    python3-module-%modulename
-Version: 2.1.4
+Version: 2.2.0
 Release: alt1
 
 Summary: Python interface to the number theory library PARI/GP
 License: GPL-2.0
 Group:   Development/Python3
-URL:     https://github.com/sagemath/cypari2
+URL:     https://pypi.org/project/cypari2
+VCS:     https://github.com/sagemath/cypari2
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
+BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-cysignals
 BuildRequires: pari-devel
@@ -29,19 +31,20 @@ A Python interface to the number theory library PARI/GP.
 %setup -n %modulename-%version
 
 %build
-%python3_build
-# Second pass for auto_paridecl.pxd generate
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
+- Automatically updated to 2.2.0.
+
 * Mon Dec 25 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.4-alt1
 - Automatically updated to 2.1.4.
 
