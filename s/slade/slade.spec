@@ -1,5 +1,5 @@
 Name: slade
-Version: 3.2.5
+Version: 3.2.6
 Release: alt1
 
 Summary: SLADE3 Doom editor
@@ -61,7 +61,7 @@ from/to other generic formats such as PNG.
 %cmake_insource \
 	-DUSE_WX_EXCEPTION_HANDLER=0 \
 	-DWX_GTK3:BOOL=ON \
-	-DUSE_SYSTEM_FMT=ON \
+	-DUSE_SYSTEM_FMT=OFF \
 	-DNO_WEBVIEW=ON \
 	-DBUILD_PK3=ON
 	
@@ -99,6 +99,11 @@ done
 %_datadir/metainfo/net.mancubus.SLADE.metainfo.xml
 
 %changelog
+* Sat Oct 26 2024 Artyom Bystrov <arbars@altlinux.org> 3.2.6-alt1
+- Update to new version
+- Fix FTBFS (disable system libfmt)
+
+
 * Tue Jan  9 2024 Artyom Bystrov <arbars@altlinux.org> 3.2.5-alt1
 - Update to new version
 - Fix FTBFS
