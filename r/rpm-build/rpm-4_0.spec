@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.202
+Version: 4.0.4.203
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -262,6 +262,7 @@ make apidocs
 # check
 lib/test-set
 make check VERBOSE=1
+scripts/check
 
 %install
 %make_install DESTDIR='%buildroot' install
@@ -402,6 +403,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Oct 25 2024 Vitaly Chikunov <vt@altlinux.org> 4.0.4.203-alt1
+- Fix packaging debuginfo for ZSTD compressed kernel modules.
+- Do not put uncompressed kernel modules into -debuginfo package.
+
 * Sun Oct 20 2024 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.202-alt1
 - tree-wide: Made sure PAM modules under /usr are treated correctly.
 - brp-compress: Dropped the "ls -l | awk field 11" hack.
