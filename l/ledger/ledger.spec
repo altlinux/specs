@@ -5,7 +5,7 @@
 
 Name: ledger
 Version: 3.3.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 
 Patch: 69e6b89cf8d2820d28174e7ffaea1c59a0f84d3f.patch
 Patch1: ledger-upstream-fix-build-with-boost-1.85.0.patch
+Patch2: ledger-upstream-fix-build-with-boost-1.86.0.patch
 
 Requires: libledger = %EVR
 
@@ -108,6 +109,7 @@ This package contains emacs libraries to ease use of ledger.
 %setup
 #patch -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake -DUSE_PYTHON=yes
@@ -140,6 +142,9 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Sun Oct 27 2024 Ivan A. Melnikov <iv@altlinux.org> 3.3.2-alt1.2
+- NMU: fix building with boost 1.86.0
+
 * Mon May 20 2024 Ivan A. Melnikov <iv@altlinux.org> 3.3.2-alt1.1
 - NMU: fix building with boost 1.85.0
 
