@@ -6,11 +6,11 @@
 
 Name: byedpi
 Version: 0.14.1.0.8.g322f
-Release: alt1
+Release: alt2
 
 Summary: A local proxy for DPI environments
 
-Group: System/Internationalization
+Group: Networking/Other
 License: MIT
 Url: https://github.com/hufrea/byedpi
 
@@ -27,9 +27,10 @@ A local SOCKS proxy for users in DPI environments.
 
 %install
 %makeinstall_std
-mkdir -p %buildroot{/run/%_user,%_home}
-install -pD -m755 .gear/%name.init %buildroot%_initdir/%name
-install -pD -m644 .gear/%name.conf %buildroot%_sysconfdir/sysconfig/%name
+mkdir -p %buildroot%_home
+install -pD -m755 .gear/%name.init    %buildroot%_initdir/%name
+install -pD -m644 .gear/%name.conf    %buildroot%_sysconfdir/sysconfig/%name
+install -D  -m644 .gear/tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
 
 %pre
 groupadd -r -f %_user ||:
@@ -40,11 +41,15 @@ useradd -g %_user -c 'The byedpi daemon' \
 %files
 %_bindir/*
 %doc README.md
-%dir %attr(0775,root,%_user) /run/%_user
 %dir %attr(0770,root,%_user) %_home
 %_initdir/%name
 %_sysconfdir/sysconfig/%name
+%_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Oct 27 2024 Andrew Savchenko <bircoph@altlinux.org> 0.14.1.0.8.g322f-alt2
+- Use tmpfilesd (Closes: #51622)
+- Add LSB header to the init script
+
 * Mon Sep 30 2024 Andrew Savchenko <bircoph@altlinux.org> 0.14.1.0.8.g322f-alt1
 - Initial version.
