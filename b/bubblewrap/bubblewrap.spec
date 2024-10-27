@@ -7,7 +7,7 @@
 
 Name: bubblewrap
 Version: 0.10.0
-Release: alt1.1
+Release: alt2
 
 Summary: Unprivileged sandboxing tool
 License: LGPL-2.0-or-later
@@ -42,7 +42,7 @@ because it is trivial to turn such access into to a fully privileged root shell 
 
 %prep
 %setup
-%patch1 -p1 -b .run-path
+#%%patch1 -p1 -b .run-path
 
 %build
 %meson \
@@ -78,6 +78,10 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Mon Oct 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt2
+- bwrap is no more setuid after previous release, so
+  alt-fix-run-path.patch is useless and even harmful (ALT #51514)
+
 * Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1.1
 - rebuilt with priv_mode=none (required for xdg-desktop-portal-1.19)
 

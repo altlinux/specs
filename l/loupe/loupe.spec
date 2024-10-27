@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: loupe
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Image Viewer
@@ -57,7 +57,7 @@ BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
 %setup -n %name-%version%beta %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -82,6 +82,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Oct 17 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
