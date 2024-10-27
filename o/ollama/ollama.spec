@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.3.12
+Version: 0.3.14
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -102,6 +102,9 @@ go test ./...
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Sun Oct 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.3.14-alt1
+- Update to v0.3.14 (2024-10-17).
+
 * Tue Oct 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.3.12-alt1
 - Update to v0.3.12 (2024-09-24). (Fixes CVE-2024-45436).
 
