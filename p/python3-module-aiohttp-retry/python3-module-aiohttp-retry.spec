@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-aiohttp-retry
-Version: 2.8.3
+Version: 2.9.0
 Release: alt1
 
 Summary: Simple retry client for aiohttp
@@ -11,20 +11,20 @@ License: MIT
 Group:   Development/Python3
 URL:     https://github.com/inyutin/aiohttp_retry
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch0: upstream-version-fix.patch
 
 %description
 %summary
 
 %prep
 %setup -n %pypi_name-%version
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -42,5 +42,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 27 2024 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
+- New version.
+
 * Mon Jul 22 2024 Andrey Cherepanov <cas@altlinux.org> 2.8.3-alt1
 - Initial build for Sisyphus.
