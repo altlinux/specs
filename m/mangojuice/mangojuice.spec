@@ -1,7 +1,7 @@
 %define APP_ID io.github.radiolamp.mangojuice
 
 Name: mangojuice
-Version: 0.7.1
+Version: 0.7.5
 Release: alt1
 
 Summary: A graphical user interface for MangoHud configuration
@@ -18,8 +18,7 @@ Requires: mesa-demos
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
-BuildRequires: vala-tools
+BuildRequires: vala
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
 
@@ -42,9 +41,13 @@ temperature, CPU and GPU statistics, and more.
 %files -f %APP_ID.lang
 %_bindir/%name
 %_desktopdir/%APP_ID.desktop
-%_iconsdir/hicolor/scalable/apps/%{APP_ID}*.svg
+%_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Sun Oct 27 2024 Oleg Shchavelev <oleg@altlinux.org> 0.7.5-alt1
+- New version 0.7.5
+- Optimize BuildRequires
+
 * Mon Oct 21 2024 Oleg Shchavelev <oleg@altlinux.org> 0.7.1-alt1
 - New version 0.7.1
 - Updated `Group` from `Graphics/Utilities` to `Graphics`
