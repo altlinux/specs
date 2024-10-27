@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.33
+Version: 0.9.34
 Release: alt1
 
 Summary: A drawing program for young children
@@ -124,6 +124,9 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_man1dir/tp-magic-config*
 
 %changelog
+* Sun Oct 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.34-alt1
+- Build new version.
+
 * Tue Jul 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.33-alt1
 - Build new version.
 

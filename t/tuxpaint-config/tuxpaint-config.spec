@@ -1,5 +1,5 @@
 Name: tuxpaint-config
-Version: 0.0.24
+Version: 0.0.25
 Release: alt1
 
 Summary: Configuration tool for Tux Paint
@@ -55,6 +55,9 @@ find %buildroot%_mandir -type f -exec chmod 644 {} \;
 %_datadir/icons/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Oct 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.0.25-alt1
+- Build new version.
+
 * Tue Jul 23 2024 Grigory Ustinov <grenka@altlinux.org> 0.0.24-alt1
 - Build new version.
 
