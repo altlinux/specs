@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Password calculator and generator for Gnome
@@ -68,6 +68,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Sun Oct 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.5-alt1
+- 1.6.5
+
 * Mon Sep 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
