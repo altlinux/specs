@@ -1,6 +1,6 @@
 Name: mkimage
-Version: 0.3.5
-Release: alt2
+Version: 0.3.6
+Release: alt1
 
 Summary: Simple image creator
 License: GPL-3.0-or-later
@@ -88,6 +88,11 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Sun Oct 27 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.6-alt1
+- mki-install: make 'apt-mark auto' for packages installed by dependencies.
+- mki-copy-grub-efi-chrooted: Capitalize primary bootloader filename for x86_64
+  and shim.
+
 * Tue Sep 24 2024 Ivan A. Melnikov <iv@altlinux.org> 0.3.5-alt2
 - Capitalize primary EFI bootloader name on non-secureboot platforms.
 
