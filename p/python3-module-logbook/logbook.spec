@@ -3,14 +3,14 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: A logging replacement for Python
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Logbook/
-# https://github.com/mitsuhiko/logbook.git
+URL: https://pypi.org/project/Logbook
+VCS: https://github.com/mitsuhiko/logbook
 
 Source: %name-%version.tar
 
@@ -78,6 +78,9 @@ py.test3
 %doc docs/_build/html/*
 
 %changelog
+* Sun Oct 27 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
+- Automatically updated to 1.8.0.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Automatically updated to 1.7.0.
 
