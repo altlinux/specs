@@ -1,5 +1,5 @@
 Name: kernel-image-6.12
-Release: alt0.rc4
+Release: alt0.rc5
 %define kernel_src_version	6.11
 %define kernel_base_version	6.12
 %define kernel_sublevel	.0
@@ -579,6 +579,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Oct 27 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc5
+- Update to v6.12-rc5 (2024-10-27).
+- config: Enable CONFIG_SCSI_MPI3MR=m (ALT#51728).
+- config: CONFIG_SQUASHFS=y.
+
 * Mon Oct 21 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc4
 - Update to v6.12-rc4 (2024-10-20).
 
