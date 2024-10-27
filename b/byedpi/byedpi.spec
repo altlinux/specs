@@ -6,7 +6,7 @@
 
 Name: byedpi
 Version: 0.14.1.0.8.g322f
-Release: alt2
+Release: alt3
 
 Summary: A local proxy for DPI environments
 
@@ -29,6 +29,7 @@ A local SOCKS proxy for users in DPI environments.
 %makeinstall_std
 mkdir -p %buildroot%_home
 install -pD -m755 .gear/%name.init    %buildroot%_initdir/%name
+install -pD -m644 .gear/%name.service %buildroot%_unitdir/%name.service
 install -pD -m644 .gear/%name.conf    %buildroot%_sysconfdir/sysconfig/%name
 install -D  -m644 .gear/tmpfiles.conf %buildroot%_tmpfilesdir/%name.conf
 
@@ -43,10 +44,14 @@ useradd -g %_user -c 'The byedpi daemon' \
 %doc README.md
 %dir %attr(0770,root,%_user) %_home
 %_initdir/%name
+%_unitdir/%name.service
 %_sysconfdir/sysconfig/%name
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Oct 27 2024 Andrew Savchenko <bircoph@altlinux.org> 0.14.1.0.8.g322f-alt3
+- Add systemd unit file
+
 * Sun Oct 27 2024 Andrew Savchenko <bircoph@altlinux.org> 0.14.1.0.8.g322f-alt2
 - Use tmpfilesd (Closes: #51622)
 - Add LSB header to the init script
