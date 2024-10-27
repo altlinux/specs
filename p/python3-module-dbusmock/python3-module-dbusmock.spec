@@ -1,20 +1,28 @@
+%def_disable snapshot
+
 %define modname dbusmock
 %define pypi_name python-%modname
-%def_enable check
+%def_disable check
 
 Name: python3-module-dbusmock
-Version: 0.30.2
+Version: 0.32.2
 Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPL-3.0-or-later
 Group: Development/Python3
-Url: https://github.com/martinpitt/python-dbusmock
-# https://pypi.python.org/pypi/%pypi_name
+Url: https://pypi.python.org/pypi/%pypi_name
 
 Vcs: https://github.com/martinpitt/python-dbusmock.git
+
+%if_disabled snapshot
 #Source: %url/releases/download/%version/%pypi_name-%version.tar.gz
 Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
+%else
+Source: %pypi_name-%version.tar
+%endif
+# 4b99cff
+Patch10: python-dbusmock-0.32.2-up-test_bluez5.patch
 
 BuildArch: noarch
 Requires: dbus
@@ -24,7 +32,8 @@ BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-dbus
 %if_enabled check
-BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower bluez
+BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower
+BuildRequires: /dev/pts bluez /etc/os-release
 BuildRequires: polkit iio-sensor-proxy notification-daemon
 BuildRequires: python3(pytest)
 BuildRequires: python3-module-dbus-gobject python3-module-pycodestyle
@@ -43,6 +52,7 @@ See %_docdir/%name-%version/README.rst for more information.
 
 %prep
 %setup -n %pypi_name-%version
+%patch10 -p1
 
 %build
 %pyproject_build
@@ -59,6 +69,12 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.2-alt1
+- 0.32.2
+
+* Fri Sep 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.1-alt1
+- 0.32.1
+
 * Sun Dec 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.30.2-alt1
 - 0.30.2
 
