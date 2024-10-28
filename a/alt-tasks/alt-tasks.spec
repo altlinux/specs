@@ -1,5 +1,5 @@
 Name: alt-tasks
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Utility for observing ALT Linux tasks
@@ -38,6 +38,11 @@ cp COPYING readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Oct 29 2024 Alexey Appolonov <alexey@altlinux.org> 0.11.0-alt1
+- There is no need to access the ALT server (team:/tasks/archive/done);
+- New ability to select today's and yesterday's tasks, as well as tasks
+  completed until today, using simple flags.
+
 * Thu Oct 17 2024 Alexey Appolonov <alexey@altlinux.org> 0.10.0-alt1
 - Ability to display Unix time of a task while using a custom output format;
 - Ability to select tasks using a range of task IDs (the commit time of a task
