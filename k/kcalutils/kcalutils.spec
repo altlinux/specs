@@ -1,7 +1,7 @@
 %define rname kcalutils
 
 Name: %rname
-Version: 24.08.1
+Version: 24.08.2
 Release: alt1
 %K6init
 
@@ -78,6 +78,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.1-alt1
 - new version
 

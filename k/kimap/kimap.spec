@@ -1,14 +1,14 @@
 %define rname kimap
 
 Name: %rname
-Version: 24.08.1
+Version: 24.08.2
 Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
 Summary: Job-based API for interacting with IMAP servers
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
 
@@ -75,6 +75,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.1-alt1
 - new version
 

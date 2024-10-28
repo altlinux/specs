@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%gui_sover
 
 Name: %rname
-Version: 24.08.1
+Version: 24.08.2
 Release: alt1
 %K6init
 
@@ -113,6 +113,9 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,6}-kleopatra.xml
 
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.1-alt1
 - new version
 
