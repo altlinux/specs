@@ -4,7 +4,7 @@
 %define libkf6pulseaudioqt libkf6pulseaudioqt%sover
 
 Name: pulseaudio-qt6
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Group: System/Libraries
@@ -59,6 +59,9 @@ Summary: %name library
 %_pkgconfigdir/KF6PulseAudioQt.pc
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt1
+- new version
+
 * Fri Sep 13 2024 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
 - new version
 
