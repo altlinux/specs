@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    yakuake
-Version: 23.08.3
+Version: 24.08.2
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
@@ -12,48 +12,47 @@ Url: http://yakuake.kde.org/
 # Download from https://download.kde.org/stable/release-service//$pkgver/src/yakuake-$pkgver.tar.xz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: qt5-declarative-devel
-BuildRequires: kf5-kauth-devel
-BuildRequires: kf5-kbookmarks-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-purpose-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: libkf5quickaddons
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: gcc-c++
+BuildRequires: extra-cmake-modules
+BuildRequires: kf6-karchive-devel
+BuildRequires: kf6-kauth-devel
+BuildRequires: kf6-kbookmarks-devel
+BuildRequires: kf6-kcodecs-devel
+BuildRequires: kf6-kcompletion-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kdeclarative-devel
+BuildRequires: kf6-kdoctools-devel
+BuildRequires: kf6-kglobalaccel-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kitemviews-devel
+BuildRequires: kf6-kjobwidgets-devel
+BuildRequires: kf6-knewstuff-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-knotifyconfig-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-kparts-devel
+BuildRequires: kf6-kservice-devel
+BuildRequires: kf6-kstatusnotifieritem-devel
+BuildRequires: kf6-ktextwidgets-devel
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kxmlgui-devel
+BuildRequires: kf6-purpose-devel
+BuildRequires: kf6-solid-devel
+BuildRequires: kf6-sonnet-devel
+BuildRequires: plasma6-kwayland-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-svg-devel
 
-BuildRequires: kf5-karchive-devel
-BuildRequires: kf5-kcrash-devel
-BuildRequires: kf5-kdbusaddons-devel
-BuildRequires: kf5-kglobalaccel-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-knewstuff-devel
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kf5-knotifyconfig-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-sonnet-devel
-BuildRequires: kf5-kwayland-devel
-BuildRequires: qt5-x11extras-devel
-BuildRequires: qt5-svg-devel
+Requires: konsole
 
-Requires:  kde5-konsole
-Requires:  kf5-kglobalaccel
 Provides:  kde5-%name = %version-release
 Obsoletes: kde5-%name < %version-release 
 
@@ -66,25 +65,32 @@ This version is built with KF5.
 %setup
 
 %build
-%K5init no_altplace
-%K5build
+%K6init no_altplace
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang --with-kde %name
 
 %files -f %name.lang
 %doc AUTHORS README.md TODO
-%_K5bin/*
-%_K5xdgapp/*.desktop
-%_K5icon/*/*/apps/*
+%_K6bin/*
+%_K6xdgapp/*.desktop
+%_K6icon/*/*/apps/*
 %_datadir/%name
-%_K5notif/%name.notifyrc
-%_K5dbus_srv/*.service
+%_K6notif/%name.notifyrc
+%_K6dbus_srv/*.service
 %_datadir/knsrcfiles/%name.knsrc
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Oct 28 2024 Andrey Cherepanov <cas@altlinux.org> 24.08.2-alt1
+- New version (ALT #51843).
+- Build for KF6.
+
+* Sat Apr 27 2024 Andrey Cherepanov <cas@altlinux.org> 24.02.2-alt1
+- New version.
+
 * Wed Nov 15 2023 Andrey Cherepanov <cas@altlinux.org> 23.08.3-alt1
 - New version.
 
