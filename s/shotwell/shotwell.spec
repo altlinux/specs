@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -11,13 +11,15 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
 License: CC-BY-SA-3.0 and LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Apps/Shotwell
+
+Vcs: https://gitlab.gnome.org/GNOME/shotwell.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -113,6 +115,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Mon Oct 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.10-alt1
+- 0.32.10
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.9-alt1
 - 0.32.9
 
