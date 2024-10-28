@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.18
+Version: 6.0.22
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -11,10 +11,14 @@ Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-session-ui
+Vcs: git://github.com/linuxdeepin/dde-session-ui.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+
+# %%_datadir/dbus-1/services/org.freedesktop.Notifications.service
+Conflicts: notify-osd
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Wed Oct 25 2023
@@ -103,6 +107,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Mon Oct 28 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.22-alt1
+- New version 6.0.22.
+- Added vcs tag.
+- Added Conflicts to notify-osd (ALT #51858).
+
 * Thu May 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.18-alt1
 - New version 6.0.18.
 - Built via separate qt5 instead system (ALT #48138).
