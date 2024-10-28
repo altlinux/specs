@@ -2,7 +2,7 @@
 
 Name: amsynth
 Version: 1.13.2
-Release: alt1
+Release: alt2
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -32,7 +32,7 @@ BuildRequires:  gcc-c++
 BuildRequires: liblo-devel libsndfile-devel
 BuildRequires:  autoconf-archive libX11-devel
 
-BuildRequires:  appliance-base-glibc glibc-utils
+BuildRequires:  glibc-utils
 BuildRequires:  libgtk2-devel libgtkmm3-devel
 BuildRequires:  libjack-devel liblash-devel libsndfile-devel libsndfile-utils
 BuildRequires:  libGL-devel libEGL-devel
@@ -180,6 +180,9 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Mon Oct 28 2024 Anton Midyukov <antohami@altlinux.org> 1.13.2-alt2
+- NMU: fix BuildRequires
+
 * Sat Mar 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.2-alt1
 - Version 1.13.2
 - Remove requires to jack-audio-connection-kit
