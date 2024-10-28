@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.19.6
+Version: 0.19.8
 Release: alt1
 Summary: A Python ASGI web microframework with the same API as Flask
 License: MIT
@@ -59,6 +59,9 @@ Quart is an async Python web microframework. Using Quart you can,
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 28 2024 Stanislav Levin <slev@altlinux.org> 0.19.8-alt1
+- 0.19.6 -> 0.19.8.
+
 * Mon May 20 2024 Stanislav Levin <slev@altlinux.org> 0.19.6-alt1
 - 0.19.5 -> 0.19.6.
 
