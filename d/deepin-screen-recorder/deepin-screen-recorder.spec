@@ -4,7 +4,7 @@
 
 Name: deepin-screen-recorder
 Version: 6.0.5
-Release: alt1
+Release: alt2
 
 Summary: Default screen recorder application for Deepin
 
@@ -21,6 +21,7 @@ Patch3: deepin-screen-recorder-6.0.5-alt-fix-opencv4.patch
 
 Provides: %name-data = %version
 Obsoletes: %name-data < %version
+Conflicts: deepin-screenshot
 
 BuildRequires(pre): rpm-macros-dqt5
 # Automatically added by buildreq on Fri Dec 15 2023
@@ -116,6 +117,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Mon Oct 28 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt2
+- Added Conflicts to deepin-screenshot (ALT #51857).
+
 * Thu May 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
 - New version 6.0.5.
 - Built via separate qt5 instead system (ALT #48138).
