@@ -2,19 +2,23 @@
 
 Name: python3-module-feedgenerator
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Standalone version of Django's feedgenerator module
 License: BSD
 Group: Development/Python
-URL: https://github.com/getpelican/feedgenerator
+URL: https://pypi.org/project/feedgenerator
+VCS: https://github.com/getpelican/feedgenerator
 
 # https://github.com/getpelican/feedgenerator/archive/refs/tags/2.1.0.tar.gz
-Source0: %{name}-%{version}.tar
+Source0: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-pytz
@@ -28,24 +32,28 @@ enhancements.
 
 %prep
 %setup
-rm -rf .tox
-rm -rf %{pypi_name}.egg-info
-rm -rf %{pypi_name}/django/utils/six.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%{__python3} setup.py test
+%pyproject_run_pytest
 
 %files
 %doc LICENSE README.rst
-%{python3_sitelibdir_noarch}/*
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1.1
+- NMU:
+  + fixed FTBFS.
+  + Moved on modern pyproject macros.
+  + Cleaned up spec a little bit.
+
 * Sat Apr 13 2024 Alexey Appolonov <alexey@altlinux.org> 2.1.0-alt1
 - Python 3.6 is no longer supported;
 - Description field are used as subtitle for Atom feeds, if provided;
