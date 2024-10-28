@@ -1,6 +1,6 @@
 Name: udev-rules-goodix-touchpad
 Version: 1.0
-Release: alt5
+Release: alt6
 Summary: Fix orientation of touchscreen in Anbernic RG Arc D
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -14,13 +14,16 @@ BuildArch: noarch
 mkdir -p %buildroot%_udevrulesdir
 
 cat > %buildroot%_udevrulesdir/99-goodix-touchscreen.rules <<EOF
-ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="Goodix Capacitive TouchScreen", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 -1 1 1 0 0"
+ACTION=="add|change", KERNEL=="event*", ATTRS{name}=="927", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 -1 1 1 0 0"
 EOF
 
 %files
 %_udevrulesdir/99-goodix-touchscreen.rules
 
 %changelog
+* Mon Oct 28 2024 Artyom Bystrov <arbars@altlinux.org> 1.0-alt6
+- Change name of device to name of model
+
 * Wed Oct 23 2024 Artyom Bystrov <arbars@altlinux.org> 1.0-alt5
 - Update rule
 
