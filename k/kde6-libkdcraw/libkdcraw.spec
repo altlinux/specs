@@ -4,14 +4,14 @@
 %define libkdcrawqt libkdcrawqt6_%sover
 
 Name: kde6-%rname
-Version: 24.08.1
+Version: 24.08.2
 Release: alt1
 %K6init altplace
 
 Group: Graphical desktop/KDE
 Summary: LibRaw C++ interface for KDE
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-libraw-ver.patch
@@ -76,6 +76,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.1-alt1
 - initial build
 

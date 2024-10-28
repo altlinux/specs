@@ -8,7 +8,7 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 24.08.1
+Version: 24.08.2
 Release: alt1
 %K6init no_altplace
 
@@ -31,6 +31,7 @@ Patch13: alt-def-colors.patch
 Patch14: alt-fix-empty-profile.patch
 Patch15: alt-disable-colorfilter.patch
 Patch16: alt-new-tab-button.patch
+Patch17: alt-no-f10.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-xdg
@@ -97,6 +98,7 @@ Obsoletes: libkonsoleapp1 < %EVR
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 %K6build \
@@ -158,6 +160,9 @@ __EOF__
 
 
 %changelog
+* Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.1-alt1
 - initial build
 
