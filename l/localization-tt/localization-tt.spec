@@ -1,5 +1,5 @@
 Name: localization-tt
-Version: 241004
+Version: 241020
 Release: alt1
 
 Summary: Translation files for Tatar language
@@ -27,7 +27,6 @@ msgfmt po/NetworkManager-openconnect.po -o %buildroot%_datadir/locale/tt/LC_MESS
 msgfmt po/NetworkManager-openvpn.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/NetworkManager-openvpn.mo
 msgfmt po/NetworkManager-pptp.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/NetworkManager-pptp.mo
 msgfmt po/NetworkManager-vpnc.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/NetworkManager-vpnc.mo
-msgfmt po/thunar.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/thunar.mo
 msgfmt po/thunar-archive-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/thunar-archive-plugin.mo
 msgfmt po/thunar-media-tags-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/thunar-media-tags-plugin.mo
 msgfmt po/thunar-shares-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/thunar-shares-plugin.mo
@@ -69,6 +68,9 @@ msgfmt po/xfce4-xkb-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4
 %_datadir/locale/tt/LC_MESSAGES/*
 
 %changelog
+* Sun Oct 20 2024 Kirill Izmestev <felixz@altlinux.org> 241020-alt1
+- Move thunar.po to Thunar package.
+
 * Fri Oct 04 2024 Kirill Izmestev <felixz@altlinux.org> 241004-alt1
 - Added translation files.
 

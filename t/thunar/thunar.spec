@@ -6,7 +6,7 @@
 
 Name: thunar
 Version: 4.19.3
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -151,6 +151,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Sun Oct 20 2024 Kirill Izmestev <felixz@altlinux.org> 4.19.3-alt2
+- Add Tatar translation.
+
 * Wed Jul 31 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - Patch from upstream:
   + I18n: Update po/LINGUAS list.
