@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname curb
 
 Name:          gem-curb
-Version:       1.0.0
+Version:       1.0.6
 Release:       alt1
 Summary:       Ruby bindings for libcurl
 License:       MIT
@@ -12,14 +16,22 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libcurl-devel
+%if_enabled check
+BuildRequires: gem(webrick) >= 0
+BuildRequires: gem(rdoc) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(mixlib-shellout) >= 0
+BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(ruby_memcheck) >= 0
+BuildRequires: gem(minitest) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_ignore_names bench
 Obsoletes:     ruby-curb < %EVR
 Provides:      ruby-curb = %EVR
-Provides:      gem(curb) = 1.0.0
+Provides:      gem(curb) = 1.0.6
 
 
 %description
@@ -31,15 +43,16 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 'multi' modes.
 
 
+%if_enabled    doc
 %package       -n gem-curb-doc
-Version:       1.0.0
+Version:       1.0.6
 Release:       alt1
 Summary:       Ruby bindings for libcurl documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curb
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(curb) = 1.0.0
+Requires:      gem(curb) = 1.0.6
 
 %description   -n gem-curb-doc
 Ruby bindings for libcurl documentation files.
@@ -53,17 +66,26 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 
 %description   -n gem-curb-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета curb.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-curb-devel
-Version:       1.0.0
+Version:       1.0.6
 Release:       alt1
 Summary:       Ruby bindings for libcurl development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curb
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(curb) = 1.0.0
+Requires:      gem(curb) = 1.0.6
+Requires:      gem(webrick) >= 0
+Requires:      gem(rdoc) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(mixlib-shellout) >= 0
+Requires:      gem(test-unit) >= 0
+Requires:      gem(ruby_memcheck) >= 0
+Requires:      gem(minitest) >= 0
 
 %description   -n gem-curb-devel
 Ruby bindings for libcurl development package.
@@ -77,6 +99,7 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 
 %description   -n gem-curb-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета curb.
+%endif
 
 
 %prep
@@ -97,16 +120,23 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-curb-doc
 %doc README.markdown
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-curb-devel
 %doc README.markdown
 %ruby_includedir/*
+%endif
 
 
 %changelog
+* Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.6-alt1
+- ^ 1.0.0 -> 1.0.6
+
 * Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - ^ 0.9.11 -> 1.0.0
 

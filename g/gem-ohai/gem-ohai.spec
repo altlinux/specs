@@ -1,8 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname ohai
 
 Name:          gem-ohai
-Version:       18.1.16
+Version:       19.0.4
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       Apache-2.0
@@ -14,8 +17,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(chefstyle) >= 2.2.2
+%if_enabled check
+BuildRequires: gem(cookstyle) >= 7.32.8
 BuildRequires: gem(ipaddr_extensions) >= 0
 BuildRequires: gem(rake) >= 10.1.0
 BuildRequires: gem(rspec-collection_matchers) >= 1.0
@@ -40,14 +43,13 @@ BuildRequires: gem(mixlib-shellout) >= 3.2.5
 BuildRequires: gem(plist) >= 3.1
 BuildRequires: gem(train-core) >= 0
 BuildRequires: gem(wmi-lite) >= 1.0
-BuildConflicts: gem(chefstyle) >= 3
 BuildConflicts: gem(rspec-collection_matchers) >= 2
 BuildConflicts: gem(rspec-core) >= 4
 BuildConflicts: gem(rspec-expectations) >= 4
 BuildConflicts: gem(rspec-mocks) >= 4
 BuildConflicts: gem(rubocop-performance) >= 2
-BuildConflicts: gem(chef-config) >= 19
-BuildConflicts: gem(chef-utils) >= 19
+BuildConflicts: gem(chef-config) >= 20
+BuildConflicts: gem(chef-utils) >= 20
 BuildConflicts: gem(ffi) >= 2
 BuildConflicts: gem(ffi-yajl) >= 3
 BuildConflicts: gem(mixlib-config) >= 4.0
@@ -60,7 +62,6 @@ BuildConflicts: gem(wmi-lite) >= 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_use_gem_dependency chefstyle >= 2.2.2,chefstyle < 3
 Requires:      gem(chef-config) >= 14.12
 Requires:      gem(chef-utils) >= 16.0
 Requires:      gem(ffi) >= 1.9
@@ -73,8 +74,8 @@ Requires:      gem(mixlib-shellout) >= 3.2.5
 Requires:      gem(plist) >= 3.1
 Requires:      gem(train-core) >= 0
 Requires:      gem(wmi-lite) >= 1.0
-Conflicts:     gem(chef-config) >= 19
-Conflicts:     gem(chef-utils) >= 19
+Conflicts:     gem(chef-config) >= 20
+Conflicts:     gem(chef-utils) >= 20
 Conflicts:     gem(ffi) >= 2
 Conflicts:     gem(ffi-yajl) >= 3
 Conflicts:     gem(mixlib-config) >= 4.0
@@ -84,9 +85,8 @@ Conflicts:     gem(plist) >= 4
 Conflicts:     gem(wmi-lite) >= 2
 Obsoletes:     ohai < %EVR
 Provides:      ohai = %EVR
-Provides:      gem(ohai) = 18.1.16
+Provides:      gem(ohai) = 19.0.4
 
-%ruby_bindir_to %ruby_bindir
 
 %description
 Ohai is a tool that is used to detect attributes on a node, and then provide
@@ -95,14 +95,14 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n ohai
-Version:       18.1.16
+Version:       19.0.4
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ohai
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 18.1.16
+Requires:      gem(ohai) = 19.0.4
 
 %description   -n ohai
 Ohai profiles your system and emits JSON executable(s).
@@ -115,15 +115,16 @@ is required by the chef-client and must be present on a node.
 Исполнямка для самоцвета ohai.
 
 
+%if_enabled    doc
 %package       -n gem-ohai-doc
-Version:       18.1.16
+Version:       19.0.4
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ohai
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 18.1.16
+Requires:      gem(ohai) = 19.0.4
 
 %description   -n gem-ohai-doc
 Ohai profiles your system and emits JSON documentation files.
@@ -134,18 +135,20 @@ is required by the chef-client and must be present on a node.
 
 %description   -n gem-ohai-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета ohai.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-ohai-devel
-Version:       18.1.16
+Version:       19.0.4
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ohai
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 18.1.16
-Requires:      gem(chefstyle) >= 2.2.2
+Requires:      gem(ohai) = 19.0.4
+Requires:      gem(cookstyle) >= 7.32.8
 Requires:      gem(ipaddr_extensions) >= 0
 Requires:      gem(rake) >= 10.1.0
 Requires:      gem(rspec-collection_matchers) >= 1.0
@@ -158,7 +161,6 @@ Requires:      gem(pry) >= 0
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(pry-stack_explorer) >= 0
 Requires:      gem(rb-readline) >= 0
-Conflicts:     gem(chefstyle) >= 3
 Conflicts:     gem(rspec-collection_matchers) >= 2
 Conflicts:     gem(rspec-core) >= 4
 Conflicts:     gem(rspec-expectations) >= 4
@@ -174,6 +176,7 @@ is required by the chef-client and must be present on a node.
 
 %description   -n gem-ohai-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета ohai.
+%endif
 
 
 %prep
@@ -193,15 +196,22 @@ is required by the chef-client and must be present on a node.
 %ruby_gemlibdir
 
 %files         -n ohai
-%ruby_bindir/ohai
+%_bindir/ohai
 
+%if_enabled    doc
 %files         -n gem-ohai-doc
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-ohai-devel
+%endif
 
 
 %changelog
+* Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 19.0.4-alt1
+- ^ 18.1.16 -> 19.0.4
+
 * Mon Dec 04 2023 Pavel Skrylev <majioa@altlinux.org> 18.1.16-alt1
 - ^ 18.0.26 -> 18.1.16
 

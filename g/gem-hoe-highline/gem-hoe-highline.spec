@@ -6,7 +6,7 @@
 
 Name:          gem-hoe-highline
 Version:       0.2.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       A Hoe plugin for building interactive Rake tasks
 License:       BSD
 Group:         Development/Ruby
@@ -22,15 +22,15 @@ BuildRequires: gem(highline) >= 1.6
 BuildRequires: gem(hoe) >= 3.11
 BuildRequires: gem(hoe-mercurial) >= 1.4
 BuildRequires: gem(rdoc) >= 4.0
-BuildConflicts: gem(highline) >= 3
+BuildConflicts: gem(highline) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency highline >= 2.0.3,highline < 3
+%ruby_use_gem_dependency highline >= 3.1.1,highline < 4
 Requires:      gem(highline) >= 1.6
 Requires:      gem(hoe) >= 3.11
-Conflicts:     gem(highline) >= 3
+Conflicts:     gem(highline) >= 4
 Provides:      gem(hoe-highline) = 0.2.1.3
 
 
@@ -46,7 +46,7 @@ build menus, and other fun stuff.
 %if_enabled    doc
 %package       -n gem-hoe-highline-doc
 Version:       0.2.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       A Hoe plugin for building interactive Rake tasks documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hoe-highline
 Group:         Development/Documentation
@@ -65,7 +65,7 @@ A Hoe plugin for building interactive Rake tasks documentation files.
 %if_enabled    devel
 %package       -n gem-hoe-highline-devel
 Version:       0.2.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       A Hoe plugin for building interactive Rake tasks development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hoe-highline
 Group:         Development/Ruby
@@ -114,6 +114,9 @@ A Hoe plugin for building interactive Rake tasks development package.
 
 
 %changelog
+* Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 0.2.1.3-alt1.1
+- ^ updated dep to highline gem upto 3.1.1
+
 * Fri Aug 30 2024 Pavel Skrylev <majioa@altlinux.org> 0.2.1.3-alt1
 - ^ 0.2.1 -> 0.2.1p3
 
