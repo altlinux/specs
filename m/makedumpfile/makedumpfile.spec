@@ -4,9 +4,9 @@
 %set_verify_elf_method strict
 
 Name:    makedumpfile
-Version: 1.7.5
-Release: alt2
-Summary: Make vmcore smaller by filtering and compressing pages
+Version: 1.7.6
+Release: alt1
+Summary: Make Linux crash dump small by filtering and compressing pages
 Group:   System/Kernel and hardware
 License: GPL-2.0-only
 Url:     https://github.com/makedumpfile/makedumpfile
@@ -59,23 +59,32 @@ install -Dm0755 eppic_makedumpfile.so %buildroot%_libdir/%name/eppic_makedumpfil
 %_libdir/%name
 
 %changelog
+* Sat Oct 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.6-alt1
+- Update to 1.7.6 (2024-10-23).
+- Add support for Linux 6.9, 6.10, 6.11 (x86_64).
+
 * Tue May 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.5-alt2
 - spec: Fix verify-elf error for eppic_makedumpfile.so.
 
 * Fri Apr 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.5-alt1
 - Update to 1.7.5 (2024-04-12).
+- Add support for Linux 6.7, 6.8 (x86_64).
 
 * Mon Nov 06 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.4-alt1
 - Update to 1.7.4 (2023-11-06).
+- Add support for Linux 6.4, 6.5, 6.6 (x86_64).
 
 * Tue Apr 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.7.3-alt1
 - Update to 1.7.3 (2023-04-25).
+- Add support for Linux 6.1, 6.2, 6.3 (x86_64).
 
 * Fri Oct 21 2022 Vitaly Chikunov <vt@altlinux.org> 1.7.2-alt1
 - Update to 1.7.2 (2022-10-20).
+- Add support for Linux 5.18, 5.19, 6.0 (x86_64).
 
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 1.7.1-alt1
 - Update to 1.7.1 (2022-04-18).
+- Support for Linux up to 5.17.
 
 * Thu Jun 25 2020 Vitaly Chikunov <vt@altlinux.org> 1.6.7.0.10.gc9e0785-alt1
 - First import of Released-1-6-7-10-gc9e0785. (Experimental).
