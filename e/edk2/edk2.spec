@@ -4,10 +4,16 @@
 
 %define DBXDATE 20230509
 
+%ifndef _priority_distbranch
+# We have it defined in macros but not in buildmacros.
+%define _priority_distbranch %(rpm --eval %%_priority_distbranch)
+%endif
+
+
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: 20240811
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -96,6 +102,9 @@ EFI Development Kit II implementation of UEFI Shell 2.0+
 %prep
 %setup -q
 %patch1 -p1
+%if "%_priority_distbranch" == "p10"
+sed -i 's|-Wl,--no-warn-rwx-segments||' BaseTools/Conf/tools_def.template
+%endif
 
 cp -f %SOURCE4 MdeModulePkg/Logo/
 
@@ -153,8 +162,11 @@ CC_FLAGS="-t %tool_chain_tag"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
-#CC_FLAGS="${CC_FLAGS} -b RELEASE"
+%if "%_priority_distbranch" == "p10" || "%_priority_distbranch" == "p11"
+CC_FLAGS="${CC_FLAGS} -b RELEASE"
+%else
 CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+%endif
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE -D NETWORK_ALLOW_HTTP_CONNECTIONS=TRUE"
@@ -358,6 +370,12 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt2
+- Fix build on p10
+- Backports:
+  + MdePkg: Fix overflow issue in BasePeCoffLib
+  + MdePkg: Improving readability of CVE patch for PeCoffLoaderRelocateImage
+
 * Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt1
 - edk2-stable202408
 
