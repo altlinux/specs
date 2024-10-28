@@ -1,7 +1,7 @@
 %define oname pefile
 
 Name: python3-module-%oname
-Version: 2023.2.7
+Version: 2024.8.26
 Release: alt1
 Group: Development/Python3
 Summary: Python module for working with Portable Executable files
@@ -41,10 +41,13 @@ sed -i -e '/^#!\//, 1d' pefile.py
 %python3_install
 
 %files
-%doc README*
+%doc LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 2024.8.26-alt1
+- 2024.8.26
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 2023.2.7-alt1
 - 2023.2.7
 
