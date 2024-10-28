@@ -13,7 +13,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt3
+Release: alt4
 %K5init
 
 Group: File tools
@@ -29,6 +29,7 @@ Patch2: alt-def-general.patch
 Patch3: alt-def-toolbar.patch
 Patch4: alt-fix-unmounting-during-preview-generation.patch
 Patch5: upstream-8d7e600f.patch
+Patch6: alt-skip-mime.patch
 
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -89,6 +90,7 @@ KF5 library
 %patch3 -p1
 #%patch4 -p2
 %patch5 -R -p1
+%patch6 -p1
 
 %build
 %K5build \
@@ -149,6 +151,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Oct 28 2024 Oleg Solovyov <mcpain@altlinux.org> 23.08.5-alt4
+- Skip MIME guessing on network-mounted file systems when listing dir
+
 * Tue Oct 08 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt3
 - add nfs:/ handler
 

@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt6
+Release: alt7
 %K5init no_altplace
 
 Group: System/Libraries
@@ -102,7 +102,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#patch4 -p1
 %patch11 -p1
 
 %if_enabled streebog
@@ -186,6 +186,9 @@ mv %buildroot/%_K5xdgapp/kcm_trash{,5}.desktop
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Wed Oct 23 2024 Oleg Solovyov <mcpain@altlinux.org> 5.116.0-alt7
+- move patch to Dolphin: Skip MIME guessing on network-mounted file systems
+
 * Thu Oct 10 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt6
 - rename kcm_trash.desktop
 
