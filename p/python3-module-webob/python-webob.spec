@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-webob
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 
 Summary: WSGI request and response object
@@ -49,6 +49,9 @@ environment.
 %python3_sitelibdir_noarch/%pypi_name-%version.dist-info
 
 %changelog
+* Mon Oct 28 2024 Anton Vyatkin <toni@altlinux.org> 1.8.9-alt1
+- New version 1.8.9.
+
 * Wed Aug 14 2024 Anton Vyatkin <toni@altlinux.org> 1.8.8-alt1
 - New version 1.8.8.
 
