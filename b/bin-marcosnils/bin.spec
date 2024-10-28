@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: bin-marcosnils
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 Summary: Effortless binary manager
 License: MIT
@@ -43,6 +43,9 @@ go test -v ./...
 %_bindir/bin
 
 %changelog
+* Sat Oct 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.19.0-alt1
+- Update to v0.19.0 (2024-10-20).
+
 * Tue Jul 30 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.0-alt1
 - Update to v0.18.0 (2024-07-15).
 
