@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:    eg25-manager
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Manager daemon for the Quectel EG25 mobile broadband modem
@@ -70,6 +70,9 @@ EOF
 %_datadir/%name
 
 %changelog
+* Mon Oct 28 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
+- New version.
+
 * Thu Aug 29 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.0-alt1
 - New version.
 
