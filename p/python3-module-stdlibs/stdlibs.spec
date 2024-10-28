@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2024.5.15
+Version: 2024.10.25
 Release: alt1
 Summary: List of packages in the stdlib
 License: MIT
@@ -19,8 +19,9 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-# not packaged in sisyphus, upstream uses attribution to generate __version__.py
+# not packaged in sisyphus
 %add_pyproject_deps_check_filter attribution
+%add_pyproject_deps_check_filter fissix
 %pyproject_builddeps_metadata_extra dev
 %endif
 
@@ -55,6 +56,9 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 28 2024 Stanislav Levin <slev@altlinux.org> 2024.10.25-alt1
+- 2024.5.15 -> 2024.10.25 (closes: #51837).
+
 * Thu May 16 2024 Stanislav Levin <slev@altlinux.org> 2024.5.15-alt1
 - 2024.1.28 -> 2024.5.15.
 
