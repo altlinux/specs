@@ -3,8 +3,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics
-Version: 1.101.0
-Release: alt3
+Version: 1.105.0
+Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
 Group: Development/Other
@@ -180,7 +180,7 @@ install -m644 %SOURCE13 %buildroot%_sysconfdir/%name/vmauth/config.yml
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/scrape.yml
 %doc README.md SECURITY.md 
-%doc docs/CHANGELOG.md docs/MetricsQL.md docs/FAQ.md docs/Single-server-VictoriaMetrics.md
+%doc docs/changelog/CHANGELOG.md docs/MetricsQL.md docs/FAQ.md docs/Single-server-VictoriaMetrics.md
 
 %files utils
 %_bindir/vmalert-tool
@@ -211,8 +211,11 @@ install -m644 %SOURCE13 %buildroot%_sysconfdir/%name/vmauth/config.yml
 %_unitdir/vmauth.service
 
 %changelog
+* Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.105.0-alt1
+- 1.105.0.
+
 * Mon Jul 08 2024 Alexey Shabalin <shaba@altlinux.org> 1.101.0-alt3
-- Ddd bundle vmui (ALT#50771).
+- Add bundle vmui (ALT#50771).
 
 * Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.101.0-alt2
 - Fixed use Environment in systemd unit (ALT#50398).

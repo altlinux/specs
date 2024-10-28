@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 0.27.1
+Version: 0.37.0
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -91,6 +91,9 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %doc docs/VictoriaLogs/QuickStart.md docs/VictoriaLogs/README.md docs/VictoriaLogs/data-ingestion
 
 %changelog
+* Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 0.37.0-alt1
+- 0.37.0
+
 * Mon Jul 08 2024 Alexey Shabalin <shaba@altlinux.org> 0.27.1-alt1
 - 0.27.1
 
