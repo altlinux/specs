@@ -1,7 +1,7 @@
 %define oname hawkmoth
 
 Name:    python3-module-%oname
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 
 Summary: Hawkmoth - Sphinx Autodoc for C
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel python3-module-sphinx
+BuildRequires: python3-module-hatchling
 
 %description
 Hawkmoth is a minimalistic Sphinx C and C++ Domain autodoc directive extension
@@ -39,9 +40,14 @@ using Sphinx, mainly through its simplicity of design, implementation and use.
 
 %files
 %doc README.rst LICENSE
+%_bindir/%oname
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 29 2024 L.A. Kostis <lakostis@altlinux.ru> 0.19.0-alt1
+- 0.19.0.
+- BR: added hatchling module.
+
 * Thu Aug 22 2024 L.A. Kostis <lakostis@altlinux.ru> 0.18.0-alt1
 - Initial build for ALTLinux.
