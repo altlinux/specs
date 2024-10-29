@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt81
+Release: alt82
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,11 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Oct 24 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt82
+- fix crash after defaulting 1.0 superblock (Closes: #49438)
+- missing changelog entry from 2.5.5-alt81:
+  + use default geometry for SCSI disks (Closes: #46133, #46134, #43210)
+
 * Wed Jul 24 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt81
 - adjust minmal XFS size (Closes: #49868)
 - show custom error messages (Closes: #50989, #47580, #48961, #48962)

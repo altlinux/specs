@@ -1,6 +1,6 @@
 Name: alterator-vm
-Version: 0.4.42
-Release: alt4
+Version: 0.4.43
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,12 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Oct 24 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.43-alt1
+- allow EFI on RAID with super 1.0 (Closes: #49438)
+
+* Fri Aug 09 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.42-alt5
+- fix crash (Closes: #49479)
+
 * Fri May 31 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.42-alt4
 - fix crash after creating BtrFS subvolume
 
