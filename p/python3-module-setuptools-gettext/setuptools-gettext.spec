@@ -2,11 +2,10 @@
 %define pypi_name setuptools-gettext
 
 Name: python3-module-%pypi_name
-Version: 0.1.13
+Version: 0.1.14
 Release: alt1
 License: GPLv2
 Source: %pypi_name-%version.tar
-Patch: alt-drop-distutils.patch
 Group: Development/Python3
 BuildArch: noarch
 Summary: setuptools plugin for building mo files
@@ -25,7 +24,6 @@ well as hooking those into standard commands.
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -39,6 +37,10 @@ well as hooking those into standard commands.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 29 2024 L.A. Kostis <lakostis@altlinux.ru> 0.1.14-alt1
+- 0.14.0.
+- drop -distutils patch (fixed by upstream).
+
 * Wed May 08 2024 L.A. Kostis <lakostis@altlinux.ru> 0.1.13-alt1
 - Initial build for ALTLinux.
 
