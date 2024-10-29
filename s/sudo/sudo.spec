@@ -5,7 +5,7 @@
 
 
 Name: sudo
-Version: 1.9.15p5
+Version: 1.9.16
 Release: alt1
 Epoch: 1
 
@@ -263,6 +263,33 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Fri Oct 25 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16-alt1
+- Update to latest stable release:
+ + Added the cmddenial_message sudoers option to provide additional information
+   to the user when a command is denied by the sudoers policy.
+   The default message is still displayed.
+ + The time stamp used for file-based logs is now more consistent with the time
+   stamp produced by syslog (GitHub#327).
+ + Sudo will now warn the user if it can detect the user's terminal but cannot
+   determine the path to the terminal device. The sudoers time stamp file will
+   now use the terminal device number directly (GitHub #329).
+ + Added a json_compact value for the sudoers log_format option which can be
+   used when logging to a file (GitHub#357).
+ + new pam_silent sudoers option has been added which may be negated to avoid
+   suppressing output from PAM authentication modules (GitHub#216).
+ + Fixed several cvtsudoers JSON output problems (GitHub#369, GitHub#370,
+   GitHub#371, GitHub#373, GitHub#381).
+ + When sudo runs a command in a pseudo-terminal and the user's terminal is
+   revoked, the pseudo-terminal's foreground process group will now receive
+   SIGHUP before the terminal is revoked. This emulates the behavior of the
+   session leader exiting and is consistent with what happens when, for example,
+   an ssh session is closed (GitHub#367).
+ + Paths specified via a Chdir_Spec or Chroot_Spec in sudoers may now be
+   double-quoted.
+ + The default sudoers file now enables the secure_path option by default
+   and preserves the EDITOR, VISUAL, and SUDO_EDITOR environment variables
+   when running visudo (GitHub#387).
+
 * Thu Jan 04 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.15p5-alt1
 - Update to latest stable bugfix release:
  + Fixed evaluation of the "lecture", "listpw", "verifypw", and "fdexec"
