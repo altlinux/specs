@@ -4,8 +4,8 @@
 %global optflags_lto %nil
 
 Name: dtc
-Version: 1.7.0
-Release: alt2
+Version: 1.7.1
+Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
@@ -15,9 +15,9 @@ Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: meson
-BuildRequires: flex bison
-%{?_with_python3:BuildRequires: swig python3-devel python3-module-setuptools_scm}
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: flex bison meson >= 0.57.0
+%{?_with_python3:BuildRequires: swig python3-devel >= 3.8 python3-module-setuptools_scm}
 %{?_with_docs:BuildRequires: texlive-base texlive-latex-extra}
 
 %description
@@ -84,7 +84,12 @@ sed -i "/subdir('tests')/d" meson.build
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%meson -Dstatic-build=false
+%meson \
+%ifarch %e2k
+  -Dtests=false \
+%endif
+  -Dstatic-build=false
+
 %meson_build
 %if_with docs
 pushd Documentation
@@ -133,6 +138,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+
 * Mon Jun 10 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.0-alt2
 - fix e2k build
 
