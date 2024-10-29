@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Waitress WSGI server
@@ -57,6 +57,9 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 %python3_sitelibdir/waitress-%version.dist-info
 
 %changelog
+* Tue Oct 29 2024 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Thu Feb 08 2024 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt1
 - New version 3.0.0.
 
