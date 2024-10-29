@@ -1,5 +1,5 @@
 Name: libxlsxwriter
-Version: 1.1.7
+Version: 1.1.9
 Release: alt1
 Summary: A C library for creating Excel XLSX files
 Group: Development/C
@@ -32,7 +32,8 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -n %name-RELEASE_%version
+%setup 
+# -n %name-RELEASE_%version
 
 %__subst 's|ZLIB REQUIRED "1.0"|ZLIB|' CMakeLists.txt
 
@@ -50,7 +51,7 @@ rm -f include/xlsxwriter/third_party/zip.h
 
 %files
 %doc Readme.md Changes.txt License.txt
-%_libdir/%name.so.6*
+%_libdir/%name.so.7*
 
 %files devel
 %_includedir/xlsxwriter.h
@@ -59,6 +60,9 @@ rm -f include/xlsxwriter/third_party/zip.h
 %_libdir/pkgconfig/xlsxwriter.pc
 
 %changelog
+* Tue Oct 29 2024 Ilya Mashkin <oddity@altlinux.ru> 1.1.9-alt1
+- 1.1.9
+
 * Tue Apr 09 2024 Ilya Mashkin <oddity@altlinux.ru> 1.1.7-alt1
 - 1.1.7
 
