@@ -3,7 +3,7 @@
 
 %def_with check
 Name: python3-module-%pypi_name
-Version: 0.16.0
+Version: 0.18.0
 Release: alt1
 License: MIT
 # https://files.pythonhosted.org/packages/76/f5/b352eee084f2bcebb25f144dece8fd2bd77d6a48c5d5bde083419d4c6ec0/sphinx-automodapi-0.16.0.tar.gz
@@ -61,6 +61,9 @@ PYTHONPATH=`pwd` make -C docs SPHINXBUILD=sphinx-build-3 html
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 29 2024 L.A. Kostis <lakostis@altlinux.ru> 0.18.0-alt1
+- 0.18.0.
+
 * Sat Jan 20 2024 L.A. Kostis <lakostis@altlinux.ru> 0.16.0-alt1
 - 0.16.0.
 - BR: add serializinghtml module.
