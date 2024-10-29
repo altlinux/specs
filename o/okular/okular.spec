@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 24.08.2
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -95,8 +95,6 @@ developing applications that use %name.
 %package -n %libokularcore
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common >= %EVR
-Obsoletes: libokular5core11 < %EVR
 %description -n %libokularcore
 %name library
 
@@ -192,6 +190,9 @@ fi
 
 
 %changelog
+* Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
+- don't obsolete libokular5core11 (closes: 51865)
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
