@@ -1,10 +1,9 @@
 %define oname whitenoise
 
-# needs tox >=4.2
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.7.0
+Version: 6.8.1
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
@@ -74,6 +73,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Tue Oct 29 2024 Grigory Ustinov <grenka@altlinux.org> 6.8.1-alt1
+- Automatically updated to 6.8.1.
+
 * Tue Jun 25 2024 Grigory Ustinov <grenka@altlinux.org> 6.7.0-alt1
 - Automatically updated to 6.7.0.
 - Built with check.
