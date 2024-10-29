@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-only
+%def_without check
 
 Name: kernel-source-hinic
 Version: 2.3.2.17
-Release: alt3
+Release: alt4
 Summary: Huawei(R) Intelligent Network Interface Card Driver
 License: GPL-2.0-only
 Group: Development/Kernel
@@ -14,8 +15,10 @@ Source0: %name-%version.tar
 BuildArch: noarch
 ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-build-kernel
+%if_with check
 BuildRequires: kernel-headers-modules-un-def
 BuildRequires: kernel-headers-modules-std-def
+%endif
 
 %description
 %summary
@@ -27,13 +30,16 @@ BuildRequires: kernel-headers-modules-std-def
 install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/%name-%version.tar
 
 %check
-#make -C /lib/modules/*-un-def-*/build  M=$PWD/drivers/net/ethernet/huawei/hinic -j
-#make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/net/ethernet/huawei/hinic -j
+make -C /lib/modules/*-un-def-*/build  M=$PWD/drivers/net/ethernet/huawei/hinic -j
+make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/net/ethernet/huawei/hinic -j
 
 %files
 %kernel_src/%name-%version.tar
 
 %changelog
+* Tue Oct 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.3.2.17-alt4
+- Do not BR: kernel modules headers without check.
+
 * Thu Jan 20 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.3.2.17-alt3
 - Disable %%check.
 
