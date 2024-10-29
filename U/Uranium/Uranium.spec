@@ -7,7 +7,7 @@
 
 Name:    Uranium
 Version: 5.4.0
-Release: alt3
+Release: alt4
 
 Summary:  A Python framework for building Desktop applications.
 License: LGPL-3.0
@@ -56,6 +56,8 @@ Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
 # Fix asserts for called once in Python 3.12
 # https://github.com/Ultimaker/Uranium/pull/885.patch#/Uranium-5.3.0-python3.12.patch
 Patch3: Uranium-5.3.0-python3.12.patch
+# https://github.com/Ultimaker/Uranium/commit/e86d717035af317dab5d62851181873ec3c38ebe.patch
+Patch4: upstream-Replace-deprecated-imp.patch
 
 %description
 %summary
@@ -124,6 +126,9 @@ python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
 %doc html LICENSE
 
 %changelog
+* Tue Oct 29 2024 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt4
+- upstream-Replace-deprecated-imp.patch
+
 * Mon Feb 26 2024 Anton Midyukov <antohami@altlinux.org> 5.4.0-alt3
 - Disable failed tests
 
