@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.9.20
+Version: 0.9.21
 Release: alt1
 
 Summary: Permanently install Live system
@@ -62,6 +62,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Fri Oct 25 2024 Mikhail Efremov <sem@altlinux.org> 0.9.21-alt1
+- preinstall: Add initrd feature fsck by default.
+
 * Tue Sep 03 2024 Mikhail Efremov <sem@altlinux.org> 0.9.20-alt1
 - 30-setup-network.sh: Get rid of ifdump dependence.
 - zdg-user-dirs-install.sh: Don't hardcode livecd user UID.
