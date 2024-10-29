@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-typeguard
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 Summary: Run-time type checker for Python
 License: MIT
@@ -49,6 +49,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Mon May 27 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Automatically updated to 4.3.0.
 - Build with check.
