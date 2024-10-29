@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: talos
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -114,6 +114,10 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Tue Oct 29 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.2-alt1
+- 1.8.2
+- Define registry.altlinux.org for k8s images.
+
 * Sun Sep 29 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
 - Initial build.
 
