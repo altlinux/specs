@@ -7,8 +7,8 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.28.0
-Release: alt1.2
+Version: 9.29.0
+Release: alt1
 
 Summary: DRBD user-land tools and scripts
 License: GPLv2+
@@ -192,6 +192,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Tue Oct 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.29.0-alt1
+- 9.29.0
+
 * Mon Jun 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.28.0-alt1.2
 - FTBFS: fix udev.d path, change /lib to /usr/lib
 
