@@ -8,7 +8,7 @@
 
 Name: kf6-%rname
 Version: 6.7.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,7 @@ License: GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-3.0-only
 
 Provides: kf5-baloo = %EVR
 Obsoletes: kf5-baloo < %EVR
+Obsoletes: libkf5baloowidgets < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-disable-indexing.patch
@@ -108,6 +109,9 @@ KF6 library
 
 
 %changelog
+* Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt2
+- obsolete libkf5baloowidgets
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
 - new version
 
