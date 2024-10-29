@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: iotas
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -15,10 +15,11 @@ License: GPL-3.0
 Group: Office
 Url: https://gitlab.gnome.org/World/iotas
 
+Vcs: https://gitlab.gnome.org/World/iotas.git
+
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/iotas.git
 Source: %name-%version.tar
 %endif
 
@@ -77,6 +78,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Tue Oct 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4
+
 * Tue Oct 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - 0.9.3
 
