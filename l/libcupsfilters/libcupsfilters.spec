@@ -1,6 +1,6 @@
 %define soversion 2
 Name: libcupsfilters
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 Summary: Library for developing printing filters
 License: Apache-2.0 WITH LLVM-exception
@@ -116,6 +116,9 @@ rm -rf %buildroot/usr/share/doc/libcupsfilters
 %_libdir/pkgconfig/libcupsfilters.pc
 
 %changelog
+* Tue Oct 29 2024 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
+- 2.1.0 (Fixes: CVE-2024-47076)
+
 * Fri Sep 29 2023 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
 - 2.0.0
 - added default-testpage.pdf from cups-filters package (Closes: #47646)
