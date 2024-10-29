@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 10.2
-Release: alt5
+Version: 10.4
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Oct 29 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt1
+- update to ALT Server V 10.4
+- fix some typos
+
 * Tue Aug 27 2024 Elena Mishina <lepata@altlinux.org> 10.2-alt5
 - fix some typos (ALT 51175, 51218, 51228, 51254, 51258, 51266, 51276, 51279, 51286)
 - small improvements (ALT 51219, 51200, 51213, 51232, 51263, 51291)
