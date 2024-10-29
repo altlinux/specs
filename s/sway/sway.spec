@@ -1,5 +1,5 @@
 Name: sway
-Version: 1.9
+Version: 1.10
 Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
@@ -30,7 +30,7 @@ BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(libcap)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libevdev)
-BuildRequires: pkgconfig(libinput) >= 1.21.0
+BuildRequires: pkgconfig(libinput) >= 1.26.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(wayland-client)
@@ -38,7 +38,7 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wlroots) >= 0.17.0
+BuildRequires: pkgconfig(wlroots-0.18) >= 0.18.0
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xkbcommon) >= 1.5.0
 BuildRequires: scdoc
@@ -51,7 +51,7 @@ Requires: swaybg
 Requires: swayidle
 
 Requires: foot
-Requires: dmenu-wl
+Requires: wmenu
 Requires: %name-data
 
 %description
@@ -109,6 +109,9 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Mon Oct 28 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.10-alt1
+- 1.10 released
+
 * Tue Mar  5 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.9-alt1
 - New version (1.9)
 
