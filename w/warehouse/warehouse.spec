@@ -1,12 +1,12 @@
 %define _name warehouse
-%define ver_major 1.6
+%define ver_major 2.0
 %define rdn_name io.github.flattool.Warehouse
 
 # online screenshots
 %def_disable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: Flatpak manager for GNOME
@@ -60,6 +60,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Tue Oct 29 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- updated to 2.0.0-2-g2fd24f3
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.5-alt1
 - 1.6.5
 
