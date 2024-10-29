@@ -18,8 +18,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.22.0
-Release: alt4
+Version: 7.28.0
+Release: alt1
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -166,6 +166,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 7.28.0-alt1
+- new version
+
 * Sun May 26 2024 Michael Shigorin <mike@altlinux.org> 7.22.0-alt4
 - E2K: skip glaxnimate for now (ftbfs with lcc 1.27.14)
 

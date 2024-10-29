@@ -3,9 +3,9 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 23.08.5
+Version: 24.08.2
 Release: alt1
-%K5init no_altplace man appdata
+%K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
 Summary: KDE Non Linear Video Editor
@@ -25,8 +25,8 @@ AutoProv: yes, nopython nopython3
 Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: mediainfo
-Requires: icon-theme-breeze kde5-runtime kde5-kio-extras
-Requires: qml(org.kde.kcm) qml(org.kde.kirigami)
+Requires: icon-theme-breeze kde-runtime kio-extras
+Requires: kf6-kirigami
 %if %is_ffmpeg
 Requires: /usr/bin/ffmpeg /usr/bin/ffplay /usr/bin/ffprobe
 %else
@@ -38,23 +38,20 @@ Source1: rttr.tar
 Patch2: alt-find-lumas.patch
 Patch3: alt-ffmpegaudiothumbnails.patch
 
-# Automatically added by buildreq on Mon Jul 27 2015 (-bi)
-# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libmlt-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs shared-mime-info xml-common xml-utils
-#BuildRequires: extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel libdb4-devel libmlt++-devel libv4l-devel python-module-google qt5-script-devel qt5-svg-devel rpm-build-gir rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): libavformat-devel
 BuildRequires(pre): mlt-utils
 BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-multimedia-devel qt5-quickcontrols2-devel qt5-networkauth-devel
+BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-declarative-devel qt6-multimedia-devel qt6-declarative-devel qt6-networkauth-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
 BuildRequires: mlt7-devel mlt7xx-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel
-BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel
-BuildRequires: kf5-knotifyconfig-devel kf5-kplotting-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-kfilemetadata-devel kf5-purpose-devel
-BuildRequires: kf5-kdeclarative-devel kf5-kpackage-devel
+BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools kf6-kdoctools-devel kf6-kguiaddons-devel kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knewstuff-devel kf6-knotifications-devel
+BuildRequires: kf6-knotifyconfig-devel kf6-kplotting-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
+BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel kf6-kfilemetadata-devel kf6-purpose-devel
+BuildRequires: kf6-kdeclarative-devel kf6-kpackage-devel
 
 %description
 Kdenlive is a non-linear video editor for GNU/Linux, which supports
@@ -78,32 +75,36 @@ install -m 0644 %SOURCE1 .
 sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
-sed -i 's|^Exec=\(.*\)|Exec=kde5 \1|' %buildroot/%_K5xdgapp/org.kde.kdenlive.desktop
+%K6install
+sed -i 's|^Exec=\(.*\)|Exec=kde6 \1|' %buildroot/%_K6xdgapp/org.kde.kdenlive.desktop
 
 %find_lang %name --with-kde --all-name
 sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 %files -f %name.lang
 %doc AUTHORS LICENSES/*
-%_K5bin/*
-%_K5plug/kf5/thumbcreator/*mlt*.so
-%_K5xdgapp/*.desktop
+%_K6bin/*
+%_K6plug/kf6/thumbcreator/*mlt*.so
+%_K6xdgapp/*.desktop
 %_datadir/%name
-%_K5cfg/*kdenlive*
+%_K6cfg/*kdenlive*
 %_iconsdir/*/*/*/*.*
-%_K5notif/*rc
-%_K5xdgmime/*.xml
+%_K6notif/*rc
+%_K6xdgmime/*.xml
 %_man1dir/kdenlive*
 %_datadir/metainfo/org.kde.kdenlive.appdata.xml
-%_datadir/qlogging-categories5/*.categories
+%_datadir/qlogging-categories6/*.categories
 %_datadir/knsrcfiles/*.knsrc
 
 
+
 %changelog
+* Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Wed Feb 21 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
