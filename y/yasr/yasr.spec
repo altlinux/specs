@@ -1,20 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: yasr
-Version: 0.6.7
-Release: alt7.qa1
-Packager: Michael Pozhidaev <msp@altlinux.ru>
+Version: 0.6.9
+Release: alt1
 
 Summary: %name - yet another screen reader
-License: %gpl2only
+License: GPL-2.0-only
 Group: Accessibility
-Url: http://yasr.sourceforge.net
-Requires: voiceman
-BuildRequires: rpm-build-licenses 
+Url: https://sourceforge.net/projects/yasr/
+VCS: https://git.code.sf.net/p/yasr/git
 
-Source: %name-%version.tar.gz
-Source1: voiceman-emacspeak-yasr
-Patch0: %name-%version-alt-config.patch
-Patch1: %name-%version-alt-voiceman.patch
-Patch2: %name-%version-alt-pty.patch
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build
+BuildRequires: libtool
+BuildRequires: gettext
+BuildRequires: automake
+BuildRequires: make
+BuildRequires: gcc-c++
 
 %description
 YASR ("Yet Another Screen Reader") is the attempt at a lightweight,
@@ -26,28 +29,29 @@ necessarily need to be setuid root (the only requirement being that
 the user be able to access the tts device).
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%setup
 
 %build
+%autoreconf
 %configure
-make
+%make
 
 %install
-%__install -pD -m775 ./yasr/yasr %buildroot%_bindir/yasr
-%__install -pD -m664 ./yasr.conf %buildroot%_sysconfdir/yasr.conf
-%__install -pD -m664 ./yasr/yasr.1 %buildroot%_man1dir/yasr.1
-%__install -pD -m755 %SOURCE1 %buildroot%_bindir/voiceman-emacspeak-yasr
+%makeinstall_std
+
+mv %buildroot%_datadir/%name %buildroot%_sysconfdir
+rm -rv %buildroot%_datadir/locale
 
 %files
-%_bindir/*
-%_sysconfdir/*
-%_man1dir/*
+%_bindir/%name
+%_sysconfdir/%name.conf
+%_man1dir/%name.1.xz
 %doc ChangeLog BUGS CREDITS NEWS README TODO
 
 %changelog
+* Tue Oct 29 2024 Artem Semenov <savoptik@altlinux.org> 0.6.9-alt1
+- Build new version 0.6.9 (ALT bug: 51705)
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.6.7-alt7.qa1
 - NMU: rebuilt for debuginfo.
 
