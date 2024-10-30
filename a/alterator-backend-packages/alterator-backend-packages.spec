@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -16,8 +16,8 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-alterator
 
 Requires: alterator-interface-packages
-Requires: alterator-manager
-Requires: alterator-module-executor
+Requires: alterator-manager >= 0.1.23
+Requires: alterator-module-executor >= 0.1.13
 
 %package -n alterator-interface-packages
 Summary: Alterator interfaces for managing system packages
@@ -42,19 +42,19 @@ mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_alterator_datadir/backends
 mkdir -p %buildroot%_alterator_datadir/objects
 
-install -v -p -m 644 -D apt/ru.basealt.alterator.apt1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D apt/ru.basealt.alterator.apt1.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D apt/org.altlinux.alterator.apt1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D apt/org.altlinux.alterator.apt1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 755 -D apt/apt-wrapper %buildroot%_libexecdir/%name/apt-wrapper
 install -v -p -m 644 -D apt/apt.backend %buildroot%_alterator_datadir/backends
 install -v -p -m 644 -D apt/apt.object %buildroot%_alterator_datadir/objects
 
-install -v -p -m 644 -D rpm/ru.basealt.alterator.rpm1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D rpm/ru.basealt.alterator.rpm1.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D rpm/org.altlinux.alterator.rpm1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D rpm/org.altlinux.alterator.rpm1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D rpm/rpm.backend %buildroot%_alterator_datadir/backends
 install -v -p -m 644 -D rpm/rpm.object %buildroot%_alterator_datadir/objects
 
-install -v -p -m 644 -D repo/ru.basealt.alterator.repo1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D repo/ru.basealt.alterator.repo1.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D repo/org.altlinux.alterator.repo1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D repo/org.altlinux.alterator.repo1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D repo/repo.backend %buildroot%_alterator_datadir/backends
 install -v -p -m 644 -D repo/repo.object %buildroot%_alterator_datadir/objects
 
@@ -74,6 +74,10 @@ install -v -p -m 644 -D repo/repo.object %buildroot%_alterator_datadir/objects
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
+- Change prefix from ru.basealt to org.altlinux.
+- Remove error output from Info methods.
+
 * Wed Sep 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
 - Fix some incorrect package names in List method of apt backend.
 - Add lastUpdate method to apt backend.

@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -52,17 +52,17 @@ mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_rpmlibdir/
 mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager.service-user \
       %buildroot%_prefix/lib/systemd/user/alterator-manager.service
-mv -f %buildroot%_datadir/dbus-1/services/ru.basealt.alterator-manager.service-user \
-      %buildroot%_datadir/dbus-1/services/ru.basealt.alterator-manager.service
+mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service-user \
+      %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 %files
 %_sbindir/%name
-%_datadir/dbus-1/system.d/ru.basealt.alterator-manager.conf
-%_datadir/dbus-1/services/ru.basealt.alterator-manager.service
-%_datadir/dbus-1/system-services/ru.basealt.alterator-manager.service
+%_datadir/dbus-1/system.d/org.altlinux.alterator-manager.conf
+%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
+%_datadir/dbus-1/system-services/org.altlinux.alterator-manager.service
 %_unitdir/alterator-manager.service
 %_prefix/lib/systemd/user/alterator-manager.service
-%_datadir/polkit-1/actions/ru.basealt.alterator.manager.policy
+%_datadir/polkit-1/actions/org.altlinux.alterator.manager.policy
 %_rpmlibdir/%name.filetrigger
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
@@ -81,6 +81,10 @@ mv -f %buildroot%_datadir/dbus-1/services/ru.basealt.alterator-manager.service-u
 
 
 %changelog
+* Mon Oct 14 2024 Ivan Savin <svn17@altlinux.org> 0.1.23-alt1
+- Renaming object paths and interface names and bus name from ru.basealt to
+  org.altlinux.
+
 * Thu Jul 11 2024 Ivan Savin <svn17@altlinux.org> 0.1.22-alt1
 - Add missing 'static' for GDBusSubtreeVTable subtree_vtable.
 - Make the service in system mode bus-activatable.

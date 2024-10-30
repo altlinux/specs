@@ -1,14 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.0.5
-Release: alt3
+Version: 0.0.6
+Release: alt1
 
 Summary: CLI for alterator browser
 License: GPL-2.0+
 Group: System/Configuration/Other
 
 BuildRequires: cmake gcc glib2-devel libdbus-glib-devel libgio-devel
+
+Requires: alterator-manager >= 0.1.23
+Requires: alterator-module-executor >= 0.1.13
 
 Source0: %name-%version.tar
 
@@ -30,6 +33,10 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.0.6-alt1
+- change prefix from ru.basealt to org.altlinux
+- add systeminfo module
+
 * Wed Oct 02 2024 Aleksey Saprunov <sav@altlinux.org> 0.0.5-alt3
 - two ways of getting information about an object are implemented: plain text and keyed parsed content
 - fix components and packages modules

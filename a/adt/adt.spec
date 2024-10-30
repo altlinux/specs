@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -24,8 +24,8 @@ BuildRequires: doxygen
 
 BuildRequires: desktop-file-utils ImageMagick-tools
 
-Requires: alterator-manager
-Requires: alterator-module-executor
+Requires: alterator-manager >= 0.1.23
+Requires: alterator-module-executor >= 0.1.13
 Requires: alterator-interface-diag
 
 Source0: %name-%version.tar
@@ -60,6 +60,9 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.6-alt1
+- change prefix from ru.basealt to org.altlinux
+
 * Fri Oct 04 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.5-alt1
 - remove horizontal scrollbar in test widget
 - implement test status reset

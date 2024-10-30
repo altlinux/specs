@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-component_categories
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Backend for components categories
@@ -14,6 +14,8 @@ BuildArch: noarch
 Requires: alterator-interface-component_categories
 Requires: alterator-entry
 Requires: bash
+Requires: alterator-manager >= 0.1.23
+Requires: alterator-module-executor >= 0.1.13
 
 Source0: %name-%version.tar
 
@@ -38,8 +40,8 @@ mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_libexecdir/%name
 mkdir -p %buildroot%_datadir/alterator/backends
 
-install -v -p -m 644 -D ru.basealt.alterator.component-categories1.policy %buildroot%_datadir/polkit-1/actions
-install -v -p -m 644 -D ru.basealt.alterator.component-categories1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D org.altlinux.alterator.component-categories1.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D org.altlinux.alterator.component-categories1.xml %buildroot%_datadir/dbus-1/interfaces
 
 install -v -p -m 644 -D component-categories.backend %buildroot%_datadir/alterator/backends
 
@@ -56,9 +58,12 @@ install -v -p -m 755 -D list-component-categories %buildroot%_libexecdir/%name
 %files -n alterator-interface-component_categories
 %dir %_datadir/dbus-1/interfaces
 %dir %_datadir/polkit-1/actions
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.component-categories1.xml
-%_datadir/polkit-1/actions/ru.basealt.alterator.component-categories1.policy
+%_datadir/dbus-1/interfaces/org.altlinux.alterator.component-categories1.xml
+%_datadir/polkit-1/actions/org.altlinux.alterator.component-categories1.policy
 
 %changelog
+* Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
+- Change prefix from ru.basealt to org.altlinux.
+
 * Thu Jun 27 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
 - Initial build.

@@ -2,14 +2,14 @@
 %def_with legacy
 %define alt_name acc
 
-Name: alterator-browser
-Version: 0.1.5
-Release: alt1
+Name: alterator-explorer
+Version: 0.1.6
+Release: alt2
 
-Summary: Browser of Alterator modules operating via D-Bus
+Summary: Explorer of Alterator applications operating via D-Bus
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-browser
+URL: https://gitlab.basealt.space/alt/alterator-explorer
 
 Source0: %name-%version.tar
 
@@ -38,13 +38,17 @@ Requires: /usr/bin/acc-legacy
 Requires: alterator-backend-legacy
 %else
 # Oldest versions of alterator-standalone don't provides acc-legacy.
-# TODO: Add force disable SwitchBack() logic in this case. So, alterator-browser
-#       conflicts with alterator-standalone until this task is not completed.
+# TODO: Add force disable SwitchBack() logic in this case. So,
+#       alterator-explorer conflicts with alterator-standalone until this task
+#       is not completed.
 Conflicts: alterator-standalone >= 7.4.3
 %endif
 
+Requires: alterator-manager >= 0.1.23
+Requires: alterator-module-executor >= 0.1.13
+
 %description
-Browser of Alterator modules operating via D-Bus.
+%summary.
 
 %prep
 %setup
@@ -58,20 +62,20 @@ Browser of Alterator modules operating via D-Bus.
 
 %if_without legacy
 
-install -D -m644 setup/alterator-browser.desktop \
-    %buildroot%_desktopdir/alterator-browser.desktop
+install -D -m644 setup/%name.desktop \
+    %buildroot%_desktopdir/%name.desktop
 
 for size in 48 64 128 256 512; do
     mkdir -p %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/
     convert setup/logo.png -resize ''${size}x''${size} \
-        %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/alterator-browser.png
+        %buildroot%_datadir/icons/hicolor/''${size}x''${size}/apps/%name.png
 done
 
 %else
 
 install -d %buildroot/%_altdir
 cat > %buildroot/%_altdir/%name <<EOF
-%_bindir/%alt_name	%_bindir/alterator-browser 50
+%_bindir/%alt_name	%_bindir/%name 50
 EOF
 
 touch %buildroot/%_bindir/%alt_name
@@ -80,7 +84,6 @@ touch %buildroot/%_bindir/%alt_name
 
 %files
 %_datadir/alterator/categories/*
-%_bindir/alterator-browser
 %doc *.md
 %_bindir/%name
 
@@ -90,16 +93,23 @@ touch %buildroot/%_bindir/%alt_name
 
 %_bindir/%alt_name
 %else
-%_desktopdir/alterator-browser.desktop
+%_desktopdir/%name.desktop
 
-%_datadir/icons/hicolor/48x48/apps/alterator-browser.png
-%_datadir/icons/hicolor/64x64/apps/alterator-browser.png
-%_datadir/icons/hicolor/128x128/apps/alterator-browser.png
-%_datadir/icons/hicolor/256x256/apps/alterator-browser.png
-%_datadir/icons/hicolor/512x512/apps/alterator-browser.png
+%_datadir/icons/hicolor/48x48/apps/%name.png
+%_datadir/icons/hicolor/64x64/apps/%name.png
+%_datadir/icons/hicolor/128x128/apps/%name.png
+%_datadir/icons/hicolor/256x256/apps/%name.png
+%_datadir/icons/hicolor/512x512/apps/%name.png
 %endif
 
 %changelog
+* Mon Oct 29 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.6-alt2
+- rename to alterator-explorer
+
+* Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.6-alt1
+- change prefix from ru.basealt to org.altlinux
+- fix components and applications category icon and comment translation
+
 * Sat Aug 24 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.1.5-alt1
 - add support for execution with acc-legacy
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
@@ -16,8 +16,9 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires: python3-devel
 
+Requires: alterator-manager >= 0.1.23
+Requires: alterator-module-executor >= 0.1.13
 Requires: alterator-interface-legacy alterator-application-legacy
-Requires: alterator-module-executor
 Requires: alterator-standalone
 Requires: python3
 Requires: zenity
@@ -26,13 +27,13 @@ Requires: bash
 %package -n alterator-interface-legacy
 Summary: Interface for old alterator modules
 Group: System/Configuration/Other
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 %package -n alterator-application-legacy
 Summary: Runner for old alterator modules
 Group: System/Configuration/Other
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 %description
@@ -58,8 +59,8 @@ mkdir -p %buildroot%_alterator_datadir/backends
 
 install -v -p -m 755 -D %name.filetrigger %buildroot%_rpmlibdir/10%name.filetrigger
 install -v -p -m 755 -D alterator-generate-legacy-backends %buildroot%_libexecdir/%name
-install -v -p -m 644 -D ru.basealt.alterator.legacy.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D ru.basealt.alterator.legacy.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D org.altlinux.alterator.legacy.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D org.altlinux.alterator.legacy.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 755 -D alterator-application-legacy %buildroot%_libexecdir/alterator-application-legacy/alterator-application-legacy
 install -v -p -m 644 -D legacy_runner.application %buildroot%_alterator_datadir/applications
 install -v -b -m 644 -D legacy_runner.backend %buildroot%_alterator_datadir/backends
@@ -71,8 +72,8 @@ install -v -b -m 644 -D legacy_runner.backend %buildroot%_alterator_datadir/back
 %_libexecdir/%name/*
 
 %files -n alterator-interface-legacy
-%_datadir/polkit-1/actions/ru.basealt.alterator.legacy.policy
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.legacy.xml
+%_datadir/polkit-1/actions/org.altlinux.alterator.legacy.policy
+%_datadir/dbus-1/interfaces/org.altlinux.alterator.legacy.xml
 
 %files -n alterator-application-legacy
 %dir %_alterator_datadir/applications
@@ -91,5 +92,8 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt1
+- Change prefix from ru.basealt to org.altlinux.
+
 * Tue Jun 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
 - Initial build.

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -43,18 +43,21 @@ install -v -p -m 644 -D alterator/components.object %buildroot%_datadir/alterato
 install -v -p -m 644 -D alterator/components-app.application %buildroot%_datadir/alterator/applications
 install -v -p -m 644 -D alterator/components.backend %buildroot%_datadir/alterator/backends
 install -v -p -m 644 -D alterator/components-app.backend %buildroot%_datadir/alterator/backends
-install -v -p -m 644 -D setup/ru.basealt.alterator.components1.policy %buildroot%_datadir/polkit-1/actions
-install -v -p -m 644 -D setup/ru.basealt.alterator.components1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D setup/org.altlinux.alterator.components1.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D setup/org.altlinux.alterator.components1.xml %buildroot%_datadir/dbus-1/interfaces
 
 %files
 %_datadir/alterator/applications/*.application
 %_datadir/alterator/backends/*.backend
 %_datadir/alterator/objects/*.object
-%_datadir/polkit-1/actions/ru.basealt.alterator.components1.policy
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.components1.xml
+%_datadir/polkit-1/actions/org.altlinux.alterator.components1.policy
+%_datadir/dbus-1/interfaces/org.altlinux.alterator.components1.xml
 %_bindir/%name
 
 %changelog
+* Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
+- Change prefix from ru.basealt to org.altlinux.
+
 * Wed Sep 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - Now component description desappears on click on category.
 - Remove redundant buttons.

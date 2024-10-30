@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Components interface for alterator browser
@@ -26,8 +26,8 @@ mkdir -p %buildroot%_datadir/dbus-1/interfaces
 mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_libexecdir/%name
 
-install -v -p -m 644 -D ru.basealt.alterator.component1.xml %buildroot%_datadir/dbus-1/interfaces
-install -v -p -m 644 -D ru.basealt.alterator.component1.policy %buildroot%_datadir/polkit-1/actions
+install -v -p -m 644 -D org.altlinux.alterator.component1.xml %buildroot%_datadir/dbus-1/interfaces
+install -v -p -m 644 -D org.altlinux.alterator.component1.policy %buildroot%_datadir/polkit-1/actions
 
 sed -i 's/@VERSION@/%version/' basic_check_component_installed
 install -v -p -m 755 -D basic_check_component_installed %buildroot%_libexecdir/%name/basic_check_component_installed
@@ -42,10 +42,13 @@ install -v -p -m 755 -D basic_get_component_description %buildroot%_libexecdir/%
 %_libexecdir/%name/basic_check_component_installed
 %_libexecdir/%name/basic_get_component_description
 %_libexecdir/%name/*
-%_datadir/polkit-1/actions/ru.basealt.alterator.component1.policy
-%_datadir/dbus-1/interfaces/ru.basealt.alterator.component1.xml
+%_datadir/polkit-1/actions/org.altlinux.alterator.component1.policy
+%_datadir/dbus-1/interfaces/org.altlinux.alterator.component1.xml
 
 %changelog
+* Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
+- Change prefix from ru.basealt to org.altlinux.
+
 * Thu Sep 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
 - Fix install status of virtual packages.
 

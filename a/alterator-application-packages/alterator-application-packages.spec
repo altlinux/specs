@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-packages
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Alterator application for managing system packages and package repositories
@@ -59,6 +59,9 @@ install -v -p -m 644 -D alterator/amp-repo.application %buildroot%_alterator_dat
 %_alterator_datadir/applications/*.application
 
 %changelog
+* Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
+- Change prefix from ru.basealt to org.altlinux.
+
 * Wed Sep 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
 - Add dialog if update has not been done for a while.
 - Fixed incorrect package selection in on apt page.
