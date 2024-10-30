@@ -1,5 +1,5 @@
 Name: rbw
-Version: 1.11.1
+Version: 1.12.1
 Release: alt1
 
 Summary: Unofficial bitwarden cli
@@ -57,6 +57,9 @@ install -Dm 644 fish-completions %buildroot%_datadir/fish/vendor_completions.d/r
 %_datadir/zsh/site-functions/_rbw
 
 %changelog
+* Tue Sep 17 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.12.1-alt1
+- new version 1.12.1 (with rpmrb script)
+
 * Tue Jul 23 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.11.1-alt1
 - new version 1.11.1 (with rpmrb script)
 
