@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Mission Center
@@ -95,6 +95,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- updated to v0.6.2-1-gbef908b
+
 * Mon Oct 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
