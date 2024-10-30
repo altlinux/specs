@@ -1,20 +1,20 @@
 %set_compress_method none
 
-%define gcc_branch 13
+%define gcc_branch 14
 %define psuffix -%gcc_branch
 
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
-%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
-%define libhwasan_arches	x86_64 aarch64
-%define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le
-%define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le
-%define liblsan_arches		x86_64 aarch64 ppc64le
+%define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le loongarch64
+%define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64 loongarch64
 %define libquadmath_arches	%ix86 x86_64 ppc64le
-%define libtsan_arches		x86_64 aarch64 ppc64le
-%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le
 %define libvtv_arches		%ix86 x86_64
+%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64 loongarch64
+%define libhwasan_arches	x86_64 aarch64
+%define liblsan_arches		x86_64 aarch64 ppc64le riscv64 loongarch64
+%define libtsan_arches		x86_64 aarch64 ppc64le riscv64 loongarch64
+%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le riscv64 loongarch64
 
 Name: gcc-defaults
 Version: %gcc_branch
@@ -347,6 +347,9 @@ ln_bin \
 %endif
 
 %changelog
+* Tue Oct 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 14-alt1
+- Changed the default compiler to gcc14.
+
 * Tue Jun 13 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 13-alt1
 - Changed the default compiler to gcc13.
 

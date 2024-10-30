@@ -1,7 +1,7 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.41
+Version: 2.43
 Release: alt1
 Epoch: 1
 
@@ -226,6 +226,7 @@ cp %SOURCE0 %buildroot%binutils_sourcedir/
 %define _stripped_files_terminate_build 1
 
 %check
+unset SOURCE_DATE_EPOCH
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
 # testsuite requires gcc to be able to print path to liblto_plugin.so
 GCC_PFN_LTO=$(gcc -print-file-name=liblto_plugin.so)
@@ -281,6 +282,9 @@ XFAIL_TESTS=
 %binutils_sourcedir
 
 %changelog
+* Tue Oct 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.43-alt1
+- Updated to 2.43 20241025.
+
 * Wed Aug 30 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.41-alt1
 - Updated to 2.41 20230826.
 

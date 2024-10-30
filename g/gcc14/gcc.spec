@@ -1,10 +1,10 @@
 %set_autoconf_version 2.60
 
-%define gcc_branch 13
+%define gcc_branch 14
 
 Name: gcc%gcc_branch
-Version: 13.2.1
-Release: alt5
+Version: 14.2.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20240128
+%define snapshot 20241028
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -50,15 +50,17 @@ Url: https://gcc.gnu.org/
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
-%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64 loongarch64
-%define libhwasan_arches	x86_64 aarch64
+
 %define libatomic_arches	%ix86 x86_64 %arm aarch64 mips mipsel s390x riscv64 ppc64le loongarch64
 %define libitm_arches		%ix86 x86_64 %arm aarch64 s390x ppc64le riscv64 loongarch64
-%define liblsan_arches		x86_64 aarch64 ppc64le
 %define libquadmath_arches	%ix86 x86_64 ppc64le
-%define libtsan_arches		x86_64 aarch64 ppc64le
-%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le riscv64 loongarch64
 %define libvtv_arches		%ix86 x86_64
+
+%define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le mipsel riscv64 loongarch64
+%define libhwasan_arches	x86_64 aarch64
+%define liblsan_arches		x86_64 aarch64 ppc64le riscv64 loongarch64
+%define libtsan_arches		x86_64 aarch64 ppc64le riscv64 loongarch64
+%define libubsan_arches		%ix86 x86_64 %arm aarch64 ppc64le riscv64 loongarch64
 
 %ifarch %d_arches
 %def_enable d
@@ -111,7 +113,7 @@ Url: https://gcc.gnu.org/
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
 %def_disable precompat
-%def_enable compat
+%def_disable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64 loongarch64
@@ -599,18 +601,18 @@ in order to explicitly use the GNU C++ compiler version %version.
 ####################################################################
 # D Runtime
 
-%package -n libgdruntime4
+%package -n libgdruntime5
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgdruntime4
+%description -n libgdruntime5
 This package contains DRuntime shared library which is the
 low-level runtime library backing the D programming language.
 
 %package -n libgdruntime%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgdruntime4 = %EVR
+Requires: libgdruntime5 = %EVR
 
 %description -n libgdruntime%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -618,24 +620,24 @@ This package contains development files for DRuntime library.
 %package -n libgdruntime%gcc_branch-devel-static
 Summary: Static DRuntime library
 Group: Development/Other
-Requires: libgdruntime4 = %EVR
+Requires: libgdruntime5 = %EVR
 Requires: libgdruntime%gcc_branch-devel = %EVR
 
 %description -n libgdruntime%gcc_branch-devel-static
 This package contains static DRuntime library.
 
-%package -n libgphobos4
+%package -n libgphobos5
 Summary: D runtime
 Group: System/Libraries
 
-%description -n libgphobos4
+%description -n libgphobos5
 This packages contains the standard library for the D Programming
 Language which is needed to run D dynamically linked programs.
 
 %package -n libgphobos%gcc_branch-devel
 Summary: Development files for DRuntime library
 Group: Development/Other
-Requires: libgphobos4 = %EVR
+Requires: libgphobos5 = %EVR
 
 %description -n libgphobos%gcc_branch-devel
 This package contains development files for DRuntime library.
@@ -896,12 +898,12 @@ version %version.
 ####################################################################
 # Go Libraries
 
-%package -n libgo22
+%package -n libgo23
 Summary: Go runtime libraries
 Group: System/Libraries
 Requires: libgcc1 %REQ %EVR
 
-%description -n libgo22
+%description -n libgo23
 This package contains the shared libraries required to run programs
 compiled with the GNU Go compiler if they are compiled to use
 shared libraries.
@@ -910,7 +912,7 @@ shared libraries.
 Summary: Header files and libraries for Go development
 Group: Development/Other
 Requires(pre): gcc-common >= 1.4.7
-Requires: libgo22 %REQ %EVR
+Requires: libgo23 %REQ %EVR
 
 %description -n libgo%gcc_branch-devel
 This package includes the include files and libraries needed for
@@ -1592,6 +1594,7 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/include/stdarg.h
 %gcc_target_libdir/include/stdatomic.h
 %gcc_target_libdir/include/stdbool.h
+%gcc_target_libdir/include/stdckdint.h
 %gcc_target_libdir/include/stddef.h
 %gcc_target_libdir/include/stdfix.h
 %gcc_target_libdir/include/stdint-gcc.h
@@ -1602,6 +1605,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %gcc_target_libdir/include/varargs.h
 
 %ifarch aarch64
+%gcc_target_libdir/include/arm_neon_sve_bridge.h
+%gcc_target_libdir/include/arm_sme.h
 %gcc_target_libdir/include/arm_sve.h
 %endif
 %ifarch aarch64 armh
@@ -1925,8 +1930,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif
 
 %if_enabled d
-%files -n libgphobos4
-%_libdir/libgphobos.so.4*
+%files -n libgphobos5
+%_libdir/libgphobos.so.5*
 
 %files -n libgphobos%gcc_branch-devel
 %gcc_target_libdir/include/d
@@ -1936,8 +1941,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files -n libgphobos%gcc_branch-devel-static
 %gcc_target_libdir/libgphobos.a
 
-%files -n libgdruntime4
-%_libdir/libgdruntime.so.4*
+%files -n libgdruntime5
+%_libdir/libgdruntime.so.5*
 
 %files -n libgdruntime%gcc_branch-devel
 %gcc_target_libdir/libgdruntime.so
@@ -2075,8 +2080,8 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %files go-doc
 %_infodir/gccgo.info*
 
-%files -n libgo22
-%_libdir/libgo.so.22*
+%files -n libgo23
+%_libdir/libgo.so.23*
 
 %files -n libgo%gcc_branch-devel
 %dir %gcc_doc_dir/
@@ -2146,11 +2151,13 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
-* Mon Oct 28 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt5
-- Rebuilt in gcc14 compatibility mode.
-
-* Wed Aug 07 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt4
-- Rebuilt in precompat mode to prepare for gcc14 build.
+* Mon Oct 28 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 14.2.1-alt1
+- Updated to 14.2.1.
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-14-branch
+  commit c7a1c1a4bf73b3cb4943c428085fe5cbb433cde4;
+  + releases/gcc-14 (snapshot 20241014)
+  commit r14-10781-g20131c1cb58418432326a5f6464050e83af409ec.
 
 * Mon Jan 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 13.2.1-alt3
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
