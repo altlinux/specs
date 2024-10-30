@@ -3,7 +3,7 @@
 
 Name:    rulex
 Version: 3.8.5
-Release: alt1
+Release: alt2
 
 Summary: Russian pronunciation dictionary
 License: GPL-2.0
@@ -52,7 +52,7 @@ Requires: %name = %EVR
 %summary
 
 %package utils
-Summary: Doc files to %name
+Summary: Bin files to %name
 Group: Other
 Requires: %name = %EVR
 
@@ -94,5 +94,8 @@ ln -s lexdb.h %buildroot%_includedir/rulexdb.h
 %_bindir/%name
 
 %changelog
+* Tue Oct 22 2024 Artem Semenov <savoptik@altlinux.org> 3.8.5-alt2
+- Fixed summary for doc subpackage
+
 * Wed Aug 21 2024 Artem Semenov <savoptik@altlinux.org> 3.8.5-alt1
 - Initial build for Sisyphus (ALT bug: 51042)

@@ -3,7 +3,7 @@
 
 Name: mbrola
 Version: 3.3
-Release: alt2
+Release: alt3
 
 Summary: MBROLA is a speech synthesizer based on the concatenation of diphones
 License: AGPL-3.0
@@ -11,10 +11,9 @@ Group:   Sound
 Url:     https://github.com/numediart/MBROLA
 
 Source: %name-%version.tar
-Source3:        say
+
 Requires:       sox-base
 Requires: freespeech
-Requires: txt2pho
 
 BuildRequires: gcc
 BuildRequires: make
@@ -45,17 +44,19 @@ export CFLAGS="%optflags"
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_datadir/mbrola
 install -m 755 ./Bin/mbrola %buildroot%_bindir/mbrola
-install -m 755 %SOURCE3 %buildroot%_bindir/mbrola-de6-say
 fdupes %buildroot%_datadir/%name
 
 %files
 %doc README.md
 %doc --no-dereference LICENSE
 %_bindir/mbrola
-%_bindir/mbrola-de6-say
 %_datadir/%name
 
 %changelog
+* Tue Oct 29 2024 Artem Semenov <savoptik@altlinux.org> 3.3-alt3
+- Remove req to txt2pho
+- Deleted say for txt2pho
+
 * Fri Sep 13 2024 Artem Semenov <savoptik@altlinux.org> 3.3-alt2
 - Build from gear
 - Remove req to voices
