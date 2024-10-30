@@ -6,7 +6,7 @@
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.17
+Version: 1.18.1
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -86,6 +86,9 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Wed Oct 30 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Tue Sep 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.17-alt1
 - 1.17
 - enable embedded yajl - system version lags behind
