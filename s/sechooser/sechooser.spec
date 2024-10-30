@@ -1,24 +1,32 @@
 
-%def_enable qt5
+%def_disable qt5
+
+%if_disabled qt5
+%define qtmajor 6
+%define qmake_qt %qmake_qt6
+%define install_qt %install_qt6
+%define qt_translationdir %_qt6_translationdir
+%else
+%define qtmajor 5
+%define qmake_qt %qmake_qt5
+%define install_qt %installqt5
+%define qt_translationdir %_qt5_translationdir
+%endif
 
 Name: sechooser
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Selinux user range chooser
 License: GPL
 Group: System/Configuration/Other
 
-Requires: qt5-translations
+Requires: qt%{qtmajor}-translations
 
 Source: %name-%version.tar
 
 BuildRequires: libselinux-devel
-%if_disabled qt5
-BuildRequires: gcc-c++ libqt4-devel
-%else
-BuildRequires: qt5-base-devel qt5-tools
-%endif
+BuildRequires: qt%{qtmajor}-base-devel qt%{qtmajor}-tools
 
 %description
 %summary.
@@ -26,34 +34,17 @@ BuildRequires: qt5-base-devel qt5-tools
 
 %prep
 %setup -q -n %name-%version
-%if_disabled qt5
-%qmake_qt4 CONFIG+=nostrip
-%else
-%qmake_qt5 CONFIG+=nostrip
-%endif
+%qmake_qt CONFIG+=nostrip
 
 %build
 %make
-%if_disabled qt5
-lrelease-qt4 sechooser.pro
-%else
-lrelease-qt5 sechooser.pro
-%endif
+lrelease-qt%{qtmajor} sechooser.pro
 
 %install
-%if_disabled qt5
-%make install INSTALL_ROOT=%buildroot
-%else
-%installqt5
-%endif
+%install_qt
 
-%if_disabled qt5
-mkdir -p %buildroot/%_datadir/qt4/translations/
-install -m644 translations/sechooser_??.qm %buildroot/%_datadir/qt4/translations/
-%else
-mkdir -p %buildroot/%_qt5_translationdir/
-install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
-%endif
+mkdir -p %buildroot/%qt_translationdir/
+install -m644 translations/sechooser_??.qm %buildroot/%qt_translationdir/
 
 %find_lang --with-qt --all-name %name
 
@@ -61,6 +52,9 @@ install -m644 translations/sechooser_??.qm %buildroot/%_qt5_translationdir/
 %_bindir/*
 
 %changelog
+* Wed Oct 30 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.3-alt1
+- build with Qt6
+
 * Mon Feb 01 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.2-alt1
 - Enabled keyboard navigation and introduced active elements focus order.
 - Enabled building debuginfo package.
