@@ -1,8 +1,9 @@
 %define __name sopwith
 %define _name sdl-%__name
+%define rdn_name io.github.fragglet.sdl_sopwith
 
 Name: sdl_%__name
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
@@ -37,15 +38,20 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %files
 %_bindir/%__name
 %_man5dir/%__name.cfg.*
+%_man5dir/%__name-mission.*
 %_man6dir/%__name.*
 %_desktopdir/%__name.desktop
 %_pixmapsdir/%__name.png
 %_iconsdir/hicolor/*x*/apps/%__name.png
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc NEWS* README* doc/origdoc.txt
 
 %exclude %_docdir/%_name
 
 %changelog
+* Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
