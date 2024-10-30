@@ -16,7 +16,7 @@
 
 Name:           runc
 Version:        1.2.0
-Release:        alt1
+Release:        alt1.1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
 License:        Apache-2.0
@@ -24,6 +24,10 @@ URL:            https://%provider_prefix
 ExclusiveArch:  %go_arches
 
 Source0:        %name-%version.tar
+
+# Patches for loongarch64:
+Patch1:         seccomp-upstream-support-missing-arches.patch
+Patch2:         runc-alt-libcontainer-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
@@ -39,6 +43,7 @@ and to manage containers running under runc.
 
 %prep
 %setup -q
+%autopatch -p1
 sed -i 's/ -trimpath//g' Makefile
 sed -i '/\#\!\/bin\/bash/d' contrib/completions/bash/%name
 
@@ -70,6 +75,11 @@ install -p -m 0644 contrib/completions/bash/%name %buildroot%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Wed Oct 30 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt1.1
+- NMU: fix loongarch64 support (ALT#51885)
+  + backport upstream patch from libseccomp-golang upstream
+  + add a similar fix for libcontainer
+
 * Mon Oct 28 2024 Vladimir Didenko <cow@altlinux.ru> 1.2.0-alt1
 - New version
 
