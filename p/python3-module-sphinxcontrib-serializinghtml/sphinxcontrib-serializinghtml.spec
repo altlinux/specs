@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.1.10
+Version: 2.0.0
 Release: alt1
 
 Summary: Sphinx extension for serialized HTML
@@ -47,6 +47,9 @@ HTML files (json and pickle).
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Oct 29 2024 L.A. Kostis <lakostis@altlinux.ru> 2.0.0-alt1
+- 2.0.0.
+
 * Sat Jan 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.1.10-alt1
 - 1.1.10.
 - .spec:
