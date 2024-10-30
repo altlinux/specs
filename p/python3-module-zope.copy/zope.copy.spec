@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3
+Version: 5.0
 Release: alt1
 
 Summary: Pluggable object copying mechanism
@@ -16,14 +16,15 @@ Vcs: https://github.com/zopefoundation/zope.copy.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-zope.testing
 BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-zope.location
 BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zodbpickle
 %endif
 
 %py3_requires zope
@@ -49,10 +50,10 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* \
@@ -60,8 +61,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-export PYTHONPATH=src
-zope-testrunner3 --test-path=src -vv
+%pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
 %doc LICENSE.txt *.rst
@@ -73,6 +73,9 @@ zope-testrunner3 --test-path=src -vv
 %python3_sitelibdir/zope/copy/tests
 
 %changelog
+* Fri Oct 25 2024 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
+- New version 5.0.
+
 * Thu May 18 2023 Anton Vyatkin <toni@altlinux.org> 4.3-alt1
 - New version 4.3.
 
