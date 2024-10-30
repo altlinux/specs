@@ -91,7 +91,7 @@
 %def_enable vaapi
 %def_enable vdpau
 # VK_HEADER_VERSION
-%if_ver_gteq %vulkan_ver 1.3.255
+%if_ver_gteq %vulkan_ver 1.3.277
 %def_disable vulkan
 %else
 %def_enable vulkan
@@ -166,7 +166,7 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	124
+Version:	126
 Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
@@ -712,6 +712,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Wed Oct 30 2024 Sergey V Turchin <zerg@altlinux.org> 126-alt1
+- new version
+
 * Wed Jul 24 2024 Sergey V Turchin <zerg@altlinux.org> 124-alt1
 - new version
 
