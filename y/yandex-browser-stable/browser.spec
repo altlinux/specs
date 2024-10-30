@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 24.6.1.893
+Version: 24.7.6.1018
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -41,12 +41,12 @@ Requires(preun): %{_sbindir}/update-alternatives
 %Description
 The web browser from Yandex
 
-Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 124.0.6367.
+Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 126.0.6478.
 
 %Description -l ru_RU.UTF-8
 Веб-браузер от Яндекса
 
-Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 124.0.6367.
+Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 126.0.6478.
 
 #------------------------------------------------------------------------------
 #   Prep rule - Prepare sources before build
@@ -221,6 +221,28 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Oct 22 2024 yabro <yabro@altlinux.org> 24.7.6.1018-alt1
+- Fixed Animated Backgrounds bug (closes: 51152)
+- Browser updated to 24.7.6.1018
+ + Critical CVE-2024-6473: DLL Hijacking in Yandex Browser
+ + High CVE-2024-6772: Inappropriate implementation in V8
+ + High CVE-2024-6773: Inappropriate implementation in V8
+ + High CVE-2024-6774: Use after free in Screen Capture
+ + High CVE-2024-6775: Use after free in Media Stream
+ + High CVE-2024-6776: Use after free in Audio
+ + High CVE-2024-6777: Use after free in Navigation
+ + High CVE-2024-6778: Race in DevTools
+ + High CVE-2024-6779: Out of bounds memory access in V8
+ + Critical CVE-2024-6990: Uninitialized Use in Dawn
+ + High CVE-2024-7965: Inappropriate implementation in V8
+ + High CVE-2024-7971: Type confusion in V8
+ + High CVE-2024-4558: Use after free in ANGLE
+ + High CVE-2024-4559: Heap buffer overflow in WebAudio
+ + High CVE-2024-5496: Use after free in Media Session
+ + High CVE-2024-5497: Out of bounds memory access in Browser UI
+ + High CVE-2024-5498: Use after free in Presentation API
+ + High CVE-2024-5499: Out of bounds write in Streams API
 
 * Thu Jul 25 2024 yabro <yabro@altlinux.org> 24.6.1.893-alt1
 - Fixed virtual keyboard Maliit bug (closes: 50301)
