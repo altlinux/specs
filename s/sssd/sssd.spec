@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.9.4
-Release: alt2
+Version: 2.9.5
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -176,6 +176,7 @@ Summary: Userspace tools for use with the SSSD
 Group: System/Configuration/Networking
 License: GPLv3+
 Requires: %name = %version-%release
+Requires: %name-dbus = %EVR
 Requires: python3-module-sss = %EVR
 Requires: python3-module-sssd = %EVR
 Requires: python3-module-sssdconfig = %EVR
@@ -883,6 +884,60 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Tue Oct 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.5-alt1
+- Update to latest 2.9 LTM release (fixes: CVE-2023-3758) (closes: 51860).
+- Add sssd-dbus to Requires for sssd-tools (due the InfoPipe responder using).
+- Major fixes from upstream (GitHub#5708, GitHub#7109, GitHub#7152, GitHub#7173,
+                             GitHub#7197, GitHub#7250, GitHub#7319, GitHub#7375)
+  + SSSD incorrectly works with AD GPO during user login (fixed a race
+    condition flaw in GPO policy application).
+  + gdm smartcard login fails with "system error 4" in case of multiple
+    identities.
+  + passkey cannot fall back to password, when both of user authentication
+    types configured for IPA user even when user intends to do so.
+  + AD users are unable to log in due to case sensitivity of user because the
+    domain is found as an alias to the email address.
+  + Errors in krb5_child.log every time a user authenticates:
+    "Pre-authentication failed: No pkinit_anchors supplied".
+  + SSSD is not fully registering the domains if the cache is empty (refresh
+    root domain when read directly).
+  + PAC and PAM responders can crash if backend takes too long time to process
+    getDomains() (use proper context if client disconnects before request is
+    completed).
+  + Add option 'failover_primary_timeout' to configure timeout to reconnect to
+    primary servers: minimum and default value in seconds is 31.
+
+- Major backported fixes from upstream (GitHub#7451, GitHub#7404, GitHub#7007,
+                                        GitHub#5418, GitHub#7456, GitHub#7462,
+                                        GitHub#5861, GitHub#7532, GitHub#7590,
+                                        GitHub#7590, GitHub#7642)
+  + sysdb: do not fail to add non-posix user to MPG domain (e.g. cause issues
+    during GPO evaluation when adding a host account).
+  + enhance 'soft_crl' option (revoked certificate will now be rejected if the
+    CRL is expired even if 'soft_crl' is set).
+  + pam_sss: fix passthrow of old authtok from another pam modules (issue in
+    case of using 'use_first_pass' parameter when we need to get old password
+    from another module) at PAM_PRELIM_CHECK.
+  + krb5_child: do not try passwords during two-factor authentication.
+    It should use use the dedicated OTP auth types SSS_AUTHTOK_TYPE_2FA and
+    SSS_AUTHTOK_TYPE_2FA_SINGLE exclusively and should not try password or other
+    types.
+  + Expose flat_name (%F palceholder) for use in homedir path also for AD
+    subdomains.
+  + cert util: replace deprecated OpenSSL calls (replaces them if OpenSSL 3.0 or
+    newer is used).
+  + pam: only set SYSDB_LOCAL_SMARTCARD_AUTH to 'true' but never to 'false'.
+  + sdap: allow to provide user_map when looking up group memberships of other
+    objects similar to user objects but with different attribute mappings, e.g.
+    host objects in AD.
+  + ad: use default user_map when looking of host groups for GPO (to determine
+    the group memberships of a host for GPO evaluation).
+  + ad: honor ad_use_ldaps setting with ad_machine_pw_renewal passed as
+    '--use-ldaps' argument to the adcli update command which handles the
+    automatic renewal of AD machine account password.
+  + Add missing 'dns_update_per_family' option (whether DNS update of A and AAAA
+    record should be performed in one update or in two separate updates).
+
 * Fri Mar 15 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.4-alt2
 - Update 2.9 major release with fixes from upstream:
   + Fix the build with Samba 4.20.
