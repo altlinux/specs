@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: lowdown
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 Summary: A simple markdown translator
 License: ISC
@@ -78,6 +78,9 @@ CFLAGS="%optflags" \
 %_libdir/liblowdown.so.*
 
 %changelog
+* Wed Oct 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt1
+- Update to VERSION_1_2_0 (2024-10-24).
+
 * Wed Oct 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.1.2-alt1
 - Update to VERSION_1_1_2 (2024-09-29).
 
