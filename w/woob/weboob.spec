@@ -12,8 +12,8 @@
 %endif
 
 Name:    woob
-Version: 3.6
-Release: alt2
+Version: 3.7
+Release: alt1
 
 Summary: woob is a collection of applications able to interact with websites, without requiring the user to open them in a browser
 License: AGPL-3.0+
@@ -108,6 +108,9 @@ cp -a modules %buildroot%_datadir/%name
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Oct 30 2024 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
+- New version.
+
 * Tue Dec 26 2023 Andrey Cherepanov <cas@altlinux.org> 3.6-alt2
 - Removed unsupported in python3.12 module smtpd.
 
