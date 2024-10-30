@@ -2,7 +2,7 @@
 
 Name: yasr
 Version: 0.6.9
-Release: alt1
+Release: alt2
 
 Summary: %name - yet another screen reader
 License: GPL-2.0-only
@@ -39,16 +39,25 @@ the user be able to access the tts device).
 %install
 %makeinstall_std
 
-mv %buildroot%_datadir/%name %buildroot%_sysconfdir
+# compatibility with ald package version
+install -D -m 0664 %buildroot%_datadir/%name/%name.conf %buildroot%_sysconfdir/%name.conf
+rm -v %buildroot%_datadir/%name/%name.conf
+ln -s %_sysconfdir/%name.conf %buildroot%_datadir/%name/%name.conf
+
+# remove locales
 rm -rv %buildroot%_datadir/locale
 
 %files
+%config(noreplace) %_sysconfdir/%name.conf
 %_bindir/%name
-%_sysconfdir/%name.conf
+%_datadir/%name/%name.conf
 %_man1dir/%name.1.xz
 %doc ChangeLog BUGS CREDITS NEWS README TODO
 
 %changelog
+* Wed Oct 30 2024 Artem Semenov <savoptik@altlinux.org> 0.6.9-alt2
+- Fixed config location
+
 * Tue Oct 29 2024 Artem Semenov <savoptik@altlinux.org> 0.6.9-alt1
 - Build new version 0.6.9 (ALT bug: 51705)
 
