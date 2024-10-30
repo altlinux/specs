@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.8.1
+Version: 6.8.2
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
@@ -73,6 +73,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Wed Oct 30 2024 Grigory Ustinov <grenka@altlinux.org> 6.8.2-alt1
+- Automatically updated to 6.8.2.
+
 * Tue Oct 29 2024 Grigory Ustinov <grenka@altlinux.org> 6.8.1-alt1
 - Automatically updated to 6.8.1.
 
