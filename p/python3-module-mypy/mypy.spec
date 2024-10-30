@@ -12,25 +12,27 @@
 
 Name: python3-module-%pypi_name
 Version: 1.13.0
-Release: alt1
+Release: alt2
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/mypy/
 VCS: https://github.com/python/mypy
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%add_pyproject_deps_build_filter types-
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: /proc
 BuildRequires: gcc-c++
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-typing-extensions
+BuildRequires: python3-module-mypy-extensions
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-psutil
 # required for mypy/test/testpep561.py
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-editables
@@ -62,11 +64,6 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.in
-%endif
 
 %build
 %pyproject_build
@@ -134,6 +131,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Wed Oct 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.13.0-alt2
+- Fixed building scheme for backport to stable branches.
+
 * Wed Oct 23 2024 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
 - 1.12.1 -> 1.13.0.
 
