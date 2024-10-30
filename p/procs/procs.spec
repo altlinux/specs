@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: procs
-Version: 0.14.6
+Version: 0.14.8
 Release: alt1
 
 Summary: A replacement for ps written in Rust
@@ -37,6 +37,9 @@ install -Dm 644 %SOURCE2 .cargo/config.toml
 %doc README.md CHANGELOG.md
 
 %changelog
+* Wed Oct 30 2024 Vladislav Glinkin <smasher@altlinux.org> 0.14.8-alt1
+- 0.14.6 -> 0.14.8
+
 * Tue Oct 01 2024 Vladislav Glinkin <smasher@altlinux.org> 0.14.6-alt1
 - Update to 0.14.6
 
