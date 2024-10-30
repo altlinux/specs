@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Oct 30 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt4
+- typo fixes, small improvements (closes #51825, #51823, #51826)
+- desktop-software: add kwalletmanager
+
 * Tue Oct 01 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt3
 - add alterator-usbguard, alterator-usbmount
 - updated to latest public distr
