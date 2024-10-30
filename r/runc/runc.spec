@@ -7,7 +7,7 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
-%global commit      bc20cb4497af9af01bea4a8044f1678ffca2745c
+%global commit      0b9fa21be2bcba45f6d9d748b4bcf70cfbffbc19
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.15
+Version:        1.2.0
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -24,8 +24,6 @@ URL:            https://%provider_prefix
 ExclusiveArch:  %go_arches
 
 Source0:        %name-%version.tar
-
-Patch1:         runc-alt-loongarch64-support.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang go-md2man
@@ -43,7 +41,6 @@ and to manage containers running under runc.
 %setup -q
 sed -i 's/ -trimpath//g' Makefile
 sed -i '/\#\!\/bin\/bash/d' contrib/completions/bash/%name
-%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -73,6 +70,9 @@ install -p -m 0644 contrib/completions/bash/%name %buildroot%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Mon Oct 28 2024 Vladimir Didenko <cow@altlinux.ru> 1.2.0-alt1
+- New version
+
 * Wed Oct 9 2024 Vladimir Didenko <cow@altlinux.ru> 1.1.15-alt1
 - New version
 
