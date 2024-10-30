@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Music player built around customisation
@@ -42,8 +42,10 @@ deeper level of control.
 %autopatch -p1
 
 %build
-%cmake \
--DBUILD_LIBVGM=OFF
+%ifarch %ix86
+    %add_optflags -msse2
+%endif
+%cmake -DBUILD_LIBVGM=OFF
 %cmake_build
 
 %install
@@ -68,6 +70,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Wed Oct 30 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt1
+- New version 0.8.1.
+
 * Tue Oct 15 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.0-alt1
 - New version 0.8.0.
 
