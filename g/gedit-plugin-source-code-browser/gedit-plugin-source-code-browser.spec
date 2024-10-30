@@ -1,13 +1,12 @@
 Name: gedit-plugin-source-code-browser
 Version: 3.0.3
-Release: alt5.git.9.g7d83d2b
+Release: alt6.git.4.g2a3b25d
 Summary: source code class and function browser plugin for Gedit 3
 License: BSD
 Group: Editors
 Url: https://github.com/toobaz/gedit-source-code-browser/
 
-# GIT https://github.com/toobaz/gedit-source-code-browser/
-Source: %name-%version.tar
+Source: https://github.com/heguangyu5/gedit-source-code-browser/archive/refs/heads/master.tar.gz#/%name-%version.tar
 Source44: %name.watch
 
 Obsoletes: gedit-source-code-browser < %EVR
@@ -47,6 +46,10 @@ install -m644 sourcecodebrowser/data/*.gschema.xml \
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Wed Oct 30 2024 Ildar Mulyukov <ildar@altlinux.ru> 3.0.3-alt6.git.4.g2a3b25d
+- change upstream once again to https://github.com/heguangyu5/gedit-source-code-browser
+- fix for newer gEdit versions
+
 * Mon May 01 2023 Ildar Mulyukov <ildar@altlinux.ru> 3.0.3-alt5.git.9.g7d83d2b
 - change package name from `gedit-source-code-browser` to `gedit-plugin-source-code-browser`
 - change upstream once again to https://github.com/Supreeeme/gedit-source-code-browser
