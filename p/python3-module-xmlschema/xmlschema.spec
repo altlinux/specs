@@ -6,10 +6,11 @@
 %else
 %def_without check
 %endif
+%def_without memory_profiler
 
 Name: python3-module-%oname
 Version: 3.4.2
-Release: alt1
+Release: alt1.1
 
 Summary: XML Schema validator and data conversion library
 
@@ -31,8 +32,8 @@ BuildRequires: python3(lxml)
 %if_with check
 BuildRequires: /proc
 BuildRequires: python3(tox)
-BuildRequires: python3-module-memory_profiler
 # these are optional
+%{?memory_profiler BuildRequires: python3-module-memory_profiler}
 BuildRequires: python3-module-mypy
 BuildRequires: python3-module-jinja2
 # lxml-stubs is not packaged yet
@@ -65,6 +66,9 @@ sed -i 's/unittest/unittest -v/' tox.ini
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Oct 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1.1
+- Make memory_profiler in check optional.
+
 * Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.2-alt1
 - Automatically updated to 3.4.2.
 
