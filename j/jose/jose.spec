@@ -1,5 +1,5 @@
 Name:    jose
-Version: 11
+Version: 14
 Release: alt1
 Summary: C-language implementation of Javascript Object Signing and Encryption
 
@@ -72,6 +72,9 @@ rm -rf %buildroot%_datadir/licenses/%name/COPYING
 %_includedir/*
 
 %changelog
+* Wed Oct 23 2024 Evgeny Sinelnikov <sin@altlinux.org> 14-alt1
+- Updated to 14 version (fixes: CVE-2023-50967)
+
 * Sat Jun 18 2022 Andrey Limachko <liannnix@altlinux.org> 11-alt1
 - Updated to 11 version
 
