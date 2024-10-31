@@ -15,7 +15,7 @@
 %endif
 
 %def_disable doc
-%def_disable debug
+%def_disable debugutils
 %def_disable examples
 %ifarch %ix86 x86_64 aarch64
 %def_enable valgrind
@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -96,11 +96,15 @@ This package contains development documentation for GStreamer Good Plugins
 %setup -n %_name-good-%version
 
 %build
+# required for gcc-14
+%ifarch %ix86
+%add_optflags -msse2
+%endif
 %meson \
-	-Dexamples=disabled \
-	%{?_disable_check:-Dtests=disabled} \
-	%{?_disable_doc:-Ddoc=disabled} \
-	%{?_enable_debug:-Dgst_debug=true}
+    -Dexamples=disabled \
+    %{subst_enable_meson_feature check tests} \
+    %{subst_enable_meson_feature doc doc} \
+    %{subst_enable_meson_feature debugutils debugutils}
 %nil
 %meson_build
 
@@ -135,6 +139,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.9-alt1
+- 1.24.9
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.8-alt1
 - 1.24.8
 
