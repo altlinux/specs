@@ -5,8 +5,8 @@
 %define _home %_localstatedir/%_user
 
 Name: byedpi
-Version: 0.14.1.0.8.g322f
-Release: alt3
+Version: 0.15
+Release: alt1
 
 Summary: A local proxy for DPI environments
 
@@ -39,6 +39,12 @@ useradd -g %_user -c 'The byedpi daemon' \
         -d %_home -s /dev/null -r %_user \
         >/dev/null 2>&1 ||:
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %_bindir/*
 %doc README.md
@@ -49,6 +55,10 @@ useradd -g %_user -c 'The byedpi daemon' \
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Thu Oct 31 2024 Andrew Savchenko <bircoph@altlinux.org> 0.15-alt1
+- Version bump
+- init: use state check instead of lockfile due to daemon backgrounding
+
 * Sun Oct 27 2024 Andrew Savchenko <bircoph@altlinux.org> 0.14.1.0.8.g322f-alt3
 - Add systemd unit file
 
