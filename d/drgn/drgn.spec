@@ -5,7 +5,7 @@
 
 Name:    drgn
 Version: 0.0.29
-Release: alt2
+Release: alt3
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
 Group:   Development/Debuggers
@@ -21,7 +21,7 @@ Provides: python3-module-drgn
 
 Source: %name-%version.tar
 
-BuildRequires(pre): kernel
+BuildRequires(pre): kernel-latest
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
 BuildRequires: flex
@@ -122,6 +122,9 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt3
+- Remove dependency on kernel-image-un-def.
+
 * Thu Oct 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt2
 - spec: Change kernel for checkinstall preparing for removal of un-def.
 
