@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.0.54
+Version: 0.0.57
 Release: alt1
 
 Summary: grammars for babi
@@ -57,6 +57,9 @@ grammars for babi
 %_datadir/babi/
 
 %changelog
+* Thu Oct 31 2024 Vladislav Glinkin <smasher@altlinux.org> 0.0.57-alt1
+- 0.0.54 -> 0.0.57
+
 * Sun Nov 05 2023 Vladislav Glinkin <smasher@altlinux.org> 0.0.54-alt1
 - Updated to 0.0.54
 
