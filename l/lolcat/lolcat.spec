@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: lolcat
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: High-performance implementation of a colorful cat
 License: WTFPL
@@ -40,6 +40,9 @@ censor LICENSE
 %_bindir/censor
 
 %changelog
+* Thu Oct 31 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 1.5-alt1
+- Update to v1.5 (2024-07-04).
+
 * Wed Jul 12 2023 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
 - Update to v1.4 (2023-02-26).
 
