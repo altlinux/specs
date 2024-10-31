@@ -1,6 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name:           qcl
-Version:        0.6.4
-Release:        alt3
+Version:        0.6.7
+Release:        alt1
 Summary:        Quantum Computation Language with an emulator of a quantum computer
 License:        GPLv2
 URL:            http://tph.tuwien.ac.at/~oemer/qcl.html
@@ -12,7 +15,7 @@ Source2:        qcldoc.pdf
 Source3:		quprog.pdf
 Source4:		structquprog.pdf
 
-BuildRequires:  gcc-c++ bison flex
+BuildRequires:  gcc-c++
 BuildRequires:  libplotter-devel libreadline-devel libncurses-devel
 
 %description
@@ -33,6 +36,7 @@ emulator of a quantum computer.
 
 %prep
 %setup -q
+sed 's|/usr/local/|/usr/|g' -i Makefile
 
 %build
 export CXXFLAGS="%optflags"
@@ -55,6 +59,9 @@ cp %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %buildroot%_docdir
 %_docdir/*.pdf
 
 %changelog
+* Thu Oct 31 2024 Andrew Savchenko <bircoph@altlinux.org> 0.6.7-alt1
+- Version bump
+
 * Sat Apr 25 2020 Andrew Savchenko <bircoph@altlinux.org> 0.6.4-alt3
 - Make doc subpackage noarch.
 
