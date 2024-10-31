@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pioneerspacesim
-Version: 20240203
+Version: 20240710
 Release: alt1
 
 Summary: A game of lonely space adventure
@@ -19,8 +19,6 @@ ExcludeArch: armh i586
 Source: %name-%version.tar
 
 Patch1: suse-use-system-fmt.patch
-Patch3: alt-fix-fmt-wont-format-enum.patch
-Patch4: alt-fix-fmt-vsprintf-usage.patch
 Patch3500: alt-profiler-loongarch-ftbfs-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -62,8 +60,6 @@ This package contains models, scripts and other data for the game.
 %prep
 %setup
 %patch1 -p1
-%patch3 -p1
-%patch4 -p1
 %patch3500 -p1
 
 %build
@@ -108,6 +104,9 @@ find %buildroot%_bindir -type f ! -name 'pioneer*' -exec rename '' pioneer- {} \
 %_datadir/%name/
 
 %changelog
+* Thu Oct 31 2024 Anton Golubev <golubevan@altlinux.org> 20240710-alt1
+- new version, which fixed FTBFS
+
 * Mon Feb 05 2024 Anton Golubev <golubevan@altlinux.org> 20240203-alt1
 - new version
 - build without SSE4 and AVX, which support has been added
