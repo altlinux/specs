@@ -2,7 +2,7 @@
 
 Name: pcmanfm
 Version: 1.3.2
-Release: alt1
+Release: alt2.20240821
 
 Summary: PCMan File Manager
 License: GPL-2.0-or-later
@@ -74,6 +74,9 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt2.20240821
+- new snapshot for fix build with gcc14
+
 * Mon Feb 22 2021 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt1
 - new version 1.3.2
 - Update URL tag
