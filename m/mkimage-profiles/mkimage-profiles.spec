@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.8
+Version: 1.6.9
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,22 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 1.6.9-alt1
+- replace open-iscsi from base+rescue to rescue+extra package list
+- docs: delete links with absolute PATH 'file:///'
+- x11-autostart: replace installer-feature-runlevel5-stage{3,2}
+- init: exclude startup for systemd on sisyphus, p11
+- tty, uboot: use console=tty0 instead console=tty1
+- Enable report unconditionally, when REPORT is set
+- Add option NOCHECK to disable checking for package availability
+- drop kernel-modules-rtl8821ce because altbug#51398 (from zerg@)
+- drop xorg-drv-synaptics (from zerg@)
+- a11y: initial accessibility package list and config a11y.mk
+  (suggested by Artem Semenov savoptik@)
+- kernel: set default KFLAVOURS=6.6 for sisyphus
+- add commits for kworksatation 11 alpha (from zerg@)
+- add commits for alt-server 11 alpha (from jqt4@)- 
+
 * Mon Sep 02 2024 Anton Midyukov <antohami@altlinux.org> 1.6.8-alt1
 - lib/{distro,ve,vm}.mk: add branding notes with licenses
 - x11: fix condition for kde on p11
