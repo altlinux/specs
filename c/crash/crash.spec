@@ -5,7 +5,7 @@
 
 Name:    crash
 Version: 8.0.5
-Release: alt2
+Release: alt3
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -24,6 +24,7 @@ Source0: %name-%version.tar
 Source1: gdb-10.2.tar.gz
 
 ExcludeArch: e2k
+BuildRequires(pre): kernel-latest
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: makeinfo
@@ -44,8 +45,8 @@ Note: You will need -debuginfo package for the current kernel installed
 Summary: CI test for %name
 Group: Development/Other
 Requires(post): crash = %EVR
-Requires(post): kernel-image-un-def-debuginfo
 Requires(post): rpm-build-vm
+Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo')
 
 %description -n kernel-ci-crash-debuginfo
 %summary with a workaround for 'sisyphus_check: check-deps ERROR: package
@@ -106,6 +107,10 @@ grep -F '[swapper/0]' crash.log
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.5-alt3
+- Update to 8.0.5-33-g32b03ca262 (2024-08-30) which supports Linux 6.12.
+- Remove dependency on kernel-image-un-def.
+
 * Fri Jun 14 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.5-alt2
 - Fix FTBFS in p10.
 - spec: Add CI package with a smoke test.
