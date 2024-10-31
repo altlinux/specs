@@ -1,10 +1,10 @@
-%define ver	2.8.9
-%define subver  pre.1
-%define bver	2-8-9
+%define ver	2.9.2
+%define subver  rel.0
+%define bver	2-9-2
 
 Name: lynx
 Version: %ver
-Release: alt1.%subver.1
+Release: alt1.%subver
 
 Summary: Text based browser for the world wide web
 License: GPLv2
@@ -20,7 +20,7 @@ Source102: lynx-48.xpm
 Requires: %name-data = %version-%release
 
 Patch: %name-pld.patch
-Patch1: lynx2-8-9-alt-cfg.patch
+Patch1: lynx2-9-2-alt-cfg.patch
 Patch2: %name-tmpdir.patch
 Patch3: lynx2-8-4-fix-ugly-color.patch
 Patch4: %name-284-ipv6-salen.patch
@@ -160,6 +160,9 @@ install -m 644 %SOURCE101 %buildroot/%_liconsdir/lynx.xpm
 %_datadir/%name
 
 %changelog
+* Thu Oct 31 2024 Alexei Takaseev <taf@altlinux.org> 2.9.2-alt1.rel.0
+- 2.9.2 (Fixes: CVE-2021-38165)
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 2.8.9-alt1.pre.1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
