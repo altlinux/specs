@@ -1,10 +1,14 @@
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
+%endif
+
 %define rname plasma-desktop
 %def_disable scim
 %def_disable accounts
 
 Name: %rname
-Version: 6.1.5
-Release: alt2
+Version: 6.2.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -155,7 +159,7 @@ SDDM breeze theme
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-%patch15 -p1
+#%patch15 -p1
 %patch16 -p1
 #
 %patch18 -p1
@@ -235,6 +239,7 @@ done
 %_datadir/accounts/services/kde/*.service
 %endif
 %_datadir/metainfo/*.xml
+%_userunitdir/*.service
 
 %files -n polkit-kde-plasma-desktop
 %_datadir/polkit-1/actions/*kcmclock*.policy
@@ -247,6 +252,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
 - using alt-main-menu icon for main menu
 

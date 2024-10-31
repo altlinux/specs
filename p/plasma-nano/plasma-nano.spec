@@ -1,7 +1,7 @@
 %define rname plasma-nano
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -38,11 +38,14 @@ A minimal plasma shell package intended for embedded devices.
 %files -f %name.lang
 %doc LICENSES/*
 %_K6qml/org/kde/plasma/private/nanoshell/
-%_K6data/plasma/packages/org.kde.plasma.nano.desktoptoolbox/
+#%_K6data/plasma/packages/org.kde.plasma.nano.desktoptoolbox/
 %_K6data/plasma/shells/org.kde.plasma.nano/
-%_datadir/metainfo/*.xml
+#%_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

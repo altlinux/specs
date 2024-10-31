@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -43,6 +43,7 @@ BuildRequires: kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-
 BuildRequires: kf6-kpackage-devel kf6-kpeople-devel kf6-kitemmodels-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel kwin-devel plasma-workspace-devel plasma6-libkscreen-devel plasma6-kwayland-devel
+BuildRequires: plasma6-activities-devel
 %if_enabled dialer
 BuildRequires: libphonenumber-devel
 %endif
@@ -136,6 +137,7 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %_K6data/kwin/effects/mobiletaskswitcher/
 %_K6data/kwin/scripts/convergentwindows/
 %_K6data/plasma-mobile-apn-info/
+%_K6data/plasma/layout-templates/org.kde.plasma.mobile.*/
 %_datadir/wayland-sessions/plasma-mobile.desktop
 %_datadir/metainfo/*.xml
 %exclude %_datadir/metainfo/*keyboard*.xml
@@ -143,6 +145,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkcupslib libkcupslib%sover
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -123,5 +123,8 @@ rm -f "$tmp_file"
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Wed Sep 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - initial build

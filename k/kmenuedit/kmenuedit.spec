@@ -1,7 +1,7 @@
 %define rname kmenuedit
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -54,6 +54,9 @@ Menu Editor
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

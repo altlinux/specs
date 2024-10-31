@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -239,6 +239,7 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/kcms/systemsettings_qwidgets/*networkmanagement*.so
 %_K6qml/org/kde/plasma/networkmanagement/
 %_K6xdgapp/*networkmanagement*.desktop
+%_K6xdgapp/*vpnimport*.desktop
 %_K6data/*networkmanagement/
 %_K6data/plasma/plasmoids/org.kde.plasma.networkmanagement/
 %_K6notif/networkmanagement.notifyrc
@@ -276,6 +277,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

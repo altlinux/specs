@@ -5,8 +5,8 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.1.5
-Release: alt2
+Version: 6.2.2
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -48,7 +48,7 @@ Compatibility package.
 
 %prep
 %setup -n %rname-%version
-%autopatch -p1
+#%autopatch -p1
 
 %build
 %K6build \
@@ -81,6 +81,9 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Mon Oct 21 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
 - workaround against broken systemd.pc
 

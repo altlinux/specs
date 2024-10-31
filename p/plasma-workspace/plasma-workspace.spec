@@ -26,13 +26,15 @@
 %define libkfontinstui libkfontinstui%kfontinstui_sover
 %define krdb_sover 6
 %define libkrdb libkrdb%krdb_sover
+%define klipper_sover 6
+%define libklipper libklipper%klipper_sover
 
 %def_enable qalculate
 %def_enable appstream
 
 Name: %rname
-Version: 6.1.5
-Release: alt2
+Version: 6.2.2
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -125,7 +127,7 @@ Patch150: alt-kcmusers-avatars.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-base-devel qt6-phonon-devel qt6-declarative-devel qt6-svg-devel
-BuildRequires: qt6-wayland-devel qt6-5compat-devel qt6-shadertools-devel
+BuildRequires: qt6-wayland-devel qt6-5compat-devel qt6-shadertools-devel qt6-positioning-devel
 BuildRequires: qcoro6-devel
 BuildRequires: libgps-devel libpam0-devel zlib-devel libpolkitqt6-qt6-devel
 BuildRequires: python3-devel libsystemd-devel
@@ -277,6 +279,13 @@ Requires: %name-common >= %EVR
 %description -n %libkrdb
 %name library
 
+%package -n %libklipper
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common >= %EVR
+%description -n %libklipper
+%name library
+
 %package -n %libbatterycontrol
 Group: System/Libraries
 Summary: %name library
@@ -295,7 +304,7 @@ Requires: %name-common >= %EVR
 %prep
 %setup -n %rname-%version
 #%patch100 -p1 -b .startkde
-%patch101 -p1
+#%patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
@@ -309,7 +318,7 @@ Requires: %name-common >= %EVR
 #
 %patch117 -p1
 %patch118 -p1
-%patch119 -p2
+#%patch119 -p2
 %patch120 -p1
 %patch121 -p2
 #
@@ -517,6 +526,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_userunitdir/*.target
 %_datadir/zsh/site-functions/_*
 %_datadir/metainfo/*.xml
+%_datadir/xdg-desktop-portal/kde-portals.conf
 
 %files -n polkit-kde-plasma-workspace
 %_datadir/polkit-1/actions/*fontinst*.policy
@@ -567,6 +577,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %files -n %libkrdb
 %_K6lib/libkrdb.so.*
 %_K6lib/libkrdb.so.%krdb_sover
+%files -n %libklipper
+%_K6lib/libklipper.so.*
+%_K6lib/libklipper.so.%klipper_sover
 %files -n %libbatterycontrol
 %_K6lib/libbatterycontrol.so.*
 %_K6lib/libbatterycontrol.so.%kworkspace6_sover
@@ -576,6 +589,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.2-alt1
+- new version
+
 * Wed Oct 09 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.1.5-alt2
 - don't apply background on logout screen
 

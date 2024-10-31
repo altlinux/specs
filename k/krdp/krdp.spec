@@ -8,12 +8,12 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
-Summary: Desktop sharing using RDP server.
+Summary: Desktop sharing using RDP server
 Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
@@ -88,6 +88,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Thu Oct 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - initial build
 

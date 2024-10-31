@@ -1,7 +1,7 @@
 %define rname wacomtablet
 
 Name: plasma-wacomtablet
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -63,5 +63,8 @@ module.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Mon Sep 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - initial build

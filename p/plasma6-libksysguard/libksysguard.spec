@@ -1,5 +1,3 @@
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
 
 %define rname libksysguard
 
@@ -22,7 +20,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma6-%rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -39,9 +37,9 @@ Obsoletes: plasma5-libksysguard < 1:%version-%release
 Source: %rname-%version.tar
 Patch: alt-killbtn.patch
 
-BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine rpm-build-ubt
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
-BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: extra-cmake-modules
 BuildRequires: libsensors3-devel
 BuildRequires: zlib-devel libnl-devel libcap-devel libpcap-devel
 BuildRequires: qt6-declarative-devel  qt6-tools-devel
@@ -228,6 +226,9 @@ Common polkit files for %name
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

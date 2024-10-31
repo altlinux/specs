@@ -7,8 +7,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.1.5
-Release: alt2
+Version: 6.2.2
+Release: alt1
 #Epoch: 2
 %K6init
 
@@ -159,6 +159,9 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Fri Sep 13 2024 Oleg Solovyov <mcpain@altlinux.org> 6.1.5-alt2
 - enable non-interactive authenticators
 - use system-auth-multi for interactive prompts

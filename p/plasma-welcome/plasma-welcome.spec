@@ -1,7 +1,7 @@
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -18,7 +18,7 @@ Obsoletes: plasma5-welcome < %EVR
 
 Source: %rname-%version.tar
 Patch2: alt-check-auth.patch
-Patch3: alt-add-pre-distro-pages.patch
+Patch3: alt-prepend-distro-pages.patch
 Patch4: alt-discover-apps.patch
 
 BuildRequires(pre): rpm-build-kf6
@@ -27,8 +27,9 @@ BuildRequires: libvulkan-devel
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: kf6-kdeclarative-devel kf6-ki18n-devel kf6-kirigami-devel
 BuildRequires: kf6-knewstuff-devel kf6-knotifications-devel kf6-kpackage-devel kf6-kcmutils-devel kf6-ksvg-devel
-BuildRequires: plasma6-lib-devel
+BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: accounts-qt6-devel
+BuildRequires: plasma6-lib-devel
 # kaccounts-integration-devel signon-devel
 
 %description
@@ -37,7 +38,7 @@ A Friendly onboarding wizard for Plasma.
 %prep
 %setup -n %rname-%version
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 %patch4 -p1
 
 %build
@@ -58,6 +59,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

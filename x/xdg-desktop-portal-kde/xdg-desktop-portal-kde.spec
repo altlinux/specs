@@ -4,8 +4,8 @@
 
 %define rname xdg-desktop-portal-kde
 Name: %rname
-Version: 6.1.5
-Release: alt2
+Version: 6.2.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -17,6 +17,7 @@ Provides: plasma5-xdg-desktop-portal-kde = %EVR
 Obsoletes: plasma5-xdg-desktop-portal-kde < %EVR
 
 Requires: xdg-desktop-portal
+Requires: libkf6iconthemes
 Requires: plasma-workspace-qml
 #Requires: kio-fuse
 
@@ -60,7 +61,7 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 %_K6dbus_srv/*portal*kde*.service
 %_K6notif/*portal*kde*.notifyrc
 %_datadir/xdg-desktop-portal/portals/kde.portal
-%_datadir/xdg-desktop-portal/*kde*.conf
+#%_datadir/xdg-desktop-portal/*kde*.conf
 %config(noreplace) %_K6xdgconf/plasma-workspace/env/*.sh
 %_userunitdir/*.service
 %_datadir/qlogging-categories6/*.*categories
@@ -68,6 +69,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Fri Sep 20 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt2
 - don't export GTK_USE_PORTAL=1 because GTK3 fonts antialiasing fail
 

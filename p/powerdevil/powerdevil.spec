@@ -12,7 +12,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 %K6init
 
@@ -32,22 +32,24 @@ Source: %rname-%version.tar
 Patch1: alt-kidletime-crash.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel
+BuildRequires: qcoro6-devel
 BuildRequires: libudev-devel libddcutil-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel
-BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kdbusaddons-devel kf6-krunner-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kglobalaccel-devel
 BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kidletime-devel 
 BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-knotifications-devel kf6-knotifyconfig-devel kf6-kparts-devel kf6-kservice-devel
 BuildRequires: kf6-ktextwidgets-devel kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
-BuildRequires: kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
+BuildRequires: kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel kf6-kpackage-devel
 BuildRequires: kf6-kirigami-devel
 BuildRequires: kf6-networkmanager-qt-devel kf6-bluez-qt-devel kf6-kcmutils-devel
+BuildRequires: plasma-wayland-protocols
 BuildRequires: plasma6-libkscreen-devel plasma-workspace-devel plasma6-kwayland-devel plasma6-activities-devel
-BuildRequires: plasma6-layer-shell-qt-devel
+BuildRequires: plasma6-layer-shell-qt-devel plasma6-lib-devel
 # tmp
 BuildRequires: libnm-devel
 
@@ -122,14 +124,19 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 %_K6exec/kauth/*helper*
 %_K6libexecdir/*power*
 %_K6plug/powerdevil/
+%_K6plug/kf6/krunner/*powerdevil*.so
 %_K6plug/plasma/kcms/systemsettings/*powerdevil*.so
+%_K6qml/org/kde/plasma/private/batterymonitor/
+%_K6qml/org/kde/plasma/private/brightnesscontrolplugin/
 %_K6start/powerdevil.desktop
 %_K6xdgapp/*powerdevil*.desktop
+%_K6data/plasma/plasmoids/org.kde.plasma.*/
 %_K6notif/*.notifyrc
-%_K6dbus_srv/*.service
+#%_K6dbus_srv/*.service
 %_K6dbus_sys_srv/*.service
 %_datadir/polkit-1/actions/*.policy
 %_userunitdir/*.service
+%_datadir/metainfo/*.xml
 
 #%files devel
 #%_K6link/lib*.so
@@ -147,6 +154,9 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 

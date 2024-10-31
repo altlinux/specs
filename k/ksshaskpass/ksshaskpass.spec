@@ -2,7 +2,7 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: %rname
-Version: 6.1.5
+Version: 6.2.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -65,10 +65,12 @@ EOF
 %openssh_askpass_dir/%name
 %_K6bin/ksshaskpass-autostart
 %_K6start/ksshaskpass.desktop
-#%_K6xdgapp/org.kde.ksshaskpass.desktop
-
+%_K6xdgapp/*ksshaskpass*.desktop
 
 %changelog
+* Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
+- new version
+
 * Tue Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.5-alt1
 - new version
 
