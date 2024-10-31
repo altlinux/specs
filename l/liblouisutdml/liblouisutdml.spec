@@ -4,7 +4,7 @@
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt1
+Release: alt2
 Summary: Braille transcription library for UTDML documents
 License: LGPLv3+
 Group: Accessibility
@@ -13,6 +13,9 @@ Source: %name-%version.tar
 # upstream patch to fix failing testsuite
 # https://github.com/liblouis/liblouisutdml/pull/101/commits/10254fc8216fba30e03c2bb3650d1699bfcb3716
 Patch1: %name-%version-failing-testsuite.patch
+Patch2: 0001-fix-Wimplicit-function-declaration-warnings.patch
+Patch3: 0002-Fix-callback-type.patch
+Patch4: .gear/patches/0003-Fixed-segmentation-fault-in-the-file2brl-ALT-bug-513.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
@@ -79,8 +82,10 @@ provided by %name-utils.
 
 %prep
 %setup
-
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %autoreconf
@@ -119,5 +124,9 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_infodir/%name.info.*
 
 %changelog
+* Thu Oct 31 2024 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt2
+- Fixed segmentation fault in the file2brl (ALT bug: 51356)
+- Fixed build with GCC-14
+
 * Wed May 29 2024 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt1
 - Initial build for Sisyphus (ALT bug: 50364)
