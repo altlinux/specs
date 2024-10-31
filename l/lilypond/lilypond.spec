@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 2.24
-%define ver_minor 2
+%define ver_minor 4
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
 
@@ -18,6 +18,7 @@ Source1: russian-lirycs-test.ly
 
 BuildRequires(pre): rpm-build-vim
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-emacs
 BuildRequires: python3-devel
 BuildRequires: gcc-c++ emacs emacs-devel flex fontconfig-devel fontforge guile-devel
 BuildRequires: help2man libfreetype-devel libpango-devel makeinfo python-devel texlive
@@ -128,6 +129,9 @@ rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 %vim_runtime_dir/syntax/*
 
 %changelog
+* Fri Nov 01 2024 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 2.24.4-alt1
+- Updated to stable upstream version 2.24.4.
+
 * Sun Oct 15 2023 Artyom Bystrov <arbars@altlinux.org> 2.24.2-alt1
 - Update to new version
 
