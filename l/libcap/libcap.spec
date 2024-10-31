@@ -1,6 +1,6 @@
 Name: libcap
 Version: 2.69
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Library for getting and setting POSIX.1e capabilities
@@ -11,12 +11,8 @@ Url: https://sites.google.com/site/fullycapable/
 Source: %name-%version-%release.tar
 Vcs: https://git.kernel.org/pub/scm/libs/libcap/libcap.git
 
-# For backwards compatibility.
-%{expand:%%global lib_suffix %(test %_lib != lib64 && echo %%nil || echo '()(64bit)')}
-Provides: %name.so.1%lib_suffix
-
 BuildRequires: gperf
-BuildRequires(pre): libpam-devel
+BuildRequires(pre): libpam-devel >= 1.7.0-alt1
 
 %set_pam_name pam_cap
 
@@ -24,6 +20,12 @@ BuildRequires(pre): libpam-devel
 Summary: Utilities for getting and setting POSIX.1e capabilities
 Group: System/Base
 Requires: %name = %EVR
+# Utils were moved to /usr/sbin, so we need to provide
+# the old paths to avoid unmets.
+Provides: /sbin/capsh
+Provides: /sbin/getcap
+Provides: /sbin/getpcaps
+Provides: /sbin/setcap
 
 %package devel
 Summary: Development environment for libcap
@@ -69,34 +71,24 @@ for users specified in configuration file.
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
 %make_build CC=%__cc CFLAGS="%optflags" FORCELINKPAM=yes \
-	GOLANG=no lib=%_lib DEBUG= INDENT=
+	GOLANG=no prefix=%_prefix lib=%_lib DEBUG= INDENT=
 
 %install
-%makeinstall_std lib=%_lib RAISE_SETFCAP=no FORCELINKPAM=yes
+%makeinstall_std prefix=%_prefix lib=%_lib RAISE_SETFCAP=no FORCELINKPAM=yes
 install -pDm600 pam_cap/capability.conf %buildroot/etc/security/capability.conf
-
-# Relocate development library from /%_lib/ to %_libdir/.
-mkdir -p "%buildroot%_libdir"
-for l in libcap libpsx; do
-	symlink="%buildroot/%_lib/"$l".so"
-	soname=$(readlink "$symlink")
-	rm "$symlink"
-	ln -rsnf %buildroot/%_lib/"$soname" "%buildroot%_libdir/"$l".so"
-	mv %buildroot/%_lib/"$l".a %buildroot%_libdir/
-done
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 %check
-%make_build CC=%__cc CFLAGS="%optflags" lib=%_lib DEBUG= INDENT= test
+%make_build CC=%__cc CFLAGS="%optflags" prefix=%_prefix lib=%_lib DEBUG= INDENT= test
 
 %files
-/%_lib/*.so.*
+%_libdir/*.so.*
 
 %files utils
-/sbin/*
+%_sbindir/*
 %_man1dir/*
 %_man8dir/*
 
@@ -115,6 +107,12 @@ done
 %_pam_modules_dir/*
 
 %changelog
+* Thu Oct 31 2024 Mikhail Efremov <sem@altlinux.org> 1:2.69-alt2
+- Provided old /sbin/* paths for utils.
+- Dropped obsoleted patch.
+- Dropped libcap.so.1 provides.
+- Moved files to /usr.
+
 * Tue Jan 30 2024 Mikhail Efremov <sem@altlinux.org> 1:2.69-alt1
 - Dropped libcap.so.1 symlink.
 - Fixed some compiler warnings.
