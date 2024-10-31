@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 24.02.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -49,17 +49,9 @@ developing applications that use %name.
 %package -n %libkf5cddb
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkf5cddb
 KF5 library
-
-%package -n %libkf5cddbwidgets
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %EVR
-%description -n %libkf5cddbwidgets
-KF5 library
-
 
 %prep
 %setup -n %rname-%version
@@ -90,6 +82,9 @@ KF5 library
 %_K5xdgapp/*cddb*.desktop
 
 %changelog
+* Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt2
+- relax requires
+
 * Thu May 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
 - new version
 
