@@ -1,6 +1,6 @@
 Name: sdcc
 Version: 4.4.0
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Small Device C Compiler
@@ -10,8 +10,10 @@ Url: http://sdcc.sourceforge.net
 
 Source: %name-%version.tar
 
+%set_gcc_version 13
+
 BuildRequires: rpm-build-python3
-BuildRequires: flex gcc-c++ boost-devel >= 1:1.85.0-alt3 gputils >= 1.5.2
+BuildRequires: flex gcc13-c++ boost-devel >= 1:1.85.0-alt3 gputils >= 1.5.2
 BuildRequires: zlib-devel
 
 Requires: %name-common = %EVR
@@ -66,6 +68,7 @@ sed -ri '/^extern char \*(copying|warranty)/ s,char ,const char ,' \
 	sim/ucsim/globals.h
 
 %build
+export CC=gcc CXX=g++
 %configure \
 	--docdir=%_docdir/%name-%version \
 	--enable-werror=no \
@@ -92,6 +95,9 @@ rm -vf %buildroot%_man1dir/serialview*
 %_docdir/%name-%version
 
 %changelog
+* Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.4.0-alt4
+- pin gcc13 for build
+
 * Thu Jun 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.4.0-alt3
 - rebuilt after boost #281 fixed
 
