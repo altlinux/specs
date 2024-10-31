@@ -6,8 +6,8 @@
 %endif
 
 Name: bubblewrap
-Version: 0.10.0
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Unprivileged sandboxing tool
 License: LGPL-2.0-or-later
@@ -19,18 +19,16 @@ Vcs: https://github.com/projectatomic/bubblewrap.git
 Source: %name-%version.tar
 #Source: https://github.com/projectatomic/%name/releases/download/v%version/%name-%version.tar.xz
 
-Patch1: bubblewrap-0.9.0-alt-fix-run-path.patch
-
 %if %priv_mode == "none"
 Requires(pre): sysctl-conf-userns
 %endif
 
-%define meson_ver 1.3.0
+%define meson_ver 0.49
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver gcc-c++ binutils-devel libelf-devel
 BuildRequires: db2latex-xsl docbook-style-xsl libcap-devel xsltproc
-BuildRequires: python3 bash-completion
+BuildRequires: python3 bash-completion >= 2.10
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %description
@@ -42,29 +40,16 @@ because it is trivial to turn such access into to a fully privileged root shell 
 
 %prep
 %setup
-#%%patch1 -p1 -b .run-path
 
 %build
 %meson \
-	%{subst_enable_meson_feature selinux selinux} \
-	%{subst_enable_meson_bool userns require_userns}
+    %{subst_enable_meson_feature selinux selinux} \
+    %{subst_enable_meson_bool userns require_userns}
 %nil
 %meson_build
 
 %install
 %meson_install
-
-#%%if_enabled userns
-#mkdir -p %buildroot%_sysctldir
-#cat > %buildroot%_sysctldir/90-bwrap.conf << _EOF_
-#kernel.userns_restrict = 0
-#_EOF_
-#%%endif
-
-#%%if %priv_mode == "none"
-#%%post
-#setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" %_bindir/bwrap 2>/dev/null ||:
-#%%endif
 
 %files
 %if %priv_mode == "setuid"
@@ -72,12 +57,15 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %else
 %_bindir/bwrap
 %endif
-#%{?_enable_userns:%_sysctldir/90-bwrap.conf}
 %_man1dir/bwrap*
 %_datadir/bash-completion/completions/bwrap
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+- spec cleanup
+
 * Mon Oct 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt2
 - bwrap is no more setuid after previous release, so
   alt-fix-run-path.patch is useless and even harmful (ALT #51514)
