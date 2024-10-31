@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.0.20
+Version: 6.5.2
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -12,12 +12,12 @@ Summary: A more user-friendly system monitor
 License: GPL-3.0+
 Group: Monitoring
 Url: https://github.com/linuxdeepin/deepin-system-monitor
+Vcs: git://github.com/linuxdeepin/deepin-system-monitor.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: deepin-system-monitor-6.0.12-alt-fix-GNUInstallDirs.patch
-Patch2: deepin-system-monitor-6.0.12-alt-fix-build-gcc13.patch
-Patch3: deepin-system-monitor-6.0.12-alt-fix-build-ppc64le.patch
+Patch0: deepin-system-monitor-6.5.2-alt-fix-GNUInstallDirs.patch
+Patch1: deepin-system-monitor-6.0.12-alt-fix-build-gcc13.patch
+Patch2: deepin-system-monitor-6.0.12-alt-fix-build-ppc64le.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-build-xdg desktop-file-utils rpm-macros-dqt5
 # Automatically added by buildreq on Tue Oct 31 2023
@@ -40,6 +40,9 @@ BuildRequires: gcc-c++
 %autopatch -p1
 
 %build
+# fix gcc14
+# https://github.com/linuxdeepin/developer-center/issues/10558
+%add_optflags -Wno-error=incompatible-pointer-types
 %if_enabled clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -80,6 +83,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libdeepin-system-monitor-plugin.so
+%dir %_datadir/dde-dock/
+%dir %_datadir/dde-dock/icons/
+%dir %_datadir/dde-dock/icons/dcc-setting/
+%_datadir/dde-dock/icons/dcc-setting/deepin-system-monitor.svg
 %dir %_libdir/deepin-service-manager/
 %_libdir/deepin-service-manager/libdeepin-system-monitor-daemon.so
 %_datadir/dbus-1/services/com.deepin.SystemMonitorPluginPopup.service
@@ -123,6 +130,11 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Thu Oct 31 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
+- New version 6.5.2.
+- Added vcs tag.
+- Fixed build with gcc14.
+
 * Thu May 30 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.20-alt1
 - New version 6.0.20.
 - Built via separate qt5 instead system (ALT #48138).
