@@ -15,11 +15,12 @@
 %endif
 
 %set_autoconf_version 2.60
+%set_gcc_version      13
 
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     0
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -69,7 +70,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm15.0-devel clang15.0-devel gcc-c++
+BuildRequires: llvm15.0-devel clang15.0-devel gcc13-c++
 %endif
 
 %description
@@ -355,6 +356,9 @@ goal of accelerating analytics queries.
 %patch9 -p1
 
 %build
+export CC=%__cc
+export CXX=%__cxx
+
 %if_with jit
 export LLVM_CONFIG=/usr/bin/llvm-config-15
 export CLANG=/usr/bin/clang-15
@@ -996,6 +1000,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 31 2024 Alexei Takaseev <taf@altlinux.org> 17.0-alt3
+- Use GCC 13
+
 * Fri Sep 27 2024 Alexei Takaseev <taf@altlinux.org> 17.0-alt2
 - Build libecpg6, libecpg6-devel and libecpg6-devel-static as
   libecpg6-XY, libecpg6-XY-devel and libecpg6-XY-devel-static

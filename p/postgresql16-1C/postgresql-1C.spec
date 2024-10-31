@@ -16,11 +16,12 @@
 %endif
 
 %set_autoconf_version 2.60
+%set_gcc_version      13
 
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     4
-%define postgresql_altrel    4
+%define postgresql_altrel    5
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -76,7 +77,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm15.0-devel clang15.0-devel gcc-c++
+BuildRequires: llvm15.0-devel clang15.0-devel gcc13-c++
 %endif
 
 %description
@@ -351,6 +352,9 @@ goal of accelerating analytics queries.
 %patch101 -p1
 
 %build
+export CC=%__cc
+export CXX=%__cxx
+
 %if_with jit
 export LLVM_CONFIG=/usr/bin/llvm-config-15
 export CLANG=/usr/bin/clang-15
@@ -1009,6 +1013,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 31 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt5
+- Use GCC 13
+
 * Mon Oct 28 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt4
 - Update 1C patch
 
