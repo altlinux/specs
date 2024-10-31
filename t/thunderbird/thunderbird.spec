@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.3.3
+Version: 128.4.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -45,6 +45,7 @@ Patch003: 0003-Use-maximize-icon-for-CSD-restore-button-missing-in-.patch
 Patch004: 0004-Disable-browser-option.patch
 Patch005: 0005-Fix-types-defination.patch
 Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
+Patch007: 0007-Reduce-the-height-of-the-Create-key-dialog.patch
 ### End Patches
 
 ExcludeArch: armh
@@ -520,6 +521,21 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Oct 30 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.0-alt1
+- New version.
+- Reduce the height of the Create key dialog (closes: 51608).
+- Security fixes:
+  + CVE-2024-10458: Permission leak via embed or object elements
+  + CVE-2024-10459: Use-after-free in layout with accessibility
+  + CVE-2024-10460: Confusing display of origin for external protocol handler prompt
+  + CVE-2024-10461: XSS due to Content-Disposition being ignored in multipart/x-mixed-replace response
+  + CVE-2024-10462: Origin of permission prompt could be spoofed by long URL
+  + CVE-2024-10463: Cross origin video frame leak
+  + CVE-2024-10464: History interface could have been used to cause a Denial of Service condition in the browser
+  + CVE-2024-10465: Clipboard "paste" button persisted across tabs
+  + CVE-2024-10466: DOM push subscription message could hang Firefox
+  + CVE-2024-10467: Memory safety bugs fixed in Firefox 132, Thunderbird 132, Firefox ESR 128.4, and Thunderbird 128.4
+
 * Wed Oct 23 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.3.3-alt1
 - New version.
 
