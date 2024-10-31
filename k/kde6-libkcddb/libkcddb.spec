@@ -5,7 +5,7 @@
 
 Name: kde6-%rname
 Version: 24.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -47,7 +47,6 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
-Obsoletes: libkf5cddb5 < %EVR
 %description -n %libkcddb
 %name library
 
@@ -83,6 +82,9 @@ Obsoletes: libkf5cddb5 < %EVR
 
 
 %changelog
+* Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
+- don't obsolete libkf5cddb5
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
