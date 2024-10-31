@@ -6,7 +6,7 @@
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
 Version: 3.1.1
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/dell/dkms
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildRequires(pre): lsb-release
+BuildRequires(pre): rpm-build-kernel
 
 %filter_from_requires /\(debconf\|python\|dpkg\|lsb\|systemd\|module-init-tools\|\/etc\/sysconfig\/kernel\)/d
 
@@ -30,8 +31,8 @@ Group: Development/Other
 BuildArch: noarch
 Requires(pre): %name = %EVR
 Requires: /proc
-Requires: kernel > 5.7
-Requires: kernel-headers-modules-un-def
+Requires: kernel-%kernel_latest
+Requires: kernel-headers-modules-%kernel_latest
 Requires: rpm-build
 
 %description checkinstall
@@ -75,9 +76,9 @@ rm -f %buildroot%_libexecdir/kernel/install.d/*.install
 %preun_service dkms
 
 %pre checkinstall
-set -e
+set -e -o pipefail
 PS4=$'\n+ '
-khdr=$(rpm -q kernel-headers-modules-un-def | sort -V | tail -1)
+khdr=$(rpm -qa kernel-headers-modules-\* | sort -V | tail -1)
 khdr=${khdr#kernel-headers-modules-}
 khdr=${khdr%%.*}
 krel=${khdr##*-}
@@ -123,6 +124,9 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 3.1.1-alt2
+- Remove dependence on kernel-image-un-def.
+
 * Tue Oct 22 2024 Andrey Cherepanov <cas@altlinux.org> 3.1.1-alt1
 - New version.
 
