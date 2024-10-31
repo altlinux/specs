@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.13
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -9,9 +9,9 @@ URL: https://gitlab.basealt.space/alt/alterator-module-executor
 
 BuildRequires: cmake gcc
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
-BuildRequires: alterator-manager-devel >= 0.1.23
+BuildRequires: alterator-manager-devel >= 0.1.24
 
-Requires: alterator-manager >= 0.1.23-alt1
+Requires: alterator-manager >= 0.1.24-alt1
 
 Source: %name-%version.tar
 
@@ -34,6 +34,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Oct 31 2024 Ivan Savin <svn17@altlinux.org> 0.1.13-alt2
+- Change BuildRequires from alterator-manager-devel >= 0.1.23 to
+  alterator-manager-devel >= 0.1.24.
+
 * Mon Oct 14 2024 Ivan Savin <svn17@altlinux.org> 0.1.13-alt1
 - Renaming object paths and interface names and bus name from ru.basealt to
   org.altlinux.

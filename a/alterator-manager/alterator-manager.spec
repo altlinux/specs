@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.23
+Version: 0.1.24
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -10,6 +10,8 @@ Group: System/Configuration/Other
 
 BuildRequires: cmake gcc
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
+
+Requires: remote-polkit-agent >= 0.1.2-alt1
 
 Source: %name-%version.tar
 
@@ -25,8 +27,9 @@ Auxiliary tools for the alterator-manager.
 
 %package devel
 Summary: Headers for developing alterator-manager modules
-Group: Development/Other
+Group: Development/C
 Requires: libgio-devel
+BuildArch: noarch
 
 %description devel
 Headers for developing alterator-manager modules.
@@ -81,6 +84,10 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 
 %changelog
+* Wed Oct 30 2024 Ivan Savin <svn17@altlinux.org> 0.1.24-alt1
+- Add the connection field to the ManagerData struct.
+- Update docs/README-ru.md.
+
 * Mon Oct 14 2024 Ivan Savin <svn17@altlinux.org> 0.1.23-alt1
 - Renaming object paths and interface names and bus name from ru.basealt to
   org.altlinux.
