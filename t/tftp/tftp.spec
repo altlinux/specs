@@ -1,28 +1,19 @@
-%def_enable largefile
-%def_with remap
-%def_with readline
-%def_with ipv6
-
 Name: tftp
-%define dname %{name}d
 Version: 5.2
-Release: alt3
+Release: alt4
+
 Summary: The client for the Trivial File Transfer Protocol (TFTP)
 License: BSD
 Group: Networking/File transfer
-URL: http://www.kernel.org/pub/software/network/%name
-Source0: %url/%name-hpa-%version.tar
-Source1: %name.xinetd.in
-Source2: %dname.init.in
-Source3: %dname.sysconfig.in
-Source4: tftp.service.in
-Source5: tftp.socket
-Patch: %name-%version-%release.patch
+Url: https://git.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
+
+Source0: %name-%version.tar
+
 %define sys_user %name
 %define sys_group %name
-%define bootdir %_localstatedir/%{name}boot
+%define bootdir %_localstatedir/tftpboot
 
-%{?_with_readline:BuildRequires: libreadline-devel}
+BuildRequires: libreadline-devel
 
 %description
 The Trivial File Transfer Protocol (TFTP) is normally used only for
@@ -32,13 +23,13 @@ machine. This program, and TFTP, provide very little security, and
 should not be enabled unless it is expressly needed.
 
 
-%package -n %{name}d
+%package -n tftpd
 Summary: The server for the Trivial File Transfer Protocol (TFTP)
 Group: System/Servers
 Provides: %name-server-common = %version-%release
 Conflicts: %name-server < 5.0-alt1
 
-%description -n %{name}d
+%description -n tftpd
 The Trivial File Transfer Protocol (TFTP) is normally used only for
 booting diskless workstations. This package provides the server for
 TFTP, which allows users to transfer files to and from a remote
@@ -50,7 +41,7 @@ unless it is expressly needed.
 Summary: The server for the Trivial File Transfer Protocol (TFTP) - standalone mode
 Group: System/Servers
 BuildArch: noarch
-Requires: %{name}d >= 0.49-alt1
+Requires: tftpd >= 0.49-alt1
 Conflicts: %name-server = 0.49-alt1
 
 %description server-standalone
@@ -94,26 +85,21 @@ This package provides documentation for TFTP client and server.
 
 
 %prep
-%setup -n %name-hpa-%version
-%patch -p1
-install -m 0644 %SOURCE1 ./%name.xinetd.in
-install -m 0644 %SOURCE2 ./%dname.init.in
-install -m 0644 %SOURCE3 ./%dname.sysconfig.in
-install -m0644 %SOURCE4  .
+%setup
 
 %build
 %define _optlevel s
 %add_optflags -fcommon
 %autoreconf
 %configure \
-    %{subst_enable largefile} \
-    %{subst_with remap} \
-    %{subst_with readline} \
-    %{subst_with ipv6}
+    --enable-largefile \
+    --with-readline \
+    --with-remap \
+    --with-ipv6
 
 %make_build
 
-for f in %name.xinetd %dname.sysconfig %dname.init tftp.service; do
+for f in tftp.xinetd tftpd.sysconfig tftpd.init tftp.service; do
     sed 's|@USER@|%sys_user|g;s|@BOOTDIR@|%bootdir|g' $f.in > $f
 done
 
@@ -122,25 +108,25 @@ bzip2 --best --keep --force CHANGES
 
 %install
 %make_install INSTALLROOT=%buildroot install
-ln -sf {in.,%buildroot%_sbindir/}%dname
-install -D -m 0640 %name.xinetd %buildroot%_sysconfdir/xinetd.d/%name
-install -D -m 0644 %dname.sysconfig %buildroot%_sysconfdir/sysconfig/%dname
-install -D -m 0755 %dname.init %buildroot%_initdir/%dname
-install -D -m 0644 %name.service %buildroot%_unitdir/%name.service
-install    -m 0644 %SOURCE5 %buildroot%_unitdir/%name.socket
+ln -sf {in.,%buildroot%_sbindir/}tftpd
+install -D -m 0640 tftp.xinetd %buildroot%_sysconfdir/xinetd.d/tftp
+install -D -m 0644 tftpd.sysconfig %buildroot%_sysconfdir/sysconfig/tftpd
+install -D -m 0755 tftpd.init %buildroot%_initdir/tftpd
+install -D -m 0644 tftp.service %buildroot%_unitdir/tftp.service
+install    -m 0644 tftp.socket %buildroot%_unitdir/tftp.socket
 install -d -m 0755 %buildroot{%bootdir,%_docdir/%name-%version}
 install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
 
-%post -n %{name}d
+%post -n tftpd
 %_sbindir/groupadd -rf %sys_group ||:
 %_sbindir/useradd -r -g %sys_group -d /dev/null -s /dev/null -n %sys_user &>/dev/null ||:
 
 %post server-standalone
-%post_service %dname ||:
+%post_service tftpd ||:
 
 %preun server-standalone
-%preun_service %dname ||:
+%preun_service tftpd ||:
 
 
 %files
@@ -148,7 +134,7 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 %_man1dir/*
 
 
-%files -n %{name}d
+%files -n tftpd
 %_unitdir/*
 %_sbindir/*
 %_man8dir/*
@@ -169,6 +155,9 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
 
 %changelog
+* Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.2-alt4
+- fixed build with gcc14
+
 * Thu Dec 10 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.2-alt3
 - fix build with gcc10
 
