@@ -1,6 +1,6 @@
 Name: obconf
 Version: 2.0.4
-Release: alt3
+Release: alt4
 
 Summary: Obconf is a configuration tool for the Openbox window manager
 License: GPLv2+
@@ -12,6 +12,7 @@ Source2: %name.pod
 
 Patch0: %name-%version-alt.patch
 Patch1: fix-tab-error.patch
+Patch2: obconf-c99.patch
 
 Requires(post,postun): desktop-file-utils
 BuildPreReq: desktop-file-utils
@@ -26,9 +27,8 @@ BuildRequires: perl-podlators
 %name is a configuration tool for Openbox window manager.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+%setup
+%autopatch -p1
 
 cp %SOURCE2 .
 
@@ -58,6 +58,9 @@ install -pD -m 644 obconf.1 %buildroot%_man1dir/obconf.1
 %_datadir/pixmaps/obconf.png
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt4
+- add patch to port C99
+
 * Sun Jun 09 2019 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt3
 - Not require openbox more
 
