@@ -3,8 +3,8 @@
 %add_findreq_skiplist %_datadir/apr-1/build/config.guess
 
 Name: apr%aprver
-Version: 1.7.0
-Release: alt4
+Version: 1.7.5
+Release: alt1
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
@@ -14,7 +14,6 @@ Url: http://apr.apache.org/
 #Source: http://archive.apache.org/dist/apr/apr-%version.tar.gz
 Source: apr-%version.tar
 
-Patch: apr-1.7.0-upstream-fix-build-autoconf-2.70.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -73,7 +72,6 @@ This package contains APR static library.
 
 %prep
 %setup -n apr-%version
-%patch -p1
 
 %build
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
@@ -126,6 +124,9 @@ make check
 %endif
 
 %changelog
+* Wed Oct 30 2024 Alexander Danilov <admsasha@altlinux.org> 1.7.5-alt1
+- New version 1.7.5.
+
 * Fri Jul 28 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt4
 - Backported upstream commit to fix build with autoconf 2.70+ (thx Yann Ylavic
   and Sergei Trofimovich).
