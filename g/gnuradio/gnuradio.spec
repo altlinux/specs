@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.10.11.0
-Release: alt1
+Release: alt2
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
 Group: Engineering
@@ -38,7 +38,6 @@ BuildRequires: boost-program_options-devel
 BuildRequires: libgsm-devel
 BuildRequires: qt5-base-devel
 BuildRequires: liblog4cpp-devel
-BuildRequires: mpir-devel
 BuildRequires: libqwt6-qt5-devel
 BuildRequires: libzeromq-cpp-devel
 BuildRequires: pkgconfig(alsa)
@@ -200,6 +199,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 3.10.11.0-alt2
+- remove "BuildRequires: mpir-devel"
+
 * Mon Aug 12 2024 Anton Midyukov <antohami@altlinux.org> 3.10.11.0-alt1
 - New version 3.10.11.0.
 

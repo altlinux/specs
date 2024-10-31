@@ -3,7 +3,7 @@
 Name: gr-osmosdr
 Url: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
 Version: 0.2.6
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -24,7 +24,6 @@ BuildRequires: liborc-devel
 BuildRequires: python3-devel
 BuildRequires: python3-module-mako
 BuildRequires: liblog4cpp-devel
-BuildRequires: mpir-devel
 BuildRequires: libgmp-devel
 BuildRequires: libfftw3-devel
 BuildRequires: libsndfile-devel
@@ -124,6 +123,9 @@ EOF
 %endif
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt2
+- remove "BuildRequires: mpir-devel"
+
 * Mon Aug 12 2024 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt1
 - New version 0.2.6.
 
