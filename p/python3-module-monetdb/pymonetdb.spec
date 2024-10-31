@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 Summary: MonetDB is an open source column-oriented database management system
 License: MPL-2.0-no-copyleft-exception
@@ -42,6 +42,9 @@ rm -rv %buildroot%python3_sitelibdir/tests
 %python3_sitelibdir/pymonetdb-%version.dist-info
 
 %changelog
+* Thu Oct 31 2024 Grigory Ustinov <grenka@altlinux.org> 1:1.8.3-alt1
+- Automatically updated to 1.8.3.
+
 * Mon Sep 30 2024 Grigory Ustinov <grenka@altlinux.org> 1:1.8.2-alt1
 - Automatically updated to 1.8.2.
 
