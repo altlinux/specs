@@ -5,7 +5,7 @@
 %define use_syslog 1
 Name: bladerf
 Version: 2.5.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: SDR radio receiver
 License: GPL-2.0-only
@@ -15,6 +15,8 @@ Url: http://nuand.com/
 
 Source: %name-%version.tar
 Source1: ad9361.tar
+
+Patch: Fix-compile-error-with-gcc14.patch
 
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: cmake >= 2.8.4
@@ -85,6 +87,9 @@ sed -i 's/GROUP="bladerf"/GROUP="uucp"/' %buildroot%_udevrulesdir/*.rules
 %_pkgconfigdir/libbladeRF.pc
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 1:2.5.0-alt3
+- Fix build with gcc14
+
 * Tue Aug 15 2023 Anton Midyukov <antohami@altlinux.org> 1:2.5.0-alt2
 - allow access only to users in uucp group
 - do not create group 'bladerf'
