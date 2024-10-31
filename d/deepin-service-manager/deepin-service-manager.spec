@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.3.0.36.ge15b893
+Version: 1.0.4
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -15,6 +15,7 @@ Url: https://github.com/linuxdeepin/deepin-service-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-service-manager-1.0.4-alt-fix-gcc14.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake dqt5-base-devel dqt5-tools-devel libsystemd-devel
@@ -43,6 +44,7 @@ This package provides development files for deepin-qdbus-service.
 
 %prep
 %setup
+%autopatch -p1
 # Fix pkg-config.
 sed -i 's|Version: @PROJECT_VERSION@|Version: %version|' \
   misc/deepin-qdbus-service.pc.in
@@ -114,6 +116,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Thu Oct 31 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.4-alt1
+- New version 1.0.4.
+- Fixed build with gcc14.
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.3.0.36.ge15b893-alt1
 - New version 1.0.3-36-ge15b893.
 - Built via separate qt5 instead system (ALT #48138).
