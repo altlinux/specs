@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.2
+%define ver_major 3.4
 %define gst_api_ver 1.0
 %def_enable debug
 %def_enable exiv2
@@ -10,8 +10,8 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: An image viewer and browser utility.
 License: GPLv2+
@@ -123,6 +123,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 3.4.3-alt1
+- new version (3.4.3) with rpmgs script
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt2
 - NMU: s/_enabled_libchamplain/_enable_libchamplain/
 
