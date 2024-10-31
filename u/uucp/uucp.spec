@@ -1,16 +1,16 @@
 Name: uucp
 Version: 1.07
-Release: alt6
+Release: alt7
 
 Summary: The %name utility for copying files between systems
 License: GPLv2
 Group: Networking/File transfer
 Url: http://www.airs.com/ian/uucp.html
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 
+Patch0: %name-1.07-socklen.patch
 Patch1: %name-alt-misc.patch
-Patch2: %name-1.06.1-sigfpe.patch
 
 PreReq: coreutils, /var/lock/serial
 
@@ -41,6 +41,7 @@ This package contains only cu(1) utility.
 
 %prep
 %setup
+%patch0 -p2
 %patch1 -p1
 rm -f aclocal.m4
 
@@ -50,6 +51,7 @@ find -type f |
 	xargs -r perl -pi -e "s/^''' /"'.\\" /'
 
 %build
+export uucp_cv_c_void=yes uucp_cv_c_unsigned_char=yes
 %autoreconf
 %configure --with-user=%name --with-newconfigdir=/etc/uucp \
 	   --with-oldconfigdir=/etc/uucp/old
@@ -130,6 +132,9 @@ chmod go-rwx %_logdir/%name/Debug
 %_man1dir/cu.1*
 
 %changelog
+* Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.07-alt7
+- fixed build with gcc14
+
 * Mon Feb 05 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.07-alt6
 - fixed build with texinfo-7.1
 
