@@ -1,6 +1,6 @@
 Name: texmaker
-Version: 5.1.4
-Release: alt1.1
+Version: 6.0.0
+Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
 License: GPLv2+
@@ -22,15 +22,32 @@ Patch1:		%{name}-5.1.0-unbundle-hunspell.patch
 Patch2:		%{name}-5.1.0-viewfiles.patch
 
 
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine rpm-macros-cmake
 # Automatically added by buildreq on Thu Apr 24 2008
-BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: qt5-webengine-devel
-%else
+BuildRequires: fontconfig gcc-c++ cmake
+BuildRequires: pkgconfig
+BuildRequires: qt6-base-devel rpm-macros-qt6-webengine
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6PrintSupport)
+BuildRequires: pkgconfig(Qt6Quick)
+BuildRequires: pkgconfig(Qt6WebEngineCore)
+BuildRequires: pkgconfig(Qt6WebEngineWidgets)
+BuildRequires: pkgconfig(Qt6Xml)
+
+
+# Qt5:
+# qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel
+#ifarch #qt5_qtwebengine_arches
+#BuildRequires: qt5-webengine-devel
+#else
 BuildRequires: qt5-declarative-devel rpm-build-qml
-%endif
-#Excludearch: ppc64le
+#endif
+Excludearch: ppc64le i586
 
 %description
 Texmaker is a LaTeX editor that integrates many tools
@@ -38,23 +55,31 @@ needed to develop documents with LaTeX.
 
 %prep
 %setup
-%patch0
-%patch1
+#patch0
+#patch1
 #patch2
 
 # get rid of zero-length space
-sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.metainfo.xml
+#sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.metainfo.xml
 
 # remove bundled stuff (hunspell and qtsingleapplication)
 rm -fr hunspell singleapp
 
 
 %build
-/usr/share/qt5/bin/qmake -unix PREFIX=%prefix %name.pro
-%make
+#/usr/share/qt5/bin/qmake -unix PREFIX=%prefix %name.pro
+#make
+%cmake \
+  -DCMAKE_C_COMPILER=gcc%{?gcc_ver:-%{gcc_ver}} \
+  -DCMAKE_CXX_COMPILER=g++%{?gcc_ver:-%{gcc_ver}} \
+  -DCMAKE_SKIP_RPATH=ON \
+	%{nil}
+%cmake_build
+
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+#makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %_bindir/%name
@@ -65,8 +90,15 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Thu Oct 31 2024 Ilya Mashkin <oddity@altlinux.ru> 6.0.0-alt1
+- 6.0.0
+- Build with Qt6
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 5.1.4-alt1.1
 - NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64)
+
+* Sun May 07 2023 Ilya Mashkin <oddity@altlinux.ru> 5.1.4-alt1
+- 5.1.4
 
 * Sun May 07 2023 Ilya Mashkin <oddity@altlinux.ru> 5.1.4-alt1
 - 5.1.4
