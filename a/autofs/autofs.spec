@@ -3,7 +3,7 @@
 
 Name: autofs
 Version: 5.1.9
-Release: alt2
+Release: alt3
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -143,6 +143,9 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Fri Nov 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.1.9-alt3
+- rebuilt with gcc14
+
 * Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.1.9-alt2
 - rebuilt for merged-usr
 
