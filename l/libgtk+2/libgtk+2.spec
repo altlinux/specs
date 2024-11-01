@@ -19,7 +19,7 @@
 
 Name: libgtk+2
 Version: %ver_major.33
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: LGPL-2.0
@@ -50,6 +50,10 @@ Patch6: gtk+-2.10.6-fix-drop-gdk_colormap_change.patch
 Patch10: gtk+-2.24.30-icon-padding.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=599618
 Patch12: gtk+-2.24.30-tooltip-positioning.patch
+# https://gitlab.gnome.org/GNOME/gtk/-/commit/3bbf0b6176d42836d23c36a6ac410e807ec0a7a7
+Patch13: gtk+-3.24.43-up-CVE-2024-6655.patch
+# a set of patches c99, c89, c89-(2-6)
+Patch14: gtk+-2.24.33-fc-cc.diff
 
 %define glib_ver 2.28.0
 %define cairo_ver 1.6
@@ -216,6 +220,8 @@ install -p -m644 %_sourcedir/%name-gtk.lds gtk/compat.lds
 
 %patch10 -p1 -b .icon-padding
 %patch12 -p1 -b .tooltip-positioning
+%patch13 -p1 -b .CVE-2024-6655
+%patch14 -p1 -b .gcc-14
 
 bzip2 -9k NEWS
 
@@ -224,6 +230,7 @@ bzip2 -9k NEWS
 sed -i 's|\(#\!/usr/bin/env python\)|\13|' gtk/gtk-builder-convert
 
 %build
+%add_optflags -fno-strict-aliasing
 %if_enabled snapshot
 NOCONFIGURE=1 ./autogen.sh
 %else
@@ -366,6 +373,10 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cach
 %endif
 
 %changelog
+* Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.24.33-alt2
+- fixed CVE-2024-6655
+- fixed build with gcc-14
+
 * Mon Dec 21 2020 Yuri N. Sedunov <aris@altlinux.org> 2.24.33-alt1
 - 2.24.33
 
