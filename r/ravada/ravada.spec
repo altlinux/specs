@@ -12,7 +12,7 @@
 
 Name: ravada
 Version: 2.3.1
-Release: alt1
+Release: alt2
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -21,6 +21,7 @@ Vcs: https://github.com/UPC/ravada.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %name-sysusers.conf
 
 Requires: perl-DBD-mysql perl-DBD-SQLite perl-Mojolicious-Plugin-I18N
 Requires: bridge-utils iproute2 iptables iptstate net-tools
@@ -28,6 +29,7 @@ Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core
 # spice-vdagent @ VM
 
 BuildRequires(pre): rpm-build-perl
+BuildRequires(pre): rpm-macros-systemd
 
 BuildRequires: ImageMagick-tools
 BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
@@ -110,14 +112,17 @@ cp -aR etc/xml %buildroot%_localstatedir/%name/
 mkdir -p %buildroot%_datadir/%name
 cp -aR public %buildroot%_datadir/%name/
 cp -aR templates %buildroot%_datadir/%name/
+cp -aR sql %buildroot%_datadir/%name
+rm -f %buildroot%_datadir/%name/sql/mysql/Makefile
 mkdir -p %buildroot%_sysconfdir
 install -p -m644 etc/%name.conf %buildroot%_sysconfdir/%name.conf
 install -p -m644 etc/rvd_front.conf.example %buildroot%_sysconfdir/rvd_front.conf
+# Change fallback to 0 as defaulted in rvd_front:
+sed -i 's/fallback => 1/fallback => 0/' %buildroot%_sysconfdir/rvd_front.conf
 mkdir -p %buildroot%_unitdir
 install -p -m644 etc/systemd/*.service %buildroot%_unitdir
-mkdir -p %buildroot%_datadir/%name
-cp -aR sql %buildroot%_datadir/%name
-rm -f %buildroot%_datadir/%name/sql/mysql/Makefile
+
+install -Dpm 0644 %SOURCE1 %buildroot%_sysusersdir/%name.conf
 
 mkdir -p %buildroot%_bindir
 cat > %buildroot%_bindir/kvm-spice <<_EOF
@@ -157,6 +162,9 @@ export TZ=UTC
 export PATH=$PATH:/sbin
 vm-run --kvm=cond "mount -t tmpfs tmp /var/run; service libvirtd start; make test"
 
+%pre
+%sysusers_create_package %name %SOURCE1
+
 %preun
 %preun_service rvd_back
 %preun_service rvd_front
@@ -187,10 +195,15 @@ fi
 %_datadir/%name
 %_localstatedir/%name
 %_unitdir/*.service
+%_sysusersdir/%name.conf
 %config(noreplace)%_sysconfdir/%name.conf
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Oct 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.3.1-alt2
+- change fallback in config to default=0 (ALT #51894)
+- add sysusers support
+
 * Thu Oct 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.3.1-alt1
 - 2.3.1
 - fix misplaced sql files (ALT #51792)
