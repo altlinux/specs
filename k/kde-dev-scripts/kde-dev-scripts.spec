@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 24.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 Provides:  kde5-dev-scripts = %EVR
 Obsoletes: kde5-dev-scripts < %EVR
+Conflicts: colorsvn
 
 Source: %rname-%version.tar
 
@@ -69,6 +70,9 @@ done
 
 
 %changelog
+* Fri Nov 01 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
+- add conflict with colorsvn
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 
