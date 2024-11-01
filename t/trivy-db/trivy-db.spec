@@ -1,7 +1,7 @@
 %define _check_contents_method relaxed
 
 Name:    trivy-db
-Version: 20240627
+Version: 20241101
 Release: alt3
 
 Summary: Database for Trivy
@@ -41,6 +41,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Fri Nov 01 2024 Cronbuild Service <cronbuild@altlinux.org> 20241101-alt3
+- repocop cronbuild 20241101. At your service.
+
 * Thu Oct 31 2024 Alexey Shabalin <shaba@altlinux.org> 20240627-alt3
 - disable 028-check_contents.brp: set _check_contents_method as relaxed
 
