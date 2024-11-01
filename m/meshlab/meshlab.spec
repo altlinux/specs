@@ -2,7 +2,7 @@
 
 Name: meshlab
 Version: 2021.10
-Release: alt2
+Release: alt3
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
@@ -54,10 +54,6 @@ BuildRequires: libmuparser-devel
 #BuildRequires: patchelf
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick-tools
-%ifnarch ppc64le
-# mpir has ppc64le excluded
-BuildRequires: mpir-devel
-%endif
 
 %description
 MeshLab is an open source, portable, and extensible system for the
@@ -156,6 +152,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 2021.10-alt3
+- rebuild without mpir-devel
+
 * Sat Jun 24 2023 Anton Midyukov <antohami@altlinux.org> 2021.10-alt2
 - fix build with gcc13
 -  add 'Requires: flexiblas-netlib'
