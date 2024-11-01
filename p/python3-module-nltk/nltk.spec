@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 3.8.1
-Release: alt1.1
+Version: 3.9.1
+Release: alt1
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
@@ -67,6 +67,10 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 01 2024 Pavel Skrylev <majioa@altlinux.org> 3.9.1-alt1
+- ^ 3.8.1 -> 3.9.1
+- ! CVE-2024-39705 (closes ALT #51738)
+
 * Tue Feb 06 2024 Pavel Skrylev <majioa@altlinux.org> 3.8.1-alt1.1
 - ! FTBFS: tests disabled
 
