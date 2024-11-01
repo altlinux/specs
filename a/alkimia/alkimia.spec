@@ -8,7 +8,7 @@
 
 Name:    alkimia
 Version: 8.1.2
-Release: alt3.1
+Release: alt4
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -37,7 +37,6 @@ BuildRequires: kf5-kpackage-devel
 BuildRequires: kf5-plasma-framework-devel
 BuildRequires: kf5-kio-devel
 BuildRequires: kf5-kxmlgui-devel
-BuildRequires: mpir-devel
 BuildRequires: doxygen
 
 Requires: lib%name = %version-%release
@@ -106,6 +105,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 8.1.2-alt4
+- NMU: rebuild without mpir-devel
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 8.1.2-alt3.1
 - NMU: Use rpm-macros-qt5-webengine (fixes build on loongarch64).
 
