@@ -1,6 +1,6 @@
 Name:    gcompris-qt
 Version: 4.2
-Release: alt1
+Release: alt2
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -73,6 +73,8 @@ GCompris - набор образовательных игр и программ 
 tar xf %SOURCE1
 install -Dpm0644 %SOURCE2 poqm/ru/gcompris_qt.po
 install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
+# Remove geography activity due to non actial maps
+subst '/geography/d' src/activities/activities.txt
 
 %build
 %cmake \
@@ -96,6 +98,9 @@ install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Fri Nov 01 2024 Andrey Cherepanov <cas@altlinux.org> 4.2-alt2
+- Removed geography activity due to non actial maps.
+
 * Fri Sep 20 2024 Andrey Cherepanov <cas@altlinux.org> 4.2-alt1
 - New version.
 
