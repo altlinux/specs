@@ -1,19 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libgmp-devel mpir-devel
+BuildRequires: libgmp-devel
 # END SourceDeps(oneline)
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 5
+%define autorelease 1
 
 #%%bcond bundled_thread_pool 0
 
 Name:           libfplll
 Version:        5.4.4
 %global so_version 8
-Release:        alt1_%autorelease
+Release:        alt2_%autorelease
 Summary:        Lattice algorithms using floating-point arithmetic
 
 # The entire source is LGPL-2.1-or-later, except:
@@ -212,6 +212,9 @@ LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 5.4.4-alt2_1
+- NMU: rebuild without mpir-devel
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.4.4-alt1_5
 - update to new release by fcimport
 
