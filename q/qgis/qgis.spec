@@ -15,7 +15,7 @@
 
 Name:    qgis
 Version: 3.40.0
-Release: alt1
+Release: alt2
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -32,6 +32,7 @@ Source5: qgis.xml
 Patch1: qgis-serverprefix.patch
 Patch2: qgis-no-politics.patch
 Patch3: qgis-alt-python3-libpath.patch
+Patch4: qgis-alt-remove-external-developers-map.patch
 Patch2000: qgis-e2k.patch
 
 # Fix unresolved symbols in grass based libs
@@ -195,6 +196,7 @@ Please refer to %name-server-README for details!
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -399,6 +401,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Fri Nov 01 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.0-alt2
+- Do not use developer map from external untrusted resource.
+
 * Sat Oct 26 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.0-alt1
 - New version.
 
