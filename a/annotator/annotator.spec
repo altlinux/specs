@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Annotator
-%define ver_major 1.2
+%define ver_major 2.0
 %define rdn_name com.github.phase1geo.annotator
 
 # No tests defined
 %def_enable check
 
 Name: annotator
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Image annotation for Elementary OS
 License: GPL-2.0-or-later
@@ -76,6 +76,9 @@ Annotate your images and let a picture say 1000 words.
 
 
 %changelog
+* Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt2
 - updated to 1.2.1-69-g77c352e
 
