@@ -1,5 +1,7 @@
+%global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
+
 Name: netatalk
-Version: 3.2.10
+Version: 4.0.3
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -16,10 +18,10 @@ Patch2: netatalk-3.1.12-afpstats-python3-compat.patch
 Patch3: netatalk-systemd-execstartpre.patch
 
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel
-BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel
-BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel
+BuildRequires(pre): rpm-build-python3 rpm-macros-meson
+BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel docbook-style-xsl
+BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel xsltproc
+BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel meson cmake unicode-ucd
 BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus
 Requires: cracklib-words cracklib
 
@@ -44,7 +46,7 @@ developing applications that use %name.
 rm -frv libevent/
 
 #patch0 -p1
-%patch1 -p0
+#patch1 -p0
 #patch2 -p1
 #patch3 -p0
 
@@ -59,47 +61,75 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ \( -name '*.py' -o -name 'afpstats' \))
 
 # Don't call systemctl daemon-reload during the build
-sed -i 's\-systemctl daemon-reload\\g' distrib/initscripts/Makefile.am
+#sed -i 's\-systemctl daemon-reload\\g' distrib/initscripts/Makefile.am
+
+# Set RuntimeDirectory in the service file rather than use a tmpfiles.d config
+#sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initscripts/service.systemd.tmpl
 
 
 %build
-%autoreconf
-%add_optflags -fcommon
-%configure \
-        --localstatedir=%_localstatedir             \
-        --with-acl                                  \
-        --with-cracklib                             \
-        --with-docbook                              \
-        --with-kerberos                             \
-        --with-libgcrypt                            \
-        --with-pam                                  \
-        --with-pkgconfdir=%_sysconfdir/netatalk/    \
-        --with-shadow                               \
-        --with-tbd=no                               \
-        --with-uams-path=%_libdir/netatalk          \
-        --enable-pgp-uam                            \
-        --enable-shared                             \
-        --enable-krbV-uam                           \
-        --enable-overwrite                          \
-        --with-init-style=redhat-systemd            \
-        --with-spotlight                            \
-        --with-dbus-daemon=/usr/bin/dbus-daemon     \
-        --without-libevent                          \
-        --with-libevent-header=%_includedir         \
-        --with-libevent-lib=%_libdir                \
-        --without-tdb                               \
-        --with-bdb                                  \
-        --disable-silent-rules                      \
-        --disable-static
+#autoreconf
+#%add_optflags -fcommon
+#configure \
+#        --localstatedir=%_localstatedir             \
+#        --with-acl                                  \
+#        --with-cracklib                             \
+#        --with-docbook                              \
+#        --with-kerberos                             \
+#        --with-libgcrypt                            \
+#        --with-pam                                  \
+#        --with-pkgconfdir=%_sysconfdir/netatalk/    \
+#        --with-shadow                               \
+#        --with-tbd=no                               \
+#        --with-uams-path=%_libdir/netatalk          \
+#        --enable-pgp-uam                            \
+#        --enable-shared                             \
+#        --enable-krbV-uam                           \
+#        --enable-overwrite                          \
+#        --with-init-style=redhat-systemd            \
+#        --with-spotlight                            \
+#        --with-dbus-daemon=/usr/bin/dbus-daemon     \
+#        --without-libevent                          \
+#        --with-libevent-header=%_includedir         \
+#        --with-libevent-lib=%_libdir                \
+#        --without-tdb                               \
+#        --with-bdb                                  \
+#        --disable-silent-rules                      \
+#        --disable-static
 
-%make_build
+#make_build
 
 # Build the local docs.
-make -C doc/manual html-local
+#make -C doc/manual html-local
+
+#install
+#makeinstall_std
+
+
+%meson  \
+        -Ddefault_library=shared                                               \
+        -Dwith-manual=local                                                    \
+        -Dwith-rpath=false                                                     \
+        -Dwith-overwrite=true                                                  \
+        -Dwith-tcp-wrappers=false                                              \
+        -Dwith-tests=true                                                      \
+        -Dwith-pkgconfdir-path=%{_sysconfdir}/netatalk                         \
+        -Dwith-init-style=systemd	                                       \
+        -Dwith-lockfile-path=%{_runtimedir}/lock/netatalk/netatalk                 \
+	-Dwith-dbus-sysconf-path=%{_sysconfdir}/dbus-1/system.d                \
+	-Dwith-docbook-path=%{_datadir}/sgml/docbook/xsl-stylesheets-%{xslver} \
+        -Dwith-init-hooks=false
+
+
+
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
+
 # Ghost lock dir.
+
 mkdir -p %buildroot/var/lock/netatalk
 
 # Use specific pam conf.
@@ -112,12 +142,17 @@ find %buildroot -name '*.la' -delete -print
 
 touch %buildroot%_sysconfdir/netatalk/afppasswd
 
+# make rpmlint happy
+#ln -sf ../README %{buildroot}/var/lib/netatalk/CNID/README
+
 %check
-sh test/afpd/test.sh
+#sh test/afpd/test.sh
+%meson_test
 
 %files
-%doc CONTRIBUTORS NEWS COPYING COPYRIGHT
-%config(noreplace) %_datadir/dbus-1/system.d/netatalk-dbus.conf
+%doc CONTRIBUTORS NEWS COPYING COPYRIGHT INSTALL.md README.md SECURITY.md
+%doc %{_defaultdocdir}/%name/htmldocs
+%config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
 %dir %_sysconfdir/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afp.conf
 %config(noreplace) %_sysconfdir/netatalk/dbus-session.conf
@@ -125,28 +160,31 @@ sh test/afpd/test.sh
 %config(noreplace) %_sysconfdir/pam.d/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afppasswd
 #_datadir/dbus-1/system.d/netatalk-dbus.conf
-/usr/etc/pam.d/netatalk
+#/usr/etc/pam.d/netatalk
 %_bindir/*
-%exclude %_bindir/netatalk-config
+#exclude %_bindir/netatalk-config
 %_libdir/netatalk/
 %_libdir/libatalk.so.*
 %_mandir/man*/*
-%exclude %_mandir/man*/netatalk-config*
+#exclude %_mandir/man*/netatalk-config*
 %_sbindir/*
 %ghost %dir /var/lock/netatalk
 /usr/lib/systemd/system/netatalk.service
-%exclude %_localstatedir/netatalk/CNID/README
-%exclude %_localstatedir/netatalk/README
-%dir /var/lib/netatalk
+#exclude %_localstatedir/netatalk/CNID/README
+#exclude %_localstatedir/netatalk/README
+#dir /var/lib/netatalk
 
 %files devel
-%_bindir/netatalk-config
-%_datadir/aclocal/netatalk.m4
+#_bindir/netatalk-config
+#_datadir/aclocal/netatalk.m4
 %_includedir/atalk/
 %_libdir/libatalk.so
-%_mandir/man*/netatalk-config.1*
+#_mandir/man*/netatalk-config.1*
 
 %changelog
+* Thu Oct 31 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.3-alt1
+- 4.0.3
+
 * Wed Sep 25 2024 Ilya Mashkin <oddity@altlinux.ru> 3.2.10-alt1
 - 3.2.10
 
