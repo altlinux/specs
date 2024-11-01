@@ -1,6 +1,6 @@
 Name: bristol
 Version: 0.60.11
-Release: alt5
+Release: alt6
 Summary: Synthesizer emulator
 Group: Sound
 License: GPLv2+
@@ -10,6 +10,7 @@ Source1: %name.desktop
 Patch: bristol-0.60.9-CVE-2010-3351.patch
 Patch1: bristol-0.60.11-alt-build-without-alsa-iatomic.patch
 Patch2: bristol-0.60.11-alt-reduce-script-deps.patch
+Patch3: bristol-0.60.11-debian-implicit-function-declaration.patch
 
 BuildRequires: libXext-devel libpulseaudio-devel pkgconfig(liblo) xorg-xproto-devel
 BuildRequires: libX11-devel libalsa-devel jackit-devel desktop-file-utils
@@ -35,6 +36,7 @@ This package contains the development libraries for Bristol.
 %patch -p0 -b .libpath
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 
 find . -type f | xargs chmod -x
 chmod +x config* *sh depcomp
@@ -79,6 +81,9 @@ desktop-file-install \
 %_libdir/lib*.so
 
 %changelog
+* Fri Nov 01 2024 Ivan A. Melnikov <iv@altlinux.org> 0.60.11-alt6
+- apply patch from Debian to fix build with gcc 14
+
 * Thu Mar 25 2021 Slava Aseev <ptrnine@altlinux.org> 0.60.11-alt5
 - fix build with gcc-10
 
