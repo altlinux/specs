@@ -1,7 +1,7 @@
 %define  modulename resolvelib
 
 Name:    python3-module-%modulename
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Resolve abstract dependencies into concrete ones 
@@ -11,8 +11,10 @@ URL:     https://github.com/sarugaku/resolvelib
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3-dev
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -27,17 +29,21 @@ on how it should interact with them, and it will spit out a resolution result.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst CHANGELOG.rst
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info/
 
 %changelog
+* Fri Nov 01 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+- Built using pyproject macros.
+
 * Fri Mar 10 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version.
 
