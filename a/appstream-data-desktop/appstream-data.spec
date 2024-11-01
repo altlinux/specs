@@ -2,7 +2,7 @@
 
 Name:      appstream-data-desktop
 Summary:   ALT Linux AppStream metadata
-Version:   20241001
+Version:   20241101
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -35,6 +35,9 @@ cp -r xmls/* %buildroot%_datadir/swcatalog/xml/
 %_datadir/swcatalog/icons/altlinux
 
 %changelog
+* Fri Nov 01 2024 Kirill Izmestev <felixz@altlinux.org> 20241101-alt1
+- Updated database.
+
 * Tue Oct 01 2024 Kirill Izmestev <felixz@altlinux.org> 20241001-alt1
 - Updated database.
 
