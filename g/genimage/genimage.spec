@@ -10,7 +10,7 @@
 
 Name: genimage
 Version: 18
-Release: alt1
+Release: alt2
 
 Summary: Tool to generate multiple filesystem and flash images
 
@@ -23,8 +23,8 @@ Source: %name-%version.tar
 BuildRequires: libconfuse-devel
 
 # for check
-
-BuildRequires: genext2fs e2fsprogs /proc
+BuildRequires: /proc
+BuildRequires: e2fsprogs
 BuildRequires: sfdisk fdisk
 BuildRequires: dosfstools
 BuildRequires: genisoimage
@@ -63,6 +63,9 @@ config file or from commandline switches.
 %_bindir/%name
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 18-alt2
+- remove "BuildRequires: genext2fs"
+
 * Thu Jul 04 2024 Anton Midyukov <antohami@altlinux.org> 18-alt1
 - new version
 
