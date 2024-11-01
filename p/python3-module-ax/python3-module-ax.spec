@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -12,7 +12,7 @@ Group: Development/Python3
 
 Packager: Alexey Appolonov <alexey@altlinux.org>
 
-# http://git.altlinux.org/people/alexey/packages/?p=python3-module-ax.git
+# http://git.altlinux.org/people/alexey/packages/python3-module-ax.git
 Source: %{pyname}.tar
 
 BuildArch: noarch
@@ -26,9 +26,6 @@ cve-manager project but potentially reusable elsewhere.
 
 %prep
 %setup -n %{pyname}
-
-%build
-make testing
 
 %install
 mkdir -p %{buildroot}%{thislibdir}
@@ -45,6 +42,19 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 31 2024 Alexey Appolonov <alexey@altlinux.org> 0.21.0-alt1
+- The content of the library has been heavily revised, names of the modules
+  have been changed and the functions have been moved around:
+  -- the "ver" module is evolved into a separate library "verlib",
+  -- the "alt" module is evolved into a separate library "sisyphus",
+  -- the "vul" module is removed,
+  -- the "sefunctions" module is splitted into "datetime" and "filesystem"
+  modules,
+  -- new module "num" consists of functions for working with numbers,
+  -- new module "text" consists of functions for working with text;
+- New ability to escape specified symbols of a given string (the "Esc"
+  function).
+
 * Mon Aug 05 2024 Alexey Appolonov <alexey@altlinux.org> 0.20.0-alt1
 - New ability of the "Printer" class to perform some of the most basic HTML
   formatting.

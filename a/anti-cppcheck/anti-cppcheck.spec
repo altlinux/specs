@@ -1,10 +1,12 @@
 %define pyname anticppcheck
 %define thislibdir %{python3_sitelibdir_noarch}/%{pyname}
 %define thisdocdir %{_defaultdocdir}/%{name}
-%define ax_ver 0.7
+%define ax_ver 0.21
+%define verlib_ver 0.21
+%define sisyphus_ver 0.21
 
 Name: anti-cppcheck
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Utility that helps to handle reports produced by cppcheck
@@ -21,6 +23,8 @@ BuildArch: noarch
 BuildRequires: python3-devel
 Requires: python3
 Requires: python3-module-ax >= %{ax_ver}
+Requires: python3-module-verlib >= %{verlib_ver}
+Requires: python3-module-sisyphus >= %{sisyphus_ver}
 
 %description
 %{name} can be used to handle reports produced by cppcheck - it can convert
@@ -58,6 +62,10 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 31 2024 Alexey Appolonov <alexey@altlinux.org> 0.5.1-alt1
+- Minor improvements;
+- Synchronization with library updates.
+
 * Wed Mar 25 2020 Alexey Appolonov <alexey@altlinux.org> 0.5.0-alt1
 - Support of svace reports.
 
