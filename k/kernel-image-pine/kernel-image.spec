@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt3
 epoch:1
 %define kernel_need_version	6.10
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Nov 01 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.10.14-alt3
+- correct initialization Anbernic RG353V-V2 panel
+
+* Mon Oct 14 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.10.14-alt2
+- config-aarch64: CONFIG_IIO_MUX=m, CONFIG_JOYSTICK_ADC=m, CONFIG_MUX_GPIO=m
+
 * Thu Oct 10 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.10.14-alt1
 - 6.10.14
 
