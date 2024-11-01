@@ -2,7 +2,7 @@
 
 Name: %{rname}player
 Version: 24.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Video
@@ -12,6 +12,7 @@ License: GPL-2.0-or-later
 
 Provides:  kde5-dragon = %EVR
 Obsoletes: kde5-dragon < %EVR
+Conflicts: dragon
 
 Source: %rname-%version.tar
 
@@ -51,6 +52,9 @@ BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 01 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
+- add conflict with dragon
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 
