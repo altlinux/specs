@@ -2,7 +2,7 @@
 
 Name: linux-atm
 Version: 2.5.1
-Release: alt7
+Release: alt8
 
 Summary: Asynchronous Transfer Mode tools
 License: GPLv2
@@ -89,6 +89,9 @@ bzip2 -9k ChangeLog
 %endif
 
 %changelog
+* Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.1-alt8
+- rebuilt with gcc14
+
 * Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt7
 - drop support for long obsolete ZN122x ATM devices
 
