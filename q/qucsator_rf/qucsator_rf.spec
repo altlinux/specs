@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucsator_rf
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: RF circuit simulation kernel for Qucs-S
@@ -45,6 +45,9 @@ conversion.
 %_man1dir/qucsconv_rf.1.*
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 1.0.3-alt1
+- New version 1.0.3.
+
 * Tue Sep 10 2024 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
 - new version 1.0.2
 

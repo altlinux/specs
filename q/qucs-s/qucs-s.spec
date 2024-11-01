@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 24.3.2
-Release: alt1
+Version: 24.4.0
+Release: alt2
 
 Summary: Circuit simulator
 License: GPL-2.0-or-later
@@ -22,6 +22,7 @@ BuildRequires: flex
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-svg-devel
+BuildRequires: qt6-charts-devel
 BuildRequires: rpm-build-python3
 Requires: qucsator_rf
 Requires: ngspice
@@ -67,6 +68,12 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 24.4.0-alt2
+- Update Russian translation
+
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 24.4.0-alt1
+- New version 24.4.0.
+
 * Tue Sep 24 2024 Anton Midyukov <antohami@altlinux.org> 24.3.2-alt1
 - New version 24.3.2
 
