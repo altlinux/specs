@@ -2,7 +2,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.19.0
+Version: 4.19.1
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -136,6 +136,9 @@ make check
 %endif
 
 %changelog
+* Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
+- Updated to 4.19.1.
+
 * Tue May 28 2024 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt1
 - Dropped html documentation.
 - Updated to 4.19.0.

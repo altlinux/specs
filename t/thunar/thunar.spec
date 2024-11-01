@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: thunar
-Version: 4.19.3
-Release: alt2
+Version: 4.19.4
+Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -27,10 +27,12 @@ BuildRequires: libxfce4util >= 4.17.2 libxfce4ui-gtk3-devel >= 4.17.6
 BuildRequires: libSM-devel libexif-devel libpcre2-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify-devel libgudev-devel
-BuildRequires: libpolkit-devel
 BuildRequires: desktop-file-utils
 # NOTE: gtk-doc is required by build system even if docs are disabled.
 BuildRequires: gtk-doc
+# For /usr/share/gettext/its/polkit.{its,loc}
+# See https://gitlab.xfce.org/xfce/thunar/-/issues/1403
+BuildRequires: libpolkit-devel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -151,6 +153,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Returned dropped translations.
+- Updated to 4.19.4.
+
 * Sun Oct 20 2024 Kirill Izmestev <felixz@altlinux.org> 4.19.3-alt2
 - Add Tatar translation.
 

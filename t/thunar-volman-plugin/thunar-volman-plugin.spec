@@ -1,6 +1,6 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 4.18.0
+Version: 4.19.0
 Release: alt1
 
 Summary: Thunar volume manager plugin
@@ -14,9 +14,9 @@ Vcs: https://gitlab.xfce.org/xfce/thunar-volman.git
 Source: %base-%version.tar
 Patch: %base-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
-BuildRequires: libgtk+3-devel intltool libgudev-devel libnotify-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libgtk+3-devel libgudev-devel libnotify-devel
 
 Requires: gvfs
 
@@ -58,6 +58,9 @@ application and import the new pictures from your camera.
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt1
+- Updated to 4.19.0.
+
 * Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Packaged NEWS file.
 - Updated description.
