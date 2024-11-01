@@ -2,7 +2,7 @@
 %define upstream hyprland
 
 Name: hyprland-legacyrenderer
-Version: 0.42.0
+Version: 0.44.1
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor (legacy renderer)
@@ -13,7 +13,8 @@ Url: https://github.com/hyprwm/Hyprland
 
 ExcludeArch: i586 armh
 Conflicts: hyprland
-Patch0: hyprland-0.40.0-native-udis86.patch
+Provides: hyprland
+#Patch0: hyprland-0.40.0-native-udis86.patch
 
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
@@ -29,13 +30,15 @@ BuildRequires: pkgconfig(hyprwayland-scanner)
 BuildRequires: pkgconfig(hyprutils)
 BuildRequires: pkgconfig(aquamarine)
 
-BuildRequires: gcc-c++ >= 11
+BuildRequires: gcc-c++ >= 14
 BuildRequires: glslang-devel
 BuildRequires: libudis86-devel
+BuildRequires: glibc-devel
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(gbm) >= 17.1.0
 BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(libdrm) >= 2.4.118
 BuildRequires: pkgconfig(libinput) >= 1.14.0
@@ -75,9 +78,9 @@ model allowing for a lot of customization, and more.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
-subst '/^version_h = run_command/d' meson.build
+subst '/generateVersion\.sh/d' meson.build
 
 %build
 %meson \
@@ -117,6 +120,10 @@ rm -rf %buildroot%_datadir/pkgconfig/hyprland.pc
 %_datadir/zsh/site-functions/_hyprpm
 
 %changelog
+* Fri Nov 01 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.44.1-alt1
+- new version 0.44.1 (with rpmrb script)
+- added provides a hyprland
+
 * Thu Aug 15 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.42.0-alt1
 - new version 0.42.0 (with rpmrb script)
 - added missing conflict on hyprland
