@@ -2,7 +2,7 @@ Name: kernel-image-6.11
 Release: alt1
 %define kernel_src_version	6.11
 %define kernel_base_version	6.11
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -578,6 +578,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Nov 01 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.6-alt1
+- v6.11.6 (2024-11-01).
+- config: Enable CONFIG_SCSI_MPI3MR=m (ALT#51728).
+- config: CONFIG_SQUASHFS=y.
+
 * Tue Oct 22 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.5-alt1
 - v6.11.5 (2024-10-22).
 
