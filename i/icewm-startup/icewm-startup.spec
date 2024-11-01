@@ -2,9 +2,10 @@
 %def_without desklaunch
 %def_without ivman
 %def_without blueberry
+%def_without spacefm
 Name: icewm-startup
 Version: 0.216
-Release: alt1
+Release: alt2
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -260,6 +261,7 @@ Startup and shutdown simple sound for IceWM.
 %description -l ru_RU.UTF-8 simple-sound
 Простейшие звуки при старте и выключении IceWM.
 
+%if_with spacefm
 %package spacefm
 Group: Graphical desktop/Icewm
 Summary: spacefm autostart at IceWM startup
@@ -271,6 +273,7 @@ AutoReq: no
 spacefm plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 spacefm
 spacefm plug-in для менеджера автозапуска программ IceWM.
+%endif
 
 %package tray_mixer_plus
 Group: Graphical desktop/Icewm
@@ -555,7 +558,9 @@ echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
 echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
 echo "pnmixer&" > %buildroot/%icewmconfdir/startup.d/pnmixer
 echo "/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&" > %buildroot/%icewmconfdir/startup.d/polkit-gnome
+%if_with spacefm
 echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
+%endif
 echo 'xscreensaver -nosplash&'> %buildroot/%icewmconfdir/startup.d/xscreensaver
 
 %define startup_if_config() \
@@ -677,8 +682,10 @@ fi
 %config %icewmconfdir/startup.d/000-simple-sound
 %config %icewmconfdir/shutdown.d/000-simple-sound
 
+%if_with spacefm
 %files spacefm
 %config %icewmconfdir/startup.d/spacefm
+%endif
 
 %files tray_mixer_plus
 %config %icewmconfdir/startup.d/070-tray_mixer_plus
@@ -702,6 +709,9 @@ fi
 %icewmconfdir/XXkb.conf
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 0.216-alt2
+- NMU: disable build icewm-startup-spacefm
+
 * Thu Apr 04 2024 Dmitriy Khanzhin <jinn@altlinux.org> 0.216-alt1
 - networkmanager: added l2tp module, nmtui
 - notification-daemon: added forgotten requires
