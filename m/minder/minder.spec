@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _name Minder
-%define ver_major 1.16
+%define ver_major 1.17
 %define rdn_name com.github.phase1geo.minder
 
 %def_enable check
 
 Name: minder
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mind-mapping application
@@ -71,6 +71,9 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 
 
 %changelog
+* Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Thu Apr 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1.16.4-alt1
 - 1.16.4
 
