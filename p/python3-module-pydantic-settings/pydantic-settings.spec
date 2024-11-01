@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: Settings management using pydantic
@@ -67,6 +67,9 @@ for discussion.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 01 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.1-alt1
+- Updated to 2.6.1.
+
 * Fri Oct 18 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.6.0-alt1
 - Updated to 2.6.0.
 
