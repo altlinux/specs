@@ -9,14 +9,12 @@
 %define nautilus_extdir %_datadir/nautilus-python/extensions
 %define caja_extdir %_datadir/caja-python/extensions
 %define nemo_extdir %_datadir/nemo-python/extensions
-%define thunar_extdir %_datadir/thunarx-python/extensions
 
 %define _scliconsdir %_iconsdir/hicolor/scalable/apps
 %define _symiconsdir %_iconsdir/hicolor/symbolic/apps
 
 %define _bshcompldir %_datadir/bash-completion/completions
 %define _dbussrvsdir %_datadir/dbus-1/services
-
 
 ## Define turtle files
 %define turtle_svg de.philippun1.turtle.svg
@@ -35,11 +33,10 @@
 %define turtle_nautilus_cmpr_plg turtle_nautilus_compare.py
 %define turtle_caja_plg turtle_caja.py
 %define turtle_nemo_plg turtle_nemo.py
-%define turtle_thunar_plg turtle_thunar.py
 
 Name: turtle
 Version: 0.10
-Release: alt1
+Release: alt2
 
 Summary: Turtle is a graphical interface for version control intended to run on gnome and nautilus
 License: GPLv3
@@ -86,6 +83,37 @@ Staging hunks directly is also possible, both from the nautilus plugin
 and the commit window.
 Currently only ssh login is possible for remote operations.
 
+%package caja
+Summary: Caja extension for turtle
+Group: Development/Other
+Requires: %name = %EVR
+Requires: python3-module-caja
+
+%description caja
+An extension for Caja to allow better integration with the
+source control system.
+
+%package nautilus
+Summary: Nautilus extension for turtle
+Group: Development/Other
+Requires: %name = %EVR
+Requires: nautilus-python
+
+%description nautilus
+An extension for Nautilus to allow better integration with the
+source control system.
+
+%package nemo
+Summary: Nemo extension for turtle
+Group: Development/Other
+Requires: %name = %EVR
+Requires: nemo-python
+Requires: libnemo-gir
+
+%description nemo
+An extension for Nemo to allow better integration with the
+source control system.
+
 %prep
 %setup
 
@@ -127,8 +155,6 @@ install -pDm 644 plugins/%turtle_caja_plg %buildroot%caja_extdir/%turtle_caja_pl
 python3 -m compileall %buildroot%caja_extdir/%turtle_caja_plg
 install -pDm 644 plugins/%turtle_nemo_plg %buildroot%nemo_extdir/%turtle_nemo_plg
 python3 -m compileall %buildroot%nemo_extdir/%turtle_nemo_plg
-install -pDm 644 plugins/%turtle_thunar_plg %buildroot%thunar_extdir/%turtle_thunar_plg
-python3 -m compileall %buildroot%thunar_extdir/%turtle_thunar_plg
 
 %check
 %pyproject_run_pytest -Wignore
@@ -143,19 +169,27 @@ python3 -m compileall %buildroot%thunar_extdir/%turtle_thunar_plg
 %_desktopdir/%turtle_desktop
 %_bshcompldir/%turtle_completion
 %_dbussrvsdir/%turtle_dbus_service
-%nautilus_extdir/%turtle_nautilus_plg
-%nautilus_extdir/%turtle_nautilus_cmpr_plg
-%nautilus_extdir/__pycache__/turtle_*
-%caja_extdir/%turtle_caja_plg
-%caja_extdir/__pycache__/turtle_*
-%nemo_extdir/%turtle_nemo_plg
-%nemo_extdir/__pycache__/turtle_*
-%thunar_extdir/%turtle_thunar_plg
-%thunar_extdir/__pycache__/turtle_*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
+%files nautilus
+%nautilus_extdir/%turtle_nautilus_plg
+%nautilus_extdir/%turtle_nautilus_cmpr_plg
+%nautilus_extdir/__pycache__/turtle_*
+
+%files caja
+%caja_extdir/%turtle_caja_plg
+%caja_extdir/__pycache__/turtle_*
+
+%files nemo
+%nemo_extdir/%turtle_nemo_plg
+%nemo_extdir/__pycache__/turtle_*
+
 %changelog
+* Fri Nov 01 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.10-alt2
+- Divided file-managers' extensions to the separates bin packages
+  (Closes: #51913).
+
 * Thu Oct 10 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.10-alt1
 - Initial build for ALT Sisyphus.
 
