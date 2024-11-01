@@ -2,7 +2,7 @@
 
 Name: p7zip
 Version: 17.05
-Release: alt2
+Release: alt3
 
 Summary: 7zip unofficial port - a file-archiver with highest compression ratio
 
@@ -61,6 +61,9 @@ The devel package contains the p7zip include files.
 %patch1 -p1
 %patch2 -p1
 chmod +x *.sh */*.sh
+# Completely remove NTFS support due to several CVEs
+rm -rf p7zip/CPP/7zip/Archive/NtfsHandler.cpp
+subst '/NtfsHandler/d' `grep -Rl NtfsHandler *`
 
 %build
 %ifarch %e2k
@@ -121,6 +124,9 @@ P7ZIP_HOME_DIR=`pwd`/bin/ make test_7z
 %endif
 
 %changelog
+* Fri Nov 01 2024 Andrey Cherepanov <cas@altlinux.org> 17.05-alt3
+- Completely remove NTFS support due to several CVE: CVE-2023-52168, CVE-2023-52169
+
 * Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 17.05-alt2
 - build to Sisyphus
 
