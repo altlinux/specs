@@ -4,7 +4,7 @@
 %define sover 6
 
 Name: lxqt-wallet
-Version: 4.0.0
+Version: 4.0.2
 Release: alt1
 Summary: Create a kwallet like functionality for LXQt
 Group: Graphical desktop/Other
@@ -92,5 +92,8 @@ cp -p frontend/README README-frontend
 %_pkgconfigdir/lxqt-wallet.pc
 
 %changelog
+* Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Thu Oct 24 2024 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
 - initial build
