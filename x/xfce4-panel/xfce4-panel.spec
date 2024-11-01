@@ -3,7 +3,7 @@
 %def_disable docs
 
 Name: xfce4-panel
-Version: 4.19.5
+Version: 4.19.6
 Release: alt1
 
 Summary: Panel for Xfce
@@ -176,6 +176,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.6-alt1
+- Updated to 4.19.6.
+
 * Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
 - Updated to 4.19.5.
 
