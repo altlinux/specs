@@ -1,5 +1,5 @@
 Name: rtl_433
-Version: 23.11
+Version: 24.10
 Release: alt1
 
 Summary: Generic radio data receiver
@@ -12,7 +12,7 @@ Obsoletes: rtl_433-devel
 
 Source: %name-%version-%release.tar
 
-BuildRequires: cmake libusb-devel rtl-sdr-devel
+BuildRequires: cmake libssl-devel libusb-devel rtl-sdr-devel
 
 %description
 %name (despite the name) is a generic data receiver, mainly
@@ -39,6 +39,9 @@ touch %buildroot%_sysconfdir/rtl_433/rtl_433.conf
 %_includedir/rtl_433*.h
 
 %changelog
+* Fri Nov 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 24.10-alt1
+- 24.10 released
+
 * Tue Dec 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.11-alt1
 - 23.11 released
 
