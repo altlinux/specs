@@ -8,7 +8,7 @@
 
 %global v_major 19
 %global v_majmin %v_major.1
-%global v_full %v_majmin.2
+%global v_full %v_majmin.3
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -690,6 +690,10 @@ Group: System/Libraries
 # libomp soname remains the same
 Conflicts: lib%omp_name < %EVR
 Conflicts: lib%omp_name > %EVR
+# due shared dirs with clang-support
+%ifarch %libomptarget_arches
+Requires: %clang_name-support = %EVR
+%endif
 %requires_filesystem
 
 %description -n lib%omp_name
@@ -698,7 +702,6 @@ OpenMP runtime for clang.
 %package -n lib%omp_name-devel
 Summary: OpenMP header files
 Group: Development/C
-Requires: %clang_name-support = %EVR
 %requires_filesystem
 
 %description -n lib%omp_name-devel
@@ -1504,6 +1507,10 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Fri Nov 01 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.3-alt0.1
+- Update to 19.1.3.
+- libomp: fix unowned dirs in case of omptarget.
+
 * Fri Oct 25 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.2-alt0.1
 - Update to 19.1.2.
 
