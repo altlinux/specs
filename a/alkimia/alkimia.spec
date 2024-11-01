@@ -8,7 +8,7 @@
 
 Name:    alkimia
 Version: 8.1.2
-Release: alt4
+Release: alt5
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
 License: LGPLv2+
@@ -59,7 +59,6 @@ class to represent monetary values with arbitrary precision.
 Summary: Development files for %name
 Group: Development/KDE and QT
 Requires: lib%name = %version-%release
-Requires: mpir-devel
 
 %description -n lib%name-devel
 Headers and other files for develop with %name.
@@ -105,6 +104,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 8.1.2-alt5
+- NMU: devel: do not dependency on mpir-devel
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 8.1.2-alt4
 - NMU: rebuild without mpir-devel
 
