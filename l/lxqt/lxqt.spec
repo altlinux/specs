@@ -1,6 +1,6 @@
 Name: lxqt
 Version: 2.0
-Release: alt1
+Release: alt2
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
@@ -37,17 +37,8 @@ Requires: obconf-qt
 Requires: icon-theme-oxygen
 # system components
 Requires: openbox-base openbox-autostart
-
-Obsoletes: lxqt < 0.14
-Obsoletes: lxqt-l10n < 0.14
-Obsoletes: compton-conf-l10n < 0.14
-Obsoletes: libfm-qt-l10n < 0.14
-Obsoletes: lximage-qt-l10n < 0.14
-Obsoletes: obconf-qt-l10n < 0.14
-Obsoletes: pavucontrol-qt-l10n < 0.14
-Obsoletes: pcmanfm-qt-l10n < 0.14
-Obsoletes: qterminal-l10n < 0.14
-Obsoletes: qtermwidget-l10n < 0.14
+# translations
+Requires: qt6-translations
 
 %description mini
 %summary.
@@ -81,6 +72,8 @@ Requires: openbox-themes
 Requires: lxqt-sudo
 # xdg-desktop-portal
 Requires: xdg-desktop-portal-lxqt
+# safe desktop-wide storage for passwords
+Requires: lxqt-wallet
 
 %description regular
 %summary.
@@ -89,6 +82,11 @@ Requires: xdg-desktop-portal-lxqt
 %files regular
 
 %changelog
+* Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 2.0-alt2
+- mini: add dependency on qt6-translations
+- regular: add dependency on lxqt-wallet
+- drop old Obsoletes
+
 * Tue Jul 09 2024 Anton Midyukov <antohami@altlinux.org> 2.0-alt1
 - new version 2.0
 
