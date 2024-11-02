@@ -2,10 +2,11 @@
 %define ver_major 2.14
 %def_disable static
 %def_enable gtk_doc
+%def_disable check
 
 Name: ORBit2
 Version: %ver_major.20
-Release: alt0.3
+Release: alt0.4
 
 Summary: A high-performance CORBA Object Request Broker
 Group: System/Libraries
@@ -14,16 +15,20 @@ Url: http://www.gnome.org/projects/%name
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
+Vcs: https://gitlab.gnome.org/Archive/orbit2.git
+
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 %else
-#VCS: https://gitlab.gnome.org/Archive/orbit2.git
 Source: %name-%version.tar
 %endif
 Patch: %name-2.7.3-alt-test_makefile.patch
 Patch1: %name-2.14.20-alt-shared_name-server.patch
 Patch2: %name-2.13.3-fix-link-as-needed.patch
 Patch3: %name-2.14.20-alt-fix-include-in-makefile.patch
+Patch4: %name-2.14.3-fc-ref-leaks.patch
+Patch5: %name-2.14.20-fc-configure-c99.patch
+Patch6: %name-2.14.20-fc-pointer-type.patch
 
 %define libIDL_ver 0.8.2
 %define glib_ver 2.8.0
@@ -31,10 +36,10 @@ Patch3: %name-2.14.20-alt-fix-include-in-makefile.patch
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome
-BuildPreReq: pkgconfig >= %pkgconfig_ver
-BuildPreReq: libIDL-devel >= %libIDL_ver
-BuildPreReq: glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-build-licenses rpm-build-gnome
+BuildRequires: pkgconfig >= %pkgconfig_ver
+BuildRequires: libIDL-devel >= %libIDL_ver
+BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: indent libssl-devel
 
 %if_enabled gtk_doc
@@ -114,17 +119,21 @@ This package contains static versions of libraries from ORBit2 package.
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
 %patch -p1 -b .test
 %patch1 -p0 -b .shared_name-server
 %patch2 -p0 -b .as_needed
 %patch3 -p2 -b .include
+%patch4 -p1 -b .ref-leaks
+%patch5 -p1 -b .gcc-14
+%patch6 -b .pointer-type
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+    %{subst_enable static} \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
 # SMP-incompatible build
 %make
 
@@ -147,7 +156,7 @@ cat << EOF > %buildroot%_sysconfdir/orbitrc
 EOF
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/typelib-dump
@@ -183,6 +192,10 @@ EOF
 %exclude %_libdir/*/*.la
 
 %changelog
+* Fri Nov 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.4
+- fixed build with gcc-14
+- disabled %%check
+
 * Sat Apr 13 2019 Yuri N. Sedunov <aris@altlinux.org> 2.14.20-alt0.3
 - fixed build with automake-1.16
 

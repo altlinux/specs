@@ -2,7 +2,7 @@
 
 Name: vte
 Version: %ver_major.2
-Release: alt4
+Release: alt5
 
 %def_enable pty_helper
 %def_disable static
@@ -129,7 +129,7 @@ language.
 %patch2 -p1
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -Wno-incompatible-pointer-types
 %autoreconf
 %{?_enable_python:export PYTHON=%__python}
 %configure \
@@ -151,16 +151,16 @@ language.
 %install
 %makeinstall_std
 
-%__install -d -m755 %buildroot%pkgdocdir
-%__install -p -m644 AUTHORS ChangeLog MAINTAINERS NEWS README %buildroot%pkgdocdir/
-%__bzip2 %buildroot%pkgdocdir/ChangeLog
-%__ln_s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
+install -d -m755 %buildroot%pkgdocdir
+install -p -m644 AUTHORS ChangeLog MAINTAINERS NEWS README %buildroot%pkgdocdir/
+bzip2 %buildroot%pkgdocdir/ChangeLog
+ln -s %_licensedir/LGPL-2 %buildroot%pkgdocdir/COPYING
 
-%__install -p -m644 doc/utmpwtmp.txt doc/boxes.txt \
+install -p -m644 doc/utmpwtmp.txt doc/boxes.txt \
     %buildroot%pkgdocdir/
-%__install -p -m644 src/iso2022.txt \
+install -p -m644 src/iso2022.txt \
     %buildroot%pkgdocdir/
-%__install -p -m644 doc/openi18n/*.txt \
+install -p -m644 doc/openi18n/*.txt \
     %buildroot%pkgdocdir/
 
 # Remove unpackaged files
@@ -168,12 +168,15 @@ find %buildroot -type f -name '*.la' -delete
 
 %find_lang %name-%vte_api_ver --output=%name.lang
 
+%check
+%make -k check VERBOSE=1
+
 %files
 %_bindir/*
 
 %if_enabled pty_helper
 %files -n gnome-pty-helper
-%dir %helperdir/*
+%dir %helperdir
 %attr(2711,root,utmp) %helperdir/gnome-pty-helper
 %endif
 
@@ -212,6 +215,10 @@ find %buildroot -type f -name '*.la' -delete
 %endif
 
 %changelog
+* Sat Nov 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt5
+- rebuilt with gcc-14
+- enabled %%check
+
 * Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt4
 - disabled useless python2 support
 
