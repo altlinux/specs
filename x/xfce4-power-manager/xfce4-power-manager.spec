@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
-Version: 4.19.3
-Release: alt2.g974546ec
+Version: 4.19.4
+Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools
 BuildRequires: libxfce4util >= 4.19.2 libxfconf-devel libxfce4panel-gtk3-devel
 BuildRequires: libxfce4ui-gtk3-devel >= 4.18.4
 BuildRequires: libX11-devel libXext-devel libXrandr-devel
-BuildRequires: libwayland-client-devel wayland-devel wayland-protocols wlr-protocols
+BuildRequires: libwayland-client-devel wayland-devel >= 1.20 wayland-protocols >= 1.25 wlr-protocols
 BuildRequires: libnotify-devel >= 0.7.8
 BuildRequires: libupower-devel
 BuildRequires: libpolkit-devel
@@ -77,6 +77,9 @@ applications to prevent automatic sleep actions via the power manager.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Updated to 4.19.4.
+
 * Fri Jun 07 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt2.g974546ec
 - Upstream git snapshot (master branch).
 
