@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -19,8 +19,8 @@ Patch: %name-%version-%release.patch
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires: libxfce4ui-gtk3-devel libexo-gtk3-devel libxfconf-devel libgarcon-devel >= 0.1.10
 BuildRequires: libX11-devel libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
-BuildRequires: libwayland-client-devel wayland-devel wlr-protocols libgtk-layer-shell-devel
-%{?_enable_upower:BuildRequires: libupower-devel >= 0.99.4-alt2}
+BuildRequires: libwayland-client-devel wayland-devel >= 1.20 wlr-protocols libgtk-layer-shell-devel
+%{?_enable_upower:BuildRequires: libupower-devel >= 0.99.10}
 BuildRequires: libcolord-devel
 BuildRequires: xorg-drv-libinput-devel
 BuildRequires: xml-utils
@@ -91,6 +91,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %exclude %_libdir/gtk-3.0/modules/*.la
 
 %changelog
+* Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- settings-manager: returned xscreensaver properties.
+- Updated to 4.19.3.
+
 * Wed May 29 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - Updated to 4.19.2.
 
