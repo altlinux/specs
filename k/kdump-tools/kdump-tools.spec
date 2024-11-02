@@ -6,7 +6,7 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt7
+Release: alt8
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -94,6 +94,9 @@ grep -vw alt1 <<<'%release'
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt8
+- checkinstall: Fallback to grep for file4.
+
 * Mon Aug 19 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt7
 - Fix build with old shellcheck (for p9).
 
