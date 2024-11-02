@@ -1,3 +1,6 @@
+%define _unpackaged_files_terminate_build 1
+#define _stripped_files_terminate_build 1
+
 #define udapl 1
 #define static 1
 %define thread 1
@@ -39,8 +42,8 @@
 Name: openmpi
 #pkgname
 
-Version: 2.0.1
-Release: alt9
+Version: 2.1.6.0.6.g610e3
+Release: alt1
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -50,7 +53,6 @@ License: BSD
 Group: Development/Other
 Url: http://www.open-mpi.org/
 
-Packager: Denis Pynkin <dans@altlinux.ru>
 Source:  openmpi-%version.tar
 #Source1: MPI_Status_c2f.3
 
@@ -137,6 +139,9 @@ Package for development with Open MPI/SHMEM
 
 %build
 CFLAGS+=" %optflags -D_FORTIFY_SOURCE=2"
+%ifarch i586
+CFLAGS+=" -Wno-incompatible-pointer-types"
+%endif
 CXXFLAGS+=" %optflags"
 LDFLAGS+="-Wl,-R%mpi_prefix/lib/openmpi:%mpi_prefix/lib"
 echo="/bin/echo"
@@ -334,6 +339,10 @@ EOF
 %endif
 
 %changelog
+* Fri Nov 01 2024 Andrew Savchenko <bircoph@altlinux.org> 2.1.6.0.6.g610e3-alt1
+- Update to the HEAD in the upstream 2.x branch (2.1.6 + bugfixes)
+- Fix FTBFS with gcc-14
+
 * Sun Sep 03 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.1-alt9
 - Fixed FTBFS (m4 quoting versus autoconf 2.71).
 
