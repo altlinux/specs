@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.10.11.0
-Release: alt2
+Release: alt3
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
 Group: Engineering
@@ -68,7 +68,6 @@ BuildRequires: python3-module-jsonschema
 BuildRequires: pybind11-devel
 BuildRequires: libsndfile-devel
 BuildRequires: libunwind-devel
-BuildRequires: mpir-devel
 BuildRequires: libgmp-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: doxygen
@@ -199,6 +198,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 3.10.11.0-alt3
+- remove "BuildRequires: mpir-devel" (now for sure)
+
 * Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 3.10.11.0-alt2
 - remove "BuildRequires: mpir-devel"
 
