@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.32.8
+Version: 1.32.9
 Release: alt1
 Epoch: 1
 
@@ -128,6 +128,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sat Nov 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.9-alt1
+- 1.32.9
+
 * Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.8-alt1
 - 1.32.8 (security update, see
   https://sourceforge.net/p/mpg123/bugs/322/)
