@@ -1,16 +1,17 @@
 %define cryptopp_cmake_commit 2c384c28265a93358a2455e610e76393358794df
-%define sdl3_commit 4cc3410dce50cefce98d3cf3cf1bc8eca83b862a
-%define vma_commit e1bdbca9baf4d682fb6066b380f4aa4a7bdbb58a
-%define robin_map_commit 2c48a1a50203bbaf1e3d0d64c5d726d56f8d3bb3
-%define magic_enum_commit dae6bbf16c363e9ead4e628a47fdb02956a634f3
-%define sirit_commit 37090c74cc6e680f2bc334cac8fd182f7634a1f6
+%define sdl3_commit 54e622c2e6af456bfef382fae44c17682d5ac88a
+%define vma_commit 1c35ba99ce775f8342d87a83a3f0f696f99c2a39
+%define robin_map_commit fe845fd7852ef541c5479ae23b3d36b57f8608ee
+%define magic_enum_commit 126539e13cccdc2e75ce770e94f3c26403099fa5
+%define sirit_commit 6cecb95d679c82c413d1f989e0b7ad9af130600d
 %define tracy_commit b8061982cad0210b649541016c88ff5faa90733c
 %define cryptopp_commit 60f81a77e0c9a0e7ffc1ca1bc438ddfa2e43b78e
-%define zydis_commit bd73bc03b0aacaa89c9c203b9b43cd08f1b1843b
+%define zydis_commit 9d298eb8067ff62a237203d1e1470785033e185c
 %define dear_imgui_commit 636cd4a7d623a2bc9bf59bb3acbb4ca075befba3
+%define discord_rpc_commit 4ec218155d73bcb8022f8f7ca72305d801f84beb
 
 Name: shadps4
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -44,31 +45,29 @@ Source8: ext-cryptopp-%cryptopp_commit.tar
 Source9: zydis-%zydis_commit.tar
 # https://github.com/shadps4-emu/ext-imgui/archive/%dear_imgui_commit/ext-imgui-%dear_imgui_commit.tar.gz
 Source10: ext-imgui-%dear_imgui_commit.tar
-
-# https://github.com/shadps4-emu/shadPS4/pull/1039
-Patch0: 0001-fixup-designator-order.patch
-
-BuildRequires(pre): libdecor-devel
+# https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
+Source11: ext-discord-rpc-%discord_rpc_commit.tar
 
 BuildRequires: boost-asio-devel
 BuildRequires: cmake
 BuildRequires: glslang-devel
+BuildRequires: ilmbase-devel
 BuildRequires: libXext-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
 BuildRequires: libdbusmenu-gtk3
+BuildRequires: libdecor-devel
 BuildRequires: libdrm-devel
 BuildRequires: libe2fs
 BuildRequires: libfmt-devel
 BuildRequires: libgbm-devel
 BuildRequires: libgtk-layer-shell
 BuildRequires: libgtkmm3
+BuildRequires: libhalf-devel
 BuildRequires: libmpdclient
 BuildRequires: libnl3
 BuildRequires: libpugixml-devel
-BuildRequires: libpulseaudio-devel
-BuildRequires: libslang2
 BuildRequires: libspdlog1.13
 BuildRequires: libspirv-tools-devel
 BuildRequires: libswresample-devel
@@ -84,7 +83,9 @@ BuildRequires: libxbyak-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzydis-devel
 BuildRequires: pipewire-jack-libs-devel
+BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-tools-devel
+BuildRequires: rapidjson-devel
 BuildRequires: spirv-headers
 BuildRequires: zlib-ng-devel
 
@@ -95,7 +96,7 @@ Obsoletes: %name-qt <= 0.2.0-alt1
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
 %__mv -Tf ../ext-cryptopp-cmake-%cryptopp_cmake_commit externals/cryptopp-cmake
 %__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
@@ -107,8 +108,7 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %__mv -Tf ../ext-cryptopp-%cryptopp_commit externals/cryptopp
 %__mv -Tf ../zydis-%zydis_commit externals/zydis
 %__mv -Tf ../ext-imgui-%dear_imgui_commit externals/dear_imgui
-
-%patch0 -p1
+%__mv -Tf ../ext-discord-rpc-%discord_rpc_commit externals/discord-rpc
 
 %build
 %add_optflags -Wno-error=return-type
@@ -136,6 +136,9 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %_libexecdir/%name
 
 %changelog
+* Sat Nov 02 2024 Nazarov Denis <nenderus@altlinux.org> 0.4.0-alt1
+- Version 0.4.0
+
 * Tue Sep 24 2024 Nazarov Denis <nenderus@altlinux.org> 0.3.0-alt1
 - Version 0.3.0
 
