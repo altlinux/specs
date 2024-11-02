@@ -4,7 +4,7 @@
 
 Name:     ledmon
 Version:  1.0.0
-Release:  alt1
+Release:  alt2.a8b320d3
 
 Summary:  Enclosure LED Utilities
 License:  GPL-2.0-only or LGPL-2.1-or-later
@@ -54,6 +54,9 @@ rm %buildroot%_docdir/%name/README.md
 %_man8dir/ledmon.8*
 
 %changelog
+* Sat Nov 02 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt2.a8b320d3
+- update from upstream/main to fix FTBFS with gcc14
+
 * Sun Aug 18 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
