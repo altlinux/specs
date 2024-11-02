@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name h5py
 %define mod_name %pypi_name
 
@@ -16,7 +15,7 @@ wrapping of the HDF5 API, while the high-level component supports access to HDF5
 files, datasets and groups using established Python and NumPy concepts.
 
 Name: %pypi_name
-Version: 3.10.0
+Version: 3.12.1
 Release: alt1
 Summary: Read and write HDF5 files from Python
 License: BSD-3-Clause
@@ -24,17 +23,17 @@ Group: Development/Python3
 Url: http://www.h5py.org/
 Vcs: https://github.com/h5py/h5py
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Patch: f406f9326e7d8ca51167809882360652e011b2bc.patch
-%pyproject_runtimedeps_metadata
 # custom ipython completer for ipython session
 %filter_from_requires /python3(IPython\(\..*\)\?)/d
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-Cython
+BuildRequires: python3-module-oldest-supported-numpy
+BuildRequires: python3-module-pkgconfig
 BuildRequires: libhdf5-devel
 BuildRequires: liblzf-devel
 %if_with check
-%pyproject_builddeps_metadata
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mpi
 %endif
@@ -60,9 +59,6 @@ This package contains tests for %name.
 
 %prep
 %setup
-%autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -91,6 +87,9 @@ ENDTESTS
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Nov 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.12.1-alt1
+- Automatically updated to 3.12.1.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
 - Automatically updated to 3.10.0.
 
