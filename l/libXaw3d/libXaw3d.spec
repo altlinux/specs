@@ -1,11 +1,11 @@
 Name: libXaw3d
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: A version of the MIT Athena widget set for X
 License: MIT
 Group: System/Libraries
-Url: http://cgit.freedesktop.org/xorg/lib/libXaw3d
+Url: https://gitlab.freedesktop.org/xorg/lib/libxaw3d
 
 Source: %name-%version.tar
 
@@ -65,6 +65,10 @@ for building programs that take full advantage of Xaw3d's features.
 %_libdir/pkgconfig/xaw3d.pc
 
 %changelog
+* Sat Nov 02 2024 Vladislav Zavjalov <slazav@altlinux.org> 1.6.6-alt1
+- 1.6.6
+- update URL in spec
+
 * Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 1.6.5-alt1
 - 1.6.5
 
