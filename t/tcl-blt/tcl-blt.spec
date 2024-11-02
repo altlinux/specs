@@ -3,7 +3,7 @@
 
 Name: tcl-%teaname
 Version: 2.5.3
-Release: alt2
+Release: alt3
 
 Summary: A Tk toolkit extension, including widgets, geometry managers etc.
 License: MIT
@@ -94,6 +94,9 @@ rm -f %buildroot%_mandir/mann/{bitmap,graph,tabset,watch}.n*
 %_docdir/%teaname%major/demos/*
 
 %changelog
+* Sat Nov 02 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.5.3-alt3
+- fix build with gcc14 (-Wincompatible-pointer-types)
+
 * Sat Oct 02 2021 Vladislav Zavjalov <slazav@altlinux.org> 2.5.3-alt2
 - Makefile: avoid using intermediate files with same names (fix make -j build)
 
