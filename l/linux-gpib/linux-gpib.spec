@@ -1,6 +1,6 @@
 Name: linux-gpib
 Version: 4.3.6
-Release: alt1
+Release: alt2
 
 Summary: Support package for GPIB (IEEE 488) hardware
 Group: System/Kernel and hardware
@@ -109,6 +109,9 @@ install -pDm0644 %SOURCE1 %kernel_srcdir/%name-%version.tar.bz2
 %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sat Nov 02 2024 Vladislav Zavjalov <slazav@altlinux.org> 4.3.6-alt2
+- fix build with gcc14 (-Wincompatible-pointer-types)
+
 * Mon Sep 25 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.3.6-alt1
 - v4.3.6
 
