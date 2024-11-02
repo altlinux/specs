@@ -3,7 +3,7 @@
 %def_disable docs
 
 Name: libxfce4util
-Version: 4.19.3
+Version: 4.19.4
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -124,6 +124,9 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
+- Updated to 4.19.4.
+
 * Thu May 23 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - devel: Dropped html documentation.
 - Fixed Patch tag.
