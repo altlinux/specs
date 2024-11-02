@@ -1,7 +1,7 @@
 
 Name: kcheckers
-Version: 0.8.1
-Release: alt9
+Version: 0.9.0
+Release: alt1
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
@@ -19,12 +19,8 @@ Source3: %name-32.png
 Source4: %name-48.png
 Source10: kcheckers_ru.ts
 
-Patch1: kcheckers-0.8.1-alt-prefix.patch
-Patch2: kcheckers-0.8.1-alt-qt-translator.patch
-Patch3: kcheckers-0.8.1-qt5.patch
-
-BuildRequires(pre): qt5-base-devel
-BuildRequires: qt5-tools
+BuildRequires(pre): qt6-base-devel
+BuildRequires: qt6-tools
 
 %description
 Tish is classic boardgame "checkers".
@@ -32,22 +28,19 @@ This game is also known as "draughts".
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 cat %SOURCE10 >i18n/kcheckers_ru.ts
 
-export PATH=%_qt5_bindir/bin:$PATH
-%qmake_qt5
+export PATH=%_qt6_bindir/bin:$PATH
+%qmake_qt6
 %make clean
 
 %build
-export PATH=%_qt5_bindir/bin:$PATH
+export PATH=%_qt6_bindir/bin:$PATH
 %make_build
-lrelease-qt5 i18n/*.ts
+lrelease-qt6 i18n/*.ts
 
 %install
-%installqt5
+%install_qt6
 install -Dm 0644 i18n/*.qm %buildroot/%_datadir/%name/
 rm -f %buildroot/%_datadir/%name/*.ts ||:
 rm -f %buildroot/%_datadir/%name/{AUTHORS,COPYING,ChangeLog,README} ||:
@@ -65,6 +58,9 @@ install -m0644 %SOURCE1 %buildroot/%_desktopdir/%name.desktop
 %doc ChangeLog AUTHORS README
 
 %changelog
+* Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- build with Qt6
+
 * Fri Oct 20 2023 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt9
 - install themes
 
