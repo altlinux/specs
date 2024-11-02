@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.18.0
+Version: 4.19.0
 Release: alt1
 
 %def_enable epoxy
@@ -20,7 +20,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel
 
 BuildRequires: gnome-doc-utils xml-utils xsltproc
-BuildRequires: intltool libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
+BuildRequires: libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
 BuildRequires: libstartup-notification-devel libwnck3-devel xorg-cf-files
 BuildRequires: libXinerama-devel libXpresent-devel libXres-devel
 # For svg support in the glib-compile-resources
@@ -45,8 +45,6 @@ Xfce.
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfwm4_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -80,6 +78,9 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt1
+- Updated to 4.19.0.
+
 * Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - Package NEWS file.
 - Don't package TODO file.
