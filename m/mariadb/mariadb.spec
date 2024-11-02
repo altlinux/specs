@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.4.3
-Release: alt2.1
+Version: 11.4.4
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -123,7 +123,7 @@ Patch33: mariadb-covscan-signexpr.patch
 Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
-Patch104: mariadb-10.11.9-disable-download-fmt.patch
+Patch104: mariadb-11.4.4-disable-download-fmt.patch
 Patch105: mariadb-10.11.9-alt-wsrep-API_fix_api-ver.patch
 
 Patch2000: mariadb-e2k.patch
@@ -619,16 +619,14 @@ pushd %buildroot%_bindir
     ln -sf mysqlcheck mysqloptimize
 popd
 
-# Install configuration files.
-#install -pD -m644 /dev/null %%buildroot%%_sysconfdir/my.cnf
-#install -pD -m600 %%SOURCE5 %%buildroot%%ROOT/my.cnf
-
 # most current distro packages have it in %%_bindir (hello kde4?)
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
 ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 
-# move pkgconfig file to arch dep path
-#mv %%buildroot%%_datadir/pkgconfig/mariadb.pc %%buildroot%%_pkgconfigdir/
+# Move pam_user_map.so to %_pam_modules_dir
+mkdir -p %buildroot%_pam_modules_dir
+mv %buildroot/%_lib/security/* %buildroot%_pam_modules_dir/
+
 # NB: still a problem for cmake on %%e2k as of 10.4.14, do not remove
 # (gave up on figuring out what was the particular crap that
 # generated broken libmariadb/cmake/install.cmake) // mike@
@@ -1071,6 +1069,9 @@ fi
 %endif
 
 %changelog
+* Sat Nov 02 2024 Alexei Takaseev <taf@altlinux.org> 11.4.4-alt1
+- 11.4.4
+
 * Fri Sep 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.4.3-alt2.1
 - Fix build on e2k
 
