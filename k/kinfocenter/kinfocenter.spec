@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.2.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -27,6 +27,7 @@ Patch2: alt-mark-usb-drives.patch
 Patch3: alt-no-aha-tool.patch
 Patch4: alt-use-pretty-name.patch
 Patch5: alt-symlink.patch
+Patch6: alt-dmidecode-path.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
@@ -44,7 +45,6 @@ BuildRequires: kf6-knotifications-devel kf6-kparts-devel kf6-kservice-devel kf6-
 BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
 BuildRequires: kf6-kdeclarative-devel kf6-kpackage-devel
 BuildRequires: plasma6-kwayland-devel
-BuildRequires: systemsettings
 
 %description
 KDE Info Center.
@@ -85,7 +85,7 @@ Requires: /usr/bin/lscpu
 Requires: /usr/bin/vulkaninfo
 # Firmware Security
 #Requires: /usr/bin/fwupdmgr
-# About
+# About, Memory
 Requires: /usr/sbin/dmidecode
 # Network
 Requires: /usr/bin/ip
@@ -116,6 +116,7 @@ KF6 library
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
  && echo 'set_target_properties(KInfoCenterInternal PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 6)' >>src/CMakeLists.txt \
@@ -167,6 +168,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt2
+- fix find dmidecode (closes: 51931)
+
 * Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 
