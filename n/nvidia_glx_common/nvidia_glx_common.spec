@@ -21,9 +21,9 @@
 # version-release
 
 %define nv_version 550
-%define nv_release 120
-%define nv_minor %nil
-%define pkg_rel alt279
+%define nv_release 127
+%define nv_minor 05
+%define pkg_rel alt280
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -367,6 +367,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 550.127.05-alt280
+- new version
+
 * Tue Oct 08 2024 Sergey V Turchin <zerg@altlinux.org> 550.120-alt279
 - new version
 
