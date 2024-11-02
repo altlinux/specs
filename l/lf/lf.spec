@@ -1,5 +1,5 @@
 %global import_path github.com/gokcehan/lf
-%define lf_ver 32
+%define lf_ver 33
 Name:     lf
 Version:  r%lf_ver
 Release:  alt1
@@ -55,6 +55,9 @@ install -D -m644 etc/lf.zsh \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sat Nov 02 2024 Ilya Demyanov <turbid@altlinux.org> r33-alt1
+- New upstream version r33
+
 * Tue Apr 02 2024 Ilya Demyanov <turbid@altlinux.org> r32-alt1
 - New upstream version r32
 
