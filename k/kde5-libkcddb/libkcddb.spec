@@ -7,7 +7,7 @@
 
 Name: kde5-%rname
 Version: 24.02.2
-Release: alt2
+Release: alt3
 %K5init
 
 Group: Graphical desktop/KDE
@@ -61,6 +61,7 @@ KF5 library
 
 %install
 %K5install
+mv %buildroot/%_K5xdgapp/kcm_cddb{,5}.desktop
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -82,6 +83,9 @@ KF5 library
 %_K5xdgapp/*cddb*.desktop
 
 %changelog
+* Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt3
+- resolve conflict with libkcddb6
+
 * Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt2
 - relax requires
 
