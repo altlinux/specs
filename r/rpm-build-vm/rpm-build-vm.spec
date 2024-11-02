@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.73
+Version: 1.74
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -43,7 +43,8 @@ Requires(pre): kernel-latest
 %else
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
-Requires(pre): kernel
+# `>= 5.7` is to avoid kernel-image-xenomai.
+Requires(pre): kernel >= 5.7
 %endif
 %endif
 
@@ -231,6 +232,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.74-alt1
+- spec: Restore 'kernel' version dependency for p10.
+
 * Sat Oct 05 2024 Vitaly Chikunov <vt@altlinux.org> 1.73-alt1
 - Reduce the initrd size by improving the handling of zstd compressed modules.
 
