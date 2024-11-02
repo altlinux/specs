@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 Name: dictd
 Version: 1.13.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Url: http://www.dict.org/
@@ -17,6 +17,8 @@ Source6: dictd-control
 Source7: dictd-README.ALT-ru_RU.UTF-8
 Source8: dictd.service
 Source9: dictd.filetrigger
+Patch0: patch-servparse.patch
+Patch1: patch-clientparse.patch
 
 # -------  dictd package description ----- #
 
@@ -124,6 +126,8 @@ dict_lookup on a keyboard shortcut in the window manager.
 # --------------- real part ----------------  #
 %prep
 %setup
+%patch0 -p2
+%patch1 -p2
 cp %SOURCE7 README.ALT-ru_RU.UTF-8
 
 %build
@@ -238,6 +242,9 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Sat Nov 2 2024 Aleksey Cheusov <cheusov@altlinux.ru> 1:1.13.1-alt3
+- fix build failure with gcc-14
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1:1.13.1-alt2
 - fix service file permissions
 
