@@ -1,14 +1,12 @@
 %define optflags_lto %nil
 
-%define git_ver 16885
-%define git_commit e56164f1e321fe2873c246a268af8ce1dc9281bd
+%define git_ver 17082
+%define git_commit 17e78a9e6f2bae69e61a16a10609a1e64e5c06f9
 
 %define glslang_version 13.1.1
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
 %define hidapi_commit 8b43a97a9330f8b0035439ce9e255e4be202deca
 %define yaml_cpp_commit 456c68f452da09d8ca84b375faa2b1397713eaba
-%define spirv_headers_version vulkan-sdk-1.3.268.0
-%define spirv_tools_version 2023.5.rc1
 %define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
 %define soundtouch_commit 394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07
 %define miniupnp_version miniupnpd_2_3_6
@@ -17,7 +15,7 @@
 %define openal_version 1.23.1
 
 Name: rpcs3
-Version: 0.0.33
+Version: 0.0.34
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -39,22 +37,18 @@ Source2: asmjit-%asmjit_commit.tar
 Source3: hidapi-%hidapi_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source4: yaml-cpp-%yaml_cpp_commit.tar
-# https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
-Source5: SPIRV-Headers-%spirv_headers_version.tar
-# https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
-Source6: SPIRV-Tools-%spirv_tools_version.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
-Source7: cubeb-%cubeb_commit.tar
+Source5: cubeb-%cubeb_commit.tar
 # https://github.com/RPCS3/soundtouch/archive/%soundtouch_commit/soundtouch-%soundtouch_commit.tar.gz
-Source8: soundtouch-%soundtouch_commit.tar
+Source6: soundtouch-%soundtouch_commit.tar
 # https://github.com/miniupnp/miniupnp/archive/%miniupnp_version/miniupnp-%miniupnp_version.tar.gz
-Source9: miniupnp-%miniupnp_version.tar
+Source7: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
-Source10: rtmidi-%rtmidi_version.tar
+Source8: rtmidi-%rtmidi_version.tar
 # https://github.com/facebook/zstd/archive/%zstd_commit/zstd-%zstd_commit.tar.gz
-Source11: zstd-%zstd_commit.tar
+Source9: zstd-%zstd_commit.tar
 # https://github.com/kcat/openal-soft/archive/%openal_version/openal-soft-%openal_version.tar.gz
-Source12: openal-soft-%openal_version.tar
+Source10: openal-soft-%openal_version.tar
 
 BuildRequires: /proc
 BuildRequires: clang
@@ -101,14 +95,12 @@ BuildRequires: qt6-svg-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
-%__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
-%__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
 %__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 %__mv -Tf ../miniupnp-%miniupnp_version 3rdparty/miniupnp/miniupnp
@@ -171,6 +163,9 @@ echo "// This is a generated file.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Nov 02 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.34-alt1
+- Version 0.0.34
+
 * Sun Sep 01 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.33-alt1
 - Version 0.0.33
 
