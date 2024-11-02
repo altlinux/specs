@@ -1,6 +1,6 @@
 Name: xfce4-session
-Version: 4.19.2
-Release: alt3.g605c7c75
+Version: 4.19.3
+Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -84,6 +84,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_datadir/xdg-desktop-portal/xfce-portals.conf
 
 %changelog
+* Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Updated to 4.19.3.
+
 * Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt3.g605c7c75
 - Upstream git snapshot (master branch).
 
