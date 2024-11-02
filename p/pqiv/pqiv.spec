@@ -1,5 +1,5 @@
 Name: pqiv
-Version: 2.13.1
+Version: 2.13.2
 Release: alt1
 
 Summary: Minimalist Image Viewer
@@ -136,6 +136,9 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Sat Nov 02 2024 Ilya Mashkin <oddity@altlinux.ru> 2.13.2-alt1
+- 2.13.2
+
 * Tue Mar 12 2024 Ilya Mashkin <oddity@altlinux.ru> 2.13.1-alt1
 - 2.13.1
 
