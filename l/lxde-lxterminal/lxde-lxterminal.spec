@@ -2,10 +2,10 @@
 %define gtkver 3
 Name: lxde-lxterminal
 Version: 0.4.0
-Release: alt1
+Release: alt2.20240821
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/lxde/lxterminal.git
 
@@ -63,6 +63,9 @@ done
 %_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt2.20240821
+- new snapshot
+
 * Sun Jun 13 2021 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - new version 0.4.0
 - update URL tag

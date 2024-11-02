@@ -2,7 +2,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.5
-Release: alt3
+Release: alt4.20241019
 
 Summary: LXSession is the default X11 session manager of LXDE
 License: GPL-2.0-or-later
@@ -20,10 +20,11 @@ Packager: LXDE Development Team <lxde at packages.altlinux.org>
 Source: %name-%version.tar
 Patch: lxsession-0.4.6.1-alt-kdmfix.patch
 Patch1: lxsession-0.5.2-notify-daemon-default.patch
-Patch2: lxsession-0.5.2-reload.patch
 
 # Fedora patchs
+Patch2: lxsession-0.5.2-reload.patch
 Patch3: lxsession-0.5.4-load-settings-nullcheck.patch
+Patch4: lxsession-0.5.5-split-indicator-support.patch
 
 BuildPreReq: intltool libXau-devel libdbus-devel libgtk+%gtkver-devel xsltproc docbook-dtds docbook-style-xsl pkgconfig(dbus-glib-1) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(unique-1.0) pkgconfig(x11) pkgconfig(polkit-agent-1) vala pkgconfig(libnotify)
 %add_findreq_skiplist %_bindir/lxlock
@@ -63,11 +64,12 @@ for lxsession lite.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 sed -i 's/^NotShowIn=GNOME;KDE;MATE;/OnlyShowIn=LXDE;/g' data/lxpolkit.desktop.in.in
 
 %build
-%__subst '/m4/ d' Makefile.am
+mkdir -p m4
 %autoreconf
 %configure --enable-man \
            --enable-debug \
@@ -122,6 +124,9 @@ mkdir -p -m 755 %buildroot%_sysconfdir/xdg/%name
 %_datadir/%upstreamname/ui/lxpolkit.ui
 
 %changelog
+* Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 0.5.5-alt4.20241019
+- new snapshot
+
 * Mon Jun 14 2021 Anton Midyukov <antohami@altlinux.org> 0.5.5-alt3
 - Fix start (Closes: 39540)
 - update Url tag
