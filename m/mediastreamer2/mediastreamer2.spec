@@ -4,13 +4,14 @@
 %def_without bcg729
 
 Name: mediastreamer2
-Version: 5.3.90
+Version: 5.3.94
 Release: alt1
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
 License: AGPL-3.0
 Group: System/Libraries
 Url: https://gitlab.linphone.org/BC/public/mediastreamer2
+Vcs: git://gitlab.linphone.org/BC/public/mediastreamer2.git
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -112,6 +113,8 @@ sed -i '/MEDIASTREAMER_LOCAL_PLUGINS_LOCATION/s|${CMAKE_BINARY_DIR}/lib|%_lib|' 
   mediastreamer-config.h.cmake
 
 %build
+# gcc14
+%add_optflags -Wno-error=implicit-function-declaration
 export CPLUS_INCLUDE_PATH=%_includedir/bcmatroska2:$CPLUS_INCLUDE_PATH
 %if_with bcg729
 export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
@@ -154,6 +157,11 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Sat Nov 02 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.94-alt1
+- New version 5.3.94.
+- Added vcs tag.
+- Fixed build with gcc14.
+
 * Tue Oct 15 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.90-alt1
 - New version 5.3.90.
 

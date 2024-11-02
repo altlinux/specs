@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: bcmatroska2
-Version: 5.3.90
+Version: 5.3.94
 Release: alt1
 
 Summary: C Library to Deal with Matroska Files
@@ -9,6 +9,7 @@ Summary: C Library to Deal with Matroska Files
 License: BSD-3-Clause AND Zlib AND GPL-2.0-or-later
 Group: System/Libraries
 Url: https://gitlab.linphone.org/BC/public/bcmatroska2
+Vcs: git://gitlab.linphone.org/BC/public/bcmatroska2.git
 
 Source: https://gitlab.linphone.org/BC/public/bcmatroska2/-/archive/%version/%name-%version.tar.bz2
 
@@ -68,6 +69,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/BCMatroska2/*.cmake
 
 %changelog
+* Sat Nov 02 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.94-alt1
+- New version 5.3.94.
+- Added vcs tag.
+
 * Tue Oct 15 2024 Leontiy Volodin <lvol@altlinux.org> 5.3.90-alt1
 - New version 5.3.90.
 
