@@ -1,4 +1,4 @@
-%define mainline_ver 5.1.2
+%define mainline_ver 5.1.21
 
 Name: eid-mw
 Version: %mainline_ver
@@ -11,9 +11,6 @@ Url: https://github.com/Fedict/eid-mw/
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
 Source: %name.tar
-
-Patch0: alt-fix-pkg-check-var.patch
-Patch1: alt-fix-underlinked.patch
 
 BuildRequires(pre): rpm-build-firefox
 BuildRequires: gcc-c++
@@ -113,8 +110,6 @@ for libeidviewer.
 
 %prep
 %setup -n %name
-%patch0 -p1
-#%patch1 -p1
 
 echo "#\!/bin/sh" > scripts/build-aux/genver.sh
 echo "echo %mainline_ver" >> scripts/build-aux/genver.sh
@@ -192,6 +187,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Sun Nov 03 2024 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.21-alt1
+- updated to version 5.1.21
+
 * Thu Apr 07 2022 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.2-alt1
 - updated to version 5.1.2
 
