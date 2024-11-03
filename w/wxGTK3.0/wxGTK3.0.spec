@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt4
+Release: alt5.20240531
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -23,6 +23,7 @@ Source2: ld_shared_wrapper.pl
 Source3: wx-config
 
 Patch1: wxGTK3-3.0.2-abicheck.patch
+Patch2: wxGTK3.0.5.1-fix-building-with-gcc14.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -238,7 +239,7 @@ wxGTK example programs.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
 #sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
@@ -296,7 +297,10 @@ CONF_FLAG="--enable-shared \
 # error: invalid initialization of reference of type 'const wxList&' from expression of type 'const wxVariantList'
 #	--enable-std_containers \
 
-./autogen.sh
+aclocal --force -I$PWD/build/aclocal
+autoconf -f
+libtoolize --copy --force
+#./autogen.sh
 export LIBS="-lX11"
 DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 %add_optflags -fno-strict-aliasing -std=gnu++11 $GST_CFLAGS $DEFS
@@ -448,6 +452,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Nov 03 2024 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt5.20240531
+- new snapshot
+
 * Tue Aug 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.0.5.1-alt4
 - NMU: support LoongArch architecture (lp64d ABI)
 
