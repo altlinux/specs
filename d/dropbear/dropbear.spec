@@ -4,9 +4,10 @@
 
 Name: dropbear
 Summary: A smallish SSH server and client
-Version: 2024.85
+Version: 2024.86
 Release: alt1
 License: MIT
+# "Dropbear is open source software, distributed under a MIT-style license."
 Group: System/Servers
 Url: https://matt.ucc.asn.au/dropbear/dropbear.html
 Vcs: https://github.com/mkj/dropbear
@@ -18,6 +19,7 @@ Source3: dropbear.sysconfig
 BuildRequires: zlib-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: iproute2
+BuildRequires: python3-module-asyncssh
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-pytest-rerunfailures
 BuildRequires: rpm-build-vm
@@ -77,6 +79,7 @@ vm-run --ext4 --heredoc <<-EOF
   HOME=/root
   mkdir -p ~/.ssh
   ../dropbearkey -t ecdsa -f ~/.ssh/id_dropbear | grep ^ecdsa > ~/.ssh/authorized_keys
+  ../dropbearconvert dropbear openssh ~/.ssh/id_dropbear ~/.ssh/id_ecdsa
   chmod 700 ~/.ssh ~/.ssh/authorized_keys
   pytest3 --reruns=3 --hostkey=fakekey --dbclient=../dbclient --dropbear=../dropbear
 EOF
@@ -103,6 +106,9 @@ EOF
 %_bindir/scp
 
 %changelog
+* Fri Nov 01 2024 Vitaly Chikunov <vt@altlinux.org> 2024.86-alt1
+- Update to DROPBEAR_2024.86 (2024-10-22).
+
 * Thu Apr 25 2024 Vitaly Chikunov <vt@altlinux.org> 2024.85-alt1
 - Update to DROPBEAR_2024.85 (2024-04-25).
 
