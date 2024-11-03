@@ -1,5 +1,5 @@
 Name: nix
-Version: 2.24.9
+Version: 2.24.10
 Release: alt1
 
 Summary: Nix software deployment system
@@ -116,6 +116,9 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Nov 03 2024 Boris Yumankulov <boria138@altlinux.org> 2.24.10-alt1
+- new version 2.24.10
+
 * Thu Oct 03 2024 Boris Yumankulov <boria138@altlinux.org> 2.24.9-alt1
 - new version 2.24.9
 
