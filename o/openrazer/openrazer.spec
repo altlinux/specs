@@ -4,7 +4,7 @@
 
 Name: openrazer
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary: Open source driver and user-space daemon for managing Razer devices
 License: GPL-2.0
@@ -89,7 +89,7 @@ getent group plugdev >/dev/null || groupadd -r plugdev
 set -e
 dkms install %dkms_name/%dkms_version || {
 echo "Failed to install openrazer-driver! Update your kernel and install"
-echo "kernel-headers-modules matching your kernel type std-def/un-def."
+echo "kernel-headers-modules matching your kernel flavour."
 }
 
 %preun -n %name-kernel-modules-dkms
@@ -121,6 +121,9 @@ fi
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Nov 03 2024 Anton Kurachenko <srebrov@altlinux.org> 3.9.0-alt2
+- Updated post script in the spec.
+
 * Sun Oct 06 2024 Anton Kurachenko <srebrov@altlinux.org> 3.9.0-alt1
 - New version 3.9.0.
 

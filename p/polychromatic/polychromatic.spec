@@ -1,7 +1,7 @@
 %def_with check
 
 Name: polychromatic
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: RGB lighting interface utilites
@@ -64,6 +64,9 @@ eval $(dbus-launch --sh-syntax)
 %_man1dir/%name-*
 
 %changelog
+* Sun Nov 03 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.3-alt1
+- New version 0.9.3.
+
 * Sat Aug 03 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.2-alt1
 - New version 0.9.2.
 
