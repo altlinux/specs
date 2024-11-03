@@ -3,8 +3,8 @@
 %global llvm_version 18.1
 
 Name: android-tools
-Version: 34.0.4
-Release: alt4
+Version: 34.0.5
+Release: alt1
 
 Summary: Android Debug CLI tools
 License: APL
@@ -21,29 +21,40 @@ Url: https://developer.android.com/studio/releases/platform-tools
 Source: %name-%version-%release.tar
 
 # Debian core patches
-Patch0: Revert-Remove-mips-build.patch
-Patch1: Revert-Remove-mips-support-fr.patch
-Patch2: Revert-Remove-a-file-we-haven-t-built-since-2013.patch
-Patch3: support-mips.patch
-Patch4: Revert-Order-events-returned-by-fdevent_epoll.patch
+Patch0: Revert-Remove-mips-support.patch
+Patch1: Revert-Remove-mips-build.patch
+Patch2: Revert-Remove-mips-support-fr.patch
+Patch3: Revert-Remove-a-file-we-haven-t-built-since-2013.patch
+Patch4: support-mips.patch
 Patch5: Revert-3-Add-rust-demangling.patch
-Patch6: stdatomic.patch
-Patch7: workaround__builtin_available.patch
-Patch8: Nullable.patch
-Patch9: unwindstack-porting.patch
-Patch10: move-log-file-to-proper-dir.patch
-Patch11: Added-missing-headers.patch
-Patch12: libusb-header-path.patch
-Patch13: throw-exception-on-unknown-os.patch
-Patch14: hard-code-build-number.patch
-Patch15: stub-out-fastdeploy.patch
-Patch16: Implement-const_iterator-operator.patch
-Patch17: Update_casting_type.patch
-Patch18: typos.patch
-Patch19: Drop-gki-dependency-from-mkbootimg.patch
+Patch6: Revert-Replacing-hardcoded-types-with-decltype-for-e.patch
+Patch7: Revert-Enforcing-static-invariants-to-prevent-failur.patch
+Patch8: Revert-Drop-all-path-rel.patch
+Patch9: Revert-Lose-convertToResPath-to-aapt.patch
+Patch10: stdatomic.patch
+Patch11: workaround__builtin_available.patch
+Patch12: Nullable.patch
+Patch13: unwindstack-porting.patch
+Patch14: move-log-file-to-proper-dir.patch
+Patch15: Added-missing-headers.patch
+Patch16: libusb-header-path.patch
+Patch17: throw-exception-on-unknown-os.patch
+Patch18: hard-code-build-number.patch
+Patch19: stub-out-fastdeploy.patch
+Patch20: Implement-const_iterator-operator.patch
+Patch21: Drop-gki-dependency-from-mkbootimg.patch
+Patch22: gcc-14.patch
+Patch23: add-missing-headers.patch
+Patch24: typos.patch
 
 # Debian, from boringssl package
-Patch100: Revert-Remove-support-for-ppc64le.patch
+Patch100: Add-new-Arch-ia64-riscv64-sh4-x32.patch
+Patch101: sources-mk.patch
+Patch102: Disable-failing-test.patch
+Patch103: Revert-Remove-support-for-ppc64le.patch
+
+# ALT fixes
+Patch200: alt-libziparchive-compile-fix.patch
 
 # LoongArch
 Patch3500: boringssl-loongarch64.patch
@@ -111,16 +122,16 @@ choice.
 %prep
 %setup
 # applying Debian patches
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+#%patch6 -p1
+#%patch7 -p1
+#%patch8 -p1
+#%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -131,10 +142,19 @@ choice.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
 pushd external/boringssl
 %patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
 popd
+%patch200 -p1
 %patch3500 -p1
 %patch3501 -p1
 
@@ -337,6 +357,10 @@ done
 %aprefix
 
 %changelog
+* Sun Nov 03 2024 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt1
+- Platform 34.0.5 (no changes in modeules we package)
+- Some patches from Debian
+
 * Sun Apr 21 2024 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.4-alt4
 - Minor updates from Debian (adb bash completion and mkbootimg deps fix)
 - Use LLVM 18.1
