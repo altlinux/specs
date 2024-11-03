@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.24.5
-Release: alt5
+Release: alt6
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -76,8 +76,8 @@ fi
 %install
 %makeinstall
 install -Dp .gear/wget.control %buildroot%_controldir/wget
-install -d %buildroot%_localstatedir/seccomp
-touch %buildroot%_localstatedir/seccomp/wget
+install -d %buildroot%_localstatedir/control
+touch %buildroot%_localstatedir/control/wget
 
 %find_lang --output=%name.lang %name %name-gnulib
 
@@ -101,13 +101,16 @@ fi
 %doc COPYING ChangeLog* AUTHORS MAILING-LIST NEWS README*
 %config(noreplace) %_sysconfdir/wgetrc
 %_controldir/wget
-%dir %_localstatedir/seccomp
-%ghost %_localstatedir/seccomp/wget
+%dir %_localstatedir/control
+%ghost %_localstatedir/control/wget
 %_bindir/wget
 %_man1dir/wget.1*
 %_infodir/wget.info*
 
 %changelog
+* Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt6
+- Make control(8) 'hardening' not just 'seccomp'.
+
 * Tue Oct 15 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt5
 - Install the control(8) file for wget. This will allow system-wide disabling
   seccomp filtering in case it is suddenly broken by external circumstances.
