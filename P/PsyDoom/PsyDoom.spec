@@ -2,7 +2,7 @@
 
 Name: PsyDoom
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: Port Doom from PSOne to PC
 License: GPLv2+
@@ -65,6 +65,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Nov  2 2024 Artyom Bystrov <arbars@altlinux.org> 1.1.1-alt2
+- Fix build with GCC14
+
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 1.1.1-alt1
 - Update to new version
 

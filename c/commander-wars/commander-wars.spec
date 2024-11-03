@@ -1,7 +1,7 @@
 Name: commander-wars
 Summary: The aim of this project is to create an Advance Wars Clone
 License: LGPLv3
-Version: 0.30.2.1
+Version: 0.37.2.1
 Release: alt1
 
 Group: Games/Strategy
@@ -94,6 +94,9 @@ done
 %_datadir/%name/
 
 %changelog
+* Sat Nov  2 2024 Artyom Bystrov <arbars@altlinux.org> 0.37.2.1-alt1
+- update to new version
+
 * Tue Feb 27 2024 Artyom Bystrov <arbars@altlinux.org> 0.30.2.1-alt1
 - update to new version
 

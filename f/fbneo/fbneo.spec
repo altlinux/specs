@@ -1,6 +1,6 @@
 Name:           fbneo
 Version:        1.0.0.2
-Release:        alt1
+Release:        alt1.git93da211
 Summary:        Multi-System emulator
 License:        Custom
 Group:          Emulators
@@ -41,5 +41,8 @@ install -Dm0755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Nov  2 2024 Artyom Bystrov <arbars@altlinux.org> 1.0.0.2-alt1.git93da211
+- Update to new version
+
 * Sun Mar 24 2024 2024 Artyom Bystrov <arbars@altlinux.org> 1.0.0.2-alt1
 - Initial commit for Sisyphus
