@@ -8,12 +8,13 @@ Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 30.2.3
-Release: alt1.1
+Release: alt2
 License: GPL-2.0-or-later
 Group: Video
 Url: https://github.com/jp9000/obs-studio
 Source: %name-%version.tar
 Patch1: obs-studio-27.2.4-alt-cert-bundle.patch
+Patch2: obs-studio-fix-incompatible-pointer-type.patch
 
 # https://bugzilla.altlinux.org/47318
 Requires: qt6-svg
@@ -113,6 +114,7 @@ Development files for %name.
 %prep
 %setup
 %patch1 -p0
+%patch2 -p1
 %ifarch %e2k
 # someone added this poorly written code to upstream
 sed -i '/MATCHES "e2k"/c if(false)' cmake/Modules/CompilerConfig.cmake
@@ -182,6 +184,9 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/libobs.pc
 
 %changelog
+* Sun Nov 03 2024 Anton Midyukov <antohami@altlinux.org> 30.2.3-alt2
+- add patch for build with gcc14 on 32 bit arches
+
 * Wed Sep 04 2024 Sergey V Turchin <zerg@altlinux.org> 30.2.3-alt1.1
 - NMU: fix build requires
 
