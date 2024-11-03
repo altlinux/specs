@@ -1,6 +1,6 @@
 Name:     asusctl
 Version:  6.0.12
-Release:  alt1
+Release:  alt1.1
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
 License:  MPL-2.0
@@ -15,23 +15,23 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source:  %name-%version.tar
 Source1: README.ru
-Source2: vendor.tar
+Source2: vendor_asusctl-%version.tar
 Source3: cargo_src.tar
 Source4: update-vendor.sh
 Source5: config.toml
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd >= 5
-BuildRequires(pre): rust-cargo
+BuildRequires(pre): rust-cargo 
 
-# Automatically added by buildreq on Sun Aug 25 2024
-# optimized out: ca-trust glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libudev-devel libwayland-server llvm17.0-libs pkg-config python3 python3-base python3-dev rust sh5
-BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope rust-cargo
+# Automatically added by buildreq on Sat Oct 26 2024
+# optimized out: ca-trust glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libudev-devel libwayland-server llvm17.0-libs pkg-config python3 python3-base python3-dev rust rust-cargo sh5
+BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope
 
-Buildrequires: git libayatana-indicator-devel libappindicator-gtk3 libxkbcommon-x11-devel 
+Buildrequires: git libayatana-indicator-devel libappindicator-gtk3 libxkbcommon-x11-devel cargo-vendor-filterer 
 
 # For Version 6.x BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope rust-cargo
 
-BuildRequires: cmake
+BuildRequires: cmake 
 
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -40,9 +40,16 @@ BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(gdk-3.0)
 
-BuildRequires: pkgconfig(libseat)
-BuildRequires: pkgconfig(gbm)
-BuildRequires: pkgconfig(libinput)
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(gbm)
+BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(libinput)
+BuildRequires:  pkgconfig(libseat)
+BuildRequires:  pkgconfig(libudev)
+BuildRequires:  pkgconfig(xkbcommon)
+BuildRequires:  pkgconfig(libzstd)
+BuildRequires:  pkgconfig(gtk+-3.0)
 
 %description
 asusd is a utility for Linux to control many aspects of various ASUS laptops
@@ -70,7 +77,6 @@ a notification service, and ability to run in the background.
 
 %prep
 %setup -a2 -a3
-#%%patch1 -p1
 
 install -m755 %SOURCE4 .
 
@@ -79,29 +85,13 @@ install -D -m644 %SOURCE5 .cargo/config.toml
 %__subst s\^/usr/bin/sleep^/bin/sleep^ ./data/asusd-user.service
 
 
-#mkdir .cargo
-#cat >.cargo/config.toml <<EOF
-#[source.crates-io]
-#replace-with = "vendored-sources"
-#
-#[source."git+https://github.com/slint-ui/slint.git"]
-#git = "https://github.com/slint-ui/slint.git"
-#replace-with = "vendored-sources"
-#
-#[source."git+https://gitlab.com/asus-linux/supergfxctl.git"]
-#git = "https://gitlab.com/asus-linux/supergfxctl.git"
-#replace-with = "vendored-sources"
-#
-#[source.vendored-sources]
-#directory = "vendor"
-#EOF
-
 %build
 export RUSTFLAGS="%rustflags"
 RUST_BACKTRACE=1 
 
-
 export CARGO_HOME=%_builddir/%name-%version/cargo_src
+
+# ./update-vendor.sh
 
 %rust_build
 
@@ -118,10 +108,6 @@ install -m644 %SOURCE1 %_builddir/%name-%version
 mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_udevrulesdir
 install data/asusd.service %buildroot/%_unitdir/asusd.service
-
-#mv data/asusd-user.service %buildroot/%_unitdir/asusd-user.service
-#mv %buildroot/usr/lib/udev/rules.d/99-asusd.rules %buildroot/%_udevrulesdir/99-asusd.rules
-
 
 %files
 %_bindir/*
@@ -146,6 +132,10 @@ install data/asusd.service %buildroot/%_unitdir/asusd.service
 %_datadir/rog-gui/*
 
 %changelog
+* Sat Oct 26 2024 Hihin Ruslan <ruslandh@altlinux.ru> 6.0.12-alt1.1
+- Update buildreq
+- Update vendors
+
 * Sun Oct 13 2024 Hihin Ruslan <ruslandh@altlinux.ru> 6.0.12-alt1
 - Version 6.0.12
 
