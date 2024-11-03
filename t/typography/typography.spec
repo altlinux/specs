@@ -3,22 +3,21 @@
 
 Name: typography
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Look up text styles
-License: GPL-3.0-or-later
+License: GPL-3.0-only
 Group: Graphical desktop/GNOME
 
+Url: https://gitlab.gnome.org/World/design/typography
 Vcs: https://gitlab.gnome.org/World/design/typography
-URL: https://gitlab.gnome.org/World/design/typography
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 0.59.0
-BuildRequires: cmake
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= 1.5
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate 
+BuildRequires: %_bindir/desktop-file-validate
 BuildRequires: %_bindir/appstreamcli
 %endif
 
@@ -47,5 +46,12 @@ Tool for working with the GNOME typography design guidelines.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Thu Oct 31 2024 Oleg Shchavelev <oleg@altlinux.org> 0.3.0-alt1.1
+- Rebuild improved spec (ALT #51799)
+- Replaced license GPL-3.0-or-later with GPL-3.0-only
+- Drop require cmake dependency in BuildRequires
+- Add version require libadwaita in BuildRequires
+- Turn keys URL and VCS order
+
 * Mon Oct 14 2024 Oleg Shchavelev <oleg@altlinux.org> 0.3.0-alt1
 - Initial build
