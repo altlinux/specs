@@ -4,7 +4,7 @@
 
 %global import_path github.com/restic/restic
 Name:     restic
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 Summary:  Fast, secure, efficient backup program
 License:  BSD-2-Clause
@@ -90,6 +90,9 @@ diff -qr %name-%version x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Oct 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.2-alt1
+- Update to v0.17.2 (2024-10-27).
+
 * Fri Sep 06 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.1-alt1
 - Update to v0.17.1 (2024-09-05).
 
