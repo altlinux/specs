@@ -6,7 +6,7 @@
 
 Name:          gem-curb
 Version:       1.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for libcurl
 License:       MIT
 Group:         Development/Ruby
@@ -16,6 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: libcurl-devel
 %if_enabled check
 BuildRequires: gem(webrick) >= 0
 BuildRequires: gem(rdoc) >= 0
@@ -46,7 +47,7 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 %if_enabled    doc
 %package       -n gem-curb-doc
 Version:       1.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for libcurl documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curb
 Group:         Development/Documentation
@@ -72,7 +73,7 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 %if_enabled    devel
 %package       -n gem-curb-devel
 Version:       1.0.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for libcurl development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curb
 Group:         Development/Ruby
@@ -134,6 +135,9 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 
 
 %changelog
+* Sun Nov 03 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.6-alt1.1
+- ! fuxed build dep to libcurl
+
 * Mon Oct 28 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.6-alt1
 - ^ 1.0.0 -> 1.0.6
 
