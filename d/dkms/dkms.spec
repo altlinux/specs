@@ -6,7 +6,7 @@
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
 Version: 3.1.1
-Release: alt2
+Release: alt3
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/dell/dkms
@@ -31,8 +31,13 @@ Group: Development/Other
 BuildArch: noarch
 Requires(pre): %name = %EVR
 Requires: /proc
+%if 0%{?kernel_latest:1}
 Requires: kernel-%kernel_latest
 Requires: kernel-headers-modules-%kernel_latest
+%else
+Requires: kernel > 5.7
+Requires: kernel-headers-modules-un-def
+%endif
 Requires: rpm-build
 
 %description checkinstall
@@ -124,6 +129,9 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 3.1.1-alt3
+- spec: Make checkinstall more portable between branches.
+
 * Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 3.1.1-alt2
 - Remove dependence on kernel-image-un-def.
 
