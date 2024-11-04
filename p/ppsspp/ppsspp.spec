@@ -1,6 +1,6 @@
 Name: ppsspp
-Version: 1.17.1
-Release: alt2
+Version: 1.18
+Release: alt1
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -14,8 +14,8 @@ ExcludeArch: ppc64le
 # Source-url: https://github.com/hrydgard/%name/releases/download/v%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
-Patch0: %name-alt-ffmpeg.patch
-Patch1: %name-alt-git.patch
+Patch0: %name-alt-git.patch
+Patch1: %name-alt-miniupnpc.patch
 
 Requires: %name-common = %EVR
 
@@ -91,6 +91,7 @@ This build using the Qt frontend.
 %patch1 -p1
 
 %build
+%add_optflags -Wno-error=return-type
 
 export CPLUS_INCLUDE_PATH=%_includedir/libzip
 
@@ -192,6 +193,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Mon Nov 04 2024 Nazarov Denis <nenderus@altlinux.org> 1.18-alt1
+- new version (1.18) with rpmgs script
+
 * Tue May 28 2024 Nazarov Denis <nenderus@altlinux.org> 1.17.1-alt2
 - Build libretro frontend
 
