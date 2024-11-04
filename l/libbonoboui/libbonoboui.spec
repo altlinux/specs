@@ -1,18 +1,25 @@
+%def_enable snapshot
+
 %define ver_major 2.24
 %def_disable static
+%def_enable check
 
 Name: libbonoboui
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: Bonobo user interface components
-License: LGPL
+License: LGPL-2.0-or-later
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Vcs: https://gitlab.gnome.org/Archive/libbonoboui.git
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+%else
+Source: %name-%version.tar
+%endif
 
 # From configure.in
 %define libgnomecanvas_ver 1.116.0
@@ -28,18 +35,19 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
 BuildPreReq: rpm-build-gnome gnome-common
 
 # From configure.in
-BuildPreReq: intltool >= 0.40.0
-BuildPreReq: libpango-devel libpopt-devel
-BuildPreReq: libXt-devel libX11-devel
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libbonobo-devel >= %libbonobo_ver
-BuildPreReq: libgnomecanvas-devel >= %libgnomecanvas_ver
-BuildPreReq: libgnome-devel >= %libgnome_ver
-BuildPreReq: libgtk+2-devel >= %gtk_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libglade-devel >= %glade_ver
-BuildPreReq: libGConf-devel >= %gconf_ver
-BuildPreReq: gtk-doc >= %gtk_doc_ver
+BuildRequires: intltool >= 0.40.0
+BuildRequires: libpango-devel libpopt-devel
+BuildRequires: libXt-devel libX11-devel
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libbonobo-devel >= %libbonobo_ver
+BuildRequires: libgnomecanvas-devel >= %libgnomecanvas_ver
+BuildRequires: libgnome-devel >= %libgnome_ver
+BuildRequires: libgtk+2-devel >= %gtk_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libglade-devel >= %glade_ver
+BuildRequires: libGConf-devel >= %gconf_ver
+BuildRequires: gtk-doc >= %gtk_doc_ver
+%{?_enable_check:BuildRequires: xvfb-run}
 
 %description
 Bonobo is a component system based on CORBA, used by the GNOME
@@ -49,7 +57,7 @@ that come with Bonobo.
 %package devel
 Summary: Develompment libraries and headers for %name
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Bonobo is a component system based on CORBA, used by the GNOME desktop.
@@ -74,7 +82,7 @@ This package contains development documentation for %name
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/GNOME and GTK+
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Bonobo is a component system based on CORBA, used by the GNOME desktop.
@@ -87,16 +95,19 @@ programs that use %name.
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %prep
-%setup -q
+%setup
 
 %build
+%add_optflags -Wno-incompatible-pointer-types
+%autoreconf
 %configure \
-	%{subst_enable static}
-
-%make
+    %{subst_enable static} \
+    %{?_enable_snapshot:--enable-gtk-doc}
+%nil
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 bzip2 -9f ChangeLog NEWS
 
@@ -105,6 +116,9 @@ mkdir -p %buildroot%_docdir/%name-devel-%version
 cp doc/{*.txt,*.dtd,*.html,*.xml} %buildroot%_docdir/%name-devel-%version/
 
 %find_lang %name-2.0
+
+%check
+xvfb-run %make -k check VERBOSE=1
 
 %files -f %name-2.0.lang
 %_libdir/*.so.*
@@ -140,6 +154,11 @@ cp doc/{*.txt,*.dtd,*.html,*.xml} %buildroot%_docdir/%name-devel-%version/
 %exclude %_libdir/libglade/2.0/*.la
 
 %changelog
+* Mon Nov 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt2
+- updated to last commit (LIBBONOBOUI_2_24_5-7-g66cc5281)
+- built with gcc-14
+- enabled %%check
+
 * Mon Apr 04 2011 Yuri N. Sedunov <aris@altlinux.org> 2.24.5-alt1
 - 2.24.5
 
