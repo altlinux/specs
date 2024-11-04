@@ -2,7 +2,7 @@
 %define pkgname yattag
 
 Name:    python3-module-%pkgname
-Version: 1.16.0
+Version: 1.16.1
 Release: alt1
 Summary: Generate HTML or XML in a concise and pythonic way
 Group:   Development/Python3
@@ -38,6 +38,9 @@ with Python in a very readable way?
 %python3_sitelibdir/%{pyproject_distinfo %pkgname}
 
 %changelog
+* Mon Nov 04 2024 Anton Vyatkin <toni@altlinux.org> 1.16.1-alt1
+- New version 1.16.1.
+
 * Wed Aug 07 2024 Anton Vyatkin <toni@altlinux.org> 1.16.0-alt1
 - New version 1.16.0.
 
