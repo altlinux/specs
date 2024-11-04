@@ -1,5 +1,5 @@
 Name: kernel-image-6.12
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.11
 %define kernel_base_version	6.12
 %define kernel_sublevel	.0
@@ -131,10 +131,6 @@ your system.
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
-
-There are some other kernel variants in ALT systems:
-* std-def: latest longterm (LTS) kernel;
-* un-def:  latest stable kernel, usually higher version than std-def.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -579,6 +575,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 04 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc6
+- Update to v6.12-rc6 (2024-11-03).
+
 * Sun Oct 27 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc5
 - Update to v6.12-rc5 (2024-10-27).
 - config: Enable CONFIG_SCSI_MPI3MR=m (ALT#51728).
