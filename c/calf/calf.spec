@@ -2,21 +2,22 @@
 %def_enable gui
 
 Name: calf
-Version: 0.90.3
-Release: alt1.2
+Version: 0.90.4
+Release: alt1
 
 Summary: Audio plugins pack
 Group: Sound
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: http://calf-studio-gear.org/
 
-%if_disabled snapshot
-Source: http://calf-studio-gear.org/files/%name-%version.tar.gz
-%else
 Vcs: https://github.com/calf-studio-gear/calf.git
+
+%if_disabled snapshot
+#Source: http://calf-studio-gear.org/files/%name-%version.tar.gz
+Source: https://github.com/calf-studio-gear/calf/archive/%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
 %endif
-Patch: calf-0.90.1-alt-link.patch
 
 BuildRequires: gcc-c++ desktop-file-utils
 BuildRequires: glib2-devel libexpat-devel libfftw3-devel libfluidsynth-devel
@@ -66,20 +67,23 @@ extensions.
 
 %prep
 %setup
-%patch
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -Wno-deprecated-declarations
+%add_optflags %(getconf LFS_CFLAGS)
+# required for gcc-14
+%ifarch %ix86
+%add_optflags -msse2
+%endif
 %define _optlevel 3
 %autoreconf
 %configure \
-	--enable-static=no \
-	--with-lv2-dir=%_libdir/lv2 \
-	--enable-experimental=yes \
+    --enable-static=no \
+    --with-lv2-dir=%_libdir/lv2 \
+    --enable-experimental=yes \
 %ifarch x86_64 %ix86
-	--enable-sse \
+    --enable-sse \
 %endif
-	LIBS="%(pkg-config --libs jack)"
+    LIBS="%(pkg-config --libs jack)"
 %nil
 %make_build
 
@@ -109,6 +113,10 @@ extensions.
 
 
 %changelog
+* Sun Nov 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.90.4-alt1
+- 0.90.4
+- fixed build with gcc-14
+
 * Wed Aug 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.90.3-alt1.2
 - fixed build against pipewire-jack libraries
 

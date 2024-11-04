@@ -1,4 +1,6 @@
-%define oname openh264
+%define _name openh264
+%define sover 7
+
 %def_enable check
 %ifarch %ix86 x86_64 loongarch64
 %def_with meson
@@ -8,9 +10,9 @@
 
 %def_disable static
 
-Name: libopenh264
+Name: lib%_name
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: H.264 codec library
 License: BSD-2-Clause
@@ -18,14 +20,13 @@ Group: System/Libraries
 Url: http://www.openh264.org/
 
 Vcs: https://github.com/cisco/openh264.git
-#Source: https://github.com/cisco/openh264/archive/v%version/%oname-%version.tar.gz
+#Source: https://github.com/cisco/openh264/archive/v%version/%_name-%version.tar.gz
 Source: %name-%version.tar
 
-Provides: libopenh264_7 = %version-%release
-Obsoletes: libopenh264_7 < %version-%release
+%define libname lib%{_name}_%sover
+%define sover1 %version
 
 %ifarch %ix86
-%add_optflags -msse2 -mfpmath=sse
 %set_verify_elf_method textrel=relaxed
 %endif
 
@@ -41,10 +42,22 @@ BuildRequires: gcc-c++ nasm
 OpenH264 is a codec library which supports H.264 encoding and decoding.
 It is suitable for use in real time applications such as WebRTC.
 
+%package -n %libname
+Summary: %summary
+Group: System/Libraries
+Obsoletes: %name < 2.4.1-alt2
+Provides: %name = %EVR
+
+%description -n %libname
+OpenH264 is a codec library which supports H.264 encoding and decoding.
+It is suitable for use in real time applications such as WebRTC.
+
+This package provides shared OpenH264 libraries.
+
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %EVR
+Requires: %libname = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -53,7 +66,7 @@ developing applications that use %name.
 %package devel-static
 Summary: Static H.264 codec library
 Group: Development/C++
-Requires: %name-devel = %EVR
+Requires: %libname-devel = %EVR
 
 %description devel-static
 This package provides %name static library.
@@ -63,7 +76,7 @@ This package provides %name static library.
 # setup build options
 %add_optflags %optflags_shared
 %ifarch %ix86
-%add_optflags -msse2 -mfpmath=sse
+%add_optflags -msse2 -mfpmath=sse %(getconf LFS_CFLAGS)
 sed -i 's|^USE_ASM[[:space:]][[:space:]]*=.*|USE_ASM = No|' Makefile
 sed -i 's|^HAVE_AVX2[[:space:]][[:space:]]*:=.*|HAVE_AVX2 := No|' build/arch.mk
 %endif
@@ -97,14 +110,15 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %__meson_test
 %endif
 
-%files
-%_libdir/%name.so.*
+%files -n %libname
+%_libdir/%name.so.%sover
+%_libdir/%name.so.%sover1
 %doc LICENSE README.md RELEASES
 
 %files devel
 %_includedir/wels/
 %_libdir/%name.so
-%_pkgconfigdir/%oname.pc
+%_pkgconfigdir/%_name.pc
 
 %if_enabled static
 %files devel-static
@@ -112,6 +126,9 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %changelog
+* Mon Nov 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt2
+- renamed to libopenh264_7 again
+
 * Fri Feb 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
