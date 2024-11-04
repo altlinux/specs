@@ -5,7 +5,7 @@
 
 Name: libgphoto2
 Version: 2.5.31
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -14,8 +14,8 @@ Url: http://www.gphoto.org/
 License: LGPLv2+
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
-# Automatically added by buildreq on Mon Oct 11 2010
-BuildRequires: doxygen flex gcc-c++ libcurl-devel libexif-devel libgd2-devel libjpeg-devel
+# Automatically added by buildreq on Mon Nov 04 2024
+BuildRequires: doxygen gcc-c++ libcurl-devel libexif-devel libgd3-devel libjpeg-devel
 BuildRequires: liblockdev-devel libltdl7-devel libusb-devel libxml2-devel
 
 # IMHO, this build requires are needs when build with cdk
@@ -24,6 +24,7 @@ BuildRequires: liblockdev-devel libltdl7-devel libusb-devel libxml2-devel
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
 Patch0: %name-2.5.30-alt-translation.patch
+Patch1: %name-2.5.31-upstream-gcc14-fix-build.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -49,11 +50,11 @@ Summary: Library to access to digital camera ports
 Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
 License: LGPLv2+
 
-%description  -n %{name}_port-%sover_port
+%description -n %{name}_port-%sover_port
 The %name library can be used by applications to access various digital
 camera models, via standard protocols such as USB Mass Storage and PTP,
 or vendor-specific protocols.
-This package contains the runtime code for port access. 
+This package contains the runtime code for port access.
 
 %package -n %name-devel
 Group: Development/C
@@ -124,11 +125,12 @@ against %name library.
 %prep
 %setup -n %name-%version
 %patch0 -p1
+%patch1 -p1
 
 %build
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
 %autoreconf
-export udevscriptdir=/lib/udev
+export udevscriptdir=%_udevdir
 export utilsdir=%_libexecdir/%name
 %configure \
     %{subst_enable static} \
@@ -140,22 +142,22 @@ export utilsdir=%_libexecdir/%name
 %makeinstall_std
 
 # create udev support
-/bin/mkdir -p %buildroot/lib/udev/rules.d
-/bin/touch %buildroot/lib/udev/rules.d/40-%name.rules
-/bin/mkdir -p %buildroot/lib/udev/hwdb.d
-/bin/touch %buildroot/lib/udev/hwdb.d/40-%name.hwdb
+mkdir -p %buildroot%_udevrulesdir
+touch %buildroot%_udevrulesdir/40-%name.rules
+mkdir -p %buildroot%_udevhwdbdir
+touch %buildroot%_udevhwdbdir/20-%name.hwdb
 
 # correct content of doc. directory
-/bin/rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog,RELEASE-HOWTO.md}
-/bin/cp OUTDATED.txt %buildroot/%_datadir/doc/%name/
+rm -rf %buildroot/%_datadir/doc/%name/{linux-hotplug,ABOUT-NLS,COPYING,ChangeLog,RELEASE-HOWTO.md}
+cp OUTDATED.txt %buildroot/%_datadir/doc/%name/
 
 # remove circular symlink in /usr/include/gphoto2
-/bin/rm -f %buildroot%_includedir/gphoto2/gphoto2
+rm -f %buildroot%_includedir/gphoto2/gphoto2
 # udev helper not used now
-/bin/rm -f %buildroot/lib/udev/check-ptp-camera
+rm -f %buildroot%_udevdir/check-ptp-camera
 # remove .la files
-/bin/rm -f %buildroot%_libdir/%name/*/*.la
-/bin/rm -f %buildroot%_libdir/%{name}_port/*/*.la
+rm -f %buildroot%_libdir/%name/*/*.la
+rm -f %buildroot%_libdir/%{name}_port/*/*.la
 
 %find_lang --output=%name.lang %name-%sover
 %find_lang --append --output=%name.lang %{name}_port-%sover_port
@@ -164,15 +166,15 @@ export utilsdir=%_libexecdir/%name
 
 %pre -n %name-%sover
 # create group
-/usr/sbin/groupadd -fr camera || :
+groupadd -fr camera || :
 
 %post -n %name-%sover
 # create udev rules
-%_libexecdir/%name/print-camera-list --verbose udev-rules version 201 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules 2> /dev/null
-%_libexecdir/%name/print-camera-list hwdb > /lib/udev/hwdb.d/40-%name.hwdb 2> /dev/null
+%_libexecdir/%name/print-camera-list --verbose udev-rules version 201 owner root mode 0660 group camera > %_udevrulesdir/40-%name.rules 2> /dev/null
+%_libexecdir/%name/print-camera-list hwdb > %_udevhwdbdir/20-%name.hwdb 2> /dev/null
 
 %triggerpostun -- %name <= 2.4.0
-/sbin/ldconfig
+ldconfig
 
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
@@ -184,8 +186,8 @@ export utilsdir=%_libexecdir/%name
 %_libdir/%name/*/*.so
 %dir %_libexecdir/%name
 %_libexecdir/%name/print-camera-list
-%ghost /lib/udev/hwdb.d/*
-%ghost /lib/udev/rules.d/*
+%ghost %_udevrulesdir/*
+%ghost %_udevhwdbdir/*
 %dir %_datadir/%name
 %_datadir/%name/*
 %dir %_datadir/doc/%name
@@ -228,11 +230,17 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Mon Nov 04 2024 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.31-alt2
+- applied the upstream fix to build with gcc-14
+- buildreq
+- cleanup spec
+
 * Sat Sep 02 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.31-alt1
 - 2.5.31
 
 * Mon Jan 23 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.30-alt2
-- updated russian translation, thanks to Maria Shikunova (translation-team at basealt.ru)
+- updated russian translation, thanks to Maria Shikunova (translation-team
+  at basealt.ru)
 
 * Fri Aug 19 2022 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.30-alt1
 - 2.5.30
