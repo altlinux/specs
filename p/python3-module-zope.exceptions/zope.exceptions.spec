@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1
+Version: 5.2
 Release: alt1
 
 Summary: Zope Exceptions
@@ -64,6 +64,9 @@ rm -r %buildroot%python3_sitelibdir/%ns_name/%mod_name/tests
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.1 -> 5.2.
+
 * Fri Jun 07 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - 5.0.1 -> 5.1.
 
