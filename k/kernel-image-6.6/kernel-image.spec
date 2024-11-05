@@ -1,12 +1,12 @@
 Name: kernel-image-6.6
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.58
+%define kernel_sublevel	.59
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest        lts
+%define kernel_latest        latest
 Version: %kversion
 
 %define krelease	%release
@@ -132,10 +132,6 @@ your system.
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
-
-There are some other kernel variants in ALT systems:
-* std-def: latest longterm (LTS) kernel;
-* un-def:  latest stable kernel, usually higher version than std-def.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -579,6 +575,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Nov 03 2024 Vitaly Chikunov <vt@altlinux.org> 1:6.6.59-alt2
+- spec: Unprovide kernel-lts in favor of kernel-latest (for p11).
+
+* Fri Nov 01 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.59-alt1
+- v6.6.59 (2024-11-01).
+- config: Enable CONFIG_SCSI_MPI3MR=m (ALT#51728).
+- config: CONFIG_SQUASHFS=y.
+
 * Tue Oct 22 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.58-alt1
 - v6.6.58 (2024-10-22).
 
