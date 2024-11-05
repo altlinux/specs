@@ -3,7 +3,7 @@
 
 Name: dot-matrix
 Version: 3.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Convert between currencies
 License: GPL-3.0-or-later
@@ -15,8 +15,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 0.59.0
-BuildRequires: cmake
-BuildRequires: vala-tools
+BuildRequires: vala
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(libadwaita-1)
 %if_enabled check
@@ -27,6 +26,7 @@ BuildRequires: %_bindir/appstream-util
 %description
 Make out icons, glyphs, or anything you can create with lines in this grid
 of dots
+
 * Select whetether to draw with lines or curves.
 * Quit anytime with the shortcut Ctrl + Q
 * Undo with the shortcut Ctrl + Z
@@ -56,5 +56,10 @@ and Ctrl + Shift + X
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Tue Nov 05 2024 Oleg Shchavelev <oleg@altlinux.org> 3.2.0-alt1.1
+- Rebuild improved spec (ALT #51803)
+- Drop cmake dependency from BuildRequires
+- Replaced vala-tools -> vala dependency in BuildRequires
+
 * Wed Oct 16 2024 Oleg Shchavelev <oleg@altlinux.org> 3.2.0-alt1
 - Initial build
