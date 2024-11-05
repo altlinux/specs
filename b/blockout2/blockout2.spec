@@ -2,7 +2,7 @@
 
 Name: blockout2
 Version: 2.5
-Release: alt2.1
+Release: alt3
 
 Summary: 3D Tetris game
 Summary(ru_RU.UTF-8): Трехмерный вариант игры Тетрис
@@ -22,6 +22,8 @@ Patch2: %_name-2.3-restore-resolution.patch
 Patch3: %_name-2.3-libpng15.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1037001
 Patch4: %_name-2.3-format-security.patch
+# https://src.fedoraproject.org/rpms/BlockOutII/blob/rawhide/f/BlockOutII-c99.patch
+Patch5: %_name-c99.patch
 
 Requires: %name-data = %version-%release
 
@@ -70,17 +72,18 @@ BlockOut II является свободным клоном игры BlockOut �
 
 %prep
 %setup -n BL_SRC -a1
+# Remove bundled libraries
+rm -rf ImageLib/src/png/{png,zlib}
 cp %SOURCE2 .
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+dos2unix ImageLib/src/png/*.{c,h}
+%patch5 -p1 -b .c99
 
 dos2unix BlockOut/README.txt
-
-# Remove bundled libraries
-rm -rf ImageLib/src/png/{png,zlib}
 
 %build
 pushd ImageLib/src
@@ -126,6 +129,9 @@ install -p -m644 %SOURCE3 \
 %_datadir/icons/hicolor/scalable/apps/%_name.svg
 
 %changelog
+* Tue Nov 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt3
+- fixed build with gcc-14
+
 * Mon Nov 13 2023 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt2.1
 - installed automatically converted from block_icon.ico svg icon
 - fixed License tag

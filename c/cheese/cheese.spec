@@ -15,7 +15,7 @@
 
 Name: cheese
 Version: %ver_major.1
-Release: alt1.1%beta
+Release: alt1.2%beta
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL-2.0
@@ -29,6 +29,9 @@ Source: %name-%version.tar
 %endif
 # https://gitlab.gnome.org/GNOME/cheese/-/merge_requests/75
 Patch10: cheese-44.1-up-mr75.patch
+# https://gitlab.gnome.org/GNOME/cheese/-/merge_requests/70
+# https://gitlab.gnome.org/GNOME/cheese/-/commit/d8b8f27730cca948a5e5346b8ed2db0793bb16e7.patch
+Patch11: cheese-44.1-up-mr70.patch
 
 %define glib_ver 2.40.0
 %define gtk_ver 3.14.0
@@ -38,7 +41,7 @@ Patch10: cheese-44.1-up-mr75.patch
 %define clutter_ver 1.13.2
 %define clutter_gst_ver 3.0.16
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: gnome-video-effects
 Requires: gst-plugins-base%gst_api_ver
 # camerabin used for taking photos and videos
@@ -88,7 +91,7 @@ based on the gstreamer-backend. This package contains Cheese libraries.
 %package -n lib%name-devel
 Summary: Cheese development files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package contains files necessary to develop applications that use
@@ -107,7 +110,7 @@ that use Cheese libraries.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Cheese
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Cheese library.
@@ -116,8 +119,8 @@ GObject introspection data for the Cheese library.
 Summary: GObject introspection devel data for the Cheese
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Cheese library.
@@ -126,6 +129,7 @@ GObject introspection devel data for the Cheese library.
 %prep
 %setup -n %name-%version%beta
 %patch10 -p1
+%patch11 -p1
 
 %build
 %meson \
@@ -173,6 +177,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Nov 05 2024 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1.2
+- fixed build with gcc-14
+
 * Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1.1
 - data/cheese-viewport.json: fixed json validation (ALT #51625)
 
