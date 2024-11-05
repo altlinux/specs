@@ -1,28 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-app-starter
-Version: 1.3.3
+Version: 1.4.0
 Release: alt1
+%K6init
+
 Group: Graphical desktop/KDE
 Summary: The tool to run programs as another user
-License: GPLv2
 URL: http://git.altlinux.org/gears/a/alt-app-starter.git
+License: GPL-2.0-or-later
 
-%K5init
+Requires: /usr/bin/xvt
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: gcc-c++
-BuildRequires: kf5-kdesu-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kpty-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: kf6-kdesu-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kpty-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: boost-devel-headers
-Requires: /usr/bin/xvt
 
 %description
 Alt-App-Starter is the tool to quickly run programs as another user.
@@ -32,19 +33,24 @@ This tool was designed to work with KDE.
 %setup
 
 %build
-%K5build
+%K6build \
+    -DQT_MAJOR_VERSION=6 \
+    #
 
 %install
-%K5install
+%K6install
 
 %find_lang --with-qt --all-name %name
 
 %files -f %name.lang
 %doc COPYING*
-%_K5bin/*
-%_K5xdgapp/*.desktop
+%_K6bin/*
+%_K6xdgapp/*.desktop
 
 %changelog
+* Tue Nov 05 2024 Sergey V Turchin <zerg at altlinux dot org> 1.4.0-alt1
+- build with KF6
+
 * Wed Apr 10 2024 Sergey V Turchin <zerg at altlinux dot org> 1.3.3-alt1
 - require CXX 17
 
