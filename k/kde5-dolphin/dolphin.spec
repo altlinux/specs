@@ -1,11 +1,18 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname dolphin
 
-%ifndef _unitdir_user
-%define _unitdir_user %prefix/lib/systemd/user
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
 %endif
 %define service_name plasma-dolphin
 
+%_K5if_ver_gteq %ubt_id M110
 %def_disable baloo
+%else
+%def_enable baloo
+%endif
 
 %define sover 5
 %define libdolphinprivate libdolphinprivate%sover
@@ -13,7 +20,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt4
+Release: alt5
 %K5init
 
 Group: File tools
@@ -34,7 +41,7 @@ Patch6: alt-skip-mime.patch
 # Automatically added by buildreq on Fri Apr 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kfilemetadata-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libxapian-devel python-module-google qt5-phonon-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-x11extras-devel
 BuildRequires: libxapian-devel desktop-file-utils
 BuildRequires: packagekit-qt-devel
@@ -133,7 +140,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5data/kglobalaccel/*dolphin*
 %_K5data/knsrcfiles/*
 %_K5dbus_srv/org.kde.dolphin.FileManager1.service
-%_unitdir_user/%service_name.service
+%_userunitdir/%service_name.service
 %_datadir/metainfo/*.xml
 %_datadir/zsh/site-functions/*dolphin*
 
@@ -151,6 +158,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Tue Nov 05 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt5
+- build with baloo on p10
+
 * Mon Oct 28 2024 Oleg Solovyov <mcpain@altlinux.org> 23.08.5-alt4
 - Skip MIME guessing on network-mounted file systems when listing dir
 
