@@ -1,6 +1,6 @@
 Name: tinyfugue
 Version: 5.0beta8
-Release: alt2
+Release: alt3
 Summary: Console MUD client
 License: GPLv2
 Group: Games/Other
@@ -8,6 +8,8 @@ Url: http://tinyfugue.sourceforge.net/
 Packager: %packager
 
 Source: %name-%version.tar
+Patch0: %name-5.0beta8-alt-extern.patch
+Patch1: %name-5.0beta8-alt-warning-fixes.patch
 
 %description
 TinyFugue is a console MUD client with versatile scripting.
@@ -23,6 +25,8 @@ TinyFugue или tf - это свободный клиент для игр MUD
 
 %prep
 %setup
+%patch0 -p2
+%patch1 -p1
 
 %build
 %add_optflags -fcommon
@@ -54,6 +58,10 @@ install -pm644 README %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Sat Nov 02 2024 Andrey Bergman <vkni@altlinux.org> 5.0beta8-alt3
+- Fix various warnings popped up after gcc 14.2.1
+- Fix extern declaration.
+
 * Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 5.0beta8-alt2
 - Fixed FTBFS with -fcommon.
 
