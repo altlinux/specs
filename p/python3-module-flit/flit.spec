@@ -5,12 +5,12 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.9.0
+Version: 3.10.1
 Release: alt1
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
 Group: Development/Python3
-URL: https://pypi.org/project/flit/
+Url: https://pypi.org/project/flit/
 VCS: https://github.com/pypa/flit
 
 BuildArch: noarch
@@ -47,6 +47,8 @@ Distribution-building parts of Flit.
 %prep
 %setup
 %autopatch -p1
+# debundle tomli, required on Python < 3.11
+rm -r flit_core/flit_core/vendor/
 export PYTHONPATH=$(pwd)/flit_core
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -70,9 +72,6 @@ pushd flit_core
 popd
 %pyproject_install
 
-# don't ship tests
-rm -r %buildroot%python3_sitelibdir/flit_core/tests/
-
 %check
 # build backend is required in subprocesses
 export PYTHONPATH=$(pwd)/flit_core
@@ -89,6 +88,9 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 3.10.1-alt1
+- 3.9.0 -> 3.10.1.
+
 * Mon May 15 2023 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
 - 3.8.0 -> 3.9.0.
 
