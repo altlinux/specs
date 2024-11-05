@@ -1,5 +1,6 @@
+%set_gcc_version 13
 Name:     kronos
-Version:  2.5.0
+Version:  2.6.2
 Release:  alt1
 
 Summary:  Sega Saturn Emulator
@@ -14,13 +15,15 @@ Source:   %name-%version.tar
 ExcludeArch: ppc64le
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel libGLEW-devel doxygen libfreeglut-devel qt5-base-devel qt5-multimedia-devel
+BuildRequires: cmake gcc13-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel libGLEW-devel doxygen libfreeglut-devel qt5-base-devel qt5-multimedia-devel
 
 %description
 Yet Another Buggy And Uncomplete Saturn Emulator
 
 %prep
 %setup
+export CC=%__cc
+export CXX=%__cxx
 
 %build
 cd yabause
@@ -43,6 +46,9 @@ cd yabause
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt1
+- Update to new version
+
 * Fri Feb 17 2023 Artyom Bystrov <arbars@altlinux.org> 2.5.0-alt1
 - Update to new version
 

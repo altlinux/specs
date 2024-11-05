@@ -1,6 +1,6 @@
 Name: ecwolf
 Version: 1.4.1
-Release: alt1
+Release: alt1.gitd1de69a
 Summary: An opensource implementation of Wolfenstein3D engine
 License: GPL-2.0-only
 Group: Games/Arcade
@@ -63,5 +63,8 @@ sed -e 's|/usr/local/share/games/wolf3d|%_datadir/wolf3d|g' -i docs/ecwolf.6
 %_man6dir/*
 
 %changelog
+* Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 1.4.1-alt1.gitd1de69a
+- Update to latest state of source repo
+
 * Fri Apr 28 2023 Artyom Bystrov <arbars@altlinux.org> 1.4.1-alt1
 - initial build for ALT Sisyphus

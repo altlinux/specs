@@ -1,6 +1,7 @@
+%set_gcc_version 13
 Name: pom1
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: Apple 1 emulator
 License: GPL-2.0
 Group: Emulators
@@ -8,7 +9,7 @@ Url: http://pom1.sourceforge.net
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: http://sourceforge.net/projects/pom1/files/pom1/%version/%name-%version.tar.gz
-BuildRequires: libSDL-devel ImageMagick-tools
+BuildRequires: libSDL-devel ImageMagick-tools gcc13 gcc13-c++
 
 %description
 Pom1 is an Apple 1 emulator ported to C and Android from the original Java version.
@@ -19,8 +20,9 @@ The port to C uses Simple DirectMedia Layer library and works on most platforms.
 
 %build
 # build section
+export CC=%__cc
 %configure --docdir=%_docdir/packages
-%make_build
+make OPTIMISE="%optflags -std=gnu++14"
 
 %install
 %make_build DESTDIR=%buildroot install
@@ -61,6 +63,9 @@ install -m 644 src/%name.png -t %buildroot%_pixmapsdir
 %_datadir/%name
 
 %changelog
+* Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 1.0.0-alt2
+- Fix build (stay on GCC13)
+
 * Tue Jan 31 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.0-alt1
 - initial build for ALT Sisyphus
 
