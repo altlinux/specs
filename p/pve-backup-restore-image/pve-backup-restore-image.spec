@@ -1,20 +1,22 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+%define _unpackaged_files_terminate_build 1
 %define imagedir /usr/libexec/proxmox-backup/file-restore
 %define cachedir /var/cache/proxmox-backup
 
 Name: pve-backup-restore-image
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Development/Other
+Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 
-Requires(post): make-initrd-pbs
-Requires(post): thin-provisioning-tools
-Requires(post): kernel
-Requires(post): proxmox-backup-file-restore
+Requires: make-initrd-pbs >= 1.0.5
+Requires: thin-provisioning-tools
+Requires: proxmox-backup-file-restore
 Requires: /proc
 
 Provides: proxmox-backup-restore-image = %EVR
@@ -22,55 +24,28 @@ Provides: proxmox-backup-restore-image = %EVR
 %description
 %summary.
 
+%prep
+%setup
+
 %install
-mkdir -p %buildroot%imagedir
-
-cat > %buildroot%imagedir/%name.mk <<END
-IMAGEFILE = %imagedir/initramfs.img
-FEATURES += pbs
-# To restore files from NTFS use kernel >= 5.15, uncomment next line and run %imagedir/%name.sh
-# MODULES_PRELOAD += ntfs3
-END
-
-cat > %buildroot%imagedir/%name.sh <<EOF
-#!/bin/sh
-
-INST_PATH="%imagedir"
-CACHE_PATH="%cachedir/file-restore-initramfs.img"
-
-export PATH="/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin"
-
-trap "rm -rf -- \$CACHE_PATH.tmp" EXIT
-
-mkdir -p %imagedir
-VMLINUZ="\$(readlink -e -- /boot/vmlinuz-*alt*)"
-KVER="\${VMLINUZ##*/vmlinuz-}"
-echo "VMLINUZ = \$VMLINUZ"
-echo "KVER = \$KVER"
-rm -f "%imagedir/initramfs.img"
-make-initrd --config=%imagedir/%name.mk --kernel=\$KVER
-
-mkdir -p "%cachedir"
-cp "\$INST_PATH/initramfs.img" "\$CACHE_PATH.tmp"
-mv -f "\$CACHE_PATH.tmp" "\$CACHE_PATH"
-
-cp /boot/vmlinuz-\$KVER %imagedir/bzImage
-chmod 0644 %imagedir/{bzImage,initramfs.img}
-exit 0
-EOF
-chmod 0755 %buildroot%imagedir/%name.sh
-
-%post
-%imagedir/%name.sh
+install -p -D -m 0644 pve-backup-restore-image.mk %buildroot%imagedir/%name.mk
+install -p -D -m 0755 pve-backup-restore-image.sh %buildroot%imagedir/%name.sh
+install -p -D -m 0755 pve-backup-restore-image.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 %files
 %dir %imagedir
 %config(noreplace) %imagedir/%name.mk
 %imagedir/%name.sh
-#%%ghost %imagedir/bzImage
-#%%ghost %imagedir/initramfs.img
+%_rpmlibdir/%name.filetrigger
+#%%ghost %%imagedir/bzImage
+#%%ghost %%imagedir/initramfs.img
 
 %changelog
+* Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 0.4-alt1
+- add rpm filetrigger
+- move load ntfs module to make-initrd-pbs = 1.0.5
+- not requires kernel package
+
 * Fri Oct 13 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.3-alt1
 - fix NTFS restore (only for kernels 5.15+)
 

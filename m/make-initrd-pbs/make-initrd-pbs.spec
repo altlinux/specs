@@ -2,7 +2,7 @@
 %define child pbs
 
 Name: %parent-%child
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: This feature is needed to create a file recovery image used by Proxmox backup client
@@ -32,20 +32,26 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
+- add lvchange and zfs to PBS_PROGS
+- use MODULES_TRY_ADD instead of MODULES_PRELOAD
+- add more modules load
+- disable preload modules defined in qemu and modules-virtio FEATURES
+
 * Fri May 03 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.4-alt1
-- v1.0.3 -> v1.0.4 
+- v1.0.3 -> v1.0.4
 
 * Fri Oct 13 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt2
-- remove ntfs-3g package 
+- remove ntfs-3g package
 
 * Fri Oct 13 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.3-alt1
-- v1.0.2 -> v1.0.3 
+- v1.0.2 -> v1.0.3
 
 * Thu Oct 12 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.2-alt1
-- v1.0.1 -> v1.0.2 
+- v1.0.1 -> v1.0.2
 
 * Wed Jul 26 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.1-alt1
-- v1.0.0 -> v1.0.1 
+- v1.0.0 -> v1.0.1
 
 * Fri Jul 21 2023 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.0.0-alt1
 - Initial build for ALT
