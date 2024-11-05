@@ -25,6 +25,8 @@
 
 %def_disable static
 %def_disable gtk_doc
+%def_enable check
+
 %set_automake_version 1.11
 
 %define ver_major 2.24
@@ -32,12 +34,12 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt12
+Release: alt13
 Epoch: 1
 
 Summary: The GNOME virtual file-system libraries
 Group: System/Libraries
-License: LGPL
+License: GPL-2.0-or-later
 Url: ftp://ftp.gnome.org
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -78,6 +80,7 @@ Patch15: gnome-vfs-2.20.0-resolve-fstab-symlinks.patch
 Patch16: gnome-vfs-2.24.4-alt-link.patch
 
 Patch17: 0002-dont-use-smbc_remove_unused_server.patch
+Patch18: gnome-vfs-2.24.4-alt-gcc-14.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=333041
 # https://bugzilla.redhat.com/show_bug.cgi?id=33524
@@ -107,35 +110,35 @@ Conflicts: libgnome < 2.5.2
 
 %define shared_mime_info_ver 0.15
 
-PreReq: GConf >= %GConf_ver
+Requires(pre,post): GConf >= %GConf_ver
 Requires: shared-mime-info >= %shared_mime_info_ver
 %{?_enable_gamin:Requires: gamin libgamin-fam}
 
 # From configure.in
-BuildPreReq: gnome-common rpm-build-gnome
-BuildPreReq: intltool >= 0.35.0
-BuildPreReq: GConf >= %GConf_ver libGConf-devel >= %GConf_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: bzlib-devel libkrb5-devel
-BuildPreReq: gtk-doc >= %gtk_doc_ver
-%{?_enable_cdda:BuildPreReq: libcdparanoia-devel}
-%{?_enable_samba:BuildPreReq: libsmbclient-devel}
-%{?_enable_openssl:BuildPreReq: libssl-devel}
-%{?_enable_gnutls:BuildPreReq: libgnutls-devel >= 1.0.0 libtasn1-devel libgcrypt-devel}
-%{?_enable_howl:BuildPreReq: libhowl-devel >= %howl_ver}
+BuildRequires(pre): gnome-common rpm-build-gnome
+BuildRequires: intltool >= 0.35.0
+BuildRequires: GConf >= %GConf_ver libGConf-devel >= %GConf_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: bzlib-devel libkrb5-devel
+BuildRequires: gtk-doc >= %gtk_doc_ver
+%{?_enable_cdda:BuildRequires: libcdparanoia-devel}
+%{?_enable_samba:BuildRequires: libsmbclient-devel}
+%{?_enable_openssl:BuildRequires: libssl-devel}
+%{?_enable_gnutls:BuildRequires: libgnutls-devel >= 1.0.0 libtasn1-devel libgcrypt-devel}
+%{?_enable_howl:BuildRequires: libhowl-devel >= %howl_ver}
 %if_enabled avahi
-BuildPreReq: libavahi-devel >= %avahi_ver
-BuildPreReq: libavahi-glib-devel >= %avahi_ver
+BuildRequires: libavahi-devel >= %avahi_ver
+BuildRequires: libavahi-glib-devel >= %avahi_ver
 %endif
 %if_enabled hal
-BuildPreReq: libhal-devel >= %hal_ver
+BuildRequires: libhal-devel >= %hal_ver
 %endif
-BuildPreReq: libdbus-glib-devel
+BuildRequires: libdbus-glib-devel
 # For direct inotify support
-BuildPreReq: glibc-kernheaders
-%{?_enable_fam:BuildPreReq: libfam-devel}
-%{?_enable_gamin:BuildPreReq: gamin-devel}
+BuildRequires: glibc-kernheaders
+%{?_enable_fam:BuildRequires: libfam-devel}
+%{?_enable_gamin:BuildRequires: gamin-devel}
 BuildPreReq: openssh-clients gcc-c++  libattr-devel libacl-devel libcom_err-devel zlib-devel perl-XML-Parser
 
 %description
@@ -254,6 +257,7 @@ This package contains command line tools for GNOME VFS.
 %patch15 -p1 -b .resolve-fstab-symlinks
 %patch16 -p1
 %patch17 -p1
+%patch18 -b .gcc-14
 
 # send to upstream
 %patch300 -p1 -b .ignore-certain-mount-points
@@ -298,6 +302,9 @@ bzip2 -9fk ChangeLog
 # system_smb.schemas is not included in this list, because SMB module is
 # packaged separately.
 %define schemas desktop_default_applications desktop_gnome_url_handlers system_http_proxy system_dns_sd
+
+%check
+%make -k check VERBOSE=1
 
 %post
 %gconf2_install %schemas
@@ -372,6 +379,10 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Tue Nov 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt13
+- fixed build with gcc-14
+- enabled %%check
+
 * Tue Aug 21 2018 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt12
 - rebuilt with openssl-1.1 (suse patch)
 
