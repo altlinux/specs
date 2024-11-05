@@ -1,12 +1,12 @@
 Name:         mapsoft2
-Version:      2.7
+Version:      2.8
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
 Group:        Sciences/Geosciences
 Url:          https://slazav.github.io/mapsoft2/
 Packager:     Vladislav Zavjalov <slazav@altlinux.org>
-License:      GPL3.0
+License:      GPL-3.0
 
 Source:        %name-%version.tar
 
@@ -62,11 +62,43 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/render.cfg
 %_datadir/mapsoft2/types.cfg
 %_datadir/mapsoft2/pics
-%_datadir/mapsoft2/slazav.typ
+%_datadir/mapsoft2/typ.txt
 %_datadir/mapsoft2/map_templ.htm
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Tue Nov 05 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.8-alt1
+build system:
+ - notests makefile target: much faster build without tests
+ - -Wstrict-aliasing=1 by default
+err/assert_err, image: fix compilation warnings, remove c++17 features
+tmpdir: update for new libzip interface
+geom:
+ - rect_crop_multi() function
+ - Line::area() method
+ - simplify check_hole() function
+ - fix nearest_pt() for 0- and 1- point lines
+ - fix error in join_cross()
+geo_data/io_gpx: do not show 1s timestamp in track points (default nakarte timestamp)
+fig_geo: add --compound option for fig_add_*() functions
+geo_render/gobj_trk: fix speed drawing mode
+srtm: a few important fixes
+image_cnt: rewrite river/ridge tracing code
+vmap2: fix conversion of muplipart objects to fig/gpx
+vmap rendering: allow move_to feature for areas and points; add move_from feature
+vmap_data:
+ - scripts: do not crop maps by default when updating from MP/FIG
+ - scripts: always crop map when generating mp/img
+ - add source for typ file (2012, A.Tonis, corrections by S.Orlov, S.V.)
+ - remove compiled slazav.typ file
+ - use line:0x24 (former swamp line) as glacier crevasse
+ - render.cfg: draw borders with semi-transparent line
+ - render.cfg: move roads from rivers; move summits to auto summits
+ - add labels to some point objects
+ - tune xfig text size
+ms2nom program: --cover_ratio option
+ms2geofig: add --compound option for adding fig data
+
 * Fri Jul 26 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.7-alt1
 - image_cnt, srtm, ms2geofig: add tracing of rivers and mountain
   ridges (my old code from mapsoft1 with some improvements);
