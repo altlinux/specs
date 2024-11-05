@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.7.0
 #define cvsdate 20031019
-Release: alt1
+Release: alt2
 
 %def_with fribidi
 %def_with libstroke
@@ -367,6 +367,9 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %exclude %_iconsdir/hicolor/64x64/apps/%name.xpm
 
 %changelog
+* Tue Nov 05 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.7.0-alt2
+- fix build with gcc14
+
 * Mon Dec 12 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.7.0-alt1
 - upstream version 2.7.0
 
