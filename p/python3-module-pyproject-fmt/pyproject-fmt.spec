@@ -4,42 +4,50 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.4.3
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyproject-fmt
 VCS: https://github.com/tox-dev/pyproject-fmt.git
-BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+# https://github.com/stanislavlevin/pyproject_installer/issues/81
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
 %endif
 
 %description
 %summary.
 
 %prep
-%setup
+%setup -a2
 %autopatch -p1
+mkdir .cargo
+cat < vendor_cargoconf.toml >> .cargo/config.toml
 %pyproject_scm_init
+cd pyproject-fmt
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
 %build
+cd pyproject-fmt
 %pyproject_build
 
 %install
+cd pyproject-fmt
 %pyproject_install
 
 %check
+cd pyproject-fmt
 %pyproject_run_pytest -ra tests
 
 %files
@@ -49,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 29 2024 Stanislav Levin <slev@altlinux.org> 2.4.3-alt1
+- 2.3.1 -> 2.4.3.
+
 * Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
 - 2.3.0 -> 2.3.1.
 
