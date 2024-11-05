@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 License: MIT
 
@@ -21,8 +21,6 @@ BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(dbus-1)
 
-Requires: fonts-ttf-symbols-nerd
-
 %description
 %summary.
 
@@ -32,10 +30,6 @@ Requires: fonts-ttf-symbols-nerd
 mkdir -p .cargo
 cat <<EOF >> .cargo/config.toml
 [source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/MalpenZibo/hyprland-rs"]
-git = "https://github.com/MalpenZibo/hyprland-rs"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/MalpenZibo/iced_sctk"]
@@ -71,5 +65,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Nov 05 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.5-alt1
+- new version (0.1.5) with rpmgs script
+- drop requires on fonts-ttf-symbols-nerd
+
 * Sun Oct 27 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.4-alt1
 - Initial build
