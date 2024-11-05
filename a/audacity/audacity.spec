@@ -16,7 +16,7 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.6.4
+Version: 3.7.0
 Release: alt1
 
 Summary: Cross-platform audio editor
@@ -237,7 +237,8 @@ done
 %check
 # upstream seems to assume statically linking bundled libsbsms,
 # verify that system one is used
-patchelf --print-needed %buildroot/%_bindir/audacity | grep -q sbsms
+patchelf --print-needed %buildroot/%_libdir/audacity/lib-builtin-effects.so | grep -q sbsms
+
 # mp3lame can be either dlopen'ed or linked explicitly,
 # ensure that a system library is linked explicitly
 patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -q libmp3lame
@@ -266,6 +267,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Wed Oct 30 2024 Ivan A. Melnikov <iv@altlinux.org> 3.7.0-alt1
+- 3.7.0
+
 * Thu Sep 19 2024 Ivan A. Melnikov <iv@altlinux.org> 3.6.4-alt1
 - 3.6.4
 
