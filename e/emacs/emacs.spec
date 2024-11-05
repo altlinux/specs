@@ -1,5 +1,5 @@
 Name: emacs
-Version: 29.4
+Version: 30.0.92
 Release: alt1
 
 Summary: GNU Emacs text editor
@@ -27,7 +27,6 @@ BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(harfbuzz)
-BuildRequires: pkgconfig(jansson)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(libacl)
 BuildRequires: pkgconfig(libjpeg)
@@ -51,7 +50,7 @@ BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: texinfo
 BuildRequires: libgif-devel
 BuildRequires: libXaw3d-devel libXaw-devel
-%{?_enable_natcomp:BuildRequires: libgccjit13-devel}
+%{?_enable_natcomp:BuildRequires: libgccjit-devel}
 
 %package athena
 Summary: The GNU Emacs text editor for the X Window System (athena)
@@ -208,26 +207,31 @@ mkdir build-athena && pushd build-athena
 %configure %_configure_mostly --without-cairo --without-rsvg \
 	--without-dbus --without-gconf --without-gsettings \
 	--with-x-toolkit=athena
+%make_build
 popd
 
 mkdir build-gtk3 && pushd build-gtk3
 %configure %_configure_mostly --with-x-toolkit=gtk3
+make bootstrap
+%make_build
 popd
 
 mkdir build-pgtk && pushd build-pgtk
 %configure %_configure_mostly --with-pgtk
+make bootstrap
+%make_build
 popd
 
-%make_build -C build-athena
-%make_build -C build-gtk3
-%make_build -C build-pgtk
-
 %install
-%makeinstall -C build-athena
+%makeinstall -C build-pgtk
+
 install -pm0755 build-athena/src/emacs %buildroot%_bindir/%name-athena
 install -pm0644 build-athena/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-athena.pdmp
 %if_enabled natcomp
-echo build-athena/native-lisp/* |sed 's,build-athena/,%_libdir/%name/%version/,' > athena.ls
+pushd build-athena
+find native-lisp/ -type f -name \*.eln |cpio -pmd %buildroot%_libdir/emacs/%version/
+echo native-lisp/* |sed 's,^,%_libdir/%name/%version/,' > ../athena.ls
+popd
 %else
 touch athena.ls
 %endif
@@ -235,8 +239,10 @@ touch athena.ls
 install -pm0755 build-gtk3/src/emacs %buildroot%_bindir/%name-gtk3
 install -pm0644 build-gtk3/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-gtk3.pdmp
 %if_enabled natcomp
-%make_install libdir=%buildroot%_libdir install-eln -C build-gtk3
-echo build-gtk3/native-lisp/* |sed 's,build-gtk3/,%_libdir/%name/%version/,' > gtk3.ls
+pushd build-gtk3
+find native-lisp/ -type f -name \*.eln |cpio -pmd %buildroot%_libdir/emacs/%version/
+echo native-lisp/* |sed 's,^,%_libdir/%name/%version/,' > ../gtk3.ls
+popd
 %else
 touch gtk3.ls
 %endif
@@ -244,14 +250,10 @@ touch gtk3.ls
 install -pm0755 build-pgtk/src/emacs %buildroot%_bindir/%name-pgtk
 install -pm0644 build-pgtk/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-pgtk.pdmp
 %if_enabled natcomp
-%make_install libdir=%buildroot%_libdir install-eln -C build-pgtk
 echo build-pgtk/native-lisp/* |sed 's,build-pgtk/,%_libdir/%name/%version/,' > pgtk.ls
 %else
 touch pgtk.ls
 %endif
-
-# better suited to handle all build variants
-install -pm0755 build-pgtk/lib-src/emacsclient %buildroot%_bindir/emacsclient
 
 # remove the installed duplicate emacs binaries
 # -- it'll be a link managed by `alternatives':
@@ -268,7 +270,7 @@ sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
     %buildroot%_libexecdir/systemd/user/emacs.service
 mv %buildroot%_bindir/{,g}ctags
 mv %buildroot%_man1dir/{,g}ctags.1.gz
-rm -vf %buildroot%_infodir/dir
+rm -vf %buildroot%_infodir/{dir,elisp_type_hierarchy.*}
 
 # alternatives
 install -pm644 -D .gear/athena.alternatives %buildroot%_altdir/%name-athena
@@ -370,6 +372,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Tue Oct 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 30.0.92-alt1
+- 30.0.92 released
+
 * Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 29.4-alt1
 - 29.4 released
 
