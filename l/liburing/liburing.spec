@@ -3,20 +3,27 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define sover 2
+
 Name: liburing
-Version: 2.7
+Version: 2.8
 Release: alt1
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
 Group: System/Libraries
-Url: http://git.kernel.dk/cgit/liburing
-# Author's Vcs and CI: https://github.com/axboe/liburing
+Url: https://github.com/axboe/liburing
+# Old Url: http://git.kernel.dk/cgit/liburing
 
 Source: %name-%version.tar
 Patch: liburing-e2k.patch
 
 BuildRequires: gcc-c++
-%{?!_without_check:%{?!_disable_check:BuildRequires: strace /proc rpm-build-vm iproute2}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iproute2
+BuildRequires: /proc
+BuildRequires: rpm-build-vm
+BuildRequires: strace
+}}
 
 %description
 Provides native async IO for the Linux kernel, in a fast and efficient
@@ -40,6 +47,7 @@ for the Linux-native io_uring.
 %ifarch %e2k
 %patch -p1
 %endif
+sed -i '/MAKE.*examples/d' Makefile
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects
@@ -50,7 +58,7 @@ for the Linux-native io_uring.
 	--libdevdir=%_libdir \
 	--mandir=%_mandir \
 	%nil
-%make_build --no-print-directory CFLAGS="%optflags" V=1
+%make_build CFLAGS="%optflags" V=1
 
 %install
 %makeinstall_std V=1
@@ -59,23 +67,25 @@ rm %buildroot%_libdir/liburing*.a
 install -Dp test/probe.t %buildroot%_bindir/io_uring_ok
 
 %check
+# Test build examples but do not install their binaries into %%doc.
+%make_build -C examples
+%make_build -C examples clean
+rm examples/Makefile
+
 uname -rm
 # List of available probes
 test/probe.t
 strace -v test/probe.t
 
-# Almost all tests fail on ppc64le, so there is no point to even try.
 %ifnarch %e2k
+# https://github.com/axboe/liburing/issues/1207
 TEST_EXCLUDE="
-%ifarch aarch64
-	accept-non-empty.t
-%endif
 %ifarch ppc64le
-	buf-ring-nommap.t
 	no-mmap-inval.t
 	recv-multishot.t
+	recvsend_bundle.t
 	reg-fd-only.t
-	send-zerocopy.t
+	timeout.t
 %endif
 %ifarch %ix86
 	sqpoll-sleep.t
@@ -87,14 +97,18 @@ TEST_EXCLUDE="
 
 %files
 %_bindir/io_uring_ok
-%_libdir/liburing*.so.*
+%_libdir/liburing-ffi.so.%sover
+%_libdir/liburing.so.%sover
+%_libdir/liburing-ffi.so.%version
+%_libdir/liburing.so.%version
 %doc LICENSE
 
 %files devel
-%doc README COPYING COPYING.GPL SECURITY.md CHANGELOG examples/*.c
+%doc README COPYING COPYING.GPL SECURITY.md CHANGELOG examples
 %exclude %_docdir/%name/LICENSE
 %_includedir/liburing*
-%_libdir/liburing*.so
+%_libdir/liburing.so
+%_libdir/liburing-ffi.so
 %_pkgconfigdir/liburing*.pc
 %_man2dir/io_uring*.2*
 %_man3dir/IO_URING*.3*
@@ -103,6 +117,9 @@ TEST_EXCLUDE="
 %_man7dir/io_uring.7*
 
 %changelog
+* Wed Oct 30 2024 Vitaly Chikunov <vt@altlinux.org> 2.8-alt1
+- Update to liburing-2.8 (2024-10-23).
+
 * Sat Aug 17 2024 Vitaly Chikunov <vt@altlinux.org> 2.7-alt1
 - Update to liburing-2.7 (2024-08-16).
 
