@@ -2,7 +2,7 @@
 
 Name: pcsxr
 Version: 1.9.95
-Release: alt1
+Release: alt1.1
 
 Summary: A plugin based PlayStation (PSX) emulator with high compatibility
 License: GPLv3
@@ -36,6 +36,7 @@ important PSX components, and is able to play many games without problems.
 %patch0 -p1
 
 %build
+%add_optflags -Wno-error=implicit-function-declaration -Wno-error=int-conversion
 %__mkdir include
 %autoreconf
 %configure --enable-opengl
@@ -60,6 +61,9 @@ important PSX components, and is able to play many games without problems.
 %_datadir/psemu/*.ui
 
 %changelog
+* Wed Nov 06 2024 Nazarov Denis <nenderus@altlinux.org> 1.9.95-alt1.1
+- Fix FTBFS
+
 * Sun Dec 13 2020 Nazarov Denis <nenderus@altlinux.org> 1.9.95-alt1
 - Version 1.9.95
 
