@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 24.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 #BuildArch: noarch
-#Requires: signon-ui
+Requires: signon-plugin-oauth2
 Provides: kde5-kaccounts-providers = %EVR
 Obsoletes: kde5-kaccounts-providers < %EVR
 
@@ -68,6 +68,9 @@ Requires: kf6-filesystem
 
 
 %changelog
+* Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
+- update requires (closes: 42146)
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
