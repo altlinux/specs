@@ -1,6 +1,6 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
-Version:  1.7.7
+Version:  2.0.0
 Release:  alt1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
@@ -48,7 +48,7 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 cd .build/src/%import_path
-export LDFLAGS="${LDFLAGS:-} -X github.com/containerd/nerdctl/pkg/version.Version=%version"
+export LDFLAGS="${LDFLAGS:-} -X github.com/containerd/nerdctl/v2/pkg/version.Version=%version"
 %golang_build cmd/%name
 
 %install
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Nov 06 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Wed Sep 11 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.7-alt1
 - new version 1.7.7
 
