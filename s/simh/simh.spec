@@ -1,6 +1,6 @@
 Name: simh
 Version: 3.12.5
-Release: alt1
+Release: alt2
 Summary: A highly portable, multi-system emulator
 
 Group: Emulators
@@ -13,6 +13,7 @@ Url: http://simh.trailing-edge.com/
 Packager: Andrey Bergman <vkni@altlinux.org>
 
 Source: %name-%version.tar
+Patch0: %name-alt-3.12.5-pointer-conversion.patch
 
 BuildRequires: libpcap-devel libSDL2-devel libpng-devel recode
 
@@ -65,6 +66,7 @@ http://pdp-11.org.ru
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 mkdir -p BIN
@@ -89,6 +91,9 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 #%%doc DOC/*.pdf
 
 %changelog
+* Tue Nov 05 2024 Andrey Bergman <vkni@altlinux.org> 3.12.5-alt2
+- Fix pointer conversion.
+
 * Sat Aug 24 2024 Andrey Bergman <vkni@altlinux.org> 3.12.5-alt1
 - Version update.
 
