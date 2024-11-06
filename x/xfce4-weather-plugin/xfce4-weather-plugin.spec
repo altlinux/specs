@@ -1,5 +1,5 @@
 Name: xfce4-weather-plugin
-Version: 0.11.2
+Version: 0.11.3
 Release: alt1
 
 Summary: Weather plugin for the Xfce panel
@@ -15,7 +15,7 @@ BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.14
 BuildRequires: libxfconf-devel
 BuildRequires: libjson-c-devel
-BuildRequires: intltool libxml2-devel libsoup-devel libupower-devel
+BuildRequires: libxml2-devel libsoup-devel libupower-devel
 
 Requires: xfce4-panel >= 4.14
 
@@ -28,7 +28,6 @@ using forecast data provided by met.no.
 %prep
 %setup
 %patch -p1
-mkdir m4
 
 %build
 %xfce4reconf
@@ -52,6 +51,9 @@ mkdir m4
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Nov 06 2024 Mikhail Efremov <sem@altlinux.org> 0.11.3-alt1
+- Updated to 0.11.3.
+
 * Fri Mar 08 2024 Mikhail Efremov <sem@altlinux.org> 0.11.2-alt1
 - Updated to 0.11.2.
 
