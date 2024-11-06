@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.18.05
+Version: 0.18.06
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -118,6 +118,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sun Nov 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.06-alt1
+- Update to V0.18.06 (2024-10-31).
+
 * Wed Oct 02 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.05-alt1
 - Update to V0.18.05 (2024-10-02).
 - spec: Stop using rpm-macros-make.
