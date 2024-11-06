@@ -1,7 +1,10 @@
-%def_enable check
+# wait for tox 4
+%if "%(rpmquery --qf '%%{VERSION}' python3-module-tox)" < "4"
+%def_disable check
+%endif
 
 Name: git-cola
-Version: 4.8.2
+Version: 4.9.0
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -11,15 +14,14 @@ Group: Development/Tools
 Url: https://git-cola.github.io
 Vcs: git://github.com/git-cola/git-cola.git
 Source: %name-%version.tar
-Patch: git-cola-4.5.0-alt-tox-v3.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %if_enabled check
-BuildRequires(pre): python3-module-pytest python3-module-tox-pip-version python3-module-qtpy python3-module-PyQt5 python3-module-GitPython python3-module-polib
+BuildRequires: python3-module-pytest python3-module-tox-pip-version python3-module-GitPython python3-module-polib
 %endif
-BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel python3-module-qtpy python3-module-PyQt5 rsync
 # hasher tests:
 Requires: python3-module-pyinotify python3-module-PyQt5 git-core
 
@@ -29,26 +31,37 @@ and caffeine-inspired features.
 
 %prep
 %setup
-%if "%(rpmquery --qf '%%{VERSION}' python3-module-tox)" < "4"
-%patch -p1
-%endif
 %prepare_sphinx3 share/doc/%name
 sed -i '/Git Cola version/s/%%(cola_version)s/%{version}/' \
-    cola/widgets/about.py
-# Not needed with virtualenv.
-sed -i '/tox-venv/d' tox.ini
-sed -i 's/ --flake8//' pytest.ini
+  cola/widgets/about.py
+sed -i '/prefix =/s|\$(HOME)|%_prefix|' Makefile
 
 %build
 %pyproject_build
+%make_build doc man
+%ifnarch aarch64 ppc64le
+%make_build html
+%endif
 
 %install
+export DESTDIR=%buildroot
 %pyproject_install
-%find_lang %name
-# because executable script is not executable
-chmod +x %buildroot%python3_sitelibdir/cola/widgets/spellcheck.py
+%make_install \
+  install-desktop-files \
+  install-icons \
+  install-htmldocs \
+  install-metainfo \
+  install-doc \
+%ifnarch aarch64 ppc64le
+  install-html \
+%endif
+  install-man
+
+# executable script is not executable
 chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass
 chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
+
+%find_lang %name
 
 %if_enabled check
 %check
@@ -62,9 +75,15 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_docdir/git-cola
 %_iconsdir/hicolor/scalable/apps/git-cola.svg
 %_datadir/metainfo/git-*.appdata.xml
+%_man1dir/git-*.1.xz
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 06 2024 Leontiy Volodin <lvol@altlinux.org> 4.9.0-alt1
+- New version 4.9.0.
+- Check is temporarily disabled (tox4 needed).
+- Included html and man documentation.
+
 * Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 4.8.2-alt1
 - New version 4.8.2.
 
