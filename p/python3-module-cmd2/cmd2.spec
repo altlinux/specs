@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.2
+Version: 2.5.3
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -21,6 +21,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 Buildrequires: python3-module-setuptools_scm
+Buildrequires: python3-module-setuptools
+Buildrequires: python3-module-wheel
 
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
@@ -74,13 +76,9 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %if_with docs
-# temporary install to avoid circular dependency
-%__python3 setup.py install --skip-build --root=_build --force
-export PYTHONPATH=$PWD/_build/%python3_sitelibdir
-
 sphinx-build-3 -b html docs build/html
 sphinx-build-3 -b pickle docs build/pickle
 
@@ -90,7 +88,7 @@ rm -rf build/pickles/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 install -d %buildroot%python3_sitelibdir/%oname
@@ -104,7 +102,7 @@ pytest3
 %files
 %doc LICENSE PKG-INFO *.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
 
@@ -117,6 +115,9 @@ pytest3
 %endif
 
 %changelog
+* Wed Nov 06 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.3-alt1
+- Automatically updated to 2.5.3.
+
 * Mon Nov 04 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.2-alt1
 - Automatically updated to 2.5.2.
 
