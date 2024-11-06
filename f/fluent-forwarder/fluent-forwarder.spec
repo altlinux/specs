@@ -2,7 +2,7 @@
 
 Name: fluent-forwarder
 Version: 0.0.1.0.46.b7c3
-Release: alt1
+Release: alt2
 
 Summary: A lightweight Fluentd forwarder written in Go
 
@@ -13,7 +13,8 @@ Vcs: git://github.com/fluent/fluentd-forwarder.git
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-Patch0: fluent-forwarter-0.0.1.46.b7c3-fix-td-client-go.patch
+Patch0: fluent-forwarder-0.0.1.46.b7c3-fix-td-client-go.patch
+Patch1: fluent-forwarder-0.0.1.46.b7c3-support-int64-timestamps.patch
 
 BuildRequires(pre): rpm-build-golang
 
@@ -31,6 +32,7 @@ The package provides development files for %name.
 %prep
 %setup -a1
 %patch0 -p1
+%patch1 -p1
 # vendor requires
 rm -rf vendor/src/github.com/ugorji/go/codec/test.py
 mkdir -p vendor/src/github.com/fluent/ && cd vendor/src/github.com/fluent/
@@ -69,6 +71,9 @@ install -Dm755 .build/fluentd_forwarder %buildroot%_bindir
 %go_path/src/%import_path
 
 %changelog
+* Wed Nov 06 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1.0.46.b7c3-alt2
+- Fixed decoding of timestamp field.
+
 * Fri Oct 25 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1.0.46.b7c3-alt1
 - Initial build for ALT Sisyphus (0.0.1-46-gb7c3958).
 - Built for fluent-bit.
