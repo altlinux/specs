@@ -1,9 +1,9 @@
 %define module_name rtl88x2bu
 %define module_version 5.8.7.1
-%define module_release alt4
+%define module_release alt5
 
 %define flavour	6.6
-%define karch @karch@
+%define karch %ix86 x86_64 aarch64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.6
 
@@ -22,7 +22,7 @@ License: GPLv2
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %karch
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
