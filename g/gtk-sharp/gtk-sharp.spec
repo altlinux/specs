@@ -4,7 +4,7 @@
 
 Name: gtk-sharp
 Version: 2.99.4
-Release: alt2.gitdadc19c
+Release: alt3.gitdadc19c
 
 Summary: C-Sharp Language Bindings for GTK+
 License: LGPLv2
@@ -117,6 +117,7 @@ This package contains the %name%gtk_version documentation for monodoc.
 %setup -n %name-%git_commit
 
 %build
+%add_optflags -Wno-error=implicit-function-declaration
 NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static
 %make_build
@@ -182,6 +183,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_monodocdir
 
 %changelog
+* Wed Nov 06 2024 Nazarov Denis <nenderus@altlinux.org> 2.99.4-alt3.gitdadc19c
+- Fix FTBFS
+
 * Fri Feb 11 2022 Nazarov Denis <nenderus@altlinux.org> 2.99.4-alt2.gitdadc19c
 - Fix requires on devel subpackages
 
