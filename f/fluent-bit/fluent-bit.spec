@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 3.1.9
+Version: 3.1.10
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -10,6 +10,7 @@ Summary: Fast data collector for Linux
 License: Apache-2.0
 Group: Monitoring
 Url: https://github.com/fluent/fluent-bit
+Vcs: git://github.com/fluent/fluent-bit.git
 
 Source: %name-%version.tar
 # Fix up some install paths in CMake. Not upstream
@@ -103,6 +104,10 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Wed Nov 06 2024 Leontiy Volodin <lvol@altlinux.org> 3.1.10-alt1
+- New version 3.1.10.
+- Added vcs tag.
+
 * Mon Sep 30 2024 Leontiy Volodin <lvol@altlinux.org> 3.1.9-alt1
 - New version.
 
