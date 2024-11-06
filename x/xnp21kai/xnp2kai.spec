@@ -1,6 +1,7 @@
+%set_gcc_version 13
 Name: xnp21kai
 Version: rev.22
-Release: alt1
+Release: alt1.git4b109ea
 Summary: PC-9801 series emulator	
 Group: Emulators
 License: BSD3
@@ -9,7 +10,7 @@ Url: http://domisan.sakura.ne.jp/article/np2kai/np2kai.html
 Source: %name-%version.tar
 Patch0: delete-git-CMakefiles.patch
 
-BuildRequires: gcc-c++
+BuildRequires: gcc13-c++
 BuildRequires: zlib-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL2_ttf-devel
@@ -31,8 +32,11 @@ PC-9801 series emulator
 %prep
 %setup -n %name-%version
 %patch0 -p1
+export CC=%__cc
+export CXX=%__cxx
 
 %build
+
 %cmake
 %cmake_build
 
@@ -75,5 +79,8 @@ cp x/resources/* %buildroot%_datadir/%name
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Nov  6 2024 Artyom Bystrov <arbars@altlinux.org> rev.22-alt1.git4b109ea
+- update to new version
+
 * Thu Aug 4 2022 Artyom Bystrov <arbars@altlinux.org> rev.22-alt1
  - initial release
