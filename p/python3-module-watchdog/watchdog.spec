@@ -8,14 +8,14 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
 }
 
 Name: python3-module-%pypi_name
-Version: 5.0.3
+Version: 6.0.0
 Release: alt1
 
 Summary: Filesystem events monitoring
@@ -34,9 +34,10 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter types- sphinx
 %pyproject_builddeps_metadata_extra watchmedo
 %pyproject_builddeps_check
+# required by raise_nofile fixture (see tests/test_inotify_c.py)
+BuildRequires: /proc
 %endif
 
 Conflicts: python-module-watchdog
@@ -66,12 +67,15 @@ export NO_SUDO=YES
 %pyproject_run_pytest -ra -o=addopts=-Wignore
 
 %files
-%doc AUTHORS *.rst
+%doc README.*
 %_bindir/watchmedo
 %python3_sitelibdir/watchdog/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 06 2024 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
+- 5.0.3 -> 6.0.0.
+
 * Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 5.0.3-alt1
 - 5.0.2 -> 5.0.3.
 
