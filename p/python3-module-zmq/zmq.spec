@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 26.0.3
+Version: 26.2.0
 Release: alt1
 
 Summary: Software library for fast, message-based applications
@@ -114,8 +114,9 @@ find . -name "*.c" | xargs rm -v
 # because zmq's asyncio conflicts with python3-base's asyncio
 # Maybe it somehow tied with paths
 export PYTHONPATH=%buildroot%python3_sitelibdir
-cd ..
-py.test3 --pyargs zmq -v --asyncio-mode auto -k "not test_cython"
+rm -v zmq/__init__.py
+echo asyncio_default_fixture_loop_scope="function" >> pytest.ini
+%pyproject_run_pytest -k "not test_cython"
 
 %files
 %doc README.md LICENSE.md CONTRIBUTING.md AUTHORS.md examples/
@@ -131,6 +132,9 @@ py.test3 --pyargs zmq -v --asyncio-mode auto -k "not test_cython"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Nov 06 2024 Grigory Ustinov <grenka@altlinux.org> 26.2.0-alt1
+- Automatically updated to 26.2.0.
+
 * Fri May 17 2024 Grigory Ustinov <grenka@altlinux.org> 26.0.3-alt1
 - Automatically updated to 26.0.3.
 
