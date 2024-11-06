@@ -1,15 +1,17 @@
 Name: mosml
 Version: 2.10.1
-Release: alt2
+Release: alt3
 
 Summary:  Moscow ML
 License: GPL
 Group: Development/ML
 Url: http://mosml.org/
+Excludearch: ppc64le
 
 Packager: %packager
 Source: %name-%version.tar
-Patch: %name-alt-header.patch
+Patch0: %name-alt-header.patch
+Patch1: %name-2.10.1-alt-c89-in-autoconf.patch
 
 # Automatically added by buildreq on Sat Sep 03 2016
 BuildRequires: libgmp-devel
@@ -50,6 +52,7 @@ compilation and modest storage consumption.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %define docdir %_docdir/%name-%version
@@ -103,6 +106,9 @@ rm -f %buildroot/%_libdir/mosml/camlrunm
 %doc README copyrght doc/* examples
 
 %changelog
+* Tue Nov 05 2024 Andrey Bergman <vkni@altlinux.org> 2.10.1-alt3
+- Fix C standard in configure script to C 89.
+
 * Tue Oct 09 2018 Andrey Bergman <vkni@altlinux.org> 2.10.1-alt2
 - Add unpackaged files.
 
