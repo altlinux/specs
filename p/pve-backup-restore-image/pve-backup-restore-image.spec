@@ -4,7 +4,7 @@
 %define cachedir /var/cache/proxmox-backup
 
 Name: pve-backup-restore-image
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
@@ -41,6 +41,9 @@ install -p -D -m 0755 pve-backup-restore-image.filetrigger %buildroot%_rpmlibdir
 #%%ghost %%imagedir/initramfs.img
 
 %changelog
+* Wed Nov 06 2024 Alexey Shabalin <shaba@altlinux.org> 0.5-alt1
+- update filetrigger: update initramfs on self update
+
 * Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 0.4-alt1
 - add rpm filetrigger
 - move load ntfs module to make-initrd-pbs = 1.0.5
