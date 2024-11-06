@@ -1,6 +1,6 @@
 Name:    zxtune
-Version: r5056
-Release: alt1.1
+Version: r5075
+Release: alt1.git44be56a
 
 Summary: Crossplatform chiptune player
 License: GPL
@@ -48,6 +48,9 @@ install -Dpm0644 ./apps/zxtune123/dist/dingux/zxtune.png %buildroot%_iconsdir/%n
 %_iconsdir/%name.png
 
 %changelog
+* Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> r5075-alt1.git44be56a
+- Update to new version
+
 * Mon Apr 08 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> r5056-alt1.1
 - Fixed build for Elbrus
 
