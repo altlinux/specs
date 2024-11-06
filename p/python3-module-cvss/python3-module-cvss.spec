@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: CVSS2/3/4 library with interactive calculator for Python 3
@@ -59,6 +59,9 @@ interactive calculator.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 07 2024 Anton Zhukharev <ancieg@altlinux.org> 3.3-alt1
+- Updated to 3.3.
+
 * Tue Oct 29 2024 Anton Zhukharev <ancieg@altlinux.org> 3.2-alt1
 - Built for ALT Sisyphus.
 
