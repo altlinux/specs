@@ -3,11 +3,14 @@
 Name:             melonds
 Summary:          Nintendo DS emulator
 Version:          0.9.5
-Release:          alt1.gitd8f1d10
+Release:          alt2.gitd8f1d10
 Group:            Emulators
 License:          GPL-3.0-or-later
 URL:              http://melonds.kuribo64.net/
+Packager:         Artyom Bystrov <arbars@altlinux.org>
 Source0:          https://github.com/Arisotura/melonDS/archive/%{version}.tar.gz#/%{_localname}-%{version}.tar.gz
+Patch0:           melonds-alt-explicit-using-log.patch
+
 ExcludeArch: %ix86 ppc64le
 
 BuildRequires:    binutils gcc-c++
@@ -36,6 +39,7 @@ melonDS is a Nintendo DS emulator.
 
 %prep
 %setup -q -n %{_localname}-%{version}
+%autopatch -p1
 
 %build
 mkdir build
@@ -59,6 +63,9 @@ DESTDIR=%{buildroot} ninja install
 %{_datadir}/icons/hicolor/*/apps/net.kuribo64.melonDS.png
 
 %changelog
+* Wed Nov 06 2024 Ivan A. Melnikov <iv@altlinux.org> 0.9.5-alt2.gitd8f1d10
+- NMU: fix FTBFS on loongarch64.
+
 * Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 0.9.5-alt1.gitd8f1d10
 - Update to new version
 - Add new deps in BR
