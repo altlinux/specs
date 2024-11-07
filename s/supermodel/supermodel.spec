@@ -1,6 +1,6 @@
 Name: supermodel
-Version: 0.2a
-Release: alt4
+Version: 0.3a
+Release: alt1.git4e7356a
 Summary: A cross-platform Sega Model 3 arcade machine emulator
 Summary(ru_RU.UTF-8): Кросплатформенный эмулятор аркадного автомата Sega Model 3
 Group: Emulators
@@ -33,8 +33,8 @@ Supermodel эмулирует аркадную платформу Sega Model 3, 
 %prep
 %setup -n %name-%version
 
-%patch0 -p1
-%patch1 -p1
+#%%patch0 -p1
+#%%patch1 -p1
 # Initial Elbrus support (thanks to ilyakurdyukov@)
 %ifarch %e2k
 sed -i 's/k_framePeriod/(int)&/g' Src/Model3/DSB.cpp
@@ -61,10 +61,12 @@ install -D -m 755 %SOURCE2  %buildroot%_bindir/supermodel
 %_man6dir/*
 
 %changelog
+* Thu Nov  7 2024 Artyom Bystrov <arbars@altlinux.org> 0.3a-alt1.git4e7356a
+- Update to new version
+
 * Sat Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 0.2a-alt4
 - Add patch for fix "no function with name 'texture2DLod' " error
 - enable network card support
-
 
 * Sat Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 0.2a-alt3
 - Change run script

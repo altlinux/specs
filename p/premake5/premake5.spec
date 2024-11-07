@@ -1,6 +1,7 @@
+%set_gcc_version 13
 Name: premake5
 Version: 5.0.0.beta2
-Release: alt1
+Release: alt2
 Summary: Cross-platform build configuration tool
 
 Group: Development/Tools
@@ -28,6 +29,8 @@ Premake5 is a build configuration tool that can generate project files for:
 #%%patch1 -p1
 
 %build
+export CC=%__cc
+export CXX=%__cxx
 
 # bootstrap your first Premake executable
 make -f Bootstrap.mak linux
@@ -50,5 +53,8 @@ install -m 644 -Dp ./packages/debian/premake.1 %buildroot/%_mandir/man1/premake5
 %doc LICENSE.txt README.md CHANGES.txt
 
 %changelog
+* Thu Nov  7 2024 Artyom Bystrov <arbars@altlinux.org> 5.0.0.beta2-alt2
+- stay on GCC13
+
 * Tue Jun 20 2023 Artyom Bystrov <arbars@altlinux.org> 5.0.0.beta2-alt1
 - initial build for ALT Sisyphus
