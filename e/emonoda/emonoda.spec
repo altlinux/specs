@@ -1,6 +1,6 @@
 Name: emonoda
 Version: 2.1.37
-Release: alt1
+Release: alt2
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -33,10 +33,10 @@ The set of tools to organize and management of your torrents.
 #autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/emdiff
@@ -52,9 +52,12 @@ The set of tools to organize and management of your torrents.
 %_bindir/emhook-transmission-redownload
 
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%name-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Thu Nov 07 2024 Stanislav Levin <slev@altlinux.org> 2.1.37-alt2
+- Fixed FTBFS (setuptools 75.3.0).
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1.37-alt1
 - new version 2.1.37 (with rpmrb script)
 
