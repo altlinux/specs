@@ -9,7 +9,7 @@
 
 Name: opendnssec
 Version: 2.1.14
-Release: alt1
+Release: alt2
 
 Summary: DNSSEC key and zone management software
 License: BSD-2-Clause
@@ -163,6 +163,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Thu Nov 07 2024 Stanislav Levin <slev@altlinux.org> 2.1.14-alt2
+- Fixed FTBFS (gcc 14).
+
 * Wed Oct 23 2024 Stanislav Levin <slev@altlinux.org> 2.1.14-alt1
 - 2.1.13 -> 2.1.14.
 
