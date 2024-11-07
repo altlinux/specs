@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 Summary: Parser library for project Change Log documents
 License: AGPL-3.0
@@ -47,5 +47,8 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 07 2024 Stanislav Levin <slev@altlinux.org> 0.0.3-alt1
+- 0.0.2 -> 0.0.3.
+
 * Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 0.0.2-alt1
 - Initial build for Sisyphus.
