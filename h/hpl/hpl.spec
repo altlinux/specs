@@ -9,7 +9,7 @@
 
 Name: hpl
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: The Linpack Benchmark
 
@@ -44,6 +44,7 @@ This package contains libhpl.a and manual pages with its API documentation.
 %package doc
 Summary: The Linpack Benchmark development files
 Group: Sciences/Other
+BuildArch: noarch
 
 %description doc
 %desc
@@ -64,23 +65,25 @@ export MPICC=mpicc
 %install
 %makeinstall_std
 install -pD -m0644 -t %buildroot%_man3dir man/man3/*.3
-install -pD -m0644 -t %buildroot%_docdir/%name-%version/www www/*
-install -p -m0644 -t %buildroot%_docdir/%name-%version \
-    AUTHORS BUGS COPYING HISTORY NEWS README THANKS TUNING \
-    testing/ptest/HPL.dat
+install -pD -m0644 -t %buildroot%_docdir/%name www/*
+install -pD -m0644 -t %buildroot%_includedir/%name include/*.h
 
 %files
 %_bindir/*
-%exclude %_docdir/%name-%version/www
-%_docdir/%name-%version/*
+%doc AUTHORS BUGS COPYING HISTORY NEWS README THANKS TUNING testing/ptest/HPL.dat
 
 %files devel-static
 %_libdir/*.a
+%_includedir/hpl
 %_man3dir/*
 
 %files doc
-%_docdir/%name-%version/www
+%_docdir/%name
 
 %changelog
+* Thu Nov 07 2024 Andrew Savchenko <bircoph@altlinux.org> 2.3-alt2
+- Add missing devel headers.
+- Fix docs packaging.
+
 * Sat Nov 02 2024 Andrew Savchenko <bircoph@altlinux.org> 2.3-alt1
 - Initial version.
