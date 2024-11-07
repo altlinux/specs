@@ -11,7 +11,7 @@
 
 Name: python3-module-%{_name}3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
@@ -42,6 +42,10 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %define pycairo_ver 1.16
 %define ffi_ver 3.0
 
+Requires: %name-nox = %EVR
+# required by /gi/overrides/Gdk.py
+Requires: typelib(cairo)
+
 BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-python3
 BuildRequires: meson gtk-doc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel libffi-devel >= %ffi_ver
@@ -61,6 +65,15 @@ GObject Introspection. It replaces the need for separate modules such as
 PyGTK, GIO and python-gnome to build a full GNOME 3.0 application. Once
 new functionality is added to gobject library it is instantly available
 as a Python API without the need for intermediate Python glue.
+
+%package nox
+Summary: PyGObject w/o Cairo dependencies
+Group: Development/Python3
+Requires: %name = %EVR
+%filter_from_requires /typelib(cairo)/d
+
+%description nox
+This package provides a part of PyGObject without Cairo dependencies.
 
 %package pygtkcompat
 Summary: PyGTK compatibility layer for PyGObject
@@ -111,7 +124,16 @@ Development documentation for %_name.
 xvfb-run %__meson_test -t 2
 
 %files
-%python3_sitelibdir/gi/
+%{?_enable_pycairo:%python3_sitelibdir/gi/_gi_cairo.cpython-*.so}
+
+%files nox
+%dir %python3_sitelibdir/gi/
+%python3_sitelibdir/gi/overrides/
+%python3_sitelibdir/gi/repository/
+%python3_sitelibdir/gi/*.py
+%python3_sitelibdir/gi/_gi.cpython-*.so
+%{?_enable_pycairo:%exclude %python3_sitelibdir/gi/_gi_cairo.cpython-*.so}
+%python3_sitelibdir/gi/__pycache__/
 %python3_sitelibdir/*.dist-info
 %exclude %python3_sitelibdir/gi/pygtkcompat.py*
 
@@ -130,6 +152,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Thu Nov 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt2
+- new Cairo-free "-nox" subpackage (ALT #51976)
+
 * Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt1
 - 3.50.0
 
