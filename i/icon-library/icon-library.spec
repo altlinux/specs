@@ -3,7 +3,7 @@
 
 Name: icon-library
 Version: 0.0.19
-Release: alt1
+Release: alt1.1
 
 Summary: Symbolic icons for your apps
 License: GPL-3.0-or-later
@@ -16,13 +16,13 @@ Source1: %name-vendor.tar
 Source2: config.toml
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
-BuildRequires: cmake
+BuildRequires: meson >= 0.59
 BuildRequires: rust-cargo
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(libadwaita-1)
-BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(glib-2.0) >= 2.66
+BuildRequires: pkgconfig(gio-2.0) >= 2.66
+BuildRequires: pkgconfig(gtk4) >= 4.6.0
+BuildRequires: pkgconfig(libadwaita-1) >= 1.5
+BuildRequires: pkgconfig(gtksourceview-5) >= 5.0.0
 %if_enabled check
 BuildRequires: %_bindir/desktop-file-validate
 BuildRequires: %_bindir/appstream-util
@@ -38,6 +38,7 @@ install -vD %SOURCE2 .cargo/config.toml
 
 %build
 %meson
+%meson_build
 
 %install
 %meson_install
@@ -57,5 +58,11 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sun Nov 03 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.19-alt1.1
+- Rebuild improved spec (ALT #51802)
+- Drop cmake dependency from BuildRequires
+- Add macro %meson_build
+- Add version require in BuildRequires
+
 * Sun Oct 20 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.19-alt1
 - Initial build
