@@ -5,7 +5,7 @@
 %def_enable    doc
 
 Name:          denemo
-Version:       2.6.0
+Version:       2.6.4.9
 Release:       alt1
 Summary:       WYSIWYG musical score editor, and frontend for Lilypond
 Summary(ru_RU.UTF-8): Нотный редактор с поддержкой Lilypond
@@ -117,6 +117,9 @@ fc-cache %_datadir/fonts/ttf/%name ||:
 %doc AUTHORS ChangeLog* LICENSE_OFL.txt NEWS README*
 
 %changelog
+* Thu Nov 07 2024 Pavel Skrylev <majioa@altlinux.org> 2.6.4.9-alt1
+- ^ 2.6.0 -> 2.6.4p9
+
 * Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 2.6.0-alt1
 - ^ 2.4.0 -> 2.6.0
 - ! fixed compilation without explicitly defined math (-lm) library
