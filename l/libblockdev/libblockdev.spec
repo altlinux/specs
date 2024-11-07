@@ -12,16 +12,17 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2.0
+Version: %ver_major.2.1
 Release: alt1
 
 Summary: A library for low-level manipulation with block devices
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://github.com/storaged-project/%name
 
-%if_disabled snapshot
 Vcs: https://github.com/storaged-project/libblockdev.git
+
+%if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
@@ -649,6 +650,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Thu Nov 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 - new smart{,montools} subpackages
