@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 Summary: XML-RPC for asyncio
 License: BSD-3-Clause
@@ -15,11 +15,10 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry-core
+BuildRequires: python3-module-pdm-backend
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-httpx
-BuildRequires: python3-module-pkg_resources
 BuildRequires: python3-module-pytest-asyncio
 %endif
 
@@ -47,8 +46,13 @@ coroutine is implemented.
 %doc LICENSE README.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
+%exclude %python3_sitelibdir/CHANGELOG.rst
+%exclude %python3_sitelibdir/CONTRIBUTORS.rst
 
 %changelog
+* Thu Nov 07 2024 Anton Vyatkin <toni@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Thu Apr 25 2024 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt1
 - New version 0.8.1.
 
