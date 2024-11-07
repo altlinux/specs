@@ -2,7 +2,7 @@
 
 Name: goldendict
 Version: 1.5.0
-Release: alt2
+Release: alt3
 
 Summary: Feature-rich dictionary lookup program
 License: GPL-3.0
@@ -13,6 +13,7 @@ VCS: https://github.com/goldendict/goldendict
 Source0: %name-%version.tar
 Patch0: goldendict-ru-desktop.patch
 Patch1: goldendict-remove-git-version.patch
+Patch2: goldendict-1.5.0-alt-link-config.patch
 
 BuildRequires(pre): qt5-base-devel
 BuildRequires: bzlib-devel
@@ -96,6 +97,9 @@ rm -rf %buildroot%_datadir/app-install
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt3
+- Replaced untrusted web-site for MediaWiki search (thanks alton@).
+
 * Tue Nov 14 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt2
 - Release 1.5.0.
 
