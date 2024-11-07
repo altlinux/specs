@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 Summary: pytest fixture for benchmarking code
 License: BSD-2-Clause
@@ -60,6 +60,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 5.0.0 -> 5.1.0.
+
 * Tue Oct 29 2024 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.0.0 -> 5.0.0.
 
