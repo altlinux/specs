@@ -2,7 +2,7 @@
 
 Name:           clufter
 Version:        0.77.2
-Release:        alt2.2
+Release:        alt3
 Group:          System/Base
 Summary:        Tool/library for transforming/analyzing cluster configuration formats
 License:        GPLv2+
@@ -30,6 +30,7 @@ Source12:        pacemaker-borrow-schemas
 Patch0:         compat-Python-3.9-no-longer-offers-collections.Mutable-ABCs.patch
 Patch1:         compat-Python-3.9-no-longer-raises-ValueError-at-some-bound.patch
 Patch2:         plugin_registry-fix-a-problem-with-native-plugins-missing.patch
+Patch3:         clufter-fix-build-gcc14.patch
 
 %description
 While primarily aimed at (CMAN,rgmanager)->(Corosync/CMAN,Pacemaker) cluster
@@ -166,6 +167,7 @@ pushd clufter
 %patch1 -p1
 %patch2 -p1
 popd
+%patch3 -p1
 
 %__cp -a ../"%name-tests-%version"/* .
 
@@ -333,6 +335,9 @@ test -x '%_bindir/%name' && test -f "${bashcomp}" \
 %files common
 %_datadir/cluster
 %_datadir/%name
+%exclude %_datadir/%name/ext-plugins/lib-general/
+%exclude %_datadir/%name/ext-plugins/lib-ccs/
+%exclude %_datadir/%name/ext-plugins/lib-pcs/
 %dir %_defaultdocdir/%name-%version
 %_defaultdocdir/%name-%version/*[^[:digit:]]
 %_defaultdocdir/%name-%version/*[[:digit:]].txt
@@ -347,6 +352,9 @@ test -x '%_bindir/%name' && test -f "${bashcomp}" \
 %_datadir/%name/ext-plugins/lib-pcs
 
 %changelog
+* Wed Nov 06 2024 Oleg Solovyov <mcpain@altlinux.org> 0.77.2-alt3
+- fix FTBFS with gcc14
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.77.2-alt2.2
 - NMU: Added zombie-imp to BuildRequires.
 
