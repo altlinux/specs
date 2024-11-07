@@ -12,8 +12,8 @@
 %endif
 
 Name: proxmox-backup
-Version: 3.1.5.1
-Release: alt3
+Version: 3.2.8.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -30,7 +30,7 @@ ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd rpm-macros-javascript
 BuildRequires: rpm-build-rust clang-devel
-
+BuildRequires: libapt-devel gcc-c++
 BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-devel libfuse3-devel libuuid-devel
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
 BuildRequires: proxmox-widget-toolkit-dev
@@ -98,11 +98,13 @@ rm -f docs/installation.rst
 
 %build
 export REPOID=alt
+export BUILD_MODE=release
 #export RUST_BACKTRACE=1
 #%make_build PROXY_USER=%proxy_user
 %make PROXY_USER=%proxy_user
 
 %install
+export BUILD_MODE=release
 %makeinstall_std PROXY_USER=%proxy_user
 %makeinstall_std -C docs install_html
 
@@ -171,6 +173,7 @@ usermod -a -G tape %proxy_user ||:
 %_libexecdir/proxmox-backup/proxmox-daily-update
 %attr(2511,root,%proxy_user) %_libexecdir/%name/sg-tape-cmd
 %_jsdir/%name
+%_datadir/%name
 %_datadir/zsh/vendor-completions/_pmt*
 %_datadir/zsh/vendor-completions/_proxmox-tape
 %_datadir/zsh/vendor-completions/_proxmox-backup-manager
@@ -179,7 +182,6 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/bash-completion/completions/proxmox-tape
 %_datadir/bash-completion/completions/proxmox-backup-manager
 %_datadir/bash-completion/completions/proxmox-backup-debug
-
 %_unitdir/%name.service
 %_unitdir/%name-proxy.service
 %_unitdir/%name-daily-update.service
@@ -220,6 +222,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Sat Nov 02 2024 Alexey Shabalin <shaba@altlinux.org> 1:3.2.8.1-alt1
+- 3.2.8-1
+
 * Fri May 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.1.5.1-alt3
 - fix build for p10
 
