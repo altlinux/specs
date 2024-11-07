@@ -1,12 +1,13 @@
 Name:          bin2iso
-Version:       1.9b
+Version:       1.9c
 Release:       alt1
 Summary:       Convert ".bin" files into ISO or WAV
 Summary(ru_RU.UTF-8): Преобразователь файлов ".bin" в формат ISO и/или WAV.
 License:       Unlicense
 Group:         File tools
 Url:           http://users.andara.com/~doiron/bin2iso/
-Vcs:           https://github.com/einsteinx2/bin2iso.git
+Vcs:           https://git.altlinux.org/gears/b/bin2iso.git
+
 Source:        %name-%version.tar
 
 %description
@@ -21,19 +22,20 @@ WAV-файлов.
 %setup
 
 %build
-cd src/linux_macos
-%__cc $RPM_OPT_FLAGS -o %name %{name}_v%{version}_linux.c
+%make_build
 
 %install
-cd src/linux_macos
-%__mkdir_p $RPM_BUILD_ROOT%_bindir
-%__install -m 0755 %name $RPM_BUILD_ROOT/%_bindir
+%makeinstall_std
 
 %files
 %_bindir/%name
 
 
 %changelog
+* Thu Nov 07 2024 Pavel Skrylev <majioa@altlinux.org> 1.9c-alt1
+- ^ 1.9b -> 1.9c
+- ! fixed by removing warnings
+
 * Wed Mar 11 2020 Pavel Skrylev <majioa@altlinux.org> 1.9b-alt1
 - ^ 1.9 -> 1.9b
 - > sources at upstream
