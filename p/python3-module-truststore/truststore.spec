@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.2
+Version: 0.10.0
 Release: alt1
 
 Summary: Verify certificates using OS trust stores
@@ -69,8 +69,11 @@ luck!
 %check
 # Deselect tests/test_inject.py::test_requests_works_with_inject because of
 # it needs dns resolving, but there's no it within hasher chroot.
+# Deselect tests/test_api.py::test_wrong_host_succeeds_with_hostname_verification_disabled because of
+# it needs dns resolving, but there's no it within hasher chroot.
 %pyproject_run_pytest -Wignore -m "not internet" \
-    --deselect="tests/test_inject.py::test_requests_works_with_inject"
+    --deselect="tests/test_inject.py::test_requests_works_with_inject" \
+    --deselect="tests/test_api.py::test_wrong_host_succeeds_with_hostname_verification_disabled"
 
 %files
 %doc README.md LICENSE
@@ -78,6 +81,9 @@ luck!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 07 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.0-alt1
+- Updated to 0.10.0.
+
 * Tue Oct 15 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.2-alt1
 - Initial build for ALT Sisyphus.
 
