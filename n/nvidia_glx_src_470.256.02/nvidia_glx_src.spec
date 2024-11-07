@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt252
+%define pkg_rel alt253
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -106,6 +106,7 @@ Patch2: alt-ignore-dma-remap.patch
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 Patch6: kernel-6.0.patch
+Patch7: gcc14.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -187,6 +188,7 @@ pushd kernel
 %patch5 -p1
 %endif
 %patch6 -p1
+%patch7 -p1
 rm -rf precompiled
 %ifarch aarch64
 fgrep -rl MT_DEVICE_GRE | \
@@ -411,6 +413,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt253
+- fix compile kernel module with gcc-14
+
 * Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt252
 - new version
 
