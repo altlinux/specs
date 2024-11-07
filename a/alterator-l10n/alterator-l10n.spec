@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.146
+Version: 2.9.147
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Nov 06 2024 Oleg Solovyov <mcpain@altlinux.org> 2.9.147-alt1
+- alterator-vm: new translations from EVMS (Closes: #51903)
+
 * Thu Oct 24 2024 Oleg Solovyov <mcpain@altlinux.org> 2.9.146-alt1
 - alterator-vm: add details from EVMS
 - alterator-vm: change EFI on RAID warning

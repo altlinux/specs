@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.43
+Version: 0.4.44
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Nov 06 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.44-alt1
+- new translations from evms 2.5.5-alt83
+
 * Thu Oct 24 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.43-alt1
 - allow EFI on RAID with super 1.0 (Closes: #49438)
 

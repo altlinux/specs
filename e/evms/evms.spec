@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt82
+Release: alt83
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,12 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Nov 06 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt83
+- custom error messages:
+  + LVM: volume group name is in use
+  + DOS: no acceptable objects given (Closes: #51897)
+- LUKS: change default cypher to cryptsetup default (Closes: #51890)
+
 * Thu Oct 24 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt82
 - fix crash after defaulting 1.0 superblock (Closes: #49438)
 - missing changelog entry from 2.5.5-alt81:
