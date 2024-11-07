@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.2.2
-Release: alt2
+Version: 6.2.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -168,6 +168,10 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
+- new version
+- fix path to kinfocenter-ansi2html.sh (closes: 51960)
+
 * Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt2
 - fix find dmidecode (closes: 51931)
 

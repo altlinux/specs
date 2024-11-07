@@ -1,7 +1,7 @@
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.2.2
+Version: 6.2.3
 Release: alt1
 %K6init
 
@@ -11,7 +11,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 # PowerfulWhenNeeded
-Requires: kf6-knewstuff
+#Requires: kf6-knewstuff
 
 Provides: plasma5-welcome = %EVR
 Obsoletes: plasma5-welcome < %EVR
@@ -59,6 +59,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
+- new version
+
 * Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 

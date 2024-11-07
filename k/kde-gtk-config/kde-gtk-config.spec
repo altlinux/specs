@@ -1,7 +1,7 @@
 %define rname kde-gtk-config
 
 Name: %rname
-Version: 6.2.2
+Version: 6.2.3
 Release: alt1
 #Epoch: 1
 %K6init
@@ -64,10 +64,12 @@ ADD_OPTFLAGS=`pkg-config --cflags harfbuzz`
 %_K6conf_up/*gtk*.*
 %_K6data/kcm-gtk-module/
 %_datadir/themes/Breeze/window_decorations.css
-
-
+%_datadir/qlogging-categories6/*.*categories
 
 %changelog
+* Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
+- new version
+
 * Mon Oct 28 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 
