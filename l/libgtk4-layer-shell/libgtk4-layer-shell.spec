@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: libgtk4-layer-shell
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 License: MIT
 
@@ -131,6 +131,9 @@ This package provides Vala language bindings for the %name library.
 %endif
 
 %changelog
+* Thu Nov 07 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
 * Mon Sep 23 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.0.3-alt1
 - new version 1.0.3 (with rpmrb script)
 
