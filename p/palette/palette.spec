@@ -3,10 +3,10 @@
 
 Name: palette
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Color Palette tool
-License: GPL-3.0-or-later
+License: GPL-3.0-only
 Group: Graphical desktop/GNOME
 
 Url: https://gitlab.gnome.org/World/design/palette
@@ -18,11 +18,8 @@ Source1: HIG-app-icons.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
-BuildRequires: vala-tools
-BuildRequires: rpm-build-gir
-BuildRequires: rpm-build-vala
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: vala
+BuildRequires: pkgconfig(libadwaita-1) >= 1.5
 %if_enabled check
 BuildRequires: %_bindir/desktop-file-validate
 BuildRequires: %_bindir/appstreamcli
@@ -53,5 +50,12 @@ Tool for viewing the GNOME color palette as defined by the design guidelines.
 %_datadir/metainfo/%{APP_ID}.metainfo.xml
 
 %changelog
+* Sun Nov 03 2024 Oleg Shchavelev <oleg@altlinux.org> 2.0.3-alt1.1
+- Rebuild improved spec (ALT #51800)
+- Replaced license GPL-3.0-or-later with GPL-3.0-only
+- Drop cmake,rpm-build-gir,rpm-build-vala dependencies from BuildRequires
+- Replaced vala-tools -> vala dependency in BuildRequires
+- Add version require libadwaita in BuildRequires
+
 * Tue Oct 15 2024 Oleg Shchavelev <oleg@altlinux.org> 2.0.3-alt1
 - Initial build
