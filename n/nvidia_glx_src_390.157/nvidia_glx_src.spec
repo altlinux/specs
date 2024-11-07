@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt230
+%define pkg_rel alt231
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -111,6 +111,7 @@ Patch10: buildfix_kernel_6.5-garbage-collect-all-references-to-get_user.patch
 Patch11: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova.patch
 Patch12: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova_uvm.patch
 Patch13: buildfix_kernel_6.6.patch
+Patch14: gcc14.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -195,6 +196,8 @@ if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
 %patch12 -p1
 fi
 %patch13 -p2
+pwd
+%patch14 -p2
 rm -rf precompiled
 popd
 
@@ -382,6 +385,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 390.157-alt231
+- fix compile kernel module with gcc-14
+
 * Fri May 31 2024 Sergey V Turchin <zerg@altlinux.org> 390.157-alt230
 - move nvidia_icd.json for switching
 
