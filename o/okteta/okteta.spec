@@ -20,7 +20,7 @@
 
 Name: %rname
 Version: 0.26.18
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -54,8 +54,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
-Provides:  kde5-okteta = %EVR
-Obsoletes: kde5-okteta < %EVR
+Provides:  kde5-okteta-common = %EVR
+Obsoletes: kde5-okteta-common < %EVR
 %description common
 %name common package
 
@@ -189,6 +189,9 @@ mv %buildroot/%_K5xdgmime/okteta{,5}.xml
 
 
 %changelog
+* Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 1:0.26.18-alt2
+- fix obsoletes
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 1:0.26.18-alt1
 - new version
 
