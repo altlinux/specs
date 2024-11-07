@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 0.4.23
-Release: alt12
+Version: 6.0.1
+Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -11,18 +11,7 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 
 Source: %name-%version.tar
 
-Patch1: port-build-files-to-kde6.patch
-Patch2: embed-liblightdm.patch
-Patch3: port-to-kde6.patch
-Patch4: move-kcm-module-qml-files.patch
-Patch5: port-kcm-to-qt-6.patch
-Patch6: remove-the-binding-loop-in-the-userslist-component.patch
-Patch7: make-non-existent-default-index-in-listbutton.patch
-Patch8: fix-networkmanager-widget-in-the-userbar-theme.patch
-Patch9: bring-back-the-password-preview-button.patch
-Patch10: provide-some-time-to-read-messages-from-pam.patch
-Patch11: show-caps-lock-or-num-lock-enabled.patch
-Patch12: hide-menubar-items-gradually.patch
+Patch1: add-russian-translations-to-desktop-files.patch
 
 %K6init
 
@@ -56,17 +45,6 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %build
 %K6build \
@@ -106,6 +84,11 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Nov 06 2024 Anton Golubev <golubevan@altlinux.org> 6.0.1-alt1
+- upstream has caught up with Sisyphus
+- raise the major version to 6, according to Qt
+- get rid of all patches, except for translation into Russian
+
 * Thu Oct 24 2024 Anton Golubev <golubevan@altlinux.org> 0.4.23-alt12
 - hide menuBar items gradually
 
