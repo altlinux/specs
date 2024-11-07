@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt14
+Release:       alt15
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Wed Nov 06 2024 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt15
+- ! relaxed build for gcc14
+- ! break extension compilation when configure fails
+
 * Thu Oct 24 2024 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt14
 - ! ruby required limit detection
 
