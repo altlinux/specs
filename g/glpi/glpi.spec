@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.16
+Version: 10.0.17
 Release: alt1
 
 Summary: IT and asset management software
@@ -57,8 +57,18 @@ Requires: php8.2-curl, php8.2-fileinfo, php8.2-gd2, php8.2-json, php8.2-mbstring
 Requires: php8.2-bz2, php8.2-exif, php8.2-ldap, php8.2-opcache, php8.2-openssl, php8.2-sodium, php8.2-xmlreader, php8.2-zip
 
 %description php8.2
-php8.2 dependencies for %name
+php8.3 dependencies for %name
 
+%package php8.3
+Summary: PHP8.3 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.3
+Requires: php8.3-curl, php8.3-fileinfo, php8.3-gd2, php8.3-json, php8.3-mbstring, php8.3-mysqlnd-mysqli, php8.3-session, php8.3-zlib, php8.3-intl
+Requires: php8.3-bz2, php8.3-exif, php8.3-ldap, php8.3-opcache, php8.3-openssl, php8.3-sodium, php8.3-xmlreader, php8.3-zip
+
+%description php8.3
+php8.3 dependencies for %name
 
 %prep
 %setup
@@ -166,7 +176,31 @@ fi
 
 %files php8.2
 
+%files php8.3
+
 %changelog
+* Fri Nov 08 2024 Pavel Zilke <zidex@altlinux.org> 10.0.17-alt1
+- New version 10.0.17
+- Added glpi-php8.3
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2024-50339 : Unauthenticated session hijacking
+ + CVE-2024-40638 : Account takeover through SQL injection
+ + CVE-2024-43416 : Users email enumeration by unauthenticated user
+ + CVE-2024-47758 : Account takeover without privilege escalation through the API
+ + CVE-2024-47761 : Account takeover via the password reset feature
+ + CVE-2024-47760 : Account takeover via API
+ + CVE-2024-48912 : Insecure account deletion by authenticated user
+ + CVE-2024-45608 : Authenticated SQL Injection
+ + CVE-2024-41679 : Authenticated SQL injection in ticket form
+ + CVE-2024-45611 : Stored XSS in RSS feeds
+ + CVE-2024-47759 : Stored XSS via document upload
+ + CVE-2024-43417 : Reflected XSS
+ + CVE-2024-43418 : Reflected XSS
+ + CVE-2024-45609 : Reflected XSS
+ + CVE-2024-45610 : Reflected XSS
+ + CVE-2024-41678 : Reflected XSS
+
 * Wed Jul 03 2024 Pavel Zilke <zidex@altlinux.org> 10.0.16-alt1
 - New version 10.0.16
 - This release fixes a security issue that has been recently discovered. Update is recommended!
