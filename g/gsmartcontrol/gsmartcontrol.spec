@@ -1,18 +1,28 @@
+%def_enable snapshot
+%def_disable check
+
 Name: gsmartcontrol
-Version: 1.1.4
+Version: 2.0.0
 Release: alt1
 
 Summary: GSmartControl - Hard disk drive and SSD health inspection tool
 Group: Monitoring
-License: GPL-2.0 or GPL-3.0
+License: GPL-3.0-only
 Url: https://gsmartcontrol.sourceforge.io/home/
 
-Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
-Patch1: gsmartcontrol-0.8.7-alt-lfs.patch
+Vcs: https://github.com/ashaduri/gsmartcontrol.git
 
-Requires: smartmontools >= 5.43 polkit
+%if_disabled snapshot
+#Source: http://download.sourceforge.net/%name/%name-%version.tar.bz2
+Source: https://github.com/ashaduri/gsmartcontrol/archive/v%version/%name-%version.tar.gz
+%else
+Source: %name-%version.tar
+%endif
 
-BuildRequires: gcc-c++ libgtkmm3-devel >= 3.4.0 libpcrecpp-devel libappstream-glib-devel
+Requires: smartmontools >= 7.4 polkit
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ libgtkmm3-devel >= 3.4.0
 
 %description
 GSmartControl is a graphical user interface for smartctl (from
@@ -23,17 +33,16 @@ to determine its health, as well as run various tests on it.
 
 %prep
 %setup
-%patch1
 
 %build
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %check
-%make check
+%cmake_build -t test
 
 %files
 %_sbindir/%name
@@ -44,11 +53,13 @@ to determine its health, as well as run various tests on it.
 %_man1dir/*.1*
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%name.appdata.xml
-%_datadir/pixmaps/gsmartcontrol.*
 %_defaultdocdir/%name/
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Thu Nov 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- updated to v2.0.0-4-g566b110
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
 - 1.1.4
 
