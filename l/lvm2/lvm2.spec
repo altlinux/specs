@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.26
-%define dmversion 1.02.200
+%define lvm2version 2.03.28
+%define dmversion 1.02.202
 
 %define _runtimedir /run
 %define _lockdir /run/lock
@@ -15,7 +15,11 @@
 %def_enable blkid_wiping
 %def_disable lvmdbusd
 %def_enable dmfilemapd
+%ifnarch %e2k
 %def_enable thin
+%else
+%def_disable thin
+%endif
 %ifarch x86_64 aarch64 ppc64le ppc64 s390 s390x %e2k
 %def_enable vdo
 %else
@@ -52,18 +56,16 @@ Requires: dmsetup  >= %{dmversion}-%{release}
 Requires: dmeventd >= %{dmversion}-%{release}
 Requires: liblvm2  = %{lvm2version}-%{release}
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 BuildRequires: libaio-devel
 # libudev-devel >= 205 required for udev-systemd-background-jobs
 BuildRequires: libudev-devel >= 205
 BuildRequires: systemd-devel >= 234
-%if_enabled thin
-BuildRequires: thin-provisioning-tools >= 0.7.0
-%endif
 BuildRequires: autoconf-archive
-%{?_enable_thin:BuildRequires: thin-provisioning-tools >= 0.5.4}
-BuildRequires(pre): rpm-build-python3
+%{?_enable_thin:BuildRequires: thin-provisioning-tools >= 0.7.0}
+%{?_enable_thin:Requires: thin-provisioning-tools >= 0.7.0}
 %{?_enable_lvmdbusd:BuildRequires: python3-devel python3-module-setuptools python3-module-dbus python3-module-pyudev}
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static libaio-devel-static libblkid-devel-static}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
@@ -485,6 +487,10 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 2.03.28-alt1
+- 2.03.28
+- add requires thin-provisioning-tools
+
 * Fri Aug 23 2024 Alexey Shabalin <shaba@altlinux.org> 2.03.26-alt1
 - 2.03.26
 

@@ -1,19 +1,21 @@
 
 Summary: A suite of tools for manipulating the metadata of the dm-thin device-mapper target.
 Name: thin-provisioning-tools
-Version: 0.9.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 License: GPLv3+
 Group: System/Base
 Url: https://github.com/jthornber/thin-provisioning-tools
 Source: %name-%version.tar
-Patch: device-mapper-persistent-data-avoid-strip.patch
+Patch: %name-%version-%release.patch
 
 # add provides for RH compat
 Provides: device-mapper-persistent-data = %EVR
 
-BuildRequires: gcc-c++
-BuildRequires: libexpat-devel libaio-devel boost-devel-headers
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
+BuildRequires: clang clang-devel
+BuildRequires: libdevmapper-devel libudev-devel
 
 %description
 thin-provisioning-tools contains check,dump,restore,repair,rmap
@@ -27,20 +29,14 @@ snapshot eras
 %setup
 %patch -p1
 
-%ifarch %e2k
-sed -i "s|ref_counter<uint64_t>|persistent_data::&|" \
-	persistent-data/data-structures/array.h
-%endif
-
-echo %version > VERSION
-
 %build
-%autoreconf
-%configure --with-optimisation=""
-%make_build
+%rust_build
 
 %install
-%makeinstall_std BINDIR=%buildroot%_sbindir
+%makeinstall_std STRIP=true MANDIR=%_mandir BINDIR=%buildroot%_sbindir
+
+#%%check
+#cargo test %%_smp_mflags --release --no-fail-fast
 
 %files
 %doc COPYING README.md
@@ -48,6 +44,9 @@ echo %version > VERSION
 %_sbindir/*
 
 %changelog
+* Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Wed Aug 04 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.0-alt2
 - Fixed Elbrus build
 
