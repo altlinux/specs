@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-rocknix
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.8
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -426,6 +426,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Nov 06 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.8.12-alt2
+- add chassis type in DTS of Anbernic and Powkiddy (closes: #51967)
+
 * Thu Oct 03 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.8.12-alt1
 - 6.8.12
 
