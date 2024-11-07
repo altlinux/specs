@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.0.6
-Release: alt2
+Release: alt3
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -30,6 +30,7 @@ Requires(post,postun): desktop-file-utils
 Source: http://download.m0k.org/%name/files/%name-%version.tar
 Patch2: %name-alt-extra-doc-disable.patch
 Patch3: %name-alt-fix-trsnslations-qt.patch
+Patch4: %name-miniupnp228.patch
 Source1: %dname.init
 Source2: %dname.logrotate
 Source3: %dname.service
@@ -239,6 +240,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Thu Nov 07 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt3
+- fixed build with miniupnp 2.2.8
+
 * Tue Jun 25 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt2
 - use service in logrotate (ALT bug: 49869)
 
