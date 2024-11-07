@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-aiohttp-retry
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 
 Summary: Simple retry client for aiohttp
@@ -17,14 +17,13 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch0: upstream-version-fix.patch
 
 %description
 %summary
 
 %prep
 %setup -n %pypi_name-%version
-%patch0 -p1
+sed -i 's/version=".*/version="%version",/' setup.py
 
 %build
 %pyproject_build
@@ -42,6 +41,9 @@ Patch0: upstream-version-fix.patch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 07 2024 Andrey Cherepanov <cas@altlinux.org> 2.9.1-alt1
+- New version.
+
 * Sun Oct 27 2024 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
 - New version.
 
