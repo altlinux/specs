@@ -3,7 +3,7 @@
 
 Name: icon-library
 Version: 0.0.19
-Release: alt1.1
+Release: alt2
 
 Summary: Symbolic icons for your apps
 License: GPL-3.0-or-later
@@ -58,10 +58,13 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Thu Nov 07 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.19-alt2
+- Corrected release description in 0.0.19-alt1.1
+
 * Sun Nov 03 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.19-alt1.1
 - Rebuild improved spec (ALT #51802)
 - Drop cmake dependency from BuildRequires
-- Add macro %meson_build
+- Add macro %%meson_build
 - Add version require in BuildRequires
 
 * Sun Oct 20 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.19-alt1
