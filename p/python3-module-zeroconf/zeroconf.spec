@@ -1,5 +1,5 @@
 Name: python3-module-zeroconf
-Version: 0.133.0
+Version: 0.136.0
 Release: alt1
 
 Summary: Python Multicast DNS Service Discovery Library
@@ -41,6 +41,9 @@ export SKIP_IPV6=1
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.136.0-alt1
+- 0.136.0 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.133.0-alt1
 - 0.133.0 released
 
