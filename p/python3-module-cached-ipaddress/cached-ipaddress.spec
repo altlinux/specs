@@ -1,5 +1,5 @@
 Name: python3-module-cached-ipaddress
-Version: 0.5.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Cache construction of ipaddress objects
@@ -14,6 +14,7 @@ BuildRequires: python3(poetry-core)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(cython)
 BuildRequires: python3(pytest-cov)
+BuildRequires: python3(propcache)
 
 %description
 %summary
@@ -35,6 +36,9 @@ BuildRequires: python3(pytest-cov)
 %python3_sitelibdir/cached_ipaddress-%version.dist-info
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8.0-alt1
+- 0.8.0 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.0-alt1
 - 0.5.0 released
 
