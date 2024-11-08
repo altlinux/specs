@@ -1,10 +1,10 @@
 Name: icon-theme-altos
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 
 Group: Graphics
 Summary: ALT icons theme
-Url: http://www.kde.org
+Url: https://altlinux.org
 License: LGPL-3.0-only
 
 BuildArch: noarch
@@ -13,7 +13,8 @@ Requires: icon-theme-breeze
 
 Source: %name-%version.tar
 
-BuildRequires: cmake
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
 BuildRequires: icon-naming-utils xml-utils python3-module-lxml
 BuildRequires: hardlink
 
@@ -27,24 +28,10 @@ BuildRequires: hardlink
 #find . -type f -name '*.svg' | xargs sed -i 's/ColorScheme-Accent/ColorScheme-Highlight/'
 
 %build
-#%cmake_build
+%K6build
 
 %install
-#%cmake_install
-# FAKE
-touch COPYING-ICONS README.md
-mkdir -p %buildroot/%_iconsdir/{altos,altos-dark,altos-cursors}
-for t in altos altos-dark altos-cursors; do
-    install -m 0644 index.theme %buildroot/%_iconsdir/$t/
-    cp -ar actions %buildroot/%_iconsdir/$t/
-done
-sed -i '/^Inherits=.*/d' %buildroot/%_iconsdir/altos-cursors/index.theme
-sed -i '/^Directories=.*/d' %buildroot/%_iconsdir/altos-cursors/index.theme
-sed -i 's|^Inherits=.*|Inherits=breeze,hicolor|' %buildroot/%_iconsdir/altos/index.theme
-sed -i 's|^Name=.*|Name=ALT OS|'            %buildroot/%_iconsdir/altos/index.theme
-sed -i 's|^Inherits=.*|Inherits=breeze-dark,hicolor|' %buildroot/%_iconsdir/altos-dark/index.theme
-sed -i 's|^Name=.*|Name=ALT OS Dark|'                 %buildroot/%_iconsdir/altos-dark/index.theme
-# END FAKE
+%K6install
 
 for t in %buildroot/%_iconsdir/* ; do
     [ -d $t ] || continue
@@ -105,11 +92,13 @@ done
 hardlink -c -v %buildroot/%_iconsdir/
 
 %files
-%doc COPYING* README.md
+%doc COPYING*
 %_iconsdir/altos/
 %_iconsdir/altos-dark/
-%_iconsdir/altos-cursors/
 
 %changelog
+* Tue Nov 05 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.0.2-alt1
+- add icons themes
+
 * Fri Nov 01 2024 Sergey V Turchin <zerg at altlinux dot org> 0.0.1-alt1
 - initial build
