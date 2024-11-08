@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 2024.5
+%define ver_major 2024.11
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
@@ -21,7 +21,7 @@ Vcs: https://github.com/giantpinkrobots/varia.git
 Source: %name-%version.tar
 %endif
 
-%define adw_ver 1.4
+%define adw_ver 1.6
 
 Requires: /usr/bin/aria2p /usr/bin/aria2c
 Requires: typelib(Adw) = 1 libadwaita >= %adw_ver
@@ -31,7 +31,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%name
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir rpm-build-xdg
 BuildRequires: meson yelp-tools
 BuildRequires: pkgconfig(libadwaita-1)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
@@ -61,11 +61,15 @@ It uses the amazing aria2 to handle the downloads.
 %_datadir/%name/
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
+%_iconsdir/hicolor/*/*/%{rdn_name}*.svg
+%_xdgmimedir/packages/io.github.giantpinkrobots.varia.mime.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.11.7-alt1
+- updated to v2024.11.7-1
+
 * Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.5.7-alt1
 - 2024.5.7
 
