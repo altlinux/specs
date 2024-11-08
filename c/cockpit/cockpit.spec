@@ -36,7 +36,7 @@
 
 Name: cockpit
 Version: 311.1
-Release: alt2
+Release: alt3
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
@@ -603,6 +603,9 @@ systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 %endif # build optional extension packages
 
 %changelog
+* Fri Nov 08 2024 Stanislav Levin <slev@altlinux.org> 311.1-alt3
+- Fixed FTBFS with libjson-glib 1.9.2 (closes: #51992).
+
 * Thu Jul 04 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 311.1-alt2
 - fix cockpit-bridge (closes: 50759)
 
