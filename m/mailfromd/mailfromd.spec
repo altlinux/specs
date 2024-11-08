@@ -7,7 +7,7 @@
 
 Name: mailfromd
 
-%define baseversion 8.16
+%define baseversion 9.0.90
 
 %if %snapshot
 %define snapshotdate 20210215
@@ -341,6 +341,12 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Thu Nov 07 2024 Sergey Y. Afonin <asy@altlinux.org> 9.0.90-alt1
+- new version (git 20240904, with patches for clamav 0.104;
+  full IPv6 support since 9.0)
+- userfunctions.mf: updated to_double_str() for 9.0
+- mailfromd.mf: used built-in sa_format_score() instead of to_double_str()
+
 * Wed May 17 2023 Sergey Y. Afonin <asy@altlinux.org> 8.16-alt1
 - new version
 - fixed DNS name lengh check in SPF's check_host()
