@@ -1,5 +1,5 @@
 Name: python3-module-aiooui
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: Async OUI lookups
@@ -39,6 +39,9 @@ BuildRequires: python3(requests)
 %python3_sitelibdir/aiooui-%version.dist-info
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.7-alt1
+- 0.1.7 released
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.6-alt1
 - 0.1.6 released
 
