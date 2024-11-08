@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp
-Version: 3.10.5
+Version: 3.10.10
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -79,6 +79,9 @@ make cythonize
 %python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.10-alt1
+- 3.10.10 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.5-alt1
 - 3.10.5 released
 
