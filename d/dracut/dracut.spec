@@ -3,7 +3,6 @@
 %define _unpackaged_files_terminate_build 1
 %define dracutlibdir %prefix/lib/dracut
 %define bash_completion_dir %(pkg-config --variable=completionsdir bash-completion)
-%define _unitdir %(pkg-config --variable=systemdsystemunitdir systemd)
 %def_enable documentation
 
 # We ship a .pc file but don't want to have a dep on pkg-config. We
@@ -13,7 +12,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 103
+Version: 105
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -41,6 +40,7 @@ BuildRequires: docbook-style-xsl docbook-dtds xsltproc
 BuildRequires: asciidoc xsltproc
 %endif
 
+Provides: dracut-ng = %EVR
 Requires: bash >= 4
 Requires: coreutils
 Requires: cpio
@@ -206,45 +206,52 @@ echo "DRACUT_VERSION=%version" > dracut-version.sh
 
 %install
 %makeinstall_std \
-    libdir=%prefix/lib
+    libdir=%prefix/lib enable_test=no
 
 echo "DRACUT_VERSION=%version-%release" > %buildroot%dracutlibdir/dracut-version.sh
 
 # Cleanup
-rm -fr -- %buildroot%dracutlibdir/modules.d/01fips
+rm -frv -- %buildroot%dracutlibdir/modules.d/01fips
+rm -frv -- %buildroot%dracutlibdir/modules.d/01fips-crypto-policies
+rm -frv -- %buildroot%dracutlibdir/dracut.conf.d/fips
 
 # we do not support dash in the initramfs
-rm -fr -- %buildroot%dracutlibdir/modules.d/00dash
+rm -frv -- %buildroot%dracutlibdir/modules.d/00dash
 
 # we do not support mksh in the initramfs
-rm -fr -- %buildroot%dracutlibdir/modules.d/00mksh
+rm -frv -- %buildroot%dracutlibdir/modules.d/00mksh
 
 # with systemd IMA and selinux modules do not make sense
-rm -fr -- %buildroot%dracutlibdir/modules.d/96securityfs
-rm -fr -- %buildroot%dracutlibdir/modules.d/97masterkey
-rm -fr -- %buildroot%dracutlibdir/modules.d/98integrity
+rm -frv -- %buildroot%dracutlibdir/modules.d/96securityfs
+rm -frv -- %buildroot%dracutlibdir/modules.d/97masterkey
+rm -frv -- %buildroot%dracutlibdir/modules.d/98integrity
+rm -frv -- %buildroot%dracutlibdir/dracut.conf.d/ima
 
 %ifnarch s390 s390x
 # remove architecture specific modules
-rm -fr -- %buildroot%dracutlibdir/modules.d/80cms
-rm -fr -- %buildroot%dracutlibdir/modules.d/81cio_ignore
-rm -fr -- %buildroot%dracutlibdir/modules.d/91zipl
-rm -fr -- %buildroot%dracutlibdir/modules.d/95dasd
-rm -fr -- %buildroot%dracutlibdir/modules.d/95dasd_mod
-rm -fr -- %buildroot%dracutlibdir/modules.d/95dasd_rules
-rm -fr -- %buildroot%dracutlibdir/modules.d/95dcssblk
-rm -fr -- %buildroot%dracutlibdir/modules.d/95qeth_rules
-rm -fr -- %buildroot%dracutlibdir/modules.d/95zfcp
-rm -fr -- %buildroot%dracutlibdir/modules.d/95zfcp_rules
-rm -fr -- %buildroot%dracutlibdir/modules.d/95znet
+rm -frv -- %buildroot%dracutlibdir/modules.d/80cms
+rm -frv -- %buildroot%dracutlibdir/modules.d/81cio_ignore
+rm -frv -- %buildroot%dracutlibdir/modules.d/91zipl
+rm -frv -- %buildroot%dracutlibdir/modules.d/95dasd
+rm -frv -- %buildroot%dracutlibdir/modules.d/95dasd_mod
+rm -frv -- %buildroot%dracutlibdir/modules.d/95dasd_rules
+rm -frv -- %buildroot%dracutlibdir/modules.d/95dcssblk
+rm -frv -- %buildroot%dracutlibdir/modules.d/95qeth_rules
+rm -frv -- %buildroot%dracutlibdir/modules.d/95zfcp
+rm -frv -- %buildroot%dracutlibdir/modules.d/95zfcp_rules
+rm -frv -- %buildroot%dracutlibdir/modules.d/95znet
 %else
-rm -fr -- %buildroot%dracutlibdir/modules.d/00warpclock
+rm -frv -- %buildroot%dracutlibdir/modules.d/00warpclock
 %endif
 %ifnarch ppc ppc64
-rm -fr -- %buildroot%dracutlibdir/modules.d/90ppcmac
+rm -frv -- %buildroot%dracutlibdir/modules.d/90ppcmac
 %endif
 # remove gentoo specific modules
-rm -fr -- %buildroot%dracutlibdir/modules.d/50gensplash
+rm -frv -- %buildroot%dracutlibdir/modules.d/50gensplash
+
+rm -fv -- %buildroot%dracutlibdir/dracut.conf.d/test*
+rm -fv -- %buildroot%dracutlibdir/dracut.conf.d/*.example
+
 
 mkdir -p %buildroot/boot/dracut
 mkdir -p %buildroot/%_var/lib/dracut/overlay
@@ -253,7 +260,7 @@ touch %buildroot%_logdir/dracut.log
 mkdir -p %buildroot%_sharedstatedir/initramfs
 
 install -m 0644 dracut.conf.d/alt.conf.example %buildroot%dracutlibdir/dracut.conf.d/01-dist.conf
-rm -f %buildroot%_mandir/man?/*suse*
+rm -fv %buildroot%_mandir/man?/*suse*
 
 echo 'hostonly="no"' > %buildroot%dracutlibdir/dracut.conf.d/02-generic-image.conf
 echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-rescue.conf
@@ -282,6 +289,13 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/dracut.conf.d/01-dist.conf
 %dir %_sysconfdir/dracut.conf.d
 %dir %dracutlibdir/dracut.conf.d
+%dracutlibdir/dracut.conf.d/generic
+%dracutlibdir/dracut.conf.d/hostonly
+%dracutlibdir/dracut.conf.d/no-network
+%dracutlibdir/dracut.conf.d/no-xattr
+%dracutlibdir/dracut.conf.d/rescue
+%dracutlibdir/dracut.conf.d/uki-virt
+
 %_datadir/pkgconfig/dracut.pc
 
 %if_enabled documentation
@@ -296,8 +310,8 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %endif
 
 %dracutlibdir/modules.d/00bash
+%dracutlibdir/modules.d/00shell-interpreter
 %dracutlibdir/modules.d/00systemd
-%dracutlibdir/modules.d/00systemd-network-management
 %ifnarch s390 s390x
 %dracutlibdir/modules.d/00warpclock
 %endif
@@ -307,6 +321,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-bsod
 %dracutlibdir/modules.d/01systemd-coredump
 %dracutlibdir/modules.d/01systemd-creds
+%dracutlibdir/modules.d/01systemd-cryptsetup
 %dracutlibdir/modules.d/01systemd-hostnamed
 %dracutlibdir/modules.d/01systemd-initrd
 %dracutlibdir/modules.d/01systemd-integritysetup
@@ -330,7 +345,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/03rescue
 %dracutlibdir/modules.d/04watchdog
 %dracutlibdir/modules.d/04watchdog-modules
-%dracutlibdir/modules.d/05busybox
 %dracutlibdir/modules.d/06dbus-broker
 %dracutlibdir/modules.d/06dbus-daemon
 %dracutlibdir/modules.d/06rngd
@@ -342,9 +356,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/62bluetooth
 %dracutlibdir/modules.d/80lvmmerge
 %dracutlibdir/modules.d/80lvmthinpool-monitor
-%dracutlibdir/modules.d/80test
-%dracutlibdir/modules.d/80test-makeroot
-%dracutlibdir/modules.d/80test-root
+#%dracutlibdir/modules.d/80test
+#%dracutlibdir/modules.d/80test-makeroot
+#%dracutlibdir/modules.d/80test-root
 %dracutlibdir/modules.d/90btrfs
 %dracutlibdir/modules.d/90crypt
 %dracutlibdir/modules.d/90dm
@@ -362,7 +376,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %endif
 %dracutlibdir/modules.d/90pcmcia
 %dracutlibdir/modules.d/90qemu
-%dracutlibdir/modules.d/90systemd-cryptsetup
 %dracutlibdir/modules.d/91crypt-gpg
 %dracutlibdir/modules.d/91crypt-loop
 %dracutlibdir/modules.d/91fido2
@@ -381,7 +394,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/95virtfs
 %dracutlibdir/modules.d/95virtiofs
 %ifarch s390 s390x
-%dracutlibdir/modules.d/80cms
 %dracutlibdir/modules.d/81cio_ignore
 %dracutlibdir/modules.d/91zipl
 %dracutlibdir/modules.d/95dasd
@@ -403,6 +415,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/98syslog
 %dracutlibdir/modules.d/98usrmount
 %dracutlibdir/modules.d/99base
+%dracutlibdir/modules.d/99busybox
 %dracutlibdir/modules.d/99memstrack
 %dracutlibdir/modules.d/99fs-lib
 %dracutlibdir/modules.d/99shutdown
@@ -428,11 +441,11 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %_kernel_installdir/50-dracut.install
 
 %files network
+%dracutlibdir/modules.d/00systemd-network-management
 %dracutlibdir/modules.d/01systemd-networkd
 %dracutlibdir/modules.d/35connman
 %dracutlibdir/modules.d/35network-legacy
 %dracutlibdir/modules.d/40network
-%dracutlibdir/modules.d/45ifcfg
 %dracutlibdir/modules.d/45net-lib
 %dracutlibdir/modules.d/45url-lib
 %dracutlibdir/modules.d/90kernel-network-modules
@@ -445,7 +458,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/95nfs
 %dracutlibdir/modules.d/95ssh-client
 %ifarch s390 s390x
+%dracutlibdir/modules.d/80cms
 %dracutlibdir/modules.d/95znet
+%dracutlibdir/modules.d/95zfcp
 %endif
 %dracutlibdir/modules.d/99uefi-lib
 
@@ -474,6 +489,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 
 %files squash
 %dracutlibdir/modules.d/99squash
+%dracutlibdir/modules.d/95squash-erofs
+%dracutlibdir/modules.d/95squash-squashfs
+%dracutlibdir/modules.d/99squash-lib
 
 %files config-generic
 %dracutlibdir/dracut.conf.d/02-generic-image.conf
@@ -485,14 +503,19 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%files fips
 #%config %_sysconfdir/dracut.conf.d/40-fips.conf
 #%dracutlibdir/modules.d/01fips
+#%dracutlibdir/dracut.conf.d/fips
 
 #%files ima
 #%config %_sysconfdir/dracut.conf.d/40-ima.conf
 #%dracutlibdir/modules.d/96securityfs
 #%dracutlibdir/modules.d/97masterkey
 #%dracutlibdir/modules.d/98integrity
+#%dracutlibdir/dracut.conf.d/ima
 
 %changelog
+* Sat Nov 02 2024 Alexey Shabalin <shaba@altlinux.org> 105-alt1
+- 105
+
 * Sat Jul 20 2024 Alexey Shabalin <shaba@altlinux.org> 103-alt1
 - 103
 
