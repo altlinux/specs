@@ -1,5 +1,5 @@
 Name: python3-module-yarl
-Version: 1.9.11
+Version: 1.17.1
 Release: alt1
 
 Summary: Yet another URL library
@@ -16,8 +16,11 @@ BuildRequires: python3(cython)
 BuildRequires: python3(expandvars)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_cov)
+BuildRequires: python3(pytest_codspeed)
 BuildRequires: python3(idna)
 BuildRequires: python3(multidict)
+BuildRequires: python3(propcache)
+BuildRequires: python3(hypothesis)
 
 %description
 The module provides handy URL class for url parsing and changing.
@@ -35,13 +38,16 @@ python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
 
 %check
 export YARL_NO_EXTENSIONS=1
-%pyproject_run_pytest --no-cov tests
+%pyproject_run_pytest -m "not hypothesis" --no-cov tests
 
 %files
 %python3_sitelibdir/yarl
 %python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.17.1-alt1
+- 1.17.1 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.11-alt1
 - 1.9.11 released
 
