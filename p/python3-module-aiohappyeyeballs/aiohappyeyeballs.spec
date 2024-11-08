@@ -1,5 +1,5 @@
 Name: python3-module-aiohappyeyeballs
-Version: 2.4.0
+Version: 2.4.3
 Release: alt1
 
 Summary: Happy Eyeballs
@@ -36,6 +36,9 @@ BuildRequires: python3(pytest-asyncio)
 %python3_sitelibdir/aiohappyeyeballs-%version.dist-info
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.3-alt1
+- 2.4.3 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.0-alt1
 - 2.4.0 released
 
