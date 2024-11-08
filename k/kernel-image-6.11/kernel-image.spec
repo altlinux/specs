@@ -2,7 +2,7 @@ Name: kernel-image-6.11
 Release: alt1
 %define kernel_src_version	6.11
 %define kernel_base_version	6.11
-%define kernel_sublevel	.6
+%define kernel_sublevel	.7
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -131,10 +131,6 @@ your system.
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
-
-There are some other kernel variants in ALT systems:
-* std-def: latest longterm (LTS) kernel;
-* un-def:  latest stable kernel, usually higher version than std-def.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -528,6 +524,7 @@ check-pesign-helper
 %modules_dir/updates
 %modules_dir/kernel
 %exclude %modules_dir/build
+%exclude %modules_dir/kernel/drivers/accel/
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/
@@ -561,6 +558,7 @@ check-pesign-helper
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
+%modules_dir/kernel/drivers/accel/
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
@@ -578,6 +576,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Nov 08 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.7-alt1
+- v6.11.7 (2024-11-08).
+
 * Fri Nov 01 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.6-alt1
 - v6.11.6 (2024-11-01).
 - config: Enable CONFIG_SCSI_MPI3MR=m (ALT#51728).
