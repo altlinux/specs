@@ -1,6 +1,10 @@
+# CMake option USE_PLUGIN_TELESCOPECONTROL
+# requires libindi API incompatible with codebase
+%def_without telescopecontrol
+
 Name: stellarium
-Version: 0.21.0
-Release: alt1.1
+Version: 24.3
+Release: alt1
 
 Summary: Astronomical Sky Simulator
 
@@ -10,12 +14,29 @@ Url: http://www.stellarium.org/
 
 Source: %name-%version.tar
 
-BuildRequires: rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6-webengine
 
-BuildRequires: cmake perl-Pod-Usage zlib-devel libdrm-devel
-BuildRequires: qt5-script-devel qt5-serialport-devel qt5-multimedia-devel
-BuildRequires: qt5-tools-devel qt5-location-devel
-BuildRequires: fonts-ttf-dejavu
+BuildRequires: cmake ctest gcc-c++
+BuildRequires: qt6-base-devel
+BuildRequires: libCalcMySky-devel
+BuildRequires: pkgconfig(Qt6Charts)
+BuildRequires: pkgconfig(Qt6SerialPort)
+BuildRequires: pkgconfig(Qt6Multimedia)
+BuildRequires: pkgconfig(Qt6Positioning)
+BuildRequires: libQXlsx-devel
+BuildRequires: doxygen
+%if_with telescopecontrol
+BuildRequires: pkgconfig(libindi)
+%endif
+BuildRequires: pkgconfig(nlopt)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(exiv2)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(expat)
+BuildRequires: perl-podlators
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: pkgconfig(Qt6WebEngineWidgets)
+%endif
 
 %ifnarch %e2k
 %define _optlevel s
@@ -35,7 +56,14 @@ find -type f -print0 | xargs -r0 -- sed -i '1s/^\xEF\xBB\xBF//'
 %endif
 
 %build
-%cmake -DQT5_LIBS=%_libdir/qt5 -DCMAKE_INSTALL_PREFIX=/usr
+%cmake \
+%if_without telescopecontrol
+       -DUSE_PLUGIN_TELESCOPECONTROL=NO \
+%endif
+%ifarch %qt6_qtwebengine_arches
+       -DENABLE_TESTING=YES \
+%endif
+       -DCMAKE_INSTALL_PREFIX=/usr
 %cmake_build
 
 %install
@@ -46,6 +74,14 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 
 %find_lang %name
 %find_lang %name-skycultures
+
+%check
+# Floating point tests fails on %%ix86 arches
+%ifarch %qt6_qtwebengine_arches
+# FIXME: Watch the upstream issue #2591.
+# Broken test excluded from suite.
+%ctest -E testCalendars
+%endif
 
 %files -f %name.lang
 %doc ChangeLog README*
@@ -58,6 +94,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Thu Nov 07 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 24.3-alt1
+- NMU: Build new version.
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.21.0-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
