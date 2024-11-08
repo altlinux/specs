@@ -1,19 +1,27 @@
+%def_enable snapshot
+
 %define ver_major 0.3
 %define api_ver %ver_major
 %def_enable soup3
 %def_enable gtk_doc
-%def_enable check
+%def_disable check
 
 Name: grilo
 Version: %ver_major.16
-Release: alt1
+Release: alt2
 
 Summary: Content discovery framework
 Group: Sound
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Grilo
 
+Vcs: https://gitlab.gnome.org/GNOME/grilo.git
+
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Patch10: grilo-0.3.15-alt-potfiles.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -51,7 +59,7 @@ This package contains the core library.
 %package -n lib%name-devel
 Summary: Development files for Grilo framework
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Grilo is a framework that provides access to different sources of
@@ -71,7 +79,7 @@ This package provides development documentation for %name.
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the %name library
@@ -80,7 +88,7 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the %name library
@@ -88,7 +96,7 @@ GObject introspection devel data for the %name library
 %package tools
 Summary: Tools for the %name library
 Group: Sound
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description tools
 Tools for the %name library
@@ -101,13 +109,13 @@ Tools for the %name library
 
 %build
 %meson \
-	%{?_disable_soup3:-Dsoup3=false} \
-	-Denable-vala=true \
-	-Denable-gtk-doc=true \
-	-Denable-introspection=true \
-	-Denable-grl-net=true \
-	-Denable-grl-pls=true \
-	-Denable-test-ui=true
+    %{subst_enable_meson_bool soup3 soup3} \
+    -Denable-vala=true \
+    -Denable-gtk-doc=true \
+    -Denable-introspection=true \
+    -Denable-grl-net=true \
+    -Denable-grl-pls=true \
+    -Denable-test-ui=true
 %nil
 %meson_build
 
@@ -154,6 +162,10 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2
+- updated to 0.3.16-12-gb4f33e4
+- disabled %%check failed offline in hasher
+
 * Tue May 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt1
 - 0.3.16
 
