@@ -8,7 +8,7 @@
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt1
+Release: alt2
 %K5init
 
 Group: System/Libraries
@@ -46,7 +46,7 @@ developing applications that use %name.
 %package -n %libanalitzaplot
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libanalitzaplot
 KF5 library
 
@@ -111,6 +111,9 @@ KF5 library
 %_K5lib/libAnalitza.so.*
 
 %changelog
+* Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt2
+- update requires
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
