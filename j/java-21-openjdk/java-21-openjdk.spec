@@ -290,9 +290,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 4
+%global updatever 5
 %global patchver 0
-%global buildver 7
+%global buildver 11
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -352,7 +352,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1987,6 +1987,14 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Fri Nov 08 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.5.0.11-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-21208
+  - CVE-2024-21210
+  - CVE-2024-21217
+  - CVE-2024-21235
+
 * Thu Sep 05 2024 Ivan A. Melnikov <iv@altlinux.org> 0:21.0.4.0.7-alt2
 - Update loongarch64 patch: specify pd_default_address and
   DEFAULT_CACHE_LINE_SIZE (by k0tran@)
