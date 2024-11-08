@@ -2,7 +2,7 @@
 %define sover 7
 
 %def_enable check
-%ifarch %ix86 x86_64 loongarch64
+%ifarch %ix86 x86_64 loongarch64 riscv64
 %def_with meson
 %else
 %def_without meson
@@ -11,8 +11,8 @@
 %def_disable static
 
 Name: lib%_name
-Version: 2.4.1
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: H.264 codec library
 License: BSD-2-Clause
@@ -74,7 +74,7 @@ This package provides %name static library.
 %prep
 %setup
 # setup build options
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -fno-strict-aliasing
 %ifarch %ix86
 %add_optflags -msse2 -mfpmath=sse %(getconf LFS_CFLAGS)
 sed -i 's|^USE_ASM[[:space:]][[:space:]]*=.*|USE_ASM = No|' Makefile
@@ -107,7 +107,7 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 
 %check
 %if_with meson
-%__meson_test
+%__meson_test -t 2
 %endif
 
 %files -n %libname
@@ -126,6 +126,9 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %changelog
+* Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Mon Nov 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt2
 - renamed to libopenh264_7 again
 
