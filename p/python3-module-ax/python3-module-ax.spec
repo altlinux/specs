@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -42,6 +42,12 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Nov 08 2024 Alexey Appolonov <alexey@altlinux.org> 0.22.0-alt1
+- The "num" module is removed:
+  -- the "PrettyNum" function is moved to the "text" module,
+  -- the "NearlyEqualShares" function is moved to the "cve-manager-common"
+  package.
+
 * Thu Oct 31 2024 Alexey Appolonov <alexey@altlinux.org> 0.21.0-alt1
 - The content of the library has been heavily revised, names of the modules
   have been changed and the functions have been moved around:
