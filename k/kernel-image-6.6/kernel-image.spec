@@ -1,9 +1,9 @@
 Name: kernel-image-6.6
-Release: alt2
+Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.59
+%define kernel_sublevel	.60
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -575,6 +575,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Nov 08 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.60-alt1
+- v6.6.60 (2024-11-08).
+
 * Sun Nov 03 2024 Vitaly Chikunov <vt@altlinux.org> 1:6.6.59-alt2
 - spec: Unprovide kernel-lts in favor of kernel-latest (for p11).
 
