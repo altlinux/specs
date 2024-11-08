@@ -1,5 +1,5 @@
 Name: python3-module-frozenlist
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: A list-like structure which implements collections.abc.MutableSequence 
@@ -40,6 +40,9 @@ make cythonize
 %python3_sitelibdir/frozenlist-%version.dist-info
 
 %changelog
+* Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
+- 1.5.0 released
+
 * Tue May 07 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt1
 - 1.4.1 released
 
