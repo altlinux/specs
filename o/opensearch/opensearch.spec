@@ -1,7 +1,7 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 2.17.1
+Version: 2.18.0
 Release: alt1
 
 Summary: Open source distributed and RESTful search engine
@@ -95,6 +95,9 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Nov 08 2024 Andrey Cherepanov <cas@altlinux.org> 2.18.0-alt1
+- New version.
+
 * Wed Oct 02 2024 Andrey Cherepanov <cas@altlinux.org> 2.17.1-alt1
 - New version.
 
