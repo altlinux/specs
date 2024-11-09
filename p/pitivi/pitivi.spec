@@ -15,7 +15,7 @@
 
 Name: pitivi
 Version: %ver_major.03.0
-Release: alt2
+Release: alt2.1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPL-2.1-or-later
@@ -47,7 +47,7 @@ Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
 Requires: python3(matplotlib)
 # optional
-Requires: python3(librosa)
+#Requires: python3(librosa)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson desktop-file-utils gtk-doc python3-module-nose2
@@ -92,6 +92,9 @@ xvfb-run %__meson_test -t 4
 %_datadir/mime/packages/%xdg_name-mime.xml
 
 %changelog
+* Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2023.03.0-alt2.1
+- removed optional runtime dependency on python3(librosa)
+
 * Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2023.03.0-alt2
 - updated to 2023.03.0-38-gf14979a2
 - explicitly required python3(matplotlib,librosa), typelib(Peas) = 1.0,
