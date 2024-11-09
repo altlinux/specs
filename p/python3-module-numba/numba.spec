@@ -14,7 +14,7 @@
 
 Name:    python3-module-%oname
 Version: 0.59.1
-Release: alt1
+Release: alt2
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -72,6 +72,16 @@ sed -i "/omp parallel/s/),/)/" numba/np/ufunc/omppool.cpp
 
 mv %buildroot%_bindir/numba %buildroot%_bindir/numba3
 
+# Tests bring lots of dependencies! See ALT#52000
+rm -rv %buildroot%python3_sitelibdir/%oname/tests
+rm -rv %buildroot%python3_sitelibdir/%oname/testing
+rm -rv %buildroot%python3_sitelibdir/%oname/runtests.py
+rm -rv %buildroot%python3_sitelibdir/%oname/cuda/tests
+rm -rv %buildroot%python3_sitelibdir/%oname/cuda/testing.py
+rm -rv %buildroot%python3_sitelibdir/%oname/core/datamodel/testing.py
+rm -rv %buildroot%python3_sitelibdir/%oname/misc/POST.py
+rm -rv %buildroot%python3_sitelibdir/%oname/misc/help/inspector.py
+
 %check
 mkdir emtpytestdir
 pushd emtpytestdir
@@ -86,6 +96,9 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Nov 09 2024 Grigory Ustinov <grenka@altlinux.org> 0.59.1-alt2
+- Cut out tests from the package.
+
 * Fri Jul 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.59.1-alt1
 - Build new version.
 
