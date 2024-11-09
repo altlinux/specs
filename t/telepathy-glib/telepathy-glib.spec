@@ -11,21 +11,24 @@
 
 Name: telepathy-glib
 Version: 0.24.2
-Release: alt3
+Release: alt4
 
 Summary: Telepathy framework - GLib connection manager library
 License: LGPL-2.1
 Group: System/Libraries
 Url: https://telepathy.freedesktop.org/wiki/TelepathyGLib
-Patch10: telepathy-glib-0.24.2-up-test-cm.patch
+
+#Vcs: https://github.com/TelepathyIM/telepathy-glib.git
+Vcs: https://gitlab.freedesktop.org/telepathy/telepathy-glib.git
 
 %if_disabled snapshot
 Source: https://telepathy.freedesktop.org/releases/telepathy-glib/%name-%version.tar.gz
 %else
-Vcs: https://github.com/TelepathyIM/telepathy-glib.git
-#Vcs: https://anongit.freedesktop.org/git/telepathy/telepathy-glib.git
 Source: %name-%version.tar
 %endif
+
+Patch10: telepathy-glib-0.24.2-up-test-cm.patch
+Patch11: %name-0.24.1-up-gcc-14.patch
 
 %define glib_ver 2.36.0
 %define dbus_ver 0.90
@@ -114,6 +117,7 @@ the functionality of the installed %name library package.
 %prep
 %setup
 %patch10 -p1
+%patch11 -p1 -b .gcc-14
 sed -i 's;\(\/bin\/python\)$;\13;' tests/*.py
 sed -i 's;\(env python\)$;\13;' examples/client/python/*.py
 
@@ -121,12 +125,12 @@ sed -i 's;\(env python\)$;\13;' examples/client/python/*.py
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection} \
-	%{?_enable_vala:--enable-vala-bindings} \
-	%{?_enable_installed_tests:--enable-installed-tests} \
-	PYTHON=%__python3
+    %{subst_enable static} \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{subst_enable introspection} \
+    %{?_enable_vala:--enable-vala-bindings} \
+    %{?_enable_installed_tests:--enable-installed-tests} \
+    PYTHON=%__python3
 %make_build
 
 %install
@@ -175,6 +179,9 @@ export TP_TESTS_NO_TIMEOUT=1
 %endif
 
 %changelog
+* Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt4
+- fixed build with gcc-14
+
 * Sun May 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.24.2-alt3
 - fixed test-cm for newer glib (upstream patch)
 
