@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 2023
 %define api_ver 1.0
@@ -7,15 +7,18 @@
 %define gtk_api_ver 3.0
 %define gtk_ver 3.24
 %define gi_ver 1.32
+%define peas_api_ver 1.0
 
 %define xdg_name org.pitivi.Pitivi
 
+%def_disable check
+
 Name: pitivi
-Version: %ver_major.03
-Release: alt1
+Version: %ver_major.03.0
+Release: alt2
 
 Summary: PiTiVi allows users to easily edit audio/video projects
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Group: Video
 Url: http://www.pitivi.org/
 
@@ -31,6 +34,8 @@ Source: %name-%version.tar
 %add_python3_req_skip gi.repository.GstPbutils
 
 Requires: typelib(Gtk) = %gtk_api_ver
+Requires: typelib(Peas) = %peas_api_ver
+Requires: libpeas-python3-loader
 Requires: python3-module-gst%gst_api_ver >= %gst_ver
 Requires: gstreamer-editing-services
 Requires: gst-devtools
@@ -40,6 +45,9 @@ Requires: gst-plugins-good%gst_api_ver >= %gst_ver
 Requires: gst-plugins-bad%gst_api_ver >= %gst_ver
 Requires: gst-plugins-ugly%gst_api_ver >= %gst_ver
 Requires: python3-module-canberra
+Requires: python3(matplotlib)
+# optional
+Requires: python3(librosa)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson desktop-file-utils gtk-doc python3-module-nose2
@@ -50,6 +58,9 @@ BuildRequires: gst-plugins%gst_api_ver-devel gst-plugins-bad%gst_api_ver-devel >
 BuildRequires: libgtk+3-devel >= %gtk_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: gst-devtools libgtk+3-gir-devel
+%{?_enable_check:BuildRequires: xvfb-run desktop-file-utils /usr/bin/appstreamcli
+BuildRequires: typelib(Peas) = %peas_api_ver gst-devtools typelib(GES)}
+
 
 %description
 Pitivi is a video editor built upon the GStreamer Editing Services.
@@ -68,6 +79,8 @@ newbies and professionals alike.
 %meson_install
 %find_lang --with-gnome %name
 
+%check
+xvfb-run %__meson_test -t 4
 
 %files -f %name.lang
 %_bindir/%name
@@ -78,8 +91,12 @@ newbies and professionals alike.
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_datadir/mime/packages/%xdg_name-mime.xml
 
-
 %changelog
+* Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2023.03.0-alt2
+- updated to 2023.03.0-38-gf14979a2
+- explicitly required python3(matplotlib,librosa), typelib(Peas) = 1.0,
+  libpeas-python3-loader (ALT #52000)
+
 * Mon Mar 27 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.03-alt1
 - 2023.03
 
