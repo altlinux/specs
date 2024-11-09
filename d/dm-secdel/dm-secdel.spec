@@ -3,7 +3,7 @@
 
 Name: dm-secdel
 Version: 1.0.11
-Release: alt1
+Release: alt2
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -17,11 +17,12 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-kernel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: figlet
-BuildRequires: kernel-headers-modules-std-def
-BuildRequires: kernel-headers-modules-un-def
 BuildRequires: rpm-build-vm
 %if 0%{?kernel_latest:1}
 BuildRequires: kernel-headers-modules-latest
+%else
+BuildRequires: kernel-headers-modules-std-def
+BuildRequires: kernel-headers-modules-un-def
 %endif
 %if 0%{?kernel_new:1}
 BuildRequires: kernel-new
@@ -69,6 +70,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Sat Nov 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.11-alt2
+- More compatibility with removal or un-def/std-def.
+
 * Mon Sep 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.11-alt1
 - Disable debugging messages in dmesg (for CONFIG_DYNAMIC_DEBUG=n kernels).
 
