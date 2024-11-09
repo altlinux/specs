@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.4.0
+Version: 128.4.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -45,7 +45,6 @@ Patch003: 0003-Use-maximize-icon-for-CSD-restore-button-missing-in-.patch
 Patch004: 0004-Disable-browser-option.patch
 Patch005: 0005-Fix-types-defination.patch
 Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
-Patch007: 0007-Reduce-the-height-of-the-Create-key-dialog.patch
 ### End Patches
 
 ExcludeArch: armh
@@ -521,6 +520,9 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sat Nov 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.2-alt1
+- New version.
+
 * Wed Oct 30 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.0-alt1
 - New version.
 - Reduce the height of the Create key dialog (closes: 51608).
