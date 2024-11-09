@@ -1,7 +1,7 @@
 %global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
 
 Name: netatalk
-Version: 4.0.3
+Version: 4.0.4
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -68,42 +68,6 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %build
-#autoreconf
-#%add_optflags -fcommon
-#configure \
-#        --localstatedir=%_localstatedir             \
-#        --with-acl                                  \
-#        --with-cracklib                             \
-#        --with-docbook                              \
-#        --with-kerberos                             \
-#        --with-libgcrypt                            \
-#        --with-pam                                  \
-#        --with-pkgconfdir=%_sysconfdir/netatalk/    \
-#        --with-shadow                               \
-#        --with-tbd=no                               \
-#        --with-uams-path=%_libdir/netatalk          \
-#        --enable-pgp-uam                            \
-#        --enable-shared                             \
-#        --enable-krbV-uam                           \
-#        --enable-overwrite                          \
-#        --with-init-style=redhat-systemd            \
-#        --with-spotlight                            \
-#        --with-dbus-daemon=/usr/bin/dbus-daemon     \
-#        --without-libevent                          \
-#        --with-libevent-header=%_includedir         \
-#        --with-libevent-lib=%_libdir                \
-#        --without-tdb                               \
-#        --with-bdb                                  \
-#        --disable-silent-rules                      \
-#        --disable-static
-
-#make_build
-
-# Build the local docs.
-#make -C doc/manual html-local
-
-#install
-#makeinstall_std
 
 
 %meson  \
@@ -182,6 +146,9 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #_mandir/man*/netatalk-config.1*
 
 %changelog
+* Sat Nov 09 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.4-alt1
+- 4.0.4
+
 * Thu Oct 31 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.3-alt1
 - 4.0.3
 
