@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 132.0.0
+Version: 132.0.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -383,6 +383,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Nov 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 132.0.1-alt1
+- New version (132.0.1).
+
 * Wed Oct 30 2024 Ajrat Makhmutov <rauty@altlinux.org> 132.0.0-alt1
 - New version (132.0.0).
 - Security fixes:
