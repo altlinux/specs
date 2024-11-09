@@ -144,7 +144,7 @@
 
 Name: qemu
 Version: 9.0.2
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -193,9 +193,7 @@ BuildRequires: libkeyutils-devel
 %{?_enable_af_xdp:BuildRequires: libxdp-devel >= 1.4.0}
 BuildRequires: python3-devel >= 3.8
 BuildRequires: flex
-%ifarch riscv64
 BuildRequires: libatomic-devel-static
-%endif
 %{?_enable_sdl:BuildRequires: libSDL2-devel libSDL2_image-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -1364,6 +1362,10 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Nov 08 2024 Ivan A. Melnikov <iv@altlinux.org> 9.0.2-alt3
+- require libatomic-devel-static for building on all platforms
+  (fixes FTBFS) (ALT#51995).
+
 * Sat Jul 20 2024 Alexey Shabalin <shaba@altlinux.org> 9.0.2-alt2
 - qemu-guest-agent.rules: fix warning reported by udevadm verify (ALT#49574).
 
