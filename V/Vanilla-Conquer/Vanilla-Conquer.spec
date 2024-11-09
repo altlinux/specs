@@ -1,6 +1,7 @@
+%set_gcc_version 13
 Name: Vanilla-Conquer
 Version: 06032023
-Release: alt1
+Release: alt1.1
 Summary: Game Engine for the 1st generation Command and Conquer games
 License: GPL-3.0-or-later
 Group: Games/Strategy
@@ -11,7 +12,7 @@ Source: %name-%version.tar
 BuildRequires: ImageMagick-tools
 BuildRequires: cmake
 BuildRequires: pkg-config
-BuildRequires: gcc-c++
+BuildRequires: gcc13-c++
 BuildRequires: git-core
 BuildRequires: libopenal-devel
 BuildRequires: libSDL2-devel
@@ -34,6 +35,8 @@ the game.
 
 %prep
 %setup
+export CC=%__cc
+export CXX=%__cxx
 
 %build
 %cmake
@@ -89,6 +92,9 @@ done
 %_desktopdir/*.desktop
 
 %changelog
+* Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 06032023-alt1.1
+- Stay on GCC13
+
 * Mon May 15 2023 Artyom Bystrov <arbars@altlinux.org> 06032023-alt1
 - initial build for ALT Sisyphus
 

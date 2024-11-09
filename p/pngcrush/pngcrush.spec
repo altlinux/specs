@@ -1,6 +1,6 @@
 Name: pngcrush
 Version: 1.8.13
-Release: alt2
+Release: alt3
 
 Summary: Optimizer for PNG (Portable Network Graphics) files
 License: zlib
@@ -10,6 +10,9 @@ Url: https://pmt.sourceforge.net/pngcrush/
 # http://download.sourceforge.net/pmt/%name-%version.tar.xz
 
 Source: %name-%version.tar
+
+# https://www.mail-archive.com/debian-bugs-dist%40lists.debian.org/msg1957191.html
+Patch0: ignore_PNG_IGNORE_ADLER32.patch
 
 BuildPreReq: libpng-devel libcrc32c-devel
 
@@ -22,6 +25,8 @@ certain chunks including gAMA, tRNS, and textual chunks.
 
 %prep
 %setup
+
+%patch0 -p1
 
 %build
 make
@@ -37,6 +42,9 @@ install -Dpm755 pngcrush %buildroot%_bindir/pngcrush
 %doc ChangeLog.zst LICENSE
 
 %changelog
+* Fri Nov  8 2024 Artyom Bystrov <arbars@altlinux.org> 1.8.13-alt3
+- Fix build
+
 * Wed Dec 07 2022 Artyom Bystrov <arbars@altlinux.org> 1.8.13-alt2
 - Fix FTBFS https://git.altlinux.org/beehive/logs/Sisyphus-x86_64/latest/error/pngcrush-1.8.13-alt1
 

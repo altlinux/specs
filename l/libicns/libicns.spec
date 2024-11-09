@@ -2,7 +2,7 @@
 
 Name: libicns
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Library for manipulation of the Mac OS icns resource format
 License: %lgpl21plus/%gpl2plus
@@ -75,6 +75,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_man1dir/*
 
 %changelog
+* Fri Nov  8 2024 Artyom Bystrov <arbars@altlinux.org> 0.8.1-alt2
+- add #include <unistd.h>
+
 * Mon Dec 05 2022 Artyom Bystrov <arbars@altlinux.org> 0.8.1-alt1
 - update to new version
 - disable patch by real@ - changes already added in upstream
