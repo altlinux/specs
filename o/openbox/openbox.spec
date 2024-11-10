@@ -3,7 +3,7 @@
 
 Name: openbox
 Version: 3.6.1
-Release: alt6
+Release: alt7
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -26,8 +26,9 @@ Source13: menu.xml
 # ALT Linux
 Patch2: openbox-alt-menu-rc.xml.in.patch
 
-# Fedora patch
+# Fedora
 Patch10: openbox-python3.patch
+Patch11: openbox-calc-layer.patch
 
 Requires: lib%name = %version-%release
 # for menu "Run" item
@@ -274,8 +275,8 @@ This theme distributed with Openbox.
 
 %prep
 %setup -q -a2
-%patch2 -p1
-%patch10 -p1
+%autopatch -p1
+
 sed -i '/^obrender_libobrender_la_LIBADD/ a\\tobt/libobt.la \\' Makefile.am
 
 %build
@@ -420,6 +421,10 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %_datadir/themes/Syscrash
 
 %changelog
+* Sun Nov 10 2024 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt7
+- Fix calc layer for glib2 >= 2.76.0 (fix segfault, when switch focus from
+  full-screen mode)
+
 * Thu Dec 30 2021 Anton Midyukov <antohami@altlinux.org> 3.6.1-alt6
 - Replace openbox-session from openbox-base package to openbox
 - do not require package menu for openbox-base, require package menu
