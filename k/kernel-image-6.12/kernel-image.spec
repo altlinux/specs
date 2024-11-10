@@ -1,5 +1,5 @@
 Name: kernel-image-6.12
-Release: alt0.rc6
+Release: alt0.rc7
 %define kernel_src_version	6.11
 %define kernel_base_version	6.12
 %define kernel_sublevel	.0
@@ -525,6 +525,7 @@ check-pesign-helper
 %modules_dir/updates
 %modules_dir/kernel
 %exclude %modules_dir/build
+%exclude %modules_dir/kernel/drivers/accel/
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/
@@ -558,6 +559,7 @@ check-pesign-helper
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
+%modules_dir/kernel/drivers/accel/
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
@@ -575,6 +577,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Nov 10 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc7
+- Update to v6.12-rc7 (2024-11-10).
+
 * Mon Nov 04 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc6
 - Update to v6.12-rc6 (2024-11-03).
 
