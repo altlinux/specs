@@ -4,7 +4,7 @@
 
 %global import_path github.com/restic/restic
 Name:     restic
-Version: 0.17.2
+Version: 0.17.3
 Release: alt1
 Summary:  Fast, secure, efficient backup program
 License:  BSD-2-Clause
@@ -57,7 +57,7 @@ restic version
 ## Upstream tests.
 # No user xattrs support on tmpfs on Linux before 6.6
 # https://github.com/restic/restic/issues/4646
-printf '6.6\n%s\n' $(uname -r) | sort -CV || {
+printf '6.6\n%%s\n' $(uname -r) | sort -CV || {
 	sed -i '/rtest.Assert/s/n2.ExtendedAttributes/test.ExtendedAttributes/' internal/restic/node_test.go
 	sed -i '/rtest.Assert/s/nodeActual.sameExtendedAttributes(node)/true/' internal/restic/node_xattr_all_test.go
 }
@@ -90,6 +90,9 @@ diff -qr %name-%version x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sun Nov 10 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.3-alt1
+- Update to v0.17.3 (2024-11-08).
+
 * Tue Oct 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.17.2-alt1
 - Update to v0.17.2 (2024-10-27).
 
