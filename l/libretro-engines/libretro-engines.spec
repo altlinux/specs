@@ -1,16 +1,17 @@
 %global __find_debuginfo_files %nil
+%set_gcc_version 13
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-engines
 Version:	20240628
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
 Url:		http://www.libretro.com
 # fetched via libretro-fetch.sh from git and re-packed
 Source0:	%{name}-%{version}.tar.xz
-BuildRequires:	nasm gcc gcc-c++ cmake
+BuildRequires:	nasm gcc13 gcc13-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
 BuildRequires:	libstdc++-devel
@@ -80,6 +81,8 @@ libretro API and that's it - we take care of the rest.
 %prep
 %setup -q
 
+export CC=%__cc
+export CXX=%__cxx
 %build
 
 for core in boom3 cannonball chailove dinothawr ecwolf jumpnbump lutro mrboom numero nxengine prboom reminiscence superbroswar tyrquake vitaquake2 xrick; do
@@ -103,5 +106,8 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2
+- Stay on GCC13
+
 * Sun Jul  7 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt1
 - Initial commit for Sisyphus

@@ -1,9 +1,10 @@
 %global __find_debuginfo_files %nil
+%set_gcc_version 13
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-arcades
 Version:	20240628
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -14,7 +15,7 @@ Source0:	%{name}-%{version}.tar
 Patch1: libretro-arcades-20240813-alt1-Fix_build_mame2010.patch
 Patch2: libretro-arcades-20240813-alt1-Fix_build_mame2015.patch 
 
-BuildRequires:	nasm gcc gcc-c++ cmake
+BuildRequires:	nasm gcc13 gcc13-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
 BuildRequires:	libstdc++-devel
@@ -100,6 +101,8 @@ THs set contains cores for arcade machines emulation (except FBNeo - this is mul
 %patch1 -p1
 %patch2 -p1
 
+export CC=%__cc
+export CXX=%__cxx
 %build
 
 for core in daphne fbalpha2012 fbalpha2012_cps1 fbalpha2012_cps2 fbalpha2012_cps3 fbalpha2012_neogeo fbneo galaxy mame2000 mame2003 mame2003_midway mame2003_plus; do
@@ -123,5 +126,8 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2
+- Stay on GCC13
+
 * Thu Aug 15 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt1
 - Initial commit for Sisyphus after split of libretro into number of packages

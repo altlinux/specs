@@ -1,9 +1,10 @@
 %global __find_debuginfo_files %nil
+%set_gcc_version 13
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
 Version:	20240628
-Release:	alt2
+Release:	alt2.1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -12,7 +13,7 @@ Url:		http://www.libretro.com
 Source0:	%{name}-%{version}.tar
 Patch1: libretro-consoles-20240813-alt1-Fix-build-blastem-on-ALT.patch
 
-BuildRequires:	nasm gcc gcc-c++ cmake
+BuildRequires:	nasm gcc13 gcc13-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
 BuildRequires:	libstdc++-devel
@@ -107,6 +108,8 @@ This is set of cores of game consoles emulators.
 %setup -q
 %patch1 -p1
 
+export CC=%__cc
+export CXX=%__cxx
 %build
 
 %ifarch %ix86
@@ -143,6 +146,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2.1
+- Stay on GCC13
+
 * Fri Aug 30 2024 Ivan A. Melnikov <iv@altlinux.org> 20240628-alt2
 - Fix cores for loongarch64 (by k0tran@).
 
