@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 2.0.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL-2.1-or-later
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
@@ -60,6 +61,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+-  New version 2.1.0
+
 * Tue Jul 09 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt2
 - Add dependency on plasma6-libkscreen-utils
 

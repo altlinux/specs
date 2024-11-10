@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-notificationd
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Notification service
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://github.com/lxqt/lxqt-notificationd
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -32,6 +33,7 @@ Conflicts: lxqt-common <= 0.11.0
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
@@ -49,6 +51,9 @@ Conflicts: lxqt-common <= 0.11.0
 %_datadir/lxqt/translations/*
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
 - New version 2.0.1
 

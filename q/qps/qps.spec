@@ -2,14 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPL-2.0-or-later
 Group:   Monitoring
 URL:     https://github.com/lxqt/qps
-Source0: %name-%version.tar
-Source1: %name.desktop
+Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -20,22 +19,28 @@ BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: /usr/bin/convert
 
 %description
-Qps is a perfect visual process manager, an X11 version of "top" or "ps" that displays processes in a window and lets you sort and manipulate them easily
+Qps is a perfect visual process manager, an X11 version of "top" or "ps" that
+displays processes in a window and lets you sort and manipulate them easily
 Qps can
     * change nice value of a process
     * alter the scheduling policy and soft realtime priority of a process
-    * display the TCP/UDP sockets used by a process, and names of the connected hosts (Linux only)
-    * display the memory mappings of the process (which files and shared libraries are loaded where)
+    * display the TCP/UDP sockets used by a process, and names of the connected
+      hosts (Linux only)
+    * display the memory mappings of the process (which files and shared
+      libraries are loaded where)
     * display the open files of a process, and the state of unix domain sockets
     * kill or send any other signal to selected processes
-    * display the load average as a graph, and use this as its icon when iconified
+    * display the load average as a graph, and use this as its icon when
+      iconified
     * show (as graph or numbers) current CPU, memory and swap usage
     * sort the process table on any attribute (size, cpu usage, owner etc)
-    * on SMP systems running Linux 2.1 or later (or Solaris), display cpu usage for each processor, and which CPU a process is running on
+    * on SMP systems running Linux 2.1 or later (or Solaris), display cpu usage
+      for each processor, and which CPU a process is running on
     * display the environment variables of any process
     * show the process table in tree form, showing the parent-child relationship
     * execute user-defined commands on selected processes
-    * display MOSIX-specific fields and migrate processes to other nodes in a cluster
+    * display MOSIX-specific fields and migrate processes to other nodes in a
+      cluster
 
 %prep
 %setup
@@ -46,7 +51,6 @@ Qps can
 
 %install
 %cmake_install
-install -pD -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Icons
 mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
@@ -66,6 +70,10 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.10.0-alt1
+- New version 2.10.0
+- use upstream desktop file
+
 * Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt1
 - New version 2.9.0
 

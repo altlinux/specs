@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-runner
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Tool used to launch programs quickly by typing their names
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://github.com/lxqt/lxqt-runner
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -33,6 +34,7 @@ Obsoletes: razorqt-runner < 0.7.0
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
@@ -50,6 +52,9 @@ Obsoletes: razorqt-runner < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 

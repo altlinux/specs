@@ -2,15 +2,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-about
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
-Summary: About dialog of LXDE-Qt
+Summary: About dialog of LXQt
 License: LGPL-2.1-or-later
 Group: Graphical desktop/Other
 
 Url: https://github.com/lxqt/lxqt-about
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -24,6 +25,7 @@ BuildRequires: kf6-kwindowsystem-devel
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -40,6 +42,9 @@ BuildRequires: kf6-kwindowsystem-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 

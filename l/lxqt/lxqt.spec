@@ -1,6 +1,6 @@
 Name: lxqt
-Version: 2.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
@@ -18,7 +18,7 @@ BuildArch: noarch
 # core componenets
 Requires: lxqt-menu-data >= %version
 Requires: lxqt-about >= %version
-Requires: lxqt-themes >= 1.3
+Requires: lxqt-themes >= %version
 Requires: lxqt-globalkeys >= %version
 Requires: lxqt-notificationd >= %version
 Requires: lxqt-panel >= %version
@@ -39,6 +39,8 @@ Requires: icon-theme-oxygen
 Requires: openbox-base openbox-autostart
 # translations
 Requires: qt6-translations
+# screenshot
+Requires: screengrab >= 2.9.0
 
 %description mini
 %summary.
@@ -55,9 +57,9 @@ Requires: pavucontrol-qt >= %version
 Requires: lxqt-openssh-askpass >= %version
 Requires: lxqt-admin >= %version
 # archiver
-Requires: lxqt-archiver
+Requires: lxqt-archiver >= 1.1.0
 # task-manager
-Requires: qps
+Requires: qps >= 2.9.0
 # clipboard history applet
 Requires: qlipper
 # fonts
@@ -65,15 +67,15 @@ Requires: fonts-ttf-core
 # pdf-viewer
 Requires: qpdfview
 # image-viewer
-Requires: lximage-qt
+Requires: lximage-qt >= %version
 # themes for window manager
 Requires: openbox-themes
 # Graphical wrapper for su
-Requires: lxqt-sudo
+Requires: lxqt-sudo >= %version
 # xdg-desktop-portal
-Requires: xdg-desktop-portal-lxqt
+Requires: xdg-desktop-portal-lxqt >= 1.1.0
 # safe desktop-wide storage for passwords
-Requires: lxqt-wallet
+Requires: lxqt-wallet >= 4.0.0
 
 %description regular
 %summary.
@@ -82,6 +84,10 @@ Requires: lxqt-wallet
 %files regular
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+- mini: add dependency on screengrab
+
 * Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 2.0-alt2
 - mini: add dependency on qt6-translations
 - regular: add dependency on lxqt-wallet

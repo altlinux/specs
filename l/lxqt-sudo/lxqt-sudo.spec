@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     lxqt-sudo
-Version:  2.0.0
+Version:  2.1.0
 Release:  alt1
 
 Summary:  GUI frontend for sudo/su
@@ -11,6 +11,7 @@ Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/lxqt-sudo
 
 Source:   %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -25,6 +26,7 @@ BuildRequires: kf6-kwindowsystem-devel
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake
@@ -40,6 +42,9 @@ BuildRequires: kf6-kwindowsystem-devel
 %_man1dir/*
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 

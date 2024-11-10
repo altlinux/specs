@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-themes
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Themes, graphics and icons for LXQt
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -25,6 +26,7 @@ Obsoletes: lxqt-common < 0.12.0
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -39,6 +41,9 @@ Obsoletes: lxqt-common < 0.12.0
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Thu Jun 13 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 

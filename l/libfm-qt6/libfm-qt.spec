@@ -1,9 +1,9 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%define sover 14
+%define sover 15
 
 Name: libfm-qt6
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
@@ -25,9 +25,7 @@ BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libmenu-cache) >= 1.1.0
 BuildRequires: lxqt-menu-data-devel
 
-Requires: lxqt-menu-data >= 2.0.0
-
-Obsoletes: libfm-qt3
+Requires: lxqt-menu-data >= 2.1.0
 
 %description
 LibFM-Qt is a core library of PCManFM-Qt file manager.
@@ -51,7 +49,7 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -print0 |
 
 %build
 %cmake
-export NPROCS=1
+#export NPROCS=1
 %cmake_build
 
 %install
@@ -74,6 +72,10 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Nov 05 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+- clean old "Obsoletes: libfm-qt3"
+
 * Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.2-alt1
 - New version 2.0.2
 - rename libfm-qt -> libfm-qt6

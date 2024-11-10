@@ -1,5 +1,5 @@
 Name:     qtxdg-tools
-Version:  4.0.0
+Version:  4.1.0
 Release:  alt1
 
 Summary:  libqtxdg user tools
@@ -8,6 +8,7 @@ Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/qtxdg-tools
 
 Source:   %name-%version.tar
+Patch:    %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -31,6 +32,7 @@ cmake modules for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -47,6 +49,9 @@ cmake modules for %name.
 %_datadir/cmake/%name
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 4.1.0-alt1
+- New version 4.1.0
+
 * Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
 - New version 4.0.0
 

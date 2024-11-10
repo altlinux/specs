@@ -3,7 +3,7 @@
 
 Name: obconf-qt
 Version: 0.16.5
-Release: alt1
+Release: alt2
 
 Summary: Openbox configuration tool
 License: GPL-2.0-or-later
@@ -41,6 +41,9 @@ BuildRequires: libopenbox-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 0.16.5-alt2
+- Applied upstream patch for russian translation
+
 * Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 0.16.5-alt1
 - New version 0.16.5.
 

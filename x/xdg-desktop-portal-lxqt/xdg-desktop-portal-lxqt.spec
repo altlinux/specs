@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     xdg-desktop-portal-lxqt
-Version:  1.0.2
-Release:  alt2
+Version:  1.1.0
+Release:  alt1
 
 Summary:  A backend implementation for xdg-desktop-portal
 License:  LGPL-2.1
@@ -11,6 +11,7 @@ Group:    Graphical desktop/Other
 Url:      https://github.com/lxqt/xdg-desktop-portal-lxqt
 
 Source:   %name-%version.tar
+Patch:    %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -25,6 +26,7 @@ BuildRequires: libfm-qt6-devel
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -39,8 +41,12 @@ BuildRequires: libfm-qt6-devel
 %_desktopdir/org.freedesktop.impl.portal.desktop.lxqt.desktop
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.lxqt.service
 %_datadir/xdg-desktop-portal/portals/lxqt.portal
+%_datadir/xdg-desktop-portal/lxqt-portals.conf
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- New version 1.1.0
+
 * Wed Jul 10 2024 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt2
 - do not build dependency on libfm-qt
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Session manager
@@ -12,8 +12,7 @@ Group: Graphical desktop/Other
 Url: https://github.com/lxqt/lxqt-session
 Source0: %name-%version.tar
 Source1: 08lxqt
-Patch: fix_XDG_CONFIG_DIRS.patch
-Patch1: alt-settings.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: lxqt2-build-tools
@@ -68,6 +67,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 

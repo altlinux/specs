@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-powermanagement
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Powermanagement module for LXQt
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://github.com/lxqt/lxqt-powermanagement
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -33,6 +34,7 @@ Obsoletes: razorqt-power < 0.7.0
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -50,6 +52,9 @@ Obsoletes: razorqt-power < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 

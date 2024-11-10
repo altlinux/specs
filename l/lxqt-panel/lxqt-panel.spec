@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Desktop panel
@@ -11,7 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://github.com/lxqt/lxqt-panel
 Source: %name-%version.tar
-Patch: alt-settings.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
@@ -39,6 +39,7 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libgio-devel
 BuildRequires: libXtst-devel
+BuildRequires: qt6-wayland-devel
 
 # see bug 34612
 BuildRequires: pkgconfig(libpulse)
@@ -68,7 +69,7 @@ This package provides the development files for %name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
@@ -82,14 +83,19 @@ This package provides the development files for %name.
 %_man1dir/*
 %_bindir/*
 %_libdir/*/*.so
+%_libdir/lxqt-panel/backend/
 %_xdgconfigdir/*/*
 %_datadir/lxqt/*
+%_desktopdir/lxqt-panel.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %files devel
 %_includedir/*/*.h
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- New version 2.1.0
+
 * Mon Jul 08 2024 2024 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt1
 - New version 2.0.1
 

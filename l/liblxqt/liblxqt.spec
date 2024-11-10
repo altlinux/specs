@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: liblxqt
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Core utility library for LxQt components
@@ -11,7 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://github.com/lxqt/liblxqt
 Source: %name-%version.tar
-Patch: liblxqt-2.0.0-fix_translate_load.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt6-base-devel qt6-tools-devel
@@ -50,8 +50,7 @@ This package provides the development files for LXQt library.
 %patch -p1
 
 %build
-%cmake -DUPDATE_TRANSLATIONS=ON \
-	
+%cmake -DUPDATE_TRANSLATIONS=ON
 %cmake_build
 
 %install
@@ -72,6 +71,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Thu Nov 07 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 

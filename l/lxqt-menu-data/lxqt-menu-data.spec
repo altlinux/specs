@@ -1,5 +1,5 @@
 Name: lxqt-menu-data
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Freedesktop.org application menu definition files
@@ -53,6 +53,9 @@ Development files for %name.
 %_datadir/cmake/%name
 
 %changelog
+* Tue Nov 05 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Wed Jun 12 2024 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 

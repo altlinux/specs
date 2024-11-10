@@ -4,7 +4,7 @@
 %define sover 1
 
 Name: libsysstat-qt6
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Library used to query system info and statistics
@@ -13,6 +13,7 @@ Group: System/Libraries
 
 Url: https://github.com/lxqt/libsysstat
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
@@ -32,6 +33,7 @@ which is used to query system info and statistics.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ifarch %e2k
@@ -54,6 +56,9 @@ which is used to query system info and statistics.
 %_datadir/cmake/sysstat-qt6/
 
 %changelog
+* Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Mon Jul 08 2024 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 - rename package libsysstat-qt5 -> libsysstat-qt6
