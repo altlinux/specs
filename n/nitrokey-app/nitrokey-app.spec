@@ -1,80 +1,67 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %def_disable ubuntuicons
 
 Name: nitrokey-app
-Version: 0.6.3
-Release: alt3
-License: %gpl3only
-Summary: Nitrokey's Application
+Version: 1.4.2
+Release: alt1
+License: GPLv3+
+Summary: Application for Nitrokey devices management
 Url: https://www.nitrokey.com/
+Vcs: https://github.com/Nitrokey/nitrokey-app.git
 Group: System/Configuration/Other
 
-# git clone https://github.com/Nitrokey/nitrokey-app.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-macros-cmake rpm-build-xdg
-
-# Automatically added by buildreq on Wed Oct 19 2016
-# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-widgets libstdc++-devel perl pkg-config python-base python-modules
-BuildRequires: cmake libusb-devel qt5-base-devel
+BuildRequires(pre): rpm-macros-cmake rpm-build-xdg
+BuildRequires: cmake bash-completion
+BuildRequires: cppcodec-devel libnitrokey-devel
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-svg-devel
 
 %description
-The implementation is compatible to the Google Authenticator application
-which can be used for testing purposes. See google-authenticator.
-
-Using the application under Linux also requires root privileges, or
-configuration of device privileges in udev (due to USB communication).
+Nitrokey App is a cross-platform application created to manage
+Nitrokey devices. Underneath it uses libnitrokey communicate with
+the supported devices.
 
 %prep
 %setup
 %patch -p1
-perl -p -i -e 's|\r\n|\n|g' OTP_full_specification.txt
-sed -e 's,\<plugdev\>,_cryptodev,g' -i_ data/40-nitrokey.rules
-diff -u data/40-nitrokey.rules{_,} ||:
+# Qt5 forces c++11 while libnitrokey needs at least c++14
+sed 's/(COMPILE_FLAGS "-Wall/(COMPILE_FLAGS "-std=gnu++17 -Wall/' -i CMakeLists.txt
 
 %build
-%cmake \
-	-DHAVE_LIBAPPINDICATOR:BOOL=FALSE \
-	#
+%cmake -DADD_GIT_INFO=off
 %cmake_build
 
 %install
 %cmake_install
 
-mkdir -p %buildroot%_udevrulesdir
-
-mkdir -p %buildroot%_xdgconfigdir/autostart
-cat > %buildroot%_xdgconfigdir/autostart/nitrokey-app.desktop <<@@@
-[Desktop Entry]
-Type=Application
-Name=Nitrokey App
-Comment=Launch Nitrokey App tray program
-Icon=nitrokey-app
-Exec=nitrokey-app
-@@@
-
 %find_lang %name
 
-%pre
-groupadd -r _cryptodev ||:
-
 %files -f %name.lang
-%_sysconfdir/bash_completion.d/nitrokey-app
 %_bindir/nitrokey-app
+%_datadir/bash-completion/completions/%name
 %_datadir/applications/nitrokey-app.desktop
-%_xdgconfigdir/autostart/nitrokey-app.desktop
 %_datadir/icons/hicolor/*/apps/nitrokey-app.*
 %if_enabled ubuntuicons
 %_datadir/icons/ubuntu-mono-*/apps/*/nitrokey-app.*
 %else
 %exclude %_datadir/icons/ubuntu-mono-*/apps/*/nitrokey-app.*
 %endif
-%_datadir/nitrokey/
 %_datadir/pixmaps/nitrokey-app.png
-%_udevrulesdir/40-nitrokey.rules
-%doc OTP_full_specification.txt README.md
+%_datadir/metainfo/*.appdata.xml
+%doc OTP_full_specification.txt *.md
 
 %changelog
+* Sun Nov 10 2024 Andrew Savchenko <bircoph@altlinux.org> 1.4.2-alt1
+- Major update to 1.4.2.
+- Hardware management is moved to libnitrokey.
+- Udev rules no longer require a separate user (neither upstream or
+  downstream).
+- More docs are available.
+
 * Thu Sep 12 2024 Andrew Savchenko <bircoph@altlinux.org> 0.6.3-alt3
 - Fix ftbfs after usrmerge.
 
