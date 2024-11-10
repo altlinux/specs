@@ -3,7 +3,7 @@
 Summary: A GTK front-end for gPhoto2
 Name: gtkam
 Version: 1.0
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Graphics
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
@@ -75,6 +75,10 @@ mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
 %files -n %name-i18n -f %name.lang
 
 %changelog
+* Sun Nov 10 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt2
+- Last git snapshot gtkam-1_0-release-17-gd17f512
+- Fixed build with GCC-14
+
 * Sun Oct 22 2023 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt1
 - Last git snapshot gtkam-1_0-release-15-g8a9bde6
 - Built gimp plugin
