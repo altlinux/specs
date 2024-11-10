@@ -23,7 +23,7 @@
 %def_enable gtk_doc
 
 Name: ibus
-Version: 1.5.30
+Version: 1.5.31
 Release: alt1
 
 Summary: Intelligent Input Bus for Linux OS
@@ -366,6 +366,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Sun Nov 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.31-alt1
+- 1.5.31
+
 * Thu May 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.30-alt1
 - 1.5.30
 

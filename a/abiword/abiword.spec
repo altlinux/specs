@@ -13,20 +13,20 @@
 %def_enable collabnet
 
 Name: abiword
-Version: %ver_major.5
-Release: alt2.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: http://www.abisource.com/
+
+Vcs: https://gitlab.gnome.org/World/AbiWord.git
 
 %if_disabled snapshot
 Source: https://www.abisource.com/downloads/abiword/%version/source/%name-%version.tar.gz
 #Source: https://github.com/AbiWord/abiword/archive/release-%version/%name-%version.tar.gz
 %else
-#Vcs: https://github.com/AbiWord/abiword.git
-Vcs: https://gitlab.gnome.org/World/AbiWord.git
 Source: %name-%version.tar
 %endif
 
@@ -46,10 +46,10 @@ Patch30: abiword-3.0.5-alt-boost-1.84.patch
 
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
 Obsoletes: %name-%abi_ver
-Provides: %name-%abi_ver = %version-%release
+Provides: %name-%abi_ver = %EVR
 Conflicts: %name-light
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 Requires: %name-docs >= %docs_ver
 
 BuildRequires: autoconf-archive gcc-c++ boost-devel /usr/bin/appstream-util libreadline-devel flex
@@ -96,7 +96,7 @@ Summary: Arch independent files for AbiWord
 Group: Office
 BuildArch: noarch
 Obsoletes: %name-%abi_ver-data
-Provides: %name-%abi_ver-data = %version-%release
+Provides: %name-%abi_ver-data = %EVR
 
 %description data
 This package provides noarch data needed for AbiWord to work.
@@ -104,9 +104,9 @@ This package provides noarch data needed for AbiWord to work.
 %package devel
 Group: Development/C++
 Summary: Headers for Abiword plugins
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: %name-%abi_ver-devel
-Provides: %name-%abi_ver-devel = %version-%release
+Provides: %name-%abi_ver-devel = %EVR
 
 %description devel
 Headers and pkgconfig support for  Abiword plugin building.
@@ -115,9 +115,9 @@ Conflicts: %name-devel %name-light-devel
 %package gir
 Summary: GObject introspection data for the %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: %name-%abi_ver-gir
-Provides: %name-%abi_ver-gir = %version-%release
+Provides: %name-%abi_ver-gir = %EVR
 
 %description gir
 GObject introspection data for the %name
@@ -126,9 +126,9 @@ GObject introspection data for the %name
 Summary: GObject introspection devel data for the %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 Obsoletes: %name-%abi_ver-gir-devel
-Provides: %name-%abi_ver-gir-devel = %version-%release
+Provides: %name-%abi_ver-gir-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the AbiWord
@@ -136,7 +136,7 @@ GObject introspection devel data for the AbiWord
 %package -n python3-module-%name
 Summary: Python 3 bindings for developing with AbiWord
 Group: Development/Python3
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 Requires: typelib(Gtk) = 3.0
 
 %description -n python3-module-%name
@@ -157,19 +157,19 @@ sed -i "s|python|\$(PYTHON)|" src/gi-overrides/Makefile.am
 %add_optflags -std=c++11 %(getconf LFS_CFLAGS)
 %{?_disable_snapshot:%autoreconf}%{?_enable_snapshot:./autogen.sh}
 %configure \
-	--enable-print \
-	--enable-plugins \
-	--enable-templates \
-	--enable-clipart \
-	--enable-introspection \
-	%{subst_enable spell} \
-	%{subst_with goffice} \
-	%{subst_with champlain} \
-	%{subst_with libical} \
-	%{?_without_eds:--without-evolution-data-server} \
-	%{?_enable_collabnet:--enable-collab-backend-service} \
-	--disable-static \
-	PYTHON=%__python3
+    --enable-print \
+    --enable-plugins \
+    --enable-templates \
+    --enable-clipart \
+    --enable-introspection \
+    %{subst_enable spell} \
+    %{subst_with goffice} \
+    %{subst_with champlain} \
+    %{subst_with libical} \
+    %{?_without_eds:--without-evolution-data-server} \
+    %{?_enable_collabnet:--enable-collab-backend-service} \
+    --disable-static \
+    PYTHON=%__python3
 %make_build
 
 %install
@@ -213,6 +213,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Sun Nov 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
+- 3.0.6
+
 * Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt2.1
 - rebuilt against boost-1.84 with fix by iv@
 
