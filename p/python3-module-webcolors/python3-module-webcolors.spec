@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 24.8.0
+Version: 24.11.1
 Release: alt1
 
 Summary: Library for working with HTML/CSS color formats in Python
@@ -21,6 +21,8 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pdm
+BuildRequires: python3-module-pdm-backend
 %endif
 
 BuildArch: noarch
@@ -48,6 +50,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Nov 11 2024 Grigory Ustinov <grenka@altlinux.org> 24.11.1-alt1
+- Automatically updated to 24.11.1.
+
 * Wed Aug 14 2024 Grigory Ustinov <grenka@altlinux.org> 24.8.0-alt1
 - Automatically updated to 24.8.0.
 
