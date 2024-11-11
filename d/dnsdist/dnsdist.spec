@@ -1,6 +1,12 @@
+%if "%(rpmquery --qf '%%{VERSION}' libssl-devel)" >= "3"
+%def_enable tls
+%endif
+
+%define _unitdir %_prefix/lib/systemd/system
+
 Name: dnsdist
 Version: 1.9.7
-Release: alt1
+Release: alt2
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -41,7 +47,9 @@ sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.i
     --enable-dnscrypt \
     --enable-dns-over-https \
     --enable-dns-over-tls \
+%if_enabled tls
     --enable-tls-providers \
+%endif
     --enable-unit-tests \
     --with-cdb \
     --with-lmdb \
@@ -88,5 +96,8 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Mon Nov 11 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.7-alt2
+- Enabled tls providers with OpenSSL >= 3.0 only.
+
 * Fri Nov 08 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.7-alt1
 - Initial build for ALT Sisyphus (thanks fedora for this spec).
