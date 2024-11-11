@@ -1,12 +1,13 @@
 Name: cups-backend-bjnp
 Version: 2.0.3
-Release: alt3
+Release: alt4
 License: GPLv2
 URL: https://sourceforge.net/projects/cups-bjnp/
 # Source: http://downloads.sourceforge.net/cups-bjnp/cups-bjnp-%version.tar.gz
 Source: cups-bjnp-%version.tar
 Patch1: fix-off-by-one.patch
 Patch2: build-with-gcc12.patch
+Patch3: build-with-gcc14.patch
 
 Group: System/Configuration/Printing
 
@@ -24,6 +25,7 @@ proprietary BJNP network protocol.
 %setup -n cups-bjnp-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %configure --with-cupsbackenddir=%cups_backend_dir
@@ -37,6 +39,9 @@ proprietary BJNP network protocol.
 %doc COPYING ChangeLog TODO NEWS README
 
 %changelog
+* Mon Nov 11 2024 Oleg Solovyov <mcpain@altlinux.org> 2.0.3-alt4
+- build with gcc14
+
 * Mon Jun 06 2022 Oleg Solovyov <mcpain@altlinux.org> 2.0.3-alt3
 - Build with gcc12
 
