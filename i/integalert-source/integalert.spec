@@ -9,9 +9,10 @@
 %def_without pve
 %endif
 
+%{!?_rundir: %global _rundir /run}
 
 Name:     %pname-source
-Version:  0.5.0
+Version:  0.5.1
 Release:  alt2
 
 Summary:  Osec-based integrity checking script and settings
@@ -21,6 +22,8 @@ Url:      http://git.altlinux.org/people/manowar/packages/integalert.git
 
 Packager: Paul Wolneykien <manowar@altlinux.org>
 Source:   %name-%version.tar
+
+BuildRequires: shellcheck
 
 %description
 Osec-based integrity checking script and settings.
@@ -84,14 +87,17 @@ Lock down PVE cluster VMs on integalert_vm.service failure.
 %setup
 
 %build
-%make_build sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir sharedstatedir=%_sharedstatedir logdir=%_logdir libexecdir=%_libexecdir
+%make_build sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir rundir=%_rundir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir sharedstatedir=%_sharedstatedir logdir=%_logdir libexecdir=%_libexecdir
 
 %install
-%makeinstall_std sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir sharedstatedir=%_sharedstatedir logdir=%_logdir libexecdir=%_libexecdir
+%makeinstall_std sbindir=%_sbindir sysconfdir=%_sysconfdir datadir=%_datadir unitdir=%_unitdir rundir=%_rundir presetdir=%_presetdir WITH_PVE=%{with pve} logrotatedir=%_logrotatedir mandir=%_mandir man8dir=%_man8dir sharedstatedir=%_sharedstatedir logdir=%_logdir libexecdir=%_libexecdir
 
 # For ghost:
 mkdir -p %buildroot%_sysconfdir/sysconfig
 touch %buildroot%_sysconfdir/sysconfig/integalert
+
+%check
+shellcheck %pname -e SC1090,SC1091 -e SC2155,SC2166,SC3043
 
 %post -n %pname
 %post_service %pname
@@ -135,6 +141,10 @@ touch %buildroot%_sysconfdir/sysconfig/integalert
 %endif
 
 %changelog
+* Tue Nov 12 2024 Paul Wolneykien <manowar@altlinux.org> 0.5.1-alt2
+- Fix: Evaluate paths and patterns listed in files.list properly.
+- Moved the temporary virtual directory list file to /run.
+
 * Thu Oct 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.5.0-alt2
 - Fix: Run %%post_service and %%preun_service for
   integalert_vm.service.
