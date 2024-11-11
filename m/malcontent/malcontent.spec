@@ -1,13 +1,14 @@
 %def_disable snapshot
 %define api_ver 0
 %define ui_api_ver 1
+%define namespace Malcontent
 %define xdg_name org.freedesktop.MalcontentControl
 
 %def_enable check
 %def_enable ui
 
 Name: malcontent
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Parental controls implementation
@@ -16,6 +17,7 @@ License: LGPL-2.1-or-later and GPL-2.0-or-later
 Url: https://gitlab.freedesktop.org/pwithnall/malcontent/
 
 Vcs: https://gitlab.freedesktop.org/pwithnall/malcontent.git
+
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.bz2
 %else
@@ -24,7 +26,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.54.2
 %define gtk4_ver 4.12
-%define adwaita_ver 1.0.0
+%define adwaita_ver 1.6
 %define accountsservice_ver 0.6.39
 %define appstream_ver 0.12.10
 %define flatpak_ver 1.14
@@ -32,7 +34,7 @@ Source: %name-%version.tar
 Requires: polkit accountsservice >= %accountsservice_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-pam0
-BuildRequires: meson yelp-tools desktop-file-utils /usr/bin/appstream-util
+BuildRequires: meson yelp-tools
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(polkit-gobject-1)
@@ -44,6 +46,7 @@ BuildRequires: pam-devel
 BuildRequires: libglib-testing-devel
 %{?_enable_ui:BuildRequires: pkgconfig(gtk4) >= %gtk4_ver gir(Gtk) = 4.0
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw) = 1}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 %name implements parental controls support which can be used by
@@ -141,7 +144,7 @@ controls settings for users.
 
 %build
 %meson -Dpamlibdir=%_pam_modules_dir \
-       %{?_disable_ui:-Dui=disabled}
+       %{subst_enable_meson_feature ui ui}
 %nil
 %meson_build
 
@@ -151,8 +154,6 @@ controls settings for users.
 
 %check
 %__meson_test
-%{?_enable_ui:desktop-file-validate %buildroot%_desktopdir/%xdg_name.desktop
-appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.appdata.xml}
 
 %files -f %name.lang
 %_datadir/accountsservice/interfaces/*.xml
@@ -165,33 +166,33 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 %_libdir/libmalcontent-%api_ver.so.*
 
 %files -n lib%name-gir
-%_typelibdir/Malcontent-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-devel
 %_includedir/%name-%api_ver/
 %_libdir/lib%name-%api_ver.so
 %_pkgconfigdir/%name-%api_ver.pc
-%_girdir/Malcontent-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled ui
 %files -n lib%name-ui
 %_libdir/lib%name-ui-%ui_api_ver.so.*
 
 %files -n lib%name-ui-gir
-%_typelibdir/MalcontentUi-%ui_api_ver.typelib
+%_typelibdir/%{namespace}Ui-%ui_api_ver.typelib
 
 %files -n lib%name-ui-devel
 %_libdir/lib%name-ui-%ui_api_ver.so
 %_includedir/%name-ui-%ui_api_ver/
 %_pkgconfigdir/%name-ui-%ui_api_ver.pc
-%_girdir/MalcontentUi-%ui_api_ver.gir
+%_girdir/%{namespace}Ui-%ui_api_ver.gir
 
 %files control
 %_bindir/%name-control
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %endif
 
 %files pam
@@ -203,6 +204,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Wed Mar 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 

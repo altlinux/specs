@@ -2,12 +2,13 @@
 
 %define ver_major 3.4
 %define rev %nil
+%define api_ver 3.0
 %define xdg_name org.gnome.Rhythmbox3
 %define gst_api_ver 1.0
 
 %def_enable gudev
 %def_enable vala
-%def_enable gtk_doc
+%def_enable doc
 %def_enable daap
 %def_enable grilo
 %def_enable mtp
@@ -22,21 +23,23 @@
 %def_disable context
 
 Name: rhythmbox
-Version: %ver_major.7
-Release: alt2%rev
+Version: %ver_major.8
+Release: alt1%rev
 
 Summary: Music Management Application
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Sound
 Url: https://wiki.gnome.org/Apps/Rhythmbox
 
-%define pkgdocdir %_docdir/%name-%version
+Vcs: https://gitlab.gnome.org/GNOME/rhythmbox.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
+
+%define pkgdocdir %_docdir/%name-%version
 
 %define dbus_ver 0.35
 %define glib_ver 2.66.0
@@ -97,7 +100,7 @@ BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libxml2-devel libjson-glib-devel libpng-devel
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_doc:BuildRequires: gi-docgen}
 %{?_enable_mtp:BuildRequires: libmtp-devel >= %mtp_ver}
 %{?_enable_grilo:BuildRequires: libgrilo-devel >= %grilo_ver}
 BuildRequires: libavahi-glib-devel
@@ -336,20 +339,19 @@ This virtual package installs all Rhythmbox plugins
 
 %prep
 %setup -n %name-%version
-#sed -i 's|0\.62\.0|0.62.9|' meson.build
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_gudev:-Dgudev=disabled} \
-    %{?_disable_lirc:-Dlirc=disabled} \
-    %{?_disable_brasero:-Dbrasero=disabled} \
-    %{?_disable_mtp:-Dmtp=disabled} \
-    %{?_disable_ipod:-Dipod=disabled} \
-    %{?_enable_daap:-Ddaap=enabled} \
-    %{?_disable_vala:-Dplugins_vala=disabled} \
-    %{?_enable_sample_plugins:-Dsample-plugins=true}
+    %{subst_enable_meson_bool doc apidoc} \
+    %{subst_enable_meson_feature gudev gudev} \
+    %{subst_enable_meson_feature lirc lirc} \
+    %{subst_enable_meson_feature brasero brasero} \
+    %{subst_enable_meson_feature mtp mtp} \
+    %{subst_enable_meson_feature ipod ipod} \
+    %{subst_enable_meson_feature daap daap} \
+    %{subst_enable_meson_feature vala plugins_vala} \
+    %{subst_enable_meson_bool sample_plugins sample-plugins}
 %nil
 %meson_build
 
@@ -383,7 +385,7 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %doc %pkgdocdir/COPYING
 %doc %pkgdocdir/ChangeLog.bz2
 %doc %pkgdocdir/NEWS
-%doc %pkgdocdir/README
+%doc %pkgdocdir/README*
 %doc %pkgdocdir/THANKS
 
 %files -n lib%name
@@ -453,12 +455,12 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/android/
 
 %files -n lib%name-gir
-%_libdir/girepository-1.0/MPID-3.0.typelib
-%_libdir/girepository-1.0/RB-3.0.typelib
+%_libdir/girepository-1.0/MPID-%api_ver.typelib
+%_libdir/girepository-1.0/RB-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/MPID-3.0.gir
-%_datadir/gir-1.0/RB-3.0.gir
+%_datadir/gir-1.0/MPID-%api_ver.gir
+%_datadir/gir-1.0/RB-%api_ver.gir
 
 %files plugins-python
 %_libdir/%name/plugins/rb/
@@ -476,10 +478,13 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/rhythmbox/
+%_datadir/doc/%name-%version/
 %endif
 
 %changelog
+* Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 3.4.8-alt1
+- 3.4.8
+
 * Wed Sep 13 2023 Yuri N. Sedunov <aris@altlinux.org> 3.4.7-alt2
 - updated python3/typelib dependencies (ALT #47567)
 
