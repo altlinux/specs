@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: igraph
-Version: 0.10.13
+Version: 0.10.15
 Release: alt1
 
 Summary: Library for creating and manipulating graphs
@@ -11,6 +11,7 @@ License: GPL-2.0+
 Group: System/Libraries
 
 Url: https://igraph.org/
+Vcs: git://github.com/igraph/igraph.git
 Source: https://github.com/igraph/igraph/releases/download/%version/igraph-%version.tar.gz
 
 %if_enabled clang
@@ -132,6 +133,10 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Mon Nov 11 2024 Leontiy Volodin <lvol@altlinux.org> 0.10.15-alt1
+- New version 0.10.15.
+- Added vcs tag.
+
 * Thu Jul 04 2024 Leontiy Volodin <lvol@altlinux.org> 0.10.13-alt1
 - New version 0.10.13.
 
