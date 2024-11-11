@@ -1,5 +1,5 @@
 Name: libjaylink
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Access library for SEGGER J-Link and complatible devices
@@ -31,8 +31,10 @@ This package contains develkpment part.
 
 %install
 %makeinstall_std
+install -pm0644 -D contrib/60-libjaylink.rules %buildroot%_udevrulesdir/60-libjaylink.rules
 
 %files
+%_udevrulesdir/*.rules
 %_libdir/*.so.*
 
 %files devel
@@ -42,6 +44,9 @@ This package contains develkpment part.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
+- 0.4.0 released
+
 * Wed Sep 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.1-alt1
 - 0.3.1 released
 
