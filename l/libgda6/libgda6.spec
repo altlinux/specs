@@ -31,7 +31,7 @@
 %def_enable ui
 %def_with gtksourceview
 %def_enable glade
-%def_enable tools
+%def_disable tools
 
 %add_python3_path %_datadir/%_name-%abi_ver
 # openerp provides this
@@ -39,7 +39,7 @@
 
 Name: %{_name}%abi_ver_major
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Library for writing gnome database programs
 Group: System/Libraries
@@ -52,6 +52,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 Patch: libgda-6.0.0-alt-meson.patch
+# https://gitlab.gnome.org/GNOME/libgda/-/merge_requests/208/
+Patch10: libgda-6.0.0-up-gcc-14.patch
 
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %EVR
@@ -296,8 +298,6 @@ Group: Development/C
 Requires: %name = %EVR
 Obsoletes: libgda2-devel < %version
 Provides: libgda2-devel = %EVR
-
-
 Requires: %name-providers = %EVR
 
 %if_with openldap
@@ -401,6 +401,16 @@ Requires: %name-devel = %EVR
 %description devel-static
 This package contains the static version of %name libraries.
 
+%package -n gda-control-center
+Summary: GDA Control Center
+Group: Databases
+Requires: %name = %EVR
+
+%description -n gda-control-center
+From the database control center, you can manage the defined data
+sources (database connections), and check which database providers
+are installed (and usable to connect to different databases).
+
 %package -n gda-browser
 Summary: GDA Browser
 Group: Databases
@@ -434,21 +444,27 @@ This package provides GDA Python-based report engine.
 %prep
 %setup -n %_name-%version
 %patch
+%patch10 -p1 -b .gcc-14
 
 %build
 export VALA_VERSION=%vala_ver
 %meson \
     %{?_with_ldap:-Dldap=true} \
     %{?_with_web:-Dweb=true} \
-    %{?_enable_experimental:-Dexperimental=true} \
-    %{?_disable_ui:-Dui=false} \
-    %{?_enable_tools:-Dtools=true}
+    %{subst_enable_meson_bool experimental experimental} \
+    %{subst_enable_meson_bool ui ui} \
+    %{subst_enable_meson_bool tools tools}
 %nil
 %meson_build
 
 %install
 %meson_install
 %find_lang --with-gnome %_name-%abi_ver gda-browser
+
+# fix import
+# libgda-report/RML/trml2pdf/__init__.py#L18
+# from .trml2pdf import parseString
+ln -s ../../../bin/trml2pdf.py %buildroot%_datadir/%_name-%abi_ver/gda_trml2pdf/trml2pdf.py
 
 %files -f %_name-%abi_ver.lang
 %_libdir/libgda-%abi_ver.so.*
@@ -462,7 +478,6 @@ export VALA_VERSION=%vala_ver
 %_datadir/%_name-%abi_ver/dtd/
 %{?_enable_crypto:%_datadir/%_name-%abi_ver/sqlcipher_*}
 %doc AUTHORS ChangeLog README NEWS
-
 
 %files providers
 
@@ -591,16 +606,18 @@ export VALA_VERSION=%vala_ver
 %_bindir/gda-list-config-%abi_ver
 %_bindir/gda-list-server-op-%abi_ver
 %_bindir/gda-sql-%abi_ver
-%_bindir/gda-control-center-%abi_ver
 %_bindir/org.gnome.gda.Browser
 %_desktopdir/org.gnome.gda.Browser.desktop
 %_iconsdir/hicolor/*/*/org.gnome.gda.Browser.*
 %_datadir/pixmaps/org.gnome.gda.Browser.png
-%_datadir/%_name-%abi_ver/information_schema.xml
 %_datadir/%_name-%abi_ver/gda-sql/
 %_man1dir/gda-sql.1*
 %_datadir/metainfo/org.gnome.gda.Browser.appdata.xml
 %endif
+
+%files -n gda-control-center
+%_bindir/gda-control-center-%abi_ver
+%_datadir/%_name-%abi_ver/information_schema.xml
 
 %files demo
 %_bindir/org.gnome.gda.Demoui
@@ -613,6 +630,9 @@ export VALA_VERSION=%vala_ver
 %_datadir/%_name-%abi_ver/gda_trml2pdf/
 
 %changelog
+* Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt2
+- fixed build with gcc-14
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
 - updated to LIBGDA_6_0_0-72-g9a89053d5
 
