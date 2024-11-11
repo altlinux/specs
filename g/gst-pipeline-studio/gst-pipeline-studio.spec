@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: gst-pipeline-studio
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Draw your own GStreamer pipeline
@@ -15,10 +15,11 @@ License: GPL-3.0
 Group: Video
 Url: https://gitlab.freedesktop.org/dabrain34/GstPipelineStudio
 
+Vcs: https://gitlab.freedesktop.org/dabrain34/GstPipelineStudio.git
+
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.freedesktop.org/dabrain34/GstPipelineStudio.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -49,7 +50,7 @@ interface to add elements to a pipeline and debug it.
 %setup -n %{?_enable_snapshot:%name}%{?_disable_snapshot:%_name}-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -71,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.6-alt1
+- 0.3.6
+
 * Fri Jan 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
 - first build for Sisyphus (0.3.5-1-g7a70fee)
 

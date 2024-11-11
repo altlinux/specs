@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Echo
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name io.github.lo2dev.%_name
 
 %def_disable check
@@ -73,6 +73,9 @@ sed -i 's|\(Exec=\)%name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.desktop
 
 
 %changelog
+* Mon Nov 11 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1-alt1
+- 2.1
+
 * Wed Sep 25 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - updated to 2.0-2-gd8bb5ca
 
