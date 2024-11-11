@@ -11,13 +11,13 @@ BuildRequires: jpackage-1.8-compat
 %define pkgname		SweetHome3D
 %define pkgmod		3DModels
 %define pkgtextu	Textures
-%define modelver	1.8
-%define textuver	1.2
-%define texturesver	1.8
-%define furniturever	1.29
+%define modelver	1.9.3
+%define textuver	1.3.1
+%define texturesver	2.1
+%define furniturever 2.2
 
 Name:		sweethome3d
-Version:	7.0
+Version:	7.5
 Release:	alt1
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
@@ -66,16 +66,14 @@ BuildRequires:	vecmath
 BuildRequires:	xerces-j2
 BuildRequires:	xml-commons-apis
 
-Requires:	batik
-Requires:	bouncycastle-pkix
-#Requires:	java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
-Requires:	itext-core
-Requires:	java3d
-Requires:	jpackage-utils
-Requires:	sunflow-sweethome3d
-Requires:	vecmath
-Source44: import.info
-
+Requires: java-1.8.0-openjdk
+Requires: batik
+Requires: bouncycastle-pkix
+Requires: itext-core
+Requires: java3d
+Requires: jpackage-utils
+Requires: sunflow-sweethome3d
+Requires: vecmath
 
 %description
 Sweet Home 3D is a free interior design application that helps you place your
@@ -91,13 +89,13 @@ your layout.
 
 #-----------------------------------------------------------------------------
 
-%package	3dmodels
-Summary:	Some extra 3DModels for %{pkgname}
-Group:		Graphics
-BuildArch:	noarch
-Requires:	%{name} >= %{version}-%{release}
+%package 3dmodels
+Summary: Some extra 3DModels for %{pkgname}
+Group: 	Graphics
+BuildArch: noarch
+Requires: %{name} >= %{version}-%{release}
 
-%description	3dmodels
+%description 3dmodels
 Some extra 3DModels for %{pkgname}.
 
 This package contains:
@@ -112,11 +110,11 @@ This package contains:
 
 #-----------------------------------------------------------------------------
 
-%package	textures
-Summary:	Some extra Textures for %{pkgname}
-Group:		Graphics
-BuildArch:	noarch
-Requires:	%{name} >= %{version}-%{release}
+%package textures
+Summary: Some extra Textures for %{pkgname}
+Group: 	Graphics
+BuildArch: noarch
+Requires: %{name} >= %{version}-%{release}
 
 %description	textures
 Some extra Textures for %{pkgname}.
@@ -146,7 +144,7 @@ This package contains javadoc for %{pkgname}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-
+rm -f src/com/eteks/sweethome3d/MacOSXConfiguration.java
 
 for j in $(find . -name "*.jar"); do
   mv $j $j.no
@@ -165,7 +163,7 @@ pushd lib
   ln -sf $(build-classpath vecmath) vecmath.jar
 # FIXME for package jar that does not exist on Mageia
    mv jmf.jar.no jmf.jar
-   mv freehep-vectorgraphics-svg-2.1.1b.jar.no freehep-vectorgraphics-svg-2.1.1b.jar
+   mv freehep-vectorgraphics-svg-2.1.1c.jar.no freehep-vectorgraphics-svg-2.1.1c.jar
    mv jeksparser-calculator.jar.no jeksparser-calculator.jar
 popd
 
@@ -289,7 +287,7 @@ rm -rf lib/Loader3DS1_2u.jar
 
 # FIXME for package jar that does not exist on Mageia
 install -pm 644 lib/jmf.jar %{buildroot}%{_javadir}/%{name}
-install -pm 644 lib/freehep-vectorgraphics-svg-2.1.1b.jar %{buildroot}%{_javadir}/%{name}
+install -pm 644 lib/freehep-vectorgraphics-svg-2.1.1c.jar %{buildroot}%{_javadir}/%{name}
 install -pm 644 lib/jeksparser-calculator.jar %{buildroot}%{_javadir}/%{name}
 # FIXME for display the sweethome3d splash screen
 install -pm 644 libtest/jnlp.jar.no %{buildroot}%{_javadir}/%{name}/jnlp.jar
@@ -334,14 +332,14 @@ Version=1.0
 Name=Sweet Home 3D
 Name[fr]=Sweet Home 3D
 Name[pt]=Sweet Home 3D
-Name[ru]=Милый дом 3D
+Name[ru]=Sweet Home 3D
 GenericName=Sweet Home 3D
 GenericName[fr]=Sweet Home 3D
-GenericName[ru]=Проектирование домашнего интерьера в 3D
+GenericName[ru]=Проектирование домашнего интерьера
 Comment=Design Application
 Comment[fr]=Application de conception d'intérieur en 3D
 Comment[pt]=Aplicativo de design de interiores
-Comment[ru]=Программа проектирования домашнего интерьера в 3D
+Comment[ru]=Программа проектирования домашнего интерьера
 Exec=%{name}
 Icon=%{name}
 Terminal=false
@@ -361,6 +359,7 @@ cat > %{buildroot}%{_datadir}/mime/packages/%{name}.xml <<EOF
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
         <mime-type type="application/vnd.sh3d">
                 <comment>SweetHome3D Project</comment>
+                <comment xml:lang="ru">Проект SweetHome3D</comment>
                 <glob pattern="*.sh3d"/>
         </mime-type>
 </mime-info>
@@ -380,7 +379,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_javadir}/%{name}/Textures.jar
 # FIXME for package jar that does not exist on Mageia
 %{_javadir}/%{name}/jmf.jar
-%{_javadir}/%{name}/freehep-vectorgraphics-svg-2.1.1b.jar
+%{_javadir}/%{name}/freehep-vectorgraphics-svg-2.1.1c.jar
 %{_javadir}/%{name}/jeksparser-calculator.jar
 # FIXME for display the sweethome3d splash screen
 %{_javadir}/%{name}/jnlp.jar
@@ -411,6 +410,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 7.5-alt1
+- New version.
+- Requires java-1.8.0-openjdk (ALT #43813).
+
 * Sat Jul 23 2022 Evgeny Sinelnikov <sin@altlinux.org> 7.0-alt1
 - update to latest release
 
