@@ -4,7 +4,7 @@
 
 Name: heaptrack
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: A heap memory profiler for Linux 
 
@@ -16,6 +16,7 @@ VCS: https://github.com/KDE/heaptrack.git
 %K5init altplace man
 
 Source: %name-%version.tar
+Patch1: fix-gcc14-cmake-compat.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ cmake extra-cmake-modules ctest
@@ -72,6 +73,7 @@ This package contains GUI for %name.
 
 %prep
 %setup
+%patch1 -p1
 
 rm -f screenshots/.directory
 
@@ -99,6 +101,9 @@ rm -f screenshots/.directory
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Mon Nov 11 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5.0-alt2
+- fixed build with gcc14
+
 * Wed Nov 01 2023 Mikhail Tergoev <fidel@altlinux.org> 1.5.0-alt1
 - Updated to upstream version 1.5.0.
 
