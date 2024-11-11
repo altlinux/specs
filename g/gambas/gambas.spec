@@ -18,7 +18,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:    gambas
-Version: 3.19.5
+Version: 3.19.6
 Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
@@ -127,6 +127,7 @@ Patch6: %name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7: %name-alt-mysql8-bool-type-fix.patch
 Patch8: gambas3-3.13.0-poppler-0.73.0.patch
 Patch9: gambas3-3.14.1-gst1.patch
+Patch10: 0001-Fix-builtin-overflow-64-bits-arithmetic-and-some-pri.patch
 
 Provides:  gambas3 = %EVR
 Obsoletes: gambas3 < %EVR
@@ -1277,6 +1278,7 @@ Requires: %name-runtime = %version-%release
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 %ifarch %e2k
 find . -name 'gambas.h' -exec sed -i "/ifndef NO_GAMBAS_CASE_REPLACEMENT/a #ifdef __cplusplus\n#include <bits/locale_facets.h>\n#endif" {} \;
 %endif
@@ -1934,6 +1936,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Sat Nov 09 2024 Andrey Cherepanov <cas@altlinux.org> 3.19.6-alt1
+- New version.
+
 * Sat Sep 28 2024 Andrey Cherepanov <cas@altlinux.org> 3.19.5-alt1
 - New version.
 
