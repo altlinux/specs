@@ -2,7 +2,7 @@
 %def_without python
 
 Name:    sdformat
-Version: 14.0.0
+Version: 15.0.0
 Release: alt1
 
 Summary: Simulation Description Format (SDFormat) parser and description files
@@ -79,6 +79,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 15.0.0-alt1
+- New version.
+
 * Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 14.0.0-alt1
 - New version.
 

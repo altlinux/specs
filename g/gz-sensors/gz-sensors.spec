@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-sensors
-Version: 8.0.0
+Version: 9.0.0
 Release: alt1
 
 Summary: Provides numerous sensor models designed to generate realistic data from simulation environments
@@ -68,6 +68,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Mon Oct 02 2023 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
 - New version.
 

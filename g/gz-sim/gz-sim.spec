@@ -1,8 +1,8 @@
-%define _unpackaged_files_terminate_build 1                                                                           
-%define ver 8
+%define _unpackaged_files_terminate_build 1
+%define ver 9
 
 Name:    gz-sim
-Version: 8.2.0
+Version: %ver.0.0
 Release: alt1
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
@@ -136,6 +136,9 @@ install -Dpm 0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Tue Apr 02 2024 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
 - New version.
 - Used ogre2 rendering engine.

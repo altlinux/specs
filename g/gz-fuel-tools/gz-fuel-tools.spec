@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-fuel-tools
-Version: 9.0.0
+Version: 10.0.0
 Release: alt1
 
 Summary: A client library and command line tools for interacting with Gazebo Fuel servers
@@ -61,7 +61,6 @@ Group: Development/C++
 %_libdir/lib*.so.*
 %_libdir/lib*.so
 %_datadir/gz/*.yaml
-%_datadir/gz/*fuel_tools*
 %_datadir/gz/gz2.completion.d/fuel*.bash_completion.sh
 
 %files -n lib%{name}-devel
@@ -70,6 +69,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 10.0.0-alt1
+- New version.
+
 * Wed Apr 03 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - New version.
 

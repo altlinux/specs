@@ -1,5 +1,5 @@
 Name:    gz-plugin
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Cross-platform C++ library for dynamically loading plugins
@@ -64,6 +64,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Tue Aug 01 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 

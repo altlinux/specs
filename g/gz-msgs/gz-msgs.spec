@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-msgs
-Version: 10.1.1
+Version: 11.0.1
 Release: alt1
 
 Summary: Messages for Gazebo robot simulation
@@ -65,6 +65,7 @@ ln -s /usr/include/google proto/google
 %_datadir/gz/gz-msgs*
 %_datadir/gz/protos/gz-msgs*
 %_libdir/python/gz/msgs*
+%_prefix/libexec/gz/msgs*/gz-msgs
 
 %files -n lib%{name}-devel
 %_includedir/gz/msgs*
@@ -72,6 +73,9 @@ ln -s /usr/include/google proto/google
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 11.0.1-alt1
+- New version.
+
 * Tue Apr 02 2024 Andrey Cherepanov <cas@altlinux.org> 10.1.1-alt1
 - New version.
 

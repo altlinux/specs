@@ -1,5 +1,5 @@
 Name:    gz-cmake
-Version: 3.5.0
+Version: 4.0.0
 Release: alt1
 
 Summary: A set of CMake modules that are used by the C++-based Gazebo projects
@@ -45,6 +45,9 @@ subst 's|^#!.*$|#!%__python3|' `find %buildroot%_datadir/gz/gz-cmake* -name \*.p
 %_datadir/gz
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Fri Mar 29 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version.
 

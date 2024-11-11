@@ -1,7 +1,8 @@
-%define _unpackaged_files_terminate_build 1                                                                           
+%define _unpackaged_files_terminate_build 1
+%define ver 9
 
 Name:    gz-rendering
-Version: 8.1.0
+Version: %ver.0.0
 Release: alt1
 
 Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
@@ -58,9 +59,9 @@ subst 's/2\.3\.1/2.3.3/' CMakeLists.txt
        -DBUILD_TESTING=OFF \
        -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON
 %ninja_build -C "%_cmake__builddir"
-cp %_cmake__builddir/lib/libgz-rendering8-ogre2.so.8 %_cmake__builddir
-ln -s libgz-rendering8-ogre2.so.8 %_cmake__builddir/libgz-rendering8-ogre2.so
-ln -s libgz-rendering8-ogre2.so.8 %_cmake__builddir/libgz-rendering-ogre2.so
+cp %_cmake__builddir/lib/libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir
+ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering%ver-ogre2.so
+ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering-ogre2.so
 
 %install
 %ninja_install -C "%_cmake__builddir"
@@ -78,6 +79,9 @@ ln -s libgz-rendering8-ogre2.so.8 %_cmake__builddir/libgz-rendering-ogre2.so
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Fri Mar 29 2024 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
 - New version.
 

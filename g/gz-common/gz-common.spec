@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-common
-Version: 5.4.0
-Release: alt3.1
+Version: 6.0.0
+Release: alt1
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -13,7 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: gz-common-alt-fix-build.patch
-Patch1: gz-common-alt-gcc13.patch
+Patch1: gz-common-alt-gcc14.patch
 Patch2: gz-common-alt-gdal-without-version.patch
 
 # XXX: gz_remotery_vis calls `xdg-open` if available tries
@@ -99,6 +99,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+
 * Wed Nov 22 2023 L.A. Kostis <lakostis@altlinux.ru> 5.4.0-alt3.1
 - BR: remove stbi (not used).
 

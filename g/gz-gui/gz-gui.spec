@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define ver 9
 
 Name:    gz-gui
-Version: 8.1.0
+Version: %ver.0.0
 Release: alt1
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
@@ -63,8 +64,8 @@ Group: Development/C++
 %install
 %ninja_install -C "%_cmake__builddir"
 # Replace libGrid3D.so by libGridConfig.so without RPATH
-rm -f %buildroot%_libdir/gz-gui-8/plugins/libGrid3D.so
-cp %buildroot%_libdir/gz-gui-8/plugins/{libGridConfig.so,libGrid3D.so}
+rm -f %buildroot%_libdir/gz-gui-%ver/plugins/libGrid3D.so
+cp %buildroot%_libdir/gz-gui-%ver/plugins/{libGridConfig.so,libGrid3D.so}
 
 %files -n lib%name
 %doc AUTHORS README.md
@@ -81,6 +82,9 @@ cp %buildroot%_libdir/gz-gui-8/plugins/{libGridConfig.so,libGrid3D.so}
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Tue Apr 02 2024 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
 - New version.
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    gz-physics
-Version: 7.0.0
+Version: 8.0.0
 Release: alt1
 
 Summary: Abstract physics interface designed to support simulation and rapid development of robot applications
@@ -83,6 +83,9 @@ rm -f %buildroot%_libdir/pkgconfig/gz-physics*-bullet-*plugin.pc
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+
 * Wed Apr 03 2024 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt1
 - New version.
 
