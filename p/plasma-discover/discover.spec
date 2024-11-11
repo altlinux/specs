@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.2.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -333,6 +333,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt2
+- fix showing application page (closes: 51940)
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 
