@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
-%define git 77a7671f546
+%define git 4ab01178e2c
 %define kern_dir scripts/addons_core/cycles/lib
 %define project blender
 %define gcc_ver 13
@@ -17,7 +17,7 @@
 %ifarch x86_64
 %def_with cuda
 %def_with hiprt
-# levelzero packages not ready yet
+# oneapi needs sycl compiler
 %def_without levelzero
 %else
 %def_without cuda
@@ -58,7 +58,7 @@
 
 Name: %{project}4.4
 Version: 4.4.0
-Release: alt0.2.g%{git}
+Release: alt0.3.g%{git}
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -77,7 +77,6 @@ Patch23: blender-2.80-alt-use-system-glog.patch
 Patch24: blender-2.90-alt-non-x86_64-linking.patch
 Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
-Patch27: blender-4.0.1-suse-reproducible.patch
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
 Patch31: blender-alt-osl-shader-dir.patch
@@ -121,7 +120,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: libgomp-devel
+BuildRequires: libgomp%{gcc_ver}-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpulseaudio-devel
@@ -159,6 +158,7 @@ BuildRequires: hip-devel
 BuildRequires: hiprt-devel clang-rocm-devel
 # hiprtCreateGeometry relies on hardcoded headers
 # in /usr/include
+# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
 Requires: hiprt-devel
 %endif
 
@@ -303,7 +303,6 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
-#%%patch27 -p1
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
@@ -373,6 +372,8 @@ export GCC_VERSION=%gcc_ver
 %endif #hiprt
 %if_with levelzero
 	-DLEVEL_ZERO_ROOT_DIR=%prefix \
+	-DWITH_CYCLES_DEVICE_ONEAPI:BOOL=ON \
+	-DWITH_CYCLES_ONEAPI_BINARIES:BOOL=ON \
 %endif #levelzero
 	-DBUILD_SHARED_LIBS=OFF \
 	-DWITH_ALEMBIC:BOOL=ON \
@@ -477,6 +478,10 @@ popd
 %endif
 
 %changelog
+* Mon Nov 11 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.3.g4ab01178e2c
+- 4.4.0 GIT 4ab01178e2c.
+- Fix OpenMP detection.
+
 * Thu Oct 31 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.2.g77a7671f546
 - 4.4.0 GIT 77a7671f546.
 - Update cycles-fix-kernels patch.
