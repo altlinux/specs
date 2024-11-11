@@ -5,7 +5,7 @@
 %define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.6
+Version: 0.0.7
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -24,6 +24,7 @@ Requires: %name-mm-count
 Requires: %name-clearcpuid514
 Requires: %name-tcp-mtu-probing
 Requires: %name-alive-timeout
+Requires: %name-swappiness10
 
 %description
 %summary
@@ -69,6 +70,14 @@ Override check-alive-timeout=uint32 15000 (only for GNOME)
 Increases application keepalive timeout to 15 seconds.
 Fixes problems with some games.
 
+%package swappiness10
+Group: System/Configuration/Other
+Summary: Override swappiness=10 by default
+%description swappiness10
+Override swappiness=10 by default.
+Lowering the swappiness allows Linux to favor using free RAM over swap,
+which is faster. Lower values lessen swap usage which usually speeds things up.
+
 %prep
 %setup
 
@@ -80,6 +89,7 @@ install -D -m 644 95-esync.conf %buildroot%limitsdir/95-esync.conf
 install -D -m 644 95-vm.max_map_count.conf %buildroot%sysctldir/95-vm.max_map_count.conf
 install -D -m 644 95-tcp_mtu_probing.conf %buildroot%sysctldir/95-tcp_mtu_probing.conf
 install -D -m 644 95-gnome-gschema.override %buildroot%schemasdir/95-gnome-gschema.override
+install -D -m 644 95-swappiness.conf %buildroot%sysctldir/95-swappiness.conf
 popd
 
 install -D -m 755 scripts/alt-gaming-check %buildroot%_bindir/alt-gaming-check
@@ -119,7 +129,14 @@ fi
 %files alive-timeout
 %schemasdir/95-gnome-gschema.override
 
+%files swappiness10
+%sysctldir/95-swappiness.conf
+
 %changelog
+* Mon Nov 11 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.7-alt1
+- added alt-gaming-swappiness10
+- updated alt-gaming-check
+
 * Tue Oct 22 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.6-alt1
 - fixed removal of clearcpuid=514 from grub2 when updating package
 
