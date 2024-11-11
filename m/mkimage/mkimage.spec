@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon Nov 11 2024 Anton Midyukov <antohami@altlinux.org> 0.3.7-alt1
+- mki-copy-grub-efi-chrooted: fix typo in grub suffix on loongarch64
+
 * Sun Oct 27 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.6-alt1
 - mki-install: make 'apt-mark auto' for packages installed by dependencies.
 - mki-copy-grub-efi-chrooted: Capitalize primary bootloader filename for x86_64
