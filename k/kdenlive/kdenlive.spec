@@ -3,7 +3,7 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
@@ -102,6 +102,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
