@@ -1,39 +1,45 @@
-%define rname libkeduvocdocument
+%define rname rocs
 
-%define keduvocdocument_sover 5
-%define libkeduvocdocument libkeduvocdocument%keduvocdocument_sover
+%define rocsgraphtheory_sover 0
+%define librocsgraphtheory librocsgraphtheory%rocsgraphtheory_sover
 
-Name: kde5-%rname
-Version: 23.08.5
+Name: %rname
+Version: 24.08.2
 Release: alt1
 %K5init
 
-Group: System/Libraries
-Summary: KVTML format reading and writing library
+Group: Education
+Summary: Graph Theory
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
+
+Provides:  kde5-rocs = %EVR
+Obsoletes: kde5-rocs < %EVR
 
 Source: %rname-%version.tar
 
-# Automatically added by buildreq on Fri Mar 18 2016 (-bi)
-# optimized out: cmake cmake-modules elfutils gcc-c++ libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base python-modules python3 python3-base rpm-build-python3 ruby ruby-stdlibs
-#BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel python-module-google python3.3-site-packages qt5-base-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kio-devel
-BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: boost-devel extra-cmake-modules grantlee5-devel
+BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-xmlpatterns-devel
+BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
+BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdeclarative-devel kf5-kdelibs4support
+BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
+BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel
+BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-syntax-highlighting-devel
 
 %description
-Contains KEduVocDocument and its related class for reading from/writing to the
-KVTML format (and others too).
+Rocs is a Graph Theory IDE for designing and analyzing graph algorithms.
+It provides an easy to use visual editor for creating graphs, a scripting engine
+to execute algorithms, and several helper tools for simulations and experiments.
+Algorithms are specified in JavaScript.
 
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf5-filesystem
+Provides:  kde5-rocs-common = %EVR
+Obsoletes: kde5-rocs-common < %EVR
 %description common
 %name common package
 
@@ -44,11 +50,11 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkeduvocdocument
+%package -n %librocsgraphtheory
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
-%description -n %libkeduvocdocument
+Requires: %name-common >= %EVR
+%description -n %librocsgraphtheory
 %name library
 
 
@@ -62,20 +68,35 @@ Requires: %name-common = %version-%release
 
 %install
 %K5install
+%K5install_move data rocsgraphtheory rocs
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
+%doc LICENSES/*
+#%_K5data/rocsgraphtheory/
+
+%files
+%_K5bin/rocs
+%_K5plug/rocs/
+%_K5data/rocs/
+%_K5icon/*/*/apps/rocs.*
+%_K5icon/*/*/actions/rocs*.*
+%_K5xdgapp/org.kde.rocs.desktop
+%_K5cfg/rocs.kcfg
+%_datadir/metainfo/*.xml
 
 %files devel
-%_K5inc/libkeduvocdocument/
+%_K5inc/rocs/
 %_K5link/lib*.so
-%_K5lib/cmake/libkeduvocdocument/
 
-%files -n %libkeduvocdocument
-%_K5lib/libKEduVocDocument.so.%keduvocdocument_sover
-%_K5lib/libKEduVocDocument.so.*
+%files -n %librocsgraphtheory
+%_K5lib/librocsgraphtheory.so.%rocsgraphtheory_sover
+%_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
@@ -84,6 +105,9 @@ Requires: %name-common = %version-%release
 
 * Fri Nov 10 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.3-alt1
 - new version
+
+* Thu Oct 26 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt2
+- fix package
 
 * Thu Oct 19 2023 Sergey V Turchin <zerg@altlinux.org> 23.08.2-alt1
 - new version
@@ -123,6 +147,9 @@ Requires: %name-common = %version-%release
 
 * Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
+
+* Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt2
+- fix crash
 
 * Tue Jan 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - new version
@@ -196,31 +223,31 @@ Requires: %name-common = %version-%release
 * Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1
 - new version
 
-* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
 * Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1

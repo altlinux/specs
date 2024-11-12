@@ -1,6 +1,5 @@
 %define rname cantor
 
-%def_disable python2
 %def_enable python3
 %def_disable luajit
 %ifarch %qt5_qtwebengine_arches
@@ -14,8 +13,8 @@
 %define cantor_config_sover 0
 %define libcantor_config libcantor_config%cantor_config_sover
 
-Name: kde5-%rname
-Version: 23.08.5
+Name: %rname
+Version: 24.08.2
 Release: alt1
 %K5init
 
@@ -28,22 +27,19 @@ License: GPL-2.0-or-later or GPL-3.0-only
 Requires: kde5-kalgebra
 Requires: epstool
 %endif
+Provides:  kde5-cantor = %EVR
+Obsoletes: kde5-cantor < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-lib-so-ver.patch
 Patch2: alt-find-luajit.patch
-Patch3: fix-incorrect-removal-tabs.patch
 
-# Automatically added by buildreq on Wed Mar 30 2016 (-bi)
-# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: extra-cmake-modules kde5-analitza-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libcln-devel liblua5-devel libluajit-devel libspectre-devel python-module-google python3-dev qt5-svg-devel qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel
 %if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: libcln-devel libspectre-devel libdiscount-devel libpoppler-qt5-devel
-%{?_enable_python2:BuildRequires: python-devel}
 %{?_enable_python3:BuildRequires: python3-devel}
 %{?_enable_luajit:BuildRequires: liblua5-devel libluajit-devel}
 BuildRequires: kde5-analitza-devel
@@ -64,6 +60,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 #BuildArch: noarch
 Requires: kf5-filesystem
+Provides:  kde5-cantor-common = %EVR
+Obsoletes: kde5-cantor-common < %EVR
 %description common
 %name common package
 
@@ -76,24 +74,23 @@ developing applications that use %name.
 
 %package -n %libcantorlibs
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libcantorlibs
-KF5 library
+%name library
 
 %package -n %libcantor_config
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libcantor_config
-KF5 library
+%name library
 
 
 %prep
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
 
 #LUA_BASE_VER=`echo "%{get_version libluajit-devel}" | sed -E 's|^([[:digit:]]+\.[[:digit:]]).*|\1|'`
 #pushd src/backends/lua
@@ -129,7 +126,6 @@ mkdir -p %buildroot
 %_K5cfg/*.kcfg
 %_K5xdgapp/org.kde.cantor.desktop
 %_K5icon/*/*/apps/*.*
-%_K5xmlgui/cantor/
 %_K5data/knsrcfiles/*cantor*.knsrc
 %_K5xdgmime/*cantor*.xml
 %_datadir/metainfo/*.xml
@@ -153,6 +149,9 @@ mkdir -p %buildroot
 %endif
 
 %changelog
+* Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 

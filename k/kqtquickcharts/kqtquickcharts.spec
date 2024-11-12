@@ -1,77 +1,70 @@
-%define rname kig
-%add_python3_path %_K5bin
-%add_findreq_skiplist %_K5bin/pykig.py
-%define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
+%define rname kqtquickcharts
 
-Name: kde5-%rname
-Version: 23.08.5
+Name: %rname
+Version: 24.08.2
 Release: alt1
 %K5init
 
-Group: Education
-Summary: Interactive Geometry
+Group: Graphical desktop/KDE
+Summary: Beautiful and interactive charts for Qt Quick
 Url: http://www.kde.org
-License: GPL-2.0-or-later and LGPL-2.1-or-later
+License: BSD-3-Clause
 
-%add_python3_requires traceback os math getopt xml.sax.saxutils
+Requires: %name-common = %version-%release
+Provides:  kde5-kqtquickcharts = %EVR
+Obsoletes: kde5-kqtquickcharts < %EVR
 
 Source: %rname-%version.tar
-# upstream
-Patch1: 0001-explicitly-use-QLibrary-to-load-libpython-like-pykde.patch
 
-# Automatically added by buildreq on Tue Mar 22 2016 (-bi)
-# optimized out: boost-python-headers cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libqt5-xmlpatterns libstdc++-devel libxcbutil-keysyms pkg-config python-base python-devel python-modules python3 qt5-base-devel rpm-build-gir rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils
-#BuildRequires: boost-devel-headers boost-python-devel extra-cmake-modules kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-kemoticons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google python3-base qt5-svg-devel qt5-xmlpatterns-devel rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-python3
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-svg-devel qt5-xmlpatterns-devel
-BuildRequires: boost-devel-headers boost-python3-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel
-BuildRequires: kf5-kemoticons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-syntax-highlighting-devel
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
 
 %description
-Kig is a program for exploring geometric constructions.
+Beautiful and interactive charts for Qt Quick.
 
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kf5-filesystem
+Provides:  kde5-kqtquickcharts-common = %EVR
+Obsoletes: kde5-kqtquickcharts-common < %EVR
+%description common
+%name common package
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common >= %EVR
+%description devel
+The %name-devel package contains libraries and header files for
+developing applications that use %name.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
-sed -i '1d' pykig/pykig.py
-sed -i '1i#!%__python3' pykig/pykig.py
-#sed -i -E '/[[:space:]]except[[:space:]]+.*,.*/s/(^.*except[[:space:]]+)([[:alpha:]].*):$/\1(\2):/' pykig/pykig.py
 
 %build
-PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
-%K5build \
-    -DPYTHON_EXECUTABLE:PATH=%__python3 \
-    -DPYTHON_INCLUDE_DIR=%__python3_includedir \
-    -DPYTHON_LIBRARY=%__libpython3 \
-    -DBoostPython_INCLUDE_DIRS="%__python3_includedir;%_includedir/boost" \
-    -DBoostPython_LIBRARIES="%__libpython3;%_libdir/libboost_python${PY3_VER_WO_DOTS}.so" \
-    #
+%K5build
 
 %install
 %K5install
-%K5install_move data kig katepart
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
-%doc LICENSES/*
-%_K5bin/kig
-%_K5bin/pykig.py
-%_K5plug/kf5/parts/*kig*.so
-%_K5data/kig/
-%_datadir/katepart5/syntax/*-kig.xml
-%_K5icon/*/*/apps/kig.*
-%_K5icon/*/*/mimetypes/application-x-kig.*
-%_K5xmlgui/kig/
-%_K5xdgapp/org.kde.kig.desktop
-#%_K5srv/kig_part.desktop
-%_datadir/metainfo/*.xml
+%files common -f %name.lang
+%doc COPYING*
+
+%files
+%_K5qml/org/kde/charts/
+
+%files devel
+%_K5inc/kqtquickcharts_version.h
+%_libdir/cmake/KQtQuickCharts/
+
 
 %changelog
+* Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
@@ -168,10 +161,6 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 * Thu Jan 23 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.1-alt1
 - new version
 
-* Mon Dec 02 2019 Sergey V Turchin <zerg@altlinux.org> 19.08.3-alt2
-- build with python3
-- remove ubt tag
-
 * Wed Nov 27 2019 Sergey V Turchin <zerg@altlinux.org> 19.08.3-alt1
 - new version
 
@@ -202,9 +191,6 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 * Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Wed Jun 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2
-- rebuild with new boost
-
 * Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
@@ -223,17 +209,5 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 * Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1
 - new version
 
-* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
-- new version
-
-* Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1
-- new version
-
-* Mon Jul 04 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.2-alt1
-- new version
-
-* Thu May 12 2016 Sergey V Turchin <zerg@altlinux.org> 16.04.1-alt1
-- new version
-
-* Thu Mar 17 2016 Sergey V Turchin <zerg@altlinux.org> 15.12.2-alt1
+* Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - initial build

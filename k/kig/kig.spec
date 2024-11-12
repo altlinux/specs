@@ -1,65 +1,77 @@
-%define rname kwordquiz
+%define rname kig
+%add_python3_path %_K5bin
+%add_findreq_skiplist %_K5bin/pykig.py
+%define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
-Name: kde5-%rname
-Version: 23.08.5
+Name: %rname
+Version: 24.08.2
 Release: alt1
 %K5init
 
 Group: Education
-Summary: A general purpose flash card program
+Summary: Interactive Geometry
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 
-Requires: kde5-kdeedu-data kf5-kirigami-addons
+%add_python3_requires traceback os math getopt xml.sax.saxutils
+Provides:  kde5-kig = %EVR
+Obsoletes: kde5-kig < %EVR
 
 Source: %rname-%version.tar
+# upstream
+Patch1: 0001-explicitly-use-QLibrary-to-load-libpython-like-pykde.patch
 
-# Automatically added by buildreq on Fri Mar 18 2016 (-bi)
-# optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 xml-common xml-utils
-#BuildRequires: extra-cmake-modules kde5-libkeduvocdocument-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google python3.3-site-packages qt5-declarative-devel qt5-phonon-devel ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-multimedia-devel qt5-declarative-devel qt5-quickcontrols2-devel qt5-phonon-devel
-BuildRequires: kde5-libkeduvocdocument-devel
-BuildRequires: kf5-kirigami-addons-devel
-BuildRequires: kf5-kirigami-devel
+BuildRequires(pre): rpm-build-kf5 rpm-build-python3
+BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-svg-devel qt5-xmlpatterns-devel
+BuildRequires: boost-devel-headers boost-python3-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
-BuildRequires: kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdelibs4support-devel kf5-kdesignerplugin-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
-BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel
-BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdelibs4support kf5-kdoctools-devel
+BuildRequires: kf5-kemoticons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel
+BuildRequires: kf5-kjobwidgets-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
+BuildRequires: kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel kf5-kcrash-devel kf5-syntax-highlighting-devel
 
 %description
-KWordQuiz is a general purpose flash card program. It can be used for
-vocabulary learning and many other subjects. If you need more advanced
-language learning features, please try KVocTrain.
+Kig is a program for exploring geometric constructions.
+
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+sed -i '1d' pykig/pykig.py
+sed -i '1i#!%__python3' pykig/pykig.py
+#sed -i -E '/[[:space:]]except[[:space:]]+.*,.*/s/(^.*except[[:space:]]+)([[:alpha:]].*):$/\1(\2):/' pykig/pykig.py
 
 %build
-%K5build
+PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
+%K5build \
+    -DPYTHON_EXECUTABLE:PATH=%__python3 \
+    -DPYTHON_INCLUDE_DIR=%__python3_includedir \
+    -DPYTHON_LIBRARY=%__libpython3 \
+    -DBoostPython_INCLUDE_DIRS="%__python3_includedir;%_includedir/boost" \
+    -DBoostPython_LIBRARIES="%__libpython3;%_libdir/libboost_python${PY3_VER_WO_DOTS}.so" \
+    #
 
 %install
 %K5install
-%K5install_move data kwordquiz knsrcfiles
+%K5install_move data kig katepart
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
-%_K5bin/kwordquiz
-%_K5data/kwordquiz/
-%_K5icon/*/*/apps/*kwordquiz*
-%_K5icon/*/*/mimetypes/application-x-kwordquiz.*
-%_K5xdgapp/org.kde.kwordquiz.desktop
-%_K5cfg/kwordquiz.kcfg
-%_K5notif/kwordquiz.notifyrc
-%_K5data/knsrcfiles/*kwordquiz*.knsrc
+%_K5bin/kig
+%_K5bin/pykig.py
+%_K5plug/kf5/parts/*kig*.so
+%_K5data/kig/
+%_datadir/katepart5/syntax/*-kig.xml
+%_K5icon/*/*/apps/kig.*
+%_K5icon/*/*/mimetypes/application-x-kig.*
+%_K5xdgapp/org.kde.kig.desktop
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
+- new version
+
 * Tue Feb 20 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt1
 - new version
 
@@ -156,6 +168,10 @@ language learning features, please try KVocTrain.
 * Thu Jan 23 2020 Sergey V Turchin <zerg@altlinux.org> 19.12.1-alt1
 - new version
 
+* Mon Dec 02 2019 Sergey V Turchin <zerg@altlinux.org> 19.08.3-alt2
+- build with python3
+- remove ubt tag
+
 * Wed Nov 27 2019 Sergey V Turchin <zerg@altlinux.org> 19.08.3-alt1
 - new version
 
@@ -180,31 +196,34 @@ language learning features, please try KVocTrain.
 * Thu Feb 28 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Thu Jul 05 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Wed Jun 06 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2
+- rebuild with new boost
+
+* Fri May 25 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Tue Mar 13 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Tue Nov 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Thu Jun 15 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1%ubt
+* Wed Jun 07 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.1-alt1
 - new version
 
-* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Apr 06 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - new version
 
 * Thu Sep 22 2016 Sergey V Turchin <zerg@altlinux.org> 16.08.1-alt1

@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.6.1
-Release: alt3
+Release: alt3.1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -374,36 +374,32 @@ Requires: pip
 %{summary}.
 
 %package kde5
-Summary(ru_RU.UTF-8): Среда KDE5 для Альт Образование
-Summary: KDE5 for Alt Education
+Summary(ru_RU.UTF-8): Среда KDE для Альт Образование
+Summary: KDE for Alt Education
 Group: Education
-Requires: kde5
-Requires: kf5-plasma-workspace
-Requires: kde5-network-manager-nm
-Requires: libqimageblitz5
-Requires: kde5-krfb
-%ifnarch loongarch64 ppc64le
-Requires: kde5-parley
-%endif
-Requires: kde5-kanagram
-Requires: kde5-khangman
-Requires: kde5-kwordquiz
-Requires: kde5-kturtle
-Requires: kde5-marble
-Requires: kde5-step
-Requires: kde5-kig
-Requires: kde5-kmplot
-Requires: kde5-kalgebra
-Requires: kde5-cantor
-Requires: kde5-rocs
-Requires: kde5-kbruch
-Requires: kde5-kgeography
-Requires: kde5-ktouch
-Requires: kde5-minuet
-Requires: kde5-runtime
-Requires: kde5-printing
-Requires: kde5-scanning
-Requires: kde5-connect
+Requires: kde-network-manager-nm
+Requires: kde
+Requires: krfb
+Requires: parley
+Requires: kanagram
+Requires: khangman
+Requires: kwordquiz
+Requires: kturtle
+Requires: marble
+Requires: step
+Requires: kig
+Requires: kmplot
+Requires: kalgebra
+Requires: cantor
+Requires: rocs
+Requires: kbruch
+Requires: kgeography
+Requires: ktouch
+Requires: minuet
+Requires: kde-runtime
+Requires: kde-printing
+Requires: kde-scanning
+Requires: kdeconnect
 %ifnarch armh
 Requires: %{lo_name}-kde5
 %endif
@@ -559,6 +555,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt3.1
+- NMU: update KDE requries
+
 * Fri Aug 09 2024 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt3
 - NMU: drop OpenBoard and kde5-parley on loongarch64,
   as they require qt5-webengine.

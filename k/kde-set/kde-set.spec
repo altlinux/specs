@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.5
+Version: 24.01.6
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -61,7 +61,7 @@ Requires: kf6-baloo
 Requires: polkit-kde-agent kio-extras plasma6-breeze powerdevil plasma-systemmonitor
 Requires: drkonqi milou systemsettings plasma6-integration
 Requires: ark konsole gwenview okular kwrite kwalletmanager
-Requires: kcalc kross-python
+Requires: kcalc
 #
 Requires: plasma5-breeze plasma5-integration
 %description -n kde-small
@@ -161,8 +161,8 @@ Requires: kde-runtime
 #
 Requires: kate
 Requires: dolphin-plugins
-Requires: lokalize kde5-okteta kapptemplate kde-dev-scripts kompare
-Requires: kdesdk-thumbnailers poxml kde5-umbrello
+Requires: lokalize okteta kapptemplate kde-dev-scripts kompare
+Requires: kdesdk-thumbnailers poxml umbrello
 Requires: kcachegrind
 %if_enabled qtwebengine
 Requires: kimagemapeditor
@@ -178,17 +178,17 @@ Obsoletes: kde5-edu < %EVR
 Requires: kde-runtime
 #
 %if_enabled qtwebengine
-Requires: kde5-parley
+Requires: parley
 %endif
-Requires: kde5-kanagram kde5-khangman
-Requires: kde5-kwordquiz kde5-kturtle kde5-marble
-Requires: kde5-step
+Requires: kanagram khangman
+Requires: kwordquiz kturtle marble
+Requires: step
 %ifnarch armh
 Requires: kde5-kstars
 %endif
-Requires: kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
-Requires: kde5-kbruch kde5-kgeography kde5-ktouch
-Requires: kde5-minuet
+Requires: kig kmplot kalgebra cantor rocs
+Requires: kbruch kgeography ktouch
+Requires: minuet
 %description -n kde-edu
 Educational software based on the KDE technologies
 
@@ -271,6 +271,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.6-alt1
+- update for Edu
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.5-alt1
 - update for Apps
 
