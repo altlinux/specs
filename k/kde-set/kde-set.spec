@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.6
+Version: 24.01.7
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -199,10 +199,10 @@ Provides: kde5-games = %EVR
 Obsoletes: kde5-games < %EVR
 Requires: kde-runtime
 #
-Requires: kde5-lskat kde5-kmines kde5-kshisen kde5-ktuberling kde5-bovo kde5-knetwalk
-Requires: kde5-katomic kde5-knavalbattle kde5-kpat kde5-kmahjongg
-Requires: kde5-ksudoku kde5-kigo kde5-knights kde5-kreversi kde5-granatier
-Requires: kde5-kolf kde5-ksirk kde5-palapeli
+Requires: lskat kmines kshisen ktuberling bovo knetwalk
+Requires: katomic knavalbattle kpat kmahjongg
+Requires: ksudoku kigo knights kreversi granatier
+Requires: kolf ksirk palapeli
 %description -n kde-games
 High quality gaming and entertainment software.
 
@@ -271,6 +271,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.7-alt1
+- update for Games
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.6-alt1
 - update for Edu
 
