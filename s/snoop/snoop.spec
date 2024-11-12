@@ -3,11 +3,11 @@
 
 Name: snoop
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: Snoop through your files
-License: GPL-3.0
-Group: Sound
+License: GPL-3.0-or-later
+Group: File tools
 Url: https://gitlab.gnome.org/philippun1/snoop/
 VCS: https://gitlab.gnome.org/philippun1/snoop/
 
@@ -48,5 +48,8 @@ BuildRequires: libgtksourceview5-devel
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Nov 11 2024 Alexey Volkov <qualimock@altlinux.org> 0.4-alt2
+- Fix license and group
+
 * Mon Nov 11 2024 Alexey Volkov <qualimock@altlinux.org> 0.4-alt1
 - Initial build for ALT
