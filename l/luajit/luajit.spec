@@ -2,7 +2,7 @@
 
 Name: luajit
 Version: 2.1
-Release: alt18.gitc68711c
+Release: alt19.git97813fb
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -93,6 +93,9 @@ mv %buildroot%_bindir/luajit-2.1.* %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Tue Nov 12 2024 Vladimir Didenko <cow@altlinux.org> 2.1-alt19.git97813fb
+- sync with the latest version of 2.1 branch
+
 * Thu Aug 22 2024 Vladimir Didenko <cow@altlinux.org> 2.1-alt18.gitc68711c
 - sync with the latest version of 2.1 branch
 
