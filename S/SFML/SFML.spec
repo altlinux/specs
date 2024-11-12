@@ -1,7 +1,7 @@
 %define soversion 2.6
 
 Name: SFML
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Simple and Fast Multimedia Library
@@ -67,8 +67,6 @@ developing applications that use SFML.
 
 %install
 %cmake_install
-%__mkdir_p %buildroot%_pkgconfigdir
-%__mv %buildroot%_prefix/pkgconfig/sfml-*.pc %buildroot%_pkgconfigdir
 
 %files -n lib%name%soversion
 %doc changelog.md
@@ -82,6 +80,9 @@ developing applications that use SFML.
 %_libdir/cmake/%name/%{name}*.cmake
 
 %changelog
+* Tue Nov 12 2024 Nazarov Denis <nenderus@altlinux.org> 2.6.2-alt1
+- New version 2.6.2.
+
 * Tue Nov 14 2023 Nazarov Denis <nenderus@altlinux.org> 2.6.1-alt1
 - New version 2.6.1.
 
