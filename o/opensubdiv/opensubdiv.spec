@@ -11,10 +11,12 @@
 %endif
 
 %define soname 3.6.0
+# cuda is not ready for gcc14
+%define gcc_ver 13
 
 Name: opensubdiv
 Version: %soname
-Release: alt3
+Release: alt3.1
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: Apache-2.0
@@ -40,7 +42,7 @@ BuildRequires: python3-module-docutils doxygen graphviz
 # examples
 BuildRequires: libglfw3-devel libXrandr-devel libXxf86vm-devel libXcursor-devel libXinerama-devel libXi-devel libPtex-devel
 %if_with cuda
-BuildRequires: nvidia-cuda-devel
+BuildRequires: gcc%{gcc_ver}-c++ nvidia-cuda-devel
 %endif
 
 %description
@@ -125,7 +127,9 @@ An Open-Source subdivision surface library documentation
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-
+%if_with cuda
+export GCC_VERSION=%{gcc_ver}
+%endif
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DPYTHON_EXECUTABLE=%_bindir/python3 \
@@ -160,6 +164,9 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3.1
+- Fix FTBFS with gcc14 (compile with gcc13 for cuda).
+
 * Sun Dec 10 2023 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3
 - x86_64: Enable CUDA support.
 
