@@ -5,7 +5,7 @@
 
 Name: dqt6-tools
 Version: 6.7.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -36,7 +36,7 @@ Source23: qdbusviewer.desktop
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
 # BuildRequires(pre): dqt6-tools-common
 #ifnarch %e2k
-BuildRequires: clang-devel-static llvm-devel-static
+BuildRequires: llvm-devel-static
 BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
@@ -323,6 +323,9 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Tue Nov 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
+- cleanup BRs
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 
