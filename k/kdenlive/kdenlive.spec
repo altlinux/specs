@@ -4,7 +4,7 @@
 
 Name: kdenlive
 Version: 24.08.3
-Release: alt1
+Release: alt2
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -79,7 +79,6 @@ sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
 
 %install
 %K6install
-sed -i 's|^Exec=\(.*\)|Exec=kde6 \1|' %buildroot/%_K6xdgapp/org.kde.kdenlive.desktop
 
 %find_lang %name --with-kde --all-name
 sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
@@ -102,6 +101,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
+- fix start from main menu (closes: 52021)
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
