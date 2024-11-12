@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.9
+Version: 1.3.10
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,10 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Nov 12 2024 Anton Midyukov <antohami@altlinux.org> 1.3.10-alt1
+- ALT_Container_OS_License: fix typo in russian license
+- ALT_Container_OS_License: add missing distbranch.list
+
 * Tue Nov 12 2024 Anton Midyukov <antohami@altlinux.org> 1.3.9-alt1
 - Add ALT_Container_OS_License for talos like OS, MPL2.0 licensed source codes
 - modify text about the method of providing the source code of the free
