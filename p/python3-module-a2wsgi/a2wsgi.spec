@@ -1,5 +1,5 @@
 Name: python3-module-a2wsgi
-Version: 1.10.4
+Version: 1.10.7
 Release: alt1
 
 Summary: Convert WSGI app from/to ASGI app
@@ -13,6 +13,8 @@ Source1: pyproject_deps.json
 BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(starlette)
 BuildRequires: python3(httpx)
 
 %pyproject_builddeps_build
@@ -38,6 +40,9 @@ BuildRequires: python3(httpx)
 %python3_sitelibdir/a2wsgi-%version.dist-info
 
 %changelog
+* Tue Oct 01 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.7-alt1
+- 1.10.7 released
+
 * Tue May 07 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.4-alt1
 - 1.10.4 released
 
