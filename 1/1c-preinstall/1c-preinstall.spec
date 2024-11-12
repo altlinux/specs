@@ -1,8 +1,9 @@
-%define tested_version 8.3.22.2239
+%define tested_version 8.3.24.1624
+%define ftrigger 1c.filetrigger
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt17
+Release: alt18
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -11,6 +12,7 @@ URL:     http://1c.ru/
 Packager: Pavel Isopenko <pauli@altlinux.org>
 
 BuildArch: noarch
+Source: %name-%version.tar
 
 Requires: at-spi2-atk
 Requires: bzlib
@@ -26,6 +28,7 @@ Requires: libbrotlidec
 Requires: libcairo
 Requires: libcairo-gobject
 Requires: libcom_err
+Requires: libcrypto3
 Requires: libcups
 Requires: libdatrie
 Requires: libdbus
@@ -66,6 +69,7 @@ Requires: libselinux
 Requires: libSM
 Requires: libsoup
 Requires: libsqlite3
+Requires: libssl3
 Requires: libsystemd
 Requires: libthai
 Requires: libunistring2
@@ -112,9 +116,20 @@ Tested with 1C:Enterprise platform version %tested_version
 
 Проверено с версией платформы 1С:Предприятие %tested_version
 
+%prep
+%setup
+
+%install
+install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
+
 %files
+%_rpmlibdir/%ftrigger
 
 %changelog
+* Tue Nov 12 2024 Pavel Isopenko <pauli@altlinux.org> 8.3-alt18
+- new 1c.filetrigger
+- clarification of dependencies: plus libcrypto3 and libssl3
+
 * Fri Oct 11 2024 Andrey Cherepanov <cas@altlinux.org> 8.3-alt17
 - Required xorg-96dpi according https://t.me/alt_linux/448716.
 
