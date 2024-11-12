@@ -1,6 +1,6 @@
 
 Name: qstardict
-Version: 1.4
+Version: 2.0.2
 Release: alt1
 
 Group: System/Internationalization
@@ -8,12 +8,15 @@ Summary: QStarDict Qt clone of StarDict
 License: GPL-3.0-or-later
 Url: http://qstardict.ylsoftware.com
 
+Requires: qt5-translations
+
 Provides: qstardict-kde5
 Obsoletes: qstardict-kde5 <= %EVR
 
 Source: %name-%version.tar
 Source10: qstardict-ru_RU.ts
 Patch1: alt-l10n.patch
+Patch2: alt-ftbfs.patch
 
 # Automatically added by buildreq on Mon Dec 18 2017 (-bi)
 # optimized out: desktop-file-utils elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGL-devel libX11-devel libdbusmenu-qt52 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-common qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel rpm-build-python3 ruby ruby-stdlibs xorg-kbproto-devel xorg-xproto-devel
@@ -46,6 +49,7 @@ QStarDict KDE Plasma integration
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 #cat %SOURCE10 > translations/qstardict-ru_RU.ts
 
 %build
@@ -58,10 +62,12 @@ QStarDict KDE Plasma integration
 %install
 %installqt5
 
-desktop-file-install --dir %buildroot%_desktopdir \
+LC_ALL=en_US.UTF-8 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=TextTools \
 	--add-category=Office \
+	--set-key="Comment[ru]" \
+	--set-value="Qt-версия словаря StarDict" \
 	%buildroot%_desktopdir/qstardict.desktop
 
 %find_lang %name --all-name --with-qt
@@ -73,12 +79,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %dir %_datadir/%name/translations/
 %_datadir/%name/docs/
 %_desktopdir/*.desktop
-%_iconsdir/*/*/apps/%{name}.*
+#%_iconsdir/*/*/apps/qstardict.*
+%_datadir/pixmaps/qstardict.*
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
 %_libdir/%name/plugins/*.so
 
 %changelog
+* Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
+- new version
+- fix FTBFS (closes: 51994)
+
 * Mon Oct 09 2023 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
 - new version
 
