@@ -3,14 +3,15 @@
 
 Name: rocm-smi-lib
 Version: 6.1.2
-Release: alt0.2
+Release: alt0.3
 License: MIT
 Summary: ROCm System Management Interface (ROCm SMI) Library
 Url: https://github.com/ROCm/amdsmi
 Group: System/Libraries
 
 Source: %name-%version.tar
-Patch: rocm-smi-alt-rocm-path.patch
+Patch0: rocm-smi-alt-rocm-path.patch
+Patch1: rocm-smi-gcc14-fix.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++ rpm-build-python3 help2man
@@ -47,7 +48,8 @@ Development headers for %name.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %cmake \
@@ -99,10 +101,12 @@ help2man -N --name "ROCm System Management Interface" --version-string="%version
 %_libdir/cmake/%rocm_name
 
 %changelog
+* Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.3
+- Fix FTBFS with gcc14 (https://bugs.gentoo.org/918709).
+
 * Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.2
 - .spec: fix -devel package deps.
 - rocm-smi: added man page.
 
 * Fri Jul 05 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
 - Initial build for ALTLinux.
-
