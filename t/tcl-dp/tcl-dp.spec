@@ -6,7 +6,7 @@
 
 Name: tcl-dp
 Version: 4.0b2
-Release: alt5
+Release: alt6
 
 Summary: The package provides UDP, TCP, IP-multicast, and RPC for Tcl
 Summary(ru_RU.UTF-8): Пакет, добавляет возможности UDP, TCP, IP-multicast и RPC к языку Tcl
@@ -21,10 +21,11 @@ Patch1: tcl-dp-4.0b2-alt1-remove-tcphassockets.patch
 Patch2: tcl-dp-4.0b2-alt1-fix-tcl-version-check.patch
 Patch3: tcl-dp-4.0b2-alt1-fix-configure.patch
 Patch4: tcl-dp-4.0b2-alt1-fix-syntax.patch
-Patch5: tcl-dp-4.0b2-alt1-remove-bad-tests.patch
+#Patch5: tcl-dp-4.0b2-alt1-remove-bad-tests.patch
 Patch6: tcl-dp-4.0b2-alt1-fix-serial-module.patch
 Patch7: tcl-dp-4.0b2-alt1-pkgindex.patch
 Patch8: tcl-dp-4.0b2-alt-tcltk8.6.patch
+Patch9: tcl.fix.make.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.5.2-alt1
 BuildRequires: tcl-devel zlib-devel
@@ -46,14 +47,7 @@ primitives is also provided.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%autopatch -p1
 %tea_patch
 sed 's,@lib@,%_lib,' -i tekilib/pkgIndex.tcl
 
@@ -88,6 +82,9 @@ install tekilib/pkgIndex.tcl %pkg_dir/
 %_tcllibdir/lib%teaname%teaversion.so
 
 %changelog
+* Mon Nov 11 2024 Pavel Skrylev <majioa@altlinux.org> 4.0b2-alt6
+- ! relaced gcc14 strikt errors
+
 * Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0b2-alt5
 - Built with %%tea_patch.
 

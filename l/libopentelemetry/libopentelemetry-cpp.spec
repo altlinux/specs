@@ -2,8 +2,8 @@
 %define        oname opentelemetry
 
 Name:          lib%oname
-Version:       1.13.0
-Release:       alt1.1
+Version:       1.17.0.25
+Release:       alt0.1
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -11,7 +11,6 @@ Url:           https://opentelemetry-cpp.readthedocs.io/
 Vcs:           https://github.com/open-telemetry/opentelemetry-cpp.git
 
 Source:        %name-%version.tar
-Patch1:        libopentelemetry-alt-detect-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
@@ -50,6 +49,7 @@ The OpenTelemetry C++ Client.
 %cmake_insource \
    -DCMAKE_MODULE_PATH=%_libdir/cmake \
    -DBUILD_SHARED_LIBS=ON \
+   -DOTELCPP_VERSIONED_LIBS=ON \
    -DWITH_STL=ON
 
 %install
@@ -61,16 +61,20 @@ The OpenTelemetry C++ Client.
 
 %files
 %doc README*
-%_libdir/%{name}_*.so
+%_libdir/%{name}_*.so.*
 
 %files         devel
 %doc README*
+%_libdir/%{name}_*.so
 %_libdir/cmake/%{oname}-cpp
 %_pkgconfigdir/%{oname}_*
 %_includedir/%oname
 
 
 %changelog
+* Mon Nov 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.17.0.25-alt0.1
+- ^ 1.13.0 > 1.17.0p25
+
 * Wed Feb 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1.13.0-alt1.1
 - NMU: loongarch64 support.
 

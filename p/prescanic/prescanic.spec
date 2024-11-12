@@ -1,18 +1,18 @@
 Name:          prescanic
-Version:       0.8.1
+Version:       0.8.3
 Release:       alt1
 
 Summary:       IP Scanner that catalogs all information
 Summary(ru_RU.UTF-8): Сканер IP адресов, упорядочивающий все сведения
 License:       GPL
 Group:         Monitoring
-Url:           http://www.presonico.com/prescanic/
-Packager:      Pavel Skrylev <majioa@altlinux.org>
+Url:           https://www.presonico.com/prescanic/
 
-Source:        %name-%version.tar.bz2
-Patch:         %name-0.8-alt-makefile.patch
+Source:        %name-%version.tar
 
-BuildRequires: libmysqlclient-devel libpcap-devel libmysqlclient21-devel
+BuildRequires: libpcap-devel
+BuildRequires: libmysqlclient-devel
+BuildRequires: libmysqlclient21-devel
 
 %description
 Prescanic's goal was to an attempt to obtain as much information about
@@ -27,20 +27,21 @@ anonymous ftp detection, telnet banner parsing, and more.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir
-%make_install DESTDIR=%buildroot%_bindir/ install
+%makeinstall_std
 
 %files
 %doc PROJECT README TODO
 %_bindir/*
 
 %changelog
+* Mon Nov 11 2024 Pavel Skrylev <majioa@altlinux.org> 0.8.3-alt1
+- ^ 0.8.1 -> 0.8.3
+
 * Wed Mar 06 2019 Pavel Skrylev <majioa@altlinux.org> 0.8.1-alt1
 - Bump to 0.8.1
 - NMU: Add to enable build with novel libmysqlclient21-devel (Closes: #36282)

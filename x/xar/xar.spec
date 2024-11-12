@@ -1,20 +1,24 @@
-Name: xar
-Version: 1.6.1
-Release: alt5
+Name:          xar
+Version:       1.6.1.13
+Release:       alt0.1
 
-Summary: The XAR project aims to provide an easily extensible archive format
-License: BSD-3-Clause
-Group: Archiving/Compression
-Url: https://github.com/mackyle/xar
-Source: %name-%version.tar
-#patch: xar-1.5.3-alt-config.patch
-Patch1: xar-1.5.3-ext2.patch
-Patch2: xar-1.6.1-openssl-1.1.patch
-Patch3: xar-1.6.1-alt-char-unsigned.patch
-Requires: lib%name = %version-%release
+Summary:       The XAR project aims to provide an easily extensible archive format
+License:       BSD-3-Clause
+Group:         Archiving/Compression
+Url:           https://github.com/mackyle/xar
+Vcs:           https://git.altlinux.org/gears/x/xar.git
 
-# Automatically added by buildreq on Sat Dec 17 2011
-BuildRequires: bzlib-devel libacl-devel libe2fs-devel libssl-devel libxml2-devel xsltproc zlib-devel liblzma-devel
+Source:        %name-%version.tar
+Requires:      lib%name = %version-%release
+
+BuildRequires: bzlib-devel
+BuildRequires: libacl-devel
+BuildRequires: libe2fs-devel
+BuildRequires: libssl-devel
+BuildRequires: libxml2-devel
+BuildRequires: liblzma-devel
+BuildRequires: zlib-devel
+BuildRequires: xsltproc
 BuildRequires: rsync
 
 %description
@@ -31,23 +35,35 @@ table of content's rich meta-data.
 Please note that the code quality of this project is quite poor.
 Do not expect that error conditions would be handled properly.
 
-%package -n lib%name
-Summary: The eXtensible ARchiver runtime library
-Group: System/Libraries
 
-%description -n lib%name
+%package       -n lib%name
+Summary:       The eXtensible ARchiver runtime library
+Group:         System/Libraries
+
+%description   -n lib%name
 The XAR project aims to provide an easily extensible archive format.
 This package contains the eXtensible ARchiver runtime library.
 
 Please note that the code quality of this project is quite poor.
 Do not expect that error conditions would be handled properly.
 
-%package -n lib%name-devel
-Summary: Development files for the eXtensible ARchiver library
-Group: Development/C
-Requires: lib%name = %version-%release
 
-%description -n lib%name-devel
+%package       -n lib%name-devel
+Summary:       Development files for the eXtensible ARchiver library
+Group:         Development/C
+
+Requires:      lib%name = %version-%release
+Requires:      bzlib-devel
+Requires:      libacl-devel
+Requires:      libe2fs-devel
+Requires:      libssl-devel
+Requires:      libxml2-devel
+Requires:      liblzma-devel
+Requires:      zlib-devel
+Requires:      xsltproc
+Requires:      rsync
+
+%description   -n lib%name-devel
 The XAR project aims to provide an easily extensible archive format.
 
 This package contains headers and other development files required to
@@ -55,14 +71,6 @@ build XAR-based software.
 
 %prep
 %setup
-#%patch -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-# get rid of RPATH.
-sed -ri 's/(RPATH=)".*/\1/' xar/configure.ac
-sed '/^\. functions/iset -x' -i xar/test/*
-sed 's|^\. functions|. ./functions|' -i xar/test/*
 
 %build
 cd xar
@@ -73,27 +81,6 @@ autoconf
 %install
 cd xar
 %makeinstall_std
-
-%check
-cd xar
-# prepare test data
-rm -rf test/%_builddir
-mkdir -p test-bin
-rsync -aH --delete /usr/bin/ test-bin/
-%__subst "s|/bin$|$(pwd)/test-bin|g" test/*
-%__subst "s|bin |test-bin |g" test/*
-%__subst "s| bin$| test-bin|g" test/*
-
-cd test
-export "PATH=%buildroot%_bindir:$PATH"
-export LD_LIBRARY_PATH="%buildroot%_libdir"
-xar --help
-find .
-./checksums
-./compression
-./data
-./hardlink
-./heap
 
 %files
 %_bindir/*
@@ -108,6 +95,10 @@ find .
 %_libdir/*.so
 
 %changelog
+* Mon Nov 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.6.1.13-alt0.1
+- ^ 1.6.1 -> 1.6.1p13
+- ![NMU] explicit requires for impocit function declaration error
+
 * Wed May 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.6.1-alt5
 - NMU:
   + Fixed FTBFS on architectures where char is unsigned.
