@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:    gz-tools
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Entrypoint to Gazebo's command line interface
@@ -43,12 +45,15 @@ Group: Development/C++
 %_bindir/gz
 %_datadir/bash-completion/completions/gz
 %_datadir/gz/gz.completion
-%_libdir/lib*.so
+%_libdir/lib*.so*
 
 %files devel
 %_libdir/cmake/gz-tools*
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+
 * Thu Aug 03 2023 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - New version.
 
