@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: firmware-linux
-Version: 20241018
+Version: 20241110
 Release: alt1
-
 Summary: Firmware files used by the Linux kernel
-License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
-Group: System/Kernel and hardware
+License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
 
-Url: git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
+Group: System/Kernel and hardware
+Url: https://gitlab.com/kernel-firmware/linux-firmware
+
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 Provides: linux-firmware
@@ -27,6 +28,8 @@ required for some devices to operate.
 %package netronome
 Group: System/Kernel and hardware
 Summary: firmware for Agilio SmartNICs
+AutoReqProv: no
+AutoReq: symlinks
 
 %description netronome
 firmware for Agilio SmartNICs
@@ -34,6 +37,8 @@ firmware for Agilio SmartNICs
 %package liquidio
 Group: System/Kernel and hardware
 Summary: firmware for LiquidIO Smart NICs
+AutoReqProv: no
+AutoReq: symlinks
 
 %description liquidio
 firmware for LiquidIO II Smart NICs
@@ -41,6 +46,8 @@ firmware for LiquidIO II Smart NICs
 %package qcom
 Group: System/Kernel and hardware
 Summary: firmware for Qualcomm platforms
+AutoReqProv: no
+AutoReq: symlinks
 
 %description qcom
 firmware for Qualcomm platforms (most of it)
@@ -48,6 +55,8 @@ firmware for Qualcomm platforms (most of it)
 %package mrvl
 Group: System/Kernel and hardware
 Summary: firmware for Marvell Prestera
+AutoReqProv: no
+AutoReq: symlinks
 
 %description mrvl
 firmware for Marvell Prestera switchdev
@@ -55,46 +64,60 @@ firmware for Marvell Prestera switchdev
 %package mellanox
 Group: System/Kernel and hardware
 Summary: firmware for Mellanox Spectrum
+AutoReqProv: no
+AutoReq: symlinks
 
 %description mellanox
 firmware for Mellanox Spectrum switchdev
 
 %prep
-%setup -n %name-%version
-%patch -p1
+%setup
 
 %install
-DESTDIR=%buildroot FIRMWAREDIR=lib/firmware make install
+DESTDIR=%buildroot FIRMWAREDIR=lib/firmware make install-xz
+du -shc %buildroot/lib/firmware
 hardlink -cv %buildroot/lib/firmware
 
 ## *TODO* check these too
 rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 
+%check
+# Ensure that compression mode is correct.
+xz -l %buildroot/lib/firmware/i915/mtl_gsc_1.bin.xz | grep -w CRC32
+
 %files
-%doc WHENCE LICEN?E.*
-/lib/firmware/*
+%doc WHENCE LICEN?E.* Apache-2 GPL-2 GPL-3
+/lib/firmware
 %exclude /lib/firmware/netronome
 %exclude /lib/firmware/liquidio
-%exclude /lib/firmware/qcom/*/
-%exclude /lib/firmware/mrvl/*/
+%exclude /lib/firmware/qcom/*
+%exclude /lib/firmware/mrvl/*
 %exclude /lib/firmware/mellanox
 
 %files netronome
+%doc LICENCE.Netronome
 /lib/firmware/netronome
 
 %files liquidio
+%doc LICENCE.cavium_liquidio
 /lib/firmware/liquidio
 
 %files qcom
-/lib/firmware/qcom/*/
+%doc LICENSE.qcom LICENSE.qcom_yamato qcom/NOTICE.txt LICENCE.linaro
+/lib/firmware/qcom
 
 %files mrvl
-/lib/firmware/mrvl/*/
+%doc LICENCE.Marvell LICENCE.NXP
+/lib/firmware/mrvl
 
 %files mellanox
+%doc WHENCE
 /lib/firmware/mellanox
 
 %changelog
+* Tue Nov 12 2024 Vitaly Chikunov <vt@altlinux.org> 20241110-alt1
+- Update to 20241110-0-gb5885ec5.
+
 * Sat Oct 19 2024 Anton Midyukov <antohami@altlinux.org> 20241018-alt1
 - configuration changes:
   + update.sh: do not git fetch tag from upstream/main
