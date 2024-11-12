@@ -1,7 +1,8 @@
 %define optflags_lto %nil
+%define gcc_ver 13
 
 Name: radeon-memory-visualizer
-Version: 1.10
+Version: 1.11
 Release: alt0.1
 License: MIT
 Summary: Software tool to analyze video memory usage on AMD Radeon GPUs
@@ -12,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ qt6-svg-devel python3-module-sphinx-sphinx-build-symlink
+BuildRequires: gcc%{gcc_ver}-c++ qt6-svg-devel python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-sphinx_rtd_theme linuxdeployqt chrpath
 
 Requires: %name-data = %EVR
@@ -40,6 +41,7 @@ Samples and help files for Radeon Memory Visualizer (RMV).
 %patch -p1
 
 %build
+export GCC_VERSION=%{gcc_ver}
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DDISABLE_EXTRA_QT_LIB_DEPLOY=ON
@@ -66,6 +68,10 @@ install -m644 LICENSE.txt %buildroot%_datadir/rmv/
 %_datadir/rmv/*
 
 %changelog
+* Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.11-alt0.1
+- 1.11.
+- use gcc13 to build.
+
 * Wed Jul 03 2024 L.A. Kostis <lakostis@altlinux.ru> 1.10-alt0.1
 - 1.10.
 - qt5->qt6.
