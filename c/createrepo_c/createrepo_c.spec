@@ -1,5 +1,5 @@
 Name:     createrepo_c
-Version:  1.1.4
+Version:  1.2.0
 Release:  alt1
 Summary:  Creates a common metadata repository
 License:  GPL-2.0+
@@ -9,6 +9,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0:  %name-%version.tar
 Patch0:   %name-set-versions.patch
+Patch1:   %name-alt-gcc14.patch
 
 ExcludeArch: ppc64le
 
@@ -69,6 +70,7 @@ Python 3 bindings for the createrepo_c library.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 export CMAKE_CXX_FLAGS="%optflags"
@@ -98,6 +100,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version.
+
 * Thu Aug 15 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
 - New version.
 
