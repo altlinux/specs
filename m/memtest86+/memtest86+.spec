@@ -1,6 +1,6 @@
 Name: memtest86+
-Version: 7.00
-Release: alt2
+Version: 7.20
+Release: alt1
 
 Summary: Memory test for x86 architecture
 License: GPL-2.0-or-later
@@ -10,8 +10,18 @@ Url: http://www.memtest.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 loongarch64
 Requires(post,preun): bootloader-utils >= 0.3
+
+%ifarch %ix86
+%define builddir build32
+%endif
+%ifarch x86_64
+%define builddir build64
+%endif
+%ifarch loongarch64
+%define builddir build64/la64
+%endif
 
 %description
 Memtest86 is thorough, standalone memory test for x86 systems. It is
@@ -56,20 +66,14 @@ and avoids the following errors:
 %patch -p1
 
 %build
-%ifarch %ix86
-cd build32
-%else
-cd build64
-%endif
+cd %builddir
 %make_build LD=/usr/bin/ld.bfd
 
 %install
-%ifarch %ix86
-cd build32
-%else
-cd build64
-%endif
+cd %builddir
+%ifarch %ix86 x86_64
 install -pDm644 memtest.bin %buildroot/boot/memtest-%version.bin
+%endif
 %ifnarch %ix86
 install -pDm644 memtest.efi %buildroot/boot/memtest-%version.efi
 %endif
@@ -84,7 +88,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %_sbindir/installmemtest86+ --remove %version
 
 %files
+%ifarch %ix86 x86_64
 /boot/memtest-%version.bin
+%endif
 %ifnarch %ix86
 /boot/memtest-%version.efi
 %endif
@@ -92,6 +98,10 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Tue Nov 12 2024 Ivan A. Melnikov <iv@altlinux.org> 7.20-alt1
+- new version (7.20)
+- enable loongarch64 support
+
 * Sat Jan 13 2024 Anton Midyukov <antohami@altlinux.org> 7.00-alt2
 - switch to build from git (Closes:  49060)
 - app/display.c: do not show GIT_HASH in version (Closes: 49061)
