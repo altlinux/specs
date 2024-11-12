@@ -11,7 +11,7 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt29
+Release: alt30
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
@@ -100,6 +100,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Tue Nov 12 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.0.3-alt30
+- fix displayed errors text (closes: 52014)
+
 * Wed Oct 18 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.0.3-alt29
 - rework change password option
 
