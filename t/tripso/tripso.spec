@@ -4,7 +4,7 @@
 
 Name: tripso
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Translation of IPv4 Security Options (IPSO) Labels
 License: GPLv2
@@ -20,10 +20,14 @@ BuildRequires: libiptables-devel
 BuildRequires: figlet
 BuildRequires: iproute2
 BuildRequires: iptables
-BuildRequires: kernel
+%if 0%{?kernel_latest:1}
+BuildRequires: kernel-%kernel_latest
 BuildRequires: kernel-headers-modules-%kernel_latest
+%else
+BuildRequires: kernel
 BuildRequires: kernel-headers-modules-std-def
 BuildRequires: kernel-headers-modules-un-def
+%endif
 BuildRequires: net-tools
 BuildRequires: rpm-build-vm
 BuildRequires: tcpdump
@@ -61,6 +65,9 @@ VERSION=%version ./check.sh
 /%_lib/iptables/*.so
 
 %changelog
+* Wed Nov 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt2
+- Use %%kernel_latest for tests.
+
 * Fri Aug 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
 - Improve spec and %%check to use latest kernel.
 - Fix compilation warnings.
