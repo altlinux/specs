@@ -1,23 +1,35 @@
+%def_enable snapshot
+
 %define _name libgee
 %define ver_major 0.20
+%define namespace Gee
 %define api_ver 0.8
 %def_disable static
 %def_enable check
 
 Name: %_name%api_ver
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: a collection library providing GObject-based interfaces
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/Libgee
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/libgee.git
 
-BuildRequires(pre): rpm-build-gir rpm-build-gnome
-BuildRequires: libgio-devel >= 2.36 gobject-introspection-devel
-BuildRequires: libvala-devel >= 0.23.2 vala-tools
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+%else
+Source: %_name-%version.tar
+%endif
+
+BuildRequires(pre): rpm-build-gir
+# for AX_REQUIRE_DEFINED
+BuildRequires: autoconf-archive
+BuildRequires: libvala-devel vala-tools
+BuildRequires: libgio-devel >= 2.36
+BuildRequires: gobject-introspection-devel
 
 %description
 libgee is a collection library providing GObject-based interfaces and classes
@@ -34,8 +46,8 @@ library. It's planned to provide bindings for further languages.
 %package devel
 Group: Development/C
 Summary: Development files of %name
-Provides: %_name-devel = %version-%release
-Requires: %name = %version-%release
+Provides: %_name-devel = %EVR
+Requires: %name = %EVR
 
 %description devel
 libgee is a collection library providing GObject-based interfaces and classes
@@ -47,7 +59,7 @@ with %name.
 %package gir
 Summary: GObject introspection data for the libgee library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the libgee library
@@ -56,8 +68,8 @@ GObject introspection data for the libgee library
 Summary: GObject introspection devel data for the libgee library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the libgee library
@@ -66,7 +78,7 @@ GObject introspection devel data for the libgee library
 %package devel-static
 Group: Development/C
 Summary: Static library of %name
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 libgee is a collection library providing GObject-based interfaces and classes
@@ -102,10 +114,10 @@ applications with %name.
 %_datadir/vala/vapi/gee-%api_ver.vapi
 
 %files gir
-%_typelibdir/Gee-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Gee-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled static
 %files devel-static
@@ -113,6 +125,9 @@ applications with %name.
 %endif
 
 %changelog
+* Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.20.6-alt2
+- updated to 0.20.6-3-gce8461f
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.6-alt1
 - 0.20.6
 
