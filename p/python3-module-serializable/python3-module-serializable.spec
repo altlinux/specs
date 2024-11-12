@@ -1,7 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name py-serializable
 
+%def_with check
+
 Name: python3-module-serializable
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 Summary: Pythonic library to aid with serialisation and deserialisation to/from JSON and XML.
 License: Apache-2.0
@@ -21,6 +24,7 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest python3-module-lxml python3-module-xmldiff
 %endif
 
 %description
@@ -38,9 +42,17 @@ classes to and from JSON and XML.
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 1.1.2-alt1
+- Updated to upstream version 1.1.2.
+- Terminate build if unpackaged files were found.
+- Added %%check section that runs test suite by default.
+
 * Mon Sep 16 2024 Andrey Kovalev <ded@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.
