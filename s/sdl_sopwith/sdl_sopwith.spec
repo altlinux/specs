@@ -3,7 +3,7 @@
 %define rdn_name io.github.fragglet.sdl_sopwith
 
 Name: sdl_%__name
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
@@ -49,6 +49,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %exclude %_docdir/%_name
 
 %changelog
+* Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
+- 2.7.0
+
 * Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 

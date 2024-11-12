@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name g4music
-%define ver_major 4.1
+%define ver_major 4.2
 %define rdn_name com.github.neithern.%_name
 
 %def_disable check
@@ -69,6 +69,9 @@ appstreamcli metainfo-to-news --format text data/app.metainfo.xml.in NEWS
 
 
 %changelog
+* Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2-alt1
+- 4.2
+
 * Mon Oct 28 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1-alt1
 - updated to v4.1-1-ga50c484
 
