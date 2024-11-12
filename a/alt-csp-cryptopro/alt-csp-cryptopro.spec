@@ -8,8 +8,8 @@
 %endif
 
 Name: alt-csp-cryptopro
-Version: 0.3.2
-Release: alt2
+Version: 0.3.3
+Release: alt1
 
 Group: File tools
 Summary: CryptoPRO GUI tool
@@ -39,12 +39,12 @@ CryptoPRO GUI tool
 %K6init no_altplace
 %define Kbuild %K6build
 %define Kinstall %K6install
-%define _Ksrv %_K6srv
+%define _Kdata %_K6data
 %else
 %K5init no_altplace
 %define Kbuild %K5build
 %define Kinstall %K5install
-%define _Ksrv %_K5srv
+%define _Kdata %_K5data
 %endif
 %Kbuild \
     -DQT_MAJOR_VERSION=%qtver \
@@ -65,10 +65,13 @@ install -m 0644 BUILD/*.qm %buildroot/%_qt5_translationdir/
 %_bindir/alt-csp-cryptopro
 %_desktopdir/alt-csp-cryptopro.desktop
 %_iconsdir/hicolor/*/apps/alt-csp-cryptopro.*
-%_Ksrv/ServiceMenus/alt-csp-cryptopro.desktop
+%_Kdata/kio/servicemenus/alt-csp-cryptopro.desktop
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Tue Nov 12 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.3-alt1
+- restore context menu item
+
 * Wed Oct 16 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.2-alt2
 - build with Qt6 on p11
 
