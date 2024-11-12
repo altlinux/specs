@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: wget
-Version: 1.24.5
-Release: alt6
+Version: 1.25.0
+Release: alt1
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -108,6 +108,9 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Tue Nov 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt1
+- Update to v1.25.0 (2024-11-10) (fixes: CVE-2024-10524).
+
 * Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.24.5-alt6
 - Make control(8) 'hardening' not just 'seccomp'.
 
