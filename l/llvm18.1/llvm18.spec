@@ -113,7 +113,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -173,7 +173,11 @@ BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: zip zlib-devel binutils-devel
-BuildRequires: python3-module-myst-parser graphviz
+BuildRequires: python3-module-myst-parser
+# dot crashes on ix86
+%ifnarch %ix86
+BuildRequires: graphviz
+%endif
 BuildRequires: ninja-build
 %if_with lldb
 BuildRequires: pkgconfig(liblzma)
@@ -1496,6 +1500,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.3
+- Fix FTBFS on ix86 (don't use graphviz).
+
 * Fri Sep 20 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.2
 - Build without openmp.
 
