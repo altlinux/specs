@@ -4,7 +4,7 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.46
+Version: 0.47
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
@@ -17,6 +17,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3 tcl-devel zlib-devel
+BuildRequires: cxxopts-devel
 
 BuildPreReq: /proc
 
@@ -77,6 +78,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Tue Nov 12 2024 Anton Midyukov <antohami@altlinux.org> 0.47-alt1
+- New version 0.47.
+
 * Thu Oct 17 2024 Anton Midyukov <antohami@altlinux.org> 0.46-alt1
 - New version 0.46.
 
