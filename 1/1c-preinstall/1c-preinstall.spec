@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt18
+Release: alt19
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -99,8 +99,6 @@ Requires: zlib
 
 Requires: libstdc++6
 Requires: fonts-ttf-ms
-# https://t.me/alt_linux/448716
-Requires: xorg-96dpi
 
 %description
 This metapackage is intend to deploy correct environment for 1C:Enterprise platform installation.
@@ -126,6 +124,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 8.3-alt19
+- remove ugly requires to xorg-96dpi (closes: 52026)
+
 * Tue Nov 12 2024 Pavel Isopenko <pauli@altlinux.org> 8.3-alt18
 - new 1c.filetrigger
 - clarification of dependencies: plus libcrypto3 and libssl3
