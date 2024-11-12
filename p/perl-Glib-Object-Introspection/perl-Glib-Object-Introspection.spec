@@ -4,7 +4,7 @@
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
 Version: 0.051
-Release: alt3
+Release: alt4
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -12,6 +12,13 @@ License: LGPL-2.1+
 
 Url: %CPAN Glib-Object-Introspection
 Source: %name-%version.tar
+# fc patches
+Patch1: perl-Glib-Object-Introspection_lib_pattern.patch
+# Use system-wide compiler flags when building test libraries. It's silents
+# annocheck gating tests, CPAN RT#147466, proposed to the upstream.
+Patch4: Glib-Object-Introspection-0.050-Use-CFLAGS-and-LDFLAGS-from-the-envirnoment-for-buil.patch
+# https://gitlab.gnome.org/GNOME/perl-glib-object-introspection/-/issues/7
+Patch5: Glib-Object-Introspection-0.051-Handle-pointer-types.patch
 
 BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm)
 # dependency loop
@@ -34,7 +41,8 @@ BuildArch: noarch
 scripts for %name
 
 %prep
-%setup -q
+%setup
+%autopatch -p1
 
 %build
 # some Glib functions fail with LANG=C
@@ -54,6 +62,9 @@ export LANG=ru_RU.UTF-8
 %_man1dir/perli11ndoc.1*
 
 %changelog
+* Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.051-alt4
+- applied a set of fc-patches, fixed FTBFS (ALT #51996)
+
 * Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 0.051-alt3
 - unbootstrap
 
