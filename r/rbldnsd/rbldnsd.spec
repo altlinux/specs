@@ -1,13 +1,15 @@
 Summary: Small, fast daemon to serve DNSBLs
 Name: rbldnsd
 Version: 0.998
-Release: alt2
+Release: alt2.1
 License: GPLv2+
 Group: System/Servers
 Url: http://www.corpit.ru/mjt/rbldnsd.html
 # http://git.corpit.ru/?p=rbldnsd.git
 Source0: http://www.corpit.ru/mjt/rbldnsd/rbldnsd_%version.tar.gz
 Source1: rbldnsd.init
+
+Patch: %name-alt-gcc14-fix.patch
 
 BuildRequires: gawk, zlib-devel
 
@@ -22,6 +24,7 @@ blocklists.
 %setup -n %name-%version
 sed -i	-e 's@/var/lib/rbldns\([/ ]\)@%_localstatedir/rbldnsd\1@g' \
 		-e 's@\(-r/[a-z/]*\) -b@\1 -q -b@g' debian/rbldnsd.default
+%patch -p2
 
 %build
 # this is not an autotools-generated configure script, and does not support --libdir
@@ -56,6 +59,9 @@ install -m 755 %SOURCE1			%buildroot%_initdir/rbldnsd
 %_initdir/rbldnsd
 
 %changelog
+* Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 0.998-alt2.1
+- Fix FTBFS with gcc14.
+
 * Tue Sep 24 2019 L.A. Kostis <lakostis@altlinux.ru> 0.998-alt2
 - init.d: Fix bash 4+ compatibility.
 - dirs: enforce permissions.
