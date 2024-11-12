@@ -1,5 +1,5 @@
 Name: python3-module-aioesphomeapi
-Version: 25.3.2
+Version: 27.0.1
 Release: alt1
 
 Summary: Python API to ESPHome devices
@@ -13,6 +13,7 @@ Source1: pyproject_deps.json
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
@@ -21,6 +22,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync check pip_reqfile requirements_test.txt
 
 %build
 %pyproject_build
@@ -28,12 +30,18 @@ BuildRequires(pre): rpm-build-pyproject
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest tests
+
 %files
 %_bindir/aioesphomeapi-*
 %python3_sitelibdir/aioesphomeapi
 %python3_sitelibdir/aioesphomeapi-%version.dist-info
 
 %changelog
+* Tue Nov 12 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 27.0.1-alt1
+- 27.0.1 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 25.3.2-alt1
 - 25.3.2 released
 
