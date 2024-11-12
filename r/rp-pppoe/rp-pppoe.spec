@@ -1,6 +1,6 @@
 Name: rp-pppoe
 Version: 3.15
-Release: alt1
+Release: alt2
 
 License: GPLv2+
 Url: https://dianne.skoll.ca/projects/rp-pppoe/
@@ -186,6 +186,9 @@ EOF
 %post_control pppoe-wrapper
 
 %changelog
+* Tue Nov 12 2024 Mikhail Efremov <sem@altlinux.org> 3.15-alt2
+- Fixed build with gcc14.
+
 * Wed May 12 2021 Mikhail Efremov <sem@altlinux.org> 3.15-alt1
 - Used versioned provides/obsoletes for rp-pppoe.
 - Updated to 3.15.
