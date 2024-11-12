@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: zed
-Version: 0.158.1
+Version: 0.160.7
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -19,7 +19,6 @@ Source1: %name-%version-vendor.tar
 Source2: config.toml
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
@@ -45,9 +44,6 @@ editor from the creators of Atom and Tree-sitter.
 install -vpD %SOURCE2 .cargo/config.toml
 
 %build
-export CC=clang
-export CXX=clang++
-
 export RELEASE_VERSION="%version"
 export ZED_UPDATE_EXPLANATION="Please update zed using apt-get."
 
@@ -56,7 +52,11 @@ export ZED_UPDATE_EXPLANATION="Please update zed using apt-get."
 # https://github.com/zed-industries/zed/issues/14302
 ./script/generate-licenses
 
-%rust_build --package zed --package cli
+export CC=clang
+export CXX=clang++
+export CARGO_BUILD_RUSTFLAGS="-Copt-level=3 -Cdebuginfo=1"
+export CARGO_PROFILE_RELEASE_STRIP="true"
+mold -run cargo build %_smp_mflags --release --offline --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
@@ -82,6 +82,9 @@ sed -i "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
 %_iconsdir/hicolor/*/apps/zed.png
 
 %changelog
+* Tue Nov 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.160.7-alt1
+- Updated to 0.160.7.
+
 * Thu Oct 24 2024 Anton Zhukharev <ancieg@altlinux.org> 0.158.1-alt1
 - Updated to 0.158.1.
 
