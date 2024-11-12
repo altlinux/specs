@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.4.1
-Release: alt1
+Version: 0.4.2
+Release: alt2
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -28,9 +28,6 @@ Requires: alterator-users
 
 Requires(post): chkconfig service
 Requires(preun): chkconfig service
-
-Conflicts: alterator-livecd
-Conflicts: installer-common-stage2
 
 Obsoletes: alterator-setup-x11vnc < %EVR
 
@@ -105,6 +102,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Mon Nov 11 2024 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt2
+- Remove conflicts with alterator-livecd, installer-common-stage2
+
 * Thu Nov 23 2023 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
 - Remove /etc/firsttime.flag when install, and touch it after setup
 
