@@ -1,17 +1,27 @@
-Name: python3-module-parso
-Version: 0.8.3
+%define _unpackaged_files_terminate_build 1
+%define pypi_name parso
+%define mod_name %pypi_name
+
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 0.8.4
 Release: alt1
-License: MIT
 Summary: A Python3 Parser
+License: MIT
 Group: Development/Python3
-Source: v%version.tar.gz
+Url: https://pypi.org/project/parso/
+Vcs: https://github.com/davidhalter/parso
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-# Automatically added by buildreq on Mon Feb 01 2021
-# optimized out: ca-trust python-modules python2-base python3 python3-base python3-dev python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-cffi python3-module-chardet python3-module-cryptography python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-openssl python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
-BuildRequires: ctags python3-module-setuptools python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-jsmath python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-pytest
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra testing
+%endif
 
 %description
 Parso is a Python parser that supports error recovery and round-trip
@@ -24,28 +34,28 @@ useful for other projects as well.
 Parso consists of a small API to parse Python and analyse the syntax tree.
 
 %prep
-%setup -n parso-%version
+%setup
+%autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
-%make -C docs SPHINXBUILD=py3_sphinx-build html
+%pyproject_build
 
 %install
-%python3_install
-
-%files
-%doc docs/_build/html/*
-%python3_sitelibdir_noarch/*
+%pyproject_install
 
 %check
-# No python3.10 errors in 0.8.3
-%if "%version" == "0.8.3"
-python3 -m pytest -k "not test_python_errors"
-%else
-python3 -m pytest
-%endif
+%pyproject_run_pytest -vra
+
+%files
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 11 2024 Stanislav Levin <slev@altlinux.org> 0.8.4-alt1
+- 0.8.3 -> 0.8.4.
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.8.3-alt1
 - Autobuild version bump to 0.8.3
 - Introduce partial check

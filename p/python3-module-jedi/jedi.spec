@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.19.1
-Release: alt2
+Version: 0.19.2
+Release: alt1
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
 Group: Development/Python
@@ -58,6 +58,9 @@ bugs should be rare.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 11 2024 Stanislav Levin <slev@altlinux.org> 0.19.2-alt1
+- 0.19.1 -> 0.19.2.
+
 * Tue May 28 2024 Stanislav Levin <slev@altlinux.org> 0.19.1-alt2
 - Fixed FTBFS (Pytest 8.2.0).
 
