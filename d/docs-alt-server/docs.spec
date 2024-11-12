@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Nov 12 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt2
+- fix some typos (#51918, #51955)
+- fix PBS (closes: #51979, #51973, #51966, #51965, #51915, #51988, #52022)
+
 * Fri Oct 18 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt1
 - update to ALT Server 10.4
 - bug fixes (closes: #51549)
