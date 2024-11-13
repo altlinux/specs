@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -48,7 +48,7 @@ Compatibility package.
 
 %prep
 %setup -n %rname-%version
-#%autopatch -p1
+%autopatch -p1
 
 %build
 %K6build \
@@ -81,6 +81,9 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Tue Nov 12 2024 Ajrat Makhmutov <rauty@altlinux.org> 6.2.3-alt2
+- Enable ALT debuginfod server support for character resolution in KCrash.
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 
