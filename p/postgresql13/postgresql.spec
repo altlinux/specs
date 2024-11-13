@@ -16,12 +16,11 @@
 %endif
 
 %set_autoconf_version 2.60
-%set_gcc_version      13
 
 %define prog_name            postgresql
 %define postgresql_major     13
-%define postgresql_minor     16
-%define postgresql_altrel    4
+%define postgresql_minor     17
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -49,7 +48,6 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 Source0: %name-%version.tar
 
 Patch0: 0007-e2k.patch
-Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch4: 0004-Setup-logging.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
@@ -70,7 +68,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm15.0-devel clang15.0-devel gcc13-c++
+BuildRequires: llvm18.1-devel clang18.1-devel gcc-c++
 %endif
 
 %description
@@ -222,7 +220,7 @@ Group: Development/Databases
 Requires: %libpq_name-devel
 Requires: %libecpg_name-%postgresql_major-devel
 %if_with jit
-Requires: llvm15.0-devel clang15.0-devel gcc-c++
+Requires: llvm18.1-devel clang18.1-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
@@ -333,7 +331,7 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm15.0
+Requires: llvm18.1
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -347,7 +345,6 @@ goal of accelerating analytics queries.
 %setup
 
 %patch0 -p1
-%patch2 -p1
 %patch3 -p2
 %patch4 -p1
 %patch6 -p2
@@ -358,8 +355,8 @@ export CC=%__cc
 export CXX=%__cxx
 
 %if_with jit
-export LLVM_CONFIG=/usr/bin/llvm-config-15
-export CLANG=/usr/bin/clang-15
+export LLVM_CONFIG=/usr/bin/llvm-config-18
+export CLANG=/usr/bin/clang-18
 %endif
 
 %ifnarch armh
@@ -979,6 +976,10 @@ fi
 %endif
 
 %changelog
+* Wed Nov 13 2024 Alexei Takaseev <taf@altlinux.org> 13.17-alt1
+- 13.17 (Fixes CVE-2024-10976, CVE-2024-10977, CVE-2024-10978, CVE-2024-10979)
+- Fix build by GCC > 13 and LLVM > 15 (drop patch 0002-Fix-search-for-setproctitle.patch)
+
 * Thu Oct 31 2024 Alexei Takaseev <taf@altlinux.org> 13.16-alt4
 - Use GCC 13
 
