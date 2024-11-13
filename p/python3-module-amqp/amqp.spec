@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2.0
+Version: 5.3.1
 Release: alt1
 Epoch: 1
 Summary: Low-level AMQP client for Python
@@ -51,6 +51,9 @@ alternative when librabbitmq is not available.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 13 2024 Stanislav Levin <slev@altlinux.org> 1:5.3.1-alt1
+- 5.2.0 -> 5.3.1.
+
 * Thu Jun 20 2024 Stanislav Levin <slev@altlinux.org> 1:5.2.0-alt1
 - 5.1.1 -> 5.2.0.
 
