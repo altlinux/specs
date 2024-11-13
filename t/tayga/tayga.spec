@@ -2,7 +2,7 @@
 
 Name: tayga
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: Simple, no-fuss NAT64
 Group: Other
@@ -45,6 +45,9 @@ install -p -D -m 0644 .gear/%name.tmpfiles.d.conf %buildroot%_tmpfilesdir/%name.
 %_man8dir/%{name}*
 
 %changelog
+* Wed Nov 13 2024 Andrey Limachko <liannnix@altlinux.org> 0.9.2-alt2
+- Fixed FTBFS.
+
 * Wed Mar 02 2022 Andrey Limachko <liannnix@altlinux.org> 0.9.2-alt1
 - Initial build
 
