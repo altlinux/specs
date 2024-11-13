@@ -5,8 +5,8 @@
 %define soname 2
 
 Name: libgumbo
-Version: 0.12.1
-Release: alt2.g1440b18
+Version: 0.12.2
+Release: alt1
 
 Summary: An HTML5 parsing library
 License: Apache-2.0
@@ -134,6 +134,10 @@ make check
 %endif
 
 %changelog
+* Wed Nov 13 2024 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt1
+- Set autoconf version requirements to 2.71.
+- Updated to 0.12.2.
+
 * Tue Oct 15 2024 Mikhail Efremov <sem@altlinux.org> 0.12.1-alt2.g1440b18
 - Updated Url and Vcs tags.
 - Upstream git snapshot (fixed potential segfault).
