@@ -15,7 +15,7 @@ BuildRequires: texinfo
 
 Name: mpfi
 Version: 1.5.4
-Release: alt1
+Release: alt2
 
 Summary: An interval arithmetic library based on MPFR
 
@@ -81,6 +81,7 @@ The %name-static package contains the static %name library.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -123,6 +124,10 @@ make check
 %endif
 
 %changelog
+* Wed Nov 13 2024 Leontiy Volodin <lvol@altlinux.org> 1.5.4-alt2
+- Fixed version.
+- Fixed build with gcc14.
+
 * Thu Mar 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.5.4-alt1
 - New version (1.5.4) with rpmgs script.
 
