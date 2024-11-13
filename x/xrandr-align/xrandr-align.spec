@@ -1,5 +1,5 @@
 Name: xrandr-align
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 Summary: Utility to keep the proper alignment between the screen and an X input device
 License: MIT/X11
@@ -86,6 +86,11 @@ chmod a+x %buildroot%_rpmlibdir/%name.filetrigger
 %_sysconfdir/%name/eGalax.monitor
 
 %changelog
+* Wed Nov 13 2024 Paul Wolneykien <manowar@altlinux.org> 0.3.6-alt1
+- Version: 0.3.6
+- Fixed gravitate.c: Include common.h. That fixes building
+  with GCC v14.
+
 * Fri Apr 27 2012 Paul Wolneykien <manowar@altlinux.ru> 0.3.5-alt1
 - Add configuration package for eGalax.
 - Add the filetrigger for configuration files.
