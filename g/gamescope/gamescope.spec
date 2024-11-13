@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.14.18
+Version: 3.15.14
 Release: alt1
 
 Summary: SteamOS session compositing window manager
@@ -17,6 +17,10 @@ Source1: submodules-%name-%version.tar
 Source2: stb.pc
 
 Patch1: gamescope-alt-NestedRefresh60.patch
+Patch2: 0001-cstdint.patch
+Patch3: Allow-to-use-system-wlroots.patch
+Patch4: Switch-wlroots-to-the-new-pc-filename.patch
+Patch5: Add-pixman-dependency.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -27,8 +31,7 @@ BuildRequires: libliftoff-devel
 BuildRequires: libbenchmark-devel
 BuildRequires: libglm-devel
 BuildRequires: hwdata-devel
-# subprojects: Use Joshua-Ashton personal wlroots fork for with branch for now
-# BuildRequires: libwlroots-devel
+BuildRequires: libwlroots-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libX11-devel
 BuildRequires: libXdamage-devel
@@ -62,8 +65,10 @@ BuildRequires: libxcbutil-devel
 BuildRequires: libxcbutil-errors-devel
 BuildRequires: pkgconfig(libdecor-0)
 BuildRequires: pkgconfig(xcb-ewmh)
+BuildRequires: libei-devel
+BuildRequires: git-core
 
-ExclusiveArch: x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
 In an embedded session usecase, gamescope does the same thing as steamcompmgr,
@@ -98,7 +103,7 @@ or corruption will be observed until the stack picks up DRM modifiers support.
 
 %prep
 %setup -a1
-%patch1 -p1
+%autopatch1 -p1
 
 mkdir -p pkgconfig
 cp -v %SOURCE2 pkgconfig/stb.pc
@@ -132,11 +137,17 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %files
 %doc LICENSE README.md
 %_bindir/gamescope
+%_bindir/gamescopectl
+%_bindir/gamescopereaper
 %_bindir/gamescopestream
 %_libdir/libVkLayer_FROG_gamescope_wsi_*.so
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
 
 %changelog
+* Wed Nov 13 2024 Mikhail Tergoev <fidel@altlinux.org> 3.15.14-alt1
+- 3.15.14
+- Added build for aarch64 and i586. 
+
 * Wed May 29 2024 Mikhail Tergoev <fidel@altlinux.org> 3.14.18-alt1
 - 3.14.18
 - Nested refresh = 60 and unfocused = 30 by default (ALT bug: 50107)
