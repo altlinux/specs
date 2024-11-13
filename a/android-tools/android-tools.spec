@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Android Debug CLI tools
 License: APL
@@ -204,6 +204,9 @@ case %_arch in
     "loongarch64")
         DEB_HOST_ARCH="loong64"
         ;;
+    "riscv64")
+        DEB_HOST_ARCH="riscv64"
+        ;;
     *)
         false
         ;;
@@ -357,6 +360,9 @@ done
 %aprefix
 
 %changelog
+* Wed Nov 13 2024 Ivan A. Melnikov <iv@altlinux.org> 34.0.5-alt1.1
+- NMU: add basic riscv64 support
+
 * Sun Nov 03 2024 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt1
 - Platform 34.0.5 (no changes in modeules we package)
 - Some patches from Debian
