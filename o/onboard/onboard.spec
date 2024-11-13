@@ -1,20 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.1
-Release: alt7.git8de1177
+Version: 1.4.2
+Release: alt1
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+ and BSD
 Group: Graphical desktop/GNOME
-URL: https://launchpad.net/onboard/
+URL: https://github.com/dr-ni/onboard
+VCS: https://github.com/dr-ni/onboard
 
-Source0: http://launchpad.net/%name/0.96/%version/+download/%name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: ru.po
 Patch: build-against-Ayatana-AppIndicator.patch
 Patch1: 1004-fix-ftbfs-python3-12.patch
 
-BuildRequires(pre): rpm-build-gnome rpm-macros-python3
+BuildRequires(pre): rpm-build-gnome rpm-macros-python3 rpm-build-pyproject
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: intltool
@@ -28,6 +29,8 @@ BuildRequires: libhunspell-devel
 BuildRequires: libxkbfile-devel
 BuildRequires: python3-module-distutils-extra >= 2.12
 BuildRequires: libudev-devel
+BuildRequires: python3(packaging)
+BuildRequires: python3(wheel)
 
 Requires: python3-module-dbus
 # see ALT bug #35174
@@ -54,10 +57,12 @@ GNOME Shell support for onboard.
 install -Dpm0644 %SOURCE1 po/ru.po
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+mv %buildroot%python3_sitelibdir/etc %buildroot
 
 desktop-file-install --dir %buildroot%_desktopdir       \
     --remove-category="Accessibility"        \
@@ -93,13 +98,17 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/sounds/freedesktop/stereo/onboard-key-feedback.oga
 %_datadir/dbus-1/services/*
 %python3_sitelibdir/Onboard/
-%python3_sitelibdir/%{name}*.egg-info
+%python3_sitelibdir/%name-%version.dist-info
 %_datadir/help/C/%name
 
 %files gnome
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Wed Nov 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- New version from https://github.com/dr-ni/onboard (ALT #52032)
+- Build using pyproject macros.
+
 * Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt7.git8de1177
 - New snapshot from https://github.com/dr-ni/onboard (ALT #49818).
 
