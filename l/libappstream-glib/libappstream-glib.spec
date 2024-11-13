@@ -2,31 +2,30 @@
 
 %define _name appstream-glib
 %define ver_major 0.8
+%define namespace AppStreamGlib
 %define api_ver 1.0
 %define asb_ver 5
 
-%if "%(rpmvercmp '%{get_version librpm-devel}' '4.13')" >= "0"
-%def_enable rpm
-%endif
+%def_disable rpm
 
-%def_enable stemmer
 %def_enable installed_tests
 %def_enable gtk_doc
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Library for AppStream metadata
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
+
+Vcs: https://github.com/hughsie/appstream-glib.git
 
 %if_disabled snapshot
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
 %else
-Vcs: https://github.com/hughsie/appstream-glib.git
 Source: %_name-%version.tar
 %endif
 
@@ -53,7 +52,6 @@ BuildRequires: gtk-doc docbook-utils docbook-dtds
 BuildRequires: libyaml-devel gcab libgcab-devel gperf libuuid-devel
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: librpm-devel
-%{?_enable_stemmer:BuildRequires: libstemmer-devel}
 
 %description
 This library provides GObjects and helper methods to make it easy to read and
@@ -115,15 +113,12 @@ the functionality of the installed %_name library.
 
 %prep
 %setup -n %_name-%version
-#application/yaml: use IANA registered type
-#https://www.iana.org/assignments/media-types/application/yaml
-sed -i 's|\(application\/\)x-\(yaml\)|\1\2|' libappstream-glib/as-yaml.c
 
 %build
 %meson \
-       %{?_enable_rpm:-Drpm=true} \
-       %{?_enable_stemmer:-Dstemmer=true} \
-       %{?_enable_gtk_doc:-Dgtk-doc=true}
+       %{subst_enable_meson_bool rpm rpm} \
+       %{subst_enable_meson_bool gtk_doc gtk-doc}
+%nil
 %meson_build
 
 %install
@@ -157,10 +152,10 @@ sed -i 's|\(application\/\)x-\(yaml\)|\1\2|' libappstream-glib/as-yaml.c
 %_datadir/gettext/its/appdata.loc
 
 %files gir
-%_typelibdir/AppStreamGlib-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/AppStreamGlib-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %files devel-doc
 %_datadir/gtk-doc/html/%_name/
@@ -172,6 +167,9 @@ sed -i 's|\(application\/\)x-\(yaml\)|\1\2|' libappstream-glib/as-yaml.c
 
 
 %changelog
+* Wed Jun 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1.1
 - fixed for shared-mime-info-2.3
 

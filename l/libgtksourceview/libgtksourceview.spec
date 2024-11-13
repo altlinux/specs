@@ -1,5 +1,6 @@
 %define _name gtksourceview
 %define ver_major 2.11
+%define namespace GtkSource
 %define api_ver 2.0
 %def_disable static
 %def_disable gtk_doc
@@ -8,17 +9,20 @@
 
 Name: lib%{_name}
 Version: %ver_major.2
-Release: alt3
+Release: alt3.1
 
 Summary: GtkSourceView text widget library
 License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://www.gnome.org
 
+Vcs: https://gitlab.gnome.org/GNOME/gtksourceview.git
+
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.gz
 Source1: %name-2.10.map
 Patch: %name-2.9.4-alt-symver.patch
 Patch1: %name-2.11.2-alt-tests-deprecation.patch
+Patch2: %_name-2.11.2-alt-no-gtk3.patch
 
 # fc patches
 Patch10: %_name-2.11.2-cflags.patch
@@ -27,7 +31,7 @@ Patch11: %_name-2.11-fix-GCONST-def.patch
 Patch12: %_name-2.11-add-libs.patch
 Patch13: %_name-2.11-glib-unicode-constant.patch
 
-Provides: %{name}2 = %version-%release
+Provides: %{name}2 = %EVR
 Obsoletes: %{name}2 < %version-%release
 
 # From configure.ac
@@ -35,7 +39,7 @@ Obsoletes: %{name}2 < %version-%release
 %define gtk_ver 2.12.0
 %define libxml2_ver 2.5.0
 
-BuildRequires(pre): rpm-build-gnome rpm-build-python
+BuildRequires(pre): rpm-build-gnome rpm-build-python rpm-build-gir
 
 # From configure.ac
 BuildPreReq: intltool >= %intltool_ver
@@ -48,6 +52,7 @@ BuildPreReq: gtk-doc >= 1.0
 BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel libcairo-gobject-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_introspection:BuildRequires: libgtk+2-gir-devel}
+%{?_enable_cheeck:BuildRequires: xvfb-run}
 
 %description
 GtkSourceView is a text widget that extends the standard gtk+ 2.x text
@@ -59,8 +64,8 @@ This package contains shared GtkSourceView library.
 %package devel
 Summary: Files to compile applications that use GtkSourceView
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
-Provides: %{name}2-devel = %version-%release
+Requires: %name = %EVR
+Provides: %{name}2-devel = %EVR
 Obsoletes: %{name}2-devel < %version-%release
 
 %description devel
@@ -83,7 +88,7 @@ This package provides development documentation for %_name.
 %package gir
 Summary: GObject introspection data for the GtkSourceView library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GtkSourceView library
@@ -92,7 +97,7 @@ GObject introspection data for the GtkSourceView library
 Summary: GObject introspection devel data for the GtkSourceView library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GtkSourceView library
@@ -104,6 +109,7 @@ GObject introspection devel data for the GtkSourceView library
 install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 %patch
 %patch1
+%patch2 -b .no-gtk3
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -113,17 +119,19 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 sed -i 's|\(#\!/usr/bin/env python\)$|\12|' data/language-specs/convert.py
 
 %build
-%add_optflags -Wno-error=format-nonliteral
+%add_optflags -Wno-error=format-nonliteral -Wno-deprecated-declarations -Wno-incompatible-pointer-types
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection} \
-	--enable-deprecations=no
+    %{subst_enable static} \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{subst_enable introspection} \
+    --enable-deprecations=no
+%nil
 %make_build
 
 %check
-%make check
+export LANG=en_US.UTF-8
+xvfb-run %make -k check VERBOSE=1
 
 %install
 %makeinstall_std
@@ -145,14 +153,17 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\12|' data/language-specs/convert.py
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/GtkSource-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/GtkSource-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 
 %changelog
+* Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt3.1
+- rebuilt with gcc-14
+
 * Fri Apr 30 2021 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt3
 - BR(pre): +rpm-build-python
 
