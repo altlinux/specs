@@ -1,6 +1,6 @@
 Name: valgrind
-Version: 3.17.0
-Release: alt3
+Version: 3.24.0
+Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -8,28 +8,17 @@ Group: Development/Other
 URL: http://www.valgrind.org/
 Source: https://sourceware.org/pub/valgrind/%name-%version.tar
 
-Patch1: gdbserver_tests-update-filters-for-newer-glibc-gdb.patch
-Patch2: helgrind-and-drd-suppression-libc-and-libpthread.patch
-Patch3: valgrind-alt-arm.patch
-Patch4: valgrind-alt-loongson-is-mips.patch
-Patch5: valgrind-alt-vki_siginfo.patch
-Patch6: valgrind-rh-cachegrind-improvements.patch
-Patch7: valgrind-rh-ldso-supp.patch
-Patch8: valgrind-rh-alt-some-stack-protector.patch
-Patch9: valgrind-rh-some-Wl-z-now.patch
-Patch10: valgrind-rh-ppc64-isa-3.1.patch
-Patch11: valgrind-rh-ppc64-isa-3.1-tests.patch
-Patch12: valgrind-rh-debuginfod.patch
-Patch13: valgrind-rh-clone-parent-res.patch
-Patch14: valgrind-rh-clone3.patch
-Patch15: valgrind-rh-_start.patch
-Patch16: valgrind-rh-ppc64-statfs64.patch
-Patch17: valgrind-rh-vgdb-queued-signals.patch
-Patch18: valgrind-rh-ppc64-test-isa-3-1.patch
-Patch19: valgrind-rh-ppc64-pstxvp.patch
+Patch1: valgrind-alt-arm.patch
+Patch2: valgrind-alt-loongson-is-mips.patch
+Patch3: valgrind-alt-vki_siginfo.patch
+Patch4: valgrind-rh-cachegrind-improvements.patch
+Patch5: valgrind-rh-ldso-supp.patch
+Patch6: valgrind-rh-alt-some-stack-protector.patch
+Patch7: valgrind-rh-some-Wl-z-now.patch
 
 # Apparently, nobody cares whether valgrind works on arm or not.
-%ifarch %arm
+# And of powerpc, nobody cares at all.
+%ifarch %arm ppc64le
 %def_disable check
 %endif
 
@@ -38,6 +27,10 @@ Requires: /proc
 %{?!_disable_check:BuildRequires: /proc gdb-light}
 
 BuildRequires: gcc-c++
+
+BuildRequires: rpm-build-python3
+%add_python3_path %_libexecdir/%name/
+
 
 %description
 Valgrind is an instrumentation framework for building dynamic analysis
@@ -131,7 +124,9 @@ fi
 
 echo "===============TESTING==================="
 make nonexp-regtest ||:
-find -type f -name '*.diff' |sort
+find -type f -name '*.diff' \
+  | sort \
+  | xargs head -n20 -v
 echo "===============END TESTING==============="
 
 %files
@@ -161,6 +156,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Wed Nov 13 2024 Ivan A. Melnikov <iv@altlinux.org> 3.24.0-alt1
+- 3.17.0 -> 3.24.0 (ALT#51941).
+- Synced RH patches with valgrind-3.24.0-1 from Fedora.
+
 * Wed Sep 01 2021 Dmitry V. Levin <ldv@altlinux.org> 3.17.0-alt3
 - Synced with valgrind-3.17.0-12 from Fedora.
 
