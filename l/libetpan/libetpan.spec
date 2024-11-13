@@ -1,6 +1,6 @@
 Name: libetpan
 Version: 1.9.4
-Release: alt5
+Release: alt6
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
 License: BSD-3-Clause
@@ -31,7 +31,9 @@ Patch100: Fix-charconv-double-free.patch
 # Patch from upstream pull request
 # https://github.com/dinhvh/libetpan/pull/427
 Patch101: Fix-FD_SET-undefined-behavior.patch
-
+# Patch from upstream pull request
+# https://github.com/dinhvh/libetpan/pull/447
+Patch102: Fix-poll-operator-precedence.patch
 %def_with gnutls
 %def_without openssl
 
@@ -81,6 +83,7 @@ program which use lib%name.
 
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 
 ln -s README.md README
 
@@ -90,6 +93,7 @@ ln -s README.md README
 	--disable-static \
 	%{subst_with openssl} \
 	%{subst_with gnutls} \
+	--with-poll \
 	--enable-lmdb \
 	--enable-ipv6
 %make_build
@@ -113,6 +117,11 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 %_libdir/%name.so
 
 %changelog
+* Wed Nov 13 2024 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt6
+- Use poll() instead of select().
+- Patch from upstream pull requests:
+  + Fix operator precedence related to poll.
+
 * Wed Apr 24 2024 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt5
 - smtp: Use sockaddr_storage instead of sockaddr.
 - Don't link against unused libraries.
