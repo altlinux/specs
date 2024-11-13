@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 3.1.0
 Release: alt1
 
 Summary: Fast, flexible Python bindings for the excellent yyjson project
@@ -53,5 +53,8 @@ trailing commas, Inf/NaN, and more.
 %python3_sitelibdir/%{library_name}*.so
 
 %changelog
+* Wed Nov 13 2024 Denis Rastyogin <gerben@altlinux.org> 3.1.0-alt1
+- Updated to 3.1.0.
+
 * Thu May 02 2024 Denis Rastyogin <gerben@altlinux.org> 2.3.1-alt1
 - Initial build for ALT Sisyphus.
