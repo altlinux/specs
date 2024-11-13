@@ -1,19 +1,24 @@
-%define git 4f76d51
+%define git %nil
 
 Name: pam-mysql
 Summary: MySQL authentication for PAM
-Version: 0.8.1
-Release: alt0.1.g%git
+Version: 1.0.0
+Release: alt0.2.b3
+License: GPL-2
+Group: System/Libraries
+Url: https://github.com/NigelCunningham/pam-MySQL
 
 Packager: L.A. Kostis <lakostis@altlinux.ru>
-Url: https://github.com/NigelCunningham/pam-MySQL
+
 Source: pam_mysql-%version.tar
 Source1: %name.conf
-License: GPL2
-Group: System/Libraries
 
-BuildRequires(pre): libpam-devel
-BuildRequires: gcc-c++ libmysqlclient21-devel libstdc++-devel zlib-devel libssl-devel
+Patch0: pam_mysql-alt-conf.patch
+Patch1: pam_mysql-fix-dangling-pointer.patch
+Patch2: pam_mysql-fix-tests-ub.patch
+
+BuildRequires(pre): libpam-devel meson
+BuildRequires: libmariadb-devel zlib-devel libssl-devel cmake ninja-build
 
 %description
 This is a module that allows people to login to PAM-aware applications by
@@ -23,24 +28,42 @@ column to interrogate.
 
 %prep
 %setup -q -n pam_mysql-%version
+%autopatch -p2
+subst "s,@PAM_DIR@,%_pam_modules_dir," meson.build
 
 %build
-%autoreconf
-%configure --with-pam-mods-dir=%_pam_modules_dir --with-openssl
+%meson
+%meson_build
 
-%make
+%check
+%meson_test
 
 %install
-%make_install DESTDIR=%buildroot install
-mkdir -p %buildroot%_sysconfdir
-install -p -m600 %SOURCE1 %buildroot%_sysconfdir/
+%meson_install
+install -pD -m600 %SOURCE1 %buildroot%_sysconfdir/%name.conf
 
 %files
-%doc ChangeLog AUTHORS COPYING README NEWS
+%doc AUTHORS COPYING README NEWS examples
 %_pam_modules_dir/pam_mysql.so
 %attr(600,root,root) %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Wed Nov 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt0.2.b3
+- tests: fix UB in password check.
+
+* Thu Aug 15 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt0.1.b3
+- 1.0.0-beta3.
+
+* Fri Sep 23 2022 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt0.1.b2
+- 1.0.0-beta2.
+- src/configure.c: fix memory allocation error.
+
+* Wed Dec 01 2021 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt0.1.b1
+- Updated to 1.0.0-beta1.
+- Switch to meson.
+- Update License.
+- Exclude 323 authentication from test (sig11 so beware!).
+
 * Tue Sep 24 2019 L.A. Kostis <lakostis@altlinux.ru> 0.8.1-alt0.1.g4f76d51
 - Updated to v0.8.1-30-g4f76d51.
 
