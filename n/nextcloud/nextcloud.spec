@@ -2,7 +2,7 @@
 %define php_version 8.2
 
 Name: nextcloud
-Version: 30.0.0
+Version: 30.0.2
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -167,6 +167,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Nov 13 2024 Kirill Izmestev <felixz@altlinux.org> 30.0.2-alt1
+- New version (ALT #52028).
+
 * Thu Oct 10 2024 Andrey Cherepanov <cas@altlinux.org> 30.0.0-alt1
 - New version (fixes: CVE-2024-37887, CVE-2024-37884, CVE-2024-37882,
   CVE-2024-37315, CVE-2024-37313, CVE-2024-22403, CVE-2023-49792,
