@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: trompeloeil
-Version: 48
+Version: 49
 Release: alt1
 Summary: Header only C++14 mocking framework
 Group: Development/C++
@@ -55,6 +55,9 @@ Header only C++14 mocking framework documentation
 %doc docs
 
 %changelog
+* Wed Nov 13 2024 L.A. Kostis <lakostis@altlinux.ru> 49-alt1
+- v49.
+
 * Mon Aug 12 2024 L.A. Kostis <lakostis@altlinux.ru> 48-alt1
 - v48.
 
