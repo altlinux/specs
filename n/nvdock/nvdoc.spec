@@ -1,6 +1,6 @@
 Name: nvdock
 Version: 1.03
-Release: alt1.1
+Release: alt2
 
 Summary: A tray icon to easily launch the nvidia-settings control panel
 
@@ -16,7 +16,7 @@ Patch1: %name-desktop-fix.patch
 # Automatically added by buildreq on Sun Aug 19 2007
 BuildRequires: libgtk+2-common-devel libgtk+2-devel
 # Due NVCtrlLib
-BuildRequires: nvidia-settings-devel
+BuildRequires: libxnvctrl-devel
 Requires: nvidia-settings
 
 # we don't ship nvidia for other arches
@@ -46,6 +46,9 @@ RPM_OPT_FLAGS="%optflags" \
 %_desktopdir/*
 
 %changelog
+* Wed Nov 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.03-alt2
+- update nvctrl patch (fix FTBFS with gcc14).
+
 * Sat Apr 16 2022 L.A. Kostis <lakostis@altlinux.ru> 1.03-alt1.1
 - Fix .desktop file categories.
 
