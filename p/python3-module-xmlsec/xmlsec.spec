@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.14
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for the XML Security Library
 
@@ -14,6 +14,7 @@ URL: https://pypi.org/project/xmlsec
 VCS: https://github.com/mehcode/python-xmlsec
 
 Source: %name-%version.tar
+Patch: xmlsec-gcc14-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libxmlsec1-openssl-devel
@@ -27,6 +28,7 @@ BuildRequires: python3-module-lxml
 
 %prep
 %setup
+%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -47,6 +49,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Nov 13 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.14-alt2
+- Fixed FTBFS.
+
 * Fri Apr 19 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.14-alt1
 - Automatically updated to 1.3.14.
 
