@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.25
+Version: 0.9.28
 Release: alt1
 
 Summary: A Python implementation of the JSON5 data format
@@ -44,6 +44,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 13 2024 Anton Vyatkin <toni@altlinux.org> 0.9.28-alt1
+- New version 0.9.28.
+
 * Sat Apr 13 2024 Anton Vyatkin <toni@altlinux.org> 0.9.25-alt1
 - New version 0.9.25.
 
