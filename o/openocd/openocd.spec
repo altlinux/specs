@@ -1,11 +1,13 @@
 Name: openocd
 Version: 0.12.0
-Release: alt4
+Release: alt5
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
 Group: Development/Tools
 Url: http://sourceforge.net/projects/openocd
+
+Requires: libjaylink >= 0.4.0
 
 Source: %name-%version-%release.tar
 
@@ -80,6 +82,9 @@ install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.r
 %_mandir/man1/*
 
 %changelog
+* Wed Nov 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt5
+- dropped jlink related udev rules and rely on libjaylink ones
+
 * Sat Nov 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt4
 - fixed atlink udev rule
 
