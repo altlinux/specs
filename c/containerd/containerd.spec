@@ -3,7 +3,7 @@
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%global commit      7f7fdf5fed64eb6a7caf99b3e12efcf9d60e311c
+%global commit      207ad711eabd375a01713109a8a197d197ff6542
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.7.22
+Version:	2.0.0
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -25,8 +25,6 @@ Source0: %name-%version.tar
 Source2: %name.init
 Source3: %name.limits
 Source4: config.toml
-
-Patch1:  containerd-alt-loongarch64-support.patch
 
 ExclusiveArch: %go_arches
 
@@ -47,7 +45,6 @@ support as well as checkpoint and restore for cloning and live migration of cont
 
 %prep
 %setup -q
-%autopatch -p1
 sed -i 's|/usr/local/bin/containerd|/usr/bin/containerd|g' containerd.service
 
 %build
@@ -90,6 +87,12 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Tue Nov 12 2024 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
+* Thu Oct 03 2024 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt0.rc5
+- v2.0.0-rc.5
+
 * Thu Sep 12 2024 Vladimir Didenko <cow@altlinux.org> 1.7.22-alt1
 - 1.7.22
 

@@ -1,7 +1,7 @@
 %global pkg_name github.com/docker/buildx
 
 Name:     docker-buildx
-Version:  0.17.1
+Version:  0.18.0
 Release:  alt1
 
 Summary:  Docker CLI plugin for extended build capabilities with BuildKit
@@ -33,10 +33,12 @@ Key features:
 
 %build
 mkdir -p .build
+pushd cmd/buildx
 go build -ldflags "-s -w \
     -X %pkg_name/version.Version=%version \
     -X %pkg_name/version.Revision=" \
-    -mod=vendor -o .build/%name cmd/buildx/main.go
+    -mod=vendor -o ../../.build/%name
+popd
 
 %install
 install -D -m 0755 .build/%name %buildroot%{_libexecdir}/docker/cli-plugins/%name
@@ -46,6 +48,9 @@ install -D -m 0755 .build/%name %buildroot%{_libexecdir}/docker/cli-plugins/%nam
 %{_libexecdir}/docker/cli-plugins/%name
 
 %changelog
+* Tue Nov 12 2024 Vladimir Didenko <cow@altlinux.org> 0.18.0-alt1
+- New version
+
 * Fri Sep 20 2024 Vladimir Didenko <cow@altlinux.org> 0.17.1-alt1
 - New version
 
