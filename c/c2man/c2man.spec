@@ -1,7 +1,9 @@
+%set_gcc_version 13
+
 Name: c2man
 #catalog:version:2.0 patchlevel 40
 Version: 2.0.40
-Release: alt1.1
+Release: alt1.2
 
 Summary: C Source Manual Page Extraction Tool
 Group: Development/Other
@@ -11,6 +13,7 @@ Url: https://github.com/fribidi/c2man
 Vcs: https://github.com/fribidi/c2man.git
 Source: %name-%version.tar
 Patch: c2man-lex.patch
+Patch1: c2man-2.0.40-alt-gcc-14.patch
 
 BuildRequires: bison flex
 
@@ -27,6 +30,7 @@ generated from existing code with no modifications.
 %prep
 %setup
 %patch
+%patch1 -b .gcc14
 
 %build
 %ifarch %e2k
@@ -40,6 +44,7 @@ touch "./-"
     -Dprefix=%_prefix \
     -Dlex=%_bindir/flex \
     -Dyacc="%_bindir/bison -y"
+%nil
 %make_build
 
 %install
@@ -54,6 +59,9 @@ install -m644 %name.1 %buildroot%_man1dir/
 
 
 %changelog
+* Wed Nov 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.40-alt1.2
+- rebuilt with gcc-13
+
 * Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.40-alt1.1
 - fixed build for Elbrus by ilyakurdyukov@
 
