@@ -1,5 +1,5 @@
 Name: eepm-play-gui
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 License: AGPL2
 
@@ -52,6 +52,9 @@ GUI frontend for install third-party applications using epm play.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Nov 14 2024 Roman Alifanov <ximper@altlinux.org> 0.5.0-alt1
+- implemented downloading icons from Etersoft servers and caching
+
 * Mon Oct 28 2024 Roman Alifanov <ximper@altlinux.org> 0.4.0-alt1
 - when the user clicks on the row, the checkbox is activated
 - errordialog implementation
