@@ -14,13 +14,19 @@
 %def_enable baloo
 %endif
 
+%_K5if_ver_gteq %ubt_id M120
+%def_disable devel
+%else
+%def_enable devel
+%endif
+
 %define sover 5
 %define libdolphinprivate libdolphinprivate%sover
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
 Version: 23.08.5
-Release: alt5
+Release: alt6
 %K5init
 
 Group: File tools
@@ -145,10 +151,12 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_datadir/zsh/site-functions/*dolphin*
 
 %files devel
+%if_enabled devel
 %_K5inc/?olphin*
 %_K5link/lib*.so
 %_K5lib/cmake/DolphinVcs/
 %_K5dbus_iface/org.freedesktop.FileManager1.xml
+%endif
 
 %files -n %libdolphinprivate
 %_K5lib/libdolphinprivate.so.*
@@ -158,6 +166,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt6
+- disable devel files on branch > 11
+
 * Tue Nov 05 2024 Sergey V Turchin <zerg@altlinux.org> 23.08.5-alt5
 - build with baloo on p10
 
