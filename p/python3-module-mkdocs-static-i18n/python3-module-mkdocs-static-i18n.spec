@@ -1,23 +1,25 @@
-%define pypi_name django-htmx
-%define mod_name django_htmx
+%define pypi_name mkdocs-static-i18n
+%define mod_name mkdocs_static_i18n
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.21.0
+Version: 1.2.3
 Release: alt1
 
-Summary: Extensions for using Django with htmx
+Summary: MkDocs i18n plugin using static translation markdown files
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/adamchainz/django-htmx
+URL:     https://github.com/ultrabug/mkdocs-static-i18n
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 %if_with check
-BuildRequires: python3-module-django
-BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-mkdocs
+BuildRequires: python3-module-mkdocs-material
 %endif
 
 BuildArch: noarch
@@ -25,7 +27,8 @@ BuildArch: noarch
 Source: %pypi_name-%version.tar
 
 %description
-%summary.
+The MkDocs plugin that helps you support multiple language versions of your site
+or documentation.
 
 %prep
 %setup -n %pypi_name-%version
@@ -40,13 +43,10 @@ Source: %pypi_name-%version.tar
 %pyproject_run_pytest
 
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 1.21.0-alt1
-- New version 1.21.0.
-
-* Tue Jul 16 2024 Alexander Burmatov <thatman@altlinux.org> 1.18.0-alt1
+* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 1.2.3-alt1
 - Initial build for Sisyphus.

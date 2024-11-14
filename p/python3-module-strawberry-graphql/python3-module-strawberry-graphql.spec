@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.237.3
+Version: 0.248.1
 Release: alt1
 
 Summary: A GraphQL library for Python that leverages type annotations
@@ -90,6 +90,9 @@ export DJANGO_SETTINGS_MODULE=tests.django.django_settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 0.248.1-alt1
+- New version 0.248.1.
+
 * Sat Aug 10 2024 Alexander Burmatov <thatman@altlinux.org> 0.237.3-alt1
 - New version 0.237.3.
 

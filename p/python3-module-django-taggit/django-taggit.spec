@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.1
+Version: 6.1.0
 Release: alt1
 
 Summary: Simple tagging for django
@@ -25,6 +25,10 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3-module-djangorestframework
 %endif
 
+# self-providing dependency
+%add_python3_req_skip library_management
+%add_python3_req_skip library_management.models
+
 %description
 django-taggit is a reusable Django application for simple tagging.
 
@@ -44,9 +48,13 @@ python3 -m django test -v 2 --settings=tests.settings
 %files -f %name.lang
 %doc AUTHORS LICENSE *.rst docs/*
 %python3_sitelibdir/%mod_name/
+%python3_sitelibdir/sample_taggit/
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 6.1.0-alt1
+- Version updated to 6.1.0.
+
 * Wed Jan 03 2024 Alexander Burmatov <thatman@altlinux.org> 5.0.1-alt1
 - Version updated to 5.0.1.
 

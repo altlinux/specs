@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.7
+Version: %branch.9
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,17 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Nov 08 2024 Alexander Burmatov <thatman@altlinux.org> 5.0.9-alt1
+- New version 5.0.9.
+- Fixes for the following security vulnerabilities:
+  + CVE-2024-41989: Memory exhaustion in django.utils.numberformat.floatformat()
+  + CVE-2024-41990: Potential denial-of-service vulnerability in django.utils.html.urlize()
+  + CVE-2024-41991: Potential denial-of-service vulnerability in django.utils.html.urlize() and AdminURLFieldWidget
+  + CVE-2024-42005: Potential SQL injection in QuerySet.values() and values_list()
+  + CVE-2024-45230: Potential denial-of-service vulnerability in django.utils.html.urlize()
+  + CVE-2024-45231: Potential user email enumeration via response status on password reset
+- Some bugfixes.
+
 * Mon Jul 15 2024 Alexander Burmatov <thatman@altlinux.org> 5.0.7-alt1
 - New version 5.0.7.
 - Fixes for the following security vulnerabilities:

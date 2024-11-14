@@ -1,23 +1,23 @@
-%define pypi_name django-htmx
-%define mod_name django_htmx
+%define pypi_name super-collections
+%define mod_name super_collections
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.21.0
+Version: 0.5.3
 Release: alt1
 
-Summary: Extensions for using Django with htmx
+Summary: Python SuperDictionaries (with attributes) and SuperLists
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/adamchainz/django-htmx
+URL:     https://github.com/fralau/super-collections
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-django
-BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-hjson
 %endif
 
 BuildArch: noarch
@@ -40,13 +40,10 @@ Source: %pypi_name-%version.tar
 %pyproject_run_pytest
 
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 1.21.0-alt1
-- New version 1.21.0.
-
-* Tue Jul 16 2024 Alexander Burmatov <thatman@altlinux.org> 1.18.0-alt1
+* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 0.5.3-alt1
 - Initial build for Sisyphus.

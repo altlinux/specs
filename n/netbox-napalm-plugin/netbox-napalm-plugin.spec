@@ -1,7 +1,7 @@
 %define pname netbox_napalm_plugin
 
 Name:    netbox-napalm-plugin
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: NetBox Napalm plugin
@@ -45,5 +45,8 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %python3_sitelibdir/%{pyproject_distinfo %pname}
 
 %changelog
+* Fri Nov 08 2024 Alexander Burmatov <thatman@altlinux.org> 0.3.0-alt1
+- New 0.3.0 version.
+
 * Tue Aug 13 2024 Alexander Burmatov <thatman@altlinux.org> 0.2.1-alt1
 - Initial build for Sisyphus.

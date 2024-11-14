@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.0.11
+Version: 4.1.6
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -29,6 +29,7 @@ Requires: python3-module-django
 Requires: python3-module-django-rq
 Requires: python3-module-django-htmx
 Requires: python3-module-django-mptt
+Requires: python3-module-django-rich
 Requires: python3-module-django-redis
 Requires: python3-module-django-filter
 Requires: python3-module-django-taggit
@@ -42,11 +43,13 @@ Requires: python3-module-django-cors-headers
 Requires: python3-module-django-debug-toolbar
 Requires: python3-module-django-timezone-field
 Requires: python3-module-django-graphiql-debug-toolbar
+Requires: python3-module-rq
 Requires: python3-module-nh3
 Requires: python3-module-Pillow
 Requires: python3-module-tablib
 Requires: python3-module-tzdata
 Requires: python3-module-netaddr
+Requires: python3-module-psycopg
 Requires: python3-module-svgwrite
 Requires: python3-module-markdown
 Requires: python3-module-packaging
@@ -199,6 +202,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu Nov 14 2024 Alexander Burmatov <thatman@altlinux.org> 4.1.6-alt1
+- New 4.1.6 version.
+
 * Tue Nov 12 2024 Alexander Burmatov <thatman@altlinux.org> 4.0.11-alt1
 - New 4.0.11 version.
 
