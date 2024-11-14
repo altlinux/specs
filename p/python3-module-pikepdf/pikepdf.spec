@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-%def_with docs
+# No module autoapi
+%def_without docs
 
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-pikepdf
-Version: 8.7.1
+Version: 9.4.1
 Release: alt1
 License: MPL-2.0
 Summary: A Python library for reading and writing PDF files
 Group: Development/Python
 
 Url: https://github.com/pikepdf/pikepdf
-Source: pikepdf-%version.tar
-Patch: pikepdf-jbig2dec.patch
+Source: %name-%version.tar
 
 Requires: libpoppler-gir
 
@@ -53,8 +53,7 @@ Python + QPDF = "py" + "qpdf" = "pyqpdf", which looks like a dyslexia test.
 Say it out loud, and it sounds like "pikepdf".
 
 %prep
-%setup -n pikepdf-%version
-# patch -p0
+%setup
 # disable pytest-xdist (unstable results)
 sed -i 's/-n auto//' pyproject.toml
 
@@ -91,6 +90,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Thu Nov 14 2024 Grigory Ustinov <grenka@altlinux.org> 9.4.1-alt1
+- NMU: Build new version.
+
 * Fri Dec 01 2023 Fr. Br. George <george@altlinux.org> 8.7.1-alt1
 - Autobuild version bump to 8.7.1
 
