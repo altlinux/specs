@@ -2,7 +2,7 @@
 
 Name:    mbrola-voices
 Version: 20200332
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 Summary: Data files of mbrola speech synthesizer voices
@@ -27,6 +27,7 @@ Group: Sound \
 BuildArch: noarch \
 Requires: mbrola \
 Provides: mbrola-voice-%1 = %EVR \
+Conflicts: mbrola-voice-%1 < %EVR \
 Obsoletes: mbrola-voice-%1 < %EVR \
 \
 %description %1        \
@@ -149,6 +150,9 @@ installVoice() {
 %install_voices
 
 %changelog
+* Mon Nov 11 2024 Artem Semenov <savoptik@altlinux.org> 20200332-alt3
+- Add conflict to old packages
+
 * Tue Oct 29 2024 Artem Semenov <savoptik@altlinux.org> 20200332-alt2
 - Fix symlink/dir collision (thx Paul Wolneykien)
 
