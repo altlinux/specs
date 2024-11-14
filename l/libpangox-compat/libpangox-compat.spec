@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: %ver_major.2
-Release: alt3
+Release: alt4
 
 Summary: Obsolete pangox library
 License: LGPL-2.0+
@@ -50,6 +50,8 @@ files to develop with %_name.
 %patch1 -p1
 
 %build
+# gcc14
+%add_optflags -Wno-error=implicit-function-declaration -Wno-error=int-conversion -Wno-error=incompatible-pointer-types
 %configure --disable-static
 %make_build
 
@@ -70,6 +72,9 @@ files to develop with %_name.
 
 
 %changelog
+* Thu Nov 14 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt4
+- Fixed build with gcc14.
+
 * Mon Sep 13 2021 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt3
 - Adjusted to Shared Libs Policy.
 - Returned for ibm_lotus_notes (redmine #51324).
