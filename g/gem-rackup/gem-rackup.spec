@@ -7,7 +7,7 @@
 Name:          gem-rackup
 Epoch:         2
 Version:       2.1.0
-Release:       alt1
+Release:       alt2
 Summary:       A general server command for Rack applications
 License:       MIT
 Group:         Development/Ruby
@@ -17,6 +17,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Source1:       thin.rb
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
 BuildRequires: gem(rack) >= 2.2.2
@@ -107,6 +108,7 @@ A general server command for Rack applications development package.
 
 %install
 %ruby_install
+install -p -D -m 755 %SOURCE1 %buildroot%ruby_gemlibdir/lib/rackup/handler/thin.rb
 
 %check
 %ruby_test
@@ -133,5 +135,8 @@ A general server command for Rack applications development package.
 
 
 %changelog
+* Sat Nov 02 2024 Alexander Burmatov <thatman@altlinux.org> 2:2.1.0-alt2
+- Add thin rackup handler.
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 2:2.1.0-alt1
 - + packaged gem with Ruby Policy 2.0

@@ -9,11 +9,12 @@
 %def_with firecracker
 %endif
 %def_enable prebuilded_sunstone
+%def_enable prebuilded_fireedge
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 6.6.1.1
-Release: alt2
+Version: 6.8.0.1
+Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -39,7 +40,10 @@ BuildRequires: scons
 BuildRequires: python3-module-setuptools
 BuildRequires: java-openjdk-devel ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
-BuildRequires: node node-bower node-gyp npm node-devel node-sass libsass libzeromq-devel
+BuildRequires: node node-bower node-gyp npm node-devel libsass
+%if_disabled prebuilded_fireedge
+BuildRequires: node-zeromq
+%endif
 BuildRequires: ronn
 BuildRequires: groff-base
 %if_with check
@@ -91,7 +95,7 @@ BuildRequires: gem(ox)
 BuildRequires: gem(addressable)
 BuildRequires: gem(vsphere-automation-cis) >= 0.4.6
 BuildRequires: gem(vsphere-automation-vcenter) >= 0.4.6
-BuildRequires: gem(rbvmomi) >= 3.0.0
+BuildRequires: gem(rbvmomi2) >= 3.7.0
 BuildRequires: gem(rake)
 BuildRequires: gem(rspec) >= 3
 BuildRequires: gem(webmock) >= 1.20
@@ -103,10 +107,11 @@ BuildRequires: gem(sinatra) >= 1.4
 BuildRequires: gem(pry)
 BuildRequires: gem(faraday) >= 1.9.3
 BuildRequires: gem(polyglot) >= 0.3
+BuildRequires: gem(mini_portile2)
 BuildConflicts: gem(ffi-rzmq) >= 2.1
-BuildConflicts: gem(highline) >= 3
+BuildConflicts: gem(highline) >= 4
 BuildConflicts: gem(augeas) >= 1
-BuildConflicts: gem(git) >= 2
+BuildConflicts: gem(git) >= 3
 BuildConflicts: gem(faraday_middleware) >= 1.3
 BuildConflicts: gem(activesupport) >= 7
 BuildConflicts: gem(i18n) >= 2
@@ -125,7 +130,7 @@ BuildConflicts: gem(sinatra) >= 2
 %endif
 
 %ruby_use_gem_dependency i18n >= 1.0,i18n < 2
-%ruby_use_gem_dependency highline >= 2.0,highline < 3
+%ruby_use_gem_dependency highline >= 2.0,highline < 4
 %ruby_use_gem_dependency webmock >= 3.13.0,webmock < 4
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
@@ -230,11 +235,11 @@ Requires: gem(polyglot) >= 0.3
 Requires: gem(sorted_set) gem(set)
 Requires: gem(vsphere-automation-cis) >= 0.4.6
 Requires: gem(vsphere-automation-vcenter) >= 0.4.6
-Requires: gem(rbvmomi) >= 3.0.0
+Requires: gem(rbvmomi2) >= 3.7.0
 Conflicts: gem(ffi-rzmq) >= 2.1
-Conflicts: gem(highline) >= 3
+Conflicts: gem(highline) >= 4
 Conflicts: gem(augeas) >= 1
-Conflicts: gem(git) >= 2
+Conflicts: gem(git) >= 3
 Conflicts: gem(faraday_middleware) >= 1.3
 Conflicts: gem(activesupport) >= 7
 Conflicts: gem(i18n) >= 2
@@ -312,7 +317,6 @@ Browser based UI for OpenNebula cloud management and usage.
 %package fireedge
 Summary: OpenNebula web interface FireEdge
 Group: System/Servers
-#TODO: build node-zeromq as external package
 #BuildArch: noarch
 
 AutoReq: yes,noperl,nonodejs,noshell
@@ -325,7 +329,7 @@ Requires: guacamole-server
 Browser based UI for OpenNebula application management.
 
 %package gate
-Summary: OpenNebula Gate server 
+Summary: OpenNebula Gate server
 Group: System/Servers
 BuildArch: noarch
 
@@ -471,12 +475,16 @@ OpenNebula infrastructure provisioning data
 %prep
 %setup
 rm -rf src/sunstone/public/node_modules/node-gyp
-rm -rf src/sunstone/public/node_modules/node-sass
 ln -sf %nodejs_sitelib/node-gyp src/sunstone/public/node_modules/node-gyp
-ln -sf %nodejs_sitelib/node-sass src/sunstone/public/node_modules/node-sass
+rm -rf src/fireedge/node_modules/node-gyp
+ln -sf %nodejs_sitelib/node-gyp src/fireedge/node_modules/node-gyp
+%if_disabled prebuilded_fireedge
+rm -rf src/fireedge/node_modules/zeromq
+ln -sf %nodejs_sitelib/zeromq src/fireedge/node_modules/zeromq
+%endif
 
-rm -rf src/fireedge/node_modules/zeromq/build/Release
-rm -rf src/fireedge/node_modules/zeromq/zmq
+rm -fr src/fireedge/node_modules/flatted/python
+rm -fr src/fireedge/node_modules/zeromq/prebuilds
 
 %build
 export PATH_DEFAULT="$PATH"
@@ -497,12 +505,14 @@ mv -f dist/main.js dist/main-dist.js
 popd
 %endif
 
+%if_disabled prebuilded_fireedge
 pushd src/fireedge
 export PATH="$PATH_DEFAULT:$PWD/node_modules/.bin"
 #npm install --production --zmq-external
 npm rebuild
 npm run build
 popd
+%endif
 
 export PATH="$PATH_DEFAULT"
 
@@ -1037,6 +1047,7 @@ fi
 %_libexecdir/one/ruby/az_driver.rb
 %_libexecdir/one/ruby/ec2_driver.rb
 %_libexecdir/one/ruby/aws_vnm.rb
+%_libexecdir/one/ruby/equinix.rb
 %_libexecdir/one/ruby/equinix_vnm.rb
 %_libexecdir/one/ruby/vultr_vnm.rb
 %_libexecdir/one/ruby/onedb
@@ -1065,6 +1076,7 @@ fi
 %config(noreplace) %_sysconfdir/one/hm/*
 %config(noreplace) %_sysconfdir/one/oned.conf
 %config(noreplace) %_sysconfdir/one/sched.conf
+%config(noreplace) %_sysconfdir/one/guacd
 %config(noreplace) %_sysconfdir/one/monitord.conf
 %config(noreplace) %_sysconfdir/one/onehem-server.conf
 %config(noreplace) %_sysconfdir/one/vmm_exec/*
@@ -1086,6 +1098,7 @@ fi
 
 %_bindir/oneacct
 %_bindir/oneacl
+%_bindir/onebackupjob
 %_bindir/onecluster
 %_bindir/onedatastore
 %_bindir/onegroup
@@ -1129,6 +1142,11 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Fri Sep 13 2024 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt1
+- 6.8.0.1
+- fix sunstone build (thnx majioa@)
+- local fireedge build
+
 * Sat Feb 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 6.6.1.1-alt2
 - disable noarch for opennebula-java subpackage (thnx lav@)
 - fix building without pathfix (thnx grenka@) (ALT #49501)

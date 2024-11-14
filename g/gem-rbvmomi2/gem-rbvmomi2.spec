@@ -1,7 +1,7 @@
 %define        gemname rbvmomi2
 
 Name:          gem-rbvmomi2
-Version:       3.5.0
+Version:       3.8.0
 Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API
 License:       MIT
@@ -21,7 +21,7 @@ BuildRequires: gem(rubocop) >= 1.0
 BuildRequires: gem(simplecov) >= 0.17
 BuildRequires: gem(soap4r-ng) >= 2.0
 BuildRequires: gem(test-unit) >= 3.3
-BuildRequires: gem(yard) >= 0.9.25
+BuildRequires: gem(yard) >= 0.9.36
 BuildRequires: gem(builder) >= 3.2
 BuildRequires: gem(json) >= 2.3
 BuildRequires: gem(nokogiri) >= 1.12.5
@@ -51,7 +51,7 @@ Conflicts:     gem(builder) >= 4
 Conflicts:     gem(json) >= 3
 Conflicts:     gem(nokogiri) >= 2
 Conflicts:     gem(optimist) >= 4
-Provides:      gem(rbvmomi2) = 3.5.0
+Provides:      gem(rbvmomi2) = 3.8.0
 
 
 %description
@@ -59,14 +59,14 @@ Ruby interface to the VMware vSphere API
 
 
 %package       -n rbvmomish2
-Version:       3.5.0
+Version:       3.8.0
 Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rbvmomi2
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rbvmomi2) = 3.5.0
+Requires:      gem(rbvmomi2) = 3.8.0
 Conflicts:     rbvmomish
 
 %description   -n rbvmomish2
@@ -77,14 +77,14 @@ Ruby interface to the VMware vSphere API executable(s).
 
 
 %package       -n gem-rbvmomi2-doc
-Version:       3.5.0
+Version:       3.8.0
 Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rbvmomi2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rbvmomi2) = 3.5.0
+Requires:      gem(rbvmomi2) = 3.8.0
 
 %description   -n gem-rbvmomi2-doc
 Ruby interface to the VMware vSphere API documentation files.
@@ -94,14 +94,14 @@ Ruby interface to the VMware vSphere API documentation files.
 
 
 %package       -n gem-rbvmomi2-devel
-Version:       3.5.0
+Version:       3.8.0
 Release:       alt1
 Summary:       Ruby interface to the VMware vSphere API development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rbvmomi2
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rbvmomi2) = 3.5.0
+Requires:      gem(rbvmomi2) = 3.8.0
 Requires:      gem(activesupport) >= 0
 Requires:      gem(pry) >= 0.13.1
 Requires:      gem(rake) >= 13.0
@@ -109,7 +109,7 @@ Requires:      gem(rubocop) >= 1.0
 Requires:      gem(simplecov) >= 0.17
 Requires:      gem(soap4r-ng) >= 2.0
 Requires:      gem(test-unit) >= 3.3
-Requires:      gem(yard) >= 0.9.25
+Requires:      gem(yard) >= 0.9.36
 Conflicts:     gem(pry) >= 1
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rubocop) >= 2
@@ -155,5 +155,8 @@ Ruby interface to the VMware vSphere API development package.
 
 
 %changelog
+* Tue Oct 15 2024 Alexander Burmatov <thatman@altlinux.org> 3.8.0-alt1
+- ^ 3.5.0 -> 3.8.0
+
 * Sat Feb 04 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.0-alt1
 - + packaged gem with Ruby Policy 2.0
