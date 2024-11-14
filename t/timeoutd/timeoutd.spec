@@ -1,10 +1,11 @@
 Summary: Automatically logout users by idle timeouts
 Name: timeoutd
-Version: 1.5.2
-Release: alt2
+Version: 1.5.3
+Release: alt1
 License: GPL
 Group: System/Base
 Packager: Paul Wolneykien <manowar@altlinux.org>
+Url: https://github.com/wolneykien/timeoutd.git
 Source: %name-%version.tar
 
 BuildRequires: libX11-devel libXScrnSaver-devel libXext-devel libsystemd-devel
@@ -40,6 +41,11 @@ mkdir -p %buildroot%_sysconfdir/%name/messages
 %_unitdir/%name.*
 
 %changelog
+* Thu Nov 14 2024 Paul Wolneykien <manowar@altlinux.org> 1.5.3-alt1
+- Version: 1.5.3.
+- Fixed build (string warnings and suggested parentheses).
+- Fixed build with GCC 14 (localtime() function).
+
 * Wed Aug 07 2024 Paul Wolneykien <manowar@altlinux.org> 1.5.2-alt2
 - Fixed build: Pass unitdir to make.
 
