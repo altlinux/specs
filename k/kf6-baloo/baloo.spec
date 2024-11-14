@@ -7,8 +7,8 @@
 %add_findreq_skiplist %_userunitdir/*.service
 
 Name: kf6-%rname
-Version: 6.7.0
-Release: alt2
+Version: 6.8.0
+Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -109,6 +109,9 @@ KF6 library
 
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
+- new version
+
 * Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt2
 - obsolete libkf5baloowidgets
 

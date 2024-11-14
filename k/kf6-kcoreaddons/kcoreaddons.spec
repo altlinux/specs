@@ -5,7 +5,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.7.0
+Version: 6.8.0
 Release: alt1
 %K6init altplace
 
@@ -135,6 +135,9 @@ Sip files for python3-module-%rname
 
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
+- new version
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
 - new version
 

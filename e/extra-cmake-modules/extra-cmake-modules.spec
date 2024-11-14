@@ -21,8 +21,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 6.7.0
-Release: alt2
+Version: 6.8.0
+Release: alt1
 
 Group: Development/Other
 Summary: Additional modules for CMake build system
@@ -38,9 +38,6 @@ Requires: clang-devel
 %endif
 
 Source: %name-%version.tar
-Patch2: alt-fix-python-install-dirs.patch
-Patch3: alt-find-clang-library.patch
-Patch4: alt-remove-c90.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake qt6-tools qt6-tools-devel
@@ -54,9 +51,6 @@ Additional modules for CMake build system needed by KDE Frameworks.
 
 %prep
 %setup
-%patch2 -p1
-#%patch3 -p1
-#%patch4 -p1
 
 # can't do %%ifarch here becouse noarch build
 if [ "$(arch)" = "e2k" ]; then
@@ -88,6 +82,9 @@ fi
 
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
+- new version
+
 * Fri Oct 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt2
 - fix requires
 

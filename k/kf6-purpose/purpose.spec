@@ -7,7 +7,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf6-%rname
-Version: 6.7.0
+Version: 6.8.0
 Release: alt1
 %K6init no_altplace
 
@@ -36,7 +36,7 @@ BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompl
 BuildRequires: kf6-kcoreaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
 BuildRequires: kf6-kpackage-devel kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel
 BuildRequires: kf6-knotifications-devel kf6-kwindowsystem-devel
-BuildRequires: libgomp13-devel kf6-kirigami-devel
+BuildRequires: libgomp-devel kf6-kirigami-devel
 
 %description
 Purpose offers the possibility to create integrate services and actions on
@@ -149,6 +149,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 
 
 %changelog
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
+- new version
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
 - new version
 
