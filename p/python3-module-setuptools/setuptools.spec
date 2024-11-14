@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 75.3.0
+Version: 75.4.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -185,6 +185,9 @@ export PIP_IGNORE_INSTALLED=1
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue Nov 12 2024 Stanislav Levin <slev@altlinux.org> 1:75.4.0-alt1
+- 75.3.0 -> 75.4.0.
+
 * Wed Nov 06 2024 Stanislav Levin <slev@altlinux.org> 1:75.3.0-alt1
 - 75.2.0 -> 75.3.0.
 
