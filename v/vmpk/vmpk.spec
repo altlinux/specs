@@ -1,29 +1,26 @@
-Name:           vmpk
-Version:        0.7.2
-Release:        alt1
+Name: vmpk
+Version: 0.9.0
+Release: alt1
 
-# repacked tarball http://sf.net/vmpk/%name-%version.tar.bz2
-Source:         %name-%version.tar
-Source1:	%name.watch
+Summary: Virtual MIDI Piano Keyboard
+License: GPLv3
+Group: Sound
+Url: https://vmpk.sourceforge.net/
 
-Summary:        Virtual MIDI Piano Keyboard
-Url:		http://vmpk.sourceforge.net/
-License:        GPLv3
-Group:          Sound
+Source: %name-%version-%release.tar
 
-Packager:       Vladimir D. Seleznev <vseleznv@altlinux.org>
-
-BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Sat Jul 30 2016
-# optimized out: cmake-modules gcc-c++ libEGL-devel libGL-devel libdrumstick-rt1 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-tools
-BuildRequires: cmake drumstick-devel >= 1.1.3 qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
-BuildRequires: xz
+BuildRequires: cmake gcc-c++
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(drumstick-alsa)
+BuildRequires: pkgconfig(drumstick-rt)
 
 %description
-Virtual MIDI Piano Keyboard is a MIDI events generator and receiver. It
-doesn't produce any sound by itself, but can be used to drive a MIDI
-synthesizer (either hardware or software, internal or external). You
-can use the computer's keyboard to play MIDI notes, and also the
+Virtual MIDI Piano Keyboard is a MIDI events generator and receiver.
+It doesn't produce any sound by itself, but can be used to drive a MIDI
+synthesizer (either hardware or software, internal or external).
+You can use the computer's keyboard to play MIDI notes, and also the
 mouse. You can use the Virtual MIDI Piano Keyboard to display the
 played MIDI notes from another instrument or MIDI file player. To do
 so, connect the other MIDI port to the input port of VMPK.
@@ -34,29 +31,23 @@ so, connect the other MIDI port to the input port of VMPK.
 %build
 %cmake
 %cmake_build
-xz ChangeLog NEWS
 
 %install
 %cmakeinstall_std
 
 %files
-%doc AUTHORS
-%doc ChangeLog*
-%doc COPYING
-%doc NEWS*
-%doc README
-%doc TODO
-
-%_bindir/%name
-%_man1dir/%name.1.*
-
-%_datadir/%name
-
-%_iconsdir/hicolor/*/apps/*
-%_desktopdir/*
-
+%doc AUTHORS COPYING NEWS README* TODO
+%_bindir/vmpk
+%_datadir/vmpk
+%_datadir/metainfo/*.xml
+%_iconsdir/*/*/*/*.*
+%_desktopdir/*.desktop
+%_man1dir/vmpk.1*
 
 %changelog
+* Thu Nov 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.0-alt1
+- 0.9.0 released
+
 * Sun Sep 22 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.7.2-alt1
 - 0.7.2.
 
@@ -71,4 +62,3 @@ xz ChangeLog NEWS
 
 * Sun Jul 31 2016 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.2a-alt1
 - Initial build.
-

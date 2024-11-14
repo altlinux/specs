@@ -1,167 +1,98 @@
-
-%define sover 1
-%define libdrumstick_file libdrumstick-file%sover
-%define libdrumstick_alsa libdrumstick-alsa%sover
-%define libdrumstick_rt libdrumstick-rt%sover
-
 Name: drumstick
-Version: 1.1.3
+Version: 2.9.1
 Release: alt1
 
+Summary: MIDI C++ Libraries for Qt
+License: GPLv3
 Group: System/Libraries
-Summary: C++/Qt5 wrapper around multiple MIDI interfaces
-Url: http://drumstick.sourceforge.net/
-License: GPLv2+
+Url: https://drumstick.sourceforge.net/
 
-Source: %name-%version.tar
+Source: %name-%version-%release.tar
 
-# Automatically added by buildreq on Thu May 26 2016 (-bi)
-# optimized out: cmake-modules docbook-dtds elfutils fontconfig fonts-bitmap-misc gcc-c++ libEGL-devel libGL-devel libalsa-devel libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libstdc++-devel libwayland-client libwayland-server perl pkg-config python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3 ruby ruby-stdlibs shared-mime-info xml-common xz
-#BuildRequires: cmake docbook-style-xsl doxygen fonts-bitmap-terminus fonts-otf-stix fonts-ttf-dejavu fonts-ttf-google-droid-kufi fonts-ttf-google-droid-sans fonts-ttf-google-droid-serif fonts-ttf-java-1.6.0-sun fonts-type1-urw fonts-type1-xorg graphviz libfluidsynth-devel python-module-google python3-dev qt5-svg-devel qt5-tools-devel rpm-build-ruby xsltproc
-BuildRequires: kde-common-devel
-BuildRequires: cmake docbook-style-xsl doxygen graphviz xsltproc
-BuildRequires: libfluidsynth-devel qt5-svg-devel qt5-tools-devel
-BuildRequires: libalsa-devel
+BuildRequires: cmake gcc-c++
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: pkgconfig(fluidsynth)
 
-%description
-The drumstick library is a C++ wrapper around the ALSA library sequencer
-interface, using Qt5 objects, idioms and style. OSS, network and Fluidsynth
-interfaces are also supported by this library.
-
-%package common
-Summary: %name common package
-Group: System/Configuration/Other
-#BuildArch: noarch
-%description common
-%name common package
-
-%package -n %libdrumstick_file
+%package -n libdrumstick
+Summary: MIDI C++ Libraries for Qt
 Group: System/Libraries
-Summary: %name library
-Requires: %name-common = %version-%release
-%description -n %libdrumstick_file
-%name library
 
-%package -n %libdrumstick_alsa
+%package -n libdrumstick-widgets
+Summary: MIDI Widget Library for Qt
 Group: System/Libraries
-Summary: %name library
-Requires: %name-common = %version-%release
-%description -n %libdrumstick_alsa
-%name library
-
-%package -n %libdrumstick_rt
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common = %version-%release
-%description -n %libdrumstick_rt
-%name library
 
 %package devel
 Summary: Developer files for %name
 Group: Development/Other
-Requires: %name-common = %version-%release
-%description devel
-%summary.
 
 %package examples
-Summary: Example programs for %name
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description examples
-This package contains the test/example programs for %name.
-
-%package drumgrid
+Summary: Set of example programs using drumstick
 Group: Sound
-Summary: Drum Grid application from %name
-Requires: %name-examples = %version-%release
-%description drumgrid
-This package contains the drumgrid application.
 
-%package guiplayer
-Group: Sound
-Summary: MIDI player from %name
-Requires: %name-examples = %version-%release
-%description guiplayer
-This package contains the guiplayer application.
+%define desc\
+Drumstick is a set of MIDI libraries using C++/Qt idioms and style.\
+Includes a C++ wrapper around the ALSA library sequencer interface:\
+ALSA sequencer provides software support for MIDI technology on Linux.\
+A complementary library provides classes for processing SMF file formats.\
+A multiplatform realtime MIDI I/O library and a GUI Widgets libraries\
+are also provided.
 
-%package vpiano
-Group: Sound
-Summary: Virtual piano application from %name
-Requires: %name-examples = %version-%release
-%description vpiano
-This package contains the vpiano application.
+%description %desc
+
+%description -n libdrumstick %desc
+
+%description -n libdrumstick-widgets %desc
+This package contains MIDI Widget Library for Qt
+
+%description devel %desc
+This package contains development part of drumstick.
+
+%description examples %desc
+This package contains set of example programs using drumstick
 
 %prep
-%setup -n %name-%version%{?svn}
+%setup
 
 %build
-%Kbuild
-pushd BUILD*
-make doxygen
-popd
+%cmake -DUSE_SONIVOX=OFF -DUSE_PULSEAUDIO=OFF -DUSE_DBUS=ON -DBUILD_DOCS=OFF
+%cmake_build
 
 %install
-%Kinstall
+%cmakeinstall_std
 
+%files -n libdrumstick
+%exclude %_libdir/libdrumstick-widgets.so.*
+%_libdir/libdrumstick-*.so.*
+%_libdir/drumstick2
 
-%files common
-%doc AUTHORS ChangeLog COPYING
-%dir %_libdir/drumstick/
-%_datadir/mime/packages/drumstick.xml
-%_iconsdir/hicolor/*/apps/drumstick.*
-
-%files -n %libdrumstick_file
-%_libdir/libdrumstick-file.so.*
-
-%files -n %libdrumstick_alsa
-%_libdir/libdrumstick-alsa.so.*
-%_libdir/drumstick/libdrumstick-rt-alsa-*.so
-
-%files -n %libdrumstick_rt
-%_libdir/libdrumstick-rt.so.*
-%_libdir/drumstick/libdrumstick-rt-net-*.so
-%_libdir/drumstick/libdrumstick-rt-oss-*.so
+%files -n libdrumstick-widgets
+%_libdir/libdrumstick-widgets.so.*
+%_libdir/qt6/*/*/libdrumstick-*.so
 
 %files devel
-%doc BUILD*/doc/html
 %_libdir/libdrumstick-*.so
-%_libdir/pkgconfig/drumstick-*.pc
-%_datadir/%name/cmake/*.cmake
-%_includedir/drumstick/
+%_pkgconfigdir/drumstick-*.pc
+%_libdir/cmake/drumstick
 %_includedir/drumstick.h
+%_includedir/drumstick
 
 %files examples
-%_bindir/drumstick-dumpmid
-%_bindir/drumstick-dumpove
-%_bindir/drumstick-dumpsmf
-%_bindir/drumstick-dumpwrk
-%_bindir/drumstick-metronome
-%_bindir/drumstick-playsmf
-%_bindir/drumstick-sysinfo
-%_man1dir/drumstick-dumpmid.*
-%_man1dir/drumstick-dumpove.*
-%_man1dir/drumstick-dumpsmf.*
-%_man1dir/drumstick-dumpwrk.*
-%_man1dir/drumstick-metronome.*
-%_man1dir/drumstick-playsmf.*
-%_man1dir/drumstick-sysinfo.*
-
-%files drumgrid
-%_bindir/drumstick-drumgrid
-%_desktopdir/drumstick-drumgrid.desktop
-%_man1dir/drumstick-drumgrid.*
-
-%files guiplayer
-%_bindir/drumstick-guiplayer
-%_desktopdir/drumstick-guiplayer.desktop
-%_man1dir/drumstick-guiplayer.*
-
-%files vpiano
-%_bindir/drumstick-vpiano
-%_desktopdir/drumstick-vpiano.desktop
-%_man1dir/drumstick-vpiano.*
+%_bindir/drumstick-*
+%_datadir/drumstick
+%_datadir/metainfo/*.drumstick-*.xml
+%_datadir/mime/packages/*.xml
+%_iconsdir/*/*/*/*.*
+%_desktopdir/*.desktop
 
 %changelog
+* Thu Nov 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.9.1-alt1
+- 2.9.1 released
+
 * Mon Sep 23 2019 Oleg Solovyov <mcpain@altlinux.org> 1.1.3-alt1
 - update to 1.1.3
 
