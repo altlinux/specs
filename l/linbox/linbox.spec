@@ -2,7 +2,7 @@
 
 Name: linbox
 %define lname   liblinbox0
-Version: 1.7.0
+Version: 1.7.0.0.106.a253
 Release: alt1
 Summary: C++ library for computation with matrices over ints and finite fields
 License: LGPL-2.1+
@@ -10,10 +10,6 @@ Group: Sciences/Mathematics
 Url: https://linalg.org/
 
 Source: https://github.com/linbox-team/linbox/releases/download/v%version/linbox-%version.tar.gz
-
-Patch: remove-linboxsage-libs-from-pc.patch
-Patch1: fix-ksh-pkgconfig.patch
-Patch2: linbox-pr-256.patch
 
 # Couldn't find package libatlas-devel on aarch64, armh and ppc64le.
 %if_without openblas
@@ -66,9 +62,6 @@ developing against the Givaro library.
 
 %prep
 %setup
-# %%patch -p1
-# %%patch1 -p1
-# %%patch2 -p1
 
 %build
 %if_with openblas
@@ -89,13 +82,6 @@ export LIBS+="-L%_libdir -lgivaro -lopenblas -lgmp"
   %endif
 #
 
-# Get rid of undesirable hardcoded rpaths, and workaround libtool reordering
-# -Wl,--as-needed after all the libraries.
-# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-#     -e 's|CC="\(g..\)"|CC="\1 -Wl,--as-needed"|' \
-#     -i libtool
-
 %make_build
 
 %install
@@ -114,6 +100,10 @@ rm -f "%buildroot/%_libdir"/*.la
 %doc COPYING*
 
 %changelog
+* Thu Nov 14 2024 Leontiy Volodin <lvol@altlinux.org> 1.7.0.0.106.a253-alt1
+- New version v1.7.0-106-ga253f54da.
+- Fixed build with gcc14.
+
 * Tue Jul 19 2022 Leontiy Volodin <lvol@altlinux.org> 1.7.0-alt1
 - New version (1.7.0).
 - Built with openblas instead atlas.

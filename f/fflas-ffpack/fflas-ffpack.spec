@@ -3,17 +3,17 @@
 %define lname libfflas0
 
 Name: fflas-ffpack
-Version: 2.5.0
+Version: 2.5.0.0.117.94aa
 Release: alt1
 
 Summary: Finite Field Linear Algebra Subroutines
+
 License: LGPL-2.1+
 Group: Sciences/Mathematics
-
 Url: https://linbox-team.github.io/fflas-ffpack/
-#Git-Clone: https://github.com/linbox-team/fflas-ffpack
+Vcs: git://github.com/linbox-team/fflas-ffpack.git
+
 Source: https://github.com/linbox-team/fflas-ffpack/releases/download/%version/fflas-ffpack-%version.tar.gz
-Patch: reproducible.patch
 
 # Couldn't find package libatlas-devel on aarch64, armh and ppc64le.
 %if_without openblas
@@ -62,7 +62,6 @@ the FFLAS-FFPACK API.
 
 %prep
 %setup
-# %%patch -p1
 
 #Do not compile in DATE and TIME
 sed '/HTML_TIMESTAMP/s/YES/NO/' -i doc/Doxyfile
@@ -79,8 +78,8 @@ trap "cat config.log; exit 1" ERR
 %else
 	--with-blas-libs="-lcblas -lblas" \
 %endif
-	--enable-doc --with-docdir="%_docdir/%name" --disable-simd
-trap "" ERR
+	--enable-doc --with-docdir="%_docdir/%name"
+
 %make_build
 
 %install
@@ -106,6 +105,10 @@ sed -i 's,-fabi-version=6,,' \
 %_docdir/%name/
 
 %changelog
+* Thu Nov 14 2024 Leontiy Volodin <lvol@altlinux.org> 2.5.0.0.117.94aa-alt1
+- New version v2.5.0-117-g94aa8826.
+- Added vcs tag.
+
 * Tue Jul 19 2022 Leontiy Volodin <lvol@altlinux.org> 2.5.0-alt1
 - New version (2.5.0).
 - Built with openblas instead atlas.
