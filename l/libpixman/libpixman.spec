@@ -1,8 +1,8 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.43.4
-Release: alt2
+Version: 0.44.0
+Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
 License: MIT
@@ -59,6 +59,9 @@ sed -i 's/timeout : 120/timeout : 600/' test/meson.build
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 14 2024 Valery Inozemtsev <shrek@altlinux.ru> 3:0.44.0-alt1
+- 0.44.0
+
 * Mon Apr 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3:0.43.4-alt2
 - fix e2k patch
 
