@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: opencl-headers
-Version: 2024.05.08
+Version: 2024.10.24
 Release: alt1
 Epoch: 1
 
@@ -22,7 +22,6 @@ Source1: https://github.com/KhronosGroup/OpenCL-CLHPP/releases/download/v%cl_hpp
 Source2: https://www.khronos.org/registry/cl/api/%version/cl.hpp
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++
 
 BuildArch: noarch
 
@@ -36,7 +35,7 @@ cp -p %SOURCE1 %SOURCE2 CL/
 rm -vf CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
 
 %build
-%cmake
+%cmake -DOPENCL_HEADERS_BUILD_CXX_TESTS=OFF
 %cmake_build
 
 %install
@@ -48,6 +47,10 @@ rm -vf CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
 %_datadir/pkgconfig/OpenCL-Headers.pc
 
 %changelog
+* Thu Nov 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2024.10.24-alt1
+- v2024.10.24 (OpenCL 3.0.17).
+- BR: don't require c++.
+
 * Thu May 23 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2024.05.08-alt1
 - v2024.05.08.
 
