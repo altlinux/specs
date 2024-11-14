@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    bpfmon
-Version: 2.52
+Version: 2.53
 Release: alt1
 
 Summary: Traffic monitor for BPF expression/iptables rule
@@ -10,6 +10,7 @@ Group:   Monitoring
 Url:     https://github.com/bbonev/bpfmon
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libpcap-devel
 BuildRequires: libyascreen-devel
@@ -26,6 +27,7 @@ menu.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %make_build CFLAGS="%optflags"
@@ -41,6 +43,9 @@ install -p -m 644 bpfmon.8 %buildroot/%_man8dir/bpfmon.8
 
 
 %changelog
+* Wed Nov 13 2024 Pavel Shilov <zerospirit@altlinux.org> 2.53-alt1
+- Update version based on upstream
+
 * Thu Feb 22 2024 Pavel Shilov <zerospirit@altlinux.org> 2.52-alt1
 - Initial build for Sisyphus
 
