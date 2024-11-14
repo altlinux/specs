@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: labwc
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -27,9 +30,21 @@ BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(librsvg-2.0)
+BuildRequires: pkgconfig(libsfdo-basedir)
+
+Requires: labwc-base = %EVR
 
 %description
-%summary
+%summary.
+
+%package base
+Summary: A Wayland window-stacking compositor (without session)
+Group: Engineering
+Conflicts: labwc < 0.8.1
+
+%description base
+%summary.
 
 %prep
 %setup
@@ -43,16 +58,24 @@ BuildRequires: pkgconfig(libdrm)
 %meson_install
 %find_lang %name
 
-%files -f %name.lang
+%files base -f %name.lang
 %doc NEWS.md
 %_bindir/%name
-%_datadir/wayland-sessions/%name.desktop
+%_datadir/xdg-desktop-portal/labwc-portals.conf
 %_docdir/%name/
 %_mandir/man1/*.1*
 %_mandir/man5/*.5*
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 
+%files
+%_datadir/wayland-sessions/%name.desktop
+
 %changelog
+* Thu Nov 14 2024 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt1
+- new version (0.8.1) with rpmgs script
+- separate base subpackage without %%_datadir/wayland-sessions/%%name.desktop
+- unpackaged files terminate build
+
 * Sat Aug 17 2024 Roman Alifanov <ximper@altlinux.org> 0.8.0-alt1
 - new version 0.8.0 (with rpmrb script)
 - move to tarball

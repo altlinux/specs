@@ -1,7 +1,7 @@
 %define soversion 0.18
 
 Name: libwlroots
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 
 Summary: Modular Wayland compositor library
@@ -105,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/wlroots-%soversion.pc
 
 %changelog
+* Wed Oct 30 2024 Roman Alifanov <ximper@altlinux.org> 0.18.1-alt1
+- new version 0.18.1 (with rpmrb script)
+
 * Fri Aug 09 2024 Roman Alifanov <ximper@altlinux.org> 0.18.0-alt1
 - new version 0.18.0 (with rpmrb script)
 
