@@ -2,13 +2,16 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Games/Boards
 Summary: Old reversi board game, also known as othello
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Provides:  kde5-kreversi = %EVR
+Obsoletes: kde5-kreversi < %EVR
 
 Source: %rname-%version.tar
 
@@ -48,6 +51,9 @@ pieces of his own color on the board and there are no more possible moves.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
+- fix obsoletes
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - initial build
 
