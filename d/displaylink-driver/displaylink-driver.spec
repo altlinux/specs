@@ -1,7 +1,7 @@
 %define module_name	 evdi
-%define module_version 1.14.4
+%define module_version 1.14.7
 %define stage %nil
-%define rel 24
+%define rel 17
 
 %ifarch x86_64
 %define dl_dir x64-ubuntu-1604
@@ -17,7 +17,7 @@
 %endif
 
 Name: displaylink-driver
-Version: 6.0.0
+Version: 6.1.0
 Release: alt1.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
@@ -29,8 +29,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64 aarch64 armh
 
-BuildRequires: libdrm-devel libusb
-BuildRequires: libgomp-devel chrpath
+BuildRequires: libdrm-devel libusb chrpath patchelf
 
 Source1: %name-%version-%{stage}%{rel}.run
 Source2: %module_name.modprobe
@@ -89,7 +88,7 @@ echo %module_name > %buildroot%_sysconfdir/modules-load.d/%module_name.conf
 
 # kernel-source install
 mkdir -p {kernel-source-%module_name-%module_version,%buildroot%_usrsrc/kernel/sources}
-install -m644 module/* kernel-source-%module_name-%module_version/
+cp -ar module/* kernel-source-%module_name-%module_version/
 tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
     %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
@@ -103,6 +102,11 @@ mkdir -p %buildroot{%_bindir,%_unitdir,%_udev_rulesdir,%_systemd_dir,%_datadir/%
 install -m0755 %dl_dir/DisplayLinkManager %buildroot%_bindir/
 
 chrpath -d %buildroot%_bindir/DisplayLinkManager
+# upstream uses /lib/ld-linux-aarch64.so.1
+# which we don't provide for now
+%ifarch aarch64
+patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 %buildroot%_bindir/DisplayLinkManager
+%endif
 
 install -m 0644 %SOURCE3 %buildroot%_unitdir/%name.service
 install -pD -m 0755 %SOURCE4 %buildroot%_systemd_dir/system-sleep/displaylink.sh
@@ -136,6 +140,11 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Thu Nov 14 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.0-alt1.17
+- New release (6.1.0).
+- evdi: updated to 1.14.7.
+- aarch64: fix ld-linux path spotted by usrmerge (tnx to glebfm@).
+
 * Mon May 06 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0.0-alt1.24
 - New release (6.0).
 - udev-rules: sync with upstream.

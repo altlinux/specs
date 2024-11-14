@@ -2,9 +2,9 @@
 %define module_version	1.14.7
 %define module_release	alt1
 
-%define flavour		6.6
+%define flavour		6.12
 %define karch %ix86 x86_64 aarch64
-BuildRequires(pre): kernel-headers-modules-6.6
+BuildRequires(pre): kernel-headers-modules-6.12
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
