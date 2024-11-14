@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt19
+Release: alt20
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -28,7 +28,6 @@ Requires: libbrotlidec
 Requires: libcairo
 Requires: libcairo-gobject
 Requires: libcom_err
-Requires: libcrypto3
 Requires: libcups
 Requires: libdatrie
 Requires: libdbus
@@ -69,7 +68,6 @@ Requires: libselinux
 Requires: libSM
 Requires: libsoup
 Requires: libsqlite3
-Requires: libssl3
 Requires: libsystemd
 Requires: libthai
 Requires: libunistring2
@@ -124,6 +122,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 8.3-alt20
+- remove requires incompatible with p10 (libcrypto3 and libssl3)
+
 * Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 8.3-alt19
 - remove ugly requires to xorg-96dpi (closes: 52026)
 
