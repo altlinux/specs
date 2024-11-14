@@ -1,6 +1,6 @@
 Name: tree-sitter
 Version: 0.24.4
-Release: alt1
+Release: alt2
 
 Summary: Parser generator tool and an incremental parsing library
 
@@ -9,6 +9,7 @@ License: MIT
 Url: https://github.com/tree-sitter/tree-sitter
 
 Source: %name-%version.tar
+Patch1: tree-sitter-0.24.4-alt-correct-next-sibling-of-zero-width-node.patch
 
 BuildRequires: gcc make
 BuildRequires: rust-cargo
@@ -43,6 +44,7 @@ Tree-sitter CLI tool
 
 %prep
 %setup
+%autopatch -p1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -91,6 +93,9 @@ install -d %{buildroot}%{_libdir}/%name
 %_bindir/%name
 
 %changelog
+* Thu Nov 14 2024 Vladimir Didenko <cow@altlinux.ru> 0.24.4-alt2
+- fix neovim freeze (upstream issue: #3930)
+
 * Tue Nov 12 2024 Vladimir Didenko <cow@altlinux.ru> 0.24.4-alt1
 - new version
 
