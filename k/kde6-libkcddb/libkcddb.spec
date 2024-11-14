@@ -4,8 +4,8 @@
 %define libkcddb libkcddb6_%sover
 
 Name: kde6-%rname
-Version: 24.08.2
-Release: alt2
+Version: 24.08.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
 - don't obsolete libkf5cddb5
 

@@ -12,7 +12,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: %rname
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init
 
@@ -109,7 +109,6 @@ Obsoletes: libdolphinvcs5 < %EVR
 desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
     --add-mime-type=x-scheme-handler/ftp \
     --add-mime-type=x-scheme-handler/smb \
-    --add-mime-type=x-scheme-handler/nfs \
     --add-mime-type=x-scheme-handler/trash \
     %buildroot/%_K6xdgapp/org.kde.dolphin.desktop
 # kf6-kio-extras
@@ -157,6 +156,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 

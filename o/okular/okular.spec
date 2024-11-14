@@ -9,8 +9,8 @@
 %define libokularcore libokular6core%sover
 
 Name: %rname
-Version: 24.08.2
-Release: alt2
+Version: 24.08.3
+Release: alt1
 %K6init no_altplace
 
 Group: Office
@@ -190,6 +190,9 @@ fi
 
 
 %changelog
+* Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
 - don't obsolete libokular5core11 (closes: 51865)
 

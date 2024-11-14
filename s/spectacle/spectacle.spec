@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: %rname
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init
 
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols
 BuildRequires: pipewire-libs-devel plasma6-kpipewire-devel
-BuildRequires: libopencv-devel
+BuildRequires: libopencv-devel libvulkan-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-kdoctools-devel
@@ -68,6 +68,9 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 

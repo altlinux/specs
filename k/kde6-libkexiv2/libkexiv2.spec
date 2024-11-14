@@ -4,7 +4,7 @@
 %define libkexiv2 libkexiv2qt6_%sover
 
 Name: kde6-%rname
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init altplace
 
@@ -73,6 +73,9 @@ Requires: %name-common
 
 
 %changelog
+* Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
