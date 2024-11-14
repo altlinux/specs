@@ -1,5 +1,5 @@
 Name: xorg-drv-fbdev
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 Epoch: 1
 Summary: video driver for framebuffer device
@@ -45,6 +45,9 @@ tions are supported.
 %_man4dir/*
 
 %changelog
+* Thu Nov 14 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:0.5.1-alt1
+- 0.5.1
+
 * Thu May 31 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:0.5.0-alt1
 - 0.5.0
 
