@@ -1,13 +1,13 @@
-%define commit 976cd7cb78b41ffdd5f79c56cd5a7dc358359f1f
-%define commit_short %(echo %commit | head -c 6)
+%define commit %nil
+#%%define commit_short %(echo %commit | head -c 6)
 
 %define rdn_name org.gnome.NetworkDisplays
 
 %def_enable check
 
 Name: gnome-network-displays
-Version: 0.93.0
-Release: alt0.git%{commit_short}.1
+Version: 0.94.0
+Release: alt1
 
 Summary: Miracast streaming GUI
 License: GPL-3.0
@@ -18,9 +18,6 @@ Vcs: https://gitlab.gnome.org/GNOME/gnome-network-displays.git
 
 Source0: %name.tar
 #Patch0: %name-%version-%release.patch
-
-#Patch0001: 0001-Add-Russian-localization.patch
-#Patch0002: 0002-Localize-application-name.patch
 
 %define nm_ver 1.15.1
 %define gst_ver 1.14
@@ -69,6 +66,9 @@ Choose a wireless display and stream your desktop to it.
 %doc README.md COPYING
 
 %changelog
+* Thu Nov 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.94.0-alt1
+- 0.94.0
+
 * Fri Aug 16 2024 Yuri N. Sedunov <aris@altlinux.org> 0.93.0-alt0.git976cd7.1
 - updated to 0.93.0-10-g976cd7c (ALT #49118)
 
