@@ -1,6 +1,6 @@
 Name:    inlyne
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: Introducing Inlyne, a GPU powered yet browserless tool to help you quickly view markdown files in the blink of an eye
 License: MIT
@@ -10,6 +10,8 @@ Url:     https://github.com/Inlyne-Project/inlyne
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source: %name-%version.tar
+
+Patch: inlyne-0.4.3-alt-old-nix-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
@@ -34,6 +36,10 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
+
+%patch -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    ./vendor/nix-0.25.1/.cargo-checksum.json
 
 %build
 %rust_build
@@ -62,5 +68,8 @@ install -Dm 644 completions/%name.fish %buildroot%_datadir/fish/vendor_completio
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Nov 13 2024 Ilya Sorochan <k0tran@altlinux.org> 0.4.3-alt2
+- Add patch for loongarch64 that fixes nix crate.
+
 * Thu Nov 07 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.4.3-alt1
 - Initial build for Sisyphus
