@@ -6,7 +6,7 @@
 
 Name: libgumbo
 Version: 0.12.2
-Release: alt1
+Release: alt2
 
 Summary: An HTML5 parsing library
 License: Apache-2.0
@@ -80,6 +80,10 @@ supplied by %name.
 %prep
 %setup -n %_name-%version
 %patch -p1
+%if_with python
+# Fix library name
+sed -i "s;'libgumbo\.so';'libgumbo.so.%soname';" python/gumbo/gumboc.py
+%endif
 
 %build
 # Remove python tests:
@@ -95,7 +99,7 @@ doxygen Doxyfile
 %endif
 
 %if_with python
-%python3_build
+%pyproject_build
 %endif
 
 %install
@@ -107,7 +111,7 @@ install -m 644 docs/man/man3/*.3 %buildroot%_man3dir/
 %endif
 
 %if_with python
-%python3_install
+%pyproject_install
 %endif
 
 %check
@@ -134,6 +138,10 @@ make check
 %endif
 
 %changelog
+* Thu Nov 14 2024 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt2
+- Don't use deprecated python macros.
+- Fixed system library loading (closes: #52042).
+
 * Wed Nov 13 2024 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt1
 - Set autoconf version requirements to 2.71.
 - Updated to 0.12.2.
