@@ -15,7 +15,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.103.8
+Version: 0.103.12
 Release: alt1
 %define abiversion 9
 
@@ -169,7 +169,10 @@ for details.
 %{!?snap: aclocal --force -I m4}
 %{!?snap: %autoreconf}
 
-#add_optflags -std=gnu++98
+%add_optflags -std=gnu++11
+
+# gcc 14.2.1
+%add_optflags -Wno-error=incompatible-pointer-types
 
 # --disable-clamav: Disable test for clamav user/group
 %configure \
@@ -397,6 +400,11 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Thu Nov 14 2024 Sergey Y. Afonin <asy@altlinux.org> 0.103.12-alt1
+- 0.103.12 (CVE-2024-20506, CVE-2024-20505)
+- built with -std=gnu++11
+- built with -Wno-error=incompatible-pointer-types (behavior before gcc 14.2.1)
+
 * Thu Mar 09 2023 Sergey Y. Afonin <asy@altlinux.org> 0.103.8-alt1
 - 0.103.8 (CVE-2023-20032, CVE-2023-20052)
 
