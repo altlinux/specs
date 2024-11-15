@@ -2,12 +2,18 @@
 
 Name: python3-module-%modulename
 Version: 2.2.10
-Release: alt2
+Release: alt2.1
 
 Summary: Python library for interacting with the LXD REST API.
-License: Apache 2.0
+
+License: Apache-2.0
 Group: Development/Python3
+URL: https://pypi.org/project/pylxd
+VCS: https://github.com/canonical/pylxd
+
 BuildRequires(Pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-requests-unixsocket >= 0.1.5
 BuildRequires: python3-module-pbr
 BuildRequires: python3-module-dateutil
@@ -18,7 +24,6 @@ BuildRequires: python3-module-cryptography
 
 %py3_provides %modulename
 
-Url: https://github.com/lxc/pylxd
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -31,19 +36,22 @@ A Python library for interacting with the LXD REST API.
 
 %build
 export PBR_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export PBR_VERSION=%version
-%python3_install
-rm -rf -- %buildroot/%python3_sitelibdir/%modulename/deprecated/tests
-rm -rf -- %buildroot/%python3_sitelibdir/%modulename/tests
+%pyproject_install
+rm -rv %buildroot/%python3_sitelibdir/%modulename/deprecated/tests
+rm -rv %buildroot/%python3_sitelibdir/%modulename/tests
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt2.1
+- Moved on pyproject macros.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.10-alt2
 - Rename package, cleanup spec.
 
