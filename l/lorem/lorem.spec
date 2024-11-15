@@ -3,7 +3,7 @@
 
 Name: lorem
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Generate placeholder text
 License: GPL-3.0-or-later
@@ -16,10 +16,11 @@ Source1: %name-vendor.tar
 Source2: config.toml
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
-BuildRequires: cmake
+BuildRequires: meson >= 0.59
 BuildRequires: rust-cargo
 BuildRequires: pkgconfig(gio-2.0) >= 2.76
+BuildRequires: pkgconfig(glib-2.0) >= 2.76
+BuildRequires: pkgconfig(gtk4) >= 4.10.1
 BuildRequires: pkgconfig(libadwaita-1) >= 1.5.alpha
 %if_enabled check
 BuildRequires: %_bindir/desktop-file-validate
@@ -37,6 +38,7 @@ install -vD %SOURCE2 .cargo/config.toml
 
 %build
 %meson
+%meson_build
 
 %install
 %meson_install
@@ -50,10 +52,15 @@ install -vD %SOURCE2 .cargo/config.toml
 %_desktopdir/%APP_ID.desktop
 %_datadir/fonts/SourceSerif4.ttf
 %_datadir/glib-2.0/schemas/%APP_ID.gschema.xml
-%_datadir/icons/hicolor/*/apps/%{APP_ID}*.svg
+%_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 %_datadir/%name
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Tue Nov 12 2024 Oleg Shchavelev <oleg@altlinux.org> 1.4-alt2
+- Rebuild improved spec (ALT #51816)
+- Add macro %%meson_build
+- Update BuildRequires
+
 * Wed Oct 16 2024 Oleg Shchavelev <oleg@altlinux.org> 1.4-alt1
 - Initial build
