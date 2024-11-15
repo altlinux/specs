@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 3
 %define ver_bugfix 0
 Version: 8.4.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 %define sover %version
@@ -231,7 +231,7 @@ install -m 0755 %SOURCE10 %buildroot/%_K6bin/digikam_mysql_install_db
 %find_lang --with-kde %rname
 %find_lang --with-kde --append --output=%rname.lang showfoto
 
-mv %buildroot/%_datadir/kxmlgui{5,6}
+cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 %files common
 %dir %_K6data/%rname/*
@@ -245,8 +245,10 @@ mv %buildroot/%_datadir/kxmlgui{5,6}
 %_K6bin/digitaglinktree
 %_K6plug/digikam/
 %_K6xdgapp/*.desktop
-%_K6xmlgui/%rname/
-%_K6xmlgui/showfoto/
+#%_K6xmlgui/%rname/
+%_K6data/kxmlgui?/%rname/
+#%_K6xmlgui/showfoto/
+%_K6data/kxmlgui?/showfoto/
 %_K6notif/%rname.notifyrc
 %_K6data/solid/actions/%rname-*.desktop
 %_datadir/metainfo/*.xml
@@ -284,5 +286,8 @@ mv %buildroot/%_datadir/kxmlgui{5,6}
 
 
 %changelog
+* Fri Nov 15 2024 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt2
+- fix package kxmlgui files
+
 * Wed Oct 09 2024 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt1
 - initial build
