@@ -1,7 +1,7 @@
 %define plugin dynamic-cursors
 
 Name: hyprland-plugin-%plugin
-Version: 0.44.1
+Version: 0.45.0
 Release: alt1
 License: MIT
 
@@ -20,6 +20,7 @@ BuildRequires: gcc-c++
 BuildRequires: hyprland-devel
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(aquamarine)
+BuildRequires: pkgconfig(hyprcursor)
 
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(libdrm)
@@ -51,6 +52,9 @@ install out/%plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Thu Nov 14 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.0-alt1
+- new version 0.45.0 (with rpmrb script)
+
 * Thu Oct 31 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.44.1-alt1
 - new version 0.44.1 (with rpmrb script)
 

@@ -1,7 +1,7 @@
 %define plugin Hyprspace
 
 Name: hyprland-plugin-hyprspace
-Version: 0.44.1
+Version: 0.45.0
 Release: alt1
 License: GPL-2.0
 
@@ -49,6 +49,9 @@ install %plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Thu Nov 14 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.0-alt1
+- new version 0.45.0 (with rpmrb script)
+
 * Thu Oct 31 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.44.1-alt1
 - new version 0.44.1 (with rpmrb script)
 

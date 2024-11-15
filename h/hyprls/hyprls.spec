@@ -1,5 +1,5 @@
 Name: hyprls
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 License: MIT
 
@@ -34,5 +34,8 @@ install -Dpm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Nov 14 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Tue Sep 24 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - Initial build

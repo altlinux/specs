@@ -1,7 +1,7 @@
 %define plugin hypr-darkwindow
 
 Name: hyprland-plugin-%plugin
-Version: 0.44.1
+Version: 0.45.0
 Release: alt1
 License: MIT
 
@@ -46,6 +46,9 @@ install out/%plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Sun Nov 10 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.0-alt1
+- new version 0.45.0 (with rpmrb script)
+
 * Thu Oct 31 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.44.1-alt1
 - new version 0.44.1 (with rpmrb script)
 

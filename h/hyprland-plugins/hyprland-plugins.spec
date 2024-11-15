@@ -1,7 +1,7 @@
 %define plugins borders-plus-plus csgo-vulkan-fix hyprbars hyprexpo hyprtrails hyprwinwrap
 
 Name: hyprland-plugins
-Version: 0.44.0
+Version: 0.45.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -114,6 +114,9 @@ done
 %_libdir/hyprland/hyprwinwrap.so
 
 %changelog
+* Mon Nov 11 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.0-alt1
+- new version 0.45.0 (with rpmrb script)
+
 * Thu Oct 31 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.44.0-alt1
 - new version 0.44.0 (with rpmrb script)
 
