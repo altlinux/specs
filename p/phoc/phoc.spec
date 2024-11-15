@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.42
+%define ver_major 0.43
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: phoc
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
@@ -132,6 +132,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
+- 0.43.0
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt1
 - 0.42.1
 

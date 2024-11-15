@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.42
+%define ver_major 0.43
 %define beta %nil
 %define rdn_name sm.puri.Phosh.OskStub
 
@@ -95,6 +95,8 @@ xvfb-run %__meson_test
 %{?_disable_default_osk:%_desktopdir/%rdn_name.desktop}
 %dir %_datadir/%name
 %_datadir/%name/layouts.json
+%dir %_datadir/%name/completers
+%_datadir/%name/completers/hunspell.completer
 %_datadir/glib-2.0/schemas/sm.puri.phosh.osk.enums.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.osk.gschema.xml
 %{?_enable_man:%_man1dir/%name.1*}
@@ -103,6 +105,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
+- 0.43.0
+
 * Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
 - 0.42.0
 

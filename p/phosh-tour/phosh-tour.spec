@@ -1,5 +1,6 @@
 %def_enable snapshot
 
+%define ver_major 0.43
 %define beta %nil
 %define gmobile_ver v0.1.0
 %define rdn_name mobi.phosh.PhoshTour
@@ -8,7 +9,7 @@
 %def_enable check
 
 Name: phosh-tour
-Version: 0.41.0
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Phosh Tour
@@ -72,6 +73,9 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
+- 0.43.0
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
 - 0.41.0
 

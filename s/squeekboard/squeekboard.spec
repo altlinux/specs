@@ -4,7 +4,7 @@
 %define rdn_name sm.puri.Squeekboard
 
 Name: squeekboard
-Version: 1.42.2
+Version: 1.43.0
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -76,6 +76,9 @@ EOF
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.43.0-alt1
+- 1.43.0
+
 * Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.42.2-alt1
 - 1.42.2
 

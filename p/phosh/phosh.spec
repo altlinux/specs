@@ -1,9 +1,10 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.42
+%define ver_major 0.43
 %define beta %nil
 %define namespace Phosh
 %define api_ver %ver_major
+%define gi_api_ver 0
 %define doc_api_ver 0
 %define rdn_name sm.puri.Phosh
 %define dev_uid 1000
@@ -222,6 +223,7 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-ticket-box.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-emergency-info.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-upcoming-events.so
+%_libdir/%name/plugins/prefs/lib%name-plugin-prefs-pomodoro-quick-setting.so
 %_libdir/%name/plugins/caffeine-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-caffeine-quick-setting.so
 %_libdir/%name/plugins/lib%name-plugin-simple-custom-quick-setting.so
@@ -232,9 +234,10 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/lib%name-plugin-dark-mode-quick-setting.so
 %_libdir/%name/plugins/lib%name-plugin-mobile-data-quick-setting.so
 %_libdir/%name/plugins/mobile-data-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-pomodoro-quick-setting.so
+%_libdir/%name/plugins/pomodoro-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-wifi-hotspot-quick-setting.so
 %_libdir/%name/plugins/wifi-hotspot-quick-setting.plugin
-#%{?_enable_introspection:%_typelibdir/%namespace-%api_ver.typelib}
 %doc NEWS README.md
 
 %files data
@@ -243,6 +246,7 @@ xvfb-run %__meson_test
 %_datadir/glib-2.0/schemas/sm.puri.phosh.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.enums.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.plugins.pomodoro.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.upcoming-events.gschema.xml
 %_datadir/glib-2.0/schemas/00_mobi.Phosh.gschema.override
@@ -264,20 +268,24 @@ xvfb-run %__meson_test
 %_includedir/%name/
 %_pkgconfigdir/%name-plugins.pc
 %_pkgconfigdir/%name-settings.pc
-#%{?_enable_introspection:%_girdir/%namespace-%api_ver.gir}
 %{?_enable_gtk_doc:%doc %_datadir/doc/%name-%doc_api_ver}
 
 %{?_enable_shared_libs:
 %files -n lib%name
 %_libdir/lib%name-%api_ver.so.*
+%{?_enable_introspection:%_typelibdir/%namespace-%gi_api_ver.typelib}
 
 %files -n lib%name-devel
 %_includedir/lib%name-%api_ver
 %_libdir/lib%name-%api_ver.so
 %_pkgconfigdir/lib%name-%api_ver.pc
+%{?_enable_introspection:%_girdir/%namespace-%gi_api_ver.gir}
 }
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
+- 0.43.0
+
 * Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
 - 0.42.0
 
