@@ -1,6 +1,6 @@
 Name: trinity
 Version: 1.9
-Release: alt6
+Release: alt7
 Summary: System call fuzz tester
 
 License: GPL-2.0
@@ -11,12 +11,7 @@ Packager: Pavel Vasenkov <pav@altlinux.org>
 
 Source0:  https://github.com/kernelslacker/%name/%name-%version.tar.xz
 # Fix crash due to walking off the end of the net_protocols array
-Patch0: %name-net-protocols.patch
-Patch1: %name-rm-definition.patch
-Patch2: %name-1.9-alt3.patch
-Patch3: %name-1.9-alt4.patch
-Patch4: %name-Fix_kvm.patch
-Patch5: %name-1.9-alt6-Fix_i810drm.patch
+Patch0: %name-1.9-alt7.patch
 
 BuildRequires: libpam-devel libpcap-devel libssl-devel libudev-devel
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -51,9 +46,7 @@ and fed to subsequent syscalls, sometimes with hilarious results.
 
 %prep
 %setup
-%patch3 -p2
-%patch4 -p1
-%patch5 -p2
+%patch0 -p2
 
 %build
 %configure
@@ -72,6 +65,10 @@ install -Dm0755 scripts/* -t %buildroot%_libexecdir/%name
 %_libexecdir/%name/
 
 %changelog
+* Thu Nov 14 2024 Pavel Vasenkov <pav@altlinux.org> 1.9-alt7
+- Update from upstream
+- Fix build memfd and drm
+
 * Fri May 19 2023 Pavel Vasenkov <pav@altlinux.org> 1.9-alt6
 - Fix removing depricated i810 definations
 
