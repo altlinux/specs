@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 8.0.5
-Release: alt3
+Version: 8.0.6
+Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -107,6 +107,9 @@ grep -F '[swapper/0]' crash.log
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Thu Nov 14 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.6-alt1
+- Update to 8.0.6 (2024-11-12).
+
 * Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.5-alt3
 - Update to 8.0.5-33-g32b03ca262 (2024-08-30) which supports Linux 6.12.
 - Remove dependency on kernel-image-un-def.
