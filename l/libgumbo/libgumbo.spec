@@ -6,7 +6,7 @@
 
 Name: libgumbo
 Version: 0.12.2
-Release: alt2
+Release: alt3
 
 Summary: An HTML5 parsing library
 License: Apache-2.0
@@ -99,7 +99,7 @@ doxygen Doxyfile
 %endif
 
 %if_with python
-%pyproject_build
+%python3_build
 %endif
 
 %install
@@ -111,7 +111,7 @@ install -m 644 docs/man/man3/*.3 %buildroot%_man3dir/
 %endif
 
 %if_with python
-%pyproject_install
+%python3_install
 %endif
 
 %check
@@ -138,6 +138,9 @@ make check
 %endif
 
 %changelog
+* Fri Nov 15 2024 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt3
+- Use old python macros again.
+
 * Thu Nov 14 2024 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt2
 - Don't use deprecated python macros.
 - Fixed system library loading (closes: #52042).
