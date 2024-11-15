@@ -2,19 +2,21 @@
 
 Name: python3-module-%oname
 Version: 2.5.1
-Release: alt1
+Release: alt1.1
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python3
-Url: http://routes.groovie.org/
+URL: https://pypi.org/project/Routes
+VCS: https://github.com/bbangert/routes
 
-# git://github.com/bbangert/routes
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
 Requires: python3-module-repoze.lru
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-six
 
 %description
@@ -56,10 +58,10 @@ This package contains pickles for Routes.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd docs
@@ -69,12 +71,16 @@ popd
 
 %files
 %doc *.rst *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/Routes-%version.dev20241115.dist-info
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.1
+- Moved on pyproject macros.
+
 * Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
 - Automatically updated to 2.5.1.
 
