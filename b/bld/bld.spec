@@ -6,7 +6,7 @@
 
 Name: bld
 Version: 0.3.4.1
-Release: alt4
+Release: alt5
 
 Summary: BLD stands for "blacklist daemon" and is intended to serve a blacklist.
 Group: System/Servers
@@ -45,6 +45,9 @@ See %_defaultdocdir/%name-%version/COPYRIGHT for license.
 %patch1 -p2
 
 %build
+# gcc14
+%add_optflags -Wno-error=incompatible-pointer-types
+
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -53,6 +56,7 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 
+%autoreconf
 %configure
 %make_build
 
@@ -98,6 +102,9 @@ rm -f %buildroot%_sbindir/bld-mrtg.pl # it's broken
 %_man8dir/*
 
 %changelog
+* Fri Nov 15 2024 Leontiy Volodin <lvol@altlinux.org> 0.3.4.1-alt5
+- built with gcc14
+
 * Fri Feb 12 2021 Leontiy Volodin <lvol@altlinux.org> 0.3.4.1-alt4
 - built with gcc10
 
