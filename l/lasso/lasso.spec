@@ -10,7 +10,7 @@
 
 Name:    lasso
 Version: 2.8.2
-Release: alt3
+Release: alt4
 
 Summary: Liberty Alliance Single Sign On
 
@@ -147,7 +147,8 @@ sed -i 's|PYTHON_INC=.*|PYTHON_INC=%_includedir/python%_python3_version|' config
 sed -i 's|PYTHON_LIB=.*|PYTHON_LIB=%python3_sitelibdir|' configure.ac
 
 %build
-%add_optflags -fPIC
+# gcc14
+%add_optflags -fPIC -Wno-error=implicit-function-declaration -Wno-error=int-conversion -Wno-error=incompatible-pointer-types
 %autoreconf
 %configure \
 %if_with java
@@ -255,6 +256,9 @@ make check
 %endif
 
 %changelog
+* Fri Nov 15 2024 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt4
+- Fixed build with gcc14.
+
 * Thu Mar 14 2024 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt3
 - Fixed module build for python 3.12.
 
