@@ -4,15 +4,15 @@
 
 Name: python3-module-%oname
 Version: 4.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Fixtures, reusable state for writing clean tests and more
 
 License: Apache-2.0 or BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.org/project/fixtures
+URL: https://pypi.org/project/fixtures
+VCS: https://github.com/testing-cabal/fixtures
 
-# https://github.com/testing-cabal/fixtures
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -52,6 +52,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.1
+- Fixed URL.
+
 * Tue Jun 13 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 
