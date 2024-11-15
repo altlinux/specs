@@ -9,7 +9,7 @@
 %{?_enable_check:%def_with check}
 
 Name: librarian
-Version: %major.5
+Version: %major.6
 Release: alt1
 
 Summary: A documentation meta-data library
@@ -41,7 +41,7 @@ Requires(pre): xml-common, xml-utils, docbook-dtds
 
 BuildRequires(pre): rpm-build-compat rpm-build-licenses
 BuildRequires(pre): rpm-build-gnome >= 0.8
-BuildRequires: gcc-c++ tinyxml-devel xsltproc
+BuildRequires: gcc-c++ pkgconfig(tinyxml2) xsltproc
 %{?_enable_check:BuildRequires: libcheck-devel man-db info man-pages}
 
 %description
@@ -147,6 +147,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
+- 0.8.6 (ported to TinyXML2)
+
 * Mon Apr 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1
 - updated to 0.8.5-2-g1d3d4b0
 - added Vcs tag, updated BR
