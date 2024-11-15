@@ -12,7 +12,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group:     Networking/File transfer
@@ -73,16 +73,18 @@ KTorrent library
  -DKDE_INSTALL_KXMLGUIDIR=%_K6xmlgui \
  #
 
-
 %install
 %K6install
 %K6install_move data ktorrent
 for f in %buildroot/%_K6xmlgui/%rname/*.rc ; do
     ln -sr $f %buildroot/%_K6data/
 done
+mkdir -p %buildroot/%_K6data/kxmlgui5/%rname/
+for f in %buildroot/%_K6xmlgui/%rname/*.rc ; do
+    ln -sr $f %buildroot/%_K6data/kxmlgui5/%rname/
+done
 
 %find_lang --with-kde %rname
-
 
 %files -f %rname.lang
 %doc LICENSES/*
@@ -91,7 +93,8 @@ done
 %_K6xdgapp/org.kde.%rname.desktop
 %_K6plug/ktorrent_plugins/
 %_K6notif/%rname.notifyrc
-%_K6xmlgui/ktorrent/
+#%_K6xmlgui/ktorrent/
+%_K6data/kxmlgui*/%rname/
 %_K6data/*torrent*.rc
 %if_enabled qtwebengine
 %_K6data/%rname/
@@ -103,6 +106,9 @@ done
 %_libdir/libktcore.so.*
 
 %changelog
+* Fri Nov 15 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
+- fix package kxmlgui files
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
