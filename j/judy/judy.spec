@@ -1,21 +1,23 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: judy
 Version: 1.0.5
-Release: alt5
-
+Release: alt6
 Summary: Judy is a C library that implements a dynamic array
 License: LGPLv2.1
 Group: Sciences/Mathematics
-
 Url: https://sourceforge.net/projects/judy/
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch1: judy-1.0.5-parallel-make.patch
 Patch2: Judy-1.0.4-test-shared.patch
 Patch4: 04_fix_undefined_behavior_during_aggressive_loop_optimizations.patch
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
 BuildRequires(pre): gcc-c++ gcc libstdc++-devel
+
 Requires: lib%name = %version-%release
 
 %description
@@ -73,17 +75,25 @@ This package contains development documentation of Judy.
 %patch4 -p1
 # now actually apply patch4
 patch -p1 < debian/patches/04_fix_undefined_bahavior_during_aggressive_loop_optimizations.patch
+
 rm -fR autom4te.cache
 
 %build
 %add_optflags -fno-strict-aliasing -fpermissive
-%autoreconf
-%configure
-#find -name Makefile | xargs -r -- sed -i 's|%_arch-alt-linux-gcc|g++|g'
-%make_build
+#%%autoreconf
+
+%configure --with-pic --disable-static
+for i in $(find ./ -name Makefile); do
+	sed -i 's|%_arch-alt-linux-gcc|g++|g' $i
+done
+
+%__mkdir_p doc/man/man3
+
+%make_build -j1
 
 %install
 %makeinstall_std
+
 install -d %buildroot%_bindir
 install -m644 tool/jhton %buildroot%_bindir
 
@@ -97,12 +107,15 @@ install -m644 tool/jhton %buildroot%_bindir
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_man3dir/*
 
 %files -n lib%name-devel-doc
-%doc doc/*/*
 %doc examples
 
 %changelog
+* Sat Nov 16 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.0.5-alt6
+- Properly package man pages
+
 * Sat Oct 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.5-alt5
 - FTBFS: fixed build with lto
 
@@ -119,4 +132,3 @@ install -m644 tool/jhton %buildroot%_bindir
 
 * Thu May 26 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1
 - Initial build for Sisyphus
-
