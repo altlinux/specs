@@ -1,13 +1,13 @@
 %define oname qjoypad
 Name: qjoypad-qt5
 Version: 4.3.1
-Release: alt1
+Release: alt2
 
 Summary: A joystick-keyboard mapper
 Summary(ru_RU.UTF-8): Программа для превращения событий джойстика в события клавиатуры
 License: %gpl2only
 Group: Games/Other
-Url: https://github.com/panzi/qjoypad
+Url: https://github.com/nathanielstenzel/qjoypad
 
 Source0: %name-%version.tar
 
@@ -58,5 +58,8 @@ X Window System. QJoyPad поддерживает несколько вариа�
 %_datadir/%oname/translations/*.qm
 
 %changelog
+* Fri Nov 15 2024 Artyom Bystrov <arbars@altlinux.org> 4.3.1-alt2
+- Change upstream
+
 * Fri Oct 11 2024 Artyom Bystrov <arbars@altlinux.org> 4.3.1-alt1
 - Initial build for Sisyphus
