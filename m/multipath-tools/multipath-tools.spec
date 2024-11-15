@@ -7,7 +7,7 @@
 
 Name: multipath-tools
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -95,13 +95,13 @@ device-mapper-multipath's libdmmp C API library
 %prep
 %setup -q
 %patch1 -p1
-%ifarch %e2k
-sed -i "s|-Werror -Wall|-Wall|" Makefile.inc
-%endif
 
 %build
 unset RPM_OPT_FLAGS
 %make_build \
+%ifarch %e2k
+    WARN_ONLY=1 \
+%endif
     prefix=%_prefix \
     systemd_prefix=/usr \
     sys_execprefix=/usr \
@@ -210,6 +210,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Fri Nov 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.0-alt2
+- e2k build fix
+
 * Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
 - 0.10.0
 
