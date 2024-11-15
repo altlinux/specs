@@ -1,23 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 %define oname jsonrpcserver
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 5.0.9
-Release: alt1
+Release: alt1.1
 
 Summary: JSON-RPC 2.0 server library
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/jsonrpcserver
+URL: https://pypi.org/project/jsonrpcserver
+VCS: https://github.com/explodinglabs/jsonrpcserver
 
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,22 +34,25 @@ A JSON-RPC 2.0 server library for Python 3.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 rm -fR build
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3
+%pyproject_run_pytest
 
 %files
 %doc *.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 5.0.9-alt1.1
+- Moved on pyproject macros.
+
 * Thu Sep 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.9-alt1
 - Automatically updated to 5.0.9.
 
