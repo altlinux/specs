@@ -10,7 +10,7 @@ BuildRequires: gobject-introspection-devel
 
 Name:           fcitx5-gtk
 Version:        5.1.0
-Release:        alt2_1
+Release:        alt3_1
 Summary:        Gtk im module and glib based dbus client library
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5-gtk
@@ -18,6 +18,7 @@ Source:         https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.
 Source1:        https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.xz.sig
 Source2:        https://pgp.key-server.io/download/0x8E8B898CBF2412F9
 
+Patch1:         fcitx5-gtk-upstream-add-missing-header.patch
 
 BuildRequires:  gnupg2
 BuildRequires:  ctest cmake
@@ -80,6 +81,7 @@ fcitx5 gtk module for gtk4.
 
 %prep
 %setup -q
+%autopatch -p1
 
 
 %build
@@ -117,6 +119,10 @@ sed -i 's,^Version: $,Version: %version,' %buildroot%_pkgconfigdir/Fcitx5GClient
 %{_bindir}/fcitx5-gtk4-immodule-probing
 
 %changelog
+* Fri Nov 15 2024 Ivan A. Melnikov <iv@altlinux.org> 5.1.0-alt3_1
+- NMU: backport upstream patch to add a missing header
+  (fixes FTBFS).
+
 * Mon Jun 24 2024 Ivan A. Melnikov <iv@altlinux.org> 5.1.0-alt2_1
 - add BR: gobject-introspection-devel to fix FTBFS
 
