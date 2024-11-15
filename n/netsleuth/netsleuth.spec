@@ -3,8 +3,7 @@
 
 Name: netsleuth
 Version: 1.0.4
-Release: alt1
-BuildArch: noarch
+Release: alt2
 
 Summary: Calculate IP subnets
 License: GPL-3.0-or-later
@@ -20,15 +19,15 @@ AutoProv: nopython3
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
 BuildRequires: rpm-build-python3
-BuildRequires: rpm-build-gir
 BuildRequires: gtk4-update-icon-cache
 BuildRequires: pkgconfig(gio-2.0)
 %if_enabled check
 BuildRequires: %_bindir/desktop-file-validate
 BuildRequires: %_bindir/appstreamcli
 %endif
+
+BuildArch: noarch
 
 %description
 A simple utility for the calculation and analysis of IP subnet values, designed
@@ -43,7 +42,7 @@ to simplify network configuration tasks.
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --with-gnome %name
 
 %check
 %__meson_test
@@ -56,6 +55,11 @@ to simplify network configuration tasks.
 %_datadir/%name
 
 %changelog
+* Tue Nov 12 2024 Oleg Shchavelev <oleg@altlinux.org> 1.0.4-alt2
+- Rebuild improved spec (ALT #51818)
+- Add macro %%meson_build
+- Update BuildRequires
+
 * Mon Oct 21 2024 Oleg Shchavelev <oleg@altlinux.org> 1.0.4-alt1
 - New version 1.0.4
 
