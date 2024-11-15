@@ -1,16 +1,21 @@
 Name: python3-module-elftools
 Version: 0.31
-Release: alt1
+Release: alt1.1
 
 Summary: Pure-Python library for parsing and analyzing ELF files
 
 License: Unlicense
 Group: Development/Python3
-Url: https://pypi.org/project/pyelftools/
+URL: https://pypi.org/project/pyelftools
+VCS: https://github.com/eliben/pyelftools
 
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Pure-Python library for parsing and analyzing ELF files
@@ -20,18 +25,21 @@ and DWARF debugging information.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc CHANGES LICENSE README*
 %_bindir/readelf.py
 %python3_sitelibdir/elftools
-%python3_sitelibdir/pyelftools-%version-*-info
+%python3_sitelibdir/pyelftools-%version.dist-info
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 0.31-alt1.1
+- Moved on pyproject macros.
+
 * Mon Mar 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.31-alt1
 - Automatically updated to 0.31.
 
