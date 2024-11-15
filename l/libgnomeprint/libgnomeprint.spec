@@ -8,7 +8,7 @@
 
 Name: libgnomeprint
 Version: %ver_major.8
-Release: alt5
+Release: alt6
 
 Summary: Printing library for GNOME
 License: LGPL-2.0+
@@ -112,6 +112,7 @@ This package contains static libraries for the GNOME printing infrastructure.
 %patch2 -p1
 
 %build
+%add_optflags -Wno-error=incompatible-pointer-types
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -166,6 +167,9 @@ This package contains static libraries for the GNOME printing infrastructure.
 %exclude %_libdir/%name/%version/modules/*.la
 
 %changelog
+* Fri Nov 15 2024 Leontiy Volodin <lvol@altlinux.org> 2.18.8-alt6
+- Fixed build with gcc14.
+
 * Wed Sep 01 2021 Leontiy Volodin <lvol@altlinux.org> 2.18.8-alt5
 - Returned for p9 branch.
 
@@ -446,7 +450,7 @@ This package contains static libraries for the GNOME printing infrastructure.
   packages requiring libgnomeprint might not get a runtime environment
 - Add Prereq on ghostscript, since run-gnome-font-install parses output of 'gs -h'
 
-* Mon Jul 16 2001 Trond Eivind Glomsrød <teg@redhat.com>
+* Mon Jul 16 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - Kill output from run-gnome-font-install
 - s/Copyright/License/
 - Add post/postun scripts for the libgnomeprint subpackage
@@ -460,7 +464,7 @@ This package contains static libraries for the GNOME printing infrastructure.
 * Thu Mar 01 2001 Owen Taylor <otaylor@redhat.com>
 - Rebuild for GTK+-1.2.9 include paths
 
-* Fri Feb 23 2001 Trond Eivind Glomsrød <teg@redhat.com>
+* Fri Feb 23 2001 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - langify
 - patch it to compile (didn't include locale.h when needed)
 - use %%{_tmppath}

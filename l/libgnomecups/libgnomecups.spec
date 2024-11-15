@@ -3,7 +3,7 @@
 
 Name: libgnomecups
 Version: %ver_major.3
-Release: alt7
+Release: alt8
 
 Summary: GNOME CUPS Library
 Group: System/Libraries
@@ -72,7 +72,8 @@ linked programs that use %name.
 %patch11 -p1 -b .cupsfix
 
 %build
-%add_optflags -D_IPP_PRIVATE_STRUCTURES
+%add_optflags -D_IPP_PRIVATE_STRUCTURES -Wno-error=incompatible-pointer-types
+
 %configure \
     %{subst_enable static}
 
@@ -99,6 +100,9 @@ linked programs that use %name.
 %endif
 
 %changelog
+* Fri Nov 15 2024 Leontiy Volodin <lvol@altlinux.org> 0.2.3-alt8
+- Fixed build with gcc14.
+
 * Wed Sep 01 2021 Leontiy Volodin <lvol@altlinux.org> 0.2.3-alt7
 - Returned with libgnomeprint for p9 branch
 - Apply patches from PCLinuxOS
