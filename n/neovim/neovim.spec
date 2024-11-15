@@ -1,6 +1,6 @@
 Name: neovim
 Version: 0.10.2
-Release: alt1
+Release: alt3
 
 Summary: heavily refactored vim fork
 
@@ -12,13 +12,11 @@ Url: https://neovim.io/
 Source: %name-%version-%release.tar
 Source1: %name.watch
 Source2: sysinit.vim
-# Neovim doesn't have fallback to Vim grammar for Lua language.
-# So we pack Lua parser as part of Neovim. It is expected
-# that the rest of the parsers will be installed by user using one
-# of the Neovim package managers
-%define ts_lua_ver 0.2.0
-%define vendored_ts_parsers_dir %_libdir/neovim/ts-parsers
-Source3: tree-sitter-lua-%{ts_lua_ver}.tar.gz
+# Neovim doesn't have fallback to Vim grammar for a few
+# languages (e.g. lua, vimdoc). So we require system parsers
+# in this case. It is expected that the rest of the parsers
+# will be installed by user using one of the Neovim package managers.
+%define neovim_ts_parsers_dir %_libdir/neovim/ts-parsers
 
 BuildRequires(pre): rpm-macros-cmake cmake
 
@@ -45,6 +43,7 @@ Requires: lua5.1(lpeg)
 %package runtime
 Summary: heavily refactored vim fork - runtime files
 Group: Editors
+Requires: %name-ts-parsers
 
 %define common_descr \
 Neovim is a refactor, and sometimes redactor, in the tradition of Vim (which\
@@ -62,17 +61,21 @@ of Vim, and more.
 
 This package contains runtime files.
 
+%package ts-parsers
+Summary: TS parsers for Neovim
+Group: Editors
+License: Apache-2.0 and MIT
+Requires: tree-sitter-lua
+Requires: tree-sitter-vimdoc
+
+%description ts-parsers
+Minimum set of TS parsers for Neovim for languages that don't have corresponding
+languagename.vim syntax files.
+
 %prep
 %setup
 
 %build
-# build vendored Lua TS parser first
-mkdir -p .vendor/build
-tar -xf %SOURCE3 -C .vendor/build
-pushd .vendor/build/tree-sitter-lua-%{ts_lua_ver}
-gcc -shared %optflags %optflags_shared -Isrc src/parser.c src/scanner.c -o lua.so
-popd
-
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DNVIM_VERSION_RELEASE=%release \
@@ -89,10 +92,12 @@ install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
 install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 
-# install vendored tree-sitter grammars
-install -d %buildroot%vendored_ts_parsers_dir
-install -pm0644 .vendor/build/tree-sitter-lua-%{ts_lua_ver}/lua.so %buildroot%vendored_ts_parsers_dir
-ln -s %vendored_ts_parsers_dir %buildroot%_datadir/nvim/runtime/parser
+# make symlinks to system tree-sitter grammars
+install -d %buildroot%neovim_ts_parsers_dir
+ln -s %neovim_ts_parsers_dir %buildroot%_datadir/nvim/runtime/parser
+
+ln -s %_libdir/libtree-sitter-lua.so %buildroot/%neovim_ts_parsers_dir/lua.so
+ln -s %_libdir/libtree-sitter-vimdoc.so %buildroot/%neovim_ts_parsers_dir/vimdoc.so
 
 # dependency is handled manually since the lua5.1-module-lpeg doesn't provide "Provides: lpeg.so"
 %filter_from_requires /lpeg.so/d
@@ -114,9 +119,18 @@ ln -s %vendored_ts_parsers_dir %buildroot%_datadir/nvim/runtime/parser
 %dir %_datadir/nvim/runtime
 %_datadir/nvim/runtime/*
 %_datadir/nvim/sysinit.vim
-%vendored_ts_parsers_dir/*
+
+%files ts-parsers
+%dir %neovim_ts_parsers_dir
+%neovim_ts_parsers_dir/*
 
 %changelog
+* Fri Nov 15 2024 Vladimir Didenko <cow@altlinux.org> 0.10.2-alt3
+- use system TS parsers
+
+* Fri Nov 15 2024 Vladimir Didenko <cow@altlinux.org> 0.10.2-alt2
+- vendor vimdoc TS parser
+
 * Mon Oct 07 2024 Vladimir Didenko <cow@altlinux.org> 0.10.2-alt1
 - New version
 
