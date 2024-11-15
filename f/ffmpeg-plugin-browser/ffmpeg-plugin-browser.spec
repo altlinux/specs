@@ -40,6 +40,7 @@
 %def_enable libcdio
 %def_enable libcodec2
 %def_enable libdav1d
+%def_enable librav1e
 %ifarch %e2k
 %def_disable libdc1394
 %else
@@ -112,7 +113,6 @@
 %def_disable libmysofa
 %def_disable libopenh264
 %def_disable libopenmpt
-%def_disable librav1e
 %def_disable libshine
 %def_enable libsrt
 %def_disable libtensorflow
@@ -167,7 +167,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	126
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -207,6 +207,7 @@ BuildRequires:	yasm
 %{?_enable_libcelt:BuildRequires: libcelt-devel}
 %{?_enable_libcodec2:BuildRequires: libcodec2-devel}
 %{?_enable_libdav1d:BuildRequires: libdav1d-devel}
+%{?_enable_librav1e:BuildRequires: librav1e-devel}
 %{?_enable_libdc1394:BuildRequires: libdc1394-devel libraw1394-devel}
 %{?_enable_libdrm:BuildRequires: libdrm-devel}
 %{?_enable_libfreetype:BuildRequires: libfreetype-devel}
@@ -641,7 +642,8 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 	--enable-avformat \
 	--enable-avutil \
 	--enable-libopus \
-	--enable-decoder=aac,flac,h264,libopus,mp3,pcm_alaw,pcm_f32le,pcm_mulaw,pcm_s16be,pcm_s16le,pcm_s24be,pcm_s24le,pcm_s32le,pcm_u8,theora,vorbis,vp8 \
+	--enable-librav1e \
+	--enable-decoder=aac,flac,h264,libopus,mp3,pcm_alaw,pcm_f32le,pcm_mulaw,pcm_s16be,pcm_s16le,pcm_s24be,pcm_s24le,pcm_s32le,pcm_u8,theora,vorbis,vp8,av1 \
 	--enable-demuxer=aac,flac,matroska,mov,mp3,ogg,wav \
 	--enable-parser=aac,flac,h264,mpegaudio,opus,vorbis,vp3,vp8,vp9 \
 	--enable-pic \
@@ -712,6 +714,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Fri Nov 15 2024 Sergey V Turchin <zerg@altlinux.org> 126-alt2
+- enable AV1 decoder
+
 * Wed Oct 30 2024 Sergey V Turchin <zerg@altlinux.org> 126-alt1
 - new version
 
