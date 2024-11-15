@@ -1,15 +1,14 @@
 %define oname pybox2d
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 
 Name:           python3-module-%oname
 Version:        2.3.2
-Release:        alt2
+Release:        alt2.1
 
 Summary:        A 2D rigid body simulation library for Python
 License:        zlib
 Group:          Development/Python3
-URL:            https://github.com/pybox2d/%{oname}
+URL:            https://pypi.org/project/Box2D
+VCS:            https://github.com/pybox2d/pybox2d
 
 Source0:        https://github.com/pybox2d/%{oname}/archive/%{version}.tar.gz#/%{oname}-%{version}.tar.gz
 Source44:       import.info
@@ -52,6 +51,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt2.1
+- Fixed URL.
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.2-alt2
 - python2 disabled
 
