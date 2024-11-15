@@ -1,3 +1,6 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 %define git %nil
 %define _libexecdir %_prefix/libexec
 %def_enable midi
@@ -13,7 +16,7 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.78
+Version: 5.79
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -51,7 +54,7 @@ Libraries for use in Bluetooth applications
 %package -n lib%name-devel
 Summary: Development libraries for Bluetooth applications
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 lib%name-devel contains development libraries and headers for
@@ -60,7 +63,7 @@ use in Bluetooth applications
 %package cups
 Summary: CUPS printer backend for Bluetooth printers
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description cups
 This package contains the CUPS backend
@@ -68,7 +71,7 @@ This package contains the CUPS backend
 %package btpclient
 Summary: Tester protocol for Bluetooth stack client
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description btpclient
 BTP stands for Bluetooth Tester Protocol and aims at automated testing of BT
@@ -76,11 +79,21 @@ stack. BTP is binary protocol and is already implemented in Zephyr Project.
 
 https://github.com/zephyrproject-rtos/zephyr/blob/master/tests/bluetooth/tester/btp_spec.txt
 
+%package mpris-proxy
+Summary: Bluetooth mpris proxy
+Group: Networking/Other
+Requires: %name = %EVR
+
+%description mpris-proxy
+Bluetooth mpris-player implements some features of MPRIS[1] specification.
+
+1. https://specifications.freedesktop.org/mpris-spec/latest/
+
 %package -n zsh-completion-%name
 Summary: Zsh completion for %name
 Group: Shells
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n zsh-completion-%name
 Zsh completion for %name.
@@ -157,12 +170,10 @@ fi
 %_bindir/hex2hcd
 %_bindir/l2ping
 %_bindir/l2test
-%_bindir/mpris-proxy
 %_bindir/rctest
 %_bindir/bneptest
 %_bindir/isotest
 %{?_enable_obex:%_bindir/obexctl}
-
 %if_enabled deprecated
 %_bindir/ciptool
 %_bindir/gatttool
@@ -182,6 +193,7 @@ fi
 %{?_enable_obex:%_datadir/dbus-1/services/org.bluez.obex.service}
 %_localstatedir/bluetooth
 %_man1dir/*.1*
+%_man7dir/hci.7*
 %_man8dir/*.8*
 
 %files -n lib%name
@@ -202,10 +214,18 @@ fi
 %_bindir/btpclient
 %endif
 
+%files mpris-proxy
+%_bindir/mpris-proxy
+%_user_unitdir/mpris-proxy.service
+
 %files -n zsh-completion-%name
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Fri Nov 15 2024 L.A. Kostis <lakostis@altlinux.ru> 5.79-alt1
+- 5.79.
+- pack mpris-proxy as separate package.
+
 * Fri Sep 27 2024 L.A. Kostis <lakostis@altlinux.ru> 5.78-alt1
 - 5.78.
 
