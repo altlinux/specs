@@ -3,10 +3,10 @@
 
 Name: gnome-icon-theme
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: A set of icons for GNOME 2 desktop
-License: LGPL-3.0
+License: LGPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
@@ -33,6 +33,7 @@ The standard set of icons for Gnome.
 
 %prep
 %setup
+echo "Inherits=hicolor" >> index.theme.in.in
 
 %build
 %configure
@@ -77,6 +78,9 @@ fi
 %doc AUTHORS README TODO
 
 %changelog
+* Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1.2
+- added "Inherits=hicolor" to index.theme (ALT #52051)
+
 * Thu Jun 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1.1
 - removed obsolete default.gnome symlink (ALT #46439)
 
