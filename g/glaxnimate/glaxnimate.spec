@@ -2,14 +2,16 @@
 
 Name: glaxnimate
 Version: 0.5.4
-Release: alt1
+Release: alt2
+
 Summary: A simple vector graphics animation program
+License: BSD-2-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and Unicode-TOU
 Group: Graphics
-Packager: Artyom Bystrov <arbars@altlinux.org>
+
 Url: https://glaxnimate.mattbas.org/
 Source: https://gitlab.com/mattbas/glaxnimate.git/%version/glaxnimate-%version.tar.bz2
 Patch: glaxnimate-0.5.1-qt6.patch
-License: BSD-2-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and Unicode-TOU
+Packager: Artyom Bystrov <arbars@altlinux.org>
 
 BuildRequires: libarchive-devel
 BuildRequires: libavcodec-devel
@@ -35,6 +37,12 @@ A simple vector graphics animation program.
 %setup
 %patch0 -p1
 
+%ifarch %e2k
+sed -i 's/ch\.unicode()/(ushort)&/' src/core/io/svg/path_parser.hpp
+sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
+	src/core/io/avd/avd_parser.cpp
+%endif
+
 %build
 %cmake
 %cmake_build
@@ -57,6 +65,10 @@ A simple vector graphics animation program.
 %doc *.md
 
 %changelog
+* Fri Nov 15 2024 Michael Shigorin <mike@altlinux.org> 0.5.4-alt2
+- E2K: fix build with lcc 1.29 (ilyakurdyukov@)
+- Minor spec cleanup
+
 * Fri Aug  2 2024 Artyom Bystrov <arbars@altlinux.org> 0.5.4-alt1
 - Update to new version
 - Added russian translation
