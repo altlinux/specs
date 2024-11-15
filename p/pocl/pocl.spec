@@ -34,7 +34,7 @@
 
 Name: pocl
 Version: 6.0
-Release: alt0.3
+Release: alt0.4
 
 # The entire code is under MIT
 # include/utlist.h which is under BSD-1-Clause (unbundled)
@@ -48,6 +48,7 @@ Patch0: 0001-vulkan-remove-unsupported-clspv-args.patch
 # remote rely on some hidden rdma funcs
 Patch1: pocl-5.0-alt-unhide-rdma.patch
 Patch2: pocl-5.0-remote-fix-uthash.patch
+Patch3: pocl-6.0-pocld-gcc14-fix.patch
 # debian patches for GENERIC cpu target
 Patch100: deb-generic-cpu.patch
 Patch101: deb-blhc.patch
@@ -336,6 +337,9 @@ sphinx-build-3 -N -b html doc/sphinx/source build-doc/html
 %endif
 
 %changelog
+* Fri Nov 15 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.4
+- Fix FTBFS with gcc14.
+
 * Fri Oct 04 2024 L.A. Kostis <lakostis@altlinux.ru> 6.0-alt0.3
 - Disable OpenMP (for now).
 
