@@ -1,5 +1,5 @@
 %define _upver 1.3.4
-%define _datever 20240622
+%define _datever 20240905
 
 Name: mawk
 Version: %_upver.%_datever
@@ -50,6 +50,9 @@ This package contains examples for mawk.
 %doc examples/
 
 %changelog
+* Fri Nov 15 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.3.4.20240905-alt1
+- 1.3.4-20240905
+
 * Sat Jun 29 2024 Aleksey Cheusov <cheusov@altlinux.org> 1.3.4.20240622-alt1
 - 1.3.4-20240622
 
