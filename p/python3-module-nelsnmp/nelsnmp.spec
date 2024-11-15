@@ -1,24 +1,25 @@
-%define _unpackaged_files_terminate_build 1
 %define oname nelsnmp
 
 %def_with check
 
 Name: python3-module-%oname
 Version: 0.2.9
-Release: alt2
+Release: alt2.1
 
 Summary: A wrapper module for pysnmp
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/nelsnmp/
+URL: https://pypi.org/project/nelsnmp
+VCS: https://github.com/networklore/nelsnmp
 
 BuildArch: noarch
 
-# https://github.com/networklore/nelsnmp.git
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pysnmp4
 
 %if_with check
@@ -40,21 +41,24 @@ Requires: python3-module-pysnmp4
 sed -i 's/yaml.load/yaml.safe_load/' tests/test_device_versions.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%pyproject_run_pytest
 
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt2.1
+- Moved on pyproject macros.
+
 * Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt2
 - Fixed FTBFS.
 
