@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.15
-Release: alt5.%_db_date
+Release: alt6.%_db_date
 License: copyleft-next-0.3.0
 Group: Networking/Other
 
@@ -77,6 +77,9 @@ cd %name-%version
 %patch1 -p2 -b .ldconfig-remove
 %patch2 -p2 -b .ldflags
 %patch5 -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' Makefile
+%endif
 cd ../%_db
 %patch3 -p2 -b .fwsign
 %patch4 -p2 -b .pubcert
@@ -128,6 +131,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Fri Nov 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.15-alt6.2023.09.01
+- Fix e2k build.
+
 * Sat Jun 29 2024 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt5.2023.09.01
 - Fix udev rules dir.
 - Usrmerge fixes.
