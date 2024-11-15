@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
 %define _libexecdir %_prefix/libexec
+%define app_id dev.zed.Zed
 
 Name: zed
 Version: 0.160.7
-Release: alt1
+Release: alt2
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and AGPL-3.0 and Apache-2.0
@@ -17,6 +17,7 @@ ExclusiveArch: x86_64 aarch64
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: config.toml
+Source3: update-metadata-releases.py
 Patch0: %name-%version-alt.patch
 
 BuildRequires: /proc
@@ -33,6 +34,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
+BuildRequires: python3
 
 %description
 Code at the speed of thought - Zed is a high-performance, multiplayer code
@@ -42,6 +44,7 @@ editor from the creators of Atom and Tree-sitter.
 %setup -a1
 %autopatch -p1
 install -vpD %SOURCE2 .cargo/config.toml
+install -vp  %SOURCE3 ./update-metadata-releases.py
 
 %build
 export RELEASE_VERSION="%version"
@@ -61,27 +64,35 @@ mold -run cargo build %_smp_mflags --release --offline --package zed --package c
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
 install -pD -m0755 target/release/cli %buildroot%_bindir/zed
-install -pD -m0644 crates/zed/resources/app-icon.png %buildroot%_iconsdir/hicolor/512x512/apps/zed.png
-install -pD -m0644 crates/zed/resources/app-icon@2x.png %buildroot%_iconsdir/hicolor/1024x1024/apps/zed.png
+install -pD -m0644 crates/zed/resources/app-icon.png %buildroot%_iconsdir/hicolor/512x512/apps/%app_id.png
+install -pD -m0644 crates/zed/resources/app-icon@2x.png %buildroot%_iconsdir/hicolor/1024x1024/apps/%app_id.png
 
 export DO_STARTUP_NOTIFY="true"
+export APP_ID="%app_id"
 export APP_CLI="zed"
-export APP_ICON="zed"
+export APP_ICON="%app_id"
 export APP_ARGS="%%U"
 export APP_NAME="Zed"
-mkdir -p %buildroot%_desktopdir
-envsubst < crates/zed/resources/zed.desktop.in > %buildroot%_desktopdir/zed.desktop
-sed -i "/Name=/aStartupWMClass=dev.zed.Zed" %buildroot%_desktopdir/zed.desktop
+export BRANDING_LIGHT="#99c1f1"
+export BRANDING_DARK="#1a5fb4"
+mkdir -p %buildroot%_desktopdir %buildroot%_datadir/metainfo
+envsubst < crates/zed/resources/zed.desktop.in > %buildroot%_desktopdir/%app_id.desktop
+envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadir/metainfo/%app_id.metainfo.xml
+./update-metadata-releases.py %_specdir/%name.spec %buildroot%_datadir/metainfo/%app_id.metainfo.xml
 
 %files
 # some licenses files have copyrights
 %doc LICENSE-AGPL LICENSE-APACHE README.md assets/licenses.md
 %_libexecdir/zed-editor
 %_bindir/zed
-%_desktopdir/zed.desktop
-%_iconsdir/hicolor/*/apps/zed.png
+%_desktopdir/%app_id.desktop
+%_datadir/metainfo/%app_id.metainfo.xml
+%_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Nov 14 2024 Anton Zhukharev <ancieg@altlinux.org> 0.160.7-alt2
+- Shipped /usr/share/metainfo/dev.zed.Zed.metainfo.xml.
+
 * Tue Nov 12 2024 Anton Zhukharev <ancieg@altlinux.org> 0.160.7-alt1
 - Updated to 0.160.7.
 
