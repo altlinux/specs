@@ -4,7 +4,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 8.2
-%define ver_minor 7
+%define ver_minor 8
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -47,6 +47,7 @@ BuildRequires: pve-acme pve-http-server >= 5.1.1 pve-access-control >= 8.1.3
 BuildRequires: proxmox-widget-toolkit >= 4.2.0
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
+BuildRequires: update-kernel
 
 %description
 This package contains the PVE management tools
@@ -96,7 +97,7 @@ rm -f  %buildroot%_unitdir/pvebanner.service
 rm -f  %buildroot%_unitdir/pvenetcommit.service
 rm -f  %buildroot%_bindir/pvebanner
 rm -f  %buildroot%_bindir/pvesubscription
-rm -f  %buildroot%_bindir/pveupgrade
+# rm -f  %buildroot%_bindir/pveupgrade
 rm -f  %buildroot%_datadir/doc/pve-manager/aplinfo.dat
 rm -f  %buildroot%_man1dir/pvesubscription.1*
 rm -f  %buildroot%_man1dir/pveupgrade.1*
@@ -141,6 +142,11 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Thu Nov 14 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.8-alt1
+- 8.2.8
+- adapt web-interface for ALT apt-repm repo
+- add update-kernel to pveupgrade
+
 * Thu Oct 17 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.7-alt1
 - 8.2.7
 

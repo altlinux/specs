@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.3.4
-Release: alt1
+Release: alt2
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust clang-devel perl-devel
 BuildRequires: libssl-devel libacl-devel libuuid-devel
 BuildRequires: cargo-vendor-checksum
+BuildRequires: gcc-c++ libapt-devel
 BuildRequires: /proc
 %set_perl_req_method relaxed
 
@@ -94,11 +95,13 @@ popd
 %install
 pushd pve-rs
 install -pD -m0644 target/release/libpve_rs.so %buildroot%perl_vendor_autolib/libpve_rs.so
-mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,Proxmox/Lib,Proxmox/RS}
+mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/APT,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
 install -m0644 PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
 install -m0644 PVE/RS/ResourceScheduling/*.pm %buildroot%perl_vendor_privlib/PVE/RS/ResourceScheduling/
+install -m0644 PVE/RS/APT/*.pm %buildroot%perl_vendor_privlib/PVE/RS/APT/
 install -m0644 common/pkg/PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
 install -m0644 Proxmox/RS/*.pm %buildroot%perl_vendor_privlib/Proxmox/RS/
+install -m0644 Proxmox/RS/APT/*.pm %buildroot%perl_vendor_privlib/Proxmox/RS/APT
 install -m0644 common/pkg/Proxmox/Lib/Common.pm Proxmox/Lib/PVE.pm %buildroot%perl_vendor_privlib/Proxmox/Lib/
 
 %check
@@ -109,17 +112,24 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 %perl_vendor_autolib/libpve_rs.so
 %dir %perl_vendor_privlib/PVE/RS
 %dir %perl_vendor_privlib/PVE/RS/ResourceScheduling
+%dir %perl_vendor_privlib/PVE/RS/APT
 %perl_vendor_privlib/PVE/RS/*.pm
 %perl_vendor_privlib/PVE/RS/ResourceScheduling/*.pm
+%perl_vendor_privlib/PVE/RS/APT/*.pm
 
 %files -n libproxmox-rs-perl
 %dir %perl_vendor_privlib/Proxmox/RS
+%dir %perl_vendor_privlib/Proxmox/RS/APT
 %perl_vendor_privlib/Proxmox/RS/*
+%perl_vendor_privlib/Proxmox/RS/APT/*
 %dir %perl_vendor_privlib/Proxmox/Lib
 %perl_vendor_privlib/Proxmox/Lib/*
 
 
 %changelog
+* Thu Nov 14 2024 Alexey Shabalin <shaba@altlinux.org> 0.3.4-alt2
+- Build with ALT apt-rpm support.
+
 * Mon Sep 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.3.4-alt1
 - Update:
   + libproxmox-rs-perl 0.3.4

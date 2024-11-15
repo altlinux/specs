@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 3.2.8.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -222,6 +222,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Thu Nov 14 2024 Alexey Shabalin <shaba@altlinux.org> 1:3.2.8.1-alt2
+- Revert disable support apt and repo
+
 * Sat Nov 02 2024 Alexey Shabalin <shaba@altlinux.org> 1:3.2.8.1-alt1
 - 3.2.8-1
 
