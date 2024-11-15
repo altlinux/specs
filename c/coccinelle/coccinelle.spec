@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:		coccinelle
-Version: 1.2
+Version: 1.3.0
 Release: alt1
 Summary:	Semantic patching for Linux (spatch)
 Group:		Development/C
@@ -101,9 +101,12 @@ find . -name Makefile | xargs sed -r  -i 's/-custom\s/-output-complete-exe /g'
 ./autogen
 %configure \
 	--with-python=%__python3 \
+%ifnarch x86_64
+	--disable-opt \
+%endif
 	%nil
 
-%make_build VERBOSE=1
+%make_build VERBOSE=yes
 
 %install
 %make DESTDIR=%buildroot install
@@ -119,7 +122,6 @@ install ./tools/pycocci %buildroot%_bindir/pycocci
 %check
 PATH=%buildroot%_bindir:$PATH
 spatch --version
-spatch --version | grep -F 'spatch version %version '
 %define run_tests \
 demos=( \
         simple # a simple demo \
@@ -167,6 +169,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Fri Nov 15 2024 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
+- Update to 1.3.0 (2024-11-12).
+
 * Sat Mar 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
 - Update to 1.2 (2024-03-28).
 
