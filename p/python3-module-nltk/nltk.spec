@@ -2,11 +2,11 @@
 %define pypi_name nltk
 %define mod_name %pypi_name
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%pypi_name
 Version: 3.9.1
-Release: alt1
+Release: alt2
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
@@ -14,30 +14,22 @@ Url: http://www.nltk.org
 Vcs: https://github.com/nltk/nltk.git
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # apply only for tests on RPM build
 Patch0: skip_nltk_data_tests.patch
-
-# direct dep
-%py3_requires joblib
-
+Patch1: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 # optional deps, not packaged yet
 %filter_from_requires /python3\(\.[[:digit:]]\)\?(twython\(\..*\)\?)/d
-
-BuildRequires(pre): rpm-build-python3
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_enabled check
-BuildRequires: python3(click)
-BuildRequires: python3(joblib)
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_mock)
-BuildRequires: python3(regex)
-BuildRequires: python3(scipy)
-BuildRequires: python3(sklearn)
-BuildRequires: python3(sqlite3)
-BuildRequires: python3(tqdm)
+# not packaged yet
+%add_pyproject_deps_check_filter 'gensim$'
+%add_pyproject_deps_check_filter 'mdit-plain$'
+%add_pyproject_deps_check_filter 'twython$'
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -47,6 +39,12 @@ Natural Language Processing.
 
 %prep
 %setup
+%patch1 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_enabled check
+%pyproject_deps_resync_check_pipreqfile requirements-ci.txt
+%endif
 
 %build
 %pyproject_build
@@ -67,6 +65,9 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 15 2024 Stanislav Levin <slev@altlinux.org> 3.9.1-alt2
+- Backported fix for WordNetLemmatizer (closes: #51985).
+
 * Fri Nov 01 2024 Pavel Skrylev <majioa@altlinux.org> 3.9.1-alt1
 - ^ 3.8.1 -> 3.9.1
 - ! CVE-2024-39705 (closes ALT #51738)
