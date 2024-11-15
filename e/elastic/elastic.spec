@@ -3,7 +3,7 @@
 
 Name: elastic
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: Design spring animations
 License: GPL-3.0-or-later
@@ -14,10 +14,10 @@ Vcs: https://gitlab.gnome.org/World/elastic
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
-BuildRequires: vala-tools
-BuildRequires: cmake
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: meson >= 0.59.0
+BuildRequires: vala
+BuildRequires: pkgconfig(gtk4) >= 4.11.2
+BuildRequires: pkgconfig(libadwaita-1) >= 1.4.alpha
 BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(template-glib-1.0)
 %if_enabled check
@@ -56,9 +56,13 @@ Features:
 %_desktopdir/%APP_ID.desktop
 %_datadir/dbus-1/services/%APP_ID.service
 %_datadir/glib-2.0/schemas/%APP_ID.gschema.xml
-%_datadir/icons/hicolor/*/apps/%{APP_ID}*.svg
+%_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Tue Nov 12 2024 Oleg Shchavelev <oleg@altlinux.org> 0.1.6-alt2
+- Rebuild improved spec (ALT #51841)
+- Update BuildRequires
+
 * Tue Oct 22 2024 Oleg Shchavelev <oleg@altlinux.org> 0.1.6-alt1
 - Initial build
