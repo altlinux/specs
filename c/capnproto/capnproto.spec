@@ -5,7 +5,7 @@
 
 Name: capnproto
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
 License: MIT
@@ -57,16 +57,6 @@ that use Cap'n Proto.
 %setup
 %ifarch %e2k
 %patch2000 -p1
-# because of "multiple definition of typeinfo" errors at linking
-%define typeinfo_fix() \
-  sed -i "1i #define TransformPromiseNode TransformPromiseNode_$(echo %1 | tr "-" "_")" c++/src/capnp/%1.c++
-%typeinfo_fix ez-rpc
-%typeinfo_fix any-test
-%typeinfo_fix capability-test
-%typeinfo_fix membrane-test
-%typeinfo_fix rpc-test
-%typeinfo_fix rpc-twoparty-test
-%typeinfo_fix ez-rpc-test
 %endif
 
 %build
@@ -112,6 +102,9 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Sat Nov 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.2-alt2
+- e2k patch update
+
 * Sat Jan 20 2024 Vitaly Chikunov <vt@altlinux.org> 1.0.2-alt1
 - Update to v1.0.2 (2024-01-12).
 
