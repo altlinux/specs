@@ -3,7 +3,7 @@
 
 Name: mbrola
 Version: 3.3
-Release: alt3
+Release: alt4
 
 Summary: MBROLA is a speech synthesizer based on the concatenation of diphones
 License: AGPL-3.0
@@ -35,6 +35,10 @@ or freespeech.
 %prep
 %setup
 sed -i 's/SYNTH_VERSION.*/SYNTH_VERSION \"%version\"/' Misc/common.h
+%ifarch %e2k
+# e2k: fix optlevel (lcc won't accept insane values)
+sed -i 's,-O6,-O%_optlevel,g' Makefile
+%endif
 
 %build
 export CFLAGS="%optflags"
@@ -53,6 +57,9 @@ fdupes %buildroot%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Sat Nov 16 2024 Ilya Mashkin <oddity@altlinux.ru> 3.3-alt4
+- fix build on Elbrus (Returned the fixline back in spec)
+
 * Tue Oct 29 2024 Artem Semenov <savoptik@altlinux.org> 3.3-alt3
 - Remove req to txt2pho
 - Deleted say for txt2pho
