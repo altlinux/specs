@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.2.5
+Version: 2.2.6
 Release: alt1
 
 Summary: Python interface to MySQL
@@ -99,6 +99,9 @@ py.test-3
 %endif
 
 %changelog
+* Sat Nov 16 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.6-alt1
+- Automatically updated to 2.2.6.
+
 * Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.5-alt1
 - Automatically updated to 2.2.5.
 
