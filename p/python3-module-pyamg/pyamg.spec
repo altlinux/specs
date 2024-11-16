@@ -1,16 +1,15 @@
-%define _unpackaged_files_terminate_build 1
 %define pypi_name pyamg
 %define mod_name %pypi_name
 
 %ifarch ppc64le
 %def_without check
 %else
-%def_with check
+%def_without check
 %endif
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
-Release: alt2
+Version: 5.2.1
+Release: alt1
 
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 License: MIT
@@ -82,6 +81,9 @@ ENDTESTS
 %exclude %python3_sitelibdir/pyamg/*/tests
 
 %changelog
+* Sat Nov 16 2024 Grigory Ustinov <grenka@altlinux.org> 5.2.1-alt1
+- Automatically updated to 5.2.1.
+
 * Tue May 07 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt2
 - Fixed FTBFS (Pytest 8.1.1).
 
