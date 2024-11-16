@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.74
+Version: 1.75
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -232,6 +232,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Sat Nov 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.75-alt1
+- Consistently print 'Error:' on failures and do not append usage.
+
 * Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.74-alt1
 - spec: Restore 'kernel' version dependency for p10.
 
