@@ -4,10 +4,10 @@
 %set_verify_elf_method strict
 
 Name: libcpucycles
-Version: 20230115
+Version: 20240318
 Release: alt1
 Summary: Microlibrary for counting CPU cycles
-License: CC0
+License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
 Group: Development/C
 Url: https://cpucycles.cr.yp.to/
 
@@ -60,7 +60,6 @@ Group: Development/C
 %setup
 
 %build
-cd libcpucycles
 %define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS)
 echo "gcc %optflags -fPIC -fwrapv -fvisibility=hidden" > compilers/default
@@ -69,15 +68,13 @@ sed -i 's/\bgcc\b/set -x \&\& &/' $(grep -r -w gcc -I -l build)
 %make_build
 
 %install
-cd libcpucycles
 %makeinstall_std
 rm %buildroot/usr/lib/libcpucycles.a
 # Fix incorrect installs.
 [ -d %buildroot%_libdir ] || mv %buildroot/usr/lib %buildroot%_libdir
 mkdir -p %buildroot%_mandir
 mv %buildroot/usr/man/man3 %buildroot%_man3dir
-
-%define _customdocdir %_docdir/%name
+mv %buildroot/usr/man/man1 %buildroot%_man1dir
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir PATH=%buildroot%_bindir
@@ -87,13 +84,17 @@ cpucycles-info
 %_libdir/libcpucycles.so.*
 
 %files devel
-%doc libcpucycles/doc/*.md
+%doc doc/*.md
 %_bindir/cpucycles-info
 %_includedir/cpucycles.h
 %_libdir/libcpucycles.so
+%_man1dir/cpucycles-info.1*
 %_man3dir/cpucycles.3*
 
 %changelog
+* Sat Nov 16 2024 Vitaly Chikunov <vt@altlinux.org> 20240318-alt1
+- Update to 20240318 (2024-03-18).
+
 * Mon Sep 25 2023 Vitaly Chikunov <vt@altlinux.org> 20230115-alt1
 - Update to 20230115 (2023-01-16).
 
