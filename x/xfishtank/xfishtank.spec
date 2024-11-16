@@ -1,6 +1,6 @@
 Name: xfishtank
-Version: 3.2.1pre1
-Release: alt2
+Version: 3.2.2
+Release: alt1
 
 Summary:  An aquarium for your screen, with fish swimming around on your desktop.
 License: GPLv3+
@@ -38,7 +38,7 @@ Xfishtank это современная версия винтажного при
 %makeinstall_std
 
 # create 48x48 pixmap and put icons according to the Policy, see https://www.altlinux.org/Icon_Paths_Policy
-convert -resize 48x48 src/%name.png %name.png
+magick convert -resize 48x48 src/%name.png %name.png
 install -m 755 -d %buildroot/%_liconsdir/
 install -m 644 %name.png %buildroot/%_liconsdir/
 # fix Category
@@ -47,12 +47,15 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 
 %files
 %doc README
-%_gamesbindir/*
+%_bindir/*
 %_man1dir/*
 %_liconsdir/%name.*
 %_desktopdir/*
  
 %changelog
+* Sat Nov 16 2024 Alexei Mezin <alexvm@altlinux.org> 3.2.2-alt1
+- New version
+
 * Fri Oct 27 2023 Michael Shigorin <mike@altlinux.org> 3.2.1pre1-alt2
 - Re-added explicit BR: desktop-file-utils
 
