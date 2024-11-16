@@ -1,7 +1,7 @@
 %define crda_lib %_libexecdir/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2023.09.01
+%define _db_date 2024.10.07
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
@@ -9,8 +9,8 @@ Version: 4.15
 Release: alt6.%_db_date
 License: copyleft-next-0.3.0
 Group: Networking/Other
-
-Url: http://www.linuxwireless.org/en/developers/Regulatory/CRDA
+# wireless-regdb git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git
+Url: https://wireless.docs.kernel.org/en/latest/en/developers/regulatory/crda.html
 
 Requires: firmware-%_db >= %EVR
 
@@ -28,6 +28,8 @@ Patch3: %_db-fw-dependency.patch
 Patch4: %_db-pubcert-conf.patch
 # https://gitweb.gentoo.org/repo/gentoo.git/plain/net-wireless/crda/files/crda-4.14-python-3.patch
 Patch5: crda-4.14-python-3.patch
+# https://wireless.docs.kernel.org/en/latest/en/developers/regulatory/crda.html#build-requirements
+Patch6: crda-4.15-update-pubkeys.patch
 
 BuildRequires: libgcrypt-devel openssl chrpath
 BuildRequires: rpm-build-python3
@@ -77,6 +79,7 @@ cd %name-%version
 %patch1 -p2 -b .ldconfig-remove
 %patch2 -p2 -b .ldflags
 %patch5 -p1
+%patch6 -p2
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' Makefile
 %endif
@@ -131,6 +134,11 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Sun Nov 17 2024 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt6.2024.10.07
+- crda: update pubkeys.
+- regdb: update to 20241007.
+- update Url.
+
 * Fri Nov 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.15-alt6.2023.09.01
 - Fix e2k build.
 
