@@ -4,16 +4,16 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.9.6
+Version: 1.10.1
 Release: alt1
 
 Summary: Fiona reads and writes spatial data files
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Fiona/
+URL: https://pypi.org/project/fiona
+VCS: https://github.com/Toblerity/Fiona
 
-# https://github.com/Toblerity/Fiona.git
 Source: %name-%version.tar
 
 Patch: use_sphinx-apidoc-3.patch
@@ -22,13 +22,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: libgdal-devel gcc-c++
 BuildRequires: python3-module-Cython
-BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-attrs
 BuildRequires: python3-module-click
 BuildRequires: python3-module-cligj
 BuildRequires: python3-module-munch
-BuildRequires: python3-module-sphinx-click
-BuildRequires: python3-module-sphinx_rtd_theme
 
 Conflicts: fio
 Conflicts: python-module-fiona < %EVR
@@ -46,61 +43,16 @@ data using multi-layered GIS formats and zipped virtual file systems and
 integrates readily with other Python GIS packages such as pyproj, Rtree,
 and Shapely.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Fiona is OGR's neat, nimble, no-nonsense API for Python programmers.
-
-Fiona is designed to be simple and dependable. It focuses on reading and
-writing data in standard Python IO style and relies upon familiar Python
-types and protocols such as files, dictionaries, mappings, and iterators
-instead of classes specific to OGR. Fiona can read and write real-world
-data using multi-layered GIS formats and zipped virtual file systems and
-integrates readily with other Python GIS packages such as pyproj, Rtree,
-and Shapely.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Fiona is OGR's neat, nimble, no-nonsense API for Python programmers.
-
-Fiona is designed to be simple and dependable. It focuses on reading and
-writing data in standard Python IO style and relies upon familiar Python
-types and protocols such as files, dictionaries, mappings, and iterators
-instead of classes specific to OGR. Fiona can read and write real-world
-data using multi-layered GIS formats and zipped virtual file systems and
-integrates readily with other Python GIS packages such as pyproj, Rtree,
-and Shapely.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
 %patch -p1
-
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
 %python3_build
 
-python3 setup.py build_ext -i
-export PYTHONPATH=$PWD
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
 %install
 %python3_install
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
 
@@ -109,16 +61,15 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %_bindir/fio
 %python3_sitelibdir/%oname
 %python3_sitelibdir/fiona-%version-py%_python3_version.egg-info
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html docs/*.txt
 
 %changelog
+* Fri Nov 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.10.1-alt1
+- Automatically updated to 1.10.1.
+- Build without docs.
+
+* Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
+- Automatically updated to 1.10.0.
+
 * Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.6-alt1
 - Automatically updated to 1.9.6.
 
