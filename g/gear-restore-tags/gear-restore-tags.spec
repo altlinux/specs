@@ -1,6 +1,6 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 Name: gear-restore-tags
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 Summary: Manage restored tags in the gear package repository
 License: %gpl2plus
@@ -25,6 +25,9 @@ sed -i 's/@VERSION@/%version/g' %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sat Nov 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.0.4-alt1
+- fixed egrep is obsolescent; use grep -E instead
+
 * Sat Dec 17 2022 Anton Farygin <rider@altlinux.ru> 0.0.3-alt1
 - removed rpm-macros-branch build dependency (not needed anymore)
 - fixed year in source code copyright notice
