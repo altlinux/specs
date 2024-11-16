@@ -1,12 +1,15 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: uw-imap
-Version: 2007f
-Release: alt1
+Version: 2010
+Release: alt1.1
 
 Summary: Server daemons for IMAP and POP network mail protocols
 License: Apache-2.0
 Group: System/Servers
-Url: http://www.washington.edu/imap/
+# as old URL is not valid anymore
+# and another one dead too
+# https://github.com/jonabbey/panda-imap/issues/5
+Url: https://github.com/nkhorman/panda-imap
 
 ###########################################
 # Relations with other POP3/IMAP server pkgs (like courier-imap)
@@ -54,7 +57,7 @@ Obsoletes: imap < 1:2001a-alt1
 %if %WithSSL
 
 # for openssl-config:
-BuildPreReq: libssl-devel
+BuildRequires(pre): libssl-devel
 %define _ssldir %(openssl-config --openssldir)
 %define _pemdir %_ssldir/certs
 
@@ -69,7 +72,8 @@ Requires: pam >= 0.72-ipl11mdk
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: ftp://ftp.cac.washington.edu/mail/imap-%version.tar.bz2
+# https://github.com/jonabbey/panda-imap/archive/refs/heads/master
+Source: imap-%version.tar.bz2
 Source1: imap.pamd
 Source2: uw-imap.xinetd
 Source3: uw-pop3.xinetd
@@ -84,8 +88,8 @@ Source9: uw-imap-2001a-README.IMAPS.ALT
 Patch1: uw-imap-2007f-alt1-ALT-custom.patch
 Patch2: uw-imap-2001a-debian-portability.patch
 Patch5: imap-2007e-overflow.patch
-Patch10: imap-2007e-authmd5.patch
-Patch13: imap-2007e-poll.patch
+Patch10: imap-2010-authmd5.patch
+Patch13: imap-2010-poll.patch
 # The maildir support (turned on by %WithMaildir)
 # is supplied by three source pieces:
 # the tarball (Source8) with the module and README,
@@ -93,16 +97,13 @@ Patch13: imap-2007e-poll.patch
 # process, and a patch special for Pine client (not the imap server).
 # The last piece is only included in pine.src.rpm
 Patch20:uw-imap-2001a-maildir-embed.patch
+Patch21: 1006_openssl1.1_autoverify.patch
 # for glibc 2.2.2
 Patch22: imap-maildir-glibc-time.patch
-Patch21: 1006_openssl1.1_autoverify.patch
+Patch23: uw-imap-2010-gcc14-fix.patch
 
 # Automatically added by buildreq on Wed Dec 05 2001
 BuildRequires: libpam-devel
-
-%if %WithSSL
-BuildRequires: libssl-devel
-%endif
 
 %package -n lib%name
 Summary: Shared library for IMAP applications
@@ -161,14 +162,15 @@ tar jxvf %SOURCE8
 %patch1 -p2 -b .ALT
 %patch2 -p1 -b .deb-port
 %patch5 -p1 -b .overflow
-%patch10 -p1 -b .authmd5
-%patch13 -p1 -b .poll
+%patch10 -p2 -b .authmd5
+%patch13 -p2 -b .poll
 
 %if %WithMaildir
 %patch20 -p1 -b .maildir
 %patch22 -p1 -b .glibc-time-maildir
 %endif
 %patch21 -p1
+%patch23 -p2
 
 # RH says:
 # It looks like this is required by the license (see COPYRIGHT), so here goes....
@@ -296,6 +298,14 @@ fi
 %endif
 
 %changelog
+* Sat Nov 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2010-alt1.1
+- Update Url (again).
+- Fix FTBFS with gcc14.
+- mtest: fix obsoleted gets (upstream issue #5).
+
+* Wed Feb 15 2023 L.A. Kostis <lakostis@altlinux.ru> 2010-alt1
+- Rebased to panda-imap sources (as latest available).
+
 * Tue Feb 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2007f-alt1
 - Updated sources to 2007f.
 - Rediffed patches.
