@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.40.3
+Version: 1.40.4
 Release: alt1
 
 Summary: A personal full text search package
@@ -162,7 +162,7 @@ export QMAKE=qmake-qt6
 # meson-based build is race-prone here (cf. #348496 try 1/2)
 %meson_build || %meson_build
 
-gzip --best --keep --force ChangeLog
+#gzip --best --keep --force ChangeLog
 for s in 128 96 72 64 36 32 24 22 16; do
     convert -depth 8 -resize ${s}x$s desktop/%name{.xcf,-$s.png}
 done
@@ -203,7 +203,7 @@ chrpath -d %buildroot%_bindir/recollindex
 %_libexecdir/systemd/system/recoll*.service
 %_man1dir/*
 %_man5dir/*
-%doc ChangeLog.* README
+%doc  README
 
 %files devel
 %_libdir/lib%{name}.so
@@ -223,6 +223,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Sat Nov 16 2024 Ilya Mashkin <oddity@altlinux.ru> 1.40.4-alt1
+- 1.40.4
+
 * Tue Oct 15 2024 Ilya Mashkin <oddity@altlinux.ru> 1.40.3-alt1
 - 1.40.3
 
