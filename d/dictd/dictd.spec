@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 Name: dictd
-Version: 1.13.2
+Version: 1.13.3
 Release: alt1
 Epoch: 1
 
@@ -238,6 +238,12 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Sat Nov 16 2024 Aleksey Cheusov <cheusov@altlinux.ru> 1:1.13.3-alt1
+- 1.13.3
+
+  dictd: fix buffer overflow in first/last search strategies.
+  Affected versions: 1.10.10 (May 2007).
+
 * Fri Nov 15 2024 Aleksey Cheusov <cheusov@altlinux.ru> 1:1.13.2-alt1
 - 1.13.2
 
