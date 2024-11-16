@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.5.6
+Version: 0.6.0
 Release: alt1
 
 Summary: Linux AMDGPU Control Application
@@ -64,6 +64,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sat Nov 16 2024 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Wed Sep 25 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.6-alt1
 - New version 0.5.6.
 
