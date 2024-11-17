@@ -2,7 +2,7 @@ Name: kernel-image-6.11
 Release: alt1
 %define kernel_src_version	6.11
 %define kernel_base_version	6.11
-%define kernel_sublevel	.8
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -576,6 +576,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Nov 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.9-alt1
+- v6.11.9 (2024-11-17).
+
 * Thu Nov 14 2024 Kernel Bot <kernelbot@altlinux.org> 6.11.8-alt1
 - v6.11.8 (2024-11-14).
 - config: Enable CONFIG_NVME_HWMON=y.
