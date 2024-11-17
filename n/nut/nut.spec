@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.2
-Release: alt2
+Release: alt3
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -268,6 +268,10 @@ This package contains python bindings for NUT.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+# error: HandlerThread is not a template
+sed -i 's/~HandlerThread<H>/~HandlerThread/' include/nutipc.hpp
+%endif
 
 # fix cgi path in html links for current %%cgidir
 sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
@@ -591,6 +595,9 @@ fi
 %python3_sitelibdir/test_nutclient.py
 
 %changelog
+* Sun Nov 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.8.2-alt3
+- Fixed build for Elbrus.
+
 * Thu Sep 12 2024 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt2
 - Replaced /usr/lib/systemd with the %_systemddir macro.
 
