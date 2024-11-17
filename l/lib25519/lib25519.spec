@@ -5,11 +5,12 @@
 
 Name: lib25519
 Version: 20241004
-Release: alt1
+Release: alt1.1
 Summary: A microlibrary for the X25519 encryption system and the Ed25519 signature system
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
 Group: System/Libraries
 Url: https://lib25519.cr.yp.to/
+Packager: Vitaly Chikunov <vt@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -41,7 +42,9 @@ lib25519 has a very simple stateless API based on the SUPERCOP API.
 Summary: CI tests for %name
 Group: Development/Other
 Requires(pre): %name-devel = %EVR
+%ifarch %valgrind_arches
 Requires(pre): valgrind
+%endif
 
 %description checkinstall
 %summary.
@@ -103,5 +106,9 @@ time lib25519-test
 %files checkinstall
 
 %changelog
+* Sun Nov 17 2024 Ivan A. Melnikov <iv@altlinux.org> 20241004-alt1.1
+- NMU: avoid requiring valgrind on architectures it does not support
+  (fixes FTBFS on loongarch64).
+
 * Sat Nov 16 2024 Vitaly Chikunov <vt@altlinux.org> 20241004-alt1
 - First import lib25519-20241004 (2024-10-04).
