@@ -1,5 +1,5 @@
 Name: haveged
-Version: 1.9.18
+Version: 1.9.19
 Release: alt1
 License: GPLv3
 Group: System/Kernel and hardware
@@ -69,6 +69,9 @@ install -Dpm 0644 contrib/Fedora/90-haveged.rules %buildroot%_udevrulesdir/90-%n
 %_libdir/*.so
 
 %changelog
+* Sun Nov 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.9.19-alt1
+- 1.9.19.
+
 * Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 1.9.18-alt1
 - 1.9.18.
 - Drop init.d service (removed by upstream)
