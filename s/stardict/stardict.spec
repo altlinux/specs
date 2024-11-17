@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.6
-Release: alt1
+Release: alt1.1
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
@@ -25,6 +25,7 @@ Patch1: stardict-3.0.3-alt-dsl2dict.patch
 Patch2: stardict-3.0.3-alt-linkage.patch
 Patch3: stardict-3.0.4-alt-desktop.patch
 Patch4: stardict-3.0.5-alt-tabfile.patch
+Patch5: stardict-3.0.6-debian-fix-gcc14-ftbfs.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -103,6 +104,7 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
@@ -181,6 +183,9 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Sun Nov 17 2024 Ivan A. Melnikov <iv@altlinux.org> 3.0.6-alt1.1
+- NMU: fix FTBFS with gcc14 via a patch from Debian.
+
 * Thu Nov 16 2017 Fr. Br. George <george@altlinux.ru> 3.0.6-alt1
 - 3.0.5 -> 3.0.6
 
