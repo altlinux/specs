@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ntp
-Version: 4.2.8p15
-Release: alt4
+Version: 4.2.8p18
+Release: alt1
 %define srcname %name-%version%{?patchlevel:%patchlevel}
 
 Summary: The Network Time Protocol (NTP)
@@ -27,8 +27,7 @@ Source23: chrooted-ntpd.lib
 
 Patch1: %name-4.2.6p5-alt-compile-dirty-hack-NANO.patch
 Patch2: %name-4.2.8p14-MD5-to-SHA1-default.patch
-Patch3: NTP_4_2_8P15+4@0x5fe43ce5.patch
-Patch4: ntp-4.2.8p15-hotfix-glibc-2.34.patch
+Patch3: %name-4.2.8p18-bug3926-gcc14.patch
 
 Requires: ntp-doc = %version-%release
 Requires: ntp-utils = %version-%release
@@ -159,7 +158,6 @@ sed -i 's,-Wnormalized=id,,' sntp/libevent/configure*
 #patch1 -p1
 %patch2 -p2
 %patch3 -p1
-%patch4 -p1
 
 # Fix progname initialization when argc==0.
 fgrep -rl --include='*.c' 'progname = argv[0];' . |
@@ -177,6 +175,9 @@ install -p -m644 $RPM_SOURCE_DIR/{ntp.1,{ntpd,ntpdate,ntpsweep}.8} .
 find -type f -print0 |
 	xargs -r0 grep -FZl '@ROOT@' -- |
 	xargs -r0 sed -i 's,@ROOT@,%ROOT,g' --
+
+# https://lists.altlinux.org/pipermail/devel/2024-November/218948.html
+sed -i "/test-realpath/d" tests/libntp/Makefile.am
 
 %build
 %add_optflags -D_GNU_SOURCE
@@ -357,6 +358,12 @@ fi
 %ghost %ROOT/%_lib/libresolv.so.2
 
 %changelog
+* Sun Nov 17 2024 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p18-alt1
+- 4.2.8p18
+- added build patch for gcc 14: https://bugs.ntp.org/show_bug.cgi?id=3926
+- disabled test-realpath:
+  https://lists.altlinux.org/pipermail/devel/2024-November/218948.html
+
 * Sat Oct 30 2021 Sergey Y. Afonin <asy@altlinux.org> 4.2.8p15-alt4
 - fixed FTBFS (used patch from the T2 SDE Project for build with glibc 2.34)
 
