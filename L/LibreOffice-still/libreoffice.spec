@@ -36,7 +36,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -85,13 +85,14 @@ Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
 Patch402: alt-002-tmpdir.patch
-Patch403: alt-004-shortint.patch
-Patch404: alt-006-unversioned-desktop-files.patch
-Patch405: alt-008-mkdir-for-external-project.patch
-Patch406: alt-009-fix-appdata.patch
-Patch410: alt-005-svg-icons-1.patch
-Patch411: alt-006-svg-icons-2.patch
-Patch412: alt-007-svg-icons-3.patch
+Patch403: alt-003-shortint.patch
+Patch404: alt-004-unversioned-desktop-files.patch
+Patch405: alt-005-mkdir-for-external-project.patch
+Patch406: alt-006-fix-appdata.patch
+Patch407: alt-007-vnd.ms-word-mimetype.patch
+Patch410: alt-010-svg-icons-1.patch
+Patch411: alt-011-svg-icons-2.patch
+Patch412: alt-012-svg-icons-3.patch
 Patch413: alt-013-icu74.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
@@ -386,6 +387,7 @@ echo Direct build
 %patch404 -p1
 %patch405 -p1
 %patch406 -p1
+%patch407 -p1
 #patch410 -p1
 #patch411 -p1
 #patch412 -p1
@@ -448,6 +450,9 @@ subst '1i#!/usr/bin/python3' `find odk/examples/ -name \*.py`
 # Guess Kyrgyz localization as complete
 subst '/ks /a ky \\' solenv/inc/langlist.mk
 
+# Remove wrong mime-type application/vnd.ms-word
+rm -f sysui/desktop/mimetypes/ms-word-document2.desktop
+
 %build
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
@@ -491,7 +496,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         %{?_without_orcus:--without-system-orcus } \
         %{?_without_zxing:--without-system-zxing } \
         %{subst_enable mergelibs} \
-        --without-system-libcmis \
+        --with-system-libcmis \
         --disable-firebird-sdbc \
         --disable-coinmp \
         --disable-dbus \
@@ -772,6 +777,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Nov 16 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.6.2-alt2
+- Remove wrong mime-type application/vnd.ms-word to fix open .doc from network shares.
+- Use system libcmis.
+
 * Thu Oct 03 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.6.2-alt1
 - New version.
 - Security fixes (for 24.8.0/24.2.5):
