@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.0.6
-Release: alt3
+Release: alt4
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -119,6 +119,14 @@ Daemonised BitTorrent client
 %prep
 %setup -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
 %autopatch -p1
+%ifarch %e2k
+# error: incomplete type is not allowed
+sed -i 's/default_specs\[\] = {/default_specs[5] = {/' \
+	third-party/fmt/include/fmt/chrono.h
+# undefined reference to ~fixed_static_array()
+sed -i '/~fixed_static_array() = default/d' \
+	third-party/wide-integer/math/wide_integer/uintwide_t.h
+%endif
 
 %build
 %cmake \
@@ -240,6 +248,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Sun Nov 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.6-alt4
+- fixed build for Elbrus
+
 * Thu Nov 07 2024 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt3
 - fixed build with miniupnp 2.2.8
 
