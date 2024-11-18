@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-
 %define oname waitress
+
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Waitress WSGI server
@@ -16,7 +16,6 @@ Vcs: https://github.com/Pylons/waitress
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -39,7 +38,6 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -48,7 +46,7 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v -o=addopts="-W always"
 
 %files
 %doc README.rst CHANGES.txt COPYRIGHT.txt LICENSE.txt
@@ -57,6 +55,9 @@ visit https://docs.pylonsproject.org/projects/waitress/en/latest/
 %python3_sitelibdir/waitress-%version.dist-info
 
 %changelog
+* Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
 * Tue Oct 29 2024 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 
