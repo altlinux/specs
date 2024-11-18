@@ -1,7 +1,7 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: forgejo-runner
-Version: 3.5.1
+Version: 5.0.0
 Release: alt1
 
 Summary: Forgejo Runner
@@ -17,7 +17,7 @@ Patch: %name-%version.patch
 ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.21
+BuildRequires: rpm-build-golang golang >= 1.23.3
 
 #Requires: docker-engine
 
@@ -76,6 +76,9 @@ useradd -r -g _%name -s /dev/null -c "%name services" -M -d %_sharedstatedir/%na
 %_unitdir/%name.service
 
 %changelog
+* Mon Nov 18 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 3.5.1-alt1
 - 3.5.1
 
