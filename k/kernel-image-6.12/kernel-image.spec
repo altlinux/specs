@@ -1,11 +1,11 @@
 Name: kernel-image-6.12
-Release: alt0.rc7
-%define kernel_src_version	6.11
+Release: alt1
+%define kernel_src_version	6.12
 %define kernel_base_version	6.12
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	new
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -577,6 +577,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt1
+- Update to v6.12 (2024-11-17).
+
 * Sun Nov 10 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc7
 - Update to v6.12-rc7 (2024-11-10).
 
