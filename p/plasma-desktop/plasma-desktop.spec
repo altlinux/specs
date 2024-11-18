@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -209,7 +209,6 @@ done
 %files
 %_K6dbus/system.d/*.conf
 %_K6bin/*
-%exclude %_K6bin/*emojier*
 %_K6libexecdir/ki*
 %_K6exec/kauth/*
 %_K6plug/kf6/kded/*.so
@@ -252,6 +251,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt2
+- fix package emojier (closes: 52077)
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 
