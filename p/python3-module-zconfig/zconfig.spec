@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 4.1
-Release: alt1
+Release: alt2
 
 Summary: Python configuration module from Zope
 License: ZPL-2.1
@@ -26,6 +26,7 @@ BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-manuel
 BuildRequires: python3-module-manuel-tests
 BuildRequires: python3-module-docutils
+BuildRequires: python3-module-six
 %endif
 
 Conflicts: python-module-%oname < 3.2.0-alt2
@@ -93,6 +94,9 @@ sed -i 's/unittest.TestCase.assertRaisesRegexp/unittest.TestCase.assertRaisesReg
 
 
 %changelog
+* Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 4.1-alt2
+- Fixed FTBFS.
+
 * Fri May 03 2024 Anton Vyatkin <toni@altlinux.org> 4.1-alt1
 - New version 4.1.
 
