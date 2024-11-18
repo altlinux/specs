@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.2.14
+Version: 1.2.15
 Release: alt1
 Summary: Decorators to deprecate old python classes, functions or methods
 License: MIT
@@ -49,6 +49,9 @@ methods.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Nov 18 2024 Stanislav Levin <slev@altlinux.org> 1.2.15-alt1
+- 1.2.14 -> 1.2.15.
+
 * Wed Jun 14 2023 Stanislav Levin <slev@altlinux.org> 1.2.14-alt1
 - 1.2.13 -> 1.2.14.
 
