@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: netsleuth
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 
 Summary: Calculate IP subnets
 License: GPL-3.0-or-later
@@ -55,6 +55,9 @@ to simplify network configuration tasks.
 %_datadir/%name
 
 %changelog
+* Fri Nov 15 2024 Oleg Shchavelev <oleg@altlinux.org> 1.0.5-alt1
+- New version 1.0.5
+
 * Tue Nov 12 2024 Oleg Shchavelev <oleg@altlinux.org> 1.0.4-alt2
 - Rebuild improved spec (ALT #51818)
 - Add macro %%meson_build
