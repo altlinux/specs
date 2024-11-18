@@ -19,7 +19,7 @@
 
 Name: %nam%mlt_major
 Version: 7.28.0
-Release: alt1
+Release: alt3
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -99,6 +99,13 @@ This module allows to work with %Name using python..
 
 %prep
 %setup -n %nam-%version -a10
+%ifarch %e2k
+# see glaxnimate 0.5.4-alt2 package
+sed -i 's/ch\.unicode()/(ushort)&/' \
+	glaxnimate/src/core/io/svg/path_parser.hpp
+sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
+	glaxnimate/src/core/io/avd/avd_parser.cpp
+%endif
 rm -rf src/modules/glaxnimate/glaxnimate
 mv glaxnimate src/modules/glaxnimate/
 %patch102 -p1
@@ -107,16 +114,8 @@ mv glaxnimate src/modules/glaxnimate/
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
 
-%ifarch %e2k
-sed -i 's,-fno-tree-pre,,' src/modules/xine/CMakeLists.txt
-%endif
-
 %build
 %mIF_ver_lt %_qt5_version 5.9
-%add_optflags -std=c++11
-%endif
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
 export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
@@ -126,10 +125,8 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
     -DMOD_OPENCV=%{?_enable_opencv:ON}%{!?_enable_opencv:OFF} \
     -DMOD_QT=ON \
     -DMOD_QT6=ON \
-%ifnarch %e2k
     -DMOD_GLAXNIMATE=ON \
     -DMOD_GLAXNIMATE_QT6=ON \
-%endif
     #
 
 %install
@@ -166,6 +163,14 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 7.28.0-alt3
+- cleanup
+
+* Fri Nov 15 2024 Michael Shigorin <mike@altlinux.org> 7.28.0-alt2
+- glaxnimate:
+  + enable Russian translation (arbars@, see 0.5.4-alt1 package)
+  + build on e2k too (lcc 1.29.04)
+
 * Tue Oct 29 2024 Sergey V Turchin <zerg@altlinux.org> 7.28.0-alt1
 - new version
 
