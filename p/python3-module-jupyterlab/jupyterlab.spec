@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -102,6 +102,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/jupyterlab.json \
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 4.3.1-alt1
+- new version 4.3.1
+
 * Thu Oct 31 2024 Anton Vyatkin <toni@altlinux.org> 4.3.0-alt1
 - new version 4.3.0
 
