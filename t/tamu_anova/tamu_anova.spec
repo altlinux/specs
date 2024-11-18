@@ -1,7 +1,7 @@
 %define sover 0
 Name: tamu_anova
 Version: 0.2
-Release: alt3.qa1
+Release: alt3.qa2
 Summary: ANOVA Extensions to the GNU Scientific Library
 License: GPL v2
 Group: Sciences/Other
@@ -66,7 +66,7 @@ sed -e 's@instdir = /usr/lib/@instdir = %_libdir@' -i Makefile.am
 pushd %buildroot%_libdir
 LIB=libtamuanova
 gcc -shared -Wl,--whole-archive $LIB.a -Wl,--no-whole-archive \
-	-o $LIB.so.%sover -Wl,-soname,$LIB.so.%sover -lgsl -Wl,-z,defs
+	-o $LIB.so.%sover -Wl,-soname,$LIB.so.%sover -lgsl -lm -Wl,-z,defs
 ln -s $LIB.so.%sover $LIB.so
 rm -f $LIB.a
 popd
@@ -81,6 +81,9 @@ popd
 %_infodir/*
 
 %changelog
+* Mon Nov 18 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.2-alt3.qa2
+- Fixed build for Elbrus.
+
 * Mon May 13 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2-alt3.qa1
 - Fixed build on architectures with %%_libdir != /usr/lib .
 
