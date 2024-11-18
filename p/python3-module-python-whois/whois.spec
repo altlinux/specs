@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Whois querying and parsing of domain registration information
@@ -63,6 +63,9 @@ and not test_simple_unicode_domain"
 
 
 %changelog
+* Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 0.9.5-alt1
+- new version 0.9.5
+
 * Wed May 22 2024 Anton Vyatkin <toni@altlinux.org> 0.9.4-alt1
 - new version 0.9.4
 - rename package to use PyPI name
