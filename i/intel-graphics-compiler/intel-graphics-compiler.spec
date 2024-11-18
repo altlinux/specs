@@ -2,7 +2,7 @@
 %define llvmversion 14
 
 Name: intel-graphics-compiler
-Version: 1.0.17384.11
+Version: 1.0.17791.9
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -133,5 +133,8 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 1.0.17791.9-alt1
+- Updated to upstream version 1.0.17791.9.
+
 * Mon Sep 09 2024 Andrey Kovalev <ded@altlinux.org> 1.0.17384.11-alt1
 - Initial build for Sisyphus.

@@ -1,9 +1,10 @@
 %define soversion 1
 %define llvmversion 14
+%define oclocversion 24.39.1
 
 Name: intel-compute-runtime
-Version: 24.35.30872.18
-Release: alt2
+Version: 24.39.31294.12
+Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -11,7 +12,8 @@ URL: https://github.com/intel/compute-runtime
 
 Source: %name-%version.tar
 
-Patch1: intel-compute-runtime-2.35.30872.18-alt-build.patch
+Patch1: intel-compute-runtime-24.35.30872.18-alt-build.patch
+Patch2: intel-compute-runtime-24.39.31294.12-arch-disable-werror.patch
 
 BuildRequires: cmake
 BuildRequires: gcc
@@ -95,6 +97,7 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 mkdir -p build
@@ -113,7 +116,7 @@ pushd build
 %makeinstall_std
 popd
 
-mv %buildroot%_bindir/ocloc-24.35.1 %buildroot%_bindir/ocloc
+mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 
 %files -n intel-opencl
 %_libdir/intel-opencl/libigdrcl.so
@@ -134,6 +137,10 @@ mv %buildroot%_bindir/ocloc-24.35.1 %buildroot%_bindir/ocloc
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 24.39.31294.12-alt1
+- Updated to upstream version 24.39.31294.12.
+- Added patch for fix error in Davinci Resolve (closes: #51702).
+
 * Mon Sep 16 2024 Andrey Kovalev <ded@altlinux.org> 24.35.30872.18-alt2
 - Added provides intel-opencl-icd for intel-opencl.
 
