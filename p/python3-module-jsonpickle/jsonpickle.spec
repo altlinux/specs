@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.2
+Version: 4.0.0
 Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
@@ -53,6 +53,9 @@ not test_multindex_dataframe_roundtrip" tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 4.0.0-alt1
+- New version 4.0.0.
+
 * Wed Nov 06 2024 Anton Vyatkin <toni@altlinux.org> 3.4.2-alt1
 - New version 3.4.2.
 
