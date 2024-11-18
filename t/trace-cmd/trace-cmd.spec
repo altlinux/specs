@@ -8,7 +8,7 @@
 %def_without python
 
 Name:     trace-cmd
-Version: 3.3
+Version: 3.3.1
 Release: alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -156,6 +156,9 @@ EOF
 %endif
 
 %changelog
+* Mon Nov 18 2024 Vitaly Chikunov <vt@altlinux.org> 3.3.1-alt1
+- Update to trace-cmd-v3.3.1 (2024-10-11).
+
 * Fri Aug 02 2024 Vitaly Chikunov <vt@altlinux.org> 3.3-alt1
 - Update to trace-cmd-v3.3 (2024-07-26).
 
