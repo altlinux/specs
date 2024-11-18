@@ -25,7 +25,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -47,7 +47,7 @@ Source11: libcall-ui-%callui_ver.tar
 
 Patch1: %name-0.28.0-alt-tcb-check.patch
 # https://bugzilla.altlinux.org/46930
-Patch2: %name-0.29.0-alt-service.patch
+Patch2: %name-0.43.0-alt-service.patch
 # https://bugzilla.altlinux.org/46978
 Patch3: %name-0.29.0-alt-service-dm.patch
 
@@ -283,6 +283,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Mon Nov 18 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1.1
+- updated service.patch after 0.43.0 change
+
 * Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
 - 0.43.0
 
