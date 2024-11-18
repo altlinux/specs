@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.11.1
-Release: alt2
+Release: alt3
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -37,7 +37,10 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(x264)
 BuildRequires: nasm
-# TODO: BuildRequires: nvidia-cuda-toolkit
+BuildRequires: nvidia-cuda-devel
+
+# fixed build ffmpeg whith CUDA
+BuildRequires: gcc11-c++
 
 Requires: typelib(GLib)
 Requires: typelib(GObject)
@@ -101,7 +104,9 @@ export ALVR_OPENVR_DRIVER_ROOT_DIR=%_libdir/%name
 export ALVR_VRCOMPOSITOR_WRAPPER_DIR=%_libdir/%name
 # export FIREWALL_SCRIPT_DIR="$ALVR_ROOT_DIR/share/%name/"
 
-cargo run --release --offline --frozen -p alvr_xtask -- prepare-deps --platform linux --no-nvidia
+export PATH=/usr/lib64/nvcc/bin${PATH:+:${PATH}}
+
+cargo run --release --offline --frozen -p alvr_xtask -- prepare-deps --platform linux
 
 cargo build \
     --frozen \
@@ -147,6 +152,9 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Mon Nov 18 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt3
+- build with CUDA for support NVIDIA NVENC
+
 * Wed Oct 09 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt2
 - added requires: alvr-companion openvr
 - dropped script for downloading client apk file
