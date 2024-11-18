@@ -1,7 +1,7 @@
 %define oname fuse
 
 Name: python3-module-%oname
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: This is a Python interface to FUSE
@@ -42,6 +42,9 @@ create and mount their own filesystem implementations.
 %python3_sitelibdir/fuseparts
 
 %changelog
+* Mon Nov 18 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt1
+- Automatically updated to 1.0.9.
+
 * Fri Aug 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
 - Automatically updated to 1.0.8.
 
