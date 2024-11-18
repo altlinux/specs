@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Command-line interfaces Python library
@@ -56,6 +56,9 @@ Cleo allows you to create beautiful and testable command-line interfaces.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Mon Nov 18 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
+- 2.2.1
+
 * Sun Nov 12 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
