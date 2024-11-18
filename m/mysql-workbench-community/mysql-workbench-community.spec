@@ -1,8 +1,8 @@
-%define gdal_version 35
+%define gdal_version 36
 
 Name: mysql-workbench-community
-Version: 8.0.33
-Release: alt2.3
+Version: 8.0.40
+Release: alt1
 
 Summary: A MySQL visual database modeling tool
 
@@ -13,7 +13,7 @@ Url: http://wb.mysql.com
 # Source-url: https://cdn.mysql.com/Downloads/MySQLGUITools/mysql-workbench-community-%version-src.tar.gz
 Source0: %name-%version.tar
 # TODO: build with external antlr4-runtime (>= 4.7.1)
-Source1: antlr-4.11.1-complete.jar
+Source1: antlr-4.13.2-complete.jar
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
 # ExclusiveArch: %ix86 x86_64
@@ -21,9 +21,8 @@ Source1: antlr-4.11.1-complete.jar
 Patch0: mysql-workbench-community-8.0.32-alt-suppress-unsupported.patch
 Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
 Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
-Patch3: %name-8.0.33-alt-fix-missing-include.patch
-Patch4: %name-8.0.33-alt-fix-usage-of-libxml2.patch
-Patch5: %name-8.0.33-alt-arm-fix.patch
+Patch3: %name-8.0.33-alt-arm-fix.patch
+Patch4: %name-8.0.40-alt-fix-gcc14-build.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -47,6 +46,7 @@ Obsoletes: mysql-query-browser < %version-%release
 %add_python_req_skip _mforms grt mforms
 %add_python_req_skip wb workbench cairo_utils wb_common
 %endif
+BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): rpm-build-python3
 
 %add_python3_req_skip workbench.change_tracker workbench.client_utils workbench.db_driver
@@ -170,13 +170,11 @@ Look to %_defaultdocdir/%name-%version/License.txt
 
 %prep
 %setup
-
 %patch0 -p1
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch4 -p2
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -203,14 +201,16 @@ sed -i "/token.h/d" library/grt/src/python_context.cpp
 # 8.0.32: wb_sql_editor_help.cpp: fatal error: include <pcrecpp.h>
 %add_optflags -I/usr/include/pcre
 
-%cmake \
+%cmake -GNinja \
     -DWITH_ANTLR_JAR=%SOURCE1 \
 #
 
-%cmake_build
+#%%cmake_build
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%cmake_install
+#%%cmake_install
+%ninja_install -C "%_cmake__builddir"
 
 mkdir -p %buildroot%_niconsdir
 cp %_builddir/%name-%version/images/icons/MySQLWorkbench-32.png %buildroot%_niconsdir/mysql-workbench.png
@@ -252,6 +252,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Nov 12 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.40-alt1
+- New version.
+
 * Sun Jun 02 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.33-alt2.3
 - NMU: requires libgdal with soversion made according Shared Libs Policy.
 

@@ -15,7 +15,7 @@
 
 Name:    qgis
 Version: 3.40.0
-Release: alt2
+Release: alt3
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -43,7 +43,7 @@ Patch2000: qgis-e2k.patch
 
 Conflicts: qgis
 
-ExcludeArch: armh ppc64le
+ExcludeArch: armh ppc64le %ix86
 
 # TODO: Pyspatialite is included if you use the bundled libspatialite.
 # Some plug-ins need it.
@@ -401,6 +401,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.0-alt3
+- Remove support of i586 architecture.
+
 * Fri Nov 01 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.0-alt2
 - Do not use developer map from external untrusted resource.
 

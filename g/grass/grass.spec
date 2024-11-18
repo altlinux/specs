@@ -3,7 +3,7 @@
 
 Name:    grass
 Version: 8.4.0
-Release: alt1
+Release: alt2
 
 %def_with mysql
 %def_with postgres
@@ -24,7 +24,7 @@ Group:   Sciences/Geosciences
 URL:     https://grass.osgeo.org
 #VCS: https://github.com/OSGeo/grass
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
+ExcludeArch: %ix86 armh
 
 Source: %name-%version.tar
 
@@ -322,6 +322,9 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 8.4.0-alt2
+- Rebuild with gdal-3.10.0 and remove support for i586 and armh.
+
 * Sun Jul 28 2024 Andrey Cherepanov <cas@altlinux.org> 8.4.0-alt1
 - New version.
 - Used Shared Libs Policy.

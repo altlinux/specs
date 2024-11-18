@@ -6,11 +6,11 @@
 %def_without libtiff
 %def_without geotiff
 
-%define sover 35
+%define sover 36
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 3.9.3
+Version: 3.10.0
 Release: alt1
 Group: Sciences/Geosciences
 
@@ -241,6 +241,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 10 2024 Andrey Cherepanov <cas@altlinux.org> 3.10.0-alt1
+- New version.
+
 * Thu Oct 17 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.3-alt1
 - New version.
 

@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.6.1
-Release: alt3.1
+Version: 1.6.2
+Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -357,10 +357,10 @@ Requires: qcad
 %ifarch x86_64 aarch64
 Requires: freecad
 %endif
-%ifnarch %e2k armh ppc64le
-Requires: qgis3
-Requires: qgis3-grass
-Requires: qgis3-python
+%ifnarch %e2k %ix86 armh ppc64le
+Requires: qgis
+Requires: qgis-grass
+Requires: qgis-python
 %endif
 Requires: projectlibre
 Requires: openmpi
@@ -555,6 +555,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Nov 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
+- Do not use qgis for i586.
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt3.1
 - NMU: update KDE requries
 
