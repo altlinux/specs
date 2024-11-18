@@ -1,5 +1,5 @@
 Name: strace
-Version: 6.11
+Version: 6.12
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -46,7 +46,6 @@ date +%%Y-%%m-%%d > doc/.strace.1.in.date
 date +%%Y-%%m-%%d > doc/.strace-log-merge.1.in.date
 
 %build
-%add_optflags -isystem /usr/include/linux-default/include
 echo 'BEGIN OF BUILD ENVIRONMENT INFORMATION'
 uname -a |head -1
 libc="$(ldd /bin/sh |sed -n 's|^[^/]*\(/[^ ]*/libc\.so[^ ]*\).*|\1|p' |head -1)"
@@ -90,6 +89,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Mon Nov 18 2024 Dmitry V. Levin <ldv@altlinux.org> 6.12-alt1
+- v6.11 -> v6.12.
+
 * Sun Sep 15 2024 Dmitry V. Levin <ldv@altlinux.org> 6.11-alt1
 - v6.10 -> v6.11.
 
