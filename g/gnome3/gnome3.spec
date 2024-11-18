@@ -1,8 +1,8 @@
-%define ver_major 45
+%define ver_major 47
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -28,23 +28,25 @@ BuildRequires(pre): rpm-build-licenses
 %define pm_ver 43
 %define yelp_ver 42.2
 %define dconf_editor_ver 43
+%define tweaks_ver 46.1
 %define contacts_ver %ver_major
 %define bijiben_ver 41
-%define cheese_ver 41.0
-%define roller_ver 43
+%define cheese_ver 44.1
+%define roller_ver 44.3
 %define eog_ver %ver_major
-%define network_manager_ver 1.26.0
-%define terminal_ver 3.46
+%define network_manager_ver 1.36.0
+%define terminal_ver 3.54.1
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
-%define evince_ver %ver_major
+%define evince_ver 46.3.1
+%define papers_ver %ver_major
 %define applets_ver %ver_major
 %define gedit_ver 46.1
 %define gedit_plugins_ver 46.0
 %define gdm_ver %ver_major
-%define gdu_ver %ver_major
-%define evo_ver 3.46
-%define emp_ver 3.12.11
+%define gdu_ver 46.1
+%define evo_ver 3.54.1
+%define chatty_ver 0.8.5
 %define polari_ver 43
 %define brasero_ver 3.12.3
 %define accerciser_ver 3.40
@@ -87,7 +89,7 @@ Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 Requires: gnome-browser-connector
 # user settings utility
-Requires: gnome-tweaks >= 40
+Requires: gnome-tweaks >= %tweaks_ver
 Requires: dconf-editor >= %dconf_editor_ver
 
 # default font
@@ -185,7 +187,7 @@ Requires: gdm-gnome >= %gdm_ver
 ## Default mailer
 Requires: evolution >= %evo_ver
 ## Default messenger
-Requires: empathy >= %emp_ver
+Requires: chatty >= %chatty_ver
 ## IRC client
 #Requires: polari >= %polari_ver
 # Und contacts manager
@@ -193,6 +195,7 @@ Requires: gnome-contacts >= %contacts_ver
 
 ## Default document reader (currently pdf, ps, tiff, dvi)
 Requires: evince >= %evince_ver
+#Requires: papers >= %papers_ver
 ## and E-Book Reader
 Requires: foliate
 ## and videos from a webcam
@@ -473,6 +476,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Mon Nov 18 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
+- default: empathy -> chatty
+
 * Mon Dec 25 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0-alt1.1
 - gvfs-{backends,fuse} moved from default to minimal.
 
