@@ -5,12 +5,10 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.72
+Version: 5.73
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
-
-Packager: Alexey Gladkov <legion@altlinux.org>
 
 Source0: ftp://stunnel.mirt.net/stunnel/stunnel-%version.tar.gz
 Source1: stunnel.init
@@ -24,7 +22,7 @@ Url: http://www.stunnel.org/
 
 Requires(pre): cert-sh-functions
 
-BuildRequires: libssl-devel >= 0.9.7d
+BuildRequires(pre): libssl-devel >= 0.9.7d
 BuildRequires: openssl >= 0.9.7d
 
 # pod2man
@@ -154,7 +152,7 @@ make check
 %dir %_sysconfdir/stunnel
 %config(noreplace) %verify(not md5 mtime size) %_sysconfdir/stunnel/stunnel.conf
 %attr(755,root,root) %_bindir/*
-%_mandir/man8/*
+%_man8dir/*
 
 %files standalone
 %systemd_unitdir/stunnel.service
@@ -169,6 +167,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Nov 18 2024 L.A. Kostis <lakostis@altlinux.ru> 5.73-alt1
+- New version (5.73).
+- spec: remove Packager.
+
 * Fri Feb 23 2024 L.A. Kostis <lakostis@altlinux.ru> 5.72-alt1
 - New version (5.72).
 
