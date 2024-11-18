@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.40.2
+Version: 0.43.0
 Release: alt1
 Summary: A formatter for Python files
 License: Apache-2.0
@@ -92,6 +92,9 @@ popd
 %vim_plugin_dir/*
 
 %changelog
+* Mon Nov 18 2024 Anton Zhukharev <ancieg@altlinux.org> 0.43.0-alt1
+- Updated to 0.43.0.
+
 * Mon Sep 25 2023 Anton Zhukharev <ancieg@altlinux.org> 0.40.2-alt1
 - Updated to 0.40.2.
 
