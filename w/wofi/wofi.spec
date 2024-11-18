@@ -1,6 +1,6 @@
 Name: wofi
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: launcher/menu program for wlroots based wayland compositors such as sway
 License: GPLv3
@@ -30,6 +30,8 @@ Summary: Development package for %name
 
 %prep
 %setup
+# uses pow() but -lm is missing
+sed -i "s/deps = \[/&cc.find_library('m'), /" meson.build
 
 %build
 %meson
@@ -51,6 +53,9 @@ Summary: Development package for %name
 %_man3dir/*
 
 %changelog
+* Mon Nov 18 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4.1-alt2
+- e2k build fix
+
 * Wed May 29 2024 Roman Alifanov <ximper@altlinux.org> 1.4.1-alt1
 - new version (1.4.1) with rpmgs script
 - move to tarball
