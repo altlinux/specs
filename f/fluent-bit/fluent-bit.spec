@@ -1,8 +1,17 @@
 %global _unpackaged_files_terminate_build 1
 %def_disable check
+# Disabled by upstream.
+# EBPF support.
+%def_without ebpf
+# Apache Avro encoding support.
+%def_without avro
+# Apache Arrow support.
+%def_without arrow
+# Jemalloc support (memory allocator).
+%def_with jemalloc
 
 Name: fluent-bit
-Version: 3.1.10
+Version: 3.2.1
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -21,11 +30,20 @@ Patch2: 0003-jemalloc-add-fPIC-to-CFLAGS.patch
 ExcludeArch: armh ppc64le
 
 BuildRequires(pre): rpm-macros-cmake
-# Automatically added by buildreq on Fri Mar 22 2024
-# optimized out: CUnit cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libstdc++-devel pkg-config python3 python3-base sh5 xz
-BuildRequires: gcc-c++ CUnit-devel cmake flex libcares-devel libedit-devel libev-devel libevent-devel libjansson-devel libjemalloc-devel libnghttp3-devel libngtcp2-devel libpq5-devel libsasl2-devel libssl-devel libsystemd-devel libxml2-devel libyaml-devel libzstd-devel zlib-devel
+# Automatically added by buildreq on Mon Nov 18 2024
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libssl-devel pkg-config python3-base sh5
+BuildRequires: cmake flex libbacktrace-devel libcares-devel libedit-devel libluajit-devel libnghttp2-devel libpq5-devel librdkafka-devel libsystemd-devel libyaml-devel
 # libudev-devel BR is needed for systemd input plugin
 BuildRequires: libudev-devel
+%if_with jemalloc
+BuildRequires: libjemalloc-devel
+%endif
+%if_with arrow
+BuildRequires: libarrow-glib-devel
+%endif
+%if_with ebpf
+BuildRequires: clang-devel libbpf-devel liblzma-devel
+%endif
 %if_enabled check
 BuildRequires: ctest
 %endif
@@ -37,7 +55,8 @@ Fluent Bit is a fast Log Processor and Forwarder.
 Its part of the Fluentd Ecosystem and a CNCF sub-project.
 Fluent Bit allows to collect log events or metrics from different sources,
 process them and deliver them to different backends such as
-Fluentd, Elasticsearch, NATS, InfluxDB or any custom HTTP end-point within others.
+Fluentd, Elasticsearch, NATS, InfluxDB or any custom HTTP end-point within
+others.
 In addition, Fluent Bit comes with full Stream Processing capabilities:
 data manipulation and analytics using SQL queries.
 
@@ -46,18 +65,15 @@ data manipulation and analytics using SQL queries.
 %patch1 -p1
 %patch2 -p1
 sed -i 's|c-ares|cares|' \
-    src/CMakeLists.txt
-sed -i '/FLB_PATH_LIB_CARES/d' \
-    CMakeLists.txt \
-    cmake/headers.cmake \
-    cmake/libraries.cmake
-sed -i '/include(ExternalProject)/i include(CheckIncludeFiles)' \
-    CMakeLists.txt
+    cmake/cares.cmake
 
 %build
+# gcc14
+%add_optflags -Wno-error=incompatible-pointer-types
 %cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DPACKAGE_VERSION=%version \
+    -DENABLE_LIB_ONLY=Off \
     -DFLB_EXAMPLES=Off \
     -DFLB_OUT_SLACK=Off \
     -DFLB_IN_SYSTEMD=On \
@@ -66,16 +82,30 @@ sed -i '/include(ExternalProject)/i include(CheckIncludeFiles)' \
     -DFLB_OUT_PGSQL=On \
     -DFLB_OUT_KAFKA=On \
     -DFLB_IN_KAFKA=On \
+    -DFLB_IN_BLOB=On \
     -DFLB_SHARED_LIB=Off \
+    -DFLB_PREFER_SYSTEM_LIBS=On \
     -DFLB_TESTS_RUNTIME=On \
     -DFLB_TESTS_INTERNAL=Off \
     -DFLB_RELEASE=On \
     -DFLB_DEBUG=Off \
     -DFLB_TLS=On \
-    -DFLB_LUAJIT=Off \
-    -DFLB_FILTER_LUA=Off \
+    -DFLB_LUAJIT=On \
+    -DFLB_FILTER_LUA=On \
     -DFLB_HTTP_SERVER=On \
     -DFLB_CONFIG_YAML=On \
+%if_with jemalloc
+    -DFLB_JEMALLOC=On \
+%endif
+%if_with arrow
+    -DFLB_ARROW=On \
+%endif
+%if_with avro
+    -DFLB_AVRO_ENCODER=On \
+%endif
+%if_with ebpf
+    -DFLB_IN_EBPF=On \
+%endif
 #
 
 %cmake_build
@@ -104,6 +134,14 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Nov 18 2024 Leontiy Volodin <lvol@altlinux.org> 3.2.1-alt1
+- New version 3.2.1.
+- Prefered system libraries instead built-in.
+- Cleanup BRs.
+- Enabled support:
+  + luajit and filter_lua;
+  + jemalloc (memory allocator).
+
 * Wed Nov 06 2024 Leontiy Volodin <lvol@altlinux.org> 3.1.10-alt1
 - New version 3.1.10.
 - Added vcs tag.
