@@ -34,7 +34,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -589,6 +589,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Nov 15 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1:6.2.3-alt2
+- fix loading into empty session (closes: 51942)
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.3-alt1
 - new version
 
