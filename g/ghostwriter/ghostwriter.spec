@@ -1,7 +1,7 @@
 %define rname ghostwriter
 
 Name: ghostwriter
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init
 
@@ -60,6 +60,9 @@ or your novel.
 
 
 %changelog
+* Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 

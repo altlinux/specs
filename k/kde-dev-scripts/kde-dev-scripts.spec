@@ -6,8 +6,8 @@
 %filter_from_requires /^cvs$/d
 
 Name: %rname
-Version: 24.08.2
-Release: alt2
+Version: 24.08.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -70,6 +70,9 @@ done
 
 
 %changelog
+* Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Fri Nov 01 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
 - add conflict with colorsvn
 

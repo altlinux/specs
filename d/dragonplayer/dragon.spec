@@ -1,8 +1,8 @@
 %define rname dragon
 
 Name: %{rname}player
-Version: 24.08.2
-Release: alt2
+Version: 24.08.3
+Release: alt1
 %K6init
 
 Group: Video
@@ -52,6 +52,9 @@ BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Fri Nov 01 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
 - add conflict with dragon
 

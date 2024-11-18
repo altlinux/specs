@@ -1,7 +1,7 @@
 %define rname tokodon
 
 Name: %rname
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init
 
@@ -16,7 +16,6 @@ Provides:  kde5-tokodon = %EVR
 Obsoletes: kde5-tokodon < %EVR
 
 Source: %rname-%version.tar
-Patch: alt-fix-logout.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules
@@ -35,7 +34,6 @@ A modern Mastodon client.
 
 %prep
 %setup -n %rname-%version
-%patch -p1
 
 %build
 %K6build
@@ -56,6 +54,9 @@ A modern Mastodon client.
 %_datadir/metainfo/*tokodon*.xml
 
 %changelog
+* Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 
