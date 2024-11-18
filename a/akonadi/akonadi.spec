@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: %rname
-Version: 24.08.2
+Version: 24.08.3
 Release: alt1
 %K6init
 
@@ -228,7 +228,6 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 %dir %_datadir/akonadi/agents/
 %dir %_datadir/akonadi/contact/
 %dir %_datadir/akonadi/plugins/
-#%config(noreplace) %_K6xdgconf/akonadi.*categories
 %_datadir/qlogging-categories6/*.*categories
 %_K6cfg/resourcebase.kcfg
 %_K6xdgmime/akonadi6-mime.xml
@@ -261,6 +260,9 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 
 
 %changelog
+* Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
+- new version
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
