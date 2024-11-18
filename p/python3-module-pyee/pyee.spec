@@ -3,30 +3,27 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 12.0.0
+Version: 12.1.1
 Release: alt1
 
 Summary: A port of node.js's EventEmitter to python
 
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyee
+Url: https://pypi.org/project/pyee
+Vcs: https://github.com/jfhbrook/pyee
 
-# https://github.com/jesusabdullah/pyee.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-
 %if_with check
 BuildRequires: python3-module-typing_extensions
-BuildRequires: python3-module-flake8
 BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-mock
 BuildRequires: python3-module-twisted-core
 BuildRequires: python3-module-pytest-trio
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides %oname
@@ -47,7 +44,7 @@ EventEmitter that comes with node.js.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc LICENSE *.md
@@ -55,6 +52,9 @@ EventEmitter that comes with node.js.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 12.1.1-alt1
+- New version 12.1.1.
+
 * Sat Aug 31 2024 Anton Vyatkin <toni@altlinux.org> 12.0.0-alt1
 - New version 12.0.0.
 
