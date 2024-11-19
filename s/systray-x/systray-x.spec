@@ -2,7 +2,7 @@
 
 Name:    systray-x
 Version: 0.9.10
-Release: alt1
+Release: alt2
 
 Summary: A system tray extension for Thunderbird 68+
 License: MPL-2.0
@@ -13,6 +13,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: %name-version.patch
+
+ExcludeArch: armh ppc64le
 
 BuildRequires(pre): rpm-build-thunderbird
 BuildRequires: qt5-base-devel
@@ -63,6 +65,9 @@ unzip -d %buildroot%tbird_arch_extensionsdir/systray-x@Ximi1970 systray-x@Ximi19
 %tbird_arch_extensionsdir/systray-x@Ximi1970
 
 %changelog
+* Tue Nov 19 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt2
+- ExcludeArch: armh ppc64le.
+
 * Sun Aug 11 2024 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt1
 - New version.
 
