@@ -1,19 +1,20 @@
 Name: tree-sitter
 Version: 0.24.4
-Release: alt2
+Release: alt3
 
 Summary: Parser generator tool and an incremental parsing library
-
-Group: Development/Tools
 License: MIT
-Url: https://github.com/tree-sitter/tree-sitter
+Group: Development/Tools
 
+Url: https://github.com/tree-sitter/tree-sitter
 Source: %name-%version.tar
-Patch1: tree-sitter-0.24.4-alt-correct-next-sibling-of-zero-width-node.patch
+Patch: tree-sitter-0.24.4-alt-correct-next-sibling-of-zero-width-node.patch
 
 BuildRequires: gcc make
+%ifnarch %e2k
 BuildRequires: rust-cargo
 BuildRequires: /proc
+%endif
 
 %description
 Tree-sitter is a parser generator tool and an incremental parsing library.
@@ -46,6 +47,7 @@ Tree-sitter CLI tool
 %setup
 %autopatch -p1
 
+%ifnarch %e2k
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -59,11 +61,14 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "cli/vendor"
 EOF
+%endif
 
 %build
 %make_build
 
+%ifnarch %e2k
 cargo build --offline --release
+%endif
 
 %install
 export PREFIX=%_prefix
@@ -73,8 +78,10 @@ export LIBDIR=%_libdir
 export PCLIBDIR=%_pkgconfigdir
 make install
 
+%ifnarch %e2k
 mkdir -p %buildroot%_bindir
 install -m 0755 target/release/%name %buildroot%_bindir
+%endif
 
 # install directory for parser symlinks
 install -d %{buildroot}%{_libdir}/%name
@@ -89,10 +96,15 @@ install -d %{buildroot}%{_libdir}/%name
 %_includedir/*
 %_pkgconfigdir/%name.pc
 
+%ifnarch %e2k
 %files -n %name-cli
 %_bindir/%name
+%endif
 
 %changelog
+* Tue Nov 19 2024 Michael Shigorin <mike@altlinux.org> 0.24.4-alt3
+- E2K: skip cli build for now (BR: rust-cargo)
+
 * Thu Nov 14 2024 Vladimir Didenko <cow@altlinux.ru> 0.24.4-alt2
 - fix neovim freeze (upstream issue: #3930)
 
