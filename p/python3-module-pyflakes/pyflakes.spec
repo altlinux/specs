@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
@@ -29,6 +29,20 @@ although it does not perform as many checks. Unlike PyLint, Pyflakes\
 checks only for logical errors in programs; it does not perform any\
 check on style.
 
+%package tests
+Summary: Tests for %pypi_name
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Pyflakes is similar to PyChecker in scope, but differs in that it does\
+not execute the modules to check them. This is both safer and faster,\
+although it does not perform as many checks. Unlike PyLint, Pyflakes\
+checks only for logical errors in programs; it does not perform any\
+check on style.
+
+This package contains tests for %pypi_name.
+
 %prep
 %setup
 %pyproject_deps_resync_build
@@ -42,9 +56,6 @@ check on style.
 
 mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 
-# don't package tests
-rm -r %buildroot%python3_sitelibdir/pyflakes/test
-
 %check
 %pyproject_run_unittest
 
@@ -53,8 +64,15 @@ rm -r %buildroot%python3_sitelibdir/pyflakes/test
 %_bindir/pyflakes-py3
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%pypi_name/test
+
+%files tests
+%python3_sitelibdir/%pypi_name/test
 
 %changelog
+* Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
+- Built with tests subpackage.
+
 * Thu Feb 08 2024 Anton Zhukharev <ancieg@altlinux.org> 3.2.0-alt1
 - Updated to 3.2.0.
 

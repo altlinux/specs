@@ -1,12 +1,9 @@
 %define  modulename confluent-kafka
 
-# needs pyflakes.test, but it can be removed but also
-# ImportError: cannot import name 'builder' from 'google.protobuf.internal'
-# in 2 tests
-%def_without check
+%def_with check
 
 Name:    python3-module-%modulename
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: Confluent's Kafka Python Client
@@ -30,7 +27,11 @@ BuildRequires: python3-module-avro
 BuildRequires: python3-module-fastavro
 BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-google-api-core
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pyrsistent
 BuildRequires: python3-module-pyflakes
+BuildRequires: python3-module-pyflakes-tests
 %endif
 
 Source:  %name-%version.tar
@@ -50,18 +51,22 @@ and the Confluent Platform.
 %install
 %pyproject_install
 
-# Remove license file installed in weird place
-rm -f  %buildroot/%_prefix/LICENSE.txt
-
 %check
-%tox_check_pyproject
+# test_alter_consumer_group_offsets_api causes segault
+# https://github.com/confluentinc/confluent-kafka-python/issues/1797
+%pyproject_run_pytest --ignore=tests/integration \
+    -k 'not test_alter_consumer_group_offsets_api'
 
 %files
-%doc *.md LICENSE.txt
+%doc *.md LICENSE
 %python3_sitelibdir/confluent_kafka
 %python3_sitelibdir/%{pyproject_distinfo confluent_kafka}
 
 %changelog
+* Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
+- Automatically updated to 2.6.1.
+- Built with check.
+
 * Sat Oct 12 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.0-alt1
 - Automatically updated to 2.6.0.
 
