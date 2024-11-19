@@ -1,12 +1,13 @@
 %define soname 12
 
 Name: primesieve
-Version: 12.5
+Version: 12.6
 Release: alt1
 Summary: A prime number generator
 License: BSD-2-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/kimwalisch/primesieve
+Vcs: git://github.com/kimwalisch/primesieve.git
 
 Source: https://github.com/kimwalisch/primesieve/archive/v%version.tar.gz#/%name-%version.tar.gz
 
@@ -79,6 +80,10 @@ ctest
 %_pkgconfigdir/primesieve.pc
 
 %changelog
+* Tue Nov 19 2024 Leontiy Volodin <lvol@altlinux.org> 12.6-alt1
+- New version 12.6.
+- Added vcs tag.
+
 * Tue Oct 29 2024 Leontiy Volodin <lvol@altlinux.org> 12.5-alt1
 - New version 12.5.
 
