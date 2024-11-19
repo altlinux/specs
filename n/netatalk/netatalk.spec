@@ -1,7 +1,7 @@
 %global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
 
 Name: netatalk
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -146,6 +146,9 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #_mandir/man*/netatalk-config.1*
 
 %changelog
+* Tue Nov 19 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.6-alt1
+- 4.0.6
+
 * Tue Nov 12 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.5-alt1
 - 4.0.5
 
