@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.8.0
+Version: 4.8.1
 Release: alt1
 
 Summary: %descr
@@ -31,6 +31,7 @@ BuildRequires: python3-module-mocket
 BuildRequires: python3-module-decorator
 BuildRequires: python3-module-http-parser
 BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-pytest-httpserver
 %endif
 
 BuildArch: noarch
@@ -78,6 +79,9 @@ rm -rf html/.{buildinfo,doctrees}
 %endif
 
 %changelog
+* Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt1
+- Automatically updated to 4.8.1.
+
 * Wed Dec 27 2023 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
 - Automatically updated to 4.8.0.
 
