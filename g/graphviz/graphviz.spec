@@ -24,7 +24,7 @@
 
 Name: graphviz
 Version: 12.1.2
-Release: alt1
+Release: alt2
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -40,6 +40,8 @@ Patch1:  graphviz-2.28.0-alt-string_h_trhow.patch
 Patch2:  graphviz-2.38.0-gs-9.18-fix.patch
 Patch3:  graphviz-2.41.2-alt-add-riscv64.patch
 Patch4:  graphviz-9.0.0-loongarch64.patch
+# https://bugzilla.altlinux.org/51872
+Patch5:  graphviz-12.1.2-alt1-remove_limit_of_100_vertices.patch
 
 # From Fedora:
 Patch40:                 graphviz-2.40.1-visio.patch
@@ -178,6 +180,7 @@ This package makes %name functionality accessible from Tcl
 %patch2 -p1
 #patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 #patch40 -p1 -b .visio
 #patch41 -p1 -b .python3
@@ -369,6 +372,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Mon Nov 18 2024 Anton Midyukov <antohami@altlinux.org> 12.1.2-alt2
+- Remove limit of 100 vertices (Closes: 51872) (thanks mike@)
+
 * Thu Oct 17 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 12.1.2-alt1
 - Update to upstream 12.1.2
 
