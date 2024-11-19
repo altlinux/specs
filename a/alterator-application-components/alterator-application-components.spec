@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -55,6 +55,11 @@ install -v -p -m 644 -D setup/org.altlinux.alterator.components1.xml %buildroot%
 %_bindir/%name
 
 %changelog
+* Fri Nov 15 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
+- Don't show default category if it's empty.
+- Sort components and component categories in a given tree.
+- Fix translations in components install dialog and enable qtbase translations.
+
 * Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
 - Change prefix from ru.basealt to org.altlinux.
 
