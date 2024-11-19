@@ -1,7 +1,10 @@
+%define commit 49c154a4
+%define date 20241007
+
 %global import_path github.com/arduino/arduino-cli
 Name:    arduino-cli
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Arduino command line tool
 License: GPL-3.0
@@ -24,6 +27,9 @@ interfaces.
 
 %prep
 %setup
+subst 's/defaultVersionString *= .*/defaultVersionString = "%version"/' version/version.go
+subst 's/commit *= .*/commit = "%commit"/' version/version.go
+subst 's/date *= .*/date = "%date"/' version/version.go
 tar xf %SOURCE1
 
 %build
@@ -47,5 +53,8 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Nov 19 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt2
+- Set application version.
+
 * Mon Nov 18 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.
