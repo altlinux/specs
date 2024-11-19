@@ -3,7 +3,7 @@
 %def_disable domU
 
 Name: kernel-image-rk
-Release: alt1
+Release: alt2
 
 %define kernel_base_version	6.1
 %define kernel_sublevel	.75
@@ -101,15 +101,7 @@ BuildRequires: ccache
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
-your system.
-
-Most hardware drivers for this kernel are built as modules.  Some of
-these drivers are built separately from the kernel; they are available
-in separate packages (kernel-modules-*-%flavour).
-
-There are some other kernel variants in ALT systems:
-* std-def: latest longterm (LTS) kernel;
-* un-def:  latest stable kernel, usually higher version than std-def.
+your system and supports ARM Rockhip SoC.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -172,7 +164,9 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
+%if_without cross_toolchain_aarch64
 subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+%endif
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -185,6 +179,9 @@ sed -Ei 's/-j[[:digit:]]*/-j8/' scripts/pahole-flags.sh
 banner build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
+%if_with cross_toolchain_aarch64
+export CROSS_COMPILE=aarch64-linux-gnu-
+%endif
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -414,5 +411,8 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 19 2024 Nazarov Denis <nenderus@altlinux.org> 6.1.75-alt2
+- Update to v24.11.1 tag
+
 * Thu Sep 19 2024 Nazarov Denis <nenderus@altlinux.org> 6.1.75-alt1
 - Initial build for ALT Linux
