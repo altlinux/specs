@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.8.93
+Version: 0.8.94
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -98,6 +98,14 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip alt-rpmkeys-checksig \
 %_bindir/alt-rpmkey*
 
 %changelog
+* Tue Nov 19 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.94-alt1
+- Removed keys:
+  + alenka (15077C6A; see #38652);
+  + iakuninaa (A7AAB918; see #42532);
+  + oskiller (1D078CE3; see #45966).
+- Added key: shad@ (63F1AA86; see #50539).
+- Replaced key: zah@ (14E3D59B -> 253C9B29; closes: #44645).
+
 * Fri Nov 01 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.93-alt1
 - Updated key: armatik@ (155FD922; closes: #51850).
 - Added keys:
