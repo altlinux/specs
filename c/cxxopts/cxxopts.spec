@@ -4,7 +4,7 @@
 
 Name: %_name
 Version: 3.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Lightweight C++ option parser library
 License: MIT
@@ -30,6 +30,9 @@ Development files for %name.
 
 %prep
 %setup -n %_name-%version
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/' cmake/cxxopts.cmake
+%endif
 
 %build
 %cmake
@@ -47,6 +50,9 @@ Development files for %name.
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Tue Nov 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1.1
+- fixed build for E2K (ilyakurdyukov@)
+
 * Tue Feb 20 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
