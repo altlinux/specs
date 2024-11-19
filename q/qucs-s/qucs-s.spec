@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 24.4.0
-Release: alt2
+Version: 24.4.1
+Release: alt1
 
 Summary: Circuit simulator
 License: GPL-2.0-or-later
@@ -64,10 +64,14 @@ done > %name.lang
 %_bindir/*
 %_desktopdir/*
 %_datadir/%name
+%_datadir/metainfo/io.github.ra3xdh.qucs_s.metainfo.xml
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 
 %changelog
+* Fri Nov 15 2024 Anton Midyukov <antohami@altlinux.org> 24.4.1-alt1
+- New version 24.4.1.
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 24.4.0-alt2
 - Update Russian translation
 
