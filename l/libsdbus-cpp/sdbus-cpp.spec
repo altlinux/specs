@@ -1,6 +1,7 @@
 Name: libsdbus-cpp
-Version: 1.4.0
+Version: 1.6.0
 Release: alt1
+
 Summary: A C++ bindings for libdbus
 License: LGPLv2.1
 Group: System/Libraries
@@ -10,6 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libsystemd-devel
 
 %description
@@ -25,7 +27,7 @@ Summary:  Development libraries for %name
 Development libraries for %name
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -46,5 +48,8 @@ Development libraries for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 19 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Oct 20 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt1
 - initial release
