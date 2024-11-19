@@ -3,25 +3,23 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.3
-Release: alt5
+Version: 0.2.4
+Release: alt1
 
 Summary: Utilities for testing Sphinx extensions
 
 License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/sphinxtesters
+Url: https://pypi.org/project/sphinxtesters
+Vcs: https://github.com/matthew-brett/sphinxtesters
 
 BuildArch: noarch
 
-# Source-url: %__pypi_url %oname
-Source: %oname-%version.tar
-Patch: sphinxtesters-0.2.3-configparser-alt-fix.patch
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-flit-core
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-docutils
@@ -32,8 +30,7 @@ BuildRequires: python3-module-sphinx
 Sphinxtesters - utilities for testing Sphinx extensions.
 
 %prep
-%setup -n %oname-%version
-%patch -p2
+%setup
 
 %build
 %pyproject_build
@@ -43,8 +40,7 @@ Sphinxtesters - utilities for testing Sphinx extensions.
 %python3_prune
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -vv -k 'not test_bad_pagebuilder'
+%pyproject_run_pytest -v
 
 %files
 %doc LICENSE README.rst
@@ -53,6 +49,10 @@ py.test3 -vv -k 'not test_bad_pagebuilder'
 
 
 %changelog
+* Tue Nov 19 2024 Anton Vyatkin <toni@altlinux.org> 0.2.4-alt1
+- New version 0.2.4.
+- Using gear remotes.
+
 * Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt5
 - Fixed FTBFS.
 
