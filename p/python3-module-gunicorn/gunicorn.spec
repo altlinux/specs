@@ -4,34 +4,30 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 20.1.0
-Release: alt2
+Version: 23.0.0
+Release: alt1
 
 Summary: WSGI HTTP Server for UNIX
 
-License: Mit
+License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/gunicorn/
+Url: https://pypi.org/project/gunicorn
+Vcs: https://github.com/benoitc/gunicorn
 
 Source: %name-%version.tar
-Patch1: gunicorn_fix_eventlet_0.30.3+_breaking_changes.patch
 
 BuildArch: noarch
 
 Conflicts: python-module-%oname
 Provides: %oname = %version-%release
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx_rtd_theme
-
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-gevent
 BuildRequires: python3-module-eventlet
-BuildRequires: python3-module-coverage
-BuildRequires: pytest3
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-mock
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -40,51 +36,35 @@ pre-fork worker model ported from Ruby's Unicorn project. The Gunicorn
 server is broadly compatible with various web frameworks, simply
 implemented, light on server resource usage, and fairly speedy.
 
-%package docs
-Summary: Documentation for gunicorn
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-Gunicorn 'Green Unicorn' is a Python WSGI HTTP Server for UNIX. It's a
-pre-fork worker model ported from Ruby's Unicorn project. The Gunicorn
-server is broadly compatible with various web frameworks, simply
-implemented, light on server resource usage, and fairly speedy.
-
-This package contains documentation for gunicorn.
-
 %prep
 %setup
-%autopatch -p1
-
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # compibility
 ln -s gunicorn %buildroot%_bindir/gunicorn.py3
 
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs html SPHINXBUILD=sphinx-build-3
-
 %check
-PYTHONPATH=$(pwd) py.test3
+%pyproject_run_pytest -v -o=addopts="--assert=plain"
 
 %files
-%doc LICENSE NOTICE THANKS *.rst
+%doc README.*
 %_bindir/gunicorn
 %_bindir/gunicorn.py3
-%python3_sitelibdir/*
-
-%files docs
-%doc docs/build/html examples
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Nov 19 2024 Anton Vyatkin <toni@altlinux.org> 23.0.0-alt1
+- New version 23.0.0 (Fixes CVE-2024-1135) (Closes: #52085).
+- Migrate to pyproject macroses.
+- Do not build docs.
+- Using gear remotes.
+
 * Mon Apr 04 2022 Danil Shein <dshein@altlinux.org> 20.1.0-alt2
 - fix FTBFS
 - spec clean up

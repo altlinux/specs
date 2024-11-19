@@ -9,7 +9,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.37.0
+Version: 0.38.0
 Release: alt1
 
 Summary: Highly concurrent networking library
@@ -141,6 +141,9 @@ and not test_raise_dns_tcp"
 %endif
 
 %changelog
+* Tue Nov 19 2024 Anton Vyatkin <toni@altlinux.org> 0.38.0-alt1
+- new version 0.38.0
+
 * Thu Sep 12 2024 Anton Vyatkin <toni@altlinux.org> 0.37.0-alt1
 - new version 0.37.0
 
