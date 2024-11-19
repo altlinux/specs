@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define ver_major 45
@@ -7,11 +7,11 @@
 
 Name: dconf-editor
 Version: %ver_major.0.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Projects/dconf
 
 %if_disabled snapshot
@@ -19,15 +19,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-#https://l10n.gnome.org/media/upload/dconf-editor-master-po-ru-812899_sj2ZdlN.merged.po
-Source1: %name-3.38.3.ru.po.finziyr
 
 %define glib_ver 2.56
 %define dconf_ver 0.26.1
 %define gtk_ver 3.22.27
 %define handy_ver 1.6
 %define vala_ver 0.40
-
 
 Requires: dconf >= %dconf_ver
 
@@ -51,7 +48,6 @@ This package provides graphical dconf configuration editor.
 
 %prep
 %setup -n %name-%version%beta
-cp %SOURCE1 po/ru.po
 
 %build
 %meson
@@ -75,6 +71,9 @@ cp %SOURCE1 po/ru.po
 %doc README*
 
 %changelog
+* Tue Nov 19 2024 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt2
+- 45.0-67-gd109e6b1 (updated translations) (ALT #52102)
+
 * Fri Sep 22 2023 Yuri N. Sedunov <aris@altlinux.org> 45.0.1-alt1
 - 45.0.1
 
