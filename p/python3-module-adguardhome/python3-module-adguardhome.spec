@@ -3,12 +3,14 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 Summary: Asynchronous Python client for the AdGuard Home API
 License: MIT
 Group: Development/Python3
-Url: https://github.com/frenck/python-adguardhome
+Url: https://pypi.org/project/adguardhome
+VCS: https://github.com/frenck/python-adguardhome
+
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -32,7 +34,6 @@ programs to automate the behavior of AdGuard.
 %prep
 %setup
 sed -i '/version/s/0.0.0/%version/' pyproject.toml
-sed -i '/PythonAdGuardHome/s/0.0.0/%version/' tests/test_adguardhome.py
 
 %build
 %pyproject_build
@@ -48,5 +49,8 @@ sed -i '/PythonAdGuardHome/s/0.0.0/%version/' tests/test_adguardhome.py
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Mon Nov 18 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.0-alt1
+- Updated to version 0.7.0.
+
 * Fri Feb 09 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.3-alt1
 - Initial build for ALT.
