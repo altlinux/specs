@@ -5,7 +5,7 @@
 %def_with cocoa
 
 Name: giac
-Version: 1.9.0.69
+Version: 1.9.0.996
 Release: alt1
 
 Summary: Computer algebra system
@@ -27,6 +27,11 @@ BuildRequires: gcc-fortran
 %if !%{with cocoa}
 BuildRequires: libao-devel
 %endif
+
+# ELF object out of allowed directory tree.
+# khicas.nwa have placed to Downloads directory for send KhiCAS.
+# It refers to the documentation and is not a dependency for any package.
+%add_verify_elf_skiplist %_datadir/giac/doc/khicas.nwa
 
 %description
 A computer algebra system, compatible with existing CAS, as a C++
@@ -88,6 +93,7 @@ export CXXFLAGS+=' -std=c++14 -Wp,-U_GLIBCXX_ASSERTIONS'
 # %%add_optflags -no-pie
 # %%remove_optflags -fPIC
 # %%endif
+%autoreconf
 %configure \
     --enable-gui \
     --enable-static=no \
@@ -148,7 +154,8 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_bindir/en_cas_help
 %_bindir/es_cas_help
 %_bindir/fr_cas_help
-%_datadir/giac/
+%dir %_datadir/giac/
+%_datadir/giac/*
 %_datadir/mime/packages/giac.xml
 %_infodir/giac_es.info.xz
 %_infodir/giac_us.info.xz
@@ -185,13 +192,21 @@ rm %buildroot%_docdir/giac/Makefile.am
 
 %files doc
 %doc COPYING
-%_datadir/giac/doc/
+%dir %_datadir/giac/
+%dir %_datadir/giac/doc/
+%_datadir/giac/doc/*
 %_datadir/giac/aide_cas
-%_datadir/giac/examples/
+%dir %_datadir/giac/examples/
+%_datadir/giac/examples/*
+%dir %_docdir/giac/
+%dir %_docdir/giac/*/
 %_docdir/giac/index.html
-%_docdir/giac/*/
+%_docdir/giac/*/*
 
 %changelog
+* Tue Nov 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.0.996-alt1
+- New version 1.9.0.996.
+
 * Wed Nov 29 2023 Leontiy Volodin <lvol@altlinux.org> 1.9.0.69-alt1
 - New version.
 - Cleanup BRs.
