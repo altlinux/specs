@@ -1,6 +1,6 @@
 Name: ppsspp
 Version: 1.18.1
-Release: alt1
+Release: alt2
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-miniupnpc.patch
+Patch2: %name-1.18.1-alt-loongarch-always-return.patch
 
 Requires: %name-common = %EVR
 
@@ -89,6 +90,7 @@ This build using the Qt frontend.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %add_optflags -Wno-error=return-type
@@ -193,6 +195,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Mon Nov 18 2024 Ilya Sorochan <k0tran@altlinux.org> 1.18.1-alt2
+- add patch that fixes FTBFS on loongarch64
+
 * Tue Nov 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.18.1-alt1
 - new version (1.18.1) with rpmgs script
 
