@@ -4,8 +4,8 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.9.1
-Release: alt1
+Version: 5.10.0
+Release: alt3
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -24,7 +24,7 @@ Source2: %{name}.service
 Source3: %{name}.rsyslog
 Source4: %{name}.logrotate
 Source5: %{name}.README
-#Source6: %{name}_game-5.7.0.tar.gz
+Source6: %{name}_game-5.8.0.tar.gz
 Source7: http://www.gnu.org/licenses/lgpl-2.1.txt
 # Now using its own Minetest-specific fork of irrlicht.
 #Source8:	https://github.com/minetest/irrlicht/archive/%{irrlichtmt_version}/irrlicht-%{irrlichtmt_version}.tar.gz
@@ -90,10 +90,10 @@ System.
 %patch0 -p1
 %patch1 -p1
 
-#pushd games
-#tar xf %%SOURCE6
-#mv %{name}_game-%version %{name}_game
-#popd
+pushd games
+tar xf %SOURCE6
+mv %{name}_game-5.8.0 %{name}_game
+popd
 
 cp %SOURCE7 doc/
 
@@ -161,9 +161,9 @@ cp -p minetest.conf.example %buildroot%{_sysconfdir}/%{name}.conf
 cp -p %SOURCE5 README
 
 %if_with l10n
-%find_lang %name
+%find_lang luanti
 %else
-touch %name.lang
+touch luanti.lang
 %endif
 
 %pre server
@@ -193,28 +193,43 @@ if [ $1 -ge 1 ] ; then
     /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
 fi
 
-%files -f %{name}.lang
+%files -f luanti.lang
 %doc README.md doc/lgpl-2.1.txt README
-%doc %_docdir/%name
+%doc %_docdir/luanti
 %_bindir/%name
-%_datadir/%name
+%{_bindir}/luanti
+%{_datadir}/luanti/client
+%{_datadir}/luanti/fonts
+%{_datadir}/luanti/textures
+#_datadir/%name
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/scalable/apps/%name.svg
-%_iconsdir/hicolor/128x128/apps/%name.png
-%_man6dir/minetest.*
-%_datadir/metainfo/*.metainfo.xml
+%_iconsdir/hicolor/scalable/apps/luanti.svg
+%_iconsdir/hicolor/128x128/apps/luanti.png
+%_man6dir/luanti.*
+%_datadir/metainfo/net*.metainfo.xml
+%{_datadir}/luanti/builtin
 
 %files server
 %doc README.md doc/lgpl-2.1.txt doc/world_format.md doc/protocol.txt README
 %_bindir/%{name}server
+%{_bindir}/luantiserver
 %_unitdir/%{name}.service
 %config(noreplace) %{_sysconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}-server
 %config(noreplace) %{_sysconfdir}/rsyslog.d/%{name}.conf
 %attr(0755,minetest,minetest) %dir %{_sharedstatedir}/%{name}
-%_man6dir/minetestserver.6*
+%_man6dir/luantiserver.6*
 
 %changelog
+* Tue Nov 19 2024 Ilya Mashkin <oddity@altlinux.ru> 5.10.0-alt3
+- Fixed Minetest_game
+
+* Tue Nov 19 2024 Ilya Mashkin <oddity@altlinux.ru> 5.10.0-alt2
+- Added Minetest_game
+
+* Tue Nov 19 2024 Ilya Mashkin <oddity@altlinux.ru> 5.10.0-alt1
+- 5.10.0
+
 * Sun Sep 22 2024 Ilya Mashkin <oddity@altlinux.ru> 5.9.1-alt1
 - 5.9.1
 
