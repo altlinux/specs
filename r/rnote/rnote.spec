@@ -1,9 +1,9 @@
 %define APP_ID com.github.flxzt.rnote
-%def_disable check
+%def_enable check
 
 Name: rnote
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Sketch and take handwritten notes
 License: GPL-3.0-or-later
@@ -20,18 +20,18 @@ BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: rust-cargo
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(glib-2.0) >= 2.76
+BuildRequires: pkgconfig(gio-2.0) >= 2.76
+BuildRequires: pkgconfig(cairo) >= 1.18
 BuildRequires: pkgconfig(appstream)
 BuildRequires: pkgconfig(poppler-glib)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(libxml-2.0)
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstreamcli
-BuildRequires: %_bindir/glib-compile-schemas
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
+BuildRequires: libgio
 %endif
 
 ExcludeArch: %ix86
@@ -49,15 +49,16 @@ install -vD %SOURCE2 .cargo/config.toml
 
 %build
 %meson
+%meson_build
 
 %install
 %meson_install
+# drop unknown languages, find known
+rm -r %buildroot%_datadir/locale/zh_Han{s,t}
 %find_lang --with-gnome %name
-echo '%%lang(zh-Hans) %_datadir/locale/zh_Hans/LC_MESSAGES/rnote.mo' >> %name.lang
-echo '%%lang(zh-Hans) %_datadir/locale/zh_Hans/LC_MESSAGES/rnote.mo' >> %name.lang
 
 %check
-%__meson_test
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -71,5 +72,12 @@ echo '%%lang(zh-Hans) %_datadir/locale/zh_Hans/LC_MESSAGES/rnote.mo' >> %name.la
 %_datadir/%name
 
 %changelog
+* Wed Nov 20 2024 Oleg Shchavelev <oleg@altlinux.org> 0.11.0-alt2
+- Rebuild improved spec (ALT #51842)
+- Add macro %%meson_build, rename macro %%__meson_test -> %%meson_test
+- Update BuildRequires
+- Drop unknown languages, find known
+- Enable check
+
 * Tue Oct 22 2024 Oleg Shchavelev <oleg@altlinux.org> 0.11.0-alt1
 - Initial build
