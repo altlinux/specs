@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 6.2.8
-Release: alt1
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPL-2.0-or-later
@@ -44,7 +44,6 @@ Requires: libmuffin-gir >= %muffin_ver
 Requires: %name-translations
 Requires: gst-plugins-base1.0
 
-Requires: libsoup-gir
 
 # needed to install applets
 Requires: gettext-tools
@@ -60,9 +59,9 @@ BuildRequires: meson
 BuildRequires: gcc-c++
 BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel
 BuildRequires: libstartup-notification-devel libcinnamon-desktop-gir-devel
-BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel libnm-devel libnm-gir-devel
+BuildRequires: libpolkit-devel libupower-devel libgudev-devel libnm-devel libnm-gir-devel
 BuildRequires: libcanberra-gtk3-devel
-BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel
+BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel
 BuildRequires: libcinnamon-menus-gir-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: pkgconfig(libxml-2.0)
@@ -207,6 +206,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Wed Nov 20 2024 Anton Midyukov <antohami@altlinux.org> 6.2.8-alt2
+- Remove unnecessary dependency on libsoup from BuildRequires and Requires
+
 * Tue Aug 06 2024 Anton Midyukov <antohami@altlinux.org> 6.2.8-alt1
 - 6.2.8
 
