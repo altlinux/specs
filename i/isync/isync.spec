@@ -1,5 +1,5 @@
 Name: isync
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Utility to synchronize IMAP mailboxes with local maildir folders
@@ -39,6 +39,9 @@ touch ChangeLog
 %doc AUTHORS NEWS README TODO src/mbsyncrc.sample
 
 %changelog
+* Wed Nov 20 2024 Alexander Danilov <admsasha@altlinux.org> 1.4.4-alt1
+- New version 1.4.4 (fixes: CVE-2021-3657).
+
 * Mon Jul 29 2024 Alexander Danilov <admsasha@altlinux.org> 1.4.3-alt1
 - New version 1.4.3 (fixes: CVE-2021-3578, CVE-2021-44143).
 
