@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Terminals
@@ -25,6 +25,8 @@ Obsoletes: kde5-konsole < %EVR
 
 Source: %rname-%version.tar
 Source10: profiles.tar
+Patch1: kdebug-482149.patch
+#
 Patch11: alt-sover.patch
 Patch12: alt-def-font.patch
 Patch13: alt-def-colors.patch
@@ -92,6 +94,8 @@ Obsoletes: libkonsoleapp1 < %EVR
 
 %prep
 %setup -q -n %rname-%version -a10
+%patch1 -p1
+#
 %patch11 -p1
 #patch12 -p1
 %patch13 -p1
@@ -160,6 +164,9 @@ __EOF__
 
 
 %changelog
+* Wed Nov 20 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
+- add fix against kdebug#482149
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
