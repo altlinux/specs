@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 14.0
-Release: alt2
+Version: 15.0
+Release: alt1
 
 Summary: a pytest plugin that re-runs failed tests up to -n times to eliminate flakey failures
 
@@ -56,6 +56,9 @@ and not test_exception_match_only_rerun_in_dual_query"
 %python3_sitelibdir/pytest_rerunfailures-%version.dist-info/
 
 %changelog
+* Wed Nov 20 2024 Grigory Ustinov <grenka@altlinux.org> 15.0-alt1
+- Automatically updated to 15.0.
+
 * Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 14.0-alt2
 - Fixed FTBFS.
 
