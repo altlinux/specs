@@ -1,5 +1,5 @@
 Name: libheif
-Version: 1.18.2
+Version: 1.19.5
 Release: alt1
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -57,6 +57,9 @@ sed -i 's/-Werror/-Wno-error/g' configure.ac CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Nov 20 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.19.5-alt1
+- 1.19.5
+
 * Mon Sep 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.18.2-alt1
 - 1.18.2
 
