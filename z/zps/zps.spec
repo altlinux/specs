@@ -2,11 +2,11 @@
 
 Name: zps
 Version: 2.0.0
-Release: alt1
-Summary: A small utility for listing and reaping zombie processes on GNU/Linux.
+Release: alt2
+Summary: A small utility for listing and reaping zombie processes on GNU/Linux
 License: GPL-3.0
 Group: Terminals
-Url: https://github.ink/orhun/zps
+Url: https://github.com/orhun/zps
 
 Source: %name-%version.tar
 
@@ -14,7 +14,8 @@ BuildRequires: desktop-file-utils
 BuildRequires: glibc >= 2.38
 
 %description
-zps lists the running processes with theirs stats and indicates/reaps the zombie processes.
+zps lists the running processes with theirs stats and indicates/reaps
+the zombie processes.
 
 %prep
 %setup
@@ -35,5 +36,8 @@ desktop-file-install --dir %buildroot%_datadir/applications/ .application/%name.
 %_datadir/applications/%name.desktop
 
 %changelog
+* Wed Nov 20 2024 Pavel Shilov <zerospirit@altlinux.org> 2.0.0-alt2
+- update based on upstream
+
 * Wed Feb 28 2024 Pavel Shilov <zerospirit@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
