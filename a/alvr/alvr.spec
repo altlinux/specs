@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.11.1
-Release: alt3
+Release: alt4
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -10,6 +10,8 @@ Url: https://github.com/alvr-org/ALVR
 Source: %name-%version.tar
 Source1: %name-%version-openvr.tar
 Source2: %name-%version-vendor.tar
+# alvr helper script
+Source10: alvr.sh
 
 Patch1: use-static-x264-ffmpeg.patch
 
@@ -38,6 +40,7 @@ BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(x264)
 BuildRequires: nasm
 BuildRequires: nvidia-cuda-devel
+BuildRequires: openxr-devel
 
 # fixed build ffmpeg whith CUDA
 BuildRequires: gcc11-c++
@@ -53,6 +56,7 @@ Requires: libunwind
 Requires: libvulkan1
 Requires: libx264
 Requires: alvr-companion
+Requires: openxr
 
 ExclusiveArch: x86_64
 
@@ -104,8 +108,6 @@ export ALVR_OPENVR_DRIVER_ROOT_DIR=%_libdir/%name
 export ALVR_VRCOMPOSITOR_WRAPPER_DIR=%_libdir/%name
 # export FIREWALL_SCRIPT_DIR="$ALVR_ROOT_DIR/share/%name/"
 
-export PATH=/usr/lib64/nvcc/bin${PATH:+:${PATH}}
-
 cargo run --release --offline --frozen -p alvr_xtask -- prepare-deps --platform linux
 
 cargo build \
@@ -119,6 +121,7 @@ cargo build \
 %define _alvrBuildDir "target/release"
 
 %install
+install -Dm755 %SOURCE10 %buildroot%_bindir/%name
 install -Dm755 %_alvrBuildDir/alvr_dashboard -t %buildroot%_bindir/
 
 # vrcompositor wrapper
@@ -134,6 +137,7 @@ install -Dm644 %_alvrBuildDir/libalvr_vulkan_layer.so -t %buildroot%_libdir/
 install -Dm644 alvr/vulkan_layer/layer/alvr_x86_64.json -t %buildroot%_datadir/vulkan/explicit_layer.d/
 
 # Desktop
+sed -i "s|Exec=alvr_dashboard|Exec=%name|" alvr/xtask/resources/%name.desktop
 install -Dm644 alvr/xtask/resources/%name.desktop -t %buildroot%_desktopdir/
 
 # Icons
@@ -144,6 +148,7 @@ done
 
 %files
 %doc LICENSE README.md CHANGELOG.md
+%_bindir/%name
 %_bindir/alvr_dashboard
 %_libdir/%name/
 %_libdir/libalvr_vulkan_layer.so
@@ -152,6 +157,10 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Wed Nov 20 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt4
+- added alvr helper script
+- simplified initial setup
+
 * Mon Nov 18 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt3
 - build with CUDA for support NVIDIA NVENC
 
