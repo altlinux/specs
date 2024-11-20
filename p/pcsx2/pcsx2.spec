@@ -1,17 +1,17 @@
 %define optflags_lto -flto=thin
 
 %define version_hi 2
-%define version_mid 0
-%define version_lo 2
+%define version_mid 2
+%define version_lo 0
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define git_date Sat Jul 13 06:19:16 2024
+%define git_date Thu Oct 31 16:22:11 2024
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash 2f46e5a8406e4832ba60c5ab1ba2fd16a074ab1f
+%define git_hash 2d5faa627ff54f3fb2a69a43286181bee071a1c3
 
 Name: pcsx2
-Version: %version_hi.%version_mid.%version_lo
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: Playstation 2 console emulator
 License: GPLv3 and LGPLv3
@@ -26,6 +26,7 @@ ExclusiveArch: x86_64
 Source: %name-%version.tar
 
 Patch0: %name-shaderc.patch
+Patch1: %name-unique-lock.patch
 
 BuildRequires: bzlib-devel
 BuildRequires: clang
@@ -77,6 +78,7 @@ There is still lot of on going work to improve compatibility & speed.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake \
@@ -91,6 +93,7 @@ There is still lot of on going work to improve compatibility & speed.
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
 	-DLTO_PCSX2_CORE:BOOL=TRUE \
+	-DPACKAGE_MODE:BOOL=TRUE \
 	-GNinja \
 	-Wno-dev
 
@@ -106,10 +109,8 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %cmake_build
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_libexecdir/%name,%_iconsdir/hicolor/64x64/apps,%_iconsdir/hicolor/512x512/apps,%_desktopdir}
-%__install -Dp -m0755 %_target_platform/bin/%name-qt %buildroot%_libexecdir/%name/%name-qt
-%__ln_s %_libexecdir/%name/%name-qt %buildroot%_bindir/%name-qt
-%__cp -r %_target_platform/bin/{resources,translations} %buildroot%_libexecdir/%name
+%cmake_install
+%__mkdir_p %buildroot{%_iconsdir/hicolor/64x64/apps,%_iconsdir/hicolor/512x512/apps,%_desktopdir}
 %__install -Dp -m0644 %name-qt/resources/icons/AppIcon64.png %buildroot%_iconsdir/hicolor/64x64/apps/PCSX2.png
 %__install -Dp -m0644 bin/resources/icons/AppIconLarge.png %buildroot%_iconsdir/hicolor/512x512/apps/PCSX2.png
 %__install -Dp -m0644 .github/workflows/scripts/linux/%name-qt.desktop %buildroot%_desktopdir/%name-qt.desktop
@@ -121,10 +122,13 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %doc bin/docs/*.pdf
 %_bindir/%name-qt
 %_desktopdir/%name-qt.desktop
-%_libexecdir/%name
+%_datadir/PCSX2
 %_iconsdir/hicolor/*/apps/PCSX2.png
 
 %changelog
+* Wed Nov 20 2024 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Sat Sep 07 2024 Nazarov Denis <nenderus@altlinux.org> 2.0.2-alt2
 - Fix pack icons
 
