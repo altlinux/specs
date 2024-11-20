@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hardinfo2
-Version: 2.2.1
+Version: 2.2.4
 Release: alt1
 
 Summary: System Information and Benchmark for Linux Systems
@@ -65,6 +65,9 @@ It can benchmark your system and compare to other machines online.
 %_libdir/%name
 
 %changelog
+* Wed Nov 20 2024 Ilya Sorochan <k0tran@altlinux.org> 2.2.4-alt1
+- 2.2.1 -> 2.2.4
+
 * Wed Oct 30 2024 Vladislav Glinkin <smasher@altlinux.org> 2.2.1-alt1
 - 2.1.17 -> 2.2.1
 
