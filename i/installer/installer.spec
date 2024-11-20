@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.12
+Version: 1.15.14
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,13 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Nov 18 2024 Anton Midyukov <antohami@altlinux.org> 1.15.14-alt1
+- preinstall.d/10-xorg.sh: do not copy xorg config from installer
+  (Closes: 46226)
+
+* Wed Oct 30 2024 Anton Midyukov <antohami@altlinux.org> 1.15.13-alt1
+- postinstall.d: add 95-dconf-update
+
 * Fri Oct 25 2024 Mikhail Efremov <sem@altlinux.org> 1.15.12-alt1
 - preinstall.d/05-initrd-fsck.sh: Add shebang.
 
