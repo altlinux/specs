@@ -34,7 +34,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -78,6 +78,8 @@ Source42: obex.conf
 Source43: xdg-user-dirs.conf
 #
 Source51: nvidia_prime_available.cpp
+
+Patch1: kdebug-490582.patch
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
@@ -303,6 +305,7 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 #%patch100 -p1 -b .startkde
 #%patch101 -p1
 %patch102 -p1
@@ -589,6 +592,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Nov 20 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.3-alt3
+- add fix against kdebug#490582 (closes: 51942)
+
 * Fri Nov 15 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1:6.2.3-alt2
 - fix loading into empty session (closes: 51942)
 
