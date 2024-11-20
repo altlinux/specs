@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,9 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Nov 6 2024 Semyon Knyazev <samael@altlinux.org> 0.17.1-alt1
+- Fix crashing on child domains after context menu request.
+
 * Wed Aug 21 2024 Semyon Knyazev <samael@altlinux.org> 0.17.0-alt1
 - Add password settings object's creation/deletion/edition. Password
   Settings Container contains these objects and located in the System
