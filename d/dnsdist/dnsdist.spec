@@ -1,12 +1,12 @@
 %if "%(rpmquery --qf '%%{VERSION}' libssl-devel)" >= "3"
-%def_enable tls
+%def_enable providers
 %endif
 
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
 Version: 1.9.7
-Release: alt2
+Release: alt3
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -47,7 +47,7 @@ sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.i
     --enable-dnscrypt \
     --enable-dns-over-https \
     --enable-dns-over-tls \
-%if_enabled tls
+%if_enabled providers
     --enable-tls-providers \
 %endif
     --enable-unit-tests \
@@ -69,7 +69,6 @@ cp dnsdist.conf-dist dnsdist.conf.sample
 install -D -p -m 644 %name.service %buildroot%_unitdir/%name.service
 install -d %buildroot%_sysconfdir/%name/
 mv %buildroot%_sysconfdir/%name/dnsdist.conf-dist %buildroot%_sysconfdir/%name/dnsdist.conf
-chmod 0640 %buildroot/%_sysconfdir/%name/dnsdist.conf
 
 %pre
 getent group dnsdist >/dev/null || groupadd -r dnsdist
@@ -96,6 +95,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Wed Nov 20 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.7-alt3
+- Fixed service startup (ALT #52112).
+
 * Mon Nov 11 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.7-alt2
 - Enabled tls providers with OpenSSL >= 3.0 only.
 
