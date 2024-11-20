@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: widelands
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 Epoch: 1
 
@@ -93,6 +93,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_datadir/%name
 
 %changelog
+* Wed Nov 20 2024 Anton Midyukov <antohami@altlinux.org> 1:1.2.1-alt1
+- New version 1.2.1.
+
 * Sat Mar 30 2024 Anton Midyukov <antohami@altlinux.org> 1:1.2-alt1
 - New version 1.2
 - correct the License field to match SPDX format
