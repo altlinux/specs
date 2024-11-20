@@ -7,7 +7,7 @@
 
 Name: SDL2
 Version: 2.30.9
-Release: alt2
+Release: alt3
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -85,9 +85,6 @@ This is the static libraries you can use to develop SDL applications.
 
 %prep
 %setup
-%ifarch %e2k
-sed -i '/^ *CheckDeclarationAfterStatement$/d' configure{,.ac}
-%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -122,6 +119,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Wed Nov 20 2024 Michael Shigorin <mike@altlinux.org> 2.30.9-alt3
+- back to -alt1 (fixed toolchain headers instead, see mcst#9144)
+
 * Fri Nov 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.30.9-alt2
 - e2k build fix
 
