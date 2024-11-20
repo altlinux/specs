@@ -18,7 +18,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     17
-%define postgresql_minor     1
+%define postgresql_minor     2
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -997,6 +997,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 20 2024 Alexei Takaseev <taf@altlinux.org> 17.2-alt1
+- 17.2
+
 * Wed Nov 13 2024 Alexei Takaseev <taf@altlinux.org> 17.1-alt1
 - 17.1 (Fixes CVE-2024-10976, CVE-2024-10977, CVE-2024-10978, CVE-2024-10979)
 - Fix build by GCC > 13 and LLVM > 15 (drop patch 0002-Fix-search-for-setproctitle.patch)

@@ -20,7 +20,7 @@
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     4
-%define postgresql_altrel    6
+%define postgresql_altrel    7
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1010,6 +1010,10 @@ fi
 %endif
 
 %changelog
+* Wed Nov 20 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt7
+- Fix ABI break in struct ResultRelInfo.
+- Fix per-session activation of ALTER {ROLE|DATABASE} SET role.
+
 * Wed Nov 13 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt6
 - Fixes CVE-2024-10976, CVE-2024-10977, CVE-2024-10978, CVE-2024-10979
 - Fix build by GCC > 13 and LLVM > 15 (drop patch 0002-Fix-search-for-setproctitle.patch)
