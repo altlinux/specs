@@ -57,7 +57,6 @@
 %def_enable virglrenderer
 %def_enable tpm
 %def_enable libssh
-%def_enable live_block_migration
 %def_enable replication
 %ifnarch %arm %ix86 %mips32
 %def_enable numa
@@ -83,6 +82,14 @@
 %def_enable fuse
 %def_disable brlapi
 %def_disable af_xdp
+%ifarch %ix86 x86_64
+%def_enable have_vmsr_helper
+%else
+%def_disable have_vmsr_helper
+%endif
+%ifarch x86_64
+%def_enable qpl
+%endif
 
 %define power64 ppc64 ppc64p7 ppc64le
 %define mips32 mips mipsel mipsr6 mipsr6el
@@ -132,7 +139,7 @@
 %define ui_spice_list %{?_enable_spice:app core}
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
 %define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
-%define qemu_arches aarch64 alpha arm avr cris hppa loongarch m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
+%define qemu_arches aarch64 alpha arm avr cris hppa loongarch m68k microblaze mips or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
 
 %global _group vmusers
 %global rulenum 90
@@ -143,8 +150,8 @@
 # }}}
 
 Name: qemu
-Version: 9.0.2
-Release: alt3
+Version: 9.1.1
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -179,21 +186,20 @@ BuildRequires: /dev/kvm
 BuildRequires: /proc /dev/pts
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: meson >= 0.63.0
-BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static libdw-devel-static
-BuildRequires: glib2-devel >= 2.56 libgio-devel
+BuildRequires: meson >= 1.1.0
+BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static libdw-devel-static libatomic-devel-static
+BuildRequires: glib2-devel >= 2.66 libgio-devel
 BuildRequires: libdw-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
 BuildRequires: libcap-ng-devel
 BuildRequires: libxfs-devel
 BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
+BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.1 qboot
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: libkeyutils-devel
 %{?_enable_af_xdp:BuildRequires: libxdp-devel >= 1.4.0}
 BuildRequires: python3-devel >= 3.8
 BuildRequires: flex
-BuildRequires: libatomic-devel-static
 %{?_enable_sdl:BuildRequires: libSDL2-devel libSDL2_image-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -228,6 +234,7 @@ BuildRequires: libuuid-devel
 %{?_enable_nettle:BuildRequires: libnettle-devel >= 3.4}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.8.0}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?_enable_qpl:BuildRequires: libqpl-devel >= 1.5.0}
 BuildRequires: libpam-devel
 BuildRequires: libtasn1-devel
 BuildRequires: libslirp-devel >= 4.1.0
@@ -460,6 +467,20 @@ Group: Emulators
 %description pr-helper
 This package provides the qemu-pr-helper utility that is required for certain
 SCSI features.
+
+%package vmsr-helper
+Summary: qemu-pr-helper utility for %name
+Group: Emulators
+
+%description vmsr-helper
+This package provides the qemu-vmsr-helper utility that is required for
+accessing the RAPL (Running Average Power Limit) MSR enables the RAPL powercap
+driver to advertise and monitor the power consumption or accumulated energy
+consumption of different power domains, such as CPU packages, DRAM, and other
+components when available.
+However those register are accesible under priviliged access (CAP_SYS_RAWIO).
+QEMU can use an external helper to access those priviliged register.
+
 
 %package tests
 Summary: tests for the %name package
@@ -794,7 +815,6 @@ run_configure \
 	--disable-fdt \
 	--disable-auth-pam \
 	--disable-avx2 \
-	--disable-avx512f \
 	--disable-avx512bw \
 	--disable-install-blobs \
 	--disable-blkio \
@@ -817,6 +837,7 @@ run_configure \
 	--disable-debug-info \
 	--disable-debug-mutex \
 	--disable-debug-tcg \
+	--disable-debug-remap \
 	--disable-dmg \
 	--disable-docs \
 	--disable-download \
@@ -850,7 +871,6 @@ run_configure \
 	--disable-libusb \
 	--disable-linux-aio \
 	--disable-linux-io-uring \
-	--disable-live-block-migration \
 	--disable-replication \
 	--disable-lzfse \
 	--disable-lzo \
@@ -869,10 +889,10 @@ run_configure \
 	--disable-pipewire \
 	--disable-pixman \
 	--disable-plugins \
-	--disable-pvrdma \
 	--disable-qcow1 \
 	--disable-qed \
 	--disable-qom-cast-debug \
+	--disable-qpl \
 	--disable-rbd \
 	--disable-vitastor \
 	--disable-rdma \
@@ -895,6 +915,7 @@ run_configure \
 	--disable-tools \
 	--disable-tpm \
 	--disable-tsan \
+	--disable-uadk \
 	--disable-u2f \
 	--disable-usb-redir \
 	--disable-vpc \
@@ -1005,7 +1026,6 @@ run_configure \
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
 	%{subst_enable libssh} \
-	%{?_enable_live_block_migration:--enable-live-block-migration} \
 	%{subst_enable replication} \
 	%{subst_enable rdma} \
 	%{subst_enable gnutls} \
@@ -1085,8 +1105,14 @@ mkdir -p %buildroot%_logdir
 touch %buildroot%_logdir/qga-fsfreeze-hook.log
 
 # Install qemu-pr-helper service
-install -m 0644 contrib/systemd/qemu-pr-helper.service %buildroot%_unitdir/qemu-pr-helper.service
-install -m 0644 contrib/systemd/qemu-pr-helper.socket %buildroot%_unitdir/qemu-pr-helper.socket
+install -m 0644 contrib/systemd/qemu-pr-helper.service %buildroot%_unitdir
+install -m 0644 contrib/systemd/qemu-pr-helper.socket %buildroot%_unitdir
+%if_enabled have_vmsr_helper
+# Install qemu-vmsr-helper service
+install -m 0644 contrib/systemd/qemu-vmsr-helper.service %buildroot%_unitdir
+install -m 0644 contrib/systemd/qemu-vmsr-helper.socket %buildroot%_unitdir
+%endif
+
 # Install rules to use the bridge helper with libvirt's virbr0
 install -m 0644 %SOURCE12 %buildroot%_sysconfdir/%name
 
@@ -1301,11 +1327,18 @@ groupadd -r -f %_group
 %_man7dir/qemu-storage-daemon-qmp-ref.*
 
 %if_enabled mpath
-%files -n qemu-pr-helper
+%files pr-helper
 %_bindir/qemu-pr-helper
 %_unitdir/qemu-pr-helper.service
 %_unitdir/qemu-pr-helper.socket
 %_man8dir/qemu-pr-helper.*
+%endif
+
+%if_enabled have_vmsr_helper
+%files vmsr-helper
+%_bindir/qemu-vmsr-helper
+%_unitdir/qemu-vmsr-helper.service
+%_unitdir/qemu-vmsr-helper.socket
 %endif
 
 %files tools
@@ -1362,6 +1395,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Nov 18 2024 Alexey Shabalin <shaba@altlinux.org> 9.1.1-alt1
+- 9.1.1
+
 * Fri Nov 08 2024 Ivan A. Melnikov <iv@altlinux.org> 9.0.2-alt3
 - require libatomic-devel-static for building on all platforms
   (fixes FTBFS) (ALT#51995).
