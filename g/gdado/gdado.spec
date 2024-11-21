@@ -1,6 +1,6 @@
 Name: gdado
 Version: 2.2
-Release: alt6
+Release: alt6.1
 
 Summary: Very simple application that simulates dice rolling
 License: GPL-2.0+
@@ -30,6 +30,8 @@ intended to help roleplayers.
 %patch1 -p2
 
 %build
+# gcc14
+%add_optflags -Wno-error=incompatible-pointer-types -Wno-error=implicit-function-declaration -Wno-error=int-conversion
 %configure
 %make_build
 
@@ -59,6 +61,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/pixmaps/gdado.png
 %_datadir/pixmaps/gdado.png
 
 %changelog
+* Thu Nov 21 2024 Leontiy Volodin <lvol@altlinux.org> 2.2-alt6.1
+- Fixed build with gcc14.
+
 * Fri Jan 29 2021 Leontiy Volodin <lvol@altlinux.org> 2.2-alt6
 - Fixed build with gcc10.
 
