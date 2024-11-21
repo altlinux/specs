@@ -24,7 +24,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Low-footprint RDF triple store with SPARQL 1.1 interface
@@ -260,6 +260,9 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %endif
 
 %changelog
+* Thu Nov 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0
 - tracker -> tinysparql
