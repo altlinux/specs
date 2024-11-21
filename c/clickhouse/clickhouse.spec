@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 24.8.5.115
+Version: 24.8.7.41
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -199,7 +199,6 @@ rm -fv %buildroot%_prefix/lib/*.a
 # remove empty debuginfo
 rm -rf %buildroot%_libdir/debug
 
-
 %check
 ./%_cmake__builddir/src/unit_tests_dbms --gtest_filter='-CoordinationTest.TestRotateIntervalChanges:ReadBufferAIOTest.TestReadAfterAIO:WeakHash32.*:Common.ReverseDNS:ParserPRQL/*' %relax
 
@@ -263,6 +262,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Thu Nov 21 2024 Anton Farygin <rider@altlinux.ru> 24.8.7.41-alt1
+- 24.8.5.115 -> 24.8.7.41
+
 * Tue Oct 15 2024 Anton Farygin <rider@altlinux.ru> 24.8.5.115-alt1
 - 24.8.2.3 -> 24.8.5.115
 
