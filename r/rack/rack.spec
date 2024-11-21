@@ -1,5 +1,5 @@
 Name: rack
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: VCV virtual Eurorack host
@@ -27,6 +27,8 @@ BuildRequires: pkgconfig(libssl)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(speexdsp)
+BuildRequires: pkgconfig(rtmidi)
+BuildRequires: pkgconfig(xrandr)
 
 %package devel
 Summary: VCV virtual Eurorack host SDK
@@ -44,6 +46,7 @@ Requires: pkgconfig(libssl)
 Requires: pkgconfig(libzstd)
 Requires: pkgconfig(samplerate)
 Requires: pkgconfig(speexdsp)
+Requires: pkgconfig(rtmidi)
 
 %description
 Rack is the host application for the VCV virtual Eurorack
@@ -110,6 +113,9 @@ install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
 %_datadir/rack/sdk
 
 %changelog
+* Thu Nov 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.0-alt1
+- 2.6.0 released
+
 * Mon May 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.2-alt1
 - 2.5.2 released
 
