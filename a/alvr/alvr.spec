@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.11.1
-Release: alt4
+Release: alt5
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -14,6 +14,7 @@ Source2: %name-%version-vendor.tar
 Source10: alvr.sh
 
 Patch1: use-static-x264-ffmpeg.patch
+Patch2: alvr-default-settings.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
@@ -42,7 +43,7 @@ BuildRequires: nasm
 BuildRequires: nvidia-cuda-devel
 BuildRequires: openxr-devel
 
-# fixed build ffmpeg whith CUDA
+# fixed build ffmpeg with CUDA
 BuildRequires: gcc11-c++
 
 Requires: typelib(GLib)
@@ -57,6 +58,7 @@ Requires: libvulkan1
 Requires: libx264
 Requires: alvr-companion
 Requires: openxr
+Requires: android-tools
 
 ExclusiveArch: x86_64
 
@@ -71,7 +73,7 @@ a standalone headset such as Pico, Gear VR or Oculus Go/Quest.
 
 %prep
 %setup -a1 -a2
-%patch1 -p1
+%autopatch -p1
 
 mv vendor/ffmpeg deps
 
@@ -97,8 +99,8 @@ EOF
 sed -i 's:../../../lib64/libalvr_vulkan_layer.so:libalvr_vulkan_layer.so:' alvr/vulkan_layer/layer/alvr_x86_64.json
 
 %build
-# export CARGO_PROFILE_RELEASE_LTO=true
-# export RUSTUP_TOOLCHAIN=stable
+export CARGO_PROFILE_RELEASE_LTO=true
+export RUSTUP_TOOLCHAIN=stable
 export CARGO_TARGET_DIR=target
 export CARGO_NET_OFFLINE=true
 
@@ -130,6 +132,7 @@ install -Dm644 %_alvrBuildDir/alvr_drm_lease_shim.so -t %buildroot%_libdir/%name
 
 # OpenVR Driver
 install -Dm644 %name/xtask/resources/driver.vrdrivermanifest -t %buildroot%_libdir/%name/
+install -Dm644 openvr/bin/linux64/libopenvr_api.so -t %buildroot%_libdir/%name/bin/linux64/
 install -Dm644 %_alvrBuildDir/libalvr_server_openvr.so %buildroot%_libdir/%name/bin/linux64/driver_alvr_server.so
 
 # Vulkan Layer
@@ -157,6 +160,13 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Fri Nov 22 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt5
+- added auto-connection via USB
+- used bitrate: 40Mbps by default
+- used balanced quality by default
+- used TCP protocol by default
+- greatly improved image quality around the edges
+
 * Wed Nov 20 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt4
 - added alvr helper script
 - simplified initial setup
