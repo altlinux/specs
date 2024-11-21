@@ -2,7 +2,8 @@
 %def_without old_make_initrd
 
 Name: ima-evm-integrity-check
-Version: 0.7.6
+Epoch: 1
+Version: 0.7.7
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -24,7 +25,13 @@ Requires: make-initrd >= 2.0.0
 
 Requires: /usr/bin/chattr
 
-Conflicts: cert-distro-updater
+Obsoletes: cert-distro-updater < %EVR
+Provides: cert-distro-updater = %EVR
+Conflicts: cert-distro-updater < %EVR
+
+Obsoletes: updater < %EVR
+Provides: updater = %EVR
+Conflicts: updater < %EVR
 
 %description
 This package make use of the IMA and EVM technologies from the Linux
@@ -53,7 +60,7 @@ Requires: coreutils grep kmod mount
 
 Requires: keyutils ima-evm-utils
 Requires: filesystem >= 2.3.13-alt1.M80C.1
-Conflicts: cert-distro-updater
+Conflicts: cert-distro-updater < %EVR
 
 %description -n make-initrd-integrity
 Integrity check feature for make-initrd
@@ -103,6 +110,14 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Thu Nov 21 2024 Paul Wolneykien <manowar@altlinux.org> 1:0.7.7-alt1
+- Fix: Don't run update-grub if /etc/sysconfig/grub2 doesn't exist.
+- controls: Return error if specified configuration variable isn't
+  defined anywhere.
+- Fix handling of /boot/boot.conf.
+- Provide next epoch of 'cert-distro-updater' and 'updater' packages
+  to make upgrade possible (+ conflict them).
+
 * Thu Sep 05 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.6-alt1
 - Make the contents of /etc/sysconfig/integrity override values
   set in /etc/integrity/config.

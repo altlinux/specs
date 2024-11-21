@@ -12,8 +12,9 @@
 %{!?_rundir: %global _rundir /run}
 
 Name:     %pname-source
+Epoch:    1
 Version:  0.5.1
-Release:  alt2
+Release:  alt3
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -36,7 +37,9 @@ BuildArch: noarch
 Requires: systemd
 Requires: osec-cronjob >= 1.3.1-alt2
 
-Obsoletes: integ < 0.4.2-alt2
+Obsoletes: integ < %EVR
+Provides:  integ = %EVR
+Conflicts: integ
 
 %description -n %pname
 Osec-based integrity checking script and settings.
@@ -141,6 +144,10 @@ shellcheck %pname -e SC1090,SC1091 -e SC2155,SC2166,SC3043
 %endif
 
 %changelog
+* Wed Nov 20 2024 Paul Wolneykien <manowar@altlinux.org> 1:0.5.1-alt3
+- Provide next epoch of 'integ' package to make upgrade possible
+  (+ conflict it).
+
 * Tue Nov 12 2024 Paul Wolneykien <manowar@altlinux.org> 0.5.1-alt2
 - Fix: Evaluate paths and patterns listed in files.list properly.
 - Moved the temporary virtual directory list file to /run.
