@@ -1,5 +1,5 @@
 Name: easy-rsa
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Simple shell based CA utility
@@ -29,9 +29,11 @@ certificates, including sub-CAs and certificate revokation lists (CRL).
 %install
 mkdir -p %{buildroot}%{_datadir}/%name
 mkdir -p %{buildroot}%{_bindir}
+pushd easyrsa3
 cp openssl-easyrsa.cnf vars.example %{buildroot}%{_datadir}/%name
 cp -r x509-types %{buildroot}%{_datadir}/%name
 mv easyrsa %{buildroot}%{_bindir}/
+popd
 
 # easyrsa supports busybox but it is not required for correct work
 %filter_from_requires /busybox/d
@@ -43,6 +45,9 @@ mv easyrsa %{buildroot}%{_bindir}/
 %{_datadir}/%name
 
 %changelog
+* Thu Nov 21 2024 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
+- new version
+
 * Tue Jun 11 2024 Vladimir Didenko <cow@altlinux.org> 3.2.0-alt1
 - new version
 
