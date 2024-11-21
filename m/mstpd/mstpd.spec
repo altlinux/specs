@@ -2,7 +2,7 @@
 
 Name: mstpd
 Version: 0.1.0
-Release: alt3
+Release: alt4
 
 Summary: STP/RSTP/PVST+/MSTP Spanning Tree Protocol Daemon
 License: GPLv2+
@@ -10,7 +10,7 @@ Group: Development/Other
 URL: https://github.com/mstpd/mstpd.git
 
 Source0: %name-%version.tar
-Requires: bridge-utils
+Patch0: %name-%version-%release.patch
 
 %description
 This package provides a user-space daemon which replaces the STP handling that
@@ -24,11 +24,12 @@ on Linux bridges when MSTP is used.
 
 %prep
 %setup -q
+%patch0 -p1
 sed -i -e 's|mstpdpidfile=.*|mstpdpidfile=/run/mstpd.pid|g' Makefile.am
 
 %build
 %autoreconf
-%configure --with-systemdunitdir=%_unitdir
+%configure --with-systemdunitdir=%_unitdir --with-bashcompletiondir=%_datadir/bash-completion/completions
 %make_build
 
 %install
@@ -51,11 +52,20 @@ rm -fr %buildroot%_libexecdir/mstpctl-utils/mstp_config_bridge
 %_sbindir/bridge-stp
 %_sbindir/mstp_restart
 %config(noreplace) %_sysconfdir/bridge-stp.conf
-%_sysconfdir/bash_completion.d/mstpctl
+%_datadir/bash-completion/completions/mstpctl
 %_unitdir/mstpd.service
 %_libexecdir/mstpctl-utils
 
 %changelog
+* Thu Nov 21 2024 Alexey Shabalin <shaba@altlinux.org> 0.1.0-alt4
+- Replace brctl with ip in bash_completion
+- Remove requires bridge-utils
+- Move bash_completion to /usr/share
+- Backport patches:
+  + netif_utils: fix speeds > 65G
+  + Update bridge_track.c
+  + mstpctl-utils-functions.sh: fix shellcheck warnings
+
 * Mon Sep 11 2023 Oleg Obidin <nofex@altlinux.org> 0.1.0-alt3
 - Remove unnecessary rpm-build-python3 BR
 
