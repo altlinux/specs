@@ -34,7 +34,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt3
+Release: alt4
 Epoch: 1
 %K6init
 
@@ -86,7 +86,7 @@ Patch101: alt-menu-add-tooltip.patch
 Patch102: alt-def-wallpaper-image.patch
 Patch103: alt-wait-drkonqi.patch
 Patch104: alt-def-digital-clock.patch
-#
+Patch105: alt-menu-no-comment.patch
 Patch106: alt-digital-clock-date.patch
 Patch107: alt-freespacenotifier.patch
 Patch108: alt-def-background.patch
@@ -307,11 +307,11 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch1 -p1
 #%patch100 -p1 -b .startkde
-#%patch101 -p1
+%patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
-#
+%patch105 -p1
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
@@ -510,6 +510,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6data/kfontinst/
 %_K6data/konqsidebartng/
 %_K6data/desktop-directories/*
+%_K6data/kxmlgui?/
 %_K6data/solid/actions/*.desktop
 %_K6data/plasma5support/
 %_K6xdgapp/*.desktop
@@ -592,6 +593,10 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.3-alt4
+- exclude comments from menu entries
+- restore menu entries tooltip support
+
 * Wed Nov 20 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.3-alt3
 - add fix against kdebug#490582 (closes: 51942)
 

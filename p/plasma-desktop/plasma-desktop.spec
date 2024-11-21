@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Graphical desktop/KDE
@@ -159,7 +159,7 @@ SDDM breeze theme
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
-#%patch15 -p1
+%patch15 -p1
 %patch16 -p1
 #
 %patch18 -p1
@@ -251,6 +251,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt3
+- restore menu entries tooltip
+
 * Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt2
 - fix package emojier (closes: 52077)
 
