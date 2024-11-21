@@ -6,12 +6,12 @@
 # $ git commit -n --no-post-rewrite -m "update go vendor modules"
 
 Name: clickhouse-backup
-Version: 2.6.1
+Version: 2.6.3
 Release: alt1
 Summary: Tool for easy ClickHouse backup and restore with cloud storages support
 Group: Databases
 License: MIT
-Url: https://github.com/AlexAkulov/clickhouse-backup/
+Url: https://github.com/Altinity/clickhouse-backup
 Source0: %name-%version.tar
 
 ExclusiveArch: %go_arches
@@ -48,6 +48,10 @@ go build -ldflags " \
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Wed Nov 20 2024 Anton Farygin <rider@altlinux.ru> 2.6.3-alt1
+- 2.6.1 -> 2.6.3
+- updated URL
+
 * Mon Sep 23 2024 Anton Farygin <rider@altlinux.ru> 2.6.1-alt1
 - 2.5.20 -> 2.6.1
 
