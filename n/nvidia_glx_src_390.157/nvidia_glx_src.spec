@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt231
+%define pkg_rel alt232
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -112,6 +112,10 @@ Patch11: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova.patch
 Patch12: buildfix_kernel_6.5-handle-get_user_pages-vmas-argument-remova_uvm.patch
 Patch13: buildfix_kernel_6.6.patch
 Patch14: gcc14.patch
+Patch15: gcc14-2.patch
+Patch16: kernel-6.8.patch
+Patch17: kernel-6.10.patch
+Patch18: kernel-6.12.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -198,6 +202,10 @@ fi
 %patch13 -p2
 pwd
 %patch14 -p2
+%patch15 -p2
+%patch16 -p2
+%patch17 -p2
+%patch18 -p2
 rm -rf precompiled
 popd
 
@@ -385,6 +393,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 390.157-alt232
+- add fix against 6.12 kernel
+
 * Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 390.157-alt231
 - fix compile kernel module with gcc-14
 
