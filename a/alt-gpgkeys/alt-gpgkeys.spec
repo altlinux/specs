@@ -1,5 +1,5 @@
 Name: alt-gpgkeys
-Version: 0.8.94
+Version: 0.8.95
 Release: alt1
 
 Summary: ALT GnuPG keys
@@ -98,11 +98,14 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip alt-rpmkeys-checksig \
 %_bindir/alt-rpmkey*
 
 %changelog
+* Thu Nov 21 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.95-alt1
+- Replaced key: morozovaes@ (3A97326D -> 2FE13E3F; see: #43827).
+
 * Tue Nov 19 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.94-alt1
 - Removed keys:
-  + alenka (15077C6A; see #38652);
-  + iakuninaa (A7AAB918; see #42532);
-  + oskiller (1D078CE3; see #45966).
+  + alenka@ (15077C6A; see #38652);
+  + iakuninaa@ (A7AAB918; see #42532);
+  + oskiller@ (1D078CE3; see #45966).
 - Added key: shad@ (63F1AA86; see #50539).
 - Replaced key: zah@ (14E3D59B -> 253C9B29; closes: #44645).
 
@@ -245,8 +248,8 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip alt-rpmkeys-checksig \
 * Fri Dec 08 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.65-alt1
 - Added key: serjigva@ (EAF91A27; see #48351).
 - Removed keys:
-  + kaf (127CA906; see #39627);
-  + x09 (0C16659B; see #34359).
+  + kaf@ (127CA906; see #39627);
+  + x09@ (0C16659B; see #34359).
 
 * Thu Dec 07 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.64-alt1
 - Added keys:
@@ -260,11 +263,11 @@ install -pm755 alt-gpgkey-check alt-gpgkey-strip alt-rpmkeys-checksig \
   + samael@ (EF7EFED2; see #44326);
   + oficerovas@ (6FD53D1E; see #46301).
 - Removed keys:
-  + paksa (1917EAAC; see #44492);
-  + palar (5A300462; see #42968);
-  + prohorp (96AA4A6B; see #43501);
-  + tema (A4B649FF; see #33388);
-  + valentina (46F5A98B; see #37006).
+  + paksa@ (1917EAAC; see #44492);
+  + palar@ (5A300462; see #42968);
+  + prohorp@ (96AA4A6B; see #43501);
+  + tema@ (A4B649FF; see #33388);
+  + valentina@ (46F5A98B; see #37006).
 
 * Fri Nov 10 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.62-alt1
 - Replaced expired key: nbr@ (95781CE0 -> BBCF62CD; closes: #48315).
