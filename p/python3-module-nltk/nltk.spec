@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.9.1
-Release: alt2
+Release: alt3
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
@@ -30,6 +30,7 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter 'twython$'
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+BuildRequires: python3-modules-sqlite3
 %endif
 
 %description
@@ -65,6 +66,9 @@ patch -p1 < %PATCH0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 21 2024 Stanislav Levin <slev@altlinux.org> 3.9.1-alt3
+- Added missing tests dependency on sqlite3.
+
 * Fri Nov 15 2024 Stanislav Levin <slev@altlinux.org> 3.9.1-alt2
 - Backported fix for WordNetLemmatizer (closes: #51985).
 
