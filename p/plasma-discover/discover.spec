@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.2.3
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -286,7 +286,7 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_datadir/metainfo/org.kde.discover.appdata.xml
 #
 %_K6plug/plasma/kcms/systemsettings/kcm_updates.so
-#%_K6data/kpackage/kcms/kcm_updates/
+%_K6data/kxmlgui?/plasmadiscover/
 
 %files kns
 %_K6plug/discover/kns-backend.so
@@ -333,6 +333,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt3
+- fix package kxmlgui files
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt2
 - fix showing application page (closes: 51940)
 
