@@ -1,5 +1,5 @@
 Name: libpjsip
-Version: 2.11
+Version: 2.14.1
 Release: alt1
 
 Summary: Libraries for building embedded/non-embedded VoIP applications
@@ -68,7 +68,6 @@ Header information for:
 find %buildroot%_libdir -type f -name '*.a' -delete
 
 %files
-%doc README.txt
 %_libdir/libpj.so.2
 %_libdir/libpjlib-util.so.2
 %_libdir/libpjmedia-audiodev.so.2
@@ -80,7 +79,7 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_libdir/libpjsip-ua.so.2
 %_libdir/libpjsip.so.2
 %_libdir/libpjsua.so.2
-#_libdir/libpjsua2.so.2
+%_libdir/libpjsua2.so.2
 %_libdir/libresample.so.2
 
 %files devel
@@ -103,6 +102,9 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_pkgconfigdir/libpjproject.pc
 
 %changelog
+* Wed Nov 20 2024 Alexander Danilov <admsasha@altlinux.org> 2.14.1-alt1
+- new version 2.14.1
+
 * Wed Jun 30 2021 Vitaly Lipatov <lav@altlinux.ru> 2.11-alt1
 - new version 2.11 (with rpmrb script) (ALT bug 40295)
 
