@@ -8,7 +8,11 @@
 # 0.21 required
 %def_enable system_libraw
 %def_enable system_lua
+%ifarch %e2k
+%def_disable libavif
+%else
 %def_enable libavif
+%endif
 %def_enable libheif
 %def_enable jxl
 # lensfun a mandatory dependency
@@ -18,7 +22,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -34,6 +38,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
 Patch1: darktable-4.4.0-alt-disable-use-of-gcc-graphite.patch
+Patch2000: darktable-e2k.patch
 Patch3500: darktable-4.6.1-loongarch64.patch
 
 ExcludeArch: %ix86 armh
@@ -101,6 +106,16 @@ light table. It also enables you to develop raw images and enhance them.
 %setup -n %name-%version
 %patch1 -p1
 #%%patch3500 -p1
+%ifarch %e2k
+%patch2000 -p2
+sed -i 's/OpenMP 4\.5 /OpenMP /' CMakeLists.txt
+sed -i 's/__x86_64__/__e2k__/' src/is_supported_platform.h
+sed -i 's/(SEND_ERROR /(STATUS /;s/#error/#warning/' \
+	{,src/external/rawspeed/}cmake/compiler-versions.cmake
+sed -i 's/(VALIDATE_JSON 1)/(VALIDATE_JSON 0)/' CMakeLists.txt
+sed -i '/#pragma omp/{N;N;s/rawspeed_get_number_of_processor_cores()/nthreads/;Tx;s/^/int nthreads = rawspeed_get_number_of_processor_cores();\n/;:x}' src/external/rawspeed/src/librawspeed/{decompressors,interpolators}/*.cpp
+sed -i "/#pragma unroll/d" src/common/fast_guided_filter.h src/iop/channelmixerrgb.c src/develop/noise_generator.h
+%endif
 
 %build
 %ifarch aarch64
@@ -160,6 +175,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Thu Nov 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1.1
+- fixed build for E2K (ilyakurdyukov@)
+
 * Thu Jul 25 2024 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1
 - 4.8.1
 
