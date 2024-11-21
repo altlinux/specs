@@ -3,7 +3,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2-loongarch64
 Version: 20240430
-Release: alt1
+Release: alt2
 Summary: UEFI firmware for loongarch virtual machines
 
 License: BSD-2-Clause-Patent
@@ -69,6 +69,11 @@ build \
 	--pcd gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString=L"UEFI Firmware %version" \
 	%nil
 
+# XXX: qemu since commit 3ed016f525c8010e66be62d3ca6829eaa9b7cfb5 (9.1.0)
+# requires loongarch64 firmware size to be a multipe of 256 Kb
+truncate -s %%256K Build/LoongArchQemu/DEBUG_GCC5/FV/QEMU_EFI.fd
+truncate -s %%256K Build/LoongArchQemu/DEBUG_GCC5/FV/QEMU_VARS.fd
+
 %install
 mkdir -p %buildroot%_datadir/LA64VMF
 install -pm 644 -t %buildroot%_datadir/LA64VMF Build/LoongArchQemu/DEBUG_GCC5/FV/QEMU_EFI.fd
@@ -82,6 +87,10 @@ install -pm 644 -t %buildroot%_datadir/qemu/firmware %SOURCE4
 %_datadir/qemu/firmware/*edk2-loongarch*.json
 
 %changelog
+* Thu Nov 21 2024 Ivan A. Melnikov <iv@altlinux.org> 20240430-alt2
+- make sure firmwire sizes are multiples of 256 Kb,
+  as required by qemu 9.1.0+
+
 * Thu May 02 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240430-alt1
 - edk2 stable20402-231-g0c74aa2073 (commit 0c74aa2073e48b21)
 - edk2-platforms commit 73cfdc4afff3e641:
