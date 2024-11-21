@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Qt stylesheet generation utility for PyQt/PySide
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 21 2024 Anton Vyatkin <toni@altlinux.org> 0.2.4-alt1
+- New version 0.2.4.
+
 * Thu Apr 18 2024 Anton Vyatkin <toni@altlinux.org> 0.2.3-alt1
 - New version 0.2.3.
 
