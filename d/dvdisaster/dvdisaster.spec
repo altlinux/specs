@@ -1,6 +1,6 @@
 Name: dvdisaster
 Version: 0.79.10
-Release: alt2
+Release: alt2.1
 
 Summary: Additional error protection for CD/DVD media
 License: GPL-3.0+
@@ -9,7 +9,7 @@ Group: File tools
 URL: https://dvdisaster.jcea.es
 Source: https://dvdisaster.jcea.es/downloads/dvdisaster-%version.tar.bz2
 Source1: dvdisaster.desktop
-Patch: dvdisaster-0.72.3-alt-libpng15.patch
+Patch: dvdisaster-0.79.10-alt-gcc14.patch
 
 # Automatically added by buildreq on Tue Mar 08 2011
 BuildRequires: bzlib-devel libgtk+2-devel libpng-devel
@@ -32,7 +32,7 @@ Help files for %name.
 
 %prep
 %setup
-#%patch -p2
+%patch -p2
 
 subst 's/\@\$/\$/' GNUmakefile.template
 subst 's/-O2/%optflags/' configure
@@ -93,6 +93,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Thu Nov 21 2024 Leontiy Volodin <lvol@altlinux.org> 0.79.10-alt2.1
+- Fixed build with gcc14.
+
 * Sat Apr 08 2023 Michael Shigorin <mike@altlinux.org> 0.79.10-alt2
 - E2K: explicitly disable SSE2
 
