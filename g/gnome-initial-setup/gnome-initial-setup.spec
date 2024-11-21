@@ -9,13 +9,15 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: https://gitlab.gnome.org/GNOME/gnome-initial-setup
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-initial-setup.git
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -114,6 +116,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Thu Nov 21 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
+- 47.2
+
 * Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 

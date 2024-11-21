@@ -38,7 +38,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -46,8 +46,9 @@ Group: System/Libraries
 License: LGPL-2.0-or-later
 Url: http://www.gtk.org
 
-%if_enabled snapshot
 Vcs: https://gitlab.gnome.org/GNOME/gtk.git
+
+%if_enabled snapshot
 Source: %_name-%version.tar
 %else
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
@@ -418,6 +419,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Thu Nov 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.6-alt1
+- 4.16.6
+
 * Sun Nov 03 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.5-alt1
 - 4.16.5
 
