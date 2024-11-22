@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: gmrun
 Version: 1.4w
-Release: alt1
+Release: alt2
 Summary: Small GTK based 'Run application'
 
 Group: System/X11
 License: Unlicense
-Url: https://github.com/WdesktopX/gmrun
+Url: https://github.com/wdlkmpx/gmrun
+Vcs: https://github.com/wdlkmpx/gmrun.git
 Source: %name-%version.tar
 
-Packager: Afanasov Dmitry <ender@altlinux.org>
-
-BuildRequires: gcc-c++ pkgconfig gettext
+BuildRequires: gcc-c++ gettext
 BuildRequires: libgtk+3-devel >= 3.14
 
 %description
@@ -20,6 +20,8 @@ A full featured 'Run' application, GTK based.
 
 %prep
 %setup
+# follow icon paths policy
+sed -i 's|pixmaps|icons/hicolor/64x64/apps|g' data/Makefile
 
 %build
 # xdg paths are disable for compatibility with old gmrun history
@@ -32,17 +34,20 @@ A full featured 'Run' application, GTK based.
 
 %install
 %makeinstall_std
+%find_lang %name
 
-%files
+%files -f %name.lang
 %_bindir/%name
 %_sysconfdir/%{name}rc
 %_datadir/applications/%name.desktop
-%_datadir/locale/*/LC_MESSAGES/%name.mo
 %_man1dir/%name.*
-%_pixmapsdir/%name.*
+%_iconsdir/hicolor/64x64/apps/%name.png
 %doc AUTHORS README.md ChangeLog
 
 %changelog
+* Fri Nov 22 2024 Andrew Savchenko <bircoph@altlinux.org> 1.4w-alt2
+- Various QA and packaging fixes.
+
 * Sat Jul 16 2022 Andrew Savchenko <bircoph@altlinux.org> 1.4w-alt1
 - Version bump (Closes: 42988).
 - Move to new upstream.
