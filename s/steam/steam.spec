@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.82
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -11,7 +11,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: %ix86
 
-Source0: https://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
+Source0: https://repo.steampowered.com/%name/archive/stable/%{name}_%version.tar.gz
 Source1: %{name}_install_agreement.txt
 Source2: %name-nm.rules
 Source3: %name.watch
@@ -29,6 +29,7 @@ Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
 Requires: libcurl
 Requires: libdbusmenu-gtk2
+Requires: libEGL
 Requires: libGL
 Requires: libnm
 Requires: libnsl1
@@ -75,6 +76,9 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Fri Nov 22 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt2
+- Add require on libEGL for VR (ALT #52087)
+
 * Sat Oct 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt1
 - Version 1.0.0.82
 
