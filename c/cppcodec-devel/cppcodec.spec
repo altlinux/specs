@@ -9,14 +9,15 @@
 
 Name: cppcodec-devel
 Version: 0.2
-Release: alt1
+Release: alt2
 Buildarch: noarch
 
 Summary: C++11 library codec for base64, base64url, base32, base32hex and hex
 
 Group: System/Libraries
 License: MIT
-Url: https://github.com/Nitrokey/libnitrokey
+Url: https://github.com/tplgy/cppcodec
+Vcs: https://github.com/tplgy/cppcodec.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -73,5 +74,8 @@ sed 's/PROJECT_VERSION 0.1/PROJECT_VERSION 0.2/' -i CMakeLists.txt
 %doc example/*.cpp
 
 %changelog
+* Fri Nov 22 2024 Andrew Savchenko <bircoph@altlinux.org> 0.2-alt2
+- Fix url/cvs.
+
 * Sun Nov 10 2024 Andrew Savchenko <bircoph@altlinux.org> 0.2-alt1
 - Initial version.
