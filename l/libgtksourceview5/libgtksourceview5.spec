@@ -1,6 +1,7 @@
 %def_disable snapshot
 %define _name gtksourceview
 %define ver_major 5.14
+%define namespace GtkSource
 %define api_ver 5
 
 %def_disable static
@@ -20,7 +21,7 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -117,10 +118,10 @@ the functionality of the installed GtkSourceView library.
 
 %build
 %meson \
-    %{?_enable_doc:-Ddocumentation=true} \
-    %{?_disable_introspection:-Dgir=false} \
-    %{?_disable_vala:-Dvapi=false} \
-    %{?_enable_installed_tests:-Dinstall-tests=true}
+    %{subst_enable_meson_bool doc documentation} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool installed_tests install-tests}
 %nil
 %meson_build
 
@@ -155,10 +156,10 @@ dbus-run-session xvfb-run %__meson_test
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GtkSource-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GtkSource-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled installed_tests
@@ -170,6 +171,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 5.14.2-alt1
+- 5.14.2
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 5.14.1-alt1
 - 5.14.1
 

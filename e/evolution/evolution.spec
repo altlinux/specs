@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -38,8 +38,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %{?_enable_installed_tests:%add_python3_path %_libexecdir/%name/installed-tests}
 
 Provides: camel
-
-%define glib_ver 2.66.0
+# G_CONNECT_DEFAULT
+%define glib_ver 2.74.0
 %define gtk_ver 3.22
 %define clutter_gtk_ver 0.91.8
 %define eds_ver %version
@@ -271,6 +271,9 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 
 
 %changelog
+* Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.2-alt1
+- 3.54.2
+
 * Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.1-alt1
 - 3.54.1
 
