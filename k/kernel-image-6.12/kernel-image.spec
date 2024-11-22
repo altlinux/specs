@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -577,6 +577,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Nov 22 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.1-alt1
+- v6.12.1 (2024-11-22).
+- config: Enable CONFIG_NVME_HWMON=y.
+- config: Enable CONFIG_HWMON=y.
+
 * Mon Nov 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt1
 - Update to v6.12 (2024-11-17).
 
