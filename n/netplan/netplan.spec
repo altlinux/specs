@@ -1,15 +1,25 @@
 Name:    netplan
-Version: 0.106
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Backend-agnostic network configuration in YAML
 License: GPL-3.0
 Group:   System/Configuration/Networking
-URL:     https://github.com/CanonicalLtd/netplan
+URL:     https://github.com/canonical/netplan
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-meson
+BuildRequires:  meson
+BuildRequires:  python3-module-pyflakes
+BuildRequires:  python3-module-pycodestyle
+BuildRequires:  python3-module-coverage
+BuildRequires:  pytest3
+BuildRequires:  python3-dev
+BuildRequires:  python3(cffi)
+BuildRequires:  pkgconfig(cmocka)
+
+BuildRequires:  python3(setuptools)
 BuildRequires:  pkgconfig(bash-completion)
 BuildRequires:  pkgconfig(systemd)
 BuildRequires:  pkgconfig(glib-2.0)
@@ -19,31 +29,43 @@ BuildRequires:  pkgconfig(uuid)
 BuildRequires:  %_bindir/pandoc
 
 Requires:       iproute2
+Requires:       python3(cffi)
 
 %add_python3_path %_datadir/%name
 
 Source:  %name-%version.tar
+
+Patch1: netplan-1.1.1-alt-meson.patch
+Patch2: netplan-1.1.1-alt-libexec.patch
 
 %description
 %summary
 
 %prep
 %setup -n %name-%version
+%autopatch -p1
 
 %build
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std DOCDIR=%_docdir/%name-%version LIBDIR=%_libdir
+%meson_install
+if [ '%python3_sitelibdir' != '%python3_sitelibdir_noarch' ]; then
+    mv %buildroot%python3_sitelibdir_noarch/%name/* -t %buildroot%python3_sitelibdir/%name
+    rmdir %buildroot%python3_sitelibdir_noarch/%name
+fi
 mkdir -p %buildroot%_sysconfdir/%name
 
 %files
+%python3_sitelibdir/%name
 %_sbindir/%name
 %_gen_dir/%name
-/lib/%name
-%_libdir/libnetplan.so.0.0
+%_libexecdir/%name
+%_libdir/libnetplan.so.1
 %_datadir/bash-completion/completions/%name
 %_datadir/%name
+%_defaultdocdir/%name
 %_datadir/dbus-1/system-services/io.netplan.Netplan.service
 %_datadir/dbus-1/system.d/io.netplan.Netplan.conf
 %dir %_sysconfdir/%name
@@ -52,6 +74,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Wed Nov 20 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt1
+- New version 1.1.1 (Fixes: CVE-2022-4968).
+
 * Tue Jul 02 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.106-alt2
 - Fix rebuild using %%_gen_dir
 
