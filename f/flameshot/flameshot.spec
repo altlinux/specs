@@ -2,13 +2,14 @@
 
 Name: flameshot
 Version: 12.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Powerful yet simple to use screenshot software
 
 License: GPLv3
 Group: Graphics
-Url: https://github.com/lupoDharkael/flameshot
+URL: https://flameshot.org
+VCS: https://github.com/flameshot-org/flameshot
 
 Source: %name-%version.tar
 
@@ -62,6 +63,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_man1dir/flameshot.1.xz
 
 %changelog
+* Fri Nov 22 2024 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt2.1
+- Fixed URL.
+
 * Sun Feb 12 2023 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt2
 - Added support of wayland clipboard.
 
