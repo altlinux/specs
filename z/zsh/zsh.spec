@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.9
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -45,6 +45,16 @@ mechanism, and a lots of other features.
 rm config.guess config.sub
 
 %build
+# Make feature tests compatible with -Werror=implicit-int.
+subst 's/^[[:space:]]*main()/int main()/' aczsh.m4 configure.ac
+subst 's/\[main()/[int main()/' configure.ac
+subst 's/^fred () { }/int fred (void) { return 2024; }/' configure.ac
+# ...including some pre-C89 feat. test code.
+subst 's/^[[:space:]]*main(argc, argv)/int main(argc, argv)/' configure.ac
+
+# Make feature tests compatible with -Werror=incompatible-pointer-types.
+subst 's/char [*][*]test = /char **test = (char **)/' configure.ac
+
 %autoreconf
 
 # Disable libnsl/NIS support.
@@ -151,6 +161,9 @@ fi
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Fri Nov 22 2024 Arseny Maslennikov <arseny@altlinux.org> 1:5.9-alt3
+- Fix auxiliary feature test code to get rid of FTBFS condition.
+
 * Fri Aug 25 2023 Arseny Maslennikov <arseny@altlinux.org> 1:5.9-alt2
 - _hasher: complete `hsh --predb-prog`.
 
