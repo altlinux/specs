@@ -1,5 +1,5 @@
 Name: nvidia-modprobe
-Version: 550.90.07
+Version: 550.135
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -40,6 +40,9 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD STRIP_CMD=true NV_KEEP_UNSTRIPPED_BINA
 
 
 %changelog
+* Fri Nov 22 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt1
+- new version
+
 * Thu Jun 06 2024 Sergey V Turchin <zerg@altlinux.org> 550.90.07-alt1
 - new version
 

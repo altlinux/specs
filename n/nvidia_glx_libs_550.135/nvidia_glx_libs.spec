@@ -16,8 +16,8 @@
 %endif
 
 %define nv_version 550
-%define nv_release 127
-%define nv_minor   05
+%define nv_release 135
+%define nv_minor   %nil
 %define pkg_rel alt1
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -259,6 +259,9 @@ done
 %endif
 
 %changelog
+* Fri Nov 22 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt1
+- new version
+
 * Sat Nov 02 2024 Sergey V Turchin <zerg@altlinux.org> 550.127.05-alt1
 - new version
 
