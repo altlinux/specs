@@ -4,7 +4,7 @@
 
 Name: %oname
 Version: 0.10.2
-Release: alt2
+Release: alt3
 Summary: Python bindings for the liblo OSC library
 
 License: GPLv2+
@@ -13,6 +13,7 @@ URL: http://das.nasophon.de/pyliblo/
 
 VCS: https://github.com/bonktree/pyliblo
 Source0:        %name-%version.tar
+Patch1: 0001-liblo.pyx-quelch-Wincompatible-pointer-types.patch
 
 BuildRequires:  gcc
 BuildRequires:  liblo-devel
@@ -52,6 +53,7 @@ This package contains the command line utilities send_osc and dump_osc.
 
 %prep
 %setup
+%autopatch -p1
 find -type f -exec sed -i '1s=^#!/usr/bin/\(python\|env python\)[23]\?=#!%{__python3}=' {} +
 
 # Remove hashbang and executable bit from example scripts.
@@ -74,6 +76,9 @@ chmod -x examples/*
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Nov 23 2024 Arseny Maslennikov <arseny@altlinux.org> 0.10.2-alt3
+- Fix compatibility with GCC 14 default warnings.
+
 * Tue Dec 19 2023 Arseny Maslennikov <arseny@altlinux.org> 0.10.2-alt2
 - Make another attempt to fix compatibility with Cython > 3.
 
