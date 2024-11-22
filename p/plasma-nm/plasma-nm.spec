@@ -1,5 +1,5 @@
 %define rname plasma-nm
-%def_disable libreswan
+%def_enable libreswan
 
 %ifarch %not_qt6_qtwebengine_arches
 %def_disable qtwebengine
@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.2.3
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -277,6 +277,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Fri Nov 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt2
+- require NetworkManager-libreswan for libreswan module
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 
