@@ -58,7 +58,7 @@ BuildRequires: jpackage-default
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20210413
+%global addver  .v20240826
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -67,14 +67,14 @@ BuildRequires: jpackage-default
 %bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.40
-Release:        alt1_2jpp11
+Version:        9.4.56
+Release:        alt1
 Summary:        Java Webserver and Servlet Container
 
-# Jetty is dual licensed under both ASL 2.0 and EPL 1.0, see NOTICE.txt
-License:        ASL 2.0 or EPL-1.0
-URL:            http://www.eclipse.org/jetty/
-Source0:        https://github.com/eclipse/%{name}.project/archive/%{name}-%{version}%{addver}.tar.gz
+# Jetty is dual licensed under both Apache-2.0 and EPL 1.0, see NOTICE.txt
+License:        Apache-2.0 or EPL-1.0
+URL:            https://jetty.org/
+Source0:        %{name}-%{version}%{addver}.tar.gz
 Source1:        jetty.sh
 Source3:        jetty.logrotate
 Source5:        %{name}.service
@@ -222,7 +222,7 @@ Obsoletes:      %{name}-hazelcast < 9.4.18-1
 Obsoletes:      %{name}-infinispan < 9.4.18-1
 # Eclipse no longer available (Added in F31)
 Obsoletes:      %{name}-osgi-alpn < 9.4.18-1
-Obsoletes:      %{name}-osgi-boot < 9.4.18-1
+Obsoletes:      %{name}-osgi-boot < 9.4.18-1v20240826
 Obsoletes:      %{name}-osgi-boot-jsp < 9.4.18-1
 Obsoletes:      %{name}-osgi-boot-warurl < 9.4.18-1
 # Spring framework removed from Fedora (Added in F32)
@@ -267,7 +267,6 @@ Obsoletes:      %{name}-http2-http-client-transport < 9.4.20-1
 Obsoletes:      %{name}-http2-server < 9.4.20-1
 Obsoletes:      %{name}-nosql < 9.4.20-1
 %endif
-Source44: import.info
 Source45: jetty.init
 
 %description
@@ -364,7 +363,7 @@ Obsoletes:      %{name}-httpservice < 9.4.18-1
 Group: Networking/WWW
 Summary:        util module for Jetty
 # Utf8Appendable.java is additionally under MIT license
-License:        (ASL 2.0 or EPL-1.0) and MIT
+License:        (Apache-2.0 or EPL-1.0) and MIT
 
 %description    util
 %{extdesc} %{summary}.
@@ -648,14 +647,14 @@ Summary:        jstl module for Jetty
 Group: Development/Java
 Summary:        Javadoc for %{name}
 # some MIT-licensed code (from Utf8Appendable) is used to generate javadoc
-License:        (ASL 2.0 or EPL-1.0) and MIT
+License:        (Apache-2.0 or EPL-1.0) and MIT
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{name}.project-%{name}-%{version}%{addver}
+%setup -n jetty.project-jetty-%{version}%{addver}
 
 %patch1 -p1
 %patch2 -p1
@@ -767,6 +766,12 @@ cp %{SOURCE6} .
 sed -i '/<SystemProperty name="jetty.state"/d' \
     jetty-home/src/main/resources/etc/jetty-started.xml
 
+# Remove org.apache.directory.api support
+%pom_remove_dep :api-ldap-schema-data jetty-jaas
+%pom_remove_dep :api-ldap-model jetty-jaas
+%pom_remove_dep :api-util jetty-jaas
+%pom_remove_dep :api-asn1-api jetty-jaas
+
 %if %{with jp_minimal}
 # remote-resources only copies about.html
 %pom_remove_plugin :maven-remote-resources-plugin
@@ -774,6 +779,8 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_remove_plugin :maven-assembly-plugin
 # only useful when tests are enabled (copies test deps)
 %pom_remove_plugin :maven-dependency-plugin jetty-client
+%pom_xpath_remove "pom:dependency[pom:artifactId='testcontainers-bom']"
+%pom_xpath_remove "pom:dependency[pom:artifactId='infinispan-bom']"
 
 %pom_disable_module jetty-ant
 %pom_disable_module jetty-http2
@@ -1046,6 +1053,12 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Thu Nov 21 2024 Andrey Cherepanov <cas@altlinux.org> 9.4.56-alt1
+- New version.
+- Change URL to https://jetty.org/
+- Security fixes: CVE-2021-34429, CVE-2022-2047, CVE-2023-26048, CVE-2023-26049,
+  CVE-2023-40167, CVE-2023-41900, CVE-2024-22201
+
 * Sun Feb 13 2022 Igor Vlasenko <viy@altlinux.org> 9.4.40-alt1_2jpp11
 - do not package init script in minimal version (closes: 41882)
 
