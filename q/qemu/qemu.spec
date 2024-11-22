@@ -151,7 +151,7 @@
 
 Name: qemu
 Version: 9.1.1
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -698,6 +698,9 @@ Requires: seabios seavgabios edk2-ovmf libseccomp qboot \
 %%endif \
 %%if "%%{1}" == "aarch64" \
 Requires: edk2-aarch64 \
+%%endif \
+%%if "%%{1}" == "loongarch" \
+Requires: edk2-loongarch64 >= 20240430-alt2 \
 %%endif \
 %%if "%%{1}" == "ppc" \
 Requires: seavgabios \
@@ -1395,6 +1398,10 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Thu Nov 21 2024 Ivan A. Melnikov <iv@altlinux.org> 9.1.1-alt2
+- qemu-system-loongarch64-core: require recent release of
+  edk2-loongarch64 that fixes firmware alignment issues.
+
 * Mon Nov 18 2024 Alexey Shabalin <shaba@altlinux.org> 9.1.1-alt1
 - 9.1.1
 
