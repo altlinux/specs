@@ -4,7 +4,7 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name-%api_ver_major
-%define ver_major 7.5
+%define ver_major 7.6
 %define namespace Granite
 %define api_ver_major 7
 %define api_ver 7.0
@@ -16,13 +16,14 @@ Release: alt1
 
 Summary: Extension of GTK4 libraries
 Group: System/Libraries
-License: LGPL-3.0
+License: LGPL-3.0-or-later
 Url: https://github.com/elementary/%_name
+
+Vcs: https://github.com/elementary/granite.git
 
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/elementary/granite.git
 Source: %_name-%version.tar
 %endif
 
@@ -130,6 +131,9 @@ GObject introspection devel data for the Granite library.
 
 
 %changelog
+* Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 7.6.0-alt1
+- 7.6.0
+
 * Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 7.5.0-alt1
 - 7.5.0
 
