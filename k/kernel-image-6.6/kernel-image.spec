@@ -3,7 +3,7 @@ Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.62
+%define kernel_sublevel	.63
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -575,6 +575,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Nov 22 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.63-alt1
+- v6.6.63 (2024-11-22).
+
 * Sun Nov 17 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.62-alt1
 - v6.6.62 (2024-11-17).
 
