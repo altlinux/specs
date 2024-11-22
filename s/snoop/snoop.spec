@@ -2,8 +2,8 @@
 %define xdg_name de.philippun1.Snoop
 
 Name: snoop
-Version: 0.4
-Release: alt2
+Version: 0.4.1
+Release: alt1
 
 Summary: Snoop through your files
 License: GPL-3.0-or-later
@@ -16,13 +16,11 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
 BuildRequires: vala
-BuildRequires: blueprint-compiler
-BuildRequires: libgtk4-devel
-BuildRequires: libadwaita-gir-devel
-BuildRequires: libadwaita-devel
-BuildRequires: libgtksourceview5-devel
+BuildRequires: pkgconfig(blueprint-compiler)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(gtksourceview-5)
 
 %description
 %summary.
@@ -48,6 +46,9 @@ BuildRequires: libgtksourceview5-devel
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Nov 22 2024 Alexey Volkov <qualimock@altlinux.org> 0.4.1-alt1
+- New version 0.4.1
+
 * Mon Nov 11 2024 Alexey Volkov <qualimock@altlinux.org> 0.4-alt2
 - Fix license and group
 
