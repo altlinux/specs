@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -16,9 +16,6 @@ Group: Sound
 Url: https://www.strawberrymusicplayer.org
 
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
-
-Provides: bundled(SPMediaKeyTap)
-Provides: bundled(gstfastspectrum)
 
 Requires: gst-plugins-good1.0 vlc-mini
 
@@ -88,14 +85,15 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %files
 %doc COPYING Changelog README.md
 %_bindir/strawberry
-%_bindir/strawberry-tagreader
 %_datadir/metainfo/org.strawberrymusicplayer.strawberry.appdata.xml
 %_desktopdir/org.strawberrymusicplayer.strawberry.desktop
 %_iconsdir/hicolor/*/apps/strawberry.*
 %_man1dir/strawberry.1.*
-%_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Fri Nov 22 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.1-alt1
+- New version 1.2.1.
+
 * Mon Sep 23 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt1
 - New version 1.2.0.
 - Removed qt5 support (by upstream).
