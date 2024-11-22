@@ -1,6 +1,6 @@
 Name: iaito
 Version: 5.9.8
-Release: alt1
+Release: alt2
 
 Summary: GUI for radare2
 License: GPLv3
@@ -43,6 +43,9 @@ install -pm0644 -D src/iaito.1 %buildroot%_man1dir/iaito.1
 %_man1dir/iaito.1*
 
 %changelog
+* Fri Nov 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.8-alt2
+- backported fix for null deref in codemeta_new
+
 * Wed Nov 20 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.8-alt1
 - 5.9.8 released
 
