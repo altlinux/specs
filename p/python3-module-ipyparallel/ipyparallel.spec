@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ipyparallel
 
-%def_without check
+%def_with check
 %def_with bootstrap
 
 Name: python3-module-%oname
-Version: 8.8.0
+Version: 9.0.0
 Release: alt1
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
@@ -90,7 +90,7 @@ mv %buildroot%_prefix%_sysconfdir %buildroot%_sysconfdir
 
 %check
 export TMPDIR=/tmp
-%pyproject_run_pytest -v --color=no
+%pyproject_run_pytest -v --color=no -k "not test_disambiguate_ip"
 
 %files
 %doc *.md
@@ -105,6 +105,9 @@ export TMPDIR=/tmp
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Nov 22 2024 Anton Vyatkin <toni@altlinux.org> 9.0.0-alt1
+- New version 9.0.0.
+
 * Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 8.8.0-alt1
 - New version 8.8.0.
 
