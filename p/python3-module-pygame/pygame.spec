@@ -4,16 +4,15 @@
 
 Name: python3-module-pygame
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
 
 Group: Development/Python3
 License: LGPL-2.1
-Url: https://www.pygame.org
+Url: https://pypi.org/project/pygame
 
-# Source-url: https://github.com/pygame/pygame/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: pygame-2.1.0-docs.patch
 
@@ -25,10 +24,13 @@ BuildRequires: libfreetype-devel
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel
 BuildRequires: libjpeg-devel libpng-devel libportmidi-devel
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 BuildRequires: python3-module-sphinx
 
 %if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy
 BuildRequires: libvorbis
 BuildRequires: fonts-ttf-xorg
 BuildRequires: fonts-ttf-dejavu
@@ -37,7 +39,6 @@ BuildRequires: fonts-ttf-dejavu
 Requires: libSDL >= 1.2.7
 
 %add_python3_req_skip AppKit Foundation py2app Numeric opencv
-
 
 %description
 pygame is a Python wrapper module for the SDL multimedia library, written by
@@ -92,12 +93,18 @@ sed -i '811a\ \ \ \ @unittest.skip("https://github.com/pygame/pygame/issues/4274
 %ifarch %ix86
 export CFLAGS="-msse3"
 %endif
-%python3_build
+export PYGAME_DETECT_AVX2=1
+%pyproject_build
 python3 setup.py docs
 
 %install
-%python3_install
+%pyproject_install
 sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pygame-doc-%version"@' %buildroot%python3_sitelibdir/%oname/docs/__main__.py
+
+%if_without check
+# else remove in check section
+rm -rv %buildroot%python3_sitelibdir/%oname/tests
+%endif
 
 %check
 export SDL_VIDEODRIVER=dummy
@@ -105,18 +112,24 @@ export SDL_AUDIODRIVER=disk
 export LANG=en_US.UTF-8
 export PYTHONPATH=%buildroot%python3_sitelibdir
 python3 -m pygame.tests -v --exclude opengl --time_out 300
+# Clean up from tests
+rm -rv %buildroot%python3_sitelibdir/%oname/tests
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files doc
 %doc docs/.
 
 %files devel
-%python3_includedir/%oname/
-
+%python3_includedir/%oname
 
 %changelog
+* Fri Nov 22 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2
+- Built with PYGAME_DETECT_AVX2=1 (Closes: #52126).
+- Built without tests.
+
 * Tue Oct 01 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
 - Automatically updated to 2.6.1.
 
