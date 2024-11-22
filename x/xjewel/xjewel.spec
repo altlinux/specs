@@ -1,6 +1,6 @@
 Name: xjewel
 Version: 1.6
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: An X Window System game of falling jewel blocks
@@ -21,6 +21,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Dec 13 2009
 BuildRequires: imake libX11-devel libXext-devel xorg-cf-files
+BuildRequires: gcc13
 
 %description
 Xjewel is an X Window System game much like Domain/Jewelbox
@@ -37,6 +38,8 @@ to get jewels in patterns of three when they come to rest.
 %patch3 -p1
 
 %build
+%set_gcc_version 13
+
 xmkmf
 make "RPM_OPT_FLAGS=%optflags"
 
@@ -58,6 +61,9 @@ install -pDm644 %SOURCE4 %buildroot%_liconsdir/%name.xpm
 %_liconsdir/*
 
 %changelog
+* Wed Nov 20 2024 Ilya Mashkin <oddity@altlinux.ru> 1:1.6-alt7
+- Fix FTBFS
+
 * Wed Feb 22 2012 Michael Shigorin <mike@altlinux.org> 1:1.6-alt6
 - added Arch patch by Anton Bazhenov to fix font/kbd issues
   (closes: #26920)
