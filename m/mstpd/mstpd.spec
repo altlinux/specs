@@ -2,7 +2,7 @@
 
 Name: mstpd
 Version: 0.1.0
-Release: alt4
+Release: alt5
 
 Summary: STP/RSTP/PVST+/MSTP Spanning Tree Protocol Daemon
 License: GPLv2+
@@ -57,7 +57,7 @@ rm -fr %buildroot%_libexecdir/mstpctl-utils/mstp_config_bridge
 %_libexecdir/mstpctl-utils
 
 %changelog
-* Thu Nov 21 2024 Alexey Shabalin <shaba@altlinux.org> 0.1.0-alt4
+* Fri Nov 22 2024 Alexey Shabalin <shaba@altlinux.org> 0.1.0-alt5
 - Replace brctl with ip in bash_completion
 - Remove requires bridge-utils
 - Move bash_completion to /usr/share
