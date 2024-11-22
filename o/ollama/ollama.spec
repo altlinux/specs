@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.3.14
+Version: 0.4.3
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -23,14 +23,11 @@ Requires: libcuda
 
 ExclusiveArch: aarch64 x86_64
 Source: %name-%version.tar
-Source1: llama.cpp-0.tar
-Source2: kompute-0.tar
 Source3: ollama-user.conf
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: git-core
 BuildRequires: golang
 %if_with cuda
 BuildRequires: gcc12-c++
@@ -41,19 +38,11 @@ BuildRequires: nvidia-cuda-devel-static
 %summary.
 Using llama.cpp backend.
 
+Note: You should have at least 8 GB of RAM available to run the 7B models,
+16 GB to run the 13B models, and 32 GB to run the 33B models.
+
 %prep
 %setup
-tar xf %SOURCE1 -C llm
-tar xf %SOURCE2 -C llm/llama.cpp/ggml/src
-# Build process requires git repo to repeatedly patch and restore different
-# modifications to llama.cpp
-cd llm/llama.cpp
-git init -q
-git config user.name "$USER"
-git config user.email "$USER"
-git add -Af .
-git commit -q -m "$PWD"
-git tag "%version-%release"
 
 %build
 export NPROCS="%__nprocs"
@@ -65,6 +54,7 @@ export OLLAMA_SKIP_PATCHING=1
 export OLLAMA_CUSTOM_CUDA_DEFS="-DCMAKE_CUDA_HOST_COMPILER=gcc-12"
 export CUDA_LIB_DIR=%_libdir
 %endif
+export GOFLAGS='-buildmode=pie'
 go generate ./...
 go build -v \
 	-buildmode=pie \
@@ -79,6 +69,8 @@ install -Dpm644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
 # HTTP server on 127.0.0.1:11434
 install -Dpm644 .gear/%name.service -t %buildroot%_unitdir
 mkdir -p %buildroot%_localstatedir/%name
+install -Dpm644 models-list.txt tags-list.txt -t %buildroot%_datadir/ollama
+install -Dpm644 .gear/completions %buildroot%_datadir/bash-completion/completions/ollama
 
 %check
 go test ./...
@@ -97,11 +89,17 @@ go test ./...
 %define _customdocdir %_docdir/%name
 %doc LICENSE README.md docs examples
 %_bindir/ollama
+%_datadir/ollama
+%_datadir/bash-completion/completions/ollama
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Fri Nov 22 2024 Vitaly Chikunov <vt@altlinux.org> 0.4.3-alt1
+- Update to v0.4.3 (2024-11-21).
+- Add bash-completion support.
+
 * Sun Oct 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.3.14-alt1
 - Update to v0.3.14 (2024-10-17).
 
