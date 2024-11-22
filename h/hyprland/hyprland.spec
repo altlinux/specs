@@ -1,7 +1,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.45.0
+Version: 0.45.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -122,6 +122,9 @@ subst '/generateVersion\.sh/d' meson.build
 %_includedir/%name
 
 %changelog
+* Thu Nov 21 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.2-alt1
+- new version 0.45.2 (with rpmrb script)
+
 * Sun Nov 10 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.0-alt1
 - new version 0.45.0 (with rpmrb script)
 
