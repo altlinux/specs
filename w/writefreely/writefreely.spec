@@ -3,8 +3,8 @@
 %def_without check
 
 Name: writefreely
-Version: 0.15.0
-Release: alt2
+Version: 0.15.1
+Release: alt1
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
 Summary: Federated blogging from write.as
@@ -127,6 +127,9 @@ echo "writefreely: database migration might be needed, see https://blog.writefre
 %preun_systemd writefreely
 
 %changelog
+* Sat Nov 23 2024 Pavel Nakonechnyi <zorg@altlinux.org> 0.15.1-alt1
+- version 0.15.1
+
 * Sat May 18 2024 Pavel Nakonechnyi <zorg@altlinux.org> 0.15.0-alt2
 - remove sqlite build dependency (closes #50379)
 
