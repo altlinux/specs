@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%{pypi_name}
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 
 Summary: Dynamic version generation
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/dunamai/
-Vcs: https://github.com/mtkennerly/dunamai
+Vcs: https://github.com/mtkennerly/dunamai.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -60,6 +60,9 @@ git config --global user.name "Your Name"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 23 2024 Anton Kurachenko <srebrov@altlinux.org> 1.23.0-alt1
+- New version 1.23.0.
+
 * Wed Aug 07 2024 Anton Kurachenko <srebrov@altlinux.org> 1.22.0-alt1
 - New version 1.22.0.
 
