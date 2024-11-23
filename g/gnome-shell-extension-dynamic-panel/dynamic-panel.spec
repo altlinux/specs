@@ -2,7 +2,7 @@
 %define nameU dynamic-panel
 
 Name: gnome-shell-extension-dynamic-panel
-Version: 4.6
+Version: 4.8
 Release: alt1
 
 Summary: Dynamic top panel
@@ -13,6 +13,7 @@ BuildArch: noarch
 License: M.W.B License
 Group:  Graphical desktop/GNOME
 Url: https://github.com/velade/dynamic-panel
+VCS: https://github.com/velade/dynamic-panel.git
 
 Source: %nameU-%version.tar
 
@@ -33,6 +34,7 @@ mkdir -p %buildroot%_datadir/gnome-shell/extensions/%exID/
 cp -R locale %buildroot%_datadir/gnome-shell/extensions/%exID/locale
 cp -R schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas
 cp -R icons %buildroot%_datadir/gnome-shell/extensions/%exID/icons
+cp -R lib %buildroot%_datadir/gnome-shell/extensions/%exID/lib
 cp *.js %buildroot%_datadir/gnome-shell/extensions/%exID/
 cp LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID/LICENSE
 cp metadata.json %buildroot%_datadir/gnome-shell/extensions/%exID/metadata.json
@@ -42,6 +44,9 @@ cp metadata.json %buildroot%_datadir/gnome-shell/extensions/%exID/metadata.json
 %doc *.md LICENSE 
 
 %changelog
+* Thu Nov 21 2024 Aleksandr Shamaraev <shad@altlinux.org> 4.8-alt1
+- Update to version 4.8
+
 * Tue Oct 15 2024 Hihin Ruslan <ruslandh@altlinux.ru> 4.6-alt1
 - Update to version 4.6
 
