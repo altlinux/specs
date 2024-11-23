@@ -3,7 +3,7 @@
 
 Name: cozy
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Listen to audio books
 License: GPL-3.0-or-later
@@ -12,6 +12,8 @@ Group: Graphical desktop/GNOME
 Url: https://cozy.sh
 Vcs: https://github.com/geigi/cozy/
 Source: %name-%version.tar
+
+Requires: python3-modules-sqlite3
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-python3
@@ -23,6 +25,11 @@ BuildRequires: python3-module-distro
 BuildRequires: python3-module-peewee
 BuildRequires: python3-module-mutagen
 BuildRequires: python3-module-pygobject3
+%if_enabled check
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
+BuildRequires: libgio
+%endif
 
 BuildArch: noarch
 
@@ -57,7 +64,7 @@ Perfect to listen to on the go!
 %find_lang --with-gnome %APP_ID
 
 %check
-%__meson_test
+%meson_test
 
 %files -f %APP_ID.lang
 %python3_sitelibdir/%name/
@@ -70,5 +77,10 @@ Perfect to listen to on the go!
 %_datadir/metainfo/%APP_ID.appdata.xml
 
 %changelog
+* Sat Nov 23 2024 Oleg Shchavelev <oleg@altlinux.org> 1.3.0-alt2
+- Add python3-modules-sqlite3 dependency from Requires (ALT #52135)
+- Rename macro %%__meson_test -> %%meson_test
+- Update BuildRequires
+
 * Sun Nov 17 2024 Oleg Shchavelev <oleg@altlinux.org> 1.3.0-alt1
 - Initial build
