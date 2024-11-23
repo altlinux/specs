@@ -3,6 +3,7 @@
 
 %define ver_major 1.1
 %define beta %nil
+%define namespace Gly
 %define api_ver_major 1
 %define api_ver %{api_ver_major}+
 
@@ -10,7 +11,7 @@
 %def_disable check
 
 Name: glycin
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -173,10 +174,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_vapidir/lib%name-%api_ver_major.vapi
 
 %files -n lib%name-gir
-%_typelibdir/Gly-%api_ver_major.typelib
+%_typelibdir/%namespace-%api_ver_major.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Gly-%api_ver_major.gir
+%_girdir/%namespace-%api_ver_major.gir
 
 %files -n lib%name-gtk4
 %_libdir/lib%name-gtk4-%api_ver_major.so.*
@@ -189,12 +190,15 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_vapidir/lib%name-gtk4-%api_ver_major.vapi
 
 %files -n lib%name-gtk4-gir
-%_typelibdir/GlyGtk4-%api_ver_major.typelib
+%_typelibdir/%{namespace}Gtk4-%api_ver_major.typelib
 
 %files -n lib%name-gtk4-gir-devel
-%_girdir/GlyGtk4-%api_ver_major.gir
+%_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Sat Nov 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
