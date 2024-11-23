@@ -6,7 +6,7 @@
 %define modules_path %_sysconfdir/httpd2/modules
 
 Name: gnome-user-share
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Gnome user file sharing
@@ -71,6 +71,9 @@ mDNSResolver running.
 %doc README* NEWS
 
 %changelog
+* Sat Nov 23 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
+- 47.2
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
