@@ -11,8 +11,8 @@
 %define qIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 
 Name: mono
-Version: 6.12.0.199
-Release: alt2
+Version: 6.12.0.206
+Release: alt1
 Summary: Cross-platform, Open Source, .NET development framework
 
 Group: Development/Other
@@ -632,6 +632,9 @@ install -pD -m755 %SOURCE4 %buildroot%_rpmlibdir/mono-cert-sync.filetrigger
 ln -s mcs %buildroot%_bindir/gmcs
 %endif
 
+# Upstream issue #19489 still opened
+rm -fv %buildroot%_bindir/mono-test-install
+
 %find_lang mcs
 
 # drop python2-base requires
@@ -945,7 +948,6 @@ done
 %_bindir/gmcs
 %endif
 %_sysconfdir/pki/mono/
-%_bindir/mono-test-install
 %mono_bin mono-api-info
 %mono_bin aprofutil
 %mono_bin illinkanalyzer
@@ -1405,6 +1407,9 @@ done
 %_pkgconfigdir/mono-2.pc
 
 %changelog
+* Fri Nov 22 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.12.0.206-alt1
+- Updated to upstream version 6.12.0.206.
+
 * Fri Apr 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.12.0.199-alt2
 - Repair source tree after previous release with mixed versions in srpm.
 
