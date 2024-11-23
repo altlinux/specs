@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libmceliece
-Version: 20230612
+Version: 20241009
 Release: alt1
 Summary: Classic McEliece microlibrary
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
@@ -140,5 +140,10 @@ sha256sum mceliece*.sessionkey*
 %endif
 
 %changelog
+* Sat Nov 23 2024 Vitaly Chikunov <vt@altlinux.org> 20241009-alt1
+- Correct version to 20241009 (2024-10-09).
+- Previous release is incorrectly versioned as 20230612, in real it
+  is 20241009.
+
 * Fri Jun 23 2023 Vitaly Chikunov <vt@altlinux.org> 20230612-alt1
 - First import 20230612 (2023-06-23).
