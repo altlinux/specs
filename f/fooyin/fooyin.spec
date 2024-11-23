@@ -2,12 +2,13 @@
 
 Name: fooyin
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Music player built around customisation
 License: GPL-3.0
 Group: Sound
-Url: https://github.com/ludouzi/fooyin
+Url: https://www.fooyin.org/
+Vcs: https://github.com/fooyin/fooyin.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt-change-libdir.patch
@@ -43,7 +44,7 @@ deeper level of control.
 
 %build
 %ifarch %ix86
-    %add_optflags -msse2
+ %add_optflags -msse2
 %endif
 %cmake -DBUILD_LIBVGM=OFF
 %cmake_build
@@ -70,6 +71,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Sat Nov 23 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt2
+- Updated Url and Vcs links.
+
 * Wed Oct 30 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt1
 - New version 0.8.1.
 
