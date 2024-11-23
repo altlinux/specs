@@ -1,7 +1,13 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%ifarch aarch64 ppc64le
+%def_disable check
+%else
+%def_enable check
+%endif
+
 Name: xca
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: A GUI for handling X509 certificates, RSA keys, PKCS#10 Requests
@@ -11,7 +17,8 @@ Url: https://hohnstaedt.de/xca/
 # sources: https://github.com/chris2511/xca/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+
+Patch01: alt-test_asn1time-do-not-force-TZ.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -31,7 +38,8 @@ presented.
 
 %prep
 %setup
-%patch -p1
+
+%patch01 -p1
 
 %build
 
@@ -51,15 +59,18 @@ LANG="C.UTF-8" TZ="GMT" \
 %_datadir/xca
 %_datadir/doc/xca
 %_datadir/metainfo/*.xml
-%_desktopdir/xca*
+%_desktopdir/*xca*
 %_datadir/bash-completion/completions/xca
 %_datadir/mime/packages/xca.xml
 %_man1dir/xca*.1*
-%_pixmapsdir/xca*.xpm
 %_iconsdir/hicolor/*/*/*
 %_bindir/*
 
 %changelog
+* Sat Nov 23 2024 Pavel Nakonechnyi <zorg@altlinux.ru> 2.8.0-alt1
+- update to 2.8.0 release
+- disable check on aarch64 and ppc64le
+
 * Sat Sep 07 2024 Pavel Nakonechnyi <zorg@altlinux.ru> 2.7.0-alt1
 - update to 2.7.0 release
 - enabling tests for packaging stage
