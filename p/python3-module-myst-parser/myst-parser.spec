@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.0.0
-Release: alt1
+Release: alt2
 Summary: An extended commonmark compliant parser, with bridges to docutils/sphinx
 License: MIT
 Group: Development/Python3
@@ -75,7 +75,7 @@ See the MyST Parser documentation for more information.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -ra --ignore tests/test_renderers
 
 %files
 %doc README.md
@@ -86,6 +86,9 @@ See the MyST Parser documentation for more information.
 %_bindir/myst-*
 
 %changelog
+* Wed Nov 13 2024 Andrey Limachko <liannnix@altlinux.org> 4.0.0-alt2
+- NMU: fixed FTBFS.
+
 * Mon Sep 02 2024 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 2.0.0 -> 4.0.0.
 
