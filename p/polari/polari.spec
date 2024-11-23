@@ -8,15 +8,16 @@
 
 Name: polari
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: Internet Relay Chat client for GNOME
 License: GPL-2.0 and LGPL-2.0
 Group: Networking/Chat
 Url: https://wiki.gnome.org/Apps/Polari
 
-%if_disabled snapshot
 Vcs: https://github.com/GNOME/polari.git
+
+%if_disabled snapshot
 #Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 Source: https://github.com/GNOME/polari/archive/%version/%name-%version%beta.tar.gz
 %else
@@ -34,7 +35,6 @@ Requires: tinysparql localsearch
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 Requires: typelib(Adw) = 1
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
@@ -56,9 +56,9 @@ BuildRequires: meson gtk-doc yelp-tools
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver libtelepathy-glib-devel
 BuildRequires: pkgconfig(tracker-sparql-3.0)
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libsoup-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libsoup3.0-gir-devel
 BuildRequires: libsecret-gir-devel gir(Tracker) = 3.0
-BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel
+BuildRequires: libtelepathy-glib-gir-devel
 %{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
@@ -91,10 +91,14 @@ with GNOME 3 Desktop.
 %_datadir/telepathy/clients/Polari.client
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%doc AUTHORS NEWS
+%doc README* NEWS
 
 
 %changelog
+* Sat Nov 23 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt3
+- updated to 46.0-37-gbd6e3c95
+- fixed BR
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
 - updated to 46.0-18-gadda9456
 
