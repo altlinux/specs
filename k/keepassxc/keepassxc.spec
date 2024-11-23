@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.7.9
-Release:  alt1
+Release:  alt2
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 # - either go to https://www.transifex.com/keepassxc/keepassxc/language/ru/ and "download for use", category "master"
 # - or use transifex client `tx pull` accordingly
 Source1: keepassx_ru.ts
+
+Patch1: alt-add-chromium-gost-support-for-browser-integrations.patch
 
 %def_without yubikey
 # requires asciidoctor
@@ -51,6 +53,7 @@ open-source password manager.
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
@@ -106,6 +109,9 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %changelog
+* Sat Nov 23 2024 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.9-alt2
+- add Chromium-Gost support for browser integration (closes: #52159)
+
 * Sat Jul 13 2024 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.9-alt1
 - updated to v2.7.9
 
