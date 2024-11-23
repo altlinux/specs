@@ -1,10 +1,10 @@
-# git commit 635981878f2d1bc5194fa180ac6142a153f581e4
+# git commit 778d030afdd47f1226010353e892fc04dd8a1e0f
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.4.0.1
+Version: 33.4.1
 
 Release: alt1
 
@@ -12,6 +12,8 @@ License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
 
 Url: https://github.com/MoonchildProductions/Pale-Moon
+Vcs: https://github.com/MoonchildProductions/Pale-Moon
+
 Epoch: 2
 
 ExclusiveArch: x86_64 aarch64
@@ -55,7 +57,7 @@ Patch10: palemoon-33.0.1-compatversion.patch
 #Patch1: palemoon_google_add-26.4.0.patch
 Patch16: mozilla_palimoon-29.4.6-cross-desctop.patch
 
-Patch18: mozilla_palimoon-29.4.6-bug-1153109-enable-stdcxx-compat.patch
+Patch18: mozilla_palimoon-33.4.1-bug-1153109-enable-stdcxx-compat.patch
 
 #Patch21: palemoon-build-el5-nss.patch
 
@@ -93,7 +95,6 @@ BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel libdbus-
 BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket
 BuildRequires: python-devel python-modules-json python-modules-wsgiref python3-module-setuptools
 BuildRequires: unzip yasm zip
-
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gobject-introspection-devel libssl-devel perl(Archive/Zip.pm) perl(CGI.pm) perl(LWP/Simple.pm)
@@ -201,7 +202,7 @@ popd
 
 %patch16 -p1
 
-%patch18 -p1
+%patch18 -p1 -b .p18
 
 %patch22 -p1
 
@@ -508,6 +509,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sat Nov 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.4.1-alt1
+- New Version (CVE-2024-10463)
+
 * Sat Oct 12 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.4.0.1-alt1
 - New Version (CVE-2024-9396)
 
