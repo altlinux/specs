@@ -1,14 +1,14 @@
 %define fname 3270NerdFont
 
 Name: fonts-ttf-%fname
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: Nerd Fonts patched IBM 3270 font
 License: BSD-3-Clause
 Group: System/Fonts/True type
 Url: https://www.nerdfonts.com/
-Vcs: https://github.com/ryanoasis/nerd-fonts
+Vcs: https://github.com/ryanoasis/nerd-fonts.git
 BuildArch: noarch
 
 Source: %fname-%version.tar
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-fonts
 
 %prep
 %setup -c
-cp -a %SOURCE1 . && cp -a %SOURCE2 .
+cp -a %SOURCE1 %SOURCE2 .
 
 %install
 %ttf_fonts_install %fname
@@ -31,5 +31,8 @@ cp -a %SOURCE1 . && cp -a %SOURCE2 .
 %doc LICENSE.* README.*
 
 %changelog
+* Sat Nov 23 2024 Anton Kurachenko <srebrov@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Sat Jun 29 2024 Anton Kurachenko <srebrov@altlinux.org> 3.2.1-alt1
 - Initial build for Sisyphus.
