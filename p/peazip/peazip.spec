@@ -4,12 +4,12 @@
 
 Name: peazip
 Version: 10.1.0
-Release: alt1
+Release: alt2
 
 Summary: File and archive manager
 License: LGPL-3.0-only
 Group: File tools
-URL: https://peazip.github.io/
+Url: https://peazip.github.io/
 Vcs: https://github.com/peazip/PeaZip.git
 
 ExclusiveArch: %ix86 x86_64 aarch64
@@ -21,15 +21,13 @@ Patch1: %name-%version-alt-fix-folders-path-ru.patch
 Patch2: %name-%version-alt-fix-desktop-files-ru.patch
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: brotli
 BuildRequires: dos2unix
 BuildRequires: lazarus
-BuildRequires: fpc-compiler
 BuildRequires: qt5pas-devel
-BuildRequires: qt5-base-devel
+BuildRequires: brotli
 BuildRequires: p7zip
-BuildRequires: unzip
 BuildRequires: zstd
+BuildRequires: upx
 BuildRequires: /proc
 
 %description
@@ -78,7 +76,7 @@ lazbuild \
 %install
 mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%_peainstalldir/res/share
-cp %SOURCE1 %buildroot%_peainstalldir/res/
+cp -v %SOURCE1 %buildroot%_peainstalldir/res/
 
 #install helper apps
 mkdir -p %buildroot%_peainstalldir/res/bin/{7z,upx,brotli,zstd}
@@ -123,5 +121,8 @@ install -m 0644 %_peasrc/res/share/batch/freedesktop_integration/KDE-servicemenu
 %_K5srv/*.desktop
 
 %changelog
+* Sat Nov 23 2024 Anton Kurachenko <srebrov@altlinux.org> 10.1.0-alt2
+- Corrected BuildReqs.
+
 * Thu Nov 21 2024 Anton Kurachenko <srebrov@altlinux.org> 10.1.0-alt1
 - Initial build for Sisyphus.
