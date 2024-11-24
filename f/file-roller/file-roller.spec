@@ -9,7 +9,7 @@
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: An archive manager for GNOME
@@ -30,7 +30,10 @@ Patch1: %name-3.3.90-alt-zip_command.patch
 %define nautilus_ver 43
 %define portal_ver 0.5
 
-Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip lzma-utils xz
+Requires: tar gzip bzip2 ncompress lzop binutils
+Requires: arj lha unrar zip unzip p7zip lzma-utils xz
+# since 44.4
+Requires: bzip3
 # Requires: cdrecord # for .iso support
 Requires: dconf gnome-icon-theme
 
@@ -124,6 +127,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
+- 44.4
+
 * Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
 - 44.3
 
