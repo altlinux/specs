@@ -1,23 +1,27 @@
-%define modname mygpoclient
+%define pypi_name mygpoclient
+%def_enable check
 
-Name: python3-module-%modname
-Version: 1.9
+Name: python3-module-%pypi_name
+Version: 1.10
 Release: alt1
 
 Summary: gpodder.net API Client Library for Python3
 License: GPLv3+
 Group: Development/Python3
-Url: https://github.com/gpodder/%modname
+Url: https://github.com/gpodder/%pypi_name
 #https://pypi.org/project/mygpoclient/
 
 Vcs: https://github.com/gpodder/mygpoclient.git
-#Source: %url/archive/%modname-%version.tar.gz
-Source: https://pypi.io/packages/source/m/%modname/%modname-%version.tar.gz
+
+#Source: %url/archive/%pypi_name-%version.tar.gz
+Source: https://pypi.io/packages/source/m/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest) python3(pytest-cov)
+BuildRequires: python3(coverage) python3(minimock)}
 
 %description
 This Python 3 library provides an easy and structured way to access the
@@ -26,24 +30,32 @@ synchronization and storage, the advanced API support allows to upload
 and download episode status changes.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+py.test-3 %pypi_name
 
 %files
 %_bindir/mygpo-bpsync
 %_bindir/mygpo-list-devices
 %_bindir/mygpo-simple-client
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_man1dir/mygpo-bpsync.1.*
 %doc AUTHORS README*
 
 
 %changelog
+* Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
+- 1.10
+- ported to %%pyproject macros, enabled %%check
+
 * Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
 - 1.9
 

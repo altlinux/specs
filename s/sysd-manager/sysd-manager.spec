@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -69,6 +69,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc README*
 
 %changelog
+* Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Mon Nov 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - first build for Sisyphus
 
