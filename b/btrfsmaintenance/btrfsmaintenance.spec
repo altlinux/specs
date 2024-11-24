@@ -1,18 +1,22 @@
 Name: btrfsmaintenance
-Version: 0.4.2
-Release: alt5
+Version: 0.5.2
+Release: alt1
 Summary: Scripts for btrfs periodic maintenance tasks
 License: GPLv2
 Group: System/Base
+
 Url: https://github.com/kdave/btrfsmaintenance
+VCS: https://github.com/kdave/btrfsmaintenance
+
 Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
 BuildArch: noarch
 
+BuildRequires(Pre): rpm-macros-systemd
 BuildRequires: pkgconfig(systemd)
 # https://bugzilla.altlinux.org/35388
-BuildRequires: rpm-macros-fedora-compat
-Requires: btrfs-progs
+# BuildRequires: rpm-macros-fedora-compat
+# Requires: btrfs-progs
 
 %description
 Scripts for btrfs maintenance tasks like periodic scrub, balance, trim or defrag
@@ -98,6 +102,9 @@ echo "$BTRFS_TRIM_MOUNTPOINTS"
 echo "$BTRFS_ALLOW_CONCURRENCY"
 
 %changelog
+
+* Sun Nov 24 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.5.2-alt1
+- Update to version 0.5.2
 
 * Mon Dec 23 2019 Mikhail Novosyolov <mikhailnov@altlinux.org> 0.4.2-alt5
 - Fix git merge mistake
