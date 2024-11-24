@@ -8,7 +8,7 @@
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 %def_disable static
@@ -216,6 +216,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.78.2-alt1
+- 0.78.2
+
 * Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.78.1-alt1
 - 0.78.1
 
