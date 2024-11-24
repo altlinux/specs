@@ -1,7 +1,7 @@
 %define xdg_name io.github.Foldex.AdwSteamGtk
 
 Name: adwaita-steam-gtk
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 License: GPL-3.0
 
@@ -50,6 +50,9 @@ rm -rf %buildroot%_datadir/locale/zh_Hans
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sun Nov 24 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.7.2-alt1
+- new version 0.7.2 (with rpmrb script)
+
 * Fri Nov 15 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.7.1-alt1
 - new version 0.7.1 (with rpmrb script)
 
