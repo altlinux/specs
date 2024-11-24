@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcpuid
-Version: 0.6.5
+Version: 0.7.0
 Release: alt1
 Summary: libcpuid provides CPU identification for the x86 (and x86_64)
 License: BSD-2-Clause
@@ -10,12 +10,14 @@ Group: Development/C
 Url: https://github.com/anrieff/libcpuid
 Source: libcpuid-%version.tar
 Patch: 0001-CMakeLists.txt-Add-LIB_DESTINATION-variable.patch
+Patch1: use_KDIR_for_kmodule_path-libcpuid-0.7.0.patch
 
 ExclusiveArch: %ix86 x86_64
 
+BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: doxygen
+BuildRequires: doxygen graphviz
 
 %description
 %summary.
@@ -31,6 +33,13 @@ developing applications that use %name.
 For details about the programming API, please see the docs
 on the project's site (http://libcpuid.sourceforge.net/)
 
+%package -n kernel-source-cpuid
+Summary: cpuid kernel driver for arm64
+Group: Development/Kernel
+
+%description -n kernel-source-cpuid
+cpuid kernel driver for arm64.
+
 %prep
 %setup
 %autopatch -p1
@@ -40,7 +49,15 @@ on the project's site (http://libcpuid.sourceforge.net/)
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
+
+#%%ifarch aarch64
+#mkdir -p %kernel_srcdir
+#cd %buildroot%prefix/src/
+#mv cpuid-%version kernel-source-cpuid-%version
+#tar -cjvf %kernel_srcdir/kernel-source-cpuid-%version.tar.bz2 kernel-source-cpuid-%version
+#rm -r kernel-source-cpuid-%version
+#%%endif
 
 %files
 %_libdir/%name.so.*
@@ -53,7 +70,15 @@ on the project's site (http://libcpuid.sourceforge.net/)
 %_libdir/pkgconfig/%name.pc
 %_prefix/lib/cmake/cpuid
 
+#%%ifarch aarch64
+#%%files -n kernel-source-cpuid
+#%%attr(0644,root,root) %kernel_src/kernel-source-cpuid-%version.tar.bz2
+#%%endif
+
 %changelog
+* Sun Nov 24 2024 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Wed May 01 2024 Anton Midyukov <antohami@altlinux.org> 0.6.5-alt1
 - New version 0.6.5.
 
