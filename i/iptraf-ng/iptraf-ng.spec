@@ -3,16 +3,17 @@
 %set_verify_elf_method strict
 
 Name: iptraf-ng
-Version: 1.2.1
-Release: alt3
+Version: 1.2.2
+Release: alt1
 
 Summary: IPTraf-ng is a console-based network monitoring program for Linux
 License: GPL-2.0
-Url: https://github.com/iptraf-ng/iptraf-ng
 Group: Monitoring
+Url: https://github.com/iptraf-ng/iptraf-ng
+Vcs: https://github.com/iptraf-ng/iptraf-ng
 
 Source: %name-%version.tar
-Patch0: iptraf-ng-1.2.1-alt-fix-non-lfs-functions.patch
+Patch: %name-%version-alt.patch
 
 BuildRequires: libncursesw-devel
 
@@ -41,7 +42,7 @@ and SIT tunnels.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch0 -p1
 
 %build
 %make_build
@@ -50,18 +51,19 @@ and SIT tunnels.
 %makeinstall
 
 mkdir -p %buildroot%_logdir/%name
-mkdir -p %buildroot%_logrotatedir
 install -pD -m644 iptraf-ng-logrotate.conf %buildroot%_logrotatedir/%name.conf
 
 %files
 %doc AUTHORS CHANGES FAQ LICENSE README* Documentation
-%_sbindir/*
-%_man8dir/*
-%attr(750, root, root) %dir %_logdir/*
-%config(noreplace) %_logrotatedir/*
-
+%_sbindir/iptraf-ng
+%_man8dir/iptraf-ng.8*
+%attr(750, root, root) %dir %_logdir/%name
+%config(noreplace) %_logrotatedir/%name.conf
 
 %changelog
+* Mon Nov 25 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.2-alt1
+- Updated to 1.2.2 (fixes CVE-2024-52949).
+
 * Mon Aug 28 2023 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt3
 - Fixed FTBFS: built with libncursesw.
 
