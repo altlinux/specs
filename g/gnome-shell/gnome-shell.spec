@@ -8,6 +8,7 @@
 %define gst_api_ver 1.0
 %define gvc_ver 5f9768a
 
+%def_enable x11
 %def_enable extensions_tool
 %def_enable extensions_app
 %def_disable gtk_doc
@@ -17,7 +18,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -129,10 +130,9 @@ Requires: typelib(WebKit) = %webkit_api_ver
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires(pre): rpm-build-python3 rpm-build-xdg rpm-build-systemd
 BuildRequires: meson gcc-c++ xsltproc asciidoc-a2x sassc /usr/bin/jasmine
-BuildRequires: /usr/bin/appstream-util /usr/bin/appstreamcli desktop-file-utils
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: bash-completion
 BuildRequires: python3-devel
-BuildRequires: libX11-devel libXfixes-devel
 BuildRequires: libmutter-devel >= %mutter_ver libmutter-gir-devel
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: libgio-devel >= %gio_ver
@@ -167,6 +167,7 @@ BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gir(Gcr) = %gcr_api_ver libsecret-devel >= %libsecret_ver libpolkit-gir-devel
 BuildRequires: libgnome-autoar-devel
 BuildRequires: pkgconfig(tecla)
+%{?_enable_x11:BuildRequires: libX11-devel libXfixes-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
@@ -220,7 +221,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %{?_enable_browser_plugin:subst "s|\(mozplugindir = \).*$|\1'%browser_plugins_path'|" meson.build}
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool extensions_tool extensions_tool} \
     %{subst_enable_meson_bool extensions_app extensions_app} \
     %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
@@ -308,6 +309,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
+- 47.2
+
 * Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 
