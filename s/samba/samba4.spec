@@ -121,7 +121,7 @@
 %endif
 
 Name:    samba
-Version: 4.20.5
+Version: 4.20.6
 Release: alt1
 
 Group:   System/Servers
@@ -261,7 +261,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.9.1
+%define ldb_version 2.9.2
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -394,9 +394,6 @@ BuildArch: noarch
 Summary: Files used by both Samba servers
 Group: System/Servers
 BuildArch: noarch
-%if_with winbind
-Requires: %name-winbind-common = %version-%release
-%endif
 Requires: %name-common-client = %version-%release
 Provides: %dcname-common = %version-%release
 Obsoletes: %dcname-common < 4.10
@@ -701,6 +698,7 @@ as a user using the `net usershare` command.
 Summary: Files used by MIT and Heimdal Winbind servers
 Group: System/Servers
 Requires: %name-common-client = %version-%release
+Requires: %name-common = %version-%release
 
 %description winbind-common
 %rname-winbind-common provides files necessary for both MIT and Heimdal
@@ -1576,10 +1574,8 @@ control role-sambashare enabled
 
 %files common
 %_sysconfdir/pam.d/samba
-%if_without winbind
 %dir /var/lib/samba
 %attr(710,root,root) %dir /var/lib/samba/private
-%endif
 %_tmpfilesdir/%rname.conf
 %config(noreplace) %_sysconfdir/logrotate.d/samba
 %config(noreplace) %_sysconfdir/security/limits.d/90-samba.conf
@@ -2076,8 +2072,6 @@ control role-sambashare enabled
 
 %if_with winbind
 %files winbind-common
-%dir /var/lib/samba
-%attr(710,root,root) %dir /var/lib/samba/private
 %attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
 %dir %_samba_piddir/winbindd
 %if_with doc
@@ -2238,6 +2232,16 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Nov 20 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.6-alt1
+- Update to maintenance release of Samba 4.20
+- Major fixes from upstream (Samba#15590, Samba#15692):
+  + libldb: performance issue with indexes (ldb 2.9.2 is already released).
+  + Missing conversion for msDS-UserTGTLifetime, msDS-ComputerTGTLifetime and
+    msDS-ServiceTGTLifetime on "samba-tool domain auth policy modify".
+- Error handling fixes (Samba#15624, Samba#15732, Samba#14356, Samba#15280,
+                        Samba#15425, Samba#15649, Samba#15651, Samba#15708,
+                        Samba#15740, Samba#15749, Samba#15730, Samba#15706).
+
 * Sat Sep 21 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.5-alt1
 - Update to maintenance release of Samba 4.20
 - Major fixes from upstream (Samba#15695, Samba#15699, Samba#15698, Samba#15696,
