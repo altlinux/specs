@@ -3,7 +3,7 @@
 
 Name: libelfin
 Version: 0.3
-Release: alt4
+Release: alt5
 
 Summary: C++11 library for reading ELF binaries and DWARFv4 debug information.
 License: GPL
@@ -92,6 +92,9 @@ install -pm644 examples/* %buildroot%docdir/examples/
 %endif
 
 %changelog
+* Mon Nov 25 2024 Andrey Bergman <vkni@altlinux.org> 0.3-alt5
+- Sync with upstream to fix errors due to gcc 14.
+
 * Sun Jun 09 2024 Michael Shigorin <mike@altlinux.org> 0.3-alt4
 - Honour optflags.
 - Drop BR: selinux-policy-alt (looks like a mistake).
