@@ -3,7 +3,7 @@
 
 Name: passes
 Version: 0.10
-Release: alt1
+Release: alt2
 
 Summary: Manage your digital passes
 License: GPL-3.0-or-later
@@ -19,16 +19,14 @@ AutoProv: nopython3
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-python3
 BuildRequires: meson >= 0.59.0
-BuildRequires: cmake
 BuildRequires: blueprint-compiler
 BuildRequires: rpm-build-python3
-BuildRequires: rpm-build-gir
 BuildRequires: zint-devel
 BuildRequires: pkgconfig(gio-2.0)
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstream-util
-BuildRequires: %_bindir/glib-compile-schemas
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: libgio
 %endif
 
 %description
@@ -55,7 +53,7 @@ passes. Download Passes now and keep all your passes in one convenient location.
 %find_lang %name
 
 %check
-%__meson_test
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -69,5 +67,10 @@ passes. Download Passes now and keep all your passes in one convenient location.
 %_datadir/%name
 
 %changelog
+* Sun Nov 24 2024 Oleg Shchavelev <oleg@altlinux.org> 0.10-alt2
+- Rebuild improved spec (ALT #51801)
+- Update BuildRequires
+- Rename macro %%__meson_test -> %%meson_test
+
 * Sun Oct 20 2024 Oleg Shchavelev <oleg@altlinux.org> 0.10-alt1
 - Initial build
