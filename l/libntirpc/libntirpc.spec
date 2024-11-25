@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libntirpc
-Version: 6.0.1
+Version: 6.3
 Release: alt1
 Summary: New Transport Independent RPC Library
 Group: System/Libraries
@@ -74,6 +74,9 @@ Development headers and auxiliary files for developing with %name.
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Mon Nov 25 2024 Vitaly Chikunov <vt@altlinux.org> 6.3-alt1
+- Update to v6.3 (2024-11-22).
+
 * Wed Sep 04 2024 Vitaly Chikunov <vt@altlinux.org> 6.0.1-alt1
 - Update to v6.0.1 (2024-08-21).
 
