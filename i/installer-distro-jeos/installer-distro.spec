@@ -1,9 +1,9 @@
 Name: installer-distro-jeos
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration for JeOS
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer
@@ -26,6 +26,7 @@ Requires: alterator-sysconfig
 Requires: alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
+Requires: alterator-net-functions
 
 %description stage2
 This package contains installer configuration
@@ -37,7 +38,7 @@ The stage2 part is included into live installer system.
 Summary: Installer configuration and scripts (stage3 part)
 License: GPL
 Group: System/Configuration/Other
-Provides: installer-altlinux-generic-stage3 = %name-%version
+Requires: installer-common-stage3
 # modules
 Requires: alterator-root
 
@@ -63,5 +64,11 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 0.1-alt2
+- stage2: Add dependency on alterator-net-functions
+- stage3: Add dependency on installer-common-stage3
+- Fix License
+- Drop unnecessary Provides: installer-altlinux-generic-stage3
+
 * Wed Sep 20 2023 Anton Midyukov <antohami@altlinux.org> 0.1-alt1
 - Initial build
