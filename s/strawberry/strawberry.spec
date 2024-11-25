@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -14,6 +14,7 @@ Summary: Audio player and music collection organizer
 License: GPL-3.0-or-later and Apache-2.0 and LGPL-2.0-or-later and BSD
 Group: Sound
 Url: https://www.strawberrymusicplayer.org
+Vcs: git://github.com/strawberrymusicplayer/strawberry.git
 
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
 
@@ -91,6 +92,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Mon Nov 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1
+- New version 1.2.2.
+- Added vcs tag.
+
 * Fri Nov 22 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.1-alt1
 - New version 1.2.1.
 
