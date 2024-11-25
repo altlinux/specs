@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 2.1.1
-Release: alt2
+Version: 2.1.2
+Release: alt1
 
 Summary: Desktop panel
 License: LGPL-2.1
@@ -99,6 +99,9 @@ QtWayland::org_kde_plasma_window_management::show_desktop/" \
 %_includedir/*/*.h
 
 %changelog
+* Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 2.1.2-alt1
+- New version 2.1.2.
+
 * Mon Nov 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.1-alt2
 - e2k build fix
 
