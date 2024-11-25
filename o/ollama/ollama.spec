@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -96,6 +96,9 @@ go test ./...
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Sat Nov 23 2024 Vitaly Chikunov <vt@altlinux.org> 0.4.4-alt1
+- Update to v0.4.4 (2024-11-22).
+
 * Fri Nov 22 2024 Vitaly Chikunov <vt@altlinux.org> 0.4.3-alt1
 - Update to v0.4.3 (2024-11-21).
 - Add bash-completion support.
