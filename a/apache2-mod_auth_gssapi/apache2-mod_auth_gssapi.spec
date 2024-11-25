@@ -5,12 +5,12 @@
 
 Name: apache2-%modname
 Version: 1.6.5
-Release: alt1
+Release: alt2
 
 Summary: A GSSAPI Authentication module for Apache2
 Group: System/Servers
 License: %mit
-Url: https://github.com/modauthgssapi/mod_auth_gssapi
+Url: https://github.com/gssapi/mod_auth_gssapi
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -70,6 +70,9 @@ echo "LoadModule auth_gssapi_module modules/mod_auth_gssapi.so" > %buildroot%apa
 %config(noreplace) %apache2_mods_available/auth_gssapi.load
 
 %changelog
+* Mon Nov 25 2024 Stanislav Levin <slev@altlinux.org> 1.6.5-alt2
+- Updated project's url.
+
 * Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 1.6.5-alt1
 - 1.6.3 -> 1.6.5.
 
