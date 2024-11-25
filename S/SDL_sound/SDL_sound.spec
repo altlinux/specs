@@ -1,17 +1,17 @@
 %def_disable static
 
 Name: SDL_sound
-Version: 1.0.3
-Release: alt6.git4a8ecd7
+Version: 1.0.3.0.90.53a1
+Release: alt1
 %define lib_name lib%name
 
 Summary: An abstract soundfile decoder
-License: LGPL-2.1+
+License: LGPL-2.1-or-later and GPL-2.0-or-later
 Group: System/Libraries
-URL: http://icculus.org/SDL_sound/
+URL: https://icculus.org/SDL_sound/
+VCS: git://github.com/icculus/SDL_sound.git
 # hg clone http://hg.icculus.org/icculus/SDL_sound/
 Source: %name-%version.tar
-Patch: SDL_sound-1.0.3-debian-libphysfs.patch
 
 BuildRequires: doxygen libSDL-devel libflac-devel libmikmod-devel libmodplug-devel libspeex-devel libvorbis-devel libphysfs-devel
 %ifnarch %arm
@@ -72,11 +72,9 @@ Static library for develop SDL_sound applications.
 
 %prep
 %setup
-%patch -p1
-cp -a ./CHANGELOG.txt ./ChangeLog
-cp -a ./CREDITS.txt ./AUTHORS
-cp -a ./README.txt ./README
-cp -a ./CHANGELOG.txt ./NEWS
+cp -a ./CHANGELOG ./ChangeLog
+cp -a ./CREDITS ./AUTHORS
+cp -a ./CHANGELOG ./NEWS
 
 %build
 %add_optflags -I%_includedir/smpeg
@@ -113,7 +111,7 @@ popd
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-cp -a *.txt docs/html %buildroot%docdir/
+cp -a docs/html %buildroot%docdir/
 
 %if_disabled static
 rm -f %buildroot%_libdir/*.a
@@ -138,6 +136,11 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Nov 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.3.0.90.53a1-alt1
+- New version release-1.0.3-90-g53a13cb (latest commit from stable-1.0).
+- Added vcs tag.
+- Updated license tag.
+
 * Fri Aug 27 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt6.git4a8ecd7
 - Disabled static libraries.
 
