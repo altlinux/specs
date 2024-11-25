@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: yggdrasil
-Version: 0.5.9
+Version: 0.5.10
 Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
@@ -80,6 +80,9 @@ install -pD -m0644 {,%buildroot%_unitdir/}yggdrasil-default-config.service
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Mon Nov 25 2024 Anton Zhukharev <ancieg@altlinux.org> 0.5.10-alt1
+- Updated to 0.5.10.
+
 * Mon Oct 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.5.9-alt1
 - Updated to 0.5.9.
 
