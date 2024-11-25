@@ -1,5 +1,5 @@
 Name: west
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Zephyr RTOS Project meta-tool
@@ -11,7 +11,8 @@ Url: https://github.com/zephyrproject-rtos/west
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires: python3-module-setuptools rpm-build-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
 
 %description
 West provides a multiple repository management system with features
@@ -23,17 +24,20 @@ add additional features to west.
 %setup -n %name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/%name
 %python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%name-*.dist-info
 
 %changelog
+* Mon Nov 25 2024 Vladimir Didenko <cow@altlinux.org> 1.3.0-alt1
+- New version
+
 * Mon Nov 27 2023 Vladimir Didenko <cow@altlinux.org> 1.2.0-alt1
 - New version
 
