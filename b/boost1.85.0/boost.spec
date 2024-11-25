@@ -69,7 +69,7 @@
 Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4
+Release: alt5
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -1946,6 +1946,9 @@ done
 
 
 %changelog
+* Mon Nov 25 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt5
+- bump release to allow updating p11
+
 * Thu Aug 15 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.85.0-alt4
 - rebuild as compat package without development files
 
