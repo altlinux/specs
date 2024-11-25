@@ -1,6 +1,6 @@
 Name: fftw3
 Version: 3.3.10
-Release: alt1
+Release: alt2
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -214,6 +214,13 @@ options_double='%{subst_enable sse2} %{subst_enable avx}'
 %endif
 %define _configure_script ../configure
 
+%ifarch %e2k
+# can spoil the binaries with newer instructions
+# off the build host (unavailable in runtime);
+# other arches might consider this too
+export ax_cv_c_flags__mtune_native=no
+%endif
+
 for m in single double long-double %{?_enable_quad:quad-precision}; do
 	d=${m%%-*}
 	mkdir $d
@@ -293,6 +300,9 @@ fi
 %docdir/*.pdf
 
 %changelog
+* Fri Nov 22 2024 Michael Shigorin <mike@altlinux.org> 3.3.10-alt2
+- E2K: disable -march=native (mcst#9169, ALT#52145).
+
 * Wed Aug 28 2024 Egor Ignatov <egori@altlinux.org> 3.3.10-alt1
 - 3.3.8 -> 3.3.10.
 
