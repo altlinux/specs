@@ -3,7 +3,7 @@
 
 Name: lxqt-panel
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: Desktop panel
 License: LGPL-2.1
@@ -70,6 +70,12 @@ This package provides the development files for %name.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+# workaround for bug with class inheritance
+sed -i "s/LXQtTaskBarPlasmaWindowManagment::show_desktop/\
+QtWayland::org_kde_plasma_window_management::show_desktop/" \
+  panel/backends/wayland/kwin_wayland/lxqtwmbackend_kwinwayland.cpp
+%endif
 
 %build
 %add_optflags -I%_includedir/KF6/ -L%_libdir/kf6/devel/
@@ -93,6 +99,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Mon Nov 25 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.1-alt2
+- e2k build fix
+
 * Tue Nov 12 2024 Anton Midyukov <antohami@altlinux.org> 2.1.1-alt1
 - New version 2.1.1.
 
