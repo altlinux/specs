@@ -1,6 +1,6 @@
 Name: installer-distro-regular
-Version: 0.1
-Release: alt2
+Version: 0.2
+Release: alt1
 
 Summary: Installer configuration for ALT Regular
 License: GPL-2.0-or-later
@@ -43,7 +43,6 @@ Group: System/Configuration/Other
 Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
 Requires: alterator-luks
-Requires: alterator-net-eth
 
 %description stage3
 This package contains installer configuration for
@@ -69,6 +68,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
+- stage3: remove dependency on alterator-net-eth
+
 * Wed Feb 28 2024 Anton Midyukov <antohami@altlinux.org> 0.1-alt2
 - add ghost lists of service
 
