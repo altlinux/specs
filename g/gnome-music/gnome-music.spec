@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-music
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -38,7 +38,7 @@ BuildArch: noarch
 Requires: tracker3 tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
 Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
-Requires: typelib(Gtk) = 4.0 typelib(Soup) = %soup_api_ver
+Requires: typelib(Adw) = 1 typelib(Soup) = %soup_api_ver
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag) = %gst_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
@@ -82,6 +82,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
