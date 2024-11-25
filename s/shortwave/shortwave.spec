@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: shortwave
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Shortwave is an internet radio player
@@ -90,6 +90,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- updated to 4.0.1-10-g490619d
+
 * Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - updated to 4.0.0-2-g80528e7
 

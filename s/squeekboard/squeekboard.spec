@@ -4,7 +4,7 @@
 %define rdn_name sm.puri.Squeekboard
 
 Name: squeekboard
-Version: 1.43.0
+Version: 1.43.1
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -13,6 +13,7 @@ Group: Graphical desktop/Other
 Url: https://gitlab.gnome.org/World/Phosh/squeekboard
 
 Vcs: https://gitlab.gnome.org/World/Phosh/squeekboard.git
+
 Source0: %name-%version.tar
 Source1: %name-%version-crates.tar
 Patch3500: squeekboard-1.23-alt-nix-loongarch64.patch
@@ -21,6 +22,8 @@ Provides: osk-wayland
 Requires: dconf
 # for %name-entry
 Requires: typelib(Gtk) = 3.0
+# for %name-entry4
+Requires: typelib(Gtk) = 4.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-macros-alternatives
 BuildRequires: meson rust-cargo /proc
@@ -76,6 +79,9 @@ EOF
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 
 %changelog
+* Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.43.1-alt1
+- 1.43.1
+
 * Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1.43.0-alt1
 - 1.43.0
 
