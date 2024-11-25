@@ -6,7 +6,7 @@
 
 Name: kf6-%rname
 Version: 6.8.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -93,6 +93,9 @@ Sip files for python3-module-%rname
 %setup -n %rname-%version
 %patch1 -p1 -b .kreslimit
 %patch2 -p1
+%ifarch %e2k
+sed -i -E 's/(if \()(static const auto.*; )(force ==)/\2\1\3/' src/lib/io/kurlmimedata.cpp
+%endif
 
 %build
 %K6build \
@@ -135,6 +138,9 @@ Sip files for python3-module-%rname
 
 
 %changelog
+* Mon Nov 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
+- E2K: lcc 1.29 ICE workaround (mcst#9171; ilyakurdyukov@)
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
