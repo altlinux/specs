@@ -1,6 +1,6 @@
 Name:    fwbackups
 Version: 1.43.8
-Release: alt2
+Release: alt3
 Summary: A feature-rich user backup program
 Group:   Archiving/Backup
 License: GPL-2.0-only
@@ -49,6 +49,9 @@ or from the contents of an external folder or archive.
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Nov 26 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.43.8-alt3
+- correct patch
+
 * Fri Oct 04 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.43.8-alt2
 - add metainfo data into package
 
