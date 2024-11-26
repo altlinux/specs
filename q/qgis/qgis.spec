@@ -14,8 +14,8 @@
 %endif
 
 Name:    qgis
-Version: 3.40.0
-Release: alt3
+Version: 3.40.1
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -401,6 +401,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Fri Nov 22 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.1-alt1
+- New version.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.0-alt3
 - Remove support of i586 architecture.
 
