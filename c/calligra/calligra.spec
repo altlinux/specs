@@ -1,16 +1,12 @@
 
-%add_findreq_skiplist %_K5xdgapp/*/scripts/*/*.py
-%add_findreq_skiplist %_K5xdgapp/*/scripts/*/*.rb
-
-# obsileted koffice version
-%define koffice_ver 4:2.3.70
-%def_disable plan
+%add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.py
+%add_findreq_skiplist %_K6xdgapp/*/scripts/*/*.rb
 
 Name: calligra
-Version: 3.2.1
-Release: alt7
-Epoch: 0
-%K5init no_altplace
+Version: 4.0.1
+Release: alt1
+#Epoch: 0
+%K6init no_altplace
 %define libname lib%name
 
 Group: Office
@@ -18,65 +14,53 @@ Summary: An integrated office suite
 Url: http://www.calligra-suite.org/
 License: GFDL-1.2-only AND GPL-2.0-or-later AND LGPL-2.1-or-later
 
-Provides: koffice = %koffice_ver
-Obsoletes: koffice < %koffice_ver
+ExcludeArch: %ix86
 
 #Requires: %name-gemini
 Requires: %name-words
 Requires: %name-sheets
 Requires: %name-stage
 Requires: %name-karbon
-%if_enabled plan
-Requires: %name-plan
-%endif
 Requires: %name-okular-generators
 
 Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 # upstream
-Patch1: 0001-Fix-some-more-warnings.patch
-Patch2: 0002-Make-show-hidden-row-s-work.patch
-Patch3: 0003-Fix-Bug-423038-Annotation-shape-crashes-on-paste.patch
-Patch4: 0008-Fix-comparison-between-QString-and-0.patch
-Patch5: 0009-Sheets-Fix-Bug-423474-Selections-not-retained-when-s.patch
-Patch6: 0010-ChartTool-KoFormulaTool-Guard-against-crash-if-activ.patch
-Patch7: 0018-Fix-assert-with-invalid-.local-share-autocorrect-cus.patch
-Patch8: 0019-Repair-KFileWidget-integration.patch
-Patch9: 0020-Fix-inserting-a-large-JPEG-image-into-a-presentation.patch
-Patch10: 0032-Remove-duplicated-actions-provided-by-parent-view.patch
-Patch11: 0037-kundo2_aware_xgettext.sh-fix-a-gawk-warning.patch
-Patch12: 0053-Partial-update-of-Commit-62f51070-to-make-it-compile.patch
 # FC
-Patch30: calligra-c++17.patch
 Patch31: calligra-gcc11.patch
 # SuSE
-Patch50: poppler-22.04_1.patch
-Patch51: poppler-22.04_2.patch
 # ALT
+Patch102: alt-find-ooo-sdk.patch
 Patch103: alt-disable-products.patch
-Patch104: alt-fix-crash-adding-bibl.patch
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: kf5-attica-devel boost-devel eigen3 gcc-c++ glib2-devel rpm-build-python
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires: kf6-attica-devel boost-devel eigen3 glib2-devel rpm-build-python3
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-declarative-devel qt5-script-devel qt5-x11extras-devel
-#BuildRequires: qt5-quick1-devel
-#BuildRequires: qt5-webkit-devel
-BuildRequires: kf5-attica-devel kde5-kholidays-devel
-BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdoctools-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-kjs-devel kf5-ki18n-devel
-BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kcmutils-devel kf5-kdelibs4support-devel
-BuildRequires: kf5-kio-devel kf5-kross-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-sonnet-devel
-BuildRequires: kf5-ktextwidgets-devel kf5-threadweaver-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-#BuildRequires: kde5-marble-devel
-BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-akonadi-devel kde5-akonadi-contacts-devel
-BuildRequires: kde5-okular-devel
-BuildRequires: kf5-kdiagram-devel kf5-kreport-devel kf5-kproperty-devel
-BuildRequires: qt5-phonon-devel libqca-qt5-devel libpoppler-qt5-devel
+BuildRequires: libvulkan-devel
+BuildRequires: qt6-svg-devel qt6-declarative-devel
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: qt6-webengine-devel
+%endif
+BuildRequires: libqtkeychain-qt6-devel
+BuildRequires: kf6-attica-devel kf6-kholidays-devel
+BuildRequires: kf6-karchive-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools-devel kf6-kguiaddons-devel kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kcmutils-devel
+BuildRequires: kf6-kio-devel kf6-knotifications-devel kf6-knotifyconfig-devel kf6-kparts-devel kf6-sonnet-devel
+BuildRequires: kf6-ktextwidgets-devel kf6-threadweaver-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kcontacts-devel
+BuildRequires: qt6-phonon-devel libqca-qt6-devel libpoppler-qt6-devel
 BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libGLEW-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel pstoedit
 BuildRequires: liblcms2-devel libmysqlclient-devel
 BuildRequires: libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
 BuildRequires: libdrm-devel libpng-devel libexpat-devel libspnav-devel
+BuildRequires: plasma6-activities-devel
+BuildRequires: kde6-kdiagram-devel
+#BuildRequires: kf6-kreport-devel kf6-kproperty-devel
+#BuildRequires: marble-devel
+BuildRequires: kf6-kcalendarcore-devel akonadi-devel akonadi-contacts-devel
+BuildRequires: okular-devel
+#BuildRequires: LibreOffice-still-sdk
 
 %description
 %summary.
@@ -85,19 +69,13 @@ BuildRequires: libdrm-devel libpng-devel libexpat-devel libspnav-devel
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 %description common
 %name common package
 
 %package core
 Group: System/Libraries
 Summary: Core support files for %name
-Provides: koffice-core = %koffice_ver
-Obsoletes: koffice-core < %koffice_ver
-Provides:  koffice-kchart = %koffice_ver
-Obsoletes: koffice-kchart < %koffice_ver
-Provides:  koffice-kformula = %koffice_ver
-Obsoletes: koffice-kformula < %koffice_ver
 Requires: fonts-ttf-latex-xft
 %description core
 %summary.
@@ -113,8 +91,6 @@ Header files and libraries needed for %name development
 Group: Office
 Summary: An intuitive word processor application with desktop publishing features
 Provides: kword = %version-%release
-Provides: koffice-kword = %koffice_ver
-Obsoletes: koffice-kword < %koffice_ver
 Requires: %name-core
 %description words
 KWord is an intuitive word processor and desktop publisher application.
@@ -134,8 +110,6 @@ as income and expenditure, employee working hours...
 %package stage
 Group: Office
 Summary: A full-featured presentation program
-Provides: koffice-kpresenter = %koffice_ver
-Obsoletes: koffice-kpresenter < %koffice_ver
 Requires: %name-core
 %description stage
 Stage is a powerful and easy to use presentation application. You
@@ -146,8 +120,6 @@ animation and more.
 Group: Graphics
 Summary: A vector drawing application
 Provides: karbon = %version-%release
-Provides: koffice-karbon = %koffice_ver
-Obsoletes: koffice-karbon < %koffice_ver
 Requires: %name-core
 Requires: pstoedit
 %description karbon
@@ -160,19 +132,6 @@ art.
 Whether you want to create clipart, logos, illustrations or photorealistic
 vector images - look no further, Karbon is the tool for you!
 
-%if_enabled plan
-%package plan
-Group: Office
-Summary: A project planner
-Provides: koffice-kplato = %koffice_ver
-Obsoletes: koffice-kplato < %koffice_ver
-Requires: %name-core
-Requires: kf5-kreport
-%description plan
-Plan is a project management application. It is intended for managing
-moderately large projects with multiple resources.
-%endif
-
 %package gemini
 Group: Office
 Summary: Office Suite
@@ -184,7 +143,7 @@ The KDE Office suite for 2-in-1 devices.
 Group: Office
 Summary:  OpenDocument text and presenter support for okular
 Requires: %name-stage
-Requires: kde5-okular-core
+Requires: okular-core
 Provides: calligra-okular-odp = %EVR
 Obsoletes: calligra-okular-odp < %EVR
 Provides: calligra-okular-odf = %EVR
@@ -195,33 +154,17 @@ Obsoletes: calligra-okular-odf < %EVR
 %package -n %libname
 Summary: %name libraries
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libname
 %name libraries
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 #
-%patch30 -p1
 %patch31 -p1
 #
-%patch50 -p1
-%patch51 -p1
-#
+%patch102 -p1
 %patch103 -p1
-%patch104 -p1
 
 # fix docs names
 for subd in po/*/docs/{sheets,stage} ; do
@@ -246,22 +189,25 @@ ls | grep -E ".A4" | xargs -I {} \
 popd >/dev/null
 
 %build
-%K5build \
+%K6cmake \
+    -DRELEASE_BUILD=ON \
+    -DCMAKE_CXX_FLAGS="-DKDE_NO_DEBUG_OUTPUT" \
     -DCALLIGRA_SHOULD_BUILD_PRODUCTS=ALL \
     -DPACKAGERS_BUILD=OFF \
     -DBUILD_TESTING=OFF \
-    -DTEMPLATES_INSTALL_DIR:PATH=%_K5tmpl \
+    -DTEMPLATES_INSTALL_DIR:PATH=%_K6tmpl \
     #
+%K6make
 
 %install
-%K5install
+%K6install
 
 ## unpackaged files
 rm -fv %buildroot%_datadir/mime/packages/{krita_ora,x-iwork-keynote-sffkey}.xml
 rm -frv %buildroot/%_datadir/locale/x-test/
 
 # remove InitialPreference
-for f in %buildroot/%_K5xdgapp/*.desktop ; do
+for f in %buildroot/%_K6xdgapp/*.desktop ; do
     sed -i '/^InitialPreference=/d' $f
 done
 
@@ -269,215 +215,191 @@ done
 
 %files
 %files common -f %name.lang
-%dir %_K5srv/ServiceMenus/calligra/
-%doc AUTHORS README
-%_K5xdgapp/calligra.desktop
+%doc AUTHORS README.md
 
 %files devel
-%_K5bin/cstester
-%_K5bin/cstrunner
-%_K5bin/visualimagecompare
-%_K5link/lib*.so
+#%_K6bin/cstester
+#%_K6bin/cstrunner
+#%_K6bin/visualimagecompare
+%_K6link/lib*.so
 
 %files core
-%dir %_K5plug/calligra/
-%dir %_K5plug/calligra/colorspaces/
-%dir %_K5plug/calligra/devices/
-%dir %_K5plug/calligra/dockers/
-%dir %_K5plug/calligra/formatfilters/
-%dir %_K5plug/calligra/pageapptools/
-%dir %_K5plug/calligra/shapefiltereffects/
-%dir %_K5plug/calligra/shapes/
-%dir %_K5plug/calligra/tools/
-%dir %_K5plug/calligra/textediting/
-%dir %_K5plug/calligra/textinlineobjects/
-%config(noreplace) %_K5xdgconf/calligra_stencils.knsrc
-%_K5bin/calligra
-%_K5bin/calligraconverter
-%_K5qml/
-%_datadir/calligra
-%_datadir/calligra_shape_music/fonts/Emmentaler-14.ttf
-%_datadir/color/icc/calligra/
-%_K5plug/calligra/textediting/calligra_textediting_autocorrect.so
-%_K5plug/calligra/tools/calligra_tool_basicflakes.so
-%_K5plug/calligra/textediting/calligra_textediting_changecase.so
-%_K5plug/calligra/tools/calligra_tool_defaults.so
-%_K5plug/calligra/devices/calligra_device_spacenavigator.so
-%_K5plug/calligra/dockers/calligra_docker_defaults.so
-%_K5plug/calligra/dockers/calligra_docker_stencils.so
-%_K5plug/calligrathumbnail.so
-%_K5plug/calligradocinfopropspage.so
-%_K5plug/calligra/pageapptools/kopabackgroundtool.so
-%_K5plug/calligra/colorspaces/kolcmsengine.so
-%_K5plug/calligra/formatfilters/calligra_filter_eps2svgai.so
-%_K5plug/calligra/formatfilters/calligra_filter_pdf2svg.so
-%_K5plug/calligra/formatfilters/calligra_filter_kpr2odp.so
-%_K5plug/calligra/formatfilters/calligra_filter_vsdx2odg.so
-%_K5plug/calligra/textediting/calligra_textediting_spellcheck.so
-%_K5plug/calligra/textinlineobjects/calligra_textinlineobject_variables.so
-%_K5plug/calligra/textediting/calligra_textediting_thesaurus.so
-%_K5plug/calligra/shapes/calligra_shape_artistictext.so
-%_K5plug/calligra/shapes/calligra_shape_chart.so
-%_K5plug/calligra/shapes/calligra_shape_formula.so
-%_K5plug/calligra/shapes/calligra_shape_music.so
-%_K5plug/calligra/shapes/calligra_shape_picture.so
-%_K5plug/calligra/shapes/calligra_shape_plugin.so
-%_K5plug/calligra/shapes/calligra_shape_text.so
-%_K5plug/calligra/shapes/calligra_shape_vector.so
-%_K5plug/calligra/shapes/calligra_shape_video.so
-%_K5plug/calligra/shapefiltereffects/calligra_filtereffects.so
-%_K5plug/calligraimagethumbnail.so
-%_K5xdgmime/calligra_svm.xml
-%_K5icon/*/*/*/*
-%_K5srv/calligra_odg_thumbnail.desktop
-%_K5srv/calligradocinfopropspage.desktop
-%_K5srv/flow_vsdx_thumbnail.desktop
-%_K5srv/flow_wpg_thumbnail.desktop
-%_K5plug/calligra/shapes/calligra_shape_paths.so
+%dir %_K6plug/calligra/
+%dir %_K6plug/calligra/colorspaces/
+%dir %_K6plug/calligra/dockers/
+%dir %_K6plug/calligra/formatfilters/
+%dir %_K6plug/calligra/pageapptools/
+%dir %_K6plug/calligra/shapefiltereffects/
+%dir %_K6plug/calligra/shapes/
+%dir %_K6plug/calligra/tools/
+%dir %_K6plug/calligra/textediting/
+%dir %_K6plug/calligra/textinlineobjects/
+%_K6bin/calligralauncher
+%_K6bin/calligraconverter
+#%_K6qml/
+%_K6data/calligra/
+%_K6data/calligra_shape_music/fonts/Emmentaler-14.ttf
+%_K6data/color/icc/calligra/
+%_K6plug/calligra/textediting/calligra_textediting_autocorrect.so
+%_K6plug/calligra/tools/calligra_tool_basicflakes.so
+%_K6plug/calligra/textediting/calligra_textediting_changecase.so
+%_K6plug/calligra/tools/calligra_tool_defaults.so
+%_K6plug/calligra/dockers/calligra_docker_defaults.so
+%_K6plug/calligra/dockers/calligra_docker_stencils.so
+%_K6plug/kf6/thumbcreator/calligrathumbnail.so
+%_K6plug/kf6/propertiesdialog/calligradocinfopropspage.so
+%_K6plug/calligra/pageapptools/kopabackgroundtool.so
+%_K6plug/calligra/colorspaces/kolcmsengine.so
+%_K6plug/calligra/formatfilters/calligra_filter_eps2svgai.so
+%_K6plug/calligra/formatfilters/calligra_filter_pdf2svg.so
+%_K6plug/calligra/formatfilters/calligra_filter_kpr2odp.so
+%_K6plug/calligra/formatfilters/calligra_filter_vsdx2odg.so
+%_K6plug/calligra/textediting/calligra_textediting_spellcheck.so
+%_K6plug/calligra/textinlineobjects/calligra_textinlineobject_variables.so
+%_K6plug/calligra/textediting/calligra_textediting_thesaurus.so
+%ifarch %qt6_qtwebengine_arches
+%_K6plug/calligra/shapes/braindump_shape_web.so
+%endif
+%_K6plug/calligra/shapes/calligra_shape_artistictext.so
+%_K6plug/calligra/shapes/calligra_shape_chart.so
+%_K6plug/calligra/shapes/calligra_shape_formula.so
+%_K6plug/calligra/shapes/calligra_shape_music.so
+%_K6plug/calligra/shapes/calligra_shape_picture.so
+%_K6plug/calligra/shapes/calligra_shape_plugin.so
+%_K6plug/calligra/shapes/calligra_shape_text.so
+%_K6plug/calligra/shapes/calligra_shape_vector.so
+%_K6plug/calligra/shapes/calligra_shape_video.so
+%_K6plug/calligra/shapes/calligra_shape_threed.so
+%_K6plug/calligra/shapefiltereffects/calligra_filtereffects.so
+%_K6plug/kf6/thumbcreator/calligraimagethumbnail.so
+%_K6xdgapp/calligra.desktop
+%_K6xdgapp/org.kde.calligra.desktop
+%_K6xdgmime/calligra_svm.xml
+%_K6icon/*/*/*/*
+#%_K6srv/calligra_odg_thumbnail.desktop
+#%_K6srv/calligradocinfopropspage.desktop
+#%_K6srv/flow_vsdx_thumbnail.desktop
+#%_K6srv/flow_wpg_thumbnail.desktop
+%_K6plug/calligra/shapes/calligra_shape_paths.so
+%_datadir/metainfo/org.kde.calligra.metainfo.xml
 
-%files gemini
-%_K5bin/calligragemini
-%_K5bin/calligrageminithumbnailhelper
-%_K5xdgapp/org.kde.calligragemini.desktop
-%_datadir/calligragemini/
-%_datadir/metainfo/org.kde.calligragemini.appdata.xml
+#%files gemini
+#%_K6bin/calligragemini
+#%_K6bin/calligrageminithumbnailhelper
+#%_K6xdgapp/org.kde.calligra.gemini.desktop
+#%_K6data/calligragemini/
+#%_datadir/metainfo/org.kde.calligra.gemini.metainfo.xml
 
 %files sheets
-%config(noreplace) %_K5xdgconf/calligrasheetsrc
-%_K5bin/calligrasheets
-%_K5lib/libkdeinit5_calligrasheets.so
-%_K5plug/calligra/*/calligrasheets*.so
-%_K5plug/calligrasheets/*/kspread*module.so
-%_K5plug/calligra/formatfilters/calligra_filter_*sheets*.so
-%_K5plug/calligra/formatfilters/calligra_filter_*kspread*.so
-%_K5plug/calligra/formatfilters/calligra_filter_xls*.so
-%_K5plug/calligrasheets/extensions/sheetssolver.so
-%_datadir/calligrasheets/
-%_K5xmlgui/calligrasheets/
-%_K5srv/sheets_*_thumbnail.desktop
-%_K5srv/ServiceMenus/calligra/sheets_print.desktop
-%_K5cfg/calligrasheets.kcfg
-%_K5tmpl/SpreadSheet.*
-%_K5tmpl/.source/SpreadSheet.*
-%_K5xdgapp/org.kde.calligrasheets.desktop
-%_datadir/metainfo/org.kde.calligrasheets.appdata.xml
+%config(noreplace) %_K6xdgconf/calligrasheetsrc
+%_K6bin/calligrasheets
+%_K6plug/calligra/*/calligrasheets*.so
+%_K6plug/calligrasheets/*/kspread*module.so
+%_K6plug/calligra/formatfilters/calligra_filter_*sheets*.so
+%_K6plug/calligra/formatfilters/calligra_filter_*kspread*.so
+%_K6plug/calligra/formatfilters/calligra_filter_xls*.so
+%_K6plug/calligrasheets/extensions/sheetssolver.so
+%_K6data/calligrasheets/
+%_K6data/kxmlgui?/calligrasheets/
+#%_K6srv/sheets_*_thumbnail.desktop
+%_K6data/kio/servicemenus/sheets_*.desktop
+%_K6cfg/calligrasheets.kcfg
+%_K6tmpl/SpreadSheet.*
+%_K6tmpl/.source/SpreadSheet.*
+%_K6xdgapp/org.kde.calligra.sheets.desktop
+%_datadir/metainfo/org.kde.calligra.sheets.metainfo.xml
 
 %files stage
-%config(noreplace) %_K5xdgconf/calligrastagerc
+%config(noreplace) %_K6xdgconf/calligrastagerc
 %doc stage/AUTHORS stage/CHANGES
-%_K5bin/calligrastage
-%_K5lib/libkdeinit5_calligrastage.so
-%_K5plug/calligra/*/*stage*.*
-%_K5plug/calligra/textinlineobjects/kprvariables.so
-%_K5plug/calligrastage/pageeffects/kpr_pageeffect_*.so
-%_K5plug/calligrastage/shapeanimations/kpr_shapeanimation_*.so
-%_K5plug/calligra/formatfilters/calligra_filter_ppt2odp.so
-%_K5plug/calligra/formatfilters/calligra_filter_pptx2odp.so
-%_K5plug/calligra/formatfilters/calligra_filter_key2odp.so
-%_K5plug/calligrastage/tools/calligrastagetoolanimation.so
-%_K5xdgapp/org.kde.calligrastage.desktop
-%_datadir/calligrastage/
-%_K5xmlgui/calligrastage/
-%_K5tmpl/Presentation.*
-%_K5tmpl/.source/Presentation.*
-%_K5srv/stage_*_thumbnail.desktop
-%_K5srv/ServiceMenus/calligra/stage_*.desktop
-%_datadir/metainfo/org.kde.calligrastage.appdata.xml
+%_K6bin/calligrastage
+%_K6plug/calligra/*/*stage*.*
+%_K6plug/calligra/textinlineobjects/kprvariables.so
+%_K6plug/calligrastage/pageeffects/kpr_pageeffect_*.so
+%_K6plug/calligrastage/shapeanimations/kpr_shapeanimation_*.so
+%_K6plug/calligra/formatfilters/calligra_filter_ppt2odp.so
+%_K6plug/calligra/formatfilters/calligra_filter_pptx2odp.so
+%_K6plug/calligra/formatfilters/calligra_filter_key2odp.so
+%_K6plug/calligrastage/tools/calligrastagetoolanimation.so
+%_K6xdgapp/org.kde.calligra.stage.desktop
+%_K6data/calligrastage/
+%_K6data/kxmlgui?/calligrastage/
+%_K6tmpl/Presentation.*
+%_K6tmpl/.source/Presentation.*
+#%_K6srv/stage_*_thumbnail.desktop
+%_K6data/kio/servicemenus/stage_*.desktop
+%_datadir/metainfo/org.kde.calligra.stage.metainfo.xml
 
 %files karbon
-%config(noreplace) %_K5xdgconf/karbonrc
-%_K5bin/karbon
-%_K5lib/libkdeinit5_karbon.so
-%_K5plug/karbon/extensions/*karbon*.*
-%_K5plug/calligra/formatfilters/calligra_filter_wmf2svg.so
-%_K5plug/calligra/formatfilters/calligra_filter_xfig2odg.so
-%_K5plug/calligra/formatfilters/calligra_filter_karbon1x2karbon.so
-%_K5plug/calligra/formatfilters/calligra_filter_karbon2image.so
-%_K5plug/calligra/formatfilters/calligra_filter_karbon2svg.so
-%_K5plug/calligra/formatfilters/calligra_filter_karbon2wmf.so
-%_K5plug/calligra/formatfilters/calligra_filter_svg2karbon.so
-%_K5plug/calligra/formatfilters/calligra_filter_pdf2odg.so
-%_K5plug/calligra/parts/karbonpart.so
-%_K5plug/calligra/tools/karbon_tools.so
-%_datadir/karbon/
-%_K5xmlgui/karbon/
-%_K5srv/karbon_*_thumbnail.desktop
-%_K5tmpl/Illustration.*
-%_K5tmpl/.source/Illustration.*
-%_K5xdgapp/org.kde.karbon.desktop
-%_K5srv/ServiceMenus/calligra/karbon_print.desktop
-%_datadir/metainfo/org.kde.karbon.appdata.xml
-
-%if_enabled plan
-%files plan
-%doc plan/CHANGELOG plan/TODO
-%config(noreplace) %_K5xdgconf/calligraplan*rc
-%_K5bin/calligraplan
-%_K5bin/calligraplanwork
-%_K5lib/libkdeinit5_calligraplan.so
-%_K5lib/libkdeinit5_calligraplanwork.so
-%_K5plug/calligra/parts/calligraplanpart.so
-%_K5plug/calligra/formatfilters/planicalexport.so
-%_K5plug/calligra/formatfilters/plankplatoimport.so
-%_K5plug/calligraplan/schedulers/libplantjscheduler.so
-%_K5plug/calligraplanworkpart.so
-%_K5plug/kreport/planreport_textplugin.so
-%_datadir/calligraplan/
-%_datadir/calligraplanwork/
-%_K5xmlgui/calligraplan/
-%_K5xmlgui/calligraplanwork/
-%_K5cfg/calligraplansettings.kcfg
-%_K5cfg/calligraplanworksettings.kcfg
-%_K5xdgapp/org.kde.calligraplan.desktop
-%_K5xdgapp/org.kde.calligraplanwork.desktop
-%endif
+%config(noreplace) %_K6xdgconf/karbonrc
+%_K6bin/karbon
+%_K6plug/karbon/extensions/*karbon*.*
+%_K6plug/calligra/formatfilters/calligra_filter_wmf2svg.so
+%_K6plug/calligra/formatfilters/calligra_filter_xfig2odg.so
+%_K6plug/calligra/formatfilters/calligra_filter_karbon1x2karbon.so
+%_K6plug/calligra/formatfilters/calligra_filter_karbon2image.so
+%_K6plug/calligra/formatfilters/calligra_filter_karbon2svg.so
+%_K6plug/calligra/formatfilters/calligra_filter_karbon2wmf.so
+%_K6plug/calligra/formatfilters/calligra_filter_svg2karbon.so
+%_K6plug/calligra/formatfilters/calligra_filter_pdf2odg.so
+%_K6plug/calligra/parts/karbonpart.so
+%_K6plug/calligra/tools/karbon_tools.so
+%_K6data/karbon/
+%_K6data/kxmlgui?/karbon/
+#%_K6srv/karbon_*_thumbnail.desktop
+%_K6tmpl/Illustration.*
+%_K6tmpl/.source/Illustration.*
+%_K6xdgapp/org.kde.calligra.karbon.desktop
+%_K6data/kio/servicemenus/karbon_*.desktop
+%_datadir/metainfo/org.kde.calligra.karbon.metainfo.xml
 
 %files words
-%config(noreplace) %_K5xdgconf/calligrawordsrc
-%_K5bin/calligrawords
-%_K5lib/libkdeinit5_calligrawords.so
-%_K5plug/calligra/parts/calligrawordspart.so
-%_datadir/calligrawords/
-%_K5xmlgui/calligrawords/
-%_K5tmpl/TextDocument.*
-%_K5tmpl/.source/TextDocument.*
-%_K5xdgapp/org.kde.calligrawords.desktop
-%_K5xdgapp/org.kde.calligrawords_ascii.desktop
-%_K5plug/calligra/formatfilters/calligra_filter_applixword2odt.so
-%_K5plug/calligra/formatfilters/calligra_filter_ascii2words.so
-%_K5plug/calligra/formatfilters/calligra_filter_doc2odt.so
-%_K5plug/calligra/formatfilters/calligra_filter_docx2odt.so
-%_K5plug/calligra/formatfilters/calligra_filter_html2ods.so
-%_K5plug/calligra/formatfilters/calligra_filter_odt2ascii.so
-%_K5plug/calligra/formatfilters/calligra_filter_odt2epub2.so
-%_K5plug/calligra/formatfilters/calligra_filter_odt2html.so
-%_K5plug/calligra/formatfilters/calligra_filter_odt2mobi.so
-%_K5plug/calligra/formatfilters/calligra_filter_rtf2odt.so
-%_K5plug/calligra/formatfilters/calligra_filter_wpd2odt.so
-%_K5plug/calligra/formatfilters/calligra_filter_wpg2svg.so
-%_K5plug/calligra/formatfilters/calligra_filter_wpg2odg.so
-%_K5plug/calligra/formatfilters/calligra_filter_wps2odt.so
-%_K5plug/calligra/formatfilters/calligra_filter_odt2docx.so
-%_K5plug/calligra/formatfilters/calligra_filter_odt2wiki.so
-#%_K5xdgapp/calligra_filter_odt2docx.desktop
-%_K5srv/words_*_thumbnail.desktop
-%_K5srv/ServiceMenus/calligra/words_print.desktop
-%_K5xdgmime/wiki-format.xml
-%_datadir/metainfo/org.kde.calligrawords.appdata.xml
+%config(noreplace) %_K6xdgconf/calligrawordsrc
+%_K6bin/calligrawords
+%_K6plug/calligra/parts/calligrawordspart.so
+%_K6data/calligrawords/
+%_K6data/kxmlgui?/calligrawords/
+%_K6tmpl/TextDocument.*
+%_K6tmpl/.source/TextDocument.*
+%_K6xdgapp/org.kde.calligra.words.desktop
+%_K6xdgapp/org.kde.calligrawords_ascii.desktop
+%_K6plug/calligra/formatfilters/calligra_filter_applixword2odt.so
+%_K6plug/calligra/formatfilters/calligra_filter_ascii2words.so
+%_K6plug/calligra/formatfilters/calligra_filter_doc2odt.so
+%_K6plug/calligra/formatfilters/calligra_filter_docx2odt.so
+%_K6plug/calligra/formatfilters/calligra_filter_html2ods.so
+%_K6plug/calligra/formatfilters/calligra_filter_odt2ascii.so
+%_K6plug/calligra/formatfilters/calligra_filter_odt2epub2.so
+%_K6plug/calligra/formatfilters/calligra_filter_odt2html.so
+%_K6plug/calligra/formatfilters/calligra_filter_odt2mobi.so
+%_K6plug/calligra/formatfilters/calligra_filter_rtf2odt.so
+%_K6plug/calligra/formatfilters/calligra_filter_wpd2odt.so
+%_K6plug/calligra/formatfilters/calligra_filter_wpg2svg.so
+%_K6plug/calligra/formatfilters/calligra_filter_wpg2odg.so
+%_K6plug/calligra/formatfilters/calligra_filter_wps2odt.so
+%_K6plug/calligra/formatfilters/calligra_filter_odt2docx.so
+%_K6plug/calligra/formatfilters/calligra_filter_odt2wiki.so
+#%_K6srv/words_*_thumbnail.desktop
+%_K6data/kio/servicemenus/words_*.desktop
+%_K6xdgmime/wiki-format.xml
+%_datadir/metainfo/org.kde.calligra.words.metainfo.xml
 
 %files okular-generators
-%_K5lib/libkookularGenerator_odp.so*
-%_K5lib/libkookularGenerator_odt.so*
-%_K5plug/okular/generators/okularGenerator_*_calligra.so
-%_K5xdgapp/okularApplication_*_calligra.desktop
-%_K5srv/okular*_calligra.desktop
+%_K6lib/libkookularGenerator_odp.so*
+%_K6lib/libkookularGenerator_odt.so*
+%_K6plug/okular_generators/okularGenerator_*_calligra.so
+%_K6xdgapp/okularApplication_*_calligra.desktop
+#%_K6srv/okular*_calligra.desktop
 
 %files -n %libname
-%_K5lib/lib*.so.*
-%exclude %_K5lib/libkookularGenerator_odp.so*
-%exclude %_K5lib/libkookularGenerator_odt.so*
+%_K6lib/lib*.so.*
+%exclude %_K6lib/libkookularGenerator_odp.so*
+%exclude %_K6lib/libkookularGenerator_odt.so*
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 4.0.1-alt1
+- new version
+
 * Fri Jun 07 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0:3.2.1-alt7
 - fix a crach when duplicating the bibliography (closes: 42875)
 - remove duplicate templates (closes: 42876)
