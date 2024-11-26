@@ -14,7 +14,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.8.0.1
-Release: alt2
+Release: alt3
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -217,6 +217,7 @@ Requires: gem(activesupport) >= 4.2
 Requires: gem(i18n) >= 0.9
 Requires: gem(rack)
 Requires: gem(rackup)
+Requires: gem(rake)
 Requires: gem(sinatra)
 Requires: gem(thin)
 Requires: gem(uuidtools)
@@ -1143,6 +1144,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Nov 25 2024 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt3
+- fix requires (ALT #51726)
+
 * Sat Nov 23 2024 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt2
 - fix requires
 
