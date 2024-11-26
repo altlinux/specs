@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%mod_name
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 Summary: A module with some convenient utilities not included with the standard Python install
 License: BSD
@@ -67,6 +67,9 @@ extending it.
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Tue Nov 26 2024 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
+- 3.9.0 -> 3.9.1.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
 - 3.8.2 -> 3.9.0.
 
