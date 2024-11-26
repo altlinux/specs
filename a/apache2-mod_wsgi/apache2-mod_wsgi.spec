@@ -3,7 +3,7 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 
 Summary: Python WSGI module for Apache2
@@ -65,6 +65,9 @@ echo -e '<IfModule !wsgi_module>\n\tLoadModule wsgi_module %apache2_moduledir/mo
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Mon Nov 25 2024 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
+- 5.0.1 -> 5.0.2.
+
 * Wed Oct 23 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
 - 5.0.0 -> 5.0.1.
 
