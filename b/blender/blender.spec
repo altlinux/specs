@@ -3,6 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed
 %define git %nil
 %define kern_dir scripts/addons_core/cycles/lib
+%define gcc_ver 13
 
 %def_with docs
 
@@ -14,10 +15,13 @@
 
 %ifarch x86_64
 %def_with cuda
-%def_without hiprt
+%def_with hiprt
+# oneapi needs sycl compiler
+%def_without levelzero
 %else
 %def_without cuda
 %def_without hiprt
+%def_without levelzero
 %endif
 
 %ifarch x86_64 ppc64le aarch64
@@ -52,8 +56,8 @@
 %endif
 
 Name: blender
-Version: 4.2.1
-Release: alt1.1
+Version: 4.3.0
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -72,7 +76,6 @@ Patch23: blender-2.80-alt-use-system-glog.patch
 Patch24: blender-2.90-alt-non-x86_64-linking.patch
 Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
-Patch27: blender-4.0.1-suse-reproducible.patch
 
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
@@ -86,6 +89,7 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
+Patch35: blender-4.4-alt-hiprt-inc.patch
 
 Patch2000: blender-e2k-support.patch
 Patch3500: blender-4.2.1-loongarch64.patch
@@ -115,7 +119,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: libgomp-devel
+BuildRequires: libgomp%{gcc_ver}-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpulseaudio-devel
@@ -125,7 +129,7 @@ BuildRequires: opensubdiv-devel
 BuildRequires: libzstd-devel
 BuildRequires: libepoxy-devel
 BuildRequires: libwayland-egl-devel wayland-protocols libwayland-cursor-devel libxkbcommon-devel libdecor-devel
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libshaderc-devel
 BuildRequires: libspnav-devel
 BuildRequires: libwebp-devel
 %ifarch aarch64
@@ -150,7 +154,11 @@ BuildRequires: hip-devel
 %endif
 
 %if_with hiprt
-BuildRequires: hiprt-devel
+BuildRequires: hiprt-devel clang-rocm-devel
+# hiprtCreateGeometry relies on hardcoded headers
+# in /usr/include
+# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
+Requires: hiprt-devel
 %endif
 
 %if_with openpgl
@@ -162,7 +170,7 @@ BuildRequires: OpenUSD-devel
 %endif
 
 %if_with cuda
-BuildRequires: nvidia-cuda-devel
+BuildRequires: nvidia-cuda-devel gcc%{gcc_ver}-c++
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %set_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
@@ -174,6 +182,10 @@ BuildRequires: openimagedenoise-devel
 
 %if_with mold
 BuildRequires: mold
+%endif
+
+%if_with levelzero
+BuildRequires: liboneapi-level-zero1-devel
 %endif
 
 %add_python3_path %_datadir/%name/scripts
@@ -286,7 +298,6 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
-%patch27 -p1
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
@@ -301,6 +312,7 @@ cat >/tmp/bits/math-vector.h <<EOF
 EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
+%patch35 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -332,6 +344,12 @@ popd
 # needed due to non-standard location of pcre.h header
 %add_optflags -I%_includedir/pcre -DGLOG_USE_GLOG_EXPORT
 
+%if_with hiprt
+export ALTWRAP_LLVM_VERSION=rocm
+%endif
+%if_with cuda
+export GCC_VERSION=%gcc_ver
+%endif
 %cmake -G Ninja \
 %if_with hip
 	-DWITH_CYCLES_HIP_BINARIES:BOOL=ON \
@@ -342,7 +360,15 @@ popd
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=%prefix \
 	-DWITH_CYCLES_DEVICE_HIPRT:BOOL=ON \
+	-DHIPRT_INCLUDE_DIR=%_includedir \
+	-DHIP_LINKER_EXECUTABLE=%_bindir/clang++-rocm \
+	-DHIPRT_COMPILER_PARALLEL_JOBS=4 \
 %endif #hiprt
+%if_with levelzero
+	-DLEVEL_ZERO_ROOT_DIR=%prefix \
+	-DWITH_CYCLES_DEVICE_ONEAPI:BOOL=ON \
+	-DWITH_CYCLES_ONEAPI_BINARIES:BOOL=ON \
+%endif #levelzero
 	-DBUILD_SHARED_LIBS=OFF \
 	-DWITH_ALEMBIC:BOOL=ON \
 	-DWITH_FFTW3=ON \
@@ -444,6 +470,12 @@ popd
 %endif
 
 %changelog
+* Mon Nov 25 2024 Egor Ignatov <egori@altlinux.org> 4.3.0-alt1
+- Update to 4.3.0.
+- Enable hiprt (thx lakostis@).
+- Update cycles-fix-kernels patch (thx lakostis@).
+- Fix cuda build: downgrade gcc to 13 (thx lakostis@).
+
 * Mon Sep 23 2024 Ivan A. Melnikov <iv@altlinux.org> 4.2.1-alt1.1
 - NMU: update loongarch64 patch
 
