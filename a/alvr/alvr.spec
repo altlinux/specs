@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.11.1
-Release: alt5
+Release: alt6
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -56,9 +56,11 @@ Requires: libavutil58
 Requires: libunwind
 Requires: libvulkan1
 Requires: libx264
-Requires: alvr-companion
+# Requires: alvr-companion
 Requires: openxr
 Requires: android-tools
+Requires: yad
+Requires: curl
 
 ExclusiveArch: x86_64
 
@@ -160,6 +162,12 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Tue Nov 26 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt6
+- added pop-up notifications when connected via USB
+- APK client installation simplified
+- added Steam and SteamVR check
+- added automatic configuration of SteamVR parameters
+
 * Fri Nov 22 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt5
 - added auto-connection via USB
 - used bitrate: 40Mbps by default
