@@ -69,7 +69,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -96,6 +96,10 @@ Patch89: boost-1.86.0-upstream-ppc64le-charconv-workaround.patch
 # https://github.com/boostorg/compute/issues/889
 Patch90: boost-1.86.0-upstream-compute-fixap-sha1-digest-type.patch
 
+# https://github.com/chriskohlhoff/asio/issues/1547
+# https://github.com/chriskohlhoff/asio/pull/1556
+Patch91: boost-1.86.0-alt-fix-asio-hpp-compilation.patch
+
 Patch2000: boost-1.83-e2k-makecontext.patch
 
 # we use %%_python3_abiflags
@@ -111,7 +115,12 @@ BuildRequires: python3-devel libnumpy-py3-devel
 BuildRequires: %mpiimpl-devel
 %endif
 
-BuildRequires: gcc-c++ libstdc++-devel zlib-devel bzlib-devel libicu-devel
+BuildRequires: gcc-c++ libstdc++-devel
+BuildRequires: libicu-devel
+BuildRequires: zlib-devel bzlib-devel liblzma-devel libzstd-devel
+%if_with devel_static
+BuildRequires: zlib-devel-static bzlib-devel-static liblzma-devel-static libzstd-devel-static
+%endif
 
 %if_with libquadmath
 BuildRequires: libquadmath-devel
@@ -1972,6 +1981,10 @@ done
 
 
 %changelog
+* Sun Nov 24 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.86.0-alt2
+- Fix asio.hpp compilation with c++20 but w/o concepts
+- Build Boost.Iostreams with LZMA and Zstd support (ALT#52165)
+
 * Thu Aug 29 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.86.0-alt1
 - 1.86.0
 - Apply additional workaround to compile Boost.Charconv
