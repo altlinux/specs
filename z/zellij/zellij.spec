@@ -1,5 +1,5 @@
 Name:    zellij
-Version: 0.41.1
+Version: 0.41.2
 Release: alt1
 
 Summary: A terminal workspace with batteries included
@@ -63,5 +63,8 @@ cp -r ./example %buildroot%_datadir/example
 %_datadir/example
 
 %changelog
+* Mon Nov 25 2024 Ilya Sorochan <k0tran@altlinux.org> 0.41.2-alt1
+- Update version.
+
 * Thu Nov 07 2024 Ilya Sorochan <k0tran@altlinux.org> 0.41.1-alt1
 - Initial build for Sisyphus.
