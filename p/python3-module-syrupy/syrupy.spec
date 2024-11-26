@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.7.2
+Version: 4.8.0
 Release: alt1
 
 Summary: Pytest Snapshot Test Utility
@@ -20,6 +20,7 @@ BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-xdist
 %endif
 
 BuildArch: noarch
@@ -48,6 +49,9 @@ to write tests which assert immutability of computed results.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
+- Automatically updated to 4.8.0.
+
 * Sun Oct 06 2024 Grigory Ustinov <grenka@altlinux.org> 4.7.2-alt1
 - Automatically updated to 4.7.2.
 
