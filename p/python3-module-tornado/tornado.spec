@@ -1,7 +1,9 @@
 %define oname tornado
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 6.4.1
+Version: 6.4.2
 Release: alt1
 
 Summary: Scalable, non-blocking web server and tools
@@ -16,6 +18,8 @@ Patch: Do-not-turn-DeprecationWarning-into-Exception.patch
 Patch1: tornado-increase-timeout-for-simplehttpclienttest.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 Requires: ca-certificates python3-module-certifi
 %add_python3_req_skip MySQLdb pycurl
 
@@ -37,10 +41,10 @@ ideal for real-time web services.
 sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 pushd %buildroot%python3_sitelibdir/%oname
 ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
 
@@ -54,9 +58,12 @@ export ASYNC_TEST_TIMEOUT=120
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-6.4.1-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Nov 22 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.2-alt1
+- Automatically updated to 6.4.2.
+
 * Fri Jul 05 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.1-alt1
 - Automatically updated to 6.4.1.
 
