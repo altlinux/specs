@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.14
+Version: 1.15.15
 Release: alt1
 
 Summary: Installer common parts
@@ -30,6 +30,8 @@ Requires: glibc-locales
 Requires: eject
 # initinstall.d/10-vt.sh
 Requires: bash console-vt-tools
+# initinstall.d/25-setup-dhcp.sh
+Requires: alterator-hw-functions >= 0.7.8-alt1
 
 Provides: installer-feature-autohostname
 Obsoletes: installer-feature-autohostname
@@ -100,11 +102,20 @@ This package contains common installer stage3 files and dependencies.
 %_sbindir/*
 %_datadir/install2
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
+%exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
 %files common-stage3
 %_datadir/install2/preinstall.d/30-setup-network.sh
+%_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
 %changelog
+* Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 1.15.15-alt1
+- Do not dependency stage2 subpackage on etcnet (through alterator-net-functions)
+  (request by shaba@ for build distribution with PVE).
+- Replace initial setup of hostname from 30-setup-network.sh to
+  40-autohostname.sh
+- postinstall.d: remove alterator-preinstall also
+
 * Mon Nov 18 2024 Anton Midyukov <antohami@altlinux.org> 1.15.14-alt1
 - preinstall.d/10-xorg.sh: do not copy xorg config from installer
   (Closes: 46226)

@@ -1,5 +1,5 @@
 Name: alterator-hw-functions
-Version: 0.7.7
+Version: 0.7.8
 Release: alt1
 
 Url: http://www.altlinux.org/Alterator
@@ -12,6 +12,9 @@ Summary: helper functions for alterator to retrieve hardware info
 License: GPL
 Group: System/Base
 
+# because of the function list_eth
+Conflicts: alterator-net-functions < 2.1.3
+
 %description
 %summary
 
@@ -22,6 +25,9 @@ install -pDm644 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 0.7.8-alt1
+- Add function list_eth from alterator-net-functions
+
 * Wed Jul 17 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.7.7-alt1
 - Added partition_num() and partition_is_PReP().
 

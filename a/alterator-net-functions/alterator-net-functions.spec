@@ -1,11 +1,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Requires: libshell >= 0.1.3 etcnet
-Requires: alterator-hw-functions >= 0.7.5
+Requires: alterator-hw-functions >= 0.7.8
 
 Provides: alterator-net-common = %version
 Obsoletes: alterator-net-common
@@ -41,6 +41,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 2.1.3-alt1
+- Remove function "list_eth" (replaced to alterator-hw-functions >= 0.7.8)
+
 * Tue Jan 23 2024 Mikhail Efremov <sem@altlinux.org> 2.1.2-alt1
 - Fix write_systemd_networkd_bootproto() (closes: #49159).
 - Fix sed regex for systemd-networkd config (closes: #49158).
