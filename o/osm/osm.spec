@@ -1,6 +1,6 @@
 Name: osm
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 
 Summary: Open Sound Meter
 License: GPLv3
@@ -56,6 +56,9 @@ done
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Nov 26 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4-alt1
+- 1.4 released
+
 * Wed Nov 08 2023 Michael Shigorin <mike@altlinux.org> 1.3-alt2
 - E2K: ftbfs workaround (ilyakurdyukov@)
 
