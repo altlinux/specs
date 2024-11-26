@@ -7,7 +7,7 @@
 %define pcre_version 10.21
 
 Name: ptyxis
-Version: 47.4
+Version: 47.5
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -66,6 +66,9 @@ Provides: x-terminal-emulator
 %_man1dir/ptyxis.1.xz
 
 %changelog
+* Tue Nov 26 2024 Boris Yumankulov <boria138@altlinux.org> 47.5-alt1
+- new version 47.5
+
 * Sun Nov 03 2024 Boris Yumankulov <boria138@altlinux.org> 47.4-alt1
 - new version 47.4
 
