@@ -1,5 +1,5 @@
 Name: distrobox
-Version: 1.7.2.1
+Version: 1.8.0
 Release: alt1
 
 Summary: Another tool for containerized command line environments on Linux
@@ -59,6 +59,9 @@ done
 %_datadir/zsh/site-functions/_%{name}*
 
 %changelog
+* Sun Oct 13 2024 Boris Yumankulov <boria138@altlinux.org> 1.8.0-alt1
+- new version 1.8.0
+
 * Sun May 19 2024 Boris Yumankulov <boria138@altlinux.org> 1.7.2.1-alt1
 - Initial build for Sisyphus (ALT bug: 49431)
 
