@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
-%define git 4ab01178e2c
+%define git 2760def19ab
 %define kern_dir scripts/addons_core/cycles/lib
 %define project blender
 %define gcc_ver 13
@@ -58,7 +58,7 @@
 
 Name: %{project}4.4
 Version: 4.4.0
-Release: alt0.3.g%{git}
+Release: alt0.4.g%{git}
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -478,6 +478,9 @@ popd
 %endif
 
 %changelog
+* Tue Nov 26 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.4.g2760def19ab
+- 4.4.0 GIT 2760def19ab.
+
 * Mon Nov 11 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.3.g4ab01178e2c
 - 4.4.0 GIT 4ab01178e2c.
 - Fix OpenMP detection.
