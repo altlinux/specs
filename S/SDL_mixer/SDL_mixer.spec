@@ -1,10 +1,11 @@
 Name: SDL_mixer
-Version: 1.2.12
-Release: alt2.git40a7e1a
+Version: 1.2.12.0.173.ed76
+Release: alt1
 Summary: Simple DirectMedia Layer - mixer
 Group: System/Libraries
 License: LGPL-2.0+
-Url: http://www.libsdl.org/projects/SDL_mixer/
+Url: https://github.com/libsdl-org/SDL_mixer
+Vcs: git://github.com/libsdl-org/SDL_mixer.git
 # https://github.com/libsdl-org/SDL_mixer/tree/SDL-1.2
 
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -87,6 +88,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 26 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.12.0.173.ed76-alt1
+- New version release-1.2.12-173-ged76d39c (latest commit from SDL-1.2).
+- Added vcs tag.
+
 * Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt2.git40a7e1a
 - Built git snapshot.
 
