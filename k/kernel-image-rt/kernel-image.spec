@@ -1,7 +1,7 @@
 Name: kernel-image-rt
 %define kernel_base_version	6.1
-%define kernel_sublevel	.112
-%define kernel_rt_release	rt43
+%define kernel_sublevel	.119
+%define kernel_rt_release	rt45
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -140,10 +140,6 @@ with Real-Time Linux project PREEMPT_RT patches.
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
-
-There are some other kernel variants in ALT systems:
-* std-def: latest longterm (LTS) kernel;
-* un-def:  latest stable kernel, usually higher version than std-def.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -601,6 +597,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Nov 27 2024 Vitaly Chikunov <vt@altlinux.org> 6.1.119-alt1.rt45
+- Update to v6.1.119-rt45 (2024-11-26).
+
 * Tue Oct 15 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.112-alt1.rt43
 - v6.1.112-rt43 (2024-10-13).
 - config: Enable CONFIG_USB_ANNOUNCE_NEW_DEVICES=y.
