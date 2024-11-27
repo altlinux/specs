@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Helper to test WSGI applications
 License: MIT
@@ -57,6 +57,9 @@ This is based on ``paste.fixture.TestApp``.
 %python3_sitelibdir/WebTest-%version.dist-info
 
 %changelog
+* Wed Nov 27 2024 Anton Vyatkin <toni@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
 * Fri Aug 30 2024 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
 - New version 3.0.1.
 
