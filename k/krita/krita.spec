@@ -38,7 +38,7 @@
 %define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 5.2.2
+Version: 5.2.6
 Release: alt1
 %K5init no_altplace
 
@@ -421,7 +421,7 @@ done
 %if_enabled python_bindings
 %_libdir/krita-python-libs/
 %endif
-%_K5qml/org/krita/
+#%_K5qml/org/krita/
 %_datadir/krita/
 %_datadir/kritaplugins/
 %_datadir/color/icc/krita/
@@ -458,9 +458,9 @@ done
 %files -n %libkritalibkra
 %_libdir/libkritalibkra.so.%sover
 %_libdir/libkritalibkra.so.*
-%files -n %libkritaqml
-%_libdir/libkritaqml.so.%sover
-%_libdir/libkritaqml.so.*
+#%files -n %libkritaqml
+#%_libdir/libkritaqml.so.%sover
+#%_libdir/libkritaqml.so.*
 %files -n %libkritacolord
 %_libdir/libkritacolord.so.%sover
 %_libdir/libkritacolord.so.*
@@ -526,6 +526,9 @@ done
 %_libdir/libkritamultiarch.so.*
 
 %changelog
+* Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 5.2.6-alt1
+- new version
+
 * Wed Mar 06 2024 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1
 - new version
 
