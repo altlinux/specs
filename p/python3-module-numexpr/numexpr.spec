@@ -1,10 +1,9 @@
-%define _unpackaged_files_terminate_build 1
 %define oname numexpr
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.10.1
+Version: 2.10.2
 Release: alt1
 Epoch: 1
 
@@ -84,6 +83,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Nov 27 2024 Grigory Ustinov <grenka@altlinux.org> 1:2.10.2-alt1
+- Automatically updated to 2.10.2.
+
 * Tue Jul 09 2024 Grigory Ustinov <grenka@altlinux.org> 1:2.10.1-alt1
 - Automatically updated to 2.10.1.
 
