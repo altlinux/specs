@@ -1,6 +1,4 @@
 %define nm_version 1.18.10-alt3
-#define git_hash .g4909bd30
-%define git_hash %nil
 
 %define _unpackaged_files_terminate_build 1
 
@@ -10,7 +8,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 1.36.0
-Release: alt1%git_hash
+Release: alt2
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -51,7 +49,7 @@ NetworkManager, including a panel applet for wireless networks.
 %patch -p1
 %build
 %meson \
-    --libexecdir==%_libexecdir/NetworkManager \
+    --libexecdir=%_libexecdir/NetworkManager \
     --localstatedir=%_var \
 %if_with selinux
     -Dselinux=true \
@@ -94,6 +92,10 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Wed Nov 27 2024 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt2
+- Fixed Russian translation.
+- Fixed meson option.
+
 * Thu Feb 22 2024 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt1
 - Updated Russian translation.
 - Updated to 1.36.0.
