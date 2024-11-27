@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.7
+Version: 24.01.8
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -121,8 +121,6 @@ Requires: krfb
 Requires: kdf
 Requires: kid3-ui-kde5
 Requires: kdegraphics-thumbnailers
-#
-Requires: plasma5-oxygen
 %description -n kde-big
 %summary
 
@@ -271,6 +269,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.8-alt1
+- relax requires
+
 * Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.7-alt1
 - update for Games
 
