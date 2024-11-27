@@ -11,7 +11,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.15.0
+Version: 4.16.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -32,7 +32,7 @@ BuildRequires: libxml2-devel nss-devel nspr-devel
 BuildRequires: flex libuuid-devel
 
 # skipped: pve, raritan, rcd-serial, virsh
-%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-cyberpower-ssh fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-eaton-ssh fence-agents-ecloud fence-agents-emerson fence-agents-eps fence-agents-gce fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ibm-powervs fence-agents-ibm-vpc fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-ovm fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack
+%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-cyberpower-ssh fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-eaton-ssh fence-agents-ecloud fence-agents-emerson fence-agents-eps fence-agents-gce fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ibm-powervs fence-agents-ibm-vpc fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-ovm fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack fence-agents-nutanix-ahv
 
 %description
 Fence Agents is a collection of scripts to handle remote
@@ -534,6 +534,16 @@ Requires: fence-agents-common = %version-%release
 
 %description netio
 The fence-agents-netio package contains a fence agent for Koukaam NETIO devices that are accessed via telnet or SSH.
+
+%package nutanix-ahv
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for Nutanix AHV
+Requires: fence-agents-common = %version-%release
+Obsoletes: fence-agents < 3.1.13
+
+%description nutanix-ahv
+Fence agent for Nutanix AHV clusters.
 
 %package openstack
 BuildArch: noarch
@@ -1117,6 +1127,10 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %_sbindir/fence_netio
 %_man8dir/fence_netio.8*
 
+%files nutanix-ahv
+%_sbindir/fence_nutanix_ahv
+%_man8dir/fence_nutanix_ahv.8*
+
 %files openstack
 %_sbindir/fence_openstack
 %_man8dir/fence_openstack.8*
@@ -1251,6 +1265,10 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %endif
 
 %changelog
+* Wed Nov 27 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.16.0-alt1
+- 4.16.0
+- Add nutanix-ahv module.
+
 * Fri Jul 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.15.0-alt1
 - 4.15.0
 
