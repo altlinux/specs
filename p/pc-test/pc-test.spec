@@ -7,7 +7,7 @@
 
 Name: pc-test
 Version: 2.1.2
-Release: alt1
+Release: alt2
 
 Summary: PC Test Suite
 Group: System/Configuration/Hardware
@@ -138,6 +138,12 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Thu Nov 28 2024 Leonid Krivoshein <klark@altlinux.org> 2.1.2-alt2
+- Fixed:
+  + add 15 sec timeout for slow Wi-Fi connections
+  + do not check monitors for express testing
+  + add and increase timeouts between operations
+
 * Wed Jun 26 2024 Leonid Krivoshein <klark@altlinux.org> 2.1.2-alt1
 - Added:
   + ability to reset subtest results
