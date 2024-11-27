@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.6
+Version: 2.5.7
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -83,8 +83,8 @@ sphinx-build-3 -b html docs build/html
 sphinx-build-3 -b pickle docs build/pickle
 
 # remove the sphinx-build leftovers
-rm -rf build/html/.{doctrees,buildinfo}
-rm -rf build/pickles/.{doctrees,buildinfo}
+rm -rv build/html/.{doctrees,buildinfo}
+rm -rv build/pickle/.{doctrees,buildinfo}
 %endif
 
 %install
@@ -115,6 +115,9 @@ pytest3
 %endif
 
 %changelog
+* Tue Nov 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.7-alt1
+- Automatically updated to 2.5.7.
+
 * Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.6-alt1
 - Automatically updated to 2.5.6.
 
