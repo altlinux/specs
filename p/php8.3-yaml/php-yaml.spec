@@ -1,7 +1,7 @@
 %define php_extension yaml
 
 Name: php%_php_suffix-%php_extension
-Version: 2.2.3
+Version: 2.2.4
 Release: alt%php_version.%php_release
 Summary: PHP5 YAML-1.1 parser and emitter
 License: %mit
@@ -58,6 +58,9 @@ EOF
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Sat Nov 16 2024 Anton Farygin <rider@altlinux.ru> 2.2.4-alt1
+- update to 2.2.4
 
 * Fri Jan 19 2024 Anton Farygin <rider@altlinux.ru> 2.2.3-alt1
 - update to 2.2.3

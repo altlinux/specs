@@ -8,8 +8,7 @@ Summary:	MySQL driver for PHP Data Objects Interface
 
 Group:		System/Servers
 License:	PHP-3.01
-URL:		http://www.php.net/manual/en/ref.pdo-mysql.php
-#		http://pecl.php.net/package/PDO_MYSQL
+URL:		https://www.php.net/manual/en/ref.pdo-mysql.php
 
 #Source0:	standart PHP module
 Source1:	php-%php_extension.ini
@@ -17,7 +16,7 @@ Source2:	php-%php_extension-params.sh
 
 
 BuildRequires(pre): rpm-build-php8.3-version
-BuildRequires: gcc-c++ libMySQL-devel
+BuildRequires: gcc-c++
 BuildRequires: php-devel = %php_version
 Conflicts: php%_php_suffix-mysqlnd-%php_extension
 
@@ -50,7 +49,7 @@ subst 's@php/ext@php/%_php_version/ext@g' configure
 %configure \
 	--with-%php_extension \
 	--with-libdir=%_lib \
-	--with-pdo-mysql=%_usr \
+	--with-pdo-mysql=mysqlnd \
 	#
 
 %php_make
@@ -74,6 +73,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Wed Nov 06 2024 Anton Farygin <rider@altlinux.ru> 8.3.13-alt0.1
+- built with mysqlnd instead of libMySQL to fix FTBFS
 
 * Sun Mar 03 2019 Nikolai Kostrigin <nickel@altlinux.org> 7.2.15.20180912-alt1.1
 - Fix FTBFS against libmysqlclient21
