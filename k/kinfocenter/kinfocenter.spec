@@ -4,7 +4,7 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 %K6init
 
@@ -168,6 +168,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 - fix path to kinfocenter-ansi2html.sh (closes: 51960)

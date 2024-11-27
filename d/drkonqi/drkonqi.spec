@@ -5,8 +5,8 @@
 %add_python3_req_skip gdb gdb.FrameDecorator
 
 Name: %rname
-Version: 6.2.3
-Release: alt2
+Version: 6.2.4
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -81,6 +81,9 @@ Compatibility package.
 %_K6dbus/system.d/*drkonqi*.conf
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Tue Nov 12 2024 Ajrat Makhmutov <rauty@altlinux.org> 6.2.3-alt2
 - Enable ALT debuginfod server support for character resolution in KCrash.
 

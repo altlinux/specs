@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 %K6init
 
@@ -43,7 +43,7 @@ BuildRequires: kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-
 BuildRequires: kf6-kpackage-devel kf6-kpeople-devel kf6-kitemmodels-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel kwin-devel plasma-workspace-devel plasma6-libkscreen-devel plasma6-kwayland-devel
-BuildRequires: plasma6-activities-devel
+BuildRequires: plasma6-activities-devel plasma6-layer-shell-qt-devel
 %if_enabled dialer
 BuildRequires: libphonenumber-devel
 %endif
@@ -145,6 +145,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 

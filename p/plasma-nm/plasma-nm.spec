@@ -8,8 +8,8 @@
 %endif
 
 Name: %rname
-Version: 6.2.3
-Release: alt2
+Version: 6.2.4
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -277,6 +277,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Fri Nov 22 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt2
 - require NetworkManager-libreswan for libreswan module
 

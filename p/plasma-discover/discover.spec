@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.2.3
-Release: alt3
+Version: 6.2.4
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -333,6 +333,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt3
 - fix package kxmlgui files
 

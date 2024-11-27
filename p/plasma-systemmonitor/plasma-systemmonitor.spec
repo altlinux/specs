@@ -5,7 +5,7 @@
 %define libplasmasystemmonitortable libplasmasystemmonitortable%sover
 
 Name: %rname
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 %K6init
 
@@ -105,6 +105,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libPlasmaSystemMonitorTable.so.*
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 

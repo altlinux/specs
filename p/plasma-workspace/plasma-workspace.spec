@@ -33,8 +33,8 @@
 %def_enable appstream
 
 Name: %rname
-Version: 6.2.3
-Release: alt4
+Version: 6.2.4
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -593,6 +593,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt1
+- new version
+
 * Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.3-alt4
 - exclude comments from menu entries
 - restore menu entries tooltip support

@@ -1,7 +1,7 @@
 %define rname plasma-welcome
 
 Name: %rname
-Version: 6.2.3
+Version: 6.2.4
 Release: alt1
 %K6init
 
@@ -46,19 +46,23 @@ A Friendly onboarding wizard for Plasma.
 
 %install
 %K6install
-mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages{,-pre}
+mkdir -p %buildroot/%_K6data/plasma/plasma-welcome/extra-pages/
+mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages-pre/
 %find_lang %name --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
-%dir %_datadir/plasma-welcome-extra-pages/
 %dir %_datadir/plasma-welcome-extra-pages-pre/
 %_K6bin/plasma-welcome
 %_K6plug/kf6/kded/*welcome*.so
+%_K6data/plasma/plasma-welcome/
 %_K6xdgapp/*plasma-welcome*.desktop
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Wed Nov 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt1
 - new version
 

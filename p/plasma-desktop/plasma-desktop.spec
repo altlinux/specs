@@ -7,8 +7,8 @@
 %def_disable accounts
 
 Name: %rname
-Version: 6.2.3
-Release: alt3
+Version: 6.2.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -251,6 +251,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.3-alt3
 - restore menu entries tooltip
 
