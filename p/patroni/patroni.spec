@@ -1,6 +1,6 @@
 Name:    patroni
 Version: 4.0.4
-Release: alt1
+Release: alt2
 
 Summary: A template for PostgreSQL High Availability with Etcd, Consul, ZooKeeper, or Kubernetes
 License: MIT
@@ -18,6 +18,9 @@ BuildRequires: python3-module-psycopg2
 BuildArch: noarch
 
 Source: %name-%version.tar
+# https://salsa.debian.org/postgresql/patroni.git
+Patch0: patroni-4.0.4-debian-avoid-overwriting-configuration-during-boostrap.patch
+Patch1: patroni-4.0.4-debian-startup-scripts.patch
 
 # From requirements.txt
 Requires: python3-module-urllib3 >= 1.19.1
@@ -45,20 +48,32 @@ or plug-and-play replication system. It will have its own caveats. Use wisely.
 
 %prep
 %setup -n %name-%version
+%autopatch -p1
+sed -i 's|/etc/patroni_env.conf|/etc/patroni/env.conf|' \
+  extras/startup-scripts/patroni.service
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+install -D -m 644 extras/startup-scripts/patroni.service %buildroot%_unitdir/patroni.service
+install -D /dev/null %buildroot%_sysconfdir/patroni/config.yml
+install -D /dev/null %buildroot%_sysconfdir/patroni/env.conf
 
 %files
 %doc CODEOWNERS MAINTAINERS README.rst
 %_bindir/*
+%dir %_sysconfdir/%name/
+%config(noreplace) %_sysconfdir/%name/*
+%_unitdir/patroni.service
 %python3_sitelibdir/%name/
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Nov 27 2024 Leontiy Volodin <lvol@altlinux.org> 4.0.4-alt2
+- Added service and configuration files (thanks debian for the patches).
+
 * Fri Nov 22 2024 Andrey Cherepanov <cas@altlinux.org> 4.0.4-alt1
 - New version.
 
