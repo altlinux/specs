@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.4.3
+Version: 128.4.4
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -45,6 +45,7 @@ Patch003: 0003-Use-maximize-icon-for-CSD-restore-button-missing-in-.patch
 Patch004: 0004-Disable-browser-option.patch
 Patch005: 0005-Fix-types-defination.patch
 Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
+Patch007: 0007-Correction-of-the-Russian-translation.patch
 ### End Patches
 
 ExcludeArch: armh
@@ -239,7 +240,13 @@ thunderbird packages by some Alt Linux Team Policy compatible way.
 %prep
 %setup -q
 tar -xf %SOURCE6
-%autopatch -p2
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
+%patch7 -p1
 
 # Update bundled six.py for 1.16
 cp -fv %SOURCE9 third_party/python/six/six.py
@@ -520,8 +527,15 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Nov 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.4-alt1
+- New version.
+- Correct the Russian translation (closes: 41249).
+- Add the security fix in 128.4.3 changelog.
+
 * Thu Nov 14 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.3-alt1
 - New version.
+- Security fixes:
+  + CVE-2024-11159: Potential disclosure of plaintext in OpenPGP encrypted message
 
 * Sat Nov 09 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.2-alt1
 - New version.
