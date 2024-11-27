@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.46.4.0.5.4cda
+Version: 1.47.1.0.10.ad56
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -14,17 +14,21 @@ Source: %name-%version-%release.tar
 %def_disable libblkid
 %def_disable libuuid
 %def_disable fsck
+%def_with libarchive
 %filter_from_requires /^lvm/d
 
 Requires: libcom_err = %version-%release
 Requires: libe2fs = %version-%release
 Requires: libss = %version-%release
 %{!?_enable_fsck:Requires: /sbin/fsck}
-%{!?_enable_libblkid:BuildRequires: libblkid-devel}
-%{!?_enable_libuuid:BuildRequires: libuuid-devel}
 %{?_enable_libblkid:Requires: libblkid = %version-%release}
 %{?_enable_libuuid:Requires: libuuid = %version-%release}
+
 BuildRequires: makeinfo
+%{!?_enable_libblkid:BuildRequires: libblkid-devel}
+%{!?_enable_libuuid:BuildRequires: libuuid-devel}
+%{?_with_libarchive:BuildRequires: libarchive-devel}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm acl}}
 
 %description
 This package contains a number of utilities for creating, checking,
@@ -226,9 +230,6 @@ find -type f -print0 |
 # Remove these header files just in case.
 rm -r include
 
-mv tests/m_no_opt/expect.1{,.ext2}
-mv tests/m_no_opt/expect.1{.tmpfs,}
-
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags -D_LARGEFILE64_SOURCE -fno-strict-aliasing
@@ -243,6 +244,7 @@ autoconf
 	%{subst_enable libblkid} \
 	%{subst_enable libuuid} \
 	%{subst_enable fsck} \
+	%{subst_with libarchive} \
 	#
 
 %make_build V=1
@@ -282,20 +284,25 @@ chmod -R a+rX,go-w %buildroot%_mandir
 %find_lang %name
 
 # Ensure that buildroot did not get info installed files.
-! fgrep -rl %buildroot %buildroot
+! grep -F -rl %buildroot %buildroot
 
 %check
-rm -r tests/r_64bit_big_expand tests/r_ext4_big_expand
-%ifarch %ix86
-rm -r tests/r_1024_small_bg
+%ifarch ppc64le
+# This root-only test fails because the expected number of changed sectors is
+# 224, but on ppc64le it raises to 640.  This is likely due to a different
+# behavior of the tmpfs filesystem, possibly related to huge pages.
+# With the increased expected number, the test still ensures that in
+# "-E assume_storage_prezeroed=1" mode, mkfs modifies a significantly smaller
+# number of sectors.
+printf '%s\n' '> 10000' '640' > tests/m_assume_storage_prezeroed/expect
 %endif
-export PATH=/sbin:/usr/sbin:/bin:/usr/bin
-%make_build -k check V=1 && exit ||:
-mv tests/m_no_opt/expect.1{,.tmpfs}
-mv tests/m_no_opt/expect.1{.ext2,}
-%make_build -k check V=1
 
-%set_verify_elf_method strict,lfs=relaxed
+# The entire test suite is run twice on systems with KVM, but this way we are
+# sure that the package is also tested on systems lacking KVM support.
+vm-run --kvm=cond --ext4 --sbin %make_build -k check V=1
+%make_build -k check V=1 PATH=/sbin:/usr/sbin:/bin:/usr/bin
+
+%set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
@@ -394,6 +401,12 @@ mv tests/m_no_opt/expect.1{.ext2,}
 %endif # libuuid
 
 %changelog
+* Tue Nov 26 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.47.1.0.10.ad56-alt1
+- v1.46.4-5-g4cda2545 -> v1.47.1-10-gad56ccaa (ALT#52060).
+- Enabled libarchive support (ALT#50642).
+- spec: changed to utilize vm-run utility to rerun the whole testsuite as root,
+  enabling root-only tests.
+
 * Sun Aug 22 2021 Dmitry V. Levin <ldv@altlinux.org> 1.46.4.0.5.4cda-alt1
 - v1.46.2-16-gf1144831 -> v1.46.4-5-g4cda2545.
 
