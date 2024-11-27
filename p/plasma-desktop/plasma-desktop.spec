@@ -4,11 +4,11 @@
 
 %define rname plasma-desktop
 %def_disable scim
-%def_disable accounts
+%def_enable accounts
 
 Name: %rname
 Version: 6.2.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -234,6 +234,7 @@ done
 %_K6data/knsrcfiles/*.knsrc
 %_K6dbus_sys_srv/*.service
 %if_enabled accounts
+%_K6plug/attica_kde.so
 %_datadir/accounts/providers/kde/*.provider
 %_datadir/accounts/services/kde/*.service
 %endif
@@ -251,6 +252,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- build with kaccounts-integration
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
