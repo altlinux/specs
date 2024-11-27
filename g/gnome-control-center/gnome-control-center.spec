@@ -17,7 +17,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -166,7 +166,7 @@ sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/system/da
 
 %install
 %meson_install
-sed -e '/Simferopol/d' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
+sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 %find_lang --with-gnome --output=%name.lang %name-%api_ver %name-%api_ver-timezones %_name
 
 %check
@@ -210,6 +210,9 @@ sed -e '/Simferopol/d' %SOURCE1 > %buildroot%_datadir/%name/zone.tab
 
 
 %changelog
+* Wed Nov 27 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1.1
+- fixed datetime panel crash (ALT #52217)
+
 * Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
