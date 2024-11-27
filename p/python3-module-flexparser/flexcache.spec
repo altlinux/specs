@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.3.1
+Version: 0.4
 Release: alt1
 
 Summary: Parsing made fun ... using typing
@@ -53,5 +53,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Wed Nov 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.4-alt1
+- Automatically updated to 0.4.
+
 * Tue Jul 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
 - Initial build for Sisyphus.
