@@ -1,6 +1,6 @@
 Name: libchm
 Version: 0.40
-Release: alt7
+Release: alt8
 
 Summary: chmlib is a small library designed for accessing MS ITSS files
 License: LGPLv2.1+
@@ -12,6 +12,8 @@ Patch0: chmlib-0.39-alt-ppc.patch
 Patch1: chmlib-0.40-mcst-e2k-sparc.patch
 Patch2: chmlib-0.40-arm.patch
 Patch3: chmlib-0.40-loongarch64.patch
+Patch4: chmlib-0.40-mips-and-riscv.patch
+Patch5: chmlib-0.40-alt-fix-gcc14-ftbfs.patch
 
 # Automatically added by buildreq on Wed Feb 14 2007
 BuildRequires: gcc-c++
@@ -46,10 +48,7 @@ This package contains example utility programs that use chmlib.
 
 %prep
 %setup -n chmlib-%version
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
 %configure --enable-examples --disable-static
@@ -72,6 +71,10 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %_bindir/*
 
 %changelog
+* Wed Nov 27 2024 Ivan A. Melnikov <iv@altlinux.org> 0.40-alt8
+- added MIPS and RISC-V support
+- fixed FTBFS with gcc14
+
 * Sun Jul 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.40-alt7
 - fixed build on LoongArch
 
