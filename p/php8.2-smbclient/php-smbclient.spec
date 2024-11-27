@@ -1,7 +1,7 @@
 %define php_extension smbclient
 
 Name: php%_php_suffix-%php_extension
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1.%_php_release_version
 Summary: A PHP wrapper for libsmbclient
 
@@ -50,6 +50,9 @@ EOF
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 1.1.2-alt1
+- 1.1.1 -> 1.1.2
 
 * Wed Jan 10 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
 - update to 1.1.1

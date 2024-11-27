@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 24
+%define _php_release_version 26
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -54,6 +54,8 @@ Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 Patch21: php-8.2-alt-test-dh7787.patch
 Patch22: php-8.2-altlinux-mbstring-test.patch
+# Support for loading extensions before the run of tests in addition to tested modules
+Patch23: php-8.3-alt-preload-extensions-during-tests.patch
 
 Patch2000: php-8.1-e2k.patch
 
@@ -193,6 +195,7 @@ in use by other PHP-related packages.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -490,6 +493,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 8.2.26-alt1
+- 8.2.25 -> 8.2.26 (Fixes: CVE-2024-8932, CVE-2024-8929, CVE-2024-11234, CVE-2024-11233)
+
+* Wed Nov 06 2024 Anton Farygin <rider@altlinux.ru> 8.2.25-alt1
+- 8.2.24 -> 8.2.25
+
 * Tue Oct 01 2024 Anton Farygin <rider@altlinux.ru> 8.2.24-alt1
 - 8.2.23 -> 8.2.24 (Fixes: CVE-2024-8926, CVE-2024-8927, CVE-2024-9026, CVE-2024-8925)
 

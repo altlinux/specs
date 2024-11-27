@@ -1,7 +1,7 @@
 %define		php_extension	memcached
 Name:	 	php%_php_suffix-%php_extension
-Version:	3.2.0
-Release:	alt2.%_php_release_version
+Version:	3.3.0
+Release:	alt1.%_php_release_version
 Epoch:		1
 Summary:	php extension for interfacing with memcached via libmemcached library
 License:	PHP-3.01
@@ -16,6 +16,9 @@ BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires: php-devel = %php_version
 BuildRequires: libmemcached-devel zlib-devel
 BuildRequires: php%_php_suffix memcached /proc
+BuildRequires: php%_php_suffix-igbinary-devel
+BuildRequires: php%_php_suffix-igbinary
+Requires: php%_php_suffix-igbinary
 
 %description
 php-memcached extension uses libmemcached library to provide
@@ -41,6 +44,7 @@ export LDFLAGS=-lphp-%_php_version
 	--with-libdir=%_lib \
 	--enable-memcached \
 	--enable-memcached-json \
+	--enable-memcached-igbinary \
 	--disable-memcached-sasl \
 	%nil
 #	--enable-memcached-protocol \
@@ -58,6 +62,7 @@ rm -rf tests/experimental
 # Fails due to the warnings on deprecated syntax:
 rm -f tests/touch_binary.phpt
 memcached -d
+PHP_TEST_SHARED_EXTENSIONS='-d extension=%php_extdir/igbinary.so' \
 NO_INTERACTION=1 make test
 
 %files
@@ -75,6 +80,10 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Sat Nov 16 2024 Anton Farygin <rider@altlinux.ru> 1:3.3.0-alt1
+- 3.2.1 -> 3.3.0
+- built with igbinary support
 
 * Wed May 31 2023 Nikolay A. Fetisov <naf@altlinux.org> 1:3.2.0-alt2
 - 3.2.0 -> pre-3.2.1
