@@ -3,7 +3,7 @@
 %def_with check
 
 Name:     python3-module-%oname
-Version:  0.42.0
+Version:  0.43.0
 Release:  alt1
 
 Summary:  An opinionated HarfBuzz Python binding
@@ -40,7 +40,6 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
@@ -53,6 +52,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Nov 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.43.0-alt1
+- Build new version.
+
 * Wed Nov 06 2024 Grigory Ustinov <grenka@altlinux.org> 0.42.0-alt1
 - Build new version.
 
