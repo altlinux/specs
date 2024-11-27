@@ -2,10 +2,10 @@
 %define module_version  7.1.4
 %define module_release	alt1
 
-%define flavour		6.6
+%define flavour		6.12
 %define karch x86_64 %ix86
 BuildRequires(pre): rpm-build-kernel >= 0.100-alt1
-BuildRequires(pre): kernel-headers-modules-6.6
+BuildRequires(pre): kernel-headers-modules-6.12
 
 %setup_kernel_module %flavour
 

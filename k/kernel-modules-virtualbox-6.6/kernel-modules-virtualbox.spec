@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	7.0.20
+%define module_version	7.1.4
 
 %define module_release	alt1
 
@@ -64,23 +64,11 @@ or in your /etc/modules.conf file.
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
 tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
-pushd kernel-source-%drv_module_name-%module_version
-%patch0 -p1
-popd
 %if_with vboxpci
 tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
-pushd kernel-source-%pci_module_name-%module_version
-%patch0 -p1
-popd
 %endif
 tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
-pushd kernel-source-%net_module_name-%module_version
-%patch0 -p1
-popd
 tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
-pushd kernel-source-%net_module_adaptor_name-%module_version
-%patch0 -p1
-popd
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -118,6 +106,8 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+* Fri Nov 22 2024 Valery Sinelnikov <greh@altlinux.org> 7.1.4-alt1
+- Updated template for virtualbox 7.1.4
 
 * Tue Jul 16 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.20-alt1
 - Updated template for virtualbox 7.0.20

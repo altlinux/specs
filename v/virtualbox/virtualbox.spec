@@ -22,7 +22,7 @@
 %def_disable debug
 
 %def_with manual
-%def_with manualbuild
+%def_without manualbuild
 %def_without manualchm
 %def_without manualsdk
 %def_with additions
@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.0.20
+Version: 7.1.4
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -118,29 +118,26 @@ BuildPreReq: libIDL-devel libSDL-devel libpng-devel libSDL2-devel-static
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
 BuildPreReq: rpm-build-kernel
-BuildPreReq: rpm-macros-qt5
+BuildPreReq: rpm-macros-qt6
 BuildRequires: genisoimage
 BuildRequires: docbook-dtds
 BuildPreReq: libpulseaudio-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: makeself
-BuildRequires: qt5-tools
-BuildRequires: qt5-connectivity-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-location-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-phonon-devel
-BuildRequires: qt5-quick1-devel
-BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-script-devel
-BuildRequires: qt5-sensors-devel
-BuildRequires: qt5-serialbus-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-tools
+BuildRequires: qt6-connectivity-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-phonon-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-sensors-devel
+BuildRequires: qt6-serialbus-devel
+BuildRequires: qt6-scxml-devel
 
 BuildRequires: libopus-devel
 BuildRequires: libssl-devel
 BuildRequires: libxml2-devel libxslt-devel
-BuildRequires: qt5-base-devel libalsa-devel
+BuildRequires: qt6-base-devel libalsa-devel
 BuildRequires: libcap-devel libcurl-devel
 BuildRequires: libXmu-devel libGLU-devel
 BuildRequires: libXinerama-devel libXrandr-devel
@@ -151,7 +148,10 @@ BuildRequires(pre): xorg-sdk
 BuildPreReq: yasm >= 1.3.0
 BuildPreReq: kBuild >= 0.1.9998.r3592
 BuildRequires: glslang-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: python3-module-packaging
+BuildRequires: libavcodec-devel
+
 %if_with webservice
 BuildRequires: libgsoap-devel libgsoap-devel-static > 2.8.0
 %endif
@@ -367,6 +367,7 @@ grep -R '^#!/usr/bin/\(env[[:space:]]\+\)\?python' src | cut -d: -f1 |
 ./configure --ose \
     --with-makeself="/usr/bin/makeself.sh" \
     --disable-kmods \
+    --with-yasm="%_bindir/yasm" \
 %if_with webservice
     --enable-webservice \
 %endif
@@ -394,7 +395,7 @@ grep -R '^#!/usr/bin/\(env[[:space:]]\+\)\?python' src | cut -d: -f1 |
 %ifarch x86_64
     --disable-vmmraw \
 %endif
-    --enable-qt5 \
+    --enable-qt6 \
 
 kbuild=%_bindir
 
@@ -418,6 +419,7 @@ echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
 echo "VBOX_WITH_VBOXSDL          := 1" >> LocalConfig.kmk
 echo "VBOX_WITH_WEBSERVICES      := 1" >> LocalConfig.kmk
+echo "VBOX_GSOAP_INSTALLED       := 1" >> LocalConfig.kmk
 
 # disable build with bundled xorg/mesa headers
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
@@ -454,15 +456,16 @@ echo "VBOX_CHMCMD                :=" >> LocalConfig.kmk
 %if_with vboximg
 echo "VBOX_WITH_VBOX_IMG         := 1" >> LocalConfig.kmk
 %endif
-#%if_with manualbuild
+
 echo "VBOX_PATH_DOCBOOK          := /usr/share/xml/docbook/xsl-stylesheets" >> LocalConfig.kmk
 echo "VBOX_PATH_DOCBOOK_DTD      := /usr/share/xml/docbook/dtd/4.5" >> LocalConfig.kmk
-#%endif
+echo "VBOX_WITH_DOCS_PDF         :=" >> LocalConfig.kmk
 
 #source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 # Set NPROCS=1 due build server constraints:
 # https://lists.altlinux.org/pipermail/devel/2018-July/204964.html
+
 NPROCS=1; kmk -j$NPROCS  VBOXDIR=%vboxdir
 
 %if_enabled debug
@@ -519,11 +522,10 @@ cp -a \
     VBoxNetDHCP \
     VBoxSDL \
     VBoxSVC \
-    VBoxTestOGL \
     VBoxVolInfo \
-    VBoxXPCOMIPCD \
     VirtualBox \
     VirtualBoxVM \
+    VBoxVMMPreload \
     xpidl \
     *.r0 \
 %ifarch %ix86
@@ -647,7 +649,7 @@ cd additions >/dev/null
 %if_with additions
 # install additions
   install -d %buildroot/%_bindir
-  install -m755 VBoxClient VBoxControl VBoxDRMClient VBoxService %buildroot/%_bindir/
+  install -m755 VBoxClient VBoxControl VBoxDRMClient VBoxService vboxwl %buildroot/%_bindir/
 
 # install roles
   install -Dpm644 %SOURCE32 %buildroot%_sysconfdir/role.d/virtualbox-addition.role
@@ -792,6 +794,7 @@ mountpoint -q /dev || {
 %exclude %_bindir/VBoxClient
 %exclude %_bindir/VBoxControl
 %exclude %_bindir/VBoxService
+%exclude %_bindir/vboxwl
 %endif
 %if_with webservice
 %exclude %_bindir/vboxwebsrv
@@ -867,6 +870,7 @@ mountpoint -q /dev || {
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
 %_bindir/VBoxClient
 %_bindir/VBoxDRMClient
+%_bindir/vboxwl
 %endif
 
 %ifarch x86_64
@@ -915,6 +919,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri Nov 22 2024 Valery Sinelnikov <greh@altlinux.org> 7.1.4-alt1
+- Update to newest version 7.1.4
+
 * Tue Jul 16 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.20-alt1
 - Update to newest version 7.0.20
 

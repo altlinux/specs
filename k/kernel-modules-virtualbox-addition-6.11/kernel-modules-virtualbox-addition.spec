@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  7.0.20
+%define module_version  7.1.4
 %define module_release	alt1
 
 %define flavour		6.11
@@ -61,13 +61,7 @@ that are needed for additonal guests support for VirtualBox.
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
 tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
-pushd kernel-source-%guest_module_name-%module_version
-%patch0 -p1
-popd
 tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
-pushd kernel-source-%vfs_module_name-%module_version
-%patch0 -p1
-popd
 tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 pushd kernel-source-%video_module_name-%module_version
 
@@ -99,6 +93,9 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Nov 22 2024 Valery Sinelnikov <greh@altlinux.org> 7.1.4-alt1
+- Updated template for virtualbox 7.1.4
 
 * Tue Jul 16 2024 Aleksei Kalinin <kaa@altlinux.org> 7.0.20-alt1
 - Updated template for virtualbox 7.0.20
