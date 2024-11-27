@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 30
+%define _php_release_version 31
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -54,6 +54,8 @@ Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch20: php7-7.4-fix-run-openssl-tests-server.patch
 # patches from upstream git tree
 Patch21: php-%version-upstream.patch
+# Support for loading extensions before the run of tests in addition to tested modules
+Patch23: php-8.3-alt-preload-extensions-during-tests.patch
 
 
 Patch70: php8.0-debian-Add-support-for-use-of-the-system-timezone-database.patch
@@ -196,6 +198,7 @@ in use by other PHP-related packages.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch23 -p1
 
 
 %patch70 -p1
@@ -495,6 +498,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 8.1.31-alt1
+- 8.1.30 -> 8.1.31 (Fixes: CVE-2024-8932, CVE-2024-8929, CVE-2024-11234, CVE-2024-11233)
+
 * Tue Oct 01 2024 Anton Farygin <rider@altlinux.ru> 8.1.30-alt1
 - 8.1.29 -> 8.1.30 (Fixes: CVE-2024-8926, CVE-2024-8927, CVE-2024-9026, CVE-2024-8925)
 
