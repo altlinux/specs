@@ -1,6 +1,6 @@
 Name: e2fsprogs
 Version: 1.47.1.0.10.ad56
-Release: alt1
+Release: alt2
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
 License: GPL-2.0-only
@@ -15,7 +15,6 @@ Source: %name-%version-%release.tar
 %def_disable libuuid
 %def_disable fsck
 %def_with libarchive
-%filter_from_requires /^lvm/d
 
 Requires: libcom_err = %version-%release
 Requires: libe2fs = %version-%release
@@ -401,6 +400,11 @@ vm-run --kvm=cond --ext4 --sbin %make_build -k check V=1
 %endif # libuuid
 
 %changelog
+* Wed Nov 27 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.47.1.0.10.ad56-alt2
+- e2fsprogs: Modified e2scrub* scripts to avoid the dependency on the
+  systemd package, resolving a regression introduced by the package update and
+  rebuild following the bash5 update.
+
 * Tue Nov 26 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.47.1.0.10.ad56-alt1
 - v1.46.4-5-g4cda2545 -> v1.47.1-10-gad56ccaa (ALT#52060).
 - Enabled libarchive support (ALT#50642).
