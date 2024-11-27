@@ -2,7 +2,7 @@
 
 Name: kde6-%rname
 Version: 0.4.0
-Release: alt2
+Release: alt3
 %K6init altplace
 
 Group: System/Libraries
@@ -24,6 +24,8 @@ KQuickImageEditor is a set of QtQuick components providing basic image editing c
 BuildArch: noarch
 Summary: Common %name files
 Group: System/Configuration/Other
+Provides:  kde5-kquickimageeditor-common = %EVR
+Obsoletes: kde5-kquickimageeditor-common < %EVR
 %description common
 Common %name files
 
@@ -55,6 +57,9 @@ This package contains the development files for %name.
 
 
 %changelog
+* Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt3
+- obsolete kde5-kquickimageeditor-common
+
 * Wed Oct 23 2024 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt2
 - fix conflicts
 
