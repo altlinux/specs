@@ -2,8 +2,8 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.21
-Release: alt2
+Version: 1.1.22
+Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Summary: a library for accessing Media Transfer Protocol devices
@@ -13,6 +13,7 @@ Group: System/Libraries
 Url: http://libmtp.sourceforge.net/
 
 Source: %name-%version.tar
+Patch1: %name-%version-%release.patch
 
 BuildRequires: libusb-devel libgcrypt-devel rpm-macros-systemd
 
@@ -57,6 +58,7 @@ This package contains example programs for communicating with MTP devices.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 touch config.rpath
@@ -95,6 +97,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Wed Nov 27 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.22-alt1
+- 1.1.22
+
 * Sun Jun 23 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.21-alt2
 - rebuilt with new systemd macros
 
