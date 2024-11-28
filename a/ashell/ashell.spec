@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 License: MIT
 
@@ -71,6 +71,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Nov 28 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
+- new version (0.3.0) with rpmgs script
+
 * Fri Nov 08 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - new version (0.2.0) with rpmgs script
 - restore requires on fonts-ttf-symbols-nerd (upstream bug)
