@@ -1,6 +1,6 @@
 %global import_path github.com/cli/cli
 Name:     github-cli
-Version:  2.62.0
+Version:  2.63.0
 Release:  alt1
 
 Summary:  GitHub's official command line tool
@@ -47,6 +47,9 @@ cp -a share/man -T %buildroot/%_mandir
 %doc *.md
 
 %changelog
+* Thu Nov 28 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.63.0-alt1
+- new version 2.63.0
+
 * Fri Nov 15 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.62.0-alt1
 - new version 2.62.0
 
