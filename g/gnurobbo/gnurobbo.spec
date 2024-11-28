@@ -1,20 +1,18 @@
 Name:    gnurobbo
-Version: 0.66
-Release: alt3
+Version: 0.68
+Release: alt1
 
 Summary: GNU Robbo - It's popular Atari XE/XL game ported to Linux
 License: GPL-2.0+
-URL: http://gnurobbo.sourceforge.net
+URL: https://gnurobbo.sourceforge.net
 
 Group: Games/Arcade
 
-Source: http://sourceforge.net/projects/gnurobbo/files/gnurobbo/gnurobbo%20%version/%name-%version-source.tar.gz
+Source: https://sourceforge.net/projects/gnurobbo/files/gnurobbo/gnurobbo%%20%version/%name-%version-source.tar.gz
 Source1: %name.16.png
 Source2: %name.32.png
 Source3: %name.48.png
 Source4: %name.desktop
-
-Patch1: Makefile.patch
 
 Packager: Evgeny V. Shishkov <shev@altlinux.org>
 
@@ -33,10 +31,12 @@ GNU Robbo - ATARI XE / XL игра портированеая на Linux. Эта
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
+#patch1 -p1
 subst 's,PACKAGE_DATA_DIR?=./data,PACKAGE_DATA_DIR?=%buildroot%_gamesdatadir/$(TARGET),' Makefile
 subst 's,-DPACKAGE_DATA_DIR=\\"$(PACKAGE_DATA_DIR)\\",-DPACKAGE_DATA_DIR=\\"%_gamesdatadir/$(TARGET)\\",' Makefile
 subst 's,#define DEFAULT_LOCALE\ \"en_GB\",#define DEFAULT_LOCALE\ \"ru_RU\",' locales.h
+# gcc: error: missing argument to '-d'
+subst 's,-d ,,' Makefile
 
 %build
 export CFLAGS="$CFLAGS -fcommon"
@@ -56,16 +56,18 @@ install -pD -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 rm -rf %buildroot%_defaultdocdir/%name
 
 %files
-%defattr(-, root, root)
+%doc README COPYING ChangeLog LICENSE-sound LICENSE-ttf NEWS
 %_gamesbindir/*
 %_gamesdatadir/%name
 %_desktopdir/%name.desktop
-%doc README COPYING ChangeLog LICENSE-sound LICENSE-ttf NEWS
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Thu Nov 28 2024 Leontiy Volodin <lvol@altlinux.org> 0.68-alt1
+- new version 0.68
+
 * Mon Feb 08 2021 Leontiy Volodin <lvol@altlinux.org> 0.66-alt3
 - fix build with gcc10
 
