@@ -1,26 +1,25 @@
-Name: librubberband
-Version: 3.3.0
-Release: alt2
+Name: rubberband
+Version: 4.0.0
+Release: alt1
 
-Summary: high quality library for audio time-stretching and pitch-shifting
-License: %gpl2plus
-Group: System/Legacy libraries
+Summary: High quality library for audio time-stretching and pitch-shifting
+License: GPL-2.0-or-later
+Group: Sound
 Url: http://www.breakfastquay.com/rubberband/
 
 Vcs: https://github.com/breakfastquay/rubberband.git
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ meson
 BuildRequires: ladspa_sdk libfftw3-devel libsamplerate-devel libsndfile-devel libvamp-devel lv2-devel
 
-%package devel
+%package -n librubberband3
+Summary: High quality library for audio time-stretching and pitch-shifting
+Group: System/Libraries
+
+%package -n librubberband-devel
 Summary: Headers for %name
 Group: Development/C
-
-%package -n rubberband
-Summary: An audio time-stretching and pitch-shifting utility program
-Group: Sound
 
 %package -n ladspa-rubberband
 Summary: An audio time-stretching and pitch-shifting LADSPA plugin
@@ -41,11 +40,10 @@ recording or stream dynamically and independently of one another.
 
 %description %desc
 
-%description devel %desc
-Headers for building software that uses %name
+%description -n librubberband3 %desc
 
-%description -n rubberband
-An audio time-stretching and pitch-shifting utility program
+%description -n librubberband-devel %desc
+Headers for building software that uses %name
 
 %description -n ladspa-rubberband
 An audio time-stretching and pitch-shifting LADSPA plugin
@@ -67,11 +65,30 @@ An audio time-stretching and pitch-shifting Vamp plugin
 %meson_install
 
 %files
+%_bindir/rubberband*
+
+%files -n librubberband3
+%doc README* CHANGELOG
 %_libdir/*.so.*
 
+%files -n librubberband-devel
+%_includedir/rubberband
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+
+%files -n ladspa-rubberband
+%_libdir/ladspa/ladspa-rubberband*
+%_datadir/ladspa/rdf/ladspa-rubberband*
+
+%files -n lv2-rubberband
+%_libdir/lv2/rubberband.lv2
+
+%files -n vamp-rubberband
+%_libdir/vamp/vamp-rubberband*
+
 %changelog
-* Thu Nov 28 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.3.0-alt2
-- rebuilt as legacy library
+* Thu Nov 28 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.0-alt1
+- 4.0.0 released
 
 * Mon Aug 28 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3.0-alt1
 - 3.3.0 released
