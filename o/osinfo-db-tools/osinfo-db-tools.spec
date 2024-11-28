@@ -1,5 +1,5 @@
 Name: osinfo-db-tools
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: Tools for managing the osinfo database
@@ -55,6 +55,9 @@ sed -i '/requires GCC or CLang/d' meson.build
 %_man1dir/*
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+
 * Tue Apr 09 2024 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
 - New version 1.11.0.
 - Build with soup3.
