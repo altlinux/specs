@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 
 Summary: Python client library for OpenStack Aodh
@@ -20,7 +20,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pbr >= 1.4
+BuildRequires: python3-module-pbr >= 2.0
 BuildRequires: python3-module-cliff >= 1.17.0
 BuildRequires: python3-module-osc-lib >= 1.0.1
 BuildRequires: python3-module-oslo.i18n >= 1.5.0
@@ -28,13 +28,16 @@ BuildRequires: python3-module-oslo.serialization >= 1.4.0
 BuildRequires: python3-module-oslo.utils >= 2.0.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-keystoneauth1 >= 1.0.0
-BuildRequires: python3-module-pyparsing
+BuildRequires: python3-module-pyparsing >= 2.1.0
 
 %if_with check
-BuildRequires: python3-module-stestr
-BuildRequires: python3-module-tempest
-BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-tempest >= 10
+BuildRequires: python3-module-oslotest >= 1.10.0
 BuildRequires: python3-module-os-client-config >= 1.28.0
+BuildRequires: python3-module-coverage >= 3.6
+BuildRequires: python3-module-testtools >= 1.4.0
+BuildRequires: python3-module-pifpaf >= 0.23
 %endif
 
 %if_with docs
@@ -110,6 +113,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
 - Automatically updated to 3.6.0.
 

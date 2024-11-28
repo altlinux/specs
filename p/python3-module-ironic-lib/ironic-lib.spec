@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.2.0
+Version: 7.0.0
 Release: alt1
 
 Summary: OpenStack Ironic common library
@@ -20,7 +20,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-pbr >= 6.0.0
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -28,7 +28,6 @@ BuildRequires: python3-module-oslo.utils >= 3.34.0
 BuildRequires: python3-module-zeroconf >= 0.24.0
 BuildRequires: python3-module-bcrypt >= 3.1.3
 BuildRequires: python3-module-webob
-BuildRequires: python3-module-tenacity >= 6.2.0
 
 %if_with check
 BuildRequires: python3-module-coverage >= 4.0
@@ -119,6 +118,9 @@ mv %buildroot/usr/etc/ironic/rootwrap.d/*.filters %buildroot%_sysconfdir/%oname/
 %endif
 
 %changelog
+* Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
+- Automatically updated to 7.0.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
 - Automatically updated to 6.2.0.
 

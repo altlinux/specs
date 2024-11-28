@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.1.2
+Version: 7.2.1
 Release: alt1
 
 Summary: OpenStack Command-line Client
@@ -127,6 +127,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt1
+- Automatically updated to 7.2.1.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 7.1.2-alt1
 - Automatically updated to 7.1.2.
 
