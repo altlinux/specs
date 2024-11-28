@@ -13,7 +13,7 @@
 %endif
 
 Name: python3-module-%pyname
-Version: 0.16.1
+Version: 0.17.0
 Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
@@ -116,6 +116,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.16.1 -> 0.17.0
+
 * Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 0.16.1-alt1
 - 0.15.0 -> 0.16.1
 
