@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.6.4
+Version: 1.6.4.post1
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python
@@ -21,6 +21,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -35,24 +37,27 @@ BuildRequires: python3-module-numpy-testing
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v \
+%pyproject_run_pytest -v \
 %ifarch armh
 -k 'not test_num2date_precision'
 %endif
 
 %files
 %doc LICENSE *.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.4.post1-alt1
+- Automatically updated to 1.6.4.post1.
+
 * Fri Jun 14 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.4-alt1
 - Automatically updated to 1.6.4.
 
