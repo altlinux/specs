@@ -1,4 +1,4 @@
-# 24.2.5.1
+# 24.8.3.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 24.8
-%define urelease 2.1
+%define urelease 3.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -644,6 +644,12 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Nov 14 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.8.3.2-alt1
+- Update to 24.8.3.2
+
+* Fri Nov 08 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.8.3.1-alt1
+- Update to 24.8.3.1.
+
 * Sat Sep 28 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.8.2.1-alt1
 - Update to 24.8.2.1
 
