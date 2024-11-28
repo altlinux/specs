@@ -1,13 +1,14 @@
 Name: SDL_image
-Version: 1.2.12
-Release: alt3.gitd0ea78d
+Version: 1.2.12.0.95.7adb
+Release: alt1
 
 Summary: Image loading library for SDL
 Group: System/Libraries
-License: LGPL-2.0+
-Url: http://www.libsdl.org/projects/SDL_image/
+License: Zlib
+Url: https://github.com/libsdl-org/SDL_image
+Vcs: git://github.com/libsdl-org/SDL_image.git
 # https://github.com/libsdl-org/SDL_image/tree/SDL-1.2
-# http://www.libsdl.org/projects/%name/release/%name-%version.tar.gz
+# https://www.libsdl.org/projects/%name/release/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: SDL_image-1.2.12-fedora-interlaced-png-warning-fix.patch
 
@@ -55,6 +56,12 @@ statically-linked %name-based software.
 %prep
 %setup
 # %%patch -p2
+# fgrep and egrep are obsolescent
+sed -i 's|fgrep|grep -F|g' \
+  $(find ./ -name 'configure*')
+sed -i 's|egrep|grep -E|g' \
+  $(find ./ -name 'configure*') \
+  external/libwebp-1.0.3/gradlew
 # required for autoreconf
 mv acinclude m4
 rm m4/l*.m4
@@ -94,6 +101,11 @@ install -pm755 .libs/showimage %buildroot%_bindir/
 %endif
 
 %changelog
+* Thu Nov 28 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.12.0.95.7adb-alt1
+- New version release-1.2.12-95-g7adb1a70 (last commit from SDL-1.2).
+- Added vcs tag.
+- Updated url and license tag.
+
 * Tue Jul 13 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt3.gitd0ea78d
 - Built git snapshot.
 
