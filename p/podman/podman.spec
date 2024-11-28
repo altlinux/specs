@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.2.5
+Version:  5.3.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -18,7 +18,7 @@ Source:   %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
-BuildRequires: rpm-build-golang golang >= 1.21
+BuildRequires: rpm-build-golang golang >= 1.22.6
 BuildRequires: go-md2man man-db
 BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
@@ -156,6 +156,7 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %_modulesloaddir/*
 %_man1dir/*
 %_man5dir/*
+%_man7dir/*
 %exclude %_man1dir/%name-remote*
 %exclude %_man1dir/docker*
 %doc *.md
@@ -177,7 +178,6 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %_bindir/docker
 %_man1dir/docker*
 %exclude %_man1dir/docker-remote*
-%_sysconfdir/profile.d/%name-docker.*
 %_tmpfilesdir/%name-docker.conf
 %_user_tmpfilesdir/%name-docker.conf
 
@@ -187,6 +187,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Mon Nov 25 2024 Alexey Shabalin <shaba@altlinux.org> 5.3.1-alt1
+- New version 5.3.1.
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.5-alt1
 - New version 5.2.5 (Fixes: CVE-2024-9675, CVE-2024-9676).
 

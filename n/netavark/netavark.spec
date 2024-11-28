@@ -4,7 +4,7 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.12.2
+Version: 1.13.0
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -13,7 +13,6 @@ Url: https://github.com/containers/%name
 Vcs: https://github.com/containers/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
-Patch1: vendored-nix-loongarch64-support.patch
 ExcludeArch: %arm %ix86
 
 # Minimum X.Y dep for aardvark-dns
@@ -77,11 +76,6 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1", "--cfg=rustix_use_libc"]
 strip = false
 EOF
 
-%patch1 -p1
-# allow patching vendored rust code
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/nix-0.26.4/.cargo-checksum.json
-
 %build
 NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 
@@ -107,6 +101,9 @@ popd
 %_unitdir/*
 
 %changelog
+* Mon Nov 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.13.0-alt1
+- New version 1.13.0.
+
 * Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.2-alt1
 - New version 1.12.2.
 
