@@ -6,8 +6,8 @@
 %define tuneddir %_tuneddir/profiles
 
 Name: tuned
-Version: 2.24.0
-Release: alt3
+Version: 2.24.1
+Release: alt1
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
@@ -230,10 +230,6 @@ echo 'echo "export tuned_params"' >> 00_tuned
 # For recommend.
 sed -i '/^SYSTEM_RELEASE_FILE/s/system-release-cpe/system-release/' tuned/consts.py
 cp %SOURCE2 recommend.conf
-
-# Remove cargo cult tuna call. See 98f6620 ("ALT: profiles/realtime: Remove
-# tuna(8) call").
-sed -i s/tuna/true/ profiles/realtime/script.sh
 
 %build
 make html PYTHON=%__python3
@@ -511,6 +507,9 @@ fi
 %files checkinstall
 
 %changelog
+* Thu Nov 28 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.1-alt1
+- Update to v2.24.1 (2024-11-26). (Fixes: CVE-2024-52336, CVE-2024-52337).
+
 * Sun Aug 11 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.0-alt3
 - Fix grub.cfg patching (ALT#51117).
 
