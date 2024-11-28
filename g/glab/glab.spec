@@ -5,7 +5,7 @@
 
 Name: glab
 Version: 1.49.0
-Release: alt1
+Release: alt2
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
 License: MIT
@@ -85,6 +85,9 @@ mv .man-pages/* %buildroot%_man1dir
 %_man1dir/*.1.*
 
 %changelog
+* Thu Nov 28 2024 Anton Zhukharev <ancieg@altlinux.org> 1.49.0-alt2
+- Disabled check_update by default (closes 52246).
+
 * Mon Nov 18 2024 Anton Zhukharev <ancieg@altlinux.org> 1.49.0-alt1
 - Updated to 1.49.0.
 
