@@ -31,10 +31,11 @@
 
 %def_enable qalculate
 %def_enable appstream
+%def_disable bootstrap
 
 Name: %rname
 Version: 6.2.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -138,6 +139,9 @@ BuildRequires: libqalculate-devel
 %endif
 %if_enabled appstream
 BuildRequires: libappstream-qt6-devel
+%endif
+%if_disabled bootstrap
+BuildRequires: kde6-libkexiv2-devel
 %endif
 BuildRequires: libwayland-client-devel libwayland-server-devel libwayland-egl-devel
 BuildRequires: wayland-protocols plasma-wayland-protocols
@@ -593,6 +597,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Nov 28 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt2
+- build with kexiv2
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt1
 - new version
 
