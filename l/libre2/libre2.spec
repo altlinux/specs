@@ -1,10 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+%define pypi_name google-re2
+%define mod_name re2
+
 %define oldname re2
 %define soname 11
 Name: libre2
 Version: 20240702
-Release: alt1
+Release: alt2
 Summary: C++ fast alternative to backtracking RE engines
 Group: System/Libraries
 License: BSD-3-Clause
@@ -14,7 +17,10 @@ BuildRequires: gcc-c++ libabseil-cpp-devel
 Provides: re2 = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ cmake ctest
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pybind11
 
 %description
 RE2 is a C++ library providing a fast, safe, thread-friendly alternative to
@@ -49,6 +55,17 @@ This package contains the C++ header files and symbolic links to the shared
 libraries for %oldname. If you would like to develop programs using %oldname,
 you will need to install %name-devel.
 
+%package -n python3-module-%pypi_name
+Version: 1.1.%{version %name}
+Summary: RE2 Python bindings
+Group: Development/Python3
+
+%description -n python3-module-%pypi_name
+A drop-in replacement for the re module.
+
+It uses RE2 under the hood, of course, so various PCRE features
+(e.g. backreferences, look-around assertions) are not supported.
+
 %prep
 %setup
 %ifarch %e2k
@@ -62,11 +79,22 @@ you will need to install %name-devel.
   -DBUILD_SHARED_LIBS:BOOL=ON
 %cmake_build
 
+cd python
+cat >> setup.cfg << EOF
+[build_ext]
+include_dirs = ..
+library_dirs = ../%_cmake__builddir
+EOF
+%pyproject_build
+
 %install
 %cmake_install
 
 # Suppress the static library
 find %buildroot -name '%name.a' -delete
+
+cd python
+%pyproject_install
 
 %check
 ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process %_smp_mflags
@@ -84,7 +112,15 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/%oldname.pc
 %_libdir/cmake/%oldname
 
+
+%files -n python3-module-%pypi_name
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pep427_name %pypi_name}-%{version python3-module-%pypi_name}.dist-info/
+
 %changelog
+* Thu Nov 28 2024 Anton Zhukharev <ancieg@altlinux.org> 20240702-alt2
+- Built python bindings (closes 52209).
+
 * Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 20240702-alt1
 - 20240501 -> 20240702
 
