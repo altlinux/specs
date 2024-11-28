@@ -3,7 +3,7 @@
 
 %define _name gdm-settings
 %define pypi_name gdms
-%define ver_major 4.4
+%define ver_major 5.0
 %define rdn_name io.github.realmazharhussain.GdmSettings
 
 %def_enable check
@@ -16,6 +16,7 @@ Summary: GDM Settings
 License: AGPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://github.com/gdm-settings/gdm-settings
+
 Vcs: https://github.com/gdm-settings/gdm-settings.git
 
 %if_disabled snapshot
@@ -68,6 +69,9 @@ Python and uses LibAdwaita for graphical interface.
 
 
 %changelog
+* Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0-alt1
+- 5.0
+
 * Thu May 09 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
 - 4.4
 
