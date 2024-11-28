@@ -1,6 +1,6 @@
 Name: drumgizmo
 Version: 0.9.20
-Release: alt2
+Release: alt3
 
 Summary: Multichannel drum plugin 
 License: LGPLv3
@@ -17,6 +17,7 @@ BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(smf)
 
 %package -n lv2-drumgizmo-plugin
 Summary: Multichannel drum plugin
@@ -34,25 +35,32 @@ real drumkit that has been recorded with a multimic setup.
 This package contains LV2 version of DrumGizmo.
 
 %prep
-%setup
-tar ixf %SOURCE1
+%setup -a1
 sed -i '/^#include <cstdlib>/ a#include <cstdint>' \
 	plugin/plugingizmo/plugin.h
 
 %build
 %autoreconf
-%configure --enable-lv2 --disable-editor --disable-cli
+%configure --enable-lv2 --enable-cli
 %make_build
 
 %install
 %makeinstall_std
 
-%global _customdocdir %_defaultdocdir/drumgizmo
+%files
+%doc ABOUT AUTHORS BUGS COPYING README
+%_bindir/drumgizmo
+%_bindir/dgvalidator
+%_man1dir/drumgizmo.1*
+%_man1dir/dgvalidator.1*
 
 %files -n lv2-drumgizmo-plugin
 %_libdir/lv2/*
 
 %changelog
+* Thu Nov 28 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.20-alt3
+- built with cli utilities
+
 * Thu Oct 10 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.20-alt2
 - fixed summary tag value
 
