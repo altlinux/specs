@@ -3,7 +3,7 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.4.0.4
+Version: 1.5.0.1
 Release: alt1
 License: Apache-2.0 and BSD-3-Clause and MPL-2.0
 Group: Networking/WWW
@@ -45,6 +45,9 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 %_datadir/%pname
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.0.1-alt1
+- 1.5.0-1
+
 * Tue Sep 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0.4-alt1
 - 1.4.0-4
 
