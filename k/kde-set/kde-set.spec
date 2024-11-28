@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.8
+Version: 24.01.9
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -94,7 +94,7 @@ Requires: khelpcenter
 Requires: kolourpaint kio-audiocd kgpg
 Requires: kmenuedit kgamma plasma-thunderbolt
 Requires: kfind filelight kcharselect kteatime spectacle
-Requires: kamera kdenetwork-filesharing ktorrent
+Requires: kamera kdenetwork-filesharing
 Requires: kio-zeroconf sweeper
 %description -n kde
 %summary
@@ -109,6 +109,7 @@ Requires: kde-pim
 Requires: kde-email-client
 Requires: kde-messenger-client
 #
+Requires: ktorrent
 Requires: plasma6-oxygen
 Requires: icon-theme-oxygen
 Requires: plasma-workspace-wallpapers
@@ -269,6 +270,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Thu Nov 28 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.9-alt1
+- move ktorrent to kde-big
+
 * Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.8-alt1
 - relax requires
 
