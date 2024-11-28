@@ -10,7 +10,7 @@
 %set_gcc_version      13
 
 Name: postgresql%pg_ver-%prog_name
-Version: 4.5.4
+Version: 4.5.5
 Release: alt1
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
@@ -67,7 +67,7 @@ export CXX=%__cxx
     --with-memcached=%_includedir/libmemcached \
     --sysconfdir=%_sysconfdir/%sname
 
-%make_build
+%make_build -j1
 %make_build -C src/sql/pgpool-recovery
 %make_build -C src/sql/pgpool-regclass
 
@@ -90,7 +90,6 @@ mv %buildroot%_sysconfdir/%sname/failover.sh.sample %buildroot%_sysconfdir/%snam
 mv %buildroot%_sysconfdir/%sname/follow_primary.sh.sample %buildroot%_sysconfdir/%sname/follow_primary.sh
 mv %buildroot%_sysconfdir/%sname/pgpool_remote_start.sample %buildroot%_sysconfdir/%sname/pgpool_remote_start
 mv %buildroot%_sysconfdir/%sname/recovery_1st_stage.sample %buildroot%_sysconfdir/%sname/recovery_1st_stage
-mv %buildroot%_sysconfdir/%sname/pgpool.conf.sample-* %buildroot%_datadir/%sname/
 
 # TODO after fix doc build
 # Copy man pages
@@ -132,6 +131,9 @@ fi
 %attr(1775,root,%sname) %dir %_logdir/%sname
 
 %changelog
+* Thu Nov 28 2024 Alexei Takaseev <taf@altlinux.org> 4.5.5-alt1
+- 4.5.5
+
 * Tue Nov 05 2024 Alexei Takaseev <taf@altlinux.org> 4.5.4-alt1
 - 4.5.4
 - Use GCC 13
