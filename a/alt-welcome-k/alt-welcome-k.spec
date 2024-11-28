@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-welcome-k
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Summary: Greeting to Alt Linux for plasma-welcome
@@ -46,6 +46,9 @@ BuildRequires: qt6-tools-devel
 %_datadir/plasma/plasma-welcome/extra-pages/*.qml
 
 %changelog
+* Thu Nov 28 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.2-alt1
+- Use a single click by default
+
 * Thu Nov 28 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.1-alt1
 - Check if the themeId is empty
 
