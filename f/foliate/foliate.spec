@@ -1,14 +1,14 @@
 %def_enable snapshot
 
-%define ver_major 3.1
+%define ver_major 3.2
 %define rdn_name com.github.johnfactotum.Foliate
 # https://github.com/johnfactotum/foliate-js.git
-%define fjs_ver 04b8789
+%define fjs_ver b5ae4c2
 
 %def_enable check
 
 Name: foliate
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple and modern GTK eBook reader
@@ -30,30 +30,17 @@ BuildArch: noarch
 %define adw_ver 1.4
 %define webkit_api_ver 6.0
 %define webkit_ver 2.40.1
-%define tracker_api_ver 3.0
 %define gjs_ver 1.76
-%define iso_codes_ver 3.57
 
-Requires: libgjs >= %gjs_ver dconf iso-codes >= %iso_codes_ver
+Requires: libgjs >= %gjs_ver dconf
 #Recommends: espeak, espeak-ng or festival
 
-# find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(Gdk)
-Requires: typelib(GdkPixbuf)
-Requires: typelib(Gio)
-Requires: typelib(GLib)
-Requires: typelib(GObject)
-Requires: typelib(Gtk) = 4.0
 Requires: typelib(Adw) = %adw_api_ver
-Requires: typelib(Pango)
-Requires: typelib(Soup) = 3.0
-Requires: typelib(Tracker) = %tracker_api_ver
-Requires: typelib(Gst) = 1.0
 Requires: typelib(WebKit) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
-BuildRequires: libgjs-devel iso-codes-devel >= %iso_codes_ver
+BuildRequires: libgjs-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(webkitgtk-6.0) >= %webkit_ver
 %{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
@@ -96,6 +83,9 @@ mv %name-js-%fjs_ver/* src/%name-js
 
 
 %changelog
+* Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Thu Apr 04 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
 - 3.1.1
 
