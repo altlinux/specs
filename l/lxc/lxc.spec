@@ -15,7 +15,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 Summary: Linux Containers
 License: LGPL-2.1-or-later
@@ -176,8 +176,6 @@ echo -e "#undef ARRAY_SIZE\n#define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))" >> s
 mkdir -p %buildroot%_initdir
 mv %buildroot%_sysconfdir/init.d/* %buildroot%_initdir/
 mv %buildroot%_initdir/lxc-containers %buildroot%_initdir/lxc
-mkdir -p %buildroot/%_lib
-mv %buildroot%_libdir/security %buildroot/%_lib/
 mkdir -p %buildroot%_localstatedir/lxc
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/lxc-net
 install -pDm755 %SOURCE2 %buildroot%_controldir/lxc-user-nic
@@ -292,6 +290,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.2-alt1
+- 6.0.2.
+
 * Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
 - 6.0.1.
 

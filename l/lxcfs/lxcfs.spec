@@ -1,5 +1,5 @@
 Name:		lxcfs
-Version:	6.0.1
+Version:	6.0.2
 Release:	alt1
 Summary:	FUSE filesystem for LXC
 
@@ -13,7 +13,7 @@ Source1:	lxcfs.sysvinit
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 0.61 python3-module-jinja2
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: pkgconfig(systemd)
 BuildRequires: help2man
 
@@ -30,7 +30,7 @@ FUSE filesystem for LXC, offering the following features:
 
 %prep
 %setup
-sed -i 's|/bin/fusermount|/usr/bin/fusermount|' config/init/systemd/lxcfs.service.in
+sed -i 's|/bin/fusermount |/usr/bin/fusermount3|' config/init/systemd/lxcfs.service.in
 
 %build
 %meson \
@@ -64,6 +64,10 @@ find %buildroot -name '*.la' -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.2-alt1
+- New version 6.0.2.
+- Build with libfuse3.
+
 * Tue Sep 03 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
 - New version 6.0.1.
 
