@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hsh-svace
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Run SVACE in hasher
@@ -42,6 +42,9 @@ install -Dm755 ./hsh-svace-svacer-import -t %buildroot%_bindir
 %_libexecdir/hsh-svace/*
 
 %changelog
+* Thu Nov 28 2024 Egor Ignatov <egori@altlinux.org> 1.5-alt1
+- hsh-svace-svacer-import: fix argument parsing
+
 * Fri Oct 18 2024 Egor Ignatov <egori@altlinux.org> 1.4-alt1
 - Fix error code propagation.
 
