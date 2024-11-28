@@ -1,47 +1,59 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-welcome-k
-Version: 1.0
-Release: alt2
+Version: 2.0
+Release: alt1
 
-Summary: Greeting to Alt Linux for plasma5-welcome
+Summary: Greeting to Alt Linux for plasma-welcome
 License: GPL-2.0-or-later
 Group: Graphical desktop/KDE
 
+Requires: plasma-welcome
+
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: coreutils
-
-Requires: plasma5-welcome
+BuildRequires: kf6-kcmutils-devel
+BuildRequires: kf6-kcolorscheme-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
 
 %description
-Greeting to Alt Linux for plasma5-welcome.
+%summary.
 
 %prep
 %setup
 
 %build
-plasma_welcome_pre_path=%_datadir/plasma-welcome-extra-pages-pre
-kpackage_rel_path=$(%_bindir/realpath --relative-to "$plasma_welcome_pre_path" "%_K5data/kpackage")
-%K5build \
-    -DPLASMA_WELCOME_EXTRA_PAGES:PATH="$plasma_welcome_pre_path" \
-    -DKPACKAGE_PATH:PATH="$kpackage_rel_path"
+%K6build
 
 %install
-%K5install
+%K6install
 %find_lang %name --with-kde --all-name
 
+%__mkdir -p %buildroot%_datadir/plasma/plasma-welcome/extra-pages
+%__install -Dpm 755 %buildroot%_K6qml/org/kde/plasma/private/welcomedistro/WelcomeToAlt.qml %buildroot%_datadir/plasma/plasma-welcome/extra-pages
+
+%__rm -f %buildroot%_K6qml/org/kde/plasma/private/welcomedistro/{*.qml,kde-qmlmodule.version}
+
 %files -f %name.lang
-%_K5qml/org/kde/plasma/private/*/
-%_datadir/plasma-welcome-extra-pages-pre/*.qml
+%_K6qml/org/kde/plasma/private/*/
+%_datadir/plasma/plasma-welcome/extra-pages/*.qml
 
 %changelog
+* Wed Nov 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.0-alt1
+- Port to KF6
+- Add clang-format
+- Port qml to Qt6 and add a click type selection
+- Port the cmake file to Qt6
+- Add a selection of the type of mouse click
+- Port to Qt6
+
 * Tue Mar 05 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.0-alt2
 - Change the path to other QML components
 
