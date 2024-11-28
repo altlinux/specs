@@ -2,7 +2,7 @@
 
 Name: libmediainfo
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: %name - Shared library for mediainfo
@@ -54,6 +54,10 @@ This package includes the development support files of the libmediainfo
 %prep
 %setup -q -T -b 0 -n MediaInfoLib
 dos2unix ReadMe.txt Project/GNU/Library/%name.pc.in
+%ifarch %e2k
+# error: invalid narrowing conversion from "style" to "int8u"
+sed -i 's/ = (style)-1/ = (int8u)-1/' Source/MediaInfo/Audio/File_Adm.cpp
+%endif
 
 %build
 pushd Source/Doc
@@ -87,6 +91,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 24.11-alt1.1
+- fixed build for E2K (ilyakurdyukov@)
+
 * Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 24.11-alt1
 - 24.11
 
