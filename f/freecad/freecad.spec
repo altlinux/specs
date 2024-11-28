@@ -6,7 +6,7 @@
 %endif
 %add_findprov_skiplist %_libdir/freecad/Mod/* %_libdir/freecad/Ext/*
 %def_with bundled_libs
-%def_without bundled_pycxx
+%def_with bundled_pycxx
 %def_with glvnd
 %def_with ninja
 %def_with pybind11
@@ -17,12 +17,12 @@
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 7
 %endif
-%define git_rev b9bfa5c550
-%define git_date 13.11.2023
+%define git_rev 2fcc5317fe
+%define git_date 18.11.2024
 
 Name:    freecad
-Version: 0.21.2
-Release: alt7.3
+Version: 1.0.0
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -33,29 +33,14 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source1: freecad.1
+Source2: submodules.tar
 
 %if_without bundled_libs
 Patch1: %name-remove-3rdParty.patch
 %endif
 Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
-Patch4: freecad-unbundled-pycxx.patch
-Patch5: freecad-vtk9.3.patch
-
-# https://github.com/FreeCAD/FreeCAD/pull/13570
-Patch6: freecad-upstream-pr13570-fix-for-boost-1.85.0.patch
-
-# Part of https://github.com/FreeCAD/FreeCAD/pull/13226
-# fixes build with boost 1.85.0+
-Patch7: freecad-upstream-fix-copy-option-deprecation.patch
-
-# https://github.com/FreeCAD/FreeCAD/pull/16004
-Patch8: freecad-upstream-fix-build-with-boost-1.86.0.patch
-
-# Gentoo
-Patch20: freecad-0.21.2-navcube-qt6.patch
-Patch21: freecad-0.21.2-qtsvg-qt6.patch
-Patch22: freecad-0.21.2-shiboken-6.7.0.patch
+Patch4: freecad-alt-python-modules-path.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -129,13 +114,18 @@ BuildRequires: pybind11-devel
 %if_without bundled_pycxx
 BuildRequires: python3-module-pycxx-devel
 %endif
+# 1.0
+BuildRequires: libyaml-cpp-devel
+BuildRequires: python3-module-matplotlib
+BuildRequires: libmicrosoft-gsl-devel
+BuildRequires: libGL-devel
+BuildRequires: openmpi-devel
+BuildRequires: libfmt-devel
 
 #%%py3_requires matplotlib.backends.backend_qt6
 %py3_requires pivy
-#py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
-#py3_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
-#py3_provides ImageGui PartDesignGui _PartDesign
-%add_python3_req_skip pyopencl IfcImport Units
+#add_python3_req_skip pyopencl IfcImport Units
+%add_python3_req_skip Part PartDesign Sketcher
 %add_findreq_skiplist %ldir/Mod/*
 
 %ifnarch armh
@@ -161,26 +151,28 @@ also falls into the category of MCAD, PLM, CAx and CAE. It will be a feature
 based parametric modeler with a modular software architecture which makes it
 easy to provide additional functionality without modifying the core system.
 
+%package devel
+Summary: Development files for FreeCAD
+Group: Development/C++
+
+%description devel
+%summary
+
 %prep
 %setup
 %if_without bundled_libs
 # Removed bundled libraries
 %patch1 -p1
 rm -rf src/3rdParty
+%else
+tar xf %SOURCE2
 %endif
 %patch2 -p1
 %patch3 -p1
-%if_without bundled_pycxx
 %patch4 -p1
+%if_without bundled_pycxx
 rm -rf src/CXX
 %endif
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
@@ -235,7 +227,8 @@ export PATH=$PATH:%_qt6_bindir
     -DPYCXX_INCLUDE_DIR=$(pkg-config --variable=includedir PyCXX) \
     -DPYCXX_SOURCE_DIR=$(pkg-config --variable=srcdir PyCXX) \
 %endif
-	-Wno-dev
+	-Wno-dev \
+	-DENABLE_DEVELOPER_TESTS=OFF
 export NPROCS=%build_parallel_jobs
 %if_with ninja
 %ninja_build
@@ -273,6 +266,11 @@ rm -rf %buildroot%_prefix/Ext
 # fix python shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' %buildroot%_libdir/freecad/Mod)
 
+# fix import PySide6 python module
+subst 's|PySide|&6|g' $(find %buildroot%_libdir/freecad -name \*.py) %buildroot%python3_sitelibdir/freecad/UiTools.py
+subst 's|PySide66|PySide6|g' $(find %buildroot%_libdir/freecad -name \*.py)
+subst 's|import PySide6 as PySide|import PySide6|g' $(find %buildroot%_libdir/freecad -name \*.py)
+
 # remove static libraries
 rm -f %buildroot%_libdir/freecad/lib/*.a
 
@@ -296,15 +294,23 @@ rm -rf %buildroot%ldir/Mod/Tux
 %ldir/3Dconnexion
 %ldir/examples
 %_desktopdir/*.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/*/apps/org.freecad.FreeCAD.png
 %_iconsdir/hicolor/scalable/*/*.svg
 %_man1dir/*
 %_xdgdatadir/mime/packages/*
 %_pixmapsdir/%name.xpm
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 %_datadir/thumbnailers/FreeCAD.thumbnailer
+%python3_sitelibdir/%name
+
+%files devel
+%_includedir/OndselSolver
+%_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Tue Nov 19 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.0.0-alt1
+- New version.
+
 * Sat Oct 19 2024 Ivan A. Melnikov <iv@altlinux.org> 1:0.21.2-alt7.3
 - NMU: fix building with boost 1.86.0.
 
