@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 8.2.8
+Version: 8.2.9
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -61,22 +61,20 @@ sed -i 's/SYS_mknod,/SYS_mknodat, -100,/' src/PVE/Tools.pm
 cd src
 %make DESTDIR=%buildroot install
 cd ..
-install -pD -m0755 pve-etcnet-to-network %buildroot%_sbindir/pve-etcnet-to-network
 
-%if_enabled check
 %check
 # upstream tests
 make -C test check
-# etcnet tests
-./runtests.pl
-%endif
 
 %files
 %doc debian/copyright
-%_sbindir/pve-etcnet-to-network
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu Nov 21 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.9-alt1
+- 8.2.9
+- Revert etcnet support
+
 * Thu Nov 14 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.8-alt1
 - 8.2.8
 

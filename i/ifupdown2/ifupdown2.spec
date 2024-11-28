@@ -1,5 +1,5 @@
 Name: ifupdown2
-Version: 3.2.0.9
+Version: 3.2.0.11
 Release: alt1
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
@@ -9,14 +9,15 @@ Vcs: https://github.com/CumulusNetworks/ifupdown2.git
 
 Source0: %name-%version.tar
 Source1: %name.tar
-Source2: ip-brctl
-Source3: ip-brctl.8
 Patch1: 0001-ALT-change-path-to-ifup-ifdown-ifreload.patch
 Patch2: 0002-ALT-python-3.12-compatibility.patch
 Patch3: ALT-do-not-run-scripts-rpmnew-rpmsave.patch
 
 BuildArch: noarch
 
+Provides: network-config-subsystem
+Provides: /sbin/ifup /sbin/ifdown /sbin/ifquery /sbin/ifreload
+Conflicts: etcnet
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
@@ -65,22 +66,16 @@ install -pD -m644 debian/proxmox-bridge-mac-from-port.json %buildroot/var/lib/%n
 
 install -dm755 %buildroot%_datadir/%name/sbin
 install -dm755 %buildroot%_sbindir
-ln -s %python3_sitelibdir_noarch/%name/__main__.py %buildroot%_datadir/%name/%name
-ln -s %_datadir/%name/%name %buildroot%_datadir/%name/sbin/ifup
-ln -s %_datadir/%name/%name %buildroot%_datadir/%name/sbin/ifdown
-ln -s %_datadir/%name/%name %buildroot%_datadir/%name/sbin/ifquery
-ln -s %_datadir/%name/%name %buildroot%_datadir/%name/sbin/ifreload
-ln -s %_datadir/%name/%name %buildroot%_sbindir/ifquery
-ln -s %_datadir/%name/%name %buildroot%_sbindir/ifreload
+ln -r -s %buildroot%python3_sitelibdir_noarch/%name/__main__.py %buildroot%_datadir/%name/%name
 chmod a+x %buildroot%python3_sitelibdir_noarch/%name/__main__.py
+ln -r -s %buildroot%_datadir/%name/%name %buildroot%_sbindir/ifup
+ln -r -s %buildroot%_datadir/%name/%name %buildroot%_sbindir/ifdown
+ln -r -s %buildroot%_datadir/%name/%name %buildroot%_sbindir/ifquery
+ln -r -s %buildroot%_datadir/%name/%name %buildroot%_sbindir/ifreload
 
-install -pD -m644 debian/%name.networking.service %buildroot%_unitdir/%name.networking.service
+install -pD -m644 debian/%name.networking.service %buildroot%_unitdir/networking.service
 install -pD -m644 debian/%name-pre.service %buildroot%_unitdir/%name-pre.service
 install -pD -m644 debian/ifup@.service %buildroot%_unitdir/ifup@.service
-
-install -pD -m644 %SOURCE2 %buildroot%_sbindir/ip-brctl
-install -pD -m644 %SOURCE3 %buildroot%_man8dir/ip-brctl.8
-ln -s %_sbindir/ip-brctl %buildroot%_sbindir/brctl
 
 install -dm755 %buildroot%_sysconfdir/network/interfaces.d %buildroot%_sysconfdir/network/%name/policy.d
 install -dm755 %buildroot/var/lib/%name/{hooks,policy.d}
@@ -94,8 +89,24 @@ rm -f %buildroot%_bindir/if*
 
 %post
 if [ "$1" -eq 1 ]; then
-    mkdir -p /etc/iproute2/rt_tables.d/
-    touch /etc/iproute2/rt_tables.d/ifupdown2_vrf_map.conf
+    mkdir -p %_sysconfdir/iproute2/rt_tables.d/
+    touch %_sysconfdir/iproute2/rt_tables.d/ifupdown2_vrf_map.conf
+
+fi
+# Generic stuff done on all configurations
+if [ -f %_sysconfdir/network/interfaces ] ; then
+    if ! grep -q -E "^[[:space:]]*iface[[:space:]]+l[o0]([[:space:]]+inet([[:space:]]+loopback)?)?[[:space:]]*$" %_sysconfdir/network/interfaces ; then
+        echo "No 'iface lo' definition found in /etc/network/interfaces"
+    fi
+
+    if ! grep -q "^[[:space:]]*\(allow-\|\)auto[[:space:]]\+\(.*[[:space:]]\+\|\)lo0\?\([[:space:]]\+\|$\)" %_sysconfdir/network/interfaces ; then
+        echo "No 'auto lo' statement found in /etc/network/interfaces"
+    fi
+else  # ! -f %_sysconfdir/network/interfaces
+    echo "Creating /etc/network/interfaces."
+    echo "# interfaces(5) file used by ifup(8) and ifdown(8)" > %_sysconfdir/network/interfaces
+    echo "auto lo" >> %_sysconfdir/network/interfaces
+    echo "iface lo inet loopback" >> %_sysconfdir/network/interfaces
 fi
 
 %files
@@ -103,7 +114,7 @@ fi
 %_sysconfdir/default/networking
 %_sysconfdir/network
 %_unitdir/*
-/var/lib/%name
+%_localstatedir/%name
 %_sbindir/*
 %_datadir/%name
 %_man5dir/*
@@ -111,6 +122,15 @@ fi
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Nov 20 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.0.11-alt1
+- 3.2.0-1+pmx11
+- Add Provides: network-config-subsystem
+- Drop ip-brctl script
+- Move ifup/ifdown/ifreload to /sbin
+- Add Conflicts etcnet
+- Rename systemd unit to networking.service
+- Add create /etc/network/interfaces in %%post
+
 * Wed Oct 16 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.0.9-alt1
 - 3.2.0-1+pmx9
 - Do not run scripts ending with .rpm{new,save}

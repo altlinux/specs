@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -94,7 +94,7 @@ rm -rf %buildroot%_sysconfdir/network
 rm -f  %buildroot%_unitdir/pve-daily-update.service
 rm -f  %buildroot%_unitdir/pve-daily-update.timer
 rm -f  %buildroot%_unitdir/pvebanner.service
-rm -f  %buildroot%_unitdir/pvenetcommit.service
+#rm -f  %buildroot%_unitdir/pvenetcommit.service
 rm -f  %buildroot%_bindir/pvebanner
 rm -f  %buildroot%_bindir/pvesubscription
 # rm -f  %buildroot%_bindir/pveupgrade
@@ -142,6 +142,10 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Fri Nov 22 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.8-alt2
+- disable check enabled ifupdown2 service
+- install pvenetcommit.service
+
 * Thu Nov 14 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.8-alt1
 - 8.2.8
 - adapt web-interface for ALT apt-repm repo

@@ -3,7 +3,7 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 8.0.7
+Version: 8.0.10
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -160,6 +160,10 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Mon Nov 25 2024 Alexey Shabalin <shaba@altlinux.org> 8.0.10-alt1
+- 8.0.10
+- not delete /etc/network/interfaces /etc/network/interfaces.new
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.0.7-alt1
 - 8.0.7
 
