@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
 Summary: Asyncio client for kafka
 License: Apache-2.0
@@ -18,7 +18,9 @@ Source1: %pyproject_deps_config_name
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+# for setuptools < 70.1.0
+BuildRequires: python3-module-wheel
 %pyproject_builddeps_build
 
 BuildRequires: zlib-devel
@@ -71,6 +73,9 @@ cat requirements-{ci,cython}.txt > requirements-tests.txt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 28 2024 Egor Ignatov <egori@altlinux.org> 0.12.0-alt2
+- Add python3-module-wheel BR for setuptools < 70.1.0.
+
 * Thu Nov 28 2024 Egor Ignatov <egori@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
