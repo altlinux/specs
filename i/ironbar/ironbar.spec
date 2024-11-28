@@ -1,5 +1,5 @@
 Name: ironbar
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 License: MIT
 
@@ -25,6 +25,7 @@ BuildRequires: pkgconfig(atk)
 BuildRequires: pkgconfig(gdk-3.0)
 BuildRequires: pkgconfig(gtk-layer-shell-0)
 BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
 
 %description
 A customisable and feature-rich GTK bar for wlroots 
@@ -53,5 +54,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Thu Nov 28 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.16.1-alt1
+- new version (0.16.1) with rpmgs script
+
 * Sun Sep 01 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.16.0-alt1
 - Initial build
