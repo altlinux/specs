@@ -13,7 +13,7 @@
 
 Name: meson
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: High productivity build system
 Group: Development/Python3
@@ -140,6 +140,10 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1.1
+- meson.macros: fixed %%{,__}meson_build to allow run build
+  via wrapper like xvfb-run
+
 * Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
