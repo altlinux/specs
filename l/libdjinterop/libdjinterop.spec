@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: libdjinterop
-Version: 0.20.2
+Version: 0.22.1
 Release: alt1
 
 Summary: C++ library for access to DJ record libraries
@@ -13,7 +13,7 @@ Group: System/Libraries
 Url: https://github.com/xsco/libdjinterop
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: libdjinterop-0.20.2-alt-fix-GNUInstallDirs.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake zlib-devel libsqlite3-devel
@@ -81,6 +81,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/%name.so
 
 %changelog
+* Fri Nov 29 2024 Leontiy Volodin <lvol@altlinux.org> 0.22.1-alt1
+- New version 0.22.1.
+
 * Mon Feb 26 2024 Leontiy Volodin <lvol@altlinux.org> 0.20.2-alt1
 - Initial build for ALT Sisyphus (needed for mixxx 2.4.0).
 
