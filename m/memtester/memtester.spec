@@ -1,5 +1,5 @@
 Name: memtester
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 
 Summary: Userspace utility for testing the memory subsystem for faults
@@ -7,9 +7,8 @@ License: GPL-2.0-only
 Group: System/Kernel and hardware
 
 Url: http://pyropus.ca/software/memtester
-Source: %url/old-versions/memtester-%version.tar.gz
+Source: %url/old-versions/%name-%version.tar.gz
 # debian patches
-Patch: 01-%name-4.3.0-manpage.patch
 Patch1: 02-%name-4.3.0-cross.patch
 
 %description
@@ -19,8 +18,10 @@ Memtester is a userspace utility for testing the memory subsystem for faults.
 %setup
 %autopatch -p1
 
-# to apply optflags:
+# to apply optflags
 subst 's/-O2/%optflags/' conf-cc
+# and remove -s option
+subst 's/\(CC\).*$/\1/' conf-ld
 # and be able to verify them in build log:
 subst 's#/bin/sh#/bin/sh -x#' warn-auto.sh
 
@@ -37,6 +38,9 @@ install -pD -m644 memtester.8 %buildroot%_man8dir/memtester.8
 %_man8dir/*
 
 %changelog
+* Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 4.7.0-alt1
+- 4.7.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
 - 4.6.0
 
