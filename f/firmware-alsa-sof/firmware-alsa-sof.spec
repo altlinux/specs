@@ -1,5 +1,5 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2024.09
+%define version_major 2024.09.1
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
@@ -10,12 +10,7 @@ Group: Sound
 Url: https://github.com/thesofproject/sof-bin
 BuildRequires: alsa-utils alsa-topology-conf
 Source: %name-%version.tar
-Source2: sof-glk-es8336-ssp0.tplg
 Source3: sof-cml-es8336.tplg
-Source4: sof-tgl-es8326.tplg
-# part of upstream development stage topology set for ES8336 codec
-# https://github.com/thesofproject/linux/files/8076329/es8336-topologies-3.tar.gz
-Source5: sof-cml-es8336-ssp0.tplg
 Provides: alsa-sof-firmware = %EVR
 # noarch, since the package is firmware
 BuildArch: noarch
@@ -44,10 +39,7 @@ mkdir -p  %buildroot%_firmwarepath/intel/
 for d in sof sof-ipc4 sof-ace-tplg sof-ipc4-tplg sof-tplg; do \
   cp -a "${d}" %buildroot%_firmwarepath/intel/; \
 done
-install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg/
 install %SOURCE3 %buildroot%_firmwarepath/intel/sof-tplg/
-install %SOURCE4 %buildroot%_firmwarepath/intel/sof-tplg/
-install %SOURCE5 %buildroot%_firmwarepath/intel/sof-tplg/
 install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 
 # gather files and directories
@@ -82,6 +74,10 @@ end
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 2024.09.1-alt1
+- 2024.09 -> 2024.09.1
+- unused part of our topologies are removed
+
 * Mon Sep 30 2024 Anton Farygin <rider@altlinux.ru> 2024.09-alt1
 - 2024.06 -> 2024.09
 
