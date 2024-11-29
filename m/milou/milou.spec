@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt2
+Release: alt3
 #Epoch: 1
 %K6init
 
@@ -18,7 +18,6 @@ Provides:  plasma5-milou = 1:%version-%release
 Obsoletes: plasma5-milou < 1:%version-%release
 Provides:  plasma5-milou-common = 1:%version-%release
 Obsoletes: plasma5-milou-common < 1:%version-%release
-Provides:  libmilou5 = 1:%version-%release
 Obsoletes: libmilou5 < 1:%version-%release
 
 Source: %rname-%version.tar
@@ -51,6 +50,9 @@ Search and Launch.
 
 
 %changelog
+* Fri Nov 29 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- fix provides
+
 * Fri Nov 29 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - obsolete libmilou5
 
