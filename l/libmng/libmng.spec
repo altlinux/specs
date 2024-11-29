@@ -1,31 +1,22 @@
-%set_automake_version 1.11
-
 Name: libmng
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Summary: A library for handling MNG files
-License: Distributable (see LICENSE)
+License: Zlib
 Group: System/Libraries
-Url: http://www.libmng.com/
+Url: https://sourceforge.net/projects/libmng/
 
 # http://downloads.sourceforge.net/libmng/libmng-%version.tar.bz2
 Source: libmng-%version.tar
 Patch1: libmng-1.0.10-alt-build-fixes.patch
 Patch2: libmng-1.0.10-alt-player-build.patch
 Patch3: libmng-2.0.3-debian-linux-makefile.patch
-
-# Automatically added by buildreq on Tue Sep 23 2008
-BuildRequires: gcc-c++ libSDL-devel libXext-devel libXt-devel libjpeg-devel liblcms2-devel openmotif-devel xorg-printproto-devel xorg-xextproto-devel zlib-devel
+BuildRequires: gcc-c++ libjpeg-devel liblcms2-devel zlib-devel
 
 %package devel
 Summary: Include files for development with %name
 Group: Development/C
-Requires: %name = %version-%release
-
-%package -n mng-utils
-Summary: Various %name-based utilities
-Group: Graphics
 Requires: %name = %version-%release
 
 %description
@@ -45,15 +36,6 @@ a color-management library by Marti Maria Saguar.
 This package contains include files required for development %name-based
 applications.
 
-%description -n mng-utils
-The MNG library supports decoding, displaying, encoding, and various
-other manipulations of the Multiple-image Network Graphics (MNG) format
-image files. It uses the zlib compression library, and optionally the
-JPEG library by the Independent JPEG Group (IJG) and/or lcms (little cms),
-a color-management library by Marti Maria Saguar.
-
-This package contains various %name-based utilities.
-
 %prep
 %setup
 %patch1 -p1
@@ -61,28 +43,15 @@ This package contains various %name-based utilities.
 %patch3 -p1
 
 %build
+cp makefiles/Makefile.am .
 %autoreconf
 %configure --enable-shared --disable-static \
 	--with-zlib --with-jpeg --with-lcms
 %make_build
 
-%make_build -C contrib/gcc/xmngview \
-	X11LIBDIR="-L%_x11libdir" \
-	CFLAGS="$RPM_OPT_FLAGS -I../../.." MNGLIB="-L../../../.libs -lmng"
-
-pushd contrib/gcc/sdl-mngplay
-	sh ./autogen.sh
-	export CPPFLAGS=-I../../..
-	export LIBS=-L../../../.libs
-	%configure
-	%make_build mngplay
-popd #contrib/gcc/sdl-mngplay
-
 %install
 mkdir -p %buildroot%_mandir/man{3,5}
 %makeinstall
-install -pD -m755 contrib/gcc/xmngview/xmngview %buildroot%_bindir/mngview
-install -pD -m755 contrib/gcc/sdl-mngplay/mngplay %buildroot%_bindir/mngplay
 
 pushd doc/man
 	install -pm644 *.3 %buildroot%_man3dir/
@@ -101,10 +70,11 @@ popd
 %_pkgconfigdir/*.pc
 %_mandir/man3/*
 
-%files -n mng-utils
-%_bindir/*
-
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 2.0.3-alt3
+- FTBFS: unused utils package was removed
+- fixed License
+
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 2.0.3-alt2
 - removed ubt macros
 
