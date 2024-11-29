@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -14,10 +14,12 @@ Summary: KDE Plasma Search and Launch
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Provides: plasma5-milou = 1:%version-%release
+Provides:  plasma5-milou = 1:%version-%release
 Obsoletes: plasma5-milou < 1:%version-%release
-Provides: plasma5-milou-common = 1:%version-%release
+Provides:  plasma5-milou-common = 1:%version-%release
 Obsoletes: plasma5-milou-common < 1:%version-%release
+Provides:  libmilou5 = 1:%version-%release
+Obsoletes: libmilou5 < 1:%version-%release
 
 Source: %rname-%version.tar
 
@@ -49,6 +51,9 @@ Search and Launch.
 
 
 %changelog
+* Fri Nov 29 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- obsolete libmilou5
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
