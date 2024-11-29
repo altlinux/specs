@@ -1,12 +1,13 @@
 %define soname 6.2.0
 Name: libesmtp
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: LibESMTP is a library to manage posting email using SMTP
 License: GPLv2
 Group: System/Libraries
 Url: https://github.com/libesmtp/libESMTP
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 BuildRequires: libssl-devel
 BuildRequires(pre): meson
 
@@ -40,6 +41,7 @@ libESMTP-based software.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %meson  --buildtype=release
@@ -59,6 +61,9 @@ libESMTP-based software.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 1.1.0-alt2
+- fixed build with recent gcc and glibc changes
+
 * Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
