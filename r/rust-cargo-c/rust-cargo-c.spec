@@ -1,5 +1,5 @@
 Name: rust-cargo-c
-Version: 0.10.5
+Version: 0.10.6
 Release: alt1
 
 Summary: Cargo applet to build and install C-ABI compatible dynamic and static libraries
@@ -43,6 +43,9 @@ install -pm0755 target/release/cargo-ctest %buildroot%_bindir/
 %_bindir/cargo-c*
 
 %changelog
+* Fri Nov 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.6-alt1
+- 0.10.6 released
+
 * Mon Oct 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.10.5-alt1
 - 0.10.5 released
 
