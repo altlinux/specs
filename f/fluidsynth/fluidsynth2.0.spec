@@ -19,18 +19,19 @@
 
 Name: fluidsynth
 Version: 2.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
+License: LGPL-2.1-or-later
 Group: Sound
 Url: http://www.fluidsynth.org
-License: LGPL-2.1-or-later
+
+Vcs: https://github.com/FluidSynth/fluidsynth.git
 
 %if_disabled snapshot
 Source: https://github.com/FluidSynth/%name/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/FluidSynth/fluidsynth.git
 Source: %name-%version.tar
 %endif
 
@@ -164,6 +165,9 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
+%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -217,6 +221,9 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %endif
 
 %changelog
+* Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1.1
+- fixed build for E2K (ilyakurdyukov@)
+
 * Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
