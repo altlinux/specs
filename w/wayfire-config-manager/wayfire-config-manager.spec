@@ -3,7 +3,7 @@
 
 Name: wayfire-config-manager
 Version: 0.9.0
-Release: alt1
+Release: alt2
 Summary: Wayfire Config Manager
 License: MIT
 Group: Graphical desktop/Other
@@ -35,8 +35,7 @@ Requires: hicolor-icon-theme
 %patch -p1
 
 %build
-%meson \
-    -Denable_wdisplays=false \
+%meson -Denable_wdisplays=false
 %meson_build
 
 %install
@@ -53,5 +52,8 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/wayfire/
 
 %changelog
+* Fri Nov 29 2024 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt2
+- fix mistake with new line escaping before %%meson_build macro
+
 * Sat Oct 12 2024 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
 - initial build
