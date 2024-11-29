@@ -2,7 +2,7 @@
 %define soname 200
 
 Name: libnl3
-Version: 3.10.0
+Version: 3.11.0
 Release: alt1
 
 Summary: library for applications dealing with netlink sockets
@@ -91,6 +91,9 @@ vm-run make check
 %_man8dir/*
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 3.11.0-alt1
+- 3.10.0 -> 3.11.0
+
 * Sun Jul 21 2024 Anton Farygin <rider@altlinux.ru> 3.10.0-alt1
 - 3.9.0 -> 3.10.0
 - the cli library was moved from utils to main libnl3 package
