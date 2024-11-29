@@ -8,7 +8,7 @@
 
 Name: upower
 Version: 0.99.20
-Release: alt1
+Release: alt1.1
 
 Summary: Power Management Service
 License: GPLv2+
@@ -90,7 +90,8 @@ GObject introspection devel data for the UPower library
 
 %build
 %meson \
-	%{?_disable_gtk_doc:-Dgtk-doc=false} \
+    %{subst_enable_meson_bool gtk_doc gtk-doc}
+%nil
 %meson_build
 
 %install
@@ -131,6 +132,9 @@ GObject introspection devel data for the UPower library
 %_girdir/*.gir
 
 %changelog
+* Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.99.20-alt1.1
+- spec: fixed build after meson macros update
+
 * Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.20-alt1
 - 0.99.20
 
