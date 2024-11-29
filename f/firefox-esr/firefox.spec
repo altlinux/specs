@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.4.0
+Version: 128.5.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -387,6 +387,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Nov 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.5.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2024-11691: Out-of-bounds write in Apple GPU drivers via WebGL
+  + CVE-2024-11692: Select list elements could be shown over another site
+  + CVE-2024-11693: Download Protections were bypassed by .library-ms files on Windows
+  + CVE-2024-11694: CSP Bypass and XSS Exposure via Web Compatibility Shims
+  + CVE-2024-11695: URL Bar Spoofing via Manipulated Punycode and Whitespace Characters
+  + CVE-2024-11696: Unhandled Exception in Add-on Signature Verification
+  + CVE-2024-11697: Improper Keypress Handling in Executable File Confirmation Dialog
+  + CVE-2024-11698: Fullscreen Lock-Up When Modal Dialog Interrupts Transition on macOS
+  + CVE-2024-11699: Memory safety bugs fixed in Firefox 133, Firefox ESR 128.5, and Thunderbird 128.5
+
 * Wed Oct 30 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.0-alt1
 - New ESR version.
 - Security fixes:

@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.4.4
+Version: 128.5.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -527,6 +527,19 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Thu Nov 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.5.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-11691: Out-of-bounds write in Apple GPU drivers via WebGL
+  + CVE-2024-11692: Select list elements could be shown over another site
+  + CVE-2024-11693: Download Protections were bypassed by .library-ms files on Windows
+  + CVE-2024-11694: CSP Bypass and XSS Exposure via Web Compatibility Shims
+  + CVE-2024-11695: URL Bar Spoofing via Manipulated Punycode and Whitespace Characters
+  + CVE-2024-11696: Unhandled Exception in Add-on Signature Verification
+  + CVE-2024-11697: Improper Keypress Handling in Executable File Confirmation Dialog
+  + CVE-2024-11698: Fullscreen Lock-Up When Modal Dialog Interrupts Transition on macOS
+  + CVE-2024-11699: Memory safety bugs fixed in Firefox 133, Thunderbird 133, Firefox ESR 128.5, and Thunderbird 128.5
+
 * Tue Nov 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.4.4-alt1
 - New version.
 - Correct the Russian translation (closes: 41249).

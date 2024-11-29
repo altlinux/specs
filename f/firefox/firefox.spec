@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 132.0.2
+Version: 133.0.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -383,6 +383,27 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Nov 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 133.0.0-alt1
+- New version (133.0.0).
+- Security fixes:
+  + CVE-2024-11691: Out-of-bounds write in Apple GPU drivers via WebGL
+  + CVE-2024-11700: Potential Tapjacking Exploit for Intent Confirmation on Android
+  + CVE-2024-11692: Select list elements could be shown over another site
+  + CVE-2024-11701: Misleading Address Bar State During Navigation Interruption
+  + CVE-2024-11702: Inadequate Clipboard Protection in Private Browsing Mode on Android
+  + CVE-2024-11693: Download Protections were bypassed by .library-ms files on Windows
+  + CVE-2024-11694: CSP Bypass and XSS Exposure via Web Compatibility Shims
+  + CVE-2024-11695: URL Bar Spoofing via Manipulated Punycode and Whitespace Characters
+  + CVE-2024-11703: Password access without authentication via PIN bypass on Android
+  + CVE-2024-11696: Unhandled Exception in Add-on Signature Verification
+  + CVE-2024-11697: Improper Keypress Handling in Executable File Confirmation Dialog
+  + CVE-2024-11704: Potential Double-Free Vulnerability in PKCS#7 Decryption Handling
+  + CVE-2024-11698: Fullscreen Lock-Up When Modal Dialog Interrupts Transition on macOS
+  + CVE-2024-11705: Null Pointer Dereference in NSC_DeriveKey
+  + CVE-2024-11706: Null Pointer Dereference in PKCS#12 Utility
+  + CVE-2024-11708: Data race with PlaybackParams
+  + CVE-2024-11699: Memory safety bugs fixed in Firefox 133, Firefox ESR 128.5, and Thunderbird 128.5
+
 * Sat Nov 16 2024 Ajrat Makhmutov <rauty@altlinux.org> 132.0.2-alt1
 - New version (132.0.2).
 
