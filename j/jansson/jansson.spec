@@ -1,15 +1,17 @@
 %def_with doc
+%define soname 4
 
 Name: jansson
-Version: 2.13.1
-Release: alt2
+Version: 2.14
+Release: alt1
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
 Group: System/Libraries
 
-Url: http://www.digip.org/jansson/
+Url: https://github.com/akheron/jansson
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 %if_with doc
 BuildRequires: python3-module-sphinx
@@ -24,12 +26,13 @@ It features:
  - Full Unicode support (UTF-8)
  - Extensive test suite
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: C library for encoding, decoding and manipulating JSON data
 Group: System/Libraries
-Provides: %name = %version-%release
+Conflicts: libjansson < 2.14
+Obsoletes: libjansson
 
-%description -n lib%name
+%description -n lib%name%soname
 Jansson is a C library for encoding, decoding and manipulating JSON data.
 It features:
  - Simple and intuitive API and data model
@@ -41,7 +44,7 @@ It features:
 %package -n lib%name-devel
 Summary: C library for encoding, decoding and manipulating JSON data
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %EVR
 
 %description -n lib%name-devel
 Jansson is a C library for encoding, decoding and manipulating JSON data.
@@ -54,6 +57,7 @@ It features:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -69,8 +73,9 @@ It features:
 %check
 %make check
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name%soname
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 %doc README* LICENSE CHANGES
 
 %files -n lib%name-devel
@@ -82,6 +87,11 @@ It features:
 %endif
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt1
+- 2.13.1 -> 2.14
+- updated homepage URL
+- renamed according to SharedLibsPolicy
+
 * Tue May 18 2021 Slava Aseev <ptrnine@altlinux.org> 2.13.1-alt2
 - fix FTBFS by applying upstream commit 798d40c3f3
 
