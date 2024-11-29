@@ -1,28 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: pytesseract
-Version: 0.3.10
-Release: alt1.1
+Version: 0.3.13
+Release: alt1
 
 Summary: An optical character recognition (OCR) tool for Python
 License: Apache-2.0
 Group: Development/Python
-Url: https://github.com/madmaze/pytesseract
+Url: https://pypi.org/project/pytesseract
+Vcs: https://github.com/madmaze/pytesseract
 
 Source: %name-%version.tar
-
 Patch0: pytesseract-0.3.10-skip-gif.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(pre_commit)
-BuildRequires: python3(nodeenv)
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3(PIL)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pandas)
 BuildRequires: python3-module-pandas-tests
-BuildRequires: tesseract tesseract-langpack-fr tesseract-langpack-osd
+BuildRequires: tesseract
+BuildRequires: tesseract-langpack-fr
+BuildRequires: tesseract-langpack-osd
+%endif
+
 Requires: tesseract
 Requires: python3-module-%name = %version-%release
 
@@ -61,24 +67,28 @@ recognized text instead of writing it to a file.
 %patch0 -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages --skip-pkg-install -p auto -o -v
+# test_get_languages coredumps tessaract with invalid input
+%pyproject_run_pytest -k 'not test_get_languages'
 
 %files
 %_bindir/%name
 
 %files -n python3-module-%name
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Nov 19 2024 Anton Vyatkin <toni@altlinux.org> 0.3.13-alt1
+- New version 0.3.13.
+- Migrate to pyproject macroses.
+
 * Fri Dec 22 2023 Anton Vyatkin <toni@altlinux.org> 0.3.10-alt1.1
 - NMU: fixed FTBFS (added BR pandas-tests).
 
