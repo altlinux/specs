@@ -9,7 +9,7 @@
 
 Name: libvxl
 Version: 3.5.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: C++ Libraries for Computer Vision Research and Implementation
@@ -124,6 +124,9 @@ sed -i 's/-fno-gcse/-Wall/' v3p/netlib/CMakeLists.txt
 %endif
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 3.5.0-alt4
+- fixed build with gcc 14
+
 * Thu Aug 29 2024 Anton Farygin <rider@altlinux.ru> 3.5.0-alt3
 - libvxl-devel: Added conflicts with librply-devel (Closes: #51177)
 
