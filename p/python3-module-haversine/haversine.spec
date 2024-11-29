@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.1
+Version: 2.9.0
 Release: alt1
 
 Summary: Calculate the distance between 2 points on Earth
@@ -54,6 +54,9 @@ located by their latitude and longitude.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 29 2024 Stanislav Levin <slev@altlinux.org> 2.9.0-alt1
+- 2.8.1 -> 2.9.0.
+
 * Tue Apr 09 2024 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1
 - 2.8.0 -> 2.8.1.
 
