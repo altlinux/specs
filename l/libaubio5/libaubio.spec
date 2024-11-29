@@ -4,7 +4,7 @@
 
 Name: libaubio%sover
 Version: 0.4.9
-Release: alt6
+Release: alt7
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 VCS: https://github.com/aubio/aubio
@@ -143,6 +143,9 @@ rm -v %buildroot%_libdir/libaubio.a
 %_docdir/lib%origname-doc
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 0.4.9-alt7
+- fix build with gcc 14
+
 * Thu Sep 07 2023 Anton Farygin <rider@altlinux.ru> 0.4.9-alt6
 - add commits e1888a67 and 19b20ab9 from upstream to support build with ffmpeg 6
 
