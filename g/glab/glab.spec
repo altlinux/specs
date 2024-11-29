@@ -8,8 +8,8 @@
 %def_with docs
 
 Name: glab
-Version: 1.49.0
-Release: alt3
+Version: 1.50.0
+Release: alt1
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
 License: MIT
@@ -100,6 +100,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %_man1dir/*.1.*
 
 %changelog
+* Fri Nov 29 2024 Anton Zhukharev <ancieg@altlinux.org> 1.50.0-alt1
+- Updated to 1.50.0.
+
 * Fri Nov 29 2024 Anton Zhukharev <ancieg@altlinux.org> 1.49.0-alt3
 - Really disabled check_update by default (closes 52246).
 - Shipped shell completions for bash, fish and zsh.
