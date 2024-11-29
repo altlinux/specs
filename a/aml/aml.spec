@@ -2,7 +2,7 @@
 
 Name: aml
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Another Main Loop Library
 License: ISC
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: https://github.com/any1/aml
 
 Vcs: https://github.com/any1/aml.git
+
 Source: https://github.com/any1/aml/archive/v%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-meson
@@ -38,7 +39,8 @@ This package contains header files required to develop
 %setup
 
 %build
-%meson \
+%meson
+%nil
 %meson_build
 
 %install
@@ -56,6 +58,9 @@ This package contains header files required to develop
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1.1
+- spec: fixed typo
+
 * Thu May 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - first build for Sisyphus
 
