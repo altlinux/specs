@@ -1,6 +1,6 @@
 Name: gnome-shell-extension-dash-to-panel
-Version: 63
-Release: alt0_1_git_0d14d7
+Version: 64
+Release: alt0_1_git_db12bb
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -12,6 +12,7 @@ BuildArch: noarch
 License: GPL-2.0
 Group:  Graphical desktop/GNOME
 Url: https://github.com/home-sweet-gnome/dash-to-panel
+Vcs: https://github.com/home-sweet-gnome/dash-to-panel
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -44,6 +45,9 @@ similar to that found in KDE Plasma and Windows 7+. A separate dock is no longer
 %doc README.md
 
 %changelog
+* Fri Nov 29 2024 Hihin Ruslan <ruslandh@altlinux.ru> 64-alt0_1_git_db12bb
+- Update from git from commit db12bb
+
 * Fri Sep 20 2024 Hihin Ruslan <ruslandh@altlinux.ru> 63-alt0_1_git_0d14d7
 - Update from git from commit 0d14d7
 
