@@ -5,7 +5,7 @@
 
 Name: kde6-%rname
 Version: 0.7.1
-Release: alt1
+Release: alt10
 %K6init
 
 Group: System/Libraries
@@ -30,6 +30,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf6-filesystem
+Provides:  kde5-kimageannotator-common = %EVR
+Obsoletes: kde5-kimageannotator-common < %EVR
 %description common
 %name common package
 
@@ -92,5 +94,8 @@ done
 %_K6lib/libkImageAnnotator.so.*
 
 %changelog
+* Fri Nov 29 2024 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt10
+- obsolete kde5-kimageannotator-common
+
 * Tue Oct 01 2024 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt1
 - initial build
