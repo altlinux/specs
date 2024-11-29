@@ -1,11 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define import_path gitlab.com/gitlab-org/cli
 
+%define bash_completionsdir %_datadir/bash-completion/completions
+%define fish_completionsdir %_datadir/fish/vendor_completions.d
+%define zsh_completionsdir %_datadir/zsh/site-functions
+
 %def_with docs
 
 Name: glab
 Version: 1.49.0
-Release: alt2
+Release: alt3
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
 License: MIT
@@ -74,9 +78,20 @@ export IGNORE_SOURCES=1
 mkdir -p %buildroot%_man1dir
 mv .man-pages/* %buildroot%_man1dir
 
+mkdir -p %buildroot%bash_completionsdir
+mkdir -p %buildroot%fish_completionsdir
+mkdir -p %buildroot%zsh_completionsdir
+
+%buildroot%_bindir/%name completion -s bash > %buildroot%bash_completionsdir/%name
+%buildroot%_bindir/%name completion -s fish > %buildroot%fish_completionsdir/%name.fish
+%buildroot%_bindir/%name completion -s zsh > %buildroot%zsh_completionsdir/_%name
+
 %files
 %doc LICENSE README.md
 %_bindir/%name
+%bash_completionsdir/%name
+%fish_completionsdir/%name.fish
+%zsh_completionsdir/_%name
 
 %files docs
 %doc .web-pages/*
@@ -85,6 +100,10 @@ mv .man-pages/* %buildroot%_man1dir
 %_man1dir/*.1.*
 
 %changelog
+* Fri Nov 29 2024 Anton Zhukharev <ancieg@altlinux.org> 1.49.0-alt3
+- Really disabled check_update by default (closes 52246).
+- Shipped shell completions for bash, fish and zsh.
+
 * Thu Nov 28 2024 Anton Zhukharev <ancieg@altlinux.org> 1.49.0-alt2
 - Disabled check_update by default (closes 52246).
 
