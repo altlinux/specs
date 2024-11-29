@@ -15,15 +15,17 @@ Practice.
 
 Name: cgns
 Version: 4.4.0
-Release: alt1
+Release: alt2
 Summary: CFD General Notation System
 Group: Sciences/Mathematics
-License: Free (see license.txt)
+License: Zlib
 URL: https://github.com/CGNS/CGNS
 VCS: https://github.com/CGNS/CGNS.git
 Source: %name-%version.tar
 
 Patch1: cgns-4.4.0-alt-install.patch
+Patch2: cgns-4.4.0-fedora-gcc14-fix.patch
+Patch3: cgns-4.4.0-fedora-c99.patch
 
 BuildRequires: cmake gcc-c++ gcc-fortran zlib-devel libGL-devel tk-devel
 BuildRequires: libGLU-devel xorg-xproto-devel libXmu-devel libXtst-devel
@@ -78,6 +80,8 @@ This package contains development files of CGNS.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -113,6 +117,10 @@ This package contains development files of CGNS.
 %_libdir/*.a
 
 %changelog
+* Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 4.4.0-alt2
+- added fedora patch to fix build with gcc14
+- fixed License according SPDX
+
 * Mon Feb 12 2024 Anton Farygin <rider@altlinux.ru> 4.4.0-alt1
 - 4.2.0 -> 4.4.0
 
