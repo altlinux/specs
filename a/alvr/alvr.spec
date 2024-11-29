@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.11.1
-Release: alt6
+Release: alt7
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -12,6 +12,7 @@ Source1: %name-%version-openvr.tar
 Source2: %name-%version-vendor.tar
 # alvr helper script
 Source10: alvr.sh
+Source11: %{version}_session.json
 
 Patch1: use-static-x264-ffmpeg.patch
 Patch2: alvr-default-settings.patch
@@ -56,7 +57,6 @@ Requires: libavutil58
 Requires: libunwind
 Requires: libvulkan1
 Requires: libx264
-# Requires: alvr-companion
 Requires: openxr
 Requires: android-tools
 Requires: yad
@@ -141,6 +141,9 @@ install -Dm644 %_alvrBuildDir/libalvr_server_openvr.so %buildroot%_libdir/%name/
 install -Dm644 %_alvrBuildDir/libalvr_vulkan_layer.so -t %buildroot%_libdir/
 install -Dm644 alvr/vulkan_layer/layer/alvr_x86_64.json -t %buildroot%_datadir/vulkan/explicit_layer.d/
 
+# Default settings
+install -Dm644 %SOURCE11 %buildroot%_libdir/%name/default_settings.json
+
 # Desktop
 sed -i "s|Exec=alvr_dashboard|Exec=%name|" alvr/xtask/resources/%name.desktop
 install -Dm644 alvr/xtask/resources/%name.desktop -t %buildroot%_desktopdir/
@@ -162,6 +165,9 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Fri Nov 29 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt7
+- automatic detection and connection of IP address for WI-FI and USB
+
 * Tue Nov 26 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt6
 - added pop-up notifications when connected via USB
 - APK client installation simplified
