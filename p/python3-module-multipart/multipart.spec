@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.1.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Multipart parser for Python3
@@ -48,6 +48,9 @@ Source:  %name-%version.tar
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Nov 29 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
