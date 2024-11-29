@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.15
+Version: 1.15.16
 Release: alt1
 
 Summary: Installer common parts
@@ -109,6 +109,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
 %changelog
+* Fri Nov 29 2024 Anton Midyukov <antohami@altlinux.org> 1.15.16-alt1
+- 90-firsttime.sh: do'nt create /etc/firsttime.flag, if /etc/firsttime.d/
+  is empty
+
 * Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 1.15.15-alt1
 - Do not dependency stage2 subpackage on etcnet (through alterator-net-functions)
   (request by shaba@ for build distribution with PVE).
