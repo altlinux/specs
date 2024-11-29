@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 Summary: A lil' TOML parser
 License: MIT
@@ -47,6 +47,9 @@ v1.0.0.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 28 2024 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.1.0 -> 2.2.1.
+
 * Tue Nov 12 2024 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.2 -> 2.1.0.
 
