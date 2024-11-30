@@ -1,14 +1,15 @@
 Name: eb
 Version: 4.4.3
-Release: alt1
+Release: alt2
 Summary: Library for accessing Japanese CD-ROM electronic books
 
 Group: System/Libraries
 License: BSD
-Url: http://www.sra.co.jp/people/m-kasahr/eb/
-# ftp://ftp.sra.co.jp/pub/misc/eb/
+Url: https://www.mistys-internet.website/eb/index-en.html
+VCS: https://github.com/mistydemeo/eb/
 Source0: %name-%version.tar
 Patch1: eb-aclocal-conf-libdir.patch
+Patch2: eb-gcc14.patch
 
 BuildRequires: zlib-devel
 
@@ -29,6 +30,7 @@ This package contains development files needs to use eb in programs.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -51,6 +53,10 @@ This package contains development files needs to use eb in programs.
 %_datadir/aclocal/*
 
 %changelog
+* Sat Nov 30 2024 Anton Farygin <rider@altlinux.ru> 4.4.3-alt2
+- fixed build with gcc 14
+- updated homepage
+
 * Tue Nov 27 2018 Anton Farygin <rider@altlinux.ru> 4.4.3-alt1
 - first build for ALT
 
