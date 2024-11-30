@@ -57,8 +57,8 @@ BuildRequires: jpackage-default
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	42.6.0
-Release:	alt1_1jpp11
+Version:	42.6.2
+Release:	alt1
 License:	BSD-2-Clause
 URL:		http://jdbc.postgresql.org/
 
@@ -88,7 +88,6 @@ BuildRequires:	postgresql-test-rpm-macros
 #BuildRequires:	gettext
 
 Obsoletes:	%{name}-parent-poms < 42.2.2-2
-Source44: import.info
 
 %description
 PostgreSQL is an advanced Object-Relational database management
@@ -184,6 +183,10 @@ opts="-f"
 
 
 %changelog
+* Sat Nov 30 2024 Andrey Cherepanov <cas@altlinux.org> 0:42.6.2-alt1
+- New version.
+- Securiry fix: CVE-2024-1597 (ALT #51910).
+
 * Mon Apr 17 2023 Igor Vlasenko <viy@altlinux.org> 0:42.6.0-alt1_1jpp11
 - update
 
