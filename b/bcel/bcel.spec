@@ -1,22 +1,20 @@
+Name:    bcel
+Version: 6.8.2
+Release: alt1
 Epoch: 1
+Summary: Byte Code Engineering Library
+License: Apache-2.0
 Group: Development/Java
+URL: http://commons.apache.org/proper/commons-bcel/
+
+BuildArch: noarch
+
+Source0: http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
+
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           bcel
-Version:        6.5.0
-Release:        alt1_2jpp11
-Summary:        Byte Code Engineering Library
-License:        ASL 2.0
-URL:            http://commons.apache.org/proper/commons-bcel/
-BuildArch:      noarch
-
-Source0:        http://archive.apache.org/dist/commons/bcel/source/bcel-%{version}-src.tar.gz
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
 
 %description
 The Byte Code Engineering Library (formerly known as JavaClass) is
@@ -47,12 +45,13 @@ This package provides %{summary}.
 
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :spotbugs-maven-plugin
-
+%pom_remove_plugin :jacoco-maven-plugin
+ 
 %mvn_alias : bcel: apache:
-%mvn_file : %{name}
+%mvn_file : %name
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -65,6 +64,10 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Sat Nov 30 2024 Andrey Cherepanov <cas@altlinux.org> 1:6.8.2-alt1
+- New version.
+- Fix license according to SPDX.
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:6.5.0-alt1_2jpp11
 - new version
 

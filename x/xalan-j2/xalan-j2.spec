@@ -10,22 +10,22 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 2.7.2
+%global version 2.7.3
 %global cvs_version %(echo %{version} | tr . _)
 
 Name:           xalan-j2
-Version:        2.7.2
-Release:        alt1_12jpp11
+Version:        2.7.3
+Release:        alt1
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
-License:        ASL 2.0 and W3C
+License:        Apache-2.0 and W3C
 URL:            http://xalan.apache.org/
 
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 Source1:        xalan-j2-serializer-MANIFEST.MF
-Source2:        http://repo1.maven.org/maven2/xalan/xalan/%{version}/xalan-%{version}.pom
-Source3:        http://repo1.maven.org/maven2/xalan/serializer/%{version}/serializer-%{version}.pom
+Source2:        https://repo1.maven.org/maven2/xalan/xalan/%{version}/xalan-%{version}.pom
+Source3:        https://repo1.maven.org/maven2/xalan/serializer/%{version}/serializer-%{version}.pom
 Source4:        xsltc-%{version}.pom
 Source5:        xalan-j2-MANIFEST.MF
 # Remove bundled binaries which cannot be easily verified for licensing
@@ -48,7 +48,6 @@ BuildRequires:  xml-commons-apis >= 0:1.3
 Requires:       xerces-j2
 
 Provides:       jaxp_transform_impl
-Source44: import.info
 BuildRequires: dos2unix
 Provides: xalan-j = %{name}-%{version}
 Obsoletes: xalan-j <= 2.7.0-alt3
@@ -90,7 +89,6 @@ find . -name '*.jar' -delete
 find . -name '*.class' -delete
 
 sed -i '/<bootclasspath/d' build.xml
-(cd ./src && tar xf xml-commons-external-*-src.tar.gz)
 
 # Remove classpaths from manifests
 sed -i '/class-path/I d' $(find -iname '*manifest*')
@@ -118,18 +116,21 @@ ln -sf $(build-classpath ant) ant.jar
 popd
 export CLASSPATH=$(build-classpath glassfish-servlet-api)
 
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
-  -Dcompiler.source=1.7 \
-  -Dcompiler.target=1.7 \
+	
+%ant \
+  -Dcompiler.source=1.8 \
+  -Dcompiler.target=1.8 \
   -Djava.awt.headless=true \
   -Dbuild.xalan-interpretive.jar=build/xalan-interpretive.jar \
-  xalan-interpretive.jar\
+  -Dxmlapis.jar=$(build-classpath xml-commons-apis) \
+  -Dparser.jar=$(build-classpath xerces-j2) \
+  -Dbcel.jar=$(build-classpath bcel) \
+  -Druntime.jar=$(build-classpath java_cup-runtime) \
+  -Dregexp.jar=$(build-classpath regexp) \
+  -Djava_cup.jar=$(build-classpath java_cup) \
+  xalan-interpretive.jar \
   xsltc.unbundledjar \
   docs
-
-# inject OSGi manifests
-jar ufm build/serializer.jar %{SOURCE1}
-jar ufm build/xalan-interpretive.jar %{SOURCE5}
 
 %mvn_artifact %{SOURCE2} build/xalan-interpretive.jar
 %mvn_artifact %{SOURCE3} build/serializer.jar
@@ -137,9 +138,6 @@ jar ufm build/xalan-interpretive.jar %{SOURCE5}
 
 %install
 %mvn_install
-
-find $RPM_BUILD_ROOT -name '*.sh' -print0 | xargs -0 dos2unix
-grep -r -m 1 -l -Z '^#!/bin/sh' $RPM_BUILD_ROOT%_bindir | xargs -0 dos2unix
 
 %post
 mv %{_javadir}/jaxp_transform_impl.jar{,.tmp} || :
@@ -150,7 +148,7 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
-%doc KEYS readme.html
+%doc KEYS README
 
 %files xsltc -f .mfiles-xsltc
 %doc --no-dereference LICENSE.txt NOTICE.txt
@@ -160,6 +158,11 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %doc --no-dereference build/docs/*
 
 %changelog
+* Sat Nov 30 2024 Andrey Cherepanov <cas@altlinux.org> 0:2.7.3-alt1
+- New version.
+- Security fixes: CVE-2022-34169 (ALT #52280).
+- Fix license according to SPDX.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_12jpp11
 - update
 
