@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
+%global sover 2
+
 # 1.9.3: test suite fails on ppc64le
 %ifarch ppc64le
 %def_without check
@@ -24,7 +26,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 1.9.25
+Version: 1.9.26
 Release: alt1
 
 Summary: Firmware update daemon
@@ -113,13 +115,30 @@ Obsoletes: fwupd-labels <= %EVR
 %description
 fwupd is a daemon to allow session software to update device firmware.
 
-%package devel
-Summary: Development package for %name
-Group: Development/C
+%package -n libfwupd%sover
+Summary: Libraries for %name
+Group: System/Libraries
 Requires: %name = %EVR
 
-%description devel
+%description -n libfwupd%sover
+Libraries for %name.
+
+%package -n libfwupd-devel
+Summary: Development package for %name
+Group: Development/C
+Obsoletes: %name-devel < %EVR
+Provides: %name-devel = %EVR
+
+%description -n libfwupd-devel
 Files for development with %name.
+
+%package -n libfwupd-devel-docs
+Summary: Documentation for libfwupd-devel
+Group: Documentation
+BuildArch: noarch
+
+%description -n libfwupd-devel-docs
+Documentation for libfwupd-devel.
 
 %package tests
 Group: System/Configuration/Hardware
@@ -207,6 +226,10 @@ mv %buildroot%_docdir/fwupd %buildroot%_docdir/fwupd-devel-%version
 rm -f %buildroot%_docdir/%name-devel-%version/lib*
 mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 
+# Install docs/hsi.html to satisfy noarch check (non-identical noarch packages)
+[ -f %buildroot%_docdir/fwupd-devel-%version/hsi.html ] || \
+    install -Dpm0644 docs/hsi.html -t %buildroot%_docdir/fwupd-devel-%version/
+
 %find_lang %name
 
 %check
@@ -265,7 +288,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %dir %_localstatedir/fwupd
 %dir %_datadir/fwupd/quirks.d
 %_datadir/fwupd/quirks.d/builtin.quirk.gz
-%_libdir/libfwupd*.so.*
 %_libdir/girepository-1.0/Fwupd-2.0.typelib
 %_udevrulesdir/*.rules
 %dir %fwupd_pluginsdir
@@ -284,16 +306,21 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 
 %ghost %_localstatedir/fwupd/gnupg
 
+%files -n libfwupd%sover
+%_libdir/libfwupd.so.%{sover}*
+
 %files plugin-modem-manager
 %fwupd_pluginsdir/libfu_plugin_modem_manager.so
 
-%files devel
+%files -n libfwupd-devel
 %_datadir/gir-1.0/Fwupd-2.0.gir
-%_docdir/fwupd-devel-%version
 %_includedir/fwupd-1
-%_libdir/libfwupd*.so
+%_libdir/libfwupd.so
 %_libdir/pkgconfig/fwupd.pc
 %_datadir/vala/vapi/*
+
+%files -n libfwupd-devel-docs
+%_docdir/fwupd-devel-%version
 
 %files tests
 %if_enabled tests
@@ -321,6 +348,10 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Fri Nov 29 2024 Egor Ignatov <egori@altlinux.org> 1.9.26-alt1
+- 1.9.26
+- Package according to Shared Libs Policy.
+
 * Wed Sep 25 2024 Egor Ignatov <egori@altlinux.org> 1.9.25-alt1
 - 1.9.25
 
