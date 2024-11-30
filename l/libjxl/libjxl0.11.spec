@@ -2,7 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name jxl
-%define sover 0.10
+%define ver_major 0.11
+%define sover 0.11
 %define libname lib%_name%sover
 
 %def_enable tools
@@ -13,7 +14,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %sover.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: JPEG XL image format reference implementation
@@ -21,15 +22,16 @@ License: BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/libjxl/libjxl
 
+Vcs: https://github.com/libjxl/libjxl.git
+
 %if_disabled snapshot
 Source: https://github.com/libjxl/libjxl/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/libjxl/libjxl.git
 Source: %name-%version.tar
 %endif
 
 %define gif_ver 5.1
-%define hwy_ver 1.1.0
+%define hwy_ver 1.2.0
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build
@@ -50,7 +52,7 @@ JPEG XL image format reference implementation Library.
 Summary: JPEG XL image format reference implementation Library.
 Group: System/Libraries
 Requires: %name-pixbuf-loader = %EVR
-Obsoletes: %name < 0.9
+Obsoletes: %name < 0.10
 
 %description -n %libname
 This package provides shared JPEG XL libraries.
@@ -58,7 +60,7 @@ This package provides shared JPEG XL libraries.
 %package pixbuf-loader
 Summary: JPEG XL image loader for GTK+ applications
 Group: System/Libraries
-Conflicts: %name < 0.9
+Conflicts: %name < 0.10
 
 %description pixbuf-loader
 This package provides JPEG XL image loader for gdk-pixbuf.
@@ -144,6 +146,12 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1 (fixed CVE-2024-11403, CVE-2024-11498)
+
+* Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Thu Jun 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
 - 0.10.3
 

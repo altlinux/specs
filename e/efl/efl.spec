@@ -48,7 +48,7 @@
 
 Name: efl
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -62,6 +62,7 @@ Source: %name-%version.tar
 %endif
 Patch: efl-1.15.0-alt-ecore_fb.patch
 Patch1: efl-1.19.1-luajitfix.patch
+Patch10: efl-1.27.0-up-ppc-no-altivec.patch
 Patch2000: efl-1.25.1-alt-e2k.patch
 
 # to skip libreoffice dependency for evas_generic_loaders
@@ -248,6 +249,9 @@ developing applications that use Elementary libraries.
 %setup -n %name-%version%beta
 %patch -p1
 %patch1 -p1
+
+%patch10 -p1
+
 %ifarch %e2k
 %patch2000 -p1
 # SIGILL workaround
@@ -455,6 +459,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.27.0-alt1.2
+- fixed build for ppc64le
+
 * Sun Jun 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.27.0-alt1.1
 - rebuilt with ibus support instead of scim (ALT #50655)
 
