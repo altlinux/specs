@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: efitools
 Version: 1.9.2
-Release: alt3
+Release: alt4
 Summary: UEFI secure boot toolkit
 Group: Development/Other
 License: GPL-2.0-only
@@ -23,14 +24,14 @@ BuildRequires: perl-File-Slurp
 BuildRequires: sbsigntools
 
 %description
-Useful tools for manipulating UEFI secure boot platforms.
+Tools for manipulating UEFI secure boot platforms.
 
 %prep
 %setup
 %patch3500 -p1
 
 %build
-%make_build
+%make_build || make
 
 %install
 %makeinstall_std DOCDIR=%buildroot%_docdir/%name-%version
@@ -42,6 +43,11 @@ Useful tools for manipulating UEFI secure boot platforms.
 %_man1dir/*.1*
 
 %changelog
+* Sat Nov 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.9.2-alt4
+- Fix FTBFS for gcc14 (strptime) and for aarch64.
+- spec: Enable set_verify_elf_method strict and fix LFS.
+- Note that upstream abandoned the project 5 years ago.
+
 * Tue May 07 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.9.2-alt3
 - NMU: fixed FTBFS on LoongArch.
 
