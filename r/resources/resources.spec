@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.6
+%define ver_major 1.7
 %define rdn_name net.nokyan.Resources
 
 %def_enable check
@@ -86,6 +86,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Sat Nov 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- updated to v1.7.0-6-g6d16bfd
+
 * Sat Aug 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - updated to v1.6.0-13-g3d7286a
 
