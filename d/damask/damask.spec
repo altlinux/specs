@@ -4,7 +4,7 @@
 
 Name: damask
 Version: 0.2.2
-Release: alt1
+Release: alt2.ff908293
 
 Summary:  Automatically set wallpaper images from a variety of sources
 License: GPL-3.0-or-later
@@ -41,20 +41,24 @@ It currently supports setting the wallpaper image from the following sources:
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --with-gnome %name
 
 %check
-%__meson_test
+%meson_test
 
 %files -f %name.lang
 %_bindir/%name
 %_datadir/applications/%_name.desktop
 %_datadir/glib-2.0/schemas/%_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{_name}*.svg
-%_datadir/locale/*/LC_MESSAGES/%name.mo
+#%_datadir/locale/*/LC_MESSAGES/%name.mo
 %_datadir/metainfo/%_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sat Nov 30 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt2.ff908293
+- Fixed app.drey.Damask.desktop by Repocop comment.
+- Rename macro %%__meson_test -> %%meson_test
+
 * Thu Nov 21 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus.
