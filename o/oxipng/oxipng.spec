@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: oxipng
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: PNG compression optimizer
@@ -13,10 +13,11 @@ License: MIT
 Group: Graphics
 Url: https://github.com/shssoichiro/oxipng
 
+Vcs: https://github.com/shssoichiro/oxipng.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/shssoichiro/oxipng.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -48,6 +49,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Sat Nov 30 2024 Yuri N. Sedunov <aris@altlinux.org> 9.1.3-alt1
+- 9.1.3
+
 * Sat Jul 13 2024 Yuri N. Sedunov <aris@altlinux.org> 9.1.2-alt1
 - 9.1.2
 
