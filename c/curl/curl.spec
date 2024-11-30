@@ -32,7 +32,7 @@
 
 Name: curl
 Version: 8.11.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -96,8 +96,6 @@ interaction or any kind of interactivity.
 
 Curl offers a busload of useful tricks like proxy support, user
 authentication, ftp upload, HTTP post, file transfer resume and more.
-
-NOTE: This version is compiled with SSL (https) support.
 
 %description -l ru_RU.UTF-8
 Curl - это клиент для получения файлов или документов с серверов,
@@ -207,8 +205,12 @@ popd
 %files -n lib%name-devel-static
 %_libdir/*.a
 %endif
-
+ 
 %changelog
+* Sat Nov 30 2024 Anton Farygin <rider@altlinux.ru> 8.11.0-alt2
+- applied upstream commit f5c6169 to fix regression
+  with netrc (Closes: #52093)
+
 * Wed Nov 06 2024 Anton Farygin <rider@altlinux.ru> 8.11.0-alt1
 - 8.10.0 -> 8.11.0 (Fixes: CVE-2024-9681)
 
