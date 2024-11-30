@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: concessio
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Understand file permissions
@@ -12,6 +12,9 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/ronniedroid/concessio
 Vcs: https://github.com/ronniedroid/concessio
 Source0: %name-%version.tar
+
+Requires: typelib(Adw) >= 1
+Requires: typelib(Gdk) >= 4.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 0.62.0
@@ -52,5 +55,9 @@ representations
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Nov 30 2024 Oleg Shchavelev <oleg@altlinux.org> 0.1.9-alt1
+- New version 0.1.9
+- Add typelib(Adw), typelib(Gdk) dependencies (ALT #52170)
+
 * Sun Nov 24 2024 Oleg Shchavelev <oleg@altlinux.org> 0.1.8-alt1
 - Initial build
