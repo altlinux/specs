@@ -4,7 +4,7 @@
 
 Name: freeipmi
 Version: 1.6.14
-Release: alt1
+Release: alt2
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -177,6 +177,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Sun Dec 01 2024 Anton Farygin <rider@altlinux.ru> 1.6.14-alt2
+- added fix for building with gcc 14
+
 * Tue Feb 13 2024 Anton Farygin <rider@altlinux.ru> 1.6.14-alt1
 - 1.6.11.1 -> 1.6.14
 
