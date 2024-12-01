@@ -18,8 +18,8 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.4.0
-Release: alt1.1
+Version: 2.4.1
+Release: alt1
 
 Summary: Software real-time synthesizer
 Summary(ru_RU.UTF-8): Программный синтезатор, работающий в режиме реального времени
@@ -221,6 +221,9 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %endif
 
 %changelog
+* Sun Dec 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1.1
 - fixed build for E2K (ilyakurdyukov@)
 
