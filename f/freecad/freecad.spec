@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -175,7 +175,7 @@ rm -rf src/CXX
 %endif
 
 %ifarch %e2k
-sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
+sed -i "/-fext-numeric-literals/d" src/Mod/CAM/App/CMakeLists.txt
 # because "error: cpio archive too big"
 %define optflags_debug -g0
 # too much warnings of this type
@@ -308,6 +308,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Sun Dec 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.0.0-alt1.1
+- Fixed build for Elbrus.
+
 * Tue Nov 19 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.0.0-alt1
 - New version.
 
