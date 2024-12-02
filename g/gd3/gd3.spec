@@ -7,7 +7,7 @@
 
 Name: gd3
 Version: 2.3.3
-Release: alt2
+Release: alt3
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
 Group: Graphics
@@ -15,6 +15,7 @@ Url: https://libgd.github.io/
 
 # https://github.com/libgd/libgd.git
 Source: %name-%version.tar
+Patch1: gd-2.3.3-upstream-fix_bug_in_HEIF.patch
 
 BuildRequires: fontconfig-devel libXpm-devel libfreetype-devel libjpeg-devel libpng-devel
 BuildRequires: libwebp-devel zlib-devel libtiff-devel
@@ -124,6 +125,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -164,6 +166,9 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Tue Nov 26 2024 Kirill Izmestev <felixz@altlinux.org> 2.3.3-alt3
+- Fixed bug in HEIF usage, stride is require by patch from upstream.
+
 * Wed Nov 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.3.3-alt2
 - spec:
   + run tests on LoongArch.
