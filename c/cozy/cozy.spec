@@ -3,7 +3,7 @@
 
 Name: cozy
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: Listen to audio books
 License: GPL-3.0-or-later
@@ -14,6 +14,9 @@ Vcs: https://github.com/geigi/cozy/
 Source: %name-%version.tar
 
 Requires: python3-modules-sqlite3
+Requires: gst-plugins-base1.0
+Requires: gst-plugins-good1.0
+Requires: gst-plugins-ugly1.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-python3
@@ -77,6 +80,10 @@ Perfect to listen to on the go!
 %_datadir/metainfo/%APP_ID.appdata.xml
 
 %changelog
+* Mon Dec 02 2024 Oleg Shchavelev <oleg@altlinux.org> 1.3.0-alt3
+- Add gst-plugins-base1.0, gst-plugins-good1.0, gst-plugins-ugly1.0 dependencies
+  (ALT #52213)
+
 * Sat Nov 23 2024 Oleg Shchavelev <oleg@altlinux.org> 1.3.0-alt2
 - Add python3-modules-sqlite3 dependency from Requires (ALT #52135)
 - Rename macro %%__meson_test -> %%meson_test
