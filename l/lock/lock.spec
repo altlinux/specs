@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lock
-Version: 1.0.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Process data with GnuPG
@@ -57,7 +57,7 @@ Manage your GnuPG keyring:
 %find_lang --with-gnome %APP_ID
 
 %check
-%__meson_test
+%meson_test
 
 %files -f %APP_ID.lang
 %_bindir/%APP_ID
@@ -67,5 +67,9 @@ Manage your GnuPG keyring:
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Nov 30 2024 Oleg Shchavelev <oleg@altlinux.org> 1.2.2-alt1
+- New version 1.2.2
+- Rename macro %%__meson_test -> %%meson_test
+
 * Wed Oct 30 2024 Oleg Shchavelev <oleg@altlinux.org> 1.0.1-alt1
 - Initial build
