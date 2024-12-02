@@ -3,7 +3,7 @@
 %define ngtcp2_crypto_gnutls 8
 
 Name: ngtcp2
-Version: 1.7.0
+Version: 1.9.1
 Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
@@ -14,6 +14,10 @@ Vcs: https://github.com/ngtcp2/ngtcp2.git
 Source: %name-%version.tar
 
 Source100: %name-%version-tests-munit.tar
+Source101: %name-%version-third-party-urlparse.tar
+Source102: %name-%version-third-party-urlparse-http-parser.tar
+Source103: %name-%version-third-party-urlparse-munit.tar
+
 
 BuildRequires: gcc-c++ CUnit-devel
 # need openssl-quic branch
@@ -51,7 +55,7 @@ The libngtcp2-devel package includes libraries and header files needed
 for building applications with libngtcp2.
 
 %prep
-%setup -a100
+%setup -a100 -a101 -a102 -a103
 
 %build
 %autoreconf
@@ -81,6 +85,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 1.9.1-alt1
+- 1.7.0 -> 1.9.1
+
 * Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
 - 1.6.0  -> 1.7.0
 
