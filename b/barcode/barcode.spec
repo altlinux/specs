@@ -6,12 +6,13 @@
 
 Name: barcode
 Version: 0.99
-Release: alt3
+Release: alt4
 Group: Graphics
 Summary: Utility to generate printable barcodes in PostScript format
 Summary(ru_RU.UTF-8): Утилита для генерации штрих-кодов для печати в формате PostScript
 License: GPLv3
-Url: http://www.gnu.org/software/barcode/barcode.html
+Url: https://www.gnu.org/software/barcode/
+VCS: https://git.savannah.gnu.org/cgit/barcode.git
 
 Source: %name-%version.tar
 Patch0: barcode-0.99-info.patch
@@ -93,6 +94,10 @@ sed -i '/^#include.*config.h"$/d' %buildroot%_includedir/barcode.h
 %_libdir/libbarcode.a
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 0.99-alt4
+- fixed build with gcc 14
+- updated homepage
+
 * Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.99-alt3
 - Fixed build with LTO.
 
