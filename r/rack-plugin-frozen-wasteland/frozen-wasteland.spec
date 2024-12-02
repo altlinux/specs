@@ -1,5 +1,5 @@
 Name: rack-plugin-frozen-wasteland
-Version: 2.1.0
+Version: 2.1.3
 Release: alt1
 
 Summary: Frozen Wasteland VCV plugins
@@ -31,6 +31,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Mon Dec 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
+- 2.1.3 released
+
 * Thu Feb 29 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt1
 - initial
 
