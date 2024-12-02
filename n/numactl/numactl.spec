@@ -3,7 +3,7 @@
 %define soname 1
 
 Name: numactl
-Version: 2.0.18
+Version: 2.0.19
 Release: alt1
 Summary: Simple NUMA policy support
 License: GPLv2
@@ -82,6 +82,9 @@ developing applications that use %name.
 %endif
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 2.0.19-alt1
+- 2.0.8 -> 2.0.19
+
 * Mon Sep 23 2024 Anton Farygin <rider@altlinux.ru> 2.0.18-alt1
 - 2.0.14 -> 2.0.18
 - fixed License in libnuma package according upstream
