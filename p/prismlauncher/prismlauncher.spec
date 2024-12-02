@@ -1,7 +1,7 @@
 %define oname PrismLauncher
 Name: prismlauncher
-Version: 8.0
-Release: alt2
+Version: 9.1
+Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -20,7 +20,7 @@ ExcludeArch: %arm
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: zlib-devel bzlib-devel libGLU-devel
-BuildRequires: qt6-base-devel qt6-svg-devel qt6-5compat-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-networkauth-devel qt6-5compat-devel
 
 BuildRequires: cmake gcc-c++ extra-cmake-modules
 
@@ -71,6 +71,9 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 %_datadir/qlogging-categories6/
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 9.1-alt1
+- new version 9.1 (with rpmrb script)
+
 * Sun Feb 04 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0-alt2
 - fix build with new java
 
