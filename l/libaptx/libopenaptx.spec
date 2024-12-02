@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: libaptx
-Version: 1.3.1
+Version: 2.0.0
 Release: alt1
 Summary: reverse-engineered apt-X codec library
 License: MIT
@@ -76,6 +76,9 @@ develop programs which make use of %name
 %_man3dir/openaptx.h.*
 
 %changelog
+* Mon Dec 02 2024 L.A. Kostis <lakostis@altlinux.ru> 2.0.0-alt1
+- 2.0.0.
+
 * Wed Dec 14 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
 - 1.3.1.
 - use cmake.
