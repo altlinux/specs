@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: gearlever
-Version: 2.2.1
-Release: alt2
+Version: 2.3.1
+Release: alt1
 
 Summary: Manage AppImages
 License: GPL-3.0-or-later
@@ -61,6 +61,9 @@ rm %buildroot%_datadir/gearlever/gearlever/assets/demo.AppImage
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Sat Nov 30 2024 Oleg Shchavelev <oleg@altlinux.org> 2.3.1-alt1
+- New version 2.3.1
+
 * Fri Nov 22 2024 Oleg Shchavelev <oleg@altlinux.org> 2.2.1-alt2
 - Add macro %%add_python3_path (ALT #52122)
 - Rename macro %%__meson_test -> %%meson_test
