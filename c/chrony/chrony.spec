@@ -1,7 +1,7 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 4.6
+Version: 4.6.1
 Release: alt1
 
 Summary: Chrony clock synchronization program
@@ -160,6 +160,9 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 %_man8dir/*
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 4.6.1-alt1
+- 4.6 -> 4.6.1
+
 * Tue Oct 08 2024 Anton Farygin <rider@altlinux.ru> 4.6-alt1
 - 4.5 -> 4.6
 
