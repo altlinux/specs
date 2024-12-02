@@ -1,4 +1,7 @@
 %set_verify_elf_method textrel=relaxed
+%ifndef _unitdir
+%define _unitdir   /usr/lib/systemd/system
+%endif
 
 %define tbname         NVIDIA-Linux-x86_64
 %ifarch aarch64
@@ -18,7 +21,7 @@
 %define nv_version 550
 %define nv_release 135
 %define nv_minor   %nil
-%define pkg_rel alt1
+%define pkg_rel alt2
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -145,11 +148,11 @@ Summary: NVIDIA System Management Interface program
 nvidia-smi (also NVSMI) provides monitoring and management capabilities for each of
 NVIDIA's Tesla, Quadro, GRID and GeForce devices from Fermi and higher architecture families.
 
-%package -n nvidia-wine
+%package -n nvidia-powerd
 Group: System/Libraries
 Summary: NVIDIA DLLs for wine
 Requires: nvidia_glx_common
-%description -n nvidia-wine
+%description -n nvidia-powerd
 NVIDIA DLLs for wine.
 
 %prep
@@ -192,11 +195,14 @@ mkdir -p %buildroot/%_bindir/
 install -m 0755 nvidia-smi %buildroot/%_bindir/
 mkdir -p %buildroot/%_man1dir/
 install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
-%endif
-# install dlls
-%ifarch x86_64
-#mkdir -p %buildroot/%_libdir/nvidia/wine/
-#install -m 0755 *nvngx.dll %buildroot/%_libdir/nvidia/wine/
+# install nvidia-powerd
+install -m 0755 nvidia-powerd %buildroot/%_bindir/
+mkdir -p %buildroot/%_unitdir/
+install -m 0644 systemd/system/nvidia-powerd.service %buildroot/%_unitdir/
+mkdir -p %buildroot/%_datadir/nvidia/nvidia-powerd/
+if [ -e dlsnetparams.csv ] ; then
+    install -m 0444 dlsnetparams.csv %buildroot/%_datadir/nvidia/nvidia-powerd/
+fi
 %endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
@@ -239,10 +245,11 @@ done
 %files -n nvidia-smi
 %_bindir/nvidia-smi
 %_man1dir/nvidia-smi.1.*
-%ifarch x86_64
-#%files -n nvidia-wine
-#%_libdir/nvidia/wine/
-%endif
+%files -n nvidia-powerd
+%doc nvidia-dbus.conf
+%_bindir/nvidia-powerd
+%_unitdir/nvidia-powerd.service
+%_datadir/nvidia/nvidia-powerd/
 %files -n libnvidia-ngx
 %_libdir/libnvidia-ngx.so.%nvidia_sover
 %_libdir/libnvidia-ngx.so.%version
@@ -259,6 +266,9 @@ done
 %endif
 
 %changelog
+* Mon Dec 02 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt2
+- package nvidia-powerd
+
 * Fri Nov 22 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt1
 - new version
 
