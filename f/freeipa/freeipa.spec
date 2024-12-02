@@ -1,5 +1,6 @@
 # build defines
 %define _unpackaged_files_terminate_build 1
+%define bash_completions_dir %_datadir/bash-completion/completions
 
 %ifarch %ix86 armh
 %def_with only_client
@@ -35,8 +36,8 @@
 
 %define bind_version 9.11
 %define bind_dyndb_ldap_version 11.1-alt7
-%define certmonger_version 0.79.7
-%define ds_version 1.4.3.24
+%define certmonger_version 0.79.17
+%define ds_version 2.1.0
 %define gssproxy_version 0.8.0-alt2
 %define krb5_version 1.16.3
 %define pki_version 10.10.5
@@ -51,8 +52,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.11.2
-Release: alt3
+Version: 4.12.2
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -89,6 +90,7 @@ BuildRequires: 389-ds-base-devel >= %ds_version
 BuildRequires: samba-devel >= %samba_version
 BuildRequires: nodejs
 BuildRequires: python3(rjsmin)
+BuildRequires: python3-module-argcomplete
 %endif # only_client
 
 # python
@@ -177,6 +179,7 @@ BuildRequires: python3(pylint)
 BuildRequires: python3(pycodestyle)
 BuildRequires: python3(docker)
 BuildRequires: python3(sphinx)
+BuildRequires: python3-module-paramiko
 %endif
 
 %description
@@ -465,6 +468,7 @@ Requires: python3-module-requests
 Requires: python3-module-urllib3 >= 1.26.8
 Requires: python3-module-sss-murmur
 Requires: python3-module-yubico
+Requires: python3-module-systemd
 %py3_provides ipaplatform
 %py3_provides ipaplatform.constants
 %py3_provides ipaplatform.osinfo
@@ -509,6 +513,7 @@ Requires: openssh-clients
 Requires: sshpass
 Requires: iptables
 Requires: drill
+Requires: python3-module-paramiko
 # Tests have a huge amount useless Provides
 %filter_from_provides /python3(ipatests\(\..*\)\?)/d
 
@@ -650,6 +655,13 @@ install -D -p -m 0755 %SOURCE1 %buildroot%_rpmlibdir/freeipa-server.filetrigger
 mkdir -p %buildroot%_altdir
 printf '%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so\t/dev/null\t90\n' > %buildroot%_altdir/winbind_krb5_locator.so
 
+# generate bash completions
+for clitool in ipa-migrate
+do
+    register-python-argcomplete "$clitool" > "$clitool"
+    install -p -m 0644 -D -t '%buildroot%bash_completions_dir' "$clitool"
+done
+
 %endif # only_client
 
 /bin/touch %buildroot%_sysconfdir/ipa/{default.conf,ca.crt}
@@ -771,7 +783,28 @@ if [ $1 -gt 1 ] ; then
         %__python3 -c 'from ipaclient.install.client import configure_krb5_snippet; configure_krb5_snippet()' >>"$IPA_UPGRADE_LOG" 2>&1
         %__python3 -c 'from ipaclient.install.client import update_ipa_nssdb; update_ipa_nssdb()' >>"$IPA_UPGRADE_LOG" 2>&1
         chmod 0600 "$IPA_UPGRADE_LOG"
-        sed -E --in-place=.orig 's/^(HostKeyAlgorithms ssh-rsa,ssh-dss)$/# disabled by ipa-client update\n# \1/' /etc/openssh/ssh_config ||:
+        SSH_CLIENT_SYSTEM_CONF='/etc/openssh/ssh_config'
+        if [ -f "$SSH_CLIENT_SYSTEM_CONF" ]; then
+            if grep -E -q '^HostKeyAlgorithms ssh-rsa,ssh-dss$' "$SSH_CLIENT_SYSTEM_CONF" 2>/dev/null; then
+                sed -E --in-place=.orig 's/^(HostKeyAlgorithms ssh-rsa,ssh-dss)$/# disabled by ipa-client update\n# \1/' "$SSH_CLIENT_SYSTEM_CONF"
+            fi
+        fi
+    fi
+fi
+
+%triggerin client -- sssd >= 2.10
+# Has the client been configured?
+restore=0
+test -f '/var/lib/ipa-client/sysrestore/sysrestore.index' && restore=$(wc -l '/var/lib/ipa-client/sysrestore/sysrestore.index' | awk '{print $1}') ||:
+SSH_CLIENT_SYSTEM_CONF='/etc/openssh/ssh_config'
+if [ -f "$SSH_CLIENT_SYSTEM_CONF" -a $restore -ge 2 ]; then
+    # https://pagure.io/freeipa/issue/9536
+    # upgrade sss_ssh_knownhostsproxy with sss_ssh_knownhosts
+    if grep -E -q '^GlobalKnownHostsFile /var/lib/sss/pubconf/known_hosts$' "$SSH_CLIENT_SYSTEM_CONF" 2>/dev/null; then
+        sed -E --in-place=.orig 's/^(GlobalKnownHostsFile \/var\/lib\/sss\/pubconf\/known_hosts)$/# disabled by ipa-client update\n# \1/' "$SSH_CLIENT_SYSTEM_CONF"
+    fi
+    if grep -E -q '^ProxyCommand /usr/bin/sss_ssh_knownhostsproxy -p %%p %%h$' "$SSH_CLIENT_SYSTEM_CONF" 2>/dev/null; then
+        sed -E --in-place=.orig 's/^(ProxyCommand \/usr\/bin\/sss_ssh_knownhostsproxy -p %%p %%h)$/# replaced by ipa-client update\n# \1\nKnownHostsCommand \/usr\/bin\/sss_ssh_knownhosts %%H/' "$SSH_CLIENT_SYSTEM_CONF"
     fi
 fi
 
@@ -848,6 +881,7 @@ fi
 %_sbindir/ipa-crlgen-manage
 %_sbindir/ipa-cert-fix
 %_sbindir/ipa-acme-manage
+%_sbindir/ipa-migrate
 %_libexecdir/certmonger/dogtag-ipa-ca-renew-agent-submit
 %_libexecdir/certmonger/ipa-server-guard
 %_libexecdir/ipa/ipa-ccache-sweeper
@@ -882,6 +916,7 @@ fi
 %attr(644,root,root) %_unitdir/ipa-custodia.service
 %ghost %attr(644,root,root) %etc_systemd_dir/httpd2.service.d/ipa.conf
 %_tmpfilesdir/ipa.conf
+%attr(644,root,root) %_journal_catalogdir/ipa.catalog
 # END
 %attr(755,root,root) %plugin_dir/libipa_pwd_extop.so
 %attr(755,root,root) %plugin_dir/libipa_enrollment_extop.so
@@ -923,12 +958,15 @@ fi
 %_man1dir/ipa-crlgen-manage.1*
 %_man1dir/ipa-cert-fix.1*
 %_man1dir/ipa-acme-manage.1*
+%_man1dir/ipa-migrate.1*
 %_man8dir/ipactl.8*
 # WSGI applications
 %_datadir/ipa/wsgi.py
 %_datadir/ipa/migration/migration.py
 %_datadir/ipa/kdcproxy.wsgi
 %_datadir/ipa/wsgi/plugins.py
+
+%bash_completions_dir/ipa-migrate
 
 %_rpmlibdir/freeipa-server.filetrigger
 
@@ -1035,7 +1073,7 @@ fi
 %_bindir/ipa
 %dir %_libexecdir/ipa/acme
 %_libexecdir/ipa/acme/certbot-dns-ipa
-%_datadir/bash-completion/completions/ipa
+%bash_completions_dir/ipa
 %config %_sysconfdir/sysconfig/certmonger
 %_mandir/man1/ipa.1*
 %_mandir/man1/ipa-getkeytab.1*
@@ -1100,6 +1138,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Nov 21 2024 Stanislav Levin <slev@altlinux.org> 4.12.2-alt1
+- 4.11.2 -> 4.12.2.
+
 * Thu Aug 22 2024 Stanislav Levin <slev@altlinux.org> 4.11.2-alt3
 - Suppressed cryptography's warnings about TripleDES:
   + https://pagure.io/freeipa/issue/9641
