@@ -1,6 +1,6 @@
 Name: putty
-Version: 0.81
-Release: alt2
+Version: 0.82
+Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -81,6 +81,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Dec 02 2024 Ilya Mashkin <oddity@altlinux.ru> 0.82-alt1
+- 0.82
+
 * Sat Jun 22 2024 Kirill Izmestev <felixz@altlinux.org> 0.81-alt2
 - Fixed build for p10 error: 'G_APPLICATION_DEFAULT_FLAGS' undeclared.
 
