@@ -1,7 +1,7 @@
 %define soname 0
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libfcgi
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: FastCGI library
@@ -39,18 +39,23 @@ developing applications that use %name.
 %makeinstall
 
 %files
-%doc LICENSE.TERMS README.md
+%doc LICENSE README.md
 %_libdir/*.so.%soname
 %_libdir/*.so.%soname.*
 %exclude %_bindir/cgi-fcgi
+%exclude %_man1dir/cgi-fcgi.1.*
 
 %files devel
 %_includedir/*.h
+%_man3dir/*.3.*
 %_libdir/*.so
 %_libdir/pkgconfig/*.pc
 %exclude %_libdir/*.a
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 2.4.3-alt1
+- 2.4.3
+
 * Wed Mar 27 2024 Anton Farygin <rider@altlinux.ru> 2.4.2-alt1
 - 2.4.2 (Fixes: CVE-2012-6687)
 
