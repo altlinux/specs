@@ -35,7 +35,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt3
+Release: alt4
 Epoch: 1
 %K6init
 
@@ -311,7 +311,7 @@ Requires: %name-common >= %EVR
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-#%patch100 -p1 -b .startkde
+%patch100 -p1 -b .startkde
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
@@ -599,6 +599,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Dec 02 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt4
+- setup SSH_ASKPASS variable
+
 * Mon Dec 02 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt3
 - check donation autorized
 
