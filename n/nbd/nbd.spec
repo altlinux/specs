@@ -11,8 +11,8 @@
 %def_with setproctitle
 
 Name: nbd
-Version: 3.25
-Release: alt3
+Version: 3.26.1
+Release: alt1
 Summary: Network Block Device user space tools
 License: GPLv2
 Group: Networking/Other
@@ -122,6 +122,9 @@ DELAY=10 make check
 %_man8dir/*
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 3.26.1-alt1
+- 3.25 -> 3.26.1
+
 * Fri Feb 16 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt3
 - added pidfile to the systemd unit (closes: #49344)
 - content of the %name-doc package is included in the package with client
