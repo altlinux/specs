@@ -1,6 +1,6 @@
 Name: gdu
-Version: 5.27.0
-Release: alt2
+Version: 5.29.0
+Release: alt1
 
 Summary: Fast disk usage analyzer with console interface written in Go
 
@@ -48,6 +48,9 @@ install -Dpm 0755 %name.1 %buildroot%_man1dir/gdu.1
 %_bindir/%name
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 5.29.0-alt1
+- new version 5.29.0 (with rpmrb script)
+
 * Mon Apr 22 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.27.0-alt2
 - NMU: fixed FTBFS on LoongArch (don't try to build a static binary)
 
