@@ -4,7 +4,7 @@
 %define soname 7
 
 Name: snapper
-Version: 0.11.2
+Version: 0.12.0
 Group: System/Base
 Release: alt1
 Summary: Tool for filesystem snapshot management
@@ -53,6 +53,14 @@ Requires: lib%name-common
 %description -n lib%name%soname
 This package contains the snapper shared library
 for filesystem snapshot management.
+
+%package -n snapper-backup
+Requires: snapper = %EVR
+Summary: A backup program for snapper
+Group: System/Base
+
+%description -n snapper-backup
+A backup program for snapshots created by snapper.
 
 %package -n lib%name-common
 Summary: Commmon files for lib%name
@@ -140,6 +148,7 @@ make check
 %_sbindir/snapperd
 %config(noreplace) %_sysconfdir/logrotate.d/snapper
 %_unitdir/%{name}*
+%exclude %_unitdir/snapper-backup.*
 %_datadir/bash-completion/completions/snapper
 %_datadir/zsh/site-functions/_snapper
 %_datadir/dbus-1/system.d/org.opensuse.Snapper.conf
@@ -158,6 +167,15 @@ make check
 
 %files -n lib%name%soname
 %_libdir/libsnapper.so.%{soname}*
+
+%files -n snapper-backup
+%_sbindir/snbk
+%dir %_sysconfdir/snapper/backup-configs
+%dir %_sysconfdir/snapper/certs
+%_unitdir/snapper-backup.*
+%_man8dir/snbk.8*
+%_man5dir/snapper-backup-configs.5*
+
 
 %files -n lib%name-common
 %dir %_sysconfdir/%name
@@ -181,6 +199,9 @@ make check
 %_mandir/man8/pam_snapper.8*
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 0.12.0-alt1
+- 0.11.2 -> 0.12.0
+
 * Mon Oct 07 2024 Anton Farygin <rider@altlinux.ru> 0.11.2-alt1
 - 0.11.2
 - added fix to build in "unmerged usr" environments
