@@ -1,5 +1,5 @@
 Name: deltarpm
-Version: 3.6.3
+Version: 3.6.5
 Release: alt1
 
 Summary: Tools to Create and Apply deltarpms
@@ -45,6 +45,9 @@ make CFLAGS="$RPM_OPT_FLAGS -I%_includedir/rpm" prefix="%prefix" rpmdumpheader="
 #%_libdir/rpm/rpmdumpheader
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 3.6.5-alt1
+- new version 3.6.5 (with rpmrb script)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.6.3-alt1
 - new version 3.6.3 (with rpmrb script)
 
