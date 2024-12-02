@@ -1,5 +1,5 @@
 Name: mbuffer
-Version: 20240707
+Version: 20241007
 Release: alt1
 Summary: Measuring Buffer is an enhanced version of buffer
 
@@ -11,7 +11,7 @@ Source0: http://www.maier-komor.de/software/mbuffer/mbuffer-%version.tar.gz
 BuildRequires: mt-st, libssl-devel
 
 %description
-Measuring Buffer is an enhanced version of buffer. It features displayof
+Measuring Buffer is an enhanced version of buffer. It features display of
 throughput, memory-mapped file I/O for huge buffers, and multithreading.
 
 %prep
@@ -34,6 +34,9 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_bindir/%name
 
 %changelog
+* Mon Dec 02 2024 L.A. Kostis <lakostis@altlinux.ru> 20241007-alt1
+- Updated to 20241007.
+
 * Thu Aug 08 2024 L.A. Kostis <lakostis@altlinux.ru> 20240707-alt1
 - Updated to 20240707.
 
