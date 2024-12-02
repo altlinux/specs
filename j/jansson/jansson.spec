@@ -3,7 +3,7 @@
 
 Name: jansson
 Version: 2.14
-Release: alt1
+Release: alt2
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
@@ -12,6 +12,8 @@ Group: System/Libraries
 Url: https://github.com/akheron/jansson
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+BuildRequires: cmake ctest
+BuildRequires(pre): rpm-macros-cmake
 
 %if_with doc
 BuildRequires: python3-module-sphinx
@@ -60,18 +62,24 @@ It features:
 %patch0 -p1
 
 %build
-%autoreconf
-%configure --disable-static
-%make_build
+%cmake \
+	-DJANSSON_BUILD_SHARED_LIBS=ON \
+	-DJANSSON_INSTALL_LIB_DIR=%_libdir \
 %if_with doc
-%make html
+	-DJANSSON_BUILD_DOCS=ON \
+%endif
+	%nil
+%cmake_build
+
+%if_with doc
+%cmake_build -t doc
 %endif
 
 %install
-%makeinstall_std
+%cmake_install
 
 %check
-%make check
+%ctest
 
 %files -n lib%name%soname
 %_libdir/*.so.%soname
@@ -82,11 +90,15 @@ It features:
 %_includedir/*.h
 %_pkgconfigdir/*
 %_libdir/*so
+%_libdir/cmake/*
 %if_with doc
-%doc doc/_build/html/*
+%doc %_cmake__builddir/doc/html/*
 %endif
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt2
+- built with cmake
+
 * Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt1
 - 2.13.1 -> 2.14
 - updated homepage URL
