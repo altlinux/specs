@@ -13,7 +13,7 @@
 %def_disable docs
 
 Name: libxfce4ui
-Version: 4.19.6
+Version: 4.19.7
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
@@ -209,6 +209,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Mon Dec 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.7-alt1
+- Updated to 4.19.7.
+
 * Fri Oct 25 2024 Mikhail Efremov <sem@altlinux.org> 4.19.6-alt1
 - Updated to 4.19.6.
 

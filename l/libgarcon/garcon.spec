@@ -5,7 +5,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -222,6 +222,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Mon Dec 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Updated to 4.19.3.
+
 * Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - Updated to 4.19.2.
 

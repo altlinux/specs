@@ -3,7 +3,7 @@
 %def_enable gepub
 
 Name: tumbler
-Version: 4.19.2
+Version: 4.19.3
 Release: alt1
 
 Summary: A thumbnail D-Bus service
@@ -97,6 +97,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
+- Updated to 4.19.3.
+
 * Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - Updated to 4.19.2.
 

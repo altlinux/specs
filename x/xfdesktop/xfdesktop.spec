@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.19.6
+Version: 4.19.7
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -69,6 +69,9 @@ Conflicts: libxfce4windowing < 4.19.6
 %_datadir/backgrounds/xfce
 
 %changelog
+* Mon Dec 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.7-alt1
+- Updated to 4.19.7.
+
 * Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.6-alt1
 - Updated to 4.19.6.
 
