@@ -5,14 +5,17 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.4.1
+Version: 3.0.0
 Release: alt1
+
 Summary: Annotate AST trees with source code positions
 Group: Development/Python3
 License: Apache-2.0
 Url: https://pypi.org/project/asttokens
 Vcs: https://github.com/gristlabs/asttokens
+
 BuildArch: noarch
+
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
@@ -54,6 +57,9 @@ refactoring or highlighting.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 02 2024 Anton Zhukharev <ancieg@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0.
+
 * Sat Jan 20 2024 Anton Zhukharev <ancieg@altlinux.org> 2.4.1-alt1
 - Updated to 2.4.1.
 
