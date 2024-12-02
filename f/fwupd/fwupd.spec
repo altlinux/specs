@@ -1,7 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
-%global sover 2
+%global sover 3
+
+%global glib2_version 2.72.0
+%global libxmlb_version 0.3.19
+%global libusb_version  0.1.12
+%global libcurl_version 7.62.0
+%global libjcat_version 0.2.0
+%global systemd_version 249
+%global json_glib_version 1.6.0
 
 # 1.9.3: test suite fails on ppc64le
 %ifarch ppc64le
@@ -26,7 +34,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 1.9.26
+Version: 2.0.2
 Release: alt1
 
 Summary: Firmware update daemon
@@ -45,23 +53,25 @@ BuildRequires: bash-completion
 BuildRequires: cmake
 BuildRequires: git-core
 BuildRequires: gi-docgen
+BuildRequires: glib2-devel >= %glib2_version
 BuildRequires: libappstream-glib-devel
 BuildRequires: libmm-glib-devel
 BuildRequires: libqmi-glib-devel
 BuildRequires: libmbim-glib-devel
+BuildRequires: libjson-glib-devel >= %json_glib_version
 BuildRequires: libprotobuf-c-devel
 BuildRequires: /usr/bin/protoc /usr/bin/protoc-gen-c
 BuildRequires: libarchive-devel
 BuildRequires: libcolord-devel
 BuildRequires: liblzma-devel
 BuildRequires: libcbor-devel
-BuildRequires: libcurl-devel
+BuildRequires: libcurl-devel >= %libcurl_version
 BuildRequires: libelf-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libgpgme-devel
-BuildRequires: libgudev-devel
-BuildRequires: libgusb-gir-devel
-BuildRequires: libjcat-devel >= 0.1.10
+BuildRequires: libusb-devel >= %libusb_version
+BuildRequires: libblkid-devel
+BuildRequires: libjcat-devel >= %libjcat_version
 BuildRequires: libpango-gir-devel
 BuildRequires: libpolkit-devel
 %if_enabled flashrom
@@ -70,12 +80,12 @@ BUildRequires: libflashrom-devel
 BuildRequires: libdrm-devel
 BuildRequires: libsoup-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: libsystemd-devel
+BuildRequires: libsystemd-devel >= %systemd_version
 BuildRequires: libtpm2-tss-devel
 BuildRequires: libudev-devel
 BuildRequires: libumockdev-devel
 BuildRequires: libuuid-devel
-BuildRequires: libxmlb-devel
+BuildRequires: libxmlb-devel >= %libxmlb_version
 BuildRequires: meson
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-pycairo
@@ -118,7 +128,6 @@ fwupd is a daemon to allow session software to update device firmware.
 %package -n libfwupd%sover
 Summary: Libraries for %name
 Group: System/Libraries
-Requires: %name = %EVR
 
 %description -n libfwupd%sover
 Libraries for %name.
@@ -201,7 +210,6 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
     -Dplugin_uefi_capsule=enabled \
     -Dplugin_uefi_pk=enabled \
     -Dplugin_tpm=enabled \
-    -Defi_binary=false \
 %else
     -Dplugin_redfish=enabled \
     -Dplugin_uefi_capsule=disabled \
@@ -247,13 +255,12 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %dir %_libexecdir/fwupd
 %_libexecdir/fwupd/fwupd
 %_bindir/fwupdtool
-%_libexecdir/fwupd/fwupdoffline
 %ifarch x86_64
 %_libexecdir/fwupd/fwupd-detect-cet
 %endif
 %_datadir/bash-completion/completions/*
 %_datadir/fish/vendor_completions.d/fwupdmgr.fish
-%_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
+%_iconsdir/hicolor/*/apps/org.freedesktop.fwupd.*
 %_bindir/dbxtool
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
@@ -279,17 +286,14 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %_datadir/fwupd/add_capsule_header.py
 %_datadir/fwupd/install_dell_bios_exe.py
 %_datadir/fwupd/simple_client.py
-%_unitdir/fwupd-offline-update.service
 %_unitdir/fwupd.service
 %_unitdir/fwupd-refresh.timer
 %_unitdir/fwupd-refresh.service
-%_unitdir/system-update.target.wants/
 %_systemddir/system-shutdown/fwupd.shutdown
 %dir %_localstatedir/fwupd
 %dir %_datadir/fwupd/quirks.d
 %_datadir/fwupd/quirks.d/builtin.quirk.gz
 %_libdir/girepository-1.0/Fwupd-2.0.typelib
-%_udevrulesdir/*.rules
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfwupd*.so
 %if_enabled flashrom
@@ -314,7 +318,7 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 
 %files -n libfwupd-devel
 %_datadir/gir-1.0/Fwupd-2.0.gir
-%_includedir/fwupd-1
+%_includedir/fwupd-3
 %_libdir/libfwupd.so
 %_libdir/pkgconfig/fwupd.pc
 %_datadir/vala/vapi/*
@@ -324,30 +328,21 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 
 %files tests
 %if_enabled tests
+%dir %_datadir/fwupd/host-emulate.d
 %_datadir/fwupd/host-emulate.d/*.json.gz
-%dir %_datadir/installed-tests/fwupd
-%dir %_datadir/installed-tests/fwupd/tests
-%if_enabled uefi
-%_datadir/installed-tests/fwupd/efi
-%endif
-%_datadir/installed-tests/fwupd/tests/*
-%_datadir/installed-tests/fwupd/fwupd-tests.xml
-%_datadir/installed-tests/fwupd/*.test
-%_datadir/installed-tests/fwupd/*.zip
-%_datadir/installed-tests/fwupd/*.cab
-%_datadir/installed-tests/fwupd/fakedevice124.jcat
-%_datadir/installed-tests/fwupd/fakedevice124.bin
-%_datadir/installed-tests/fwupd/fakedevice124.metainfo.xml
-%_datadir/installed-tests/fwupd/*.sh
-%_datadir/installed-tests/fwupd/chassis_type
-%_datadir/installed-tests/fwupd/sys_vendor
-%_datadir/fwupd/device-tests/*.json
+%_datadir/installed-tests/fwupd
 %_libexecdir/installed-tests/fwupd
-%dir %_sysconfdir/fwupd/remotes.d
 %_datadir/fwupd/remotes.d/fwupd-tests.conf
 %endif
 
 %changelog
+* Mon Dec 02 2024 Egor Ignatov <egori@altlinux.org> 2.0.2-alt1
+- 2.0.2
+- New libfwupd ABI version.
+
+* Mon Dec 02 2024 Egor Ignatov <egori@altlinux.org> 1.9.26-alt2
+- Fix libfwupd dependency on fwupd.
+
 * Fri Nov 29 2024 Egor Ignatov <egori@altlinux.org> 1.9.26-alt1
 - 1.9.26
 - Package according to Shared Libs Policy.
