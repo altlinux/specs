@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.9
+Version: 1.6.10
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,22 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 1.6.10-alt1
+- rescue+extra: cleanup
+- firmware: add firmware-linux-qcom for aarch64
+- memtest: add loongarch64 support (need memtest+ >= 7.20)
+- add apt-https everywhere
+- arm-rpi4: cleanup
+- workstation: replace mate with gnome (thanks Semen Fomchenkov)
+- workstation: use live as installer and rescue
+- kernel: set defulat KFLAVOURS=6.6 for p11
+- drop set specified KFLAVOURS (std-def or un-def) everything
+- build-vm: add 90-fsck-initrd for add make-initrd feature fsck
+- install2, live-install: installer-common-stage3 from base dependency
+- tty: fix for case, when /etc/inittab is not existing
+- tar2fs: Always add BOOTPART, when ROOTFSTYPE != ext4
+- kworkstation: add latest commits from zerg@
+
 * Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 1.6.9-alt1
 - replace open-iscsi from base+rescue to rescue+extra package list
 - docs: delete links with absolute PATH 'file:///'
