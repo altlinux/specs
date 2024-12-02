@@ -2,7 +2,7 @@
 
 Name: lrcalc
 Version: 2.1
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 Summary: Littlewood-Richardson Calculator
 Group: Sciences/Mathematics
@@ -10,11 +10,9 @@ Url: https://math.rutgers.edu/~asbuch/lrcalc
 
 Source: %url/%name-%version.tar.gz
 Source1: lrcalc.module.in
-# Requires: environment(modules)
-# sagemath patch
-Patch: includes.patch
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ python3-devel python3-module-pyproject-installer python3-module-wheel python3-module-setuptools python3-module-Cython
+Requires: environment(modules)
 
 %description
 The "Littlewood-Richardson Calculator" is a package of C and Maple programs
@@ -41,14 +39,21 @@ Group: Development/Other
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package -n python3-module-%name
+Summary: Python3 module for %name
+Group: Development/Python3
+
+%description -n python3-module-%name
+The package provides python3 module for %name.
+
 %prep
 %setup
-#%%patch0 -p1
 
 %build
 %configure \
     --enable-shared \
-    --disable-static
+    --disable-static \
+    --bindir=%_libdir/%name
 
 # Kill rpaths
 subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -56,18 +61,31 @@ subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 %make
 
+# Build the python interface
+sed -i "/libraries/i\                  extra_link_args=['-L$PWD/src/.libs']," python/setup.py
+cd python
+ln -s ../src lrcalc
+%pyproject_build
+cd -
+
 %install
 %makeinstall_std
-rm %buildroot%_datadir/%name/README
-rm %buildroot%_datadir/%name/%name.maple
+rm -rf %buildroot%_datadir/%name
+mkdir -p %buildroot%_datadir/modulefiles
+sed 's#@BINDIR@#'%_libdir/%name'#g;' < %SOURCE1 > \
+    %buildroot%_datadir/modulefiles/%name-%_arch
+
+cd python
+%pyproject_install
+cd -
 
 %check
 LD_LIBRARY_PATH=%buildroot%_libdir: make check
 
 %files
 %doc AUTHORS ChangeLog COPYING LICENSE README
-%_bindir/%name
-%_bindir/schubmult
+%_libdir/%name/
+%_datadir/modulefiles/%name-%_arch
 
 %files -n lib%name%soname
 %_libdir/lib%name.so.%{soname}*
@@ -76,7 +94,13 @@ LD_LIBRARY_PATH=%buildroot%_libdir: make check
 %_includedir/%name
 %_libdir/lib%name.so
 
+%files -n python3-module-%name
+%python3_sitelibdir/%{name}*
+
 %changelog
+* Fri Nov 08 2024 Leontiy Volodin <lvol@altlinux.org> 2.1-alt2
+- Built with python3 and environment modules.
+
 * Tue Oct 26 2021 Leontiy Volodin <lvol@altlinux.org> 2.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
