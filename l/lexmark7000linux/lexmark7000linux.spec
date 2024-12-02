@@ -1,6 +1,6 @@
 Name: lexmark7000linux
 Version: 990516
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Configuration/Printing
 
@@ -8,6 +8,7 @@ URL: http://bimbo.fjfi.cvut.cz/~paluch/l7kdriver/olddrv.html
 # site is dead
 # Source: http://bimbo.fjfi.cvut.cz/~paluch/l7kdriver/%name-%version.tar.bz2
 Source: %name-%version.tar
+Patch1: lexmark7000linux-ftbfs-gcc14.patch
 
 Summary: Lexmark 7xxx and 57zzz printer driver for Linux
 %description
@@ -19,6 +20,7 @@ This is the printer driver for Lexmark 7000 "GDI" printers.
 
 %prep
 %setup
+%patch1 -p2
 
 #fix Makefile
 perl -pi -e 's@-o root -g root@@' Makefile
@@ -41,6 +43,9 @@ perl -pi -e 's@-o root -g root@@' Makefile
 %_bindir/pscprint
 
 %changelog
+* Mon Dec 02 2024 Oleg Solovyov <mcpain@altlinux.org> 990516-alt2
+- fix ftbfs with gcc14
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 990516-alt1
 - Initial build for ALT
 
