@@ -35,7 +35,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           dom4j
 Version:        2.0.3
-Release:        alt1_1jpp11
+Release:        alt2
 Epoch:          0
 Summary:        Open Source XML framework for Java
 License:        BSD
@@ -83,6 +83,7 @@ sed -i 's/runtime/compile/' pom.xml
 %pom_add_dep xalan:xalan::test
 %pom_add_dep org.testng:testng:6.8.21:test
 %pom_add_dep xerces:xercesImpl::test
+%pom_add_dep xalan:serializer:2.7.3:test
 
 # Remove support for code which depends on ancient / deprecated classes
 # xpp2 (deprecated and not developed since 2003)
@@ -123,6 +124,9 @@ export LANG=en_US.ISO8859-1
 
 
 %changelog
+* Mon Dec 02 2024 Andrey Cherepanov <cas@altlinux.org> 0:2.0.3-alt2
+- rebuild with xalan-j2-2.7.3
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.3-alt1_1jpp11
 - new version
 
