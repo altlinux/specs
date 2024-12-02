@@ -46,7 +46,7 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt6
+Release: alt7
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -1017,6 +1017,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Sat Nov 30 2024 Anton Farygin <rider@altlinux.ru> 5.12.0-alt7
+- applied upstream commit ca7a8de6 to fix build with gcc 14
+
 * Sat Oct 05 2024 Anton Farygin <rider@altlinux.ru> 5.12.0-alt6
 - disabled unsupported tokyo tyrant
 
