@@ -274,9 +274,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 12
+%global updatever 13
 %global patchver 0
-%global buildver 7
+%global buildver 11
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -459,6 +459,7 @@ Source8: tapsets-icedtea-%{icedteaver}.tar.xz
 Source9: jconsole.desktop.in
 
 # Release notes
+# https://mail.openjdk.org/pipermail/jdk-updates-dev/
 Source10: NEWS
 
 # nss configuration file
@@ -475,6 +476,8 @@ Source14: TestECDSA.java
 
 # Verify system crypto (policy) can be disabled via a property
 Source15: TestSecurityProperties.java
+
+Source16: openjdk17.watch
 
 ############################################
 #
@@ -2013,6 +2016,14 @@ fi
 %endif
 
 %changelog
+* Mon Dec 02 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.13.0.11-alt1
+- New version.
+- Security fixes:
+  - CVE-2024-21208
+  - CVE-2024-21210
+  - CVE-2024-21217
+  - CVE-2024-21235
+
 * Sat Aug 24 2024 Andrey Cherepanov <cas@altlinux.org> 0:17.0.12.0.7-alt1
 - New version.
 - Security fixes:
