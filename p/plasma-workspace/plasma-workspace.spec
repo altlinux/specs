@@ -35,7 +35,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -92,6 +92,7 @@ Patch106: alt-digital-clock-date.patch
 Patch107: alt-freespacenotifier.patch
 Patch108: alt-def-background.patch
 Patch109: alt-def-start-empty-session.patch
+Patch110: alt-check-donat-auth.patch
 #
 Patch114: alt-menu-search-results-add-genericname.patch
 #
@@ -320,6 +321,7 @@ Requires: %name-common >= %EVR
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
+%patch110 -p1
 #
 %patch114 -p1
 #
@@ -514,7 +516,7 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %_K6data/kfontinst/
 %_K6data/konqsidebartng/
 %_K6data/desktop-directories/*
-%_K6data/kxmlgui?/
+%_K6data/kxmlgui?/kfontview/
 %_K6data/solid/actions/*.desktop
 %_K6data/plasma5support/
 %_K6xdgapp/*.desktop
@@ -597,6 +599,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Dec 02 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt3
+- check donation autorized
+
 * Thu Nov 28 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt2
 - build with kexiv2
 
