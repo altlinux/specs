@@ -3,7 +3,7 @@
 
 Name: jansson
 Version: 2.14
-Release: alt2
+Release: alt3
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
@@ -16,7 +16,7 @@ BuildRequires: cmake ctest
 BuildRequires(pre): rpm-macros-cmake
 
 %if_with doc
-BuildRequires: python3-module-sphinx
+BuildRequires: /usr/bin/sphinx-build
 %endif
 
 %description
@@ -96,6 +96,10 @@ It features:
 %endif
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt3
+- dependencies for the building of documentation changed from
+  python3-module-sphinx to /usr/bin/sphinx-build to simplify the backport in stable branches
+
 * Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt2
 - built with cmake
 
