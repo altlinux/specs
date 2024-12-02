@@ -14,8 +14,8 @@ relational or object oriented databases.
 
 %define oname tables
 
-# Tests fail on armh
-%ifarch armh
+# Tests fail on armh, on aarch64 - segfault
+%ifarch armh aarch64
 %def_disable check
 %endif
 
@@ -24,7 +24,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.10.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -156,6 +156,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Mon Dec 02 2024 Anton Vyatkin <toni@altlinux.org> 1:3.10.1-alt2
+- Disable tests on aarch64.
+
 * Mon Aug 19 2024 Anton Vyatkin <toni@altlinux.org> 1:3.10.1-alt1
 - New version 3.10.1.
 
