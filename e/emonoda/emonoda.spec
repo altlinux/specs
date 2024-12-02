@@ -1,6 +1,6 @@
 Name: emonoda
-Version: 2.1.37
-Release: alt2
+Version: 2.1.38
+Release: alt1
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -55,6 +55,9 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.1.38-alt1
+- new version 2.1.38 (with rpmrb script)
+
 * Thu Nov 07 2024 Stanislav Levin <slev@altlinux.org> 2.1.37-alt2
 - Fixed FTBFS (setuptools 75.3.0).
 
