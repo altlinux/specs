@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: A library for deferring decorator actions
@@ -132,6 +132,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Dec 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Build new version.
 
