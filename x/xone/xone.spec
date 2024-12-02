@@ -2,7 +2,7 @@
 
 Name: xone
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: Driver for Xbox One and Xbox Series X|S accessories
 
@@ -13,8 +13,10 @@ Url: https://github.com/medusalix/xone
 Source0: %name-%version.tar
 Source1: %name.sh
 
-Patch0: xone-03-fix-build-on-kernel-6.3.patch
-Patch1: xone-0.3-alt-firmware-install.patch
+Patch0: xone-0.3-alt-firmware-install.patch
+Patch1: xone-03-fix-build-on-kernel-6.3.patch
+Patch2: xone-03-fix-build-on-kernel-6.8.patch
+Patch3: xone-03-fix-build-on-kernel-6.11-6.12.patch
 
 Requires: dkms-%name = %EVR
 # needed for firmware.sh (download and unpack firmware for the wireless dongle):
@@ -45,8 +47,10 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p0
+%patch0 -p0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 find . -type f \( -name dkms.conf -o -name '*.c' \) -exec sed -i "s/#VERSION#/%version/" {} +
 %__subst "s/version=/version=%version/" %SOURCE1
@@ -74,6 +78,9 @@ cp -rv . %buildroot%src_dir
 %src_dir/
 
 %changelog
+* Mon Dec 02 2024 Mikhail Tergoev <fidel@altlinux.org> 0.3-alt4
+- fixed build on kernel 6.11+
+
 * Sat Jun 22 2024 L.A. Kostis <lakostis@altlinux.ru> 0.3-alt3
 - transport: kernel 6.9+ fixes.
 
