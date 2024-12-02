@@ -3,7 +3,7 @@
 
 Name: libnitrokey
 Version: 3.8
-Release: alt1
+Release: alt2
 
 Summary: A library to communicate with Nitrokey devices
 
@@ -51,6 +51,8 @@ This package contains doxygen-generated libnitrokey API HTML documentation.
 %patch -p1
 # upstream forgot to bump the library version
 sed '/project.*libnitrokey.*VERSION/ s/3.7.0/%version.0/' -i CMakeLists.txt
+# support systems without systemd-logind
+sed 's/TAG+="uaccess"/MODE="0660", GROUP+="_cryptodev", TAG+="uaccess"/' -i data/41-nitrokey.rules
 
 %build
 %cmake -DADD_GIT_INFO=off
@@ -60,6 +62,9 @@ sed '/project.*libnitrokey.*VERSION/ s/3.7.0/%version.0/' -i CMakeLists.txt
 
 %install
 %cmakeinstall_std
+
+%pre
+groupadd -r _cryptodev ||:
 
 %files
 %_libdir/%name.so.*
@@ -75,5 +80,8 @@ sed '/project.*libnitrokey.*VERSION/ s/3.7.0/%version.0/' -i CMakeLists.txt
 %doc %_cmake__builddir/doc/html/*
 
 %changelog
+* Mon Dec 02 2024 Andrew Savchenko <bircoph@altlinux.org> 3.8-alt2
+- Support setups without systemd-logind in udev rules.
+
 * Thu Nov 07 2024 Andrew Savchenko <bircoph@altlinux.org> 3.8-alt1
 - Initial version.
