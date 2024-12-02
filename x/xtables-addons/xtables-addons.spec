@@ -1,12 +1,12 @@
 Name: xtables-addons
-Version: 3.25
+Version: 3.27
 Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
 
 URL: https://inai.de/projects/xtables-addons/
+VCS: https://codeberg.org/jengelh/xtables-addons
 License: GPLv2
-VCS: git://git.inai.de/xtables-addons
 Source: %name-%version.tar
 Source1: %name.watch
 
@@ -70,6 +70,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 3.27-alt1
+- 3.25 -> 3.27
+
 * Tue Aug 29 2023 Anton Farygin <rider@altlinux.ru> 3.25-alt1
 - 3.24 -> 3.25
 
