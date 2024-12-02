@@ -1,5 +1,5 @@
 Name: bats
-Version: 1.10.0
+Version: 1.11.1
 Release: alt1
 
 Summary: Testing framework for Bash
@@ -42,6 +42,9 @@ mv -v lib share
 %_prefix/libexec/bats-core/
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1.11.1-alt1
+- new version 1.11.1 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
 - new version 1.10.0 (with rpmrb script)
 
