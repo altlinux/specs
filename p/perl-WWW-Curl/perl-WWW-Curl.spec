@@ -1,7 +1,7 @@
 %define dist WWW-Curl
 Name: perl-%dist
 Version: 4.17
-Release: alt8
+Release: alt9
 
 Summary: Perl extension interface for libcurl 
 License: MPL
@@ -21,6 +21,8 @@ Patch4: WWW-Curl-4.17-Work-around-a-macro-bug-in-curl-7.87.0.patch
 Patch5: WWW-Curl-4.17-alt-no-win32.patch
 # http://www.cpan.org/authors/id/S/SR/SREZIC/patches/WWW-Curl-4.17-PR24-ERRONEOUS1.patch
 Patch6: http://www.cpan.org/authors/id/S/SR/SREZIC/patches/WWW-Curl-4.17-PR24-ERRONEOUS1-alt.patch
+# fix build with gcc 14
+Patch7: WWW-Curl-4.17-gcc14.patch
 
 # Automatically added by buildreq on Wed Nov 16 2011
 BuildRequires: libcurl-devel perl-Test-Pod perl-Test-Pod-Coverage perl(inc/Module/Install.pm)
@@ -37,6 +39,7 @@ The perl module WWW::Curl provides an interface to the cURL library "libcurl".
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 rm -rf inc && sed -i -e '/^inc\//d' MANIFEST
 
@@ -60,6 +63,9 @@ rm t/19multi.t
 %perl_vendor_autolib/WWW
 
 %changelog
+* Tue Dec 03 2024 Anton Farygin <rider@altlinux.ru> 4.17-alt9
+- fixed build with gcc 14
+
 * Fri Mar 31 2023 Igor Vlasenko <viy@altlinux.org> 4.17-alt8
 - support of curl 8 (closes: #41027)
 
