@@ -1,7 +1,16 @@
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "p10"
+error exit
+%endif
+
 %define rname desktop-wallpapers
 
 Name: alt-desktop-wallpapers
-Version: 11.0.0
+Version: 11.0.1
 Release: alt1
 %K5init no_altplace
 
@@ -63,6 +72,9 @@ popd 1>/dev/null
 %_pixmapsdir/*
 
 %changelog
+* Tue Dec 03 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.1-alt1
+- add json metadata (closes: 52305)
+
 * Mon May 06 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt1
 - new version
 
