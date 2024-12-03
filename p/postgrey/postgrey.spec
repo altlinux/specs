@@ -1,10 +1,10 @@
 %define postgrey_user postgrey
 %define postgrey_group postgrey
-%define postgrey_home %_localstatedir/%name
+%define postgrey_home %_spooldir/postfix/postgrey
 
 Name: postgrey
 Version: 1.37
-Release: alt1
+Release: alt2
 
 Summary: Greylisting Policy Server for Postfix and Exim
 License: GPL
@@ -17,39 +17,47 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
 Source3: %{name}_clients_dump
+Source4: %name.service
 Source6: %name.README.ALT
+Patch0: postgrey-alt-whitelist-pathes.patch
 
 BuildPreReq: perl perl-base perl-IO-Multiplex perl-Net-Server perl-BerkeleyDB perl-Net-DNS
 BuildRequires: perl-NetAddr-IP
 BuildRequires: perl-podlators
 Requires: perl-IO-Multiplex
+Requires: perl-Pod-Spell
 
 %description
 Postgrey is a Postfix policy server implementing greylisting.
-When a request for delivery of a mail is received by Postfix 
-via SMTP, the triplet CLIENT_IP / SENDER / RECIPIENT is built. 
-If it is the first time that this triplet is seen, or if the 
-triplet was first seen less than 5 minutes, then the mail gets 
-rejected with a temporary error. Hopefully spammers or viruses 
+When a request for delivery of a mail is received by Postfix
+via SMTP, the triplet CLIENT_IP / SENDER / RECIPIENT is built.
+If it is the first time that this triplet is seen, or if the
+triplet was first seen less than 5 minutes, then the mail gets
+rejected with a temporary error. Hopefully spammers or viruses
 will not try again later, as it is however required per RFC.
 Edit your configuration files:
-/etc/postfix/main.cf:
-  smtpd_recipient_restrictions = ...
-    check_policy_service unix:postgrey/socket, ...
-or if you like to use inet sockets (modify the IP if needed):
+Or if TCP sockets (modify IP / port if needed) is preferred, first change
+POSTGREY_TYPE:
+
 /etc/sysconfig/postgrey:
-  OPTIONS="--inet=127.0.0.1:60000"
+
+  POSTGREY_TYPE="--inet=127.0.0.1:10023"
+
+then modify postfix configuration file:
+
 /etc/postfix/main.cf:
+
   smtpd_recipient_restrictions = ...
-    check_policy_service inet:127.0.0.1:60000, ...
+    check_policy_service inet:127.0.0.1:10023, ...
 
 %prep
 %setup
+%patch0 -p2
 
 %install
 # directories
-install -d -m1711 %buildroot%_localstatedir/%name
-install -d -m1755 %buildroot%_var/run/%name
+install -pd -m1711 %buildroot%postgrey_home
+install -d -m1755 %buildroot/run/%name
 
 # binaries
 install -pD -m0755 %name %buildroot%_sbindir/%name
@@ -59,6 +67,7 @@ install -m0755 %SOURCE3 %buildroot%_sbindir/%{name}_clients_dump
 # initscript and sysconfig-file
 install -pD -m0755 %SOURCE1 %buildroot%_initdir/%name
 install -pD -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 
 # whitelists
 install -pD -m0644 postgrey_whitelist_clients %buildroot%_sysconfdir/%name/whitelist_clients
@@ -86,16 +95,22 @@ install -pD -m0644 postgreyreport.1  %buildroot%_man1dir/postgreyreport.1
 %preun_service %name
 
 %files
+%doc README* Changes
 %_sbindir/*
 %_initdir/%name
+%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config(noreplace) %_sysconfdir/%name/*
-%dir %attr(1771,root,%postgrey_group) %_localstatedir/%name
-%dir %attr(1775,root,%postgrey_group) %_var/run/%name
+%dir %attr(1771,root,%postgrey_group) %postgrey_home
+%dir %attr(1775,root,%postgrey_group) /run/%name
 %_man1dir/*
-%doc README* Changes
 
 %changelog
+* Fri Nov 29 2024 Andrey Cherepanov <cas@altlinux.org> 1.37-alt2
+- Added service file (ALT #29551).
+- Added Perl module requirement (ALT #31037).
+- Update README from Fedora.
+
 * Mon Jan 23 2017 Andrey Cherepanov <cas@altlinux.org> 1.37-alt1
 - New version
 
