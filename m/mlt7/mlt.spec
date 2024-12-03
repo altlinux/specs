@@ -19,7 +19,7 @@
 
 Name: %nam%mlt_major
 Version: 7.28.0
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -34,14 +34,11 @@ Source10: glaxnimate.tar
 Patch102: alt-no-version-script.patch
 Patch103: alt-ix86.patch
 
-# Automatically added by buildreq on Sun Mar 18 2018 (-bi)
-# optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libSDL-devel libX11-devel libavcodec-devel libavformat-devel libavutil-devel libcdio-paranoia libdc1394-22 libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libstdc++-devel libvdpau-devel libx265-130 perl pkg-config python-base python-devel python-modules qt5-base-devel rpm-build-gir swig-data xorg-xproto-devel
-#BuildRequires: frei0r-devel ladspa_sdk libSDL2-devel libSDL2_image-devel libalsa-devel libavdevice-devel libavfilter-devel libexif-devel libfftw3-devel libjack-devel libopencv-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswscale-devel libxml2-devel qt5-svg-devel swig
-#BuildRequires: frei0r-devel ladspa_sdk libSDL_image-devel libalsa-devel libavdevice-devel libavformat-devel libexif-devel libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel libswfdec-devel libswscale-devel libxml2-devel python-module-google python3-dev qt5-svg-devel rpm-build-ruby swig
 BuildRequires(pre): rpm-build-kf5 rpm-build-python3 libavformat-devel
 BuildRequires: qt5-svg-devel
-BuildRequires: qt6-svg-devel
+BuildRequires: qt6-svg-devel qt6-5compat-devel
 BuildRequires: cmake
+BuildRequires: libvulkan-devel
 BuildRequires: frei0r-devel libSDL-devel libSDL2-devel libSDL2_image-devel libalsa-devel libexif-devel
 BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
@@ -163,6 +160,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 7.28.0-alt4
+- fix build requires
+
 * Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 7.28.0-alt3
 - cleanup
 
