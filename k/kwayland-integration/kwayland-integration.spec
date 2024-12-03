@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -10,8 +10,6 @@ Summary: KDE Frameworks 6 Wayland integration plugins
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Provides: plasma5-kwayland-integration = %EVR
-Obsoletes: plasma5-kwayland-integration < %EVR
 Requires: xorg-xwayland qt5-wayland
 
 Source: %rname-%version.tar
@@ -45,6 +43,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 
 
 %changelog
+* Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- relax obsoletes
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
