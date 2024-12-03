@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define libname libsfizz1
+%define refname 1.2.3-10-g93da04262
 
 Name:     sfizz
 Version:  1.2.3
-Release:  alt2
+Release:  alt4.g93da04262
 
 Summary:  SFZ parser and synthesizer
 License:  BSD-2-Clause
@@ -14,22 +15,19 @@ Url:      https://sfz.tools/sfizz/
 ExcludeArch: %arm ppc64le
 
 
-Source: %name-ui-%version.tar
+Source:   %name-ui-%refname.tar
 Source1:  sub-merge.sources.txt
 Source2:  sub-merge.unpack.sh
 
-Patch1: 0001-Fix-a-fallthrough.patch
-Patch2: 0001-Fix-a-used-after-free-bug.patch
-Patch3: 0001-Fixed-a-bug-that-causes-invalid-effect-output.patch
-Patch4: 0001-Fixes-an-issue-that-caused-stuck-notes.patch
-Patch5: 0001-Fix-to-pass-a-Polyphony-test.patch
-Patch6: 0001-Avoid-duplicated-LV2_State_-Map-Free-_Path-features-.patch
+Patch1: sfizz-alt-use-approximate-comparison-in-tests.patch
 
 # import sub-merge sources here
 %(cat %SOURCE1)
 
 BuildRequires: cmake gcc-c++
+BuildRequires: simde-devel
 # BuildRequires: libabseil-cpp-devel
+
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(samplerate)
@@ -170,6 +168,15 @@ cd library/tests && "$binary"
 
 
 %changelog
+* Tue Dec 03 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt4.g93da04262
+- build with system simde
+- add a patch to fix unit tests
+
+* Tue Dec 03 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt3.g93da04262
+- build from a git snapshot
+  + fixes FTBFS with gcc14
+  + several stability improvements
+
 * Sun Mar 24 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt2
 - backport a few bugfixes from develop branches
   + fix issue with stuck nots, esp. after sustain is release
