@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.11.2
+Version: 1.12.0
 Release: alt1
 Summary: Query metadatdata from sdists / bdists / installed packages
 License: MIT
@@ -14,7 +14,6 @@ Url: https://pypi.org/project/pkginfo/
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: pkginfo-1.11.2-tests-make-test_installed_ctor_w_dist_info-compat-with-recent-flit.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -32,7 +31,6 @@ develop).
 
 %prep
 %setup
-%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -55,6 +53,9 @@ mv %buildroot%_bindir/pkginfo{,.py3}
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Tue Dec 03 2024 Stanislav Levin <slev@altlinux.org> 1.12.0-alt1
+- 1.11.2 -> 1.12.0.
+
 * Mon Dec 02 2024 Stanislav Levin <slev@altlinux.org> 1.11.2-alt1
 - 1.10.0 -> 1.11.2.
 
