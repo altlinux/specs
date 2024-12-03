@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: eza
-Version: 0.19.0
+Version: 0.20.10
 Release: alt1
 
-Summary: A modern, maintained replacement for ls
-License: MIT
+Summary: A modern alternative to ls
+License: EUPL-1.2 and MIT and CC-BY-4.0
 Group: System/Base
 Url: https://eza.rocks/
 
@@ -24,7 +24,7 @@ Provides: exa = %EVR
 Obsoletes: exa
 
 %description
-eza is a modern, maintained replacement for the venerable file-listing
+eza   is  a   modern  alternative   for  the   venerable  file-listing
 command-line  program ls  that  ships with  Unix  and Linux  operating
 systems, giving it more features  and better defaults. It uses colours
 to  distinguish file  types  and metadata.  It  knows about  symlinks,
@@ -71,7 +71,7 @@ install -Dm644 target/man/*.5 -t %buildroot%_man5dir
 cargo test --release --offline
 
 %files
-%doc LICENCE README.md
+%doc LICENSE.txt README.md LICENSES/*
 %_bindir/*
 %_man1dir/*
 %_man5dir/*
@@ -80,6 +80,9 @@ cargo test --release --offline
 %_datadir/fish/vendor_completions.d/eza.fish
 
 %changelog
+* Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 0.20.10-alt1
+- 0.20.10
+
 * Mon Aug 19 2024 Egor Ignatov <egori@altlinux.org> 0.19.0-alt1
 - 0.19.0
 
