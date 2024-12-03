@@ -2,7 +2,12 @@
 %define Brand ALT
 %define theme spserver
 %define Theme SP Server
+# NB: it'd be not noarch anymore on a shared girar instance
+%ifarch %e2k
+%define LKNV 11102-01
+%else
 %define LKNV 11100-01
+%endif
 %define altbranch %_priority_distbranch
 %define status %nil
 %define status_en %nil
@@ -19,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt5
+Release: alt5.1
 Epoch: 1
 Url: https://altsp.su
 
@@ -286,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt5.1
+- E2K: 11102-01 (thanks mike@)
+
 * Mon Oct 14 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt5
 - Update system-logo.png
 

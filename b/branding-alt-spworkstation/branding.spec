@@ -2,7 +2,12 @@
 %define Brand ALT
 %define theme spworkstation
 %define Theme SP Workstation
+# NB: it'd be not noarch anymore on a shared girar instance
+%ifarch %e2k
+%define LKNV 11102-01
+%else
 %define LKNV 11100-01
+%endif
 %define altbranch %_priority_distbranch
 %define status %nil
 %define status_en %nil
@@ -24,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 10.2
-Release: alt7
+Release: alt7.1
 Epoch: 1
 Url: https://altsp.su
 
@@ -328,6 +333,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Nov 28 2024 Michael Shigorin <mike@altlinux.org> 1:10.2-alt7.1
+- E2K: 11102-01
+
 * Thu Oct 24 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt7
 - bootsplash: set plymouth theme to bgrt-alt, when upgrade package
   branding-alt-spworkstation-bootsplash < 1:10-alt7
