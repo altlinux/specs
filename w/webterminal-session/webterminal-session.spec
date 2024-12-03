@@ -1,8 +1,8 @@
 
 Name: webterminal-session
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
-%K5init no_altplace
+%K6init no_altplace
 
 Group: Graphical desktop/Other
 Summary: Start WEB-Terminal application
@@ -11,11 +11,11 @@ URL: http://git.altlinux.org/gears/w/webterminal-session.git
 
 BuildArch: noarch
 
-Requires: kde5-runtime plasma5-kwin
+Requires: kde-runtime kwin
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 
 %description
 Start WEB-Terminal application for kiosk mode.
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Tue Dec 03 2024 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt1
+- update requires
+
 * Tue Jan 16 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.1-alt1
 - update startup options
 
