@@ -1,14 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %define rhelp_version 0.3.0
+# plugins 
+%add_verify_elf_skiplist %_libdir/*.so
 
 Name:           dd_rescue
-Version:        1.99.15
+Version:        1.99.17
 Release:        alt1
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
 License:        GPL+
 URL:            https://www.garloff.de/kurt/linux/ddrescue/
+VCS:            https://git.code.sf.net/p/ddrescue/code
 Source:         %name-%version.tar
 # http://www.kalysto.org/pkg/dd_rhelp-%{rhelp_version}.tar.gz
 Source1:        dd_rhelp-%{rhelp_version}.tar
@@ -61,8 +64,12 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/%{name}.*
 %_man1dir/ddr_crypt.1*
 %_man1dir/ddr_lzo.1*
+%_man1dir/ddr_lzma.1*
 
 %changelog
+* Sat Nov 30 2024 Anton Farygin <rider@altlinux.ru> 1.99.17-alt1
+- 1.99.15 -> 1.99.17
+
 * Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 1.99.15-alt1
 - 1.99.13 -> 1.99.15
 
