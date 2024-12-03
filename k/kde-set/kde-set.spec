@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.01.9
+Version: 24.02.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -17,14 +17,23 @@ BuildRequires(pre): rpm-macros-qt6-webengine
 %description
 %summary
 
+%package -n kde5-runtime
+Summary: %summary
+Group: Graphical desktop/KDE
+#Requires: qt5-phonon-backend
+Requires: qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations
+Requires: kf5-kio
+#Requires: kf5-kded kf5-kinit
+Requires: plasma5-breeze plasma5-integration kwayland-integration
+%description -n kde5-runtime
+%summary
+
 %package -n kde-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
-Provides: kde5-runtime = %EVR
-Obsoletes: kde5-runtime < %EVR
-#
 Requires: qt6-phonon-backend qt6-5compat qt6-declarative qt6-svg qt6-imageformats qt6-translations qt6-wayland
 Requires: kf6-kio kf6-kded
+Requires: plasma6-breeze plasma6-integration
 %description -n kde-runtime
 %summary
 
@@ -58,12 +67,10 @@ Requires: icon-theme-breeze
 Requires: kf6-kwallet kf6-kconfig kf6-kimageformats
 Requires: svgpart
 Requires: kf6-baloo
-Requires: polkit-kde-agent kio-extras plasma6-breeze powerdevil plasma-systemmonitor
-Requires: drkonqi milou systemsettings plasma6-integration
+Requires: polkit-kde-agent kio-extras powerdevil plasma-systemmonitor
+Requires: drkonqi milou systemsettings
 Requires: ark konsole gwenview okular kwrite kwalletmanager
 Requires: kcalc
-#
-Requires: plasma5-breeze plasma5-integration
 %description -n kde-small
 %summary
 
@@ -255,6 +262,7 @@ Requires: kaddressbook
 %summary
 
 
+%files -n kde5-runtime
 %files -n kde-runtime
 %files -n kde-mini
 %files -n kde-small
@@ -270,6 +278,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt1
+- return kde5-runtime package for compatibility
+
 * Thu Nov 28 2024 Sergey V Turchin <zerg@altlinux.org> 24.01.9-alt1
 - move ktorrent to kde-big
 
