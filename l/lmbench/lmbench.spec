@@ -2,12 +2,12 @@
 
 Name: lmbench
 Version: 3.0a9
-Release: alt1
+Release: alt2
 Summary: Suite of simple, portable benchmarks
 
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
-Url: http://www.bitmover.com/lmbench
+Url: https://lmbench.sourceforge.net/
 #URL: http://sourceforge.net/projects/lmbench
 
 Source: %name-%version.tar
@@ -17,6 +17,7 @@ Patch0: 0003-config-run-set-OUTPUT-as-dev-null.patch
 Patch1: 0004-Fix-errors-of-fstat-stat-open-in-lat_syscall.patch
 Patch2: 0008-Create-s.ChangeSet.patch
 Patch3: lmbench-3.0a9-alt-add-libtirpc-support.patch
+Patch4: lmbench-3.0a9-alt-fix-gcc14-build.patch
 
 BuildRequires: libtirpc-devel
 
@@ -44,9 +45,10 @@ read latency; Miscellanious Processor clock rate calculation.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p2
 
 %build
-%make_build 
+%make_build
 
 %install
 install -d -m0755 %buildroot%_sbindir
@@ -88,6 +90,9 @@ install -p -m0644 doc/*.8 %buildroot%_man8dir/
 %_sbindir/*
 
 %changelog
+* Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 3.0a9-alt2
+- Fix FTBFS: fix build with gcc14.
+
 * Tue Apr 20 2021 Egor Ignatov <egori@altlinux.org> 3.0a9-alt1
 - Cleanup spec
 - Update .gear/rules
