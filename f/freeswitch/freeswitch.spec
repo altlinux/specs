@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.11
+Version: 1.10.12
 Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
@@ -9,7 +9,7 @@ Summary: FreeSWITCH open source telephony platform
 License: MPL-1.1
 Group: System/Servers
 VCS: https://github.com/signalwire/freeswitch
-Url: http://www.freeswitch.org/
+Url: https://signalwire.com/freeswitch
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -544,6 +544,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 1:1.10.12-alt1
+- 1.10.11 -> 1.10.12
+
 * Tue Jan 16 2024 Anton Farygin <rider@altlinux.ru> 1:1.10.11-alt1
 - 1.10.10 -> 10.10.11
 
