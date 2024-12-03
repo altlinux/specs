@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: igt-gpu-tools
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: IGT gpu tools and tests
@@ -20,6 +20,7 @@ Requires: intel-gen4asm = %EVR
 
 BuildRequires: rpm-build-perl
 BuildRequires: perl-Pod-Usage
+BuildRequires: perl-IO-Zlib
 BuildRequires: python3-dev
 BuildRequires: meson flex
 BuildRequires: libdrm-devel
@@ -111,6 +112,8 @@ sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 %_libdir/*.so
 %_includedir/i915-perf
 %_pkgconfigdir/i915-perf.pc
+%_includedir/xe-oa
+%_pkgconfigdir/xe-oa.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/igt-gpu-tools
@@ -122,6 +125,9 @@ sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 %_pkgconfigdir/intel-gen4asm.pc
 
 %changelog
+* Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 1.29-alt1
+- new version 1.29
+
 * Fri Oct 13 2023 Egor Ignatov <egori@altlinux.org> 1.28-alt1
 - new version 1.28
 - change packaging scheme
