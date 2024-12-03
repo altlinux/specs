@@ -1,20 +1,15 @@
-Name: vorbisgain
-Version: 0.37
-Release: alt1.qa1
+Name:          vorbisgain
+Version:       0.37.2
+Release:       alt0.1
+Summary:       Adds tags to Ogg Vorbis files to adjust the volume
+License:       GPL-2.1
+Group:         Sound
+Url:           https://sjeng.org/vorbisgain.html
+Vcs:           https://github.com/adrianopol/vorbisgain.git
 
-Summary: Adds tags to Ogg Vorbis files to adjust the volume
-License: GPL 2.1
-Group: Sound
-
-Url: http://sjeng.sourceforge.net/vorbisgain.html
-Source: http://sjeng.org/ftp/vorbis/%name-%version.tar.gz
-Patch: vorbisgain-0.37-double-fclose.patch
-Packager: Michael Shigorin <mike@altlinux.org>
-
-# Automatically added by buildreq on Tue Jan 30 2007
+Source:        %name-%version.tar
 BuildRequires: libvorbis-devel
-
-BuildRequires: libvorbis-devel libogg-devel
+BuildRequires: libogg-devel
 
 %description
 VorbisGain is a utility that uses a psychoacoustic method to correct the
@@ -40,7 +35,6 @@ compatible. xmms will support this feature from release 1.2.8.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %configure --enable-recursive
@@ -55,6 +49,10 @@ compatible. xmms will support this feature from release 1.2.8.
 %doc NEWS README vorbisgain.txt
 
 %changelog
+* Fri Nov 22 2024 Pavel Skrylev <majioa@altlinux.org> 0.37.2-alt0.1
+- ! fixed implied function definition for gcc14 compilation
+- ! removed double fclose
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.37-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
