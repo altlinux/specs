@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.54
+%define ver_major 1.55
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
@@ -52,15 +52,15 @@ Obsoletes: %_name < %version
 Obsoletes: gscript
 
 # from meson.build
-%define meson_ver 0.63.0
+%define meson_ver 1.2
 %define glib_ver 2.62
 %define cairo_ver 1.12.10
 %define gi_docgen_ver 2021.3
 %define xft_ver 2.0.0
-%define fontconfig_ver 2.13.0
+%define fontconfig_ver 2.15.0
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 3.2.0
+%define hb_ver 8.4.0
 %define thai_ver 0.1.9
 %define fribidi_ver 1.0.6
 
@@ -222,6 +222,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Wed Nov 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.55.0-alt1
+- 1.55.0
+
 * Mon Jun 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.54.0-alt1
 - 1.54.0
 
