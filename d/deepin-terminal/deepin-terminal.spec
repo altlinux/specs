@@ -2,7 +2,7 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.0.14
+Version: 6.0.16
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -10,9 +10,10 @@ Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
 Group: Terminals
 Url: https://github.com/linuxdeepin/deepin-terminal
+Vcs: git://github.com/linuxdeepin/deepin-terminal.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: deepin-terminal-6.0.9-alt-dtk.patch
 
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
@@ -130,6 +131,10 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Tue Dec 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
+- New version 6.0.16.
+- Added vcs tag.
+
 * Wed Sep 25 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.14-alt1
 - New version 6.0.14.
 
