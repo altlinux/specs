@@ -1,6 +1,6 @@
 Name: ppmtocpva
 Version: 1.0
-Release: alt1.1
+Release: alt2
 
 Summary: Converts PPM files to the format used by the Citizen Printiva series printers
 
@@ -12,6 +12,7 @@ Url: http://www.stevens-bradfield.com/ppmtomd/
 Source: %name-%version.tar
 Patch1: ppmtocpva-1.0-netpbm.patch
 Patch2: ppmtocpva-1.0-LDFLAGS.patch
+Patch3: ppmtocpva-ftbfs-gcc14.patch
 
 BuildRequires: libnetpbm-devel
 %add_optflags -I%_includedir/netpbm
@@ -24,6 +25,7 @@ series printers and some printers of the Alps MD series.
 %setup
 %patch1 -p1
 %patch2 -p0
+%patch3 -p2
 
 # fix attribs
 chmod 644 *
@@ -42,6 +44,9 @@ install -m0755 cpva-colour %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Tue Dec 03 2024 Oleg Solovyov <mcpain@altlinux.org> 1.0-alt2
+- fix ftbfs with gcc14
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1.1
 - NMU: rebuild with libnetpbm.so.11
 
