@@ -4,11 +4,11 @@
 
 Name:    python3-module-%pypi_name
 Version: 3.5.1
-Release: alt1
+Release: alt2
 
 Summary: Top like application for PostgreSQL server activity monitoring
 License: PostgreSQL
-Group:   Development/Python3
+Group:   Monitoring
 URL:     https://github.com/dalibo/pg_activity
 
 BuildRequires(pre): rpm-build-python3
@@ -26,6 +26,8 @@ BuildRequires: python3(psycopg2)
 BuildRequires: python3(typing_extensions)
 BuildRequires: pkgconfig(libpq)
 %endif
+
+Requires: python3-module-psycopg2
 
 BuildArch: noarch
 
@@ -55,5 +57,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 02 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.1-alt2
+- Runtime requirement psycopg2 added.
+- Updated Group.
+
 * Thu Nov 28 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.1-alt1
 - Initial build for Sisyphus.
