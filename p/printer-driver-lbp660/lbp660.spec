@@ -3,11 +3,12 @@
 Summary: Linux Canon LBP-460/660 driver
 Name: printer-driver-%rname
 Version: 0.3.1
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Configuration/Printing
 URL: http://www.boichat.ch/nicolas/lbp660/
 Source: %rname-%version.tar
+Patch1: lbp660-ftbfs-gcc14.patch
 
 ExclusiveArch: %ix86 x86_64
 BuildRequires: cups-devel
@@ -24,6 +25,7 @@ This package contains CUPS drivers (PPD) for the following printers:
 
 %prep
 %setup -n %rname-%version
+%patch1 -p2
 
 %build
 %add_optflags -fgnu89-inline
@@ -45,6 +47,9 @@ install -m0644 ppd/*.ppd %buildroot%_datadir/cups/model/%rname/
 %_datadir/cups/model/%rname/
 
 %changelog
+* Tue Dec 03 2024 Oleg Solovyov <mcpain@altlinux.org> 0.3.1-alt2
+- fix FTBFS with gcc14
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 0.3.1-alt1
 - Ini8tial build for ALT
 
