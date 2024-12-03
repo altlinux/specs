@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: owamp
-Version: 4.3.4
-Release: alt2
+Version: 5.1.4
+Release: alt1
 Summary: A tool for performing one-way or two-way active measurements
 
 License: Apache-2.0
 Group: Networking/Other
 Url: http://e2epi.internet2.edu/owamp/
-# git: https://github.com/perfsonar/owamp
+VCS: https://github.com/perfsonar/owamp
 
 Source: %name-%version.tar
 
@@ -187,6 +187,9 @@ fi
 #%_includedir/owamp/*
 
 %changelog
+* Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 5.1.4-alt1
+- new version 5.1.4
+
 * Thu Apr 22 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt2
 - add %files section to create owamp packagep
 
