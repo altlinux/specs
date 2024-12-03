@@ -3,7 +3,7 @@
 
 Name: pve-guest-common
 Summary: PVE common guest-related modules
-Version: 5.1.4
+Version: 5.1.6
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -18,10 +18,9 @@ Provides: perl-%name = %EVR
 Provides: libpve-guest-common-perl = %EVR
 Conflicts: pve-common < 4.0.89
 Conflicts: pve-container < 3.1.4
-Conflicts: pve-manager < 6.0.10
-# TODO: Conflicts: pve-manager < 8.0.0
+Conflicts: pve-manager < 8.0.0
 Conflicts: qemu-server < 6.1.19
-# TODO: Conflicts: pve-http-server < 5.0.2
+Conflicts: pve-http-server < 5.0.2
 
 Requires: libpve-cluster-perl >= 7.2.3
 Requires: pve-access-control
@@ -49,6 +48,9 @@ This package contains a common code base used by pve-container and qemu-server
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 5.1.6-alt1
+- 5.1.6
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.1.4-alt1
 - 5.1.4
 

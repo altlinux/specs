@@ -2,34 +2,42 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 8.2.5
+Version: 8.2.9
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
+Source: %name-%version.tar
+Patch: %name-%version.patch
 
 ExclusiveArch: x86_64 aarch64
 
 Provides: libpve-storage-perl = %EVR
+Requires: bzip2 lzop zstd
 Requires: gdisk parted hdparm
 Requires: multipath-tools lvm2 thin-provisioning-tools
-Requires: ceph >= 12.2.1 ceph-fuse
+Requires: ceph-common >= 12.2.1 ceph-fuse
 Requires: cifs-utils samba-client
 Requires: cstream
 Requires: glusterfs-client >= 3.4.2
 Requires: zfs-utils
 Requires: nfs-clients nfs-utils
 Requires: /usr/bin/iscsi-ls open-iscsi
-Requires: proxmox-backup-client >= 1.0 proxmox-backup-file-restore
+Requires: proxmox-backup-client >= 2.1.10 proxmox-backup-file-restore
 Requires: smartmontools
+Requires: pve-esxi-import-tools >= 0.6.0
 
-Source: %name-%version.tar
-Patch: %name-%version.patch
+Conflicts: pve-container < 3.1.2
+Conflicts: pve-manager < 5.2.12
+Conflicts: pve-qemu-server < 6.1.14
 
-BuildRequires: librados2-perl pve-common >= 8.2.3 pve-cluster >= 5.0.32 libpve-cluster-perl
+BuildRequires: librados2-perl pve-common >= 8.2.3 pve-cluster >= 5.0.32 libpve-cluster-perl >= 8.0.6
 BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control >= 8.1.2 pve-apiclient xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
 BuildRequires: perl(PVE/DataCenterConfig.pm)
+
+%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MPVE::Storage'; export TZ=UTC
+%set_perl_req_method relaxed
 
 %description
 This package contains the storage management library used by PVE
@@ -53,12 +61,15 @@ __EOF__
 %_sbindir/pvesm
 %_udevrulesdir/*.rules
 %_prefix/libexec/ceph-rbdnamer-pve
-%perl_vendor_privlib/PVE
+%perl_vendor_privlib/PVE/*
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.9-alt1
+- 8.2.9
+
 * Wed Oct 16 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.5-alt1
 - 8.2.5
 

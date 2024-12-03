@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 8.2.3
+Version: 8.3.1
 Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Mon Dec 02 2024 Alexey Shabalin <shaba@altlinux.org> 8.3.1-alt1
+- 8.3.1
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.3-alt1
 - 8.2.3
 

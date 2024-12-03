@@ -3,7 +3,7 @@
 
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 4.0.5
+Version: 4.0.6
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -17,8 +17,7 @@ ExclusiveArch: x86_64 aarch64
 Conflicts: watchdog
 
 Requires: libpve-cluster-perl libpve-notify-perl
-Requires: pve-container pve-cluster >= 3.0.17 pve-qemu-server >= 6.0.15
-# TODO: pve-container >= 5.0.1 pve-qemu-server >= 8.0.2
+Requires: pve-container >= 5.0.1 pve-cluster >= 3.0.17 pve-qemu-server >= 8.0.2
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-doc-generator
 BuildRequires: pve-cluster >= 3.0.17
@@ -75,6 +74,9 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 4.0.6-alt1
+- 4.0.6
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.0.5-alt1
 - 4.0.5
 

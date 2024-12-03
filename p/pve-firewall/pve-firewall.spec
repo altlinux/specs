@@ -2,7 +2,7 @@
 
 Name: pve-firewall
 Summary: Proxmox VE Firewall
-Version: 5.0.7
+Version: 5.1.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -18,7 +18,7 @@ ExclusiveArch: x86_64 aarch64
 Requires: ebtables ipset iptables iptables-ipv6 iproute2 
 
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator
+BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator pve-network
 BuildRequires: pkgconfig(libnetfilter_log) pkgconfig(libnetfilter_conntrack) pkgconfig(glib-2.0)
 BuildRequires: perl(IO/Zlib.pm)
 
@@ -28,7 +28,6 @@ This package contains the Proxmox VE Firewall.
 
 %prep
 %setup
-sed -i 's!)/lib/sysctl.d!)/usr/lib/sysctl.d!' src/Makefile
 
 %build
 %make_build -C src
@@ -62,7 +61,7 @@ __EOF__
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
 %_logrotatedir/%name
-%config(noreplace) %_sysctldir/%name.conf
+%_sysctldir/%name.conf
 %_modulesloaddir/pve-firewall.conf
 %_unitdir/*
 %_sbindir/*
@@ -74,6 +73,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 5.1.0-alt1
+- 5.1.0
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.0.7-alt1
 - 5.0.7
 

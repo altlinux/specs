@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 8.2.4
+Version: 8.2.8
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -18,10 +18,11 @@ ExclusiveArch: x86_64 aarch64
 Provides: qemu-server = %EVR
 Obsoletes: qemu-server < %EVR
 
-Requires: socat genisoimage pve-qemu-system >= 7.1 swtpm swtpm-tools
+Requires: socat genisoimage pve-qemu-system >= 7.1 swtpm swtpm-tools proxmox-websocket-tunnel
+Conflicts: pve-ha-manager < 4.0.1 pve-manager < 6.0.13
 BuildRequires: glib2-devel libjson-c-devel
-BuildRequires: pve-common >= 8.0.2 pve-guest-common >= 5.0.3 pve-firewall pve-ha-manager
-BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 6.1.7 pve-qemu-system >= 7.1
+BuildRequires: pve-common >= 8.0.2 pve-guest-common >= 5.1.0 pve-firewall pve-ha-manager
+BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 8.2.8 pve-qemu-system >= 7.1
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
 
@@ -31,10 +32,12 @@ This package contains the Qemu Server tools used by Proxmox VE.
 
 %prep
 %setup
-sed -i 's!SERVICEDIR=/lib/systemd/system!SERVICEDIR=/usr/lib/systemd/system!' qmeventd/Makefile
+sed -i 's!SERVICEDIR=/lib/systemd/system!SERVICEDIR=%_unitdir!' qmeventd/Makefile
+sed -i 's!SERVICEDIR=/lib/systemd/system!SERVICEDIR=%_unitdir!' query-machine-capabilities/Makefile
 
 %build
 %make_build qmeventd -C qmeventd
+%make_build query-machine-capabilities -C query-machine-capabilities
 
 %install
 %makeinstall_std
@@ -53,6 +56,8 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %config(noreplace) %_sysconfdir/modules-load.d/qemu-server.conf
 %_unitdir/qmeventd.service
 %_unitdir/qmeventd.socket
+%_unitdir/pve-query-machine-capabilities.service
+%_prefix/libexec/qemu-server
 %_prefix/lib/qemu-server
 %_sbindir/*
 %_datadir/bash-completion/completions/*
@@ -70,6 +75,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.8-alt1
+- 8.2.8
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 8.2.4-alt1
 - 8.2.4
 

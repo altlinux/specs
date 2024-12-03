@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.3.4
-Release: alt2
+Release: alt3
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -40,7 +40,7 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.8.10
+Version: 0.9.1
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
@@ -95,14 +95,16 @@ popd
 %install
 pushd pve-rs
 install -pD -m0644 target/release/libpve_rs.so %buildroot%perl_vendor_autolib/libpve_rs.so
-mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/APT,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
+mkdir -p %buildroot%perl_vendor_privlib/{PVE/RS/ResourceScheduling,PVE/RS/APT,PVE/RS/Firewall,Proxmox/Lib,Proxmox/RS,Proxmox/RS/APT}
 install -m0644 PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
-install -m0644 PVE/RS/ResourceScheduling/*.pm %buildroot%perl_vendor_privlib/PVE/RS/ResourceScheduling/
 install -m0644 PVE/RS/APT/*.pm %buildroot%perl_vendor_privlib/PVE/RS/APT/
+install -m0644 PVE/RS/Firewall/*.pm %buildroot%perl_vendor_privlib/PVE/RS/Firewall/
+install -m0644 PVE/RS/ResourceScheduling/*.pm %buildroot%perl_vendor_privlib/PVE/RS/ResourceScheduling/
 install -m0644 common/pkg/PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
 install -m0644 Proxmox/RS/*.pm %buildroot%perl_vendor_privlib/Proxmox/RS/
 install -m0644 Proxmox/RS/APT/*.pm %buildroot%perl_vendor_privlib/Proxmox/RS/APT
 install -m0644 common/pkg/Proxmox/Lib/Common.pm Proxmox/Lib/PVE.pm %buildroot%perl_vendor_privlib/Proxmox/Lib/
+install -m0644 common/pkg/Proxmox/Lib/SslProbe.pm Proxmox/Lib/PVE.pm %buildroot%perl_vendor_privlib/Proxmox/Lib/
 
 %check
 pushd pve-rs
@@ -113,9 +115,11 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 %dir %perl_vendor_privlib/PVE/RS
 %dir %perl_vendor_privlib/PVE/RS/ResourceScheduling
 %dir %perl_vendor_privlib/PVE/RS/APT
+%dir %perl_vendor_privlib/PVE/RS/Firewall
 %perl_vendor_privlib/PVE/RS/*.pm
 %perl_vendor_privlib/PVE/RS/ResourceScheduling/*.pm
 %perl_vendor_privlib/PVE/RS/APT/*.pm
+%perl_vendor_privlib/PVE/RS/Firewall/*.pm
 
 %files -n libproxmox-rs-perl
 %dir %perl_vendor_privlib/Proxmox/RS
@@ -127,6 +131,9 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Tue Dec 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.3.4-alt3
+- Update libpve-rs-perl 0.9.1.
+
 * Thu Nov 14 2024 Alexey Shabalin <shaba@altlinux.org> 0.3.4-alt2
 - Build with ALT apt-rpm support.
 

@@ -3,7 +3,7 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 5.2.0
+Version: 5.2.2
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -15,9 +15,10 @@ ExclusiveArch: x86_64 aarch64
 
 Requires(pre,postun): shadow-submap
 Requires: pve-lxc pve-lxc-syscalld pve-ha-manager >= 3.0.9 pve-access-control >= 8.0.0
+Requires: proxmox-backup-client >= 3.2.3.1
 Requires: dtach xz file binutils
 
-BuildRequires: pve-common >= 8.1.0 pve-guest-common >= 5.0.3 pve-qemu-server pve-storage >= 7.2.10
+BuildRequires: pve-common >= 8.1.0 pve-guest-common >= 5.1.0 pve-qemu-server pve-storage >= 7.2.10
 BuildRequires: pve-firewall pve-cluster >= 4.0.8 libpve-cluster-perl pve-doc-generator xmlto pve-lxc >= 4.0.9
 BuildRequires: pve-manager pve-ha-manager
 BuildRequires: perl(Crypt/Eksblowfish/Bcrypt.pm) perl(UUID.pm)
@@ -56,6 +57,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 5.2.2-alt1
+- 5.2.2
+
 * Tue Sep 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.2.0-alt1
 - 5.2.0
 
