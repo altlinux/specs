@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zuluCrypt
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 
 Summary: Qt GUI front-end to cryptsetup
 License: GPL-2.0-or-later
 Group: File tools
-URL: https://mhogomchungu.github.io/zuluCrypt/
-VCS: https://github.com/mhogomchungu/zuluCrypt
+Url: https://mhogomchungu.github.io/zuluCrypt/
+Vcs: https://github.com/mhogomchungu/zuluCrypt.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt-cmake-libdir-fix.patch
@@ -35,11 +35,11 @@ BuildRequires: libargon2-devel
 BuildRequires: libmount-devel
 
 %description
-zuluCrypt is a front end to cryptsetup. It makes it easier to use cryptsetup by
-providing a Qt-based GUI and a simpler to use CLI front end to cryptsetup. It
-does the same thing truecrypt does but without licensing problems or requiring a
-user to setup sudo for it or presenting root's password. This package contains
-the applications.
+zuluCrypt is a front end to cryptsetup. It makes it easier to use cryptsetup
+by providing a Qt-based GUI and a simpler to use CLI frontend to cryptsetup.
+It does the same thing truecrypt does but without licensing problems or
+requiring a user to setup sudo for it or presenting root's password.
+This package contains the applications.
 
 %package devel
 Summary: Development library package
@@ -119,5 +119,8 @@ rm -fv %buildroot%_iconsdir/*.png
 %_libdir/pkgconfig/libzuluCrypt.pc
 
 %changelog
+* Tue Dec 03 2024 Anton Kurachenko <srebrov@altlinux.org> 7.1.0-alt1
+- New version 7.1.0.
+
 * Mon Nov 11 2024 Anton Kurachenko <srebrov@altlinux.org> 7.0.0-alt1
 - Initial build for Sisyphus.
