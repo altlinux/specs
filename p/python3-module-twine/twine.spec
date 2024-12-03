@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.1
+Version: 6.0.1
 Release: alt1
 Summary: Collection of utilities for publishing packages on PyPI
 License: Apache-2.0
@@ -16,11 +16,11 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
+%pyproject_runtimedeps_metadata_extra keyring
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
+%pyproject_builddeps_metadata_extra keyring
 %pyproject_builddeps_check
 %endif
 
@@ -58,6 +58,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 02 2024 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 5.1.1 -> 6.0.1.
+
 * Thu Jun 27 2024 Stanislav Levin <slev@altlinux.org> 5.1.1-alt1
 - 5.1.0 -> 5.1.1.
 
