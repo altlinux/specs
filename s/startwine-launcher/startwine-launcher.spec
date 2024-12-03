@@ -6,7 +6,7 @@ AutoProv: no
 
 Name: startwine-launcher
 Version: 4.0.8
-Release: alt1
+Release: alt2
 
 Summary: Installer StartWine-Launcher for Windows games
 
@@ -20,6 +20,8 @@ Requires: zenity sysctl-conf-userns yad wget fuse curl
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64
+
+Provides: startwine = %EVR
 
 %description
 %summary
@@ -54,6 +56,9 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Tue Dec 03 2024 Aleksandr Shamaraev <shad@altlinux.org> 4.0.8-alt2
+- Added provides: startwine.
+
 * Sat Nov 30 2024 Aleksandr Shamaraev <shad@altlinux.org> 4.0.8-alt1
 - Update to version 4.0.8
 
