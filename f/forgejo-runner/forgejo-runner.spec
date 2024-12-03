@@ -1,7 +1,7 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: forgejo-runner
-Version: 5.0.0
+Version: 5.0.3
 Release: alt1
 
 Summary: Forgejo Runner
@@ -76,6 +76,9 @@ useradd -r -g _%name -s /dev/null -c "%name services" -M -d %_sharedstatedir/%na
 %_unitdir/%name.service
 
 %changelog
+* Tue Dec 03 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
+- 5.0.3
+
 * Mon Nov 18 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
 - 5.0.0
 
