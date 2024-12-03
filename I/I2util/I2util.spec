@@ -1,17 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: I2util
-Version: 4.3.4
-Release: alt2
+Version: 5.1.4
+Release: alt1
 Summary: I2 Utility Library & Tools
 
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause
 Group: Networking/Other
-URL: http://software.internet2.edu
-# git: https://github.com/perfsonar/i2util
+URL: https://software.internet2.edu
+VCS: https://github.com/perfsonar/i2util
 
 Source0: %name-%version.tar
-Source1: copyright
 
 %package tools
 Summary: I2 Utility Tools
@@ -52,7 +51,6 @@ static %name library.
 
 %prep
 %setup -q
-cp %SOURCE1 ./
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -64,23 +62,19 @@ cp %SOURCE1 ./
 %makeinstall
 
 %files tools
-# LICENSE has disappeared:
-#%doc Changes LICENSE README
-# instead, we put the Debian copyright file:
-%doc copyright
-# The other files are mostly like in Debian:
-%doc README
-%{_bindir}/*
-%{_mandir}/man1/*
+%doc README.md LICENSE
+%_bindir/*
+%_man1dir/*
 
 %files -n lib%name-devel
-%doc copyright
-# The other files are mostly like in Debian:
-%doc README
-%{_libdir}/lib%name.a
-%{_includedir}/*
+%doc README.md LICENSE
+%_libdir/lib%name.a
+%_includedir/*
 
 %changelog
+* Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 5.1.4-alt1
+- new version 5.1.4
+
 * Mon Oct 04 2021 Egor Ignatov <egori@altlinux.org> 4.3.4-alt2
 - fix build with LTO
 
