@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stow
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: Manage installation of multiple softwares in the same directory tree
@@ -70,6 +70,9 @@ rm %buildroot%_defaultdocdir/stow/*.md
 %_defaultdocdir/stow
 
 %changelog
+* Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 2.4.1-alt1
+- 2.4.1
+
 * Mon Apr 08 2024 Egor Ignatov <egori@altlinux.org> 2.4.0-alt1
 - 2.4.0
 
