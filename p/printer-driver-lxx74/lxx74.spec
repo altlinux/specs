@@ -3,12 +3,13 @@
 Summary: A Linux Printer Driver for Lexmark X74 All In One
 Name: printer-driver-lxx74
 Version: 0.8.4.2
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Configuration/Printing
 Url: http://home.online.no/~enrio/
 # site is dead
 Source: %rname-%version.tar.gz
+Patch1: lxx74-ftbfs-gcc14.patch
 
 BuildRequires: libcups-devel zlib-devel
 Requires: cups
@@ -51,6 +52,7 @@ This package contains CUPS drivers (PPD) for the following printers:
 
 %prep
 %setup -n %rname-%version
+%patch1 -p2
 
 %build
 %make
@@ -150,6 +152,9 @@ install -m0644 *.ppd* %buildroot%_datadir/cups/model/%rname/
 %_datadir/cups/model/%rname/Samsung-MJC-950-%rname.ppd*
 
 %changelog
+* Tue Dec 03 2024 Oleg Solovyov <mcpain@altlinux.org> 0.8.4.2-alt2
+- fix ftbfs for gcc14
+
 * Tue May 29 2018 Oleg Solovyov <mcpain@altlinux.org> 0.8.4.2-alt1
 - Initial build for ALT
 
