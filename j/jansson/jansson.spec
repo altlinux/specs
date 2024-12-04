@@ -3,7 +3,7 @@
 
 Name: jansson
 Version: 2.14
-Release: alt3
+Release: alt4
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
@@ -96,6 +96,9 @@ It features:
 %endif
 
 %changelog
+* Wed Dec 04 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt4
+- fixed libdir location in pkgconfig file
+
 * Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt3
 - dependencies for the building of documentation changed from
   python3-module-sphinx to /usr/bin/sphinx-build to simplify the backport in stable branches
