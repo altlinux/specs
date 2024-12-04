@@ -1,12 +1,15 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 6.2
+%define ver_major 6.4
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
@@ -14,7 +17,6 @@ License: GPLv2+ and LGPLv2+ and MIT
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-desktop
 
-# Source-url: https://github.com/linuxmint/cinnamon-desktop/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -25,7 +27,6 @@ Requires: hwdatabase >= 0.3.31-alt1
 
 BuildPreReq: rpm-build-gnome
 
-# From configure.in
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libgtk+3-devel >= 3.3.6
 BuildPreReq: glib2-devel >= 2.35.0
@@ -42,6 +43,7 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: libsystemd-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 BuildRequires: libaccountsservice-devel
+BuildRequires: libudev-devel
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -155,6 +157,10 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 6.4.1-alt1
+- 6.4.1
+- build from git tag
+
 * Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 

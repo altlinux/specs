@@ -1,4 +1,7 @@
-%define ver_major 6.2
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 6.4
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -15,7 +18,6 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-settings-daemon
 
-# Source-url: https://github.com/linuxmint/cinnamon-settings-daemon/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -120,6 +122,10 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+- build from git tag
+
 * Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 - spec: convert License to SPDX format

@@ -1,12 +1,15 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define api_ver 3.0
-%define ver_major 6.2
+%define ver_major 6.4
 
 %def_enable exempi
 %def_enable introspection
 %def_enable selinux
 
 Name: nemo
-Version: %ver_major.7
+Version: %ver_major.1
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -14,7 +17,6 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/nemo
 
-# Source-url: https://github.com/linuxmint/nemo/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
@@ -187,6 +189,10 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.1-alt1
+- 6.4.1
+- build from git tag
+
 * Tue Aug 06 2024 Anton Midyukov <antohami@altlinux.org> 6.2.7-alt1
 - 6.2.7
 

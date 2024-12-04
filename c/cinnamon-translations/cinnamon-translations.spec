@@ -1,7 +1,10 @@
-%define ver_major 6.2
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 6.4
 
 Name: cinnamon-translations
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Translations for Cinnamon
@@ -10,8 +13,8 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-translations
 BuildArch: noarch
 
-# Source-url: https://github.com/linuxmint/cinnamon-translations/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Conflicts: cinnamon < 1.9.1
 
@@ -68,9 +71,10 @@ Translations for cinnamon-settings-daemon
 
 %prep
 %setup -q -n %name-%version
+%patch -p1
 
 %build
-make
+%make_build
 
 %install
 install -m 0755 -d %{buildroot}%{_datadir}/locale
@@ -100,6 +104,10 @@ cp -Rp usr/share/locale/* %{buildroot}%{_datadir}/locale
 %files -n cinnamon-settings-daemon-translations -f cinnamon-settings-daemon.lang
 
 %changelog
+* Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+- build from git tag
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 6.2.1-alt1
 - 6.2.1
 

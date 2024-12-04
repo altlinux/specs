@@ -1,4 +1,7 @@
-%define ver_major 6.2
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define ver_major 6.4
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
@@ -14,7 +17,6 @@ Provides: screen-saver-engine
 Provides: screen-saver-frontend
 Provides: cinnamon-screensaver-module
 
-# Source-url: https://github.com/linuxmint/cinnamon-screensaver/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.pam
 Patch: %name-%version-%release.patch
@@ -33,61 +35,34 @@ BuildRequires: libXrandr-devel
 Requires: %name-translations
 Requires: typelib(CDesktopEnums)
 
+Obsoletes: libcinnamon-screensaver <= %EVR
+Obsoletes: libcinnamon-screensaver-gir <= %EVR
+Obsoletes: libcinnamon-screensaver-devel <= %EVR
+Obsoletes: libcinnamon-screensaver-gir-devel <= %EVR
+
 %add_python3_self_prov_path %buildroot%_datadir/%name
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
 simple, sane, secure defaults and be well integrated with the Cinnamon desktop.
 
-%package -n lib%name
-Summary: Shared libraries needed to run %name
-Group: System/Libraries
-
-%description -n lib%name
-This package contains shared libraries needed to run %name and its
-components.
-
-%package -n lib%name-devel
-Summary: Libraries and include files for developing %name components
-Group: Development/GNOME and GTK+
-Requires: lib%name = %version-%release
-
-%description -n lib%name-devel
-This package provides the necessary development libraries and include
-files to allow you to develop %name components.
-
-%package -n lib%name-gir
-Summary: GObject introspection data for the %name library
-Group: System/Libraries
-Requires: lib%name = %version-%release
-Requires: libxapps-gir
-
-%description -n lib%name-gir
-GObject introspection data for the %name library
-
-%package -n lib%name-gir-devel
-Summary: GObject introspection devel data for the %name library
-Group: System/Libraries
-BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-
-%description -n lib%name-gir-devel
-GObject introspection devel data for the %name library
-
 %prep
 %setup -q
-%patch0 -p1
+%patch -p1
 
 %build
 export CFLAGS=-DUSE_SETRES
-%meson
+%meson --libexecdir=%_lib
 %meson_build
 
 %install
 %meson_install
 
-rm -f %buildroot/%_sysconfdir/pam.d/%name
-install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
+rm -f %buildroot/%_sysconfdir/pam.d/cinnamon-screensaver
+install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/cinnamon-screensaver
+
+# Remove development library
+rm -r %buildroot%_datadir/gir-1.0/*.gir
 
 %filter_from_requires /python3[(]dbusdepot[)]/d
 %filter_from_requires /python3[(]util[)]/d
@@ -95,35 +70,29 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %filter_from_requires /python3[(]pamhelper[)]/d
 %filter_from_requires /python3[(]pamhelper[)]/d
 %filter_from_requires /python3[(]gi.repository.CDesktopEnums[)]/d
+%filter_from_requires /python3[(]gi.repository.CDesktopEnums[)]/d
+%filter_from_requires /typelib[(]CScreensaver[)]/d
 
 %files
-%_bindir/%name
+%_bindir/cinnamon-screensaver
 %_bindir/cinnamon-unlock-desktop
-%attr(2711,root,chkpwd) %_libexecdir/%name-pam-helper
-%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
-%_libexecdir/cs-backup-locker
-%_bindir/%name-command
-%_datadir/%name
-%_datadir/dbus-1/services/*.service
-%_datadir/applications/*.desktop
+%_libdir/cinnamon-screensaver/
+%attr(2711,root,chkpwd) %_libdir/cinnamon-screensaver/cinnamon-screensaver-pam-helper
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/cinnamon-screensaver
+%_bindir/cinnamon-screensaver-command
+%_datadir/cinnamon-screensaver/
+%_datadir/dbus-1/services/org.cinnamon.ScreenSaver.service
+%_datadir/applications/org.cinnamon.ScreenSaver.desktop
 %_datadir/icons/hicolor/scalable/*/*.svg
 %_datadir/icons/hicolor/scalable/*/*.svg
 %doc AUTHORS NEWS README.md
 
-%files -n lib%name
-%_libdir/libcscreensaver.so.*
-
-%files -n lib%name-devel
-%_libdir/*.so
-%_pkgconfigdir/*
-
-%files -n lib%name-gir
-%_libdir/girepository-1.0/*
-
-%files -n lib%name-gir-devel
-%_datadir/gir-1.0/*
-
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+- build from git tag
+- Remove and obsoletes subpackages
+
 * Fri Jun 14 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 - spec: convert License to SPDX format

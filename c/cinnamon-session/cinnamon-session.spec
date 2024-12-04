@@ -1,13 +1,13 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 6.2
+%define ver_major 6.4
 %define _libexecdirname libexec
 %define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -15,7 +15,6 @@ Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/cinnamon-session
 
-# Source-url: https://github.com/linuxmint/cinnamon-session/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source1: %{_name}.session
 Source2: %{_name}2d.session
@@ -87,7 +86,7 @@ Wayland session for Cinnamon.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -p1
 
 %build
 %meson --libexecdir=%_libexecdirname
@@ -140,6 +139,9 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+
 * Sat Jul 20 2024 Anton Midyukov <antohami@altlinux.org> 6.2.1-alt1
 - 6.2.1
 

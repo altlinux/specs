@@ -1,17 +1,19 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define translations_name xapp
 
 %define libxappsdir /usr/lib/xapps
 
 Name: xapps
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 
 Summary: Libraries and common resources for XApps
-License: %gpl3only
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xapps
 
-# Source-url: https://github.com/linuxmint/xapp/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -137,7 +139,7 @@ BuildArch: noarch
 XAppStatusIcon applet for mate panel
 
 %prep
-%setup -q -n %name-%version
+%setup
 %patch -p1
 
 %build
@@ -213,6 +215,10 @@ mv %buildroot%_x11sysconfdir/xinit/xinitrc.d/80xapp-gtk3-module.sh %buildroot%_x
 %_datadir/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 2.8.5-alt1
+- 2.8.5
+- build from git tag
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 2.8.4-alt1
 - 2.8.4
 

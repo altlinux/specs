@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.2.8
-Release: alt2
+Version: 6.4.0
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPL-2.0-or-later
@@ -10,7 +13,6 @@ Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/cinnamon
 
-# Source-url: https://github.com/linuxmint/cinnamon/archive/refs/tags/%version.tar.gz
 Source0: %name-%version.tar
 Source1: polkit-%name-authentication-agent-1.desktop
 
@@ -66,6 +68,10 @@ BuildRequires: libcinnamon-menus-gir-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: libpolkit-gir-devel
+BuildRequires: pkgconfig(gcr-base-3)
+BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: %_bindir/pysassc
+BuildRequires: gcr-libs-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -98,6 +104,7 @@ Requires: gvfs gvfs-backends gvfs-utils
 # Char map - required by cinnamon keyboard applet
 Requires: gucharmap
 Requires: xdg-desktop-portal-xapp
+Requires: typelib(Gcr) = 3
 
 Provides: python3(cme)
 Provides: python3(Spices)
@@ -206,6 +213,10 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+- build from git tag
+
 * Wed Nov 20 2024 Anton Midyukov <antohami@altlinux.org> 6.2.8-alt2
 - Remove unnecessary dependency on libsoup from BuildRequires and Requires
 

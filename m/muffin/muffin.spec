@@ -1,10 +1,13 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %set_verify_elf_method unresolved=relaxed
 
 %define api_ver 0
 %define sover 0
 
 Name: muffin
-Version: 6.2.0
+Version: 6.4.0
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -13,7 +16,6 @@ Group: Graphical desktop/GNOME
 
 Url: https://github.com/linuxmint/muffin
 
-# Source-url: https://github.com/linuxmint/muffin/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -191,6 +193,10 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+- build from git tag
+
 * Sat Jun 15 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 

@@ -1,17 +1,21 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define oname xapp
 
 Name: python3-module-%oname
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Python Xapp Library
 
-License: LGPLv2
+License: LGPL-2.0
 Group: Development/Python
 Url: https://github.com/linuxmint/python-xapp
 
-# Source-url: https://github.com/linuxmint/python3-xapp/archive/refs/tags/%version.tar.gz
-Source: python-%oname-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-python3
@@ -22,7 +26,8 @@ BuildRequires: meson
 %summary.
 
 %prep
-%setup -n python-%oname-%version
+%setup
+%patch -p1
 
 %build
 %meson
@@ -35,6 +40,9 @@ BuildRequires: meson
 %python3_sitelibdir/%oname/
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 2.4.2-alt2
+- build from git tag
+
 * Sat Jun 08 2024 Anton Midyukov <antohami@altlinux.org> 2.4.2-alt1
 - New version
 

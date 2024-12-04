@@ -1,8 +1,11 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.0
+%define ver_major 1.1
 
 Name: xdg-desktop-portal-xapp
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: Xapp Desktop Portal
@@ -10,8 +13,8 @@ License: LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/xdg-desktop-portal-xapp/
 
-# Source-url: https://github.com/linuxmint/xdg-desktop-portal-xapp/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %define xdg_desktop_portal_ver 1.15.0
 
@@ -30,6 +33,7 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 
 %prep
 %setup -n %name-%version
+%patch -p1
 
 %build
 %meson
@@ -44,11 +48,16 @@ and various pieces of Cinnamon/MATE/Xfce4 infrastructure.
 %_desktopdir/%name.desktop
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.desktop.xapp.service
 %_datadir/xdg-desktop-portal/portals/xapp.portal
+%_datadir/xdg-desktop-portal/portals/xapp-gnome-keyring.portal
 %_userunitdir/%name.service
 %doc README*
 
 
 %changelog
+* Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+- build from git tag
+
 * Tue Aug 06 2024 Anton Midyukov <antohami@altlinux.org> 1.0.9-alt1
 - new version (1.0.9) with rpmgs script
 

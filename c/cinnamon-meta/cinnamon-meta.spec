@@ -1,4 +1,4 @@
-%define ver_major 6.2
+%define ver_major 6.4
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -96,6 +96,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- bump version
+
 * Sun Jun 16 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - bump version
 
