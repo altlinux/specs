@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin to display test execution output like a SPECIFICATION
 
@@ -18,12 +18,13 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-six
+BuildRequires: python3-module-pytest-describe
 %endif
 
 %py3_provides pytest_spec
@@ -58,6 +59,9 @@ Available features:
 %python3_sitelibdir/pytest_spec-%version.dist-info
 
 %changelog
+* Wed Dec 04 2024 Anton Vyatkin <toni@altlinux.org> 4.0.0-alt2
+- Fixed FTBFS.
+
 * Tue Aug 06 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 
