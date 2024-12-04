@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gtranslator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A GNOME po file editor with many bells and whistles.
@@ -79,11 +79,14 @@ GNU gettext/GNOME desktop world.
 
 
 %changelog
+* Wed Dec 04 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1.1
-rebuilt against libspelling-0.4.0
+- rebuilt against libspelling-0.4.0
 
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1%beta
 - 46.1
