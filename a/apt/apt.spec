@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt88
+Release: alt89
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -139,7 +139,6 @@ Summary: Test suite for APT
 Summary(ru_RU.UTF-8): Набор тестов для APT
 Group: Other
 BuildArch: noarch
-Requires: %name = %EVR
 Requires: rpm-build
 Requires: /usr/bin/genbasedir
 # optional
@@ -251,9 +250,6 @@ sed -i 's,/usr/share/common-licenses/GPL,/usr/share/license/GPL,' COPYING
 # Unhide potential cc/c++ errors.
 sed -i 's, > /dev/null 2>&1,,' buildlib/tools.m4
 
-# Add trivial arch translation.
-printf '%_target_cpu\t%_target_cpu' >> buildlib/archtable
-
 %build
 gettextize --force --quiet --no-changelog --symlink
 %autoreconf
@@ -334,6 +330,7 @@ Summary: Immediately test %name when installing this package (only basic tests)
 Group: Other
 BuildArch: noarch
 Requires(pre): %name-tests
+Requires(pre): %name = %EVR
 
 %description basic-checkinstall
 Immediately test %name when installing this package.
@@ -367,6 +364,10 @@ pushd %_datadir/%name/tests/
 system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
 export APT_TEST_TARGET="$system_arch"
 
+# cache built pkgs
+APT_TEST_BUILDDIR="$(mktemp -d)/pkgs"
+export APT_TEST_BUILDDIR
+
 # this macro can be prefixed (e.g., by environment assignments),
 # therefore the extra backslash in the first line
 %global runtests \\\
@@ -383,6 +384,7 @@ Summary: Immediately test %name when installing this package (complete set of te
 Group: Other
 BuildArch: noarch
 Requires(pre): %name-tests
+Requires(pre): %name = %EVR
 Requires(pre): %complete_reqs_of_tests
 Requires(pre): gpg-keygen
 
@@ -397,6 +399,15 @@ and some additional peculiarities are tested).
 %pre checkinstall -p %_sbindir/sh-safely
 set -o pipefail
 pushd %_datadir/%name/tests/
+
+# This option makes sense just for the maintainer (to test the tests).
+# This option makes the built pkgs be saved under a special filename
+# (our alias). This mechanism is used to test pkgs with N-V-R that would be
+# too long for filenames, in another run of the tests with
+# APT_TEST_PKG_DECORATE_VERSION turned on. And here we just can make sure
+# that the tests are robust with APT_TEST_PKG_FILENAME_BY_ALIAS alone.
+# APT_TEST_PKG_FILENAME_BY_ALIAS=yes
+# export APT_TEST_PKG_FILENAME_BY_ALIAS
 
 # force the target arch for the tests
 #
@@ -416,6 +427,10 @@ gpg-keygen --passphrase '' \
 
 export APT_TEST_GPGPUBKEY
 
+# cache built pkgs
+APT_TEST_BUILDDIR="$(mktemp -d)/pkgs"
+export APT_TEST_BUILDDIR
+
 %runtests
 
 # Everything has been tested by now.
@@ -425,6 +440,7 @@ Summary: Immediately test %name when installing this package (many times under h
 Group: Other
 BuildArch: noarch
 Requires(pre): %name-tests
+Requires(pre): %name = %EVR
 Requires(pre): %complete_reqs_of_tests
 Requires(pre): gpg-keygen
 
@@ -459,6 +475,10 @@ gpg-keygen --passphrase '' \
 
 export APT_TEST_GPGPUBKEY
 
+# cache built pkgs
+APT_TEST_BUILDDIR="$(mktemp -d)/pkgs"
+export APT_TEST_BUILDDIR
+
 # Below we run the same tests many times in order to possibly catch
 # bad races. (It's more probable to catch a race under heavy load;
 # therefore, of the total specified number of tries, we do
@@ -479,7 +499,7 @@ fi
 already_once=0
 for (( try = 0; try < TRIES; )); do
     # all methods (you might want to update the list if there are new ones)
-    for method in file cdrom http https; do
+    for method in file copy cdrom http https; do
 	# do the same method several times in parallel (to provoke races)
 	for (( repeat = 0; repeat < 2; ++repeat )); do
 	    echo "$((try++)):$method"
@@ -587,6 +607,18 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Sun Nov 24 2024 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt89
+- apt-get changelog: new Debian-compatible cmd; in ALT, it just reads it from
+  the cache rather than downloads. (Thx Sergey Konev konevsa@) (ALT#51975)
+- sources(configure.ac): Made the build procedure work the same even when
+  built not from this .spec by doing a fallback if the archname is unknown.
+  Also simplified quoting/escaping in that archtable code.
+- tests & checkinstall subpkgs: cache & re-use built pkgs (for speed).
+- tests subpkg: do not depend on apt (to be able to test other apt versions).
+- tests: Fixed to detect more failures (previously unnoticed).
+- tests & checkinstall subpkgs: test copy method, too.
+- tests: prepare for non-std filenames for built pkgs.
+
 * Tue May 21 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5.15lorg2-alt88
 - Backport columnar output for apt-get from Debian.
 
