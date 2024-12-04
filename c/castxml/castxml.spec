@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name:    castxml
-Version: 0.6.8
-Release: alt2
+Version: 0.6.10
+Release: alt1
 
 Summary: C-family abstract syntax tree XML output tool
 
@@ -22,7 +22,7 @@ BuildRequires: clang-devel
 BuildRequires: clang-tools
 BuildRequires: libedit-devel
 BuildRequires: zlib-devel
-BuildRequires: python3-module-sphinx
+BuildRequires: /usr/bin/sphinx-build
 BuildRequires: libxml2-devel libtinfo-devel libffi-devel
 
 Requires: /proc
@@ -83,6 +83,9 @@ popd
 %_datadir/%name/empty.cpp
 
 %changelog
+* Wed Dec 04 2024 Anton Farygin <rider@altlinux.ru> 0.6.10-alt1
+- 0.6.8 -> 0.6.10
+
 * Wed Jul 31 2024 L.A. Kostis <lakostis@altlinux.ru> 0.6.8-alt2
 - NMU:
   + remove lld deps (as new llvm doesn't need it).
