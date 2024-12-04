@@ -4,12 +4,15 @@
 
 Name:    python3-module-%pypi_name
 Version: 3.5.1
-Release: alt2
+Release: alt3
 
 Summary: Top like application for PostgreSQL server activity monitoring
 License: PostgreSQL
 Group:   Monitoring
 URL:     https://github.com/dalibo/pg_activity
+
+Provides: pg_activity = %EVR
+Provides: pg-activity = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -57,6 +60,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 03 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.1-alt3
+- Added Provides(Closes #52272).
+
 * Mon Dec 02 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.1-alt2
 - Runtime requirement psycopg2 added.
 - Updated Group.
