@@ -1,16 +1,17 @@
-%define _unpackaged_files_terminate_build 1
+%define     _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
 Version:    8.4.0
-Release:    alt1
+Release:    alt2
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
 Url:        https://github.com/puppetlabs/puppetserver
+Vcs:        https://github.com/puppetlabs/puppetserver.git
 
-BuildArch: noarch
+BuildArch:  noarch
 
-Source: %name-%version.tar
+Source:  %name-%version.tar
 Source1: repository.tar
 Source2: puppetserver.init
 Source3: jruby-gem-home.tar
@@ -21,11 +22,14 @@ Source6: %name.conf
 Patch1: puppetserver-alt-fix.patch
 Patch2: puppetserver-alt-set-logback.xml.patch
 
+Autoreq: yes,noshell
+
 BuildRequires(pre): rpm-build-java
 BuildRequires(pre): procps
 BuildRequires: leiningen
 BuildRequires: java-11-openjdk-devel
 
+Requires: lsb-init
 Requires: java
 Requires: clojure
 Requires: facter
@@ -90,7 +94,7 @@ install -d -m 0755 %buildroot%_sysconfdir/%name/conf.d
 install -d -m 0755 %buildroot%_sysconfdir/%name/services.d
 
 install -m 0644 ezbake/system-config/services.d/bootstrap.cfg %buildroot%_sysconfdir/%name/bootstrap.cfg
-install -m 0640 %SOURCE6 %buildroot%_sysconfdir/%name/conf.d/%name.conf
+install -m 0644 %SOURCE6 %buildroot%_sysconfdir/%name/conf.d/%name.conf
 install -m 0644 resources/ext/config/request-logging.xml %buildroot%_sysconfdir/%name/request-logging.xml
 
 install -m 0644 ezbake/config/logback.xml %buildroot%_sysconfdir/%name/logback.xml
@@ -125,9 +129,6 @@ install -Dpm 0644 ext/default %buildroot%_sysconfdir/sysconfig/%name
 install -d -m 0755 %buildroot%_sysconfdir/init.d
 install -m 0755 %SOURCE2 %buildroot%_sysconfdir/init.d/%name
 
-install -Dpm 0644 %SOURCE5 %buildroot%_unitdir/%name.service
-
-install -Dpm 0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
 install -Dpm 0644 %SOURCE5 %buildroot%_unitdir/%name.service
 
 mkdir -p %buildroot%_tmpfilesdir
@@ -188,6 +189,10 @@ fi
 %_sysconfdir/init.d/%name
 
 %changelog
+* Wed Dec 04 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt2
+- ! fixed start for the puppetserver service (closes #51594)
+- ![PATCH] fixed paths to puppet counter file
+
 * Fri Mar 15 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.0-alt1
 - ^ 6.20.0 -> 8.4.0 by cas@ (ALT #38464).
 - Added requires java-17-openjdk by cas@ (ALT #41623).
