@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.124
+Version: 0.125
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -96,6 +96,10 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Wed Dec 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.125-alt1
+- Revert the previous change as it caused breakage and proved unhelpful, and
+  update %%kernel_latest to include version dependency.
+
 * Tue Dec 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.124-alt1
 - kernel-macros: Add macros for every upstream kernel type (mainline, stable,
   longterm). Note that these are for internal kernel machinery use and general
