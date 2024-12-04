@@ -4,7 +4,7 @@
 
 Name: pve-esxi-import-tools
 Summary: Tools to allow importing VMs from ESXi hosts
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -60,6 +60,9 @@ export BUILD_MODE=release
 %_libexecdir/%name
 
 %changelog
+* Wed Dec 04 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
