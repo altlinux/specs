@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.3
+Version: 3.4.0
 Release: alt1
 
 Summary: Template engine and code-generator
@@ -66,6 +66,9 @@ This package contains tests for Cheetah.
 %exclude %python3_sitelibdir/%pypi_name/Tests/Performance.py*
 
 %changelog
+* Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+
 * Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.3-alt1
 - Automatically updated to 3.3.3.
 
