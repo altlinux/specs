@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.2.4
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -53,6 +53,8 @@ Patch10: alt-keep-focus.patch
 Patch11: alt-hide-autoreboot.patch
 Patch12: alt-send-interactive.patch
 Patch13: alt-ghns-auth.patch
+Patch14: alt-ui-remove-disttag.patch
+Patch15: alt-highlight-removed.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -211,6 +213,8 @@ KF6 library
 #%patch11 -p1 -b .autoreboot
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -333,6 +337,10 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Dec 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- remove disttags from apply updates dialog
+- highlight removed packages in updates dialog
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
