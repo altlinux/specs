@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.9.0
-Release: alt2
+Version: 4.9.1
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -141,6 +141,10 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Wed Dec 04 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.9.1-alt1
+- New version.
+- Configurator: add Russian translation to PolicyKit file.
+
 * Mon Oct 07 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.9.0-alt2
 - Change the runtime requirements from Qt5 to Qt6 (closes: 51649).
 
