@@ -2,7 +2,7 @@
 
 Name: libfprint2
 Version: 1.94.8
-Release: alt1
+Release: alt3
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
@@ -113,6 +113,12 @@ Installed tests for %name.
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Dec 04 2024 Egor Ignatov <egori@altlinux.org> 1.94.8-alt3
+- add support for ID 04f3:0c98 Elan Microelectronics Corp. ELAN:ARM-M4
+
+* Wed Oct 30 2024 Egor Ignatov <egori@altlinux.org> 1.94.8-alt2
+- fix build with gcc less than 11
+
 * Tue Sep 24 2024 Egor Ignatov <egori@altlinux.org> 1.94.8-alt1
 - new version 1.94.8
 
