@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -199,6 +199,13 @@ setcap cap_sys_nice,cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%a
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Wed Dec 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.10-alt1
+- 1.24.10 (more than 40 security fixes across a wide range of elements
+  following an audit by the GitHub Security Lab, including the MP4,
+  Matroska, Ogg and WAV demuxers, subtitle parsers, image decoders,
+  audio decoders and the id3v2 tag parser.
+  See https://gstreamer.freedesktop.org/security/ for details)
+
 * Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.9-alt1
 - 1.24.9
 

@@ -9,7 +9,7 @@
 %{?_with_test_package:%def_enable examples}
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: GStreamer-%api_ver RTSP server library
@@ -132,6 +132,9 @@ popd
 %endif
 
 %changelog
+* Wed Dec 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.10-alt1
+- 1.24.10
+
 * Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.24.9-alt1
 - 1.24.9 ((fixed CVE-2024-44331), see
   https://gstreamer.freedesktop.org/security/sa-2024-0004.html)
