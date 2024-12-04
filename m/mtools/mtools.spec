@@ -1,25 +1,22 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.43
+Version: 4.0.46
 Release: alt1
 Epoch: 1
 
 Summary: Programs for accessing FAT formatted media without mounting it
-License: GPLv3
+License: GPL-3.0-or-later
 Group: File tools
 
 Url: https://www.gnu.org/software/mtools/
-Source0: https://ftp.gnu.org/gnu/mtools/%name-%version.tar.gz
+# Source-url: https://ftp.gnu.org/gnu/mtools/%name-%version.tar.gz
+Source: %name-%version.tar
 Source1: floppyd.xinetd
 Source100: mtools.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Patch0: mtools-3.9.6-config.patch
-Patch2: mtools-3.9.6-atari.patch
-Patch3: mtools-3.9.7-texinfo.patch
-Patch4: mtools-3.9.10-alt-no-x.patch
-Patch5: mtools-4.0.10-alt-buffer.patch
 
 # for check
 BuildRequires: dosfstools
@@ -80,13 +77,7 @@ Floppyd является сервером, предоставляющим дос
 
 %prep
 %setup
-%patch0 -p1
-#patch2 -p1
-#patch3 -p1
-%if_without floppyd
-#patch4 -p1
-%endif
-#patch5 -p1
+%patch -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl -- /usr/local/etc |
@@ -139,6 +130,10 @@ touch EFI/BOOT/bootia32.efi EFI/enroll/cert
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Wed Dec 04 2024 Anton Midyukov <antohami@altlinux.org> 1:4.0.46-alt1
+- new version (4.0.46) with rpmgs script
+- cleanup scpec, remove unused patches
+
 * Wed Mar 22 2023 Anton Midyukov <antohami@altlinux.org> 1:4.0.43-alt1
 - new version 4.0.43
 
