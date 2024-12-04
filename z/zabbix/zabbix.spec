@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		9406e67a5ff
+%define svnrev		c1d7a081969
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.5
+Version: 7.0.6
 Release: alt1
 Epoch: 1
 
@@ -618,6 +618,13 @@ find ./database/postgresql  -name 'Makefile*' -exec rm '{}' ';'
 /usr/sbin/groupadd -r -f %zabbix_group ||:
 /usr/sbin/useradd -g %zabbix_group -G proc -c 'Zabbix' \
 	-d %zabbix_home -s /dev/null -r %zabbix_user >/dev/null 2>&1 ||:
+/usr/sbin/usermod -a -G netadmin %zabbix_user ||:
+echo "########################################################################"
+echo "                        Attention!"
+echo "########################################################################"
+echo " Notice:"
+echo " Zabbix Server and Zabbix Proxy use fping, run this command for correct work:"
+echo " # control fping netadmin"
 
 %pre server-mysql
 echo "########################################################################"
@@ -854,6 +861,11 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Dec 04 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.6-alt1
+- 7.0.6 (Fixes: CVE-2024-22117, CVE-2024-36463, CVE-2024-36466, CVE-2024-36467, CVE-2024-36468,
+                CVE-2024-42326, CVE-2024-42327, CVE-2024-42328, CVE-2024-42329, CVE-2024-42330,
+                CVE-2024-42331, CVE-2024-42332, CVE-2024-42333)
+
 * Thu Oct 24 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.5-alt1
 - 7.0.5
 - Cleanup spec
