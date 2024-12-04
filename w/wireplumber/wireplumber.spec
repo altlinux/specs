@@ -13,7 +13,7 @@
 %define libname %name-%apiversion
 
 Name: wireplumber
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -201,6 +201,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Tue Dec 03 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5.7-alt1
+- 0.5.6 -> 0.5.7.
+
 * Wed Sep 18 2024 Arseny Maslennikov <arseny@altlinux.org> 0.5.6-alt1
 - 0.5.5 -> 0.5.6.
 
