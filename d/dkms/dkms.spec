@@ -6,7 +6,7 @@
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
 Version: 3.1.3
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/dell/dkms
@@ -56,7 +56,7 @@ echo "enable dkms.service" > dkms.preset
 # Install triggers.
 rm -rf %buildroot%_sysconfdir/kernel
 
-install -Dpm 755 dkms_common.postinst %buildroot%_libexecdir/dkms/postinst
+install -Dpm 755 debian_kernel_postinst.d %buildroot%_libexecdir/dkms/postinst
 install -Dpm 755 dkms_autoinstaller %buildroot%_libexecdir/dkms/dkms_autoinstaller
 
 # '9' to make it run before boot_kernel.filetrigger for prerm
@@ -113,6 +113,12 @@ dkms remove	 --verbose --kernelver=$kver dkms_test/1.0
    dkms status | grep . && exit 1
    ! test -e /lib/modules/$kver/kernel/extra/dkms_test.ko*
 
+# Test filetrigger.
+dkms add %_defaultdocdir/%name-%version/test/dkms_test-1.0/dkms.conf
+find /boot | /usr/lib/rpm/9dkms.filetrigger
+dkms status | grep installed
+dkms remove --all dkms_test/1.0
+
 rm -rf /usr/src/dkms_test-1.0
 
 %files
@@ -132,6 +138,10 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Thu Dec 05 2024 Vitaly Chikunov <vt@altlinux.org> 3.1.3-alt2
+- Fix filetrigger (postinst) invocation.
+- spec: Add filetrigger test in checkinstall.
+
 * Mon Dec 02 2024 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt1
 - New version.
 
