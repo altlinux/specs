@@ -1,12 +1,11 @@
-%define _unpackaged_files_terminate_build 1
 %define oname six
 
 %def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.16.0
-Release: alt2
+Version: 1.17.0
+Release: alt1
 
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
@@ -87,6 +86,9 @@ diff -y move.expected.list move.actual.list
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt1
+- Automatically updated to 1.17.0.
+
 * Tue Jul 04 2023 Grigory Ustinov <grenka@altlinux.org> 1.16.0-alt2
 - Build without python2 support (Closes: #42229).
 - Build with docs.
