@@ -1,6 +1,6 @@
 
 Name: alt-kworkstation-addon
-Version: 10.1
+Version: 11.0
 Release: alt1
 
 Group: System/Configuration/Other
@@ -8,7 +8,7 @@ Summary: Additional requires for ALT Workstation K
 Url: http://www.altlinux.org/
 License: GPL-2.0-or-later
 
-Requires: systemd-ssh-agent
+Requires: kde-theme-alt
 
 BuildArch: noarch
 
@@ -22,6 +22,12 @@ BuildArch: noarch
 %files
 
 %changelog
+* Thu Dec 05 2024 Sergey V Turchin <zerg@altlinux.org> 11.0-alt1
+- update requires
+
+* Mon Apr 01 2024 Sergey V Turchin <zerg@altlinux.org> 10.2-alt1
+- clean requires
+
 * Thu Feb 09 2023 Sergey V Turchin <zerg@altlinux.org> 10.1-alt1
 - update requires
 - bump version to match distro
