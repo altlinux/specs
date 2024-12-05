@@ -1,5 +1,5 @@
 Name: mpz
-Version: 1.0.23
+Version: 1.0.26
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -40,6 +40,9 @@ cd build
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.26-alt1
+- new version 1.0.26 (with rpmrb script)
+
 * Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.23-alt1
 - new version 1.0.23 (with rpmrb script)
 
