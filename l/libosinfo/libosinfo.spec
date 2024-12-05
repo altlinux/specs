@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 License: LGPL-2.1-or-later
@@ -120,6 +120,9 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/osinfo
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
+- New version 1.12.0.
+
 * Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
 - New version 1.11.0.
 
