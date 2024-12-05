@@ -1,5 +1,5 @@
 Name: msgpack-cxx
-Version: 6.1.0
+Version: 7.0.0
 Release: alt1
 
 Summary: MessagePack implementation for C++
@@ -64,6 +64,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack-cxx/
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Fri Jul 28 2023 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
 - new version 6.1.0 (with rpmrb script)
 - build as msgpack-cxx
