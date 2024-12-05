@@ -1,12 +1,11 @@
 %define oname venusian
 
-%def_with bootstrap
 %def_without docs
 %def_with check
 
 Name: python3-module-%oname
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: A library for deferring decorator actions
 
@@ -31,10 +30,7 @@ BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-sphinx
 %endif
 
-%add_python3_req_skip doesnt
-%if_with bootstrap
 %add_python3_req_skip doesnt.exist
-%endif
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests
 
@@ -48,7 +44,6 @@ the decorator until a separate "scan" phase.
 Summary: Tests for Venusian
 Group: Development/Python3
 Requires: %name = %version-%release
-%add_python3_req_skip doesnt
 
 %description tests
 Venusian is a library which allows framework authors to defer decorator
@@ -132,6 +127,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1.1
+- Removed unused extra bootstrap knob.
+
 * Mon Dec 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Automatically updated to 3.1.1.
 
