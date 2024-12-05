@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _udevdir %(pkg-config --variable=udevdir udev)
 
-%define ver_major 2.13
+%define ver_major 2.14
 %define api_ver 1.0
 %define sover 9
 %def_disable docs
@@ -23,10 +23,11 @@ Group: System/Libraries
 License: MIT
 Url: https://github.com/linuxwacom/libwacom
 
+Vcs: https://github.com/linuxwacom/libwacom.git
+
 %if_disabled snapshot
 Source: %url/releases/download/%name-%version/%name-%version.tar.xz
 %else
-Vcs: https://github.com/linuxwacom/libwacom.git
 Source: %name-%version.tar
 %endif
 
@@ -128,6 +129,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 05 2024 Yuri N. Sedunov <aris@altlinux.org> 2.14.0-alt1
+- 2.14.0
+
 * Mon Sep 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.13.0-alt1
 - 2.13.0
 
