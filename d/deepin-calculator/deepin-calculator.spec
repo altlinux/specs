@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 6.0.0
-Release: alt2
+Version: 6.5.2
+Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-2.0+ and GPL-3.0+
 
@@ -11,6 +11,7 @@ License: GPL-2.0+ and GPL-3.0+
 
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-calculator
+Vcs: git://github.com/linuxdeepin/deepin-calculator.git
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
@@ -21,7 +22,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: cmake dqt5-linguist dqt5-base-devel dqt5-svg-devel dtk5-widget-devel deepin-qt-dbus-factory-devel dtk5-common libgtest-devel libgmock-devel
+BuildRequires: cmake dqt5-linguist dqt5-base-devel dqt5-svg-devel libdtkwidget-devel dtk6-common-devel libgtest-devel libgmock-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -47,7 +48,6 @@ export PATH=%_dqt5_bindir:$PATH
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
     -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DAPP_VERSION=%version \
     -DVERSION=%version \
     %nil
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -65,9 +65,17 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/deepin-manual/manual-assets/application/%name/calculator/*/*
+%dir %_datadir/deepin-manual/
+%dir %_datadir/deepin-manual/manual-assets/
+%dir %_datadir/deepin-manual/manual-assets/application/
+%_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Thu Dec 05 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
+- New version 6.5.2.
+- Added vcs tag.
+- Fixed post-install unowned files.
+
 * Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
