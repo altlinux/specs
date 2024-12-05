@@ -2,7 +2,7 @@
 
 Name: procs
 Version: 0.14.8
-Release: alt1
+Release: alt2
 
 Summary: A replacement for ps written in Rust
 License: MIT
@@ -13,6 +13,9 @@ Vcs: https://github.com/dalance/procs
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: config.toml
+
+Patch0: procs-0.14.8-nix-crate-loongarch64.patch
+
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust
 BuildRequires: rust-cargo
@@ -26,6 +29,10 @@ BuildRequires: /proc
 
 install -Dm 644 %SOURCE2 .cargo/config.toml
 
+%patch0 -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+        ./vendor/nix-0.26.4/.cargo-checksum.json
+
 %build
 %rust_build
 
@@ -37,6 +44,9 @@ install -Dm 644 %SOURCE2 .cargo/config.toml
 %doc README.md CHANGELOG.md
 
 %changelog
+* Tue Dec 03 2024 Ilya Sorochan <k0tran@altlinux.org> 0.14.8-alt2
+- Add patch that fixes build for nix crate on loongarch64.
+
 * Wed Oct 30 2024 Vladislav Glinkin <smasher@altlinux.org> 0.14.8-alt1
 - 0.14.6 -> 0.14.8
 
