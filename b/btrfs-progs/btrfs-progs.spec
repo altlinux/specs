@@ -7,13 +7,13 @@
 %endif
 
 Name: btrfs-progs
-Version: 6.11
+Version: 6.12
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
 Group: System/Kernel and hardware
-Url: http://btrfs.wiki.kernel.org/
+Url: https://btrfs.readthedocs.io
 VCS: git://git.kernel.org/pub/scm/linux/kernel/git/kdave/btrfs-progs.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -146,6 +146,9 @@ end
 %_includedir/*
 
 %changelog
+* Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 6.12-alt1
+- 6.11 -> 6.12
+
 * Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 6.11-alt1
 - 6.10.1 -> 6.11
 
