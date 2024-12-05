@@ -1,6 +1,6 @@
 Name: fotocx
 Version: 24.70
-Release: alt1
+Release: alt1.1
 
 %define app_id kornelix.%name
 
@@ -16,7 +16,7 @@ Source1: %name.desktop
 Source2: %{name}16.png
 Source3: %{name}32.png
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 # fotoxx uses xdg-open executable to launch HTML docs viewer:
 Requires: xdg-utils
@@ -46,6 +46,8 @@ Remove the red-eye effect from electronic flash photos. Resize or crop an image.
 Summary: Arch independent files for Fotox
 Group: Graphics
 BuildArch: noarch
+Obsoletes: fotoxx-data < 24.70
+Provides: fotoxx-data = %EVR
 
 %description data
 This package provides noarch data needed for Fotox to work.
@@ -83,6 +85,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Dec 05 2024 Yuri N. Sedunov <aris@altlinux.org> 24.70-alt1.1
+- fotocx-data obsoletes fotoxx-data
+
 * Sat Nov 30 2024 Yuri N. Sedunov <aris@altlinux.org> 24.70-alt1
 - 24.70 (renamed to fotocx)
 
