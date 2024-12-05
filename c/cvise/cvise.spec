@@ -1,8 +1,8 @@
 %def_with check
 
 Name: cvise
-Version: 2.10.0
-Release: alt2
+Version: 2.11.0
+Release: alt1
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -102,6 +102,9 @@ py.test3 -vra .
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version 2.11.0 (with rpmrb script)
+
 * Thu Nov 07 2024 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt2
 - NMU: build without static library requirements
 
