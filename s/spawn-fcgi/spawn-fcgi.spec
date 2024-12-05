@@ -2,16 +2,15 @@
 %define spawn_fcgi_group _spawn_fcgi
 
 Name: spawn-fcgi
-Version: 1.6.4
-Release: alt5
+Version: 1.6.5
+Release: alt1
 
 Summary: spawn FastCGI applications
 License: BSD
 Group: System/Servers
 
-# git remote add upstream git://git.lighttpd.net/spawn-fcgi
-Url: http://redmine.lighttpd.net/projects/spawn-fcgi/wiki
-
+Url: https://redmine.lighttpd.net/projects/spawn-fcgi/wiki
+VCS: https://github.com/lighttpd/spawn-fcgi
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -58,6 +57,9 @@ EOF
 %_initdir/spawn-fcgi
 
 %changelog
+* Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
+- 1.6.4 -> 1.6.5
+
 * Tue Sep 14 2021 Anton Farygin <rider@altlinux.ru> 1.6.4-alt5
 - switched to tmpfiles.d for run directory (closes: #38183)
 - added LSB header to initscript
