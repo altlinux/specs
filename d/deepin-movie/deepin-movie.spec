@@ -5,7 +5,7 @@
 %endif
 
 Name: deepin-movie
-Version: 6.0.7
+Version: 6.0.11
 Release: alt1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
@@ -13,6 +13,7 @@ Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-movie-reborn
+Vcs: git://github.com/linuxdeepin/deepin-movie-reborn.git
 
 Source: %url/archive/%version/%name-reborn-%version.tar
 Patch0: %name-5.10.15-alt-cxx-flags.patch
@@ -113,6 +114,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Thu Dec 05 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.11-alt1
+- New version 6.0.11.
+- Added vcs tag.
+
 * Thu May 16 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
 - New version 6.0.7.
 - Built via separate qt5 instead system (ALT #48138).
