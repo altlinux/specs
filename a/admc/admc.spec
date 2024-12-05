@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,10 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Thu Dec 5 2024 Semyon Knyazev <samael@altlinux.org> 0.17.2-alt1
+- Fixed lost site and DC info in domain info widget (child domain).
+  (closes:52329)
+
 * Wed Nov 6 2024 Semyon Knyazev <samael@altlinux.org> 0.17.1-alt1
 - Fix crashing on child domains after context menu request.
 
