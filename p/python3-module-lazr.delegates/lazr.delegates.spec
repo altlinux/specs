@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 
 Summary: Easily write objects that delegate behavior
 License: LGPLv3
@@ -51,6 +51,9 @@ object, while still providing the underlying interface, and delegating behavior.
 
 
 %changelog
+* Thu Dec 05 2024 Anton Vyatkin <toni@altlinux.org> 2.1.1-alt1
+- New version 2.1.1.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 2.1.0-alt2
 - Fix FTBFS.
 
