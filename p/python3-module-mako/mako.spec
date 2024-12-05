@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 Summary: A super-fast templating language that borrows the best ideas from the existing templating languages.
@@ -93,6 +93,9 @@ py.test-3 -v
 %python3_sitelibdir/mako/testing
 
 %changelog
+* Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt1
+- Automatically updated to 1.3.7.
+
 * Tue Oct 22 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt1
 - Automatically updated to 1.3.6.
 
