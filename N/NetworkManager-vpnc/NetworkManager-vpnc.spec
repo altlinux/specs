@@ -1,6 +1,4 @@
 %define nm_version 1.1.90
-#define git_hash %nil
-%define git_hash .g7e01b1d
 
 %def_with gtk4
 
@@ -13,8 +11,8 @@
 %endif
 
 Name: NetworkManager-vpnc
-Version: 1.2.9
-Release: alt1%git_hash
+Version: 1.4.0
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
@@ -28,7 +26,7 @@ BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
 %{?_with_gtk4:BuildRequires: libgtk4-devel >= 4.6.3 libnma-gtk4-devel}
 BuildRequires: libsecret-devel
-BuildRequires: intltool gettext
+BuildRequires: gettext
 
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: vpnc             >= 0.4
@@ -82,7 +80,6 @@ This package contains files for GTK4 applications to use %name.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--without-libnm-glib \
 	%{subst_with gtk4} \
 	--enable-more-warnings=%more_warnings
 %make_build
@@ -117,6 +114,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Dec 05 2024 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Fixed VPN page creation.
+- Updated to 1.4.0.
+
 * Thu Dec 21 2023 Mikhail Efremov <sem@altlinux.org> 1.2.9-alt1.g7e01b1d
 - Upstream git snapshot (for updated translations mostly).
 - Used Russian translation from upstream.
