@@ -2,8 +2,15 @@
 %define libgnutlsxx_soname 30
 %define libgnutls_openssl_soname 27
 
+# For dlopen()-ed libraries soname check
+%define liboqs_soname 6
+%define libz_soname 1
+%define libbrotlienc_soname 1
+%define libbrotlidec_soname 1
+%define libzstd_soname 1
+
 Name: gnutls%libgnutls_soname
-Version: 3.8.4
+Version: 3.8.8
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -15,10 +22,12 @@ Url: https://gnutls.org/
 Source: gnutls-%version.tar
 
 Patch3: Fix-privkey-verify-broken-test.patch
-Patch4: tests-Use-IPv4-only-in-s_server.patch
 Patch8: fix-32bit-LTS.patch
 Patch10: tests-Don-t-use-lscpu.patch
 Patch11: tests-Fix-work-with-ALT-faketime.patch
+
+%def_with liboqs
+%def_enable certcompress
 
 %define libcxx libgnutlsxx%libgnutlsxx_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
@@ -28,6 +37,8 @@ Patch11: tests-Fix-work-with-ALT-faketime.patch
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
 BuildRequires: libidn2-devel libunistring-devel
 BuildRequires: libnettle-devel >= 3.6-alt1
+%{?_with_liboqs:BuildRequires: liboqs-devel}
+%{?_enable_certcompress:BuildRequires: zlib-devel libbrotli-devel libzstd-devel}
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: iproute2}}
@@ -196,6 +207,18 @@ sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-
 sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 
 %build
+# Check soname version of libraries which will be dlopen()'ed to
+# ensure that the right soname will be used.
+# The point that if soname will be changed then test rebuild will fail.
+check_lib_soname() {
+	# Upper/lower case for variable value is bash5-ism, but it is usefull
+	local so_num="$(sed -r -n "s;^#define[[:blank:]]+${1@U}_LIBRARY_SONAME[[:blank:]]+\"lib${1@L}\.so\.([[:digit:]]+)\"$;\1;p"  config.h)"
+	if [ "$so_num" != "$2" ]; then
+		echo "lib$1 soname version is wrong: $so_num (expected $2)"
+		exit 1
+	fi
+}
+
 %autoreconf
 %def_disable static
 %configure \
@@ -207,7 +230,33 @@ sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 	--with-default-trust-store-file=/usr/share/ca-certificates/ca-bundle.crt \
 	--with-included-libtasn1=no \
 	--enable-openssl-compatibility \
+%if_with liboqs
+	--with-liboqs=dlopen \
+%else
+	--without-liboqs \
+%endif
+%if_enabled certcompress
+	--with-zlib=dlopen \
+	--with-brotli=dlopen \
+	--with-zstd=dlopen \
+%else
+	--without-zlib \
+	--without-brotli \
+	--without-zstd \
+%endif
 	--docdir=%_docdir/gnutls-%version/
+
+%if_with liboqs
+check_lib_soname oqs %liboqs_soname
+%endif
+
+%if_enabled certcompress
+check_lib_soname z %libz_soname
+check_lib_soname brotlienc %libbrotlienc_soname
+check_lib_soname brotlidec %libbrotlidec_soname
+check_lib_soname zstd %libzstd_soname
+%endif
+
 make MAKEINFOFLAGS=--no-split
 
 %install
@@ -227,10 +276,6 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %define _unpackaged_files_terminate_build 1
 
 %check
-# The option inserted by the patch is unknown in older openssl:
-if openssl s_server --help 2>&1 | grep -Ewe '^[[:blank:]]*-4'; then
-   patch -p2 < %PATCH4
-fi
 # Workaround for tests: gnutls-serv will be rebuilded for some reason
 # when it started, so run it before make check to be rebuilded and therefore
 # tests willn't fail due to timeout.
@@ -287,6 +332,14 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Wed Dec 04 2024 Mikhail Efremov <sem@altlinux.org> 3.8.8-alt1
+- Enabled certificate compression (RFC8879) support.
+- Added check liboqs soname during build.
+- Dropped obsoleted patch.
+- Updated tests-Fix-work-with-ALT-faketime.patch.
+- Enabled liboqs support.
+- Updated to 3.8.8.
+
 * Tue Mar 26 2024 Mikhail Efremov <sem@altlinux.org> 3.8.4-alt1
 - Updated to 3.8.4 (fixes: CVE-2024-28834, CVE-2024-28835).
 
