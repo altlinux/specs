@@ -1,7 +1,7 @@
 %def_without check
 
 Name: libdispatch
-Version: 5.9
+Version: 5.10
 Release: alt1
 
 Summary: Apple's Grand Central Dispatch library
@@ -102,6 +102,9 @@ chrpath --delete %buildroot%_libdir/libdispatch.so
 %_includedir/os/
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 5.10-alt1
+- new version 5.10 (with rpmrb script)
+
 * Sun Oct 01 2023 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt1
 - new version 5.9 (with rpmrb script)
 
