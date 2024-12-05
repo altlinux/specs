@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 Epoch: 1
 
@@ -12,12 +12,12 @@ Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.1-or-later and MPL-1.1 and BSD-2-Clause
 Group: Archiving/Compression
 Url: https://github.com/linuxdeepin/deepin-compressor
+Vcs: git://github.com/linuxdeepin/deepin-compressor.git
 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
 
 Requires: p7zip
 # Requires: icon-theme-hicolor
@@ -37,7 +37,6 @@ BuildRequires: cmake kf5-karchive-devel kf5-kcodecs-devel libarchive-devel libdt
 
 %prep
 %setup
-#autopatch -p1
 sed -i 's|/usr/lib|%_libdir|' \
     src/source/common/pluginmanager.cpp
 sed -i 's|include <zip.h>|include <libzip/zip.h>|' \
@@ -96,6 +95,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Thu Dec 05 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.4-alt1
+- New version 6.0.4.
+- Added vcs tag.
+
 * Thu May 30 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.3-alt1
 - New version 6.0.3.
 - Built via separate qt5 instead system (ALT #48138).
