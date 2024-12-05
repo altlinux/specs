@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name:    rustic
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: rustic - fast, encrypted, deduplicated backups powered by pure Rust
@@ -56,9 +56,6 @@ codegen-units = 16
 %endif
 EOF
 
-sed -i '/services-webdav/a\"services-yandex-disk",' vendor/rustic_backend/Cargo.toml
-sed -i 's/"Cargo.toml":"[^"]\+",\?//' vendor/rustic_backend/.cargo-checksum.json
-
 %build
 # Default features include 'self-update'.
 %rust_build --no-default-features --features webdav,tui
@@ -97,6 +94,9 @@ diff -qr --exclude=target . ../x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Dec 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt1
+- Update to v0.9.5 (2024-12-03).
+
 * Sat Oct 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt1
 - Update to v0.9.4 (2024-10-24).
 
