@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20240910
+%define orig_timestamp 20241112
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 28
+Version: 29
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,45 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Dec 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2:29-alt1.20241112
+- Synced with debian/3.20241112.1 (original changelog below):
+  + New upstream microcode datafile 20241112
+    - Mitigations for INTEL-SA-01101 (CVE-2024-21853)
+      Improper Finite State Machines (FSMs) in the Hardware logic in some
+      4th and 5th Generation Intel Xeon Processors may allow an authorized
+      user to potentially enable denial of service via local access.
+    - Mitigations for INTEL-SA-01079 (CVE-2024-23918)
+      Potential security vulnerabilities in some Intel Xeon processors
+      using Intel SGX may allow escalation of privilege.  Intel disclosed
+      that some processor models were already fixed by a previous
+      microcode update.
+    - Updated mitigations for INTEL-SA-01097 (CVE-2024-24968)
+      Improper finite state machines (FSMs) in hardware logic in some
+      Intel Processors may allow an privileged user to potentially enable a
+      denial of service via local access.
+    - Mitigations for INTEL-SA-01103 (CVE-2024-23984)
+      A potential security vulnerability in the Running Average Power Limit
+      (RAPL) interface for some Intel Processors may allow information
+      disclosure.  Added mitigations for more processor models.
+  + Updated Microcodes:
+    sig 0x000806f8, pf_mask 0x87, 2024-06-20, rev 0x2b000603, size 588800
+    sig 0x000806f7, pf_mask 0x87, 2024-06-20, rev 0x2b000603
+    sig 0x000806f6, pf_mask 0x87, 2024-06-20, rev 0x2b000603
+    sig 0x000806f5, pf_mask 0x87, 2024-06-20, rev 0x2b000603
+    sig 0x000806f4, pf_mask 0x87, 2024-06-20, rev 0x2b000603
+    sig 0x00090672, pf_mask 0x07, 2024-05-29, rev 0x0037, size 224256
+    sig 0x00090675, pf_mask 0x07, 2024-05-29, rev 0x0037
+    sig 0x000b06f2, pf_mask 0x07, 2024-05-29, rev 0x0037
+    sig 0x000b06f5, pf_mask 0x07, 2024-05-29, rev 0x0037
+    sig 0x000906a3, pf_mask 0x80, 2024-06-03, rev 0x0435, size 223232
+    sig 0x000906a4, pf_mask 0x80, 2024-06-03, rev 0x0435
+    sig 0x000a06a4, pf_mask 0xe6, 2024-08-02, rev 0x0020, size 138240
+    sig 0x000b06a2, pf_mask 0xe0, 2024-05-29, rev 0x4123, size 220160
+    sig 0x000b06a3, pf_mask 0xe0, 2024-05-29, rev 0x4123
+    sig 0x000b06a8, pf_mask 0xe0, 2024-05-29, rev 0x4123
+    sig 0x000c06f2, pf_mask 0x87, 2024-06-20, rev 0x21000283, size 560128
+    sig 0x000c06f1, pf_mask 0x87, 2024-06-20, rev 0x21000283
+
 * Tue Oct 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2:28-alt1.20240910
 - Synced with debian/3.20240910.1 (original changelog below):
   + New upstream microcode datafile 20240910
