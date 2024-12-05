@@ -1,5 +1,5 @@
 Name: rosegarden
-Version: 24.06
+Version: 24.12
 Release: alt1
 
 Summary: MIDI sequencer and musical notation editor
@@ -55,6 +55,9 @@ sed -i "s/UNSTABLE/STABLE/" CMakeLists.txt
 %_datadir/mime/packages/rosegarden.*
 
 %changelog
+* Thu Dec 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 24.12-alt1
+- 24.12 released
+
 * Fri Jun 07 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 24.06-alt1
 - 24.06
 
