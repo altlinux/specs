@@ -2,7 +2,7 @@
 
 Name: w3m
 Version: 0.5.3
-Release: alt4.git20200502
+Release: alt5.git20230121
 License: BSD
 Group: Networking/WWW
 Summary: w3m is a pager with Web browsing capability
@@ -22,7 +22,6 @@ Patch10: %name-0.5.3-alt-DSO.patch
 Patch4:  %{name}-rh707994-fix-https-segfault.patch
 
 #https://bugzilla.redhat.com/show_bug.cgi?id=1038009
-Patch7:  %{name}-0.5.3-FTBFS-sys-errlist.patch
 
 %add_findreq_skiplist %_libexecdir/w3m/cgi-bin/w3mhelp.cgi
 
@@ -60,7 +59,6 @@ linux framebuffer.
 %setup
 #  fedora patches
 %patch4 -p0
-%patch7 -p1
 # alt patches
 %patch10 -p2
 
@@ -97,6 +95,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_libexecdir/w3m/w3mimgdisplay
 
 %changelog
+* Thu Dec 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5.3-alt5.git20230121
+- New version (Closes: #29696, #29697, #31584).
+
 * Wed Apr 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.5.3-alt4.git20200502
 - QA: Fixed FTBFS.
 
