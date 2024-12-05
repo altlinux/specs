@@ -1,6 +1,6 @@
 %define modname python-distutils-extra
 %define pypi_name python_distutils_extra
-%define ver_major 3.0
+%define ver_major 3.1
 
 %def_disable check
 
@@ -52,6 +52,9 @@ export PYTHONPATH=./
 
 
 %changelog
+* Thu Dec 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
+- 3.1
+
 * Tue Oct 17 2023 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 - ported to %%pyproject macros
