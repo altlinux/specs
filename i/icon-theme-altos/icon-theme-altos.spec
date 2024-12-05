@@ -1,6 +1,6 @@
 Name: icon-theme-altos
 Version: 0.0.2
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: ALT icons theme
@@ -33,6 +33,7 @@ BuildRequires: hardlink
 %install
 %K6install
 
+%if 0
 for t in %buildroot/%_iconsdir/* ; do
     [ -d $t ] || continue
     theme_subdir=`basename $t`
@@ -67,6 +68,7 @@ for t in %buildroot/%_iconsdir/tmp-* ; do
 done
 
 rm -rf %buildroot/%_iconsdir/tmp-*
+%endif
 
 # fix broken symlinks
 find %buildroot/%_iconsdir -type l | \
@@ -97,6 +99,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_iconsdir/altos-dark/
 
 %changelog
+* Thu Dec 05 2024 Sergey V Turchin <zerg at altlinux dot org> 0.0.2-alt2
+- don't create symlinks for aliases
+
 * Tue Nov 05 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.0.2-alt1
 - add icons themes
 
