@@ -4,7 +4,7 @@
 
 Name:     sfizz
 Version:  1.2.3
-Release:  alt4.g93da04262
+Release:  alt5.g93da04262
 
 Summary:  SFZ parser and synthesizer
 License:  BSD-2-Clause
@@ -129,6 +129,10 @@ sh '%SOURCE2'
 %autopatch -p1
 
 %build
+%ifarch loongarch64
+%add_optflags -flax-vector-conversions
+%endif
+
 # TODO: -DSFIZZ_USE_SYSTEM_ABSEIL=ON -- currently this way it does not build
 
 %cmake \
@@ -168,6 +172,9 @@ cd library/tests && "$binary"
 
 
 %changelog
+* Thu Dec 05 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt5.g93da04262
+- fix build on loongarch64
+
 * Tue Dec 03 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt4.g93da04262
 - build with system simde
 - add a patch to fix unit tests
