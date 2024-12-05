@@ -1,5 +1,5 @@
 Name: tea
-Version: 62.0.2
+Version: 63.1.0
 Release: alt1
 
 Summary: Powerful text editor with many HTML editing and text processing functions
@@ -59,6 +59,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 63.1.0-alt1
+- new version 63.1.0 (with rpmrb script)
+
 * Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 62.0.2-alt1
 - new version 62.0.2 (with rpmrb script)
 
