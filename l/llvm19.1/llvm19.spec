@@ -55,6 +55,15 @@
 %add_findreq_skiplist %_bindir/llvm-omp-device-info-%v_major
 %add_findreq_skiplist %_bindir/llvm-omp-kernel-replay-%v_major
 
+%ifarch %libc_arches
+%def_with libcxx
+%endif
+
+%if_with libcxx
+%add_findreq_skiplist %llvm_libdir/clang/%v_major/lib/%_arch-unknown-linux-gnu/libc++.so.1.0
+%add_findreq_skiplist %llvm_libdir/clang/%v_major/lib/%_arch-unknown-linux-gnu/libc++abi.so.1.0
+%endif
+
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
 AutoProv: nopython
@@ -113,7 +122,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -737,6 +746,95 @@ time.
 
 These modules are used by llvm runtimes built outside of llvm tree.
 
+%package -n libc++%v_majmin
+Summary: %summary
+Group: System/Libraries
+Provides: libc++ = %EVR
+Obsoletes: libc++ < %EVR
+
+%description -n libc++%v_majmin
+libc++ is a new implementation of the C++ standard library, targeting C++11.
+
+%package -n libc++%v_majmin-devel
+Summary: Headers and libraries for libcxx devel
+Group: Development/C++
+Requires: libc++%v_majmin = %EVR
+Requires: libc++abi%v_majmin-devel
+Provides: libc++-devel = %EVR
+Obsoletes: libc++-devel < %EVR
+
+%description -n libc++%v_majmin-devel
+%summary.
+
+%package -n libc++%v_majmin-devel-static
+Group: Development/C++
+Summary: Static libraries for libc++
+Requires: libc++%v_majmin-devel = %EVR
+Provides: libc++-static = %EVR
+Obsoletes: libc++-static < %EVR
+
+%description -n libc++%v_majmin-devel-static
+%summary.
+
+%package -n libc++abi%v_majmin
+Summary: %summary
+Group: System/Libraries
+Provides: libc++abi = %EVR
+Obsoletes: libc++abi < %EVR
+
+%description -n libc++abi%v_majmin
+libcxxabi provides low level support for a standard C++ library.
+
+%package -n libc++abi%v_majmin-devel
+Summary: Headers and libraries for libcxxabi devel
+Group: Development/C++
+Requires: libc++abi%v_majmin = %EVR
+Provides: libc++abi-devel = %EVR
+Obsoletes: libc++abi-devel < %EVR
+
+%description -n libc++abi%v_majmin-devel
+%summary.
+
+%package -n libc++abi%v_majmin-devel-static
+Summary: Static libraries for libcxxabi
+Group: Development/C++
+Requires: libc++abi%v_majmin-devel = %EVR
+Provides: libc++abi-static = %EVR
+Obsoletes: libc++abi-static < %EVR
+
+%description -n libc++abi%v_majmin-devel-static
+%summary.
+
+%package -n libunwind%v_majmin
+Summary: An unwinding library
+Group: Development/Debuggers
+Provides: libunwind = %EVR
+Obsoletes: libunwind < %EVR
+
+%description -n libunwind%v_majmin
+Libunwind provides a C ABI to determine the call-chain of a program.
+
+%package -n libunwind%v_majmin-devel
+Summary: Development package for libunwind
+Group: Development/Debuggers
+Requires: libunwind%v_majmin = %EVR
+Provides: libunwind-devel = %EVR
+Obsoletes: libunwind-devel < %EVR
+
+%description -n libunwind%v_majmin-devel
+The libunwind-devel package includes the libraries and header files for
+libunwind.
+
+%package -n libunwind%v_majmin-devel-static
+Summary: Static libraries for libunwind
+Group: Development/Debuggers
+Requires: libunwind%v_majmin-devel = %EVR
+Provides: libunwind-static = %EVR
+Obsoletes: libunwind-static < %EVR
+
+%description -n libunwind%v_majmin-devel-static
+%summary.
+
 %prep
 # %setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4 -a5 -a6
 # for pkg in clang lld lldb; do
@@ -788,6 +886,10 @@ PROJECTS="clang;clang-tools-extra;compiler-rt;mlir;polly"
 # for openmp offload
 # https://github.com/llvm/llvm-project/issues/106399
 RUNTIMES="openmp;offload"
+%if_with libcxx
+RUNTIMES="$RUNTIMES;libcxxabi;libcxx;libunwind"
+PROJECTS="$PROJECTS;libc"
+%endif
 %if_with lld
 PROJECTS="$PROJECTS;lld"
 %endif
@@ -901,6 +1003,10 @@ fi
 	-DLLVM_BUILD_LLVM_DYLIB:BOOL=ON \
 	-DLLVM_LINK_LLVM_DYLIB:BOOL=ON \
 	-DLLVM_INSTALL_TOOLCHAIN_ONLY:BOOL=OFF \
+%if_with libcxx
+	-DLLVM_LIBC_FULL_BUILD:BOOL=ON \
+	-DLIBCXX_CXX_ABI=libcxxabi \
+%endif
 	-DPYTHON_EXECUTABLE=%_bindir/python3
 
 sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
@@ -1212,6 +1318,26 @@ sed -i '
 mkdir -p %buildroot%llvm_datadir/cmake
 cp -ar cmake/Modules %buildroot%llvm_datadir/cmake/
 
+%if_with libcxx
+# libc++/libc++abi/libunwind
+mkdir -p %buildroot%_libdir
+cp -a %buildroot%llvm_libdir/clang/%v_major/lib/%_arch-unknown-linux-gnu/lib{c++,c++abi,unwind}.so* %buildroot%_libdir
+cp -a %buildroot%llvm_libdir/clang/%v_major/lib/%_arch-unknown-linux-gnu/lib{c++,c++abi,unwind}.a %buildroot%_libdir
+
+# Install header files that libcxxabi needs
+# mkdir -p %buildroot%_includedir/libcxx-internal/ryu
+mkdir -p %buildroot%_includedir/mach-o %buildroot%_includedir/c++/v1
+cp -a %buildroot%llvm_includedir/c++/v1/* %buildroot%_includedir/c++/v1/
+mv %buildroot%llvm_includedir/%_arch-unknown-linux-gnu/c++/v1/__config_site %buildroot%_includedir/c++/v1/
+
+install -m 0644 libcxxabi/include/*.h %buildroot%_includedir
+install -m 0644 libunwind/include/*.h %buildroot%_includedir
+install -m 0644 libunwind/include/mach-o/*.h %buildroot%_includedir/mach-o/
+
+rm -rf %buildroot%llvm_includedir/c++
+rm -f  %buildroot%llvm_includedir/{*unwind*.h,libunwind.*}
+%endif
+
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
@@ -1506,7 +1632,46 @@ ninja -C %builddir check-all || :
 %dir %llvm_datadir/cmake/Modules
 %llvm_datadir/cmake/Modules/*
 
+%if_with libcxx
+%files -n libc++%v_majmin
+%_libdir/libc++.so.*
+
+%files -n libc++%v_majmin-devel
+%_includedir/c++
+%llvm_datadir/libc++
+%_libdir/libc++.so
+
+%files -n libc++%v_majmin-devel-static
+%_libdir/libc++*.a
+%exclude %_libdir/libc++abi.a
+
+%files -n libc++abi%v_majmin
+%_libdir/libc++abi.so.*
+
+%files -n libc++abi%v_majmin-devel
+%_includedir/*.h
+%exclude %_includedir/*unwind*.h
+%_libdir/libc++abi.so
+
+%files -n libc++abi%v_majmin-devel-static
+%_libdir/libc++abi.a
+
+%files -n libunwind%v_majmin
+%_libdir/libunwind*.so.*
+
+%files -n libunwind%v_majmin-devel
+%_libdir/libunwind*.so
+%_includedir/*unwind*.h
+%_includedir/mach-o/
+
+%files -n libunwind%v_majmin-devel-static
+%_libdir/libunwind.a
+%endif
+
 %changelog
+* Fri Nov 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 19.1.3-alt0.2
+- Build libc++ and friends (libc++abi, libunwind).
+
 * Fri Nov 01 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.3-alt0.1
 - Update to 19.1.3.
 - libomp: fix unowned dirs in case of omptarget.
