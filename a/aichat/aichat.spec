@@ -5,7 +5,7 @@
 
 Name: aichat
 Version: 0.24.0
-Release: alt1
+Release: alt2
 Summary: All-in-one LLM CLI tool
 License: Apache-2.0 or MIT
 Group: Development/Tools
@@ -13,6 +13,8 @@ Url: https://github.com/sigoden/aichat
 
 Source: %name-%version.tar
 BuildRequires: rust-cargo
+
+Patch: aichat-0.24.0-alt-nix-crate-loongarch64.patch
 
 %description
 AIChat is an all-in-one LLM CLI tool featuring Chat-REPL, Shell Assistant,
@@ -47,6 +49,10 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 strip = false
 EOF
 
+%patch -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+	./vendor/nix-0.26.4/.cargo-checksum.json
+
 %build
 cargo build %_smp_mflags --offline --release --all-features
 
@@ -69,5 +75,8 @@ cargo test --release --workspace
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Dec 03 2024 Ilya Sorochan <k0tran@altlinux.org> 0.24.0-alt2
+- Add patch that fixes build for nix 0.26.4 crate on loongarch64.
+
 * Mon Nov 25 2024 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt1
 - First import v0.24.0 (2024-11-25).
