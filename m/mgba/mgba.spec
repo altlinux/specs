@@ -1,10 +1,12 @@
+%set_gcc_version 13
+
 %define git_commit 1c61b54208ca6266129d0f2394c04bd8c44f98c5
 %define git_rev 7926
 %define sover 0.10
 
 Name: mgba
 Version: %sover.3
-Release: alt1
+Release: alt1.1
 
 Summary: Game Boy Advance emulator
 License: MPL-2.0
@@ -22,6 +24,7 @@ BuildPreReq: libpostproc-devel
 BuildPreReq: libzstd-devel
 
 BuildRequires: cmake
+BuildRequires: gcc13-c++
 BuildRequires: libSDL2-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
@@ -107,6 +110,9 @@ sed -i -e 's/${GIT_REV}/%git_rev/' src/core/version.c.in
 %_libdir/lib%name.so
 
 %changelog
+* Thu Dec 05 2024 Nazarov Denis <nenderus@altlinux.org> 0.10.3-alt1.1
+- Fix FTBFS
+
 * Mon Jan 08 2024 Nazarov Denis <nenderus@altlinux.org> 0.10.3-alt1
 - New version 0.10.3.
 
