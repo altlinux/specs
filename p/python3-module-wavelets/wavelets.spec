@@ -6,7 +6,7 @@
 %define oname wavelets
 
 Name: python3-module-%oname
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Wavelet Transforms in Python
@@ -95,6 +95,9 @@ popd &>/dev/null
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
+- Automatically updated to 1.8.0.
+
 * Wed Aug 14 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Automatically updated to 1.7.0.
 
