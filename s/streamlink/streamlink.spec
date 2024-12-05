@@ -1,7 +1,7 @@
 %define srcname streamlink
 
 Name: streamlink
-Version: 6.7.3
+Version: 7.0.0
 Release: alt1
 
 Summary: Python library for extracting streams from various websites
@@ -144,6 +144,9 @@ install -Dm644 completions/zsh/_%srcname %buildroot%_datadir/zsh/site-functions/
 #%license LICENSE
 
 %changelog
+* Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Fri May 03 2024 Vitaly Lipatov <lav@altlinux.ru> 6.7.3-alt1
 - new version 6.7.3 (with rpmrb script)
 
