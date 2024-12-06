@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.1
+Version: 6.0
 Release: alt1
 
 Summary: Zope Configuration Markup Language (ZCML)
@@ -69,6 +69,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Dec 06 2024 Stanislav Levin <slev@altlinux.org> 6.0-alt1
+- 5.0.1 -> 6.0.
+
 * Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt1
 - 5.0 -> 5.0.1.
 
