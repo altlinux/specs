@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: icon-library
-Version: 0.0.19
-Release: alt2
+Version: 0.0.20
+Release: alt1
 
 Summary: Symbolic icons for your apps
 License: GPL-3.0-or-later
@@ -24,9 +24,9 @@ BuildRequires: pkgconfig(gtk4) >= 4.6.0
 BuildRequires: pkgconfig(libadwaita-1) >= 1.5
 BuildRequires: pkgconfig(gtksourceview-5) >= 5.0.0
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstream-util
-BuildRequires: %_bindir/glib-compile-schemas
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
+BuildRequires: libgio
 %endif
 
 %description
@@ -58,6 +58,10 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Tue Dec 03 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.20-alt1
+- New version 0.0.20
+- Update BuildRequires
+
 * Thu Nov 07 2024 Oleg Shchavelev <oleg@altlinux.org> 0.0.19-alt2
 - Corrected release description in 0.0.19-alt1.1
 
