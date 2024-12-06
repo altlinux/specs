@@ -1,22 +1,21 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 6.2.0
+Version: 6.4.0
 Release: alt1
 Summary: Extensions for Nemo
 
-License: %gpl2plus and %lgpl2only
+License: GPL-2.0-or-later and LGPL-2.0-only
 URL: https://github.com/linuxmint/nemo-extensions
 Group: Graphical desktop/GNOME
 
-# Source-url: https://github.com/linuxmint/nemo-extensions/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 AutoReqProv: nopython
 %define __python %nil
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses rpm-build-python3
+BuildPreReq: rpm-build-gnome rpm-build-python3
 BuildRequires: libnemo-devel
 BuildRequires: python3-dev
 BuildRequires: desktop-file-utils
@@ -49,16 +48,16 @@ Extensions for Nemo
 
 %package     -n nemo-fileroller
 Summary:     File Roller extension for Nemo
-License:     %gpl2plus
+License:     GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Requires:    /usr/bin/file-roller
+Requires:    %_bindir/file-roller
 
 %description -n nemo-fileroller
 This package contains the file-roller extension for the Nemo.
 
 %package -n nemo-python
 Summary: Python bindings for Nemo
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Requires: nemo
 Requires: nemo-extensions-translations
@@ -68,16 +67,16 @@ Python bindings for Nemo
 
 %package -n nemo-python-devel
 Summary: Python bindings for Nemo
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Development/GNOME and GTK+
-Requires: nemo-python = %version-%release
+Requires: nemo-python = %EVR
 
 %description -n nemo-python-devel
 Python bindings for Nemo
 
 %package -n nemo-terminal
 Summary: Embedded terminal window for Nemo
-License: %gpl3plus
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Requires: nemo-python
@@ -86,7 +85,7 @@ Requires: nemo-extensions-translations
 
 %package -n nemo-share
 Summary: Share a folder from the Cinnamon Nemo file manager
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Requires: nemo >= 2.8
 Requires: samba >= 3.0.23
@@ -99,7 +98,7 @@ simple use of Nemo shares without signing in as root.
 
 %package -n nemo-share-common
 Summary: Common files for nemo-share
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 
@@ -111,7 +110,7 @@ Embedded terminal window for Nemo
 
 %package -n nemo-preview
 Summary: A quick previewer for Nemo
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Requires: nemo
 Requires: nemo-extensions-translations
@@ -129,20 +128,21 @@ The preview can be closed by hitting space again, or escape.
 Summary: GObject introspection devel data for the nemo-preview extension
 Group: System/Libraries
 BuildArch: noarch
-Requires: nemo-preview = %version-%release
+Requires: nemo-preview = %EVR
 
 %description -n nemo-preview-gir-devel
 GObject introspection devel data for the nemo-preview extension.
 
 %package -n nemo-image-converter
 Summary: Nemo extension to mass resize images
-License: %gpl3plus
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Requires: nemo-extensions-translations
 Requires: ImageMagick
 
 %description -n nemo-image-converter
-Adds a "Resize Images..." menu item to the context menu. This opens a dialog where you set the desired image size and file name.
+Adds a "Resize Images..." menu item to the context menu. This opens a dialog
+where you set the desired image size and file name.
 
 %prep
 %setup -q
@@ -267,6 +267,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-image-converter/
 
 %changelog
+* Thu Dec 05 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
+- 6.4.0
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 6.2.0-alt1
 - 6.2.0
 
