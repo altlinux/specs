@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.2
-Release: alt3
+Release: alt4
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -293,7 +293,7 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 	--with-htmlpath=%htmldir \
 	%{subst_with ssl} \
 	--with-drvpath=%drvdir \
-	--with-statepath=%_localstatedir/upsd \
+	--with-statepath=%ROOT%_localstatedir/upsd \
 	%{subst_with usb} \
     --with-udev-dir=%_udevdir \
 	%{subst_with snmp} %snmp_opts \
@@ -413,7 +413,6 @@ fi
 %preun server
 %preun_service upsd
 %preun_service upsdrv
-
 
 %files
 %doc COPYING MAINTAINERS NEWS docs/*.txt conf/upsmon.conf.sample conf/upssched.conf.sample conf/nut.conf.sample
@@ -595,6 +594,9 @@ fi
 %python3_sitelibdir/test_nutclient.py
 
 %changelog
+* Fri Dec 06 2024 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt4
+- Fixed an error with the nut-server installation (closes: #51566)
+
 * Sun Nov 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.8.2-alt3
 - Fixed build for Elbrus.
 
