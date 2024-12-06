@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 3.1.6
+Version: 3.2.1
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -16,7 +16,7 @@ Patch: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
-BuildRequires: rpm-build-golang golang >= 1.23
+BuildRequires: rpm-build-golang golang >= 1.23.0
 %if_without prebuild_webui
 BuildRequires: npm yarn
 BuildRequires: node node-devel node-gyp node-sass
@@ -88,7 +88,7 @@ cd .gopath/src/%import_path
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
-export CODENAME=comte
+export CODENAME=munster
 export DATE=$(date -u '+%%Y-%%m-%%d')
 export GOFLAGS="-mod=vendor"
 
@@ -118,6 +118,7 @@ install -d -m 750 %buildroot%_sysconfdir/%name
 install -d -m 750 %buildroot%_sysconfdir/%name/%name.d
 touch %buildroot%_sysconfdir/%name/acme.json
 install -p -D -m 0644 traefik.sample.toml %buildroot%_sysconfdir/%name/%name.toml
+install -p -D -m 0644 traefik.sample.yml %buildroot%_sysconfdir/%name/%name.yml
 # Setup directories
 install -d -m 755 %buildroot%_logdir/%name
 install -d -m 755 %buildroot%_sharedstatedir/%name
@@ -139,18 +140,22 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %_bindir/%name
 %dir %attr(750, root, %name) %_sysconfdir/%name
 %dir %attr(750, root, %name) %_sysconfdir/%name/%name.d
-%config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/traefik.toml
+%config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/%name.toml
+%config(noreplace) %attr(640, root, %name) %_sysconfdir/%name/%name.yml
 %config(noreplace) %attr(600, %name, %name) %_sysconfdir/%name/acme.json
 %_unitdir/%name.service
 %dir %attr(0770, root, %name) %_logdir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- 3.2.1 (Fixes: CVE-2024-52003)
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.6-alt1
 - 3.1.6
 
 * Wed Oct 09 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.5-alt1
-- 3.1.5
+- 3.1.5 (Fixes: CVE-2024-45410)
 
 * Wed Aug 28 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.2-alt1
 - 3.1.2
@@ -162,10 +167,10 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 - fix webui dashboard
 
 * Thu Jul 04 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.6-alt1
-- 2.11.6
+- 2.11.6 (Fixes: CVE-2024-39321, CVE-2024-24790, CVE-2024-35255)
 
 * Tue May 21 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.3-alt1
-- 2.11.3
+- 2.11.3 (Fixes: CVE-2024-24787)
 
 * Wed May 08 2024 Alexey Shabalin <shaba@altlinux.org> 2.11.2-alt2
 - Fix web static assets
@@ -177,7 +182,7 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 - 2.11.0
 
 * Mon Jan 15 2024 Alexey Shabalin <shaba@altlinux.org> 2.10.7-alt1
-- 2.10.7
+- 2.10.7 (Fixes: CVE-2023-47106, CVE-2023-47633, CVE-2023-47124)
 
 * Thu Nov 09 2023 Alexey Shabalin <shaba@altlinux.org> 2.10.5-alt1
 - 2.10.5
@@ -207,7 +212,7 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 - 2.8.4
 
 * Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 2.7.1-alt1
-- 2.7.1
+- 2.7.1 (Fixes: CVE-2022-23632)
 
 * Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
 - 2.6.0
@@ -223,7 +228,7 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 - 2.4.14
 
 * Tue Aug 10 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.13-alt1
-- 2.4.13
+- 2.4.13 (Fixes: CVE-2021-32813)
 
 * Thu Jun 24 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.9-alt1
 - 2.4.9
@@ -239,7 +244,7 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 - fix perm of acme.json
 
 * Tue Aug 04 2020 Alexey Shabalin <shaba@altlinux.org> 2.2.8-alt1
-- 2.2.8
+- 2.2.8 (Fixes: CVE-2020-15129)
 
 * Sun Mar 15 2020 Alexey Shabalin <shaba@altlinux.org> 2.0.7-alt1
 - 2.0.7
