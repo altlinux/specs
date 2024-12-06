@@ -8,7 +8,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,7 @@ Patch20: alt-knetattach-test-unlock-ui.patch
 Patch21: alt-re-set-xkb-mappings.patch
 Patch22: alt-kscreenlocker.patch
 Patch23: alt-screenlocker-prompt-in-placeholder.patch
+Patch24: alt-fix-resizing-pager-applet.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
@@ -168,6 +169,7 @@ SDDM breeze theme
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p1
 
 msgcat --use-first po/ru/kcm_touchpad.po %SOURCE11 > po/ru/kcm_touchpad.po.tmp
 cat po/ru/kcm_touchpad.po.tmp >po/ru/kcm_touchpad.po
@@ -252,6 +254,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Thu Dec 05 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 6.2.4-alt3
+- fix the resizing of the pager applet
+
 * Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - build with kaccounts-integration
 
