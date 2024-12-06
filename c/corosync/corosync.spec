@@ -10,8 +10,8 @@
 %define _localstatedir %_var
 
 Name: corosync
-Version: 3.1.8
-Release: alt2
+Version: 3.1.9
+Release: alt1
 Summary: The Corosync Cluster Engine and Application Programming Interfaces
 License: BSD
 Group: System/Base
@@ -93,6 +93,7 @@ mkdir -p m4
 
 %build
 %autoreconf
+export BASHPATH=/bin/bash
 
 %configure \
 	%{subst_enable watchdog} \
@@ -204,6 +205,9 @@ ln -r -s \
 %endif
 
 %changelog
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.9-alt1
+- 3.1.9
+
 * Thu Apr 11 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.8-alt2
 - Fix up the library .versions files
 - Moved system dbus config from /etc to /usr/share
