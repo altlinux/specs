@@ -92,8 +92,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 24.2
-%define ver_minor 8
+%define ver_major 24.3
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -346,7 +346,7 @@ tar -xf subprojects.tar
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=enabled \
 %endif
-	-Ddri3=enabled \
+	-Dlegacy-x11=dri2 \
 %ifarch %radeon_arches
 	-Dllvm=enabled \
 	-Dshared-llvm=enabled \
@@ -373,7 +373,6 @@ tar -xf subprojects.tar
 	-Dosmesa=true \
 	-Dgles1=disabled \
 	-Dopengl=true \
-	-Dselinux=true \
 	-Dglvnd=enabled \
 	-Ddri-drivers-path=%_libdir/X11/modules/dri \
 	-Db_ndebug=true \
@@ -421,6 +420,8 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 %_libdir/libgallium-%version.so
+%dir %_libdir/gbm
+%_libdir/gbm/dri_gbm.so
 
 %files -n libGL-devel
 %_includedir/GL/internal
@@ -582,6 +583,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Dec 06 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.3.1-alt1
+- 24.3.1
+
 * Thu Nov 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 4:24.2.8-alt1
 - 24.2.8
 
