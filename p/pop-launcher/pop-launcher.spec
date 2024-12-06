@@ -1,5 +1,5 @@
 Name:     pop-launcher
-Version:  1.2.1
+Version:  1.2.4
 Release:  alt1
 
 Summary:  Modular IPC-based desktop launcher service
@@ -26,6 +26,7 @@ BuildRequires: rpm-build-rust
 BuildRequires: /proc
 
 BuildRequires: just
+BuildRequires: pkgconfig(xkbcommon)
 
 %description
 %summary.
@@ -38,17 +39,28 @@ cat <<EOF >> .cargo/config.toml
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/pop-os/cosmic-protocols"]
+git = "https://github.com/pop-os/cosmic-protocols"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/pop-os/dbus-settings-bindings"]
+git = "https://github.com/pop-os/dbus-settings-bindings"
+replace-with = "vendored-sources"
+
 [source.vendored-sources]
 directory = "vendor"
 EOF
 
 %build
-%rust_build -p pop-launcher-bin
+%rust_build -p pop-launcher-bin \
+%ifarch %ix86
+    --config 'profile.release.lto=false'
+%endif
 
 %install
-just rootdir=%buildroot install_bin
-just rootdir=%buildroot bin_path=%_bindir/%name install_scripts
-just rootdir=%buildroot bin_path=%_bindir/%name install_plugins
+just rootdir=%buildroot install-bin
+just rootdir=%buildroot bin-path=%_bindir/%name install-scripts
+just rootdir=%buildroot bin-path=%_bindir/%name install-plugins
 
 %files
 %doc README.md
@@ -56,6 +68,9 @@ just rootdir=%buildroot bin_path=%_bindir/%name install_plugins
 %_libexecdir/%name/
 
 %changelog
+* Fri Dec 06 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.2.4-alt1
+- new version 1.2.4 (with rpmrb script) (ALT bug 51925)
+
 * Fri May 31 2024 Roman Alifanov <ximper@altlinux.org> 1.2.1-alt1
 - initial build for sisyphus
 
