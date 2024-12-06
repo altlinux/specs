@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lightdm-kde-greeter
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -84,6 +84,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Dec 04 2024 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt1
+- add VPN connections support (OpenVPN)
+
 * Wed Nov 06 2024 Anton Golubev <golubevan@altlinux.org> 6.0.1-alt1
 - upstream has caught up with Sisyphus
 - raise the major version to 6, according to Qt
