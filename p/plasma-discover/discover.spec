@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.2.4
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -39,6 +39,7 @@ Source: %rname-%version.tar
 Source1: env-flatpak.sh
 Source2: env-snap.sh
 Source10: ru-override-plasma-discover.po
+Source11: ru-add-libdiscover.po
 # ALT
 Patch1: alt-offline-updates.patch
 Patch2: alt-pk-refresh-timer.patch
@@ -237,6 +238,9 @@ msgcat --use-first %SOURCE10 po/ru/plasma-discover.po > po/ru/plasma-discover.po
 cat po/ru/plasma-discover.po.tmp >po/ru/plasma-discover.po
 rm -f po/ru/plasma-discover.po.tmp
 
+msgcat %SOURCE11 po/ru/libdiscover.po > po/ru/libdiscover.po.tmp
+cat po/ru/libdiscover.po.tmp >po/ru/libdiscover.po
+rm -f po/ru/libdiscover.po.tmp
 
 %build
 %K6build \
@@ -337,6 +341,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- fix russian translation
+
 * Wed Dec 04 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - remove disttags from apply updates dialog
 - highlight removed packages in updates dialog
