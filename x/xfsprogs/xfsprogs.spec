@@ -6,7 +6,7 @@
 %endif
 
 Name: xfsprogs
-Version: 6.9.0
+Version: 6.12.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -21,6 +21,7 @@ Requires: libxfs = %EVR
 # makefiles are buggy
 BuildConflicts: libxfs-devel
 
+BuildRequires: gcc-c++
 BuildRequires: libuuid-devel libblkid-devel 
 BuildRequires: libsystemd-devel rpm-build-python3
 BuildRequires: libinih-devel libuserspace-rcu-devel
@@ -112,6 +113,7 @@ rm -rf %buildroot%_datadir/doc/%name
 %_sbindir/*
 %_unitdir/*.service
 %_unitdir/*.timer
+%_unitdir/system-xfs_scrub.slice
 %dir %_datadir/xfsprogs
 %dir %_datadir/xfsprogs/mkfs
 %dir %_libdir/xfsprogs
@@ -148,6 +150,12 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 6.12.0-alt1
+- 6.10.1 -> 6.12.0
+
+* Tue Sep 17 2024 Anton Farygin <rider@altlinux.ru> 6.10.1-alt1
+- 6.9.0 -> 6.10.1
+
 * Mon Jul 29 2024 Anton Farygin <rider@altlinux.ru> 6.9.0-alt1
 - 6.8.0 -> 6.9.0
 
