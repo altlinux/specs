@@ -1,7 +1,7 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.44.0
+Version: 0.44.2
 Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
@@ -59,6 +59,9 @@ sed -i 's/timeout : 120/timeout : 600/' test/meson.build
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Dec 06 2024 Valery Inozemtsev <shrek@altlinux.ru> 3:0.44.2-alt1
+- 0.44.2
+
 * Thu Nov 14 2024 Valery Inozemtsev <shrek@altlinux.ru> 3:0.44.0-alt1
 - 0.44.0
 
