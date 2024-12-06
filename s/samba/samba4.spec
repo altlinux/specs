@@ -122,7 +122,7 @@
 
 Name:    samba
 Version: 4.20.6
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2232,6 +2232,11 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Dec 06 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.6-alt2
+- auth: Don't fallback to NTLMv1 in anonymous connections (thx Ivan Volchenko).
+  Disable "not doing NTLM2 without a password" in function
+  cli_credentials_get_ntlm_response().
+
 * Wed Nov 20 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.6-alt1
 - Update to maintenance release of Samba 4.20
 - Major fixes from upstream (Samba#15590, Samba#15692):
