@@ -1,6 +1,6 @@
 Name: xfce4-pulseaudio-plugin
-Version: 0.4.8
-Release: alt2
+Version: 0.4.9
+Release: alt1
 
 Summary: A pulseaudio plugin for the Xfce panel
 License: GPLv2+
@@ -15,7 +15,13 @@ Patch: %name-%version-%release.patch
 %def_disable wnck
 %def_enable libcanberra
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+%if_xfce4_wayland_support
+%def_enable libxfce4windowing
+%else
+%def_disable libxfce4windowing
+%endif
+
+BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libexo-gtk3-devel
 BuildRequires: libxfconf-devel
@@ -23,7 +29,7 @@ BuildRequires: libpulseaudio-devel libnotify-devel
 BuildRequires: libkeybinder3-devel
 %{?_enable_wnck:BuildRequires: libwnck3-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
-BuildRequires: intltool
+%{?_enable_libxfce4windowing:BuildRequires: libxfce4windowing-devel}
 
 Requires: xfce4-panel >= 4.11
 
@@ -42,7 +48,7 @@ A panel plugin for controlling PulseAudio mixer.
 	--enable-maintainer-mode \
 	--enable-keybinder \
 	%{subst_enable wnck} \
-	--disable-libxfce4windowing \
+	%{subst_enable libxfce4windowing} \
 	%{subst_enable libcanberra} \
 	--disable-silent-rules \
 	--enable-debug=minimum
@@ -61,6 +67,10 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Dec 06 2024 Mikhail Efremov <sem@altlinux.org> 0.4.9-alt1
+- Enabled libxfce4windowing support (Sisyphus only).
+- Updated to 0.4.9.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.4.8-alt2
 - Fixed build: added intltool to BR.
 
