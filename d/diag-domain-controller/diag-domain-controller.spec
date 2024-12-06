@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool domain-controller
 Name: diag-%diagnostic_tool
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -37,6 +37,25 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Dec 06 2024 Evgenii Sozonov <arzdez@altlinux.org> 0.0.3-alt1
+- The multiple systemctl call has been removed, and the
+  is_domain_info_available function has been adjusted (thx Sergey Savelev)
+- Added FQDN validation, removed multiple calls to samba-tool
+  and systemctl (thx Sergey Savelev)
+- Fixed a typo in the is_hostname_static_and_transient test (thx Sergey Savelev)
+- Added a check for the existence of the timedatectl command in
+  is_ntp_service_running (thx Sergey Savelev)
+- Added a check for the existence of the timedatectl command in
+  is_time_synchronization_enabled (thx Sergey Savelev)
+- Fixed a typo in the is_domain_info_available test comment (thx Sergey Savelev)
+- The output of archive creation information has been fixed and
+  the archiving method has been changed from zip to tar (thx Sergey Savelev)
+- Added a line to notify the user about using testparm in the test
+  does_smb_realm_and_krb5_default_realm_it_match (thx Sergey Savelev)
+- Added output of files from the sysvol directory in the
+  is_not_empty_sysvol test (thx Sergey Savelev)
+- Modify test correct hostname (thx Sergey Savelev)
+
 * Thu Oct 10 2024 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.0.2-alt1
   Author: Sergey Savelev <savelevsa@basealt.ru>
 - The version has been changed.
