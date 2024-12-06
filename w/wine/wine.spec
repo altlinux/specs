@@ -113,7 +113,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.10
+Version: %major.13
 Release: alt1
 Epoch: 1
 
@@ -886,6 +886,21 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Fri Dec 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.13-alt1
+- update patches to staging wine-9.0
+  + fixed compile error, passing incompatible types
+  + win32u: Initialize parent_rect variables in window.c
+
+* Fri Nov 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.12-alt1
+- update patches to staging wine-9.0
+  + ntdll: Compile warning fixes for esync
+
+* Wed Nov 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.11-alt1
+- update patches to staging wine-9.0
+  + msi: Install global assemblies after install custom actions and before commit custom actions
+  + msi: Install global assemblies before running deferred custom actions
+  + ntdll: Don't override WINEUSERNAME environment variable
+
 * Mon Aug 19 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.10-alt1
 - update patches to staging wine-9.0
   + partially revert 46c8a637525d0f1cf67830295fb460c819b800b6. (eterbug #17552)
