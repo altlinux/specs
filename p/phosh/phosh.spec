@@ -24,8 +24,8 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -283,6 +283,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Fri Dec 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.1-alt1
+- 0.43.1
+
 * Mon Nov 18 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1.1
 - updated service.patch after 0.43.0 change
 
