@@ -4,7 +4,7 @@
 
 Name:    osquery
 Version: 5.14.1
-Release: alt1
+Release: alt2
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
 License: Apache-2.0 and GPL-2.0
@@ -85,8 +85,6 @@ BuildRequires: librpm-devel
 BuildRequires: libblkid-devel
 BuildRequires: libcryptsetup-devel
 BuildRequires: libxml2-devel
-BuildRequires: libc++-devel
-BuildRequires: libc++abi-devel
 
 %description
 %summary
@@ -154,6 +152,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Fri Dec 06 2024 Andrey Cherepanov <cas@altlinux.org> 5.14.1-alt2
+- FTBFS: fix required (thanks alton@).
+
 * Sun Oct 20 2024 Andrey Cherepanov <cas@altlinux.org> 5.14.1-alt1
 - New version.
 
