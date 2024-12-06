@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: python3-module-%pypi_name
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Python bindings for zxcvbn-rs
@@ -43,6 +43,9 @@ tar -cf %_sourcedir/%pypi_name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Fri Dec 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - first build for Sisyphus
 
