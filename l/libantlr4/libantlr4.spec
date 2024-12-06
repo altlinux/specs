@@ -1,5 +1,5 @@
 Name: libantlr4
-Version: 4.13.1
+Version: 4.13.2
 Release: alt1
 
 Summary: ANTLR C++ runtime
@@ -59,6 +59,9 @@ rm -fv %buildroot%_docdir/%name/README.md
 %_libdir/cmake/antlr4-generator/
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 4.13.2-alt1
+- new version 4.13.2 (with rpmrb script)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 4.13.1-alt1
 - new version 4.13.1 (with rpmrb script)
 
