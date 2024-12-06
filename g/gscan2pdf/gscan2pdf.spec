@@ -1,8 +1,8 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 2.13.2
-Release: alt2
+Version: 2.13.4
+Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
 Group: Office
@@ -93,6 +93,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.13.4-alt1
+- new version 2.13.4 (with rpmrb script)
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 2.13.2-alt2
 - NMU: fixed build with perl 5.38 - added BR: /usr/bin/pod2html
 
