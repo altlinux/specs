@@ -5,9 +5,9 @@
 %define libkwave libkwave%sover
 
 Name: %rname
-Version: 24.08.2
+Version: 24.11.90
 Release: alt1
-%K5init
+%K6init
 
 Group: Sound
 Summary: Simple Sound Editor
@@ -22,14 +22,15 @@ Requires: lame
 Source: %rname-%version.tar
 Patch2: alt-opus-pkgconvig-wrong-version.patch
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-declarative-devel qt5-multimedia-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel
+BuildRequires: libvulkan-devel
 BuildRequires: dconf doxygen librsvg-utils
 BuildRequires: desktop-file-utils
 BuildRequires: libGConf libalsa-devel libaudiofile-devel libfftw3-devel libflac++-devel libopus-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel
 BuildRequires: id3lib-devel libmad-devel
-BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-kiconthemes-devel kf5-kio-devel kf5-ktextwidgets-devel
-BuildRequires: kf5-karchive-devel
+BuildRequires: kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdoctools-devel kf6-kiconthemes-devel kf6-kio-devel kf6-ktextwidgets-devel
+BuildRequires: kf6-karchive-devel
 
 %description
 Kwave is a simple sound editor.
@@ -38,7 +39,7 @@ Kwave is a simple sound editor.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 Provides:  kde5-kwave-common = %EVR
 Obsoletes: kde5-kwave-common < %EVR
 %description common
@@ -61,7 +62,7 @@ Obsoletes: libkwavegui23 < %EVR
 
 %package -n %libkwave
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common >= %EVR
 Obsoletes: libkwave23 < %EVR
 %description -n %libkwave
@@ -73,16 +74,16 @@ Obsoletes: libkwave23 < %EVR
 %patch2 -p1
 
 %build
-%K5build \
+%K6build \
     #
 
 %install
-%K5install
-%K5install_move data kwave
-desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
+%K6install
+%K6install_move data kwave
+desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
     --set-key="X-DocPath" \
     --set-value="kwave/index.html" \
-    %buildroot/%_K5xdgapp/org.kde.kwave.desktop
+    %buildroot/%_K6xdgapp/org.kde.kwave.desktop
 
 %find_lang %name --with-kde --all-name
 
@@ -90,27 +91,30 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %doc *LICENSE*
 
 %files
-%_K5bin/kwave
-%_K5plug/kwave/
-%_K5data/kwave/
-%_K5icon/*/*/*/*kwave*.*
-%_K5xdgapp/*kwave*.desktop
+%_K6bin/kwave
+%_K6plug/kwave/
+%_K6data/kwave/
+%_K6icon/*/*/*/*kwave*.*
+%_K6xdgapp/*kwave*.desktop
 %_datadir/metainfo/*.xml
 
 #%files devel
-#%_K5inc/kwave_version.h
-#%_K5inc/kwave/
-#%_K5link/lib*.so
-#%_K5lib/cmake/kwave
-#%_K5archdata/mkspecs/modules/qt_kwave.pri
+#%_K6inc/kwave_version.h
+#%_K6inc/kwave/
+#%_K6link/lib*.so
+#%_K6lib/cmake/kwave
+#%_K6archdata/mkspecs/modules/qt_kwave.pri
 
 %files -n %libkwave
-%_K5lib/libkwave.so.%sover
-%_K5lib/libkwave.so.*
+%_K6lib/libkwave.so.%sover
+%_K6lib/libkwave.so.*
 %files -n %libkwavegui
-%_K5lib/libkwavegui.so.%sover
-%_K5lib/libkwavegui.so.*
+%_K6lib/libkwavegui.so.%sover
+%_K6lib/libkwavegui.so.*
 
 %changelog
+* Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt1
+- beta on KF6
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
