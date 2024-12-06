@@ -1,5 +1,5 @@
 Name: nlopt
-Version: 2.7.1
+Version: 2.9.1
 Release: alt1
 
 Summary: Library for nonlinear optimization
@@ -135,6 +135,9 @@ This package contains development documentation for NLopt.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 2.9.1-alt1
+- new version 2.9.1 (with rpmrb script)
+
 * Mon Aug 07 2023 Vitaly Lipatov <lav@altlinux.ru> 2.7.1-alt1
 - new version 2.7.1, switched to cmake build, rewrote spec
 - no more separate libnlopt_cxx library (libnlopt-cxx subpackage)
