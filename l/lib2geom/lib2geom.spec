@@ -1,5 +1,5 @@
 Name: lib2geom
-Version: 1.3
+Version: 1.4
 Release: alt1
 Epoch: 1
 
@@ -63,6 +63,9 @@ sed -i "s|/lib$|/%_lib|" %buildroot%_pkgconfigdir/*
 %_libdir/cmake/2Geom/
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1:1.4-alt1
+- new version 1.4 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 1:1.3-alt1
 - new version 1.3 (with rpmrb script)
 

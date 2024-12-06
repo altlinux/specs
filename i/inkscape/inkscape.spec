@@ -1,4 +1,4 @@
-%define major 1.3
+%define major 1.4
 
 # pack shared libinkscape library
 %def_with shared
@@ -11,7 +11,7 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major.2
+Version: %major
 Release: alt1
 
 Summary: A Vector Drawing Application
@@ -44,7 +44,8 @@ BuildRequires: libstdc++8-devel-static
 BuildRequires: cmake gcc-c++ intltool
 BuildRequires: boost-devel-headers boost-filesystem-devel boost-asio-devel
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
-BuildRequires: lib2geom-devel >= 1:1.3
+
+BuildRequires: lib2geom-devel >= 1:1.4
 
 # Checking for modules 'gtkmm-3.0>=3.24;gdkmm-3.0>=3.24;gtk+-3.0>=3.24;gdk-3.0>=3.24'
 BuildRequires: pkgconfig(gtkmm-3.0) >= 3.24
@@ -156,7 +157,7 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
-%patch1 -p1
+#patch1 -p1
 
 %ifarch %e2k
 # missing typeinfo fix
@@ -260,6 +261,10 @@ true
 %files checkinstall
 
 %changelog
+* Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
+- new version 1.4 (with rpmrb script)
+- require lib2geom-devel >= 1.4
+
 * Thu Dec 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt1
 - new version 1.3.2 (with rpmrb script)
 - fix build with libxml2-2.12.3 (ALT bug 48874)
