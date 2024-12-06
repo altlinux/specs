@@ -4,7 +4,7 @@
 %global optflags_lto %nil
 
 Name: dtc
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
@@ -138,6 +138,9 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.2-alt1
+- New version 1.7.2.
+
 * Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 
