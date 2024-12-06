@@ -1,12 +1,12 @@
 %define rname kmix
 
-%define sover 5
+%define sover 6
 %define libkmixcore libkmixcore%sover
 
 Name: %rname
-Version: 24.08.2
+Version: 24.11.90
 Release: alt1
-%K5init
+%K6init
 
 Group: Sound
 Summary: KDE sound mixer
@@ -18,15 +18,15 @@ Obsoletes: kde5-kmix < %EVR
 
 Source: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-declarative-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libalsa-devel libcanberra-devel libpulseaudio-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdesignerplugin-devel
-BuildRequires: kf5-kdoctools kf5-kdoctools-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
-BuildRequires: kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel
-BuildRequires: kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
+BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
+BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knotifications-devel kf6-kpackage-devel
+BuildRequires: kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel
+BuildRequires: kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel kf6-kstatusnotifieritem-devel
 
 %description
 A sound mixer applet for KDE.
@@ -37,7 +37,7 @@ sound card from a KDE panel applet.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 Provides:  kde5-kmix-common = %EVR
 Obsoletes: kde5-kmix-common < %EVR
 %description common
@@ -52,49 +52,50 @@ developing applications that use %name.
 
 %package -n %libkmixcore
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common >= %EVR
 %description -n %libkmixcore
-KF5 library
+%name library
 
 
 %prep
 %setup -n %rname-%version
 
 %build
-%K5build \
-    -DKMIX_KF5_BUILD:BOOL=ON \
+%K6build \
+    -DBUILD_DATAENGINE:BOOL=OFF \
     #
 
 %install
-%K5install
-%K5install_move data kmix
+%K6install
+%K6install_move data kmix
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
-%_datadir/qlogging-categories5/*.*categories
+%_datadir/qlogging-categories?/*.*categories
 
 %files
-%_K5bin/*
-%_K5plug/kf5/kded/*kmix*.so
-%_K5start/*.desktop
-%_K5data/kmix/
-%_K5cfg/*kmix*.kcfg
-%_K5xmlgui/kmix/
-%_K5xdgapp/*kmix.desktop
-%_K5srv/*.desktop
-%_K5notif/*kmix*.notifyrc
-%_K5icon/*/*/actions/kmix.*
+%_K6bin/*
+%_K6start/*.desktop
+%_K6data/kmix/
+%_K6cfg/*kmix*.kcfg
+%_K6data/kxmlgui?/kmix/
+%_K6xdgapp/*kmix.desktop
+%_K6notif/*kmix*.notifyrc
+%_K6icon/*/*/actions/kmix.*
 %_datadir/metainfo/*.xml
 
 %files devel
-%_K5dbus_iface/*.xml
+%_K6dbus_iface/*.xml
 
 %files -n %libkmixcore
-%_K5lib/libkmixcore.so.*
-%_K5lib/libkmixcore.so.%sover
+%_K6lib/libkmixcore.so.*
+%_K6lib/libkmixcore.so.%sover
 
 %changelog
+* Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt1
+- beta with KF6
+
 * Mon Oct 21 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
