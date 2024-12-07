@@ -6,7 +6,7 @@
 
 Name: toybox
 Version: 0.8.11
-Release: alt1
+Release: alt2
 Summary: All-in-one Linux command line
 License: 0BSD
 Group: Shells
@@ -72,6 +72,9 @@ size toybox
 /bin/toybox
 
 %changelog
+* Sat Dec 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.11-alt2
+- Fix FTBFS with gcc14.
+
 * Fri Apr 12 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.11-alt1
 - Update to 0.8.11 (2024-04-08).
 
