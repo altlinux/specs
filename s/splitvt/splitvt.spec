@@ -1,10 +1,10 @@
 Name: splitvt
 Version: 1.6.6_6
-Release: alt1.qa1
+Release: alt2
 
 Summary: Splitvt splits console or shell screen to sections in which you can start different shells
 
-License: GPL
+License: GPLv2
 Group: Terminals
 Url: http://www.devolution.com/~slouken/projects/splitvt/
 Packager: Denis Medvedev <nbr@altlinux.ru>
@@ -33,6 +33,9 @@ mkdir -p %buildroot/usr/bin
 /usr/share/man/man1/*
 
 %changelog
+* Sat Dec 07 2024 Denis Medvedev <nbr@altlinux.org>  1.6.6_6-alt2
+- FTBFS fix
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.6_6-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
