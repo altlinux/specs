@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: System monitor
@@ -16,10 +16,11 @@ License: GPL-3.0-or-later
 Group: Monitoring
 Url: https://apps.gnome.org/Resources
 
+Vcs: https://github.com/nokyan/resources.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/nokyan/resources.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -86,6 +87,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Sat Nov 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - updated to v1.7.0-6-g6d16bfd
 
