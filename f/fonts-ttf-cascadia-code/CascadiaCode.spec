@@ -1,5 +1,5 @@
 Name: fonts-ttf-cascadia-code
-Version: 2404.23
+Version: 2407.24
 Release: alt1
 
 Summary: A fun new coding TTF font that comes bundled with Windows Terminal 
@@ -38,6 +38,9 @@ cd otf/static && %otf_fonts_install Cascadia
 %files -n fonts-otf-cascadia-code -f otf/static/Cascadia.files
 
 %changelog
+* Sat Dec 07 2024 Anton Zhukharev <ancieg@altlinux.org> 2407.24-alt1
+- Updated to 2407.24.
+
 * Sat Jul 27 2024 Fr. Br. George <george@altlinux.org> 2404.23-alt1
 - Rename according to font policy
 - Introduce OTF version
