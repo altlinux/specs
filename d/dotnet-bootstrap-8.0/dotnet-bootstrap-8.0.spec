@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.8
+%define _dotnet_corerelease 8.0.11
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.108
+%define _dotnet_sdkrelease 8.0.111
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -15,9 +15,10 @@
 %define _dotnet_sdkshortrelease %_dotnet_sdkrelease%preview
 
 %define _dotnetdir %_libdir/%name
+%define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.8
+Version: 8.0.11
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -30,11 +31,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/8.0
 
 # x86_64
-# Source-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
+# Source-url: %mdsourceurl dotnet-sdk-%{_dotnet_sdkrelease}-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
+# Source2-url: %mdsourceurl dotnet-sdk-%{_dotnet_sdkrelease}-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -130,6 +131,14 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.11-alt1
+- The .NET 8.0.11 and .NET SDK 8.0.111 release
+- fixed CVEs:
+ + CVE-2024-38229: .NET Remote Code Execution Vulnerability
+ + CVE-2024-43483: .NET Denial of Service Vulnerability
+ + CVE-2024-43484: .NET Denial of Service Vulnerability
+ + CVE-2024-43485: .NET Denial of Service Vulnerability
+
 * Sun Sep 15 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.8-alt1
 - The .NET 8.0.8 and .NET SDK 8.0.108 release
 - CVE-2024-38168: .NET Denial of Service Vulnerability
