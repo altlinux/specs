@@ -1,14 +1,14 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.2
-%define rdn_name com.system76.CosmicApplet
+%define beta .alpha.4
+%define rdn_name com.system76.CosmicApplets
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-applets
 Version: %ver_major.0
-Release: alt0.2%beta
+Release: alt0.4%beta
 
 Summary: COSMIC Panel Applets
 License: GPL-3.0
@@ -60,6 +60,7 @@ just rootdir=%buildroot install
 %files
 %_bindir/%name
 %_bindir/cosmic-app-list
+%_bindir/cosmic-applet-a11y
 %_bindir/cosmic-applet-audio
 %_bindir/cosmic-applet-battery
 %_bindir/cosmic-applet-bluetooth
@@ -76,9 +77,13 @@ just rootdir=%buildroot install
 %_desktopdir/*.desktop
 %_datadir/cosmic/com.system76.CosmicAppList/
 %_iconsdir/hicolor/*/*/*.svg
+%_datadir/metainfo/%rdn_name.metainfo.xml
 #%doc README*
 
 %changelog
+* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
+- 1.0.0-alpha.4
+
 * Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
 - 1.0.0-alpha.2
 

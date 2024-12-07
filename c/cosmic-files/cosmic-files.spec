@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.2
+%define beta .alpha.4
 %define rdn_name com.system76.CosmicFiles
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-files
 Version: %ver_major.0
-Release: alt0.2%beta
+Release: alt0.4%beta
 
 Summary: COSMIC File Manager
 License: GPL-3.0
@@ -24,6 +24,10 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
 Patch1: %name-1.0.0-alt-no-vergen.patch
+
+# rustc-LLVM ERROR: out of memory
+# Allocation failed
+ExcludeArch: %ix86 armh
 
 Requires: cosmic-icons
 
@@ -69,6 +73,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
+- 1.0.0-alpha.4
+
 * Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
 - updated to epoch-1.0.0-alpha.2-19-g03b6b6b
 

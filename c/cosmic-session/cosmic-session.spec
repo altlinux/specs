@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.2
+%define beta .alpha.4
 %define rdn_name com.system76.CosmicSession
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-session
 Version: %ver_major.0
-Release: alt0.2%beta
+Release: alt0.4%beta
 
 Summary: COSMIC Session Manager
 License: GPL-3.0
@@ -32,6 +32,7 @@ Requires: cosmic-bg
 Requires: cosmic-comp
 Requires: cosmic-greeter
 Requires: cosmic-icons
+Requires: cosmic-idle
 Requires: cosmic-launcher
 Requires: cosmic-notifications
 Requires: cosmic-osd
@@ -45,10 +46,11 @@ Requires: cosmic-workspaces
 Requires: switcheroo-control
 Requires: xdg-desktop-portal-cosmic
 #Requires: cosmic-edit
-#Requires: cosmic-files
+Requires: cosmic-files
 #Requires: cosmic-store
-#Requires: cosmic-term
+Requires: cosmic-term
 #Requires: cosmic-wallpapers
+Requires: orca
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -71,6 +73,7 @@ sed -i 's|\/usr\(\/bin\/dbus-run-session\)|\1|' data/start-cosmic
 
 %install
 just rootdir=%buildroot install
+install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/cosmic
 
 %check
 %rust_test
@@ -80,9 +83,13 @@ just rootdir=%buildroot install
 %_bindir/start-cosmic
 %_userunitdir/%name.target
 %_desktopdir/cosmic-mimeapps.list
+%_datadir/dconf/profile/cosmic
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
+- updated to epoch-1.0.0-alpha.4-1-g78316ba
+
 * Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
 - 1.0.0-alpha.2
 

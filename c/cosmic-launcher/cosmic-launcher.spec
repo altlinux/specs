@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.2
+%define beta .alpha.4
 %define rdn_name com.system76.CosmicLauncher
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-launcher
 Version: %ver_major.0
-Release: alt0.2%beta
+Release: alt0.4%beta
 
 Summary: COSMIC Launcher
 License: MPL-2.0
@@ -23,7 +23,6 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
-Patch10: cosmic-term-1.0.0-alt-linux-raw-sys-char-loongarch64.patch
 
 # no pop-launcher for ppc64le
 ExcludeArch: ppc64le armh
@@ -44,10 +43,6 @@ BuildRequires: pkgconfig(xkbcommon)
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
-%patch10 -p1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    vendor/linux-raw-sys/.cargo-checksum.json
-
 %build
 %rust_build
 
@@ -65,6 +60,12 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
+- 1.0.0-alpha.4
+
+* Sat Nov 02 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.3.alpha.3
+- 1.0.0.alpha.3
+
 * Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
 - 1.0.0-alpha.2
 

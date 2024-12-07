@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.2
+%define beta .alpha.4
 %define rdn_name com.system76.CosmicSettings
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-settings
 Version: %ver_major.0
-Release: alt0.2%beta
+Release: alt0.4%beta
 
 Summary: COSMIC Settings
 License: GPL-3.0
@@ -55,7 +55,11 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+%rust_build \
+%ifarch aarch64
+    --config 'profile.release.lto=false'
+%endif
+%nil
 
 %install
 just rootdir=%buildroot install
@@ -78,6 +82,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
+- 1.0.0-alpha.4
+
 * Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
 - updated to epoch-1.0.0-alpha.2-8-gc38e870
 
