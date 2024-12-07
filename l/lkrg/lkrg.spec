@@ -4,7 +4,7 @@
 
 Name: lkrg
 Version: 0.9.9
-Release: alt1
+Release: alt2
 
 Summary: Linux Kernel Runtime Guard module
 
@@ -19,7 +19,7 @@ Source1: %name.init
 ExclusiveArch: aarch64 armh %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
 %{?!_without_check:%{?!_disable_check:
-BuildRequires: kernel-headers-modules-un-def
+BuildRequires: kernel-headers-modules-%{?kernel_latest}%{!?kernel_latest:un-def}
 BuildRequires: shellcheck
 }}
 Requires: lkrg-common
@@ -177,6 +177,9 @@ test $1 -eq 1 && ! test -s %_sysconfdir/lkrg-logger.conf && lkrg-keygen > %_sysc
 %_unitdir/lkrg-logger.service
 
 %changelog
+* Sat Dec 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.9-alt2
+- Fix FTBFS after un-def flavour is gone.
+
 * Thu Oct 24 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.9-alt1
 - Update to v0.9.9
 
