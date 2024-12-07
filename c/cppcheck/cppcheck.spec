@@ -2,30 +2,38 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.13.3
+Version: 2.16.1
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
 Group: Development/Tools
 
-Url: https://github.com/danmar/cppcheck
+
+Url: https://cppcheck.sourceforge.io/
+Vcs: https://github.com/danmar/cppcheck.git
+
 # Source-url: https://github.com/danmar/cppcheck/archive/%version.tar.gz
 Source: %name-%version.tar
 
 Patch2: cppcheck-1.78-norebuild.patch
-Patch4: cppcheck-1.72-test_32.patch
+Patch4: cppcheck-2.16-test_32.patch
 Patch8: cppcheck-2.2-translations.patch
 Patch10: cppcheck-2.8-kate.patch
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
+
+# Automatically added by buildreq on Fri Dec 06 2024
+# optimized out: cmake-modules docbook-dtds gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp18 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-help libqt6-network libqt6-printsupport libqt6-qml libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libxkbcommon-devel llvm18.1-libs pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 vulkan-headers xml-common xml-utils
+BuildRequires: cmake docbook-style-xsl libpcre-devel libtinyxml2-devel qt6-tools-devel xsltproc
+
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-charts-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-charts-devel
 BuildRequires: cmake
 BuildRequires: ctest
 BuildRequires: docbook-style-xsl libpcre-devel xsltproc
 BuildRequires: libtinyxml2-devel
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-cmake
 
 # cppcheck-suppress missingReturn, we do the same here
 %add_optflags -Wno-error=return-type
@@ -50,16 +58,19 @@ Requires: icon-theme-hicolor
 %setup
 
 %__subst 's|/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl|/usr/share/xml/docbook/xsl-stylesheets/manpages/docbook.xsl|' \
- Makefile man/cppcheck.1.xml tools/dmake.cpp
+  Makefile man/cppcheck.1.xml tools/dmake/dmake.cpp
 
-%patch2 -p1
+%patch2 -p1 -b .p2
+
 
 %ifnarch x86_64
-%patch4 -p1
+%patch4 -p1 -b .p4
 %endif
 
-%patch8 -p1
-%patch10 -p1
+
+
+%patch8 -p1 -b .p8
+%patch10 -p1 -b .p10
 
 %__subst 's|/usr/bin/env python.*$|%__python3|' htmlreport/{cppcheck-htmlreport,*.py} addons/*.py tools/*.py
 
@@ -77,6 +88,7 @@ rm -rv externals/tinyxml2
 	-G'Unix Makefiles' \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DUSE_MATCHCOMPILER:BOOL=ON \
+	-DUSE_QT6=ON \
 	-DUSE_BUNDLED_TINYXML2=OFF \
 	-DHAVE_RULES:BOOL=ON \
 	-DBUILD_GUI:BOOL=ON \
@@ -127,6 +139,10 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Dec 06 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2.16.1-alt1
+- Version 2.16.1
+- Build width Qt6
+
 * Fri Feb 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2.13.3-alt1
 - Version 2.13.3
 
