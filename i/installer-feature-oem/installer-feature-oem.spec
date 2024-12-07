@@ -1,9 +1,9 @@
 Name: installer-feature-oem
 Version: 0.2
-Release: alt2
+Release: alt3
 
 Summary: OEM mode support for installer
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: https://www.altlinux.org/Installer/OEM
@@ -33,6 +33,10 @@ Requires: installer-common-stage2
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Fri Dec 06 2024 Anton Midyukov <antohami@altlinux.org> 0.2-alt3
+- initinstall.d/98-oem.sh: install alterator-net-eth, when needs
+- preinstall.d/40-oem-step.sh: add net-eth step only when available
+
 * Wed Jul 17 2024 Dmitry Terekhin <jqt4@altlinux.org> 0.2-alt2
 - Add alterator-net-eth to the installed system
 
