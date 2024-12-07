@@ -2,7 +2,7 @@
 %define abiversion 2
 
 Name: podofo
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: PDF manipulation library and tools
@@ -91,6 +91,9 @@ mv %buildroot%_datadir/%name %buildroot%_cmakedir/
 %_libdir/libpodofo.so
 
 %changelog
+* Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 0.10.4-alt1
+- new version 0.10.4 (with rpmrb script)
+
 * Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 0.10.3-alt1
 - new version 0.10.3 (with rpmrb script)
 - more strict paths in files section
