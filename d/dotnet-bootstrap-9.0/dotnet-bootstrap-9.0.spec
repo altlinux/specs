@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 9.0
-%define preview .rc.1
+%define preview %nil
 %define _dotnet_coreversion 9.0.0%preview
-%define _dotnet_sdkversion 9.0.100%preview
-%define _dotnet_corerelease 9.0.0-rc.1.24431.7
-%define _dotnet_corerelease1 9.0.0-rc.1.24452.1
+%define _dotnet_sdkversion 9.0.101%preview
+%define _dotnet_corerelease 9.0.0
+%define _dotnet_corerelease1 9.0.0
 %define _dotnet_sdkmanifestsrelease0 8.0.100
-%define _dotnet_sdkmanifestsrelease1 9.0.100-preview.6
-%define _dotnet_sdkmanifestsrelease 9.0.100-rc.1
-%define _dotnet_sdkrelease 9.0.100-rc.1.24452.12
+%define _dotnet_sdkmanifestsrelease1 9.0.100-rc.2
+%define _dotnet_sdkmanifestsrelease 9.0.100
+%define _dotnet_sdkrelease 9.0.101
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_templatesrelease %_dotnet_corerelease1
@@ -17,11 +17,12 @@
 %define _dotnet_netstandartrelease 2.1.0
 
 %define _dotnetdir %_libdir/%name
-#define mdsourceurl https://raw.githubusercontent.com/dotnet/core/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
-%define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/9.0/preview/rc1/9.0.0-rc.1.md
+#define mdsourceurl https://raw.githubusercontent.com/dotnet/core/refs/heads/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
+%define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
+#define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/9.0/preview/rc1/9.0.0-rc.1.md
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: %_dotnet_coreversion
+Version: %_dotnet_sdkrelease
 Release: alt1
 
 Summary: .NET 9 SDK binaries
@@ -138,6 +139,10 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.101-alt1
+- The .NET 9.0.0 and .NET SDK 9.0.101 release
+- use SDK version as package version
+
 * Thu Sep 19 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.rc.1-alt1
 - new version (9.0.0.rc.1) with rpmgs script
 
