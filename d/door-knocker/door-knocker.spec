@@ -3,14 +3,14 @@
 
 Name: door-knocker
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Check the availability of portals
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://gitlab.gnome.org/ilhooq/bookup
-Vcs: https://gitlab.gnome.org/ilhooq/bookup
+Url: https://codeberg.org/tytan652/door-knocker
+Vcs: https://codeberg.org/tytan652/door-knocker
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -49,5 +49,8 @@ by xdg-desktop-portal.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sun Dec 08 2024 Oleg Shchavelev <oleg@altlinux.org> 0.6.0-alt2
+- Fix url and vcs values (ALT #52371)
+
 * Tue Nov 19 2024 Oleg Shchavelev <oleg@altlinux.org> 0.6.0-alt1
 - Initial build
