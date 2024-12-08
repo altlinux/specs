@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 6.11
+%define ver_major 6.12
 %define api_ver 6
 %define namespace Tepl
 
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 %define gtk_doc_ver 1.0
 %define gtk_ver 3.24
 %define handy_ver 1.6
-%define gtksource_ver 299.3.0
+%define gtksource_ver 299.4.0
 %define amtk_ver 5.9.0
 %define gfls_ver 0.2.0
 
@@ -170,6 +170,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 6.12.0-alt1
+- 6.12.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 6.11.0-alt1
 - first build for Sisyphus
 

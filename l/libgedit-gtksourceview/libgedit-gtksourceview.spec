@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-gtksourceview
-Version: %ver_major.3.0
+Version: %ver_major.4.0
 Release: alt1
 
 Summary: Gedit Technology - Source code editing widget
@@ -110,8 +110,8 @@ the functionality of the installed %name library.
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_disable_introspection:-Dgobject_introspection=false} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool introspection gobject_introspection}
 %nil
 %meson_build
 
@@ -157,6 +157,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 299.4.0-alt1
+- 299.4.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 299.3.0-alt1
 - 299.3.0
 
