@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.9.5
-Release: alt1
+Version: 2.9.6
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -55,6 +55,9 @@ Requires: libkrb5 >= 1.14.4-alt2
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libldb-devel
+
+BuildRequires(pre): rpm-macros-systemd
+%systemd_requires
 
 ### Build Dependencies ###
 BuildRequires: libpopt-devel
@@ -518,6 +521,7 @@ install -D -m644 src/examples/logrotate %buildroot%_sysconfdir/logrotate.d/%name
 touch %buildroot%mcpath/passwd
 touch %buildroot%mcpath/group
 touch %buildroot%mcpath/initgroups
+touch %buildroot%mcpath/sid
 
 install -D -m755 %SOURCE2 %buildroot%_initdir/%name
 install -D -m644 %SOURCE3 %buildroot%_pamdir/system-auth-sss
@@ -570,12 +574,40 @@ unset CK_TIMEOUT_MULTIPLIER
 
 %post
 chown root:root %_sysconfdir/sssd/sssd.conf
+%post_systemd_postponed %name.service sssd-nss.socket sssd-pam.socket sssd-ssh.socket
 
-# Don't restart sssd services until reboot or manual restart
-#post_service %name
-#
-#preun
-#preun_service %name
+%preun
+%preun_systemd %name.service sssd-nss.socket sssd-pam.socket sssd-ssh.socket
+
+%post pac
+%post_systemd_postponed sssd-pac.socket
+
+%preun pac
+%preun_systemd sssd-pac.socket
+
+%post dbus
+%post_systemd_postponed sssd-ifp.service
+
+%preun dbus
+%preun_systemd sssd-ifp.service
+
+%post kcm
+%post_systemd_postponed sssd-kcm.socket
+
+%preun kcm
+%preun_systemd sssd-kcm.socket
+
+%post -n libsss_sudo
+%post_systemd_postponed sssd-sudo.socket
+
+%preun -n libsss_sudo
+%preun_systemd sssd-sudo.socket
+
+%post -n libsss_autofs
+%post_systemd_postponed sssd-autofs.socket
+
+%preun -n libsss_autofs
+%preun_systemd sssd-autofs.socket
 
 %triggerpostun -- %name < 2.4.2-alt1
 [ "$(control sssd-drop-privileges)" != "unknown" ] ||
@@ -645,6 +677,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/passwd
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/group
 %ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/initgroups
+%ghost %attr(0644,%sssd_user,%sssd_user) %verify(not md5 size mtime) %mcpath/sid
 %attr(755,%sssd_user,%sssd_user) %dir %pipepath
 %attr(750,%sssd_user,root) %dir %pipepath/private
 %attr(755,%sssd_user,%sssd_user) %dir %gpocachepath
@@ -884,6 +917,31 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Sat Dec 07 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.6-alt2
+- Add postponed restart of sssd services (closes: 52364).
+
+* Fri Dec 06 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.6-alt1
+- Update to latest 2.9 LTM release:
+  + The DoT for dynamic DNS updates is supported now. It requires new version of
+    nsupdate from BIND 9.19+. The dyndns_server option is extended so it can be
+    in form of URI (dns+tls://1.2.3.4:853#servername). New set of options:
+    dyndns_dot_cacert, dyndns_dot_cert and dyndns_dot_key allows to
+    configure DNS-over-TLS communication.
+  + The option default_domain_suffix is deprecated. Consider using the more
+    flexible domain_resolution_order instead.
+
+* Mon Dec 02 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.5-alt2
+- Update to latest 2.9 LTM release with fixes from upstream:
+  + dyndns: collect nsupdate debug output.
+  + ldap_child: make sure invalid krb5 context is not used (GitHub#7715).
+  + CLIENT: don't try to lookup `getservbyport(0, ...)`
+  + OPTS: Add the option for DP_OPT_DYNDNS_REFRESH_OFFSET
+  + pam_sss: add some missing cleanup calls.
+  + ipa: Check sudo command threshold correctly
+  + ssh: do not use default_domain_suffix
+  + build: unbreak detection for x400Address
+- cert util: add support build with OpenSSL older than 3.0
+
 * Tue Oct 29 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.5-alt1
 - Update to latest 2.9 LTM release (fixes: CVE-2023-3758) (closes: 51860).
 - Add sssd-dbus to Requires for sssd-tools (due the InfoPipe responder using).
