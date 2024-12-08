@@ -1,6 +1,6 @@
 Name: libmicrosoft-gsl
-Version: 4.0.0
-Release: alt2
+Version: 4.1.0
+Release: alt1
 Epoch: 1
 
 Summary: Guidelines Support Library
@@ -54,7 +54,7 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 # adopt to external catch2
 #__subst "s|\(add_custom_target(catch)\)|\1\nfind_package(Catch2)|" tests/CMakeLists.txt
 #__subst "s|catch/|catch2/|" tests/*.cpp
@@ -77,6 +77,9 @@ make test
 /usr/share/cmake/Microsoft.GSL/
 
 %changelog
+* Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 1:4.1.0-alt1
+- new version 4.1.0 (with rpmrb script)
+
 * Wed Aug 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1:4.0.0-alt2
 - add workaround for std::variant bug in libstdc++
   see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547
