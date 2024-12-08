@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-argcomplete
-Version: 3.5.1
+Version: 3.5.2
 Release: alt1
 
 Summary: Bash tab completion for argparse
@@ -67,6 +67,9 @@ export PATH=$PATH:%buildroot%_bindir
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Dec 08 2024 Anton Vyatkin <toni@altlinux.org> 3.5.2-alt1
+- New version 3.5.2.
+
 * Mon Oct 07 2024 Anton Vyatkin <toni@altlinux.org> 3.5.1-alt1
 - New version 3.5.1.
 
