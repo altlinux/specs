@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -36,6 +36,7 @@ BuildRequires(pre): rpm-build-licenses
 %define eog_ver %ver_major
 %define network_manager_ver 1.36.0
 %define terminal_ver 3.54.1
+%define console_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
 %define evince_ver 46.3.1
@@ -117,7 +118,8 @@ Requires: fuse-gvfs
 Requires: nautilus >= %nautilus_ver
 Requires: nautilus-share samba-usershares
 ## Default terminal emulator
-Requires: gnome-terminal >= %terminal_ver
+#Requires: gnome-terminal >= %terminal_ver
+Requires: gnome-console >= %console_ver
 ## Default archiving tool
 Requires: file-roller >= %roller_ver
 ## Default text editor
@@ -243,7 +245,7 @@ Requires: gnome-kra-ora-thumbnailer
 #  Epub thumbnailer for Nautilus
 Requires: gnome-epub-thumbnailer
 # Nautilus extension for terminal
-Requires: gnome-terminal-nautilus
+#Requires: gnome-terminal-nautilus
 # Menu editor
 Requires: alacarte
 
@@ -476,6 +478,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1.1
+- minimal: terminal -> console
+
 * Mon Nov 18 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - default: empathy -> chatty
 
