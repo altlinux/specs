@@ -1,6 +1,6 @@
 Name: rg552-hw-control
-Version: 0.1
-Release: alt5
+Version: 0.2
+Release: alt1
 
 Summary: Set of tools for hardware control on Anbernic RG552
 
@@ -47,6 +47,10 @@ install -m 0644 20-rg552-hardware.preset %buildroot%_presetdir/
 %_presetdir/20-rg552-hardware.preset
 
 %changelog
+* Sat Dec 07 2024 Oleg Shchavelev <oleg@altlinux.org> 0.2-alt1
+- NMU: add support of fan speed control by GUI plugin in phosh-mobile-settings,
+  see https://github.com/Maks1mS/rg552-hw-control (thx to Maks1mS)
+
 * Mon Jul 01 2024 Anton Midyukov <antohami@altlinux.org> 0.1-alt5
 - NMU: rg552-fancontrol, rg552-wifi: do nothing if the device model is not
   Anbernic RG552
