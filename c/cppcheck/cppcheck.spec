@@ -3,7 +3,7 @@
 
 Name: cppcheck
 Version: 2.16.1
-Release: alt1
+Release: alt2
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -24,9 +24,9 @@ Patch10: cppcheck-2.8-kate.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Fri Dec 06 2024
+# Automatically added by buildreq on Sun Dec 08 2024
 # optimized out: cmake-modules docbook-dtds gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp18 libdouble-conversion3 libglvnd-devel libgpg-error libp11-kit libqt6-core libqt6-dbus libqt6-gui libqt6-help libqt6-network libqt6-printsupport libqt6-qml libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libxkbcommon-devel llvm18.1-libs pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 vulkan-headers xml-common xml-utils
-BuildRequires: cmake docbook-style-xsl libpcre-devel libtinyxml2-devel qt6-tools-devel xsltproc
+BuildRequires: cmake docbook-style-xsl libpcre-devel qt6-tools-devel xsltproc
 
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel qt6-tools-devel qt6-charts-devel
@@ -81,15 +81,17 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.c' -o -name '*.h' |
 %endif
 
 # Make sure bundled tinyxml2 is not used
-rm -rv externals/tinyxml2
+#rm -rv externals/tinyxml2
 
 %build
+
 %cmake \
 	-G'Unix Makefiles' \
+	-DQHELPGENERATOR=%_qt6_libexecdir/qhelpgenerator \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DUSE_MATCHCOMPILER:BOOL=ON \
 	-DUSE_QT6=ON \
-	-DUSE_BUNDLED_TINYXML2=OFF \
+	-DUSE_BUNDLED_TINYXML2=ON \
 	-DHAVE_RULES:BOOL=ON \
 	-DBUILD_GUI:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -113,6 +115,10 @@ done
 
 install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 
+install -d %buildroot%_datadir/Cppcheck/help/
+
+cp -r gui/help/* %buildroot%_datadir/Cppcheck/help/
+
 # Install htmlreport
 install -pD -m 755 htmlreport/cppcheck-htmlreport %buildroot%_bindir/cppcheck-htmlreport
 # Restore execute permission of python files
@@ -135,10 +141,14 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %doc gui/help/manual.html
 %_bindir/%name-gui
 %_datadir/Cppcheck/lang
+%_datadir/Cppcheck/help
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Dec 08 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2.16.1-alt2
+- Add help files
+
 * Fri Dec 06 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2.16.1-alt1
 - Version 2.16.1
 - Build width Qt6
