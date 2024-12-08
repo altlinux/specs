@@ -1,13 +1,13 @@
 %define _name Iconic
 %define binary_name folder_icon
-%define ver_major 2024.10
+%define ver_major 2024.12
 %define rdn_name nl.emphisia.icon
 
 %def_enable check
 %def_disable bootstrap
 
 Name: iconic
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Easilly add icons on top of folders
@@ -72,6 +72,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.12.1-alt1
+- 2024.12.1
+
 * Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.10.2-alt1
 - updated to v2024.10.2-3-g7385daa
 
