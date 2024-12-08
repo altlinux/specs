@@ -2,7 +2,7 @@
 
 Name: spacefm
 Version: 1.0.6
-Release: alt4
+Release: alt5
 Summary: Multi-panel tabbed file and desktop manager
 License: GPLv3+ and LGPLv3+
 Group: File tools
@@ -10,9 +10,17 @@ Url: http://ignorantguru.github.io/spacefm
 Source0: %name-%version.tar
 Source1: %name.conf
 Source2: session
+
 Patch0: spacefm-1.0.6-major-glibc228.patch
 # Patch to compile with gcc10 -fno-common
 Patch1: spacefm-1.0.6-gcc10-fno-common.patch
+
+Patch2: spacefm-1.0.6-deb-fix-ftbfs-gcc14.patch
+Patch3: spacefm-1.0.6-deb-update_desktop_files.patch
+Patch4: spacefm-1.0.6-deb-fix_thumbnails.patch
+Patch5: spacefm-1.0.6-deb-add_optional_close_last_tab.patch
+Patch6: spacefm-1.0.6-deb-drop-gnome-common-macros.patch
+Patch7: spacefm-1.0.6-deb-drop_spacefm-installer.patch
 
 BuildRequires: intltool libgtk+%gtkver-devel libudev-devel
 
@@ -28,8 +36,14 @@ alike for its stability, speed, convenience and flexibility.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 %autoreconf
@@ -41,18 +55,17 @@ alike for its stability, speed, convenience and flexibility.
 %make_build
 
 %install
-make DESTDIR=%buildroot install
-install -Dp -m 0644 %SOURCE1 %buildroot/%_sysconfdir/%name/%name.conf
+%makeinstall_std
+#install -Dp -m 0644 %SOURCE1 %buildroot/%_sysconfdir/%name/%name.conf
 install -Dp -m 0644 %SOURCE2 %buildroot/%_sysconfdir/xdg/%name/session
 
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS COPYING COPYING-LGPL ChangeLog README
+%doc AUTHORS ChangeLog README data/spacefm-manual-en.html
 %_sysconfdir/%name/
 %_sysconfdir/xdg/%name/
 %_bindir/*
-%exclude %_bindir/%name-installer
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_datadir/%name/
 %_desktopdir/*.desktop
@@ -61,6 +74,10 @@ install -Dp -m 0644 %SOURCE2 %buildroot/%_sysconfdir/xdg/%name/session
 %_datadir/mime/packages/%name-mime.xml
 
 %changelog
+* Sun Dec 08 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.0.6-alt5
+- Fixed build with gcc14
+- Added some patches from Debian
+
 * Thu Dec 10 2020 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt4
 - Fix build with gcc10 -fno-common
 
