@@ -1,5 +1,6 @@
 %def_enable xfs
 %def_disable jfs
+%def_enable exfat
 %def_disable apfs
 %ifarch loongarch64 %mips ppc64le
 # raiserfs4 does not work with 16k kernel pages
@@ -10,7 +11,7 @@
 %def_enable checkfs
 
 Name: partclone
-Version: 0.3.27
+Version: 0.3.32
 Release: alt1
 
 Summary: File System Clone Utilities
@@ -22,6 +23,7 @@ Url: http://partclone.org
 Source: http://download.sourceforge.net/%name/%name-%version.tar
 Patch1: partclone-0.3.6-no_fail_mbr.patch
 Patch2: partclone-0.3.20-checkfs.patch
+Patch3: partclone-0.3.32-build.patch
 
 # Automatically added by buildreq on Fri Dec 04 2015
 # optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
@@ -45,6 +47,9 @@ BuildRequires: e2fsprogs btrfs-progs dosfstools reiserfsprogs hfsprogs ntfs-3g
 %if_enabled xfs
 BuildRequires: xfsprogs
 %endif
+%if_enabled exfat
+BuildRequires: exfatprogs
+%endif
 %if_enabled reiser4
 BuildRequires: reiser4progs
 %endif
@@ -54,12 +59,12 @@ BuildRequires: reiser4progs
 
 %description
 A set of file system clone utilities, including ext2/3/4,%{?_enable_xfs: xfs,}%{?_enable_jfs: jfs,}
-reiserfs,%{?_enable_reiser4: reiser4,}%{?_enable_apfs: apfs,} btrfs, ntfs, fat and hfs+ file systems.
+reiserfs,%{?_enable_reiser4: reiser4,}%{?_enable_apfs: apfs,}%{?_enable_exfat: exfat,} btrfs, ntfs,
+fat and hfs+ file systems.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 echo '#define git_version "%version"' > src/version.h
 
 %build
@@ -77,6 +82,7 @@ echo '#define git_version "%version"' > src/version.h
 	--enable-ntfs \
 	--disable-vmfs \
 	%{subst_enable reiser4} \
+	%{subst_enable exfat} \
 	%{subst_enable apfs} \
 	%{subst_enable xfs} \
 	%{subst_enable jfs} \
@@ -109,6 +115,9 @@ popd
 %_man8dir/*
 
 %changelog
+* Sun Dec 08 2024 Leonid Krivoshein <klark@altlinux.org> 0.3.32-alt1
+- 0.3.32, enable exfat, fix errors and warnings
+
 * Thu Oct 05 2023 Ivan A. Melnikov <iv@altlinux.org> 0.3.27-alt1
 - 0.3.27
 
