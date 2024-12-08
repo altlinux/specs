@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.12
-Release: alt1
+Release: alt2
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -544,6 +544,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Sun Dec 08 2024 Anton Farygin <rider@altlinux.ru> 1:1.10.12-alt2
+- fixed build with ffmpeg 7.1
+
 * Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 1:1.10.12-alt1
 - 1.10.11 -> 1.10.12
 
