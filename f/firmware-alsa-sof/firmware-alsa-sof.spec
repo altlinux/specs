@@ -1,5 +1,5 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2024.09.1
+%define version_major 2024.09.2
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
@@ -7,7 +7,8 @@ Release: alt1
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
-Url: https://github.com/thesofproject/sof-bin
+Url: https://thesofproject.github.io
+Vcs: https://github.com/thesofproject/sof-bin
 BuildRequires: alsa-utils alsa-topology-conf
 Source: %name-%version.tar
 Source3: sof-cml-es8336.tplg
@@ -74,6 +75,10 @@ end
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Sun Dec 08 2024 Anton Farygin <rider@altlinux.ru> 2024.09.2-alt1
+- 2024.09.1 -> 2024.09.2
+- updated homepage and VCS
+
 * Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 2024.09.1-alt1
 - 2024.09 -> 2024.09.1
 - unused part of our topologies are removed
