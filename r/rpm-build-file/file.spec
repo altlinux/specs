@@ -4,7 +4,7 @@
 
 Name: rpm-build-file
 Version: 4.26
-Release: alt18
+Release: alt19
 
 Summary: A utility for determining file types (for rpm-build)
 License: BSD-style
@@ -37,6 +37,9 @@ sed -i '/pkgdata_DATA/s/magic.mgc magic/magic.mgc/' magic/Makefile.am
 sed -i '/AC_INIT/s/file/file4/' configure.ac
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer
+%endif
 %autoreconf
 %configure --program-suffix=4
 grep -FZl sparc magic/Magdir/* |
@@ -56,6 +59,9 @@ grep -v ' text' test.out && exit 1
 
 %check
 make -k check
+date | xz -c > a.xz
+%buildroot%_bindir/file4 -m %buildroot%_datadir/file4/magic -z a.xz |
+	grep -Fz 'a.xz: ASCII text (xz compressed data)'
 
 %files
 %_bindir/file4
@@ -63,6 +69,9 @@ make -k check
 %doc COPYING
 
 %changelog
+* Sun Dec 01 2024 Vitaly Chikunov <vt@altlinux.org> 4.26-alt19
+- Resolve gcc14-related problems and warning.
+
 * Sun Aug 01 2021 Vitaly Chikunov <vt@altlinux.org> 4.26-alt18
 - Rename package to rpm-build-file, binary to file4 (closes #40619).
 - Make binary statically linked with libmagic.
