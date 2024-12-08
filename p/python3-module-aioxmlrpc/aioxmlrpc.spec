@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 Summary: XML-RPC for asyncio
 License: BSD-3-Clause
@@ -50,6 +50,9 @@ coroutine is implemented.
 %exclude %python3_sitelibdir/CONTRIBUTORS.rst
 
 %changelog
+* Sun Dec 08 2024 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt1
+- New version 0.9.1.
+
 * Thu Nov 07 2024 Anton Vyatkin <toni@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 
