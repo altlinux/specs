@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.4.4
+Version: 0.5.1
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -73,8 +73,10 @@ install -Dpm644 models-list.txt tags-list.txt -t %buildroot%_datadir/ollama
 install -Dpm644 .gear/completions %buildroot%_datadir/bash-completion/completions/ollama
 
 %check
-go test ./...
-%buildroot%_bindir/ollama --version |& grep -Pw 'version is \Q%version\E$'
+cat /proc/loadavg
+go test -v ./...
+%buildroot%_bindir/ollama --version | grep -Fx 'Warning: client version is %version'
+ldd %buildroot%_bindir/ollama
 
 %pre
 %sysusers_create_package %name %SOURCE3
@@ -96,6 +98,9 @@ go test ./...
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Sat Dec 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.5.1-alt1
+- Update to v0.5.1 (2024-12-06).
+
 * Sat Nov 23 2024 Vitaly Chikunov <vt@altlinux.org> 0.4.4-alt1
 - Update to v0.4.4 (2024-11-22).
 
