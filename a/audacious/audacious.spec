@@ -1,12 +1,12 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 4.3.1
+Version: 4.4.2
 Release: alt1
 
 Summary: Media player which uses a skinned interface
 
-License: GPL
+License: LicenseRef-Callaway-BSD
 Group: Sound
 Url: http://audacious-media-player.org/
 
@@ -27,9 +27,9 @@ BuildRequires: gcc-c++
 
 BuildRequires: glib2-devel libgio-devel
 
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel qt6-svg-devel
 
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+3-devel
 
 BuildRequires: libguess-devel >= 1.2
 
@@ -115,6 +115,11 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
+- new version 4.4.2 (with rpmrb script)
+- switch to gtk3, qt6
+- set license LicenseRef-Callaway-BSD
+
 * Wed Jun 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
 - new version 4.3.1 (with rpmrb script)
 

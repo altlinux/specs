@@ -6,11 +6,11 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.3.1
+Version: 4.4.2
 Release: alt1
 
 Summary: Plugins for Audacious
-License: GPL
+License: LicenseRef-Callaway-BSD
 Group: Sound
 
 Url: http://audacious-media-player.org/
@@ -23,11 +23,14 @@ BuildRequires: gcc-c++ libSDL2-devel libXcomposite-devel libavformat-devel libbi
 
 BuildRequires: lib%oname-devel = %version
 
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel qt6-multimedia-devel qt6-svg-devel
 
-BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel libadplug-devel
+BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel libadplug-devel pipewire-libs-devel
 
-BuildRequires: libopus-devel libopusfile-devel
+BuildRequires: libopus-devel libopusfile-devel libjson-glib-devel libopenmpt-devel
+
+# global hotkeys (X11) disabled due to missing dependency: Qt6Gui >= 6.2 x11 xcb-proto
+BuildRequires: libX11-devel libxcb-devel
 
 %description
 Base plugins for Audacious.
@@ -80,6 +83,10 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt1
+- new version 4.4.2 (with rpmrb script)
+- set license LicenseRef-Callaway-BSD
+
 * Wed Jun 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
 - new version 4.3.1 (with rpmrb script)
 
