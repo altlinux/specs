@@ -10,7 +10,7 @@
 
 Name: libraw
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: library for reading RAW files obtained from digital photo cameras
 Group: System/Libraries
@@ -76,6 +76,9 @@ This package contains static library.
 
 %prep
 %setup -n %_name-%version -a1 -a2
+%ifarch %e2k
+sed -i 's/default(none)//' src/preprocessing/raw2image.cpp
+%endif
 
 %build
 %ifarch %e2k
@@ -98,7 +101,7 @@ export LIBS+="-lpthread -lomp"
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_libdir/libraw.so.*
@@ -122,6 +125,9 @@ export LIBS+="-lpthread -lomp"
 %endif
 
 %changelog
+* Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.21.3-alt1.1
+- fixed build for E2K (ilyakurdyukov@)
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.21.3-alt1
 - 0.21.3
 
