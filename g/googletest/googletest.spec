@@ -1,6 +1,6 @@
 Name: googletest
-Version: 1.13.0
-Release: alt2
+Version: 1.15.2
+Release: alt1
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -114,6 +114,9 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %_includedir/gmock
 
 %changelog
+* Thu Dec 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.15.2-alt1
+- New version 1.15.2. (ALT #52261)
+
 * Tue Apr 18 2023 Alexey Shabalin <shaba@altlinux.org> 1.13.0-alt2
 - define CMAKE_CXX_STANDARD=17 for easy copy to p10
 
