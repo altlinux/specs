@@ -5,8 +5,8 @@
 %define sover 0.10
 
 Name: mgba
-Version: %sover.3
-Release: alt1.1
+Version: 0.10.4
+Release: alt1
 
 Summary: Game Boy Advance emulator
 License: MPL-2.0
@@ -110,6 +110,9 @@ sed -i -e 's/${GIT_REV}/%git_rev/' src/core/version.c.in
 %_libdir/lib%name.so
 
 %changelog
+* Mon Dec 09 2024 Nazarov Denis <nenderus@altlinux.org> 0.10.4-alt1
+- New version 0.10.4.
+
 * Thu Dec 05 2024 Nazarov Denis <nenderus@altlinux.org> 0.10.3-alt1.1
 - Fix FTBFS
 
