@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.4.5
+Version:  1.4.6
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,10 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Mon Dec 09 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.6-alt1
+- Add gostcrypto component to branch if it was used (ALT #51886, #48419).
+- Check for existing branch in apt-repo set (ALT #48771)
+
 * Thu Nov 28 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.5-alt1
 - Added p11 archive repo support (ALT #52249).
 
