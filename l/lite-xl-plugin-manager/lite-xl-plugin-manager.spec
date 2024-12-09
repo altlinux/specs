@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lite-xl-plugin-manager
-Version: 1.2.9
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: A lite-xl plugin manager
 License: MIT
@@ -22,6 +22,7 @@ BuildRequires: zlib-devel
 BuildRequires: libmbedtls-compat-devel
 BuildRequires: libgit2-devel
 BuildRequires: libzip-devel
+BuildRequires: liblzma-devel
 BuildRequires: liblua-devel
 
 %description
@@ -52,6 +53,9 @@ Conforms to SCPS3.
 %_bindir/lpm
 
 %changelog
+* Mon Dec 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
+- Updated to 1.3.1.
+
 * Mon Apr 22 2024 Anton Zhukharev <ancieg@altlinux.org> 1.2.9-alt2
 - Fixed version detection.
 
