@@ -1,6 +1,6 @@
 Name: cataclysm-dda
 Version: 0.H
-Release: alt1
+Release: alt2
 
 Summary: Turn-based survival game set in a post-apocalyptic world
 License: CC-BY-SA-3.0 and GPLv2+ and OFL-1.1 and BSL-1.0 and Zlib and MIT and BSD-3-Clause
@@ -104,18 +104,13 @@ Data files for %name-sdl.
 %patch1 -p1
 
 %ifarch %e2k
-# unsupported as of lcc 1.25.19
-sed -i '/-Wodr/d' Makefile
+sed -i 's/-Werror/-Wno-error/g' Makefile CMakeLists.txt
+sed -i 's/<binary_op, 15>/<binary_op, 14>/' src/math_parser_impl.h
 %endif
 
 %build
 # Workaround for gcc bug https://gcc.gnu.org/bugzilla/show_bug.cgi?id=109418
 %add_optflags -Wno-error=maybe-uninitialized
-
-%ifarch %e2k
-# src/rotatable_symbols.cpp:26
-%add_optflags -Wno-error=unused-function
-%endif
 
 %ifarch ppc64le
 %add_optflags -mabi=ieeelongdouble
@@ -172,6 +167,9 @@ LC_ALL=C.UTF-8 make -k PCH=0 RUNTESTS=1 check
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Dec 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.H-alt2
+- Fixed build for Elbrus.
+
 * Thu Nov 28 2024 Mikhail Efremov <sem@altlinux.org> 0.H-alt1
 - Fixed release name.
 - Disabled tests.
