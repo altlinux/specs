@@ -3,11 +3,11 @@
 %set_verify_elf_method strict
 
 Name: tripso
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Translation of IPv4 Security Options (IPSO) Labels
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Requires: iptables
 
@@ -65,6 +65,9 @@ VERSION=%version ./check.sh
 /%_lib/iptables/*.so
 
 %changelog
+* Mon Dec 09 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.2-alt1
+- Fix build for v6.12.
+
 * Wed Nov 13 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt2
 - Use %%kernel_latest for tests.
 

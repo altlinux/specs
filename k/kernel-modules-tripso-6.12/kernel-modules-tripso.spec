@@ -1,6 +1,6 @@
 %define module_name     tripso
 %define module_version  1.2.2
-%define flavour         6.6
+%define flavour         6.12
 %define karch %ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
 
 %setup_kernel_module %flavour
@@ -17,7 +17,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 Url: https://github.com/vt-alt/tripso/
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-6.6
+BuildRequires(pre): kernel-headers-modules-6.12
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
