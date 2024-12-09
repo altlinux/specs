@@ -6,7 +6,7 @@
 %def_disable pipewire
 
 Name: libowt-tg
-Version: 4.3.0.11
+Version: 4.3.0.12
 Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
@@ -21,22 +21,22 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/cisco/libsrtp/archive/refs/tags/v2.5.0.tar.gz
 Source1: %name-libsrtp-%version.tar
 
-# Source2-url: https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.3.tar.gz
+# Source2-url: https://github.com/abseil/abseil-cpp/archive/refs/tags/20240722.0.tar.gz
 Source2: %name-abseil-cpp-%version.tar
 
 Patch1: 0011-cmake-external.cmake-add-link_libyuv-function.patch
 Patch2: 0012-cmake-libwebrtcbuild.cmake-add-tg_owt-libyuv-only-if.patch
 Patch3: 0013-CMakeLists.txt-use-external-libyuv.patch
-Patch4: 0014-CMakeLists.txt-don-t-include-cmake-rules-for-externa.patch
 
 Patch2000: %name-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: libalsa-devel
+BuildRequires: yasm
 BuildRequires: libXtst-devel libXcomposite-devel libXdamage-devel libXrender-devel libXrandr-devel
 BuildRequires: libavformat-devel libswresample-devel libswscale-devel
-BuildRequires: libdb4-devel libjpeg-devel libopus-devel libpulseaudio-devel libssl-devel yasm
+BuildRequires: libjpeg-devel libopus-devel libpulseaudio-devel libalsa-devel
+BuildRequires: libssl-devel
 BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: libgio-devel
 
@@ -117,16 +117,13 @@ develop programs which make use of %name.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 %ifarch %e2k
 %patch2000 -p2
 %endif
 
 # TODO (used in cmake checks):
-rm -rv src/third_party/openh264
 rm -rv src/third_party/libyuv
 rm -rv src/third_party/crc32c
-rm -v cmake/libopenh264.cmake
 rm -v cmake/libyuv.cmake
 rm -v cmake/libcrc32c.cmake
 rm -rfv src/base/android/
@@ -159,14 +156,12 @@ sed -i '/absl\/strings\/cord.cc/d' cmake/libabsl.cmake
 %install
 %makeinstall_std
 rm -rv %buildroot%_includedir/tg_owt/sdk/{objc,android}/
-rm -rv %buildroot%_includedir/tg_owt/modules/audio_device/android
 
 %if_disabled internal_absl
 rm -rv %buildroot%_includedir/tg_owt/third_party/abseil-cpp/
 %endif
 
-rm -rv %buildroot%_includedir/tg_owt/third_party/libvpx
-rm -rv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
+rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 
 %if_disabled static
 %files
@@ -183,6 +178,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.12-alt1
+- new version 4.3.0.12 (with rpmrb script)
+
 * Sat Dec 30 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.11-alt1
 - build from git afd9d5d31798d3eacf9ed6c30601e91d0f1e4d60
 
