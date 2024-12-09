@@ -2,7 +2,7 @@
 
 %def_enable python3
 %def_disable luajit
-%ifarch %qt5_qtwebengine_arches
+%ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
 %else
 %def_disable qtwebengine
@@ -14,9 +14,9 @@
 %define libcantor_config libcantor_config%cantor_config_sover
 
 Name: %rname
-Version: 24.08.2
+Version: 24.11.90
 Release: alt1
-%K5init
+%K6init
 
 Group: Education
 Summary: KDE Frontend to Mathematical Software
@@ -24,7 +24,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later or GPL-3.0-only
 
 %if_enabled qtwebengine
-Requires: kde5-kalgebra
+Requires: kalgebra
 Requires: epstool
 %endif
 Provides:  kde5-cantor = %EVR
@@ -34,21 +34,22 @@ Source: %rname-%version.tar
 Patch1: alt-lib-so-ver.patch
 Patch2: alt-find-luajit.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
-BuildRequires: extra-cmake-modules qt5-svg-devel qt5-xmlpatterns-devel qt5-tools-devel
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires: extra-cmake-modules qt6-svg-devel qt6-declarative-devel qt6-tools-devel qt6-5compat-devel
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: libcln-devel libspectre-devel libdiscount-devel libpoppler-qt5-devel
+BuildRequires: libcln-devel libspectre-devel libdiscount-devel libpoppler-qt6-devel
+BuildRequires: libxml2-devel libxslt-devel
 %{?_enable_python3:BuildRequires: python3-devel}
 %{?_enable_luajit:BuildRequires: liblua5-devel libluajit-devel}
-BuildRequires: kde5-analitza-devel
-BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdelibs4support kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
-BuildRequires: kf5-knewstuff-devel kf5-kparts-devel kf5-kpty-devel kf5-kservice-devel kf5-ktexteditor-devel
-BuildRequires: kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
-BuildRequires: kf5-syntax-highlighting-devel
+BuildRequires: analitza-devel
+BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdoctools-devel
+BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
+BuildRequires: kf6-knewstuff-devel kf6-kparts-devel kf6-kpty-devel kf6-kservice-devel kf6-ktexteditor-devel
+BuildRequires: kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
+BuildRequires: kf6-syntax-highlighting-devel
 
 %description
 Cantor is a front-end to powerful mathematics and statistics packages.
@@ -59,7 +60,7 @@ It supports environments for KAlgebra, Lua, Maxima, R, Sage, Octave, Python, Sci
 Summary: %name common package
 Group: System/Configuration/Other
 #BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 Provides:  kde5-cantor-common = %EVR
 Obsoletes: kde5-cantor-common < %EVR
 %description common
@@ -101,16 +102,16 @@ Requires: %name-common >= %EVR
 
 %build
 %if_enabled qtwebengine
-%K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
+%K6build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
     #
 %endif
 
 %install
 %if_enabled qtwebengine
-%K5install
-%K5install_move data cantor knsrcfiles
-mv %buildroot/%_K5xdgmime/cantor{,-kde5}.xml
+%K6install
+%K6install_move data cantor knsrcfiles
+mv %buildroot/%_K6xdgmime/cantor{,-kde6}.xml
 %find_lang %name --with-kde --all-name
 %else
 mkdir -p %buildroot
@@ -118,16 +119,16 @@ mkdir -p %buildroot
 
 %files
 %if_enabled qtwebengine
-%_K5bin/cantor*
-%_K5lib/cantor_pythonbackend.so
-%_K5plug/kf5/parts/*cantor*.so
-%_K5plug/cantor/
-%_K5data/cantor/
-%_K5cfg/*.kcfg
-%_K5xdgapp/org.kde.cantor.desktop
-%_K5icon/*/*/apps/*.*
-%_K5data/knsrcfiles/*cantor*.knsrc
-%_K5xdgmime/*cantor*.xml
+%_K6bin/cantor*
+%_K6lib/cantor_pythonbackend.so
+%_K6plug/kf6/parts/*cantor*.so
+%_K6plug/cantor_plugins/
+%_K6data/cantor/
+%_K6cfg/*.kcfg
+%_K6xdgapp/org.kde.cantor.desktop
+%_K6icon/*/*/apps/*.*
+%_K6data/knsrcfiles/*cantor*.knsrc
+%_K6xdgmime/*cantor*.xml
 %_datadir/metainfo/*.xml
 %endif
 
@@ -136,19 +137,22 @@ mkdir -p %buildroot
 %doc LICENSES/*
 
 %files devel
-%_K5inc/cantor/
-%_K5link/lib*.so
+%_K6inc/cantor/
+%_K6link/lib*.so
 %_libdir/cmake/Cantor/
 
 %files -n %libcantorlibs
-%_K5lib/libcantorlibs.so.%cantor_sover
-%_K5lib/libcantorlibs.so.*
+%_K6lib/libcantorlibs.so.%cantor_sover
+%_K6lib/libcantorlibs.so.*
 %files -n %libcantor_config
-%_K5lib/libcantor_config.so.%cantor_config_sover
-%_K5lib/libcantor_config.so.*
+%_K6lib/libcantor_config.so.%cantor_config_sover
+%_K6lib/libcantor_config.so.*
 %endif
 
 %changelog
+* Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt1
+- beta with KF6
+
 * Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
