@@ -12,7 +12,7 @@
 %endif
 
 Name: Singular
-Version: 4.4.0.6
+Version: 4.4.0.7
 Release: alt1
 
 Summary: Computer Algebra System for polynomial computations
@@ -463,6 +463,9 @@ make check
 %_pkgconfigdir/libpolys.pc
 
 %changelog
+* Mon Dec 09 2024 Leontiy Volodin <lvol@altlinux.org> 4.4.0.7-alt1
+- New version Release-4-4-0p7.
+
 * Mon Dec 02 2024 Leontiy Volodin <lvol@altlinux.org> 4.4.0.6-alt1
 - New version Release-4-4-0p6.
 - Added vcs tag.
