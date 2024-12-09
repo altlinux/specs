@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.6.11
+Version: 6.6.13
 Release: alt1
 
 Summary: Source code tag system
@@ -82,6 +82,9 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 6.6.13-alt1
+- new version 6.6.13 (with rpmrb script)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 6.6.11-alt1
 - new version 6.6.11 (with rpmrb script)
 
