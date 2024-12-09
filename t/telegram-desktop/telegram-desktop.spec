@@ -20,8 +20,8 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 5.2.3
-Release: alt1.1
+Version: 5.9.0
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -39,7 +39,6 @@ Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch7: telegram-desktop-fix-build-with-make.patch
-Patch8: telegram-desktop-use-external-gsl.patch
 Patch9: telegram-desktop-try-fix-circular-deps.patch
 # FIXME: it is very strange, this fix needed only for local build
 Patch10: telegram-desktop-fix-protoc.patch
@@ -59,11 +58,10 @@ BuildRequires(pre): rpm-macros-ninja-build
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
 %_tune_parallel_build_by_procsize 3000
 
-# minimalize memory using
-%ifarch %ix86 armh
+# cpio archive too big - 4416M
 %define optflags_debug -g0
 %define optflags_lto %nil
-%endif
+
 
 BuildRequires: gcc-c++ libstdc++-devel
 # for -lstdc++fs
@@ -102,6 +100,7 @@ BuildRequires: libxxhash-devel
 BuildRequires: liblz4-devel
 BuildRequires: libcrc32c-devel
 BuildRequires: libfmt-devel
+BuildRequires: libada-devel
 
 BuildRequires: libminizip-devel libpcre2-devel libexpat-devel libssl-devel libselinux-devel bison
 
@@ -129,7 +128,7 @@ BuildRequires: libopenal-devel >= 1.21.1
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.11
+BuildRequires: libowt-tg-devel >= 4.3.0.12
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
@@ -242,8 +241,6 @@ or business messaging needs.
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
-%else
-%patch8 -p2
 %endif
 
 #patch9 -p1
@@ -379,6 +376,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 5.9.0-alt1
+- new version 5.9.0 (with rpmrb script)
+
 * Fri Aug 30 2024 Sergey V Turchin <zerg@altlinux.org> 5.2.3-alt1.1
 - NMU: fix build requires
 
