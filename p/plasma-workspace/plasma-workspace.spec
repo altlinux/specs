@@ -35,7 +35,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt4
+Release: alt5
 Epoch: 1
 %K6init
 
@@ -93,6 +93,7 @@ Patch107: alt-freespacenotifier.patch
 Patch108: alt-def-background.patch
 Patch109: alt-def-start-empty-session.patch
 Patch110: alt-check-donat-auth.patch
+Patch111: alt-return-trash-desktop.patch
 #
 Patch114: alt-menu-search-results-add-genericname.patch
 #
@@ -322,6 +323,7 @@ Requires: %name-common >= %EVR
 %patch108 -p1
 %patch109 -p1
 %patch110 -p1
+%patch111 -p1
 #
 %patch114 -p1
 #
@@ -599,6 +601,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt5
+- return trash on desktop by default
+
 * Mon Dec 02 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt4
 - setup SSH_ASKPASS variable
 
