@@ -3,12 +3,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 Summary: Python logging made (stupidly) simple
 License: MIT
 Group: Development/Python3
-Url: https://github.com/Delgan/loguru
+Url: https://pypi.org/project/loguru
+VCS: https://github.com/Delgan/loguru
+
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -18,9 +20,11 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-BuildRequires: python3(colorama)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(mypy)
+BuildRequires: python3-module-colorama
+BuildRequires: python3-module-flit-core
+BuildRequires: python3-module-freezegun
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-pytest-mypy-plugins
 %endif
 
 %description
@@ -44,6 +48,9 @@ Loguru is a library which aims to bring enjoyable logging in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 09 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.3-alt1
+- Updated to version 0.7.3.
+
 * Tue Sep 12 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.2-alt1
 - Updated to version 0.7.2.
 
