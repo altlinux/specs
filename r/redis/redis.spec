@@ -9,8 +9,8 @@
 %endif
 
 Name: redis
-Version: 7.2.4
-Release: alt1.1
+Version: 7.2.6
+Release: alt1
 
 Summary: Redis is an advanced key-value store
 Group: Databases
@@ -212,6 +212,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Mon Dec 09 2024 Alexey Shabalin <shaba@altlinux.org> 7.2.6-alt1
+- 7.2.6 (Fixes: CVE-2024-31449, CVE-2024-31227, CVE-2024-31228)
+
 * Tue Feb 27 2024 Ivan A. Melnikov <iv@altlinux.org> 7.2.4-alt1.1
 - NMU: Increase tests timeout (fixes FTBFS on riscv64).
 
