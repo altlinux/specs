@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.02.0
+Version: 24.02.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -127,7 +127,7 @@ Requires: kcron kruler ffmpegthumbs
 Requires: kdeconnect
 Requires: krfb
 Requires: kdf
-Requires: kid3-ui-kde5
+Requires: kid3-ui-kde
 Requires: kdegraphics-thumbnailers
 %description -n kde-big
 %summary
@@ -278,6 +278,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.1-alt1
+- update requires
+
 * Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt1
 - return kde5-runtime package for compatibility
 
