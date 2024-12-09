@@ -1,7 +1,7 @@
 %define rname plasma-wayland-protocols
 
 Name: kde5-%rname
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 %K5init altplace no_appdata
 
@@ -10,8 +10,8 @@ Summary: XML files of non-standard wayland protocols used in Plasma
 License: LGPL-2.0-or-later
 Url: https://invent.kde.org/libraries/plasma-wayland-protocols
 
-Provides: %rname = %version-%release
 Requires: wayland-protocols
+Provides: %rname = %EVR
 
 Source: %rname-%version.tar
 
@@ -35,6 +35,9 @@ XML files of non-standard wayland protocols used in Plasma.
 %_datadir/plasma-wayland-protocols/
 
 %changelog
+* Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 1.15.0-alt1
+- new version
+
 * Fri Sep 13 2024 Sergey V Turchin <zerg@altlinux.org> 1.14.0-alt1
 - new version
 
