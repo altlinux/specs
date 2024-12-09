@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.17
+Version: 1.3.18
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,10 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Wed Oct 30 2024 Anton Midyukov <antohami@altlinux.org> 1.3.18-alt1
+- backend3/sysconfig-base: fix condition for hack with tt_RU
+- Setup keymap for GNOME
+
 * Fri Oct 18 2024 Sergey V Turchin <zerg@altlinux.org> 1.3.17-alt1
 - unify kde settings usage
 
