@@ -24,8 +24,8 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 5.2.2
-Release: alt1.1
+Version: 5.8.3
+Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
 
@@ -45,7 +45,7 @@ Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
 #Patch5: telegram-desktop-fix-missed-cstdint.patch
 #Patch7: telegram-desktop-fix-build-with-make.patch
-Patch8: telegram-desktop-use-external-gsl.patch
+#Patch8: telegram-desktop-use-external-gsl.patch
 #Patch9: telegram-desktop-try-fix-circular-deps.patch
 Patch20: telegram-desktop-fix-protoc.patch
 
@@ -139,7 +139,7 @@ BuildRequires: libopenal-devel >= 1.21.1
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.11
+BuildRequires: libowt-tg-devel >= 4.3.0.12
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
@@ -168,6 +168,7 @@ BuildRequires: boost-program_options-devel
 # uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
 BuildRequires: librlottie-devel >= 0.1.1
 BuildRequires: libqrcodegen-cpp-devel
+BuildRequires: libada-devel
 
 # C++ sugar
 %if_with gsl
@@ -255,8 +256,6 @@ We are not responsible for the possible blocking of your account. Use the client
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
-%else
-%patch8 -p2
 %endif
 
 #patch9 -p1
@@ -400,6 +399,9 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 5.8.3-alt1
+- new version 5.8.3 (with rpmrb script)
+
 * Fri Aug 30 2024 Sergey V Turchin <zerg@altlinux.org> 5.2.2-alt1.1
 - NMU: fix build requires
 
