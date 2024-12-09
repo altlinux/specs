@@ -1,14 +1,12 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname gpgme
 
 Name:          gem-gpgme
-Version:       2.0.24
-Release:       alt1
+Version:       2.0.24.4
+Release:       alt0.1
 Summary:       Ruby interface to GnuPG Made Easy
 License:       LGPL-2.1+
 Group:         Development/Ruby
@@ -18,19 +16,18 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_enabled check
-BuildRequires: gem(mocha) >= 0.9.12
-BuildRequires: gem(minitest) >= 2.1.0
-BuildRequires: gem(yard) >= 0.9.11
-BuildRequires: gem(coveralls_reborn) >= 0
+BuildRequires: libgpgme-devel
 BuildRequires: gem(byebug) >= 0
-BuildRequires: gem(rake) >= 0
+BuildRequires: gem(coveralls_reborn) >= 0
 BuildRequires: gem(mini_portile2) >= 2.7
-BuildConflicts: gem(mocha) >= 2
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(yard) >= 1
+BuildRequires: gem(minitest) >= 2.1.0
+BuildRequires: gem(mocha) >= 0.9.12
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(yard) >= 0.9.11
 BuildConflicts: gem(mini_portile2) >= 3
-%endif
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(mocha) >= 2
+BuildConflicts: gem(yard) >= 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -38,11 +35,14 @@ BuildConflicts: gem(mini_portile2) >= 3
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 Requires:      gem(mini_portile2) >= 2.7
+Requires:      gem(rake) >= 0
 Conflicts:     gem(mini_portile2) >= 3
 Obsoletes:     ruby-gpgme < %EVR
 Provides:      ruby-gpgme = %EVR
-Provides:      gem(gpgme) = 2.0.24
+Provides:      gpgme = %EVR
+Provides:      gem(gpgme) = 2.0.24.4
 
+%ruby_use_gem_version gpgme:2.0.24.4
 
 %description
 Ruby interface to GnuPG Made Easy (GPGME).
@@ -50,16 +50,16 @@ Ruby interface to GnuPG Made Easy (GPGME).
 
 %if_enabled    doc
 %package       -n gem-gpgme-doc
-Version:       2.0.24
-Release:       alt1
+Version:       2.0.24.4
+Release:       alt0.1
 Summary:       Ruby interface to GnuPG Made Easy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gpgme
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gpgme) = 2.0.24
-Obsoletes:     ruby-gpgme-doc
-Provides:      ruby-gpgme-doc
+Requires:      gem(gpgme) = 2.0.24.4
+Obsoletes:     ruby-gpgme-doc < %EVR
+Provides:      ruby-gpgme-doc = %EVR
 
 %description   -n gem-gpgme-doc
 Ruby interface to GnuPG Made Easy documentation files.
@@ -73,22 +73,21 @@ Ruby interface to GnuPG Made Easy (GPGME).
 
 %if_enabled    devel
 %package       -n gem-gpgme-devel
-Version:       2.0.24
-Release:       alt1
+Version:       2.0.24.4
+Release:       alt0.1
 Summary:       Ruby interface to GnuPG Made Easy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gpgme
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gpgme) = 2.0.24
-Requires:      gem(mocha) >= 0.9.12
-Requires:      gem(minitest) >= 2.1.0
-Requires:      gem(yard) >= 0.9.11
-Requires:      gem(coveralls_reborn) >= 0
+Requires:      gem(gpgme) = 2.0.24.4
 Requires:      gem(byebug) >= 0
-Requires:      gem(rake) >= 0
-Conflicts:     gem(mocha) >= 2
+Requires:      gem(coveralls_reborn) >= 0
+Requires:      gem(minitest) >= 2.1.0
+Requires:      gem(mocha) >= 0.9.12
+Requires:      gem(yard) >= 0.9.11
 Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(mocha) >= 2
 Conflicts:     gem(yard) >= 1
 
 %description   -n gem-gpgme-devel
@@ -114,21 +113,27 @@ Ruby interface to GnuPG Made Easy (GPGME).
 %ruby_test
 
 %files
+%doc COPYING COPYING.LESSER README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-gpgme-doc
+%doc COPYING COPYING.LESSER README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-gpgme-devel
+%doc COPYING COPYING.LESSER README.rdoc
 %endif
 
 
 %changelog
+* Mon Dec 09 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.24.4-alt0.1
+- ^ 2.0.24 -> 2.0.24p4
+
 * Wed Jul 24 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.24-alt1
 - ^ 2.0.20 -> 2.0.24
 
