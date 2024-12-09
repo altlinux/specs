@@ -113,7 +113,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.3
+Release: alt0.4
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -173,11 +173,9 @@ BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: zip zlib-devel binutils-devel
-BuildRequires: python3-module-myst-parser
-# dot crashes on ix86
-%ifnarch %ix86
-BuildRequires: graphviz
-%endif
+BuildRequires: python3-module-myst-parser graphviz
+# see https://bugs.altlinux.org/show_bug.cgi?id=52353
+BuildRequires: fonts-ttf-dejavu
 BuildRequires: ninja-build
 %if_with lldb
 BuildRequires: pkgconfig(liblzma)
@@ -471,9 +469,7 @@ libclang, including clang-format.
 %package -n %clang_name-doc
 Summary: Documentation for Clang
 Group: Documentation
-# graphviz on %%ix86 produce png with zero size so make it arch again until
-# the issue will be fixed
-#BuildArch: noarch
+BuildArch: noarch
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -1500,6 +1496,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Mon Dec 09 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.4
+- clang-doc: fix graphviz issue (see ALT#52353).
+
 * Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.8-alt0.3
 - Fix FTBFS on ix86 (don't use graphviz).
 
