@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit 98af07b69ce564bec48c5a9edc6d080679ee1c13
+%global commit bb4ff4951a3e54bbee6ac75cfaf387c521e98709
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2024-03-03T00-13-08Z
-%define version 2024.03.03
+%global tag RELEASE.2024-11-17T19-35-25Z
+%define version 2024.11.17
 
 %global _unpackaged_files_terminate_build 1
 
@@ -20,7 +20,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.19
+BuildRequires: rpm-build-golang golang >= 1.22
 
 
 %description
@@ -70,6 +70,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Dec 09 2024 Alexey Shabalin <shaba@altlinux.org> 2024.11.17-alt1
+- Update to RELEASE.2024-11-17T19-35-25Z
+
 * Sun Mar 03 2024 Alexey Shabalin <shaba@altlinux.org> 2024.03.03-alt1
 - Update to RELEASE.2024-03-03T00-13-08Z
 
