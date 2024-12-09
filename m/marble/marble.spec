@@ -1,19 +1,19 @@
 %define rname marble
 
 %define marblewidget_sover 28
-%define libmarblewidget libmarblewidget-qt5_%marblewidget_sover
+%define libmarblewidget libmarblewidget-qt6_%marblewidget_sover
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%ifarch %qt5_qtwebengine_arches
+%ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
 %else
 %def_disable qtwebengine
 %endif
 
 Name: %rname
-Version: 24.08.2
+Version: 24.11.90
 Release: alt1
-%K5init
+%K6init
 
 Group: Education
 Summary: A virtual globe and world atlas
@@ -29,18 +29,22 @@ Patch1: alt-astro-static.patch
 Patch2: alt-clean-maps.patch
 Patch3: alt-remove-country-data.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-location-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-serialport-devel
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-positioning-devel qt6-svg-devel qt6-tools-devel qt6-serialport-devel qt6-5compat-devel
+BuildRequires: libvulkan-devel
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-webengine-devel
 %endif
+BuildRequires: qt6-phonon-devel
 #BuildRequires: libwlocate-devel
+BuildRequires: libabseil-cpp-devel
 BuildRequires: libgps-devel libshape-devel zlib-devel libprotobuf-devel protobuf-compiler
-BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdoctools kf5-kdoctools-devel
-BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-kpackage-devel
-BuildRequires: kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdoctools kf6-kdoctools-devel
+BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knewstuff-devel kf6-kpackage-devel
+BuildRequires: kf6-kparts-devel kf6-krunner-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
+BuildRequires: plasma6-lib-devel
 
 %description
 Marble is a Virtual Globe and World Atlas that you can use to learn more
@@ -52,7 +56,7 @@ Wikipedia article.
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: kf5-filesystem
+Requires: kf6-filesystem
 Provides:  kde5-marble-common = %EVR
 Obsoletes: kde5-marble-common < %EVR
 %description common
@@ -67,12 +71,11 @@ developing applications that use %name.
 
 %package -n %libmarblewidget
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common >= %EVR
-Provides:  libmarblewidget-qt528 = %EVR
 Obsoletes: libmarblewidget-qt528 < %EVR
 %description -n %libmarblewidget
-KF5 library
+%name library
 
 
 %prep
@@ -88,78 +91,80 @@ sed -i '/add_subdirectory(marble-qt)/d' src/apps/CMakeLists.txt
 
 # disable krunners by default
 for f in \
-src/plasmarunner/plasma-runner-marble.desktop
+src/plasmarunner/plasma-runner-marble.json
 do
-    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' $f
+    sed -i '/EnabledByDefault/s|true|false|' $f
 done
 
 %build
-%K5build \
-    -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
-    -DKDE_INSTALL_CONFDIR=%_K5xdgconf \
+%K6build \
+    -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
+    -DKDE_INSTALL_CONFDIR=%_K6xdgconf \
     -DBUILD_MARBLE_TOOLS=YES \
     -DBUILD_MARBLE_EXAMPLES=NO \
-    -DMARBLE_DATA_PATH=%_K5data/marble \
+    -DMARBLE_DATA_PATH=%_K6data/marble \
     -DMARBLE_PRI_INSTALL_USE_QT_SYS_PATHS=YES \
     #
 
 
 %install
-%K5install
-%K5install_move data marble config.kcfg icons knsrcfiles
+%K6install
+%K6install_move data marble config.kcfg icons knsrcfiles
 
-mv %buildroot/%_K5xdgmime/geo{,-kde5}.xml
+mv %buildroot/%_K6xdgmime/geo{,-kde6}.xml
 
-if [ "%_desktopdir" != "%_K5xdgapp" ] ;then
-    mkdir -p %buildroot/%_K5xdgapp
-    mv %buildroot/%_desktopdir/*.desktop %buildroot/%_K5xdgapp/ ||:
+if [ "%_desktopdir" != "%_K6xdgapp" ] ;then
+    mkdir -p %buildroot/%_K6xdgapp
+    mv %buildroot/%_desktopdir/*.desktop %buildroot/%_K6xdgapp/ ||:
 fi
-if [ "%_includedir" != "%_K5inc" ] ;then
-    mkdir -p %buildroot/%_K5inc
-    mv %buildroot/%_includedir/marble %buildroot/%_K5inc/ ||:
+if [ "%_includedir" != "%_K6inc" ] ;then
+    mkdir -p %buildroot/%_K6inc
+    mv %buildroot/%_includedir/marble %buildroot/%_K6inc/ ||:
 fi
 
 
 rm -rf %buildroot/%_datadir/locale/*/LC_MESSAGES/*_qt.qm
-rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
+rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
-%_K5cfg/marble.kcfg
-%_K5xdgmime/geo-kde5.xml
+%_K6cfg/marble.kcfg
+%_K6xdgmime/geo-kde6.xml
 
 %files
-%_K5lib/libmarbledeclarative.so
-%_K5bin/marble
-#%_K5bin/marble-qt
-%_K5plug/*marble*.so
-%_K5plug/kf5/krunner/*marble*.so
-%_K5data/marble/
-%_kf5_data/plasma/*/org.kde.plasma.*world*/
-%_K5lib/marble/
-%_K5qml/org/kde/marble/
-%_K5srv/*.desktop
-%_K5xdgapp/*marble*.desktop
-%_K5icon/*/*/apps/marble.*
-%_iconsdir/*/*/apps/marble.*
-%_K5xmlgui/marble/
+#%_K6lib/libmarbledeclarative.so
+%_K6bin/marble*
+%_K6plug/*marble*.so
+%_K6plug/kf6/krunner/*marble*.so
+%_K6data/marble/
+%_K6data/plasma/plasmoids/org.kde.plasma.worldclock/
+%_K6data/plasma//wallpapers/org.kde.plasma.worldmap/
+%_K6lib/marble/
+%_K6qml/org/kde/marble/
+#%_K6srv/*.desktop
+%_K6xdgapp/*marble*.desktop
+%_K6icon/*/*/apps/*marble*.*
+%_K6data/kxmlgui?/marble/
 %_datadir/metainfo/*.xml
 %_datadir/qlogging-categories?/*.*categories
 
 %files devel
-#%_K5plug/designer/*.so
-#%_K5inc/astro/
-%_K5inc/marble/
-%_K5link/lib*.so
-%_K5lib/cmake/Marble/
-%_K5archdata/mkspecs/modules/qt_Marble.pri
+#%_K6plug/designer/*.so
+#%_K6inc/astro/
+%_K6inc/marble/
+%_K6link/lib*.so
+%_K6lib/cmake/Marble/
+%_K6archdata/mkspecs/modules/qt_Marble.pri
 
 %files -n %libmarblewidget
-%_K5lib/libmarblewidget-qt5.so.%marblewidget_sover
-%_K5lib/libmarblewidget-qt5.so.*
+%_K6lib/libmarblewidget-qt6.so.%marblewidget_sover
+%_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt1
+- beta with KF6
+
 * Fri Nov 08 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - new version
 
