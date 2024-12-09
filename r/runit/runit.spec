@@ -1,7 +1,7 @@
 
 Name: runit
-Version: 2.1.2
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Group: System/Configuration/Boot and Init
 Summary: System-wide service supervision
@@ -11,18 +11,15 @@ License: BSD-3-clause
 Source0: %name-%version.tar
 Source1: runit.service
 Source2: sv.bash-completion
+Source3: %name.watch
+Source4: upstream-signing-key.asc
 
 # Most of these patches are from the Debian package
 Patch1: runit-2.1.2-service-dir-alt.patch
-Patch2: 0002-support-etc-runit-nosync-file-to-make-sync-on-shutdow.diff
-Patch3: 0003-utmpset.c-mixes-int32_t-and-time_t.diff
 Patch4: 0004-src-Makefile-don-t-use-static-to-link-runit-runit-ini.diff
-#Patch5:
 Patch6: 0006-make-buildsystem-respect-CFLAGS.patch
 Patch7: 0007-move-communication-files.patch
 Patch8: 0008-emulate-sysv-runlevel-5.patch
-Patch9: 0009-fix-error-in-manpage.patch
-Patch10: runit-2.1.2-disable-chkshsgr-alt.patch
 
 %description
 runit is a collection of tools to provide system-wide service supervision
@@ -37,16 +34,7 @@ system completely.  Complete init replacement needs to be done by hand.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch6 -p2
-%patch7 -p2
-%patch8 -p2
-%patch9 -p2
-%patch10 -p2
-
+%autopatch -p2
 rm -fv doc/debian
 
 %build
@@ -98,6 +86,9 @@ install -D -m0644 %SOURCE2 %buildroot%_sysconfdir/bash_completion.d/sv
 
 
 %changelog
+* Mon Dec 09 2024 Paul Wolneykien <manowar@altlinux.org> 2.2.0-alt1
+- Updated to 2.2.0.
+
 * Thu Oct 18 2018 Paul Wolneykien <manowar@altlinux.org> 2.1.2-alt2
 - Fix: Do not install the Debian-specific startup scripts.
 
