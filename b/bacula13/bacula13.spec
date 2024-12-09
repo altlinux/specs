@@ -15,7 +15,7 @@
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.4
-Release: alt1
+Release: alt2
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -45,6 +45,7 @@ Patch2: bacula11-gui-alt.patch
 Patch3: bacula-9.4.0-fedora-seg-fault.patch
 Patch4: bacula11-alt-fix-logrotate.patch
 Patch2000: bacula11-e2k.patch
+Patch2001: bacula13-alt-fix-create-pg-database.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libMySQL-devel postgresql-devel
@@ -460,6 +461,8 @@ popd
 %endif
 
 %patch4 -p2
+
+%patch2001 -p2
 
 mv ../%name-icons-%version icons
 
@@ -927,6 +930,9 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Mon Dec 09 2024 Alexei Takaseev <taf@altlinux.org> 13.0.4-alt2
+- Fix start psql as user postgres
+
 * Sat Feb 17 2024 Alexei Takaseev <taf@altlinux.org> 13.0.4-alt1
 - 13.0.4
 
