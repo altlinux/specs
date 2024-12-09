@@ -13,7 +13,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt2
+Release: alt3
 %K6init
 
 Group: File tools
@@ -111,6 +111,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
     --add-mime-type=x-scheme-handler/smb \
     --add-mime-type=x-scheme-handler/trash \
     --add-mime-type=x-scheme-handler/remote \
+    --add-mime-type=x-scheme-handler/mtp \
     %buildroot/%_K6xdgapp/org.kde.dolphin.desktop
 # kf6-kio-extras
 #    --add-mime-type=x-scheme-handler/network \
@@ -156,6 +157,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt3
+- add mtp:/ handler
+
 * Thu Dec 05 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
 - add remote:/ handler
 
