@@ -1,6 +1,6 @@
 Name: djvu
 Version: 3.5.28
-Release: alt2
+Release: alt3
 
 Summary: DjVu viewers, encoders and utilities
 License: GPLv2+
@@ -12,7 +12,11 @@ Source: djvulibre-%version.tar
 Patch0: djvulibre-3.5.22-rh-cdefs.patch
 # https://bugzilla.altlinux.org/16141
 Patch1: any2djvu-exit-code-fix.patch
+# CVE-2021-46310 CVE-2021-32491 CVE-2021-32492 CVE-2021-3500 CVE-2021-32493 CVE-2021-3630
 Patch2: djvulibre-git-fixes.patch
+# CVE-2021-46312
+Patch3: RH-0001-Check-for-zero-width-and-height.patch
+
 
 # Automatically added by buildreq on Sat Apr 13 2013
 # optimized out: libstdc++-devel
@@ -106,6 +110,7 @@ technology.
 %patch0 -p1
 %patch1 -p2
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -171,6 +176,11 @@ cp -a COPYRIGHT NEWS README doc %buildroot%docdir/
 %endif #static
 
 %changelog
+* Mon Dec 09 2024 L.A. Kostis <lakostis@altlinux.ru> 3.5.28-alt3
+- Mention CVEs for git fixes.
+- Sync with fedora (3.5.28-9):
+  + RH-0001-Check-for-zero-width-and-height.patch (RH BZ#2234738 CVE-2021-46312)
+
 * Fri Apr 01 2022 L.A. Kostis <lakostis@altlinux.ru> 3.5.28-alt2
 - any2djvu: fix exit code (ALT#16141).
 - apply fixes from git:
