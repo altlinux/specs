@@ -1,5 +1,5 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.40
+%define major 1.42
 
 %if_feature php7 7.4.3
 %def_with php7
@@ -24,8 +24,8 @@
 
 
 Name: mediawiki
-Version: %major.1
-Release: alt2
+Version: %major.3
+Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -593,6 +593,13 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 1.42.3-alt1
+- new version 1.42.3 (with rpmrb script)
+- (T372998, CVE-2024-PENDING) SECURITY: abusefiltercheckmatch does not check the user for the abusefilter-log-detail right before matching against log details.
+
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 1.41.1-alt1
+- new version 1.41.1 (with rpmrb script)
+
 * Sat Oct 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1.40.1-alt2
 - fix descriptions of php subpackages
 - restore .htaccess to disable php execution in data only dirs
