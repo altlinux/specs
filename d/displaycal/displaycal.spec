@@ -1,7 +1,7 @@
 %define up_name DisplayCAL
 
 Name: displaycal
-Version: 3.9.12
+Version: 3.9.14
 Release: alt1
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
@@ -38,6 +38,8 @@ Provides: %up_name = %version-%release
 Provides: dispcalGUI = %version-%release
 
 %add_python3_req_skip pywintypes win32api win32com.shell win32con win32gui win32process winerror winreg comtypes comtypes.client comtypes.gen.TaskbarLib
+%add_python3_req_skip distutils.filelist distutils.util py2exe
+
 # internal
 %add_python3_req_skip demjson_compat
 
@@ -76,7 +78,9 @@ ln -s ./lib64 DisplayCAL/lib32
 %install
 %pyproject_install
 mkdir -p %buildroot%_sysconfdir/xdg/autostart/
-mv -v %buildroot%_datadir/DisplayCAL/z-displaycal-apply-profiles.desktop %buildroot%_sysconfdir/xdg/autostart/
+# TODO: fix install to homedir
+# /usr/lib64/python3/site-packages/etc/xdg/autostart/z-displaycal-apply-profiles.desktop
+mv -v %buildroot%python3_sitelibdir/etc/xdg/autostart/z-displaycal-apply-profiles.desktop %buildroot%_sysconfdir/xdg/autostart/
 rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 
 %files
@@ -94,6 +98,9 @@ rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 3.9.14-alt1
+- new version 3.9.14 (with rpmrb script)
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 3.9.12-alt1
 - new version 3.9.12 (with rpmrb script)
 
