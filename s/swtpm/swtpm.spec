@@ -4,10 +4,11 @@
 %def_with openssl
 %def_without cuse
 %define _localstatedir %_var
+%define _libexecdir /usr/libexec
 %def_disable check
 
 Name: swtpm
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: TPM Emulator
@@ -19,8 +20,9 @@ Patch: %name-%version-%release.patch
 
 %{?_with_selinux:BuildRequires: selinux-policy-devel}
 %{?_with_openssl:BuildRequires: libssl-devel pkgconfig(libcrypto)}
+BuildRequires: rpm-build-python3
 BuildRequires: pkgconfig(libtasn1)
-BuildRequires: pkgconfig(libtpms) >= 0.6
+BuildRequires: pkgconfig(libtpms) >= 0.10
 BuildRequires: trousers >= 0.3.9
 %{?_with_cuse:BuildRequires: pkgconfig(fuse)}
 BuildRequires: pkgconfig(json-glib-1.0)
@@ -37,7 +39,7 @@ BuildRequires: /usr/bin/pod2man
 %{!?_disable_check:BuildRequires: /proc /dev/pts}
 
 Requires: lib%name = %EVR
-Requires: libtpms >= 0.6
+Requires: libtpms >= 0.10
 
 %description
 TPM emulator built on libtpms providing TPM functionality for QEMU VMs
@@ -59,7 +61,7 @@ Include files for the TPM emulator's CUSE interface.
 
 %package tools
 Summary: Tools for the TPM emulator
-Group: System/Configuration/Other
+Group: Development/Tools
 Requires: %name = %EVR
 Requires: trousers >= 0.3.9 gnutls-utils
 # For tss user and group
@@ -70,13 +72,21 @@ Tools for the TPM emulator from the swtpm package
 
 %package tools-pkcs11
 Summary: Tools for creating a local CA based on a pkcs11 device
-Group: System/Configuration/Other
+Group: Development/Tools
 Requires: %name-tools = %EVR
 Requires: tpm2-pkcs11 tpm2-pkcs11-tools tpm2-tools tpm2-abrmd
 Requires: expect
 
 %description tools-pkcs11
 Tools for creating a local CA based on a pkcs11 device
+
+%package tests
+Summary: Installed swtpm tests
+Group: Development/Tools
+Requires: %name-tools-pkcs11 = %EVR
+
+%description tests
+Installed swtpm tests
 
 %package selinux
 Summary: SELinux security policy for swtpm
@@ -166,7 +176,13 @@ fi
 %_man8dir/swtpm-create-tpmca.8*
 %_datadir/swtpm/swtpm-create-tpmca
 
+%files tests
+%_libexecdir/installed-tests/swtpm
+
 %changelog
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Tue Jul 09 2024 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 
