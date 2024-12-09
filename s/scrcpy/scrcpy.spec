@@ -1,10 +1,10 @@
 # Switch which helps to rebuild server jar with
 # nonfree Android SDK.  Don't forget to enable
-# newtwork sharing in hasher-priv.
+# network sharing in hasher-priv.
 %def_disable build_server
 
 Name: scrcpy
-Version: 2.7
+Version: 3.0.2
 Release: alt1
 Summary: Display and control your Android device screen
 License: Apache-2.0
@@ -81,6 +81,9 @@ rm %buildroot%_desktopdir/*.desktop
 %_datadir/bash-completion/completions/scrcpy
 
 %changelog
+* Mon Dec 09 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.2-alt1
+- Updated to v3.0.2 (ALT#52377).
+
 * Mon Sep 23 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.7-alt1
 - Updated to v2.7 (ALT#51425).
 
