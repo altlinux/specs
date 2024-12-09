@@ -1,5 +1,5 @@
 Name: argyllcms
-Version: 3.1.0
+Version: 3.3.0
 Release: alt1
 
 Summary: ICC compatible color management system
@@ -67,11 +67,14 @@ rm -rv %buildroot%_bindir/License.txt
 
 %files
 %doc doc/License.txt
-%doc Readme.txt
+%doc ReadMe.txt
 %_bindir/*
 %_datadir/color/argyll/
 
 %changelog
+* Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
+- new version 3.3.0 (with rpmrb script)
+
 * Wed Mar 06 2024 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version 3.1.0
 - drop tiff, jpeg, zlib,png embedded sources
