@@ -1,5 +1,5 @@
 Name: kernel-image-6.13
-Release: alt0.rc1
+Release: alt0.rc2
 %define kernel_src_version	6.12
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
@@ -494,11 +494,6 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 
 %check
 banner check
-%ifarch aarch64
-test "%kernel_latest" = "mainline"
-timeout 300 vm-run --kvm=only --loglevel=debug --append=earlycon uname -a ||
-timeout 300 vm-run --kvm=tcg  --loglevel=debug uname -a
-%else
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run --loglevel=debug uname -a
 # Longer LTP tests only if there is KVM (which is present on all main arches).
@@ -508,7 +503,6 @@ if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
 	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
 	exit 1
 fi
-%endif
 
 %post checkinstall
 check-pesign-helper
@@ -537,6 +531,12 @@ check-pesign-helper
 %exclude %modules_dir/kernel/drivers/gpu/
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
+%ifarch aarch64
+%exclude %modules_dir/kernel/drivers/phy/qualcomm/phy-qcom-qmp-combo.ko*
+%exclude %modules_dir/kernel/drivers/soc/qcom/pmic_glink_altmode.ko*
+%exclude %modules_dir/kernel/drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm.ko*
+%exclude %modules_dir/kernel/drivers/leds/flash/leds-qcom-flash.ko*
+%endif
 %ifarch armh aarch64
 # usb_f_uvc now depends on drm causing "kernel image shouldn't require
 # kernel modules" "sisyphus_check: check-kernel ERROR: kernel package.
@@ -569,6 +569,12 @@ check-pesign-helper
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
+%ifarch aarch64
+%modules_dir/kernel/drivers/phy/qualcomm/phy-qcom-qmp-combo.ko*
+%modules_dir/kernel/drivers/soc/qcom/pmic_glink_altmode.ko*
+%modules_dir/kernel/drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm.ko*
+%modules_dir/kernel/drivers/leds/flash/leds-qcom-flash.ko*
+%endif
 %ifarch armh aarch64
 %modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko*
 %endif
@@ -583,6 +589,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 09 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc2
+- Update to v6.13-rc2 (2024-12-08).
+- config-aarch64: add Qualcomm SoCs based devices support.
+- config-aarch64: CONFIG_ROCKCHIP_DW_HDMI_QP=y.
+
 * Mon Dec 02 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc1
 - Rebase to v6.13-rc1 (2024-12-01).
 
