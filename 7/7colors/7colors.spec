@@ -2,7 +2,7 @@
 
 Name: 7colors
 Version: 0.10
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: Little addicting game, take over the gaming area with your color
@@ -20,6 +20,8 @@ Source6: %name-32.xpm
 Source7: %name-48.xpm
 Source8: %name.desktop
 
+Patch1: 7colors-alt-fix-implicit-declaration.patch
+
 BuildRequires: libgtk+2-devel
 
 %description
@@ -31,6 +33,7 @@ rhombs with the same color.
 
 %prep
 %setup -n %rname-%version
+%autopatch -p1
 
 %build
 %configure
@@ -54,6 +57,9 @@ install -D -m644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Mon Dec 09 2024 Ivan A. Melnikov <iv@altlinux.org> 2:0.10-alt2
+- fix building with gcc14
+
 * Sun Jul 01 2018 Vitaly Lipatov <lav@altlinux.ru> 2:0.10-alt1
 - return to gtk only version ported to gtk2
 
