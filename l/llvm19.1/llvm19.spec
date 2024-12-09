@@ -8,7 +8,7 @@
 
 %global v_major 19
 %global v_majmin %v_major.1
-%global v_full %v_majmin.3
+%global v_full %v_majmin.5
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -113,7 +113,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.3
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -168,6 +168,8 @@ BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: zip zlib-devel binutils-devel
 BuildRequires: python3-module-myst-parser graphviz
+# see https://bugs.altlinux.org/show_bug.cgi?id=52353
+BuildRequires: fonts-ttf-dejavu
 BuildRequires: ninja-build
 %if_with lldb
 BuildRequires: pkgconfig(liblzma)
@@ -461,9 +463,7 @@ libclang, including clang-format.
 %package -n %clang_name-doc
 Summary: Documentation for Clang
 Group: Documentation
-# graphviz on %%ix86 produce png with zero size so make it arch again until
-# the issue will be fixed
-#BuildArch: noarch
+BuildArch: noarch
 %requires_filesystem
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
@@ -1507,11 +1507,13 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
-* Thu Dec 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 19.1.3-alt0.3
-- Revert alt0.2.
+* Mon Dec 09 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.5-alt0.1
+- Update to 19.1.5.
+- BR: Added fonts-ttf-dejavu (should fix ALT#52353, tnx to iv@).
+- Make clang-doc noarch again (as issue with graphviz is fixed).
 
-* Fri Nov 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 19.1.3-alt0.2
-- Build libc++ and friends (libc++abi, libunwind).
+* Tue Nov 26 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.4-alt0.1
+- Update to 19.1.4.
 
 * Fri Nov 01 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.3-alt0.1
 - Update to 19.1.3.
