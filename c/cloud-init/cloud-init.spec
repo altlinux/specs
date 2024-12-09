@@ -3,7 +3,7 @@
 
 Name:    cloud-init
 Version: 24.2
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -232,6 +232,9 @@ python3 -m pytest -v tests/unittests \
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Fri Nov 22 2024 Alexander Stepchenko <geochip@altlinux.org> 24.2-alt2
+- NMU: Fix update_hostname module (Closes: 52029)
+
 * Fri Jul 05 2024 Alexey Shabalin <shaba@altlinux.org> 24.2-alt1
 - 24.2
 - update cfg template generators for altlinux.
