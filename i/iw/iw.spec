@@ -1,14 +1,13 @@
 Name: iw
-Version: 5.0.1
+Version: 6.9
 Release: alt1
 
 Summary: nl80211 based CLI configuration utility for wireless devices
-License: BSD-style
+License: ISC
 Group: Networking/Other
 
 Url: http://linuxwireless.org/en/users/Documentation/iw
-
-Packager: Evgenii Terechkov <evg@altlinux.org>
+Vcs: https://git.kernel.org/pub/scm/linux/kernel/git/jberg/iw.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -38,6 +37,10 @@ export CFLAGS="%optflags"
 %doc README COPYING
 
 %changelog
+* Tue Dec 10 2024 Anton Midyukov <antohami@altlinux.org> 6.9-alt1
+- 6.9
+- Fix License
+
 * Mon May 20 2019 Alexey Shabalin <shaba@altlinux.org> 5.0.1-alt1
 - 5.0.1
 
