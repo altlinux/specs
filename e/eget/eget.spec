@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.12
+Version: 7.13
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,14 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 7.13-alt1
+- added --trust-server-names to wget and curl (eterbug #17842)
+- have_end_slash added support to php? url style
+- eget: added --output-dir option (eterbug #17899)
+- eget: fix download name on using curl backend (eterbug #17899)
+- added --trust-server-names to wget and curl (eterbug #17842)
+- EGET_BACKEND: add support for abs path to the command
+
 * Thu Sep 19 2024 Vitaly Lipatov <lav@altlinux.ru> 7.12-alt1
 - eget: use ipfs.io instead of cloudflare
 - eget: use timeout 20s for response checking, only one try by default
