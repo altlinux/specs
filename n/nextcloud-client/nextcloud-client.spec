@@ -1,7 +1,7 @@
 Name: nextcloud-client
-Version: 3.13.0
+Version: 3.15.0
 Release: alt1
-%K5init no_altplace
+%K6init no_altplace
 
 Group: Networking/File transfer
 Summary: Nextcloud Desktop Client
@@ -26,28 +26,29 @@ Patch6: alt-fix-fortify-source.patch
 %add_python3_path %_datadir/nautilus-python/extensions
 %add_python3_path %_datadir/nemo-python/extensions
 
-BuildRequires(pre): rpm-macros-qt5-webengine rpm-build-python3 rpm-build-gir
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: doxygen extra-cmake-modules graphviz kf5-kio-devel libqtkeychain-qt5-devel libsqlite3-devel libssl-devel python3-dev qt5-tools-devel qt5-webkit-devel zlib-devel
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: libqt5-webenginewidgets qt5-webengine-devel
+BuildRequires(pre): rpm-macros-qt6-webengine rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: doxygen extra-cmake-modules graphviz libsqlite3-devel libssl-devel python3-dev zlib-devel
+BuildRequires: qt6-declarative-devel qt6-tools-devel qt6-svg-devel qt6-websockets-devel qt6-5compat-devel
+BuildRequires: libqtkeychain-qt6-devel
+BuildRequires: kf6-kwindowsystem-devel kf6-karchive-devel kf6-kio-devel
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: libqt6-webenginewidgets qt6-webengine-devel
 %endif
-BuildRequires: libgio-devel glib2-devel qt5-svg-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-websockets-devel kf5-karchive-devel /usr/bin/rsvg-convert
-
-Requires: qt5-graphicaleffects
+BuildRequires: libgio-devel glib2-devel
+BuildRequires: /usr/bin/rsvg-convert
 
 %description
 The Nextcloud Desktop Client is a tool to synchronize files from Nextcloud Server with your computer.
 
-%package kde5
-Summary: KDE5 %name integration
+%package kde
+Summary: KDE %name integration
 Group: Graphical desktop/KDE
 Requires: %name
-%description kde5
-KDE5 %name integration
+Provides:  nextcloud-client-kde5 = %EVR
+Obsoletes: nextcloud-client-kde5 < %EVR
+%description kde
+KDE %name integration
 
 %package mate
 Summary: MATE %name integration
@@ -85,20 +86,19 @@ Cinnamon %name integration
 
 %build
 %add_optflags %optflags_shared
-%K5build \
-    -DBUILD_WITH_QT4=OFF \
-%ifarch %not_qt5_qtwebengine_arches
+%K6build \
+    -DQT_MAJOR_VERSION=6 \
+%ifarch %not_qt6_qtwebengine_arches
     -DBUILD_WITH_WEBENGINE=OFF \
 %endif
     -DDATA_INSTALL_DIR=%_datadir \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc/%name \
-    -DKDE_INSTALL_PLUGINDIR=%_K5plug \
-    -DKDE_INSTALL_KSERVICES5DIR=%_K5srv \
+    -DKDE_INSTALL_PLUGINDIR=%_K6plug \
     -DCMAKE_BUILD_TYPE=Release \
     -DNO_SHIBBOLETH=1
 
 %install
-%K5install
+%K6install
 mkdir -p %buildroot/%_desktopdir
 desktop-file-install \
     --dir=%buildroot/%_desktopdir %SOURCE2
@@ -120,10 +120,10 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/Nextcloud.*
 %_iconsdir/hicolor/*/apps/Nextcloud_*.*
 
-%files kde5
-%_K5plug/kf5/overlayicon/
-%_K5plug/kf5/kfileitemaction/
-#%_K5srv/*nextcloud*.desktop
+%files kde
+%_K6plug/kf6/overlayicon/
+%_K6plug/kf6/kfileitemaction/
+#%_K6srv/*nextcloud*.desktop
 
 %files mate
 %_datadir/caja-python/extensions/*.py
@@ -138,6 +138,10 @@ desktop-file-install \
 %_datadir/nemo-python/extensions/__pycache__/*
 
 %changelog
+* Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 3.15.0-alt1
+- new version
+- build with Qt6/KF6
+
 * Tue May 21 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 3.13.0-alt1
 - new version
 - fixed runtime dependencies for -caja, -nautilus and -nemo noarch subpackages (ALT#50357). thanks aris@
