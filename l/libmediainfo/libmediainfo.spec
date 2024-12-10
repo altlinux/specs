@@ -1,8 +1,8 @@
-%define ver_major 24.11
+%define ver_major 24.12
 
 Name: libmediainfo
 Version: %ver_major
-Release: alt1.1
+Release: alt1
 
 Group: System/Libraries
 Summary: %name - Shared library for mediainfo
@@ -91,6 +91,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 24.12-alt1
+- 24.12
+
 * Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 24.11-alt1.1
 - fixed build for E2K (ilyakurdyukov@)
 

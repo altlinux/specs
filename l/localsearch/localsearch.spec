@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -77,6 +77,7 @@ Provides: %old_name%api_ver_major = %EVR
 # mediaextractor (gstreamer|libav|mplayer|external)
 %define generic_media_extractor gstreamer
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
+BuildRequires: gst-plugins-bad1.0-devel >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-build-systemd rpm-build-gir rpm-build-python3
 BuildRequires: meson
@@ -208,6 +209,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Thu Nov 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 

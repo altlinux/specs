@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.6
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -143,6 +143,9 @@ the functionality of the installed %_name library.
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.6-alt1
+- 1.10.6
+
 * Sat Aug 31 2024 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 

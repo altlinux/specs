@@ -6,8 +6,8 @@
 %def_enable check
 
 Name: phog
-Version: 0.1.5
-Release: alt0.2
+Version: 0.1.7
+Release: alt1
 
 Summary: Phone Greeter
 Group: Graphical desktop/GNOME
@@ -78,6 +78,9 @@ xvfb-run %__meson_test
 %doc README*
 
 %changelog
+* Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Thu Dec 14 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt0.2
 - src/greetd.c:
   fixed DEFAULT_MAX_UID detection if /etc/login.defs unaccessible (antohami@)
