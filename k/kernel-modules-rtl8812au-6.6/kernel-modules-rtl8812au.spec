@@ -1,9 +1,9 @@
 %define module_name rtl8812au
 %define module_version 5.6.4.2
-%define module_release alt2
+%define module_release alt3
 
 %define flavour	6.6
-%define karch %ix86 x86_64
+%define karch %ix86 x86_64 aarch64
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.6
 
@@ -13,17 +13,17 @@ BuildRequires(pre): kernel-headers-modules-6.6
 
 Name: kernel-modules-%module_name-%flavour
 Group: System/Kernel and hardware
-Summary: Module for Realtek RTL8812ce
+Summary: Module for Realtek RTL8812au
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 Epoch: 1
-Url: https://github.com/tomaspinho/rtl8821ce.git
+Url: https://github.com/aircrack-ng/rtl8812au
 License: GPLv2
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %karch
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
@@ -35,7 +35,8 @@ BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
 %description
-These packages contain Realtek RTL8812au module.
+This is a fork of the Realtek 802.11ac (rtl8812au) v4.2.2 (7502.20130507)
+driver altered to build on Linux kernel version >= 3.10.
 
 %prep
 rm -rf kernel-source-%module_name-%module_version
