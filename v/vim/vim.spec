@@ -48,8 +48,8 @@
 
 Name: vim
 %define branch 9.1
-Version: %branch.0050
-Release: alt4
+Version: %branch.0917
+Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -841,7 +841,7 @@ install -p -m644 alternatives/vim-X11-motif %buildroot%_altdir/vim-X11-motif
 # {{{2 Language-specific parts
 %find_lang --with-man --output vim.lang vim ex rview rvim view vimdiff
 %find_lang --with-man --output xxd.lang xxd
-%find_lang --with-man --output vimtutor.lang --custom-file-script 's:\(%_datadir/vim/tutor/tutor\)\(\.\([a-z][a-z]\)\(\..*\)\?\)$:%%lang(\3) \1\2:; s:^\([^%%].*\)::; s:%%lang(en) ::;' vimtutor
+%find_lang --with-man --output vimtutor.lang --custom-file-script 's:\(%_datadir/vim/tutor/tutor[1-9]\?\)\(\.\([a-z][a-z]\)\(\..*\)\?\)$:%%lang(\3) \1\2:; s:^\([^%%].*\)::; s:%%lang(en) ::;' vimtutor
 %find_lang --with-man --output vim-X11.lang evim eview gvim gview gvimdiff rgvim rgview
 install -p -m644 runtime/langrc/* %buildroot%_datadir/vim/langrc
 install -p -m644 runtime/langmap/*.vim %buildroot%_datadir/vim/langmap
@@ -865,10 +865,10 @@ rm ./usr/share/vim/spell/en.utf-8.sug
 rm ./usr/share/vim/spell/he.vim
 rm ./usr/share/vim/spell/spell.vim
 rm ./usr/share/vim/spell/yi.vim
-rm ./usr/share/vim/tutor/tutor.bar
-rm ./usr/share/vim/tutor/tutor.bar.utf-8
-rm ./usr/share/vim/tutor/tutor.zh_cn.utf-8
-rm ./usr/share/vim/tutor/tutor.zh_tw.utf-8
+rm ./usr/share/vim/tutor/tutor1.bar
+rm ./usr/share/vim/tutor/tutor1.bar.utf-8
+rm ./usr/share/vim/tutor/tutor1.zh_cn.utf-8
+rm ./usr/share/vim/tutor/tutor1.zh_tw.utf-8
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -933,7 +933,9 @@ fi
 %_datadir/vim/compiler
 %dir %_datadir/vim/doc
 %doc %_datadir/vim/doc/*.txt
+%doc %lang(ru) %_datadir/vim/doc/*.rux
 %doc %_datadir/vim/doc/tags
+%doc %lang(ru) %_datadir/vim/doc/tags-ru
 %_datadir/vim/ftdetect
 %_datadir/vim/ftplugin
 %_datadir/vim/import
@@ -971,8 +973,13 @@ fi
 %endif
 %_bindir/vimtutor
 %dir %_datadir/vim/tutor
-%_datadir/vim/tutor/tutor
-%_datadir/vim/tutor/tutor.utf-8
+%_datadir/vim/tutor/en/
+%_datadir/vim/tutor/tutor.tutor
+%_datadir/vim/tutor/tutor.tutor.json
+%_datadir/vim/tutor/tutor1
+%_datadir/vim/tutor/tutor1.utf-8
+%_datadir/vim/tutor/tutor2
+%_datadir/vim/tutor/tutor2.utf-8
 %_datadir/vim/tutor/tutor.vim
 %_datadir/vim/tutor/README*
 # }}}
@@ -1063,6 +1070,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Dec 09 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0917-alt1
+- Updated to v9.1.0917 (ALT#51821).
+
 * Wed Jun 05 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0050-alt4
 - Dropped R: menu.
 
