@@ -2,7 +2,7 @@
 
 Name:    kamoso
 Version: 24.02.2
-Release: alt2
+Release: alt3
 
 Group:   Video
 Summary: Application for taking pictures and videos from a webcam
@@ -59,8 +59,7 @@ BuildRequires: qt5-quickcontrols2-devel
 
 Requires: kf5-ki18n-common
 Requires: kf5-kio
-# will be return after build with KF6
-#Requires: kf5-purpose
+Requires: kf5-purpose
 Requires: libkf5quickaddons
 Requires: qt5-quickcontrols
 
@@ -102,6 +101,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt3
+- return kf5-purpose to requires
+
 * Mon Sep 30 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt2
 - relax requires
 
