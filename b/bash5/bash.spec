@@ -1,6 +1,6 @@
 Name: bash5
 %define bash_version 5.2
-%define bash_patchlevel .26
+%define bash_patchlevel .37
 Version: %bash_version%bash_patchlevel
 Release: alt1
 
@@ -167,7 +167,7 @@ pushd build-bash
 	--without-bash-malloc \
 	--with-installed-readline \
 	--disable-command-timing \
-	--disable-net-redirections \
+	--enable-net-redirections \
 	--enable-separate-helpfiles \
 	#
 %make_build
@@ -300,6 +300,13 @@ make -k check -C build-bash
 %_libexecdir/%name/*.h
 
 %changelog
+* Thu Nov 28 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.37-alt1
+- 5.2.26 -> 5.2.37.
+- Cleaned up the default value of BASH_LOADABLES_PATH variable.
+- Fixed BASH_LOADABLES_PATH which was broken due to sh -> sh5; bash -> bash5
+  rename (ALT#52156).
+- bash5: Reenable net-redirections (ALT#52222).
+
 * Wed Jan 24 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.2.26-alt1
 - 5.2.15 -> 5.2.26.
 
