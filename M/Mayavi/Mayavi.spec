@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+ExcludeArch: %ix86
 
 %def_disable bootstrap
 %def_disable docs
@@ -10,7 +11,7 @@
 
 Name:           Mayavi
 Version:        4.8.2
-Release:        alt1
+Release:        alt2
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -213,6 +214,9 @@ export ETS_TOOLKIT=null
 %endif
 
 %changelog
+* Tue Dec 10 2024 Anton Farygin <rider@altlinux.ru> 4.8.2-alt2
+- Disabled build on 32-bit x86.
+
 * Mon May 27 2024 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt1
 - New version 4.8.2.
 
