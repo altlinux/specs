@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.17
+Version: 0.5.18
 Release: alt1
 
 Summary: Manager for game installation and execution
@@ -15,7 +15,7 @@ Group: Games/Other
 Url: https://lutris.net
 
 Source: https://lutris.net/releases/lutris_%version.tar.xz
-Patch: %name-%version-%release.patch
+Patch0: lutris-0.5.17-alt-GdkPixbuf.patch
 # Sometimes the Auto option does not work correctly, so it was decided to leave the option for now.
 Patch1: lutris-0.5.17-upstream-disable-the-GPUs-option-when-there-is-only-one-GPU.patch
 
@@ -46,7 +46,7 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 
 %prep
 %setup -n %name
-%patch -p1
+%patch0 -p1
 %patch1 -p1 -R
 
 %build
@@ -80,6 +80,9 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_man1dir/%name.1.xz
 
 %changelog
+* Tue Dec 10 2024 Leontiy Volodin <lvol@altlinux.org> 0.5.18-alt1
+- New version 0.5.18.
+
 * Fri Apr 12 2024 Leontiy Volodin <lvol@altlinux.org> 0.5.17-alt1
 - New version 0.5.17.
 
