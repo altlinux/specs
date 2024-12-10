@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
@@ -18,8 +18,9 @@ License: BSD-2-Clause
 Group: System/Libraries
 Url: https://www.openjpeg.org/
 
-%if_enabled snapshot
 Vcs: https://github.com/uclouvain/openjpeg.git
+
+%if_enabled snapshot
 Source: %_name-%version.tar
 %else
 Source: https://github.com/uclouvain/%_name/archive/v%version/%_name-%version.tar.gz
@@ -73,14 +74,14 @@ developing with %name library.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DBUILD_STATIC_LIBS:BOOL=OFF \
-	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DOPENJPEG_INSTALL_LIB_DIR=%_lib \
-	-DBUILD_THIRDPARTY:BOOL=OFF \
-	%{?_enable_docs:-DBUILD_DOC:BOOL=ON} \
-	%{?_enable_check:-DBUILD_TESTING=ON \
-	 -DBUILD_UNIT_TESTS=ON \
-	 -DOPJ_DATA_ROOT=${PWD}/data}
+    -DBUILD_STATIC_LIBS:BOOL=OFF \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DOPENJPEG_INSTALL_LIB_DIR=%_lib \
+    -DBUILD_THIRDPARTY:BOOL=OFF \
+    %{?_enable_docs:-DBUILD_DOC:BOOL=ON} \
+    %{?_enable_check:-DBUILD_TESTING=ON \
+     -DBUILD_UNIT_TESTS=ON \
+     -DOPJ_DATA_ROOT=${PWD}/data}
 %nil
 %cmake_build
 
@@ -125,6 +126,9 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/cmake/%_
 %endif
 
 %changelog
+* Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.3-alt1
+- 2.5.3
+
 * Wed Feb 28 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.2-alt1
 - 2.5.2
 
