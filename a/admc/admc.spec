@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.17.2
+Version: 0.18.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,31 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Wed Dec 5 2024 Semyon Knyazev <samael@altlinux.org> 0.18.0-alt1
+- Add custom permissions to security tab: create/delete child objects
+  and read/write properties.
+- Add delegation tasks to security tab. Delegation tasks represent
+  common tasks from RSAT's delegation dialog.
+- Extended rights are placed in a separate permissions tab.
+- Generic and standard permissions are placed in the common permissions
+  tab. Common permissions are supplemented by following: list contents,
+  read/write all properties, delete, delete subtree, read permissions,
+  modify permissions, modify owner, all validated writes and all extended
+  rights.
+- Add permissions scope selection to the security tab. Corresponding
+  permissions can be applied to the target object, target and child objects,
+  only to the child objects or to the child object with specific class.
+  Delegation tasks are appliable only to target object.
+- Changed permissions unsetting behavior: superior permission unsetting
+  unsets all subordinate permissions too. For example, "Full control"
+  unsetting unsets all other permissions.
+- Fixed test fails, which were caused by arbitrary invalid domain controller
+  selection.
+- Add "Set/unset all" and "Edit" actions to the links tab in the policy OU
+  widget. "Set/unset all" actions set/unset state (enforced/disabled, depending
+  on column) for all linked policies. "Edit" action opens GPUI for policy editing.
+  These actions can be triggered via context menu.
+
 * Thu Dec 5 2024 Semyon Knyazev <samael@altlinux.org> 0.17.2-alt1
 - Fixed lost site and DC info in domain info widget (child domain).
   (closes:52329)
