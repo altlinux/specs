@@ -1,12 +1,12 @@
 Name: yazi
-Version: 0.3.3
+Version: 0.4.1
 Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
 License: MIT
 Group: File tools
 Url: https://yazi-rs.github.io
-Vcs: https://github.com/sxyazi/yazi
+Vcs: https://github.com/sxyazi/yazi.git
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -69,10 +69,14 @@ export YAZI_GEN_COMPLETIONS=true
 cargo build %_smp_mflags --offline --release
 
 %install
-install -Dp target/release/%name -t %buildroot%_bindir
-install -Dm 644 yazi-boot/completions/yazi.bash %buildroot%_datadir/bash-completion/completions/yazi
-install -Dm 644 yazi-boot/completions/yazi.fish %buildroot%_datadir/fish/vendor_completions.d/yazi.fish
-install -Dm 644 yazi-boot/completions/_yazi %buildroot%_datadir/zsh/site-functions/_yazi
+install -D target/release/%name -t %buildroot%_bindir
+install -D target/release/ya -t %buildroot%_bindir
+install -D yazi-boot/completions/yazi.bash %buildroot%_datadir/bash-completion/completions/yazi
+install -D yazi-boot/completions/yazi.fish -t %buildroot%_datadir/fish/vendor_completions.d/
+install -D yazi-boot/completions/_yazi -t %buildroot%_datadir/zsh/site-functions/
+install -D yazi-cli/completions/ya.bash %buildroot%_datadir/bash-completion/completions/ya
+install -D yazi-cli/completions/ya.fish -t %buildroot%_datadir/fish/vendor_completions.d/
+install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 
 %check
 # Has no tests.
@@ -80,6 +84,7 @@ install -Dm 644 yazi-boot/completions/_yazi %buildroot%_datadir/zsh/site-functio
 %files
 %doc LICENSE README.md
 %_bindir/%name
+%_bindir/ya
 
 %files bash-completion
 %_datadir/bash-completion
@@ -91,6 +96,9 @@ install -Dm 644 yazi-boot/completions/_yazi %buildroot%_datadir/zsh/site-functio
 %_datadir/zsh
 
 %changelog
+* Tue Dec 10 2024 Anton Kurachenko <srebrov@altlinux.org> 0.4.1-alt1
+- New version 0.4.1.
+
 * Wed Sep 04 2024 Anton Kurachenko <srebrov@altlinux.org> 0.3.3-alt1
 - New version 0.3.3.
 
