@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.0.9
-Release: alt3
+Release: alt4
 
 Summary: Get metadata for python modules
 License: Apache-2.0
@@ -25,6 +25,7 @@ BuildRequires: python3-module-pbr
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+Patch: metaextract-1.0.9-fix-tests.patch
 
 %description
 metaextract is a tool to collect metadata about a python module. For example
@@ -35,6 +36,7 @@ too.
 
 %prep
 %setup -n %modulename-%version
+%patch -p1
 
 grep -rl "distutils.core" | xargs sed -i 's/distutils.core/setuptools/'
 
@@ -54,6 +56,9 @@ grep -rl "distutils.core" | xargs sed -i 's/distutils.core/setuptools/'
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Dec 10 2024 Anton Vyatkin <toni@altlinux.org> 1.0.9-alt4
+- Fixed FTBFS.
+
 * Tue Oct 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt3
 - Dropped dependency on distutils.
 - Built with check.
