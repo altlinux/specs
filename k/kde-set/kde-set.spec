@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.02.1
+Version: 24.02.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-macros-qt6-webengine
 Summary: %summary
 Group: Graphical desktop/KDE
 #Requires: qt5-phonon-backend
-Requires: qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations
+Requires: qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects qt5-imageformats qt5-translations qt5-wayland
 Requires: kf5-kio
 #Requires: kf5-kded kf5-kinit
 Requires: plasma5-breeze plasma5-integration kwayland-integration
@@ -278,6 +278,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
+- update requires
+
 * Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.1-alt1
 - update requires
 
