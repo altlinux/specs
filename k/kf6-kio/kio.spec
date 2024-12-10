@@ -6,7 +6,7 @@
 
 Name: kf6-%rname
 Version: 6.8.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Summary: KDE Frameworks 6 network transparent access to files and data
 Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
-Requires: kf5-kded
+Requires: kf6-kded
 
 Source: %rname-%version.tar
 Source10: add-ru.po
@@ -174,6 +174,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
+- fix requires
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
