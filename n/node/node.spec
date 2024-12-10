@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 20.17
+%define major 20.18
 
 %define nodejs_soversion 115
 %define nodejs_abi %nodejs_soversion
@@ -80,7 +80,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -512,6 +512,9 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 20.18.1-alt1
+- 2024-11-20, Version 20.18.1 'Iron' (LTS)
+
 * Sun Sep 01 2024 Vitaly Lipatov <lav@altlinux.ru> 20.17.0-alt1
 - 2024-08-21, Version 20.17.0 'Iron' (LTS), @marco-ippolito
 - set npm >= 10.8.2, c-ares >= 1.32.3
