@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,9 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Dec 10 2024 Alexey Gladkov <legion@altlinux.ru> 0.3.8-alt1
+- mki-pack: add option '-iso-level' (by default 2) for xorriso (mkisofs)
+
 * Mon Nov 11 2024 Anton Midyukov <antohami@altlinux.org> 0.3.7-alt1
 - mki-copy-grub-efi-chrooted: fix typo in grub suffix on loongarch64
 
