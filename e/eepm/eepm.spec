@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 Name: eepm
-Version: 3.64.2
+Version: 3.64.4
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -105,12 +105,14 @@ make -C po
 %dir %_sysconfdir/eepm/pack.d/
 %dir %_sysconfdir/eepm/repack.d/
 %dir %_sysconfdir/eepm/prescription.d/
+%dir %_sysconfdir/eepm/desktop.d/
 %config(noreplace) %_sysconfdir/eepm/eepm.conf
 %config(noreplace) %_sysconfdir/eepm/serv.conf
 %config(noreplace) %_sysconfdir/eepm/*.list
 %config(noreplace) %_sysconfdir/eepm/repack.d/*
 %config(noreplace) %_sysconfdir/eepm/pack.d/*
 %config(noreplace) %_sysconfdir/eepm/prescription.d/*
+%config(noreplace) %_sysconfdir/eepm/desktop.d/*
 %_bindir/epm*
 %_bindir/eepm
 %_bindir/serv
@@ -142,6 +144,28 @@ make -C po
 %endif
 
 %changelog
+* Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 3.64.4-alt1
+- epm status: fix typo (eterbug #17865)
+- epm play cnrdrvcups-ufr2: fix download link (eterbug #17865)
+- epm play schildichat-desktop: fix download method; add version support (eterbug #17865)
+- epm repack tsukimi: fix png, xml download link  (eterbug #17865)
+- epm play yucca: fix getting version (eterbug #17865)
+
+* Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 3.64.3-alt1
+- epm status: add UncomOS support (eterbug #17885)
+- epm status: add Ubuntu support (eterbug #17885)
+- epm status: add Debian support (eterbug #17885)
+- epm play: add the --ipfs flag to the help message
+- bash and zsh completion update
+- epm play freeoffice: drop year from PKGNAME (eterbug #17849)
+- eget: added --trust-server-names to wget and curl (eterbug #17842)
+- eget: have_end_slash added support to php? url style
+- eget: added --output-dir option (eterbug #17899)
+- eget: fix download name on using curl backend (eterbug #17899)
+- revert "eget: use curl by default"
+- EGET_BACKEND: add support for abs path to the command
+- epm-repack-rpm: don't pack /usr/share/icons
+
 * Thu Dec 05 2024 Vitaly Lipatov <lav@altlinux.ru> 3.64.2-alt1
 - fix options order for dnf5
 - distr_info: use alt vendor instead of altlinux
