@@ -1,6 +1,6 @@
 Name: pam_mkuser
 Version: 0.1.0
-Release: alt5
+Release: alt6
 
 Summary: A pluggable authentication module that adds the new user account if it doesn\'t exist
 License: GPLv2+
@@ -39,7 +39,8 @@ doesn\'t exist.
 %configure \
 	--libdir=/%_lib \
 	--sbindir=%_sbindir \
-	--includedir=%_includedir/security
+	--includedir=%_includedir/security \
+	--enable-securedir=%_pam_modules_dir
 
 %make_build
 
@@ -54,6 +55,9 @@ doesn\'t exist.
 %_controldir/*
 
 %changelog
+* Tue Dec 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt6
+- Fix: Install module to %_pam_modules_dir.
+
 * Wed Aug 22 2018 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt5
 - Rebuild the package to make it available for the "aarch64" arch.
 
