@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg epson-inkjet-printer-escpr
-%define ver 1.8.5
+%define ver 1.8.6
 
 %define drivername      epson-inkjet-printer-escpr
 %define driverstr       epson-inkjet-printer-escpr
@@ -32,12 +32,15 @@ Name: %{pkg}
 Version: %{ver}
 Release: alt1
 License: GPL-2.0+
-URL: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
+URL: https://support.epson.net/linux/Printer/LSB_distribution_pages/en/escpr.php
 # Open URL http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX&productName=ET-2750 and push button with magnifier
 Group: System/Configuration/Hardware
 Summary: Epson Inkjet Printer Driver (ESC/P-R) for Linux
 
 Source0: %{name}-%{version}.tar.gz
+Patch1: 0001-Forbid-the-upstream-buildsystem-to-touch-files-under.patch
+Patch3: 0003-Fix-suc-c-essful-typo-in-debug-message.patch
+Patch4: 0004-fix-implicit-function-compile-error.patch
 
 BuildRequires: libcups-devel
 
@@ -54,7 +57,8 @@ http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
 # Packaging settings
 %prep
-%setup -q
+%setup
+%autopatch -p1
 
 %build
 %undefine _configure_gettext
@@ -77,6 +81,12 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Tue Dec 10 2024 Andrey Cherepanov <cas@altlinux.org> 1.8.6-alt1
+- New version.
+- Supported new model:
+  + Epson EP-717A Series
+  + Epson EP-817A Series
+
 * Mon Mar 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.8.5-alt1
 - New version (ALT #49770).
 - Supported new model:
