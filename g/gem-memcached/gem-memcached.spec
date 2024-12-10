@@ -5,7 +5,7 @@
 %define        gemname memcached
 
 Name:          gem-memcached
-Version:       2.0.0.20
+Version:       2.0.0.21
 Release:       alt0.1
 Summary:       A Ruby interface to the libmemcached C client
 License:       AFL-3.0
@@ -15,27 +15,24 @@ Vcs:           https://github.com/arthurnn/memcached.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         allow-use-system-libraries-arg.patch
 BuildRequires(pre): rpm-build-ruby
-%if_enabled check
-BuildRequires: gem(rake) >= 0
+BuildRequires: libsasl2-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libmemcached-devel
+BuildRequires: gem(activesupport) >= 0
 BuildRequires: gem(minitest) >= 0
 BuildRequires: gem(mocha) >= 0
-BuildRequires: gem(activesupport) >= 0
+BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
-BuildRequires: gem(remix-stash) >= 1.1.3
-BuildRequires: gem(dalli) >= 0
-BuildRequires: gem(memcache-client) >= 0
-BuildConflicts: gem(remix-stash) >= 1.2
-%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-memcached < %EVR
 Provides:      ruby-memcached = %EVR
-Provides:      gem(memcached) = 2.0.0.20
+Provides:      memcached = %EVR
+Provides:      gem(memcached) = 2.0.0.21
 
-%ruby_use_gem_version memcached:2.0.0.20
+%ruby_use_gem_version memcached:2.0.0.21
 
 %description
 An interface to the libmemcached C client.
@@ -52,14 +49,14 @@ The memcached library wraps the pure-C libmemcached client via SWIG.
 
 %if_enabled    doc
 %package       -n gem-memcached-doc
-Version:       2.0.0.20
+Version:       2.0.0.21
 Release:       alt0.1
 Summary:       A Ruby interface to the libmemcached C client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета memcached
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(memcached) = 2.0.0.20
+Requires:      gem(memcached) = 2.0.0.21
 
 %description   -n gem-memcached-doc
 A Ruby interface to the libmemcached C client documentation files.
@@ -82,27 +79,23 @@ The memcached library wraps the pure-C libmemcached client via SWIG.
 
 %if_enabled    devel
 %package       -n gem-memcached-devel
-Version:       2.0.0.20
+Version:       2.0.0.21
 Release:       alt0.1
 Summary:       A Ruby interface to the libmemcached C client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета memcached
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(memcached) = 2.0.0.20
-Requires:      gem(rake) >= 0
-Requires:      gem(minitest) >= 0
-Requires:      gem(mocha) >= 0
-Requires:      gem(activesupport) >= 0
-Requires:      gem(rake-compiler) >= 0
-Requires:      gem(remix-stash) >= 1.1.3
-Requires:      gem(dalli) >= 0
-Requires:      gem(memcache-client) >= 0
 Requires:      libsasl2-devel
 Requires:      libstdc++-devel
 Requires:      libmemcached-devel
 Requires:      gnu-config
-Conflicts:     gem(remix-stash) >= 1.2
+Requires:      gem(memcached) = 2.0.0.21
+Requires:      gem(activesupport) >= 0
+Requires:      gem(minitest) >= 0
+Requires:      gem(mocha) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rake-compiler) >= 0
 
 %description   -n gem-memcached-devel
 A Ruby interface to the libmemcached C client development package.
@@ -125,7 +118,6 @@ The memcached library wraps the pure-C libmemcached client via SWIG.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -137,25 +129,30 @@ The memcached library wraps the pure-C libmemcached client via SWIG.
 %ruby_test
 
 %files
-%doc README.md vendor/libmemcached-1.0.18/README vendor/libmemcached-1.0.18/README.FIRST vendor/libmemcached-1.0.18/README.win32 vendor/libmemcached-1.0.18/libmemcached/memcached/README.txt
+%doc CHANGELOG LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-memcached-doc
-%doc README.md vendor/libmemcached-1.0.18/README vendor/libmemcached-1.0.18/README.FIRST vendor/libmemcached-1.0.18/README.win32 vendor/libmemcached-1.0.18/libmemcached/memcached/README.txt
+%doc CHANGELOG LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-memcached-devel
-%doc README.md vendor/libmemcached-1.0.18/README vendor/libmemcached-1.0.18/README.FIRST vendor/libmemcached-1.0.18/README.win32 vendor/libmemcached-1.0.18/libmemcached/memcached/README.txt
+%doc CHANGELOG LICENSE README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Tue Dec 10 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.0.21-alt0.1
+- ^ 2.0.0p20 -> 2.0.0p21
+- * change build required
+- ! build with extension by add proper build deps
+
 * Thu Jul 25 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.0.20-alt0.1
 - ^ 2.0.0 -> 2.0.0p20
 
