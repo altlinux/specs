@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.9.6
-Release: alt2
+Release: alt3
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -917,6 +917,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Tue Dec 10 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.6-alt3
+- Fix typo in sss_ec_get_key() for OpenSSL older than 3.0.
+
 * Sat Dec 07 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.6-alt2
 - Add postponed restart of sssd services (closes: 52364).
 
