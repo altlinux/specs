@@ -47,7 +47,7 @@
 
 # Then the hypervisor drivers that run on local host
 %def_with qemu
-%def_with openvz
+%def_without openvz
 %def_with lxc
 %if_with lxc
 %def_with login_shell
@@ -106,7 +106,7 @@
 # A few optional bits
 %def_without netcf
 %def_with udev
-%def_with yajl
+%def_with json_c
 %def_with sanlock
 %if_with lxc
 %def_with fuse
@@ -119,7 +119,7 @@
 %if_with  qemu
 %def_with qemu_tcg
 %def_with libnbd
-%ifarch %ix86 x86_64 armh aarch64 ppc64le loongarch64
+%ifarch %ix86 x86_64 armh aarch64 ppc64le loongarch64 riscv64
 %def_with qemu_kvm
 %endif
 %endif
@@ -171,7 +171,7 @@
 %endif
 
 Name: libvirt
-Version: 10.7.0
+Version: 10.10.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -200,7 +200,7 @@ Requires: %name-libs = %EVR
 BuildRequires(pre): meson >= 0.56.0
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_udev:BuildRequires: udev libudev-devel >= 219 libpciaccess-devel}
-%{?_with_yajl:BuildRequires: libyajl-devel >= 2.0.1}
+%{?_with_json_c:BuildRequires: libjson-c-devel >= 0.14}
 %{?_with_sanlock:BuildRequires: sanlock-devel >= 1.8}
 %{?_with_libpcap:BuildRequires: libpcap-devel >= 1.5.0}
 %{?_with_libnl:BuildRequires: libnl-devel}
@@ -284,7 +284,7 @@ Group: System/Servers
 Requires: %name-libs = %EVR
 Requires: iproute2
 %{?_with_pm_utils:Requires: pm-utils}
-%ifarch %ix86 x86_64
+%ifarch %ix86 x86_64 aarch64 riscv64
 Requires: dmidecode
 %endif
 # libvirtd depends on 'messagebus' service
@@ -692,7 +692,6 @@ Summary: Server side daemon, driver & default configs required to run XEN guests
 Group: System/Servers
 BuildArch: noarch
 Requires: %name-daemon-config-network = %EVR
-Requires: %name-daemon-config-nwfilter = %EVR
 Requires: %name-daemon-proxy = %EVR
 Requires: xen
 %if_with driver_modules
@@ -881,7 +880,7 @@ tar -xf %SOURCE2 -C subprojects/keycodemapdb --strip-components 1
 %endif
     -Dnetcf=%{enabled_ifwith netcf} \
     -Dudev=%{enabled_ifwith udev} \
-    -Dyajl=%{enabled_ifwith yajl} \
+    -Djson_c=%{enabled_ifwith json_c} \
     -Dsanlock=%{enabled_ifwith sanlock} \
     -Dfuse=%{enabled_ifwith fuse} \
     -Dpm_utils=%{enabled_ifwith pm_utils} \
@@ -1535,8 +1534,6 @@ fi
 %_libexecdir/libvirt-ssh-proxy
 %endif
 
-
-
 %files devel
 %_pkgconfigdir/*.pc
 %_libdir/*.so
@@ -1544,6 +1541,14 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Dec 10 2024 Alexey Shabalin <shaba@altlinux.org> 10.10.0-alt1
+- 10.10.0
+- Build with json-c
+- Build without yajl
+- Build without openvz support
+- Requires dmidecode on aarch64 and riscv64
+- Requires qemu-kvm on riscv64
+
 * Thu Sep 26 2024 Alexey Shabalin <shaba@altlinux.org> 10.7.0-alt1
 - 10.7.0 (Fixes: CVE-2024-8235)
 
