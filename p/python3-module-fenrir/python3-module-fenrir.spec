@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.9.8
-Release: alt1
+Release: alt2
 
 Summary: Python3 module for %pypi_name
 License: LGPL-3.0
@@ -51,6 +51,7 @@ cp -r %buildroot%python3_sitelibdir/usr/* %buildroot/usr/
 rm -r %buildroot%python3_sitelibdir/usr
 
 install -Dm 755 autostart/systemd/Arch/%pypi_name.service %buildroot%_systemd_dir/system/%pypi_name
+install -m 644 config/settings/settings.conf %buildroot%_sysconfdir/fenrirscreenreader/settings/settings.conf
 
 %check
 %tox_check_pyproject
@@ -71,5 +72,5 @@ install -Dm 755 autostart/systemd/Arch/%pypi_name.service %buildroot%_systemd_di
 %_man1dir/%pypi_name.1.xz
 
 %changelog
-* Sat Nov 02 2024 Artem Semenov <savoptik@altlinux.org> 1.9.8-alt1
+* Sat Nov 02 2024 Artem Semenov <savoptik@altlinux.org> 1.9.8-alt2
 - Initial build for Sisyphus (ALT bug: 51707)
