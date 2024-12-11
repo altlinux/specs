@@ -4,7 +4,7 @@
 
 Summary: A collection of UNIX tools
 Name: moreutils
-Version: 0.69
+Version: 0.70
 Release: alt1
 License: GPL-2.0-or-later
 Group: File tools
@@ -82,6 +82,9 @@ make check
 %_man1dir/parallel.1*
 
 %changelog
+* Wed Dec 11 2024 Vitaly Chikunov <vt@altlinux.org> 0.70-alt1
+- Update to 0.70 (2024-12-09).
+
 * Tue Feb 27 2024 Vitaly Chikunov <vt@altlinux.org> 0.69-alt1
 - Update to 0.69 (2024-02-25). No-op change.
 - 'ts' man page is renamed so it's easier to find with tab completion.
