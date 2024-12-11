@@ -1,8 +1,10 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%define _unpackaged_files_terminate_build 1
+
 Name: librep
-Version: 0.92.3
-Release: alt6
+Version: 0.92.7
+Release: alt1
 
 Summary: An embeddable LISP environment
 License: GPL
@@ -10,7 +12,9 @@ Group: Development/Other
 
 ExcludeArch: armh
 
-Url: http://librep.sourceforge.net/
+Url: https://sawfish.fandom.com/wiki/Main_Page
+Vcs: https://github.com/SawfishWM/librep
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -112,6 +116,9 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Wed Dec 11 2024 Paul Wolneykien <manowar@altlinux.org> 0.92.7-alt1
+- New version 0.92.7.
+
 * Wed Nov 22 2023 Ivan A. Melnikov <iv@altlinux.org> 0.92.3-alt6
 - Assume downwards stack direction for loongarch64 and riscv64
   (fixes FTBFS on those architectures).
