@@ -1,10 +1,12 @@
 # wait for tox 4
 %if "%(rpmquery --qf '%%{VERSION}' python3-module-tox)" < "4"
 %def_disable check
+%else
+%def_enable check
 %endif
 
 Name: git-cola
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -28,6 +30,22 @@ Requires: python3-module-pyinotify python3-module-PyQt5 git-core
 %description
 A sweet, carbonated git gui known for its sugary flavour
 and caffeine-inspired features.
+
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+
+%description -n bash-completion-%name
+The official bash completion script for %name.
+
+%package -n zsh-completion-%name
+Summary: Zsh completion for %name
+Group: Shells
+BuildArch: noarch
+
+%description -n zsh-completion-%name
+The official zsh completion script for %name.
 
 %prep
 %setup
@@ -57,6 +75,10 @@ export DESTDIR=%buildroot
 %endif
   install-man
 
+# zsh and bash
+install -Dm644 contrib/_%{name} -t %buildroot%_datadir/zsh/site-functions/
+install -Dm644 contrib/%name-completion.bash %buildroot%_datadir/bash-completion/completions/%name
+
 # executable script is not executable
 chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass
 chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
@@ -69,7 +91,7 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %endif
 
 %files -f %name.lang
-%doc COPYING COPYRIGHT README.md
+%doc CHANGES.rst CONTRIBUTING.md LICENSE README.md
 %_bindir/*
 %_desktopdir/*.desktop
 %_docdir/git-cola
@@ -78,7 +100,17 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_man1dir/git-*.1.xz
 %python3_sitelibdir/*
 
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/%name
+
+%files -n zsh-completion-%name
+%_datadir/zsh/site-functions/_%{name}
+
 %changelog
+* Wed Dec 11 2024 Leontiy Volodin <lvol@altlinux.org> 4.10.0-alt1
+- New version 4.10.0.
+- Added bash and zsh completition packages.
+
 * Wed Nov 06 2024 Leontiy Volodin <lvol@altlinux.org> 4.9.0-alt1
 - New version 4.9.0.
 - Check is temporarily disabled (tox4 needed).
