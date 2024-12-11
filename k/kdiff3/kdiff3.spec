@@ -1,37 +1,37 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kdiff3
-Version: 1.8.4
+Version: 1.12.0
 Release: alt1
 Summary: Compare + merge 2 or 3 files or directories
- 
-License: GPLv2
+%K6init
+
+License: GPL-2.0-or-later
 Group: Text tools
 URL: https://invent.kde.org/sdk/kdiff3
 
 # https://invent.kde.org/sdk/kdiff3.git
 Source: %name-%version.tar
 
-Patch1: %name-1.8.3-gentoo-hidpi.patch
-
-BuildRequires(pre): rpm-build-kf5 
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
-BuildRequires: gcc-c++
+BuildRequires: qt6-declarative-devel qt6-5compat-devel
+BuildRequires: boost-devel boost-signals-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
-BuildRequires: kf5-kio-devel 
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-kcrash-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kbookmarks-devel
+BuildRequires: kf6-kio-devel 
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kparts-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-kdoctools-devel
+BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kbookmarks-devel
 BuildRequires: rpm-macros-cmake 
 BuildRequires: cmake-modules
 BuildRequires: extra-cmake-modules
-BuildRequires: kf5-ktextwidgets-devel
+BuildRequires: kf6-ktextwidgets-devel
 
 %description
 KDiff3 is a program that
@@ -44,32 +44,32 @@ KDiff3 is a program that
 
 %prep
 %setup
-%patch1 -p1
+rm -rf po/*/diff_ext.po
 
 %build
-%K5build
+%K6build
 
 %install
-%K5install
-%K5install_move data appdata
+%K6install
 
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 
-%doc AUTHORS ChangeLog INSTALL NEWS README
-%_K5bin/%name
-%_K5plug/kf5/kfileitemaction/kdiff3fileitemaction.so
-%_K5plug/kf5/parts/kdiff3part.so
+%doc ChangeLog INSTALL README LICENSES/*
+%_K6bin/%name
+%_K6plug/kf6/kfileitemaction/*kdiff3*.so
 %_datadir/metainfo/org.kde.%name.appdata.xml
-%_K5xdgapp/org.kde.%name.desktop
-%_K5icon/hicolor/*/apps/*.png
-%_K5icon/hicolor/scalable/apps/kdiff3.svgz
-%_K5srv/kdiff3part.desktop
-%_K5xmlgui/%name
-%_K5xmlgui/kdiff3part
+%_K6xdgapp/org.kde.%name.desktop
+%_K6icon/hicolor/*/apps/*.png
+%_K6icon/hicolor/scalable/apps/kdiff3.svgz
 
 %changelog
+* Wed Dec 11 2024 Sergey V Turchin <zerg@altlinux.org> 1.12.0-alt1
+- new version
+- build with KF6
+- package translations
+
 * Fri Oct 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.8.4-alt1
 - Updated to upstream version 1.8.4.
 
