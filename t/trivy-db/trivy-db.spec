@@ -1,8 +1,8 @@
 %define _check_contents_method relaxed
 
 Name:    trivy-db
-Version: 20241206
-Release: alt3
+Version: 20241207
+Release: alt1
 
 Summary: Database for Trivy
 License: Apache-2.0
@@ -41,6 +41,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Wed Dec 11 2024 Alexey Shabalin <shaba@altlinux.org> 20241207-alt1
+- bump version and release.
+
 * Fri Dec 06 2024 Cronbuild Service <cronbuild@altlinux.org> 20241206-alt3
 - repocop cronbuild 20241206. At your service.
 
