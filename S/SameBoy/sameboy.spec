@@ -7,7 +7,7 @@
 
 Name: SameBoy
 Version: 0.16.6
-Release: alt1
+Release: alt1.1
 Summary: Game Boy and Game Boy Color emulator written in C  
 License:  MIT
 Group: Games/Other
@@ -29,6 +29,9 @@ for testing gb (sm83) lifting.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' Makefile
+%endif
 
 %build
 export CFLAGS="%optflags"
@@ -52,5 +55,8 @@ rm -f %buildroot%_datadir/%lower_name/LICENSE
 
 
 %changelog
+* Wed Dec 11 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.16.6-alt1.1
+- Fixed build for Elbrus
+
 * Thu Jul 25 2024 Pavel Shilov <zerospirit@altlinux.org> 0.16.6-alt1
 - Initial build for Sisyphus
