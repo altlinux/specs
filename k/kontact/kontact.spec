@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -15,10 +15,14 @@ License:  GPL-2.0-or-later
 
 ExcludeArch: %not_qt6_qtwebengine_arches
 
+Requires: kmail-account-wizard
+Requires: kdepim-runtime
+
 Provides: kde5-kontact = %EVR
 Obsoletes: kde5-kontact < %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-fix-kontact-crash.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-webengine-devel
@@ -60,6 +64,7 @@ Obsoletes: libkontactprivate5 < %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -96,6 +101,9 @@ Obsoletes: libkontactprivate5 < %EVR
 
 
 %changelog
+* Wed Dec 11 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 24.08.3-alt2
+- fix the kontact crash when you click on "Setup your Accounts"
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
