@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.1.12
-Release: alt1
+Release: alt2
 
 Summary: A configurable HTML Minifier with safety features
 License: BSD-3-Clause
@@ -17,12 +17,14 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: py3.13-remove-cgi.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -41,5 +43,8 @@ rm -fr %buildroot%python3_sitelibdir/%pypi_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 0.1.12-alt2
+- Drop python3.13 cgi module dependency.
+
 * Thu Oct 26 2023 Alexander Burmatov <thatman@altlinux.org> 0.1.12-alt1
 - Initial build for Sisyphus.
