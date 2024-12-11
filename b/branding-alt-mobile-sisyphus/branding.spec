@@ -9,7 +9,7 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2024.09
+Version: 2024.12
 Release: alt1
 
 Url: https://www.altlinux.org/ALT_Mobile
@@ -229,6 +229,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Wed Dec 11 2024 Anton Midyukov <antohami@altlinux.org> 2024.12-alt1
+- Bump version
+
 * Wed Sep 25 2024 Anton Midyukov <antohami@altlinux.org> 2024.09-alt1
 - Bump version
 - Fix Russian name
