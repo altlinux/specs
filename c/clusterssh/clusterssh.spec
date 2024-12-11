@@ -1,6 +1,6 @@
 Name: clusterssh
-Version: 4.16
-Release: alt2.git.b302a77
+Version: 4.18
+Release: alt1
 
 Summary: Run commands on multiple servers over ssh
 Group: Networking/Remote access
@@ -56,6 +56,9 @@ mv  %buildroot/%_bindir/clusterssh_bash_completion.dist \
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Dec 11 2024 Anton Farygin <rider@altlinux.ru> 4.18-alt1
+- 4.16 -> 4.18
+
 * Tue Feb 06 2024 Anton Farygin <rider@altlinux.ru> 4.16-alt2.git.b302a77
 - FTBFS: applied commits from upstream git
 
