@@ -13,7 +13,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt3
+Release: alt4
 %K6init
 
 Group: File tools
@@ -93,7 +93,7 @@ Obsoletes: libdolphinvcs5 < %EVR
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p2
-%patch5 -R -p1
+#%patch5 -R -p1
 
 %build
 %K6build \
@@ -157,6 +157,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Wed Dec 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt4
+- return portalizing of drop urls
+
 * Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt3
 - add mtp:/ handler
 
