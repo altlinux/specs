@@ -12,7 +12,7 @@
 
 Name: cmake
 Version: 3.31.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -146,9 +146,6 @@ bash completion for CMake
 %setup
 %patch1 -p1
 %ifarch %e2k
-# "Could NOT find OpenMP_C (missing: OpenMP_omp_LIBRARY OpenMP_pthread_LIBRARY)"
-# cmake tries to scan the OpenMP example for libraries, which breaks the build
-sed -i 's/if(CMAKE_${LANG}_VERBOSE_FLAG)/if(false) # &/' Modules/FindOpenMP.cmake
 # workaround for SUNPro compiler also helps EDG
 sed -i 's/__SUNPRO_CC/__EDG__/' Source/cmArgumentParserTypes.h
 %endif
@@ -326,6 +323,9 @@ popd
 
 
 %changelog
+* Wed Dec 11 2024 Michael Shigorin <mike@altlinux.org> 3.31.2-alt2
+- remove obsolete e2k hack (ilyakurdyukov@)
+
 * Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 3.31.2-alt1
 - new version 3.31.2 (with rpmrb script)
 
