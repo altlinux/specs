@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 15.0.1
-Release: alt1
+Release: alt2
 
 Summary: Colored terminal output for Python's logging module
 License: MIT
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: coloredlogs-15.0.1-fedora-replace-pipes.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -49,6 +50,7 @@ Tests for %name
 
 %prep
 %setup
+%patch
 
 %pyproject_deps_resync_metadata
 %pyproject_deps_resync_build
@@ -81,6 +83,9 @@ vm-run '%pyproject_run_pytest %pypi_name -k "not test_auto_install"'
 %python3_sitelibdir/%pypi_name/tests.py
 
 %changelog
+* Wed Dec 11 2024 Vladislav Glinkin <smasher@altlinux.org> 15.0.1-alt2
+- add patch for 'pipes' module removal in Python 3.13
+
 * Fri Oct 27 2023 Vladislav Glinkin <smasher@altlinux.org> 15.0.1-alt1
 - Initial build for ALT
 
