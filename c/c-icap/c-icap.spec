@@ -1,6 +1,6 @@
 Name: 	 c-icap
 Version: 0.5.10
-Release: alt1
+Release: alt2
 Epoch:	 1
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -15,6 +15,7 @@ Source2: %name.watch
 Source3: %name.conf
 Source4: %name.service
 Source5: %name.sysconfig
+Patch:   %name-fix-includ-libs.patch
 
 Requires(pre): shadow-utils
 
@@ -44,6 +45,7 @@ ICAP module for scanning content with ClamAV.
 
 %prep
 %setup -q
+%patch -p2
 
 sed -i "s|/var/run/c-icap|/run/c-icap|g" cfg_param.c
 sed -i "s|/var/run/c-icap|/run/c-icap|g" c-icap.conf.in
@@ -132,6 +134,9 @@ chmod -x %buildroot/%_sysconfdir/%name.magic*
 %_libdir/libicapapi.so
 
 %changelog
+* Wed Dec 11 2024 Andrey Cherepanov <cas@altlinux.org> 1:0.5.10-alt2
+- FTBFS fix (thanks alton@).
+
 * Fri Oct 22 2021 Andrey Cherepanov <cas@altlinux.org> 1:0.5.10-alt1
 - New version.
 
