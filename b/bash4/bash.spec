@@ -2,7 +2,7 @@ Name: bash4
 %define bash_version 4.4
 %define bash_patchlevel .23
 Version: %bash_version%bash_patchlevel
-Release: alt1
+Release: alt2
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -167,7 +167,7 @@ pushd build-bash
 	--without-bash-malloc \
 	--with-installed-readline \
 	--disable-command-timing \
-	--disable-net-redirections \
+	--enable-net-redirections \
 	--enable-separate-helpfiles \
 	#
 %make_build
@@ -298,6 +298,10 @@ make -k check -C build-bash
 %_pkgconfigdir/*
 
 %changelog
+* Wed Dec 11 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.4.23-alt2
+- Fixed build with gcc 14.
+- bash4: Reenabled net-redirections (ALT#52405).
+
 * Mon Dec 17 2018 Dmitry V. Levin <ldv@altlinux.org> 4.4.23-alt1
 - 4.2.50 -> 4.4.23 (closes: #32607, #32134, #33196).
 - Enabled Rational Range Interpretation (globasciiranges) by default.
