@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.13.6
+Version: 0.2.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,24 @@ done
 %_destdir
 
 %changelog
+* Tue Dec 03 2024 Valentin Sokolov <sova@altlinux.org> 0.2.0-alt1
+- Added new group policies for Systemd1 polkit actions
+- Added new group policies for Machine1 polkit actions
+- Added new group policies for TimeDate1 polkit actions
+- Added new group policies for ColorManager polkit actions
+- Added thunderbird mechanism policy
+- Added enviroment variables mechanism policy
+- Added policy to enable network directory creation mechanism
+- Added KDE screenlocker policy (closes: 50126)
+- Added network directories timer unmounted policy
+- Added name of drive mount directory policies for machine and user
+- Added policy to disable .net prefix in network drive mount directory name
+- Added plasma-update policy
+- Added force update policy
+- Added a policy group to manage the mate session
+- Changed descriptions in Polkit sections
+- Fix bugs (closes: 50612, 50340, 50012, 49790)
+
 * Mon Mar 04 2024 Valentin Sokolov <sova@altlinux.org> 0.1.13.6-alt1
 - Added new group policies for Machine1 polkit actions
 - Added new group policies for Login1 polkit actions

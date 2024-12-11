@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.11.4
+Version: 0.12.0
 Release: alt1
 
 Summary: GPT applier
@@ -195,6 +195,19 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Dec 10 2024 Valery Sinelnikov <greh@altlinux.org> 0.12.0-alt1
+- Special thanks to Andrey Belgorodtsev (andrey@net55.su)
+  for valuable pre-release testing and feedback
+- Added applier thunderbird
+- Added environment file cleaning (closes: 51016)
+- Added the ability to set the name of the directory to automount
+- Added the ability to remove the prefix from a sylink
+  to the catalog in automount
+- Added the ability to set the timeout in automount
+- Added messages using the force mode
+- Improved KDE update logic
+- Added preservation of previous keys
+
 * Fri Oct 11 2024 Valery Sinelnikov <greh@altlinux.org> 0.11.4-alt1
 - Added skip plugin (closes: 51631)
 - Fixed getting the network path (closes:51606)
