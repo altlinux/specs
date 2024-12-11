@@ -13,7 +13,9 @@
 %def_without openssl
 
 # enable kde5 UI
-%def_enable kde5
+%def_disable kde5
+# enable kde6 UI
+%def_enable kde6
 
 %ifarch mipsel
 %def_without java
@@ -24,6 +26,11 @@
 %def_enable qt5
 %else
 %def_disable qt5
+%endif
+%if_enabled kde6
+%def_enable qt6
+%else
+%def_disable qt6
 %endif
 %def_disable mergelibs
 %def_disable gtk4
@@ -36,7 +43,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -57,7 +64,7 @@ Obsoletes: %name-full < %EVR
 Obsoletes: LibreOffice4
 Conflicts: LibreOffice
 
-%define with_lang ru be de fr uk pt-BR es kk tt el uz ky
+%define with_lang ru be de fr uk pt-BR es kk tr tt el uz ky
 #Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 #Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
 Requires: gst-libav
@@ -102,8 +109,8 @@ Patch700: alt-700-external-project-concurrency.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
-%add_findreq_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py 
-%add_findprov_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py 
+%add_findreq_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py
+%add_findprov_skiplist %lodir/sdk/examples/python/DocumentHandling/*.py
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py
 %add_findreq_skiplist %lodir/sdk/examples/DevelopersGuide/FirstSteps/*/python/*.py
 %add_findreq_skiplist %lodir/sdk/classes
@@ -152,6 +159,9 @@ BuildRequires: libepubgen-devel libqxp-devel boost-locale-devel boost-filesystem
 %if_enabled qt5
 BuildRequires: qt5-base-devel
 %endif
+%if_enabled qt6
+BuildRequires: qt6-base-devel
+%endif
 # 6.1.0
 BuildRequires: libnumbertext-devel
 # 6.1.1
@@ -163,6 +173,11 @@ BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kdelibs4support-devel
 BuildRequires: libgtk+3-devel
+%endif
+# kde6 UI
+%if_enabled kde6
+BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel
+BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kwindowsystem-devel
 %endif
 # 6.1.5.2
 #BuildRequires: libpoppler-devel
@@ -274,6 +289,17 @@ Conflicts: LibreOffice-qt5
 qt5 extensions for %name
 %endif
 
+%if_enabled qt6
+%package qt6
+Summary: Qt6 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+Conflicts: LibreOffice-qt6
+%description qt6
+qt6 extensions for %name
+%endif
+
 %if_enabled kde5
 %package kde5
 Summary: KDE5 Extensions for %name
@@ -286,6 +312,21 @@ Provides:  LibreOffice4-kde4 = %EVR
 Obsoletes: LibreOffice4-kde4 < %EVR
 %description kde5
 KDE5 extensions for %name
+%endif
+
+%if_enabled kde6
+%package kde6
+Summary: KDE5 Extensions for %name
+Group:  Office
+Requires: %uname = %EVR
+Requires: %name-common = %EVR
+Provides:  %name-kde4 = %EVR
+Obsoletes: %name-kde4 < %EVR
+Provides:  LibreOffice4-kde4 = %EVR
+Obsoletes: LibreOffice4-kde4 < %EVR
+Conflicts: %name-kde5
+%description kde6
+KDE6 extensions for %name
 %endif
 
 %package -n libreofficekit-still
@@ -376,7 +417,7 @@ echo Direct build
 #unzip -o -d translations/source/ru %%SOURCE4
 
 ## FC apply patches
-#patch1 -p1                                                                                                                                                                                   
+#patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
@@ -402,10 +443,12 @@ echo Direct build
 sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -ljawt@' configure.ac
 %filter_from_requires /libjawt[.]so/d
 
+%if_enabled kde5
 # Choose right path to kcoreaddons_version.h
-if [ -e "%_includedir/KF5/KCoreAddons/kcoreaddons_version.h" ]; then  
+if [ -e "%_includedir/KF5/KCoreAddons/kcoreaddons_version.h" ]; then
     sed -i -e 's|kf5_test_include="KF5/kcoreaddons_version.h"|kf5_test_include="KF5/KCoreAddons/kcoreaddons_version.h"|' configure.ac
 fi
+%endif
 
 # Hack in proper LibreOffice PATH in libreofficekit
 sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgtk.mk
@@ -424,7 +467,7 @@ rm -fr %name-tnslations/git-hooks
 # create shell wrappers
 for n in office writer impress calc base draw math qstart; do
 	oname=lo$n
-	case "$n" in 
+	case "$n" in
 		office) opt=""; oname=libreoffice;;
 		qstart) opt="--quickstart --nologo --nodefault";;
 		*) opt="--$n";;
@@ -541,6 +584,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-help \
   \
         %{subst_enable qt5} \
+        %{subst_enable qt6} \
 %if_enabled gtk4
         --enable-gtk4 \
 %else
@@ -549,10 +593,14 @@ export ac_cv_prog_LO_CLANG_CC=""
 %if_enabled kde5
         --enable-gtk3-kde5 \
 %endif
+%if_enabled kde6
+        --enable-kf6 \
+        --enable-qt6 \
+%endif
         --without-system-zxcvbn \
 %if_with parallelism
         --with-parallelism="$PARALLEL" \
-%else   
+%else
         --without-parallelism \
 %endif
 %if_with python
@@ -620,8 +668,14 @@ find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
 # Create kde5 plugin list
 find %buildroot%lodir -name "*_kde5*" | sed 's@^%buildroot@@' > files.kde5
 
+# Create qt6 plugin list
+find %buildroot%lodir -name "*qt6*"   | sed 's@^%buildroot@@' > files.qt6
+
+# Create kde6 plugin list
+find %buildroot%lodir -name "*_kf6*" | sed 's@^%buildroot@@' > files.kde6
+
 # Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.gtk4 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3 files.gtk4 files.kde5 files.qt5 files.kde6 files.qt6; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
 
 # Return Oxygen icon theme from LibreOffice 5.3 (see https://bugs.documentfoundation.org/show_bug.cgi?id=110353 for details)
 install -D %SOURCE400 %buildroot%lodir/share/config/images_oxygen.zip
@@ -747,6 +801,15 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_datadir/metainfo/org.libreoffice.kde.metainfo.xml
 %endif
 
+%if_enabled qt6
+%files qt6 -f files.qt6
+%endif
+
+%if_enabled kde6
+%files kde6 -f files.kde6
+%_datadir/metainfo/org.libreoffice.kde.metainfo.xml
+%endif
+
 %files extensions
 %lodir/share/extensions/*
 #exclude %lodir/share/extensions/package.txt
@@ -763,6 +826,7 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %langpack       -l pt-BR -s pt -n Brazilian Portuguese
 %langpack -m -h -l es -s es -n Espanian
 %langpack       -l kk -s kk -n Kazakh
+%langpack       -l tr       -n Turkish
 %langpack    -h -l tt -s tt -n Tatar
 %langpack -m -h -l el -s el -n Greek
 %langpack       -l uz -s uz -n Uzbek
@@ -777,6 +841,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Dec 10 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.6.2-alt3
+- Build with KDE6 (ALT #52386).
+- Build with Turkish localization.
+
 * Sat Nov 16 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.6.2-alt2
 - Remove wrong mime-type application/vnd.ms-word to fix open .doc from network shares.
 - Use system libcmis.

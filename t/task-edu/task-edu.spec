@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -400,9 +400,9 @@ Requires: kde-runtime
 Requires: kde-printing
 Requires: kde-scanning
 Requires: kdeconnect
-%ifnarch armh
-Requires: %{lo_name}-kde5
-%endif
+#ifnarch armh
+#Requires: %{lo_name}-kde5
+#endif
 %ifnarch %e2k ppc64le
 Requires: nextcloud-client-kde5
 %endif
@@ -555,6 +555,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Dec 10 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.3-alt1
+- task-edu-kde5: remove unsupported LibreOffice-still-kde5.
+
 * Tue Nov 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
 - Do not use qgis for i586.
 
