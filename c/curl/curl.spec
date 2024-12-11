@@ -31,8 +31,8 @@
 %endif
 
 Name: curl
-Version: 8.11.0
-Release: alt2
+Version: 8.11.1
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -207,6 +207,9 @@ popd
 %endif
  
 %changelog
+* Wed Dec 11 2024 Anton Farygin <rider@altlinux.ru> 8.11.1-alt1
+- 8.11.0 -> 8.11.1 (Fixes: CVE-2024-11053)
+
 * Sat Nov 30 2024 Anton Farygin <rider@altlinux.ru> 8.11.0-alt2
 - applied upstream commit f5c6169 to fix regression
   with netrc (Closes: #52093)
