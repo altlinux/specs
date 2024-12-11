@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: etckeeper
-Version: 1.18.21
-Release: alt3
+Version: 1.18.22
+Release: alt1
 Summary: Etckeeper help to keep your /etc directory in VCS repository
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -63,6 +63,9 @@ pl="/var/cache/etckeeper/packagelist.pre-install"
 %_unitdir/%{name}.*
 
 %changelog
+* Wed Dec 11 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.22-alt1
+- Update to 1.18.22 (2024-12-09).
+
 * Thu Jul 11 2024 Vitaly Chikunov <vt@altlinux.org> 1.18.21-alt3
 - Fix FTBFS after usrmerge related systemd update.
 
