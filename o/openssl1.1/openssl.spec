@@ -7,7 +7,7 @@
 
 Name: openssl1.1
 Version: 1.1.1w
-Release: alt1
+Release: alt2
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -21,6 +21,14 @@ Source1: openssl-config
 Source2: Makefile.certificate
 Source3: make-dummy-cert
 Source4: cc.sh
+
+# Backported fixes including security fixes
+Patch500: openssl-CVE-2023-5678.patch
+Patch501: openssl-CVE-2024-0727.patch
+Patch502: openssl-CVE-2024-2511.patch
+Patch503: openssl-CVE-2024-4741.patch
+Patch504: openssl-CVE-2024-5535.patch
+Patch505: openssl-CVE-2024-9143.patch
 
 Patch01: openssl-upstream-branch-updates.patch
 Patch03: openssl-alt-config.patch
@@ -54,7 +62,6 @@ Patch145: openssl-rh-weak-ciphers.patch
 # Patch148: openssl-rh-fips-post-rand.patch (not needed)
 # Patch149: openssl-rh-evp-kdf.patch (new functionality; not sure)
 # Patch150: openssl-rh-ssh-kdf.patch (new functionality; not sure)
-# Backported fixes including security fixes
 
 %define shlib_soversion 1.1
 %define openssldir /var/lib/ssl
@@ -226,10 +233,19 @@ on the command line.
 
 %prep
 %setup -n openssl-%version
+# Backports
+%patch500 -p1
+%patch501 -p1
+%patch502 -p1
+%patch503 -p1
+%patch504 -p1
+%patch505 -p1
+
+# ALT patches
 %patch01 -p1
 %patch03 -p1
 %patch04 -p1
-%patch05 -p2
+%patch05 -p1
 %patch06 -p1
 %patch07 -p1
 
@@ -484,6 +500,10 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Tue Dec 10 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt2
+- Backported upstream security fixes (fixes CVE-2023-5678, CVE-2024-0727,
+  CVE-2024-2511, CVE-2024-4741, CVE-2024-5535, CVE-2024-9143).
+
 * Fri Sep 29 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt1
 - Updated to 1.1.1w (fixes CVE-2023-3817, CVE-2023-3446, CVE-2023-4807).
 
