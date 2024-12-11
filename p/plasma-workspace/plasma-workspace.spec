@@ -35,7 +35,7 @@
 
 Name: %rname
 Version: 6.2.4
-Release: alt5
+Release: alt6
 Epoch: 1
 %K6init
 
@@ -601,6 +601,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Dec 11 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt6
+- wait drkonqi on logout
+
 * Mon Dec 09 2024 Sergey V Turchin <zerg@altlinux.org> 1:6.2.4-alt5
 - return trash on desktop by default
 
