@@ -1,10 +1,14 @@
 %define optflags_lto %nil
 %define pypi_name cramjam
 
-%def_with check
+# target_pointer_width = "64" option seems a reason of tests errors
+# on %%ix86 arches
+%ifarch %ix86
+%def_without check
+%endif
 
 Name: python3-module-%pypi_name
-Version: 2.8.3
+Version: 2.9.0
 Release: alt1
 
 Summary: A collection of compression algorithms
@@ -17,13 +21,20 @@ Source1: crates.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-maturin
+# XXX: Since v2.8.4 isal and blosc2 subprojects could not be linked with
+# system provided libs.
+# use-system-isal-shared and use-system-blosc2-shared config opts did not
+# produced any result
+BuildRequires: gcc gcc-c++ glibc-devel-static cmake nasm
+BuildRequires: pkgconfig(blosc2)
+BuildRequires: pkgconfig(libisal)
 BuildRequires: /proc
 BuildRequires: rust-cargo
-%if_with check
+%{?!_without_check:%{?!_disable_check:
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-pytest
-%endif
+}}
 
 %description
 Your go-to for easy access to a plethora of compression algorithms,
@@ -32,7 +43,7 @@ all neatly bundled in one simple installation.
 %prep
 %setup -n %pypi_name-%version
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -56,20 +67,14 @@ EOF
 tar xf %SOURCE1
 
 %build
-pushd %pypi_name-python
 %pyproject_build
-popd
 
 %install
-pushd %pypi_name-python
 %pyproject_install
-popd
 
 %check
-pushd %pypi_name-python
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 --ignore benchmarks -v
-popd
+%pyproject_run_pytest --ignore benchmarks -v
 
 %files
 %doc README.* LICENSE
@@ -77,5 +82,8 @@ popd
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Dec 10 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.9.0-alt1
+- 2.8.3 -> 2.9.0
+
 * Thu May 16 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.8.3-alt1
 - Initial build for Sisyphus
