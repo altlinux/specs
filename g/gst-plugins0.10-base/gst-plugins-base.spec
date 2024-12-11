@@ -6,7 +6,7 @@
 
 Name: %gst_plugins-base
 Version: %ver_major.36
-Release: alt4
+Release: alt5
 Summary: An essential set of GStreamer plugins (legacy version)
 Group: System/Libraries
 License: LGPL-2.0
@@ -95,6 +95,7 @@ touch ABOUT-NLS config.rpath
 subst '/.PHONY/d' Makefile.am
 
 %build
+%add_optflags -Wno-error=implicit-function-declaration -Wno-incompatible-pointer-types
 %autoreconf
 %configure \
 	--with-default-audiosrc=pulsesrc \
@@ -118,6 +119,9 @@ subst '/.PHONY/d' Makefile.am
 %_libdir/*.so.*
 
 %changelog
+* Wed Dec 11 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.10.36-alt5
+- NMU: FTBFS with gcc14.
+
 * Thu Sep 23 2021 Andrey Cherepanov <cas@altlinux.org> 0.10.36-alt4
 - FTBFS: remove python-module-PyXML.
 

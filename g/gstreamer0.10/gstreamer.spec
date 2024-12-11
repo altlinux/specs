@@ -3,7 +3,7 @@
 
 Name: gstreamer%ver_major
 Version: %ver_major.36
-Release: alt2
+Release: alt3
 Summary: GStreamer streaming media framework runtime (legacy version)
 License: LGPL
 Group: System/Libraries
@@ -70,6 +70,7 @@ touch ABOUT-NLS config.rpath
 subst '/.PHONY/d' Makefile.am
 
 %build
+%add_optflags -Wno-error=implicit-function-declaration
 %autoreconf
 %configure \
 	--with-package-name=GStreamer \
@@ -112,6 +113,9 @@ subst '/.PHONY/d' Makefile.am
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Dec 11 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.10.36-alt3
+- NMU: FTBFS with gcc14.
+
 * Wed Jul 24 2019 Andrey Cherepanov <cas@altlinux.org> 0.10.36-alt2
 - Rename to gstreamer0.10.
 - Package minimal bundle for for legacy applications like VMware-Horizon-Client.
