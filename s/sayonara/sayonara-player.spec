@@ -1,16 +1,14 @@
 Name: sayonara
 Version: 1.10.0.1
-Release: alt1
+Release: alt3
 
 Summary: A lightweight Qt Audio player
-License: GPLv3+
+License: GPL-3.0+
 Group: Sound
 Url: http://sayonara-player.com
 Vcs: https://gitlab.com/luciocarreras/sayonara-player.git
 
 Source: %name-%version.tar
-
-ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): desktop-file-utils
@@ -18,6 +16,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake gcc-c++
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
+BuildRequires: gst-plugins-bad1.0-devel
 BuildRequires: libappstream-glib
 BuildRequires: libnotify-devel
 BuildRequires: libgio-devel
@@ -75,6 +74,12 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Dec 11 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.10.0.1-alt3
+- update to recent upstream/master
+
+* Wed Jun 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.10.0.1-alt2
+- fix build on 32-bit arches
+
 * Tue Jun 04 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.10.0.1-alt1
 - 1.10.0-stable1
 
