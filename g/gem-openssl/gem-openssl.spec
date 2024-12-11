@@ -5,10 +5,10 @@
 %define        gemname openssl
 
 Name:          gem-openssl
-Version:       3.2.0
-Release:       alt1
+Version:       3.2.0.21
+Release:       alt0.1
 Summary:       It wraps the OpenSSL library
-License:       Ruby
+License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
 Url:           https://github.com/ruby/openssl
 Vcs:           https://github.com/ruby/openssl.git
@@ -16,19 +16,22 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_enabled check
+BuildRequires: libssl-devel
+BuildRequires: gem(prime) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
-BuildRequires: gem(test-unit) >= 3.0
-BuildRequires: gem(test-unit-ruby-core) >= 0
 BuildRequires: gem(rdoc) >= 0
-%endif
+BuildRequires: gem(test-unit) >= 3.3.5
+BuildRequires: gem(test-unit-ruby-core) >= 0
+BuildConflicts: gem(test-unit) >= 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency test-unit >= 3.3.5,test-unit < 4
-Provides:      gem(openssl) = 3.2.0
+Requires:      ruby >= 2.7.0
+Provides:      gem(openssl) = 3.2.0.21
 
+%ruby_use_gem_version openssl:3.2.0.21
 
 %description
 OpenSSL provides SSL, TLS and general purpose cryptography. It wraps the OpenSSL
@@ -37,14 +40,14 @@ library.
 
 %if_enabled    doc
 %package       -n gem-openssl-doc
-Version:       3.2.0
-Release:       alt1
+Version:       3.2.0.21
+Release:       alt0.1
 Summary:       It wraps the OpenSSL library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета openssl
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(openssl) = 3.2.0
+Requires:      gem(openssl) = 3.2.0.21
 
 %description   -n gem-openssl-doc
 It wraps the OpenSSL library documentation files.
@@ -56,19 +59,21 @@ It wraps the OpenSSL library documentation files.
 
 %if_enabled    devel
 %package       -n gem-openssl-devel
-Version:       3.2.0
-Release:       alt1
+Version:       3.2.0.21
+Release:       alt0.1
 Summary:       It wraps the OpenSSL library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета openssl
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(openssl) = 3.2.0
+Requires:      libssl-devel
+Requires:      gem(openssl) = 3.2.0.21
+Requires:      gem(prime) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
+Requires:      gem(rdoc) >= 0
 Requires:      gem(test-unit) >= 3.0
 Requires:      gem(test-unit-ruby-core) >= 0
-Requires:      gem(rdoc) >= 0
 
 %description   -n gem-openssl-devel
 It wraps the OpenSSL library development package.
@@ -91,25 +96,28 @@ It wraps the OpenSSL library development package.
 %ruby_test
 
 %files
-%doc README.md
+%doc CONTRIBUTING.md COPYING History.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-openssl-doc
-%doc README.md
+%doc CONTRIBUTING.md COPYING History.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-openssl-devel
-%doc README.md
+%doc CONTRIBUTING.md COPYING History.md README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Wed Dec 11 2024 Pavel Skrylev <majioa@altlinux.org> 3.2.0.21-alt0.1
+- ^ 3.2.0 -> 3.2.0p21
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 3.2.0-alt1
 - ^ 3.1.0 -> 3.2.0
 
