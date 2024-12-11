@@ -10,7 +10,7 @@ error exit
 %define rname desktop-wallpapers
 
 Name: alt-desktop-wallpapers
-Version: 11.0.1
+Version: 11.0.2
 Release: alt1
 %K5init no_altplace
 
@@ -72,6 +72,9 @@ popd 1>/dev/null
 %_pixmapsdir/*
 
 %changelog
+* Wed Dec 11 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.2-alt1
+- update descriptions
+
 * Tue Dec 03 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.1-alt1
 - add json metadata (closes: 52305)
 
