@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
 License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
@@ -92,7 +92,11 @@ install -Dp oqs-* -t %buildroot%_bindir
 popd
 
 %check
-grep -Px '#define OQS_VERSION_TEXT "\Q%version\E"' %buildroot%_includedir/oqs/oqsconfig.h
+if [[ "%version-%release" == *rc* ]]; then
+	grep -F '#define OQS_VERSION_TEXT'
+else
+	grep -Fx '#define OQS_VERSION_TEXT "%version"'
+fi < %buildroot%_includedir/oqs/oqsconfig.h
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %buildroot/%_bindir/oqs-kat-kem ||:
 %buildroot/%_bindir/oqs-kat-sig ||:
@@ -123,6 +127,9 @@ time timeout --kill-after=300 200 %ninja_build -C build run_tests
 %_bindir/oqs-*
 
 %changelog
+* Wed Dec 11 2024 Vitaly Chikunov <vt@altlinux.org> 0.12.0-alt1
+- Update to 0.12.0 (2024-12-09). (Fixes: CVE-2024-54137).
+
 * Sun Sep 29 2024 Vitaly Chikunov <vt@altlinux.org> 0.11.0-alt1
 - Update to 0.11.0 (2024-09-27).
 
