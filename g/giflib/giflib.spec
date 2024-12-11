@@ -3,7 +3,7 @@
 
 Name: giflib
 Version: 5.2.2
-Release: alt1
+Release: alt1.1
 Summary: A Library for Working with GIF Images.
 License: MIT
 Group: System/Libraries
@@ -38,6 +38,8 @@ Files for development with %name.
 %prep
 %setup
 sed -i '/PREFIX=/s,/usr/local,%prefix,' Makefile
+# error: missing argument for "-Wl," switch
+sed -i 's/$(LIBUTILMAJOR)/$(LIBUTILSOMAJOR)/' Makefile
 
 %build
 export CFLAGS="%optflags"
@@ -71,5 +73,8 @@ rm -f %buildroot%_libdir/libgif.a
 %_libdir/*.so.%abiversion.*
 
 %changelog
+* Wed Dec 11 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.2.2-alt1.1
+- Fixed build for Elbrus
+
 * Tue Oct 22 2024 Pavel Shilov <zerospirit@altlinux.org> 5.2.2-alt1
 - initial build for Sisyphus
