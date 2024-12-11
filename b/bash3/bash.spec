@@ -4,7 +4,7 @@ Name: bash3
 %define bash_version 3.2
 %define bash_patchlevel 57
 Version: %bash_version.%bash_patchlevel
-Release: alt4
+Release: alt5
 
 Summary: The GNU Bourne Again SHell (Bash)
 Group: Shells
@@ -273,6 +273,9 @@ EOF
 %_includedir/*
 
 %changelog
+* Wed Dec 11 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.57-alt5
+- Fixed build with gcc 14.
+
 * Fri Aug 03 2018 Dmitry V. Levin <ldv@altlinux.org> 3.2.57-alt4
 - Moved bashrc files to a separate package.
 - Renamed to bash3 (by Aleksei Nikiforov and me).
