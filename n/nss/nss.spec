@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.106
+Version:	3.107
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -15,7 +15,6 @@ Source6:	system-pkcs11.txt
 
 Patch0001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
 Patch0002: 0002-ALT-Disable-flaky-tests.patch
-Patch0003: 0003-UPSTREAM-Update-expected-error-code-in-pk12util-pbma.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  chrpath zlib-devel libsqlite3-devel
@@ -271,6 +270,12 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Tue Dec 10 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.107-alt1
+- New version (3.107).
+- Certificate Authority Changes:
+  + Remove CN=SecureSign RootCA11
+  + Remove CN=Security Communication RootCA3
+
 * Fri Oct 25 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.106-alt1
 - New version (3.106).
 
