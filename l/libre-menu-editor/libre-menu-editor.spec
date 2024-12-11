@@ -5,7 +5,7 @@
 %define rdn_name page.codeberg.libre_menu_editor.LibreMenuEditor
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Menu editor
@@ -50,6 +50,9 @@ Menu editor for GNOME.
 %doc readme.*
 
 %changelog
+* Wed Dec 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.2-alt1
+- 1.8.2
+
 * Fri Dec 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.1-alt1
 - 1.8.1
 
