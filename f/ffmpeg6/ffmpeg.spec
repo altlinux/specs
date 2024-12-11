@@ -1,9 +1,14 @@
-%ifarch %ix86 ppc64le armh
-%def_disable check
-%endif
+# defined macro based on Sergey Bolshakov <sbolshakov@altlinux.org> libav spec
 
+# Macros
+%define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
+%define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
+%if "%(rpmvercmp '%{get_version glibc-kernheaders}' '6.0')" <= "0"
 %def_disable v4l2_request
+%else
+%def_enable v4l2_request
+%endif
 
 # License
 %def_enable gpl
@@ -59,7 +64,6 @@
 %endif
 %{?_enable_version3:%def_enable libopencore_amrnb}
 %{?_enable_version3:%def_enable libopencore_amrwb}
-%def_enable libopenh264
 %def_enable libopenjpeg
 %def_enable libopus
 %def_enable libplacebo
@@ -74,7 +78,7 @@
 %def_enable libssh
 %def_enable libtheora
 %def_enable libtwolame
-%def_disable libudev
+%def_enable libudev
 %def_enable libv4l2
 %def_enable libvidstab
 %def_enable libvorbis
@@ -107,6 +111,7 @@
 %def_disable libkvazaar
 %def_disable libmodplug
 %def_disable libmysofa
+%def_disable libopenh264
 %def_disable libopenmpt
 %def_disable librav1e
 %def_disable libshine
@@ -142,14 +147,14 @@
 %def_disable cuvid
 %endif # cuvid
 
-%define avdevicever 61
-%define avformatver 61
-%define avfilterver 10
-%define avcodecver 61
-%define postprocver 58
-%define swresamplever 5
-%define swscalever 8
-%define avutilver 59
+%define avdevicever 60
+%define avformatver 60
+%define avfilterver 9
+%define avcodecver 60
+%define postprocver 57
+%define swresamplever 4
+%define swscalever 7
+%define avutilver 58
 %ifarch ppc64le armh
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %endif
@@ -158,22 +163,21 @@
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg
+Name:		ffmpeg6
 Epoch:		2
-Version:	7.1
-Release:	alt1
+Version:	6.1.2
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
 Group:		Video
 
-Url: https://ffmpeg.org/
-VCS: https://github.com/FFmpeg/FFmpeg
+Url:		http://ffmpeg.org
 
 # https://git.ffmpeg.org/ffmpeg.git
 Source:		%name-%version.tar
 Patch:		%name-%version-%release.patch
-Patch2000: %name-e2k-simd.patch
+Patch2000: ffmpeg-e2k-simd.patch
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 %ifarch %ix86 x86_64
@@ -209,7 +213,6 @@ BuildRequires:	yasm
 %{?_enable_libmp3lame:BuildRequires: liblame-devel}
 %{?_enable_libmfx:BuildRequires: libmfx-devel}
 %{?_enable_libvpl:BuildRequires: libvpl-devel}
-%{?_enable_libopenh264:BuildRequires: libopenh264-devel}
 %{?_enable_librabbitmq:BuildRequires: librabbitmq-c-devel}
 %{?_enable_libopencore_amrnb:BuildRequires: libopencore-amrnb-devel}
 %{?_enable_libopencore_amrwb:BuildRequires: libopencore-amrwb-devel}
@@ -574,8 +577,8 @@ xz Changelog
 	--mandir=%_mandir \
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
-%if_enabled v4l2_request
-	--enable-v4l2-request \
+%ifarch armh aarch64
+	%{subst_enable_with v4l2_request v4l2-request} \
 %endif
 %ifarch mips mipsel mips64 mips64el
 	--disable-mipsdsp \
@@ -641,7 +644,6 @@ xz Changelog
 	%{subst_enable libmysofa} \
 	%{subst_enable_with libopencore_amrnb libopencore-amrnb} \
 	%{subst_enable_with libopencore_amrwb libopencore-amrwb} \
-	%{subst_enable libopenh264} \
 	%{subst_enable libopenjpeg} \
 	%{subst_enable libopenmpt} \
 	%{subst_enable libopus} \
@@ -658,9 +660,7 @@ xz Changelog
 	%{subst_enable libtesseract} \
 	%{subst_enable libtheora} \
 	%{subst_enable libtwolame} \
-%if_enabled libubdev
-	--enable-libudev \
-%endif
+	%{subst_enable libudev} \
 	%{subst_enable libv4l2} \
 	%{subst_enable libvidstab} \
 	%{subst_enable libvmaf} \
@@ -714,131 +714,39 @@ xz Changelog
 %makeinstall_std
 
 %check
-export LD_LIBRARY_PATH="libavcodec:libavdevice:libavfilter:libavformat:libavutil:libpostproc:libswresample:libswscale"
+%ifnarch armh
 tests/checkasm/checkasm
-%make check
-
-%files
-%doc README.md
-%doc MAINTAINERS
-%doc Changelog*
-%doc LICENSE.md
-%_bindir/ffmpeg
-%{?_enable_doc:%_man1dir/ffmpeg*}
-%_datadir/ffmpeg
-%exclude %_datadir/ffmpeg/examples
-
-%if_enabled doc
-%files doc
-%doc doc/ffmpeg*.html
-%doc doc/faq.html
-%doc doc/fate.html
-%doc doc/general.html
-%doc doc/git-howto.html
-%doc doc/lib*.html
-%doc doc/nut.html
-%doc doc/platform.html
-%_man3dir/*
-%endif
-
-%if_enabled ffplay
-%files -n ffplay
-%_bindir/ffplay
-%{?_enable_doc:%_man1dir/ffplay*}
-
-%if_enabled doc
-%files -n ffplay-doc
-%doc doc/ffplay*.html
-%endif
-%endif
-
-%if_enabled ffprobe
-%files -n ffprobe
-%_bindir/ffprobe
-%{?_enable_doc:%_man1dir/ffprobe*}
-
-%if_enabled doc
-%files -n ffprobe-doc
-%doc doc/ffprobe*.html
-%endif
-%endif
-
-%if_enabled ffserver
-%files -n ffserver
-%_bindir/ffserver
-%{?_enable_doc:%_man1dir/ffserver*}
-%endif
-
-%if_enabled doc
-%files -n ffserver-doc
-%{?_enable_ffserver:%doc doc/ffserver*.html}
 %endif
 
 %files -n libavcodec%avcodecver
 %_libdir/libavcodec.so.%{avcodecver}*
 
-%files -n libavcodec-devel
-%_includedir/libavcodec
-%_libdir/libavcodec.so
-%_pkgconfigdir/libavcodec.pc
 
 %files -n libavdevice%avdevicever
 %_libdir/libavdevice.so.%{avdevicever}*
 
-%files -n libavdevice-devel
-%_includedir/libavdevice
-%_libdir/libavdevice.so
-%_pkgconfigdir/libavdevice.pc
-
 %files -n libavfilter%avfilterver
 %_libdir/libavfilter.so.%{avfilterver}*
 
-%files -n libavfilter-devel
-%_includedir/libavfilter
-%_libdir/libavfilter.so
-%_pkgconfigdir/libavfilter.pc
 
 %files -n libavformat%avformatver
 %_libdir/libavformat.so.%{avformatver}*
 
-%files -n libavformat-devel
-%_includedir/libavformat
-%_pkgconfigdir/libavformat.pc
-%_libdir/libavformat.so
 
 %files -n libavutil%avutilver
 %_libdir/libavutil.so.%{avutilver}*
 
-%files -n libavutil-devel
-%_includedir/libavutil
-%_libdir/libavutil.so
-%_pkgconfigdir/libavutil.pc
 
 %files -n libpostproc%postprocver
 %_libdir/libpostproc.so.%{postprocver}*
 
-%files -n libpostproc-devel
-%_includedir/libpostproc
-%_libdir/libpostproc.so
-%_pkgconfigdir/libpostproc.pc
 
 %files -n libswresample%swresamplever
 %_libdir/libswresample.so.%{swresamplever}*
 
-%files -n libswresample-devel
-%_includedir/libswresample
-%_libdir/libswresample.so
-%_pkgconfigdir/libswresample.pc
-
-
-
 %files -n libswscale%swscalever
 %_libdir/libswscale.so.%{swscalever}*
 
-%files -n libswscale-devel
-%_includedir/libswscale
-%_libdir/libswscale.so
-%_pkgconfigdir/libswscale.pc
 
 %if_enabled static
 %files -n libavformat-devel-static
@@ -868,13 +776,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
-* Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 2:7.1-alt1
-- 6.1.2 -> 7.1
-- turned on more tests in check section
-- disabled tests on ppc64le and i586
-- aarch64: dsiabled v4l2request due to no patch for ffmpeg 7.1
-- built with librav1e
-- built with libopenh264
+* Mon Dec 09 2024 Anton Farygin <rider@altlinux.ru> 2:6.1.2-alt2
+- added commits from upstream git with fixes for gcc 14
+- built as a compatibility package only with shared libraries
 
 * Wed Aug 07 2024 Anton Farygin <rider@altlinux.ru> 2:6.1.2-alt1
 - 6.1.1 -> 6.1.2 (Fixes: CVE-2024-7055)
