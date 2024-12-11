@@ -10,7 +10,7 @@
 %define nagios_grp nagiosnew
 
 Name: nagios-%realname
-Version: 4.1.1
+Version: 4.1.3
 Release: alt1
 
 Summary: NRPE -- Nagios(R) Remote Plug-ins Execution daemon.
@@ -160,6 +160,9 @@ mkdir -p %buildroot%nagios_confdir/nrpe-commands
 %doc %plugin_docdir/*
 
 %changelog
+* Wed Dec 11 2024 Cronbuild Service <cronbuild@altlinux.org> 4.1.3-alt1
+- New version 4.1.3.
+
 * Sun Aug 04 2024 Cronbuild Service <cronbuild@altlinux.org> 4.1.1-alt1
 - New version 4.1.1.
 
