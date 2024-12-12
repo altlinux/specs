@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.13.0
-Release: alt1.1
+Version: 0.15.1
+Release: alt1
 
 Summary: Bringing order to Mongo since 2009
 License: MIT
@@ -65,6 +65,9 @@ This package contains tests for Ming.
 
 
 %changelog
+* Thu Dec 12 2024 Anton Vyatkin <toni@altlinux.org> 0.15.1-alt1
+- New version 0.15.1.
+
 * Tue Feb 27 2024 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1.1
 - NMU: mapped PyPI name to distro's one.
 
