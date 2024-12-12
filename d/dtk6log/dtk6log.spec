@@ -1,14 +1,15 @@
 %def_disable clang
 
 Name: dtk6log
-Version: 0.0.1
-Release: alt2
+Version: 0.0.2
+Release: alt1
 
 Summary: Deepin tool kit log modules
 
 License: LGPL-2.1
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6log
+Vcs: git://github.com/linuxdeepin/dtk6log.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
@@ -53,23 +54,17 @@ Header files and libraries for %name.
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt6_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
-  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
+
+%DQ6build \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIBRARY_INSTALL_DIR=%_lib \
   -DBUILD_WITH_QT6=ON \
   -DBUILD_WITH_SYSTEMD=ON \
   #
-cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install_qt
 
 %files -n lib%{name}0
 %doc README.md LICENSE*
@@ -86,6 +81,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt6_mkspecsdir/modules/qt_lib_dtklog.pri
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt1
+- New version 0.0.2.
+- Added vcs tag.
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1-alt2
 - Built with separate qt6 (ALT #48138).
 

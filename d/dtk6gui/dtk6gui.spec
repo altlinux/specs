@@ -3,22 +3,22 @@
 %def_disable clang
 
 Name: dtk6gui
-Version: 6.0.19
-Release: alt2
+Version: 6.0.24.0.1.81b6
+Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6gui
+Vcs: git://github.com/linuxdeepin/dtk6gui.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake dtk6-common-devel dqt6-base-devel libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel
+BuildRequires: cmake dtk6-common-devel dqt6-base-devel dqt6-wayland-devel libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel libwayland-egl-devel
 # waiting Qt6XdgIconLoaderConfig.cmake
 # BuildRequires: libdqt6xdg-devel
 %if_enabled clang
@@ -53,7 +53,6 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
@@ -64,28 +63,22 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt6_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+
+%DQ6build \
   -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
   -DPACKAGE_TOOL_INSTALL_DIR=libexec/dtk6/DGui/bin \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_libdir \
   -DLIBRARY_INSTALL_DIR=%_lib \
-  -DDTK_VERSION=%version \
+  -DDTK_VERSION=6.0.24 \
   -DBUILD_DOCS=OFF \
   %if_enabled clang
   -DLLVM_USE_LINKER=lld \
   %endif
 #
-cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install_qt
 
 %files
 %doc README.md LICENSE
@@ -108,6 +101,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/lib%name.so
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.24.0.1.81b6-alt1
+- New version 6.0.24-1-g81b6af1.
+- Added vcs tag.
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
 - Built with separate qt6 (ALT #48138).
 

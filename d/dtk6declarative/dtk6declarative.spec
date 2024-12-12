@@ -3,8 +3,8 @@
 %def_enable clang
 
 Name: dtk6declarative
-Version: 6.0.19
-Release: alt2
+Version: 6.0.24.0.3.ed06
+Release: alt1
 
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -12,10 +12,10 @@ Summary(ru): Инструментарий по разработке виджет
 License: LGPL-3.0+
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtk6declarative
+Vcs: git://github.com/linuxdeepin/dtk6declarative.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: dtk6declarative-6.0.19-pkgconfig-dqt6.patch
+Patch: dtk6declarative-6.0.19-pkgconfig-dqt6.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -34,6 +34,7 @@ BuildRequires: gcc-c++
 BuildRequires: cmake libdtk6gui-devel dqt6-tools-devel dqt6-declarative-devel dqt6-shadertools-devel
 
 Requires: libdqt6-core = %_dqt6_version libdqt6-qmlmodels = %_dqt6_version libdqt6-quickcontrols2 = %_dqt6_version
+AutoProv: yes, nodqml6
 
 %description
 dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is
@@ -112,28 +113,18 @@ export READELF="llvm-readelf"
 
 %endif
 
-export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt6_bindir:$PATH
-
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%DQ6build \
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
   -DBUILD_DOCS=OFF \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
-  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
-  -DQML_INSTALL_DIR=%_dqt6_qmldir \
-  -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DINCLUDE_INSTALL_DIR=include \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_lib \
-  -DDTK_VERSION=%version \
-  -DVERSION=%version \
+  -DDTK_VERSION=6.0.24 \
+  -DVERSION=6.0.24 \
 #
-cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install_qt
 
 %files
 %doc LICENSE README.md
@@ -170,6 +161,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.24.0.3.ed06-alt1
+- New version 6.0.24-3-ged06b75.
+- Added vcs tag.
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
 - Built with separate qt6 (ALT #48138).
 

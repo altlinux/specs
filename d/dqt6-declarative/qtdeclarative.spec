@@ -4,12 +4,12 @@
 
 Name: dqt6-declarative
 Version: 6.7.2
-Release: alt0.dde.1
-# %%if "%%version" == "%%{get_version dqt6-tools-common}"
+Release: alt0.dde.2
+%if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
-# %%else
-# %%def_enable bootstrap
-# %%endif
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - QtDeclarative component
@@ -43,8 +43,8 @@ Requires: libdqt6-quickcontrols2material
 
 Source: %qt_module-everywhere-src-%version.tar
 Source10: rpm-build-dqml.tar
-Source1: qml6
-Source2: qml6.env
+Source1: dqml6
+Source2: dqml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
 
@@ -53,21 +53,20 @@ Source4: find-requires.sh
 
 %include %SOURCE1
 %dqml6_req_skipall 1
-%dqml6_add_req_nover Qt.test.qtestroot
+#dqml6_add_req_nover Qt.test.qtestroot
 %define __find_provides %SOURCE3
 %define __find_requires %SOURCE4
 
 # Automatically added by buildreq on Wed Dec 01 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libdouble-conversion3 libglvnd-devel libgpg-error libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-opengl libqt6-openglwidgets libqt6-shadertools libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste qt6-base-common qt6-base-devel rpm-build-file rpm-build-gir rpm-build-python3 rpm-macros-python sh4 tzdata
 #BuildRequires: ccmake glslang libGLU-devel libxkbcommon-devel python-modules-compiler python3-dev qt6-shadertools-devel rpm-build-qml tbb-devel
-BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
-# BuildRequires(pre): dqt6-tools-common
+BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja dqt6-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel dqt6-base-devel dqt6-shadertools-devel
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
-# %%if_disabled bootstrap
-# BuildRequires: dqt6-tools
-# %%endif
+%if_disabled bootstrap
+BuildRequires: dqt6-tools
+%endif
 
 %description
 %summary
@@ -429,7 +428,7 @@ ln -s %__python3 bin_add/python
 %define qdoc_found 0
 %endif
 export PATH=$PWD/bin_add:$PATH
-%DQ6build -DCMAKE_MAKE_PROGRAM=ninja
+%DQ6build
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -437,7 +436,7 @@ export PATH=$PWD/bin_add:$PATH
 #build rpm-build-qml
 export BUILDFLAGS="-I../../include/QtQml/%version -I../../include/QtQml/%version/QtQml -I../../include/QtQml"
 pushd src/rpm-build-dqml
-#qmake_dqt6 rpmbqml-qmlinfo.pro
+#qmake_dqt6 rpmbqml6-qmlinfo.pro
 #make_build
 popd
 
@@ -457,13 +456,13 @@ pushd src/rpm-build-dqml
 
 # FIXME rpmbdqml-qmlinfo
 ln -s /bin/true %buildroot/%_bindir/rpmbdqml6-qmlinfo
-#install -pD -m755 rpmbqml-qmlinfo %buildroot/%_bindir/rpmbdqml6-qmlinfo
+#install -pD -m755 rpmbqml6-qmlinfo %buildroot/%_bindir/rpmbdqml6-qmlinfo
 # end FIXME
-install -pD -m755 rpmbqml6-prov-enum.pl %buildroot/%_bindir/rpmbdqml6-prov-enum.pl
-install -pD -m755 qml6.prov %buildroot/%_rpmlibdir/dqml6.prov
-install -pD -m755 qml6.prov.files %buildroot/%_rpmlibdir/dqml6.prov.files
-install -pD -m755 qml6.req %buildroot/%_rpmlibdir/dqml6.req
-install -pD -m755 qml6.req.files %buildroot/%_rpmlibdir/dqml6.req.files
+install -pD -m755 rpmbdqml6-prov-enum.pl %buildroot/%_bindir/rpmbdqml6-prov-enum.pl
+install -pD -m755 dqml6.prov %buildroot/%_rpmlibdir/dqml6.prov
+install -pD -m755 dqml6.prov.files %buildroot/%_rpmlibdir/dqml6.prov.files
+install -pD -m755 dqml6.req %buildroot/%_rpmlibdir/dqml6.req
+install -pD -m755 dqml6.req.files %buildroot/%_rpmlibdir/dqml6.req.files
 popd
 
 mkdir -p %buildroot%_rpmmacrosdir/
@@ -640,6 +639,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
+- fix broken requires
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 

@@ -2,14 +2,15 @@
 %def_enable docs
 
 Name: dtk6widget
-Version: 6.0.19
-Release: alt3
+Version: 6.0.24.1
+Release: alt1
 
 Summary: Deepin tool kit widget modules
 
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkwidget
+Vcs: git://github.com/linuxdeepin/dtk6widget.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -88,29 +89,21 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt6_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=None \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
+
+%DQ6build \
   -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
 %if_enabled docs
   -DBUILD_DOCS=ON \
-  -DQCH_INSTALL_DESTINATION=%_dqt6_docdir \
 %else
   -DBUILD_DOCS=OFF \
 %endif
-  -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
   -DBUILD_PLUGINS=OFF \
 #
-cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install_qt
 
 %files
 %doc README.md LICENSE
@@ -139,6 +132,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt6_docdir/dtkwidget.qch
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.24.1-alt1
+- New version 6.0.24.1.
+- Added vcs tag.
+
 * Mon Oct 07 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt3
 - Fixed pkgconfig file.
 

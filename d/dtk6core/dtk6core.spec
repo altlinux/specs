@@ -4,17 +4,18 @@
 %def_without docs
 
 Name: dtk6core
-Version: 6.0.18
-Release: alt2
+Version: 6.0.24
+Release: alt1
 
 Summary: Deepin tool kit core modules
 
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtk6core
+Vcs: git://github.com/linuxdeepin/dtk6core.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: dtk6core-6.0.9-alt-uos-version.patch
 
 Provides: libdtk6-core = %EVR
 Obsoletes: libdtk6-core < %EVR
@@ -74,28 +75,20 @@ This package provides %name documantation.
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt6_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
+
+%DQ6build \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DDTK_VERSION=%version \
   -DLIBRARY_INSTALL_DIR=%_lib \
-  -DD_DSG_APP_DATA_FALLBACK=/var/dsg/appdata \
   -DBUILD_WITH_SYSTEMD=ON \
 %if_without docs
   -DBUILD_DOCS=OFF \
 %endif
-  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules/ \
-  -DFEATURES_INSTALL_DIR=%_dqt6_mkspecsdir/features/ \
-  #
-cmake --build %_cmake__builddir -j%__nprocs
+  -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
+#
 
 %install
-%cmake_install
+%DQ6install_qt
 
 %files
 %doc README.md LICENSE
@@ -125,6 +118,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.24-alt1
+- New version 6.0.24.
+- Added vcs tag.
+
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.18-alt2
 - Built with separate qt6 (ALT #48138).
 

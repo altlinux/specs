@@ -32,7 +32,7 @@
 Name: dqt6-base
 %define major  6
 Version: 6.7.2
-Release: alt4.dde.1
+Release: alt4.dde.2
 %if "%%version" == "%%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -439,15 +439,19 @@ cmake .. \
     -DINSTALL_BINDIR:STRING=%_dqt6_bindir \
     -DINSTALL_DATADIR:STRING=%_dqt6_datadir \
     -DINSTALL_DOCDIR:STRING=%_dqt6_docdir \
+    -DQCH_INSTALL_DESTINATION:STRING=%_dqt6_docdir \
     -DINSTALL_EXAMPLESDIR:STRING=%_dqt6_examplesdir \
     -DINSTALL_INCLUDEDIR:STRING=%_dqt6_headerdir \
     -DINSTALL_QMLDIR:STRING=%_dqt6_qmldir \
+    -DQML_INSTALL_DIR:STRING=%_dqt6_qmldir \
     -DINSTALL_LIBDIR:STRING=%_dqt6_libdir \
     -DINSTALL_LIBEXECDIR:STRING=%_dqt6_libexecdir \
     -DINSTALL_PLUGINSDIR:STRING=%_dqt6_plugindir \
     -DINSTALL_SYSCONFDIR:STRING=%_dqt6_sysconfdir \
     -DINSTALL_TRANSLATIONSDIR:STRING=%_dqt6_translationdir \
     -DINSTALL_MKSPECSDIR:STRING=%_dqt6_mkspecsdir \
+    -DMKSPECS_INSTALL_DIR:STRING=%_dqt6_mkspecsdir \
+    -DFEATURES_INSTALL_DIR:STRING=%_dqt6_mkspecsdir/features \
     \
     -GNinja \
     -DCMAKE_BUILD_TYPE:STRING=%_dqt6_build_type \
@@ -844,6 +848,9 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.2
+- update cmake macros
+
 * Tue Oct 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.1
 - don't disable lto
 - fix compile with gcc-14
