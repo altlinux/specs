@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-addon-api
-Version: 4.1.0
+Version: 8.3.0
 Release: alt1
 
 Summary: Module for using Node-API from C++
@@ -15,7 +15,7 @@ Url: https://github.com/nodejs/node-addon-api/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/nodejs/node-addon-api/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/nodejs/node-addon-api/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
@@ -74,5 +74,8 @@ cp -rp package.json *.js *.h %buildroot/%nodejs_sitelib/%node_module
 %nodejs_sitelib/%node_module
 
 %changelog
+* Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 8.3.0-alt1
+- new version 8.3.0 (with rpmrb script)
+
 * Fri Sep 03 2021 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - initial build for ALT Sisyphus

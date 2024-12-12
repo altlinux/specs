@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 20.18
+%define major 22.12
 
-%define nodejs_soversion 115
+%define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
 
 # there are both 6 and 7 provided (https://github.com/nodejs/node/pull/35199), see napi using
@@ -11,12 +11,12 @@
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%define v8_version 10.2
+%define v8_version 12.4
 %def_without systemv8
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.8.2
+%define npm_version 10.9.0
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -29,7 +29,7 @@
 %define zlib_version 1.3.0.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.32.3
+%define c_ares_version 1.34.3
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 9.2.1
@@ -37,16 +37,15 @@
 %def_without systemhttpparser
 
 # check: openssl 3.0 inside (TODO: QUIC support, FIPS support)
-#define openssl_version 1.1.1s
-%define openssl_version 3.0.8
+%define openssl_version 3.0.15
 %def_with systemssl
 
 # check deps/uv/include/uv/version.h
-%define libuv_version 1.48.0
+%define libuv_version 1.49.1
 %def_with systemuv
 
 # check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
-%define libnghttp2_version 1.60.0
+%define libnghttp2_version 1.64.0
 %def_with systemnghttp2
 
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
@@ -68,7 +67,7 @@
 %endif
 
 # need OpenSSL + QUIC build from https://github.com/quictls/openssl/tree/OpenSSL_1_1_1t+quic
-%define libngtcp2_version 0.8.1
+%define libngtcp2_version 1.2.0
 %define libnghttp3_version 0.7.0
 %def_without systemngtcp2
 
@@ -80,7 +79,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -108,7 +107,7 @@ BuildRequires: python3-devel gcc-c++
 BuildRequires: zlib-devel >= %zlib_version
 BuildRequires: libbrotli-devel
 
-BuildRequires: gyp >= 0.14.0
+BuildRequires: gyp >= 0.18.3
 BuildRequires: python3-module-simplejson
 
 %if_with systemv8
@@ -168,7 +167,7 @@ Provides: nodejs(v8-abi) = %v8_version
 #Provides: nodejs(napi) = %{napi}
 
 Provides: bundled(llhttp) = %llhttp_version
-Provides: bundled(uvwasi) = 0.0.18
+Provides: bundled(uvwasi) = 0.0.21
 
 # Node.js is closely tied to the version of v8 that is used with it. It makes
 # sense to use the bundled version because upstream consistently breaks ABI
@@ -512,6 +511,12 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 22.12.0-alt1
+- 2024-12-03, Version 22.12.0 'Jod' (LTS), @ruyadorno
+- set npm >= 10.9.0, c-ares >= 1.34.3, openssl >= 3.0.15
+- set libuv >= 1.49.1, nghttp2 >= 1.64.0, ngtcp2 >= 1.2.0
+- set v8 = 12.4
+
 * Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 20.18.1-alt1
 - 2024-11-20, Version 20.18.1 'Iron' (LTS)
 

@@ -1,0 +1,75 @@
+%define pname canvas
+
+Name: node-canvas
+Version: 3.0.0
+Release: alt0.rc3
+
+Summary: node-canvas is a Cairo-backed Canvas implementation for Node.js
+
+License: MIT
+Group: Development/Other
+Url: https://github.com/Automattic/node-canvas
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
+##Source-url: https://github.com/Automattic/node-canvas/archive/v%version.tar.gz
+# Source-url: https://github.com/Automattic/node-canvas/commit/d0278832f70e0b0a06e1e3441596d402b75a7fe8
+Source: %name-%version.tar
+
+Source1: %name-development-%version.tar
+Source2: %name-production-%version.tar
+
+
+BuildRequires(pre): rpm-build-intro >= 1.9.18
+
+BuildRequires: rpm-build-nodejs node
+BuildRequires: node-addon-api >= 7.0.0
+BuildRequires(pre): rpm-macros-nodejs
+
+BuildRequires: gcc-c++ libcairo-devel pango-devel libjpeg-devel libgif-devel libpixman-devel
+BuildRequires: node-mocha node-gyp
+
+%description
+node-msgpack is an addon for NodeJS that provides an API for serializing
+and de-serializing JavaScript objects using the MessagePack library.
+The performance of this addon compared to the native JSON object isn't too bad,
+and the space required for serialized data is far less than JSON.
+
+%prep
+%setup -a1
+
+%build
+%npm_build
+
+npm test || :
+#npm prune --omit=dev
+rm -rf node_modules
+tar xf %SOURCE2
+
+#%check
+#npm test
+
+%install
+%npm_install
+rm -rf %buildroot/%nodejs_sitelib/%pname/{prebuild,examples,src,test,binding.gyp}/
+
+%files
+%doc Readme.md
+%nodejs_sitelib/%pname/
+
+%changelog
+* Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt0.rc3
+- new version (3.0.0) with rpmgs script
+
+* Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt2
+- update node_modules with npm install  for 2.11.2 (see predownloaded-development in .gear/rules)
+- update node_modules with npm install --omit=dev for 2.11.2 (see predownloaded-production in .gear/rules)
+
+* Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 2.11.2-alt1
+- new version 2.11.2 (with rpmrb script)
+
+* Mon Dec 20 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
+- new version 2.8.0 (with rpmrb script)
+
+* Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- initial build for ALT Sisyphus
