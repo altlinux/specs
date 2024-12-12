@@ -1,6 +1,6 @@
 Name: librum-reader
 Version: 0.12.2
-Release: alt1
+Release: alt2
 Summary: Librum is an application designed to make reading enjoyable and straightforward for everyone.
 
 Source:  %name-%version.tar
@@ -25,7 +25,7 @@ BuildRequires: zlib-devel libjbig2dec-devel libfreetype-devel
 BuildRequires: libharfbuzz-devel libfreeglut-devel libcurl-devel
 BuildRequires: libleptonica-devel tesseract-devel
 BuildRequires: gdcm-devel libgumbo-devel liblcms2-devel
-BuildRequires: rapidfuzz-cpp-devel libopenjpeg2.0-devel mupdf-devel bzlib-devel libopenjpeg2.0-devel
+BuildRequires: rapidfuzz-cpp-devel libopenjpeg2.0-devel bzlib-devel libopenjpeg2.0-devel
 
 %description
 Librum is an application designed to make reading enjoyable and straightforward for everyone.
@@ -95,6 +95,9 @@ done
 %_datadir/pixmaps/librum.svg
 
 %changelog
+* Thu Dec 12 2024 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt2
+- Remove redundant mupdf dependency
+
 * Thu May 02 2024 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt1
 - New version
 
