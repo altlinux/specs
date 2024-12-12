@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.5.2
+Version: 6.5.6.0.3.6d5f
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -11,7 +11,7 @@ Group: Editors
 Url: https://github.com/linuxdeepin/deepin-editor
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: deepin-editor-6.0.16-armh-ppc64le.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # Automatically added by buildreq on Mon Jan 29 2024
@@ -84,6 +84,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.6.0.3.6d5f-alt1
+- New version 6.5.6-3-g6d5f7a36.
+
 * Thu Sep 26 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
 - New version 6.5.2.
 
