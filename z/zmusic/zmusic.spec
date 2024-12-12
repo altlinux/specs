@@ -1,5 +1,5 @@
 Name:           zmusic
-Version:        1.1.12
+Version:        1.1.14
 Release:        alt1
 Summary:        ZDoom component library for music handling
 License:        GPL-3.0 and LGPL-v2.1
@@ -73,11 +73,15 @@ export CXXFLAGS="%optflags -msse -msse2"
 %files devel
 %_includedir/*
 %_libdir/libzmusic.so
+%_libdir/cmake/ZMusic/*
 
 %files -n libzmusiclite
 %_libdir/libzmusiclite.*
 
 %changelog
+* Thu Dec 12 2024 Artyom Bystrov <arbars@altlinux.org> 1.1.14-alt1
+- New version 1.1.14.
+
 * Mon Jul 10 2023 Artyom Bystrov <arbars@altlinux.org> 1.1.12-alt1
 - New version 1.1.12.
 

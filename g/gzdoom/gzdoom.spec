@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.12.2
+Version: 4.13.2
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -60,7 +60,7 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_SHARED_LINKER_FLAGS="" \
 	-DCMAKE_EXE_LINKER_FLAGS="" -DCMAKE_MODULE_LINKER_FLAGS="" \
-	-DINSTALL_PK3_PATH=%_datadir/doom/
+	-DINSTALL_PK3_PATH=%_datadir/doom/ 
 
 %make_build
 
@@ -68,7 +68,7 @@ GZDoom - порт движка Doom, основанный на ZDoom. Основ
 %makeinstall_std
 
 mkdir -p %buildroot%_datadir/%name/soundfonts/
-
+\
 install -D -m 0644 fm_banks/* -t %buildroot%_datadir/%name/fm_banks
 install -D -m 0644 soundfont/%name.sf2 %buildroot%_datadir/%name/soundfonts/
 
@@ -109,6 +109,9 @@ done
 %_gamesdatadir/doom/soundfonts/*
 
 %changelog
+* Thu Dec 12 2024 Artyom Bystrov <arbars@altlinux.org> 4.13.2-alt1
+- Update to new version
+
 * Sun Jul  7 2024 Artyom Bystrov <arbars@altlinux.org> 4.12.2-alt1
 - Update to new version
 
