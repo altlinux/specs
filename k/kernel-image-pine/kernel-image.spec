@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Dec 12 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.4-alt2
+- pinephonepro: fixed proximity sensor
+
 * Tue Dec 10 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.4-alt1
 - 6.12.4
 
