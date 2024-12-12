@@ -1,9 +1,9 @@
 Name: alt-panelmoded
 Version: 0.3.3
-Release: alt1
+Release: alt2
 
 Summary: Used for panelmode on operating systems of the Alt family with GNOME desktop enviroment
-License: GPL-3.0-later
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
 Url: https://gitlab.gnome.org/Armatik/alt-panelmoded
@@ -49,5 +49,8 @@ enviroment.
 %_desktopdir/org.altlinux.panelmoded.desktop
 
 %changelog
+* Thu Dec 12 2024 Oleg Shchavelev <oleg@altlinux.org> 0.3.3-alt2
+- Fix name license
+
 * Thu Dec 12 2024 Oleg Shchavelev <oleg@altlinux.org> 0.3.3-alt1
 - Initial build
