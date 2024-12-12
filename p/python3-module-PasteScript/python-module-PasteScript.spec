@@ -6,8 +6,8 @@
 
 Name: python3-module-%oname
 Epoch:   1
-Version: 2.0.2
-Release: alt2
+Version: 3.6.0
+Release: alt1
 Summary: A pluggable command-line frontend
 License: MIT/X11
 Group: Development/Python3
@@ -16,8 +16,7 @@ Url: https://pypi.org/project/PasteScript/
 BuildArch: noarch
 
 Source: %oname-%version.tar
-
-Patch1: %oname-%version-alt-deps.patch
+Patch: py313-logging.patch
 
 %py3_provides %oname
 
@@ -46,7 +45,7 @@ package file layouts.
 
 %prep
 %setup -n %oname-%version
-%patch1 -p2
+%patch -p1
 
 %build
 export PYTHONPATH=$PWD
@@ -68,6 +67,9 @@ mv %buildroot%_bindir/paster %buildroot%_bindir/paster3
 %_bindir/paster3
 
 %changelog
+* Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 1:3.6.0-alt1
+- New version 3.6.0.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 1:2.0.2-alt2
 - Drop python2 support.
 

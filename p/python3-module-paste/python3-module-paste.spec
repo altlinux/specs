@@ -1,27 +1,31 @@
 %define oname Paste
-%def_with bootstrap
+
+%def_with check
 
 Name: python3-module-paste
-Version: 3.7.1
+Version: 3.10.1
 Release: alt1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 
 License: MIT
 Group: Development/Python
-Url: https://github.com/cdent/paste/
+Url: https://pypi.org/project/Paste
+Vcs: https://github.com/pasteorg/paste
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides Paste
+
 %add_python3_req_skip scgi hotshot rfc822
 %add_python3_req_skip flup.middleware.session hotshot.stats
 # FIXME:mask python2 modules
@@ -39,20 +43,24 @@ middleware based on those interfaces.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-# hack for autocreate "provides python2.5(paste)"
+%pyproject_install
+# hack for autocreate "provides python3(paste)"
 touch %buildroot%python3_sitelibdir/paste/__init__.py
 
+%check
+%pyproject_run_pytest -v
 
 %files
 %python3_sitelibdir/paste/
-%python3_sitelibdir/*.egg-info
-
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 3.10.1-alt1
+- New version 3.10.1.
+
 * Thu Oct 19 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.7.1-alt1
 - Updated to upstream 3.7.1
 

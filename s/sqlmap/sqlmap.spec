@@ -1,6 +1,6 @@
 Name: sqlmap
-Version: 1.5.3
-Release: alt1.1
+Version: 1.8.12
+Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
 
@@ -12,9 +12,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/sqlmapproject/sqlmap/archive/%version.tar.gz
 Source: %name-%version.tar
-
-# Remove dependency on distutils
-Patch: 69900a6c6efac5c8b43fcee5d8d03dc2afb063b5.patch
 
 BuildArch: noarch
 
@@ -43,7 +40,6 @@ out-of-band connections.
 
 %prep
 %setup
-%patch -p1
 %remove_repo_info
 find . -type f -and -name '*.py' -exec sed -i "s|#!%_bindir/env python2\?\$|#!%__python3|" {} \;
 %__subst "s|#!/usr/bin/env python$|#!%__python3|" sqlmap.py sqlmapapi.py
@@ -89,6 +85,9 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Thu Dec 12 2024 Anton Vyatkin <toni@altlinux.org> 1.8.12-alt1
+- NMU: new version 1.8.12.
+
 * Thu Oct 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.5.3-alt1.1
 - NMU: dropped dependency on distutils.
 

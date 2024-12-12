@@ -1,6 +1,6 @@
 Name: upmpdcli
 Version: 1.8.17
-Release: alt2
+Release: alt3
 
 Summary: UPnP front-end to the Music Player Daemon
 License: LGPLv2.1
@@ -93,6 +93,8 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip uvloop
 # meinheld looks unmaintained https://github.com/mopemope/meinheld/issues
 %add_python3_req_skip meinheld
+# python 3.13 remove cgi module
+%add_python3_req_skip cgi
 
 %files
 %config(noreplace) %attr(0640,root,_upmpd) %_sysconfdir/%name.conf
@@ -120,6 +122,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Thu Dec 12 2024 Anton Vyatkin <toni@altlinux.org> 1.8.17-alt3
+- relaxed runtime dependency on cgi module.
+
 * Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.8.17-alt2
 - relaxed runtime dependency on unmaintained meinheld.
 
