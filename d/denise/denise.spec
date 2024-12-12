@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 Name:     denise
-Version:  2.2.1
+Version:  2.4
 Release:  alt1
 
 Summary:  Highly accurate C64/Amiga emulator
@@ -11,7 +11,8 @@ Url:      https://sourceforge.net/projects/deniseemu/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
-BuildRequires: gcc-c++ libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel libpcre-devel
+BuildRequires(Pre): rpm-macros-cmake
+BuildRequires: build-essential gcc-c++ cmake libSDL2-devel libgtk+3-devel libpulseaudio-devel libopenal-devel libXrandr-devel libXfixes-devel bzlib-devel libpcre2-devel libbrotli-devel libudev-devel libfreetype-devel libpcre-devel libxkbcommon-devel
 
 
 %description
@@ -32,11 +33,12 @@ Denise consists of 4 main modules.
 %setup
 
 %build
-%make_install
+%cmake
+%cmake_build
 
 %install
-%makeinstall
-install -D -m 0644 data/txt/licence.md %buildroot%_datadir/%name/
+%cmake_install
+install -D -m 0644 licence.md %buildroot%_datadir/%name/
 
 %files
 %_bindir/%name
@@ -45,6 +47,13 @@ install -D -m 0644 data/txt/licence.md %buildroot%_datadir/%name/
 %_iconsdir/%name.png
 
 %changelog
+* Thu Dec 12 2024 Artyom Bystrov <arbars@altlinux.org> 2.4-alt1
+- Update to new version
+- Temporary remove russian locale
+
+* Thu Sep 19 2024 Artyom Bystrov <arbars@altlinux.org> 2.3-alt1
+- Update to new version
+
 * Fri Jan 26 2024 Artyom Bystrov <arbars@altlinux.org> 2.2.1-alt1
 - Update to new version
 - getting back russian translation
