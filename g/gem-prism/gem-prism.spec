@@ -5,7 +5,7 @@
 %define        gemname prism
 
 Name:          gem-prism
-Version:       0.25.0
+Version:       1.2.0
 Release:       alt1
 Summary:       Prism Ruby parser
 License:       MIT
@@ -16,21 +16,21 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_enabled check
+BuildRequires: gem(benchmark-ips) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0
+%if_enabled check
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(onigmo) >= 0
 BuildRequires: gem(test-unit) >= 0
-BuildRequires: gem(ffi) >= 0
-BuildRequires: gem(parser) >= 0
-BuildRequires: gem(ruby_parser) >= 0
-BuildRequires: gem(benchmark-ips) >= 0
-BuildRequires: gem(ruby_memcheck) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(prism) = 0.25.0
+Requires:      ruby >= 2.7.0
+Provides:      gem(prism) = 1.2.0
 
+%ruby_on_build_rake_tasks templates
 
 %description
 This is a parser for the Ruby programming language. It is designed to be
@@ -45,14 +45,14 @@ against ruby.h, and so is suitable in the context of CRuby.
 
 %if_enabled    doc
 %package       -n gem-prism-doc
-Version:       0.25.0
+Version:       1.2.0
 Release:       alt1
 Summary:       Prism Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета prism
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(prism) = 0.25.0
+Requires:      gem(prism) = 1.2.0
 
 %description   -n gem-prism-doc
 Prism Ruby parser documentation files.
@@ -73,22 +73,20 @@ against ruby.h, and so is suitable in the context of CRuby.
 
 %if_enabled    devel
 %package       -n gem-prism-devel
-Version:       0.25.0
+Version:       1.2.0
 Release:       alt1
 Summary:       Prism Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета prism
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(prism) = 0.25.0
+Requires:      gem(prism) = 1.2.0
+Requires:      gem(benchmark-ips) >= 0
+Requires:      gem(minitest) >= 0
+Requires:      gem(onigmo) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0
 Requires:      gem(test-unit) >= 0
-Requires:      gem(ffi) >= 0
-Requires:      gem(parser) >= 0
-Requires:      gem(ruby_parser) >= 0
-Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(ruby_memcheck) >= 0
 
 %description   -n gem-prism-devel
 Prism Ruby parser development package.
@@ -120,24 +118,27 @@ against ruby.h, and so is suitable in the context of CRuby.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-prism-doc
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-prism-devel
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE.md README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Wed Dec 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
+- ^ 0.25.0 -> 1.2.0
+
 * Mon Apr 15 2024 Pavel Skrylev <majioa@altlinux.org> 0.25.0-alt1
 - + packaged gem with Ruby Policy 2.0
