@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool domain-controller
 Name: diag-%diagnostic_tool
-Version: 0.0.3
+Version: 0.1
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -11,7 +11,7 @@ URL: https://gitlab.basealt.space/alt/diag-domain-controller
 BuildArch: noarch
 Source: %name-%version.tar
 
-BuildRequires: rpm-macros-alterator
+BuildRequires(pre): rpm-macros-alterator
 
 %description
 Domain Controller Diagnostic Tool.
@@ -37,6 +37,10 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Dec 12 2024 Andrey Limachko <liannnix@altlinux.org> 0.1-alt1
+- The structure of the files .diag and .backend has been rewritten
+  to the toml format (thx Sergey Savelev)
+
 * Fri Dec 06 2024 Evgenii Sozonov <arzdez@altlinux.org> 0.0.3-alt1
 - The multiple systemctl call has been removed, and the
   is_domain_info_available function has been adjusted (thx Sergey Savelev)
