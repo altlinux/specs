@@ -18,7 +18,7 @@
 %define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 smbk5pwd trace usn variant vc
 
 Name: openldap
-Version: 2.6.8
+Version: 2.6.9
 Release: alt1
 
 Obsoletes: openldap2.4 < %version-%release
@@ -84,6 +84,7 @@ Patch19: %name-2.6.3-rh-add-export-symbols-LDAP_CONNECTIONLESS.patch
 
 Patch20: %name-2.6.1-system-mdb.patch
 Patch21: %name-2.6.8-alt-smbk5pwd.patch
+Patch22: %name-2.6.1-cloak.patch
 
 ### REQUIRE Section
 
@@ -283,6 +284,7 @@ Various overlays found in contrib/:
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 rm -r libraries/liblmdb
 
 # Add some more schema for the sake of migration scripts and others
@@ -716,6 +718,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Dec 12 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.9-alt1
+- 2.6.9
+
 * Wed Jun 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.8-alt1
 - 2.6.8
 - No relocate some shared libraries from %%_libdir/ to /%%_lib/
