@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 
 Summary: Fast, simple object-to-object and broadcast signaling
@@ -53,6 +53,9 @@ sent by any sender.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 10 2024 Anton Zhukharev <ancieg@altlinux.org> 1.9.0-alt1
+- Updated to 1.9.0.
+
 * Tue May 07 2024 Anton Vyatkin <toni@altlinux.org> 1.8.2-alt1
 - New version 1.8.2.
 

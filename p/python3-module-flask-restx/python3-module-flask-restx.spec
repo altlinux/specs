@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
 License: BSD-3-Clause
@@ -69,6 +69,9 @@ EXCLUDE_TESTS_CONDITION="not (\
 %python3_sitelibdir/%mod_name-%version.dist-info/
 
 %changelog
+* Tue Dec 10 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt2
+- Fixed compatibility with flask=3.1.0.
+
 * Wed Dec 13 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
