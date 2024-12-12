@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    sccache
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: sccache is ccache with cloud storage
@@ -77,6 +77,9 @@ EOF
 %doc README.md docs
 
 %changelog
+* Wed Dec 11 2024 Ivan A. Melnikov <iv@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Sun Oct 20 2024 Ivan A. Melnikov <iv@altlinux.org> 0.8.2-alt1
 - 0.8.2
 - build with default features on 64-bit platforms
