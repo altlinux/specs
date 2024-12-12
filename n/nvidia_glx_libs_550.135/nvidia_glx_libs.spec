@@ -21,7 +21,7 @@
 %define nv_version 550
 %define nv_release 135
 %define nv_minor   %nil
-%define pkg_rel alt2
+%define pkg_rel alt3
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -203,6 +203,8 @@ mkdir -p %buildroot/%_datadir/nvidia/nvidia-powerd/
 if [ -e dlsnetparams.csv ] ; then
     install -m 0444 dlsnetparams.csv %buildroot/%_datadir/nvidia/nvidia-powerd/
 fi
+mkdir -p  %buildroot/%_datadir/dbus-1/system.d/
+install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbus.conf
 %endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
@@ -246,7 +248,7 @@ done
 %_bindir/nvidia-smi
 %_man1dir/nvidia-smi.1.*
 %files -n nvidia-powerd
-%doc nvidia-dbus.conf
+%_datadir/dbus-1/system.d/nvidia-dbus.conf
 %_bindir/nvidia-powerd
 %_unitdir/nvidia-powerd.service
 %_datadir/nvidia/nvidia-powerd/
@@ -266,6 +268,9 @@ done
 %endif
 
 %changelog
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt3
+- fix package nvidia-dbus.conf for nvidia-powerd
+
 * Mon Dec 02 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt2
 - package nvidia-powerd
 
