@@ -49,7 +49,7 @@
 Name: vim
 %define branch 9.1
 Version: %branch.0917
-Release: alt1
+Release: alt2
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -200,6 +200,8 @@ Provides: vim-plugin-zip-ftplugin = 24.vim
 Obsoletes: vim-plugin-zip-ftplugin < 24.vim
 Provides: vim-plugin-vimruby = 20070302.vim
 Obsoletes: vim-plugin-vimruby < 20070302.vim
+Provides: vim-plugin-mediawiki-syntax = %EVR
+Obsoletes: vim-plugin-mediawiki-syntax <= 0.0-alt5
 
 %description common
 VIM (VIsual editor iMproved) is an updated and improved version of the
@@ -1070,6 +1072,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Thu Dec 12 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0917-alt2
+- Replace vim-plugin-mediawiki-syntax package (ALT#52413).
+
 * Mon Dec 09 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0917-alt1
 - Updated to v9.1.0917 (ALT#51821).
 
