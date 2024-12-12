@@ -1,5 +1,5 @@
 Name: userpasswd
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Group: System/Configuration/Other
@@ -36,6 +36,10 @@ graphical tool for changing password.
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Dec 11 2024 Maria Alexeeva <alxvmr@altlinux.org> 0.3.5-alt1
+- Fixed a false message about successful password change (Closes: #49619)
+  Thanks to Ivan Volchenko for the fix
+
 * Mon Mar 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.3.4-alt1
 - Support for pam_winbind (aka NT password) (Closes: #45513)
 - Update russian translation, reconvert it to UTF-8
