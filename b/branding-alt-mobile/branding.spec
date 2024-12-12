@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.6.alpha2
+Release: alt0.7.alpha3
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -36,8 +36,8 @@ License: GPL-3.0-or-later
 %define altbranch sisyphus
 %endif
 
-%define status "-альфа2"
-%define status_en "-alpha2"
+%define status "-альфа3"
+%define status_en "-alpha3"
 
 %description
 Distro-specific packages with design and texts
@@ -234,6 +234,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Thu Dec 12 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.7.alpha3
+- alpha 3
+- Update system-logo.png for plymouth
+
 * Wed Sep 25 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.6.alpha2
 - alpha 2
 - fix Russian name
