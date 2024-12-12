@@ -7,7 +7,7 @@
 %define status_en ALPHA
 %define flavour %brand-%theme
 
-%define gtk_theme Breeze-Education
+%define gtk_theme Breeze
 %define kde_theme Breeze
 %define icon_theme Papirus-Edu
 %define window_theme Smoothwall-Breeze
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.2.alpha
+Release: alt0.3.alpha
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -176,10 +176,10 @@ License: Distributable
 Group:   Graphical desktop/KDE
 Requires(pre): %name-graphics
 Requires: %name-graphics = %EVR
-Requires: kde5-konsole-colorscheme-SolarizedPastel
+Requires: konsole-colorscheme-SolarizedPastel
 Requires: papirus-icon-theme
-Requires: gtk-theme-breeze-education
-Requires: plasma5-breeze
+Requires: gtk-theme-breeze
+Requires: plasma6-breeze
 Requires: fonts-ttf-liberation
 Requires: fonts-ttf-google-droid-sans-mono
 Requires: document-templates
@@ -202,7 +202,7 @@ Requires: fonts-ttf-google-noto-sans
 Requires: gnome-icon-theme
 # Specified themes
 Requires: papirus-icon-theme
-Requires: gtk-theme-breeze-education
+Requires: gtk-theme-breeze
 Requires: xfwm4-theme-Smoothwall-Breeze
 Requires(post): lightdm-gtk-greeter
 # XFCE plugins
@@ -235,7 +235,7 @@ Requires: beesu
 Requires: dconf
 # Specified themes
 Requires: papirus-icon-theme
-Requires: gtk-theme-breeze-education
+Requires: gtk-theme-breeze
 #
 %branding_add_conflicts %flavour mate-settings
 Requires(post): lightdm-gtk-greeter
@@ -451,6 +451,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Dec 12 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.3.alpha
+- Used gtk-theme-breeze and plasma6-breeze
+- kde-settings: used konsole-colorscheme-SolarizedPastel
+
 * Sat Jul 20 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.2.alpha
 - Used licenses from distro-licenses.
 

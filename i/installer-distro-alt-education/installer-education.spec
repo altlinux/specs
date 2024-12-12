@@ -1,6 +1,6 @@
-Name:    installer-distro-education
+Name:    installer-distro-alt-education
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -13,6 +13,9 @@ BuildArch: noarch
 
 BuildRequires: alterator rpm-devel
 
+Provides: installer-distro-education = %EVR
+Obsoletes: installer-distro-education < %EVR
+
 %define feature installer-feature-simply-linux
 
 %description
@@ -21,6 +24,8 @@ Installer common files for ALT Education.
 %package stage2
 Summary: Installer stage2
 Group: System/Configuration/Other
+Provides: installer-distro-education-stage2 = %EVR
+Obsoletes: installer-distro-education-stage2 < %EVR
 Requires: %name = %version-%release
 Requires: installer-common-stage2
 # volumes profile
@@ -53,6 +58,8 @@ Installer stage2
 %package stage3
 Summary: Installer stage3
 Group: System/Configuration/Other
+Provides: installer-distro-education-stage3 = %EVR
+Obsoletes: installer-distro-education-stage3 < %EVR
 Requires: %name = %version-%release
 Requires: installer-stage3
 #modules
@@ -76,11 +83,13 @@ Requires: installer-feature-bell-off-stage3
 %description stage3
 Installer stage3
 
-%package -n volumes-profile-education
+%package -n volumes-profile-alt-education
 Summary: Volumes profile for ALT Education
 Group: System/Configuration/Other
+Provides: volumes-profile-education = %EVR
+Obsoletes: volumes-profile-education < %EVR
 
-%description -n volumes-profile-education
+%description -n volumes-profile-alt-education
 Volumes profile for ALT Education.
 
 %prep
@@ -108,10 +117,14 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %files stage3
 %_datadir/alterator/ui/simply-linux
 
-%files -n volumes-profile-education
+%files -n volumes-profile-alt-education
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Thu Dec 12 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
+- Renamed to installer-distro-alt-education.
+- volumes-profile-alt-education: disabled home partition in auto mode (ALT #52373).
+
 * Tue Oct 15 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt1
 - Bump version for p11 and Sisyphus where armh is deprecated.
 

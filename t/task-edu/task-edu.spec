@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -8,6 +8,8 @@ License: GPL-3.0+
 Group:   Education
 
 URL:     http://altlinux.org/education
+
+BuildRequires(pre): rpm-macros-qt6-webengine
 
 # Education (base part)
 Requires: task-edu-lite = %EVR
@@ -108,11 +110,10 @@ Requires: gimagereader-gtk
 Requires: tesseract
 Requires: tesseract-langpack-ru
 Requires: tesseract-langpack-en
-# KDE5 localization and profile
-Requires: kde5-profile
+# localization
 Requires: qt5-translations
-%ifnarch %e2k
-Requires: kde5-khelpcenter
+%ifnarch %e2k %not_qt6_qtwebengine_arches
+Requires: khelpcenter
 %endif
 # Content filter and antivirus
 Requires: netpolice-filter
@@ -197,13 +198,12 @@ Requires: gcompris-qt-voices-ru
 #Requires: childsplay
 #Requires: childsplay-alphabet_sounds_ru
 Requires: tuxpaint
-Requires: kde5-khangman
-Requires: kde5-kanagram
-# KDE5 localization and profile
-Requires: kde5-profile
+Requires: khangman
+Requires: kanagram
+# localization
 Requires: qt5-translations
-%ifnarch %e2k
-Requires: kde5-khelpcenter
+%ifnarch %e2k %not_qt6_qtwebengine_arches
+Requires: khelpcenter
 %endif
 %description preschool
 %{summary}.
@@ -217,8 +217,7 @@ Obsoletes: %name-gradeschool < %EVR
 Requires: task-edu = %EVR
 Requires: kumir2
 Requires: codeblocks
-Requires: kde5-profile
-Requires: kde5-kolourpaint
+Requires: kolourpaint
 %ifarch %ix86 x86_64
 Requires: lazarus
 Requires: openscad
@@ -228,14 +227,13 @@ Requires: synfigstudio
 %endif
 Requires: dia
 Requires: trikStudio
-Requires: kde5-marble
+Requires: marble
 %ifnarch ppc64le
 Requires: wxMaxima
 %endif
 Requires: bluefish
 Requires: afce
-# KDE5 localization and profile
-Requires: kde5-profile
+# localization
 Requires: qt5-translations
 %ifarch %ix86 %e2k
 Requires: scratch
@@ -245,8 +243,10 @@ Requires: scratch-desktop
 %endif
 %ifnarch %e2k
 Requires: qcad
-Requires: kde5-khelpcenter
 Requires: trikStudioJunior
+%endif
+%ifnarch %e2k %not_qt6_qtwebengine_arches
+Requires: khelpcenter
 %endif
 %ifarch x86_64 aarch64
 Requires: freecad
@@ -258,8 +258,8 @@ Requires: python3-module-pygame-doc
 Requires: python3-modules-curses
 Requires: gcompris-qt
 Requires: gcompris-qt-voices-ru
-Requires: kde5-ktouch
-Requires: kde5-kbruch
+Requires: ktouch
+Requires: kbruch
 Requires: abiword
 Requires: afce
 %description highschool
@@ -373,7 +373,7 @@ Requires: pip
 %description university
 %{summary}.
 
-%package kde5
+%package kde
 Summary(ru_RU.UTF-8): Среда KDE для Альт Образование
 Summary: KDE for Alt Education
 Group: Education
@@ -401,13 +401,13 @@ Requires: kde-printing
 Requires: kde-scanning
 Requires: kdeconnect
 #ifnarch armh
-#Requires: %{lo_name}-kde5
+Requires: %{lo_name}-kde6
 #endif
 %ifnarch %e2k ppc64le
-Requires: nextcloud-client-kde5
+Requires: nextcloud-client-kde
 %endif
 Requires: branding-alt-education-kde-settings
-%description kde5
+%description kde
 %{summary}.
 
 %package teacher
@@ -541,7 +541,7 @@ Requires: task-edu-teacher
 %files university
 
 %ifnarch %e2k
-%files kde5
+%files kde
 %endif
 
 %files teacher
@@ -555,6 +555,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Dec 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.4-alt1
+- Adapt for KDE6.
+
 * Tue Dec 10 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.3-alt1
 - task-edu-kde5: remove unsupported LibreOffice-still-kde5.
 
