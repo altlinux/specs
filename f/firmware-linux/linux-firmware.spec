@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20241110
+Version: 20241210
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -115,6 +115,9 @@ xz -l %buildroot/lib/firmware/i915/mtl_gsc_1.bin.xz | grep -w CRC32
 /lib/firmware/mellanox
 
 %changelog
+* Wed Dec 11 2024 Vitaly Chikunov <vt@altlinux.org> 20241210-alt1
+- Update to 20241210 (2024-12-10).
+
 * Tue Nov 12 2024 Vitaly Chikunov <vt@altlinux.org> 20241110-alt1
 - Update to 20241110-0-gb5885ec5.
 
