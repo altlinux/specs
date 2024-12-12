@@ -1,12 +1,13 @@
-%define git_commit 3c4d4fcd09173ea070dc812ab5d64ca3a3af5f29
+%define git_commit 992b4ea9309899ebc7ca576ebea711a70523098a
 
 %define enet_commit 2a85cd64459f6ba038d233a634d9440490dbba12
 %define implot_commit cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
 %define rcheevos_version 11.4.0
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
+%define zlib_ng_commit ce01b1e41da298334f8214389cc9369540a7560f
 
 Name: dolphin-emu
-Version: 2409
+Version: 2412
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -28,6 +29,8 @@ Source2: implot-%implot_commit.tar
 Source3: rcheevos-%rcheevos_version.tar
 # https://github.com/syoyo/tinygltf/archive/%tinygltf_commit/tinygltf-%tinygltf_commit.tar.gz
 Source4: tinygltf-%tinygltf_commit.tar
+# https://github.com/zlib-ng/zlib-ng/archive/$zlib_ng_commit/zlib-ng-%zlib_ng_commit.gz
+Source5: zlib-ng-%zlib_ng_commit.tar
 
 Patch0: dolphin-gbacore-alt.patch
 
@@ -35,16 +38,8 @@ BuildRequires: bzlib-devel
 BuildRequires: cmake
 BuildRequires: libSDL2-devel
 BuildRequires: libSFML-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libXft-devel
 BuildRequires: libXi-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
-BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
 BuildRequires: libbluez-devel
@@ -76,21 +71,22 @@ BuildRequires: libxml2-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzstd-devel
 BuildRequires: llvm-devel
-BuildRequires: llvm17.0-gold
+BuildRequires: llvm18.1-gold
 BuildRequires: qt6-svg-devel
-BuildRequires: zlib-ng-devel
+BuildRequires: zlib-devel
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4
+%setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4 -b 5
 
 %__mv -Tf ../enet-%enet_commit Externals/enet/enet
 %__mv -Tf ../implot-%implot_commit Externals/implot/implot
 %__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
 %__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
+%__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
 
 %patch0 -p1
 
@@ -126,6 +122,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Thu Dec 12 2024 Nazarov Denis <nenderus@altlinux.org> 2412-alt1
+- Version 2412
+
 * Sat Sep 14 2024 Nazarov Denis <nenderus@altlinux.org> 2409-alt1
 - Version 2409
 
