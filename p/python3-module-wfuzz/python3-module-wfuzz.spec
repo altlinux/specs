@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt4
+Release: alt5
 
 Summary: Web application fuzzer
 License: GPL-2.0
@@ -18,9 +18,12 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+# ALT patches
 Patch0: python3-module-wfuzz-3.1.0-alt-fix-relative-imports--bz44825.patch
 Patch1: wfuzz-3.1.0-Correct-dependency-specification-for-pyparsing.patch
 Patch2: python3-module-wfuzz-3.1.0-alt-do-not-use-distutils.patch
+# Debian patches
+Patch3: Python3.13-removes-pipes.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -88,6 +91,9 @@ it's a tool by pentesters for pentesters ;)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 12 2024 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt5
+- Removed dependency on python3(pipes) for compatibility with Python 3.13.
+
 * Thu Oct 12 2023 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt4
 - Do not use distutils.
 
