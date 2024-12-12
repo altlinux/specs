@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 # For dlopen()-ed libraries soname check
-%define liboqs_soname 6
+%define liboqs_soname 7
 %define libz_soname 1
 %define libbrotlienc_soname 1
 %define libbrotlidec_soname 1
@@ -11,7 +11,7 @@
 
 Name: gnutls%libgnutls_soname
 Version: 3.8.8
-Release: alt1
+Release: alt2
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -332,6 +332,9 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Thu Dec 12 2024 Mikhail Efremov <sem@altlinux.org> 3.8.8-alt2
+- Rebuilt with liboqs-0.12.0.
+
 * Wed Dec 04 2024 Mikhail Efremov <sem@altlinux.org> 3.8.8-alt1
 - Enabled certificate compression (RFC8879) support.
 - Added check liboqs soname during build.
