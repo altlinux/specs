@@ -11,7 +11,7 @@ error exit
 
 Name: alt-desktop-wallpapers
 Version: 11.0.2
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/Other
@@ -26,6 +26,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
 BuildRequires: gcc-c++ qt5-base-devel
+BuildRequires: jq
 BuildRequires: /usr/bin/convert
 
 %description
@@ -53,25 +54,44 @@ done
 # install GNOME wallpapers
 PREFIX=%buildroot
 WALLDIR=%buildroot/%_datadir/wallpapers
-GNOMEWALLDIR=%buildroot/%_pixmapsdir
-mkdir -p $GNOMEWALLDIR
+GNOME_BG_PROP_DIR=%buildroot/%_datadir/gnome-background-properties
+mkdir -p "$GNOME_BG_PROP_DIR"
+# This script generates GNOME XML wallpaper configuration files using metadata extracted from metadata.json.
 pushd $WALLDIR 1>/dev/null
 ls -1d * | \
 while read W_NAME; do
     F_PATH=`find $W_NAME/contents/images -type f | head -n 1`
     [ -n "$F_PATH" ] || continue
     F_PATH=`realpath $F_PATH`
-    W_EXT=`echo "$F_PATH"| sed 's|^.*\.||'`
-    ln -sr $F_PATH $GNOMEWALLDIR/${W_NAME}.${W_EXT}
+    METADATA_FILE="${WALLDIR}/${W_NAME}/metadata.json"
+    ID=$(jq -r '.KPlugin.Id' $METADATA_FILE)
+    RF_PATH="%_datadir${F_PATH#*%_datadir}"
+    cat <<EOF > "${GNOME_BG_PROP_DIR}/${W_NAME}.xml"
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+  <wallpaper deleted="false">
+    <name>${ID}</name>
+    <filename>${RF_PATH}</filename>
+    <options>zoom</options>
+    <shade_type>solid</shade_type>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+  </wallpaper>
+</wallpapers>
+EOF
 done
 popd 1>/dev/null
 
 %files
 #%doc COPYING*
 %_datadir/wallpapers/*
-%_pixmapsdir/*
+%_datadir/gnome-background-properties/*
 
 %changelog
+* Thu Dec 12 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.2-alt2
+- add GNOME 40 support (thanks armatik@alt)
+
 * Wed Dec 11 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.2-alt1
 - update descriptions
 
