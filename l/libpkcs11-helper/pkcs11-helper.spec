@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define _name pkcs11-helper
 %def_disable LibreSSL
 %def_enable openssl
@@ -8,7 +10,7 @@
 %def_disable mbedtls
 
 Name: lib%_name
-Version: 1.29.0
+Version: 1.30.0
 Release: alt1
 Summary: A library for using PKCS#11 providers
 
@@ -17,6 +19,7 @@ License: GPLv2 or BSD
 Url: https://github.com/OpenSC/pkcs11-helper
 
 Source: %name-%version.tar
+Patch1: libpkcs11-helper-openssl-3.0.patch
 
 Provides: %_name = %version-%release
 Obsoletes: %_name < %version-%release
@@ -61,6 +64,7 @@ programs using the pkcs11-helper library.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 %autoreconf
@@ -96,6 +100,10 @@ rm -f %buildroot%_libdir/*.la
 %_man8dir/*.8*
 
 %changelog
+* Thu Dec 12 2024 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt1
+- New version 1.30.0.
+- Fixed build with OpenSSL 3.0.
+
 * Tue Jul 18 2023 Paul Wolneykien <manowar@altlinux.org> 1.29.0-alt1
 - New version 1.29.0.
 
