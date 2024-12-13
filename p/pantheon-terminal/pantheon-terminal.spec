@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 6.2
+%define ver_major 6.3
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -13,10 +13,11 @@ Group: Terminals
 License: LGPL-3.0
 Url: https://github.com/elementary/terminal
 
+Vcs: https://github.com/elementary/terminal.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/elementary/terminal.git
 Source: %_name-%version.tar
 %endif
 
@@ -81,6 +82,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Fri Dec 13 2024 Yuri N. Sedunov <aris@altlinux.org> 6.3.0-alt1
+- 6.3.0
+
 * Fri Jul 19 2024 Yuri N. Sedunov <aris@altlinux.org> 6.2.0-alt1
 - 6.2.0
 
