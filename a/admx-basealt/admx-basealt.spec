@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,9 @@ done
 %_destdir
 
 %changelog
+* Fri Dec 13 2024 Valentin Sokolov <sova@altlinux.org> 0.2.1-alt1
+- Updated setters name in mate_session policies
+
 * Tue Dec 03 2024 Valentin Sokolov <sova@altlinux.org> 0.2.0-alt1
 - Added new group policies for Systemd1 polkit actions
 - Added new group policies for Machine1 polkit actions
