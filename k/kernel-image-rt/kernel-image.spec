@@ -1,27 +1,22 @@
 Name: kernel-image-rt
-%define kernel_base_version	6.1
-%define kernel_sublevel	.119
-%define kernel_rt_release	rt45
+Release: alt2
+%define kernel_src_version	6.12
+%define kernel_base_version	6.12
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
-Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt1.%kernel_rt_release
+%define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
+%define kernel_latest	latest
+Version: %kversion
 
 %define krelease	%release
 
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
-%define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
+%define sub_flavour	%( s='%flavour'; expr + "$s" : '[[:digit:]]\\+\\.[[:digit:]]\\+$' >/dev/null && s=def; printf %%s "${s#*-}" )
 
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
-
-# Enable/disable docs formatting
-%if "%sub_flavour" == "def" && %kgcc_version > 5
-%def_enable docs
-%else
-%def_disable docs
-%endif
 
 %ifarch %ix86 x86_64
 %def_enable domU
@@ -33,9 +28,7 @@ Release: alt1.%kernel_rt_release
 %def_disable oss
 ## Don't edit below this line ##################################
 
-%define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define modules_dir	/lib/modules/%kversion-%flavour-%krelease
-
 %define kheaders_dir	%_prefix/include/linux-%kversion-%flavour
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
@@ -43,19 +36,20 @@ Release: alt1.%kernel_rt_release
 %brp_strip_none /boot/*
 %add_verify_elf_skiplist %modules_dir/*
 
-Summary: The Linux kernel with PREEMPT_RT patches (Real-Time Linux)
+Summary: The Linux kernel (the core of the Linux operating system)
 License: GPL-2.0-only
 Group: System/Kernel and hardware
-Url: https://wiki.linuxfoundation.org/realtime/
-Vcs: git://git.kernel.org/pub/scm/linux/kernel/git/rt/linux-stable-rt.git
+Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
+%else %if "%base_flavour" == "rt"
+ExclusiveArch: x86_64 aarch64
 %else
-ExclusiveArch: aarch64 x86_64
+ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 %endif
 
 %define make_target bzImage
@@ -85,11 +79,13 @@ ExclusiveOS: Linux
 
 %if "%sub_flavour" == "def"
 Provides: kernel = %kversion
+Provides: kernel-%kernel_latest = %version-%release
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
 Provides: kernel-modules-alsa = %version-%release
 Provides: kernel-modules-kvm-%flavour = %version-%release
+Provides: kernel-modules-kvm-%kversion-%flavour-%krelease = %version-%release
 %endif
 
 Requires(pre,postun): bootloader-utils
@@ -104,7 +100,7 @@ BuildRequires: flex
 BuildRequires: gcc%kgcc_version
 BuildRequires: gcc%kgcc_version-c++
 BuildRequires: gcc%kgcc_version-plugin-devel
-BuildRequires: kernel-source-%kernel_base_version
+BuildRequires: kernel-source-%kernel_src_version
 BuildRequires: kmod
 BuildRequires: libdb4-devel
 BuildRequires: libelf-devel
@@ -119,10 +115,7 @@ BuildRequires: zlib-devel
 BuildRequires: u-boot-tools
 %endif
 Provides: kernel-modules-ipset-%flavour = %version-%release
-%if_enabled docs
-BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
-BuildRequires: fontconfig
-%endif
+Provides: kernel-modules-kvdo-%flavour = %version-%release
 %if_enabled ccache
 BuildRequires: ccache
 %endif
@@ -131,11 +124,11 @@ BuildRequires: ccache
 %endif
 
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2 rtcheck}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
 
 %description
-This package contains the Linux kernel %kernel_base_version%kernel_sublevel \
-with Real-Time Linux project PREEMPT_RT patches.
+This package contains the Linux kernel %kernel_base_version that is used to boot and run
+your system.
 
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
@@ -155,7 +148,10 @@ it seems that you do not need this package.
 %package -n kernel-modules-drm-%flavour
 Summary: The Direct Rendering Infrastructure modules
 Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Provides:  kernel-modules-v4l-%flavour = %version-%release
+Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease > %version-%release
 Requires(pre,postun): kmod
 Requires(pre,postun): %name = %EVR
 
@@ -168,20 +164,13 @@ OpenGL implementations.
 
 These are modules for your ALT Linux system
 
-%package -n kernel-modules-drm-ancient-%flavour
-Summary: The Direct Rendering modules for ancient cards
-Group: System/Kernel and hardware
-Requires(pre,post,postun): %name = %EVR
-
-%description -n kernel-modules-drm-ancient-%flavour
-The Direct Rendering Modules for ancient cards:
-sis.ko, tdfx.ko, savage.ko, r128.ko, mga.ko, via.ko
-
-These are modules for your ALT Linux system
-
 %package -n kernel-modules-drm-nouveau-%flavour
 Summary: The Direct Rendering Infrastructure modules for NVIDIA cards
 Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-nouveau-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease > %version-%release
+Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Requires(pre,postun): kmod
 Requires(pre,post,postun): %name = %EVR
 
@@ -197,6 +186,10 @@ These are modules for your ALT Linux system
 %package -n kernel-modules-staging-%flavour
 Summary:  Kernel modules under development
 Group: System/Kernel and hardware
+Provides:  kernel-modules-staging-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease > %version-%release
+Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Requires(pre,postun): kmod
 Requires(pre,post,postun): %name = %EVR
 
@@ -209,10 +202,11 @@ technical reasons.
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common
+AutoReqProv: nocpp
 %if "%sub_flavour" == "def"
 Provides: kernel-headers = %version
+Provides: kernel-headers-%kernel_latest = %version-%release
 %endif
-AutoReqProv: nocpp
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -234,6 +228,9 @@ Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
 Requires: gcc%kgcc_version
 AutoReqProv: nocpp
+%if "%sub_flavour" == "def"
+Provides: kernel-headers-modules-%kernel_latest = %version-%release
+%endif
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -270,14 +267,16 @@ Verify EFI-stub signature.
 
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
-rm -rf kernel-source-%kernel_base_version
-tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
-%setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
+rm -rf kernel-source-%kernel_src_version
+tar -xf %kernel_src/kernel-source-%kernel_src_version.tar
+%setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_src_version
 %define _default_patch_flags -s
 %autopatch -p1
 
+%if "%base_flavour" == "rt"
 # fix -rt suffix
 rm -f localversion*
+%endif
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -288,6 +287,10 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
+
+%ifarch %ix86 armh
+sed -Ei 's/-j\d*//' scripts/Makefile.btf
+%endif
 
 %build
 banner build
@@ -316,11 +319,17 @@ CONFIGS="$CONFIGS config-debug"
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
-%make_build %make_target
+%make_build %make_target || {
+	%make %make_target V=1
+	exit 1
+}
 %ifarch ppc64le
 eu-strip --remove-comment -o %image_path vmlinux
 %endif
-%make_build modules
+%make_build modules || {
+	%make modules V=1
+	exit 1
+}
 %ifarch aarch64 %arm
 %make_build dtbs
 %endif
@@ -434,6 +443,7 @@ KbuildFiles="
 	scripts/recordmcount.c
 	scripts/recordmcount
 	scripts/gcc-x86_*-has-stack-protector.sh
+	scripts/module-common.c
 	scripts/module-common.lds
 	scripts/subarch.include
 	scripts/depmod.sh
@@ -474,13 +484,11 @@ ln -s ../generated/utsrelease.h
 ln -s ../generated/uapi/linux/version.h
 popd
 
-# remove *.bin files
-rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
-touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
-touch %buildroot%modules_dir/modules.{alias,dep,devname,softdep,symbols}
+# ghostify *.bin files
+truncate -s0 %buildroot%modules_dir/modules.*.bin
 
+%if "%sub_flavour" == "def"
 # install documentation
-%if_enabled docs
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %endif
@@ -496,19 +504,15 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 
 %check
 banner check
-# Boot-test and check for Real-Time properties.
-timeout 300 vm-run --tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" rtcheck -v
+# First boot-test no matter have KVM or not.
+timeout 300 vm-run --loglevel=debug uname -a
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond \
-        "/sbin/sysctl kernel.printk=8;
-         runltp -f kernel-alt-vm -S skiplist-alt-vm -o out"; then
-        cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
-        sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
-        exit 1
+if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
+	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
+	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
+	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
+	exit 1
 fi
-# Verify fchmodat2 backport.
-make -C tools/testing/selftests/fchmodat2
-timeout 300 vm-run tools/testing/selftests/fchmodat2/fchmodat2_test
 
 %post checkinstall
 check-pesign-helper
@@ -517,26 +521,37 @@ check-pesign-helper
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
 /boot/config-%kversion-%flavour-%krelease
-%dir %modules_dir/
-%dir %modules_dir/updates
+%dir %modules_dir
+%modules_dir/modules.alias
+%modules_dir/modules.builtin
+%modules_dir/modules.builtin.modinfo
+%modules_dir/modules.dep
+%modules_dir/modules.devname
+%modules_dir/modules.order
+%modules_dir/modules.softdep
+%modules_dir/modules.symbols
+%ghost %modules_dir/modules.*.bin
 %defattr(0600,root,root,0700)
-%modules_dir/*
+%modules_dir/updates
+%modules_dir/kernel
 %exclude %modules_dir/build
+%exclude %modules_dir/kernel/drivers/accel/
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
-%ifarch %ix86 x86_64
-# thinkpad_acpi now depends on drm causing "kernel image shouldn't require
-# kernel modules" "sisyphus_check: check-kernel ERROR: kernel package
-# violation".
-%exclude %modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko*
+%ifarch aarch64
+%exclude %modules_dir/kernel/drivers/phy/qualcomm/phy-qcom-qmp-combo.ko*
+%exclude %modules_dir/kernel/drivers/soc/qcom/pmic_glink_altmode.ko*
+%exclude %modules_dir/kernel/drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm.ko*
+%exclude %modules_dir/kernel/drivers/leds/flash/leds-qcom-flash.ko*
 %endif
-%ghost %modules_dir/modules.alias.bin
-%ghost %modules_dir/modules.dep.bin
-%ghost %modules_dir/modules.symbols.bin
-%ghost %modules_dir/modules.builtin.bin
+%ifarch armh aarch64
+# usb_f_uvc now depends on drm causing "kernel image shouldn't require
+# kernel modules" "sisyphus_check: check-kernel ERROR: kernel package.
+%exclude %modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko*
+%endif
 %ifarch aarch64 %arm
 /boot/devicetree/%kversion-%flavour-%krelease
 %endif
@@ -555,38 +570,27 @@ check-pesign-helper
 %dir %modules_dir/
 %modules_dir/build
 
-%if_enabled docs
+%if "%sub_flavour" == "def"
 %files -n kernel-doc-%base_flavour
 %doc %_docdir/kernel-doc-%base_flavour-%version
 %endif
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
+%modules_dir/kernel/drivers/accel/
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko*
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko*
-%ifarch %ix86 x86_64
-%modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko*
+%ifarch aarch64
+%modules_dir/kernel/drivers/phy/qualcomm/phy-qcom-qmp-combo.ko*
+%modules_dir/kernel/drivers/soc/qcom/pmic_glink_altmode.ko*
+%modules_dir/kernel/drivers/usb/typec/tcpm/qcom/qcom_pmic_tcpm.ko*
+%modules_dir/kernel/drivers/leds/flash/leds-qcom-flash.ko*
+%endif
+%ifarch armh aarch64
+%modules_dir/kernel/drivers/usb/gadget/function/usb_f_uvc.ko*
 %endif
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
-%ifnarch aarch64 armh
-%exclude %modules_dir/kernel/drivers/gpu/drm/sis
-%exclude %modules_dir/kernel/drivers/gpu/drm/savage
-%exclude %modules_dir/kernel/drivers/gpu/drm/tdfx
-%exclude %modules_dir/kernel/drivers/gpu/drm/r128
-%exclude %modules_dir/kernel/drivers/gpu/drm/mga
-%exclude %modules_dir/kernel/drivers/gpu/drm/via
-%endif
-
-%files -n kernel-modules-drm-ancient-%flavour
-%ifnarch aarch64 armh
-%modules_dir/kernel/drivers/gpu/drm/sis
-%modules_dir/kernel/drivers/gpu/drm/savage
-%modules_dir/kernel/drivers/gpu/drm/tdfx
-%modules_dir/kernel/drivers/gpu/drm/r128
-%modules_dir/kernel/drivers/gpu/drm/mga
-%modules_dir/kernel/drivers/gpu/drm/via
-%endif
 
 %files -n kernel-modules-drm-nouveau-%flavour
 %modules_dir/kernel/drivers/gpu/drm/nouveau
@@ -597,337 +601,187 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
-* Wed Nov 27 2024 Vitaly Chikunov <vt@altlinux.org> 6.1.119-alt1.rt45
-- Update to v6.1.119-rt45 (2024-11-26).
+* Fri Dec 13 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.4-alt2
+- spec: Add -rt flavor to be built from the same source tree.
 
-* Tue Oct 15 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.112-alt1.rt43
-- v6.1.112-rt43 (2024-10-13).
-- config: Enable CONFIG_USB_ANNOUNCE_NEW_DEVICES=y.
-- config: Enable ZSTD modules compression.
-- config: unset CONFIG_BPFILTER and CONFIG_BPFILTER_UMH.
-- config-rt: Enable CONFIG_IRQ_TIME_ACCOUNTING=y.
+* Mon Dec 09 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.4-alt1
+- v6.12.4 (2024-12-09).
+- config-aarch64: add Qualcomm SoCs based devices support.
 
-* Mon Sep 23 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.111-alt1.rt42
-- v6.1.111-rt42 (2024-09-22).
+* Fri Dec 06 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.3-alt1
+- v6.12.3 (2024-12-06).
 
-* Fri Sep 13 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.109-alt1.rt41
-- v6.1.109-rt41 (2024-09-12).
+* Thu Dec 05 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.2-alt1
+- v6.12.2 (2024-12-05).
 
-* Sun Sep 08 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.108-alt1.rt40
-- v6.1.108-rt40 (2024-09-07).
+* Fri Nov 22 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.1-alt1
+- v6.12.1 (2024-11-22).
+- config: Enable CONFIG_NVME_HWMON=y.
+- config: Enable CONFIG_HWMON=y.
 
-* Fri Aug 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.107-alt1.rt39
-- v6.1.107-rt39 (2024-08-29).
+* Mon Nov 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt1
+- Update to v6.12 (2024-11-17).
+
+* Sun Nov 10 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc7
+- Update to v6.12-rc7 (2024-11-10).
+
+* Mon Nov 04 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc6
+- Update to v6.12-rc6 (2024-11-03).
+
+* Sun Oct 27 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc5
+- Update to v6.12-rc5 (2024-10-27).
+- config: Enable CONFIG_SCSI_MPI3MR=m (ALT#51728).
+- config: CONFIG_SQUASHFS=y.
+
+* Mon Oct 21 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc4
+- Update to v6.12-rc4 (2024-10-20).
+
+* Mon Oct 14 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc3
+- Update to v6.12-rc3 (2024-10-13).
+- spec: headers-modules: Install scripts/module-common.c.
+
+* Mon Oct 07 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc2
+- Update to v6.12-rc2 (2024-10-06).
+
+* Mon Sep 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.0-alt0.rc1
+- Rebase to v6.12-rc1 (2024-09-29).
+
+* Mon Sep 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.1-alt1
+- Update to v6.11.1 (2024-09-30).
+- config: Enable CONFIG_FPROBE=y.
+- config: Enable CONFIG_WDAT_WDT=m.
+- config: Enable more Realtek Wi-Fi drivers.
+- config: Enable CONFIG_ATH12K=m (Wi-Fi 7).
+- config: Enable CONFIG_AMD_PMF=m.
+- config: CONFIG_DRM_XE=m.
+- config: Enable CONFIG_IOMMUFD=m.
+- config: Enable CONFIG_INTEL_TPMI=m.
+
+* Sun Sep 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt1
+- Update to v6.11 (2024-09-15) release.
+- config: Enable more Intel drivers.
+
+* Sun Sep 08 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc7
+- Update to v6.11-rc7 (2024-09-08).
+- altha: Remove sentinel elements from sysctl tables.
+- config: Enable DRM_ACCEL drivers.
+- config: Enable some Intel audio-related settings.
+
+* Mon Sep 02 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc6
+- Update to v6.11-rc6 (2024-09-01).
+
+* Sun Aug 25 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc5
+- Update to v6.11-rc5 (2024-08-25).
+- config: CONFIG_SERIAL_SC16IS7XX_SPI=m.
+- arm64: Add dts for SoM NMS-SM-RK3568.
+
+* Sun Aug 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc4
+- Update to v6.11-rc4 (2024-08-18).
+- config: Enable CONFIG_EDAC_DEBUG=y.
+- spec: Add kernel-new provides for testing newest kernels.
+
+* Mon Aug 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc3
+- Update to v6.11-rc3 (2024-08-11).
 - spec: Remove devicetree symlinking for old u-boot.
-- config: CONFIG_SERIAL_SC16IS7XX_SPI=y.
 
-* Sat Aug 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.105-alt1.rt38
-- v6.1.105-rt38 (2024-08-16).
-- config: Enable CONFIG_BLK_SED_OPAL=y.
+* Mon Aug 05 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc2
+- Update to v6.11-rc2 (2024-08-04).
 
-* Tue Jul 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.102-alt1.rt37
-- v6.1.102-rt37 (2024-07-28).
+* Mon Jul 29 2024 Vitaly Chikunov <vt@altlinux.org> 6.11.0-alt0.rc1
+- Rebase to v6.11-rc1 (2024-07-28).
+
+* Sat Jul 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.2-alt1
+- v6.10.2 (2024-07-27).
+
+* Wed Jul 24 2024 Kernel Bot <kernelbot@altlinux.org> 6.10.1-alt1
+- v6.10.1 (2024-07-24).
 - config-aarch64: CONFIG_NR_CPUS=512.
+- config: Enable CONFIG_MHI_WWAN_CTRL (ALT#50941).
 
-* Thu Jul 18 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.99-alt1.rt36
-- v6.1.99-rt36 (2024-07-17).
+* Mon Jul 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt1
+- Update to v6.10 (2024-07-14).
 
-* Thu Jul 04 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.96-alt1.rt35
-- v6.1.96-rt35 (2024-07-02).
+* Mon Jul 08 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt0.rc7
+- Update to v6.10-rc7 (2024-07-07).
 
-* Fri Jun 28 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.95-alt1.rt34
-- v6.1.95-rt34 (2024-06-26).
+* Thu Jul 04 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt0.rc6
+- Update to v6.10-rc6 (2024-06-30).
 
-* Fri Jun 21 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.94-alt1.rt33
-- v6.1.94-rt33 (2024-06-20).
+* Sun Jun 30 2024 Vitaly Chikunov <vt@altlinux.org> 6.10.0-alt0.rc5
+- v6.10-rc5 (2024-06-23).
 
-* Mon May 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.92-alt1.rt32
-- v6.1.92-rt32 (2024-05-26).
+* Fri Jun 21 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.6-alt1
+- v6.9.6 (2024-06-21).
 
-* Sat May 25 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.91-alt1.rt31
-- v6.1.91-rt31 (2024-05-24).
+* Sun Jun 16 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.5-alt1
+- v6.9.5 (2024-06-16).
 
-* Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.1.90-alt2.rt30
+* Wed Jun 12 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.4-alt1
+- v6.9.4 (2024-06-12).
+
+* Thu May 30 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.3-alt1
+- v6.9.3 (2024-05-30).
+
+* Sat May 25 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.2-alt1
+- v6.9.2 (2024-05-25).
+
+* Fri May 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.9.1-alt1
+- v6.9.1 (2024-05-17).
+
+* Wed May 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.9.0-alt2
 - Bumped release to pesign with the new key.
 
-* Fri May 10 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.90-alt1.rt30
-- v6.1.90-rt30 (2024-05-03).
+* Tue May 14 2024 Vitaly Chikunov <vt@altlinux.org> 6.9.0-alt1
+- Rebase to v6.9 (2024-05-12).
 
-* Thu Apr 04 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.83-alt1.rt28
-- v6.1.83-rt28 (2024-03-28).
+* Thu May 02 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.9-alt1
+- v6.8.9 (2024-05-02).
 
-* Thu Mar 21 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.82-alt1.rt27
-- v6.1.82-rt27 (2024-03-21).
+* Sat Apr 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.8-alt1
+- v6.8.8 (2024-04-27).
+- Restore kernel and kernel-headers provides.
+- config: CONFIG_CONSOLE_LOGLEVEL_QUIET=3 (ALT#50098).
 
-* Sat Mar 02 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.80-alt1.rt26
-- v6.1.80-rt26 (2024-03-01).
+* Wed Apr 17 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.7-alt1
+- v6.8.7 (2024-04-17).
 
-* Wed Feb 28 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.79-alt1.rt25
-- v6.1.79-rt25 (2024-02-27).
+* Sat Apr 13 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.6-alt1
+- v6.8.6 (2024-04-13).
+- config: DYNAMIC_DEBUG=y (ALT#50002).
 
-* Fri Feb 09 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.77-alt1.rt24
-- v6.1.77-rt24 (2024-02-08).
+* Thu Apr 11 2024 Vitaly Chikunov <vt@altlinux.org> 6.8.5-alt1
+- Update to v6.8.5 (2024-04-10).
 
-* Wed Jan 31 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.75-alt1.rt23
-- v6.1.75-rt23 (2024-01-30).
+* Fri Apr 05 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.4-alt1
+- v6.8.4 (2024-04-04).
 
-* Fri Jan 19 2024 Kernel Bot <kernelbot@altlinux.org> 6.1.73-alt1.rt22
-- v6.1.73-rt22 (2024-01-18).
+* Thu Apr 04 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.3-alt1
+- v6.8.3 (2024-04-03).
 
-* Fri Dec 29 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.69-alt1.rt21
-- v6.1.69-rt21 (2023-12-28).
+* Wed Mar 27 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.2-alt1
+- v6.8.2 (2024-03-26).
 
-* Thu Dec 14 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.67-alt1.rt20
-- v6.1.67-rt20 (2023-12-13).
+* Sat Mar 16 2024 Kernel Bot <kernelbot@altlinux.org> 6.8.1-alt1
+- v6.8.1 (2024-03-15).
 
-* Sat Dec 09 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.66-alt1.rt19
-- v6.1.66-rt19 (2023-12-08).
+* Tue Mar 12 2024 Vitaly Chikunov <vt@altlinux.org> 6.8.0-alt1
+- Rebase to v6.8 (2024-03-10).
 
-* Mon Dec 04 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.65-alt1.rt18
-- v6.1.65-rt18 (2023-12-03).
+* Wed Mar 06 2024 Kernel Bot <kernelbot@altlinux.org> 6.7.9-alt1
+- v6.7.9 (2024-03-06).
 
-* Sat Dec 02 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.64-alt1.rt17
-- v6.1.64-rt17 (2023-12-01).
-- config: Enable HID_REDRAGON module (ALT#48182).
-- Remove symlinking to /lib/devicetree (ALT#48055).
+* Sun Mar 03 2024 Kernel Bot <kernelbot@altlinux.org> 6.7.8-alt1
+- v6.7.8 (2024-03-02).
 
-* Sat Oct 21 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.59-alt1.rt16
-- v6.1.59-rt16 (2023-10-20).
+* Fri Mar 01 2024 Kernel Bot <kernelbot@altlinux.org> 6.7.7-alt1
+- v6.7.7 (2024-03-01).
 
-* Wed Sep 20 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.54-alt1.rt15
-- v6.1.54-rt15 (2023-09-19).
+* Sat Feb 24 2024 Kernel Bot <kernelbot@altlinux.org> 6.7.6-alt1
+- v6.7.6 (2024-02-23).
+- config-aarch64: Do not disable CONFIG_DEBUG_INFO_BTF.
 
-* Mon Sep 18 2023 Vitaly Chikunov <vt@altlinux.org> 6.1.46-alt2.rt14
-- Synchronize source with std-def/sisyphus.
+* Sun Feb 18 2024 Vitaly Chikunov <vt@altlinux.org> 6.7.5-alt1
+- v6.7.5 (2024-02-16) (based on un-def/sisyphus).
 
-* Mon Sep 18 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.46-alt1.rt14
-- v6.1.46-rt14 (2023-09-17).
-
-* Fri Aug 18 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.46-alt1.rt13
-- v6.1.46-rt13 (2023-08-18).
-
-* Sat Jul 08 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.38-alt1.rt12
-- v6.1.38-rt12 (2023-07-07).
-
-* Thu Jun 15 2023 Kernel Bot <kernelbot@altlinux.org> 6.1.33-alt1.rt11
-- v6.1.33-rt11 (2023-06-12).
-
-* Tue May 16 2023 Vitaly Chikunov <vt@altlinux.org> 6.1.28-alt1.rt10
-- Rebase onto v6.1.28-rt10 (2023-05-15) with std-def configs.
-
-* Sat Mar 25 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.176-alt1.rt86
-- v5.10.176-rt86 (2023-03-24).
-
-* Mon Mar 20 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.175-alt1.rt84
-- v5.10.175-rt84 (2023-03-19).
-
-* Sun Feb 19 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.168-alt1.rt83
-- v5.10.168-rt83 (2023-02-18).
-
-* Tue Jan 31 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.165-alt1.rt81
-- v5.10.165-rt81 (2023-01-30).
-
-* Thu Jan 26 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.162-alt1.rt79
-- v5.10.162-rt79 (2023-01-26).
-- Enable xtables modules (ALT#44829).
-
-* Mon Jan 16 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.162-alt1.rt78
-- v5.10.162-rt78 (2023-01-04).
-
-* Fri Dec 09 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.158-alt1.rt77
-- v5.10.158-rt77 (2022-12-08).
-
-* Sat Nov 05 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.153-alt1.rt76
-- v5.10.153-rt76 (2022-11-04).
-
-* Mon Oct 31 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.152-alt1.rt75
-- v5.10.152-rt75 (2022-10-30).
-- config-rt: Enable ZRAM=m (ALT#40762).
-
-* Tue Sep 27 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.145-alt1.rt74
-- v5.10.145-rt74 (2022-09-23).
-
-* Mon Sep 19 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.140-alt1.rt73
-- v5.10.140-rt73 (2022-09-03).
-
-* Fri Aug 12 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.131-alt2.rt72
-- config: CONFIG_R8188EU=m.
-
-* Sun Jul 17 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.131-alt1.rt72
-- Update to v5.10.131-rt72 (2022-07-15).
-
-* Sun Jun 12 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.120-alt1.rt70
-- Update to v5.10.120-rt70 (2022-06-10).
-
-* Tue May 17 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.115-alt1.rt67
-- Update to v5.10.115-rt67 (2022-05-12).
-
-* Fri Apr 08 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.109-alt1.rt65
-- Update to v5.10.109-rt65 (2022-04-07).
-
-* Thu Mar 17 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.106-alt1.rt64
-- Update to v5.10.106-rt64 (2022-03-16).
-
-* Fri Mar 11 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.104-alt1.rt63
-- Update to v5.10.104-rt63 (2022-03-09). (Fixes CVE-2022-0847).
-
-* Sun Feb 13 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.100-alt1.rt62
-- Update to v5.10.100-rt62 (2022-02-11).
-
-* Fri Feb 11 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.90-alt1.rt61
-- Update to v5.10.90-rt61 (2022-02-11).
-
-* Sun Jan 09 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.90-alt1.rt60
-- Updated to v5.10.90-rt60 (2022-01-05).
-- spec: Disable GCC plugins and GCC version dependence. Remove dependence
-  on gcc and libelf-devel for kernel-headers-modules.
-
-* Fri Dec 24 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.87-alt1.rt59
-- Updated to v5.10.87-rt59 (2021-12-19).
-
-* Thu Dec 02 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.78-alt1.rt56
-- Update to v5.10.78-rt56 (2021-11-29).
-
-* Sun Oct 17 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.73-alt1.rt54
-- Update to v5.10.73-rt54 (2021-10-15).
-
-* Mon Sep 20 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.65-alt1.rt53
-- Update to v5.10.65-rt53 (2021-09-17).
-
-* Thu Sep 02 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.59-alt1.rt52
-- Update to v5.10.59-rt52 (2021-08-25).
-
-* Mon Aug 09 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.56-alt1.rt48
-- Update to v5.10.56-rt48 (2021-08-06).
-- Enable modules signing.
-
-* Tue Aug 03 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.10.52-alt2.rt47
-- Bumped release to pesign with new key.
-
-* Wed Jul 28 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.52-alt1.rt47
-- Update to v5.10.52-rt47 (2021-07-23).
-
-* Sun Jul 18 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.47-alt1.rt46
-- Update to v5.10.47-rt46 (16 Jul 2021).
-- spec: Remove BuildRequires: dev86.
-
-* Wed Jul 07 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.47-alt1.rt45
-- Update to v5.10.47-rt45 (02 Jul 2021).
-- Remove startup from Requires.
-- spec: Change way LTP is run.
-
-* Thu Jun 10 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.41-alt1.rt42
-- Update to v5.10.41-rt42 (04 Jun 2021)
-- spec: Run LTP tests in %%check.
-
-* Wed May 26 2021 Vitaly Chikunov <vt@altlinux.org> 5.10.35-alt1.rt39
-- Update to v5.10.35-rt39 (12 May 2021).
-
-* Thu May 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.189-alt1.rt78
-- Update to v4.19.189-rt78 (28 Apr 2021).
-
-* Tue Apr 06 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.184-alt1.rt75
-- Update to v4.19.184-rt75 (02 Apr 2021).
-
-* Sat Mar 13 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.180-alt1.rt73
-- Update to v4.19.180-rt73 (12 Mar 2021).
-
-* Wed Feb 10 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.173-alt1.rt72
-- Update to v4.19.173-rt72 (08 Feb 2021).
-
-* Mon Jan 25 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.165-alt1.rt70
-- Update to v4.19.165-rt70 (08 Jan 2021).
-
-* Fri Nov 27 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.160-alt1.rt69
-- Update to v4.19.160-rt69 (25 Nov 2020).
-
-* Sun Nov 08 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.152-alt1.rt65
-- Update to v4.19.152-rt65 (30 Oct 2020).
-
-* Sun Oct 04 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.148-alt1.rt64
-- Update to v4.19.148-rt64 (02 Oct 2020).
-- config: Enable some options.
-
-* Sun Sep 06 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.142-alt1.rt63
-- Update to v4.19.142-rt63 (03 Sep 2020).
-
-* Sat Aug 29 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.135-alt1.rt61
-- Update to v4.19.135-rt61 (28 Aug 2020).
-
-* Fri Aug 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.135-alt1.rt60
-- Update to v4.19.135-rt60 (03 Aug 2020).
-
-* Wed Jul 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.132-alt1.rt59
-- Update to v4.19.132-rt59 (14 Jul 2020).
-
-* Tue Jul 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt2.rt55
-- Rebuild with debuginfo package.
-
-* Wed Jul 01 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt1.rt55
-- Update to v4.19.127-rt55 (22 Jun 2020).
-
-* Mon Jun 15 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.127-alt1.rt54
-- Update to 4.19.127-rt54 (08 Jun 2020).
-
-* Sat May 23 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.124-alt1.rt53
-- Update to 4.19.124-rt53.
-
-* Thu May 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.120-alt1.rt52
-- Update to 4.19.120-rt52.
-
-* Tue May 05 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt50
-- Update to 4.19.115-rt50.
-
-* Tue Apr 28 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt49
-- Update to 4.19.115-rt49.
-
-* Fri Apr 17 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.115-alt1.rt48
-- Update to 4.19.115-rt48.
-- Add more BPF options, enable IKCONFIG, IKHEADERS.
-
-* Tue Apr 07 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.106-alt1.rt46
-- Update to 4.19.106-rt46.
-
-* Sat Mar 28 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.106-alt1.rt45
-- Update to 4.19.106-rt45.
-
-* Mon Mar 02 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.106-alt1.rt44
-- Update to 4.19.106-rt44.
-
-* Wed Feb 26 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.103-alt1.rt42
-- Update to v4.19.103-rt42.
-- Make ATA modules built-in (for qemu -hda).
-
-* Tue Feb 11 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.100-alt1.rt41
-- Update to v4.19.100-rt41.
-
-* Thu Jan 09 2020 Vitaly Chikunov <vt@altlinux.org> 4.19.90-alt1.rt35
-- Update to v4.19.90-rt35.
-
-* Sun Nov 24 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt8.rt24
-- Add some more std-def =y options.
-
-* Mon Nov 18 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt7.rt24
-- Add CONFIG_USER_NS=y.
-
-* Mon Oct 14 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt6.rt24
-- Add xz support squashfs (for propagator).
-
-* Thu Sep 19 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt5.rt24
-- Enable virtio_scsi module.
-
-* Sun Sep 08 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt4.rt24
-- Add two OSADL patches for debug purposes:
-  + tracing: Add latency histograms
-  + Provide individual CPU usage measurement based on idle time
-- Enable performance scaling governor by default and disable powersave.
-- Disable multiple debug options.
-
-* Sat Sep 07 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt3.rt24
-- Add more performance (disable NO HZ) and tracing options.
-
-* Fri Sep 06 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt2.rt24
-- Enable EFI handover support.
-
-* Thu Sep 05 2019 Vitaly Chikunov <vt@altlinux.org> 4.19.59-alt1.rt24
-- Initial build of PREEMPT_RT kernel.
+* Sat Feb 17 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.17-alt1
+- v6.6.17 (2024-02-16).
