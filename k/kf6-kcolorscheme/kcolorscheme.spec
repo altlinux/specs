@@ -2,8 +2,8 @@
 
 Name: kf6-%rname
 Version: 6.8.0
-Release: alt1
-%K6init altplace
+Release: alt2
+%K6init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 widgets for configuration dialogs
@@ -57,13 +57,8 @@ KF6 library
 %K6find_qtlang %name --all-name
 rm -rf %buildroot%_libdir/*/*/*/__*
 
-
-mkdir -p %buildroot/%_K6data/kcolorscheme/
-
-
 %files common -f %name.lang
 %doc LICENSES/* README.md
-%dir %_K6data/kcolorscheme/
 %_datadir/qlogging-categories6/*.*categories
 
 %files devel
@@ -76,6 +71,9 @@ mkdir -p %buildroot/%_K6data/kcolorscheme/
 %_K6lib/libKF6ColorScheme.so.*
 
 %changelog
+* Fri Dec 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
+- move to standard place
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
