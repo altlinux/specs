@@ -1,6 +1,6 @@
 %define rname purpose
 
-%def_enable bootstrap
+%def_disable bootstrap
 
 %define sover 6
 %define libphabricatorhelpers libphabricatorhelpers%sover
@@ -8,7 +8,7 @@
 
 Name: kf6-%rname
 Version: 6.8.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,7 @@ Summary: Abstraction to provide and leverage actions of a specific kind
 Url: http://www.kde.org
 License: LGPL-2.1-or-later
 
-Requires: kf6-kirigami
+Requires: libkf6prison kf6-kirigami kf6-kdeclarative
 %if_disabled bootstrap
 #Requires: connect
 %endif
@@ -118,30 +118,16 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K6plug/kf6/purpose/
 %_K6plug/kf6/kfileitemaction/*.so
 %_K6qml/org/kde/purpose/
-%if_disabled bootstrap
-%_K6icon/*/*/actions/kipiplugin_youtube.*
-%endif
 %_kf6_data/purpose/
 %_K6icon/*/*/apps/*purpose*.*
 %_datadir/accounts/services/kde/
 
 %files devel
-%if_disabled bootstrap
-%_K6lib/cmake/KDEExperimentalPurpose/
-%endif
 %_K6inc/Purpose/
 %_K6inc/PurposeWidgets/
 %_K6link/lib*.so
 %_K6lib/cmake/KF6Purpose/
 
-%if_disabled bootstrap
-%files -n %libphabricatorhelpers
-%_K6lib/libPhabricatorHelpers.so.*
-%_K6lib/libPhabricatorHelpers.so.%sover
-%files -n %libreviewboardhelpers
-%_K6lib/libReviewboardHelpers.so.*
-%_K6lib/libReviewboardHelpers.so.%sover
-%endif
 %files -n libkf6purpose
 %_K6lib/libKF6Purpose.so.*
 %files -n libkf6purposewidgets
@@ -149,6 +135,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 
 
 %changelog
+* Fri Dec 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
+- build with kaccounts-integration
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
