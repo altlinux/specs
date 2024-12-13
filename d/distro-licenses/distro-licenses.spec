@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.10
+Version: 1.3.11
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Fri Dec 13 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.3.11-alt1
+- ALT_Workstation_License: symlink alias to ALT_Product_License
+
 * Tue Nov 12 2024 Anton Midyukov <antohami@altlinux.org> 1.3.10-alt1
 - ALT_Container_OS_License: fix typo in russian license
 - ALT_Container_OS_License: add missing distbranch.list
