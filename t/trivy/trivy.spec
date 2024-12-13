@@ -1,8 +1,17 @@
 %global import_path github.com/aquasecurity/trivy
 %global _unpackaged_files_terminate_build 1
 
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 Name: trivy
-Version: 0.56.1
+Version: 0.58.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -14,12 +23,10 @@ Source: %name-%version.tar
 Source2: %name.service
 Source3: %name.sysconfig
 
-Patch: fix-k8s-1_31-scan.patch
-
 ExclusiveArch:  %go_arches
 
-BuildRequires(pre): rpm-macros-systemd
-BuildRequires(pre): rpm-build-golang wire
+BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
+BuildRequires: rpm-build-golang wire golang >= 1.22.9
 
 BuildRequires: /proc
 
@@ -54,20 +61,20 @@ Requires: trivy-db
 
 %prep
 %setup
-%patch -p1
 
 %build
 # replace default node-collector image source
-find . -type f -exec \
-	sed -i "s/ghcr.io\/aquasecurity\/node-collector/registry.altlinux.org\/k8s-%_priority_distbranch\/trivy-node-collector/g" {} +
+sed -i 's|ghcr.io/aquasecurity/node-collector|registry.altlinux.org/k8s-%altbranch/trivy-node-collector|g' \
+    pkg/flag/kubernetes_flags.go \
+    vendor/github.com/aquasecurity/trivy-kubernetes/pkg/jobs/template/node-collector.yaml
 
 # replace default trivy-db image source
-find . -type f -exec \
-	sed -i "s/ghcr.io\/aquasecurity\/trivy-db/registry.altlinux.org\/alt\/trivy-db/g" {} +
+#find . -type f -exec \
+#	sed -i "s/ghcr.io\/aquasecurity\/trivy-db/registry.altlinux.org\/alt\/trivy-db/g" {} +
 
 # replace default trivy-checks image source
-find . -type f -exec \
-	sed -i "s/ghcr.io\/aquasecurity\/trivy-checks/registry.altlinux.org\/alt\/trivy-checks/g" {} +
+#find . -type f -exec \
+#	sed -i "s/ghcr.io\/aquasecurity\/trivy-checks/registry.altlinux.org\/alt\/trivy-checks/g" {} +
 
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -77,7 +84,7 @@ export LDFLAGS="-X github.com/aquasecurity/trivy/pkg/version/app.ver=%version"
 export CGO_ENABLED=0
 
 %golang_prepare
-wire gen pkg/commands/... pkg/rpc/...
+wire gen pkg/commands/... pkg/rpc/... pkg/k8s/...
 %golang_build cmd/trivy
 
 %install
@@ -107,6 +114,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Dec 11 2024 Alexey Shabalin <shaba@altlinux.org> 0.58.0-alt1
+- 0.58.0
+
 * Thu Oct 10 2024 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.56.1-alt1
 - 0.55.0 -> 0.56.1
 - Fixed `trivy k8s` scan for k8s >= 1.31
