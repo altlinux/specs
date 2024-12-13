@@ -7,11 +7,12 @@
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define simpleini_version 4.20
+%define cpp_httplib_version 0.14.1
 %define tzdb_to_nx_date 221202
 
 Name: yuzu
 Version: 1734
-Release: alt2
+Release: alt2.1
 
 Summary: Nintendo Switch emulator/debugger
 License: GPLv3+
@@ -32,17 +33,20 @@ Source1: sirit-%sirit_commit.tar
 Source2: mbedtls-%mbedtls_commit.tar
 # https://github.com/brofield/simpleini/archive/v%simpleini_version/simpleini-%simpleini_version.tar.gz
 Source3: simpleini-%simpleini_version.tar
+# https://github.com/yhirose/cpp-httplib/archive/v%cpp_httplib_version/cpp-httplib-%cpp_httplib_version.tar.gz
+Source4: cpp-httplib-%cpp_httplib_version.tar
 
-Source4: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
+Source5: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-xbyak-version-alt.patch
+Patch2: %name-fmt11-alt.patch
+Patch3: %name-memory-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch-devel
-BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-tools
 BuildRequires: glslang
 BuildRequires: libSDL2-devel
@@ -73,7 +77,6 @@ BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
-BuildRequires: python3-module-mpl_toolkits
 BuildRequires: qt6-tools-devel
 BuildRequires: spirv-headers
 BuildRequires: unzip
@@ -83,14 +86,17 @@ BuildRequires: zlib-devel
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3
+%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
 %__mv -Tf ../simpleini-%simpleini_version externals/simpleini
+%__mv -Tf ../cpp-httplib-%cpp_httplib_version externals/cpp-httplib
 
 # Enforce package versioning in GUI
 sed -i \
@@ -106,9 +112,12 @@ src/common/scm_rev.cpp.in
 export ALTWRAP_LLVM_VERSION=%llvm_version
 
 sed -i -e 's/-Werror=shadow-uncaptured-local/-Wno-error=shadow-uncaptured-local/' src/CMakeLists.txt
+sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
 
 %__mkdir_p %_target_platform/externals/nx_tzdb/nx_tzdb
-unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
+unzip %SOURCE5 -d %_target_platform/externals/nx_tzdb/nx_tzdb
+
+%add_optflags -Wno-error=conversion
 
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
@@ -122,10 +131,11 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 	-DYUZU_USE_EXTERNAL_SDL2:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_HEADERS:BOOL=FALSE \
 	-DYUZU_USE_EXTERNAL_VULKAN_UTILITY_LIBRARIES:BOOL=FALSE \
+	-DYUZU_USE_PRECOMPILED_HEADERS:BOOL=FALSE \
 	-DYUZU_ENABLE_LTO:BOOL=TRUE \
 	-DYUZU_DOWNLOAD_TIME_ZONE_DATA:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
-	-DLLVM_DIR:PATH=%_libexecdir/llvm-%llvm_version/%_lib/cmake/llvm \
+	-DLLVM_DIR:PATH=$(llvm-config --cmakedir) \
 	-GNinja \
 	-Wno-dev
 %cmake_build
@@ -144,6 +154,9 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Fri Dec 13 2024 Nazarov Denis <nenderus@altlinux.org> 1734-alt2.1
+- Fix FTBFS
+
 * Sat Mar 09 2024 Nazarov Denis <nenderus@altlinux.org> 1734-alt2
 - Remove vulkan version patch
 
