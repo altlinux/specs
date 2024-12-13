@@ -4,7 +4,7 @@
 
 Name: pam_pkcs11
 Version: 0.6.12.1
-Release: alt2
+Release: alt3
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -91,7 +91,6 @@ sed -i -e '
 %autoreconf
 #	--disable-rpath \
 %configure \
-	--libdir=/%_lib \
 	--disable-static \
 	--enable-shared \
 	--enable-debug \
@@ -141,7 +140,7 @@ sed -e 's/pam_pkcs11\.so/pam_pkcs11.so use_first_pass/g' \
     >%buildroot%_sysconfdir/pam.d/system-auth-use_first_pass-pkcs11_strict
 
 # Cleanup .la files
-rm %buildroot/%_lib/*/*.la
+rm %buildroot%_libdir/*/*.la
 
 %find_lang %name
 
@@ -159,11 +158,12 @@ rm %buildroot/%_lib/*/*.la
 %config(noreplace) %_sysconfdir/security/%name/*_mapping
 %_bindir/*
 %exclude %_bindir/card_eventmgr
-%dir /%_lib/%name
-/%_lib/%name/openssh_mapper.so
-/%_lib/%name/opensc_mapper.so
+%dir %_libdir/%name
+%_libdir/%name/openssh_mapper.so
+%_libdir/%name/opensc_mapper.so
 %_pam_modules_dir/pam_pkcs11.so
 %_man1dir/*.1*
+%exclude %_man1dir/card_eventmgr.1*
 %_man8dir/*.8*
 %config(noreplace) %_sysconfdir/pam.d/*
 %_unitdir/*
@@ -172,15 +172,18 @@ rm %buildroot/%_lib/*/*.la
 %files pcsc
 %config(noreplace) %_sysconfdir/security/%name/card_eventmgr.conf
 %_bindir/card_eventmgr
-%_mandir/man1/card_eventmgr.1*
+%_man1dir/card_eventmgr.1*
 
 %files ldap
-/%_lib/%name/ldap_mapper.so
+%_libdir/%name/ldap_mapper.so
 
 %files isbc
-/%_lib/%name/ll_isbc.so
+%_libdir/%name/ll_isbc.so
 
 %changelog
+* Sat Dec 14 2024 Alexey Shabalin <shaba@altlinux.org> 0.6.12.1-alt3
+- Relocate libs from /lib to /usr/lib.
+
 * Mon Jul 15 2024 Paul Wolneykien <manowar@altlinux.org> 0.6.12.1-alt2
 - Fixed build: Pass unitdir to make.
 
