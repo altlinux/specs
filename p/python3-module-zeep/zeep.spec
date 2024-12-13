@@ -1,5 +1,5 @@
 Name: python3-module-zeep
-Version: 4.2.1
+Version: 4.3.1
 Release: alt1
 
 Summary: A fast and modern Python SOAP client
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/zeep-%version.dist-info
 
 %changelog
+* Fri Dec 13 2024 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt1
+- 4.3.1 released (nessesary update for python3.13)
+
 * Wed Jan 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.1-alt1
 - 4.2.1 released
 
