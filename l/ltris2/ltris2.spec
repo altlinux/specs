@@ -1,5 +1,5 @@
 Name: ltris2
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Group: Games/Arcade
@@ -77,6 +77,9 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 #_liconsdir/%name.xpm
 
 %changelog
+* Fri Dec 13 2024 Ilya Mashkin <oddity@altlinux.ru> 2.0.3-alt1
+- 2.0.3
+
 * Wed Oct 16 2024 Ilya Mashkin <oddity@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
