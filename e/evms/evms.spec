@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt83
+Release: alt84
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Dec 10 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt84
+- fix installing on multipath disks
+
 * Wed Nov 06 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt83
 - custom error messages:
   + LVM: volume group name is in use
