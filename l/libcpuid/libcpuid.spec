@@ -2,15 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcpuid
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 Summary: libcpuid provides CPU identification for the x86 (and x86_64)
 License: BSD-2-Clause
 Group: Development/C
 Url: https://github.com/anrieff/libcpuid
 Source: libcpuid-%version.tar
-Patch: 0001-CMakeLists.txt-Add-LIB_DESTINATION-variable.patch
-Patch1: use_KDIR_for_kmodule_path-libcpuid-0.7.0.patch
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: %ix86 x86_64
 
@@ -76,6 +75,9 @@ cpuid kernel driver for arm64.
 #%%endif
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1
+- New version 0.7.1
+
 * Sun Nov 24 2024 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
