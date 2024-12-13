@@ -20,8 +20,8 @@
 %define beta %nil
 
 Name: strongswan
-Version: 5.9.14
-Release: alt4
+Version: 6.0.0
+Release: alt1
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -29,7 +29,7 @@ Group: System/Servers
 
 # git://git.strongswan.org/strongswan.git
 Url: http://www.strongswan.org
-Source0: %name-%version%beta.tar.gz
+Source0: %name-%version%beta.tar.bz2
 Source1: %name.init
 Source100: strongswan.watch
 Patch10: strongswan-5.6.0-uintptr_t.patch
@@ -346,6 +346,9 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Fri Dec 13 2024 Ilya Mashkin <oddity@altlinux.ru> 6.0.0-alt1
+- 6.0.0
+
 * Wed Aug 21 2024 Alexey Shabalin <shaba@altlinux.org> 5.9.14-alt4
 - enable build md4 for eap-mschapv2
 
