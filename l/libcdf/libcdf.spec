@@ -1,7 +1,7 @@
-%define oversion 33_0
+%define oversion 39_1
 Name: libcdf
-Version: 3.3.0
-Release: alt4
+Version: 3.9.1
+Release: alt1
 
 Summary: Common Data Format (CDF)
 
@@ -11,13 +11,13 @@ Url: http://cdf.gsfc.nasa.gov
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: ftp://cdaweb.gsfc.nasa.gov/pub/cdf/dist/latest-release/linux/cdf%oversion-dist-all.tar
+# Source-url: https://spdf.gsfc.nasa.gov/pub/software/cdf/dist/latest/linux/cdf%oversion-dist-all.tar.gz
+Source: %name-%version.tar
 Source1: http://cdf.gsfc.nasa.gov/html/FAQ.html
 
-Patch: %name-autotools.patch
+Patch1: %name-autotools.patch
 
-# Automatically added by buildreq on Fri Oct 29 2010
-BuildRequires: glibc-devel libncurses-devel
+BuildRequires: libncursesw-devel zlib-devel
 
 %package devel
 Summary: Development tools for the CDF library
@@ -55,13 +55,14 @@ install the %name package.
 This package contains static libraries for developing with CDF library.
 
 %prep
-%setup -n cdf%oversion-dist-all
-%patch -p2
+%setup
+%patch1 -p2
 cp %SOURCE1 FAQ.html
 cp CDF_copyright.txt COPYING
 cp CHANGES.txt ChangeLog
 touch NEWS README AUTHORS
-rm -rf cdfjava/lib
+rm -rv cdfjava/lib
+rm -rv src/lib/zlib
 
 %build
 %ifarch %e2k armh aarch64 loongarch64
@@ -101,6 +102,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Fri Dec 13 2024 Vitaly Lipatov <lav@altlinux.ru> 3.9.1-alt1
+- new version, fix build, update buildreqs
+
 * Sun Oct 29 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.3.0-alt4
 - NMU: fixed FTBFS (use pkg-config to ask for ncurses libs/cflags)
 
