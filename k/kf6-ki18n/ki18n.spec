@@ -8,8 +8,8 @@
 
 Name: kf6-%rname
 Version: 6.8.0
-Release: alt1
-%K6init altplace
+Release: alt2
+%K6init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 gettext-based UI text internationalization
@@ -127,9 +127,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
-%dir %_K6i18n/*/
-%dir %_K6i18n/*/LC_MESSAGES/
-%_K6i18n/*/LC_SCRIPTS/
+#%dir %_K6i18n/*/
+#%dir %_K6i18n/*/LC_MESSAGES/
+%_K6i18n/*/LC_SCRIPTS/ki18n6/
 %_datadir/qlogging-categories6/*.*categories
 
 %files devel
@@ -161,6 +161,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Fri Dec 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
+- move to standard place
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
