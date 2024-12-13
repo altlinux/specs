@@ -2,7 +2,7 @@
 
 Name:    vaultwarden
 Version: 1.32.0
-Release: alt1
+Release: alt2
 
 Summary: Unofficial Bitwarden compatible server
 License: AGPL-3.0
@@ -15,6 +15,7 @@ Source2: %name.cfg
 Source3: %name.service
 Source4: %name.sysusers
 
+# 32bit incompatible, unable to build vendored mysqlclient-sys on ppc
 ExcludeArch: %ix86 armh ppc64le
 
 BuildRequires(pre): rpm-build-rust
@@ -23,6 +24,8 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(mariadb)
 BuildRequires: pkgconfig(libpq)
+
+Requires: %name-web
 
 %description
 Unofficial Bitwarden compatible server written in Rust,
@@ -93,5 +96,8 @@ fi
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Thu Dec 12 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.32.0-alt2
+- Added WebUI settings and requirement (Closes #51500).
+
 * Tue Sep 17 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.32.0-alt1
 - Initial build for Sisyphus
