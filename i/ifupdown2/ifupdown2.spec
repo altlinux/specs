@@ -1,6 +1,6 @@
 Name: ifupdown2
 Version: 3.2.0.11
-Release: alt1
+Release: alt2
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
 Group: System/Base
@@ -9,7 +9,6 @@ Vcs: https://github.com/CumulusNetworks/ifupdown2.git
 
 Source0: %name-%version.tar
 Source1: %name.tar
-Patch1: 0001-ALT-change-path-to-ifup-ifdown-ifreload.patch
 Patch2: 0002-ALT-python-3.12-compatibility.patch
 Patch3: ALT-do-not-run-scripts-rpmnew-rpmsave.patch
 
@@ -22,6 +21,13 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: /usr/bin/rst2man python3-module-Pygments
+
+# from ifupdown2/ifupdown/utils.py
+Requires: /sbin/ip /usr/sbin/bridge /sbin/brctl /bin/pidof /usr/bin/pstree
+Requires: /sbin/modprobe /sbin/sysctl /usr/bin/ss
+
+#Recomended
+#/usr/sbin/mstpctl /usr/sbin/vrrpd /usr/sbin/ifplugd
 
 %description
 Network Interface Management tool similar to ifupdown
@@ -44,12 +50,20 @@ are available under /usr/share/doc/ifupdown2/examples.
 %setup
 tar -xf %SOURCE1
 pushd %name
-%patch1 -p1
 %patch2 -p1
 for p in `cat ../debian/patches/series`; do
     patch -p1 < ../debian/patches/$p
 done
 %patch3 -p1
+
+sed -i 's|/sbin/mstpctl|/usr/sbin/mstpctl|g' ifupdown2/addons/mstpctl.py
+sed -i 's|/usr/sbin/ip|/sbin/ip|g' ifupdown2/ifupdownaddons/modulebase.py
+sed -i 's|/sbin/bridge|/usr/sbin/bridge|g' ifupdown2/ifupdown/utils.py
+sed -i 's|/bin/ip|/sbin/ip|g' ifupdown2/ifupdown/utils.py
+sed -i 's|/usr/sbin/service|/sbin/service|g' ifupdown2/ifupdown/utils.py
+sed -i 's|/bin/ss|/usr/bin/ss|g' ifupdown2/ifupdown/utils.py
+sed -i 's|/sbin/mstpctl|/usr/sbin/mstpctl|g' ifupdown2/ifupdown/utils.py
+sed -i 's|/sbin/ethtool|/usr/sbin/ethtool|g' ifupdown2/ifupdown/utils.py
 popd
 
 %build
@@ -122,6 +136,10 @@ fi
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Dec 13 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.0.11-alt2
+- Fix utils path
+- Update requires
+
 * Wed Nov 20 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.0.11-alt1
 - 3.2.0-1+pmx11
 - Add Provides: network-config-subsystem
