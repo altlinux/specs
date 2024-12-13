@@ -1,13 +1,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-notes
-Version: 1.1
-Release: alt9
+Version: 1.2
+Release: alt1
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
-
-Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 BuildArch:	noarch
 
@@ -22,6 +20,7 @@ Conflicts: alterator-lookout    < 0.3
 
 BuildPreReq: alterator >= 3.1
 BuildRequires: alterator
+Requires: distro-licenses
 
 %description
 alterator module for view license and release notes
@@ -41,6 +40,9 @@ alterator module for view license and release notes
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Dec 13 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.2-alt1
+- add support license search in distro-licenses by /etc/os-release
+
 * Tue Jan 27 2009 Vladislav Zavjalov <slazav@altlinux.org> 1.1-alt9
 - move translations to alterator-l10n
 
