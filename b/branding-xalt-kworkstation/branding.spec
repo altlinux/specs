@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.10
+Release: alt0.11
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -323,9 +323,18 @@ cp -a kde4/* %buildroot%_sysconfdir/skel/.kde4/
 mkdir -p %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 install -m 0644 menu/*.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/
 popd
+# kde global settings
+mkdir -p %buildroot/%_sysconfdir/skel/.config/
+echo <<__EOF__ > %buildroot/%_sysconfdir/skel/.config/kdeglobals
+[KDE]
+LookAndFeelPackage=org.basealt.altoslight.desktop
+
+[Icons]
+Theme=altos
+__EOF__
 # disable annoing autostart
 mkdir -p %buildroot/%_sysconfdir/skel/.config/autostart/
-for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store ; do
+for n in tracker-extract tracker-miner-apps tracker-miner-fs tracker-miner-user-guides tracker-store org.gnome.Software ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot%_sysconfdir/skel/.config/autostart/$n.desktop
 done
 # disable annoing menus
@@ -443,6 +452,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_sysconfdir/skel/.config/gtk-3.0
 %_sysconfdir/skel/.gtkrc-2.0
 %_sysconfdir/skel/.config/autostart
+%_sysconfdir/skel/.config/kdeglobals
 %_sysconfdir/skel/.local/share/applications
 
 %files bootsplash
@@ -489,6 +499,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Dec 13 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.11
+- set default Plasma theme for new users
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.10
 - using alt-distro-logo icon in os-release
 
