@@ -62,7 +62,7 @@
 %define modname dav_svn_module
 
 Name:     subversion
-Version:  1.14.4
+Version:  1.14.5
 Release:  alt1
 
 Summary:  A version control system
@@ -773,6 +773,10 @@ fi
 %endif
 
 %changelog
+* Fri Dec 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.14.5-alt1
+- New version.
+- Security fixes: CVE-2024-45720, CVE-2024-46901.
+
 * Fri Oct 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.14.4-alt1
 - New version.
 
