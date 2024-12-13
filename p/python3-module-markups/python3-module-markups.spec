@@ -2,8 +2,8 @@
 %def_without tests
 
 Name:    python3-module-markups
-Version: 4.0.0
-Release: alt1.1
+Version: 4.1.0
+Release: alt1
 Summary: Wrapper around various text markups
 License: MIT
 Group:   Development/Python3
@@ -53,6 +53,9 @@ can easily add your own markups.
 %python3_sitelibdir/Markups-%version.dist-info
 
 %changelog
+* Fri Dec 13 2024 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
+- New version.
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 
