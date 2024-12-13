@@ -2,7 +2,7 @@
 
 Name: bash-completion
 Epoch: 1
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 
 Summary: bash-completion offers programmable completion for bash
@@ -66,6 +66,9 @@ make -C test check ||:
 %_datadir/cmake/bash-completion
 
 %changelog
+* Fri Dec 13 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.15.0-alt1
+- 2.15.0
+
 * Thu Jul 18 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.14.0-alt1
 - 2.14.0
 
