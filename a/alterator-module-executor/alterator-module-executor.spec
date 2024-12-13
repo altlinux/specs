@@ -1,17 +1,18 @@
 Name: alterator-module-executor
-Version: 0.1.13
-Release: alt2
+Version: 0.1.14
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alterator-module-executor
 
-BuildRequires: cmake gcc
+BuildRequires: cmake gcc libtomlc99-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 BuildRequires: alterator-manager-devel >= 0.1.24
 
-Requires: alterator-manager >= 0.1.24-alt1
+Requires: alterator-manager >= 0.1.25-alt1
+Requires: libtomlc99 >= 1.0
 
 Source: %name-%version.tar
 
@@ -34,6 +35,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Dec 06 2024 Ivan Savin <svn17@altlinux.org> 0.1.14-alt1
+- Transition backend files to toml format.
+
 * Thu Oct 31 2024 Ivan Savin <svn17@altlinux.org> 0.1.13-alt2
 - Change BuildRequires from alterator-manager-devel >= 0.1.23 to
   alterator-manager-devel >= 0.1.24.

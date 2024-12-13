@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Components interface for alterator browser
@@ -11,7 +11,9 @@ URL: https://gitlab.basealt.space/alt/alterator-interface-component
 
 BuildArch: noarch
 
-Requires: alterator-entry
+BuildRequires: python3-devel
+Requires: alterator-entry >= 0.1.1
+Requires: python3
 
 Source0: %name-%version.tar
 
@@ -35,17 +37,21 @@ install -v -p -m 755 -D basic_check_component_installed %buildroot%_libexecdir/%
 sed -i 's/@VERSION@/%version/' basic_get_component_description
 install -v -p -m 755 -D basic_get_component_description %buildroot%_libexecdir/%name/basic_get_component_description
 
+install -v -p -m 755 -D extract_packages %buildroot%_libexecdir/%name/extract_packages
+
 %files
 %dir %_datadir/dbus-1/interfaces
 %dir %_datadir/polkit-1/actions
 %dir %_libexecdir/%name
-%_libexecdir/%name/basic_check_component_installed
-%_libexecdir/%name/basic_get_component_description
 %_libexecdir/%name/*
 %_datadir/polkit-1/actions/org.altlinux.alterator.component1.policy
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.component1.xml
 
 %changelog
+* Mon Dec 09 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
+- Switch to Alterator Entry in toml.
+- Change getDescription to return array of bytes instead of strings.
+
 * Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - Change prefix from ru.basealt to org.altlinux.
 

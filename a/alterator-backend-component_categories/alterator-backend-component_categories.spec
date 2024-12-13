@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-component_categories
-Version: 0.1.1
+Version: 0.1.3
 Release: alt1
 
 Summary: Backend for components categories
@@ -12,10 +12,8 @@ URL: https://gitlab.basealt.space/alt/alterator-backend-component_categories
 BuildArch: noarch
 
 Requires: alterator-interface-component_categories
-Requires: alterator-entry
-Requires: bash
-Requires: alterator-manager >= 0.1.23
-Requires: alterator-module-executor >= 0.1.13
+Requires: alterator-entry >= 0.1.1
+Requires: alterator-module-executor >= 0.1.14
 
 Source0: %name-%version.tar
 
@@ -62,6 +60,12 @@ install -v -p -m 755 -D list-component-categories %buildroot%_libexecdir/%name
 %_datadir/polkit-1/actions/org.altlinux.alterator.component-categories1.policy
 
 %changelog
+* Fri Dec 13 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
+- Allow to call methods in parallel.
+
+* Fri Dec 06 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
+- Move components categories to /usr/share/alterator/components/categories.
+
 * Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
 - Change prefix from ru.basealt to org.altlinux.
 

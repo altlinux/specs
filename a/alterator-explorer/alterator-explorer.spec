@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.6
+Version: 0.1.7
 Release: alt2
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -21,6 +21,7 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-base-common
 BuildRequires: boost-devel-headers
+BuildRequires: libtomlplusplus-devel
 
 # TODO(chernigin): validate interface on build
 BuildRequires: alterator-interface-application
@@ -29,8 +30,9 @@ BuildRequires: alterator-interface-application
 BuildRequires: ImageMagick-tools
 %endif
 
-Requires: alterator-interface-application
-Requires: alterator-backend-categories
+Requires: alterator-interface-application >= 0.1.1
+Requires: alterator-backend-categories >= 0.1.2
+Requires: alterator-backend-legacy >= 0.1.2
 
 %if_with legacy
 Requires: alterator-standalone >= 7.4.3
@@ -44,8 +46,8 @@ Requires: alterator-backend-legacy
 Conflicts: alterator-standalone >= 7.4.3
 %endif
 
-Requires: alterator-manager >= 0.1.23
-Requires: alterator-module-executor >= 0.1.13
+Requires: alterator-manager >= 0.1.25
+Requires: alterator-module-executor >= 0.1.14
 
 %description
 %summary.
@@ -103,7 +105,13 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
-* Mon Oct 29 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.6-alt2
+* Fri Dec 13 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.7-alt2
+- fix adt category
+
+* Mon Dec 09 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.7-alt1
+- move to toml
+
+* Mon Oct 29 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.6-alt2
 - rename to alterator-explorer
 
 * Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.6-alt1

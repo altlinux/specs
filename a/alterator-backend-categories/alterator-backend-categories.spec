@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-categories
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Backend for Alterator categories
@@ -14,8 +14,8 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 Requires: alterator-interface-categories
-Requires: alterator-manager >= 0.1.23
-Requires: alterator-module-executor >= 0.1.13
+Requires: alterator-manager >= 0.1.25
+Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-entry
 Requires: bash
 
@@ -60,6 +60,9 @@ install -v -p -m 644 -D org.altlinux.alterator.categories.policy %buildroot%_dat
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.categories.xml
 
 %changelog
+* Tue Dec 10 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.2-alt1
+- Move to toml
+
 * Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt1
 - Change prefix from ru.basealt to org.altlinux.
 

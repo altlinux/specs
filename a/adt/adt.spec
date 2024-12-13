@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.6
-Release: alt1
+Version: 0.1.7
+Release: alt2
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
@@ -20,13 +20,16 @@ BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-base-common
 BuildRequires: boost-devel-headers
+BuildRequires: libtomlplusplus-devel
 BuildRequires: doxygen
 
 BuildRequires: desktop-file-utils ImageMagick-tools
 
-Requires: alterator-manager >= 0.1.23
-Requires: alterator-module-executor >= 0.1.13
-Requires: alterator-interface-diag
+Requires: alterator-manager >= 0.1.25
+Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-interface-diag >= 0.1.4
+Requires: libtomlplusplus
+Requires: icon-theme-adwaita-legacy
 
 Source0: %name-%version.tar
 
@@ -60,6 +63,19 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Fri Dec 13 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.7-alt2
+- fix model translation
+- fix gui contoller
+- fix cli controller
+- fix .backend and .application file
+
+* Wed Dec 11 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.7-alt1
+- add journal save button
+- add stop dialog
+- add messages to status bar
+- update translation
+- move to toml
+
 * Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.6-alt1
 - change prefix from ru.basealt to org.altlinux
 

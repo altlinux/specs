@@ -1,17 +1,18 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.24
-Release: alt1
+Version: 0.1.25
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
 Group: System/Configuration/Other
 
-BuildRequires: cmake gcc
+BuildRequires: cmake gcc libtomlc99-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 
 Requires: remote-polkit-agent >= 0.1.2-alt1
+Requires: libtomlc99 >= 1.0
 
 Source: %name-%version.tar
 
@@ -84,6 +85,13 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 
 %changelog
+* Thu Dec 12 2024 Ivan Savin <svn17@altlinux.org> 0.1.25-alt2
+- Fix setting a thread limit.
+
+* Fri Dec 06 2024 Ivan Savin <svn17@altlinux.org> 0.1.25-alt1
+- Transition backend files to toml format.
+- Update docs/README-ru.md.
+
 * Wed Oct 30 2024 Ivan Savin <svn17@altlinux.org> 0.1.24-alt1
 - Add the connection field to the ManagerData struct.
 - Update docs/README-ru.md.

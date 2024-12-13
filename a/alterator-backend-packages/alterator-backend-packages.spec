@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -16,8 +16,8 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-alterator
 
 Requires: alterator-interface-packages
-Requires: alterator-manager >= 0.1.23
-Requires: alterator-module-executor >= 0.1.13
+Requires: alterator-manager >= 0.1.25
+Requires: alterator-module-executor >= 0.1.14
 
 %package -n alterator-interface-packages
 Summary: Alterator interfaces for managing system packages
@@ -74,6 +74,10 @@ install -v -p -m 644 -D repo/repo.object %buildroot%_alterator_datadir/objects
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Mon Dec 09 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt1
+- Fix incorrect names of packages from ListAllPackages method.
+- Change alterator entries format from ini to toml.
+
 * Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.2-alt1
 - Change prefix from ru.basealt to org.altlinux.
 - Remove error output from Info methods.

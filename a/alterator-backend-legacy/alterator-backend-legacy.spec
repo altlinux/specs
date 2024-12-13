@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
@@ -16,8 +16,8 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires: python3-devel
 
-Requires: alterator-manager >= 0.1.23
-Requires: alterator-module-executor >= 0.1.13
+Requires: alterator-manager >= 0.1.25
+Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-interface-legacy alterator-application-legacy
 Requires: alterator-standalone
 Requires: python3
@@ -92,6 +92,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Tue Dec 10 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.2-alt1
+- Move to toml.
+
 * Mon Oct 21 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt1
 - Change prefix from ru.basealt to org.altlinux.
 

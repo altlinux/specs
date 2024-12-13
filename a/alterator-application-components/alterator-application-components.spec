@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.5
+Version: 0.1.7
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -18,8 +18,14 @@ BuildRequires: gcc-c++
 BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-devel
 BuildRequires: boost-devel-headers
 BuildRequires: libqbase-devel
+BuildRequires: libtomlplusplus-devel
+
+%ifarch x86_64
+BuildRequires: alterator-entry
+%endif
 
 Requires: alterator-backend-packages alterator-entry libqbase alterator-interface-component alterator-backend-component_categories
+Requires: libtomlplusplus
 
 %description
 Alterator application for managing system components.
@@ -46,6 +52,11 @@ install -v -p -m 644 -D alterator/components-app.backend %buildroot%_datadir/alt
 install -v -p -m 644 -D setup/org.altlinux.alterator.components1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D setup/org.altlinux.alterator.components1.xml %buildroot%_datadir/dbus-1/interfaces
 
+%ifarch x86_64
+%check
+find ./alterator/ -type f -exec alterator-entry --verbose {} \+
+%endif
+
 %files
 %_datadir/alterator/applications/*.application
 %_datadir/alterator/backends/*.backend
@@ -55,6 +66,13 @@ install -v -p -m 644 -D setup/org.altlinux.alterator.components1.xml %buildroot%
 %_bindir/%name
 
 %changelog
+* Fri Dec 13 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.7-alt1
+- Improve launching time by building model async.
+- Add menubar and ability to change language at runtime (thx Kirill Sharov)
+
+* Wed Dec 11 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.6-alt1
+- Switch components from ini to toml format.
+
 * Fri Nov 15 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
 - Don't show default category if it's empty.
 - Sort components and component categories in a given tree.

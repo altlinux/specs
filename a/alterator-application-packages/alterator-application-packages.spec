@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-packages
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Alterator application for managing system packages and package repositories
@@ -22,7 +22,9 @@ BuildRequires: libqbase-devel
 BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: xorg-xvfb xvfb-run
 
-Requires: alterator-backend-packages alterator-manager alterator-module-executor
+Requires: alterator-backend-packages >= 0.1.3
+Requires: alterator-manager >= 0.1.25
+Requires: alterator-module-executor >= 0.1.14
 
 %description
 Alterator application for managing system packages and package repositories
@@ -59,6 +61,11 @@ install -v -p -m 644 -D alterator/amp-repo.application %buildroot%_alterator_dat
 %_alterator_datadir/applications/*.application
 
 %changelog
+* Mon Dec 09 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt1
+- Fix broken updating of packages list.
+- Add waiting dialog.
+- Change alterator entries format from ini to toml.
+
 * Tue Oct 22 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - Change prefix from ru.basealt to org.altlinux.
 
