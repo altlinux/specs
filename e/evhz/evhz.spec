@@ -1,11 +1,11 @@
 Name: evhz
 Version: 2012
-Release: alt1
+Release: alt2
 
 Summary: Measure mouse polling rate
 
 Group: System/Configuration/Hardware
-License: Public domain
+License: ALT-Public-Domain
 Url: https://wiki.archlinux.org/index.php/Mouse_Polling_Rate
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
@@ -35,6 +35,9 @@ install %name -D %buildroot%_sbindir/%name
 %_sbindir/%name
 
 %changelog
+* Fri Dec 13 2024 Vitaly Lipatov <lav@altlinux.ru> 2012-alt2
+- fix build
+
 * Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 2012-alt1
 - full rewrite original code and set appropriate license
 
