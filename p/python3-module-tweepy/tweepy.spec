@@ -2,7 +2,7 @@
 
 Name:    python3-module-%oname
 Version: 4.14.0
-Release: alt1
+Release: alt2
 
 Summary: Twitter library for python
 
@@ -16,6 +16,8 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
 Source0: %name-%version.tar
+# Removes dependency on imghdr
+Patch: 661d4ba7d04911e76a5903154cc7567595d9c711.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -29,6 +31,7 @@ entire API, and streaming API.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -44,6 +47,9 @@ rm -rf %buildroot%python3_sitelibdir/examples
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Dec 13 2024 Grigory Ustinov <grenka@altlinux.org> 4.14.0-alt2
+- Removed dependency on python3(imghdr).
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 4.14.0-alt1
 - Automatically updated to 4.14.0.
 
