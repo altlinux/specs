@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 License: MIT
 
@@ -71,6 +71,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Fri Dec 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.1-alt1
+- new version 0.3.1 (with rpmrb script)
+
 * Thu Nov 28 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
 - new version (0.3.0) with rpmgs script
 
