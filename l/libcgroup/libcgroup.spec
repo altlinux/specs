@@ -2,16 +2,15 @@
 Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
-Version: 2.0.3
+Version: 3.1.0
 Release: alt1
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
 # VCS: https://github.com/libcgroup/libcgroup.git
 Source: %name-%version.tar
-Source2: tests.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: flex gcc-c++ libpam-devel
+BuildRequires: flex gcc-c++ libpam-devel libsystemd-devel
 
 %description
 Control groups infrastructure.
@@ -52,34 +51,35 @@ provide scripts to manage that configuration.
 %prep
 %setup
 %patch -p1
-tar -xf %SOURCE2 -C tests
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
 	--enable-initscript-install \
-	--enable-pam-module-dir=/%_lib/security \
-	--enable-opaque-hierarchy=name=systemd
+    --enable-systemd \
+	--enable-opaque-hierarchy="name=systemd"
 
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 # install config files
-mkdir -p %buildroot%_sysconfdir/sysconfig
-cp samples/cgred.conf %buildroot%_sysconfdir/sysconfig/cgred
-cp samples/cgconfig.sysconfig %buildroot%_sysconfdir/sysconfig/cgconfig
-cp samples/cgconfig.conf %buildroot%_sysconfdir/cgconfig.conf
-cp samples/cgrules.conf %buildroot%_sysconfdir/cgrules.conf
-cp samples/cgsnapshot_blacklist.conf %buildroot%_sysconfdir/cgsnapshot_blacklist.conf
+mkdir -p -v %buildroot%_sysconfdir/sysconfig
+cp -v samples/config/cgred.conf %buildroot%_sysconfdir/sysconfig/cgred
+cp -v samples/config/cgconfig.sysconfig %buildroot%_sysconfdir/sysconfig/cgconfig
+cp -v samples/config/cgconfig.conf %buildroot%_sysconfdir/cgconfig.conf
+cp -v samples/config/cgrules.conf %buildroot%_sysconfdir/cgrules.conf
+cp -v samples/config/cgsnapshot_allowlist.conf %buildroot%_sysconfdir/cgsnapshot_allowlist.conf
+cp -v samples/config/cgsnapshot_denylist.conf %buildroot%_sysconfdir/cgsnapshot_denylist.conf
 
-rm -f %buildroot/%_lib/security/pam_cgroup.la
-rm -f %buildroot%_libdir/*.la
-rm -f %buildroot%_libdir/libcgroupfortesting.*
 
-mkdir -p %buildroot%_sysconfdir/cgconfig.d
+rm -fv %buildroot/%_lib/security/pam_cgroup.la
+rm -fv %buildroot%_libdir/*.la
+rm -fv %buildroot%_libdir/libcgroupfortesting.*
+
+mkdir -p -v %buildroot%_sysconfdir/cgconfig.d
 # install unit and sysconfig files
 install -d %buildroot%_unitdir
 install -m 644 dist/cgconfig.service %buildroot%_unitdir/
@@ -105,7 +105,8 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %config(noreplace) %_sysconfdir/sysconfig/cgconfig
 %config(noreplace) %_sysconfdir/cgconfig.conf
 %config(noreplace) %_sysconfdir/cgrules.conf
-%config(noreplace) %_sysconfdir/cgsnapshot_blacklist.conf
+%config(noreplace) %_sysconfdir/cgsnapshot_allowlist.conf
+%config(noreplace) %_sysconfdir/cgsnapshot_denylist.conf
 %dir %_sysconfdir/cgconfig.d
 %attr(2711, root, cgred) %_bindir/cgexec
 %attr(2711, root, cgred) %_bindir/cgclassify
@@ -114,8 +115,8 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
-%config %_initdir/cgconfig
-%config %_initdir/cgred
+%_initdir/cgconfig
+%_initdir/cgred
 %_unitdir/cgconfig.service
 %_unitdir/cgred.service
 
@@ -130,6 +131,9 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Fri Dec 13 2024 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 2.0.3-alt1
 - 2.0.3
 - Add cgconfig.d support to systemd unit (ALT #44890)
