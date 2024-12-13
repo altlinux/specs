@@ -1,15 +1,15 @@
 %add_optflags %optflags_shared
-%define soname 18
+%define soname 19
 
 Name: dcmtk
-Version: 3.6.8
-Release: alt2
+Version: 3.6.9
+Release: alt1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
 Group: Graphics
 
-Url: http://dcmtk.org/dcmtk.php.en
+Url: https://dcmtk.org/dcmtk.php.en
 VCS: https://github.com/DCMTK/dcmtk
 Source: %name-%version.tar
 
@@ -24,9 +24,6 @@ the DICOM standard. It includes software for examining, constructing and
 converting DICOM image files, handling offline media, sending and receiving
 images over a network connection, as well as demonstrative image storage
 and worklist servers.
-
-Contains patches against latest stable version from
-http://gna.org/projects/pdcmtk
 
 %package -n lib%name%soname
 Summary: %name shared libraries
@@ -99,6 +96,9 @@ sed -i '/ofstd_tuple/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Thu Dec 12 2024 Anton Farygin <rider@altlinux.ru> 3.6.9-alt1
+- 3.6.8 -> 3.6.9
+
 * Thu May 09 2024 Anton Farygin <rider@altlinux.ru> 3.6.8-alt2
 - added lost dependencies to the devel package (closes: #50075)
 

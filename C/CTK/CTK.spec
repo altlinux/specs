@@ -2,7 +2,7 @@
 
 Name: CTK
 Version: 0.1.0
-Release: alt6.git.51c9f4a
+Release: alt7.git.82cae578
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -11,11 +11,10 @@ Url: https://commontk.org/
 # Exclusion source: pythonqt
 ExcludeArch: %arm
 
-# https://github.com/commontk/CTK.git
-Source: %name-%version.tar
+VCS: https://github.com/commontk/CTK.git
+Source: %name-%version-%release.tar
 
 Patch1: %name-alt-build.patch
-Patch2: %name-alt-qt5_compat.patch
 
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-python3
@@ -93,7 +92,6 @@ This package provides Python bindings to CTK.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %ifarch %not_qt5_qtwebengine_arches
 for f in \
@@ -172,6 +170,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Dec 13 2024 Anton Farygin <rider@altlinux.ru> 0.1.0-alt7.git.82cae578
+- update to git 82cae578
+
 * Fri Feb 02 2024 Elizaveta Morozova <morozovaes@altlinux.org> 0.1.0-alt6.git.51c9f4a
 - Update to snapshot 51c9f4a5a55f38ddce9d8b75a72c02fca64bf17a.
 
