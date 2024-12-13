@@ -7,8 +7,8 @@
 
 Name: kf6-%rname
 Version: 6.8.0
-Release: alt1
-%K6init altplace
+Release: alt2
+%K6init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 widgets for configuration dialogs
@@ -108,13 +108,8 @@ Sip files for python3-module-%rname
 %K6find_qtlang %name --all-name
 rm -rf %buildroot%_libdir/*/*/*/__*
 
-
-mkdir -p %buildroot/%_K6data/kconfigwidgets/
-
-
 %files common -f %name.lang
 %doc LICENSES/* README.md
-%dir %_K6data/kconfigwidgets/
 %_datadir/qlogging-categories6/*.*categories
 %_K6i18n/*/kf6_entry.desktop
 
@@ -140,6 +135,9 @@ mkdir -p %buildroot/%_K6data/kconfigwidgets/
 
 
 %changelog
+* Fri Dec 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
+- move to standard place
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
