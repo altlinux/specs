@@ -1,50 +1,47 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: falcon
-Version: 1.4.1
-Release: alt1.2
+%def_with check
 
-Summary: Framework for building high-performance microservices and app backends.
+Name: falcon
+Version: 4.0.2
+Release: alt1
+
+Summary: Fast ASGI+WSGI framework for building data plane APIs at scale
 License: Apache-2.0
 Group: Development/Python3
-Url: https://falcon.readthedocs.io/
+Url: https://pypi.org/project/falcon
+Vcs: https://github.com/falconry/falcon
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-setuptools
-BuildPreReq: python3-devel
-BuildRequires: python3-module-six
-BuildRequires: python3-module-mimeparse
-BuildRequires: python3-module-msgpack
-BuildRequires: python3-module-jsonschema
-# A copy of the imp module that was removed in Python 3.12.
-# It shouldn't be used, should use `importlib.metadata` instead.
-BuildRequires: python3-module-zombie-imp
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-cbor2
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-websockets
+BuildRequires: python3-module-aiofiles
+%endif
 
 Requires: python3-module-%name = %EVR
-Requires: python3-module-django-dbbackend-sqlite3
-Requires: python3-module-bottle
-Requires: python3-module-flask
-Requires: python3-module-werkzeug
-
 
 %description
-Falcon is a reliable, high-performance Python web framework for building 
+Falcon is a reliable, high-performance Python web framework for building
 large-scale app backends and microservices. It encourages the REST architectural
 style, and tries to do as little as possible while remaining highly effective.
 
 %package -n python3-module-%name
-Summary: Framework for building high-performance microservices and app backends.
+Summary: Fast ASGI+WSGI framework for building data plane APIs at scale
 Group: Development/Python3
 BuildArch: noarch
 
-Requires: python3-module-six
-Requires: python3-module-mimeparse
-
 %description -n python3-module-%name
-Falcon is a reliable, high-performance Python web framework for building 
+Falcon is a reliable, high-performance Python web framework for building
 large-scale app backends and microservices. It encourages the REST architectural
 style, and tries to do as little as possible while remaining highly effective.
 
@@ -56,21 +53,29 @@ This package contain python modules for %name.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -v
 
 %files
 %doc README.* LICENSE AUTHORS
 %_bindir/falcon-bench
 %_bindir/falcon-print-routes
+%_bindir/falcon-inspect-app
 
 %files -n python3-module-%name
-%python3_sitelibdir/*
+%python3_sitelibdir/%name
+%python3_sitelibdir/%name-%version.dist-info
 
 
 %changelog
+* Fri Dec 13 2024 Anton Vyatkin <toni@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1.2
 - NMU: Added zombie-imp to BuildRequires.
 
