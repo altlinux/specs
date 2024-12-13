@@ -1,5 +1,5 @@
 Name:           wf-recorder
-Version:        0.4.2
+Version:        0.5.0
 Release:        alt1
 Summary:        Utility program for screen recording of wlroots-based compositors
 License:        MIT
@@ -21,6 +21,7 @@ BuildRequires:  pkgconfig(libpulse-simple)
 BuildRequires:  pkgconfig(libswresample)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-protocols) >= 1.14
+BuildRequires:  pkgconfig(libdrm)
 
 %description
 Utility program for screen recording of wlroots-based compositors
@@ -80,6 +81,9 @@ EOF
 %{_mandir}/man?/%{name}*
 
 %changelog
+* Fri Dec 13 2024 Artyom Bystrov <arbars@altlinux.org> 0.5.0-alt1
+- Update to new version (fix FTBFS, causing of FFMPEG 7.1)
+
 * Sat Nov 18 2023 Artyom Bystrov <arbars@altlinux.org> 0.4.2-alt1
 - Add dialog window with sound recording option
 - Add notifications about start and stop record
