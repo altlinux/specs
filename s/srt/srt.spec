@@ -3,14 +3,14 @@
 %def_disable check
 %endif
 Name: srt
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
 License: MPL-2.0
 Url: https://www.srtalliance.org
-# git https://github.com/Haivision/srt
-Source0: https://github.com/Haivision/srt/archive/v%version/%name-%version.tar
+VCS: https://github.com/Haivision/srt
+Source0: %name-%version.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: libgnutls-devel libnettle-devel libp11-kit-devel libidn2-devel libtasn1-devel
@@ -83,6 +83,9 @@ LD_LIBRARY_PATH=%_cmake__builddir ./%_cmake__builddir/test-srt
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Fri Dec 13 2024 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
+- 1.5.4
+
 * Mon Oct 02 2023 Anton Farygin <rider@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
