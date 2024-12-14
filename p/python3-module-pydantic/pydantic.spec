@@ -4,7 +4,7 @@
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.9.2
+Version: 2.10.3
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -26,6 +26,7 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %add_pyproject_deps_check_filter eval-type-backport
 %add_pyproject_deps_check_filter pytest-codspeed
+%add_pyproject_deps_check_filter pytest-memray
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra email
 %pyproject_builddeps_check
@@ -46,7 +47,7 @@ with pydantic.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pdm testing
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -72,6 +73,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Dec 14 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.3-alt1
+- Updated to 2.10.3.
+
 * Wed Sep 18 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.9.2-alt1
 - Updated to 2.9.2.
 

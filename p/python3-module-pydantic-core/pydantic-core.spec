@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.23.4
+Version: 2.27.1
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
@@ -34,6 +34,7 @@ BuildRequires: python3-module-pytest-benchmark
 %add_pyproject_deps_check_filter pytest-speed
 %add_pyproject_deps_check_filter pytest-codspeed
 %pyproject_builddeps_check
+%pyproject_builddeps_metadata
 %endif
 
 %description
@@ -69,7 +70,7 @@ EOF
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile tests/requirements.txt
+%pyproject_deps_resync_check_depgroup testing
 %endif
 
 %build
@@ -94,6 +95,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Sat Dec 14 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.27.1-alt1
+- Updated to 2.27.1.
+
 * Wed Sep 18 2024 Alexandr Shashkin <dutyrok@altlinux.org> 2.23.4-alt1
 - Updated to 2.23.4.
 
