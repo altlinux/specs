@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 
 Summary: OpenStack library for privilege separation
@@ -22,7 +22,7 @@ Provides: python3-module-oslo-privsep = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-oslo.log >= 5.0.2
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
@@ -36,9 +36,7 @@ BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-greenlet >= 0.4.14
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -119,6 +117,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 
