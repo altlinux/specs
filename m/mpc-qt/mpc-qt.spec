@@ -2,19 +2,20 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     mpc-qt
-Version:  24.06
+Version:  24.12
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
 License:  GPL-2.0
 Group:    Video
 Url:      https://github.com/mpc-qt/mpc-qt
-
+Vcs:      https://github.com/mpc-qt/mpc-qt.git
 Source:   %name-%version.tar
 Patch:    %name-%version-%release.patch
 
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: libmpv-devel
 
 %description
@@ -43,6 +44,9 @@ rm -r %buildroot%_defaultdocdir/%name
 %doc DOCS/ipc.md
 
 %changelog
+* Sat Dec 14 2024 Anton Midyukov <antohami@altlinux.org> 24.12-alt1
+- New version 24.12.
+
 * Mon Jul 15 2024 Anton Midyukov <antohami@altlinux.org> 24.06-alt1
 - New version 24.06
 
