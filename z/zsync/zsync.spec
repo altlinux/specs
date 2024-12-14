@@ -1,10 +1,11 @@
 Name: zsync
 Summary: An rsync like transfer software over http
 Version: 0.6.2
-Release: alt2
+Release: alt3
 License: Artistic License v2
 Group: Networking/File transfer
 Source: %name-%version.tar
+Patch1: %name-0.6.2-fix-FTBS.patch
 Url: https://github.com/cph6/zsync.git
 
 %description
@@ -24,6 +25,7 @@ once, then any downloaders with zsync can use it.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %autoreconf
@@ -39,6 +41,9 @@ once, then any downloaders with zsync can use it.
 %_man1dir/*
 
 %changelog
+* Sat Dec 14 2024 Lenar Shakirov <snejok@altlinux.org> 0.6.2-alt3
+- Fix FTBS, get patch from https://github.com/cph6/zsync/issues/20
+
 * Tue Apr 10 2018 Lenar Shakirov <snejok@altlinux.ru> 0.6.2-alt2
 - Summary/Description improved: thks to autoimport robot!
 
