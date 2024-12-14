@@ -1,8 +1,8 @@
 Name: kernel-image-rt
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -601,6 +601,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Dec 15 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.5-alt1
+- v6.12.5 (2024-12-14).
+
 * Fri Dec 13 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.4-alt2
 - spec: Add -rt flavor to be built from the same source tree.
 
