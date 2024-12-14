@@ -1,6 +1,6 @@
 Name: lesstif
 Version: 0.95.2
-Release: alt4
+Release: alt5
 
 Summary: LessTif - a free replacement of OSF/Motif
 Group: System/Libraries
@@ -153,7 +153,7 @@ rm __mwm_stamp
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-CFLAGS="$RPM_OPT_FLAGS" %configure \
+CFLAGS="$RPM_OPT_FLAGS -Wno-incompatible-pointer-types" %configure \
 	--enable-shared \
 	--enable-static \
 	--enable-build-12 \
@@ -270,6 +270,9 @@ install -p -m644 %SOURCE5 %buildroot%_datadir/xsessions/
 %doc %_docdir/%name-%version/lessdox
 
 %changelog
+* Sun Dec 15 2024 Lenar Shakirov <snejok@altlinux.org> 0.95.2-alt5
+- Fix FTBS by CFLAGS="-Wno-incompatible-pointer-types"
+
 * Wed Nov 24 2021 Ilya Mashkin <oddity@altlinux.ru> 0.95.2-alt4
 - add lto option
 
