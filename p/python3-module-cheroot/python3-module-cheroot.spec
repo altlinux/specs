@@ -6,7 +6,7 @@
 
 Name:    python3-module-%modulename
 Version: 10.0.1
-Release: alt2
+Release: alt3
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
 License: BSD-3-Clause
@@ -88,6 +88,9 @@ rm -f %python3_sitelibdir/%{modulename}/testing.py
 %endif
 
 %changelog
+* Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 10.0.1-alt3
+- Fixed FTBFS.
+
 * Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 10.0.1-alt2
 - Built with tests.
 - Built with check.
