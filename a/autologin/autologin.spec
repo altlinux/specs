@@ -1,6 +1,6 @@
 Name: autologin
 Version: 1.0.0
-Release: alt9
+Release: alt10
 Serial: 1
 
 Summary: Automatically log in
@@ -13,6 +13,7 @@ Source1: %name.pamd
 Patch: %name-1.0.0-mdk-alt.patch
 Patch1: %name-1.1.0-tty-dev.patch
 Patch2: %name-1.0.0-alt-doc.patch
+Patch3: %name-1.1.0-fix-FTBS.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Jan 15 2003
@@ -27,6 +28,7 @@ file, %_sysconfdir/sysconfig/%name, and starts the X session defined there.
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %autoreconf
@@ -50,6 +52,9 @@ CONFIG="/etc/sysconfig/autologin"
 %doc README AUTHORS
 
 %changelog
+* Sat Dec 14 2024 Lenar Shakirov <snejok@altlinux.org> 1:1.0.0-alt10
+- Fix FTBS
+
 * Wed Jul 17 2019 Anton Midyukov <antohami@altlinux.org> 1:1.0.0-alt9
 - Not require pam_ck_connector
 
