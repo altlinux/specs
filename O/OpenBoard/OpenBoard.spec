@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.7.1
-Release: alt2
+Release: alt3
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -53,6 +53,8 @@ Patch26: 0026-remove-swipe-pages.patch
 Patch100: build-with-c++20.patch
 #https://github.com/OpenBoard-org/OpenBoard/pull/962
 Patch101: fix-Add-compatibility-with-C++20.patch
+# https://github.com/OpenBoard-org/OpenBoard/commit/4f45b6c4016972cf5835f9188bda6197b1b4ed2f
+Patch102: OpenBoard-1.7.1-fix-Support-FFmpeg-7.0.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -207,6 +209,9 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt3
+- fix build with ffmpeg 7.1
+
 * Wed Oct 09 2024 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt2
 - Remove Google Maps widget
 
