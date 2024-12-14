@@ -1,5 +1,5 @@
 Name: ytdlp-gui
-Version: 1.1.1
+Version: 2.0.0
 Release: alt1
 Summary: A GUI for ytdlp written in Rust
 License: GPL-3.0
@@ -51,6 +51,9 @@ cp -pr data/icons/* %buildroot%_iconsdir/hicolor
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Dec 13 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.0-alt1
+- Updated to version 2.0.0.
+
 * Fri Aug 23 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt1
 - Updated to version 1.1.1.
 
