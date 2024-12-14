@@ -7,11 +7,12 @@
 %define sirit_commit ab75463999f4f3291976b079d42d52ee91eebf3f
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define simpleini_version 4.20
+%define cpp_httplib_version 0.14.1
 %define tzdb_to_nx_date 221202
 
 Name: suyu
 Version: 0.0.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Fully open-source Switch emulator
@@ -33,17 +34,20 @@ Source1: sirit-%sirit_commit.tar
 Source2: mbedtls-%mbedtls_commit.tar
 # https://github.com/brofield/simpleini/archive/v%simpleini_version/simpleini-%simpleini_version.tar.gz
 Source3: simpleini-%simpleini_version.tar
+# https://github.com/yhirose/cpp-httplib/archive/v%cpp_httplib_version/cpp-httplib-%cpp_httplib_version.tar.gz
+Source4: cpp-httplib-%cpp_httplib_version.tar
 
-Source4: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
+Source5: https://github.com/lat9nq/tzdb_to_nx/releases/download/%tzdb_to_nx_date/%tzdb_to_nx_date.zip
 
 Patch0: %name-cpp-jwt-version-alt.patch
 Patch1: %name-cmake-externals-alt.patch
+Patch2: %name-fmt11-alt.patch
+Patch3: %name-memory-alt.patch
 
 BuildRequires: /proc
 BuildRequires: boost-asio-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: catch-devel
-BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-tools
 BuildRequires: ctest
 BuildRequires: glslang
@@ -75,9 +79,7 @@ BuildRequires: ninja-build
 BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
-BuildRequires: python3-module-mpl_toolkits
 BuildRequires: qt6-tools-devel
-BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 BuildRequires: unzip
 BuildRequires: zlib-devel
@@ -86,14 +88,17 @@ BuildRequires: zlib-devel
 %name is a familiar C++ based Switch emulator with a focus on compatibility. Completely free and open-source, forever.
 
 %prep
-%setup -n %name-v%version -b 1 -b 2 -b 3
+%setup -n %name-v%version -b 1 -b 2 -b 3 -b 4
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
 %__mv -Tf ../simpleini-%simpleini_version externals/simpleini
+%__mv -Tf ../cpp-httplib-%cpp_httplib_version externals/cpp-httplib
 
 # Enforce package versioning in GUI
 sed -i \
@@ -104,8 +109,10 @@ src/common/scm_rev.cpp.in
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_version
 
+sed -i -e 's/-Werror=conversion/-Wno-error=conversion/' src/input_common/CMakeLists.txt
+
 %__mkdir_p %_target_platform/externals/nx_tzdb/nx_tzdb
-unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
+unzip %SOURCE5 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 
 %cmake \
 	-DCMAKE_C_COMPILER:STRING=clang \
@@ -146,6 +153,9 @@ unzip %SOURCE4 -d %_target_platform/externals/nx_tzdb/nx_tzdb
 %_iconsdir/hicolor/scalable/apps/dev.%{name}_emu.%name.svg
 
 %changelog
+* Sat Dec 14 2024 Nazarov Denis <nenderus@altlinux.org> 1:0.0.4-alt1.1
+- Fix FTBFS
+
 * Mon Jun 24 2024 Nazarov Denis <nenderus@altlinux.org> 1:0.0.4-alt1
 - Version 0.0.4 (ALT #50715)
 
