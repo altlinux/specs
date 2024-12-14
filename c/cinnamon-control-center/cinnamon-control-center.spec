@@ -10,7 +10,7 @@
 %def_enable ibus
 
 Name: cinnamon-control-center
-Version: %ver_major.0
+Version: 6.4.1
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -139,6 +139,9 @@ you'll want to install this package.
 %_libdir/*.so
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 6.4.1-alt1
+- New version 6.4.1.
+
 * Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
 - 6.4.0
 

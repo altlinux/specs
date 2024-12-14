@@ -1,3 +1,6 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %def_disable snapshot
 
 %define ver_major 3.4
@@ -10,16 +13,17 @@
 %def_disable libopenraw
 
 Name: pix
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: An image viewer and browser utility.
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphics
 Url: https://github.com/linuxmint/pix
+Vcs: https://github.com/linuxmint/pix.git
 
-# Source-url: https://github.com/linuxmint/pix/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Obsoletes: pix-data < %EVR
 Provides: pix-data = %EVR
@@ -95,6 +99,7 @@ This package contains headers needed to build extensions for pix.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -123,6 +128,9 @@ This package contains headers needed to build extensions for pix.
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 3.4.4-alt1
+- new version 3.4.4
+
 * Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 3.4.3-alt1
 - new version (3.4.3) with rpmgs script
 

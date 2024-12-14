@@ -6,19 +6,18 @@
 %def_enable introspection
 
 Name: xreader
-Version: 4.2.1
+Version: 4.2.3
 Release: alt1
 
 Summary: A document viewer
 Group: Office
 License: GPL-2.0-or-later
 Url: https://github.com/linuxmint/xreader
-
-# Source-url: https://github.com/linuxmint/xreader/archive/refs/tags/%version.tar.gz
+Vcs: https://github.com/linuxmint/xreader.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
@@ -84,7 +83,7 @@ GObject introspection devel data for the Xreader library
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 [ ! -d m4 ] && mkdir m4
 
@@ -146,6 +145,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %endif
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 4.2.3-alt1
+- New version
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 4.2.1-alt1
 - New version
 

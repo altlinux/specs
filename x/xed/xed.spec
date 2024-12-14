@@ -1,18 +1,21 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 %define _libexecdir %_prefix/libexec
 
 %define api_ver 3.0
 
 Name: xed
-Version: 3.6.5
+Version: 3.8.1
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
 License: GPL-2.0-or-later
 Group: Editors
 Url: https://github.com/linuxmint/xed
-
-# Source-url: https://github.com/linuxmint/xed/archive/refs/tags/%version.tar.gz
+Vcs: https://github.com/linuxmint/xed.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -68,6 +71,7 @@ Libraries needed to develop plugins for xed.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -108,7 +112,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-mime-type=text/x-sh \
 	--add-mime-type=text/x-tcl \
 	--add-mime-type=text/x-tex \
-	%buildroot%_desktopdir/%name.desktop
+	%buildroot%_desktopdir/org.x.editor.desktop
 
 rm -f %buildroot%_libdir/%name/*.la
 
@@ -118,10 +122,11 @@ rm -f %buildroot%_libdir/%name/*.la
 %_bindir/*
 %pkglibdir
 %pkgdatadir/
-%_desktopdir/%name.desktop
+%_desktopdir/org.x.editor.desktop
 %_mandir/man?/*
 %config %_datadir/glib-2.0/schemas/*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/gtksourceview-4/styles/xed.xml
+%_datadir/metainfo/org.x.editor.metainfo.xml
 %_datadir/dbus-1/services/org.x.editor.*service
 %doc README.md AUTHORS
 
@@ -133,6 +138,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 3.8.1-alt1
+- new version 3.8.1
+- build from git tag
+
 * Thu Jul 18 2024 Anton Midyukov <antohami@altlinux.org> 3.6.5-alt1
 - new version (3.6.5) with rpmgs script
 

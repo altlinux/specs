@@ -1,13 +1,12 @@
 Name: xviewer
-Version: 3.4.5
+Version: 3.4.7
 Release: alt1
 
 Summary: Fast and functional image viewer.
 License: GPL-2.0-or-later
 Group: Graphics
 Url: https://github.com/linuxmint/xviewer
-
-# Source-url: https://github.com/linuxmint/xviewer/archive/refs/tags/%version.tar.gz
+Vcs: https://github.com/linuxmint/xviewer.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -99,6 +98,9 @@ the functionality of the Xviewer GUI.
 %_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 3.4.7-alt1
+- New version
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 3.4.5-alt1
 - New version
 
