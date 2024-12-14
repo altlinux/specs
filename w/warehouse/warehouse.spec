@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Flatpak manager for GNOME
@@ -60,6 +60,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Sat Dec 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Tue Oct 29 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - updated to 2.0.0-2-g2fd24f3
 
