@@ -5,12 +5,13 @@
 %endif
 
 Name: starship
-Version: 1.20.1
+Version: 1.21.1
 Release: alt1
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
 Group: Shells
-Url: https://github.com/starship/starship
+Url: https://starship.rs
+VCS: https://github.com/starship/starship
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -39,12 +40,13 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
-
-%build
+sed -i 's/strip = true/strip = false/' Cargo.toml
 %ifarch armh i586
 # build failed with lto
 sed -i 's/lto = true/lto = false/' Cargo.toml
 %endif
+
+%build
 cargo-vendor-checksum --all
 %rust_build
 
@@ -60,8 +62,12 @@ cargo test -- --skip expiration_date_set
 
 %files
 %_bindir/%name
+%doc LICENSE
 
 %changelog
+* Sat Dec 14 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.21.1-alt1
+- Updated to version 1.21.1.
+
 * Tue Aug 27 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.20.1-alt1
 - Updated to version 1.20.1.
 
