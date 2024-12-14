@@ -3,15 +3,15 @@
 %define apiver 1
 %define namever %name-%apiver
 
-Name: libvazzy
-Version: 1.4
+Name: libapi-base
+Version: 1.6
 Release: alt1
 
-Summary: ALT Repo API library on Vala
+Summary: Base objects for API libraries on Vala
 License: GPL-3.0-or-later
-Group: System/Libraries
-Url: https://github.com/Rirusha/libvazzy
-VCS: https://github.com/Rirusha/libvazzy
+Group: Development/Other
+Url: https://gitlab.gnome.org/Rirusha/libapi-base
+VCS: https://gitlab.gnome.org/Rirusha/libapi-base
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -19,14 +19,16 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
-BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: gobject-introspection-devel
+BuildRequires: libjson-glib-gir-devel
+BuildRequires: libgee0.8-gir-devel
+BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(libsoup-3.0)
+BuildRequires: pkgconfig(json-glib-1.0)
 
 %description
-Library for Vala with fuzzy search functions
-
-Currently, the library contains:
-- Damerau-Levenstein distance
+%summary.
 
 %package -n %namever
 Summary: %{summary %name}
@@ -43,25 +45,25 @@ Requires: %namever = %EVR
 %description -n %namever-devel
 %summary.
 This package contains headers and libs
-required for building programs with %name
+required for building programs with %name.
 
 %package -n %namever-gir
-Summary: GObject introspection data for the libvazzy library
+Summary: GObject introspection data for libapi-base
 Group: System/Libraries
 Requires: %namever = %EVR
 
 %description -n %namever-gir
-GObject introspection data for the libvazzy library
+%{summary %namever-gir}.
 
 %package -n %namever-gir-devel
-Summary: GObject introspection devel data for the libvazzy library
+Summary: GObject introspection devel data for libapi-base
 Group: System/Libraries
 BuildArch: noarch
 Requires: %namever-gir = %EVR
 Requires: %namever-devel = %EVR
 
 %description -n %namever-gir-devel
-GObject introspection data for the libvazzy library
+%{summary %namever-gir-devel}.
 
 %prep
 %setup
@@ -73,26 +75,24 @@ GObject introspection data for the libvazzy library
 
 %install
 %meson_install
+%find_lang %name
 
 %files -n %namever
-%_libdir/libvazzy-%apiver.so.*
+%_libdir/libapi-base-%apiver.so.*
 
 %files -n %namever-devel
-%_includedir/libvazzy-%apiver.h
-%_libdir/libvazzy-%apiver.so
-%_pkgconfigdir/libvazzy-%apiver.pc
-%_datadir/vala/vapi/libvazzy-%apiver.deps
-%_datadir/vala/vapi/libvazzy-%apiver.vapi
+%_includedir/libapi-base-%apiver.h
+%_libdir/libapi-base-%apiver.so
+%_pkgconfigdir/libapi-base-%apiver.pc
+%_datadir/vala/vapi/libapi-base-%apiver.deps
+%_datadir/vala/vapi/libapi-base-%apiver.vapi
 
 %files -n %namever-gir
-%_typelibdir/Vazzy-%apiver.typelib
+%_typelibdir/ApiBase-%apiver.typelib
 
 %files -n %namever-gir-devel
-%_girdir/Vazzy-%apiver.gir
+%_girdir/ApiBase-%apiver.gir
 
 %changelog
-* Thu Nov 21 2024 Alexey Volkov <qualimock@altlinux.org> 1.4-alt1
-- New version 1.4
-
-* Thu Nov 21 2024 Alexey Volkov <qualimock@altlinux.org> 0.1.0-alt1
+* Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 1.6-alt1
 - Initial build for ALT
