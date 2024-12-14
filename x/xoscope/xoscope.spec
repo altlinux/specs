@@ -2,18 +2,20 @@
 
 Name: xoscope
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: xoscope: digital oscilloscope
 
 Url: http://xoscope.sourceforge.net/
 Group: Engineering
-License: GPL
+License: GPLv2
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://prdownloads.sourceforge.net/project/xoscope/xoscope/%version/xoscope-%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: xoscope.patch
 
 BuildRequires: libICE-devel libalsa-devel libcomedi-devel libfftw3-devel libgtkdatabox3-devel
 
@@ -22,6 +24,7 @@ xoscope: digital oscilloscope
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %configure
@@ -40,6 +43,9 @@ xoscope: digital oscilloscope
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Fri Dec 13 2024 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt2
+- fix build, fix license
+
 * Mon Apr 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3-alt1
 - new version 2.3 (with rpmrb script)
 - migrate to gtkdatabox 1.0 and gtk3
