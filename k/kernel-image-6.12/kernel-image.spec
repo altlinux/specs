@@ -1,8 +1,8 @@
 Name: kernel-image-6.12
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -47,7 +47,11 @@ Patch0: %name-%version-%release.patch
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
 %else
+%if "%base_flavour" == "rt"
+ExclusiveArch: x86_64 aarch64
+%else
 ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
+%endif
 %endif
 
 %define make_target bzImage
@@ -200,11 +204,9 @@ technical reasons.
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common
-%if "%sub_flavour" == "def"
-Provides: kernel-headers = %version
-%endif
 AutoReqProv: nocpp
 %if "%sub_flavour" == "def"
+Provides: kernel-headers = %version
 Provides: kernel-headers-%kernel_latest = %version-%release
 %endif
 
@@ -273,6 +275,11 @@ tar -xf %kernel_src/kernel-source-%kernel_src_version.tar
 %define _default_patch_flags -s
 %autopatch -p1
 
+%if "%base_flavour" == "rt"
+# fix -rt suffix
+rm -f localversion*
+%endif
+
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
@@ -301,6 +308,9 @@ echo "Building Kernel $KernelVer"
 CONFIGS="config config-%_target_cpu"
 %if "%base_flavour" == "std"
 CONFIGS="$CONFIGS config-std"
+%endif
+%if "%base_flavour" == "rt"
+CONFIGS="$CONFIGS config-rt"
 %endif
 %if "%sub_flavour" == "pae"
 CONFIGS="$CONFIGS config-pae"
@@ -479,9 +489,11 @@ popd
 # ghostify *.bin files
 truncate -s0 %buildroot%modules_dir/modules.*.bin
 
+%if "%sub_flavour" == "def"
 # install documentation
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
+%endif
 
 # On some architectures (at least ppc64le) kernel image is ELF and
 # eu-findtextrel will fail if it is not a DSO or PIE.
@@ -560,8 +572,10 @@ check-pesign-helper
 %dir %modules_dir/
 %modules_dir/build
 
+%if "%sub_flavour" == "def"
 %files -n kernel-doc-%base_flavour
 %doc %_docdir/kernel-doc-%base_flavour-%version
+%endif
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
@@ -589,6 +603,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.5-alt2
+- spec: Fix ExclusiveArch conditionals.
+
+* Sun Dec 15 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.5-alt1
+- v6.12.5 (2024-12-14).
+
+* Fri Dec 13 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.4-alt2
+- spec: Add -rt flavor to be built from the same source tree.
+
 * Mon Dec 09 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.4-alt1
 - v6.12.4 (2024-12-09).
 - config-aarch64: add Qualcomm SoCs based devices support.
