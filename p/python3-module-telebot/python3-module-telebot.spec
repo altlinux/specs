@@ -1,15 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename telebot
 %define pypi_name pyTelegramBotAPI
+%def_with check
 
 Name: python3-module-%modulename
-Version: 4.18.0
+Version: 4.25.0
 Release: alt1
 
 Summary: Python Telegram bot api
 License: GPL-2.0
 Group: Development/Python3
-Url: https://github.com/eternnoir/pyTelegramBotAPI
+Url: https://pypi.org/project/pyTelegramBotAPI
+VCS: https://github.com/eternnoir/pyTelegramBotAPI
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -18,6 +20,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(hatchling)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
+%if_with check
+BuildRequires: python3(requests)
+BuildRequires: python3(pytest)
+%endif
 
 Provides: python3-module-pytelegrambotapi = %version-%release
 %py3_provides %pypi_name
@@ -28,20 +35,24 @@ A simple, but extensible Python implementation for the Telegram Bot API.
 %prep
 %setup
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
 %build
 %pyproject_build
 
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%{pyproject_distinfo pytelegrambotapi}
 
 %changelog
+* Sun Dec 15 2024 Alexander Makeenkov <amakeenk@altlinux.org> 4.25.0-alt1
+- Updated to version 4.25.0.
+- Enabled check.
+
 * Wed May 15 2024 Anastasia Osmolovskaya <lola@altlinux.org> 4.18.0-alt1
 - Updated to version 4.18.0.
 
