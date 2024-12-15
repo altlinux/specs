@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: gearlever
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Manage AppImages
@@ -61,6 +61,9 @@ rm %buildroot%_datadir/gearlever/gearlever/assets/demo.AppImage
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Fri Dec 06 2024 Oleg Shchavelev <oleg@altlinux.org> 2.3.2-alt1
+- New version 2.3.2
+
 * Sat Nov 30 2024 Oleg Shchavelev <oleg@altlinux.org> 2.3.1-alt1
 - New version 2.3.1
 
