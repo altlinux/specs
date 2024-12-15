@@ -44,7 +44,7 @@
 %def_without legacy_python_install
 
 Name: nfs-ganesha
-Version: 6.3
+Version: 6.4
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
@@ -591,6 +591,9 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %endif
 
 %changelog
+* Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.4-alt1
+- Update to V6.4 (2024-12-13).
+
 * Mon Nov 25 2024 Vitaly Chikunov <vt@altlinux.org> 6.3-alt1
 - Update to V6.3 (2024-11-22).
 
