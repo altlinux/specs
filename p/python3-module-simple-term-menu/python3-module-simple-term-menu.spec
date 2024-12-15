@@ -3,12 +3,14 @@
 %define pypi_name simple_term_menu
 
 Name: python3-module-%module_name
-Version: 1.6.4
+Version: 1.6.6
 Release: alt1
 Summary: A Python package which creates simple interactive menus on the command line
 License: MIT
 Group: Development/Python3
-Url: https://github.com/IngoMeyer441/simple-term-menu
+Url: https://pypi.org/project/simple-term-menu
+VCS: https://github.com/IngoMeyer441/simple-term-menu
+
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -34,8 +36,12 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/%{pypi_name}.py
 %python3_sitelibdir/__pycache__/%{pypi_name}*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%doc LICENSE
 
 %changelog
+* Sun Dec 15 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.6-alt1
+- Updated to version 1.6.6.
+
 * Wed Dec 20 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.4-alt1
 - Updated to version 1.6.4.
 
