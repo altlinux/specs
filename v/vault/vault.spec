@@ -6,7 +6,7 @@
 
 Name:    vault
 Version: 1.13.12
-Release: alt5
+Release: alt6
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
 License: MPL-2.0
@@ -17,6 +17,9 @@ Source: %name-%version.tar
 Patch1: bbolt-loong64.patch
 Patch2: gopsutil-loong64.patch
 Patch3: vault-1.13.12-alt-fix-CVE-2024-2048.patch
+Patch4: vault-1.13.12-alt-fix-CVE-2024-8185.patch
+Patch5: vault-1.13.12-alt-fix-CVE-2024-9180.patch
+Patch6: vault-1.13.12-alt-fix-CVE-2024-6468.patch
 Source1: %name.hcl.example
 Source2: %name.service
 Source3: %name.init
@@ -40,6 +43,9 @@ BuildRequires: /proc
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %if_without prebuild_webui
 ln -sf %nodejs_sitelib/node-sass ui/node_modules
@@ -107,6 +113,9 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Dec 15 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt6
+- Fixes: CVE-2024-8185, CVE-2024-9180, CVE-2024-6468 (Closes: #52418)
+
 * Thu Aug 29 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt5
 - Fixes: CVE-2024-2048 (Closes: #51295)
 
