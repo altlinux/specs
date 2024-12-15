@@ -4,7 +4,7 @@
 
 Name: valkey
 Version: 8.0.1
-Release: alt1
+Release: alt2
 
 Summary: A persistent key-value database
 License: BSD-3-Clause AND BSD-2-Clause AND MIT AND BSL-1.0
@@ -191,6 +191,9 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Sun Dec 15 2024 Alexey Shabalin <shaba@altlinux.org> 8.0.1-alt2
+- Update and fix systemd units.
+
 * Fri Dec 13 2024 Alexey Shabalin <shaba@altlinux.org> 8.0.1-alt1
 - Build to Sisyphus.
 
