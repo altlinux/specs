@@ -6,7 +6,7 @@
 
 Name:           epoptes
 Version:        22.01
-Release:        alt1.1
+Release:        alt1.2
 
 Summary:        Computer lab management tool
 Summary(ru_RU.UTF-8): Инструмент управления компьютерным классом
@@ -61,6 +61,9 @@ This is a client part of Epoptes Computer lab management tool
 %prep
 %setup -n %name-%version
 %patch -p2
+
+# Quick hotfix for python3.13
+sed -i 's/pipes/shlex/g' epoptes/ui/gui.py
 
 sed -i -e 's,/etc/default/epoptes,/etc/epoptes.conf,g' debian/epoptes.postinst
 sed -i -e 's,/etc/default/epoptes,/etc/epoptes.conf,g' epoptes/common/config.py
@@ -118,6 +121,9 @@ getent group epoptes >/dev/null || groupadd -f -r epoptes
 %_man8dir/*.8*
 
 %changelog
+* Sun Dec 15 2024 Grigory Ustinov <grenka@altlinux.org> 22.01-alt1.2
+- NMU: dropped dependency on pipes.
+
 * Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 22.01-alt1.1
 - NMU: dropped dependecy on distutils.
 
