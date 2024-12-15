@@ -1,11 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%filter_from_requires /init-functions/d
+
 Name: rtcheck
 Version: 0.7.7
-Release: alt3
-
+Release: alt4
 License: GPL-2.0-only
 Summary: Test the running system for real-time capabilities
 Group: Development/Tools
 Source: %name-%version.tar
+Requires: lsb-init
 
 # Upstream research:
 #   It seems, the program is supplied by IBM to RedHat directly
@@ -24,14 +31,13 @@ correctly.
 %setup
 
 %build
-%make_build rtcheck
+%add_optflags %(getconf LFS_CFLAGS)
+%make_build CFLAGS="%optflags" rtcheck
 
 %install
 install -D %name                   %buildroot%_bindir/%name
 install -p -m 755 -D %name.init    %buildroot%_initrddir/%name
 install -p -m 644 -D %name.service %buildroot%_unitdir/%name.service
-
-%clean
 
 %files
 %doc README
@@ -45,8 +51,11 @@ install -p -m 644 -D %name.service %buildroot%_unitdir/%name.service
 %preun
 %preun_service %name
 
-
 %changelog
+* Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt4
+- Skip missing '/sys/kernel/realtime' (for Linux 6.12.)
+- spec: Cleanup and build improvements.
+
 * Wed May 17 2023 Vitaly Chikunov <vt@altlinux.org> 0.7.7-alt3
 - Fix PREEMPT_RT detection.
 
