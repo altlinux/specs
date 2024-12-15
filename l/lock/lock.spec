@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lock
-Version: 1.2.2
+Version: 1.3.4
 Release: alt1
 
 Summary: Process data with GnuPG
@@ -23,8 +23,8 @@ BuildRequires: pkgconfig(gtk4) >= 4.14
 BuildRequires: pkgconfig(libadwaita-1) >= 1.6
 BuildRequires: pkgconfig(gpgme) >= 1.23
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstreamcli
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
 %endif
 
 %description
@@ -67,6 +67,10 @@ Manage your GnuPG keyring:
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sun Dec 15 2024 Oleg Shchavelev <oleg@altlinux.org> 1.3.4-alt1
+- New version 1.3.4
+- Update BuildRequires
+
 * Sat Nov 30 2024 Oleg Shchavelev <oleg@altlinux.org> 1.2.2-alt1
 - New version 1.2.2
 - Rename macro %%__meson_test -> %%meson_test
