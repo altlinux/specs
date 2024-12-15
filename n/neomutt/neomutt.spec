@@ -5,17 +5,13 @@
 
 
 Name: neomutt
-Version: 20240425
-Release: alt1.1
+Version: 20241212
+Release: alt1
 Summary: A version of Mutt with added features
-License: GPL-2.0-only and ALT-Public-Domain
+License: GPL-2.0-or-later
 Group: Networking/Mail
 Url: https://www.neomutt.org/
-Vcs: https://github.com/neomutt/neomutt.git
-# test-files/ Vcs: https://github.com/neomutt/neomutt-test-files
-# Updated as git subtree into test-files/ dir. Example:
-#   git subtree pull --prefix test-files/ test-files master --squash
-# Where test-files remote is https://github.com/neomutt/neomutt-test-files
+Vcs: https://github.com/neomutt/neomutt
 
 Requires: mailcap
 AutoReqProv: nopython nopython3
@@ -135,6 +131,12 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 20241212-alt1
+- Update to 20241212 (2024-12-12).
+
+* Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 20241114-alt1
+- Update to 20241114 (2024-11-14), (fixes: CVE-2024-49393, CVE-2024-49394).
+
 * Mon May 06 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20240425-alt1.1
 - Fixed build for Elbrus.
 
