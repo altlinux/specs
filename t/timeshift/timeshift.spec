@@ -10,12 +10,13 @@
 %endif
 
 Name: timeshift
-Version: 24.06.3
+Version: 24.06.5
 Summary: System restore tool for Linux
-Release: alt3
-License: GPLv3
+Release: alt1
+License: GPL-2.0-or-later
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
+
 Source: %name-%version.tar
 Source1: firsttime-snapshot.sh
 Patch1: alt-use-xvt.patch
@@ -72,11 +73,15 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %_pixmapsdir/%name.png
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
 %_sysconfdir/firsttime.d/zz-firsttime-snapshot.sh
-%_man1dir/%name-gtk.1.xz
-%_man1dir/%name.1.xz
-%doc README.md
+%_man1dir/%name-gtk.1.*
+%_man1dir/%name.1.*
+%doc README.md LICENSES/GPL-2.0-or-later.txt
 
 %changelog
+* Sun Dec 15 2024 Alexander Makeenkov <amakeenk@altlinux.org> 24.06.5-alt1
+- Updated to version 24.06.5.
+- Fixed License tag value.
+
 * Sun Nov 10 2024 Alexander Makeenkov <amakeenk@altlinux.org> 24.06.3-alt3
 - Fixed opening of browse snapshots window with dolphin (plasma6).
 
