@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.30.3
+Version:	1.33.0
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -20,7 +20,7 @@ Source104: telegraf.tmpfiles
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
+BuildRequires: rpm-build-golang golang >= 1.23.0
 
 %description
 Telegraf is an agent written in Go for collecting, processing, aggregating, and writing metrics.
@@ -115,6 +115,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.33.0-alt1
+- 1.33.0
+
 * Fri May 31 2024 Alexey Shabalin <shaba@altlinux.org> 1.30.3-alt1
 - 1.30.3
 
