@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Python wrapper for tshark, allowing python packet parsing using wireshark dissectors
 License: MIT
@@ -59,5 +59,8 @@ cd src
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 16 2024 Egor Ignatov <egori@altlinux.org> 0.6-alt2
+- Fix FTBFS: backport upstream patch.
+
 * Sat Sep 02 2023 Egor Ignatov <egori@altlinux.org> 0.6-alt1
 - First build for ALT
