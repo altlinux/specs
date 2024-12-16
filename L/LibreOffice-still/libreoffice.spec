@@ -37,13 +37,13 @@
 
 Name: LibreOffice-still
 %define hversion 24.2
-%define urelease 6.2
+%define urelease 7.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -296,6 +296,8 @@ Group:  Office
 Requires: %uname = %EVR
 Requires: %name-common = %EVR
 Conflicts: LibreOffice-qt6
+Provides: LibreOffice-still-qt5 = %EVR
+Obsoletes: LibreOffice-still-qt5 < %EVR
 %description qt6
 qt6 extensions for %name
 %endif
@@ -325,6 +327,8 @@ Obsoletes: %name-kde4 < %EVR
 Provides:  LibreOffice4-kde4 = %EVR
 Obsoletes: LibreOffice4-kde4 < %EVR
 Conflicts: %name-kde5
+Provides: LibreOffice-still-kde5 = %EVR
+Obsoletes: LibreOffice-still-kde5 < %EVR
 %description kde6
 KDE6 extensions for %name
 %endif
@@ -841,6 +845,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.7.2-alt1
+- New version.
+- Provide LibreOffice-still-qt5 and LibreOffice-still-kde5 to upgrade from KDE5.
+
 * Tue Dec 10 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.6.2-alt3
 - Build with KDE6 (ALT #52386).
 - Build with Turkish localization.
