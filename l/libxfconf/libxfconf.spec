@@ -10,7 +10,7 @@
 %def_disable docs
 
 Name: lib%_name
-Version: 4.19.5
+Version: 4.20.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -174,6 +174,9 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Updated to 4.20.0.
+
 * Mon Dec 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.5-alt1
 - Updated to 4.19.5.
 

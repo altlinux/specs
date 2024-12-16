@@ -1,6 +1,6 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 4.19.1
+Version: 4.20.0
 Release: alt1
 
 Summary: Thunar volume manager plugin
@@ -58,6 +58,9 @@ application and import the new pictures from your camera.
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Updated to 4.20.0.
+
 * Mon Dec 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.1-alt1
 - Updated to 4.19.1.
 
