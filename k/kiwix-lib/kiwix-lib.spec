@@ -1,24 +1,23 @@
 Name:     kiwix-lib
-Version:  12.0.0
+Version:  14.0.0
 Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
-License:  GPL-3.0
+License:  GPL-3.0-or-later
 Group:    Other
 Url:      https://github.com/kiwix/kiwix-lib
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 
 BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++
 BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
 BuildRequires: libicu-devel
 BuildRequires: libmicrohttpd-devel
 BuildRequires: libpugixml-devel
+BuildRequires: libxapian-devel
 BuildRequires: libzim-devel
 BuildRequires: mustache-cpp-devel
 BuildRequires: zlib-devel
@@ -47,8 +46,6 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %endif
 
 %build
-# Ignore warning about old Xapian version
-%add_optflags -Wno-error=cpp
 %meson
 %meson_build
 
@@ -60,13 +57,18 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_libdir/*.so.*
 
 %files -n libkiwix-devel
+%_bindir/kiwix-compile-i18n
 %_bindir/kiwix-compile-resources
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/kiwix.pc
+%_libdir/pkgconfig/libkiwix.pc
 %_man1dir/*.1*
 
 %changelog
+* Fri Dec 13 2024 Constantin Sunzow <protvin@altlinux.org> 14.0.0-alt1
+- Merge source code to main directory.
+  New version.
+
 * Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 12.0.0-alt1
 - New version.
 

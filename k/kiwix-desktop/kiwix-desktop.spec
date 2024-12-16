@@ -1,41 +1,41 @@
 Name:     kiwix-desktop
-Version:  2.3.1
+Version:  2.4.0
 Release:  alt1
 
-# no qtwebengine
-ExcludeArch: ppc64le
-
-Summary:  Kiwix for Windows and GNU/Linux desktops
-License:  GPL-3.0+
+Summary:  Offline reader for works with the highly compressed ZIM file format
+License:  GPL-3.0-or-later
 Group:    Other
-Url:      https://github.com/kiwix/kiwix-desktop
+Url:      https://kiwix.org
+VCS:      https://github.com/kiwix/kiwix-desktop.git
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-# no qtwebengine
-ExcludeArch: ppc64le
 
 Source:   %name-%version.tar
 
-BuildRequires(pre): qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-webkit-devel
-BuildRequires: qt5-webengine-devel
-BuildRequires: qt5-tools
-BuildRequires: libkiwix-devel
+BuildRequires(pre): qt6-base-devel
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: aria2
+BuildRequires: libkiwix-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools
+BuildRequires: qt6-webengine-devel
 
 Requires: aria2
 
+ExclusiveArch: %qt6_qtwebengine_arches
+
 %description
-%summary
+Kiwix is an offline reader and manager for online content
+like Wikipedia, Project Gutenberg, or TED Talks.
+Kiwix allows you to read and search through offline content
+as they were online. Similar to a browser, Kiwix works with
+the highly compressed ZIM file format.
 
 %prep
 %setup
 
 %build
-export PATH=%_qt5_bindir:$PATH
-%qmake_qt5 PREFIX=%_prefix
+export PATH=%_qt6_bindir:$PATH
+%qmake_qt6 PREFIX=%_prefix
 %make_build
 
 %install
@@ -44,12 +44,18 @@ export PATH=%_qt5_bindir:$PATH
 %files
 %doc README.md
 %_bindir/*
-%_desktopdir/*.desktop
-%_iconsdir/hicolor/*x*/apps/%name.png
 %_datadir/metainfo/*.appdata.xml
 %_datadir/mime/packages/*.xml
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/scalable/apps/kiwix-desktop.svg
+%_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Mon Dec 16 2024 Constantin Sunzow <protvin@altlinux.org> 2.4.0-alt1
+- Merge source code to main directory.
+  Build against Qt 6.
+  New version.
+
 * Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
 - New version.
 
