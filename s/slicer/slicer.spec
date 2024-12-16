@@ -4,12 +4,13 @@
 
 %define slicerver 5.6
 Name: slicer
-Version: %slicerver.1
+Version: %slicerver.2
 Release: alt1
 Summary: Multi-platform, free open source software for visualization and image computing
-License: BSD-like
+License: 3D-Slicer-1.0
 Group: Sciences/Medicine
 Url: https://www.slicer.org/
+VCS: https://github.com/Slicer/Slicer
 
 # Exclusion source: pythonqt, CTK
 ExcludeArch: %arm
@@ -229,6 +230,9 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Mon Dec 16 2024 Anton Farygin <rider@altlinux.ru> 5.6.2-alt1
+- 5.6.1 -> 5.6.2
+
 * Thu Feb 01 2024 Elizaveta Morozova <morozovaes@altlinux.org> 5.6.1-alt1
 - Updated version to 5.6.1.
 
