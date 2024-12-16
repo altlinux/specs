@@ -7,7 +7,7 @@
 
 Name: python3-module-humanfriendly
 Version: 10.0
-Release: alt1
+Release: alt2
 
 Summary: Human friendly input/output in Python
 License: MIT
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: humanfriendly-10.0-alt-drop-pipes.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -55,6 +56,7 @@ Tests for %name
 
 %prep
 %setup
+%patch
 
 %pyproject_deps_resync_metadata
 %pyproject_deps_resync_build
@@ -85,6 +87,9 @@ Tests for %name
 %python3_sitelibdir/%pypi_name/tests.py
 
 %changelog
+* Mon Dec 16 2024 Vladislav Glinkin <smasher@altlinux.org> 10.0-alt2
+- Add a patch to remove pipes.quote
+
 * Fri Oct 27 2023 Vladislav Glinkin <smasher@altlinux.org> 10.0-alt1
 - Initial build for ALT
 
