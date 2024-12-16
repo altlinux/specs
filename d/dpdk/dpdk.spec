@@ -9,7 +9,7 @@
 %def_enable afxdp
 
 Name: dpdk
-Version: 23.11.1
+Version: 23.11.2
 Release: alt1
 Url: http://dpdk.org
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
@@ -115,7 +115,9 @@ rm -f %buildroot%_libdir/*.a
 
 %files
 # BSD
+%ifnarch %{ix86}
 %_bindir/dpdk-dumpcap
+%endif
 %_bindir/dpdk-testpmd
 %_bindir/dpdk-proc-info
 
@@ -141,7 +143,9 @@ rm -f %buildroot%_libdir/*.a
 
 %if_with tools
 %files tools
+%ifnarch %{ix86}
 %_bindir/dpdk-pdump
+%endif
 %_bindir/dpdk-graph
 %_bindir/dpdk-test
 %_bindir/dpdk-test-*
@@ -155,6 +159,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 23.11.2-alt1
+- Update to LTS release 23.11.2.
+
 * Thu Aug 29 2024 Alexey Shabalin <shaba@altlinux.org> 23.11.1-alt1
 - Update to LTS release 23.11.1.
 
