@@ -3,7 +3,7 @@
 %define sover 15
 
 Name: gnuastro
-Version: 0.22
+Version: 0.23
 Release: alt1
 Summary: GNU Astronomy Utilities
 License: GPLv3+
@@ -13,7 +13,7 @@ Url: https://www.gnu.org/software/gnuastro/
 Source: https://ftp.gnu.org/pub/gnu/gnuastro/%name-%version.tar.gz
 Source2: https://ftp.gnu.org/pub/gnu/gnuastro/%name-%version.tar.gz.sig
 Source3: https://akhlaghi.org/public-pgp-key.txt#/%name.keyring
-BuildRequires: libtool
+BuildRequires: libtool libgs-devel ghostscript-utils ghostscript
 BuildRequires: pkgconfig
 BuildRequires: pkgconfig(cfitsio)
 BuildRequires: pkgconfig(gsl)
@@ -80,12 +80,13 @@ mv -v %buildroot/%_datadir/%name/completion.bash %buildroot/%_datadir/bash-compl
 
 %check
 
-#make_build check
+%make_build check
 
 
 %files
 %doc ChangeLog README NEWS THANKS AUTHORS
-%config %_sysconfdir/*.conf
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/*.conf
 %_bindir/*
 %_datadir/gnuastro
 %_man1dir/*
@@ -106,6 +107,9 @@ mv -v %buildroot/%_datadir/%name/completion.bash %buildroot/%_datadir/bash-compl
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Mon Dec 16 2024 Ilya Mashkin <oddity@altlinux.ru> 0.23-alt1
+- 0.23
+
 * Tue Feb 06 2024 Ilya Mashkin <oddity@altlinux.ru> 0.22-alt1
 - 0.22
 - Disable check
