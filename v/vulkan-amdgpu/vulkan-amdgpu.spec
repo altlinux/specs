@@ -2,7 +2,11 @@
 %define _vkdir %_datadir/vulkan/icd.d
 %define _vkldir %_datadir/vulkan/implicit_layer.d
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
+%ifarch x86_64
 %define optflags_debug -g1
+%else
+%define optflags_debug -g0
+%endif
 # As ubuntu
 %define gcc_ver 9
 
@@ -23,13 +27,13 @@
 
 Name: vulkan-amdgpu
 Version: 2024.Q4.2
-Release: alt1
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %ix86
 
 Requires: vulkan-filesystem
 
@@ -91,7 +95,9 @@ export GCC_VERSION=%{gcc_ver} \
 %if_with shader_cache
 	-DLLPC_ENABLE_SHADER_CACHE=1 \
 %endif
+%ifarch x86_64
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%endif
 %if_with clang
 	-DLLVM_USE_LINKER=mold \
 	-DCMAKE_CXX_LINK_FLAGS="-fuse-ld=mold -Wl,--thinlto-jobs=all" \
@@ -118,6 +124,10 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q4.2-alt2
+- %%ix86: disable debuginfo (should reduce memory consumption during
+  build).
+
 * Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q4.2-alt1
 - Disable %%ix86 again (out of memory during build).
 - 2024-12-4 update:
