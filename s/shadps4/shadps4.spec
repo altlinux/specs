@@ -12,7 +12,7 @@
 
 Name: shadps4
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -47,6 +47,8 @@ Source9: zydis-%zydis_commit.tar
 Source10: ext-imgui-%dear_imgui_commit.tar
 # https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source11: ext-discord-rpc-%discord_rpc_commit.tar
+
+Patch0: %name-glslang-version-alt.patch
 
 BuildRequires: boost-asio-devel
 BuildRequires: cmake
@@ -97,6 +99,7 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
 %setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%patch0 -p1
 
 %__mv -Tf ../ext-cryptopp-cmake-%cryptopp_cmake_commit externals/cryptopp-cmake
 %__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
@@ -136,6 +139,9 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %_libexecdir/%name
 
 %changelog
+* Sun Dec 15 2024 Nazarov Denis <nenderus@altlinux.org> 0.4.0-alt2
+- Build with Glslang 15 (ALT #52431)
+
 * Sat Nov 02 2024 Nazarov Denis <nenderus@altlinux.org> 0.4.0-alt1
 - Version 0.4.0
 

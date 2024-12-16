@@ -1,5 +1,5 @@
 Name: vulkan-headers
-Version: 1.3.290
+Version: 1.3.296
 Release: alt1
 Summary: Khronos group Vulkan API SDK headers
 
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 Patch: %name-alt-fix-shebang.patch
 
-BuildRequires(pre): cmake rpm-build-python3
+BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
 
 BuildArch: noarch
@@ -39,11 +39,11 @@ Vulkan SDK API registry files.
 %patch -p1
 
 %build
-%cmake
+%cmake -G Ninja -Wno-dev
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %_includedir/vulkan
@@ -55,6 +55,9 @@ Vulkan SDK API registry files.
 %_datadir/vulkan/registry
 
 %changelog
+* Wed Dec 11 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.296-alt1
+- 1.3.296.
+
 * Wed Aug 28 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.290-alt1
 - 1.3.290.
 - fix shebang requires parsing.

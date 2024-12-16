@@ -1,10 +1,10 @@
-%define soname 14
+%define soname 15
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %define optflags_lto %nil
 
 Name: glslang
-Version: 14.3.0
+Version: 15.0.0
 Release: alt1
 Epoch: 1
 
@@ -21,7 +21,7 @@ Patch0: glslang-alt-no-external-inc.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2024.3
+BuildRequires: python3-devel libspirv-tools-devel >= 2024.4
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -86,6 +86,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Sat Dec 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1:15.0.0-alt1
+- 15.0.0 (for sdk-1.3.296.0).
+
 * Wed Aug 28 2024 L.A. Kostis <lakostis@altlinux.ru> 1:14.3.0-alt1
 - 14.3.0 (for sdk-1.3.290.0).
 

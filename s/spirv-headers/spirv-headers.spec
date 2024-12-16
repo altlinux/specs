@@ -1,8 +1,8 @@
-%define git 2acb319
+%define git 2a9b6f9
 
 Name: spirv-headers
 Version: 1.5.5
-Release: alt14.g%{git}
+Release: alt15.g%{git}
 Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -46,6 +46,9 @@ includes:
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Dec 11 2024 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt15.g2a9b6f9
+- Updated to GIT 2a9b6f9 (for sdk-1.3.296.0).
+
 * Wed Aug 28 2024 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt14.g2acb319
 - Updated to GIT g2acb319 (for sdk-1.3.290.0)
 
