@@ -3,20 +3,20 @@
 Name: ansible-core
 Summary: A radically simple IT automation system
 Version: 2.18.1
-Release: alt1
+Release: alt2
 
-Group:   System/Configuration/Other
 License: GPL-3.0
+Group: System/Configuration/Other
+URL: http://www.ansible.com
+
 Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
 Source3: ansible.cfg
-
-Url: http://www.ansible.com
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Patch0: 0001-update-ansible-galaxy-resolvelib-requirement-to-0.5..patch
 
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-six
 BuildRequires: python3-module-setuptools
@@ -61,6 +61,7 @@ Group: Development/Python3
 
 %prep
 %setup -n %rname-%version
+%patch0 -p1
 grep -Rl '^#!.*python$' * | xargs subst 's|^#!.*python$|#!%__python3|'
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
@@ -86,6 +87,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 2.18.1-alt2
+- update ansible-galaxy resolvelib requirement to >= 0.5.3, < 2.0.0 (#84218)
+
 * Sat Dec 07 2024 Andrey Cherepanov <cas@altlinux.org> 2.18.1-alt1
 - New version.
 
