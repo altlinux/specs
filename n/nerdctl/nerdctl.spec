@@ -1,6 +1,6 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
-Version:  2.0.0
+Version:  2.0.2
 Release:  alt1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
@@ -14,6 +14,7 @@ Source:   %name-%version.tar
 
 Patch1:   wrap-selinuxenabled-to-wariable-to-skip-requires.patch
 Patch2:   add-sbin-to-path-to-work-in-rootless-mode.patch
+Patch3:   nerdctl-2.0.2-alt-rootless-bind-nri-directory.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -39,6 +40,7 @@ Requires: rootlesskit %name slirp4netns
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -82,6 +84,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Dec 16 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.2-alt1
+- new version 2.0.2
+
 * Wed Nov 06 2024 Mikhail Gordeev <obirvalger@altlinux.org> 2.0.0-alt1
 - new version 2.0.0
 
