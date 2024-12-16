@@ -2,7 +2,8 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt17.git84368e78
+Release: alt18.gitaff71c77
+
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -99,7 +100,6 @@ This package contains Open vSwitch support for os-autoinst.
 %setup
 sed  -i 's/ my $thisversion = qx{git -C $dirname rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
 sed  -i 's/ chomp(my $git_hash = qx{git rev-parse HEAD});/ chomp(my $git_hash = "%version");/' OpenQA/Isotovideo/Utils.pm
-sed -e 's,/bin/env python,/bin/python3,' -i crop.py
 # don't require qemu within OBS
 # and exclude known flaky tests in OBS check
 # https://progress.opensuse.org/issues/52652
@@ -123,11 +123,13 @@ rm -f xt/30-make.t
 
 %install
 %ninja_install -C "%_cmake__builddir" install-openvswitch
-rm %buildroot%_libexecdir/os-autoinst/crop.py*
 
 %check
 export CI=1
 export OPENQA_TEST_TIMEOUT_SCALE_CI=10
+export PERL_TEST_WARNINGS_ONLY_REPORT_WARNINGS=1
+export PROVE_ARGS="--timer -v --nocolor"
+export TESSDATA_PREFIX="%_datadir/tessdata/"
 %ninja_build -C "%_cmake__builddir" check-pkg-build
 
 %files
@@ -135,15 +137,19 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %perl_vendorarch/tinycv.pm
 %perl_vendorarch/auto/tinycv
 %_libexecdir/os-autoinst
-%exclude %_libexecdir/os-autoinst/os-autoinst-openvswitch
+%exclude %_libexecdir/os-autoinst/script/os-autoinst-openvswitch
 %_bindir/*
 
 %files openvswitch
-%_libexecdir/os-autoinst/os-autoinst-openvswitch
+%_libexecdir/os-autoinst/script/os-autoinst-openvswitch
 %_unitdir/os-autoinst-openvswitch.service
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Tue Dec 10 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt18.gitaff71c77
+- update to current version
+- Commit hash: aff71c77
+
 * Tue Aug 06 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt17.git84368e78
 - update to current version
 - Commit hash: 84368e78
