@@ -18,8 +18,8 @@
 %add_python_req_skip _gpgme
 
 Name: gpgme
-Version: 1.23.2
-Release: alt5
+Version: 1.24.1
+Release: alt1
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -35,16 +35,11 @@ Source: gpgme-%version.tar
 # Upstream patches
 # --
 
-# Suse
-Patch2: gpgme-D545-python310.patch
-
 # ALT
 Patch3: gpgme-1.23.1-fix-easy_install.patch
 Patch11: gpgme-1.4.3-alt-version-script.patch
 Patch15: alt-revision.patch
 
-%define gostversion 1.0.0
-Patch16: gost-constants.patch
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
@@ -163,18 +158,17 @@ GPGME-based statically linked applications.
 %prep
 %setup
 
-%patch2 -p1
 %patch3 -p2
 %patch11 -p1
 %patch15 -p2
-%patch16 -p1
 
 %if_disabled beta
 sed -i -e 's/@BETA@/no/' configure.ac
 %else
 sed -i -e 's/@BETA@/yes/' configure.ac
 %endif
-sed -i -e 's/@REVISION@/gost-%gostversion/' -e 's/@REVISION_DESC@/ALT/' configure.ac
+sed -i -e 's/@REVISION@/1/' -e 's/@REVISION_DESC@/ALT/' configure.ac
+sed -i -e 's/@COMMITID@/1/' -e 's/@COMMITID@/ALT/' configure.ac
 
 %autoreconf
 
@@ -243,6 +237,7 @@ popd
 %files
 %_bindir/gpgme-tool
 %_bindir/gpgme-json
+%_man1dir/gpgme-json.1.*
 
 %files common
 %doc AUTHORS NEWS README THANKS
@@ -261,8 +256,7 @@ popd
 %_bindir/gpgme-config
 %_includedir/*.h
 %_includedir/gpgme++/
-%_includedir/QGpgME/
-%_includedir/qgpgme/
+%_includedir/qgpgme-qt*
 %_libdir/*.so
 %_libdir/cmake/Gpgmepp/
 %_libdir/cmake/QGpgme*/
@@ -270,6 +264,7 @@ popd
 %_infodir/*.info*
 %_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name-*.pc
+%_pkgconfigdir/gpgmepp.pc
 #%_datadir/common-lisp/source/%name
 
 %if_enabled static
@@ -292,6 +287,15 @@ popd
 %_libdir/libqgpgmeqt6.so.%qgpgme_sover.*
 
 %changelog
+* Mon Dec 16 2024 Paul Wolneykien <manowar@altlinux.org> 1.24.1-alt1
+- Added pkgconfig file for libgpgmepp (-lgpgmepp).
+- Added manpage for gpgme-json(1).
+- Fixed QT include files: qgpgme-qt{5,6} now.
+- Updated alt-revision.patch: added COMMITID (= 1).
+- Drop GOST patches.
+- Drop already applied patch gpgme-D545-python310.patch.
+- Updated to v1.24.1.
+
 * Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 1.23.2-alt5
 - fix build requires
 
