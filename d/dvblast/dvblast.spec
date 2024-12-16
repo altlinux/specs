@@ -1,12 +1,11 @@
 Name: dvblast
 Version: 3.4
-Release: alt3
+Release: alt4
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
 Group: Video
 Url: http://www.videolan.org/projects/dvblast.html
-Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -47,6 +46,9 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Mon Dec 16 2024 Alexei Takaseev <taf@altlinux.org> 3.4-alt4
+- update to git:bca0be676f33889e38a9a63a0b7b498663e1bdc0
+
 * Fri Aug 18 2023 Alexei Takaseev <taf@altlinux.org> 3.4-alt3
 - update to git:4e18d80c2474093925248b01c70c4ead35051e30
 
