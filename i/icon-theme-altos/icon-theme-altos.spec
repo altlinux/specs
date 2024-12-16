@@ -1,11 +1,11 @@
 Name: icon-theme-altos
-Version: 0.0.2
-Release: alt2
+Version: 0.1.0
+Release: alt1
 
 Group: Graphics
 Summary: ALT icons theme
 Url: https://altlinux.org
-License: LGPL-3.0-only
+License: GPL-3.0 and LGPL-2.1
 
 BuildArch: noarch
 
@@ -94,11 +94,14 @@ done
 hardlink -c -v %buildroot/%_iconsdir/
 
 %files
-%doc COPYING*
+%doc COPYING* AUTHORS
 %_iconsdir/altos/
 %_iconsdir/altos-dark/
 
 %changelog
+* Mon Dec 16 2024 Sergey V Turchin <zerg at altlinux dot org> 0.1.0-alt1
+- update icons
+
 * Thu Dec 05 2024 Sergey V Turchin <zerg at altlinux dot org> 0.0.2-alt2
 - don't create symlinks for aliases
 
