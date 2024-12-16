@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo8.0
-Version: 8.0.3
+Version: 8.0.4
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -207,6 +207,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Dec 16 2024 Alexei Takaseev <taf@altlinux.org> 8.0.4-alt1
+- 8.0.4
+
 * Sat Nov 23 2024 Alexei Takaseev <taf@altlinux.org> 8.0.3-alt1
 - 8.0.3
 
