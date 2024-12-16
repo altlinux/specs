@@ -7,14 +7,13 @@
 %def_without help_index
 
 Name: 	  fpc
-Version:  3.2.2
-Release:  alt4
+Version:  3.2.3
+Release:  alt1
 Epoch:    3
 
 Summary:  Free Pascal Compiler -- Meta Package
 License:  GPL-2.0+ and LGPL-2.1+
 Group:    Development/Other
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -56,7 +55,8 @@ Patch3: fpc-mouse-click.patch
 
 # Patches from Debian
 Patch12: fpc-fix-FPCDIR-in-fpcmake.patch
-Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
+# The following patch is no longer relevant as the changes are in upstream.
+# Patch13: fpc-fix-encoding-of-localization-files-to-be-utf8.patch
 Patch15: fpc-add_arm64_manpage.patch
 Patch16: fpc-add-arm64-support.patch
 Patch17: fpc-fix-path-of-localization-files.patch
@@ -80,10 +80,13 @@ Patch31: fpc-docs-message.patch
 Patch32: fpc-auto-add-help-index.patch
 # Show progress in writeidx
 Patch33: fpc-writeidx-show-progress.patch
-Patch34: fpc-3.2.0--glibc-2.34.patch
+# The following patch is no longer relevant as the changes are in upstream.
+# Patch34: fpc-3.2.0--glibc-2.34.patch
 Patch35: fpc-fppkg-pathes.patch
 Patch36: fpc-alt-unlocalized-fpc-usage-in-fpcdocs.patch
 Patch37: fpc-alt-remove-Using-help.patch
+Patch38: hyperref-2022.patch
+Patch39: latex-docs-cyrillic-alt-fix.patch
 
 Requires: fpc-units-rtl
 Requires: fpc-compiler
@@ -148,9 +151,10 @@ need, and can skip installing this metapackage.
 pushd fpcsrc
 %patch1 -p0
 %patch3 -p0
+find tests -iname '*.o' -exec rm "{}" \;
 popd
 %patch12 -p1
-%patch13 -p1
+#patch13 -p1
 #patch15 -p1 TODO see patch16
 #patch16 -p1 TODO need adapt
 %patch17 -p2
@@ -168,10 +172,12 @@ popd
 %patch31 -p0
 %patch32 -p2
 %patch33 -p2
-%patch34 -p1 -d fpcsrc
+#patch34 -p1 -d fpcsrc
 %patch35 -p2
 %patch36 -p2
 %patch37 -p2
+%patch38 -p0
+%patch39 -p1
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -569,6 +575,7 @@ Compiler.
 %fpc_unitdir/fcl-db
 %fpc_unitdir/fcl-extra
 %fpc_unitdir/fcl-fpcunit
+%fpc_unitdir/fcl-hash
 %fpc_unitdir/fcl-image
 %fpc_unitdir/fcl-js
 %fpc_unitdir/fcl-json
@@ -1039,6 +1046,10 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Sat Dec 14 2024 Artem Kurashov <saahriktu@altlinux.org> 3:3.2.3-alt1
+- New version.
+- Add patches for documentation.
+
 * Thu Jun 09 2022 Andrey Cherepanov <cas@altlinux.org> 3:3.2.2-alt4
 - Build documentation in CHM format.
 

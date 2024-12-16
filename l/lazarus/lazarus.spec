@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 3.6
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -12,8 +12,6 @@ License: GPL-2.0 and LGPL-2.0 and MPL-1.1
 Group:   Development/Other
 Url:     http://www.lazarus-ide.org/
 # Git: https://gitlab.com/freepascal.org/lazarus/lazarus.git
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
@@ -35,6 +33,7 @@ Patch12: lazarus-lcl-with-multple-widget-sets.patch
 
 # Other patches
 Patch13: lazarus-customform-sigsegv-fix.patch
+Patch14: lazarus_fpc_3.2.3-alt.patch
 
 BuildRequires(pre): qt5-base-devel
 BuildRequires(pre): rpm-build-python3
@@ -142,6 +141,7 @@ subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch11 -p1
 %patch12 -p1
 %patch13 -p2
+%patch14 -p0
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
@@ -368,6 +368,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt5Pas.so
 
 %changelog
+* Sat Dec 14 2024 Artem Kurashov <saahriktu@altlinux.org> 1:3.6-alt2
+- Fixed for build with fpc 3.2.3.
+
 * Sat Sep 28 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.6-alt1
 - New version.
 
