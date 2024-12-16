@@ -6,7 +6,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.295
+%define _vk_api_version 1.3.301
 
 %def_with clang
 %def_with wayland
@@ -22,14 +22,14 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2024.Q3.3
+Version: 2024.Q4.2
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-ExclusiveArch: x86_64 %ix86
+ExclusiveArch: x86_64
 
 Requires: vulkan-filesystem
 
@@ -118,6 +118,17 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q4.2-alt1
+- Disable %%ix86 again (out of memory during build).
+- 2024-12-4 update:
+  + icd: bump vulkan version
+  + llvm-dialects: Updated to 50e4ca3a5c36
+  + llvm-project: Updated to 07d4dd012428
+  + gpurt: Updated to aa5ba689e8c3
+  + llpc: Updated to 1d04cdcb4c3d
+  + pal: Updated to b6da370a9bc6
+  + xgl: Updated to a367518e0bf3
+
 * Mon Oct 14 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q3.3-alt1
 - 2024-09-30 update:
   + icd: bump vulkan version
