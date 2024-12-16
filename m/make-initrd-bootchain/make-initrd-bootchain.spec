@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt26
+Release: alt27
 
 Summary: %child modules set for %parent
 License: GPL-3.0
@@ -208,6 +208,12 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Mon Dec 16 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt27
+- added a new argument to control memory overflow
+- added a new parameter to change TMPFS size
+- image saving moved from /run to $mntdir
+- updated documentation source
+
 * Sat Dec 07 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt26
 - use MemAvailable with /dev/ramN
 
