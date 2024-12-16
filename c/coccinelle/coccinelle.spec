@@ -1,9 +1,13 @@
 # coccinelle.spec
 %define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict,unresolved=relaxed
+%ifnarch armh
+%define _stripped_files_terminate_build 1
+%endif
 
 Name:		coccinelle
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary:	Semantic patching for Linux (spatch)
 Group:		Development/C
 License:	GPL-2.0-only
@@ -13,7 +17,7 @@ Provides:	spatch
 Requires:	python3-dev
 
 Source:		%name-%version.tar
-BuildRequires(pre): rpm-build-ocaml >= 1.6.1
+BuildRequires(pre): rpm-build-ocaml
 BuildRequires(pre): rpm-build-python3
 BuildRequires:	ocaml >= 3.12.1
 BuildRequires:	ocaml-findlib
@@ -38,8 +42,9 @@ Provides: ocaml-cmx(Coccilib) = %version-%release
 %add_findreq_skiplist %python3_sitelibdir/coccilib/trac.py
 
 %description
-Coccinelle (French for "ladybug") is a utility for matching and transforming
-the source code of programs written in the C programming language.
+Coccinelle (French for "ladybug") is a utility for matching and
+transforming the source code of programs written in the C programming
+language.
 
 The source code to be matched or replaced is specified using
 a "semantic patch" syntax based on the patch syntax.
@@ -91,7 +96,7 @@ BuildArch: noarch
 %checkinstall_summary.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup
 sed -i '1s|^#!.*python.*|#!%__python3|' tools/pycocci
 
 # see https://bugzilla.altlinux.org/48475
@@ -101,12 +106,10 @@ find . -name Makefile | xargs sed -r  -i 's/-custom\s/-output-complete-exe /g'
 ./autogen
 %configure \
 	--with-python=%__python3 \
-%ifnarch x86_64
 	--disable-opt \
-%endif
 	%nil
 
-%make_build VERBOSE=yes
+make VERBOSE=yes
 
 %install
 %make DESTDIR=%buildroot install
@@ -157,7 +160,7 @@ cd %_docdir/%name-demos-%version
 %_bindir/pycocci
 %_bindir/spatch
 %_bindir/spgen
-%_libdir/%name/
+%_libdir/%name
 %python3_sitelibdir/coccilib
 %_man1dir/*.1*
 %_man3dir/Coccilib.3cocci*
@@ -169,6 +172,12 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Mon Dec 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt2
+- Disable optimization on x86_64 (as it is already on other architectures).
+- spec: Disable parallel build as it causing failures.
+- spec: Workaround FTBFS in p10 (due to version dependence of rpm-build-ocaml).
+- spec: Clean up and brp improvements.
+
 * Fri Nov 15 2024 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
 - Update to 1.3.0 (2024-11-12).
 
