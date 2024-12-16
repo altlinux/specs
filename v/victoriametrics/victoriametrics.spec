@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics
-Version: 1.105.0
+Version: 1.108.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -29,7 +29,7 @@ Patch: %name-%version.patch
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.21
+BuildRequires: rpm-build-golang golang >= 1.23.1
 Requires(pre): %name-common = %EVR
 Provides: victoria-metrics = %EVR
 
@@ -211,6 +211,9 @@ install -m644 %SOURCE13 %buildroot%_sysconfdir/%name/vmauth/config.yml
 %_unitdir/vmauth.service
 
 %changelog
+* Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.108.0-alt1
+- 1.108.0
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.105.0-alt1
 - 1.105.0.
 

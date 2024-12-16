@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 0.37.0
+Version: 1.3.2
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -19,7 +19,7 @@ Patch: %name-%version.patch
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.21
+BuildRequires: rpm-build-golang golang >= 1.23.1
 
 %description
 VictoriaLogs is open source user-friendly database for logs from VictoriaMetrics.
@@ -91,6 +91,9 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %doc docs/VictoriaLogs/QuickStart.md docs/VictoriaLogs/README.md docs/VictoriaLogs/data-ingestion
 
 %changelog
+* Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 0.37.0-alt1
 - 0.37.0
 
