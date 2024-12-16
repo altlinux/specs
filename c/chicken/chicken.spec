@@ -4,8 +4,8 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: chicken
-Version: 5.2.0
-Release: alt2
+Version: 5.4.0
+Release: alt1
 License: BSD style (see LICENSE)
 Group: Development/Scheme
 Url: http://www.call-with-current-continuation.org/
@@ -96,6 +96,9 @@ done
 %_libdir/lib*.a
 
 %changelog
+* Mon Dec 16 2024 Alexander Danilov <admsasha@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.0-alt2
 - Fixed build with LTO.
 
