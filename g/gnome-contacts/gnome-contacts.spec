@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-contacts
-Version: %ver_major.0
+Version: %ver_major.1.1
 Release: alt1%beta
 
 Summary: Contacts manager for GNOME
@@ -81,6 +81,9 @@ BuildRequires: pkgconfig(gstreamer-1.0)
 %doc README*
 
 %changelog
+* Mon Dec 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1.1-alt1
+- 47.1.1
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
