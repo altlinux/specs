@@ -1,11 +1,12 @@
 Name:           vim-plugin-nim
 Version:        1.1.2
-Release:        alt1
+Release:        alt2
 Source:         %name-%version.tar
 License:        MIT
 Summary:        Nim language support for Vim
 Group:          Editors
 BuildArch:      noarch
+URL:            https://github.com/zah/nim.vim
 
 %description
 This provides Nim language support for Vim:
@@ -28,5 +29,8 @@ done
 %_datadir/vim/*/*
 
 %changelog
+* Mon Dec 16 2024 Fr. Br. George <george@altlinux.ru> 1.1.2-alt2
+- Add URL
+
 * Mon Jun 05 2023 Fr. Br. George <george@altlinux.ru> 1.1.2-alt1
 - Initial build for ALT
