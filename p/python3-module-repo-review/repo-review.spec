@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.2
+Version: 0.11.3
 Release: alt1
 Summary: Framework that can run checks on repos
 License: BSD-3-Clause
@@ -22,8 +22,8 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 # sp-repo-review is not packaged yet
 %add_pyproject_deps_check_filter sp-repo-review
-%pyproject_builddeps_metadata_extra test
 %pyproject_builddeps_metadata_extra cli
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -37,6 +37,9 @@ to be installed.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -54,6 +57,9 @@ to be installed.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Dec 16 2024 Stanislav Levin <slev@altlinux.org> 0.11.3-alt1
+- 0.11.2 -> 0.11.3.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
 - 0.11.0 -> 0.11.2.
 
