@@ -29,7 +29,7 @@
 #%%define _libexecdir %%_prefix/libexec
 
 Name: snapd
-Version: 2.63
+Version: 2.66.1
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -40,7 +40,8 @@ Source1: https://%provider_prefix/releases/download/%version/%{name}_%version.on
 Patch3500: snapd-loongarch64.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang rpm-build-systemd
+BuildRequires(pre): rpm-macros-golang rpm-macros-systemd
+BuildRequires: rpm-build-golang rpm-build-systemd golang >= 1.18
 BuildRequires: libsystemd-devel
 BuildRequires: autoconf-archive
 # for generate manpages
@@ -460,6 +461,9 @@ fi
 %endif
 
 %changelog
+* Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 2.66.1-alt1
+- 2.66.1
+
 * Tue Jun 25 2024 Alexey Shabalin <shaba@altlinux.org> 2.63-alt1
 - 2.63
 
