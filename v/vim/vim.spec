@@ -49,7 +49,7 @@
 Name: vim
 %define branch 9.1
 Version: %branch.0917
-Release: alt2
+Release: alt3
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -683,6 +683,9 @@ popd
 find %buildroot%_datadir/vim \( -name '*.info' -o -name 'README.txt' \) -print0 |
 	xargs -r0 rm -f --
 
+# To avoid conflicts with vim-plugin-nim, which seems to have more features.
+rm %buildroot%_datadir/vim/ftplugin/nim.vim
+
 for i in autoload colors compiler ftplugin indent keymap lang macros plugin spell syntax tools tutor; do
     cp -f runtime/$i/README.txt README_$i.txt
 done
@@ -1072,6 +1075,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Dec 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0917-alt3
+- vim-common: dropped ftplugin/nim.vim to avoid conflict
+  with vim-plugin-nim (ALT#52424).
+
 * Thu Dec 12 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0917-alt2
 - Replace vim-plugin-mediawiki-syntax package (ALT#52413).
 
