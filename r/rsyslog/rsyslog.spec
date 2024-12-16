@@ -28,8 +28,8 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2408.0
-Release: alt2
+Version: 8.2412.0
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -687,6 +687,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 8.2412.0-alt1
+- New version 8.2412.0.
+
 * Mon Oct 14 2024 Alexey Shabalin <shaba@altlinux.org> 8.2408.0-alt2
 - Fixed run systemd unit in classic mode (ALT#44911).
 
