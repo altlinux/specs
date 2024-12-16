@@ -1,5 +1,5 @@
 Name: kernel-image-6.13
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	6.12
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
@@ -122,7 +122,11 @@ BuildRequires: ccache
 %endif
 
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iproute2
+BuildRequires: ltp >= 20210524-alt2
+BuildRequires: rpm-build-vm-run >= 1.30
+}}
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
@@ -589,6 +593,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 16 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc3
+- Update to v6.13-rc3 (2024-12-15).
+
 * Mon Dec 09 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc2
 - Update to v6.13-rc2 (2024-12-08).
 - config-aarch64: add Qualcomm SoCs based devices support.
