@@ -4,7 +4,7 @@
 %def_disable build_server
 
 Name: scrcpy
-Version: 3.0.2
+Version: 3.1
 Release: alt1
 Summary: Display and control your Android device screen
 License: Apache-2.0
@@ -81,6 +81,9 @@ rm %buildroot%_desktopdir/*.desktop
 %_datadir/bash-completion/completions/scrcpy
 
 %changelog
+* Mon Dec 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1-alt1
+- Updated to v3.1.
+
 * Mon Dec 09 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.0.2-alt1
 - Updated to v3.0.2 (ALT#52377).
 
