@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: addwater
-Version: 1.1.6
+Version: 1.2.2
 Release: alt1
 
 Summary: Keep Firefox in fashion
@@ -19,9 +19,9 @@ BuildRequires: meson >= 0.59.0
 BuildRequires: gtk4-update-icon-cache
 BuildRequires: pkgconfig(gio-2.0)
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstreamcli
-BuildRequires: %_bindir/glib-compile-schemas
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
+BuildRequires: libgio
 %endif
 
 BuildArch: noarch
@@ -51,7 +51,7 @@ in the U.S. and other countries.
 %setup
 
 %build
-%meson
+%meson -Dprofile=user
 %meson_build
 
 %install
@@ -66,10 +66,15 @@ in the U.S. and other countries.
 %_datadir/%name
 %_desktopdir/%APP_ID.desktop
 %_datadir/glib-2.0/schemas/%APP_ID.gschema.xml
-%_iconsdir/hicolor/scalable/apps/%APP_ID.svg
-%_iconsdir/hicolor/symbolic/apps/apps/%APP_ID-symbolic.svg
+%_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Mon Dec 16 2024 Oleg Shchavelev <oleg@altlinux.org> 1.2.2-alt1
+- New version 1.2.2
+- Update build dependencies for check
+- Update glob to correct the path to the icons
+- Add 'profile' option with value 'user' in Meson build command
+
 * Wed Nov 13 2024 Oleg Shchavelev <oleg@altlinux.org> 1.1.6-alt1
 - Initial build
