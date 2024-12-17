@@ -57,7 +57,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -76,6 +76,8 @@ Patch23: blender-2.80-alt-use-system-glog.patch
 Patch24: blender-2.90-alt-non-x86_64-linking.patch
 Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
+Patch27: blender-4.3.0-upstream-Fix-FFmpeg-deprecation-warnings.patch
+Patch28: blender-4.3.0-upstream-Fix-Remove-internal-ffmpeg-API-usage-fix-ffmpeg-7-co.patch
 
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
@@ -298,6 +300,9 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
+%patch28 -p1
+
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
@@ -470,6 +475,9 @@ popd
 %endif
 
 %changelog
+* Mon Dec 16 2024 Egor Ignatov <egori@altlinux.org> 4.3.0-alt2
+- Backport upstream patches to fix build with ffmpeg >= 7.0.
+
 * Mon Nov 25 2024 Egor Ignatov <egori@altlinux.org> 4.3.0-alt1
 - Update to 4.3.0.
 - Enable hiprt (thx lakostis@).
