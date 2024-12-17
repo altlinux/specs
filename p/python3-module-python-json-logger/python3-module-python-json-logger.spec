@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.7
-Release: alt2
+Version: 3.2.1
+Release: alt1
 
 Summary: Json Formatter for the standard python logger
 License: BSD-2-Clause
@@ -17,6 +17,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-freezegun
 %endif
 
 BuildArch: noarch
@@ -38,12 +39,7 @@ we can stop writing custom parsers for syslog type records.
 %pyproject_install
 
 %check
-# delesect for python3.12
-%pyproject_run_pytest -v -k "\
-not test_custom_object_serialization \
-and not test_percentage_format \
-and not test_rename_reserved_attrs"
-
+%pyproject_run_pytest -v
 
 %files
 %doc *.md
@@ -51,6 +47,9 @@ and not test_rename_reserved_attrs"
 %python3_sitelibdir/%{pyproject_distinfo python_json_logger}
 
 %changelog
+* Tue Dec 17 2024 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt1
+- New version 3.2.1.
+
 * Mon Jan 22 2024 Anton Vyatkin <toni@altlinux.org> 2.0.7-alt2
 - Fixed FTBFS.
 
