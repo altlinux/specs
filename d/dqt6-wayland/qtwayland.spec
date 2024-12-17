@@ -3,7 +3,7 @@
 
 Name: dqt6-wayland
 Version: 6.7.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: System/Libraries
 Summary: Qt6 - Wayland platform support and QtCompositor module
@@ -78,7 +78,7 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-waylandcompositor
 Summary: Qt6 library
 Group: System/Libraries
-AutoProv: no,lib
+AutoProv: yes,noqml6
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-waylandcompositor
@@ -87,7 +87,7 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-waylandclient
 Summary: Qt6 library
 Group: System/Libraries
-AutoProv: no,lib
+AutoProv: yes,noqml6
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-waylandclient
@@ -128,7 +128,6 @@ Requires: libdqt6-core = %_dqt6_version
 %DQ6build \
     -DFEATURE_wayland_client:BOOL=ON \
     -DFEATURE_wayland_server:BOOL=ON \
-    -DCMAKE_MAKE_PROGRAM=ninja \
     #
 
 %if %qdoc_found
@@ -207,6 +206,9 @@ done
 %endif
 
 %changelog
+* Tue Dec 17 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
+- provide dqml6 instead qml6
+
 * Thu Oct 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 
