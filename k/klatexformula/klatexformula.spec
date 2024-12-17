@@ -1,6 +1,6 @@
 Name: klatexformula
 Version: 4.1.0
-Release: alt2.2
+Release: alt2.3
 
 Summary: Generating images from LaTeX equations
 License: GPLv2
@@ -42,6 +42,9 @@ TODO: make shared version of %name-devel.
 %patch2 -p2
 %patch3 -p2
 
+# Quick hotfix for python3.13
+grep -rl pipes | xargs sed -i 's/pipes/shlex/'
+
 %build
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
@@ -75,6 +78,9 @@ done
 %_libdir/lib*.so
 
 %changelog
+* Tue Dec 17 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2.3
+- NMU: dropped dependency on pipes.
+
 * Fri Oct 20 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2.2
 - NMU: dropped dependency on distutils.
 
