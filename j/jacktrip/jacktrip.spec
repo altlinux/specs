@@ -1,5 +1,5 @@
 Name:    jacktrip
-Version: 2.3.1
+Version: 2.4.1
 Release: alt1
 
 Summary: JackTrip: multi-machine audio network performance over the Internet
@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(Qt6WebEngineCore)
 BuildRequires: pkgconfig(Qt6WebSockets)
 BuildRequires: python3(yaml)
 BuildRequires: python3(jinja2)
+BuildRequires: qt6-tools
 
 %description
 It supports any number of channels (as many as the computer/network can handle)
@@ -55,5 +56,8 @@ of bidirectional, high quality, uncompressed audio signal streaming.
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Dec 17 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.4.1-alt1
+- 2.3.1 -> 2.4.1
+
 * Wed Aug 21 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus
