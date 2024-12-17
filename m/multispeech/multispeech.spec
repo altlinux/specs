@@ -3,7 +3,7 @@
 
 Name:    multispeech
 Version: 4.6.2
-Release: alt1
+Release: alt2
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -20,9 +20,6 @@ BuildRequires: libsoundtouch-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-locale-devel
 BuildRequires: boost-program_options-devel
-BuildRequires:  libboost_iostreams1.85.0
-BuildRequires:  libboost_regex1.85.0
-BuildRequires:  libboost_thread1.85.0
 BuildRequires: libpulseaudio-devel
 BuildRequires: autoconf-archive
 BuildRequires: automake
@@ -87,5 +84,8 @@ mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
 %_libdir/speech-dispatcher-modules/sd_%name
 
 %changelog
+* Mon Dec 16 2024 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt2
+- Fixed the build after the boost update
+
 * Wed Sep 25 2024 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt1
 - Initial build for Sisyphus (ALT bugg: 51045)
