@@ -1,6 +1,6 @@
 Name: tree-sitter
-Version: 0.24.4
-Release: alt3
+Version: 0.24.5
+Release: alt1
 
 Summary: Parser generator tool and an incremental parsing library
 License: MIT
@@ -8,7 +8,6 @@ Group: Development/Tools
 
 Url: https://github.com/tree-sitter/tree-sitter
 Source: %name-%version.tar
-Patch: tree-sitter-0.24.4-alt-correct-next-sibling-of-zero-width-node.patch
 
 BuildRequires: gcc make
 %ifnarch %e2k
@@ -45,7 +44,6 @@ Tree-sitter CLI tool
 
 %prep
 %setup
-%autopatch -p1
 
 %ifnarch %e2k
 mkdir -p .cargo
@@ -102,6 +100,9 @@ install -d %{buildroot}%{_libdir}/%name
 %endif
 
 %changelog
+* Tue Dec 17 2024 Vladimir Didenko <cow@altlinux.ru> 0.24.5-alt1
+- new version
+
 * Tue Nov 19 2024 Michael Shigorin <mike@altlinux.org> 0.24.4-alt3
 - E2K: skip cli build for now (BR: rust-cargo)
 
