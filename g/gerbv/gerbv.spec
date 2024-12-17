@@ -1,23 +1,20 @@
 Name: gerbv
-Version: 2.7.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Gerber file viewer
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Url: http://gerbv.gpleda.org/
-License: GPL
+Url: https://github.com/gerbv/gerbv
+License: GPLv2
 Group: Graphics
 
-# Source-url: http://downloads.sourceforge.net/gerbv/%name-%version.tar.gz
+# Source-url: https://github.com/gerbv/gerbv/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: %name-2.7.0-Fix-Werror-format-security-problem.patch
-Patch3: gerbv-2.7.0-gcc10.patch
-
-# Automatically added by buildreq on Wed Nov 12 2008
-BuildRequires: desktop-file-utils gcc-c++ libgtk+2-devel libpng-devel
+BuildRequires: ImageMagick-tools
+BuildRequires: gcc-c++ libgtk+2-devel libdxflib-devel
 
 %description
 Gerber Viewer (gerbv) is a viewer for Gerber files. Gerber files
@@ -57,12 +54,11 @@ Header files for lib%name library.
 
 %prep
 %setup
-%patch1 -p1
-%patch3 -p2
+subst 's|set -e||' utils/git-version-gen.sh
 
 %build
 %autoreconf
-%configure --enable-exportpng --enable-gtk2 --disable-static
+%configure --enable-dxf --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -80,11 +76,12 @@ rm -f %buildroot%_desktopdir/*.cache
 %dir %_datadir/gerbv
 %dir %_datadir/gerbv/doc
 %dir %_datadir/gerbv/scheme
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README
 %_bindir/gerbv
 %_man1dir/gerbv.*
 %_datadir/gerbv/doc/*
 %_datadir/gerbv/scheme/*.scm
+%_datadir/glib-2.0/schemas/org.geda-user.gerbv.gschema.xml
 %_datadir/gerbv/gerbv_icon.ico
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
@@ -102,6 +99,18 @@ rm -f %buildroot%_desktopdir/*.cache
 %_datadir/gerbv/example/*
 
 %changelog
+* Tue Dec 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt1
+- new version 2.10.0 (with rpmrb script)
+- fixed:
+ + CVE-2023-4508: Out-of-bounds memory access of filename
+ + CVE-2021-40400: Gerbv RS-274X aperture macro outline primitive out-of-bounds read vulnerability
+ + CVE-2021-40403: Gerbv pick-and-place rotation parsing use of uninitialized variable vulnerability
+ + CVE-2021-40401: Gerbv RS-274X aperture definition tokenization use-after-free vulnerability
+ + CVE-2021-40393: RS-274X format aperture macro variables out-of-bounds write vulnerability
+ + CVE-2021-40394: Gerbv RS-274X aperture macro outline primitive integer overflow vulnerability
+ + CVE-2021-40391: Gerbv drill format T-code tool number out-of-bounds write vulnerability
+- enable build with libdxf
+
 * Mon Mar 01 2021 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
 - new version 2.7.0 (with rpmrb script)
 
