@@ -1,5 +1,5 @@
 Name: installer-distro-regular
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Installer configuration for ALT Regular
@@ -26,6 +26,7 @@ Requires: alterator-datetime
 Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
+Requires: alterator-hostname
 Requires: x-cursor-theme-jimmac
 
 %description stage2
@@ -68,6 +69,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Tue Dec 17 2024 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- add hostname step
+
 * Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - stage3: remove dependency on alterator-net-eth
 
