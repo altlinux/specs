@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  24.09
-Release:  alt2
+Version:  24.12
+Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -165,6 +165,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Sun Dec 15 2024 Ivan A. Melnikov <iv@altlinux.org> 24.12-alt1
+- 24.12
+
 * Tue Oct 08 2024 Ivan A. Melnikov <iv@altlinux.org> 24.09-alt2
 - use system simde-devel
 - basic loongarch64 support
