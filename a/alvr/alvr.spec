@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.11.1
-Release: alt7
+Release: alt8
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -51,9 +51,7 @@ Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Gtk) = 3.0
 Requires: libalsa
-Requires: libavcodec60
-Requires: libavfilter9
-Requires: libavutil58
+Requires: ffmpeg
 Requires: libunwind
 Requires: libvulkan1
 Requires: libx264
@@ -165,6 +163,9 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Tue Dec 17 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt8
+- replacing some dependencies with ffmpeg
+
 * Fri Nov 29 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt7
 - automatic detection and connection of IP address for WI-FI and USB
 
