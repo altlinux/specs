@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: Terminals
@@ -22,6 +22,8 @@ Provides: x-terminal-emulator xvt %_x11bindir/xvt
 #Requires: fonts-bitmap-misc
 Provides: kde5-konsole = %EVR
 Obsoletes: kde5-konsole < %EVR
+Provides: kde4-konsole = %EVR
+Obsoletes: kde4-konsole < %EVR
 
 Source: %rname-%version.tar
 Source10: profiles.tar
@@ -164,6 +166,9 @@ __EOF__
 
 
 %changelog
+* Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt3
+- update provides/obsoletes
+
 * Wed Nov 20 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
 - add fix against kdebug#482149
 
