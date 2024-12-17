@@ -2,7 +2,7 @@
 
 Name: clamsmtp
 Version: 1.10
-Release: alt4
+Release: alt4.1
 
 Summary: SMTP virus-scanning proxy
 License: BSD
@@ -36,6 +36,8 @@ intercepted and scanned before forwarding.
 %patch1 -p1
 
 %build
+# gcc14
+%add_optflags -Wno-error=incompatible-pointer-types
 %configure
 %make_build
 
@@ -65,6 +67,9 @@ install -m644 %SOURCE3 %_builddir/%name-%version/README.ALT-ru_RU.UTF-8
 %_man8dir/*
 
 %changelog
+* Tue Dec 17 2024 Leontiy Volodin <lvol@altlinux.org> 1.10-alt4.1
+- fix build with gcc14
+
 * Thu Feb 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.10-alt4
 - NMU: add systemd unit and tmpfiles config
 
