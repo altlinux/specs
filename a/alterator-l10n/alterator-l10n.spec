@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.147
-Release: alt2
+Version: 2.9.148
+Release: alt1
 
 Summary: translations for all alterator modules
 License: GPL
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Dec 17 2024 Anton Midyukov <antohami@altlinux.org> 2.9.148-alt1
+- alterator-hostname: Initial translations and help
+
 * Tue Nov 12 2024 Dmitry Terekhin <jqt4@altlinux.org> 2.9.147-alt2
 - alterator-users: add localadmin as the default login
 
