@@ -6,12 +6,12 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.21.2
+Version: 0.21.3
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
 License: Apache-2.0
-URL: https://github.com/iovisor/bpftrace
+Url: https://github.com/bpftrace/bpftrace
 # Docs: https://github.com/iovisor/bpftrace/blob/master/docs/reference_guide.md
 # Docs: https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md
 # Docs: http://www.brendangregg.com/BPF/bpftrace-cheat-sheet.html
@@ -22,8 +22,8 @@ URL: https://github.com/iovisor/bpftrace
 Source: %name-%version.tar
 ExclusiveArch:	x86_64 aarch64 loongarch64
 
-%define llvm_ver 17
-%define llvm_pkgver %llvm_ver.0
+%define llvm_ver 18
+%define llvm_pkgver %llvm_ver.1
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: asciidoctor
 BuildRequires: binutils-devel
@@ -46,8 +46,9 @@ BuildRequires: xxd
 
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
+BuildRequires(pre): rpm-build-kernel
 BuildRequires: dwarves
-BuildRequires: kernel-headers-modules-un-def
+BuildRequires: kernel-headers-modules-%kernel_latest
 BuildRequires: libgtest-devel
 BuildRequires: rpm-build-vm
 }}
@@ -78,7 +79,6 @@ export Clang_DIR=/usr/share/cmake/Modules/clang
 %endif
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DLLVM_DIR=$(llvm-config-%llvm_ver --cmakedir) \
-	-DLLVM_REQUESTED_VERSION=%llvm_ver \
 	-DOFFLINE_BUILDS:BOOL=ON \
 	-DALLOW_UNSAFE_PROBE:BOOL=ON \
 	-DUSE_SYSTEM_BPF_BCC:BOOL=ON \
@@ -130,6 +130,12 @@ fi
 %_man8dir/*
 
 %changelog
+* Tue Dec 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.21.3-alt1
+- Update to v0.21.3 (2024-12-16).
+- spec: Fix FTBFS due to removal of un-def kernel flavour.
+- spec: Switch build to Clang/LLVM 18.
+- spec: Update Url.
+
 * Sat Jul 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.21.2-alt1
 - Update to v0.21.2 (2024-07-19).
 
