@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.6.4
+Version: 1.6.5
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -91,9 +91,6 @@ Requires: simple-scan
 Requires: imagination
 %endif
 Requires: connector
-%ifarch x86_64 aarch64
-Requires: chromium
-%endif
 Requires: fonts-otf-mozilla-fira
 Requires: itest
 Requires: kumir2
@@ -555,6 +552,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.5-alt1
+- Remove chromium from requrements.
+
 * Thu Dec 12 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.4-alt1
 - Adapt for KDE6.
 
