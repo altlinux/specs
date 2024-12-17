@@ -1,5 +1,5 @@
 Name: sympa
-Version: 6.2.72
+Version: 6.2.74
 Release: alt1
 
 %def_without authorcheck
@@ -557,7 +557,7 @@ install -m 0644 %SOURCE107 %buildroot%_sysconfdir/logrotate.d/%name
 
 # Create configuration override structure
 for conffile in \
-    auth.conf charset.conf crawlers_detection.conf create_list.conf \
+    auth.conf charset.conf create_list.conf \
     edit_list.conf nrcpt_by_domain.conf topics.conf \
     mime.types sympa.wsdl ;
     do cp -a %buildroot%_datadir/%name/default/$conffile \
@@ -675,7 +675,6 @@ fi
 %config(noreplace) %attr(0640,%s_user,%s_group) %_sysconfdir/%name/%name.conf
 %config(noreplace,missingok) %attr(-,%s_user,%s_group) %_sysconfdir/%name/auth.conf
 %config(noreplace,missingok) %attr(-,%s_user,%s_group) %_sysconfdir/%name/charset.conf
-%config(noreplace,missingok) %attr(-,%s_user,%s_group) %_sysconfdir/%name/crawlers_detection.conf
 %config(noreplace,missingok) %attr(-,%s_user,%s_group) %_sysconfdir/%name/create_list.conf
 %config(noreplace,missingok) %attr(-,%s_user,%s_group) %_sysconfdir/%name/edit_list.conf
 %config(noreplace,missingok) %attr(-,%s_user,%s_group) %_sysconfdir/%name/nrcpt_by_domain.conf
@@ -760,6 +759,12 @@ fi
 %static_content
 
 %changelog
+* Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 6.2.74-alt1
+- 6.2.74:
+  - remove obsoleted crawlers_detection.conf.
+  - security fixes for CVE-2024-55919 CVE-2021-41183
+    CVE-2021-41182 CVE-2021-41184 CVE-2022-31160.
+
 * Fri Jun 02 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.72-alt1
 - 6.2.72.
 - BR: font-fonts-awesome->fonts-font-awesome-web.
