@@ -5,7 +5,7 @@
 
 Name: cpu_features
 Version: 0.9.0
-Release: alt1
+Release: alt2
 Summary: A library to get CPU features at runtime
 License: Apache-2.0
 Group: System/Libraries
@@ -17,6 +17,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: ctest
+BuildRequires: jq
 BuildRequires: libgtest-devel
 }}
 
@@ -52,8 +53,7 @@ Requires: cpu_features = %EVR
 %ctest
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %buildroot%_bindir/list_cpu_features
-# https://github.com/google/cpu_features/issues/373
-# %buildroot%_bindir/list_cpu_features --json | jq .
+%buildroot%_bindir/list_cpu_features --json | jq .
 
 %files
 %define _customdocdir %_docdir/%name
@@ -68,5 +68,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_cmakedir/CpuFeatures
 
 %changelog
+* Tue Dec 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt2
+- Update to v0.4.1-260-g4f45bf2 (2024-12-17) fixes JSON output.
+
 * Sun Dec 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt1
 - First import v0.9.0-22-g3db721e (2024-11-12).
