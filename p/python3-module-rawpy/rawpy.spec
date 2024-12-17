@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.23.2
+Version: 0.24.0
 Release: alt1
 
 Summary: RAW image processing for Python, a wrapper for libraw
@@ -66,6 +66,8 @@ This package contains pickles for %pypi_name.
 %setup
 
 %build
+export RAWPY_USE_SYSTEM_LIBRAW=1
+rm -rv external
 %pyproject_build
 
 %install
@@ -104,5 +106,8 @@ install -m0644 build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue Dec 17 2024 Alexander Kovalev <alexvk@altlinux.org> 0.24.0-alt1
+- New version 0.24.0.
+
 * Fri Dec 06 2024 Alexander Kovalev <alexvk@altlinux.org> 0.23.2-alt1
 - Initial build for ALT.
