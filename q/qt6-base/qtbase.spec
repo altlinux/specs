@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.7.2
-Release: alt5
+Release: alt6
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -465,7 +465,6 @@ cmake .. \
     -DQT_BUILD_STANDALONE_TESTS:BOOL=OFF \
     -DQT_FEATURE_journald:BOOL=OFF \
     -DQT_FEATURE_openssl_linked:BOOL=ON \
-    -DQT_FEATURE_openssl_hash:BOOL=ON \
     -DQT_FEATURE_accessibility:BOOL=ON \
     -DQT_FEATURE_fontconfig:BOOL=ON \
     -DQT_FEATURE_glib:BOOL=ON \
@@ -834,6 +833,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt6
+- switch to legacy implementation of QCryptographicHash while openssl3 not ready (closes: 48923)
+
 * Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt5
 - fix compile with gcc-14
 
