@@ -16,8 +16,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.0
-Release: alt1
+Version: 3.7.1
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -111,9 +111,9 @@ BuildRequires: rpm-build >= 4.0.4-alt133
 %else
 %define soname_suffix %nil
 %endif
-Requires: libavformat.so.60%soname_suffix
-Requires: libavcodec.so.60%soname_suffix
-Requires: libavutil.so.58%soname_suffix
+Requires: libavformat.so.61%soname_suffix
+Requires: libavcodec.so.61%soname_suffix
+Requires: libavutil.so.59%soname_suffix
 
 %description
 Audacity is a program that lets you manipulate digital audio waveforms.
@@ -267,6 +267,12 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Sun Dec 15 2024 Ivan A. Melnikov <iv@altlinux.org> 3.7.1-alt2
+- require the latest ffmpeg libraries
+
+* Thu Dec 12 2024 Ivan A. Melnikov <iv@altlinux.org> 3.7.1-alt1
+- 3.7.1
+
 * Wed Oct 30 2024 Ivan A. Melnikov <iv@altlinux.org> 3.7.0-alt1
 - 3.7.0
 
