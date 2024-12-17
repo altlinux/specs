@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: py3dephell
-Version: 0.1.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Bunch of tools to control project dependencies and provides
 License: GPLv2
@@ -14,12 +14,15 @@ BuildArch: noarch
 BuildRequires: python3(setuptools) python3(wheel)
 BuildRequires: python3-module-pyproject-installer rpm-build-python3
 
+
 %description
 %summary
 
 %package -n python3-module-%name
 Summary: python3 modules to control python3 project dependencies and provides
 Group: Development/Python3
+
+Conflicts: rpm-build-python3 < 0.1.26
 
 %description -n python3-module-%name
 %summary
@@ -48,6 +51,9 @@ env PYTHONPATH=%buildroot%python3_sitelibdir_noarch python3 -m unittest discover
 %_rpmlibdir/%name
 
 %changelog
+* Sat Dec 14 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.3.1-alt1
+- Update to upstream v0.3.1.
+
 * Fri Sep 01 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.0-alt2
 - Created symlink from %%python3_sitelibdir_noarch/%%name to %%_rpmlibdir
   to make this python3-package always available for scripts from rpm-build-python3.
