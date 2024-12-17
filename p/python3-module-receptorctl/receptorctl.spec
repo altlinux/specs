@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 Summary: Receptorctl is a front-end CLI and importable Python library that interacts with Receptor over its control socket interface
 License: Apache-2.0
@@ -43,6 +43,9 @@ BuildRequires: python3-module-yaml
 %exclude %python3_sitelibdir/tests
 
 %changelog
+* Tue Dec 17 2024 Anton Vyatkin <toni@altlinux.org> 1.5.2-alt1
+- new version 1.5.2
+
 * Thu Dec 05 2024 Anton Vyatkin <toni@altlinux.org> 1.5.1-alt1
 - new version 1.5.1
 
