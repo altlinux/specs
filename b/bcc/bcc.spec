@@ -20,7 +20,7 @@
 
 Name:		bcc
 Version: 0.31.0
-Release: alt2
+Release: alt3
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -34,7 +34,8 @@ Source4: blazesym-0.tar
 
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
-ExclusiveArch: x86_64 aarch64 ppc64le loongarch64
+# ppc64le: https://github.com/iovisor/bcc/issues/5172
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(pre): python3-module-setuptools
 BuildRequires(pre): rpm-macros-cmake
@@ -74,10 +75,11 @@ BuildRequires: dwarves >= 1.16
 #    builder  100,1  0,942  ld.lld
 BuildRequires: /proc
 
-# Assuming 'kernel' dependency will bring un-def kernel
+# Assuming 'rpm-build-vm' dependency will bring %%kernel_latest kernel
 %{?!_without_check:%{?!_disable_check:
-BuildRequires: kernel-headers-modules-un-def
-BuildRequires: kernel-headers-un-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires: kernel-headers-modules-%kernel_latest
+BuildRequires: kernel-headers-%kernel_latest
 BuildRequires: rpm-build-vm
 }}
 
@@ -307,6 +309,10 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Tue Dec 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt3
+- spec: Fix FTBFS due to removal of un-def kernel flavour.
+- Removed build on ppc64le (due to run-time failures).
+
 * Tue Aug 20 2024 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt2
 - spec: check: Fix FTBFS (modprobe).
 
