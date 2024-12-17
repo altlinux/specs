@@ -8,7 +8,7 @@
 
 Name: secrets
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: A password manager for GNOME
 License: GPL-3.0
@@ -22,6 +22,7 @@ Source: %url/-/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-10.3-up-zxcvbn-rs-py-0.2.0.patch
 
 %define glib_ver 2.76
 %define gtk_ver 4.16
@@ -52,6 +53,7 @@ databases.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -77,6 +79,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Tue Dec 17 2024 Yuri N. Sedunov <aris@altlinux.org> 10.3-alt1.1
+- applied upstream fix for zxcvbn-rs-py-0.2.0
+
 * Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 10.3-alt1
 - 10.3
 
