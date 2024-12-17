@@ -12,7 +12,7 @@
 
 Name: %rname
 Version: 24.11.90
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -111,6 +111,15 @@ done
 %K6install
 %K6install_move data marble config.kcfg icons knsrcfiles
 
+# hide service files
+for f in %buildroot/%_K6xdgapp/*_thumbnail_*.desktop ; do
+    LC_ALL=en_US.UTF-8 desktop-file-install \
+	--dir %buildroot/%_K6xdgapp \
+	--set-key="NoDisplay" \
+	--set-value="true" \
+	$f ||:
+done
+
 mv %buildroot/%_K6xdgmime/geo{,-kde6}.xml
 
 if [ "%_desktopdir" != "%_K6xdgapp" ] ;then
@@ -162,6 +171,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt2
+- hide services from main menu (closes: 52455)
+
 * Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt1
 - beta with KF6
 
