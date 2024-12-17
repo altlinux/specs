@@ -1,7 +1,7 @@
-%def_without pgsql
+%def_with postgresql
 Name: gnunet
-Version: 0.11.5
-Release: alt3
+Version: 0.23.0
+Release: alt1
 
 Summary: Peer-to-peer framework
 
@@ -17,11 +17,11 @@ Source3: gnunetd.sysusers
 Patch2: gnunet-0.11.0-alt-mysql8-transition.patch
 
 BuildRequires: gcc-c++ libmysqlclient21-devel libgnurl-devel libextractor-devel libgcrypt-devel libglade-devel libncursesw-devel libsqlite3-devel zlib-devel
-#BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel 
+#BuildRequires: %_bindir/git %_bindir/svnversion libICE-devel libSM-devel
 BuildRequires: glib2-devel libglpk-devel libgnutls-devel libltdl7-devel libmicrohttpd-devel libunistring-devel pkgconfig(libgtop-2.0)
-BuildRequires: libpulseaudio-devel libopus-devel libogg-devel
+BuildRequires: libpulseaudio-devel libopus-devel libogg-devel libcurl-devel libsodium-devel libgmp-devel
 BuildRequires: libidn2-devel libjansson-devel libzbar-devel
-%if_with pgsql
+%if_with postgresql
 BuildRequires: libpq-devel
 %endif
 
@@ -58,7 +58,7 @@ applications which will use %name.
 
 %prep
 %setup
-%patch2 -p0
+#patch2 -p0
 
 # broken --disable-testing
 %__subst "s|ats-tests||" src/Makefile.*
@@ -69,29 +69,29 @@ CFLAGS="%optflags -I%_includedir/mysql"
 CXXFLAGS="%optflags -I%_includedir/mysql"
 export CFLAGS CXXFLAGS
 
-# disable testing due recursive linking bug
-%configure --disable-rpath --disable-testing --disable-documentation
+%configure --disable-rpath --disable-documentation %{subst_with postgresql}
 %make_build V=1 || %make V=1
 
 %install
 # usr/bin/ld.default: warning: libgnunetblock.so.0, needed by /tmp/.private/lav/gnunet-buildroot/usr/lib64/libgnunetblockgroup.so, not found (try using -rpath or -rpath-link)
 # libtool:   error: error: relink 'libgnunet_plugin_block_test.la' with the above command before installing it
-export LD_LIBRARY_PATH=$(pwd)/src/block/.libs:$(pwd)/src/ats/.libs:$(pwd)/src/statistics/.libs:$(pwd)/src/json/.libs:$(pwd)/src/gnsrecord/.libs
+#export LD_LIBRARY_PATH=$(pwd)/src/block/.libs:$(pwd)/src/ats/.libs:$(pwd)/src/statistics/.libs:$(pwd)/src/json/.libs:$(pwd)/src/gnsrecord/.libs
 %makeinstall_std
 %find_lang %name
 
-install -D -m0644 contrib/services/systemd/gnunet.service %buildroot%_unitdir/gnunetd.service
+#install -D -m0644 contrib/services/systemd/gnunet.service %buildroot%_unitdir/gnunetd.service
 install -D -m0644 %SOURCE3 %buildroot%_sysusersdir/gnunetd.conf
 
 # unpackaged files found
-rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
+rm -v %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
+rm -rv %buildroot%_datadir/gnunet/services/
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README
-%doc %_man1dir/gnunet*.1*
-%doc %_man5dir/gnunet*.5*
+#doc %_man1dir/gnunet*.1*
+#doc %_man5dir/gnunet*.5*
 %_bindir/gnunet-arm
-%_bindir/gnunet-ats
+#_bindir/gnunet-ats
 %_bindir/gnunet-auto-share
 %_bindir/gnunet-bugreport
 %_bindir/gnunet-cadet
@@ -113,8 +113,8 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_bindir/gnunet-nat
 %_bindir/gnunet-nat-auto
 %_bindir/gnunet-nat-server
-%_bindir/gnunet-peerinfo
-%_bindir/gnunet-peerstore
+#_bindir/gnunet-peerinfo
+#_bindir/gnunet-peerstore
 #%_bindir/gnunet-pseudonym
 %_bindir/gnunet-publish
 %_bindir/gnunet-resolver
@@ -126,12 +126,12 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 #_bindir/gnunet-template
 #%_bindir/gnunet-testing
 #%_bindir/gnunet-testing-run-service
-%_bindir/gnunet-transport
+#_bindir/gnunet-transport
 %_bindir/gnunet-transport-certificate-creation
 %_bindir/gnunet-unindex
 %_bindir/gnunet-uri
 %_bindir/gnunet-vpn
-%_bindir/gnunet-bcd
+#_bindir/gnunet-bcd
 %_bindir/gnunet-conversation
 %_bindir/gnunet-conversation-test
 %_bindir/gnunet-datastore
@@ -143,19 +143,31 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_bindir/gnunet-zoneimport
 #_bindir/gnunet-set-ibf-profiler
 #_bindir/gnunet-set-profiler
+%_bindir/gnunet-base32
+%_bindir/gnunet-dht-hello
+%_bindir/gnunet-did
+%_bindir/gnunet-ecc
+%_bindir/gnunet-hello
+%_bindir/gnunet-messenger
+%_bindir/gnunet-namestore-dbtool
+%_bindir/gnunet-namestore-zonefile
+%_bindir/gnunet-scrypt
+%_bindir/gnunet-testbed
+%_bindir/gnunet-testing-netjail-launcher
 
 #_libexecdir/gnunet/libexec/gnunet-helper-audio-playback
 #_libexecdir/gnunet/libexec/gnunet-helper-audio-record
 #_libexecdir/gnunet/libexec/gnunet-service-conversation
 
 %_datadir/gnunet/
-%_unitdir/gnunetd.service
+#_unitdir/gnunetd.service
 %config %_sysusersdir/gnunetd.conf
+%_desktopdir/gnunet-uri.desktop
 
 %files -n lib%name
 %_libdir/gnunet/
 %_libdir/libgnunetarm.so.*
-%_libdir/libgnunetats.so.*
+#_libdir/libgnunetats.so.*
 %_libdir/libgnunetblock.so.*
 %_libdir/libgnunetblockgroup.so.*
 %_libdir/libgnunetcadet.so.*
@@ -167,7 +179,7 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/libgnunetdns.so.*
 #%_libdir/libgnunetdnsparser.so.*
 #%_libdir/libgnunetdnsstub.so.*
-%_libdir/libgnunetfragmentation.so.*
+#_libdir/libgnunetfragmentation.so.*
 %_libdir/libgnunetfs.so.*
 %_libdir/libgnunetgns.so.*
 #%_libdir/libgnunetgns_common.so.*
@@ -180,20 +192,20 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/libgnunetnatauto.so.*
 %_libdir/libgnunetnatnew.so.*
 %_libdir/libgnunetnse.so.*
-%_libdir/libgnunetnt.so.*
-%_libdir/libgnunetpeerinfo.so.*
+#_libdir/libgnunetnt.so.*
+#_libdir/libgnunetpeerinfo.so.*
 %_libdir/libgnunetpeerstore.so.*
 %if_with pgsql
 %_libdir/libgnunetpq.so.*
 %endif
 %_libdir/libgnunetreclaim.so.*
-%_libdir/libgnunetreclaimattribute.so.*
+#_libdir/libgnunetreclaimattribute.so.*
 %_libdir/libgnunetrest.so.*
 %_libdir/libgnunetregex.so.*
 %_libdir/libgnunetregexblock.so.*
 %_libdir/libgnunetstatistics.so.*
-%_libdir/libgnunetatsapplication.so.*
-%_libdir/libgnunetatstransport.so.*
+#_libdir/libgnunetatsapplication.so.*
+#_libdir/libgnunetatstransport.so.*
 %_libdir/libgnunetscalarproduct.so.*
 %_libdir/libgnunetsecretsharing.so.*
 %_libdir/libgnunetsq.so.*
@@ -204,7 +216,7 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 #%_libdir/libgnunetstream.so.*
 #%_libdir/libgnunettestbed.so.*
 #%_libdir/libgnunettesting.so.*
-%_libdir/libgnunettransport.so.*
+#_libdir/libgnunettransport.so.*
 %_libdir/libgnunettransportcore.so.*
 %_libdir/libgnunettransportmonitor.so.*
 %_libdir/libgnunettransportapplication.so.*
@@ -213,7 +225,7 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/libgnunetutil.so.*
 %_libdir/libgnunetvpn.so.*
 %_libdir/libgnunetconversation.so.*
-%_libdir/libgnunetfriends.so.*
+#_libdir/libgnunetfriends.so.*
 %_libdir/libgnunetgnsrecord.so.*
 %_libdir/libgnunetidentity.so.*
 %_libdir/libgnunetmicrophone.so.*
@@ -221,12 +233,26 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_libdir/libgnunetrevocation.so.*
 %_libdir/libgnunetset.so.*
 %_libdir/libgnunetspeaker.so.*
+%_libdir/libgnunetdid.so.*
+%_libdir/libgnunetgnsrecordjson.so.*
+%_libdir/libgnunetmessenger.so.*
+%_libdir/libgnunetpq.so.*
+%_libdir/libgnunetseti.so.*
+%_libdir/libgnunetsetu.so.*
+%_libdir/libgnunettestbed.so.*
+%_libdir/libgnunettesting.so.*
+%_libdir/libgnunettestingarm.so.*
+%_libdir/libgnunettestingtestbed.so.*
+%_libdir/libgnunettestingtransport.so.*
+%_libdir/libnss_gns.so.2
+%_libdir/libnss_gns4.so.2
+%_libdir/libnss_gns6.so.2
 
 %files -n lib%name-devel
 %_includedir/gnunet/
 %_libdir/*.so
 %_pkgconfigdir/gnunetarm.pc
-%_pkgconfigdir/gnunetats.pc
+#_pkgconfigdir/gnunetats.pc
 %_pkgconfigdir/gnunetblock.pc
 %_pkgconfigdir/gnunetcadet.pc
 %_pkgconfigdir/gnunetcore.pc
@@ -236,44 +262,52 @@ rm -f %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 %_pkgconfigdir/gnunetdns.pc
 #%_pkgconfigdir/gnunetdnsparser.pc
 #%_pkgconfigdir/gnunetdv.pc
-%_pkgconfigdir/gnunetfragmentation.pc
+#_pkgconfigdir/gnunetfragmentation.pc
 %_pkgconfigdir/gnunetfs.pc
 %_pkgconfigdir/gnunetgns.pc
 %_pkgconfigdir/gnunethello.pc
 #%_pkgconfigdir/gnunetlockmanager.pc
 #_pkgconfigdir/gnunetmesh.pc
-%_pkgconfigdir/gnunetmysql.pc
+#_pkgconfigdir/gnunetmysql.pc
 %_pkgconfigdir/gnunetnamestore.pc
 %_pkgconfigdir/gnunetnat.pc
 %_pkgconfigdir/gnunetnse.pc
-%_pkgconfigdir/gnunetpeerinfo.pc
+#_pkgconfigdir/gnunetpeerinfo.pc
 #_pkgconfigdir/gnunetpostgres.pc
 %_pkgconfigdir/gnunetregex.pc
 %_pkgconfigdir/gnunetrps.pc
 %_pkgconfigdir/gnunetstatistics.pc
 #%_pkgconfigdir/gnunetstream.pc
-%_pkgconfigdir/gnunettestbed.pc
+#_pkgconfigdir/gnunettestbed.pc
 %_pkgconfigdir/gnunettesting.pc
 %_pkgconfigdir/gnunettransport.pc
 #%_pkgconfigdir/gnunettun.pc
 %_pkgconfigdir/gnunetutil.pc
 %_pkgconfigdir/gnunetvpn.pc
 
-%_libdir/pkgconfig/gnunetconsensus.pc
-%_libdir/pkgconfig/gnunetconversation.pc
-#%_libdir/pkgconfig/gnunetdnsstub.pc
-%_libdir/pkgconfig/gnunetenv.pc
-%_libdir/pkgconfig/gnunetidentity.pc
-%_libdir/pkgconfig/gnunetmicrophone.pc
-#%_libdir/pkgconfig/gnunetmulticast.pc
-#%_libdir/pkgconfig/gnunetpsyc.pc
-#%_libdir/pkgconfig/gnunetpsycstore.pc
-%_libdir/pkgconfig/gnunetrevocation.pc
-%_libdir/pkgconfig/gnunetscalarproduct.pc
-%_libdir/pkgconfig/gnunetset.pc
-%_libdir/pkgconfig/gnunetspeaker.pc
+%_pkgconfigdir/gnunetconsensus.pc
+%_pkgconfigdir/gnunetconversation.pc
+#%_pkgconfigdir/gnunetdnsstub.pc
+#_libdir/pkgconfig/gnunetenv.pc
+%_pkgconfigdir/gnunetidentity.pc
+%_pkgconfigdir/gnunetmicrophone.pc
+#%_pkgconfigdir/gnunetmulticast.pc
+#%_pkgconfigdir/gnunetpsyc.pc
+#%_pkgconfigdir/gnunetpsycstore.pc
+%_pkgconfigdir/gnunetrevocation.pc
+%_pkgconfigdir/gnunetscalarproduct.pc
+%_pkgconfigdir/gnunetset.pc
+%_pkgconfigdir/gnunetspeaker.pc
+%_pkgconfigdir/gnunetjson.pc
+%_pkgconfigdir/gnunetmessenger.pc
+%_pkgconfigdir/gnunetreclaim.pc
+%_datadir/aclocal/gnunet.m4
 
 %changelog
+* Sat Dec 14 2024 Vitaly Lipatov <lav@altlinux.ru> 0.23.0-alt1
+- new version 0.23.0 (with rpmrb script)
+- temp. disabled service file
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 0.11.5-alt3
 - create service user _sysusersdir/gnunetd.conf and use it
 - remove sysvinit script
