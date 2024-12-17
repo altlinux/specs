@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.5.1
+Version: 3.3.0
 Release: alt1
 
 Summary: Library to configure Python logging easily
@@ -49,6 +49,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Dec 17 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.5.1-alt1
 - Build new version.
 
