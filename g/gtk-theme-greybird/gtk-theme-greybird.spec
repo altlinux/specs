@@ -1,7 +1,7 @@
 %define theme_name Greybird
 
 Name: gtk-theme-greybird
-Version: 3.23.3
+Version: 3.23.4
 Release: alt1
 Summary: A clean minimalistic GTK theme for Xfce
 Group: Graphical desktop/XFce
@@ -162,6 +162,9 @@ Themes for Xfce4 notifyd as part of the Greybird theme.
 %exclude %_datadir/themes/%theme_name-dark/unity
 
 %changelog
+* Wed Dec 18 2024 Mikhail Efremov <sem@altlinux.org> 3.23.4-alt1
+- 3.23.4.
+
 * Wed Sep 06 2023 Mikhail Efremov <sem@altlinux.org> 3.23.3-alt1
 - 3.23.3.
 
