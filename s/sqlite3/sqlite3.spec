@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: sqlite3
-Version: 3.46.0
+Version: 3.47.1
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
@@ -15,7 +15,6 @@ Source1: sqlite3.watch
 Patch1: 0001-FEDORA-no-malloc-usable-size.patch
 Patch2: 0002-FEDORA-percentile-test.patch
 Patch3: 0003-FEDORA-ALT-datetest-2.2c.patch
-Patch4: 0004-ALT-TEA-Policy.patch
 Patch5: 0005-ALT-run-func7-pg-181-test-only-on-x86_64.patch
 
 BuildRequires(Pre): tcl-devel
@@ -112,6 +111,7 @@ export CFLAGS="%optflags \
 	-DSQLITE_ENABLE_COLUMN_METADATA \
 	-DSQLITE_ENABLE_DBSTAT_VTAB \
 	-DSQLITE_ENABLE_DESERIALIZE \
+	-DSQLITE_ENABLE_UPDATE_DELETE_LIMIT \
 	-DSQLITE_ENABLE_FTS3 \
 	-DSQLITE_ENABLE_FTS3_PARENTHESIS \
 	-DSQLITE_ENABLE_FTS4 \
@@ -125,6 +125,7 @@ export CFLAGS="%optflags \
 cc --version | grep -q '^lcc:1.21' || export CFLAGS+="-D__INTEL_COMPILER=1"
 %endif
 autoreconf -i
+%tea_patch
 %configure \
 	%{subst_enable static} \
 	--disable-amalgamation \
@@ -145,7 +146,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %make test
 
 %install
-%make_install install tcl_install DESTDIR=%buildroot
+%make_install install  DESTDIR=%buildroot
+
+# move to the place according to ALT TEA policy
+mkdir -p %buildroot%_libdir/tcl/sqlite3
+mv %buildroot/usr/share/tcl/tcl8.6/sqlite%version/pkgIndex.tcl  %buildroot%_tcllibdir/sqlite3 
+sed -Ei 's/dir/dir \.\. /' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
+sed -Ei 's/libsqlite/libtclsqlite/' %buildroot%_tcllibdir/sqlite3/pkgIndex.tcl
+mv %buildroot/usr/share/tcl/tcl8.6/sqlite%version/libsqlite%version.so  %buildroot%_tcllibdir/libtclsqlite%version.so
+
 
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 
@@ -161,8 +170,7 @@ install -p -m644 ext/fts5/fts5.h  %buildroot%_includedir/
 
 %define pkgdocdir %_docdir/%name
 mkdir -p %buildroot%pkgdocdir
-cp -a doc %buildroot%pkgdocdir/html
-install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
+cp -ar doc/* %buildroot%pkgdocdir/
 
 %files
 %_bindir/%name
@@ -188,19 +196,22 @@ install -pD -m644 doc/lemon.html %buildroot%_docdir/lemon/lemon.html
 %endif # static
 
 %files -n tcl-sqlite3
-%_tcllibdir/libtcl%name.so*
+%_tcllibdir/libtclsqlite%version.so*
 %_tcllibdir/sqlite3
 
 %files doc
 %pkgdocdir
+%exclude %pkgdocdir/doc/lemon.html
 
 %files -n lemon
-%dir %_docdir/lemon
-%_docdir/lemon/lemon.html
+%pkgdocdir/doc/lemon.html
 %_bindir/lemon
 %_datadir/lemon
 
 %changelog
+* Fri Dec 06 2024 Denis Medvedev <nbr@altlinux.org> 3.47.1-alt1
+- 3.47.1
+
 * Sun Jul 07 2024 Denis Medvedev <nbr@altlinux.org> 3.46.0-alt1
 - 3.46.0 (closes #47924)
 
