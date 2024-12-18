@@ -1,9 +1,9 @@
 %define pypi_name apsw
-%define sqlite_ver 3.46.0
+%define sqlite_ver 3.47.1
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.46.0.1
+Version: 3.47.2.0
 Release: alt1
 
 Summary: Another Python SQLite Wrapper
@@ -13,6 +13,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://rogerbinns.github.io/apsw.git
+
 Source: https://github.com/rogerbinns/%pypi_name/releases/download/%version/%pypi_name-%version.zip
 
 BuildRequires(pre): rpm-build-python3
@@ -48,10 +49,14 @@ gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 s
 #%__python3 -m %pypi_name.speedtest
 
 %files
+%_bindir/%pypi_name
 %python3_sitelibdir/*
 %doc doc/*
 
 %changelog
+* Wed Dec 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.47.2.0-alt1
+- 3.47.2.0
+
 * Fri Jul 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.46.0.1-alt1
 - 3.46.0.1
 
