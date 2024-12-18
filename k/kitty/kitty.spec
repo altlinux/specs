@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.37.0
+Version: 0.38.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -64,6 +64,10 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: python3-module-sphinx-inline-tabs
 BuildRequires: python3-module-sphinxext-opengraph
+
+# The python3-module-sphinx package is poorly maintained, so just keep
+# this BR for compatibility.
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 # tic for xterm-kitty terminfo
 BuildRequires: ncurses
@@ -224,6 +228,12 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Wed Dec 18 2024 Egor Ignatov <egori@altlinux.org> 0.38.0-alt1
+- new version 0.38.0
+
+* Mon Dec 09 2024 Egor Ignatov <egori@altlinux.org> 0.37.0-alt2
+- fix build in stable branches
+
 * Wed Oct 30 2024 Egor Ignatov <egori@altlinux.org> 0.37.0-alt1
 - new version 0.37.0
 
