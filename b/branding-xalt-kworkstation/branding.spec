@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.11
+Release: alt0.12
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -325,12 +325,11 @@ install -m 0644 menu/*.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-m
 popd
 # kde global settings
 mkdir -p %buildroot/%_sysconfdir/skel/.config/
-echo <<__EOF__ > %buildroot/%_sysconfdir/skel/.config/kdeglobals
+cat <<__EOF__ >%buildroot/%_sysconfdir/skel/.config/kdeglobals
 [KDE]
 LookAndFeelPackage=org.basealt.altoslight.desktop
-
-[Icons]
-Theme=altos
+DefaultLightLookAndFeel=org.basealt.altoslight.desktop
+DefaultDarkLookAndFeel=org.basealt.altosdark.desktop
 __EOF__
 # disable annoing autostart
 mkdir -p %buildroot/%_sysconfdir/skel/.config/autostart/
@@ -499,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Dec 18 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.12
+- set default light and dark Plasma themes for new users
+
 * Fri Dec 13 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.11
 - set default Plasma theme for new users
 
