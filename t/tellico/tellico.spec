@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 3.5.5
+Version: 4.0.1
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -10,61 +10,57 @@ Group:   Graphical desktop/KDE
 Url:     http://tellico-project.org/
 VCS:	 https://invent.kde.org/office/tellico.git
 
-ExcludeArch: armh ppc64le
+ExcludeArch: armh ppc64le %ix86
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-declarative-devel
-BuildRequires: kde5-libkcddb-devel
-BuildRequires: kde5-libksane-devel
-BuildRequires: kf5-karchive-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kcrash-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-kdoctools-devel-static
-BuildRequires: kf5-kfilemetadata-devel
-BuildRequires: kf5-kguiaddons-devel
-BuildRequires: kf5-khtml-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kitemmodels-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-kjs-devel
-BuildRequires: kf5-knewstuff-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-kwallet-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-solid-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: kde6-libkcddb-devel
+BuildRequires: kde6-libksane-devel
+BuildRequires: kf6-karchive-devel
+BuildRequires: kf6-kcodecs-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kdoctools-devel
+BuildRequires: kf6-kdoctools-devel-static
+BuildRequires: kf6-kfilemetadata-devel
+BuildRequires: kf6-kguiaddons-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kitemmodels-devel
+BuildRequires: kf6-kjobwidgets-devel
+BuildRequires: kf6-knewstuff-devel
+BuildRequires: kf6-kparts-devel
+BuildRequires: kf6-ktextwidgets-devel
+BuildRequires: kf6-kwallet-devel
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kxmlgui-devel
+BuildRequires: kf6-solid-devel
 BuildRequires: libdiscid-devel
 BuildRequires: libexempi-devel
-BuildRequires: libpoppler-qt5-devel
+BuildRequires: libpoppler-qt6-devel
 BuildRequires: libtag-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: libyaz-devel
 BuildRequires: qimageblitz5-devel
-BuildRequires: qjson-qt5-devel
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: qt5-webengine-devel
-%else
-BuildRequires: kf5-khtml-devel
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: qt5-charts-devel
+BuildRequires: qt6-charts-devel
 BuildRequires: libcdio-devel
 
-%ifarch %qt5_qtwebengine_arches
+%ifarch %qt6_qtwebengine_arches
+# There is no KHtml for KF6
 %define use_khtml FALSE
 %else
-%define use_khtml TRUE
+%define use_khtml FALSE
 %endif
 
 %description
@@ -77,11 +73,11 @@ video games, coins, stamps, trading cards, comic books, and wines.
 
 %build
 
-%K5init no_altplace
-%K5build -DUSE_KHTML:BOOL=%use_khtml
+%K6init no_altplace
+%K6build -DUSE_KHTML:BOOL=%use_khtml
 
 %install
-%K5install
+%K6install
 
 # fix python shebangs
 find %buildroot -type f -print0 |
@@ -92,19 +88,27 @@ find %buildroot -type f -print0 |
 
 %files -f %name.lang
 %doc AUTHORS README.md
-%_K5bin/*
+%_K6bin/*
 %_datadir/%name
-%_K5xdgapp/*.desktop
-%_K5icon/hicolor/*/apps/%name.png
-%_K5icon/hicolor/*/mimetypes/application-x-%name.png
+%_K6xdgapp/*.desktop
+%_K6icon/hicolor/*/apps/%name.png
+%_K6icon/hicolor/*/mimetypes/application-x-%name.png
 %_datadir/kconf_update/*
-%_K5cfg/*.kcfg
-%_K5xdgconf/%{name}*
-%_K5xdgmime/%name.xml
+%_K6cfg/*.kcfg
+%_K6xdgconf/%{name}*
+%_K6xdgmime/%name.xml
 %_datadir/metainfo/org.kde.tellico.appdata.xml
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Tue Dec 17 2024 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- New version.
+- Build with KF6.
+- Exclude i586 arch.
+
+* Wed Sep 04 2024 Andrey Cherepanov <cas@altlinux.org> 4.0-alt1
+- New version.
+
 * Sun Jul 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.5-alt1
 - New version.
 
