@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define git %nil
+%define git ddca671
 %define optflags_lto %nil
 
 %global _description \
@@ -12,7 +12,7 @@ counterparts to produce the exact semantics of the intrinsics.
 
 Name:    sse2neon
 Version: 1.7.0
-Release: alt1
+Release: alt3.g%{git}
 Summary: A translator from Intel SSE intrinsics to Arm/Aarch64 NEON implementation
 Group:   Development/C++
 License: MIT
@@ -65,6 +65,12 @@ make check ||:
 %_includedir/*
 
 %changelog
+* Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt3.gddca671
+- v1.7.0-42-gddca671.
+
+* Fri May 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt2.gde0538f
+- v1.7.0-16-gde0538f.
+
 * Sat Jan 13 2024 L.A. Kostis <lakostis@altlinux.ru> 1.7.0-alt1
 - 1.7.0.
 

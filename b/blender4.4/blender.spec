@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
-%define git 2760def19ab
+%define git 22bda12af7e
 %define kern_dir scripts/addons_core/cycles/lib
 %define project blender
 %define gcc_ver 13
@@ -58,7 +58,7 @@
 
 Name: %{project}4.4
 Version: 4.4.0
-Release: alt0.4.g%{git}
+Release: alt0.5.g%{git}
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -88,6 +88,8 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
 Patch35: blender-4.4-alt-hiprt-inc.patch
+# use system libdraco.so.9 instead of bundled one
+Patch36: blender-4.4-system-draco.patch
 
 # upstream fixes to merge
 
@@ -123,7 +125,6 @@ BuildRequires: openvdb-devel libblosc-devel
 BuildRequires: libgomp%{gcc_ver}-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
-BuildRequires: libpulseaudio-devel
 BuildRequires: libpotrace-devel
 BuildRequires: openshadinglanguage-devel
 BuildRequires: opensubdiv-devel
@@ -133,6 +134,7 @@ BuildRequires: libwayland-egl-devel wayland-protocols libwayland-cursor-devel li
 BuildRequires: libvulkan-devel libshaderc-devel
 BuildRequires: libspnav-devel
 BuildRequires: libwebp-devel
+BuildRequires: pipewire-libs-devel
 %ifarch aarch64
 BuildRequires: sse2neon-devel
 %endif
@@ -217,6 +219,9 @@ BuildRequires: liboneapi-level-zero1-devel
 %add_python3_req_skip bpy.app.translations
 %add_python3_req_skip bpy.props
 %add_python3_req_skip bpy.types
+
+# scripts/addons_core/io_scene_gltf2/blender/imp/draco.py
+Requires: libdraco
 
 AutoProv: no
 
@@ -318,6 +323,7 @@ EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
 %patch35 -p1
+%patch36 -p1
 
 # upstream patches
 
@@ -337,7 +343,7 @@ sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeL
 rm -f build_files/cmake/Modules/FindOpenJPEG.cmake
 
 # Remove bundled libraries which must not be used instead of system ones
-rm -rf extern/{Eigen3,glew,lzo,gflags,glog}
+rm -rf extern/{Eigen3,glew,lzo,gflags,glog,draco}
 
 %build
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
@@ -412,6 +418,7 @@ export GCC_VERSION=%gcc_ver
 	-DWITH_SYSTEM_GFLAGS:BOOL=ON \
 	-DWITH_SYSTEM_GLOG:BOOL=ON \
 	-DWITH_SYSTEM_FREETYPE:BOOL=ON \
+	-DWITH_SYSTEM_DRACO:BOOL=ON \
 	-DWITH_IMAGE_OPENEXR=ON \
 	-DWITH_TBB:BOOL=ON \
 	-DPYTHON_VERSION="%_python3_version" \
@@ -478,6 +485,11 @@ popd
 %endif
 
 %changelog
+* Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.5.g22bda12af7e
+- 4.4.0 GIT g22bda12af7e.
+- Replace pulseaudio with pipewire.
+- scripts/addons_core/io_scene_gltf2/blender/imp/draco.py: use system libdraco.
+
 * Tue Nov 26 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.4.g2760def19ab
 - 4.4.0 GIT 2760def19ab.
 
