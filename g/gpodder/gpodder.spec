@@ -2,22 +2,22 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.11.4
-Release: alt1.1
+Version: 3.11.5
+Release: alt1
 
 Summary: Media aggregator and podcast client
 License: GPL-3.0-or-later
 Group: Networking/News
 Url: https://gpodder.org
 
+Vcs: https://github.com/gpodder/gpodder.git
+
 %if_disabled snapshot
 Source: https://github.com/gpodder/gpodder/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/gpodder/gpodder.git
 Source: %name-%version.tar
 %endif
 Patch: %name-3.11.1-alt-AyatanaAppIndicator.patch
-Patch10: %name-3.11.4-up-python-3.12.patch
 
 BuildArch: noarch
 
@@ -39,7 +39,7 @@ BuildArch: noarch
 %add_python3_req_skip kaa.metadata
 
 %define urllib3_ver 2.0.6
-%define mgpoclient_ver 1.9
+%define mgpoclient_ver 1.10
 %define podcastparser_ver 0.6.10
 
 Requires: typelib(Gtk) = 3.0 typelib(WebKit2) = 4.0
@@ -51,6 +51,7 @@ Requires: python3-module-eyeD3
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3(setuptools)
+BuildRequires: python3(build) python3(installer)
 BuildRequires: python3-devel python3-module-mygpoclient
 BuildRequires: python3-module-feedparser
 BuildRequires: help2man intltool desktop-file-utils
@@ -70,7 +71,7 @@ sync subscriptions, playback progress and starred episodes.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 find ./ -name "*.py" -print0 | \
 xargs -r0 sed -i -e "s|\(#\!/usr/bin/python\)$|\13|" --
 
@@ -102,6 +103,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Wed Dec 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.11.5-alt1
+- 3.11.5
+
 * Sat Apr 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.11.4-alt1.1
 - fixed build with python-3.12
 
