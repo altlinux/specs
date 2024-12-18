@@ -1,6 +1,6 @@
 Name: rpm-build-python3
 Version: 0.1.26
-Release: alt1
+Release: alt2
 
 Summary: RPM helper macros to rebuild python3 packages
 License: GPLv2+
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Wed Dec 18 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.26-alt2
+- Sort py3req output.
+
 * Thu Dec 05 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.26-alt1
 - Convert py3req output to rpm-format.
 
