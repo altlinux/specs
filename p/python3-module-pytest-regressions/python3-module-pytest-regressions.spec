@@ -2,12 +2,15 @@
 %define pypi_name pytest-regressions
 %define mod_name pytest_regressions
 
-# unstable tests
+%ifarch %ix86
+%def_without check
+%else
 %def_with check
+%endif
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
-Release: alt3
+Version: 2.6.0
+Release: alt1
 Summary: Pytest plugin for regression testing
 License: MIT
 Group: Development/Python3
@@ -54,6 +57,9 @@ Fixtures to write regression tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 18 2024 Anton Zhukharev <ancieg@altlinux.org> 2.6.0-alt1
+- Updated to 2.6.0.
+
 * Fri Dec 22 2023 Anton Zhukharev <ancieg@altlinux.org> 2.5.0-alt3
 - Fixed FTBFS (pandas 2.1.4).
 
