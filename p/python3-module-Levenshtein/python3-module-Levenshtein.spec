@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.26.0
+Version: 0.26.1
 Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
@@ -69,6 +69,9 @@ It supports both normal and Unicode strings.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 18 2024 Anton Zhukharev <ancieg@altlinux.org> 0.26.1-alt1
+- Updated to 0.26.1.
+
 * Thu Sep 26 2024 Anton Zhukharev <ancieg@altlinux.org> 0.26.0-alt1
 - Updated to 0.26.0.
 
