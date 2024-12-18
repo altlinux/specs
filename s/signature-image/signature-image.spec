@@ -4,7 +4,7 @@
 %define lib_c_wrapper_name signimage_c_wrapper
 
 Name: signature-image
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: A library for creating a digital signature image
@@ -77,6 +77,13 @@ Requires: lib%lib_c_wrapper_name%sover = %EVR
 %_libdir/cmake/SignatureImageCWrapper/*.cmake
 
 %changelog
+* Wed Dec 18 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3-alt1
+- Update the tests
+- Add a logo image resizing test
+- Delete an unnecessary method call
+- Set the default margin to 0 from the right edge
+- Resize the image of the set values
+
 * Mon Nov 25 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0.2-alt1
 - fix the text display
 
