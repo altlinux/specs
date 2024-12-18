@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.27.3
-Release: alt1
+Release: alt2
 Summary: A set of server components for JupyterLab and JupyterLab like applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -32,6 +32,7 @@ BuildRequires: python3-module-ruamel-yaml
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pip
+BuildRequires: python3-module-python-json-logger
 %endif
 
 %description
@@ -58,7 +59,7 @@ for p in \
 do
   %__python3 -m pip install --use-pep517 --no-build-isolation --disable-pip-version-check $p
 done
-%pyproject_run_pytest -v -W ignore::DeprecationWarning
+%pyproject_run_pytest -v -W default
 
 %files
 %doc README.*
@@ -66,6 +67,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 2.27.3-alt2
+- Fix FTBFS.
+
 * Wed Jul 17 2024 Anton Vyatkin <toni@altlinux.org> 2.27.3-alt1
 - New version 2.27.3.
 
