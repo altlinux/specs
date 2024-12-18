@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: Python LiveReload is an awesome tool for web developers
@@ -55,6 +55,9 @@ for web developers who know Python.
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
+- New version 2.7.1.
+
 * Sun Jun 23 2024 Anton Vyatkin <toni@altlinux.org> 2.7.0-alt1
 - New version 2.7.0.
 
