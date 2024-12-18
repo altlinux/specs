@@ -1,7 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_enable check
+
 Name: apa
-Version: 0.1.0.alpha
+Version: 0.1.4.alpha
 Release: alt1
 
 Summary: An assistant for working with packages in your ALT distros
@@ -40,14 +42,19 @@ Use `apa help` for more information.
 %meson
 %meson_build
 
+%check
+%meson_test
+
 %install
 %meson_install
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
-%_sysconfdir/%name/
 
 %changelog
+* Tue Dec 17 2024 Alexey Volkov <qualimock@altlinux.org> 0.1.4.alpha-alt1
+- New version 0.1.4.alpha (closes: #52447)
+
 * Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 0.1.0.alpha-alt1
 - Initial build for ALT
