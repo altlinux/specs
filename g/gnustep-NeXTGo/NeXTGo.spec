@@ -2,7 +2,7 @@
 
 Name: gnustep-NeXTGo
 Version: 3.0
-Release: alt5
+Release: alt6
 Summary: NeXTGo is the classic Go game
 License: GPLv2
 Group: Graphical desktop/GNUstep
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: %name.menu
 Patch1: link-libs.patch
+Patch2: %name-fix-compilation.patch
 
 BuildPreReq: gnustep-make-devel /proc
 BuildPreReq: gnustep-gui-devel
@@ -27,6 +28,7 @@ environment.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -52,6 +54,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %_menudir/*
 
 %changelog
+* Wed Dec 18 2024 Andrey Cherepanov <cas@altlinux.org> 3.0-alt6
+- FTBFS fix (thanks alton@)
+
 * Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 3.0-alt5
 - Remove redundant clang-devel for build
 
