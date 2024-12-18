@@ -1,8 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 
-# Tests disabled for now: they cause hasher-priv to freeze
-%define _disable_check 1
-
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
 %define tests enabled
 %else
@@ -10,7 +7,7 @@
 %endif
 
 Name: zathura
-Version: 0.5.8
+Version: 0.5.11
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -22,8 +19,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libgirara-devel >= 0.4.4-alt1
-BuildRequires: intltool libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
+BuildRequires: libgirara-devel >= 0.4.5-alt1
+BuildRequires: libgtk+3-devel libsqlite3-devel python3-module-docutils libmagic-devel zlib-devel
 BuildRequires: libsynctex-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libjson-glib-devel
@@ -94,6 +91,11 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Dec 18 2024 Mikhail Efremov <sem@altlinux.org> 0.5.11-alt1
+- Enabled tests again.
+- Dropped intltool from BR.
+- Updated to 0.5.11.
+
 * Wed Aug 14 2024 Mikhail Efremov <sem@altlinux.org> 0.5.8-alt1
 - Updated to 0.5.8.
 

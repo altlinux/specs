@@ -2,17 +2,14 @@
 %define _soname 4
 %define _unpackaged_files_terminate_build 1
 
-# Tests disabled for now: they cause hasher-priv to freeze
-%define _disable_check 1
-
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
-%define tests enabled
+%def_enable tests
 %else
-%define tests disabled
+%def_disable tests
 %endif
 
 Name: lib%_name
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -24,11 +21,11 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
 BuildRequires: libgtk+3-devel >= 3.4 libpango-devel
-BuildRequires: intltool
-%{?!_without_check:%{?!_disable_check:BuildRequires: libcheck-devel xvfb-run}}
+%{?_enable_tests:BuildRequires: xvfb-run}
+%{?_enable_vala:BuildRequires: vala-tools}
 
 %description
 girara is a library that implements a user interface that focuses on
@@ -51,7 +48,7 @@ developing applications that use %name.
 %build
 %meson \
 	-Djson=disabled \
-	-Dtests=%tests
+	%{subst_enable_meson_feature tests tests}
 
 %meson_build -v
 
@@ -73,6 +70,11 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Dec 11 2024 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt1
+- Enabled tests again.
+- Used macros from rpm-macros-meson.
+- Updated to 0.4.5.
+
 * Mon May 13 2024 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
 - Dropped libnotify dependence.
 - Updated Vcs tag.
