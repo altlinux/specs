@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.14.2
-Release: alt1
+Release: alt2
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
 License: BSD-3-Clause
@@ -68,8 +68,7 @@ sed -i pyproject.toml -e 's/--color=yes//'
 rm -rf examples/
 
 # test_connection and test_restart_kernel randomly fail
-%pyproject_run_pytest -v -W "always:unclosed <socket.socket:ResourceWarning" \
--W ignore::DeprecationWarning -m 'not network' -k "\
+%pyproject_run_pytest -v -W default -m 'not network' -k "\
 not test_restart_kernel \
 and not test_connection"
 
@@ -80,6 +79,9 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 2.14.2-alt2
+- Fix FTBFS.
+
 * Sat Jul 13 2024 Anton Vyatkin <toni@altlinux.org> 2.14.2-alt1
 - New version 2.14.2.
 

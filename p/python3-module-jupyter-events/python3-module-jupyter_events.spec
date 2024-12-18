@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.11.0
-Release: alt1
+Release: alt2
 Summary: Configurable event system for Jupyter applications and extensions
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/jupyter-events/
 Vcs: https://github.com/jupyter/jupyter_events
 BuildArch: noarch
 Source: %name-%version.tar
+
+Requires: python3-module-python-json-logger
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -56,6 +58,9 @@ sed -i 's/--color=yes//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt2
+- Add requires to python-json-logger.
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt1
 - New version 0.11.0.
 
