@@ -1,6 +1,6 @@
 Name: gerbv
 Version: 2.10.0
-Release: alt1
+Release: alt2
 
 Summary: Gerber file viewer
 
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 BuildRequires: ImageMagick-tools
 BuildRequires: gcc-c++ libgtk+2-devel libdxflib-devel
+# needed for p10/c10/c9
+BuildRequires: desktop-file-utils
 
 %description
 Gerber Viewer (gerbv) is a viewer for Gerber files. Gerber files
@@ -99,6 +101,9 @@ rm -f %buildroot%_desktopdir/*.cache
 %_datadir/gerbv/example/*
 
 %changelog
+* Tue Dec 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt2
+- restored missed BR: desktop-file-utils
+
 * Tue Dec 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.10.0-alt1
 - new version 2.10.0 (with rpmrb script)
 - fixed:
