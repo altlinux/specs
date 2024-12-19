@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.29
-Release: alt3
+Version: 0.0.30
+Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
 Group:   Development/Debuggers
@@ -122,6 +122,9 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Thu Dec 19 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.30-alt1
+- Update to v0.0.30 (2024-12-18).
+
 * Thu Oct 31 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.29-alt3
 - Remove dependency on kernel-image-un-def.
 
