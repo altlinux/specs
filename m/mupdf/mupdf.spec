@@ -1,83 +1,91 @@
+%define soname 25
 Name: mupdf
-Version: 1.18.0
+Version: 1.25.2
 Release: alt1
-Summary: A lightweight PDF viewer and toolkit
+Summary:  MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
 Group: Office
-License: GPLv3
-Url: http://mupdf.com/
-Source0: http://mupdf.com/download/%name-%version-source.tar.gz
-Source1: %name.desktop
-Source2: debian.tar
-Patch1: mupdf-1.18.0-gentoo-fix-oob-in-pdf-layer.patch
-Patch2: mupdf-1.18.0-gentoo-fix-oob-in-pixmap.patch
+URL: https://github.com/ArtifexSoftware/mupdf
+License: AGPL-3.0
 
-# Automatically added by buildreq on Thu Aug 22 2013
-# optimized out: libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: libXext-devel libfreetype-devel libjbig2dec-devel libjpeg-devel libssl-devel zlib-devel libfreeglut-devel
-BuildRequires: libgumbo-devel
-BuildRequires: gcc-c++
+Source:  %name-%version.tar
+Source1: %name-%version-thirdparty-extract.tar
+Source2: %name-%version-thirdparty-lcms2.tar
+Source3: %name-%version-thirdparty-mujs.tar
+
+Patch0: disable_strip.patch
+
+BuildRequires: make gcc-c++
+BuildRequires: zlib-devel libopenjpeg2.0-devel libjbig2dec-devel libgumbo-devel
+BuildRequires: libfreeglut-devel libfreetype-devel libharfbuzz-devel gdcm-devel libjpeg-devel
+BuildRequires: libX11-devel libXext-devel
+
+Requires: lib%name%soname = %EVR
+
+%package -n lib%name%soname
+Summary: MuPDF library for PDF render
+Group: System/Libraries
+
+%package -n lib%name-devel
+Summary: Development files for MuPDF library
+Group: Development/C
+Requires: lib%name%soname = %EVR
 
 %description
-MuPDF is a lightweight PDF viewer and toolkit written in portable C.
-The renderer in MuPDF is tailored for high quality anti-aliased
-graphics.  MuPDF renders text with metrics and spacing accurate to
-within fractions of a pixel for the highest fidelity in reproducing
-the look of a printed page on screen.
-MuPDF has a small footprint.  A binary that includes the standard
-Roman fonts is only one megabyte.  A build with full CJK support
-(including an Asian font) is approximately five megabytes.
-MuPDF has support for all non-interactive PDF 1.7 features, and the
-toolkit provides a simple API for accessing the internal structures of
-the PDF document.  Example code for navigating interactive links and
-bookmarks, encrypting PDF files, extracting fonts, images, and
-searchable text, and rendering pages to image files is provided.
-
-%package devel
-Summary: Development files for %name
-Group: Development/C
-Requires: %name = %version-%release
-Provides: %name-static = %version-%release
-
-%description devel
-The mupdf-devel package contains header files for developing
-applications that use mupdf and static libraries
+MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
+%description -n lib%name%soname
+MuPDF shared library
+%description -n lib%name-devel
+Header files for the MuPDF shared library
 
 %prep
-%setup -n %name-%version-source -a2
-%patch1 -p1
-%patch2 -p1
-
-# TODO rebuild with new openjpeg
-#BuildRequires: openjpeg-devel
-# NOTE: artifex bundled a forked and patched version of lcms2
-# TODO: unbundle mujs
-rm -rf thirdparty/{curl,freeglut,freetype,gumbo-parser,harfbuzz,jbig2dec,libjpeg,zlib}
-sed -i 's/-lopenjpeg //' debian/mupdf.pc
+%setup -a1 -a2 -a3
+%patch0 -p1
 
 %build
-%make_build USE_SYSTEM_LIBS=yes USE_SYSTEM_OPENJPEG=no USE_SYSTEM_MUJS=no
+
+%make_build shared-release USE_SYSTEM_LIBS=yes  FZ_ENABLE_PDF=1 \
+	XCFLAGS="-I/usr/include/freetype2/ -I/usr/include/harfbuzz/ \
+	-I/usr/include/gdcm/gdcmjpeg/ -I/usr/include/gdcm/gdcmjpeg/8/ \
+	-I/usr/include/openjpeg-2.5/" \
+	XLDFLAGS="-g -L/usr/lib64"  XLIBS="-lgdcmjpeg8" --trace
 
 %install
-# TODO deal with platform/debian/mupdf.install / iconsdirs
-%makeinstall USE_SYSTEM_LIBS=yes USE_SYSTEM_OPENJPEG=no USE_SYSTEM_MUJS=no
-install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
-install -D -m644 debian/%name.xpm %buildroot/%_datadir/pixmaps/%name.xpm
-sed 's/@VERSION@/%version/g' < debian/mupdf.pc > mupdf.pc
-install -D mupdf.pc %buildroot%_pkgconfigdir/mupdf.pc
+#%%define _makeinstall_target install-shared-c install-apps install-docs
+make INSTALL="/bin/install -p" \
+	 USE_SYSTEM_LIBS=yes \
+	 DESTDIR=%buildroot \
+	 bindir=%_bindir \
+	 libdir=%_libdir \
+	 incdir=%_includedir \
+	 mandir=%_mandir \
+	 prefix=%_prefix \
+	 install-shared-c install-apps install-docs
 
 %files
-%doc %_defaultdocdir/%name
-%_bindir/*
-%_desktopdir/mupdf.desktop
+%_bindir/mupdf-gl
+%_bindir/mupdf-x11
+%_bindir/muraster
+%_bindir/mutool
 %_mandir/man1/*
-%_datadir/pixmaps/mupdf.xpm
 
-%files devel
-%_pkgconfigdir/*
-%_includedir/%name
-%_libdir/lib*.a
+%files -n lib%name%soname
+%_libdir/libmupdf.so.%{soname}*
+%doc %_defaultdocdir/%name/CHANGES
+%doc %_defaultdocdir/%name/COPYING
+%doc %_defaultdocdir/%name/README
+
+%files -n lib%name-devel
+%_includedir/mupdf/*.h
+%_includedir/mupdf/fitz/*.h
+%_includedir/mupdf/pdf/*.h
+
+%_libdir/libmupdf.so
+%doc %_defaultdocdir/%name/examples/*
 
 %changelog
+* Wed Dec 18 2024 Oleg Proskurin <proskur@altlinux.org> 1.25.2-alt1
+- Build new version
+
 * Wed Dec 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.18.0-alt1
 - Updated to upstream version 1.18.0 (Fixes: CVE-2017-5991, CVE-2018-10289,
   CVE-2018-16647, CVE-2018-16648, CVE-2019-14975, CVE-2020-26519).
