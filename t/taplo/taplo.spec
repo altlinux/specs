@@ -2,7 +2,7 @@
 
 Name: taplo
 Version: 0.9.3
-Release: alt2
+Release: alt3
 
 Summary: A TOML toolkit written in Rust
 License: MIT
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
 BuildRequires: /proc
 
-ExcludeArch: i586 ppc64le
+ExcludeArch: i586 ppc64le armh
 
 %description
 Taplo CLI aims to be an one stop shop tool for working with TOML files
@@ -54,6 +54,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Thu Dec 19 2024 Michael Chernigin <chernigin@altlinux.org> 0.9.3-alt3
+- Exclude armh.
+
 * Fri Nov 22 2024 Ilya Sorochan <k0tran@altlinux.org> 0.9.3-alt2
 - Add patch for pprof crate to add support loongarch64.
 
