@@ -3,7 +3,7 @@ Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.66
+%define kernel_sublevel	.67
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -123,7 +123,11 @@ BuildRequires: ccache
 %endif
 
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iproute2
+BuildRequires: ltp >= 20210524-alt2
+BuildRequires: rpm-build-vm-run >= 1.30
+}}
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
@@ -575,6 +579,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Dec 20 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.67-alt1
+- v6.6.67 (2024-12-19).
+
 * Sun Dec 15 2024 Kernel Bot <kernelbot@altlinux.org> 1:6.6.66-alt1
 - v6.6.66 (2024-12-14).
 
