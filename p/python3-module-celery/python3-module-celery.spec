@@ -5,6 +5,7 @@
 %add_python3_req_skip celery.utils.nodenames
 %add_python3_req_skip celery.utils.time
 
+%def_with eventlet
 %def_without s3
 # wait for new botocore, pytest
 %def_disable check
@@ -13,14 +14,13 @@
 
 Name: python3-module-%oname
 Version: 5.3.6
-Release: alt1
+Release: alt2
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
-
-Group: Development/Python3
 License: BSD License
-URL: https://github.com/celery/celery
+Group: Development/Python3
 
+URL: https://github.com/celery/celery
 # https://github.com/celery/celery.git
 # Source-url: https://pypi.io/packages/source/c/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
@@ -39,7 +39,6 @@ BuildRequires: dvipng
 BuildRequires: python3-module-html5lib
 BuildRequires: python3(Crypto)
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3(requests)
-BuildRequires: python3(eventlet)
 BuildRequires: python3(redis)
 
 %if_with doc
@@ -66,19 +65,18 @@ BuildRequires: python3-module-pytest < 4.4.0
 BuildRequires: python3-module-moto >= 1.3.7
 %endif
 
-Conflicts: python-module-celery
-
-# due /usr/bin/celery
-Obsoletes: python-module-celery
+%if_with eventlet
+BuildRequires: python3(eventlet)
+%endif
 
 %description
 Celery is an open source asynchronous task queue/job queue based on
 distributed message passing.  It is focused on real-time operation,
 but supports scheduling as well.
 
-The execution units, called tasks, are executed concurrently on one or
-more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.  Tasks can
-execute asynchronously (in the background) or synchronously
+The execution units, called tasks, are executed concurrently on one
+or more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.
+Tasks can execute asynchronously (in the background) or synchronously
 (wait until ready).
 
 Celery is used in production systems to process millions of tasks a day.
@@ -93,9 +91,9 @@ Celery is an open source asynchronous task queue/job queue based on
 distributed message passing.  It is focused on real-time operation,
 but supports scheduling as well.
 
-The execution units, called tasks, are executed concurrently on one or
-more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.  Tasks can
-execute asynchronously (in the background) or synchronously
+The execution units, called tasks, are executed concurrently on one
+or more worker nodes using multiprocessing, `Eventlet`_ or `gevent`_.
+Tasks can execute asynchronously (in the background) or synchronously
 (wait until ready).
 
 Celery is used in production systems to process millions of tasks a day.
@@ -117,7 +115,7 @@ Sphinx documentation plugin used to document tasks.
 %patch11 -p1
 #patch12 -p1
 
-# disable moto using (needed for S3 tests)
+# avoid using moto (needed for S3 tests)
 subst "s|moto==.*||" requirements/test.txt
 
 %build
@@ -157,6 +155,10 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Thu Dec 19 2024 Michael Shigorin <mike@altlinux.org> 5.3.6-alt2
+- E2K: skip eventlet dependency (not available so far)
+- minor spec cleanup (see also ALT#46206)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 5.3.6-alt1
 - new version 5.3.6 (with rpmrb script)
 
