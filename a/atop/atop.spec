@@ -2,8 +2,8 @@
 %filter_from_requires /^.usr.bin.systemctl/d
 
 Name: atop
-Version: 2.10.0
-Release: alt2.1
+Version: 2.11.0
+Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -41,7 +41,7 @@ gzip -c9 ChangeLog > ChangeLog.gz
 %install
 mkdir -p %buildroot/usr/lib/pm-utils/sleep.d %buildroot%_sysconfdir/default
 for i in install sysvinstall;do
-make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir PMPATHD=/lib/systemd/system-sleep
+make $i DESTDIR=%buildroot INIPATH=%_initddir SYSDPATH=%_unitdir PMPATHD=%_systemddir/system-sleep
 done
 :> %buildroot%_sysconfdir/%{name}rc
 
@@ -67,10 +67,13 @@ done
 %_unitdir/%{name}*.timer
 %_logdir/%name
 %_datadir/%name
-/lib/systemd/system-sleep/atop-pm.sh
-/usr/lib/pm-utils/sleep.d/45atoppm
+%_systemddir/system-sleep/atop-pm.sh
+%_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Thu Dec 19 2024 Leontiy Volodin <lvol@altlinux.org> 2.11.0-alt1
+- atop 2.11.0
+
 * Fri Mar 22 2024 Leontiy Volodin <lvol@altlinux.org> 2.10.0-alt2.1
 - Fixed url tag
 
