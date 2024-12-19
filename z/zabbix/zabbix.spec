@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		c1d7a081969
+%define svnrev		af5010ccdbb
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.6
+Version: 7.0.7
 Release: alt1
 Epoch: 1
 
@@ -861,6 +861,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Dec 19 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.7-alt1
+- 7.0.7
+
 * Wed Dec 04 2024 Alexei Takaseev <taf@altlinux.org> 1:7.0.6-alt1
 - 7.0.6 (Fixes: CVE-2024-22117, CVE-2024-36463, CVE-2024-36466, CVE-2024-36467, CVE-2024-36468,
                 CVE-2024-42326, CVE-2024-42327, CVE-2024-42328, CVE-2024-42329, CVE-2024-42330,
