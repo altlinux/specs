@@ -8,12 +8,15 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt2
+
 Summary: Python port of markdown-it. Markdown parsing, done right!
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/markdown-it-py/
+
 Vcs: https://github.com/executablebooks/markdown-it-py
+
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
@@ -29,6 +32,7 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 Provides: python3-module-%pypi_name = %EVR
+%set_python3_req_method strict
 
 %description
 Markdown parser done right.
@@ -83,6 +87,9 @@ For more details see: https://markdown-it-py.readthedocs.io.
 %_bindir/%oname
 
 %changelog
+* Thu Dec 19 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt2
+- found python dependencies strictly (ALT #51334)
+
 * Tue Jul 11 2023 Andrey Limachko <liannnix@altlinux.org> 3.0.0-alt1
 - 2.2.0 -> 3.0.0.
 
