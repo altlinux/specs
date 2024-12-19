@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.7
+Release: alt0.8
 
 Summary: Console player
 Group: Sound
@@ -32,6 +32,10 @@ Source: moc-%version.tar
 Patch0: ffmpeg4.patch
 # https://bugs.gentoo.org/834393
 Patch1: ffmpeg6.patch
+# https://bugs-devel.debian.org/cgi-bin/bugreport.cgi?bug=1072436
+Patch2: ffmpeg7.patch
+# http://moc.daper.net/node/1872
+Patch3: %name-2.6.0-files-https.patch
 
 Requires: %name-player %name-plugin-flac %name-plugin-mp3 %name-plugin-sndfile %name-plugin-vorbis
 
@@ -329,6 +333,10 @@ EOF
 %endif
 
 %changelog
+* Thu Dec 19 2024 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt0.8
+- Fix FTBFS with ffmpeg7 (debian bug 1072436).
+- files: add https support (ALT #52414).
+
 * Sat Nov 04 2023 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt0.7
 - Fix FTBFS: added ffmpeg6 compat patch (tnx Felix Neumarker) from Gentoo.
 
