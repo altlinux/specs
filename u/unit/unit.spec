@@ -11,7 +11,7 @@
 %def_disable devel
 
 Name: unit
-Version: 1.33.0
+Version: 1.34.0
 Release: alt1
 
 Summary: NGINX Unit - Web Application Server
@@ -245,6 +245,9 @@ logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Thu Dec 19 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.34.0-alt1
+- Update to 1.34.0 (2024-12-12).
+
 * Tue Sep 17 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.33.0-alt1
 - Update to 1.33.0 (2024-08-22).
 
