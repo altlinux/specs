@@ -112,7 +112,7 @@
 
 Name: weston
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -312,6 +312,9 @@ ln -sf %name/libexec_%{name}.so.%exec_soname \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Thu Dec 19 2024 Yuri N. Sedunov <aris@altlinux.org> 14.0.1-alt1.1
+- rebuilt with neatvnc-0.9.2
+
 * Tue Oct 22 2024 Yuri N. Sedunov <aris@altlinux.org> 14.0.1-alt1
 - 14.0.1
 
