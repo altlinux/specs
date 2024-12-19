@@ -11,7 +11,7 @@
 
 Name: warp
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Fast and secure file transfer tool
 License: GPL-3.0-or-later
@@ -26,6 +26,7 @@ Source: %url/-/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
+Patch1: warp-0.8.0-alt-aperture.patch
 
 #error: failed to run custom build command for `ring v0.16.20`
 ExcludeArch: ppc64le
@@ -35,7 +36,7 @@ ExcludeArch: ppc64le
 %define adwaita_ver 1.6
 
 Requires: yelp
-%{?_enable_qr:Requires: gst-plugins-bad1.0}
+%{?_enable_qr:Requires: gst-plugins-bad1.0 gst-plugins-libcamera1.0}
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -59,14 +60,21 @@ transfers are encrypted.
 %prep
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
+# AHTUNG: update aperture to 0.8.0
+%patch1 -b .aperture
 mkdir .cargo
+#cargo update -p aperture
+# --precise 0.8.0
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+tar -cf %_sourcedir/%name-%version-cargo.tar Cargo.* .cargo/ vendor/}
 
 ln -s %_datadir/license-list-data vendor/license/license-list-data
 
+
+
 %build
 %meson \
+    -Dprofile=default \
     %{subst_enable_meson_feature qr qr-code-scanning}
 %nil
 %meson_build
@@ -90,6 +98,9 @@ ln -s %_datadir/license-list-data vendor/license/license-list-data
 
 
 %changelog
+* Thu Dec 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt2
+- updated aperture to 0.8.0 (ALT #52478)
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
