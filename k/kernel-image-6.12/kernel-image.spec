@@ -1,8 +1,8 @@
 Name: kernel-image-6.12
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -126,7 +126,12 @@ BuildRequires: ccache
 %endif
 
 # for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iproute2
+BuildRequires: ltp >= 20210524-alt2
+BuildRequires: rpm-build-vm-run >= 1.30
+BuildRequires: rtcheck
+}}
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
@@ -507,7 +512,12 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug uname -a
+timeout 300 vm-run --loglevel=debug --append=earlycon --heredoc <<-EOF
+	uname -a
+%if "%base_flavour" == "rt"
+	rtcheck -v
+%endif
+EOF
 # Longer LTP tests only if there is KVM (which is present on all main arches).
 if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
 	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
@@ -603,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Dec 20 2024 Kernel Bot <kernelbot@altlinux.org> 6.12.6-alt1
+- v6.12.6 (2024-12-19).
+
 * Sun Dec 15 2024 Vitaly Chikunov <vt@altlinux.org> 6.12.5-alt2
 - spec: Fix ExclusiveArch conditionals.
 
