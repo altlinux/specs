@@ -3,7 +3,7 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%def_disable compat
+%def_enable compat
 %def_enable jpeg2000
 
 %if_disabled compat
@@ -17,7 +17,7 @@
 %def_enable xpdfheaders
 %def_enable gir
 %else
-%def_disable cpp
+%def_enable cpp
 %def_disable glib
 %def_disable qt6
 %def_disable qt5
@@ -29,15 +29,15 @@
 %endif
 
 %define rname poppler
-%define somajor 140
-%define somajor_cpp 1
+%define somajor 134
+%define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_qt6 3
 %define somajor_glib 8
 %define major 24
-%define minor 08
+%define minor 02
 %define bugfix 0
 
 %if_disabled compat
@@ -47,7 +47,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt3
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -353,10 +353,8 @@ export QT4DIR=%_qt4dir
 make install DESTDIR=%buildroot -C BUILD
 #cmakeinstall_std
 
-%find_lang --with-qt --output=%rname.lang pdfsig
-
 %if_enabled utils
-%files -n %rname -f %rname.lang
+%files -n %rname
 %_bindir/pdf*
 %_man1dir/pdf*
 %endif
@@ -452,8 +450,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Thu Dec 19 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.0-alt1
-- new version
+* Tue Jul 16 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt3
+- build only compat library
 
 * Tue Jul 16 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.0-alt2
 - update license tag
