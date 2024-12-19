@@ -1,8 +1,9 @@
 %define oname benchmark
+%define abiversion 1
 
 Name: lib%oname
-Version: 1.7.1
-Release: alt1.2
+Version: 1.9.1
+Release: alt1
 
 Summary: A library to benchmark code snippets
 
@@ -11,12 +12,10 @@ Group: Development/C++
 Url: https://github.com/google/benchmark
 
 # Source-url: https://github.com/google/benchmark/archive/refs/tags/v%version.tar.gz
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 Provides: google-%name = %EVR
 
-Patch: benchmark-1.5.4-extbuild.patch
 Patch2000: libbenchmark-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -57,8 +56,7 @@ Requires: lib%oname = %EVR
 %summary development environment.
 
 %prep
-%setup -n %oname-%version
-#%%patch -p1
+%setup -n %name-%version
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -89,7 +87,8 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 
 %files
 %doc *.md
-%_libdir/*.so.*
+%_libdir/*.so.%abiversion
+%_libdir/*.so.%abiversion.*
 
 %files devel
 %doc docs
@@ -99,6 +98,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_includedir/*
 
 %changelog
+* Thu Dec 19 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.1-alt1
+- NMU: new version 1.9.1
+
 * Mon Oct 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.7.1-alt1.2
 - NMU: fixed FTBFS on LoongArch (some tests need /proc).
   While at it worked around Statistics.CV test failure on i586.
