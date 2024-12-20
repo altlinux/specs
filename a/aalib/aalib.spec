@@ -3,7 +3,7 @@
 
 Name: aalib
 Version: 1.4
-Release: alt8%prerel
+Release: alt9%prerel
 
 Summary: AA (Ascii Art) library
 License: LGPLv2+
@@ -121,6 +121,10 @@ done
 %exclude %_man1dir/*-config.*
 
 %changelog
+* Fri Dec 20 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.4-alt9rc5
+- Fixed FTBFS with gcc-14 by applying fix-implicit-function-declaration.patch
+  from Debian.
+
 * Fri Apr 15 2016 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt8rc5
 - Import patches from Debian aalib package.
 
