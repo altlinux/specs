@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 3.8.0
-Release: alt1
+Release: alt2
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -27,6 +27,8 @@ BuildRequires: unzip
 
 AutoReqProv: yes, noosgi-fc
 Requires: java >= 17
+# Require native library and override bad library from vendoring jar
+Requires: libzstd-jni
 
 %description
 Apache Kafka is a distributed event store and stream-processing platform. It is
@@ -90,6 +92,9 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
+- Require native libzstd-jni.
+
 * Sun Jul 28 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version.
 
