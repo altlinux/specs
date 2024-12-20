@@ -5,7 +5,7 @@
 %global build_parallel_jobs %__nprocs
 %endif
 
-%global llvm_version 18.1
+%global llvm_version 19.1
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        126.0.6478.182
+Version:        130.0.6723.69
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -53,13 +53,13 @@ Obsoletes:      chromium-gnome
 Obsoletes:      chromium-desktop-kde
 Obsoletes:      chromium-desktop-gnome
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 ### Start Patches
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
 Patch002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch003: 0003-DEBIAN-manpage-fixes.patch
-Patch004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
+Patch004: 0004-DEBIAN-ps-print.patch
 Patch005: 0005-ALT-Use-rpath-link-and-absolute-rpath.patch
 Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
@@ -67,14 +67,15 @@ Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
 Patch010: 0010-ALT-use-system-libdrm-library.patch
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch012: 0012-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+# Patch012: 0012-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch016: 0016-DEBIAN-use-system-libevent-library.patch
-Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
+# Drop 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch when switching to libc++:
+# Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
-Patch019: 0019-DEBIAN-gpu-header.patch
+Patch019: 0019-DEBIAN-bindgen.patch
 Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
@@ -82,31 +83,29 @@ Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-Patch027: 0027-Use-system-sysroot-for-rust.patch
+#XXX Patch027: 0027-Use-system-sysroot-for-rust.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
-Patch029: 0029-nullptr_t-without-namespace-std.patch
-Patch030: 0030-Fix-undefined-symbol-partition_alloc-internal-Intern.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-libavif-deps.patch
-Patch033: 0033-ALT-rename-std::powf.patch
-Patch034: 0034-DEBIAN-span-optional.patch
-Patch035: 0035-DEBIAN-quiche-deque.patch
-Patch040: 0040-DEBIAN-realtime-reporting.patch
-Patch041: 0041-DEBIAN-blink-header.patch
-Patch042: 0042-DEBIAN-urlvisit-header.patch
-Patch043: 0043-DEBIAN-accessibility-format.patch
-Patch044: 0044-DEBIAN-mojo.patch
-Patch047: 0047-DEBIAN-ruy-include.patch
-Patch048: 0048-DEBIAN-tabstrip-include.patch
-Patch050: 0050-DEBIAN-bad-font-gc0000.patch
-Patch051: 0051-DEBIAN-bad-font-gc000.patch
-Patch052: 0052-DEBIAN-bad-font-gc00.patch
-Patch053: 0053-DEBIAN-bad-font-gc0.patch
-Patch054: 0054-DEBIAN-bad-font-gc1.patch
-Patch055: 0055-DEBIAN-bad-font-gc11.patch
-Patch056: 0056-DEBIAN-bad-font-gc2.patch
-Patch057: 0057-DEBIAN-bad-font-gc3.patch
+# Patch033: 0033-ALT-rename-std::powf.patch
+# Patch034: 0034-DEBIAN-span-optional.patch
+Patch035: 0035-DEBIAN-mojo.patch
+Patch036: 0036-DEBIAN-ruy-include.patch
+Patch037: 0037-ALT-clang-path.patch
+Patch038: 0038-ALT-std::exchange.patch
+Patch041: 0041-DEBIAN-highway-include-path.patch
+Patch042: 0042-DEBIAN-material-utils.patch
+Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
+# Patch044: 0044-DEBIAN-perfetto.patch
+Patch045: 0045-DEBIAN-mojo-null.patch
+
+# Patch060: 0060-DEBIAN-lex-3way.patch
+Patch061: 0061-DEBIAN-gpu-crash.patch
+Patch062: 0062-DEBIAN-cacheline.patch
+
 ### End Patches
+
+BuildRequires(pre): rpm-macros-alternatives
 
 BuildRequires: /proc
 BuildRequires: /dev/shm
@@ -121,8 +120,15 @@ BuildRequires:  glibc-kernheaders
 BuildRequires:  gperf
 BuildRequires:  libcups-devel
 BuildRequires:  libdouble-conversion-devel
-BuildRequires:  libstdc++-devel
-BuildRequires:  libstdc++-devel-static
+#BuildRequires:  libstdc++-devel
+#BuildRequires:  libstdc++-devel-static
+BuildRequires:  libcxx-devel
+BuildRequires:  libcxx-static
+BuildRequires:  libcxxabi-devel
+BuildRequires:  libcxxabi-static
+BuildRequires:  llvm-libunwind-devel
+BuildRequires:  llvm-libunwind-static
+BuildRequires:  libtiff-devel
 BuildRequires:  ninja-build
 BuildRequires:  node
 BuildRequires:  nvidia-settings-devel
@@ -155,7 +161,7 @@ BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gnome-keyring-1)
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(harfbuzz)
-BuildRequires:  pkgconfig(jsoncpp)
+## BuildRequires:  pkgconfig(jsoncpp)
 BuildRequires:  pkgconfig(krb5-gssapi)
 BuildRequires:  pkgconfig(lcms2)
 BuildRequires:  pkgconfig(libbrotlidec)
@@ -172,17 +178,19 @@ BuildRequires:  pkgconfig(libpipewire-0.3)
 BuildRequires:  pkgconfig(libpng)
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  pkgconfig(libsecret-1)
+BuildRequires:  pkgconfig(libudev)
 BuildRequires:  pkgconfig(libusb-1.0)
 BuildRequires:  pkgconfig(libva)
 BuildRequires:  pkgconfig(libwebp)
-BuildRequires:  pkgconfig(libwoff2dec)
+## BuildRequires:  pkgconfig(libwoff2dec)
 BuildRequires:  pkgconfig(libxslt)
+BuildRequires:  pkgconfig(libzstd)
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(nspr)
 BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(openh264)
 BuildRequires:  pkgconfig(re2)
-BuildRequires:  pkgconfig(snappy)
+## BuildRequires:  pkgconfig(snappy)
 BuildRequires:  pkgconfig(uuid)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcb-proto)
@@ -207,6 +215,7 @@ BuildRequires:  pkgconfig(libavformat)
 BuildRequires:  pkgconfig(libavutil)
 BuildRequires:  pkgconfig(opus)
 %endif
+BuildRequires:  rust-bindgen
 
 BuildRequires:  python3
 BuildRequires:  python3(bs4)
@@ -238,6 +247,8 @@ sed -i \
         -e 's/"-no-canonical-prefixes"//g' \
         -e 's/"-no-opaque-pointers",//g' \
         build/config/compiler/BUILD.gn
+sed -i -e 's/'-Wundef',//' tools/gn/build/gen.py
+subst 's/-static-libstdc++/--stdlib=libc++/' `grep -Rl 'static-libstdc++' *`
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
@@ -245,10 +256,12 @@ ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
 mkdir -p buildtools/third_party/eu-strip/bin
 ln -sf %_bindir/eu-strip buildtools/third_party/eu-strip/bin/eu-strip
 
+mkdir -p third_party/rust-toolchain/bin
+ln -sf %_bindir/bindgen third_party/rust-toolchain/bin/bindgen
+
 rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
 ln -s %_bindir/python3 third_party/depot_tools/python
-
 
 %build
 export ALTWRAP_LLVM_VERSION="%llvm_version"
@@ -275,9 +288,13 @@ FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
 FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration'
 FLAGS+=' -Wno-unknown-attributes'
 FLAGS+=' -DUSE_SYSTEM_MINIZIP'
+FLAGS+=' -stdlib=libc++'
+FLAGS+=' -I/usr/include/c++/v1 -I/usr/include/c++/14 -I/usr/include/c++/14/x86_64-alt-linux'
+FLAGS+=' -Wno-error -Wno-undef'
 
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
+export LDFLAGS="$LDFLAGS -stdlib=libc++ -L/usr/lib64 -lc++"
 
 gn_arg=()
 gn_arg+=( custom_toolchain=\"//build/toolchain/linux/unbundle:default\" )
@@ -291,7 +308,6 @@ gn_arg+=( use_libpci=true )
 gn_arg+=( use_pulseaudio=true )
 gn_arg+=( use_cups=true )
 gn_arg+=( use_kerberos=true )
-gn_arg+=( use_gold=false )
 gn_arg+=( use_vaapi=true )
 gn_arg+=( use_system_freetype=true )
 gn_arg+=( use_system_harfbuzz=true )
@@ -377,6 +393,13 @@ gn_arg+=( enable_vulkan=false )
 %else
 gn_arg+=( enable_vulkan=true )
 %endif
+gn_arg+=( allow_warnings=true )
+gn_arg+=( use_system_jsoncpp=false )
+gn_arg+=( use_bundled_jsoncpp=true )
+gn_arg+=( use_system_woff2=false )
+gn_arg+=( use_bundled_woff2=true )
+gn_arg+=( use_system_snappy=false )
+gn_arg+=( use_bundled_snappy=true )
 
 %if_enabled google_api_keys
 ### From 2013 until early 2021, Google permitted distribution builds of
@@ -396,6 +419,10 @@ gn_arg+=( google_api_key=\"%api_key\" )
 #gn_arg+=( google_default_client_secret=\"%default_client_secret\" )
 %endif
 
+# Clang path
+gn_arg+=( clang_base_path=\"/usr/lib/llvm-%llvm_version\" )
+# Includedir /usr/lib/llvm-18.1/lib64/clang/18/include
+
 # Remove bundled libraries for which we will use the system copies.
 .rpm/scripts/unbundle
 
@@ -403,7 +430,7 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="${gn_arg[*]}" --build-path=%targe
 %target/gn --script-executable=%__python3 gen --args="${gn_arg[*]}" %target
 
 n=%build_parallel_jobs
-[ "$n" -lt 20 ] || n=20
+[ "$n" -lt 32 ] || n=32
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
@@ -522,6 +549,153 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 130.0.6723.69-alt1
+- New version (130.0.6723.69).
+- Build with llvm19.1 and libcxx, not libstdc++ (thanks andy@).
+- Build only for x86_64.
+- Security fixes:
+  + CVE-2024-10229: Inappropriate implementation in Extensions
+  + CVE-2024-10230: Type Confusion in V8
+  + CVE-2024-10231: Type Confusion in V8
+  + CVE-2024-9954: Use after free in AI
+  + CVE-2024-9955: Use after free in Web Authentication
+  + CVE-2024-9956: Inappropriate implementation in Web Authentication
+  + CVE-2024-9957: Use after free in UI
+  + CVE-2024-9958: Inappropriate implementation in PictureInPicture
+  + CVE-2024-9959: Use after free in DevTools
+  + CVE-2024-9960: Use after free in Dawn
+  + CVE-2024-9961: Use after free in Parcel Tracking
+  + CVE-2024-9962: Inappropriate implementation in Permissions
+  + CVE-2024-9963: Insufficient data validation in Downloads
+  + CVE-2024-9964: Inappropriate implementation in Payments
+  + CVE-2024-9965: Insufficient data validation in DevTools
+  + CVE-2024-9966: Inappropriate implementation in Navigations
+  + CVE-2024-9602: Type Confusion in V8
+  + CVE-2024-9603: Type Confusion in V8
+  + CVE-2024-7025: Integer overflow in Layout
+  + CVE-2024-9369: Insufficient data validation in Mojo
+  + CVE-2024-9370: Inappropriate implementation in V8
+  + CVE-2024-9120: Use after free in Dawn
+  + CVE-2024-9121: Inappropriate implementation in V8
+  + CVE-2024-9122: Type Confusion in V8
+  + CVE-2024-9123: Integer overflow in Skia
+  + CVE-2024-8904: Type Confusion in V8
+  + CVE-2024-8905: Inappropriate implementation in V8
+  + CVE-2024-8906: Incorrect security UI in Downloads
+  + CVE-2024-8907: Insufficient data validation in Omnibox
+  + CVE-2024-8908: Inappropriate implementation in Autofill
+  + CVE-2024-8909: Inappropriate implementation in UI
+  + CVE-2024-8636: Heap buffer overflow in Skia
+  + CVE-2024-8637: Use after free in Media Router
+  + CVE-2024-8638: Type Confusion in V8
+  + CVE-2024-8639: Use after free in Autofill
+  + CVE-2024-8362: Use after free in WebAudio
+  + CVE-2024-7970: Out of bounds write in V8
+  + CVE-2024-7969: Type Confusion in V8
+  + CVE-2024-8193: Heap buffer overflow in Skia
+  + CVE-2024-8194: Type Confusion in V8
+  + CVE-2024-8198: Heap buffer overflow in Skia
+  + CVE-2024-7964: Use after free in Passwords
+  + CVE-2024-7965: Inappropriate implementation in V8
+  + CVE-2024-7966: Out of bounds memory access in Skia
+  + CVE-2024-7967: Heap buffer overflow in Fonts
+  + CVE-2024-7968: Use after free in Autofill
+  + CVE-2024-7969: Type Confusion in V8
+  + CVE-2024-7971: Type confusion in V8
+  + CVE-2024-7972: Inappropriate implementation in V8
+  + CVE-2024-7973: Heap buffer overflow in PDFium
+  + CVE-2024-7974: Insufficient data validation in V8 API
+  + CVE-2024-7975: Inappropriate implementation in Permissions
+  + CVE-2024-7976: Inappropriate implementation in FedCM
+  + CVE-2024-7977: Insufficient data validation in Installer
+  + CVE-2024-7978: Insufficient policy enforcement in Data Transfer
+  + CVE-2024-7979: Insufficient data validation in Installer
+  + CVE-2024-7980: Insufficient data validation in Installer
+  + CVE-2024-7981: Inappropriate implementation in Views
+  + CVE-2024-8033: Inappropriate implementation in WebApp Installs
+  + CVE-2024-8034: Inappropriate implementation in Custom Tabs
+  + CVE-2024-8035: Inappropriate implementation in Extensions
+  + CVE-2024-7532: Out of bounds memory access in ANGLE
+  + CVE-2024-7533: Use after free in Sharing
+  + CVE-2024-7550: Type Confusion in V8
+  + CVE-2024-7534: Heap buffer overflow in Layout
+  + CVE-2024-7535: Inappropriate implementation in V8
+  + CVE-2024-7536: Use after free in WebAudio
+  + CVE-2024-6988: Use after free in Downloads
+  + CVE-2024-6989: Use after free in Loader
+  + CVE-2024-6991: Use after free in Dawn
+  + CVE-2024-6992: Out of bounds memory access in ANGLE
+  + CVE-2024-6993: Inappropriate implementation in Canvas
+  + CVE-2024-6994: Heap buffer overflow in Layout
+  + CVE-2024-6995: Inappropriate implementation in Fullscreen
+  + CVE-2024-6996: Race in Frames
+  + CVE-2024-6997: Use after free in Tabs
+  + CVE-2024-6998: Use after free in User Education
+  + CVE-2024-6999: Inappropriate implementation in FedCM
+  + CVE-2024-7000: Use after free in CSS. Reported by Anonymous
+  + CVE-2024-7001: Inappropriate implementation in HTML
+  + CVE-2024-7003: Inappropriate implementation in FedCM
+  + CVE-2024-7004: Insufficient validation of untrusted input in Safe Browsing
+  + CVE-2024-7005: Insufficient validation of untrusted input in Safe Browsing
+  + CVE-2024-6990: Uninitialized Use in Dawn
+  + CVE-2024-7255: Out of bounds read in WebTransport
+  + CVE-2024-7256: Insufficient data validation in Dawn
+
+* Thu Aug 22 2024 Andrey Cherepanov <cas@altlinux.org> 128.0.6613.84-alt1
+- New version (128.0.6613.84).
+- Security fixes:
+  + CVE-2024-7964: Use after free in Passwords.
+  + CVE-2024-7965: Inappropriate implementation in V8.
+  + CVE-2024-7966: Out of bounds memory access in Skia.
+  + CVE-2024-7967: Heap buffer overflow in Fonts.
+  + CVE-2024-7968: Use after free in Autofill.
+  + CVE-2024-7969: Type Confusion in V8.
+  + CVE-2024-7971: Type confusion in V8.
+  + CVE-2024-7972: Inappropriate implementation in V8.
+  + CVE-2024-7973: Heap buffer overflow in PDFium.
+  + CVE-2024-7974: Insufficient data validation in V8 API.
+  + CVE-2024-7975: Inappropriate implementation in Permissions.
+  + CVE-2024-7976: Inappropriate implementation in FedCM.
+  + CVE-2024-7977: Insufficient data validation in Installer.
+  + CVE-2024-7978: Insufficient policy enforcement in Data Transfer.
+  + CVE-2024-7979: Insufficient data validation in Installer.
+  + CVE-2024-7980: Insufficient data validation in Installer.
+  + CVE-2024-7981: Inappropriate implementation in Views.
+  + CVE-2024-8033: Inappropriate implementation in WebApp Installs.
+  + CVE-2024-8034: Inappropriate implementation in Custom Tabs.
+  + CVE-2024-8035: Inappropriate implementation in Extensions.
+
+* Wed Aug 14 2024 Andrey Cherepanov <cas@altlinux.org> 127.0.6533.119-alt1
+- New version (127.0.6533.119).
+- Security fixes:
+  + CVE-2024-7532: Out of bounds memory access in ANGLE.
+  + CVE-2024-7533: Use after free in Sharing.
+  + CVE-2024-7550: Type Confusion in V8.
+  + CVE-2024-7534: Heap buffer overflow in Layout.
+  + CVE-2024-7535: Inappropriate implementation in V8.
+  + CVE-2024-7536: Use after free in WebAudio.
+  + CVE-2024-6990: Uninitialized Use in Dawn.
+  + CVE-2024-7255: Out of bounds read in WebTransport.
+  + CVE-2024-7256: Insufficient data validation in Dawn.
+
+* Thu Jul 25 2024 Andrey Cherepanov <cas@altlinux.org> 127.0.6533.72-alt1
+- New version (127.0.6533.72).
+- Security fixes:
+  + CVE-2024-6988: Use after free in Downloads.
+  + CVE-2024-6989: Use after free in Loader.
+  + CVE-2024-6991: Use after free in Dawn.
+  + CVE-2024-6994: Heap buffer overflow in Layout.
+  + CVE-2024-6995: Inappropriate implementation in Fullscreen.
+  + CVE-2024-6996: Race in Frames.
+  + CVE-2024-6997: Use after free in Tabs.
+  + CVE-2024-6998: Use after free in User Education.
+  + CVE-2024-6999: Inappropriate implementation in FedCM.
+  + CVE-2024-7000: Use after free in CSS.
+  + CVE-2024-7001: Inappropriate implementation in HTML.
+  + CVE-2024-7003: Inappropriate implementation in FedCM.
+  + CVE-2024-7004: Insufficient validation of untrusted input in Safe Browsing.
+  + CVE-2024-7005: Insufficient validation of untrusted input in Safe Browsing.
+
 * Wed Jul 17 2024 Andrey Cherepanov <cas@altlinux.org> 126.0.6478.182-alt1
 - New version (126.0.6478.182).
 - Security fixes:
