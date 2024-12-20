@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 1.3
+%define ver_major 1.4
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -30,6 +30,7 @@ Requires: dconf polkit
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rust-cargo
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(libsystemd)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -69,6 +70,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc README*
 
 %changelog
+* Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
