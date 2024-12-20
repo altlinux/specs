@@ -11,7 +11,7 @@
 %def_with jemalloc
 
 Name: fluent-bit
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -134,6 +134,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Fri Dec 20 2024 Leontiy Volodin <lvol@altlinux.org> 3.2.3-alt1
+- New version 3.2.3.
+
 * Fri Nov 29 2024 Leontiy Volodin <lvol@altlinux.org> 3.2.2-alt1
 - New version 3.2.2.
 
