@@ -3,7 +3,7 @@
 Name: dnsmasq
 Version: 2.90
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -14,7 +14,11 @@ Source1: %name.init
 Source2: %name.sysconfig
 Source3: %name-helper
 Source4: %name.service
+Source5: %name@.service
 Patch: %name-%version-%release.patch
+
+# Patch from upstream git, must be dropped during update to new version.
+Patch100: Fix-crash-when-reloading-DHCP-config-on-SIGHUP.patch
 
 BuildPreReq: glibc-kernheaders
 
@@ -64,6 +68,8 @@ query/remove a DHCP server's leases.
 %setup
 %patch -p1
 
+%patch100 -p1
+
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
 
@@ -94,6 +100,7 @@ install -pD -m600 %SOURCE2            %buildroot%sysconfig_file
 install -pD -m600 %name.conf.example  %buildroot%_sysconfdir/%name.conf
 install -pD -m755 %SOURCE3            %buildroot%_sbindir/%name-helper
 install -pD -m644 %SOURCE4            %buildroot%_unitdir/%name.service
+install -pD -m644 %SOURCE5            %buildroot%_unitdir/%name@.service
 
 # For utils package
 install -pD -m 755 contrib/lease-tools/dhcp_release %buildroot%_bindir/dhcp_release
@@ -132,6 +139,7 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %dir %_sysconfdir/dnsmasq.conf.d
 %_unitdir/%name.service
+%_unitdir/%name@.service
 %_initdir/%name
 %_sbindir/%{name}*
 %_man8dir/%{name}*
@@ -142,6 +150,12 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Fri Dec 20 2024 Mikhail Efremov <sem@altlinux.org> 2.90-alt2
+- Added patch from upstream git:
+  + Fix crash when reloading DHCP config on SIGHUP.
+- Dropped "Broadcast routing" feature.
+- Added dnsmasq@.service.
+
 * Mon Feb 19 2024 Mikhail Efremov <sem@altlinux.org> 2.90-alt1
 - Fixed different signedness comparison on 32bit systems.
 - Dropped obsoleted patches.
