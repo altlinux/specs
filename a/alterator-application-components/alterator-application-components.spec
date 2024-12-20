@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.7
-Release: alt1
+Version: 0.1.8
+Release: alt2
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -25,7 +25,6 @@ BuildRequires: alterator-entry
 %endif
 
 Requires: alterator-backend-packages alterator-entry libqbase alterator-interface-component alterator-backend-component_categories
-Requires: libtomlplusplus
 
 %description
 Alterator application for managing system components.
@@ -66,6 +65,16 @@ find ./alterator/ -type f -exec alterator-entry --verbose {} \+
 %_bindir/%name
 
 %changelog
+* Thu Dec 19 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt2
+- Fixes for p10 build.
+
+* Mon Dec 16 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt1
+- Fix tree sorting to work correctly while using translations.
+- Add search for components and categories.
+- Add packages list on the right side.
+- Improve startup time.
+- Fix showing nested categories.
+
 * Fri Dec 13 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.7-alt1
 - Improve launching time by building model async.
 - Add menubar and ability to change language at runtime (thx Kirill Sharov)
