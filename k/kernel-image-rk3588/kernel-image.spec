@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -125,11 +125,7 @@ BuildRequires: ccache
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
-your system.
-
-Most hardware drivers for this kernel are built as modules.  Some of
-these drivers are built separately from the kernel; they are available
-in separate packages (kernel-modules-*-%flavour).
+your system and supports ARM Rockhip SoC rk3588.
 
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
@@ -361,7 +357,12 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug uname -a
+timeout 300 vm-run --loglevel=debug --append=earlycon --heredoc <<-EOF
+	uname -a
+%if "%base_flavour" == "rt"
+	rtcheck -v
+%endif
+EOF
 # Longer LTP tests only if there is KVM (which is present on all main arches).
 if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
 	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
@@ -400,6 +401,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Dec 20 2024 Alexei Takaseev <taf@altlinux.org> 6.12.6-alt1
+- v6.12.6 (2024-12-19).
+
 * Sun Dec 15 2024 Alexei Takaseev <taf@altlinux.org> 6.12.5-alt1
 - Enable PREEMPT for low latency GPIO
 - Use config-rk3588 and common config
