@@ -34,7 +34,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Firmware update daemon
@@ -336,6 +336,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Fri Dec 20 2024 Egor Ignatov <egori@altlinux.org> 2.0.3-alt1
+- 2.0.3 (closes: #52485)
+
 * Mon Dec 02 2024 Egor Ignatov <egori@altlinux.org> 2.0.2-alt1
 - 2.0.2
 - New libfwupd ABI version.
