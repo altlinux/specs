@@ -1,7 +1,7 @@
 %def_without static
 
 Name: pstoedit
-Version: 4.01
+Version: 4.02
 Release: alt1
 
 Summary: converts Postscript(TM) and PDF files to other vector graphic formats
@@ -167,6 +167,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Fri Dec 20 2024 Ilya Mashkin <oddity@altlinux.ru> 4.02-alt1
+- 4.02
+
 * Sat Apr 06 2024 Ilya Mashkin <oddity@altlinux.ru> 4.01-alt1
 - 4.01
 
