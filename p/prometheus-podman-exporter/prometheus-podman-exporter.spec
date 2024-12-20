@@ -1,8 +1,9 @@
-%define goipath github.com/containers/prometheus-podman-exporter
+%global goipath github.com/containers/prometheus-podman-exporter
+%{!?_userunitdir: %global _userunitdir /lib/systemd/user}
 
 Name: prometheus-podman-exporter
 Version: 1.14.0
-Release: alt1
+Release: alt1.1
 
 Summary: Prometheus exporter for podman environment
 
@@ -50,5 +51,8 @@ install -Dm644 contrib/systemd/user/%name.service -t %buildroot%_userunitdir/
 %_userunitdir/%name.service
 
 %changelog
+* Thu Dec 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.14.0-alt1.1
+- Fixed backporting to older branches.
+
 * Wed Dec 18 2024 Leontiy Volodin <lvol@altlinux.org> 1.14.0-alt1
 - Initial build for ALT Sisyphus.
