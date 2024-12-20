@@ -3,7 +3,7 @@
 
 Name: prometheus-podman-exporter
 Version: 1.14.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: Prometheus exporter for podman environment
 
@@ -18,7 +18,7 @@ BuildRequires(pre):  rpm-build-golang /proc
 BuildRequires: git-core libdevmapper-devel glib2-devel libgpgme-devel libassuan-devel libbtrfs-devel libsystemd-devel
 BuildRequires: libselinux-utils
 Requires: conmon crun
-%ifnarch i586
+%ifnarch i586 armh
 Requires: netavark
 %endif
 
@@ -51,6 +51,9 @@ install -Dm644 contrib/systemd/user/%name.service -t %buildroot%_userunitdir/
 %_userunitdir/%name.service
 
 %changelog
+* Fri Dec 20 2024 Leontiy Volodin <lvol@altlinux.org> 1.14.0-alt1.3
+- Fixed requires.
+
 * Fri Dec 20 2024 Leontiy Volodin <lvol@altlinux.org> 1.14.0-alt1.2
 - Fixed userunitdir path.
 
