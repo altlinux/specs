@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt7.g%{git}
+Release: alt8.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Propreitary
@@ -69,6 +69,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Fri Dec 20 2024 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt8.g6adc981
+- Added fix for kernels 6.12+ (due upstream 5f60d5f6 commit).
+
 * Thu Feb 08 2024 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt7.g6adc981
 - Restore 32-bit support (closes #49323).
 - Remove forbidden conflicts to kernel-modules-bcmwl.
