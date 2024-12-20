@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Components interface for alterator browser
@@ -12,8 +12,16 @@ URL: https://gitlab.basealt.space/alt/alterator-interface-component
 BuildArch: noarch
 
 BuildRequires: python3-devel
+BuildRequires(pre): rpm-macros-features
 Requires: alterator-entry >= 0.1.1
 Requires: python3
+
+%if_feature python3 3.11
+%filter_from_requires /python3(toml)/d
+%else
+%filter_from_requires /python3(tomllib)/d
+Requires: python3-module-toml
+%endif
 
 Source0: %name-%version.tar
 
@@ -48,6 +56,9 @@ install -v -p -m 755 -D extract_packages %buildroot%_libexecdir/%name/extract_pa
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.component1.xml
 
 %changelog
+* Thu Dec 19 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
+- Add support for python3.9.
+
 * Mon Dec 09 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
 - Switch to Alterator Entry in toml.
 - Change getDescription to return array of bytes instead of strings.
