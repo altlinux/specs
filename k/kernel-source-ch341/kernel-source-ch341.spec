@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	ch341
 %define module_version  1.0.0
-%define git 84b4b8c
+%define git b3629c3
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt1.g%{git}
+Release: alt3.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: CH341 linux drivers for I2C / SPI and GPIO mode
 License: GPLv2
@@ -50,6 +50,12 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_sysconfdir/modprobe.d/blacklist-%{module_name}.conf
 
 %changelog
+* Fri Dec 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt3.gb3629c3
+- GIT b3629c3 (with kernel 6.11+ fixes).
+
+* Mon Aug 12 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt2.g2e4bac9
+- GIT 2e4bac9 (with kernel 6.9+ fixes).
+
 * Thu Jun 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt1.g84b4b8c
 - Initial build for ALTLinux.
 
