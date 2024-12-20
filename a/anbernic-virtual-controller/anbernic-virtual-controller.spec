@@ -1,5 +1,5 @@
 Name: anbernic-virtual-controller
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: Set of tools to combine several input devices into one virtual controller on Anbernic handhelds
@@ -46,5 +46,8 @@ install -m 0644 99-%name.rules %buildroot%_udevrulesdir/99-%name.rules
 
 
 %changelog
+* Fri Dec 20 2024 Artyom Bystrov <arbars@altlinux.org> 0.1.1-alt1
+- Add udev rule for uinput support 
+
 * Wed Dec 18 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial commit for Sisyphus
