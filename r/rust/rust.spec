@@ -4,11 +4,11 @@
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 17.0
+%global llvm_version 18.1
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.82.0
+Version: 1.83.0
 Release: alt1
 Epoch: 1
 
@@ -48,7 +48,7 @@ BuildRequires: pkgconfig(tinfo)
 BuildRequires: pkgconfig(libffi)
 
 # clang=17.0.6-alt2: fix wrong -print-runtime-dir on %%ix86.
-BuildRequires: clang%{llvm_version} >= 17.0.6-alt2
+BuildRequires: clang%{llvm_version} >= 18
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: llvm%{llvm_version}-devel
 BuildRequires:  lld%{llvm_version}-devel
@@ -111,6 +111,7 @@ BuildRequires: rust-cargo
 # Since 1.12.0: striping debuginfo damages *.so files
 %add_debuginfo_skiplist %_libdir/* %_bindir/* %_libexecdir/*
 %add_debuginfo_skiplist %rustlibdir/%rust_triple/bin/*
+%add_debuginfo_skiplist %rustlibdir/%rust_triple/lib/*
 %endif
 
 %description
@@ -299,6 +300,7 @@ codegen-units = 0
 [llvm]
 ninja = true
 use-libcxx = false
+download-ci-llvm = false
 %if_without bundled_llvm
 link-shared = true
 
@@ -328,26 +330,6 @@ if [ "%_libdir" != "%_common_libdir" ]; then
 	mkdir -pv %buildroot%_libdir
 	mv %buildroot%_common_libdir/*.so %buildroot%_libdir
 fi
-
-# The libdir libraries are identical to those under rustlib/.  It's easier on
-# library loading if we keep them in libdir, but we do need them in rustlib/
-# to support dynamic linking for compiler plugins, so we'll symlink.
-find %buildroot/%rustlibdir/%rust_triple/lib \
-	-name '*.so' -printf '%%f %%p\n' |
-while read -r n rustlib; do
-	lib="%buildroot/%_libdir/$n"
-
-	[ -e "$lib" ] ||
-		continue
-
-	c="$(sha1sum "$rustlib" "$lib" |cut -f1 -d\  |uniq |wc -l)"
-
-	[ "$c" = 1 ] ||
-		continue
-
-	ln -s -f -- "$(relative "$lib" "$rustlib")" "$rustlib"
-	#ln -s -f -- "$(relative "$rustlib" "$lib")" "$lib"
-done
 
 # Remove installer artifacts (manifests, uninstall scripts, etc.)
 find %buildroot/%rustlibdir -maxdepth 1 -type f -delete
@@ -458,6 +440,11 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Dec 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.83.0-alt1
+- New version (1.83.0).
+- Change the llvm version to 18.
+- Leave libstd.so in rustlib.
+
 * Mon Oct 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.82.0-alt1
 - New version (1.82.0).
 
