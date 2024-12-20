@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.14.5
-Release: alt2
+Version: 0.14.6
+Release: alt1
 
 Summary: A programmable lazr.restful client library
 
@@ -17,7 +17,6 @@ Url: https://launchpad.net/lazr.restfulclient
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: lazr.restfulclient-0.14.5-ConfigParser-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -50,7 +49,6 @@ Requires: %name = %version-%release
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -73,6 +71,9 @@ rm -rf src/lazr/restfulclient/tests/test_docs.py
 %python3_sitelibdir/lazr/restfulclient/tests
 
 %changelog
+* Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 0.14.6-alt1
+- New version 0.14.6.
+
 * Fri Feb 09 2024 Anton Vyatkin <toni@altlinux.org> 0.14.5-alt2
 - (NMU) Add support for python3.12.
 - Moved on modern pyproject macros.

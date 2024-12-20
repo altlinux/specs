@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-launchpadlib
-Version: 1.11.0
+Version: 2.0.0
 Release: alt1
 Summary: Script Launchpad through its web services interfaces.  Officially supported.
 License: LGPL-3
@@ -20,13 +20,14 @@ BuildPreReq: rpm-build-licenses
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-httplib2
 BuildRequires: python3-module-lazr.uri
 BuildRequires: python3-module-lazr.restfulclient
 BuildRequires: python3-module-distro
-BuildRequires: python3-module-coverage
 BuildRequires: python3-module-testresources
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides launchpadlib
@@ -57,7 +58,7 @@ This package contain tools and test suites for testing launchpadlib.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -v
 
 %files
 %doc CONTRIBUTING.rst README.rst NEWS.rst
@@ -69,6 +70,9 @@ This package contain tools and test suites for testing launchpadlib.
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 1.11.0-alt1
 - NMU: new version 1.11.0
 

@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Summary: Create configuration schemas, and process and validate configurations
 License: LGPLv3
@@ -52,6 +52,9 @@ on different machines, or under different circumstances.
 
 
 %changelog
+* Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 3.1-alt1
+- New version 3.1.
+
 * Tue Jan 23 2024 Anton Vyatkin <toni@altlinux.org> 3.0-alt2
 - Fix FTBFS.
 
