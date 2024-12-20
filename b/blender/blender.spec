@@ -24,7 +24,7 @@
 %def_without levelzero
 %endif
 
-%ifarch x86_64 ppc64le aarch64
+%ifarch x86_64 ppc64le aarch64 loongarch64
 %def_with mold
 %else
 %def_without mold
@@ -57,7 +57,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt2
+Release: alt2.1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -92,9 +92,10 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
 Patch35: blender-4.4-alt-hiprt-inc.patch
+Patch36: blender-4.3.0-generic-64bit.patch
+Patch37: blender-4.3.0-loongarch64.patch
 
 Patch2000: blender-e2k-support.patch
-Patch3500: blender-4.2.1-loongarch64.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-filesystem-devel boost-locale-devel boost-wave-devel boost-python3-devel
@@ -318,15 +319,14 @@ EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
 %patch35 -p1
+%patch36 -p1
+%patch37 -p1
 
 %ifarch %e2k
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
 sed -i "/-Werror=return-type/d" CMakeLists.txt
 sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
-%endif
-%ifarch loongarch64
-%patch3500 -p1
 %endif
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
@@ -475,6 +475,13 @@ popd
 %endif
 
 %changelog
+* Fri Dec 20 2024 Ivan A. Melnikov <iv@altlinux.org> 4.3.0-alt2.1
+- NMU: loongarch64 update
+  + update loongarch64 patch;
+  + extract common part from e2k and loongarch64 patches
+    to common generic-64bit patch;
+  + build with mold on loongarch64.
+
 * Mon Dec 16 2024 Egor Ignatov <egori@altlinux.org> 4.3.0-alt2
 - Backport upstream patches to fix build with ffmpeg >= 7.0.
 
