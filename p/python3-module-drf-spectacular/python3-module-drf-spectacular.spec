@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.27.2
+Version: 0.28.0
 Release: alt1
 
 Summary: Sane and flexible OpenAPI 3 schema generation for Django REST framework
@@ -55,6 +55,9 @@ python3 runtests.py --fast
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 18 2024 Alexander Burmatov <thatman@altlinux.org> 0.28.0-alt1
+- New version 0.28.0.
+
 * Mon Apr 15 2024 Anton Vyatkin <toni@altlinux.org> 0.27.2-alt1
 - (NMU) New version 0.27.2.
 

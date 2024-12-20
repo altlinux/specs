@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: Create, fill a temporary directory
 License: MIT
@@ -17,6 +17,7 @@ BuildRequires: python3-module-poetry
 
 %if_with check
 BuildRequires: python3-module-dek
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -44,5 +45,8 @@ Run code inside a temporary directory filled with zero or more files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 1.8.2-alt2
+- Fix tests.
+
 * Fri Aug 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.8.2-alt1
 - Initial build for Sisyphus.

@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: A PDM plugin to run a command on multiple Python versions
@@ -19,6 +19,7 @@ BuildRequires: python3-module-pdm-backend
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pdm
+BuildRequires: python3-module-python-dotenv
 %endif
 
 BuildArch: noarch
@@ -57,5 +58,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 1.1.1-alt1
+- New 1.1.1 version.
+
 * Thu Oct 26 2023 Alexander Burmatov <thatman@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.

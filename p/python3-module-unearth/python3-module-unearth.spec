@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.12.1
+Version: 0.17.2
 Release: alt1
 
 Summary: A utility to fetch and download python packages
@@ -17,10 +17,12 @@ BuildRequires: python3-module-pdm-backend
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-trustme
 BuildRequires: python3-module-requests-wsgi-adapter
 BuildRequires: python3-module-pytest-httpserver
+BuildRequires: python3-module-httpx
 %endif
 
 BuildArch: noarch
@@ -60,5 +62,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 0.17.2-alt1
+- New 0.17.2 version.
+
 * Thu Oct 26 2023 Alexander Burmatov <thatman@altlinux.org> 0.12.1-alt1
 - Initial build for Sisyphus.

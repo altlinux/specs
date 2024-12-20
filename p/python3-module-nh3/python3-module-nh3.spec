@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.2.15
+Version: 0.2.20
 Release: alt1
 
 Summary: Python bindings to the ammonia HTML sanitization library
@@ -19,7 +19,6 @@ Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
-
 
 # build backend and its deps
 BuildRequires: python3(setuptools)
@@ -56,6 +55,9 @@ export CARGO_NET_OFFLINE=true
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 18 2024 Alexander Burmatov <thatman@altlinux.org> 0.2.20-alt1
+- Updated to 0.2.20.
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 0.2.15-alt1
 - initial build for ALT Sisyphus
 

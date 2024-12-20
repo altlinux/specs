@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.11.2
+Version: 2.22.0
 Release: alt1
 
 Summary: A modern Python package and dependency manager supporting the latest PEP standards
@@ -26,8 +26,6 @@ BuildRequires: python3-module-tomlkit
 BuildRequires: python3-module-platformdirs
 BuildRequires: python3-module-pyproject_hooks
 BuildRequires: python3-module-installer
-BuildRequires: python3-module-cachecontrol
-BuildRequires: python3-module-requests_toolbelt
 BuildRequires: python3-module-blinker
 BuildRequires: python3-module-pytest-httpserver
 BuildRequires: python3-module-shellingham
@@ -36,7 +34,17 @@ BuildRequires: python3-module-virtualenv
 BuildRequires: python3-module-python-dotenv
 BuildRequires: python3-module-first
 BuildRequires: python3-module-flaky
+BuildRequires: python3-module-pbs-installer
+BuildRequires: python3-module-httpx
+BuildRequires: python3-module-hishel
+BuildRequires: python3-module-msgpack
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-httpcore
 %endif
+
+Requires: python3-module-pdm-alt-namespace
+
+%filter_from_provides /^python3(%pypi_name)/d
 
 BuildArch: noarch
 
@@ -66,7 +74,13 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k 'not network'
+# Requires network
+donttest="network"
+donttest="$donttest or test_build_with_no_isolation"
+donttest="$donttest or test_find_candidates_from_find_links"
+donttest="$donttest or test_find_interpreters_with_PDM_IGNORE_ACTIVE_VENV"
+donttest="$donttest or test_build_distributions"
+%pyproject_run_pytest -k "not ($donttest)"
 
 %files
 %doc *.md
@@ -75,6 +89,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 2.22.0-alt1
+- New 2.22.0 version.
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 2.11.2-alt1
 - New 2.11.2 version.
 

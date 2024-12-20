@@ -4,11 +4,11 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.15.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Simple job queues for Python
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/rq/
 BuildArch: noarch
@@ -19,6 +19,15 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-click
+%endif
 
 %py3_provides %oname
 
@@ -36,7 +45,7 @@ processing them.
 %pyproject_install
 
 %check
-%__python3 setup.py test
+%pyproject_run_pytest
 
 %files
 %doc *.md
@@ -47,6 +56,9 @@ processing them.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Dec 18 2024 Alexander Burmatov <thatman@altlinux.org> 2.0.0-alt1
+- Updated to upstream version 2.0.0.
+
 * Wed Oct 04 2023 Alexander Burmatov <thatman@altlinux.org> 1.15.1-alt1
 - Updated to upstream version 1.15.1.
 

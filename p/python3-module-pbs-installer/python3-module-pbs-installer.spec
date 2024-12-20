@@ -1,25 +1,19 @@
-%define pypi_name dep-logic
-%define mod_name dep_logic
-
-%def_with check
+%define pypi_name pbs-installer
+%define mod_name pbs_installer
 
 Name:    python3-module-%pypi_name
-Version: 0.4.10
+Version: 2024.10.16
 Release: alt1
 
-Summary: Python dependency specifications supporting logical operations
-License: Apache-2.0
+Summary: An installer for python-build-standalone
+License: MIT
 Group:   Development/Python3
-URL:     https://github.com/pdm-project/dep-logic
+URL:     https://github.com/frostming/pbs-installer
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm python3-module-wheel
 BuildRequires: python3-module-pdm
 BuildRequires: python3-module-pdm-backend
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
 
 BuildArch: noarch
 
@@ -48,17 +42,12 @@ fi
 %install
 %pyproject_install
 
-%check
-%pyproject_run_pytest
-
 %files
 %doc *.md
+%_bindir/pbs-install
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 0.4.10-alt1
-- New 0.4.10 version.
-
-* Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 0.0.4-alt1
+* Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 2024.10.16-alt1
 - Initial build for Sisyphus.
