@@ -1,6 +1,6 @@
 Name: dssi
 Version: 1.1.1
-Release: alt3
+Release: alt4
 
 Summary: Disposable Soft Synth Interface specification & examples
 License: LGPL-2.1
@@ -11,6 +11,7 @@ Provides: dssi-examples = %version-%release
 Obsoletes: dssi-examples
 
 Source: %name-%version.tar
+Patch1: dssi-1.1.1-debian-gcc14.patch
 
 BuildRequires: gcc-c++ ladspa_sdk
 BuildRequires: pkgconfig(alsa)
@@ -35,6 +36,7 @@ This package contents development stuff for DSSI
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -55,6 +57,9 @@ This package contents development stuff for DSSI
 %_libdir/pkgconfig/dssi.pc
 
 %changelog
+* Fri Dec 20 2024 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt4
+- fix building with gcc14 via a patch from Debian
+
 * Tue Mar 26 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt3
 - rebuilt without qt-based examples
 
