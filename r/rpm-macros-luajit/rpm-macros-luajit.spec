@@ -1,5 +1,5 @@
 Name: rpm-macros-luajit
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Arch macro to build luajit clients
@@ -24,6 +24,9 @@ cp -a %SOURCE0 %buildroot%_rpmmacrosdir/luajit
 %_rpmmacrosdir/luajit
 
 %changelog
+* Fri Dec 20 2024 Ivan A. Melnikov <iv@altlinux.org> 0.4-alt1
+- add riscv64 and loongarch64
+
 * Mon Jul 05 2021 Michael Shigorin <mike@altlinux.org> 0.3-alt1
 - added %%e2k as luajit got ported
 
