@@ -8,10 +8,10 @@
 # https://chromium.googlesource.com/webm/libwebp-test-data required
 # see tests/README
 %def_disable check
-%define soversion 7
+%define sover 7
 
 Name: libwebp
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -20,6 +20,7 @@ Group: System/Libraries
 Url: http://webmproject.org/
 
 Vcs: https://chromium.googlesource.com/webm/libwebp
+
 Source: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/%name-%version.tar.gz
 
 BuildRequires: libgomp-devel libjpeg-devel libpng-devel libtiff-devel
@@ -33,13 +34,13 @@ container based on RIFF. Webmasters, web developers and browser
 developers can use WebP to compress, archive and distribute digital
 images more efficiently.
 
-%package -n %name%soversion
+%package -n %name%sover
 Summary: Libraries for the WebP graphics format
 Group: System/Libraries
 Provides: %name = %EVR
 Obsoletes: libwebp = 0.4.0-alt1
 
-%description -n %name%soversion
+%description -n %name%sover
 WebP is an image format that does lossy compression of digital
 photographic images. WebP consists of a codec based on VP8, and a
 container based on RIFF. Webmasters, web developers and browser
@@ -49,7 +50,7 @@ images more efficiently.
 %package devel
 Summary: Development files for libwebp, a library for the WebP format
 Group: Development/C
-Requires: %name%soversion = %EVR
+Requires: %name%sover = %EVR
 
 %description devel
 WebP is an image format that does lossy compression of digital
@@ -61,7 +62,7 @@ images more efficiently.
 %package tools
 Summary: The WebP command line tools
 Group: System/Libraries
-Requires: %name%soversion = %EVR
+Requires: %name%sover = %EVR
 
 %description tools
 WebP is an image format that does lossy compression of digital
@@ -82,11 +83,11 @@ images more efficiently.
 export CFLAGS="%optflags -DEMSCRIPTEN"
 %endif
 %configure --disable-static \
-	%{subst_enable libwebpmux} \
-	%{subst_enable libwebpdemux} \
-	%{subst_enable libwebpdecoder} \
-	%{subst_enable libwebpextras} \
-	%{subst_enable sdl}
+    %{subst_enable libwebpmux} \
+    %{subst_enable libwebpdemux} \
+    %{subst_enable libwebpdecoder} \
+    %{subst_enable libwebpextras} \
+    %{subst_enable sdl}
 %nil
 %make_build
 
@@ -96,8 +97,8 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %check
 %make check
 
-%files -n %name%soversion
-%_libdir/%name.so.*
+%files -n %name%sover
+%_libdir/%name.so.%{sover}*
 %_libdir/libsharpyuv.so.*
 %{?_enable_libwebpmux:%_libdir/%{name}mux.so.*}
 %{?_enable_libwebpdemux:%_libdir/%{name}demux.so.*}
@@ -145,6 +146,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Sat Apr 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

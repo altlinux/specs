@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: iconic
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Easilly add icons on top of folders
@@ -44,7 +44,9 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson
+%meson \
+    -Dprofile=default
+%nil
 %meson_build
 
 %install
@@ -72,6 +74,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.12.2-alt1
+- updated to v2024.12.2-7-g8fc73bd
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.12.1-alt1
 - 2024.12.1
 

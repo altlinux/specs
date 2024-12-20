@@ -9,7 +9,7 @@
 
 Name: resources
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: System monitor
 License: GPL-3.0-or-later
@@ -33,6 +33,7 @@ ExcludeArch: ppc64le
 Requires: dconf /usr/sbin/dmidecode polkit
 
 # nvml-wrapper requires libnvidia-ml.so (ALT #49236)
+# https://github.com/Cldfire/nvml-wrapper
 %ifarch %ix86 x86_64 aarch64
 Requires: %_libdir/libnvidia-ml.so
 %endif
@@ -61,7 +62,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 %build
-%meson
+%meson \
+    -Dprofile=default
+%nil
 %meson_build
 
 %install
@@ -87,6 +90,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1.1
+- rebuilt with -Dprofile=default
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
