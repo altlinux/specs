@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 
 Summary: Bringing order to Mongo since 2009
@@ -65,6 +65,9 @@ This package contains tests for Ming.
 
 
 %changelog
+* Sat Dec 21 2024 Anton Vyatkin <toni@altlinux.org> 0.15.2-alt1
+- New version 0.15.2.
+
 * Thu Dec 12 2024 Anton Vyatkin <toni@altlinux.org> 0.15.1-alt1
 - New version 0.15.1.
 
