@@ -1,4 +1,4 @@
-%define ver_major 1.38
+%define ver_major 1.39
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -21,7 +21,7 @@ Source: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/%ver
 
 BuildArch: noarch
 
-%define wayland_ver 1.20
+%define wayland_ver 1.23
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ libwayland-client-devel >= %wayland_ver libwayland-server-devel
@@ -53,6 +53,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md GOVERNANCE* MEMBERS*
 
 %changelog
+* Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.39-alt1
+- 1.39
+
 * Sat Oct 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.38-alt1
 - 1.38
 
