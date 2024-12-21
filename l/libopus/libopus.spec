@@ -2,7 +2,7 @@
 
 Name: libopus
 Version: 1.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -58,6 +58,7 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
        -Ddred=enabled \
        -Dosce=enabled
 %endif
+%nil
 %meson_build
 
 %install
@@ -85,6 +86,9 @@ printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
 %endif
 
 %changelog
+* Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1.1
+- added build workaround with recent meson macros.
+
 * Fri May 10 2024 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1
 - 1.5.2.
 
