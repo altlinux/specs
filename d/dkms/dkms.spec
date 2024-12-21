@@ -5,8 +5,8 @@
 
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
-Version: 3.1.3
-Release: alt2
+Version: 3.1.4
+Release: alt1
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/dell/dkms
@@ -138,6 +138,9 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 3.1.4-alt1
+- New version.
+
 * Thu Dec 05 2024 Vitaly Chikunov <vt@altlinux.org> 3.1.3-alt2
 - Fix filetrigger (postinst) invocation.
 - spec: Add filetrigger test in checkinstall.
