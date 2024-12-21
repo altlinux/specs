@@ -5,7 +5,7 @@
 
 Name:     kernelshark
 Version: 2.3.1
-Release: alt1
+Release: alt2
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
 Epoch:    1
@@ -22,11 +22,9 @@ Source:   %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: desktop-file-utils
 BuildRequires: fontconfig
 BuildRequires: fonts-ttf-freefont
 BuildRequires: gcc-c++
-BuildRequires: libappstream-glib
 BuildRequires: libaudit-devel
 BuildRequires: libfreeglut-devel
 BuildRequires: libjson-c-devel
@@ -39,6 +37,10 @@ BuildRequires: polkit
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-scxml-devel
 BuildRequires: trace-cmd
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+}}
 
 %define _metainfodir /usr/share/metainfo
 
@@ -63,9 +65,11 @@ the data.
 # There is also libkshark-devel component which we don't need.
 
 # error: value "1.1.0" for key "Version" in group "Desktop Entry" is not a known version
-sed -i '/Version/d'   %buildroot/%_datadir/applications/kernelshark.desktop
-desktop-file-validate %buildroot/%_datadir/applications/kernelshark.desktop
+sed -i '/Version/d'   %buildroot%_datadir/applications/kernelshark.desktop
 install -Dm644 -t %buildroot%_metainfodir .gear/*.appdata.xml
+
+%check
+desktop-file-validate %buildroot%_datadir/applications/kernelshark.desktop
 appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 
 %files
@@ -81,6 +85,10 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Sun Dec 22 2024 Vitaly Chikunov <vt@altlinux.org> 1:2.3.1-alt2
+- Fix FTBFS with gcc14.
+- spec: Move desktop/appdata validation tests into %%check section.
+
 * Wed Mar 27 2024 Vitaly Chikunov <vt@altlinux.org> 1:2.3.1-alt1
 - Update to kernelshark-v2.3.1 (2024-03-20).
 
