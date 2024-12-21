@@ -3,7 +3,7 @@
 %define oname imageio
 
 Name: python3-module-%oname
-Version: 2.31.4
+Version: 2.36.1
 Release: alt1
 Summary: Python library for reading and writing image data
 License: BSD-2-Clause
@@ -15,20 +15,16 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-Pillow
-BuildRequires: libnumpy-py3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-# currently unwanted extra dependency
-%add_python3_req_skip imageio_ffmpeg
 
 %description
-Imageio is a Python library that provides an easy interface
-to read and write a wide range of image data,
-including animated images, video, volumetric data,
+Imageio is a mature Python library that makes it easy
+to read and write image and video data.
+This includes animated images, video, volumetric data,
 and scientific formats.
-It is cross-platform, runs on Python 3.8+, and is easy to install.
+It is cross-platform, runs on Python 3.9+, and is easy to install.
 
 %prep
 %setup
@@ -42,11 +38,16 @@ It is cross-platform, runs on Python 3.8+, and is easy to install.
 %files
 %doc LICENSE
 %doc README.md CHANGELOG.md CONTRIBUTORS.txt
-%_bindir/*
+%_bindir/%{oname}_download_bin
+%_bindir/%{oname}_remove_bin
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Dec 16 2024 Alexander Kovalev <alexvk@altlinux.org> 2.36.1-alt1
+- Updated version to 2.36.1.
+- Fixed build requires.
+
 * Tue Oct 17 2023 Elizaveta Morozova <morozovaes@altlinux.org> 2.31.4-alt1
 - Updated version to 2.31.4.
 - Migrated to pyproject.
