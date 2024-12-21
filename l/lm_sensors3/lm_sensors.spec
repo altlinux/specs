@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.6.0
-Release: alt3
+Release: alt4
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -119,7 +119,7 @@ sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" lm_sensors.service
 sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" sensord.service
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags -D_FILE_OFFSET_BITS=64 -Wno-incompatible-pointer-types
 %make_build_ext PROG_EXTRA=sensord
 
 %install
@@ -252,6 +252,9 @@ fi
 %endif #static
 
 %changelog
+* Sat Dec 21 2024 Andrew A. Vasilyev <andy@altlinux.org> 3.6.0-alt4
+- NMU: fix FTBFS with gcc 14
+
 * Mon Oct 17 2022 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3
 - Added init.d files for sensord and fancontrol (closes ALT #38131).
 - pwmconfig: get rid of egrep.
