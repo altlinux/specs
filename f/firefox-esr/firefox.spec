@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.5.1
+Version: 128.5.2
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -36,6 +36,7 @@ Patch007: 0007-ALT-fix-double_t-redefinition.patch
 Patch008: 0008-build-Disable-Werror.patch
 Patch009: 0009-Add-dbus-cflags.patch
 Patch010: 0010-FEDORA-enable-vaapi.patch
+Patch011: 0011-UPSTREAM-fix-ftbfs-with-python-3.12.8.patch
 ### End Patches
 
 Provides: webclient
@@ -387,6 +388,10 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Dec 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.5.2-alt1
+- New ESR version.
+- Fix FTBFS with python 3.12.8.
+
 * Mon Dec 02 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.5.1-alt1
 - New ESR version.
 
