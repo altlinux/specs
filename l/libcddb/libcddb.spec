@@ -1,13 +1,14 @@
 Name: libcddb
 Version: 1.3.2
-Release: alt5
+Release: alt6
 
 Summary: Libcddb is a C library to access data on a CDDB server
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Group: System/Libraries
-Url: http://libcddb.sourceforge.net/
+Url: https://libcddb.sourceforge.net/
 
-Source: http://prdownloads.sourceforge.net/libcddb/libcddb-%version.tar.bz2
+Source: https://prdownloads.sourceforge.net/libcddb/libcddb-%version.tar.bz2
+Patch: libcddb-1.3.2-arch-pointer-types.patch
 
 # Automatically added by buildreq on Mon Nov 23 2009
 BuildRequires: libcdio-devel
@@ -21,7 +22,7 @@ Libcddb is a C library to access data on a CDDB server (freedb.org). It allows t
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains the headers that programmers will need to develop
@@ -30,13 +31,14 @@ applications which will use %name.
 %package examples
 Summary: Simple application that use %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description examples
 This package contains the cddb_query is a simple app that use %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -63,6 +65,9 @@ This package contains the cddb_query is a simple app that use %name.
 %doc examples
 
 %changelog
+* Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt6
+- fixed build with gcc-14
+
 * Fri Jan 12 2018 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt5
 - rebuilt against libcdio.so.18
 
