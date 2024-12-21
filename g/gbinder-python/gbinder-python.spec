@@ -3,7 +3,7 @@
 
 Name: %pypi_name
 Version: 1.1.2
-Release: alt0.1
+Release: alt0.2
 Summary: Python bindings for libgbinder
 Group: Development/Python
 
@@ -28,6 +28,12 @@ Cython extension module for gbinder.
 %prep
 %setup
 %patch0 -p1
+# ugly hack, see https://github.com/erfanoabdi/gbinder-python/issues/18
+%ifarch %ix86
+for patch in .gear/*.patch; do
+cat "$patch" | patch -p1
+done
+%endif
 
 %build
 python3 setup.py sdist --cython
@@ -41,6 +47,9 @@ python3 setup.py sdist --cython
 %python3_sitelibdir/gbinder_python-%{version}.dist-info/
 
 %changelog
+* Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt0.2
+- ix86: Fix FTBFS with gcc14.
+
 * Thu Oct 26 2023 L.A. Kostis <lakostis@altlinux.ru> 1.1.2-alt0.1
 - 1.1.2.
 
