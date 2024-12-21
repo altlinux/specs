@@ -3,12 +3,12 @@
 
 Name: gnome-session-alt
 Version: 47.0
-Release: alt1
+Release: alt2
 Summary: Session GNOME Shell for Alt distributions
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
-Url: https://git.altlinux.org/gears/g/gnome-session-alt
-Vcs: https://git.altlinux.org/gears/g/gnome-session-alt
+Url: https://git.altlinux.org/gears/g/gnome-session-alt.git
+Vcs: https://git.altlinux.org/gears/g/gnome-session-alt.git
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -54,5 +54,8 @@ install -m644 alt-gnome-xorg.desktop \
 %_datadir/xsessions/alt-gnome-xorg.desktop
 
 %changelog
+* Sat Dec 21 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt2
+- Fix Url and Vcs
+
 * Sat Dec 21 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt1
 - Initial build
