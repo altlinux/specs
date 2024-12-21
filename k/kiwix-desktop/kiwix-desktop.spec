@@ -1,15 +1,19 @@
-Name:     kiwix-desktop
-Version:  2.4.0
-Release:  alt1
+%define _unpackaged_files_terminate_build 1
 
-Summary:  Offline reader for works with the highly compressed ZIM file format
-License:  GPL-3.0-or-later
-Group:    Other
-Url:      https://kiwix.org
-VCS:      https://github.com/kiwix/kiwix-desktop.git
+Name: kiwix-desktop
+Version: 2.4.1
+Release: alt1
 
+Summary: Offline reader for works with the highly compressed ZIM file format
+License: GPL-3.0-or-later
+Group: Other
+Url: https://kiwix.org
+VCS: https://github.com/kiwix/kiwix-desktop.git
+ExclusiveArch: %qt6_qtwebengine_arches
 
-Source:   %name-%version.tar
+Source: %name-%version.tar
+
+Requires: aria2
 
 BuildRequires(pre): qt6-base-devel
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -18,10 +22,6 @@ BuildRequires: libkiwix-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools
 BuildRequires: qt6-webengine-devel
-
-Requires: aria2
-
-ExclusiveArch: %qt6_qtwebengine_arches
 
 %description
 Kiwix is an offline reader and manager for online content
@@ -51,10 +51,17 @@ export PATH=%_qt6_bindir:$PATH
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Sat Dec 21 2024 Constantin Sunzow <protvin@altlinux.org> 2.4.1-alt1
+- Enable check for unpackaged files.
+- Regroup spec tags and trim unnecessary spaces.
+- Changelog correction.
+- New version.
+
 * Mon Dec 16 2024 Constantin Sunzow <protvin@altlinux.org> 2.4.0-alt1
 - Merge source code to main directory.
-  Build against Qt 6.
-  New version.
+- Build against Qt 6.
+- Use ExclusiveArch instead ExcludeArch.
+- New version.
 
 * Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
 - New version.
