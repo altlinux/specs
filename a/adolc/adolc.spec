@@ -7,7 +7,7 @@
 Name: adolc
 Summary: A Package for Automatic Differentiation of Algorithms Written in C/C++
 Version: 2.7.2
-Release: alt0.3
+Release: alt0.4
 Group: Sciences/Mathematics
 License: EPL-1.0 or GPL-2.0+
 Url: https://github.com/coin-or/ADOL-C
@@ -28,7 +28,8 @@ Source11: http://ftp.mcs.anl.gov/pub/ADOLC/PAPERS/tensors.ps.gz
 Source12: http://ftp.mcs.anl.gov/pub/ADOLC/PAPERS/tr_col_ver.ps.gz
 Source13: README
 
-Patch: adolc-2.7.2-alt-loongarch64-boost.patch
+Patch0: %name-2.7.2-alt-loongarch64-boost.patch
+Patch1: %name-2.7.2-alt-gcc14-fix.patch
 
 Requires: lib%name = %EVR
 Requires: %name-examples = %EVR
@@ -115,7 +116,7 @@ This package contains examples for ADOL-C.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %autoreconf
@@ -178,6 +179,9 @@ chrpath -d %buildroot%_libdir/*.so
 %_libdir/%name-examples
 
 %changelog
+* Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.7.2-alt0.4
+- Fix FTBFS with gcc14.
+
 * Fri Sep 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2.7.2-alt0.3
 - examples: preserve files in .libs.
 - additonal_examples: build parallel examples too.
