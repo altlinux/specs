@@ -4,7 +4,7 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 Name: qt5-websockets
-Version: 5.15.15
+Version: 5.15.16
 Release: alt1
 
 Group: System/Libraries
@@ -112,6 +112,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
 * Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
 - new version
 

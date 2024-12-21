@@ -36,7 +36,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.15
+Version: 5.15.16
 Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
@@ -874,6 +874,9 @@ make check -k ||:
 
 
 %changelog
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
 * Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
 - new version (fixes: CVE-2024-39936 CVE-2024-25580 CVE-2023-51714 CVE-2023-32763 CVE-2023-34410 CVE-2023-37369 CVE-2023-38197 CVE-2023-32762 CVE-2023-33285)
 

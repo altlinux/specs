@@ -8,7 +8,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt26
+Release: alt27
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -20,6 +20,7 @@ Source: %qt_module-everywhere-src-%version.tar
 Patch1: webkit-offlineasm-warnings-ruby27.patch
 Patch2: qtwebkit-5.212.0_cmake_cmp0071.patch
 Patch3: qtwebkit-5.212.0-add-riscv64.patch
+Patch4: qtwebkit-fix-build-gcc14.patch
 # Gentoo
 Patch7: qtwebkit-5.212.0_pre20200309-icu-68.patch
 # ALT
@@ -104,6 +105,7 @@ Requires: libqt5-core = %_qt5_version
 %ifnarch %e2k
 %patch3 -p1
 %endif
+%patch4 -p1
 #
 %patch7 -p1
 #
@@ -229,6 +231,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Thu Dec 19 2024 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt27
+- fix compile with gcc14
+
 * Thu Sep 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt26
 - fix to build with new ruby
 

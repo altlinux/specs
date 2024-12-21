@@ -5,7 +5,7 @@
 %def_disable bootstrap
 
 Name: qt5-location
-Version: 5.15.15
+Version: 5.15.16
 Release: alt1
 
 Group: System/Libraries
@@ -15,6 +15,7 @@ License: LGPLv2 / GPLv3
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch1: gcc13-compilefix.patch
+Patch2: gcc14-compilefix.patch
 
 # Automatically added by buildreq on Wed Aug 23 2017 (-bi)
 # optimized out: elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGL-devel libdbus-devel libdbus-glib libdbus-glib-devel libgpg-error libqt5-clucene libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-widgets libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 ruby ruby-stdlibs
@@ -103,6 +104,7 @@ Requires: qt5-quickcontrols
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
+%patch2 -p1
 syncqt.pl-qt5 -version %version
 
 %build
@@ -159,6 +161,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
+- new version
+
 * Wed Sep 11 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.15-alt1
 - new version
 
