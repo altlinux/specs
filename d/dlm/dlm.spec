@@ -1,6 +1,6 @@
 Name: dlm
 Version: 4.2.0
-Release: alt2
+Release: alt3
 
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -51,7 +51,7 @@ sed -i 's, -fcf-protection=full,,' */Makefile
 %endif
 
 %build
-export CFLAGS="$CFLAGS -fPIC $(pkg-config --cflags pacemaker) -I../libdlm -I../dlm_controld -I../include"
+export CFLAGS="$CFLAGS -fPIC $(pkg-config --cflags pacemaker) -I../libdlm -I../dlm_controld -I../include -D_GNU_SOURCE"
 export LDCONF
 %make CFLAGS="$CFLAGS" LLT_LDFLAGS="-lpthread"
 %ifnarch %e2k
@@ -95,6 +95,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Dec 21 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.2.0-alt3
+- NMU: fix FTBFS (_GNU_SOURCE).
+
 * Fri Jul  7 2023 Artyom Bystrov <arbars@altlinux.org> 4.2.0-alt2
 - Fix build  (no file linux/dlm_netlink.h)
 
