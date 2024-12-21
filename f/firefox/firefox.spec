@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 133.0.0
+Version: 133.0.3
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -36,6 +36,7 @@ Patch007: 0007-ALT-fix-double_t-redefinition.patch
 Patch008: 0008-build-Disable-Werror.patch
 Patch009: 0009-Add-dbus-cflags.patch
 Patch010: 0010-FEDORA-enable-vaapi.patch
+Patch011: 0011-UPSTREAM-fix-ftbfs-with-python-3.12.8.patch
 ### End Patches
 
 Provides: webclient
@@ -383,6 +384,10 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Dec 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 133.0.3-alt1
+- New version (133.0.3).
+- Fix FTBFS with python 3.12.8.
+
 * Thu Nov 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 133.0.0-alt1
 - New version (133.0.0).
 - Security fixes:
