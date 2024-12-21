@@ -8,7 +8,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.17
+Version: 1.2.20
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -17,10 +17,10 @@ License: LGPL-3.0
 Url: https://lsp-plug.in/
 
 Vcs: https://github.com/sadko4u/lsp-plugins
-Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.7z
+Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
 
 BuildRequires(pre): rpm-build-xdg
-BuildRequires: /usr/bin/7z gcc-c++
+BuildRequires: gcc-c++
 BuildRequires: lv2-devel libjack-devel ladspa_sdk
 BuildRequires: libsndfile-devel libcairo-devel
 BuildRequires: libGL-devel libXrandr-devel
@@ -77,8 +77,7 @@ Requires: lv2-%name = %EVR
 This package provides headers for LSP-developers.
 
 %prep
-%setup -Tc -n %name-src-%version
-7z x -o%_builddir %SOURCE0
+%setup -n %name
 
 %ifarch %e2k
 sed -i "s|VSTCALLBACK __cdecl|VSTCALLBACK|" \
@@ -133,6 +132,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.20-alt1
+- 1.2.20
+
 * Sun Aug 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.17-alt1
 - 1.2.17
 - packaged VST3 plugins for 64-bit arches
