@@ -5,7 +5,7 @@
 %global pypi_name pulsectl-asyncio
 
 Name: python3-module-%{pypi_name}
-Version: 1.2.0
+Version: 1.2.2
 Release: alt1
 
 Summary: Asyncio frontend for pulsectl, a Python bindings library for PulseAudio (libpulse)
@@ -56,6 +56,9 @@ echo 'passenv = HOME' >> ./tox.ini
 %python3_sitelibdir/%{pyproject_distinfo pulsectl_asyncio}
 
 %changelog
+* Sat Dec 21 2024 Egor Ignatov <egori@altlinux.org> 1.2.2-alt1
+- New version 1.2.2.
+
 * Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
