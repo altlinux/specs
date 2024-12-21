@@ -1,6 +1,8 @@
+%define rev 4
+
 Name:    zstd-jni
 Version: 1.5.6
-Release: alt1.3
+Release: alt1.%rev
 
 Summary: JNI binding for Zstd
 License: BSD-2-Clause
@@ -47,12 +49,15 @@ tar xf %SOURCE1 -C ~
 %ninja_build -C "%_cmake__builddir"
 
 %install
-install -Dpm0664 "%_cmake__builddir"/libzstd-jni-%{version}-3.so %buildroot%_libdir/libzstd-jni-%{version}-3.so
+install -Dpm0664 "%_cmake__builddir"/libzstd-jni-%{version}-%rev.so %buildroot%_libdir/libzstd-jni-%{version}-%rev.so
 
 %files -n lib%name
 %doc *.md
 %_libdir/libzstd-jni-*.so
 
 %changelog
+* Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1.4
+- New version for kafka-3.8.1.
+
 * Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1.3
 - Initial build for Sisyphus.

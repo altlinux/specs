@@ -1,6 +1,6 @@
 Name:    kafka
-Version: 3.8.0
-Release: alt2
+Version: 3.8.1
+Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -92,6 +92,10 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
+- New version.
+- Security fix: CVE-2024-56128.
+
 * Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
 - Require native libzstd-jni.
 
