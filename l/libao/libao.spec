@@ -1,16 +1,17 @@
 Name: libao
 Version: 1.2.2
-Release: alt6
+Release: alt7
 Epoch: 1
 
 Summary: Cross Platform Audio Output Library
-License: GPL
+License: GPL-2.0-only
 Group: System/Libraries
 
 Url: http://www.xiph.org/ao/
 # https://git.xiph.org/libao.git
 Source0: %name-%version.tar
 Patch0: libao-1.0.0-alt-oss.patch
+Patch1: libao-nanosleep.patch
 
 BuildRequires: libalsa-devel libpulseaudio-devel
 
@@ -32,7 +33,8 @@ needed to develop applications with %name
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 sed -i 's,-O20,%optflags_optimization,g' configure*
 
 %build
@@ -75,6 +77,10 @@ __EOF__
 %_datadir/aclocal/*
 
 %changelog
+* Sat Dec 21 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1:1.2.2-alt7
+- fixed FTBFS
+- fixed license
+
 * Tue Jan 16 2024 Michael Shigorin <mike@altlinux.org> 1:1.2.2-alt6
 - re-enable oss for tricky routing with aoss and ~/.asoundrc
 
