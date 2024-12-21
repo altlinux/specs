@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.5.0
+Version: 128.5.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -46,6 +46,7 @@ Patch004: 0004-Disable-browser-option.patch
 Patch005: 0005-Fix-types-defination.patch
 Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch007: 0007-Correction-of-the-Russian-translation.patch
+Patch011: 0011-UPSTREAM-fix-ftbfs-with-python-3.12.8.patch
 ### End Patches
 
 ExcludeArch: armh
@@ -247,6 +248,7 @@ tar -xf %SOURCE6
 %patch5 -p2
 %patch6 -p2
 %patch7 -p1
+%patch11 -p2
 
 # Update bundled six.py for 1.16
 cp -fv %SOURCE9 third_party/python/six/six.py
@@ -527,6 +529,12 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Fri Dec 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.5.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-50336: matrix-js-sdk has insufficient MXC URI validation which could allow client-side path traversal
+- Fix FTBFS with python 3.12.8.
+
 * Thu Nov 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 128.5.0-alt1
 - New version.
 - Security fixes:
