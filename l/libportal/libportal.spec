@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.8
+%define ver_major 0.9
 %define api_ver_major 1
 %define api_ver %api_ver_major.0
 %define soname 0
@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: libportal
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -29,7 +29,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.58
+%define glib_ver 2.72
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson libgio-devel >= %glib_ver
@@ -318,6 +318,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Dec 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.0-alt1
+- 0.9.0
+
 * Thu Sep 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.8.1-alt1
 - 0.8.1
 
