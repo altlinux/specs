@@ -2,23 +2,26 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-session
-Version: 22.9.0
-Release: alt2
+Version: 24.5.0
+Release: alt1
 
 Summary: Ayatana Indicator showing session management, status and user switching
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-session
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: ayatana-cmake-modules cmake gcc-c++ intltool libayatana-common-devel
+BuildRequires: ayatana-cmake-modules
 BuildRequires: ayatana-indicator-common
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: hicolor-icon-theme
+BuildRequires: intltool
+BuildRequires: libayatana-common-devel
 BuildRequires: libblkid-devel
 BuildRequires: libmount-devel
 BuildRequires: libpcre2-devel
@@ -41,7 +44,8 @@ the appropriate package is mate-indicator-applet.
 
 %build
 %cmake \
-  -Denable_tests=Off
+  -Denable_tests=Off \
+  -DENABLE_RDA=Off
 %cmake_build
 
 %install
@@ -67,29 +71,23 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
-%dir %_iconsdir/hicolor/16x16/actions/
-%dir %_iconsdir/hicolor/16x16/status/
-%dir %_iconsdir/hicolor/22x22/
-%dir %_iconsdir/hicolor/22x22/actions/
-%dir %_iconsdir/hicolor/22x22/status/
-%dir %_iconsdir/hicolor/24x24/
-%dir %_iconsdir/hicolor/24x24/actions/
-%dir %_iconsdir/hicolor/24x24/status/
-%dir %_iconsdir/hicolor/32x32/actions/
-%dir %_iconsdir/hicolor/32x32/status/
-%dir %_iconsdir/hicolor/scalable/
-%dir %_iconsdir/hicolor/scalable/actions/
-%dir %_iconsdir/hicolor/scalable/status/
 %_iconsdir/hicolor/*/*/*
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.session.gschema.xml
-%dir %_datadir/ayatana
-%dir %_datadir/ayatana/indicators
 %_datadir/ayatana/indicators/org.ayatana.indicator.session
-%dir %_prefix/lib/systemd
-%dir %_userunitdir
 %_userunitdir/%name.service
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
+- New version 24.5.0.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break BuildRequires to multiple lines
+  + break BuildRequires(pre) to multiple lines
+  + do not own icons and systemd dirs (thanks to @antohami)
+  + do not own /usr/share/ayatana/indicators
+
 * Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt2
 - Removed translations which are ignored by %%find_lang
 - Language specific files are declared

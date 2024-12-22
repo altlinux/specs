@@ -1,28 +1,24 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ayatana-settings
-Version: 21.1.28
-Release: alt2
+Version: 24.10.1
+Release: alt1
 
 Summary: Ayatana Indicators Settings
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-settings
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
 Source: %name-%version.tar
 
-BuildArch: noarch
+BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires(pre): rpm-build-python3
-
+BuildRequires: ayatana-cmake-modules
+BuildRequires: cmake
+BuildRequires: intltool
 BuildRequires: hicolor-icon-theme
-BuildRequires: python3-module-polib
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-setuptools
-
-Requires: typelib(Gtk) = 3.0
-Requires: python3-module-polib python3-module-psutil
+BuildRequires: libgtk4-devel
+BuildRequires: mate-themes
 
 %description
 Ayatana Settings allows you to configure all your Ayatana system
@@ -31,36 +27,39 @@ indicators.
 %prep
 %setup
 
-# Remove hashbangs on scripts installed into sitelib.
-find 'ayatanasettings' -type 'f' -iname '*.py' -exec sed -i -e '0,/^\s*#!\s*\/.*$/d' '{}' '+'
-
-# Also remove executable flags.
-find 'ayatanasettings' -type 'f' -iname '*.py' -exec chmod -x '{}' '+'
-
 %build
-%python3_build
+%cmake
+%cmake_build
 
 %install
-%python3_install
+%cmake_install
 
-# this translation is ignored by %%find_lang
+# these translations are ignored by %%find_lang
 rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
+rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 
 %find_lang %name
 
 %files -f %name.lang
 %doc COPYING AUTHORS ChangeLog README.md
 %_bindir/ayatana-settings
-%_man1dir/ayatana-settings.1.*
-%python3_sitelibdir/ayatanasettings
-%python3_sitelibdir/ayatana_settings-%{version}*-info
-%dir %_iconsdir/hicolor/scalable
-%dir %_iconsdir/hicolor/scalable/apps
+%_iconsdir/ContrastHigh/scalable/apps/%name.*
+%_iconsdir/ContrastHigh/scalable/categories/%name-*
 %_iconsdir/hicolor/scalable/apps/%name.*
+%_iconsdir/hicolor/scalable/categories/%name-*
 %_desktopdir/ayatana-settings.desktop
-%_datadir/ayatana-settings/
+%_man8dir/ayatana-settings.8*
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.10.1-alt1
+- New version 24.10.1.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 21.1.28-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break Requires to multiple lines
+  + do not own icons dirs (thanks to @antohami)
+
 * Mon Aug 07 2023 Nikolay Strelkov <snk@altlinux.org> 21.1.28-alt2
 - Removed translation which is ignored by %%find_lang
 - Language specific files are declared

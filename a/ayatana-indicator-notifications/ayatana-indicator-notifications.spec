@@ -2,23 +2,26 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-notifications
-Version: 22.9.0
-Release: alt2
+Version: 23.10.1
+Release: alt1
 
 Summary: Ayatana Indicator for viewing recent notifications
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-notifications
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: ayatana-cmake-modules cmake gcc-c++ intltool
+BuildRequires: ayatana-cmake-modules
 BuildRequires: ayatana-indicator-common
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: hicolor-icon-theme
+BuildRequires: intltool
+BuildRequires: libayatana-common-devel
 BuildRequires: libblkid-devel
 BuildRequires: libffi-devel
 BuildRequires: libmount-devel
@@ -67,18 +70,23 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
-%dir %_iconsdir/hicolor/scalable
-%dir %_iconsdir/hicolor/scalable/status
 %_iconsdir/hicolor/scalable/status/*
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.notifications.gschema.xml
-%dir %_datadir/ayatana
-%dir %_datadir/ayatana/indicators
 %_datadir/ayatana/indicators/org.ayatana.indicator.notifications
-%dir %_prefix/lib/systemd
-%dir %_userunitdir
 %_userunitdir/%name.service
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 23.10.1-alt1
+- New version 23.10.1.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break BuildRequires to multiple lines
+  + break BuildRequires(pre) to multiple lines
+  + do not own icons and systemd dirs (thanks to @antohami)
+  + do not own /usr/share/ayatana/indicators
+
 * Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt2
 - Removed translations which are ignored by %%find_lang
 - Language specific files are declared

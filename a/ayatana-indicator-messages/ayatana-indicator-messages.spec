@@ -5,24 +5,31 @@
 %define typelib %libname-gir
 %define sover   0
 Name: ayatana-indicator-messages
-Version: 22.9.0
-Release: alt2
+Version: 24.5.0
+Release: alt1
 
 Summary: Ayatana Indicator for collecting messages that need a response
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-messages
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd rpm-build-vala
+ExcludeArch: ppc64le
 
-BuildRequires: ayatana-cmake-modules cmake gcc-c++ gtk-doc intltool libaccountsservice-devel vala vala-tools
+BuildRequires(pre): rpm-build-vala
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
+
+BuildRequires: ayatana-cmake-modules
 BuildRequires: ayatana-indicator-common
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: gobject-introspection-devel
+BuildRequires: gtk-doc
 BuildRequires: hicolor-icon-theme
+BuildRequires: intltool
+BuildRequires: libaccountsservice-devel
 BuildRequires: libblkid-devel
 BuildRequires: libffi-devel
 BuildRequires: libmount-devel
@@ -32,6 +39,8 @@ BuildRequires: libpolkit-devel
 BuildRequires: libselinux-devel
 BuildRequires: libsystemd-devel
 BuildRequires: pkg-config
+BuildRequires: vala
+BuildRequires: vala-tools
 BuildRequires: zlib-devel
 
 Requires: ayatana-indicator-common
@@ -117,22 +126,7 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_libexecdir/%name/%{name}-service
 %_datadir/ayatana/indicators/org.ayatana.indicator.messages
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.messages.gschema.xml
-%dir %_iconsdir/hicolor/16x16/categories/
-%dir %_iconsdir/hicolor/16x16/status/
-%dir %_iconsdir/hicolor/22x22/categories/
-%dir %_iconsdir/hicolor/22x22
-%dir %_iconsdir/hicolor/22x22/status/
-%dir %_iconsdir/hicolor/24x24/status/
-%dir %_iconsdir/hicolor/24x24
-%dir %_iconsdir/hicolor/32x32/categories/
-%dir %_iconsdir/hicolor/32x32/status/
-%dir %_iconsdir/hicolor/48x48/status/
-%dir %_iconsdir/hicolor/scalable/
-%dir %_iconsdir/hicolor/scalable/categories/
-%dir %_iconsdir/hicolor/scalable/status/
 %_iconsdir/hicolor/*/*/*
-%dir %_prefix/lib/systemd
-%dir %_userunitdir
 %_userunitdir/%name.service
 
 %files -n %libname%sover
@@ -146,8 +140,6 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_pkgconfigdir/messaging-menu.pc
 
 %files -n %libname-doc
-%dir %_datadir/gtk-doc
-%dir %_datadir/gtk-doc/html
 %dir %_datadir/gtk-doc/html/messaging-menu
 %_datadir/gtk-doc/html/messaging-menu/*
 
@@ -155,6 +147,17 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_libdir/girepository-1.0/MessagingMenu-1.0.typelib
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
+- New version 24.5.0.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break BuildRequires to multiple lines
+  + break BuildRequires(pre) to multiple lines
+  + do not own gtk-doc, icons and systemd dirs (thanks to @antohami)
+  + temporary disable build on ppc64le
+
 * Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.9.0-alt2
 - Removed translations which are ignored by %%find_lang
 - Language specific files are declared

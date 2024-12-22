@@ -2,23 +2,29 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-printers
-Version: 22.2.0
-Release: alt2
+Version: 23.10.1
+Release: alt1
 
 Summary: Ayatana Indicator showing active print jobs
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-printers
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: libaccounts-glib-devel libayatana-indicator3-devel libcups-devel libdbusmenu-gtk3-devel mate-common
+BuildRequires: ayatana-cmake-modules
 BuildRequires: ayatana-indicator-common
+BuildRequires: cmake
+BuildRequires: intltool
+BuildRequires: libaccounts-glib-devel
+BuildRequires: libayatana-common-devel
+BuildRequires: libcups-devel
 BuildRequires: libdbus-devel
+BuildRequires: libdbusmenu-gtk3-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libsystemd-devel
 
 %description
@@ -33,14 +39,15 @@ indicator to the user.
 %setup
 
 %build
-NOCONFIGURE=1 mate-autogen
-%configure \
-  --disable-static \
-  --disable-gcov
-%make_build V=1
+%cmake \
+  -DCMAKE_INSTALL_LOCALSTATEDIR=%_localstatedir \
+  -Denable_tests=Off \
+  -Denable_lomiri_features=Off
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
+
 find %buildroot -type f -name "*.la" -delete -print
 
 # these translations are ignored by %%find_lang
@@ -63,14 +70,20 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
-%dir %_libdir/ayatana-indicators3
-%dir %_libdir/ayatana-indicators3/7
-%_libdir/ayatana-indicators3/7/libayatana-printersmenu.so
-%dir %_prefix/lib/systemd
-%dir %_userunitdir
+%_datadir/ayatana/indicators/org.ayatana.indicator.printers
 %_userunitdir/%name.service
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 23.10.1-alt1
+- New version 23.10.1.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 22.2.0-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break BuildRequires to multiple lines
+  + break BuildRequires(pre) to multiple lines
+  + do not own systemd dirs (thanks to @antohami)
+
 * Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 22.2.0-alt2
 - Removed translations which are ignored by %%find_lang
 - Language specific files are declared

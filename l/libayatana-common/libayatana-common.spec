@@ -7,25 +7,29 @@
 %define sover   0
 %define typelib %name-gir
 Name: libayatana-common
-Version: 0.9.8
-Release: alt2
+Version: 0.9.10
+Release: alt1
 
 Summary: Common files and libraries used by Ayatana System Indicators
 License: GPLv3
 Group: System/Libraries
 Url: https://github.com/AyatanaIndicators/libayatana-common
-Packager: Nikolay Strelkov <snk@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd rpm-build-vala
+BuildRequires(pre): rpm-build-vala
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: ayatana-cmake-modules cmake gcc-c++ intltool vala vala-tools
+BuildRequires: ayatana-cmake-modules
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: glib2-devel
 BuildRequires: gobject-introspection-devel
+BuildRequires: intltool
 BuildRequires: libblkid-devel
-BuildRequires: libgio-devel
 BuildRequires: libffi-devel
+BuildRequires: libgio-devel
 BuildRequires: libmount-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libpcre-devel
@@ -33,6 +37,8 @@ BuildRequires: libselinux-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libtool
 BuildRequires: pkg-config
+BuildRequires: vala
+BuildRequires: vala-tools
 BuildRequires: zlib-devel
 
 Requires: gobject-introspection
@@ -117,11 +123,7 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %doc COPYING NEWS README.md
 %dir %_datadir/ayatana
 %dir %_datadir/ayatana/indicators
-%dir %_datadir/glib-2.0
-%dir %_datadir/glib-2.0/schemas
 %_datadir/glib-2.0/schemas/org.ayatana.common.gschema.xml
-%dir %_libexecdir/systemd
-%dir %_libexecdir/systemd/user
 %_userunitdir/ayatana-indicators.target
 
 %files -n %lname
@@ -140,6 +142,16 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_vapidir/AyatanaCommon.vapi
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 0.9.10-alt1
+- New version 0.9.10.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 0.9.8-alt3
+- Handle review issues:
+  + removed obsolete Packager tag
+  + break BuildRequires to multiple lines
+  + break BuildRequires(pre) to multiple lines
+  + do not own glib-2.0 and systemd dirs (thanks to @antohami)
+
 * Wed Aug 09 2023 Nikolay Strelkov <snk@altlinux.org> 0.9.8-alt2
 - Removed translations which are ignored by %%find_lang
 - Language specific files are declared

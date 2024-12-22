@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xfce4-indicator-plugin
-Version: 2.4.1
-Release: alt3
+Version: 2.4.2
+Release: alt1
 
 Summary: Plugin to display information from applications in the Xfce panel
 License: GPL-2.0-or-later
@@ -10,7 +10,6 @@ Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/panel-plugins/xfce4-indicator-plugin
 
 Source: %name-%version.tar
-Patch: %name-%version-alt-ayatana.patch
 
 BuildRequires(pre): rpm-build-xfce4
 
@@ -28,7 +27,6 @@ Ubuntu's MessagingMenu design specification.
 
 %prep
 %setup
-%patch -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag indicator_version_tag configure.ac.in
@@ -52,6 +50,9 @@ Ubuntu's MessagingMenu design specification.
 %_datadir/xfce4/panel/plugins/indicator.desktop
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 2.4.2-alt1
+- New version 2.4.2.
+
 * Sat Oct 12 2024 Nikolay Strelkov <snk@altlinux.org> 2.4.1-alt3
 - fix FTBFS by adding intltool build dependency
 

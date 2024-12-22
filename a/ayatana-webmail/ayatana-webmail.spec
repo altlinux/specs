@@ -2,19 +2,18 @@
 
 %define moname  ayatanawebmail
 Name: ayatana-webmail
-Version: 22.6.28
-Release: alt3
+Version: 24.5.17
+Release: alt1
 
 Summary: Webmail notifications and actions for any desktop
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-webmail
 
-Packager: Nikolay Strelkov <snk@altlinux.org>
-
 Source: %name-%version.tar
 
 BuildArch: noarch
+ExcludeArch: ppc64le
 
 BuildRequires(pre): rpm-build-python3
 
@@ -81,15 +80,21 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%moname.mo
 %python3_sitelibdir/ayatanawebmail
 %python3_sitelibdir/ayatanawebmail-%{version}*-info
 %config %_sysconfdir/xdg/autostart/%name-autostart.desktop
-%dir %_iconsdir/hicolor/scalable
-%dir %_iconsdir/hicolor/scalable/apps
 %_iconsdir/hicolor/scalable/apps/*
-%dir %_iconsdir/hicolor/scalable/status
 %_iconsdir/hicolor/scalable/status/*
 %_datadir/glib-2.0/schemas/org.ayatana.webmail.gschema.xml
 %_desktopdir/ayatana-webmail.desktop
 
 %changelog
+* Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.17-alt1
+- New version 24.5.17.
+
+* Sun Jan 28 2024 Nikolay Strelkov <snk@altlinux.org> 22.6.28-alt4
+- Handle review issues:
+  + removed obsolete Packager tag
+  + do not own icons dirs (thanks to @antohami)
+  + temporary disable build on ppc64le
+
 * Mon Aug 07 2023 Nikolay Strelkov <snk@altlinux.org> 22.6.28-alt3
 - Removed translations which are ignored by %%find_lang
 - Language specific files are declared
