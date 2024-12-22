@@ -3,43 +3,32 @@
 # appio.c directly calls non-LFS functions.
 %set_verify_elf_method strict,lfs=relaxed
 %define optflags_lto %nil
-%def_without doc
 
 Name: papi
-Version: 6.0.0
-Release: alt8
-
+Version: 7.1.0
+Release: alt1
 Summary: Performance Application Programming Interface
-
 License: BSD-3-Clause
 Group: Development/Tools
 Url: https://icl.utk.edu/exa-papi/
 Vcs: https://github.com/icl-utk-edu/papi
+Requires: libpapi = %EVR
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
-%define tagversion %(echo "%version" | sed -e "s|\\.|-|g")
-# Source-url: https://bitbucket.org/icl/papi/get/papi-%tagversion-t.tar.bz2
 Source: %name-%version.tar
-
-Patch1: papi-6.0.0-alt-fix-mips-warning.patch
-Patch4: papi-config.patch
-Patch5: papi-nostatic.patch
-Patch6: papi-init_thread.patch
 Patch2000: papi-e2k.patch
 
-Requires: lib%name = %EVR
-
-BuildRequires: /proc
-BuildRequires: rpm-build-python3
-BuildRequires: libncurses-devel gcc-fortran libsensors3-devel libgomp-devel
-BuildRequires: doxygen
-%if_with doc
-BuildRequires: graphviz
-%endif
-BuildRequires: libpfm-devel
-
+BuildRequires(pre): rpm-build-python3
 BuildRequires: chrpath
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+BuildRequires: gcc-fortran
+BuildRequires: libgomp-devel
+BuildRequires: libncurses-devel
+BuildRequires: libpfm-devel
+BuildRequires: libsensors3-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /proc
+}}
 
 %description
 PAPI aims to provide the tool designer and application engineer with a
@@ -47,11 +36,11 @@ consistent interface and methodology for use of the performance counter hardware
 found in most major microprocessors. PAPI enables software engineers to see, in
 near real time, the relation between software performance and processor events.
 
-%package -n lib%name
+%package -n libpapi
 Summary: Shared libraries of PAPI (Performance Application Programming Interface)
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libpapi
 PAPI aims to provide the tool designer and application engineer with a
 consistent interface and methodology for use of the performance counter hardware
 found in most major microprocessors. PAPI enables software engineers to see, in
@@ -59,12 +48,12 @@ near real time, the relation between software performance and processor events.
 
 This package contains shared libraries of PAPI.
 
-%package -n lib%name-devel
+%package -n libpapi-devel
 Summary: Development files of Performance Application Programming Interface
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: libpapi = %EVR
 
-%description -n lib%name-devel
+%description -n libpapi-devel
 PAPI aims to provide the tool designer and application engineer with a
 consistent interface and methodology for use of the performance counter hardware
 found in most major microprocessors. PAPI enables software engineers to see, in
@@ -72,80 +61,36 @@ near real time, the relation between software performance and processor events.
 
 This package contains development files of PAPI.
 
-%package doc
-Summary: Documentation for Performance Application Programming Interface
-Group: Documentation
-#BuildArch: noarch
-
-%description doc
-PAPI aims to provide the tool designer and application engineer with a
-consistent interface and methodology for use of the performance counter hardware
-found in most major microprocessors. PAPI enables software engineers to see, in
-near real time, the relation between software performance and processor events.
-
-This package contains documentation for PAPI.
-
 %prep
 %setup
-
-%patch1 -p2
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 %ifarch %e2k
 %patch2000 -p2
 %endif
-rm -rf src/libpfm*
-
-#rm -fR src/perfctr-*
-#cp -f src/Rules.pfm src/Rules.perfctr
-#cp -f src/Rules.pfm src/Rules.perfctr-pfm
-
-#__subst 's|-Xlinker "-rpath" -Xlinker "\$(LIBDIR)"||' src/configure.in
 
 %build
 cd src
-
-# TODO: fix build with static-lib=no
-%add_optflags %optflags_shared %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	--with-ffsll \
-	--with-static-lib=no \
-	--with-shlib \
-	--with-shared-lib=yes \
-	--with-shlib-tools=yes \
-	--with-virtualtimer=clock_thread_cputime_id \
+	--with-components="appio coretemp infiniband io lmsensors net powercap rapl sde stealtime" \
 	--with-perf-events \
-	--with-pfm-incdir=%_includedir --with-pfm-libdir=%_libdir \
-	--with-components="appio coretemp lmsensors mx net rapl stealtime"
-#cp -f Makefile.inc.bak Makefile.inc
-#make libpapi.a
+	--with-pfm-incdir=%_includedir \
+	--with-pfm-libdir=%_libdir \
+	--with-shared-lib=yes \
+	--with-shlib \
+	--with-shlib-tools=yes \
+	--with-static-lib=no \
+	%nil
 %make_build
-%if_with doc
-%make -C ../doc html
-%endif
 %make -C ../doc man
 
 %install
 cd src
 %makeinstall_std
 %make_install DESTDIR=%buildroot install-man
-
-%__subst "s|/usr/bin/python|/usr/bin/env python3|" %buildroot%_bindir/papi_hl_output_writer.py
-
-chrpath --delete %buildroot%_libdir/*.so*
-rm -rf %buildroot%_libdir/*.a
-
-%if_with doc
-install -d %buildroot%_docdir/%name
-cp -fR ../doc/html/* %buildroot%_docdir/%name/
-%endif
-
-#ln -s libpapi.so %buildroot%_libdir/libpapi64.so
-#ln -s libpfm.so %buildroot%_libdir/libpfm64.so
-
-rm -f %buildroot%_libdir/*.a
+sed -i "1s|/usr/bin/python.*|%__python3|" %buildroot%_bindir/papi_hl_output_writer.py
+find %buildroot -type f | xargs file4 -N | grep ELF | cut -d: -f1 |
+	xargs -t chrpath --delete
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir PATH=%buildroot%_bindir:$PATH
@@ -180,26 +125,27 @@ test -e .failed && exit 1
 set -x
 
 %files
-%doc *.txt README.md
-%_bindir/*
-%_man1dir/*
-%_datadir/%name
+%doc ChangeLog*.txt LICENSE.txt README.md RELEASENOTES.txt
+%_bindir/papi_*
+%_man1dir/PAPI_*.1*
+%_man1dir/papi_*.1*
+%_datadir/papi
 
-%files -n lib%name
+%files -n libpapi
 %_libdir/*.so.*
 
-%files -n lib%name-devel
+%files -n libpapi-devel
 %_libdir/*.so
-%_includedir/*
-%_man3dir/*
+%_includedir/*.h*
+%_man3dir/PAPI*.3*
 %_pkgconfigdir/*.pc
 
-%if_with doc
-%files doc
-%_docdir/%name
-%endif
-
 %changelog
+* Sun Dec 22 2024 Vitaly Chikunov <vt@altlinux.org> 7.1.0-alt1
+- Update to papi-7-1-0-t (2023-12-20).
+- spec: Change packaging from tar import to git.
+- spec: Enable more components (including sde).
+
 * Tue Oct 31 2023 Vitaly Chikunov <vt@altlinux.org> 6.0.0-alt8
 - spec: Update Url and Vcs links.
 - spec: Remove BR on libltdl-devel.
