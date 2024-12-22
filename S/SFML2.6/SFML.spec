@@ -1,18 +1,19 @@
-%define soversion 3.0
+%define origname SFML
+%define soversion 2.6
 
-Name: SFML
-Version: 3.0.0
-Release: alt1
+Name: %origname%soversion
+Version: 2.6.2
+Release: alt2
 
 Summary: Simple and Fast Multimedia Library
 License: Zlib
-Group: System/Libraries
+Group: System/Legacy libraries
 
 Url: http://www.sfml-dev.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# Source-url: https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
-Source: %name-%version.tar
+# Source-url: https://github.com/%origname/%origname/archive/%version/%origname-%version.tar.gz
+Source: %origname-%version.tar
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -38,50 +39,34 @@ API. It provides access to windowing, graphics, audio and network.
 It is written in C++, and has bindings for various languages such as C,
 .Net, Ruby, Python.
 
-%package -n lib%name%soversion
+%package -n lib%origname%soversion
 Summary: Simple and Fast Multimedia Library
 Group: System/Libraries
 
-%description -n lib%name%soversion
+%description -n lib%origname%soversion
 SFML is a simple, fast, cross-platform and object-oriented multimedia
 API. It provides access to windowing, graphics, audio and network.
 It is written in C++, and has bindings for various languages such as C,
 .Net, Ruby, Python.
 
-%package -n lib%name-devel
-Summary: Development files for SFML
-Group: Development/C++
-Requires: lib%name%soversion = %EVR
-Conflicts: libsfml-devel
-
-%description -n lib%name-devel
-Contains libraries and header files for
-developing applications that use SFML.
-
 %prep
-%setup
+%setup -n %origname-%version
 
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=TRUE -Wno-dev
+%cmake -Wno-dev
 %cmake_build
 
 %install
 %cmake_install
 
-%files -n lib%name%soversion
-%doc CONTRIBUTING.md changelog.md migration.md
+%__rm -rf %buildroot{%_defaultdocdir,%_includedir,%_pkgconfigdir,%_libdir/{libsfml-*.so,cmake}}
+%files -n lib%origname%soversion
+%doc changelog.md
 %_libdir/libsfml-*.so.*
 
-%files -n lib%name-devel
-%_defaultdocdir/%name
-%_includedir/%name
-%_pkgconfigdir/sfml-*.pc
-%_libdir/libsfml-*.so
-%_libdir/cmake/%name/*.cmake
-
 %changelog
-* Sun Dec 22 2024 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
-- New version 3.0.0.
+* Sun Dec 22 2024 Nazarov Denis <nenderus@altlinux.org> 2.6.2-alt2
+- Build as legacy library
 
 * Tue Nov 12 2024 Nazarov Denis <nenderus@altlinux.org> 2.6.2-alt1
 - New version 2.6.2.
