@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: Python scripts to manipulate HID data
@@ -64,6 +64,9 @@ vm-run --sbin --udevd --modules="uhid" '%pyproject_run_pytest -vra tests'
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Dec 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.9-alt1
+- New version.
+
 * Thu Aug 01 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.8-alt1
 - New version.
 
