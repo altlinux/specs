@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-kopidel
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 
 Summary: Creating a bootable iso that copies the file system
@@ -69,5 +69,8 @@ it on other machines, then you have found what you were looking for!
 %_libexecdir/alterator-kopidel/
 
 %changelog
+* Sun Dec 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.0.2-alt1
+- Fix the creation of a workdir for the first use.
+
 * Sat Dec 21 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.0.1-alt1
 - The first version of the new alterator module!
