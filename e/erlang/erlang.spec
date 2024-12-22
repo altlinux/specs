@@ -30,7 +30,7 @@
 Name: erlang
 Epoch: 1
 Version: 26.2.5.3
-Release: alt1
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -42,6 +42,8 @@ Source5: epmd.service
 Source6: epmd.socket
 Source7: epmd@.service
 Source8: epmd@.socket
+
+Patch0: %name-%version-alt.patch
 
 Requires: %name-otp-modules = %version-%release
 Provides: erlang_mod(demo) = %version
@@ -599,6 +601,7 @@ This package contains documentation for Erlang/OTP in chunk format.
 
 %prep
 %setup -n otp_src_OTP-%version
+%patch0 -p1
 
 #sed -i 's,armv7hl,armh,' erts/aclocal.m4
 
@@ -1221,6 +1224,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Sat Dec 21 2024 Egor Ignatov <egori@altlinux.org> 1:26.2.5.3-alt2
+- fix FTBFS with gcc-14
+
 * Thu Sep 19 2024 Egor Ignatov <egori@altlinux.org> 1:26.2.5.3-alt1
 - new version 26.2.5.3
 
