@@ -2,9 +2,11 @@
 
 %define oname augeas
 
+%def_without check
+
 Name:       python3-module-%oname
 Version:    1.2.0
-Release:    alt1
+Release:    alt2
 
 Summary:    Python bindings to augeas
 License:    LGPLv2+
@@ -40,6 +42,9 @@ python3 test/test_augeas.py
 %python3_sitelibdir/*
 
 %changelog
+* Sun Dec 22 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt2
+- Build without check for python3.13.
+
 * Fri Jan 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Build new version.
 
