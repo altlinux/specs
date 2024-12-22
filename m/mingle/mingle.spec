@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: mingle
-Version: 0.15
+Version: 0.16.1
 Release: alt1
 
 Summary: Combine emojis with Google's Emoji Kitchen
@@ -24,7 +24,7 @@ BuildRequires: pkgconfig(gee-0.8)
 %if_enabled check
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
-BuildRequires: libappstream-glib
+BuildRequires: libgio
 %endif
 
 %description
@@ -50,7 +50,13 @@ Combine emojis with Emoji Kitchen, and send them to friends.
 %_datadir/glib-2.0/schemas/%APP_ID.gschema.xml
 %_iconsdir/hicolor/scalable/actions/*.svg
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
+%_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Tue Dec 17 2024 Oleg Shchavelev <oleg@altlinux.org> 0.16.1-alt1
+- New version 0.16.1
+- Update build dependencies for check
+- Add unpackaged metainfo file
+
 * Mon Nov 18 2024 Oleg Shchavelev <oleg@altlinux.org> 0.15-alt1
 - Initial build
