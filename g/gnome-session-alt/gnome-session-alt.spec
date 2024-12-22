@@ -3,7 +3,7 @@
 
 Name: gnome-session-alt
 Version: 47.0
-Release: alt2
+Release: alt3
 Summary: Session GNOME Shell for Alt distributions
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -23,6 +23,7 @@ Requires: gnome-shell-extension-dash-to-panel
 Requires: gnome-shell-extension-arcmenu
 Requires: gnome-shell-extension-gtk4-desktop-icons-ng
 Requires: gnome-shell-extension-clipboard-indicator
+Requires: gnome-shell-extension-appindicator
 
 %description
 %summary.
@@ -54,6 +55,13 @@ install -m644 alt-gnome-xorg.desktop \
 %_datadir/xsessions/alt-gnome-xorg.desktop
 
 %changelog
+* Sun Dec 22 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt3
+- alt-gnome-wayland.desktop: remove wayland from Name
+- alt-gnome-*.desktop: fix description and categories
+- alt.json: Enable extension "appindicatorsupport@rgcjonas.gmail.com" on startup
+- gschema.override: make the panel wider and increase the margins in tray
+- gschema.override: add org.gnome.Software.desktop to favorite-apps
+
 * Sat Dec 21 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt2
 - Fix Url and Vcs
 
