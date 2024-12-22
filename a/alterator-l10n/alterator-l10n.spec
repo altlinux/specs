@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.148
+Version: 2.9.149
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,9 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Dec 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.9.149-alt1
+- alterator-kopidel: Initial translations and help
+
 * Tue Dec 17 2024 Anton Midyukov <antohami@altlinux.org> 2.9.148-alt1
 - alterator-hostname: Initial translations and help
 
