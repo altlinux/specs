@@ -2,8 +2,8 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 8.2.9
-Release: alt1
+Version: 8.3.2
+Release: alt0.1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -29,7 +29,7 @@ Requires: pve-esxi-import-tools >= 0.6.0
 
 Conflicts: pve-container < 3.1.2
 Conflicts: pve-manager < 5.2.12
-Conflicts: pve-qemu-server < 6.1.14
+# Conflicts: pve-qemu-server < 8.3.2
 
 BuildRequires: librados2-perl pve-common >= 8.2.3 pve-cluster >= 5.0.32 libpve-cluster-perl >= 8.0.6
 BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control >= 8.1.2 pve-apiclient xmlto
@@ -67,6 +67,10 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Mon Dec 16 2024 Sergey Konev <darisishe@altlinux.org> 8.3.2-alt0.1
+- 8.3.2
+- bootstrap
+
 * Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.9-alt1
 - 8.2.9
 
