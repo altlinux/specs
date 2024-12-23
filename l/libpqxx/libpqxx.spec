@@ -1,65 +1,28 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+%def_without doc
+Name: libpqxx
+Summary: C++ client API for PostgreSQL
+License: BSD
+Epoch: 1
+Version: 7.10.0
+Release: alt1
 Group: System/Libraries
-%add_optflags %optflags_shared
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with check
-%bcond_with doc
+BuildRequires(pre): rpm-macros-cmake
+Url: https://pqxx.org
+VCS: https://github.com/jtv/libpqxx/
+Source0: %name-%version.tar
 
-Name:           libpqxx
-Summary:        C++ client API for PostgreSQL
-Epoch:          1
-Version:        7.7.5
-Release:        alt2_2
-
-%global         forgeurl https://github.com/jtv/%{name}/
-%global         tag %{version}
-# FedoraForgeMeta2ALT: generated meta
-%global forgeurl https://github.com/jtv/libpqxx/
-%global forgesource https://github.com/jtv/libpqxx//archive/7.7.5/libpqxx-7.7.5.tar.gz
-%global archivename libpqxx-7.7.5
-%global archiveext tar.gz
-%global archiveurl https://github.com/jtv/libpqxx//archive/7.7.5/libpqxx-7.7.5.tar.gz
-%global topdir libpqxx-7.7.5
-%global extractdir libpqxx-7.7.5
-%global repo libpqxx
-#global owner %nil
-#global namespace %nil
-%global scm git
-%global tag 7.7.5
-#global commit %nil
-#global shortcommit %nil
-#global branch %nil
-%global version 7.7.5
-#global date %nil
-%global distprefix .git7.7.5
-# FedoraForgeMeta2ALT: end generated meta
-
-License:        BSD
-URL:            http://pqxx.org/
-Source0:        %{forgesource}
-
-BuildRequires:  gcc-c++
-BuildRequires:  ninja-build python3-module-ninja_syntax
-BuildRequires:  ctest cmake
-BuildRequires:  postgresql-devel
-%if %{with check}
-BuildRequires:  postgresql-test-rpm-macros
+BuildRequires: gcc-c++
+BuildRequires: ninja-build python3-module-ninja_syntax
+BuildRequires: ctest cmake
+BuildRequires: postgresql-devel
+%if_with check
+BuildRequires: postgresql-test-rpm-macros
 %endif
 %if %{with doc}
-BuildRequires:  doxygen
-BuildRequires:  graphviz libgraphviz
-BuildRequires:  xmlto
+BuildRequires: doxygen
+BuildRequires: graphviz libgraphviz
+BuildRequires: xmlto
 %endif
-Source44: import.info
 
 %description
 C++ client API for PostgreSQL. The standard front-end (in the sense of
@@ -68,78 +31,76 @@ Supersedes older libpq++ interface.
 
 %package devel
 Group: Development/C
-Summary:        Development files for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       pkgconfig
+Summary: Development files for %name
+Requires: %name = %epoch:%version-%release
+Requires: pkgconfig
 %description devel
-%{summary}.
+%summary.
 
 %if %{with doc}
 %package doc
 Group: System/Libraries
-Summary: Developer documentation for %{name}
+Summary: Developer documentation for %name
 BuildArch: noarch
 %description doc
-%{summary}.
+%summary.
 %endif
 
 %prep
-%setup -q -n libpqxx-7.7.5
+%setup
 %ifarch %e2k
 sed -i '/Args, Args/{N;s/\.\.\./ /g}' include/pqxx/internal/conversions.hxx
 %endif
 
 %build
-%{fedora_v2_cmake} -G Ninja \
-%if %{with doc}
+%cmake -G Ninja \
+  -DBUILD_SHARED_LIBS=on \
+%if_with doc
   -DBUILD_DOC=ON
 %endif
-%fedora_v2_cmake_build
+  %nil
+%cmake_build
 
 %install
-%fedora_v2_cmake_install
-
-%check
-%if %{with check}
-%postgresql_tests_run
-cd "%{_vpath_builddir}/test"
-%__ctest -V --force-new-ctest-process %{?_smp_mflags}
-cd -
-%endif
+%cmake_install
 
 %files
 %doc AUTHORS NEWS README.md VERSION
 %doc --no-dereference COPYING
-%{_libdir}/%{name}-7.7.so
+%_libdir/%name-7.10.so
 
 %files devel
-%dir %{_libdir}/cmake/%{name}
-%{_includedir}/pqxx
-%{_libdir}/%{name}.so
-%{_libdir}/pkgconfig/%{name}.pc
-%{_libdir}/cmake/%{name}/%{name}-config.cmake
-%{_libdir}/cmake/%{name}/%{name}-config-version.cmake
-%{_libdir}/cmake/%{name}/%{name}-targets.cmake
-%{_libdir}/cmake/%{name}/%{name}-targets-noconfig.cmake
+%dir %_libdir/cmake/%name
+%_includedir/pqxx
+%_libdir/%name.so
+%_libdir/pkgconfig/%name.pc
+%_libdir/cmake/%name/%name-config.cmake
+%_libdir/cmake/%name/%name-config-version.cmake
+%_libdir/cmake/%name/%name-targets.cmake
+%_libdir/cmake/%name/%name-targets-noconfig.cmake
 
-%if %{with doc}
+%if_with doc
 %files doc
-%dir %{_docdir}/%{name}
-%{_docdir}/%{name}/accessing-results.md
-%{_docdir}/%{name}/binary-data.md
-%{_docdir}/%{name}/datatypes.md
-%{_docdir}/%{name}/escaping.md
-%{_docdir}/%{name}/getting-started.md
-%{_docdir}/%{name}/mainpage.md
-%{_docdir}/%{name}/parameters.md
-%{_docdir}/%{name}/performance.md
-%{_docdir}/%{name}/prepared-statement.md
-%{_docdir}/%{name}/streams.md
-%{_docdir}/%{name}/thread-safety.md
-%{_docdir}/%{name}/html
+%dir %_docdir/%name
+%_docdir/%name/accessing-results.md
+%_docdir/%name/binary-data.md
+%_docdir/%name/datatypes.md
+%_docdir/%name/escaping.md
+%_docdir/%name/getting-started.md
+%_docdir/%name/mainpage.md
+%_docdir/%name/parameters.md
+%_docdir/%name/performance.md
+%_docdir/%name/prepared-statement.md
+%_docdir/%name/streams.md
+%_docdir/%name/thread-safety.md
+%_docdir/%name/html
 %endif
 
 %changelog
+* Mon Dec 23 2024 Anton Farygin <rider@altlinux.ru> 1:7.10.0-alt1
+- 7.7.5 -> 7.10.0
+- disabled documentation build
+
 * Fri Oct 13 2023 Igor Vlasenko <viy@altlinux.org> 1:7.7.5-alt2_2
 - e2k support
 
