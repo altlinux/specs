@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-chromium
-Version: 126.0
+Version: 130.0
 Release: alt1
 
 Summary: Chromium-specific ADMX policy templates
@@ -39,6 +39,10 @@ for file in %buildroot%_destdir/*.admx %buildroot%_destdir/*-*/*.adml; do
         sed -i 's/\(<policyDefinitions\|<policyDefinitionResources\)/\1 xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance"/' "$file"
     grep -q "^\(<policyDefinitions\|<policyDefinitionResources\) .*xmlns=" "$file" ||
         sed -i 's/\(<policyDefinitions\|<policyDefinitionResources\)/\1 xmlns="http:\/\/schemas.microsoft.com\/GroupPolicy\/2006\/07\/PolicyDefinitions"/' "$file"
+
+    if [ "$file" = "%buildroot%_destdir/ru-RU/chrome.adml" ]; then
+        sed -i -e 's/ True/ Включено/g' -e 's/ False/ Отключено/g' -e 's/ Enabled/ Включено/g' -e 's/ Disabled/ Отключено/g' "$file"
+    fi
 done
 
 %check
@@ -53,6 +57,16 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Mon Oct 21 2024 Valentin Sokolov <sova@altlinux.org> 130.0-alt1
+- Update ro latest release 130.0-6723.59
+
+* Mon Sep 02 2024 Valentin Sokolov <sova@altlinux.org> 128.0-alt1
+- Update to latest release 128.0-6613.114
+
+* Fri Jul 19 2024 Valentin Sokolov <sova@altlinux.org> 126.0-alt2
+- Added verification and replacement of group policy state
+  descriptions for Russian-language templates
+
 * Mon Jul 08 2024 Valentin Sokolov <sova@altlinux.org> 126.0-alt1
 - Update to latest release 126.0-6478.127
 
