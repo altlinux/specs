@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.49.0
+Version: 2.50.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -391,6 +391,29 @@ fi
 %endif
 
 %changelog
+* Mon Dec 23 2024 Alexey Gladkov <legion@altlinux.ru> 2.50.0-alt1
+- New features:
+  + New feature to add block device modules.
+  + New feature to add MD modules.
+  + New UKI feature to create a Unified Kernel Image which can be booted
+    directly from UEFI firmware.
+- Feature kickstart:
+  + Add alias /dev/root. This will allow to create images with a file system
+    with an arbitrary uuid without running make-initrd.
+  + Add increasing filesystems (ext4, xfs, f2fs) along with the partition change.
+  + Rewrite block devices detection.
+  + Fix work with busybox (use wrapper readlink-e).
+- Feature add-modules:
+  + Add workaround to add crc32 for f2fs.
+- Feature fsck:
+  + Add workaround for altlinux where fsck has non upstream compatible options.
+- Misc:
+  + make-initrd: Reorder arguments and make variables in the command line.
+  + initrd-put: Extend the mechanism for ignoring elf_dlopen dependencies.
+  + initrd-put: Ignore "archive" feature in libsystemd-shared.so by default.
+  + Search kernel System.map in the /lib/modules/<kver>.
+  + Search kernel config in the /lib/modules/<kver>.
+
 * Wed Aug 14 2024 Alexey Gladkov <legion@altlinux.ru> 2.49.0-alt1
 - Feature luks-unl0kr:
   + Feature adds the ability to use unl0kr. unl0kr is framebuffer-based
