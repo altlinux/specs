@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ego_ver
-Release: alt1%beta
+Release: alt1.1%beta
 
 %define gettext_domain %_name
 
@@ -22,8 +22,7 @@ Url: https://github.com/domferr/tilingshell
 
 Vcs: https://github.com/domferr/tilingshell.git
 
-#BuildArch: noarch
-ExclusiveArch: x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 %if_disabled snapshot
 Source: %url/archive/%version%beta/%name-%git_ver%beta.tar.gz
@@ -37,7 +36,6 @@ Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: npm eslint
-#BuildRequires: esbuild
 BuildRequires: /usr/bin/gjs
 BuildRequires: /usr/bin/glib-compile-schemas /usr/bin/gapplication
 
@@ -50,13 +48,11 @@ Can be installed on Gnome Shells on X11 and Wayland.
 %setup -n %_name-%git_ver%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 npm install && npm audit fix &&
+npm install --cpu ia32 esbuild &&
+#npm install --cpu aarch64 esbuild &&
+npm install --cpu arm64 esbuild &&
 tar -cf %_name-%git_ver-npm.tar node_modules && \
 mv %_name-%git_ver-npm.tar %_sourcedir/}
-
-#Error: Cannot find package '/usr/src/RPM/BUILD/tilingshell-15.1.0/node_modules/esbuild/index.js' imported from /usr/src/RPM/BUILD/tilingshell-15.1.0/esbuild.mjs
-#rm -rf node_modules/*esbuild
-#mkdir -p node_modules/esbuild/bin/esbuild
-#ln -sf %_bindir/esbuild node_modules/esbuild/bin/esbuild
 
 %build
 npm run build
@@ -80,6 +76,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 99-alt1.1
+- built for %%ix86 and aarch64 too
+
 * Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 99-alt1
 - first build for Sisyphus
 
