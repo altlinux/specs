@@ -6,9 +6,11 @@
 # XXX tests fail
 %def_without test
 
+%set_gcc_version      13
+
 Name: %_name%abiversion
 Version: 5.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -61,6 +63,8 @@ Requires: %_name-snmpd %_name-snmptrapd %_name-clients
 Summary: Snmpd server for the SNMP protocol
 Group: System/Servers
 Requires: lib%_name = %version-%release %_name-common
+%filter_from_requires /^\/usr\/bin\/grep/d
+%filter_from_requires /^\/usr\/bin\/ps/d
 Obsoletes: cmu-snmp ucd-snmp
 
 %package -n %_name-snmptrapd
@@ -257,6 +261,9 @@ for run-time access to parsed MIB data.
 %patch -p1
 
 %build
+export CC=%__cc
+export CXX=%__cxx
+
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 #export NETSNMP_DONT_CHECK_VERSION=1
@@ -556,6 +563,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %doc python/README
 
 %changelog
+* Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 5.9.4-alt1.1
+- Use GCC 13 for build
+
 * Tue Sep 12 2023 Alexey Shabalin <shaba@altlinux.org> 5.9.4-alt1
 - V5-9-patches branch
 
