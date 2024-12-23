@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kio-admin
-Version: 24.11.80
+Version: 24.12.0
 Release: alt1
 %K6init
 
 Summary: Manage files as administrator using the admin:// KIO protocol
 License: (GPL-2.0-only or GPL-3.0-only) and BSD-3-Clause and CC0-1.0 and FSFAP
 Group: Graphical desktop/KDE
-URL: https://invent.kde.org/system/kio-admin
-VCS: https://invent.kde.org/system/kio-admin.git
+Url: https://invent.kde.org/system/kio-admin
+Vcs: https://invent.kde.org/system/kio-admin.git
 
 Source: %name-%version.tar
 
@@ -51,5 +51,8 @@ operations in root-scope.
 %_datadir/polkit-1/actions/*kio*.policy
 
 %changelog
+* Mon Dec 23 2024 Anton Kurachenko <srebrov@altlinux.org> 24.12.0-alt1
+- New version 24.12.0.
+
 * Mon Nov 18 2024 Anton Kurachenko <srebrov@altlinux.org> 24.11.80-alt1
 - Initial build for Sisyphus.
