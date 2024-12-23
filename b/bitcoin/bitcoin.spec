@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 28.0
-Release: alt1
+Release: alt2
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -14,7 +14,7 @@ Patch0: %name-%version-%release.patch
 # optimized out: boost-devel boost-devel-headers gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libdb4-devel libgpg-error libkrb5-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel llvm perl pkg-config python-base python-modules qt5-base-common
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel boost-asio-devel
 BuildRequires: clang libevent-devel libminiupnpc-devel libprotobuf-devel libqrencode-devel
-BuildRequires: libssl-devel protobuf-compiler python3-dev qt5-base-devel qt5-tools libdb4.8_cxx-devel
+BuildRequires: libssl-devel protobuf-compiler python3-dev qt5-base-devel qt5-tools libdb6_cxx-devel
 
 %description
 Q. What is Bitcoin?
@@ -59,6 +59,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 28.0-alt2
+- Build with libdb-6.1
+
 * Mon Dec 16 2024 Alexei Takaseev <taf@altlinux.org> 28.0-alt1
 - 28.0
 
