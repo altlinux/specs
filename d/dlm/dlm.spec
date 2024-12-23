@@ -1,6 +1,6 @@
 Name: dlm
-Version: 4.2.0
-Release: alt3
+Version: 4.3.0
+Release: alt1
 
 Summary: dlm control daemon and tool
 License: GPLv2 and GPLv2+ and LGPLv2+
@@ -95,6 +95,9 @@ touch %buildroot%_sysconfdir/dlm/dlm.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 23 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.3.0-alt1
+- NMU: New version.
+
 * Sat Dec 21 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.2.0-alt3
 - NMU: fix FTBFS (_GNU_SOURCE).
 
