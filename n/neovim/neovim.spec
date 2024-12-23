@@ -1,6 +1,6 @@
 Name: neovim
-Version: 0.10.2
-Release: alt3
+Version: 0.10.3
+Release: alt1
 
 Summary: heavily refactored vim fork
 
@@ -125,6 +125,9 @@ ln -s %_libdir/libtree-sitter-vimdoc.so %buildroot/%neovim_ts_parsers_dir/vimdoc
 %neovim_ts_parsers_dir/*
 
 %changelog
+* Mon Dec 23 2024 Vladimir Didenko <cow@altlinux.org> 0.10.3-alt1
+- new version
+
 * Fri Nov 15 2024 Vladimir Didenko <cow@altlinux.org> 0.10.2-alt3
 - use system TS parsers
 
