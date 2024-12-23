@@ -1,6 +1,6 @@
 Name: gqview
 Version: 2.1.5
-Release: alt9
+Release: alt10
 
 Summary: Image viewer and browser utility
 License: GPLv2+
@@ -18,6 +18,7 @@ Patch6: gqview-pixbuf-renderer-use-gdk_region.patch
 Patch7: gqview-pixbuf-renderer-use-gdk_window_scroll.patch
 #https://gitweb.gentoo.org/repo/gentoo.git/tree/media-gfx/gqview/files/gqview-2.1.5-gcc-10.patch
 Patch8: gqview-2.1.5-gcc-10.patch
+Patch9: gqview-2.1.5-alt-gcc-14.patch
 
 # Automatically added by buildreq on Mon Feb 25 2008
 BuildRequires: libgtk+2-devel liblcms-devel
@@ -40,6 +41,7 @@ editors, previewing images using thumbnails, and zoom.
 %patch6 -p2
 %patch7 -p2
 %patch8 -p1
+%patch9 -p2
 sed -i 's,^gqview_LDADD = ,&-lm ,' src/Makefile*
 
 %build
@@ -62,6 +64,9 @@ install -pDm644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Mon Dec 23 2024 Dmitriy Khanzhin <jinn@altlinux.org> 2.1.5-alt10
+- fixed FTBFS with gcc14
+
 * Wed Dec 23 2020 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt9
 - rebuilt with gcc10
 
