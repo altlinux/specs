@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.9.7
+Version: 1.10.0
 Release: alt1
 
 Summary: Fast Avro for Python
@@ -76,6 +76,9 @@ py.test-3 -vra -k "not test_regular_vs_ordered_dict_record_typeerror $donttest"
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Dec 23 2024 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
+- Automatically updated to 1.10.0.
+
 * Tue Sep 10 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.7-alt1
 - Automatically updated to 1.9.7.
 
