@@ -5,8 +5,8 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 7.3.1
-Release: alt2
+Version: 7.3.2
+Release: alt1
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
 Group: Development/Python3
@@ -114,6 +114,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/notebook.json \
 %endif
 
 %changelog
+* Mon Dec 23 2024 Anton Vyatkin <toni@altlinux.org> 7.3.2-alt1
+- new version 7.3.2
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 7.3.1-alt2
 - fix FTBFS
 
