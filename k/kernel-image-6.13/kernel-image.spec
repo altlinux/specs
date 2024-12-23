@@ -1,5 +1,5 @@
 Name: kernel-image-6.13
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	6.12
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
@@ -593,6 +593,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Dec 23 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc4
+- Update to v6.13-rc4 (2024-12-22).
+- config: Disable CONFIG_ATM.
+- config-aarch64: enable more configs for Qualcomm Platforms support.
+
 * Mon Dec 16 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc3
 - Update to v6.13-rc3 (2024-12-15).
 
