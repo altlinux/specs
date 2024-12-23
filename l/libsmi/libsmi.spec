@@ -7,7 +7,7 @@
 
 Name: libsmi
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: A library to access SMI MIB information
 License: BSD
@@ -21,7 +21,7 @@ Source1: smi.conf
 Patch: %name-%version-%release.patch
 
 Requires: snmp-mibs
-BuildRequires: flex gcc-c++ wget
+BuildRequires: flex bison gcc-c++ wget
 %if_enabled static
 BuildRequires: glibc-devel-static
 %endif
@@ -29,23 +29,23 @@ BuildRequires: glibc-devel-static
 %package devel
 Summary: Development environment for libsmi library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %package devel-static
 Summary: Static libsmi library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %package mibs
 Summary: MIB files for LibSMI
 Group: Networking/Other
 BuildArch: noarch
-Provides: snmp-mibs
+Provides: snmp-mibs = %EVR
 
 %package -n smi-tools
 Summary: LibSMI tools
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: wget
 
 %description
@@ -84,7 +84,15 @@ This package contains the LibSMI tools.
 %setup -q
 %patch -p1
 
+pushd lib
+bison -v -t -d -psming parser-sming.y
+bison -v -t -d -pyang parser-yang.y
+popd
+
 %build
+export ac_cv_path_SH=/bin/sh
+export ac_cv_path_BASH=/bin/bash
+
 %__libtoolize --copy --force
 %autoreconf
 %configure \
@@ -137,6 +145,10 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/smi.conf
 %_man1dir/*
 
 %changelog
+* Mon Dec 23 2024 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt3
+- Add patches from fedora
+- Fixed requires sh and bash
+
 * Wed Jun 09 2021 Alexey Shabalin <shaba@altlinux.org> 0.5.0-alt2
 - Switch build to upstream git
 
