@@ -4,7 +4,7 @@
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
 Version: 1.3.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -55,6 +55,9 @@ __EOF__
 %_libexecdir/%name/%name
 
 %changelog
+* Wed Dec 18 2024 Konstantin Kozoriz <kozorizki@altlinux.org> 1.3.0-alt2
+- Merged upstream fixes
+
 * Thu Feb 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt1
 - 1.3.0
 

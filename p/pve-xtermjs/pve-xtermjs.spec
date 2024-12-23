@@ -4,7 +4,7 @@
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
 Version: 5.3.0.3
-Release: alt2
+Release: alt3
 License: AGPL-3.0+
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -63,6 +63,9 @@ cp xterm.js/src/* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 5.3.0.3-alt3
+- Merged upstream fixes
+
 * Sat Jun 22 2024 Aleksei Kalinin <kaa@altlinux.org> 5.3.0.3-alt2
 - NMU: Patched vendor nix for loongarch64 support
 

@@ -6,9 +6,15 @@
 %define _localstatedir /var
 %global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
+%ifarch %ix86 x86_64
+%def_enable have_vmsr_helper
+%else
+%def_disable have_vmsr_helper
+%endif
+
 Name: pve-%rname
-Version: 9.0.2
-Release: alt2
+Version: 9.1.2
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -26,7 +32,7 @@ Source5: qemu-kvm.sh
 Source12: bridge.conf
 Source13: vitastor.c
 
-Patch: pve-qemu-9.0-vitastor.patch
+Patch: pve-qemu-9.1-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -302,6 +308,11 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %config(noreplace) %_sysconfdir/%name/bridge.conf
 # TODO:
 %_bindir/qemu-pr-helper
+
+%if_enabled have_vmsr_helper
+%_bindir/qemu-vmsr-helper
+%endif
+
 #%%_unitdir/qemu-pr-helper.service
 #%%_unitdir/qemu-pr-helper.socket
 %_libexecdir/vhost-user-gpu
@@ -319,6 +330,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 1:9.1.2-alt1
+- 9.1.2-1
+
 * Mon Oct 07 2024 Alexey Shabalin <shaba@altlinux.org> 1:9.0.2-alt2
 - 9.0.2-3
 - Package recognized-CPUID-flags-x86_64 and machine-versions-x86_64.json

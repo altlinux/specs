@@ -3,8 +3,8 @@
 
 Name: pve-%sname
 Summary: SPICE Terminal Emulator
-Version: 3.2.2
-Release: alt2
+Version: 3.3.0
+Release: alt1
 License: GPLv2
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -38,6 +38,9 @@ sed -i 's|\ -Werror||' src/Makefile
 %_man1dir/%sname.1*
 
 %changelog
+* Thu Dec 19 2024 Konstantin Kozoriz <kozorizki@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Tue Oct 31 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.2.2-alt2
 - Also build on LoongArch
 

@@ -2,22 +2,26 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 0.9.8
+Version: 0.10.0
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 
 Source: %name-%version.tar
+Patch: alt-config-path.patch
 
 ExclusiveArch: x86_64 aarch64
 
 Provides: libpve-network-perl = %EVR
 Requires: ifupdown2
 Requires: pve-common >= 5.0.45
-Requires: pve-cluster >= 8.0.5
+Requires: pve-cluster >= 8.0.10
+Requires: frr
+Requires: dnsmasq
 
-BuildRequires: pve-cluster >= 8.0.5
+BuildRequires: pve-cluster >= 8.0.10
+BuildRequires: pve-firewall >= 5.1.0
 BuildRequires: pve-doc-generator >= 5.3.3
 BuildRequires: perl
 BuildRequires: perl(CPAN/Meta/YAML.pm)
@@ -55,6 +59,7 @@ This package contains the experimental SDN library used by Proxmox VE.
 
 %prep
 %setup -q -n %name-%version
+%patch -p1
 sed -i 's!)/lib/systemd/system!)/usr/lib/systemd/system!' src/services/Makefile
 
 %install
@@ -69,6 +74,10 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 0.10.0-alt1
+- 0.10.0
+- Fixed config path for dnsmasq
+
 * Thu Aug 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 0.9.8-alt1
 - 0.9.8
 

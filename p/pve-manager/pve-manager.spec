@@ -3,12 +3,12 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
-%define ver_major 8.2
-%define ver_minor 8
+%define ver_major 8.3
+%define ver_minor 1
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -21,13 +21,13 @@ BuildRequires(pre): rpm-macros-javascript
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
-Requires: pve-common >= 8.2.3 pve-guest-common >= 5.1.4
+Requires: pve-common >= 8.2.6 pve-guest-common >= 5.1.4
 Requires: pve-storage >= 8.1.5 pve-cluster >= 7.2.3
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
-Requires: pve-container >= 5.1.11 pve-firewall pve-ha-manager pve-qemu-server >= 8.1.2 pve-i18n >= 1.0.3 pve-docs
+Requires: pve-container >= 5.1.11 pve-firewall pve-ha-manager pve-qemu-server >= 8.2.7 pve-i18n >= 1.0.3 pve-docs
 Requires: proxmox-widget-toolkit >= 4.2.0 proxmox-mini-journalreader >= 1.3.1
 Requires: fonts-font-awesome javascript-extjs javascript-qrcodejs
-Requires: libproxmox-rs-perl >= 0.3.4 libpve-rs-perl >= 0.8.10
+Requires: libproxmox-rs-perl >= 0.3.4 libpve-rs-perl >= 0.8.12
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
 Requires: librados2-perl >= 1.3.1
 
@@ -40,11 +40,11 @@ Source9: basealt_logo-128.png
 Source10: sencha-touch.tgz
 
 BuildRequires: pve-doc-generator >= 7.2.3 xmlto perl-Pod-Parser
-BuildRequires: pve-storage >= 8.1.5 pve-cluster >= 7.2.3
-BuildRequires: pve-common >= 8.2.3 pve-guest-common >= 5.1.4
-BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.11 pve-qemu-server >= 8.1.2
+BuildRequires: pve-storage >= 8.2.8 pve-cluster >= 7.2.3
+BuildRequires: pve-common >= 8.2.6 pve-guest-common >= 5.1.4
+BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.11 pve-qemu-server >= 8.2.7
 BuildRequires: pve-acme pve-http-server >= 5.1.1 pve-access-control >= 8.1.3
-BuildRequires: proxmox-widget-toolkit >= 4.2.0
+BuildRequires: proxmox-widget-toolkit >= 4.3.0
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
 BuildRequires: update-kernel
@@ -142,6 +142,9 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Mon Dec 16 2024 Sergey Konev <darisishe@altlinux.org> 8.3.1-alt1
+- 8.3.1
+
 * Fri Nov 22 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.8-alt2
 - disable check enabled ifupdown2 service
 - install pvenetcommit.service
