@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _name openshot
 
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver 24
 
 %def_enable python
@@ -11,19 +11,20 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://launchpad.net/%name
+
+Vcs: https://github.com/OpenShot/libopenshot.git
 
 %if_disabled snapshot
 #Source: %url/%ver_major/%version/+download/%name-%version.tar.gz
 Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/OpenShot/libopenshot.git
 Source: %name-%version.tar
 %endif
 
@@ -31,8 +32,8 @@ Source: %name-%version.tar
 Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: %name-audio-devel >= 0.3.3
-BuildRequires: /proc cmake gcc-c++ 
+BuildRequires: /proc cmake gcc-c++
+BuildRequires: %name-audio-devel >= %ver_major
 BuildRequires: python3(setuptools._distutils)
 BuildRequires: libgomp-devel libunittest-cpp-devel jsoncpp-devel
 BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
@@ -111,6 +112,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 

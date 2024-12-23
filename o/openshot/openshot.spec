@@ -6,15 +6,15 @@
 %def_enable qtwebengine
 %endif
 
-%define ver_major 3.2
+%define ver_major 3.3
 %define xdg_name org.openshot.OpenShot
 Name: openshot
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Non Linear Video Editor using Python and MLT
 Group: Video
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: http://www.openshotvideo.com/
 
 %define _name  %name-qt
@@ -30,7 +30,7 @@ Source: %_name-%version.tar
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.3.3
+Requires: python3-module-%name >= 0.4.0
 Requires: blender inkscape xdg-utils
 # https://bugzilla.altlinux.org/45836
 Requires: python3-module-PyQt5 python3-module-zmq
@@ -78,6 +78,9 @@ Xbox, and many more common formats.
 %doc AUTHORS* README*
 
 %changelog
+* Mon Dec 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Thu Jul 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1.1
 - iv@: use rpm-macros-qt5-webengine to detect qt5-webengine
   availability (fixes FTBFS on riscv64 and loongarch64)

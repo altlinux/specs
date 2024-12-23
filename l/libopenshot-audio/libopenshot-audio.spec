@@ -1,21 +1,22 @@
 %define _name libopenshot
-%define ver_major 0.3
+%define ver_major 0.4
 %define api_ver 9
-%define libopenshot_ver 0.3
+%define libopenshot_ver 0.4
 
 # no tests
 %def_disable check
 
 Name: %_name-audio
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: OpenShot Audio Library
 Group: System/Libraries
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://launchpad.net/%_name
 
 Vcs: https://github.com/OpenShot/libopenshot-audio.git
+
 #Source: %url/%ver_major/%libopenshot_ver/+download/%name-%version.tar.gz
 Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.gz
 
@@ -68,6 +69,9 @@ that are needed to write applications that use %name.
 %_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Mon Dec 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Tue Jun 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
