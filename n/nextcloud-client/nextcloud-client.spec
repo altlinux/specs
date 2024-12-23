@@ -1,5 +1,5 @@
 Name: nextcloud-client
-Version: 3.15.0
+Version: 3.15.2
 Release: alt1
 %K6init no_altplace
 
@@ -35,6 +35,7 @@ BuildRequires: kf6-kwindowsystem-devel kf6-karchive-devel kf6-kio-devel
 %ifarch %qt6_qtwebengine_arches
 BuildRequires: libqt6-webenginewidgets qt6-webengine-devel
 %endif
+BuildRequires: libvulkan-devel
 BuildRequires: libgio-devel glib2-devel
 BuildRequires: /usr/bin/rsvg-convert
 
@@ -138,6 +139,9 @@ desktop-file-install \
 %_datadir/nemo-python/extensions/__pycache__/*
 
 %changelog
+* Mon Dec 23 2024 Sergey V Turchin <zerg@altlinux.org> 3.15.2-alt1
+- new version
+
 * Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 3.15.0-alt1
 - new version
 - build with Qt6/KF6
