@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 1.5.7
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -105,6 +105,7 @@ VCMI - это фанатский проект с открытым исходны
 %install
 %cmake_install
 mv %buildroot/%_libdir/%name/libvcmi.so %buildroot/%_libdir/libvcmi.so
+mv %buildroot/%_libdir/%name/libvcmiqt.so %buildroot/%_libdir/libvcmiqt.so
 rm -f %buildroot%_libdir/*.a
 
 %files
@@ -115,10 +116,14 @@ rm -f %buildroot%_libdir/*.a
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_libdir/lib%name.so
+%_libdir/libvcmi.so
+%_libdir/libvcmiqt.so
 %_libdir/%name/
 
 %changelog
+* Sun Dec 22 2024 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Sat Oct 19 2024 Anton Midyukov <antohami@altlinux.org> 1.5.7-alt2
 - Fix build with boost 1.86
 - build with qt6
