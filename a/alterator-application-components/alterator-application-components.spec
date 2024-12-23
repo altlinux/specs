@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.8
-Release: alt2
+Version: 0.1.9
+Release: alt1
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -65,6 +65,11 @@ find ./alterator/ -type f -exec alterator-entry --verbose {} \+
 %_bindir/%name
 
 %changelog
+* Mon Dec 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.9-alt1
+- Status bar now shows current build status.
+- Add context menus for components tree and packages list.
+- Display icons for components and categories.
+
 * Thu Dec 19 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt2
 - Fixes for p10 build.
 
