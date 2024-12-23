@@ -4,17 +4,17 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: A Python wrapper for Proxmox REST API
 License: MIT
 Group: Development/Python3
-Url: https://github.com/proxmoxer/proxmoxer
+Url: https://pypi.org/project/proxmoxer
+VCS: https://github.com/proxmoxer/proxmoxer
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -28,9 +28,6 @@ BuildRequires: python3(requests_toolbelt)
 BuildRequires: python3(pytest)
 BuildRequires: python3(openssh_wrapper)
 %endif
-
-
-%py3_provides %pypi_name
 
 %add_python3_req_skip httplib # python3(http) is used instead this
 %add_python3_req_skip urlparse # python3(urllib) is used instead this
@@ -58,6 +55,9 @@ Proxmox Mail Gateway (PMG), and Proxmox Backup Server (PBS).
 %doc README.rst LICENSE.txt
 
 %changelog
+* Mon Dec 23 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.2.0-alt1
+- Updated to version 2.2.0.
+
 * Tue Aug 13 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.1.0-alt1
 - Updated to version 2.1.0.
 - Enabled tests.
