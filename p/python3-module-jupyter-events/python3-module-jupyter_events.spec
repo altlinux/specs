@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jupyter-events
 %define mod_name jupyter_events
+%define _python3_req_method strict
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Version: 0.11.0
-Release: alt2
+Release: alt3
 Summary: Configurable event system for Jupyter applications and extensions
 License: BSD-3-Clause
 Group: Development/Python3
@@ -15,7 +16,6 @@ Vcs: https://github.com/jupyter/jupyter_events
 BuildArch: noarch
 Source: %name-%version.tar
 
-Requires: python3-module-python-json-logger
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -58,6 +58,11 @@ sed -i 's/--color=yes//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Sun Dec 22 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.11.0-alt3
+- NMU:
+    + remove manual dep to python3-module-python-json-logger
+    + set %%_python3_req_method to strict to catch all hidden (conditional) deps
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt2
 - Add requires to python-json-logger.
 
