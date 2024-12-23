@@ -1,13 +1,14 @@
 %define rname mint-y-icons
 
 Name: icon-themes-mint-y
-Version: 1.7.7
+Version: 1.8.0
 Release: alt1
 
 Summary: The Mint-Y icon theme
 License: CC-BY-SA-4.0
 Group: Graphical desktop/MATE
 Url: https://github.com/linuxmint/mint-y-icons
+Vcs: https://github.com/linuxmint/mint-y-icons.git
 BuildArch: noarch
 
 AutoReqProv: no
@@ -36,5 +37,8 @@ cp -a usr %buildroot/
 %exclude %_datadir/folder-color-switcher/
 
 %changelog
+* Mon Dec 23 2024 Anton Kurachenko <srebrov@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Wed Sep 18 2024 Anton Kurachenko <srebrov@altlinux.org> 1.7.7-alt1
 - Initial build for Sisyphus.
