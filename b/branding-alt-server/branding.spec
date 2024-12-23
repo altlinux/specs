@@ -1,3 +1,12 @@
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 %define brand alt
 %define Brand ALT
 %define theme server
@@ -20,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt6
+Release: alt7
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -242,7 +251,7 @@ sed -i 's,#alt-server,&-e2k,' indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ALTBRANCH='%altbranch' ./configure
 make
 
 %install
@@ -338,6 +347,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Dec 23 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt7
+- Add filling of some fields os-release
+
 * Thu Sep 26 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt6
 - Stretch background image to entire installer window
 
