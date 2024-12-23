@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.13.3
-Release: alt1
+Release: alt2
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -12,7 +12,7 @@ Patch2000: %name-e2k.patch
 
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
 BuildPreReq: libexpat-devel libssl-devel libmariadb-devel libpq-devel
-BuildPreReq: libunixODBC-devel libiodbc-devel libpcre2-devel
+BuildPreReq: libunixODBC-devel libpcre2-devel
 
 %description
 POrtable COmponents C++ Libraries are:
@@ -303,6 +303,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 1.13.3-alt2
+- Remove BR libiodbc-devel
+
 * Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 1.13.3-alt1
 - 1.13.3 (Fixes CVE-2023-52389)
 
