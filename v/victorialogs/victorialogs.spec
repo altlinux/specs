@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -62,11 +62,13 @@ export BRANCH=altlinux
 export BUILDINFO_TAG=v%version
 
 %make victoria-logs
+%make vlogscli
 
 %install
 install -m 0755 -d %buildroot%_bindir
 cd .gopath/src/%import_path
 install -m 0755 bin/victoria-logs %buildroot%_bindir/victoria-logs
+install -m 0755 bin/vlogscli %buildroot%_bindir/vlogscli
 mkdir -p %buildroot%_sharedstatedir/victoria-logs/data
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_unitdir
@@ -84,6 +86,7 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 
 %files
 %_bindir/victoria-logs
+%_bindir/vlogscli
 %_unitdir/%name.service
 %dir %attr(0755, _%name, _%name) %_sharedstatedir/victoria-logs/data
 %config(noreplace) %_sysconfdir/sysconfig/%name
@@ -91,14 +94,18 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %doc docs/VictoriaLogs/QuickStart.md docs/VictoriaLogs/README.md docs/VictoriaLogs/data-ingestion
 
 %changelog
+* Mon Dec 23 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- 1.4.0.
+- Add vlogscli to package.
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt1
-- 1.3.2
+- 1.3.2.
 
 * Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 0.37.0-alt1
-- 0.37.0
+- 0.37.0.
 
 * Mon Jul 08 2024 Alexey Shabalin <shaba@altlinux.org> 0.27.1-alt1
-- 0.27.1
+- 0.27.1.
 
 * Tue May 28 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.

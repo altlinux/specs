@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics
-Version: 1.108.0
+Version: 1.108.1
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -211,8 +211,11 @@ install -m644 %SOURCE13 %buildroot%_sysconfdir/%name/vmauth/config.yml
 %_unitdir/vmauth.service
 
 %changelog
+* Mon Dec 23 2024 Alexey Shabalin <shaba@altlinux.org> 1.108.1-alt1
+- 1.108.1.
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.108.0-alt1
-- 1.108.0
+- 1.108.0.
 
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.105.0-alt1
 - 1.105.0.
