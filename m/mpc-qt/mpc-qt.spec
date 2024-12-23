@@ -3,7 +3,7 @@
 
 Name:     mpc-qt
 Version:  24.12
-Release:  alt1
+Release:  alt2
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
 License:  GPL-2.0
@@ -44,6 +44,9 @@ rm -r %buildroot%_defaultdocdir/%name
 %doc DOCS/ipc.md
 
 %changelog
+* Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 24.12-alt2
+- mpc-qt.desktop: remove MimeType and X-KDE-Protocols
+
 * Sat Dec 14 2024 Anton Midyukov <antohami@altlinux.org> 24.12-alt1
 - New version 24.12.
 
