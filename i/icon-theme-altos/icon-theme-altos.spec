@@ -1,5 +1,5 @@
 Name: icon-theme-altos
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Group: Graphics
@@ -9,7 +9,8 @@ License: GPL-3.0 and LGPL-2.1
 
 BuildArch: noarch
 
-Requires: icon-theme-breeze
+PreReq(post,preun): alternatives >= 0.2
+Requires: icon-theme-breeze menu-icons-default
 
 Source: %name-%version.tar
 
@@ -76,6 +77,18 @@ while read l ; do
     [ -e $l ] || rm -f $l
 done
 
+# add icons alternatives
+mkdir -p %buildroot/%_sysconfdir/alternatives/packages.d/
+> %buildroot/%_sysconfdir/alternatives/packages.d/%name
+for n in alt-distro-logo alterator alt-main-menu ; do
+ln -sr %buildroot/%_iconsdir/hicolor/scalable/apps/basealt.svg %buildroot/%_iconsdir/altos/apps/16/${n}.svg
+ln -sr %buildroot/%_iconsdir/hicolor/scalable/apps/basealt.svg %buildroot/%_iconsdir/altos-dark/apps/16/${n}.svg
+cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_iconsdir/altos/apps/16/${n}.svg %_iconsdir/hicolor/scalable/apps/basealt.svg 1
+%_iconsdir/altos-dark/apps/16/${n}.svg %_iconsdir/hicolor/scalable/apps/basealt.svg 1
+__EOF__
+done
+
 # create custom icons
 for e in \
     "inode-directory application-x-smb-share" \
@@ -95,10 +108,14 @@ hardlink -c -v %buildroot/%_iconsdir/
 
 %files
 %doc COPYING* AUTHORS
+%config %_sysconfdir/alternatives/packages.d/%name
 %_iconsdir/altos/
 %_iconsdir/altos-dark/
 
 %changelog
+* Mon Dec 23 2024 Sergey V Turchin <zerg at altlinux dot org> 0.1.1-alt1
+- add branding icons alternatives
+
 * Mon Dec 16 2024 Sergey V Turchin <zerg at altlinux dot org> 0.1.0-alt1
 - update icons
 

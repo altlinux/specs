@@ -1,5 +1,5 @@
 Name: menu-icons-default
-Version: 0.2.0.22
+Version: 0.2.0.23
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -55,6 +55,9 @@ install -m644 64x64/apps/*.png %buildroot%_iconsdir/hicolor/64x64/apps/
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Mon Dec 23 2024 Sergey V Turchin <zerg@altlinux.org> 0.2.0.23-alt1
+- change symlinks alterator, alt-main-menu and alt-distro-logo from basealt to altlinux
+
 * Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 0.2.0.22-alt1
 - add symlinks to override alterator, alt-main-menu and alt-distro-logo in icon themes
 
