@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt84
+Release: alt85
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,13 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Mon Dec 16 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt85
+- LUKS: fix cypher spec (Closes: #51890)
+- GPT: full support for 4k-disks
+- GPT: round up correctly
+- Disk: fix debug message with missing string parameter
+- FAT: replace hardcoded sector size when looking for filesystem limits
+
 * Tue Dec 10 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt84
 - fix installing on multipath disks
 
