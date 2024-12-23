@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Python bindings and utilities for GeoJSON
@@ -73,6 +73,9 @@ This package contains examples for %oname.
 %python3_sitelibdir/*/*/examples.*
 
 %changelog
+* Mon Dec 23 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Build new version.
 
