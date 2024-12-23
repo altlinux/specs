@@ -1,9 +1,11 @@
+%set_gcc_version      13
+
 %define abiversion 2
 %define somask %{abiversion}*
 
 Name:    unixODBC
 Version: 2.3.12
-Release: alt1
+Release: alt1.1
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -31,7 +33,7 @@ Patch5: %name-remove-rpath-to-libdir.patch
 Patch11: keep-typedefs.patch
 Patch12: so-version-bump.patch
 
-BuildRequires: flex gcc-c++ libltdl7-devel libreadline-devel
+BuildRequires: flex gcc13-c++ libltdl7-devel libreadline-devel
 BuildRequires: chrpath
 
 %description
@@ -119,6 +121,9 @@ rm libltdl/config-h.in
 cp %_datadir/libtool/libltdl/config-h.in libltdl/config-h.in
 
 %build
+export CC=%__cc
+export CXX=%__cxx
+
 autoreconf -vfi
 
 # unixODBC 2.2.14 is not aliasing-safe
@@ -197,6 +202,9 @@ find doc -name Makefile\* -delete
 %_pkgconfigdir/odbcinst.pc
 
 %changelog
+* Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 2.3.12-alt1.1
+- Use GCC 13 for build
+
 * Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 2.3.12-alt1
 - new version 2.3.12 (with rpmrb script)
 - there is no more unixODBC/config.h in include dir
