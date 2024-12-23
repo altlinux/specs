@@ -5,7 +5,7 @@
 
 Name:       mcpp
 Version:    2.7.2
-Release:    alt4
+Release:    alt5
 
 Summary:    Alternative C/C++ preprocessor
 
@@ -18,6 +18,10 @@ Patch0:     mcpp-manual.html.patch
 Patch1:     mcpp-fix.patch
 # from fc 2.7.2-29: https://bugzilla.redhat.com/show_bug.cgi?id=948860
 Patch2:     mcpp-man.patch
+# from debian: https://salsa.debian.org/debian/mcpp/-/raw/master/debian/patches/07-fix-16.patch
+Patch3: mcpp-gcc14.patch
+# from debian: https://salsa.debian.org/debian/mcpp/-/raw/master/debian/patches/fix-implicit-function-declaration.patch
+Patch4: mcpp-implicit-function-declaration.patch
 
 %description
 C/C++ preprocessor defines and expands macros and processes '#if',
@@ -69,6 +73,8 @@ This package provides an html manual for mcpp.
 %patch0 -p0 -b -z.euc-jp
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %configure \
@@ -107,6 +113,9 @@ rm -rf %buildroot%_docdir/%name
 %lang(ja) %doc doc-jp/mcpp-manual-jp.html
 
 %changelog
+* Mon Dec 23 2024 Leontiy Volodin <lvol@altlinux.org> 2.7.2-alt5
+- fixed build with gcc14
+
 * Sun Dec 05 2021 Igor Vlasenko <viy@altlinux.org> 2.7.2-alt4
 - fixed build
 
