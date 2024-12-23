@@ -4,7 +4,7 @@
 %define libharuna libharuna%sover
 
 Name: %rname
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 %K6init
 
@@ -114,5 +114,8 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Mon Dec 23 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
+- new version
+
 * Tue Sep 03 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt1
 - initial build
