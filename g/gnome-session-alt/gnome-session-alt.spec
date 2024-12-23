@@ -3,7 +3,7 @@
 
 Name: gnome-session-alt
 Version: 47.0
-Release: alt3
+Release: alt4
 Summary: Session GNOME Shell for Alt distributions
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -42,19 +42,22 @@ install -m644 25_org.gnome.shell.extensions.gschema.override \
 
 mkdir -p %buildroot%_datadir/wayland-sessions
 install -m644 alt-gnome-wayland.desktop \
-	%buildroot%_datadir/wayland-sessions/alt-gnome-wayland.desktop
+	%buildroot%_datadir/wayland-sessions/gnome-alt-wayland.desktop
 
 mkdir -p %buildroot%_datadir/xsessions
 install -m644 alt-gnome-xorg.desktop \
-	%buildroot%_datadir/xsessions/alt-gnome-xorg.desktop
+	%buildroot%_datadir/xsessions/gnome-alt-xorg.desktop
 
 %files
 %_datadir/gnome-shell/modes/alt.json
 %_datadir/glib-2.0/schemas/25_org.gnome.shell.extensions.gschema.override
-%_datadir/wayland-sessions/alt-gnome-wayland.desktop
-%_datadir/xsessions/alt-gnome-xorg.desktop
+%_datadir/wayland-sessions/gnome-alt-wayland.desktop
+%_datadir/xsessions/gnome-alt-xorg.desktop
 
 %changelog
+* Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt4
+- Rename session desktop files for compatible with xdg-utils
+
 * Sun Dec 22 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt3
 - alt-gnome-wayland.desktop: remove wayland from Name
 - alt-gnome-*.desktop: fix description and categories
