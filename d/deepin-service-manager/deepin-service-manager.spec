@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.4
+Version: 1.0.8
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -11,11 +11,11 @@ Summary: Manage DBus service on Deepin
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-service-manager
+Vcs: git://github.com/linuxdeepin/deepin-service-manager.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-service-manager-1.0.4-alt-fix-gcc14.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake dqt5-base-devel dqt5-tools-devel libsystemd-devel
@@ -78,31 +78,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %files -f %name.lang
 %_bindir/%name
-%_bindir/getfromqm
-%dir %_libexecdir/deepin-daemon/
-%dir %_libexecdir/deepin-daemon/service-trigger/
-%_libexecdir/deepin-daemon/service-trigger/earlyoom.service.json
-%dir %_libdir/deepin-service-manager/
-%_libdir/deepin-service-manager/libplugin-oom.so
 %_unitdir/deepin-service*.service
 %_unitdir/multi-user.target.wants/deepin-service-manager.service
 %_userunitdir/deepin-service*.service
 %_userunitdir/default.target.wants/deepin-service-manager.service
 %_datadir/dbus-1/system.d/org.deepin.ServiceManager1.conf
-%_datadir/dbus-1/system.d/org.deepin.oom1.conf
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
 %_datadir/deepin-service-manager/other/manager.json
-%dir %_datadir/deepin-service-manager/system/
-%_datadir/deepin-service-manager/system/plugin-oom.json
-%dir %_datadir/dsg/
-%dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/org.deepin.oom/
-%_datadir/dsg/configs/org.deepin.oom/org.deepin.oom.json
-# additional translations
-%dir %_datadir/deepin-service-manager/oom/
-%dir %_datadir/deepin-service-manager/oom/translations/
-%_datadir/deepin-service-manager/oom/translations/plugin-oom_ky@Arab.qm
 
 %files -n libdeepin-qdbus-service%sover
 #%%_libdir/libdeepin-qdbus-service.so.%%{sover}*
@@ -116,6 +99,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Mon Dec 23 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt1
+- New version 1.0.8.
+- Added vcs tag.
+
 * Thu Oct 31 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.4-alt1
 - New version 1.0.4.
 - Fixed build with gcc14.
