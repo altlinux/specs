@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.14
+Version: 1.2.20.0.1.bd25
 Release: alt1
 
 Summary: App manager for Deepin
@@ -12,11 +12,11 @@ Summary: App manager for Deepin
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-application-manager
+Vcs: git://github.com/linuxdeepin/dde-application-manager.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake libgtest-devel libsystemd-devel python3-module-setuptools dqt6-base-devel dtk6-common-devel libdtk6core-devel
 %if_with clang
 BuildRequires: clang-devel
@@ -27,9 +27,15 @@ BuildRequires: gcc-c++
 %description
 %summary.
 
+%package devel
+Summary: Development package for %repo
+Group: Development/C++
+
+%description devel
+The package provides development files for %repo.
+
 %prep
 %setup -n %repo-%version
-%patch -p1
 
 %build
 %if_with clang
@@ -39,19 +45,13 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt6_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+
+%DQ6build \
   -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt6_libdir \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 
 # don't use dpkg
 rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
@@ -64,7 +64,6 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %dir %_libexecdir/deepin/application-manager/
 %_libexecdir/deepin/application-manager/app-launch-helper
 %_libexecdir/deepin/application-manager/app-update-notifier
-%_libexecdir/deepin/application-manager/dockEnv.sh
 %_libexecdir/deepin/application-manager/debFix.sh
 %_unitdir/org.desktopspec.ApplicationUpdateNotifier1.service
 %_userunitdir/org.desktopspec.ApplicationManager1.service
@@ -80,16 +79,22 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %dir %_datadir/deepin/
 %dir %_datadir/deepin/%repo/
 %dir %_datadir/deepin/%repo/hooks.d/
-%_datadir/deepin/%repo/hooks.d/1-dockEnv.json
 %_datadir/deepin/%repo/hooks.d/2-debFix.json
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/%repo/
-%_datadir/dsg/configs/%repo/com.deepin*.json
 %dir %_datadir/dsg/configs/org.deepin.dde.application-manager/
 %_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.am.json
+%_datadir/dsg/configs/org.deepin.dde.application-manager/org.deepin.dde.application-manager.json
+
+%files devel
+%dir %_libdir/cmake/DDEApplicationManager/
+%_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Mon Dec 23 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.20.0.1.bd25-alt1
+- New version 1.2.20-1-gbd25c2c.
+- Added vcs tag.
+
 * Mon Oct 21 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.14-alt1
 - New version 1.2.14.
 
