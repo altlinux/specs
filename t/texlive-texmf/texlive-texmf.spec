@@ -95,7 +95,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt0_12
+Release:	alt0_13
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -1015,7 +1015,7 @@ cp %{_sourcedir}/updmap-*.cfg web2c/
 mkdir -p %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/texlive-5-config.filetrigger << 'EOF'
 #!/bin/sh
-LC_ALL=C egrep -qs '^%{texmfdistdir}(/|$)' || exit 0
+LC_ALL=C grep -qs -E '^%{texmfdistdir}(/|$)' || exit 0
 %_sbindir/texlive-postinstall-rebuild-all
 EOF
 chmod 755 %buildroot%_rpmlibdir/texlive-5-config.filetrigger
@@ -1065,6 +1065,9 @@ EOF
 
 
 %changelog
+* Tue Dec 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_13
+- NMU: replace egrep by grep -E
+
 * Fri Mar 08 2024 Igor Vlasenko <viy@altlinux.org> 2022-alt0_12
 - new version (prerelease)
 
