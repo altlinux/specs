@@ -7,7 +7,7 @@
 %define soname 14
 %define _unpackaged_files_terminate_build 1
 Name:           armadillo
-Version:        14.0.2
+Version:        14.2.2
 Release:        alt1
 Summary:        Fast C++ matrix library with syntax similar to MATLAB and Octave
 Group: Sciences/Mathematics
@@ -122,6 +122,9 @@ rm -rf examples/*win64*
 
 
 %changelog
+* Tue Dec 24 2024 Anton Farygin <rider@altlinux.ru> 14.2.2-alt1
+- 14.0.2 -> 14.2.2
+
 * Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 14.0.2-alt1
 - 10.8.2 -> 14.0.2
 
