@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.5.5
-Release: alt1
+Release: alt2
 Summary: Builder and installer of Python project
 License: MIT
 Group: Development/Python3
@@ -52,6 +52,9 @@ This tool is intended to build wheel from Python source tree and install it.
 %python3_sitelibdir/%pep503_name-%version.dist-info/
 
 %changelog
+* Tue Dec 24 2024 Stanislav Levin <slev@altlinux.org> 0.5.5-alt2
+- Fixed FTBFS (Python 3.12.8/3.13.1).
+
 * Thu Nov 14 2024 Stanislav Levin <slev@altlinux.org> 0.5.5-alt1
 - 0.5.4 -> 0.5.5.
 
