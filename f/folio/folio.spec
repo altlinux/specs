@@ -3,7 +3,7 @@
 %define app_id com.toolstack.Folio
 
 Name: folio
-Version: 24.13
+Version: 24.14
 Release: alt1
 
 Summary: A beautiful markdown note-taking app for GNOME
@@ -75,5 +75,8 @@ Some features include:
 %doc README.md
 
 %changelog
+* Tue Nov 24 2024 Semen Fomchenkov <armatik@altlinux.org> 24.14-alt1
+- 24.14
+
 * Thu Nov 21 2024 Semen Fomchenkov <armatik@altlinux.org> 24.13-alt1
 - Init build for Sisyphus.
