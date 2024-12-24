@@ -1,8 +1,8 @@
 Name: python3-module-jira
-Version: 3.5.2
+Version: 3.9.4
 Release: alt1
 Summary: Python library for interacting with JIRA via REST APIs
-Group: Development/Python
+Group: Development/Python3
 License: BSD-2-Clause
 Url: https://github.com/pycontribs/jira
 
@@ -42,5 +42,8 @@ rm -rf -- %buildroot/%python3_sitelibdir_noarch/tests
 %_bindir/jirashell
 
 %changelog
+* Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 3.9.4-alt1
+- Build new version to remove dependency on python3(imghdr).
+
 * Wed Aug 30 2023 Alexey Gladkov <legion@altlinux.ru> 3.5.2-alt1
 - Initial build.
