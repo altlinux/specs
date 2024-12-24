@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        130.0.6723.69
+Version:        131.0.6778.204
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -102,6 +102,7 @@ Patch045: 0045-DEBIAN-mojo-null.patch
 # Patch060: 0060-DEBIAN-lex-3way.patch
 Patch061: 0061-DEBIAN-gpu-crash.patch
 Patch062: 0062-DEBIAN-cacheline.patch
+Patch063: 0063-DEBIAN-freetype.patch
 
 ### End Patches
 
@@ -233,6 +234,7 @@ BuildRequires:  rust-cargo >= 1.75.0-alt2
 
 Requires: libva
 Requires: xdg-utils
+Requires: icon-theme-hicolor
 
 %description
 Chromium is an open-source browser project that aims to build a safer,
@@ -549,6 +551,27 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Dec 20 2024 Andrew A. Vasilyev <andy@altlinux.org> 131.0.6778.204-alt1
+- New version (131.0.6778.204).
+- Security fixes:
+  + CVE-2024-12692: Type Confusion in V8
+  + CVE-2024-12693: Out of bounds memory access in V8
+  + CVE-2024-12694: Use after free in Compositing
+  + CVE-2024-12695: Out of bounds write in V8
+  + CVE-2024-12381: Type Confusion in V8
+  + CVE-2024-12382: Use after free in Translate
+  + CVE-2024-12053: Type Confusion in V8
+  + CVE-2024-11395: Type Confusion in V8
+  + CVE-2024-11110: Inappropriate implementation in Blink.
+  + CVE-2024-11111: Inappropriate implementation in Autofill.
+  + CVE-2024-11113: Use after free in Accessibility.
+  + CVE-2024-11116: Inappropriate implementation in Paint.
+  + CVE-2024-11117: Inappropriate implementation in FileSystem.
+  + CVE-2024-10826: Use after free in Family Experiences
+  + CVE-2024-10827: Use after free in Serial
+  + CVE-2024-10487: Out of bounds write in Dawn
+  + CVE-2024-10488: Use after free in WebRTC
+
 * Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 130.0.6723.69-alt1
 - New version (130.0.6723.69).
 - Build with llvm19.1 and libcxx, not libstdc++ (thanks andy@).
