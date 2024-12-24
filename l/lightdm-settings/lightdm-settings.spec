@@ -1,12 +1,12 @@
 Name: lightdm-settings
-Version: 2.0.4
+Version: 2.0.6
 Release: alt1
 Summary: Configuration tool for the LightDM display manager
 Group: Graphical desktop/Other
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://github.com/linuxmint/lightdm-settings
+Vcs: https://github.com/linuxmint/lightdm-settings
 
-# Source-url: https://github.com/linuxmint/lightdm-settings/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildArch: noarch
@@ -22,7 +22,7 @@ This tool currently lets users configure slick-greeter.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %make_build
@@ -48,6 +48,9 @@ chmod -c 0755 %buildroot%_bindir/%name \
 %_datadir/polkit-1/actions/org.x.%name.policy
 
 %changelog
+* Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 2.0.4-alt1
 - 2.0.4
 
