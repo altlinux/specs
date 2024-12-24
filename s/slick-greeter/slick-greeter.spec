@@ -5,14 +5,14 @@
 %define _localstatedir %_var/lib
 
 Name: slick-greeter
-Version: 2.0.5
+Version: 2.0.8
 Release: alt1
 Summary: A slick-looking LightDM greeter
 Group: Graphical desktop/Other
 License: GPL-3.0-or-later
 Url: https://github.com/linuxmint/slick-greeter
+Vcs: https://github.com/linuxmint/slick-greeter.git
 
-# Source-url: https://github.com/linuxmint/slick-greeter/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: %name.gschema.override
@@ -90,6 +90,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_man8dir/slick-greeter.8.*
 
 %changelog
+* Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 2.0.8-alt1
+- 2.0.8
+
 * Fri Jun 21 2024 Anton Midyukov <antohami@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
