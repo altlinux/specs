@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-kivy
-Version: 2.2.1
-Release: alt2
+Version: 2.3.0
+Release: alt1
 
 Summary: Open source UI framework written in Python
 
@@ -13,8 +13,10 @@ Group: System/Servers
 Url: https://pypi.org/project/Kivy
 
 Source: %name-%version.tar
-Patch1: kivy-2.2.1-cython3-support.patch
 Patch2: kivy-2.2.1-alt-do_not_use_ffpyplayer.patch
+Patch3: 0002-Fix-SDL_EventFilter-definitions.patch
+Patch4: 0003-Fix-ftbfs-with-GCC-14.patch
+Patch5: 0004-Replace-deprecated-imghdr-with-filetype.patch
 
 Requires: python3-module-docutils
 Requires: python3-module-Pygments
@@ -65,8 +67,10 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 sed -i 's/distutils.cmd/setuptools/' kivy/tools/packaging/factory.py
 
@@ -106,6 +110,9 @@ and not test_local_zipsequence"
 %python3_sitelibdir/kivy/tests
 
 %changelog
+* Tue Dec 24 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
+- Automatically updated to 2.3.0.
+
 * Sun May 12 2024 Alexey Appolonov <alexey@altlinux.org> 2.2.1-alt2
 - Fixed build;
 - There is no support for ffpyplayer, which cannot be built using the current
