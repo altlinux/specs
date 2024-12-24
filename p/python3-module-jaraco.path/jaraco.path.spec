@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.7.1
+Version: 3.7.2
 Release: alt1
 Summary: Miscellaneous path functions
 License: MIT
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 3.7.2-alt1
+- 3.7.1 -> 3.7.2.
+
 * Thu Sep 19 2024 Stanislav Levin <slev@altlinux.org> 3.7.1-alt1
 - 3.7.0 -> 3.7.1.
 
