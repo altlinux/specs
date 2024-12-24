@@ -1,8 +1,8 @@
 %define rname kcrash
 
 Name: kf6-%rname
-Version: 6.8.0
-Release: alt1
+Version: 6.9.0
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -48,7 +48,7 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
-%patch -p2
+#%patch -p2
 
 %build
 %K6build
@@ -73,6 +73,12 @@ KF6 library
 
 
 %changelog
+* Mon Dec 23 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt2
+- don't apply alt-catch-sigterm.patch
+
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 

@@ -5,8 +5,8 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.8.0
-Release: alt2
+Version: 6.9.0
+Release: alt1
 %K6init altplace
 
 Group: System/Libraries
@@ -138,6 +138,9 @@ sed -i -E 's/(if \()(static const auto.*; )(force ==)/\2\1\3/' src/lib/io/kurlmi
 
 
 %changelog
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
 * Mon Nov 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
 - E2K: lcc 1.29 ICE workaround (mcst#9171; ilyakurdyukov@)
 

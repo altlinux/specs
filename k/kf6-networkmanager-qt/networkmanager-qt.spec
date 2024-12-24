@@ -1,7 +1,7 @@
 %define rname networkmanager-qt
 
 Name: kf6-%rname
-Version: 6.8.0
+Version: 6.9.0
 Release: alt1
 %K6init altplace
 
@@ -71,6 +71,9 @@ KF6 library
 %_K6qml/org/kde/networkmanager/
 
 %changelog
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 

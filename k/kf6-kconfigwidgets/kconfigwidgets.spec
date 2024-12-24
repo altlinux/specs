@@ -6,8 +6,8 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.8.0
-Release: alt2
+Version: 6.9.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -135,6 +135,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
 * Fri Dec 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt2
 - move to standard place
 

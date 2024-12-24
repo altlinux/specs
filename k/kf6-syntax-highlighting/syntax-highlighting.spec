@@ -1,7 +1,7 @@
 %define rname syntax-highlighting
 
 Name: kf6-%rname
-Version: 6.8.0
+Version: 6.9.0
 Release: alt1
 %K6init altplace
 
@@ -13,7 +13,8 @@ License: GPL-2.0-only and LGPL-2.0-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules  qt6-declarative-devel qt6-tools-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
+BuildRequires: libvulkan-devel libxerces-c-devel
 BuildRequires: perl-Encode
 
 
@@ -73,6 +74,9 @@ KF6 library
 
 
 %changelog
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 

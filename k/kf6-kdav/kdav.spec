@@ -4,7 +4,7 @@
 %define libkpimkdav libkpimkdav%sover
 
 Name: kf6-%rname
-Version: 6.8.0
+Version: 6.9.0
 Release: alt1
 %K6init altplace
 
@@ -17,6 +17,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: kf6-kconfig-devel kf6-kio-devel kf6-ki18n-devel
 
 %description
@@ -71,6 +72,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
 - new version
 
