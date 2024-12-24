@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: Ordered YAML loader and dumper for PyYAML
 License: MIT
@@ -19,8 +19,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
-BuildRequires: python3-module-hypothesis
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -33,6 +32,7 @@ preservation of insertion order is a language feature of regular dicts.).
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -51,6 +51,9 @@ preservation of insertion order is a language feature of regular dicts.).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.4.1 -> 1.5.0.
+
 * Mon Apr 15 2024 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
 - 1.3.2 -> 1.4.1.
 
