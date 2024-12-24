@@ -1,8 +1,6 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: python3-module-openssh-wrapper-ArcticaProject
 Version: 0.5
-Release: alt1
+Release: alt1.1
 
 Summary: OpenSSH python wrapper
 License: BSD
@@ -14,6 +12,8 @@ Conflicts: python3-module-openssh-wrapper
 Provides: python3(openssh_wrapper) = %EVR
 
 Source: %name-%version.tar
+
+Patch: openssh-wrapper-ArcticaProject-remove-pipes.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -30,6 +30,7 @@ This is a fork of https://github.com/NetAngels/openssh-wrapper
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -42,5 +43,8 @@ This is a fork of https://github.com/NetAngels/openssh-wrapper
 %python3_sitelibdir/*
 
 %changelog
+* Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.5-alt1.1
+- Remove dependency on pipes.
+
 * Sun Jul 24 2022 Anton Zhukharev <ancieg@altlinux.org> 0.5-alt1
 - initial build for Sisyphus
