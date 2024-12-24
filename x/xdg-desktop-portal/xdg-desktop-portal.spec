@@ -8,7 +8,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.19.0
+Version: 1.19.1
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name}
 
 %define meson_ver 0.56.2
-%define glib_ver 2.66
+%define glib_ver 2.72
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2.90
 %define fuse3_ver 3.10.0
@@ -50,11 +50,17 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(json-glib-1.0)
 # since 1.5
 BuildRequires: pkgconfig(libportal) >= %portal_ver
+# since 1.9.1
+BuildRequires: pkgconfig(gstreamer-pbutils-1.0) pkgconfig(umockdev-1.0)
 %{?_enable_docs:BuildRequires: python3(sphinx) xmlto docbook-dtds docbook-style-xsl}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
-BuildRequires: python3(pytest)  python3-module-pygobject3
-BuildRequires: python3-module-dbus python3-module-dbusmock}
+BuildRequires: python3(pytest) python3(gi)
+BuildRequires: python3(dbus) python3(dbusmock)
+BuildRequires: typelib(UMockdev) = 1.0
+BuildRequires: /usr/bin/gst-inspect-1.0
+# wavparse
+BuildRequires: gst-plugins-good1.0}
 # with our xdist tests failed in hasher with typical error
 # Error creating thread: Resource temporarily unavailable
 # python3(xdist)
@@ -79,6 +85,7 @@ Summary: Tests for the %name
 Group: Development/Other
 Requires: %name = %EVR
 Requires: flatpak >= 1.6.0
+Requires: gst-plugins-good1.0
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -111,6 +118,7 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %_libexecdir/xdg-permission-store
 %_libexecdir/%name-validate-icon
 %_libexecdir/%name-rewrite-launchers
+%_libexecdir/%name-validate-sound
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.*.xml
 %_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.*.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Desktop.service
@@ -135,6 +143,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.19.1-alt1
+- 1.19.1
+
 * Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
 - 1.19.0
 
