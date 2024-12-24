@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Python wrapper around OpenSSH client.
 License: %bsd
@@ -22,6 +22,9 @@ on remote servers.
 %prep
 %setup
 
+# Hotfix for python3.13
+sed -i 's/pipes/shlex/g' openssh_wrapper.py
+
 %build
 %python3_build
 
@@ -33,6 +36,9 @@ on remote servers.
 
 
 %changelog
+* Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.5-alt1.1
+- Removed dependency on pipes.
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.5-alt1
 - Initial build.
 
