@@ -1,24 +1,24 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define sover 2
 %set_verify_elf_method strict
 
 %define libexec %_libdir
 
 Name: speech-dispatcher
 Version: 0.11.5
-Release: alt2
+Release: alt3
 
 Summary: A speech output processing service
 License: GPL-2.0-or-later
 Group: Sound
 URL: http://www.freebsoft.org/speechd
+VCS: https://github.com/brailcom/speechd
 
-# Source-url: https://github.com/brailcom/speechd/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-
-# fc
-Source1: %{name}d.service
-Patch: speech-dispatcher-0.8-alt-flite.patch
+Source1: speech-dispatcher.filetrigger
+Patch0: speech-dispatcher-0.8-alt-flite.patch
+Patch1: modules_order-fix.patch
 
 BuildRequires: libdotconf-devel >= 0.3
 BuildRequires: gcc-c++ glib2-devel glibc-devel-static intltool
@@ -30,19 +30,19 @@ BuildRequires: python3-base python3-devel
 BuildRequires: libsndfile-devel libpulseaudio-devel
 BuildRequires: makeinfo
 
-%add_python3_req_skip speechd_config
-%add_python3_req_skip xdg
 
 %description
 Speech Dispatcher is a part of the Free(b)soft project, which is
 intended to allow blind and visually impaired people to work with
 computer and Internet based on free software.
 
-%package -n libspeechd
+%package -n libspeechd%sover
 Summary: Client library for speech-dispatcher
 Group: System/Libraries
+Provides: libspeechd = %EVR
+obsoletes: libspeechd < %EVR
 
-%description -n libspeechd
+%description -n libspeechd%sover
 Applications can use this library to communicate with speech-dispatcher
 service and produce speech output.
 
@@ -97,7 +97,9 @@ This python module allows programmsaccess speech-dispatcher service.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p2
+
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -115,15 +117,15 @@ This python module allows programmsaccess speech-dispatcher service.
 	   --without-ibmtts \
 	   --without-baratinoo \
 	   --disable-static \
-	   --with-module-bindir=%{_libdir}/speech-dispatcher-modules/
+	   --with-module-bindir=%{_libdir}/speech-dispatcher-modules
 	   %nil
 %make_build
 
 %install
 %make_install DESTDIR='%buildroot' pyexecdir=%python3_sitelibdir_noarch install
 
-# service file
-install -D -p -m644 %SOURCE1 %buildroot%_unitdir/%{name}d.service
+# install filetrigger
+install -D -m 755 %SOURCE1 %buildroot/%_rpmlibdir/speech-dispatcher.filetrigger
 
 # unpackaged files
 find %buildroot%_libdir -name '*.la' -delete
@@ -134,7 +136,6 @@ find %buildroot%_libdir -name '*.la' -delete
 %doc FAQ NEWS README.md README.overview.md
 %_bindir/speech-dispatcher
 %config %_sysconfdir/%name
-%_unitdir/%{name}d.service
 %dir %_libdir/%name
 %_libdir/%name/spd*.so
 %dir %_libdir/%name-modules
@@ -145,9 +146,11 @@ find %buildroot%_libdir -name '*.la' -delete
 %_datadir/sounds/%name
 %_datadir/%name
 %_infodir/*
+%_rpmlibdir/speech-dispatcher.filetrigger
 
-%files -n libspeechd
-%_libdir/libspeechd*.so.*
+%files -n libspeechd%sover
+%_libdir/libspeechd*.so.%sover
+%_libdir/libspeechd*.so.%sover.*
 
 %files -n libspeechd-devel
 %_includedir/*
@@ -172,6 +175,11 @@ find %buildroot%_libdir -name '*.la' -delete
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Dec 20 2024 Artem Semenov <savoptik@altlinux.org> 0.11.5-alt3
+- Fixed default priority module order
+- remove autoreq filter fore fix spd-conf
+- added filetrigger fore update modules automaticaly
+
 * Thu Jun 06 2024 Artem Semenov <savoptik@altlinux.org> 0.11.5-alt2
 - Changed espeak to espeak-ng
 
