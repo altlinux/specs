@@ -18,6 +18,7 @@ Source2:	php-%php_extension-params.sh
 BuildRequires(pre): rpm-build-php8.3-version
 BuildRequires: gcc-c++
 BuildRequires: php-devel = %php_version
+Requires: php%_php_suffix-mysqlnd
 Conflicts: php%_php_suffix-mysqlnd-%php_extension
 
 PreReq: php%_php_suffix-pdo = %php_version
@@ -73,6 +74,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %version-%release
+
+* Fri Dec 13 2024 Anton Farygin <rider@altlinux.ru> 8.3.14-alt2 
+- added mysqlnd to dependencies (Closes: #52410)
 
 * Wed Nov 06 2024 Anton Farygin <rider@altlinux.ru> 8.3.13-alt0.1
 - built with mysqlnd instead of libMySQL to fix FTBFS

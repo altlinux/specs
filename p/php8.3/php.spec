@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 14
+%define _php_release_version 15
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -490,6 +490,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue Dec 24 2024 Anton Farygin <rider@altlinux.ru> 8.3.15-alt1
+- 8.3.14 -> 8.3.15
+
 * Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 8.3.14-alt1
 - 8.3.13 -> 8.3.14 (Fixes: CVE-2024-8929, CVE-2024-8932, CVE-2024-11234 CVE-2024-11233)
 
