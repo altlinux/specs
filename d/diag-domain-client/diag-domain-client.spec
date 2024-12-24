@@ -2,23 +2,22 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.2.8
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
 Group: System/Configuration/Other
+BuildArch: noarch
 
 Url: https://gitlab.basealt.space/alt/diag-domain-client
 Source: %name-%version.tar
-
-# actually not anymore but e2k has a standalone girar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-alterator
 %ifnarch %e2k
 BuildRequires: shellcheck
 %endif
+BuildRequires: alterator-entry
 
 Obsoletes: domain-diag < %EVR
 
@@ -43,6 +42,7 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %ifnarch %e2k
 shellcheck -e SC1090,SC1091,SC2004,SC2015,SC2034,SC2086,SC2154,SC2001,SC2120,SC2119,SC2317 %name
 %endif
+find ./alterator/ -type f -exec alterator-entry --verbose {} \+
 
 %files
 %_bindir/%name
@@ -52,6 +52,11 @@ shellcheck -e SC1090,SC1091,SC2004,SC2015,SC2034,SC2086,SC2154,SC2001,SC2120,SC2
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Dec 23 2024 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
+- Add Alterator Entry validation to .spec (thx Kozyrev Yuri)
+- Translate Alterator Entry files to toml (thx Kozyrev Yuri)
+- fix: add -v for logs in ADT (thx Elena Dyatlenko)
+
 * Fri Sep 27 2024 Michael Shigorin <mike@altlinux.org> 0.2.8-alt2
 - E2K: avoid shellcheck due to ghc still lacking
 

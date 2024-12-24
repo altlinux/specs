@@ -1,7 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch i586 ppc64le armh
+%def_without check
+%endif
+
 Name: alterator-entry
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Common files for [Alterator Entry] specification
@@ -14,9 +18,8 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-alterator
 Requires: libshell
 
-%ifarch x86_64
+%ifnarch i586 ppc64le armh
 BuildRequires: taplo
-Requires: taplo
 %endif
 
 %description
@@ -36,11 +39,9 @@ install -v -p -m 644 -D alterator-entry-sh-functions %buildroot%_bindir/
 install -v -p -m 755 -D alterator-entry %buildroot%_bindir/
 sed -i 's/@VERSION@/%version/' %buildroot%_bindir/alterator-entry
 
-%ifarch x86_64
 %check
 export ALTERATOR_SCHEMAS_DIR=%buildroot%_alterator_datadir/schemas
-PATH="$PATH:." find ./examples -type f -exec alterator-entry {} \+
-%endif
+PATH="$PATH:." find ./examples -type f -exec alterator-entry -v {} \+
 
 %files
 %doc COPYING
@@ -50,6 +51,9 @@ PATH="$PATH:." find ./examples -type f -exec alterator-entry {} \+
 %_alterator_datadir/schemas/*
 
 %changelog
+* Tue Dec 24 2024 Andrey Limachko <liannnix@altlinux.org> 0.1.2-alt1
+- Make stub to build package for all architectures
+
 * Tue Dec 03 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
 - Switch to using toml instead of ini files for Alterator Entry.
 - Add json schemas to validate Alterator Entry files.
