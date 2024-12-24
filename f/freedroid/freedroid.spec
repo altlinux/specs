@@ -1,17 +1,25 @@
 Name:		freedroid
-Version:	1.0.2
-Release:	alt2
+Version:	1.2.3
+Release:	alt1
 Summary:	A clone of the game "Paradroid"
 Group:		Games/Arcade
 License:	GPLv2
-Source:		%name-%version.tar.gz
+Source:		%name-%version.tar
 Source1:	paraicon.png
 URL:		http://www.freedroid.org/
+VCS:		https://github.com/ReinhardPrix/FreedroidClassic
 Requires: %name-data = %version
 
 # Automatically added by buildreq on Sun Apr 03 2011
 # optimized out: libSDL-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: libSDL_image-devel libSDL_mixer-devel libjpeg-devel libpng-devel libvorbis-devel
+BuildRequires: pkgconfig(SDL_gfx)
+BuildRequires: pkgconfig(SDL_image)
+BuildRequires: pkgconfig(SDL_mixer)
+BuildRequires: pkgconfig(ice)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(vorbisfile)
+BuildRequires: pkgconfig(zlib)
 
 %description
 FreedroidClassic is a clone of the game "Paradroid" which was released
@@ -24,7 +32,6 @@ them or seizing control over them by creating connections in a short
 subgame of electric circuits. The graphics are designed to be a fairly
 faithful reproduction of the original game, but a modern set of tiles is
 also available.
-
 
 %package data
 BuildArch: noarch
@@ -66,8 +73,8 @@ install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
 %files
-%_bindir/*
-%_man6dir/*
+%_bindir/%name
+%_man6dir/%name.6.*
 %_niconsdir/%name.png
 %_desktopdir/%name.desktop
 %dir %_datadir/%name
@@ -76,6 +83,10 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/*
 
 %changelog
+* Tue Dec 17 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.2.3-alt1
+- NMU: New version (mentioned in ALT #50551).
+- Source code placement updated to take from version control system tag.
+
 * Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt2
 - Fixed FTBFS with -fcommon.
 

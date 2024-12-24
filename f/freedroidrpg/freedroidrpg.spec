@@ -1,26 +1,26 @@
 Name: freedroidrpg
-Version: 0.16.1
-Release: alt3
+Version: 1.0.0.9.git85156e2
+Release: alt1
 
 Summary: Isometric action game with RPG elements
 License: GPLv2
 Group: Games/Arcade
-Url: http://freedroid.sf.net
-Packager: Roman Savochenko <rom_as at altlinux.ru>
+Url: https://www.freedroid.org
+Vcs: https://codeberg.org/freedroid/freedroid-src.git
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: libSDL-devel libGLU-devel libjpeg-devel zlib-devel libpng-devel libSDL_image-devel libSDL_net-devel libvorbis-devel libSDL_mixer-devel libSDL_gfx-devel
+BuildRequires: pkgconfig(SDL_ttf)
+BuildRequires: pkgconfig(glew)
+BuildRequires: pkgconfig(lua-5.3)
 
 Requires: %name-data = %version
 
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 Source1: %name.desktop
 Source3: %name-16x16.png
 Source4: %name-32x32.png
 Source5: %name-48x48.png
-
-# Fix multiple definitions
-Patch: e610d427374226b79da5258d979936459f30c761.patch
 
 %description
 Interesting Diablo-like game featuring The Tux as the main character.
@@ -31,7 +31,7 @@ Summary: Some edit tools for Freedroid RPG
 Requires: %name = %version-%release
 %description tools
 This package contains some edit tools required to
-develop new content to the Freedroid RPG game. 
+develop new content to the Freedroid RPG game.
 
 %package data
 Group: Games/Arcade
@@ -43,14 +43,10 @@ This package contains media files for Freedroid RPG game
 
 %prep
 %setup
-%patch -p1
-
-# see https://gitlab.com/freedroid/freedroid-src/-/commit/642f6a95ad4fa8211abf68327685caaf20d46e7d.patch
-sed -i 's/\(strncpy(MenuTexts\[i\], \)Options\[i\]/\1\&(Options\[i\]\[0\])/' src/menu.c
-
 sed -i 's|#!.*python|&3|' $(find ./ -name '*.py')
 
 %build
+./autogen.sh
 %configure --datadir=%_gamesdatadir --bindir=%_gamesbindir --enable-dev-tools
 %make_build
 
@@ -67,9 +63,6 @@ install -D %SOURCE3 %buildroot%_miconsdir/%name.png
 install -D %SOURCE4 %buildroot%_niconsdir/%name.png
 install -D %SOURCE5 %buildroot%_liconsdir/%name.png
 
-#install appdata
-mv %buildroot%_gamesdatadir/appdata %buildroot%_datadir
-
 %files -f %name.lang
 %_gamesbindir/freedroidRPG
 %_desktopdir/%name.desktop
@@ -78,9 +71,9 @@ mv %buildroot%_gamesdatadir/appdata %buildroot%_datadir
 %_niconsdir/%name.png
 
 %files data
-%doc AUTHORS ChangeLog NEWS README* INSTALL HELP_WANTED
+%doc AUTHORS ChangeLog COPYING CONTRIBUTING.md NEWS README*
 %_gamesdatadir/%name
-%_datadir/appdata/*
+%_gamesdatadir/metainfo/org.freedroid.freedroidRPG.appdata.xml
 %_man6dir/*
 %exclude %_gamesdatadir/icons
 %exclude %_gamesdatadir/applications
@@ -88,13 +81,16 @@ mv %buildroot%_gamesdatadir/appdata %buildroot%_datadir
 
 %files tools
 %_gamesbindir/croppy
-#%%_gamesbindir/pngtoico
 %_gamesbindir/explode_atlas
 %_gamesbindir/explodefont
 %_gamesbindir/gluefont
 %_gamesbindir/make_atlas
+%_gamesbindir/make_bmchars
 
 %changelog
+* Mon Dec 16 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.0.0.9.git85156e2-alt1
+- NMU: Version 1.0 from ref 85156e2 build for Sisyphus (Closes #50551).
+
 * Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt3
 - Fixed FTBFS with upstream patches.
 - Fixed license tag.
