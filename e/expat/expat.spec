@@ -1,8 +1,7 @@
 Name: expat
-Version: 2.5.0
+Version: 2.6.4
 Release: alt1
 
-%def_disable static
 %define pkgdocdir %_docdir/%name-%version
 
 Summary: An XML parser written in C
@@ -11,12 +10,14 @@ Group: System/Base
 Url: http://www.libexpat.org/
 # http://downloads.sourceforge.net/project/expat/expat/%version/expat-%version.tar.bz2
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 
 # for "make check"
 BuildRequires: gcc-c++
+
+# for docs
+BuildRequires: /usr/bin/xmlto
 
 %package -n lib%name
 Summary: XML parser library
@@ -28,11 +29,6 @@ Group: Development/C
 Requires: lib%name = %version-%release
 Provides: expat-devel = %version
 Obsoletes: expat-devel
-
-%package -n lib%name-devel-static
-Summary: Static library for developing static applications which will manipulate XML files
-Group: Development/C
-Requires: lib%name-devel = %version-%release
 
 %description
 Expat is a stream-oriented XML parser written in C.
@@ -46,21 +42,19 @@ Expat is a stream-oriented XML parser written in C.
 This package is needed if you want to build programs which use Expat
 library.
 
-%description -n lib%name-devel-static
-Expat is a stream-oriented XML parser written in C.
-This package provides the Expat parser as a library for static linking.
-
 %prep
 %setup
-%patch -p1
 
 %build
+pushd %name
 %autoreconf
 export DOCBOOK_TO_MAN="xmlto man --skip-validation"
-%configure %{subst_enable static}
+%configure --disable-static
 %make_build
+popd
 
 %install
+pushd %name
 %makeinstall_std
 
 # Relocate shared library from /usr/lib to /lib.
@@ -75,8 +69,12 @@ install -p -m644 doc/*.{html,css} %buildroot%pkgdocdir/
 install -d -m755 %buildroot%pkgdocdir/examples
 install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 
+popd
+
 %check
-%make_build -k check
+pushd %name
+%make_build check
+popd
 
 %files
 %_bindir/*
@@ -100,12 +98,10 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %pkgdocdir/*.css
 %pkgdocdir/examples
 
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/*.a
-%endif	# enabled static
-
 %changelog
+* Mon Dec 09 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.4-alt1
+- Automatically updated to 2.6.4.
+
 * Sat Oct 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.0-alt1
 - Updated to 2.5.0 (fixes: CVE-2022-43680 Fix heap use-after-free after
   overeager destruction of a shared DTD in function XML_ExternalEntityParserCreate
