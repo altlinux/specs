@@ -1,8 +1,8 @@
 %define oname cups
 
 Name:          python3-module-cups
-Version:       1.9.74
-Release:       alt3.1
+Version:       2.0.4
+Release:       alt1
 
 Summary:       Python bindings for the CUPS API
 
@@ -13,7 +13,6 @@ License:       %gpl2plus
 # git://git.fedorahosted.org/git/pycups.git
 Source0:       pycups-%{version}.tar
 Patch0:        python-module-cups-1.9.74-alt-extension-copy-document.patch
-Patch1:        3df8a811b650c01cca595fff89209087b92f801c.patch
 
 Packager:      Yury Yurevich <anarresti@altlinux.org>
 
@@ -45,9 +44,7 @@ API.
 %prep
 %setup -n pycups-%version
 %patch0 -p1
-%patch1 -p1
 
-subst 's|python|python3|g' Makefile
 subst 's|build/lib\*/$@|build/lib*/cups*.so|g' Makefile
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl 'python$' *)
 
@@ -57,7 +54,8 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl 'python$' *)
 
 %install
 %makeinstall_std
-
+rm %buildroot%_libexecdir/rpm/fileattrs/psdriver.attr
+rm %buildroot%_libexecdir/rpm/postscriptdriver.prov
 %files
 %doc NEWS README TODO test.py examples
 %python3_sitelibdir/*
@@ -67,6 +65,9 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl 'python$' *)
 
 
 %changelog
+* Mon Dec 23 2024 Valery Sinelnikov <greh@altlinux.org> 2.0.4-alt1
+- Version 2.0.4
+
 * Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.9.74-alt3.1
 - NMU: add setuptools to build dependencies
 
