@@ -2,13 +2,13 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
-%define ver_major 2.10
+%define ver_major 2.11
 %define rdn_name page.kramo.Cartridges
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Cartridges
@@ -74,6 +74,9 @@ SteamGridDB.
 
 
 %changelog
+* Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.11-alt1
+- 2.11
+
 * Sun Oct 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
 - 2.10.1
 
