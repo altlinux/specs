@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: discount
-Version: 2.2.7d
+Version: 3.0.0d
 Release: alt1
 
 Summary: A implementation of John Gruber's Markdown markup language.
@@ -13,7 +13,7 @@ Url: http://www.pell.portland.or.us/~orc/Code/discount/
 Source: %name-%version.tar
 Source44: %name.watch
 Patch: %name-%version-%release.patch
-Patch1: %name-2.2.7d-alt-no-ldconfig.patch
+Patch1: 0001-configure.inc-do-not-run-ldconfig-in-the-process-of-.patch
 
 Requires: lib%name = %EVR
 
@@ -68,12 +68,12 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test
 %_bindir/markdown
 %_bindir/mkd2html
 %_bindir/theme
-%_man1dir/makepage.1*
-%_man1dir/markdown.1*
-%_man1dir/mkd2html.1*
-%_man1dir/theme.1*
-%_man7dir/markdown.7*
-%_man7dir/mkd-extensions.7*
+%doc %_man1dir/makepage.1*
+%doc %_man1dir/markdown.1*
+%doc %_man1dir/mkd2html.1*
+%doc %_man1dir/theme.1*
+%doc %_man7dir/markdown.7*
+%doc %_man7dir/mkd-extensions.7*
 
 %files -n lib%name
 %_libdir/libmarkdown.so.*
@@ -85,6 +85,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %make test
 %_man3dir/*
 
 %changelog
+* Sat Dec 14 2024 Ildar Mulyukov <ildar@altlinux.ru> 3.0.0d-alt1
+- new version
+
 * Thu Aug 31 2023 Yuri N. Sedunov <aris@altlinux.org> 2.2.7d-alt1
 - 2.2.7d
 
