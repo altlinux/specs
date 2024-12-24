@@ -33,7 +33,7 @@
 %endif
 
 Name: libical
-Version: 3.0.18
+Version: 3.0.19
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -224,6 +224,9 @@ library.
 
 
 %changelog
+* Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.19-alt1
+- 3.0.19
+
 * Sun Mar 31 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.18-alt1
 - 3.0.18
 
