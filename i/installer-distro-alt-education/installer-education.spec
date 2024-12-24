@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -74,9 +74,6 @@ Requires: alterator-luks
 Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
-%ifnarch %e2k
-Requires: installer-feature-repo-add
-%endif
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-bell-off-stage3
 
@@ -121,6 +118,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Tue Dec 24 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt3
+- Removed requiirement of installer-feature-repo-add.
+
 * Thu Dec 12 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
 - Renamed to installer-distro-alt-education.
 - volumes-profile-alt-education: disabled home partition in auto mode (ALT #52373).
