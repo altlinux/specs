@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -31,6 +31,7 @@ Patch10: lfs.diff
 Patch12: xrdp-alt-startwm.patch
 Patch13: alt-add-russian-keyboard.patch
 Patch14: xrdp-alt-add-comment-about-windows_xp.patch
+Patch15: xrdp-alt-default-gxf-order.patch
 Patch16: xrdp-alt-ppc64le-support.patch
 
 # Fedora patches
@@ -53,7 +54,7 @@ BuildRequires: libXrandr-devel
 BuildRequires: xorg-resourceproto-devel
 BuildRequires: xorg-scrnsaverproto-devel
 BuildRequires: libXfont2-devel
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: libfreerdp-devel
 BuildRequires: libopus-devel
 BuildRequires: openssl
@@ -70,6 +71,8 @@ BuildRequires: fdkaac
 BuildRequires: libjpeg-devel
 BuildRequires: liblame-devel
 BuildRequires: libfdk-aac-devel
+BuildRequires: libx264-devel
+BuildRequires: libopenh264-devel
 
 Requires: xorg-drv-xrdp = %EVR
 Requires: xinitrc
@@ -120,6 +123,7 @@ tar xf %SOURCE6
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 %patch16 -p1
 %patch21 -p1
 %patch22 -p1
@@ -145,6 +149,9 @@ echo '#!/bin/bash -l
 %build
 %add_optflags -I%_includedir/libdrm
 %add_optflags -Wno-error=int-to-pointer-cast
+%ifarch %ix86 armh
+%add_optflags -D_FILE_OFFSET_BITS=64
+%endif
 %ifarch %ix86
 %add_optflags -fPIC
 %set_verify_elf_method textrel=relaxed
@@ -170,6 +177,9 @@ done
 	   --enable-vsock \
 	   --enable-rdpsndaudin \
 	   --enable-fdkaac \
+	   --enable-strict-locations \
+	   --enable-x264 \
+	   --enable-openh264 \
 	   --with-systemdsystemunitdir=%_unitdir
 pushd xorgxrdp
 PKG_CONFIG_PATH=../pkgconfig ./configure --enable-glamor
@@ -274,6 +284,7 @@ fi
 %ghost %config(noreplace) %attr(0400,root,root) %verify(not size md5 mtime) %_sysconfdir/xrdp/*.pem
 %config(noreplace) %_sysconfdir/xrdp/sesman.ini
 %config(noreplace) %_sysconfdir/xrdp/xrdp.ini
+%config(noreplace) %_sysconfdir/xrdp/gfx.toml
 %_bindir/xrdp*
 %_libexecdir/xrdp/*
 %_sbindir/xrdp*
@@ -293,6 +304,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.2-alt1
+- New version.
+
 * Thu Aug 01 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.1-alt1
 - New version.
 
