@@ -4,7 +4,7 @@
 
 Name: python3-module-%module_name
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Summary: A GraphQL client in Python
 License: MIT
 Group: Development/Python3
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(anyio)
@@ -53,5 +54,8 @@ compatible with the spec.
 %doc LICENSE
 
 %changelog
+* Mon Dec 23 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.0-alt2
+- Fixed BuildRequires.
+
 * Sun Dec 15 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.0-alt1
 - Initial build for ALT.
