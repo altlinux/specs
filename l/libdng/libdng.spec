@@ -1,6 +1,6 @@
 Name:    libdng
-Version: 0.1.1
-Release: alt1.git9c7b18e
+Version: 0.2.0
+Release: alt1
 
 Summary: Interface library between libtiff and the world to make sure the output is valid DNG
 License: MIT
@@ -58,5 +58,8 @@ Group: Other
 %_man1dir/makedng.1*
 
 %changelog
+* Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
+- New version.
+
 * Tue Apr 30 2024 Andrey Cherepanov <cas@altlinux.org> 0.1.1-alt1.git9c7b18e
 - Initial build for Sisyphus.
