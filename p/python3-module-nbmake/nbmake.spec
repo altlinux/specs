@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 Summary: Pytest plugin for testing notebooks
 License: Apache-2.0
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -53,5 +53,8 @@ export PYTEST_XDIST_AUTO_NUM_WORKERS=2
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Dec 24 2024 Stanislav Levin <slev@altlinux.org> 1.5.5-alt1
+- 1.5.4 -> 1.5.5.
+
 * Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 1.5.4-alt1
 - Initial build for Sisyphus.
