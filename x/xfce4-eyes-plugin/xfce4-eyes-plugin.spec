@@ -1,5 +1,5 @@
 Name: xfce4-eyes-plugin
-Version: 4.6.0
+Version: 4.6.2
 Release: alt1
 
 Summary: Eyes plugin for Xfce Desktop
@@ -12,11 +12,10 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-eyes-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
-BuildRequires: intltool libxml2-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel >= 4.16
 
 %define _unpackaged_files_terminate_build 1
 
@@ -27,9 +26,6 @@ Scary!
 %prep
 %setup
 %patch -p1
-
-# Don't use git tag in version.
-%xfce4_drop_gitvtag eyes_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -51,6 +47,9 @@ Scary!
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 4.6.2-alt1
+- Updated to 4.6.2.
+
 * Tue Apr 05 2022 Mikhail Efremov <sem@altlinux.org> 4.6.0-alt1
 - Packaged NEWS file.
 - Updated to 4.6.0.
