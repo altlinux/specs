@@ -22,7 +22,7 @@
 %endif
 
 Name: libvpx
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: VP8 video codec
 Group: Video
@@ -115,6 +115,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Wed Dec 25 2024 Anton Farygin <rider@altlinux.ru> 1.15.0-alt1
+- 1.14.0 -> 1.15.0
+
 * Fri Jun 28 2024 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
 - 1.14.1
 - source packages was renamed to libvpx
