@@ -5,7 +5,7 @@
 
 Name: python3-module-%module_name
 Version: 5.2.0
-Release: alt1
+Release: alt2
 Summary: A python wrapper for the GitLab API
 License: LGPL-3.0
 Group: Development/Python3
@@ -29,6 +29,8 @@ BuildRequires: python3(requests)
 BuildRequires: python3(requests_toolbelt)
 BuildRequires: python3(pytest)
 %endif
+
+Conflicts: gitlab
 
 %py3_provides %pypi_name
 
@@ -54,6 +56,9 @@ rm -rv tests/{install,functional,smoke}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 25 2024 Alexander Makeenkov <amakeenk@altlinux.org> 5.2.0-alt2
+- Added conflict with gitlab package.
+
 * Sat Dec 21 2024 Alexander Makeenkov <amakeenk@altlinux.org> 5.2.0-alt1
 - Updated to version 5.2.0.
 
