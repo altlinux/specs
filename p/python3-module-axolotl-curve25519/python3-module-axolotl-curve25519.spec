@@ -2,7 +2,7 @@
 
 Name:	 python3-module-axolotl-curve25519
 Version: 0.4.1.post2
-Release: alt2
+Release: alt3
 
 Summary: python wrapper for curve25519 library with ed25519 signatures
 
@@ -11,6 +11,7 @@ Group:	 Development/Python3
 Url:	 https://github.com/tgalal/python-axolotl-curve25519
 
 Source:	 python-axolotl-curve25519-%version.tar
+Patch: 00-fix-pymodule-def-init.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
@@ -21,6 +22,7 @@ code was pulled from libaxolotl-android.
 
 %prep
 %setup -n python-axolotl-curve25519-%version
+%patch -p1
 
 %build
 %python3_build
@@ -36,6 +38,9 @@ code was pulled from libaxolotl-android.
 %python3_sitelibdir/python_%modulename-%version-py*.egg-info/
 
 %changelog
+* Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.1.post2-alt3
+- Fixed FTBFS.
+
 * Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 0.4.1.post2-alt2
 - Disabled check (see #50996).
 
