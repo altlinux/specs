@@ -1,5 +1,5 @@
 Name: xfce4-sensors-plugin
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
@@ -21,7 +21,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gcc-c++
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel >= 4.16.0 libxfce4util-devel >= 4.17.2
-BuildRequires: hddtemp intltool libsensors3-devel libnotify-devel
+BuildRequires: hddtemp libsensors3-devel libnotify-devel
 %{?_enable_xnvctrl:BuildRequires: nvidia-settings-devel}
 
 Requires: xfce4-panel >= 4.17 hddtemp lm_sensors3
@@ -34,8 +34,6 @@ Requires: xfce4-panel >= 4.17 hddtemp lm_sensors3
 %prep
 %setup
 %patch -p1
-# Don't use git tag in version.
-%xfce4_drop_gitvtag sensors_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -70,6 +68,10 @@ Requires: xfce4-panel >= 4.17 hddtemp lm_sensors3
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt1
+- Dropped obsoleted patch.
+- Updated to 1.4.5.
+
 * Thu Nov 03 2022 Mikhail Efremov <sem@altlinux.org> 1.4.4-alt1
 - Updated BR.
 - Dropped obsoleted patch.
