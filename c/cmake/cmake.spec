@@ -11,14 +11,15 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.31.2
-Release: alt2
+Version: 3.31.3
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
 License: BSD
 Group: Development/Tools
-Url: http://cmake.org/
+Url: https://cmake.org/
+VCS: https://gitlab.kitware.com/cmake/cmake.git
 
 # Source-url: https://gitlab.kitware.com/cmake/cmake/-/archive/v%version/cmake-v%version.tar.bz2
 Source: %name-%version.tar
@@ -323,6 +324,10 @@ popd
 
 
 %changelog
+* Mon Dec 23 2024 Anton Farygin <rider@altlinux.ru> 3.31.3-alt1
+- 3.31.2 -> 3.31.3
+- fixed URL and VCS tags
+
 * Wed Dec 11 2024 Michael Shigorin <mike@altlinux.org> 3.31.2-alt2
 - remove obsolete e2k hack (ilyakurdyukov@)
 
