@@ -1,21 +1,21 @@
 %def_with check
+%define abiver 0
 
 Name:    albert
-Version: 0.24.3
+Version: 0.26.10
 Release: alt1
 
 Summary: A fast and flexible keyboard launcher
 License: BSD-3-Clause
 Group:   Graphical desktop/Other
-Url:     https://github.com/albertlauncher/albert
-
-Packager: Sergey Gvozdetskiy <serjigva@altlinux.org>
+Url:     https://albertlauncher.github.io
+Vcs:     https://github.com/albertlauncher/albert
 
 Source0: %name-%version.tar
 Source1: submodules.tar
 # Link application against existent pybind from repo
 # Upstream requires submodule
-Patch0: albert-0.24.3-alt-build-without-pybind-src.patch
+Patch0: albert-0.26.10-alt-build-without-pybind-src.patch
 
 BuildRequires(pre): cmake rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -38,7 +38,7 @@ Requires: libqt6-statemachineqml
 Requires: libqt6-svg
 Requires: qt6-5compat
 Requires: libarchive13
-Requires: lib%name = %EVR
+Requires: lib%name%abiver = %EVR
 
 %description
 Albert is a plugin based, desktop agnostic C++/Qt keyboard launcher that helps
@@ -48,22 +48,22 @@ you to accomplish your workflows in a breeze.
 Summary: Albert launcher development files
 License: BSD-3-Clause
 Group:   Development/KDE and QT
-Requires: lib%name = %EVR
+Requires: lib%name%abiver = %EVR
 
 %description -n lib%name-devel
 Development files for building applications under Albert launcher
 
-%package -n lib%name
+%package -n lib%name%abiver
 Summary: Albert launcher shared library
 License: BSD-3-Clause
 Group:   System/Libraries
+Obsoletes: lib%name < %EVR
 
-%description -n lib%name
+%description -n lib%name%abiver
 Shared libraries for running Albert launcher application
 
 %prep
-%setup
-tar xf %SOURCE1
+%setup -a1
 %patch0 -p2
 
 %build
@@ -96,10 +96,13 @@ tar xf %SOURCE1
 %_libdir/lib%name.so
 %_libdir/cmake/Albert/
 
-%files -n lib%name
-%_libdir/lib%name.so.*
+%files -n lib%name%abiver
+%_libdir/lib%name.so.%abiver.*
 
 %changelog
+* Wed Dec 25 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.26.10-alt1
+- New version.
+
 * Thu Aug 01 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.24.3-alt1
 - New version
 
