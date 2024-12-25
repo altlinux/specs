@@ -1,6 +1,6 @@
 Name: xfce4-mpc-plugin
-Version: 0.5.3
-Release: alt2
+Version: 0.5.5
+Release: alt1
 
 Summary: MPD Client Plugin
 License: ISC
@@ -13,17 +13,25 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel >= 4.13.5 libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libmpd-devel
-BuildRequires: intltool
 
 Requires: xfce4-panel
 
 %define _unpackaged_files_terminate_build 1
 
 %description
-This is a simple Musicpd (https://www.musicpd.org) client plugin for the
-Xfce panel.
+This is a simple client plugin for Music Player Daemon.
+
+Features :
+- send Play/Stop/Next/Previous command to MPD.
+- decrease/increase volume using the mouse wheel.
+- show the current volume, status and title as a tooltip when passing
+  the mouse over the plugin.
+- show a simple playlist window upon middle-click, permitting to select
+  a track to play
+- configurable MPD host/port/password.
+- toggles repeat/random features in the right-click menu.
 
 %prep
 %setup
@@ -45,6 +53,10 @@ Xfce panel.
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1
+- Updated description.
+- Updated to 0.5.5.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt2
 - Fixed build: added intltool to BR.
 
