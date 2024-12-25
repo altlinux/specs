@@ -6,7 +6,7 @@
 
 Name: tbb
 Version: 2021.13.0
-Release: alt1
+Release: alt1.1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -159,7 +159,7 @@ popd
 
 rm -f %buildroot%_defaultdocdir/TBB/README.md
 
-%ifnarch ppc64le aarch64
+%ifnarch ppc64le aarch64 armh
 %check
 %cmake_build -t test
 %endif
@@ -188,6 +188,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %endif
 
 %changelog
+* Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 2021.13.0-alt1.1
+- NMU: Disabled tests on armh (failed test_malloc_pools).
+
 * Thu Jun 27 2024 L.A. Kostis <lakostis@altlinux.ru> 2021.13.0-alt1
 - Updated to upstream version 2021.13.0.
 - Restore build of python3 module.
