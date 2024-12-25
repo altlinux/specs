@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.15.9
+Version: 0.16.2
 Release: alt1
 
 Summary: Python bindings to Zstandard (zstd) compression library, the API style is similar to Python's bz2/lzma/zlib modules
@@ -44,10 +44,13 @@ export CFLAGS="%optflags"
 %pyproject_run_unittest discover -v tests
 
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.16.2-alt1
+- Automatically updated to 0.16.2.
+
 * Thu Oct 05 2023 Alexander Burmatov <thatman@altlinux.org> 0.15.9-alt1
 - Initial build for Sisyphus.
