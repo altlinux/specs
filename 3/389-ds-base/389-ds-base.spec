@@ -17,7 +17,7 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.4.6
+Version: 3.1.1
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -47,7 +47,6 @@ BuildRequires: gcc-c++
 %if_with debug
 BuildRequires: libasan5
 %endif
-BuildRequires: libdb5.3-devel
 BuildRequires: liblmdb-devel
 BuildRequires: libicu-devel
 BuildRequires: libkrb5-devel
@@ -59,6 +58,8 @@ BuildRequires: libpam0-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libsystemd-devel
+# used for ldapsearch
+BuildRequires: openldap-clients
 # log compression
 BuildRequires: zlib-devel
 # audit logs
@@ -88,13 +89,12 @@ BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
 
+# perl deps
+# required by logconv.pl
+BuildRequires: perl-Archive-Tar
+
 %add_findprov_skiplist %_datadir/%pkgname/script-templates/*
 %add_findreq_skiplist %_datadir/%pkgname/script-templates/* %_sbindir/*-%pkgname
-
-# still packaged Perl script, which requires perl-devel
-# Perl is linked against libdb4.8 for now, but 389-ds requires 5.3
-%add_findprov_skiplist %_bindir/logconv.pl
-%add_findreq_skiplist %_bindir/logconv.pl
 
 # use Python3 everywhere
 %add_python3_path %_datadir/gdb/auto-load/
@@ -181,25 +181,6 @@ A cockpit UI Plugin for configuring and administering the 389 Directory Server
 %setup %{?_with_cockpit:-a1} -a2
 %patch -p1
 
-grep -qsF 'sysctldir = @prefixdir@/lib/sysctl.d' Makefile.am || exit 1
-sed -i 's|sysctldir = .*|sysctldir = %_sysctldir|' Makefile.am
-
-grep -qsr 'LD_PRELOAD=.*/libjemalloc.so.2' || exit 1
-grep -rl 'LD_PRELOAD=.*/libjemalloc.so.2' | \
-xargs sed -i 's|LD_PRELOAD=.*/libjemalloc.so.2|LD_PRELOAD=libjemalloc.so.2|g'
-
-grep -qsr '/sasl2\( \|"\)' || exit 1
-grep -rl '/sasl2\( \|"\)' | xargs sed -i 's/\/sasl2\( \|"\)/\/sasl2-3\1/g'
-
-grep -qsr '/usr/bin/\(ls\|echo\)' || exit 1
-grep -rl '/usr/bin/\(ls\|echo\)' | \
-xargs sed -i 's/\/usr\(\/bin\/\(ls\|echo\)\)/\1/g'
-
-grep -qs 'saslpath = "/usr/lib/aarch64-linux-gnu"' \
-ldap/servers/slapd/ldaputil.c || exit 1
-sed -i 's|\(saslpath = "/usr/\)lib\(/aarch64-linux-gnu"\)|\1lib64\2|g' \
-ldap/servers/slapd/ldaputil.c
-
 %build
 %ifarch mipsel
 export LDFLAGS='-latomic'
@@ -220,6 +201,7 @@ export LDFLAGS='-latomic'
 	--with-systemdsystemconfdir=%_sysconfdir/systemd/system \
 	--with-systemdgroupname=%groupname \
         --with-tmpfiles-d=%_sysconfdir/tmpfiles.d \
+        --with-db=no \
 %if_with debug
         --enable-asan \
         --enable-debug \
@@ -428,6 +410,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 17 2024 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
+- 2.4.6 -> 3.1.1.
+
 * Mon Aug 19 2024 Stanislav Levin <slev@altlinux.org> 2.4.6-alt1
 - 2.4.5 -> 2.4.6
   + (fixes: CVE-2024-2199, CVE-2024-3657, CVE-2024-5953, CVE-2024-6237)
