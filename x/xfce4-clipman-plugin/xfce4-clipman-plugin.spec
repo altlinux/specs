@@ -1,6 +1,6 @@
 Name: xfce4-clipman-plugin
-Version: 1.6.6
-Release: alt2
+Version: 1.6.7
+Release: alt1
 
 Summary: Clipboard history plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Менеджер буфера обмена для Xfce
@@ -13,14 +13,18 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+%if_xfce4_wayland_support
 %def_enable wayland
+%else
+%def_disable wayland
+%endif
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
+BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: xorg-proto-devel libXtst-devel
 BuildRequires: libqrencode-devel
 %{?_enable_wayland:BuildRequires: wayland-devel libwayland-client-devel wlr-protocols}
-BuildRequires: intltool rpm-build-xdg
+BuildRequires: rpm-build-xdg
 
 Requires: xfce4-panel
 
@@ -76,6 +80,10 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 1.6.7-alt1
+- Enabled wayland support in the Sisyphus only.
+- Updated to 1.6.7.
+
 * Fri May 31 2024 Mikhail Efremov <sem@altlinux.org> 1.6.6-alt2
 - Enabled wayland support.
 
