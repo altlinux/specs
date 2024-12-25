@@ -1,6 +1,6 @@
 Name: tuxguitar
-Version: 1.6.4
-Release: alt2
+Version: 1.6.5
+Release: alt1
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL-2.0+
@@ -104,6 +104,9 @@ end
 %_bindir/tuxguitar
 
 %changelog
+* Wed Dec 25 2024 Andrey Kovalev <ded@altlinux.org> 1.6.5-alt1
+- update to 1.6.5
+
 * Mon Sep 02 2024 Andrey Kovalev <ded@altlinux.org> 1.6.4-alt2
 - fix update (closes: #51172)
 - fix icon display
