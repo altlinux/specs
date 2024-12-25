@@ -1,5 +1,5 @@
 Name:   python3-module-itemadapter
-Version:0.8.0
+Version:0.9.0
 Release:alt1
 
 Summary:Wrapper for data container objects
@@ -34,6 +34,9 @@ manner, regardless of their underlying implementation.
 %python3_sitelibdir/itemadapter-%version-py*.egg-info
 
 %changelog
+* Thu Aug 08 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.9.0-alt1
+- new version
+
 * Tue Apr 02 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Linux
 

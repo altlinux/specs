@@ -1,5 +1,5 @@
 Name:   python3-module-itemloaders
-Version:1.1.0
+Version:1.3.1
 Release:alt1
 
 Summary:Base library for scrapy's ItemLoader
@@ -32,6 +32,9 @@ Library to populate items using XPath and CSS with a convenient API
 %python3_sitelibdir/itemloaders-%{version}.dist-info
 
 %changelog
+* Thu Aug 08 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.3.1-alt1
+- new version
+
 * Tue Apr 02 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Linux
 

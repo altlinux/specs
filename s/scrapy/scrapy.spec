@@ -1,9 +1,9 @@
 Name: scrapy
-Version: 2.11.1
+Version: 2.12.0
 Release: alt1
 
 Summary: Scrapy, a fast high-level web crawling & scraping framework for Python.
-License: BSD3
+License: BSD-3-Clause
 Group: Development/Python
 Url: https://scrapy.org/
 
@@ -39,6 +39,12 @@ module for developing web crawlers used by scrapy
 %python3_sitelibdir/Scrapy-%version.dist-info
 
 %changelog
+* Wed Dec 25 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.12.0-alt1
+- new version
+
+* Thu Aug 08 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.11.2-alt1
+- new version
+
 * Mon Mar 04 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.11.1-alt1
 - update version
 
