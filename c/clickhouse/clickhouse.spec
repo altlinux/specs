@@ -1,7 +1,7 @@
 %global __find_debuginfo_files %nil
 %define _unpackaged_files_terminate_build 1
-%global llvm_version 17.0
-%global clang_version 17
+%global llvm_version 18.1
+%global clang_version 18
 %global __nprocs 8
 
 %def_with clang
@@ -29,7 +29,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 
 Name: clickhouse
 Version: 24.8.8.17
-Release: alt1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -262,6 +262,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Tue Dec 24 2024 Anton Farygin <rider@altlinux.ru> 24.8.8.17-alt2
+- built with llvm/clang 18.1
+
 * Thu Dec 12 2024 Anton Farygin <rider@altlinux.ru> 24.8.8.17-alt1
 - 24.8.7.41 -> 24.8.8.17
 
