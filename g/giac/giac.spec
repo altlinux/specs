@@ -1,11 +1,11 @@
-%define tarver 1.9.0-69
+%define tarver 1.9.0-998
 %define mainver %( echo %tarver | sed 's/-.*//' )
 %define soname  0
 
 %def_with cocoa
 
 Name: giac
-Version: 1.9.0.996
+Version: 1.9.0.998
 Release: alt1
 
 Summary: Computer algebra system
@@ -89,10 +89,6 @@ find . -type f -iname '.*' -delete
 %build
 # Fix crashes
 export CXXFLAGS+=' -std=c++14 -Wp,-U_GLIBCXX_ASSERTIONS'
-# %%ifarch armh ppc64le
-# %%add_optflags -no-pie
-# %%remove_optflags -fPIC
-# %%endif
 %autoreconf
 %configure \
     --enable-gui \
@@ -204,6 +200,9 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/*
 
 %changelog
+* Wed Dec 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.0.998-alt1
+- New version 1.9.0.998.
+
 * Tue Nov 19 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.0.996-alt1
 - New version 1.9.0.996.
 
