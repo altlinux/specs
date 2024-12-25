@@ -1,6 +1,6 @@
 Name: xfce4-fsguard-plugin
-Version: 1.1.3
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: Plugin checks the chosen mountpoint for free disk space
 License: BSD-2-Clause
@@ -13,8 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel >= 4.12 libxfce4ui-gtk3-devel libxfce4util-devel
-BuildRequires: intltool
+BuildRequires: libxfce4panel-gtk3-devel >= 4.16 libxfce4ui-gtk3-devel libxfce4util-devel
 
 Requires: xfce4-panel
 
@@ -50,6 +49,9 @@ directory in the file manager.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 1.1.4-alt1
+- Updated to 1.1.4.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt2
 - Fixed build: added intltool to BR.
 
