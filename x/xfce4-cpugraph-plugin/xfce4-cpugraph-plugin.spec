@@ -1,6 +1,6 @@
 Name: xfce4-cpugraph-plugin
-Version: 1.2.10
-Release: alt3
+Version: 1.2.11
+Release: alt1
 
 Summary: CPU monitor for the Xfce panel
 License: GPLv2+
@@ -16,7 +16,6 @@ BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel >= 4.16.0 libxfce4util-devel >= 4.17.2
 BuildRequires: libxfconf-devel >= 4.12.0
 BuildRequires: gcc-c++
-BuildRequires: intltool
 
 Requires: xfce4-panel >= 4.17
 
@@ -54,6 +53,9 @@ the system. The colors and the size of the plugin are customizable.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.2.11-alt1
+- Updated to 1.2.11.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt3
 - Fixed build: added intltool to BR.
 
