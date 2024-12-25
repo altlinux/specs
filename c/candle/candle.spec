@@ -2,7 +2,7 @@
 %define candle_prefix %_libdir/%name
 
 Name: candle
-Release: alt3
+Release: alt4
 Version: 1.2
 
 Summary: %name application with G-Code visualizer written in Qt
@@ -47,7 +47,7 @@ Supported functions:
 
 %install
 mkdir -p %buildroot{%_bindir,%_pixmapsdir,%_desktopdir,%candle_prefix}
-install -m755 %name %buildroot%candle_prefix/%{name}-bin
+install -m755 %name %buildroot%candle_prefix/%name-bin
 install -Dpm 0644 src/images/%{name}_256.png %buildroot%_iconsdir/hicolor/256x256/apps/%name.png
 install -Dpm 0644 %SOURCE1 %buildroot%_desktopdir/
 
@@ -71,6 +71,9 @@ EOF
 %_iconsdir/hicolor/256x256/apps/%name.png
 
 %changelog
+* Wed Dec 25 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.2-alt4
+- change the display of the translation file search application
+
 * Mon Dec 02 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.2-alt3
 - use xcb when starting the app
 - fix the display of icons with a dark theme (closes: 50419)
