@@ -166,8 +166,8 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	126
-Release:	alt2
+Version:	128
+Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -714,6 +714,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Thu Dec 26 2024 Sergey V Turchin <zerg@altlinux.org> 128-alt1
+- new version
+
 * Fri Nov 15 2024 Sergey V Turchin <zerg@altlinux.org> 126-alt2
 - enable AV1 decoder
 
