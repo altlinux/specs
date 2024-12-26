@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.10
+Version: 1.6.11
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,16 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Dec 26 2024 Anton Midyukov <antohami@altlinux.org> 1.6.11-alt1
+- efi: add use/efi/dtb to +efi target
+- tar2fs: copy default devicetree to ESP
+- net-eth: setup en*.network for networkd-dhcp{,4}
+- doc/params.txt: add description for ISO_LEVEL
+- kernel: set default KFLAVOURS=6.12
+- tar2fs: use up register for grub efi binaries (aarch64, riscv64, loongarch64)
+- initrd-bootchain: add variable BOOTCHAIN_TMPFS_SIZE
+- add latest commits from education, workstation, kworkstation
+
 * Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 1.6.10-alt1
 - rescue+extra: cleanup
 - firmware: add firmware-linux-qcom for aarch64
