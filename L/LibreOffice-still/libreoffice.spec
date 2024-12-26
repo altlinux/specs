@@ -36,8 +36,8 @@
 %def_disable gtk4
 
 Name: LibreOffice-still
-%define hversion 24.2
-%define urelease 7.2
+%define hversion 24.8
+%define urelease 3.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -100,7 +100,6 @@ Patch407: alt-007-vnd.ms-word-mimetype.patch
 Patch410: alt-010-svg-icons-1.patch
 Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
-Patch413: alt-013-icu74.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
@@ -118,7 +117,7 @@ Patch700: alt-700-external-project-concurrency.patch
 %add_findreq_skiplist %lodir/sdk/idl
 %add_findreq_skiplist %lodir/sdk/include
 %filter_from_requires /com[.]sun[.]/d
-%add_python3_req_skip pyuno strings
+%add_python3_req_skip pyuno strings officehelper uno unohelper
 
 
 BuildRequires(pre): rpm-build-python3
@@ -161,6 +160,7 @@ BuildRequires: qt5-base-devel
 %endif
 %if_enabled qt6
 BuildRequires: qt6-base-devel
+BuildRequires: qt6-multimedia-devel
 %endif
 # 6.1.0
 BuildRequires: libnumbertext-devel
@@ -216,6 +216,8 @@ BuildRequires: libwebp-devel libtiff-devel
 BuildRequires: frozen-devel
 # 24.2
 BuildRequires: libargon2-devel
+# 24.8
+BuildRequires: rhino
 
 %if_without python
 BuildRequires: python3-dev
@@ -436,7 +438,6 @@ echo Direct build
 #patch410 -p1
 #patch411 -p1
 #patch412 -p1
-%patch413 -p1
 
 %patch500 -p0
 
@@ -573,6 +574,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --without-export-validation \
         --without-lxml \
         --without-system-libfixmath \
+        --with-rhino-jar=/usr/share/java/rhino/rhino.jar \
         \
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
@@ -845,6 +847,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 24.8.3.2-alt1
+- New version.
+
 * Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 24.2.7.2-alt1
 - New version.
 - Provide LibreOffice-still-qt5 and LibreOffice-still-kde5 to upgrade from KDE5.
