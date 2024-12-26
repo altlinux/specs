@@ -3,20 +3,21 @@
 %def_enable man
 
 Name: mdbtools
-Version: 1.0.0
-Release: alt1.2
+Version: 1.0.1
+Release: alt1
 
 Summary: Utilities for use M$ Access databases under Linux
 Group: Databases
 License: GPL-2.0 and LGPL-2.0
 Url: https://github.com/mdbtools/mdbtools
 
+Vcs: https://github.com/mdbtools/mdbtools.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-0.9.3-fc-mdb-sql-compile-fix.patch
 
 Requires: lib%name = %EVR
 
@@ -65,7 +66,6 @@ statically linked with MDB Tools.
 
 %prep
 %setup
-%patch -p1
 # always use system GLIB:
 sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 
@@ -84,6 +84,9 @@ sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 
 %install
 %makeinstall_std
+
+%check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/*
@@ -107,6 +110,9 @@ sed -i 's|\(Cflags:.*\)$|\1 -DHAVE_GLIB=1|' *.pc.in
 %endif
 
 %changelog
+* Fri Dec 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sun Jul 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.2
 - fixed build with gcc-13 (fc patch)
 
