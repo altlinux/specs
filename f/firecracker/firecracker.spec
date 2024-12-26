@@ -3,7 +3,7 @@
 %define clib gnu
 
 Name: firecracker
-Version: 0.23.1
+Version: 1.10.1
 Release: alt1
 Summary: Virtual Machine Monitor for creating microVMs
 License: Apache-2.0
@@ -11,7 +11,7 @@ Group: Emulators
 Url: https://firecracker-microvm.github.io/
 Source: %name-%version.tar
 Patch: %name-%version.patch
-Patch1: alt-allow-FUTEX_WAIT_BITSET_PRIVATE-argument-to-futex-syscall.patch
+Patch2: 0001-remove-aws-lc-rs.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -21,6 +21,7 @@ BuildRequires: rust >= 1.35.0
 BuildRequires: musl-devel
 %endif
 BuildRequires: libfdt-devel
+BuildRequires: clang-devel
 BuildRequires: /proc
 
 %description
@@ -30,31 +31,20 @@ multi-tenant container and function-based services.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
+%patch2 -p1
 
 %build
 cargo build \
     --release \
     %{?_smp_mflags} \
     --offline \
-    --target %_arch-unknown-linux-%clib
+    --target %_arch-unknown-linux-%clib \
+    --package={cpu-template-helper,firecracker,jailer,rebase-snap,seccompiler,snapshot-editor}
+
 
 %install
-#cargo install \
-#    --no-track \
-#    --all-features \
-#    %{?_smp_mflags} \
-#    --target %_arch-unknown-linux-%clib \
-#    --path `pwd`
-
-#    --root=%buildroot%prefix \
-
-# remove spurious file
-#rm %buildroot%prefix/.crates.toml
-
 mkdir -p %buildroot%_bindir
-install -p -m 755 build/cargo_target/%_arch-unknown-linux-%clib/release/firecracker %buildroot%_bindir/
-install -p -m 755 build/cargo_target/%_arch-unknown-linux-%clib/release/jailer %buildroot%_bindir/
+install -p -m 755 target/%_arch-unknown-linux-%clib/release/{cpu-template-helper,firecracker,jailer,rebase-snap,seccompiler-bin,snapshot-editor} %buildroot%_bindir/
 
 %check
 cargo test \
@@ -66,8 +56,15 @@ cargo test \
 %doc README.md
 %_bindir/firecracker
 %_bindir/jailer
+%_bindir/cpu-template-helper
+%_bindir/rebase-snap
+%_bindir/seccompiler-bin
+%_bindir/snapshot-editor
 
 %changelog
+* Thu Dec 26 2024 Alexander Burmatov <thatman@altlinux.org> 1.10.1-alt1
+- new version 1.10.1
+
 * Fri Dec 18 2020 Alexey Shabalin <shaba@altlinux.org> 0.23.1-alt1
 - new version 0.23.1
 
