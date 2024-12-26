@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -46,6 +46,7 @@ Patch31: xrdp-0.9.15-g_check_user_in_group.patch
 
 BuildPreReq: rpm-build-intro rpm-macros-intro-conflicts
 BuildRequires: libjpeg-devel
+BuildRequires: libturbojpeg-devel
 BuildRequires: libpam-devel
 BuildRequires: libssl-devel
 BuildRequires: libX11-devel
@@ -68,7 +69,6 @@ BuildRequires: imlib2-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libpixman-devel
 BuildRequires: fdkaac
-BuildRequires: libjpeg-devel
 BuildRequires: liblame-devel
 BuildRequires: libfdk-aac-devel
 BuildRequires: libx264-devel
@@ -304,6 +304,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.2-alt2
+- Requires libturbojpeg-devel.
+
 * Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.10.2-alt1
 - New version.
 
