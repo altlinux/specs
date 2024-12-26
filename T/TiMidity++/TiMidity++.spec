@@ -8,7 +8,7 @@
 
 Name: TiMidity++
 Version: 2.15.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPLv2
@@ -105,7 +105,7 @@ timidity-eaw-patches.
 cp -a INSTALL INSTALL.orig
 
 %build
-%add_optflags -DUSE_INTERP_RESULT
+%add_optflags -DUSE_INTERP_RESULT -DSTDC_HEADERS
 %define _optlevel 3
 export EXTRACFLAGS="-DUSE_NON_CONST %optflags %optflags_fastmath %optflags_notraceback"
 %configure \
@@ -161,6 +161,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Thu Dec 26 2024 Dmitriy Khanzhin <jinn@altlinux.org> 2.15.0-alt1.3
+- NMU: fixed FTBFS (-Wimplicit-function-declaration).
+
 * Mon Nov 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.15.0-alt1.2
 - NMU: fixed FTBFS.
 
