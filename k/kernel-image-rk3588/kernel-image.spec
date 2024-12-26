@@ -1,7 +1,7 @@
 %def_without check
 
 Name: kernel-image-rk3588
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
 %define kernel_sublevel	.6
@@ -401,6 +401,15 @@ fi
 %modules_dir/build
 
 %changelog
+* Wed Dec 25 2024 Alexei Takaseev <taf@altlinux.org> 6.12.6-alt2
+- build rockchip pmic drivers as built-in:
+    * CONFIG_REGMAP_SPI=y
+    * CONFIG_MFD_RK8XX=y
+    * CONFIG_MFD_RK8XX_I2C=y
+    * CONFIG_MFD_RK8XX_SPI=y
+    * CONFIG_REGULATOR_RK808=y
+    * CONFIG_PHY_ROCKCHIP_SNPS_PCIE3=y
+
 * Fri Dec 20 2024 Alexei Takaseev <taf@altlinux.org> 6.12.6-alt1
 - v6.12.6 (2024-12-19).
 
