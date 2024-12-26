@@ -1,5 +1,5 @@
 Name: spirv-llvm14.0-translator
-Version: 14.0.3
+Version: 14.0.7
 Release: alt1
 
 Summary: LLVM 14 to SPIRV Translator
@@ -88,6 +88,9 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Thu Dec 12 2024 Andrey Kovalev <ded@altlinux.org> 14.0.7-alt1
+- Updated to upstream version 14.0.7.
+
 * Fri Aug 09 2024 Boris Yumankulov <boria138@altlinux.org> 14.0.3-alt1
 - initial build for ALT Sisyphus (ALT bug: 51109)
 

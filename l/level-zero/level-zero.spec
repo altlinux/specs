@@ -1,5 +1,6 @@
-Name: liboneapi-level-zero1
-Version: 1.17.28
+%define soversion 1
+Name: level-zero
+Version: 1.19.2
 Release: alt1
 
 Summary: OneAPI Level Zero Specification Headers and Loader
@@ -25,14 +26,24 @@ and can be adapted to support broader set of languages features such as
 function pointers, virtual functions, unified memory,
 and I/O capabilities.
 
-%package devel
+%package -n libze%soversion
+Summary: This package contains the shared libraries for Level Zero
+Group: Development/C
+Conflicts: liboneapi-level-zero1 = %EVR
+Obsoletes: liboneapi-level-zero1 = %EVR
+
+%description -n libze%soversion
+This package contains the shared libraries for Level Zero.
+
+%package -n libze-devel
 Summary: The oneAPI Level Zero Specification Headers and Loader development package
 Group: Development/C
-Requires: %name = %EVR
+Requires: libze%soversion = %EVR
+Provides: oneapi-level-zero-devel = %EVR
 
-%description devel
-The %name-devel package contains library and header files for
-developing applications that use %name.
+%description -n libze-devel
+The libze-devel package contains library and header files for
+developing applications that use libze.
 
 %prep
 %setup
@@ -44,17 +55,17 @@ developing applications that use %name.
 %install
 %cmake_install
 
-%files
+%files -n libze%soversion
 %doc LICENSE
 %doc README.md SECURITY.md
-%_libdir/libze_loader.so.1.*
-%_libdir/libze_loader.so.1
-%_libdir/libze_validation_layer.so.1.*
-%_libdir/libze_validation_layer.so.1
-%_libdir/libze_tracing_layer.so.1.*
-%_libdir/libze_tracing_layer.so.1
+%_libdir/libze_loader.so.%soversion.*
+%_libdir/libze_loader.so.%soversion
+%_libdir/libze_validation_layer.so.%soversion.*
+%_libdir/libze_validation_layer.so.%soversion
+%_libdir/libze_tracing_layer.so.%soversion.*
+%_libdir/libze_tracing_layer.so.%soversion
 
-%files devel
+%files -n libze-devel
 %_includedir/level_zero
 %_libdir/libze_loader.so
 %_libdir/libze_validation_layer.so
@@ -63,6 +74,10 @@ developing applications that use %name.
 %_pkgconfigdir/level-zero.pc
 
 %changelog
+* Fri Dec 13 2024 Andrey Kovalev <ded@altlinux.org> 1.19.2-alt1
+- new version 1.19.2
+- built according to shared libs policy
+
 * Sat Aug 17 2024 Boris Yumankulov <boria138@altlinux.org> 1.17.28-alt1
 - new version 1.17.28
 

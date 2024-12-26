@@ -1,9 +1,9 @@
 %define soversion 1
 %define llvmversion 14
-%define oclocversion 24.39.1
+%define oclocversion 24.48.1
 
 Name: intel-compute-runtime
-Version: 24.39.31294.12
+Version: 24.48.31907.6
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -27,7 +27,7 @@ BuildRequires: libdrm-devel
 BuildRequires: libglvnd-devel
 BuildRequires: ocl-icd-devel
 BuildRequires: opencl-headers
-BuildRequires: liboneapi-level-zero1-devel
+BuildRequires: libze-devel
 
 Requires: intel-ocloc = %{version}-%{release}
 Requires: intel-opencl = %{version}-%{release}
@@ -62,8 +62,8 @@ intel-ocloc (a tool for managing Intel Compute GPU device binary format).
 Summary: OpenCL support implementation for Intel GPUs
 Group: System/Libraries
 Provides: intel-opencl-icd
-Requires: libigdfcl1
-Requires: libigc1
+Requires: libigdfcl2
+Requires: libigc2
 Requires: libigdgmm12
 
 %description -n intel-opencl
@@ -76,8 +76,8 @@ the programs and run them on the GPU.
 %package -n libze-intel-gpu%soversion
 Summary: oneAPI L0 support implementation for Intel GPUs
 Group: System/Libraries
-Requires: libigdfcl1
-Requires: libigc1
+Requires: libigdfcl2
+Requires: libigc2
 Requires: libigdgmm12
 
 %description -n libze-intel-gpu%soversion
@@ -137,6 +137,9 @@ mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 %_includedir/ocloc_api.h
 
 %changelog
+* Thu Dec 12 2024 Andrey Kovalev <ded@altlinux.org> 24.48.31907.6-alt1
+- Updated to upstream version 24.48.31907.6.
+
 * Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 24.39.31294.12-alt1
 - Updated to upstream version 24.39.31294.12.
 - Added patch for fix error in Davinci Resolve (closes: #51702).

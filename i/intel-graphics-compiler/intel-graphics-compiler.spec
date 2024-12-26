@@ -1,8 +1,8 @@
-%define soversion 1
+%define soversion 2
 %define llvmversion 14
 
 Name: intel-graphics-compiler
-Version: 1.0.17791.9
+Version: 2.3.1
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -11,7 +11,7 @@ URL: https://github.com/intel/intel-graphics-compiler
 
 Source: %name-%version.tar
 
-Patch1: %name-1.0.17384.11-alt-build.patch
+Patch1: %name-2.3.1-alt-build.patch
 
 BuildRequires(pre): rpm-build-cmake
 
@@ -104,14 +104,18 @@ popd
 pushd build
 %makeinstall_std
 popd
-
+pushd %buildroot%_libdir
+ln -sf libigc.so.%soversion libigc.so
+ln -sf libiga64.so.%soversion libiga64.so
+ln -sf libigdfcl.so.%soversion libigdfcl.so
+popd
 
 %files -n libigc%soversion
 %_libdir/libigc.so.%soversion
 %_libdir/libigc.so.%soversion.*
 %_libdir/libiga64.so.%soversion
 %_libdir/libiga64.so.%soversion.*
-%_libdir/igc/NOTICES.txt
+%_libdir/igc2/NOTICES.txt
 
 %files -n libigc-devel
 %_libdir/libigc.so
@@ -120,7 +124,6 @@ popd
 %_includedir/iga
 
 %files -n libigc-tools
-%_bindir/GenX_IR
 %_bindir/iga64
 
 %files -n libigdfcl%soversion
@@ -133,6 +136,9 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Thu Dec 12 2024 Andrey Kovalev <ded@altlinux.org> 2.3.1-alt1
+- Updated to upstream version 2.3.1.
+
 * Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 1.0.17791.9-alt1
 - Updated to upstream version 1.0.17791.9.
 
