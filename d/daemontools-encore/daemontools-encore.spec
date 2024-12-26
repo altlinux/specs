@@ -5,7 +5,7 @@
 Name: daemontools-encore
 Summary: Daemontools by DJB
 Version: 1.10
-Release: alt3
+Release: alt4
 License: Public domain
 Group: System/Servers
 Url: http://untroubled.org/daemontools-encore/
@@ -126,6 +126,9 @@ fi
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Dec 26 2024 Paul Wolneykien <manowar@altlinux.org> 1.10-alt4
+- Fixed build.
+
 * Thu Oct 17 2024 Anton Midyukov <antohami@altlinux.org> 1.10-alt3
 - NMU: drop dependency on startup package (not needed when systemd)
   (Closes: 51588)
