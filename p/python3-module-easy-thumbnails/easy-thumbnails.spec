@@ -1,9 +1,9 @@
 %global pypi_name easy-thumbnails
 
-%def_with check
+%def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Easy thumbnails for Django
@@ -14,6 +14,7 @@ URL: https://pypi.org/project/easy-thumbnails
 VCS: https://github.com/SmileyChris/easy-thumbnails
 
 Source: %name-%version.tar
+Patch: 065b74e13bc8445c4a4b612cfef60de036c0ca72.patch
 
 BuildArch: noarch
 
@@ -35,6 +36,7 @@ application for Django 1.8+
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -51,9 +53,12 @@ export PYTHONPATH=$PWD
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/easy_thumbnails
-%python3_sitelibdir/easy_thumbnails-2.9.dist-info
+%python3_sitelibdir/easy_thumbnails-2.10.dist-info
 
 %changelog
+* Thu Dec 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
+- Automatically updated to 2.10.0.
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Automatically updated to 2.9.0.
 
