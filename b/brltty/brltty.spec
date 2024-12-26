@@ -1,5 +1,4 @@
 %define _libexecdir %_prefix/libexec
-%define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 %filter_from_requires /^sudo$/d
 
@@ -12,9 +11,6 @@
 %def_with at_spi2
 %def_with python3
 %def_with speech_dispatcher
-%if_with speech_dispatcher
-%define libspeechd_ver %{get_version libspeechd}
-%endif
 
 %def_without at_spi1
 %def_without ocaml
@@ -26,7 +22,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt3
+Release: alt3.1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -198,9 +194,10 @@ This package provides the OCaml binding for BrlAPI.
 
 %prep
 %setup
-%qIF_ver_gteq %libspeechd_ver 0.8
+%if_with speech_dispatcher
 %patch2 -p2
 %endif
+
 %patch5 -p1
 sed -i 's;\/usr\(/bin/true\);\1;' Autostart/Systemd/brltty-device@.service
 
@@ -406,6 +403,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Thu Dec 26 2024 Artem Semenov <savoptik@altlinux.org> 6.6-alt3.1
+- NMU: Fixed build with speech-dispatcher
+
 * Sun Jun 23 2024 Anton Midyukov <antohami@altlinux.org> 6.6-alt3
 - Set udev rules location (fix ftbfs)
 
