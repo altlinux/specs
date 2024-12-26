@@ -1,6 +1,6 @@
 Name: xfce4-time-out-plugin
-Version: 1.1.3
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: Timeout plugin for Xfce panel
 License: GPLv2+
@@ -12,8 +12,8 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-time-out-plugin.git
 Source: %name-%version.tar
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.12
-BuildRequires: intltool
+BuildRequires: libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.16.0
+BuildRequires: libX11-devel
 
 Requires: xfce4-panel
 
@@ -51,6 +51,9 @@ exercising, cleaning up or whatever.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.1.4-alt1
+- Updated to 1.1.4.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 1.1.3-alt2
 - Fixed build: added intltool to BR.
 
