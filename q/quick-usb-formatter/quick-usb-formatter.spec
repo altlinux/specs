@@ -1,7 +1,7 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt22
-%K5init no_altplace
+Release: alt23
+%K6init no_altplace
 
 Group: Graphical desktop/KDE
 Summary: A small KDE4 application to format usb sticks and devices
@@ -14,68 +14,52 @@ Requires: /sbin/mkfs.ntfs /sbin/mkfs.fat /sbin/mke2fs /sbin/mkfs.exfat /usr/sbin
 
 Source: quick-usb-formatter-%version.tar
 Source10: ru.po
-Patch1: alt-path.patch
-Patch2: alt-desktopfile.patch
-Patch3: alt-shell.patch
-Patch4: alt-kf5.patch
-Patch5: alt-big-message.patch
-Patch6: alt-crypto-luks.patch
-Patch7: alt-fix-hang-format-ext-filesystem.patch
-Patch8: alt-force-f2fs.patch
-Patch9: alt-detect-exfatprogs.patch
-Patch10: alt-cmake.patch
 
 # Automatically added by buildreq on Thu Oct 06 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: extra-cmake-modules kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel python-module-google python3-dev ruby ruby-stdlibs
-BuildRequires(pre): rpm-build-kf5
-BuildRequires: libX11-devel extra-cmake-modules gettext qt5-base-devel qt5-x11extras-devel qt5-speech-devel
+BuildRequires(pre): rpm-build-kf6
+BuildRequires: libX11-devel extra-cmake-modules gettext qt6-base-devel qt6-speech-devel
 BuildRequires: libcryptsetup-devel libcryptsetup
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel-static kf5-kio-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-kdoctools-devel-static kf6-kio-devel
+BuildRequires: kf6-ki18n-devel kf6-kxmlgui-devel kf6-kconfig-devel qt6-declarative-devel kf6-kauth-devel
 
 %description
 Quick Usb Formatter is a tiny app designed for enhance the usability of the
 device notifier, an additional option for quick format usb sticks.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1 -b .kf5
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-
-sed -ri '/find_package.*MSGFMT/afind_package(X11)' CMakeLists.txt
+%setup
 
 install -m 0644 %SOURCE10 translations/
 
 %build
-%K5build
+%K6build \
+    -DLOCALE_INSTALL_DIR=/usr/share/locale
 
 %install
-%K5install
-%K5install_move data solid
+%K6install
+%K6install_move data solid
 %find_lang --with-kde quickusbformatter
 
 %files -f quickusbformatter.lang
 %doc README.txt
-%_K5bin/quickusbformatter
-%_K5libexecdir/kauth/qufhelper
-%_K5data/solid/actions/*quickusbformatter*.desktop
-%_K5xdgapp/quickusbformatter.desktop
-#%_K5conf_dbus_sysd/org.kde.auth.quf.conf
-%_K5dbus/system.d/org.kde.auth.quf.conf
-%_K5dbus_sys_srv/org.kde.auth.quf.service
+%_K6bin/quickusbformatter
+%_K6libexecdir/kf6/kauth/qufhelper
+%_K6data/solid/actions/*quickusbformatter*.desktop
+%_K6xdgapp/quickusbformatter.desktop
+#%_K6conf_dbus_sysd/org.kde.auth.quf.conf
+%_K6dbus/system.d/org.kde.auth.quf.conf
+%_K6dbus_sys_srv/org.kde.auth.quf.service
 %_datadir/polkit-1/actions/org.kde.auth.quf.policy
 
 
 %changelog
+* Tue Nov 26 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.6-alt23
+- build with KF6
+- fix luks encryption
+
 * Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 0.6-alt22
 - cleanup last patch
 
