@@ -1,7 +1,7 @@
 %define _check_contents_method relaxed
 
 Name:    trivy-db
-Version: 20241224
+Version: 20241226
 Release: alt1
 
 Summary: Database for Trivy
@@ -41,6 +41,9 @@ fi
 %attr(0644,_trivy,_trivy) %_sharedstatedir/trivy/db/*
 
 %changelog
+* Thu Dec 26 2024 Cronbuild Service <cronbuild@altlinux.org> 20241226-alt1
+- repocop cronbuild 20241226. At your service.
+
 * Tue Dec 24 2024 Cronbuild Service <cronbuild@altlinux.org> 20241224-alt1
 - repocop cronbuild 20241224. At your service.
 
