@@ -1,15 +1,17 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define _name robots
 %define xdg_name org.gnome.Robots
 %define __name gnome-%_name
-%define ver_major 40
+%define ver_major 41
 %define _libexecdir %_prefix/libexec
 
+%def_disable bootstrap
+
 Name: gnome-games-%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
 License: GPL-3.0-or-later
@@ -21,6 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%versio
 %else
 Source: %__name-%version.tar
 %endif
+Source1: %__name-%version-cargo.tar
 
 Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnobots
@@ -30,15 +33,14 @@ Provides:  gnome-games-gnobots = %EVR
 %define gtk_ver 4.10
 %define adw_ver 1.2
 
-Requires: gst-plugins-base1.0
+# for glycin
+Requires: bubblewrap glycin-loaders
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson rust-cargo yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver pkgconfig(librsvg-2.0)
-BuildRequires: pkgconfig(libgnome-games-support-2)
-BuildRequires: pkgconfig(gstreamer-1.0)
 %{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
 
 %description
@@ -48,11 +50,16 @@ number of UNIX systems, and comes with the BSD games package on Linux
 systems.
 
 %prep
-%setup -n %__name-%version
+%setup -n %__name-%version %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%add_optflags -lm
-%meson
+%meson \
+    -Dprofile=release
+%nil
 %meson_build
 
 %install
@@ -70,9 +77,12 @@ systems.
 %_man6dir/%__name.*
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Thu Dec 26 2024 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1 (rewrite in Rust)
+
 * Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
 - updated to 40.0-106-g6aa594b (ported to GTK4/Libadwaita)
 
