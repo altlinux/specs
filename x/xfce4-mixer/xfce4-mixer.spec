@@ -1,5 +1,5 @@
 Name: xfce4-mixer
-Version: 4.18.1
+Version: 4.18.2
 Release: alt1
 
 Summary: A volume control application and plugin for the Xfce panel
@@ -12,7 +12,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 0.1.1-alt1
-BuildRequires: intltool
 BuildRequires: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
 BuildRequires: libxfce4panel-gtk3-devel >= 4.14.0
 BuildRequires: gstreamer1.0-devel libkeybinder3-devel
@@ -32,8 +31,6 @@ the Xfce panel.
 %patch -p1
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag xfce4_mixer_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--with-host=linux \
@@ -54,7 +51,6 @@ the Xfce panel.
 %_bindir/*
 %_libdir/xfce4/panel/plugins/*
 %_desktopdir/*
-%_pixmapsdir/*
 %_datadir/xfce4/mixer/
 %_xfce4data/panel/plugins/*.desktop
 %_man1dir/*
@@ -62,6 +58,9 @@ the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- Updated to 4.18.2.
+
 * Tue May 02 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
 - Enabled debug (minimum level).
 - Updated summary and description.
