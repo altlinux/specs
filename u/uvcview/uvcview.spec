@@ -1,12 +1,12 @@
 Name: uvcview
 Version: 20071108
-Release: alt2
+Release: alt3
 
 %define LANG                    ru
 
 Summary:  UVCView is a simple USB Video Camera viewer.
 Group: Video
-License: GPL2
+License: GPL-2.0-only
 
 Url: http://freshmeat.net/projects/uvcview/
 
@@ -16,6 +16,7 @@ Source2: uvcviev.png
 
 Patch2: uvcview-20070907-stop.patch
 Patch3: uvcview-20071108-alt-linkage.patch
+Patch4: uvcview-20071108-alt-fix-implicit-function-declaration.patch
 
 BuildRequires: libgtk+2-devel
 
@@ -28,6 +29,7 @@ UVCView
 %setup -a1
 %patch2 -p1
 %patch3
+%patch4 -p2
 
 %build
 autoreconf -fisv
@@ -48,12 +50,13 @@ install -d -m 755 %buildroot%_desktopdir
 cat > %buildroot%_desktopdir/uvcview.desktop << EOF
 [Desktop Entry]
 Name=uvcview
+GenericName=USB Video Camera viewer
 GenericName[ru]=просмотр камеры uvcview 
 Comment=UVCView is a simple USB Video Camera viewer
-Icon=uvcview.png
+Icon=uvcview
 Categories=AudioVideo;Video;TV;
 TryExec=/usr/bin/uvcview
-Exec=/usr/bin/uvcview
+Exec=uvcview
 Terminal=true
 Type=Application
 EOF
@@ -64,7 +67,6 @@ install -m 644 po/ru.mo %buildroot%_datadir/locale/%LANG/LC_MESSAGES/uvcview.mo
 
 install -D -m 644 %SOURCE2 %buildroot%_niconsdir/uvcview.png
 
-			  
 %files -f %name.lang
 %_bindir/%name
 %doc ChangeLog AUTHORS
@@ -73,6 +75,9 @@ install -D -m 644 %SOURCE2 %buildroot%_niconsdir/uvcview.png
 %_niconsdir/uvcview.png
 
 %changelog
+* Thu Dec 26 2024 Dmitriy Khanzhin <jinn@altlinux.org> 20071108-alt3
+- NMU: fixed build (-Wimplicit-function-declaration)
+
 * Mon Jun 02 2014 Igor Vlasenko <viy@altlinux.org> 20071108-alt2
 - resurrected from orphaned
 
