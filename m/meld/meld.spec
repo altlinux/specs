@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.22
 %define xdg_name org.gnome.Meld
@@ -7,7 +7,7 @@
 
 Name: meld
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Meld Diff Viewer
 License: GPL-2.0-or-later
@@ -71,6 +71,10 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README*
 
 %changelog
+* Fri Dec 27 2024 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt2
+- updated to 3.22.2-11-g03cacbfd
+- don't use deprecated pipes module (ALT #52558)
+
 * Sun Mar 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.22.2-alt1
 - 3.22.2
 
