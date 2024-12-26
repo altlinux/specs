@@ -1,6 +1,6 @@
 
 Name: qmergeinifiles
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 
@@ -35,6 +35,9 @@ Utility to merge INI-format files
 %_bindir/*
 
 %changelog
+* Thu Dec 26 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 3.0.1-alt1
+- better comments handling(closes: 52533)
+
 * Thu Sep 14 2023 Daniil-Viktor Ratkin <krf10@altlinux.ru> 3.0.0-alt1
 - remove Qt dependencies
 
