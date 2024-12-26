@@ -9,7 +9,7 @@
 %def_disable docs
 %endif
 Name:		python3-module-wx
-Version:	4.2.1
+Version:	4.2.2
 Release:	alt1
 Group:		Development/Python3
 Summary:	The cross-platform GUI toolkit for the Python language
@@ -154,6 +154,9 @@ rm -rv %buildroot%python3_sitelibdir/wx/demo
 %_bindir/*
 
 %changelog
+* Thu Dec 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
+- Build new version.
+
 * Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 4.2.1-alt1
 - Build new version.
 - Build without docs.
