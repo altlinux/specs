@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: Cross-platform audio decoding python library
 Group: Development/Python3
@@ -17,6 +17,7 @@ Source: https://pypi.io/packages/source/a/%pypi_name/%pypi_name-%version.tar.gz
 %else
 Source: %pypi_name-%version.tar
 %endif
+Patch: %pypi_name-3.0.1-fc-alt-remove-legacy-sound-modules-absent-in-Python-3.13.patch
 
 BuildArch: noarch
 
@@ -37,6 +38,7 @@ The standard library wave, aifc, and sunau modules (for uncompressed audio forma
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -54,6 +56,9 @@ The standard library wave, aifc, and sunau modules (for uncompressed audio forma
 
 
 %changelog
+* Thu Dec 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt0.2
+- prepared for python-3.13 (fc patch) (ALT #52544)
+
 * Mon Aug 15 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt0.1
 - updated to v3.0.0-7-gb694c4f
 - ported to %%pyproject*/%%tox* macros
