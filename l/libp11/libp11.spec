@@ -1,21 +1,21 @@
-%define        _unpackaged_files_terminate_build 1
-%define        engines_dir $(pkg-config --variable=enginesdir --silence-errors libcrypto)
-%def_enable    check
+%define _unpackaged_files_terminate_build 1
+%define engines_dir %(pkg-config --variable=enginesdir --silence-errors libcrypto 2>/dev/null || echo unknown)
+%def_enable check
 
-Name:          libp11
-Version:       0.4.12.63
-Release:       alt0.2
-Summary:       Library for using PKCS#11 modules
-Group:         System/Libraries
-License:       LGPL-2.1-or-later
-Url:           https://github.com/OpenSC/libp11/wiki
-Vcs:           https://github.com/OpenSC/libp11.git
+Name: libp11
+Version: 0.4.13
+Release: alt1
+Summary: Library for using PKCS#11 modules
+Group: System/Libraries
+License: LGPL-2.1-or-later
+Url: https://github.com/OpenSC/libp11/wiki
+Vcs: https://github.com/OpenSC/libp11.git
 
-Source:        %name-%version.tar
-Patch:         %name-%version-alt.patch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
-Provides:      openssl-engine_pkcs11 = %version-%release
-Obsoletes:     openssl-engine_pkcs11 < %version-%release
+Provides: openssl-engine_pkcs11 = %version-%release
+Obsoletes: openssl-engine_pkcs11 < %version-%release
 
 BuildRequires: pkgconfig(p11-kit-1)
 BuildRequires: libssl-devel >= 0.9.8
@@ -32,24 +32,20 @@ BuildRequires: opensc
 Libp11 is a library implementing a small layer on top of PKCS#11 API
 to make using PKCS#11 implementations easier.
 
-%package       devel
-Summary:       Development files for %name
-Group:         Development/C++
-Requires:      %name = %version-%release
-Requires:      libssl-devel
+%package devel
+Summary: Development files for %name
+Group: Development/C++
+Requires: %name = %version-%release
+Requires: libssl-devel
 
-%description   devel
+%description devel
 Development files for %name.
 
 %prep
 %setup
 %patch -p1
 cat > README.ALT <<EOF
-In ALTLinux, the engine file has been placed in the
-%_libdir/openssl/engines directory instead of the default
-%_libdir/engines. This was done so in order to match our openssl
-installation.
-
+In ALTLinux, the engine file has been placed in the %engines_dir directory.
 Considering this new path, below is the suggested change to openssl.cnf
 in order to use this engine:
 
@@ -89,13 +85,13 @@ rm %buildroot%engines_dir/*.la
 rm -r %buildroot%_docdir/%name
 
 %check
-%make check || { cat ./tests/test-suite.log; exit 1; }
+%make VERBOSE=1 check
 
 %files
-%doc COPYING NEWS README.md README.ALT
+%doc NEWS README.md README.ALT
 %_libdir/libp11.so.*
-%_libdir/openssl/engines*/libpkcs11.so*
-%_libdir/openssl/engines*/pkcs11.so*
+%engines_dir/libpkcs11.so
+%engines_dir/pkcs11.so
 
 %files devel
 %_libdir/libp11.so
@@ -103,6 +99,9 @@ rm -r %buildroot%_docdir/%name
 %_includedir/*
 
 %changelog
+* Wed Dec 25 2024 Stanislav Levin <slev@altlinux.org> 0.4.13-alt1
+- 0.4.12 -> 0.4.13.
+
 * Fri Mar 22 2024 Stanislav Levin <slev@altlinux.org> 0.4.12.63-alt0.2
 - Reenabled testing (closes: #48229).
 
