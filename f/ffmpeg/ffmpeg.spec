@@ -3,7 +3,7 @@
 %endif
 
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
-%def_disable v4l2_request
+%def_enable v4l2_request
 
 # License
 %def_enable gpl
@@ -74,7 +74,7 @@
 %def_enable libssh
 %def_enable libtheora
 %def_enable libtwolame
-%def_disable libudev
+%def_enable libudev
 %def_enable libv4l2
 %def_enable libvidstab
 %def_enable libvorbis
@@ -161,7 +161,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	7.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -868,6 +868,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Fri Dec 27 2024 Anton Farygin <rider@altlinux.ru> 2:7.1-alt2
+- applied (again) v4l2request patches from https://github.com/jernejsk/FFmpeg
+
 * Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 2:7.1-alt1
 - 6.1.2 -> 7.1
 - turned on more tests in check section
