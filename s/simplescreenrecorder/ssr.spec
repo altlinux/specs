@@ -8,19 +8,19 @@
 %endif
 
 Name: simplescreenrecorder
-Version: 0.4.4
-Release: alt5
+Version: 0.4.4.0.23.9559
+Release: alt1
 
 Summary: Simple Screen Recording with OpenGL capture
 
 License: GPL-3.0 and ISC and GPL-3.0+ and Zlib
 Group: Video
 Url: https://www.maartenbaert.be/simplescreenrecorder/
+Vcs: git://github.com/MaartenBaert/ssr.git
 
 Source: https://github.com/MaartenBaert/ssr/archive/%version/ssr-%version.tar.gz
 Patch0: simplescreenrecorder-0.4.4-alt-hide-window-on-the-screen-recording.patch
-Patch1: simplescreenrecorder-0.4.4-upstream-fix-for-compatibility-with-ffmpeg6.patch
-Patch2: simplescreenrecorder-0.4.4-alt-fix-russian-translations.patch
+Patch1: simplescreenrecorder-0.4.4-alt-fix-russian-translations.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -52,10 +52,7 @@ Obsoletes: simplescreenrecording
 %prep
 %setup -n ssr-%version
 %patch0 -p2
-%if "%(rpmquery --qf '%%{VERSION}' libavformat-devel)" >= "6"
 %patch1 -p1
-%endif
-%patch2 -p1
 f="data/simplescreenrecorder.desktop"
 for s in "GenericName=Simple screen recorder" \
 	"GenericName[ru]=Запись видео с экрана" \
@@ -100,6 +97,11 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Fri Dec 27 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.4.0.23.9559-alt1
+- New version 0.4.4-23-g9559eb2.
+- Fixed build with ffmpeg7.
+- Added vcs tag.
+
 * Thu Mar 14 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt5
 - Simplified backporting to p10 branch.
 - Updated russian translations.
