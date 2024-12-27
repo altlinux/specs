@@ -1,5 +1,5 @@
 Name:           siril
-Version:        1.2.4
+Version:        1.2.5
 Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
@@ -101,27 +101,30 @@ fftwf_free(p);}\
 
 desktop-file-install \
     --dir=%{buildroot}%{_datadir}/applications \
-    platform-specific/linux/org.free_astro.siril.desktop
+    platform-specific/linux/org.siril.Siril.desktop
 
 %find_lang %{name}
 
 
 %check
-appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_astro.siril.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.siril.Siril.appdata.xml
 
 %files -f %{name}.lang
 
 %doc AUTHORS ChangeLog NEWS README.md LICENSE.md LICENSE_sleef.txt
 %{_bindir}/%{name}*
-%{_datadir}/applications/org.free_astro.siril.desktop
+%{_datadir}/applications/org.siril.Siril.desktop
 %{_datadir}/mime/packages/%{name}.xml
 %{_datadir}/icons/hicolor/*/*/*.svg
-%{_datadir}/metainfo/org.free_astro.siril.appdata.xml
+%{_datadir}/metainfo/org.siril.Siril.appdata.xml
 %{_datadir}/%{name}/
 %{_mandir}/man1/%{name}*
 
 
 %changelog
+* Fri Dec 27 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.5-alt1
+- 1.2.5
+
 * Sat Sep 14 2024 Ilya Mashkin <oddity@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 
