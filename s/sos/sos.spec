@@ -2,7 +2,7 @@
 
 Name: sos
 Version: 4.6.0
-Release: alt3
+Release: alt4
 
 Summary: A set of tools to gather troubleshooting information from a system
 License: GPL-2.0+
@@ -31,6 +31,9 @@ support technicians and developers.
 %prep
 %setup -n %name-%version
 %patch -p1
+
+# Quick hotfix for python3.13
+grep -rl 'pipes' | xargs sed -i 's/pipes/shlex/g'
 
 %build
 %pyproject_build
@@ -65,6 +68,9 @@ rm -rf %buildroot/usr/config/
 %_man5dir/sos.conf.5*
 
 %changelog
+* Fri Dec 27 2024 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt4
+- Removed dependency on pipes.
+
 * Sat Apr 20 2024 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt3
 - NMU: added runtime requirements (ALT #50102)
 
