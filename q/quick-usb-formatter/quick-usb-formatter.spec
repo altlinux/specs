@@ -1,11 +1,11 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt23
+Release: alt24
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
-Summary: A small KDE4 application to format usb sticks and devices
-License: LGPLv2+
+Summary: A small KDE application to format usb sticks and devices
+License: GPL-2.0-or-later
 Url: http://kde-apps.org/content/show.php?content=137493
 # git://git.chakraos.org/quick-usb-formatter.git
 
@@ -56,6 +56,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Fri Dec 27 2024 Sergey V Turchin <zerg@altlinux.org> 0.6-alt24
+- update package description (closes: 52559)
+
 * Tue Nov 26 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.6-alt23
 - build with KF6
 - fix luks encryption
