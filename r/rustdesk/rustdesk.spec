@@ -1,5 +1,5 @@
 Name: rustdesk
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
@@ -20,6 +20,7 @@ Patch1: %name-%version-alt-vendoring-config.patch
 Patch2: %name-%version-alt-cargolock-fix.patch
 Patch3: %name-%version-alt-fix-main-page-ru.patch
 Patch4: %name-%version-alt-change-ffmpeg-opts.patch
+Patch5: %name-%version-alt-libsciter-path-fix.patch
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
@@ -105,5 +106,8 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Fri Dec 27 2024 Anton Kurachenko <srebrov@altlinux.org> 1.3.6-alt1
+- New version 1.3.6.
+
 * Tue Dec 10 2024 Anton Kurachenko <srebrov@altlinux.org> 1.3.5-alt1
 - Initial build for Sisyphus.
