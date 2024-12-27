@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt7
+Release: alt8
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -206,6 +206,26 @@ Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
 %description mate-settings
 MATE settings for %distro_name
 
+%package gnome-settings
+BuildArch: noarch
+Summary: GNOME settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/GNOME
+Requires: dconf
+%branding_add_conflicts %flavour gnome-settings
+%branding_add_conflicts %flavour graphics
+Requires(post): libgio
+# To avoid install check conflicts
+Requires: %name-graphics = %EVR
+Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
+# Due to /usr/share/install3/lightdm-gtk-greeter.conf
+Conflicts: branding-simply-linux-system-settings
+Conflicts: branding-alt-workstation-gnome-settings
+Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
+
+%description gnome-settings
+GNOME settings for %distro_name
+
 %package slideshow
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
@@ -263,6 +283,9 @@ install mate-settings/lightdm-gtk-greeter.conf %buildroot/%_datadir/install3/lig
 mkdir -p %buildroot/%_datadir/mate-menu
 install mate-settings/applications.list-themed %buildroot/%_datadir/mate-menu/applications.list-themed
 
+mkdir -p %buildroot/%_datadir/glib-2.0/schemas
+install gnome-settings/50_gnome-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
+
 #graphics
 mkdir -p %buildroot/%_datadir/design/%theme
 cp -a images/product-logo.png %buildroot/%_datadir/design/%theme/icons/system-logo.png
@@ -284,6 +307,10 @@ shell_config_del /etc/sysconfig/grub2 GRUB_THEME
 %else
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 %endif
+
+%post gnome-settings
+[ "$1" -eq 1 ] || exit 0
+/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
 %post indexhtml
 %_sbindir/indexhtml-update
@@ -332,6 +359,9 @@ fi
 %_datadir/install3/lightdm-gtk-greeter.conf
 %_datadir/mate-menu/applications.list-themed
 
+%files gnome-settings
+%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
+
 %files slideshow
 /etc/alterator/slideshow.conf
 /usr/share/install2/slideshow
@@ -347,6 +377,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Dec 27 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt8
+- Add gnome-settings and default background
+
 * Mon Dec 23 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt7
 - Add filling of some fields os-release
 
