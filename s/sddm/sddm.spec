@@ -8,8 +8,8 @@
 
 Name: sddm
 Version: 0.21.0
-Release: alt1
-%K5init no_altplace man
+Release: alt2
+%K6init no_altplace man
 
 Group: Graphical desktop/KDE
 Summary: Lightweight QML-based display manager
@@ -17,11 +17,10 @@ Url: https://github.com/sddm/sddm
 License: GPLv2+
 
 Requires: xinitrc xauth
-Requires: qt5-quickcontrols
+Requires: libqt6-quickcontrols2
 
 Source: %name-%version.tar
 Source1: sddm.conf
-Source2: tmpfiles-sddm.conf
 Source3: ru.ts
 Source10: sddm.pam
 Source11: sddm-autologin.pam
@@ -38,16 +37,15 @@ Patch102: alt-systemd-unit.patch
 Patch103: alt-show-avatars.patch
 Patch104: alt-sddm-etc.locale.conf.patch
 Patch105: alt-detect-keyboard.patch
-Patch106: alt-sddm-greeter-swbackend.patch
 Patch107: alt-sddm-etc.sysconfig.i18n.patch
 #
 Patch201: alt-sddm-fix-pw-do-not-match.patch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules glibc-devel
 BuildRequires: libpam-devel libsystemd-devel libudev-devel
 BuildRequires: libxcb-devel libXau-devel libXdmcp-devel
-BuildRequires: qt5-declarative-devel qt5-tools-devel
+BuildRequires: qt6-declarative-devel qt6-tools-devel
 BuildRequires: python3-module-docutils
 
 %description
@@ -57,23 +55,12 @@ ability to create smooth, animated user interfaces.
 
 %prep
 %setup -n %name-%version
-%patch10 -p1
-
-%patch100 -p1 -b .defaults
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
-%patch106 -p1
-%patch107 -p1
-
-%patch201 -p1
+%autopatch -p1
 
 sed -i 's|rst2man2.py|rst2man.py3|' data/man/CMakeLists.txt
 
 %build
-%K5build \
+%K6build \
     -DDATA_INSTALL_DIR=%_datadir/sddm \
     -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir/sddm \
     -DLIBEXEC_INSTALL_DIR=%_libexecdir/sddm \
@@ -89,21 +76,21 @@ sed -i 's|rst2man2.py|rst2man.py3|' data/man/CMakeLists.txt
     -DCONFIG_FILE="%sddm_confdir/sddm.conf" \
     -DCONFIG_DIR="%_sysconfdir/sddm.conf.d" \
     -DSYSTEM_CONFIG_DIR="%_datadir/sddm/conf.d" \
-    -DQT_IMPORTS_DIR="%_qt5_qmldir" \
+    -DQT_IMPORTS_DIR="%_qt6_qmldir" \
     -DDBUS_CONFIG_DIR=%_sysconfdir/dbus-1/system.d \
     -DDBUS_CONFIG_FILENAME="sddm_org.freedesktop.DisplayManager.conf" \
     -DUID_MIN=500 \
+    -DBUILD_WITH_QT6=ON \
     -DUID_MAX=32000 
 
-lconvert-qt5 -i data/translations/ru.ts %SOURCE3 -o data/translations/ru.ts.new
+lconvert-qt6 -i data/translations/ru.ts %SOURCE3 -o data/translations/ru.ts.new
 rm -f data/translations/ru.ts
 mv data/translations/ru.ts{.new,}
 
 %install
-%K5install
+%K6install
 
 install -Dm 0644 %SOURCE1 %buildroot%sddm_confdir/sddm.conf
-install -Dpm 0644 %SOURCE2 %buildroot%_tmpfilesdir/sddm.conf
 install -d %buildroot%_runtimedir/sddm
 install -d %buildroot%_localstatedir/sddm
 install -d %buildroot%_sysconfdir/sddm.conf.d
@@ -136,8 +123,8 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 %config(noreplace) %_sysconfdir/dbus-1/system.d/sddm_org.freedesktop.DisplayManager.conf
 %_libexecdir/sddm/
 %_bindir/sddm
-%_bindir/sddm-greeter
-%_K5qml/*
+%_bindir/sddm-greeter-qt6
+%_K6qml/*
 %_datadir/sddm/
 %_man1dir/*.*
 %_man5dir/*.*
@@ -147,6 +134,10 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 %_tmpfilesdir/sddm.conf
 
 %changelog
+* Fri Dec 27 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.21.0-alt2
+- build with qt6
+- drop alt-sddm-greeter-swbackend.patch
+
 * Tue Sep 24 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.21.0-alt1
 - new version (0.21.0)
 - drop old patches
