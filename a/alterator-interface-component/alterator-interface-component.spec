@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Components interface for alterator browser
@@ -56,6 +56,9 @@ install -v -p -m 755 -D extract_packages %buildroot%_libexecdir/%name/extract_pa
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.component1.xml
 
 %changelog
+* Tue Dec 24 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.6-alt1
+- Return installed packages in status method.
+
 * Thu Dec 19 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
 - Add support for python3.9.
 

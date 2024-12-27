@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-components-base
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Base set of Alterator components.
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 
-Requires: alterator-interface-component
+Requires: alterator-interface-component >= 0.1.6
 
 %description
 %summary.
@@ -59,6 +59,10 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Tue Dec 24 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
+- Add stdout_strings to components status method to get list of installed
+  packages.
+
 * Mon Dec 23 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - Added sections for categories (thx Sergey Savelev)
 - Added nested categories (thx Sergey Savelev)
