@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.13.0
-Release: alt1
+Release: alt2
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
@@ -9,7 +9,7 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 AutoProv: yes
 
-BuildRequires: cmake libpcre-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
+BuildRequires: cmake libpcre2-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
 
 %description
@@ -102,6 +102,11 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Dec 27 2024 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt2
+- update upstream to git:563f4aadcb736d5c2b26e9575a71cafcb8cf6287
+- Change BR libpcre-devel -> libpcre2-devel
+- Fix running with glibc >= 2.34 (ALT #52532)
+
 * Mon Apr 01 2024 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt1
 - 1.13.0
 

@@ -2,11 +2,11 @@
 %define module_version          1.13.0
 %define module_release          alt2
 
-%define flavour		6.6
+%define flavour		6.12
 %define karch	%ix86 x86_64 aarch64 ppc64le armh
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-6.6
+BuildRequires(pre): kernel-headers-modules-6.12
 
 %setup_kernel_module %flavour
 
