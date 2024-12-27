@@ -1,6 +1,3 @@
-#define git_hash .g2d8c6343e
-%define git_hash %nil
-
 %define dbus_version 1.2.12-alt2
 %define libdbus_glib_version 0.76
 
@@ -22,7 +19,7 @@
 %else
 %def_disable ovs
 %endif
-%def_without iwd
+%def_disable iwd
 
 %if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
 %define tests yes
@@ -36,12 +33,6 @@
 %def_enable lto
 %endif
 
-%if_with iwd
-%define iwd_support true
-%else
-%define iwd_support false
-%endif
-
 %define _name %name-daemon
 %define nmlibdir %_prefix/lib/NetworkManager
 %define dispatcherdir %nmlibdir/dispatcher.d
@@ -50,8 +41,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.50.0
-Release: alt1%git_hash
+Version: 1.50.1
+Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -70,7 +61,7 @@ Source11: NetworkManager.init
 Source12: ifcfg-rh-plugin.conf
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-macros-systemd >= 6
 
 # For tests
@@ -369,59 +360,27 @@ GObject introspection devel data for the NetworkManager (libnm).
 	-Dpolkit_agent_helper_1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
 	-Dmodify_system=false \
 	-Detcnet_alt=true \
-%if_enabled ifcfg
-	-Difcfg_rh=true \
-%else
-	-Difcfg_rh=false \
-%endif
+	%{subst_enable_meson_bool ifcfg ifcfg_rh} \
 	-Dconfig_migrate_ifcfg_rh_default=false \
 	-Difupdown=false \
 	-Dconfig_plugins_default='etcnet-alt' \
 	-Dmodem_manager=true \
 	-Dmobile_broadband_provider_info_database=%_datadir/mobile-broadband-provider-info/serviceproviders.xml \
-%if_enabled teamdctl
-	-Dteamdctl=true \
-%else
-	-Dteamdctl=false \
-%endif
-%if_enabled ovs
-	-Dovs=true \
-%else
-	-Dovs=false \
-%endif
-%if_enabled nmtui
-	-Dnmtui=true \
-%else
-	-Dnmtui=false \
-%endif
-%if_enabled bluez5dun
-	-Dbluez5_dun=true \
-%else
-	-Dbluez5_dun=false \
-%endif
+	%{subst_enable_meson_bool teamdctl teamdctl} \
+	%{subst_enable_meson_bool ovs ovs} \
+	%{subst_enable_meson_bool nmtui nmtui} \
+	%{subst_enable_meson_bool bluez5dun bluez5_dun} \
 	-Dintrospection=true \
-%if_enabled lto
-	-Db_lto=true \
-%else
-	-Db_lto=false \
-%endif
-%if_enabled vala
-	-Dvapi=true \
-%else
-	-Dvapi=false \
-%endif
-%if_enabled nmcloudsetup
-	-Dnm_cloud_setup=true \
-%else
-	-Dnm_cloud_setup=false \
-%endif
+	%{subst_enable_meson_bool lto b_lto} \
+	%{subst_enable_meson_bool vala vapi} \
+	%{subst_enable_meson_bool nmcloudsetup nm_cloud_setup} \
 	-Dlibaudit=yes-disabled-by-default \
 	-Dofono=false \
 	-Dlibpsl=true \
 	-Dfirewalld_zone=true \
 	-Dnft=/usr/sbin/nft \
 	-Diptables=/sbin/iptables \
-	-Diwd=%iwd_support \
+	%{subst_enable_meson_bool iwd iwd} \
 	-Dconfig_wifi_backend_default=wpa_supplicant \
 	-Dselinux=false \
 	-Ddist_version=%version-%release
@@ -681,6 +640,10 @@ fi
 %endif
 
 %changelog
+* Fri Dec 27 2024 Mikhail Efremov <sem@altlinux.org> 1.50.1-alt1
+- Used macros from rpm-macros-meson.
+- Updated to 1.50.1.
+
 * Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 1.50.0-alt1
 - Updated to 1.50.0.
 
