@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.4.7
+Version:  1.4.8
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,9 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Fri Dec 27 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.8-alt1
+- Remove all branches with any optional components after classic.
+
 * Thu Dec 26 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.7-alt1
 - Fix gostcrypto component processing (ALT #48419, #52511).
 
