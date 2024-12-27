@@ -1,6 +1,4 @@
 %define nm_version 1.20.0
-#define git_date .git20170115
-%define git_date %nil
 %define ppp_version %(pkg-config --modversion pppd 2>/dev/null || (%{__awk} '/^#define VERSION/ { print $NF }' /usr/include/pppd/patchlevel.h 2>/dev/null||echo none)|/usr/bin/tr -d '"')
 
 %define _unpackaged_files_terminate_build 1
@@ -8,8 +6,8 @@
 %def_with gtk4
 
 Name: NetworkManager-l2tp
-Version: 1.20.16
-Release: alt1%git_date
+Version: 1.20.20
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for l2tp
@@ -120,6 +118,9 @@ This package contains files for GTK4 applications to use %name.
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Fri Dec 27 2024 Mikhail Efremov <sem@altlinux.org> 1.20.20-alt1
+- Updated to 1.20.20.
+
 * Wed May 15 2024 Mikhail Efremov <sem@altlinux.org> 1.20.16-alt1
 - Updated to 1.20.16.
 
