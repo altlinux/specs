@@ -3,7 +3,7 @@
 
 Name: openssl3
 Version: 3.1.7
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -30,8 +30,7 @@ Group: System/Libraries
 Provides: libcrypto = %version-%release
 Provides: openssl-providers = %EVR
 Obsoletes: openssl-providers < %EVR
-# due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 < 1.0.3, libcrypto1.1 < 1.1.1w-alt1
+Requires: openssl-config >= 3.1.1-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -52,8 +51,6 @@ Obsoletes: openssl-devel < %version
 Requires: libssl%shlib_soversion = %version-%release
 # due to /usr/bin/openssl-config
 Conflicts: openssl < %version-%release, openssl > %version-%release
-# manpage clash: crypto(3).
-Conflicts: erlang <= 0:R9C.0-alt2
 
 %package -n libssl-devel-static
 Summary: OpenSSL static libraries
@@ -280,9 +277,8 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-# Relocate openssl.cnf from %%openssldir/ to %_sysconfdir/openssl/.
-mkdir -p %buildroot%_sysconfdir/openssl
-mv %buildroot%openssldir/openssl.cnf %buildroot%_sysconfdir/openssl/
+# Add a symlink to /etc/openssl/openssl.cnf (packaged separately as openssl-config).
+rm -f %buildroot%openssldir/openssl.cnf
 ln -s -r %buildroot%_sysconfdir/openssl/openssl.cnf %buildroot%openssldir/
 
 # Make backwards-compatibility symlink to ssleay.
@@ -319,6 +315,7 @@ cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
 
 # Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
+mkdir -p %buildroot%_sysconfdir/openssl
 sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
 	include/openssl/ssl.h > %buildroot%_sysconfdir/openssl/cipher-list.conf
 
@@ -334,7 +331,6 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
 %_libdir/ossl-modules
-%config(noreplace) %_sysconfdir/openssl/openssl.cnf
 %dir %_sysconfdir/openssl/
 %dir %openssldir
 %dir %openssldir/certs
@@ -384,6 +380,10 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Thu Dec 26 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.7-alt3
+- Dropped Conflicts: erlang <= 0:R9C.0-alt2 (ALT#52025).
+- Moved openssl.cnf to a separate package (openssl-config).
+
 * Wed Oct 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.7-alt2
 - Fix Conflict: with libcrypto1.1.
 

@@ -7,7 +7,7 @@
 
 Name: openssl1.1
 Version: 1.1.1w
-Release: alt2
+Release: alt3
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -78,8 +78,7 @@ BuildRequires: perl-WWW-Curl
 Summary: OpenSSL libcrypto shared library
 Group: System/Legacy libraries
 Provides: libcrypto = %version-%release
-# due to openssl.cnf
-Conflicts: libcrypto7, libssl7, libssl6 < 0.9.8d-alt6, libcrypto10 <= 1.0.2r-alt3
+Requires: openssl-config >= 3.1.1-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -376,9 +375,8 @@ for f in %buildroot%_libdir/*.so; do
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 
-# Relocate openssl.cnf from %%openssldir/ to %_sysconfdir/openssl/.
-mkdir -p %buildroot%_sysconfdir/openssl
-mv %buildroot%openssldir/openssl.cnf %buildroot%_sysconfdir/openssl/
+# Add a symlink to /etc/openssl/openssl.cnf (packaged separately as openssl-config).
+rm -f %buildroot%openssldir/openssl.cnf
 ln -s -r %buildroot%_sysconfdir/openssl/openssl.cnf %buildroot%openssldir/
 
 # Rename some man pages, fix references.
@@ -432,6 +430,7 @@ cp -a demos doc %buildroot%docdir/
 rm -rf %buildroot%docdir/doc/{apps,crypto,ssl}
 
 # Create default cipher-list.conf from SSL_DEFAULT_CIPHER_LIST
+mkdir -p %buildroot%_sysconfdir/openssl
 sed -n -r 's,^#.*SSL_DEFAULT_CIPHER_LIST[[:space:]]+"([^"]+)",\1,p' \
 	include/openssl/ssl.h > %buildroot%_sysconfdir/openssl/cipher-list.conf
 
@@ -445,7 +444,6 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 
 %files -n libcrypto%shlib_soversion
 /%_lib/libcrypto*
-%config(noreplace) %_sysconfdir/openssl/openssl.cnf
 %dir %_sysconfdir/openssl/
 %dir %openssldir
 %openssldir/*.cnf
@@ -500,6 +498,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Thu Dec 26 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt3
+- Moved openssl.cnf to a separate package (openssl-config).
+
 * Tue Dec 10 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1w-alt2
 - Backported upstream security fixes (fixes CVE-2023-5678, CVE-2024-0727,
   CVE-2024-2511, CVE-2024-4741, CVE-2024-5535, CVE-2024-9143).
