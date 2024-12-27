@@ -4,7 +4,7 @@
 
 Name:    sticky
 Version: 0.2.6
-Release: alt1
+Release: alt2
 
 Summary: A simple sticky notes app for GNOME
 License: MIT
@@ -14,6 +14,8 @@ Url: https://github.com/vixalien/sticky
 Vcs: https://github.com/vixalien/sticky
 
 Source0: %name-%version.tar
+Source1: gi-types.tar
+Source2: node_modules.tar
 
 ExclusiveArch: x86_64
 
@@ -27,6 +29,9 @@ Sticky Notes is a simple note taking application for the GNOME desktop. It is wr
 
 %prep
 %setup
+
+tar -xf %SOURCE1 -C %_builddir/%name-%version/
+tar -xf %SOURCE2 -C %_builddir/%name-%version/
 
 %build
 %meson
@@ -50,5 +55,8 @@ Sticky Notes is a simple note taking application for the GNOME desktop. It is wr
 %doc *.md
 
 %changelog
+* Thu Dec 26 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2.6-alt2
+- Fixed rebuild error.
+
 * Tue Nov 26 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2.6-alt1
 - Initial build for Sisyphus
