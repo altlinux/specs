@@ -107,7 +107,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4.2
+Release: alt4.3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -151,6 +151,8 @@ Patch203: 0004-RuntimeDyld-Minimal-LoongArch64-support.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
+
+Patch400: llvm-17.0.6-fix-build-with-gcc14.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -791,6 +793,9 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 # debian patches
 %patch300 -p1
 
+# gcc14
+%patch400 -p1
+
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
 # Explicitly use python3 in hashbangs.
@@ -818,6 +823,8 @@ fi
 export ALTWRAP_LLVM_VERSION=%{v_majmin}
 %endif
 %cmake -G Ninja -S llvm \
+	-DCMAKE_CXX_LINKER_DEPFILE_SUPPORTED:BOOL=FALSE \
+	-DCMAKE_C_LINKER_DEPFILE_SUPPORTED:BOOL=FALSE \
 	-DPACKAGE_VENDOR="%vendor" \
 %ifnarch loongarch64
 %if_with clang
@@ -1512,6 +1519,10 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Fri Dec 27 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.0.6-alt4.3
+- Workarounded breakage with cmake >= v3.31.0-rc1~307^2~1.
+- Fixed build with gcc 14 (for aarch64).
+
 * Wed Apr 24 2024 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt4.2
 - Built with the llvm-17/clang-17 (closes #50137).
 
