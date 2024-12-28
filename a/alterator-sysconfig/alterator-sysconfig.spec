@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.18
+Version: 1.3.19
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,16 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Sat Dec 28 2024 Anton Midyukov <antohami@altlinux.org> 1.3.19-alt1
+- Refactoring write_gnome_kbd:
+  1. Remove unsupported keyboard shortcuts for keyboard layout switcher
+  2. Remove previous config, since we configure this config only for
+     two keyboard layouts, but there are more.
+  3. change only the forward switch, since we only have two keyboard
+     layouts
+  4. Don't delete the default switches, but add another one
+- Remove win_space_toggle
+
 * Wed Oct 30 2024 Anton Midyukov <antohami@altlinux.org> 1.3.18-alt1
 - backend3/sysconfig-base: fix condition for hack with tt_RU
 - Setup keymap for GNOME
