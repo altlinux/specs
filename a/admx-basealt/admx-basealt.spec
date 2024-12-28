@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,9 @@ done
 %_destdir
 
 %changelog
+* Sat Dec 28 2024 Valentin Sokolov <sova@altlinux.org> 0.2.2-alt1
+- Changed valuename of TimeoutAutofs policy
+
 * Fri Dec 13 2024 Valentin Sokolov <sova@altlinux.org> 0.2.1-alt1
 - Updated setters name in mate_session policies
 
