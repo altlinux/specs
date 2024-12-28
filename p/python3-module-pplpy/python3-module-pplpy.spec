@@ -1,7 +1,7 @@
 %define modname pplpy
 
 Name: python3-module-%modname
-Version: 0.8.8
+Version: 0.8.10
 Release: alt1
 
 Summary: Python interface to PPL
@@ -9,7 +9,7 @@ Summary: Python interface to PPL
 License: GPL-3.0+
 Group: Development/Python3
 Url: https://pypi.org/project/%modname
-# https://github.com/sagemath/pplpy
+Vcs: git://github.com/sagemath/pplpy.git
 
 Source: https://pypi.io/packages/source/a/%modname/%modname-%version.tar.gz
 
@@ -37,6 +37,10 @@ integer linear programming.
 %python3_sitelibdir/pplpy-%{version}*/
 
 %changelog
+* Sat Dec 28 2024 Leontiy Volodin <lvol@altlinux.org> 0.8.10-alt1
+- New version 0.8.10.
+- Added vcs tag.
+
 * Wed Sep 06 2023 Leontiy Volodin <lvol@altlinux.org> 0.8.8-alt1
 - New version 0.8.8.
 - NMU:
