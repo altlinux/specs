@@ -2,12 +2,13 @@
 
 Name: libxmlsec1
 Version: 1.2.38
-Release: alt1
+Release: alt2
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
 Source: %name-%version.tar
 Url: https://www.aleksey.com/xmlsec/
+Patch0: libxmlsec1-atoi.patch
 
 BuildRequires: help2man libltdl7-devel man
 BuildRequires: libxml2-devel >= 2.8.0 libxslt-devel >= 1.0.20
@@ -100,6 +101,7 @@ Libraries, includes, etc. for developing XML Security applications with NSS.
 
 %prep
 %setup
+%patch0
 
 %build
 %autoreconf
@@ -174,6 +176,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Sat Dec 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.2.38-alt2
+- NMU: fix FTBFS: implicit declaration of function 'atoi'
+
 * Wed Dec 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 1.2.38-alt1
 - new version 1.2.38
 
