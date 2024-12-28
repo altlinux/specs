@@ -2,7 +2,7 @@
 
 Name:    vaultwarden
 Version: 1.32.0
-Release: alt2
+Release: alt3
 
 Summary: Unofficial Bitwarden compatible server
 License: AGPL-3.0
@@ -15,6 +15,8 @@ Source2: %name.cfg
 Source3: %name.service
 Source4: %name.sysusers
 
+Patch0: vaultwarden-1.32.0-alt-mysqlclient-crate-loongarch64.patch
+
 # 32bit incompatible, unable to build vendored mysqlclient-sys on ppc
 ExcludeArch: %ix86 armh ppc64le
 
@@ -24,6 +26,9 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(mariadb)
 BuildRequires: pkgconfig(libpq)
+%ifarch loongarch64
+BuildRequires: llvm17.0 libclang17 rustfmt rust-bindgen
+%endif
 
 Requires: %name-web
 
@@ -54,6 +59,15 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 [profile.release]
 strip = false
 EOF
+%ifarch loongarch64
+%patch0 -p2
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/mysqlclient-sys/.cargo-checksum.json
+bindgen --allowlist-function "mysql.*" --allowlist-function "mariadb.*" --allowlist-type "MYSQL.*" --allowlist-type "MARIADB.*" \
+ 		--allowlist-type "mysql.*" --allowlist-type "mariadb.*" --allowlist-var "MYSQL.*" --allowlist-var "MARIADB.*" \
+ 		--default-enum-style rust_non_exhaustive vendor/mysqlclient-sys/bindings/wrapper.h -- -I/usr/include/mysql \
+ 		-I/usr/lib/llvm-17.0/lib64/clang/17/include/ > ./vendor/mysqlclient-sys/bindings/bindings_mariadb_11_4_loongarch64_linux.rs
+%endif
 
 %build
 %rust_build --features sqlite,mysql,postgresql
@@ -96,6 +110,9 @@ fi
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Fri Dec 27 2024 Ilya Sorochan <k0tran@altlinux.org> 1.32.0-alt3
+- Add bindings generation for loongarch64 for mysqlclient-sys crate.
+
 * Thu Dec 12 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.32.0-alt2
 - Added WebUI settings and requirement (Closes #51500).
 
