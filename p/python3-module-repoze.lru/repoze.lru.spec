@@ -1,8 +1,12 @@
-%define oname repoze.lru
+%define _unpackaged_files_terminate_build 1
 
-Name: python3-module-%oname
+%define pypi_name repoze.lru
+%define ns_name repoze
+%define mod_name lru
+
+Name: python3-module-%pypi_name
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: Tiny LRU cache
 
@@ -10,15 +14,20 @@ License: BSD
 Group: Development/Python3
 Url: https://github.com/repoze/repoze.lru
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 BuildArch: noarch
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_requires repoze
 
@@ -31,18 +40,23 @@ cache faster than keys and values that are used frequently.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 rm -fv %buildroot%python3_sitelibdir/repoze/lru/tests.py
 
 %files
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%ns_name.%mod_name-%version-*-nspkg.pth
+%python3_sitelibdir/%ns_name.%mod_name-%version.dist-info/
 
 %changelog
+* Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 0.7-alt3
+- map PyPI name to distro's one.
+
 * Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt2
 - fix packing
 

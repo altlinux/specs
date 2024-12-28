@@ -1,23 +1,28 @@
-%def_without check
+%define _unpackaged_files_terminate_build 1
 
-%define modulename pynacl
-Name: python3-module-pynacl
+%define pypi_name pynacl
+%define project_name PyNaCl
+%define mod_name nacl
+
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 1.5.0
-Release: alt1
-
+Release: alt2
 Summary: Python binding to the Networking and Cryptography (NaCl) library
-
-Url: https://github.com/pyca/pynacl
 License: Apache-2.0
 Group: Development/Python3
-
-# Source-url: https://github.com/pyca/pynacl/archive/%version.tar.gz
-Source: %modulename-%version.tar
-
-BuildRequires:  libsodium-devel >= 1.0.16
-
-BuildRequires(pre): rpm-build-python3 python3-module-wheel
-BuildRequires: python3-module-cffi
+Url: https://pypi.org/project/PyNaCl/
+Vcs: https://github.com/pyca/pynacl/
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: libsodium-devel >= 1.0.16
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra tests
+%endif
 
 %description
 PyNaCl is a Python binding to the Networking and Cryptography library,
@@ -25,25 +30,33 @@ a crypto library with the stated goal of improving usability, security
 and speed.
 
 %prep
-%setup -n %modulename-%version
+%setup
 # Remove bundled libsodium, to be sure
 rm -vrf src/libsodium/
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 export SODIUM_INSTALL=system
-%python3_build
+%pyproject_build
+
+%check
+%pyproject_run_pytest -ra
 
 %install
-%python3_install
+%pyproject_install
 # FIXME
-mv %buildroot/%python3_sitelibdir/nacl/_sodium.abi3.so %buildroot/%python3_sitelibdir/nacl/_sodium.so
+mv %buildroot/%python3_sitelibdir/%mod_name/{_sodium.abi3,_sodium}.so
 
 %files
 %doc README.rst
-%doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%project_name-%version.dist-info/
 
 %changelog
+* Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 1.5.0-alt2
+- Added missing runtime dependency on cffi.
+
 * Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
 - 1.5.0 released
 

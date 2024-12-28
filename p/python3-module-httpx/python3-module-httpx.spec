@@ -1,6 +1,6 @@
 Name:    python3-module-httpx
 Version: 0.27.0
-Release: alt1
+Release: alt2
 
 Summary: A next generation HTTP client for Python
 License: BSD-3-Clause
@@ -12,6 +12,7 @@ Source0: httpx-%version.tar
 Source1: pyproject_deps.json
 
 BuildArch: noarch
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
@@ -27,9 +28,10 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 
 %prep
 %setup -n httpx-%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%pyproject_deps_resync_build
 %pyproject_build
 
 %install
@@ -40,6 +42,9 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 %python3_sitelibdir/httpx-%version.dist-info
 
 %changelog
+* Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 0.27.0-alt2
+- Added missing runtime dependency on anyio.
+
 * Mon May 06 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.27.0-alt1
 - 0.27.0 released
 

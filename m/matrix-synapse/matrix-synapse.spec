@@ -1,6 +1,6 @@
 Name: matrix-synapse
 Version: 1.104.0
-Release: alt1
+Release: alt1.1
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache-2.0
@@ -44,7 +44,7 @@ BuildRequires: python3 >= 3.8
 %py3_use bcrypt >= 3.1.7
 %py3_use Pillow >= 10.0.1
 %py3_use sortedcontainers >= 1.5.2
-%py3_use pymacaroons-pynacl >= 0.13.0
+%py3_use pymacaroons >= 0.13.0
 %py3_use msgpack >= 0.5.2
 %py3_use phonenumbers >= 8.2.0
 %py3_use prometheus_client >= 0.4.0
@@ -178,6 +178,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Wed Jun 19 2024 Stanislav Levin <slev@altlinux.org> 1.104.0-alt1.1
+- NMU: require pymacaroons.
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1.104.0-alt1
 - new version 1.104.0 (with rpmrb script)
 
