@@ -1,5 +1,5 @@
 Name: doxygen
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 Epoch: 1
 
@@ -122,6 +122,9 @@ cd BUILD && make tests
 %exclude %_defaultdocdir/%name-%version/README.md
 
 %changelog
+* Sat Dec 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.13.0-alt1
+- 1.13.0
+
 * Wed Aug 28 2024 Ivan A. Melnikov <iv@altlinux.org> 1:1.12.0-alt1
 - 1.12.0
 - BuildRequires and patches cleanup
