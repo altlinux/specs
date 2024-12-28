@@ -1,18 +1,20 @@
 %define cryptopp_cmake_commit 2c384c28265a93358a2455e610e76393358794df
-%define sdl3_commit 54e622c2e6af456bfef382fae44c17682d5ac88a
-%define vma_commit 1c35ba99ce775f8342d87a83a3f0f696f99c2a39
+%define sdl3_commit 3a1d76d298db023f6cf37fb08ee766f20a4e12ab
+%define vma_commit 5a53a198945ba8260fbc58fadb788745ce6aa263
 %define robin_map_commit fe845fd7852ef541c5479ae23b3d36b57f8608ee
-%define magic_enum_commit 126539e13cccdc2e75ce770e94f3c26403099fa5
-%define sirit_commit 6cecb95d679c82c413d1f989e0b7ad9af130600d
-%define tracy_commit b8061982cad0210b649541016c88ff5faa90733c
+%define magic_enum_commit 1a1824df7ac798177a521eed952720681b0bf482
+%define sirit_commit 1e74f4ef8d2a0e3221a4de51977663f342b53c35
+%define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
 %define cryptopp_commit 60f81a77e0c9a0e7ffc1ca1bc438ddfa2e43b78e
-%define zydis_commit 9d298eb8067ff62a237203d1e1470785033e185c
+%define zydis_commit bffbb610cfea643b98e87658b9058382f7522807
 %define dear_imgui_commit 636cd4a7d623a2bc9bf59bb3acbb4ca075befba3
 %define discord_rpc_commit 4ec218155d73bcb8022f8f7ca72305d801f84beb
+%define vulkan_headers_version 1.4.303
+%define libatrac9_commit 9640129dc6f2afbca6ceeca3019856e8653a5fb2
 
 Name: shadps4
-Version: 0.4.0
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -47,8 +49,10 @@ Source9: zydis-%zydis_commit.tar
 Source10: ext-imgui-%dear_imgui_commit.tar
 # https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source11: ext-discord-rpc-%discord_rpc_commit.tar
-
-Patch0: %name-glslang-version-alt.patch
+# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
+Source12: Vulkan-Headers-%vulkan_headers_version.tar
+# https://github.com/shadps4-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
+Source13: ext-LibAtrac9-%libatrac9_commit.tar
 
 BuildRequires: boost-asio-devel
 BuildRequires: cmake
@@ -69,7 +73,10 @@ BuildRequires: libgtkmm3
 BuildRequires: libhalf-devel
 BuildRequires: libmpdclient
 BuildRequires: libnl3
+BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
+BuildRequires: libqt5-eglfskmssupport
+BuildRequires: libqt5-quickshapes
 BuildRequires: libspdlog1.13
 BuildRequires: libspirv-tools-devel
 BuildRequires: libswresample-devel
@@ -98,8 +105,7 @@ Obsoletes: %name-qt <= 0.2.0-alt1
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
-%patch0 -p1
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
 
 %__mv -Tf ../ext-cryptopp-cmake-%cryptopp_cmake_commit externals/cryptopp-cmake
 %__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
@@ -112,6 +118,8 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %__mv -Tf ../zydis-%zydis_commit externals/zydis
 %__mv -Tf ../ext-imgui-%dear_imgui_commit externals/dear_imgui
 %__mv -Tf ../ext-discord-rpc-%discord_rpc_commit externals/discord-rpc
+%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/vulkan-headers
+%__mv -Tf ../ext-LibAtrac9-%libatrac9_commit externals/LibAtrac9
 
 %build
 %add_optflags -Wno-error=return-type
@@ -123,22 +131,28 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %cmake_build
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_desktopdir,%_iconsdir/hicolor/512x512/apps,%_libexecdir/%name}
+%cmake_install
 
-%__install -Dp -m0755 %_target_platform/%name %buildroot%_libexecdir/%name/
+%__mkdir_p %buildroot%_libexecdir/%name
+
+%__mv %buildroot%_bindir/%name %buildroot%_libexecdir/%name/
 %__ln_s %_libexecdir/%name/%name %buildroot%_bindir/%name
 %__cp -r %_target_platform/translations %buildroot%_libexecdir/%name
-%__install -Dp -m0644 .github/%name.desktop %buildroot%_desktopdir/
-%__install -Dp -m0644 .github/%name.png %buildroot%_iconsdir/hicolor/512x512/apps/
 
 %files
-%doc README.md
+%doc CONTRIBUTING.md README.md
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_iconsdir/hicolor/512x512/apps/%name.png
+%_datadir/metainfo/releases/net.%name.shadPS4.releases.xml
+%_datadir/metainfo/net.%name.shadPS4.metainfo.xml
+%_desktopdir/net.%name.shadPS4.desktop
+%_iconsdir/hicolor/512x512/apps/net.%name.shadPS4.png
+%_iconsdir/hicolor/scalable/apps/net.%name.shadPS4.svg
 %_libexecdir/%name
 
 %changelog
+* Sat Dec 28 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt1
+- Version 0.5.0
+
 * Sun Dec 15 2024 Nazarov Denis <nenderus@altlinux.org> 0.4.0-alt2
 - Build with Glslang 15 (ALT #52431)
 
