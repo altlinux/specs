@@ -2,7 +2,7 @@
 
 Name:    epsonscan2
 Version: 6.7.66.0
-Release: alt1
+Release: alt2
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version-1.src.tar.gz
 Source1: %name.watch
 Patch1: epsonscan2-alt-return-type.patch
+Patch2: epsonscan2-alt-unistd.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -39,11 +40,15 @@ driver to interface with software built around the SANE standard.
 %prep
 %setup -n %name-%version-1
 %patch1 -p2
+%patch2 -p2
 subst 's|${EPSON_INSTALL_ROOT}/lib/udev|%_udevdir|' CMakeLists.txt
 
 %build
+%add_optflags -Wno-unused-function -Wno-unused-variable
 %cmake -GNinja \
        -Wno-dev \
+       -Wno-unused-function \
+       -Wno-unused-variable \
        -DCMAKE_SKIP_RPATH=OFF \
        -DCMAKE_SKIP_INSTALL_RPATH=OFF
 
@@ -62,6 +67,9 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Sat Dec 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 6.7.66.0-alt2
+- NMU: fix FTBFS: include unistd.h
+
 * Thu Sep 12 2024 Andrey Cherepanov <cas@altlinux.org> 6.7.66.0-alt1
 - New version.
 
