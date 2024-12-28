@@ -1,7 +1,7 @@
 %define py_fname python3-module-ranger
 
 Name: ranger
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary(ru_RU.UTF-8): Консольный файл-менеджер
@@ -61,6 +61,9 @@ grep -rl ' pygmentize ' ranger | xargs sed -i 's@ pygmentize @ pygmentize3 @g'
 %python3_sitelibdir/*
 
 %changelog
+* Sat Dec 28 2024 Grigory Ustinov <grenka@altlinux.org> 1.9.4-alt1
+- Build new version for python3.13.
+
 * Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 1.9.3-alt1
 - Autobuild version bump to 1.9.3
 
