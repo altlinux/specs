@@ -2,7 +2,7 @@
 %define import_path github.com/alexballas/go2tv
 
 Name: go2tv
-Version: 1.16.1
+Version: 1.17.1
 Release: alt1
 
 Summary: Cast media files to UPnP/DLNA Media Renderers and Smart TVs
@@ -65,6 +65,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name-lite
 
 %changelog
+* Fri Dec 27 2024 Artem Krasovskiy <aibure@altlinux.org> 1.17.1-alt1
+- Updated to 1.17.1
+
 * Wed Jul 10 2024 Artem Krasovskiy <aibure@altlinux.org> 1.16.1-alt1
 - Initial build for sisyphus
 
