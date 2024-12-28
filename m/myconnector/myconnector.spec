@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.5.2
+Version:  2.6
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -26,8 +26,9 @@ Requires: remmina
 Requires: remmina-plugins
 Requires: tigervnc
 Requires: xdg-utils
-Requires: xfreerdp
+Requires: /usr/bin/xfreerdp
 Requires: zenity
+Requires: curl
 
 Provides:  connector = %EVR
 Obsoletes: connector
@@ -139,6 +140,14 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Sat Dec 28 2024 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.6-alt1
+- [FreeRDP] Added support for xfreerdp3
+- Checking the OS - once at the first startup
+- [update] Added git support (even if installed from rpm/deb)
+- Fixed an error when opening a corrupted configuration file
+- The documentation URL has been fixed
+- Tray indicator: connection sorting added
+
 * Thu Dec 21 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.5.2-alt1
 - [kiosk] Fixed bug (ALT #44818)
 
