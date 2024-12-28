@@ -9,16 +9,18 @@
 %define old_theme_prefix gtk2-themes
 %define theme_namechange_ver 2.8.0-alt4
 
+%def_disable lua
 # Clearlooks animation takes some CPU cycles, so it's done optional.
 %def_enable animation
+%def_disable check
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt3.1
+Release: alt3.2
 Epoch: 1
 
 Summary: Default GTK+2 theme engines
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: http://gtk.themes.org/
 
@@ -70,7 +72,7 @@ engine needs it.
 %package -n %engine_prefix-redmond
 Summary: GTK+2 theme engine - Redmond95
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-redmond95
 Provides: %old_engine_prefix-redmond95 = %version-%release
@@ -84,7 +86,7 @@ A simple theme engine that looks a bit like another OS.
 %package -n %gtk_theme_prefix-redmond
 Summary: GTK+2 theme - Redmond95
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Obsoletes: %old_theme_prefix-redmond < %engine_namechange_ver
 Provides: %old_theme_prefix-redmond = %version-%release
 # Due to file conflicts
@@ -97,7 +99,7 @@ A simple theme that looks a bit like another OS.
 %package -n %engine_prefix-hc
 Summary: A GTK+2 high contrast theme engine
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-hc < %engine_namechange_ver
 Provides: %old_engine_prefix-hc = %version-%release
@@ -111,7 +113,7 @@ and near-white colors.
 %package -n %gtk_theme_prefix-crux
 Summary: A GTK+2 theme engine - Crux
 Group: Graphical desktop/GNOME
-License: %gpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-crux < 2.7.6
 Provides: %old_engine_prefix-crux = %version-%release
@@ -127,7 +129,7 @@ Eazel, Inc.
 %package -n %gtk_theme_prefix-mist
 Summary: A GTK+2 theme engine - Mist
 Group: Graphical desktop/GNOME
-License: %gpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-mist < 2.7.6
 Provides: %old_engine_prefix-mist = %version-%release
@@ -144,7 +146,7 @@ This package provides Mist GTK+2 theme engine.
 %package -n %gtk_theme_prefix-clearlooks
 Summary: A GTK+2 theme engine - ClearLooks
 Group: Graphical desktop/GNOME
-License: %gpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-clearlooks < 2.7.6
 Provides: %old_engine_prefix-clearlooks = %version-%release
@@ -163,7 +165,7 @@ This package contains Clearlooks theme and engine.
 %package -n %gtk_theme_prefix-thinice
 Summary: A GTK+2 theme engine - Thin Ice
 Group: Graphical desktop/GNOME
-License: %gpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %engine_prefix-thinice-devel
 Obsoletes: %old_engine_prefix-thinice < 2.7.6
@@ -179,7 +181,7 @@ This package contains a GTK2+ theme engine Thin Ice.
 %package -n %gtk_theme_prefix-industrial
 Summary: A GTK+2 theme engine - Industrial
 Group: Graphical desktop/GNOME
-License: %gpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-industrial < 2.7.6
 Provides: %old_engine_prefix-industrial = %version-%release
@@ -197,7 +199,7 @@ for applications.
 %package -n %engine_prefix-glide
 Summary: A GTK+2 theme engine - Glide
 Group: Graphical desktop/GNOME
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Requires: %name-common = %version-%release
 Obsoletes: %old_engine_prefix-glide < %engine_namechange_ver
 Provides: %old_engine_prefix-glide = %version-%release
@@ -230,21 +232,22 @@ This package contains development files for %_name
 %build
 %autoreconf
 %configure \
-    --enable-lua \
-    --with-system-lua \
-    %{subst_enable animation} \
-
+    %{subst_enable lua} \
+    %{subst_enable animation}
+%nil
 %make
-%make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang %_name
 
 %define engines_dir %_libdir/gtk-2.0/%gtk_binary_ver/engines/
 %define engines_data_dir %_datadir/%_name/
 
 ln -s gtk-2.0/%gtk_binary_ver/engines/libclearlooks.so %buildroot%_libdir/libclearlooks.so
+
+%check
+%make -k check VERBOSE=1
 
 %files
 
@@ -308,8 +311,10 @@ ln -s gtk-2.0/%gtk_binary_ver/engines/libclearlooks.so %buildroot%_libdir/libcle
 %engines_dir/libglide.so
 %engines_data_dir/glide.xml
 
+%if_enabled lua
 %files -n %{engine_prefix}-lua
 %engines_dir/libluaengine.so
+%endif
 
 %files -n %{engine_prefix}s-devel
 %_pkgconfigdir/*.pc
@@ -317,6 +322,9 @@ ln -s gtk-2.0/%gtk_binary_ver/engines/libclearlooks.so %buildroot%_libdir/libcle
 %exclude %engines_dir/*.la
 
 %changelog
+* Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.20.2-alt3.2
+- fixed FTBFS
+
 * Tue Mar 13 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.20.2-alt3.1
 - NMU: fixed undefined symbol lua_open (Patch1)
 
