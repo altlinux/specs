@@ -3,7 +3,7 @@
 
 Name: libudev0
 Version: 181
-Release: alt9
+Release: alt10
 
 Summary: Shared library to access udev device information
 License: LGPLv2.1+
@@ -51,6 +51,8 @@ This package provides shared library to access udev device information
 	--with-systemdsystemunitdir=%systemdsystemunitdir \
 	--with-usb-ids-path=/usr/share/misc/usb.ids \
 	--disable-silent-rules
+
+%add_optflags -Wno-unused-result -Wno-unused-variable -Wno-unused-label
 %make_build
 
 %install
@@ -60,6 +62,9 @@ This package provides shared library to access udev device information
 /%_lib/libudev.so.*
 
 %changelog
+* Sat Dec 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 181-alt10
+- NMU: fix FTBFS: missing function prototype
+
 * Tue Sep 05 2023 Andrew A. Vasilyev <andy@altlinux.org> 181-alt9
 - FTBFS: build with autoconf 2.60
 
