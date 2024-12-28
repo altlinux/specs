@@ -1,6 +1,6 @@
 Name: bing
 Version: 1.3.5
-Release: alt1
+Release: alt1.1
 
 Summary: Bing, a point-to-point bandwidth measurement tool (b from Bandwith)
 Summary(ru_RU.UTF-8): Bing - средство измерения производительности сети
@@ -12,6 +12,7 @@ Url: http://fgouget.free.fr/bing/index-en.shtml
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Source: http://fgouget.free.fr/%name/%{name}_src-%version.tar.gz
+Patch1: %name-1.3.5-gcc-14.patch
 
 # Automatically added by buildreq on Tue Aug 05 2003
 BuildRequires: groff-base groff-ps
@@ -28,6 +29,7 @@ Bing определяет реальную (а не доступную или с
 
 %prep
 %setup
+%patch1
 
 %build
 %make_build "COPTIM=$RPM_OPT_FLAGS"
@@ -42,6 +44,9 @@ install -pD -m644 unix/%name.8 %buildroot%_man8dir/%name.8
 %_man8dir/%name.8.*
 
 %changelog
+* Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1.1
+- fixed build with gcc-14
+
 * Sat Apr 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1
 - 1.3.5
 - spec converted to UTF-8

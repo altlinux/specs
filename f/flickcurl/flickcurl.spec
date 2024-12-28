@@ -1,9 +1,8 @@
-%set_automake_version 1.11
 %def_enable check
 
 Name: flickcurl
 Version: 1.26
-Release: alt2
+Release: alt3
 
 Summary: Flickcurl C library for the Flickr API
 License: LGPL 2.1 / ASL 2.0
@@ -57,8 +56,8 @@ This package contains the developement files for the %name library.
 gtkdocize
 %autoreconf -fisv
 %configure \
-	--disable-static
-
+    --disable-static
+%nil
 %make_build
 
 %install
@@ -85,6 +84,9 @@ gtkdocize
 %_man1dir/%name-config.1*
 
 %changelog
+* Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.26-alt3
+- updated to flickcurl_1_26-25-g83b32e4
+
 * Mon Mar 11 2019 Yuri N. Sedunov <aris@altlinux.org> 1.26-alt2
 - updated to 1_26-10-gb2d64c8
 - build with raptor2 support (ALT #36263)
