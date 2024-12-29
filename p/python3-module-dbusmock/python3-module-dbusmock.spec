@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define modname dbusmock
-%define pypi_name python-%modname
+%define pypi_name python_%modname
 %def_disable check
 
 Name: python3-module-dbusmock
-Version: 0.32.2
+Version: 0.34.2
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -21,8 +21,6 @@ Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 %else
 Source: %pypi_name-%version.tar
 %endif
-# 4b99cff
-Patch10: python-dbusmock-0.32.2-up-test_bluez5.patch
 
 BuildArch: noarch
 Requires: dbus
@@ -52,7 +50,6 @@ See %_docdir/%name-%version/README.rst for more information.
 
 %prep
 %setup -n %pypi_name-%version
-%patch10 -p1
 
 %build
 %pyproject_build
@@ -69,6 +66,9 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Sun Dec 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.34.2-alt1
+- 0.34.2
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.2-alt1
 - 0.32.2
 

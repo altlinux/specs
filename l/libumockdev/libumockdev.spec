@@ -1,5 +1,6 @@
 %def_disable snapshot
 %define _name umockdev
+%define namespace UMockdev
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -7,7 +8,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.18.4
+Version: 0.19.0
 Release: alt1
 
 Summary: Hardware devices mocking library for creating unit tests and bug reporting
@@ -90,7 +91,7 @@ GObject introspection devel data for the %_name library.
 
 %build
 %meson \
-%{?_enable_gtk_doc:-Dgtk_doc=true}
+%{subst_enable_meson_bool gtk_doc gtk_doc}
 %nil
 %meson_build
 
@@ -123,12 +124,15 @@ export PATH=/sbin:$PATH
 %endif
 
 %files gir
-%_typelibdir/UMockdev-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/UMockdev-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %changelog
+* Sun Dec 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Wed Sep 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.18.4-alt1
 - 0.18.4
 
