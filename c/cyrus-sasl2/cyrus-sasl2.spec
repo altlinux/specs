@@ -1,5 +1,7 @@
 %set_verify_elf_method unresolved=relaxed
 
+%set_gcc_version      13
+
 # Use "--disable sql" for build without PostgreSQL and MySQL support
 %def_enable sql
 # Use "--disable ldap" for build without LDAP support
@@ -14,7 +16,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.28
-Release: alt2
+Release: alt2.1
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -132,6 +134,8 @@ This package contains documentations for SASL2
 sed -i 's,/etc/sasldb2,%dbpath,g' contrib/change-sasldb2-realm.py docsrc/sasl/options.rst utils/testsuite.c docsrc/sasl/upgrading.rst doc/legacy/*.html
 
 %build
+export CC=%__cc
+export CXX=%__cxx
 
 %if_enabled sql
 export CPPFLAGS="`krb5-config --cflags` -I/usr/include/pgsql $CPPFLAG"
@@ -303,6 +307,9 @@ ls -l %buildroot%_man3dir/*
 %endif
 
 %changelog
+* Sun Dec 29 2024 Alexei Takaseev <taf@altlinux.org> 2.1.28-alt2.1
+- Use GCC 13
+
 * Wed Mar 20 2024 Alexey Shabalin <shaba@altlinux.org> 2.1.28-alt2
 - Apply patches from debian and backport from upstream
 
