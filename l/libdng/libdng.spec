@@ -1,5 +1,5 @@
 Name:    libdng
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Interface library between libtiff and the world to make sure the output is valid DNG
@@ -58,6 +58,9 @@ Group: Other
 %_man1dir/makedng.1*
 
 %changelog
+* Sun Dec 29 2024 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt1
+- New version.
+
 * Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.2.0-alt1
 - New version.
 
