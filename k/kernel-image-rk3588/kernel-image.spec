@@ -1,10 +1,10 @@
 %def_without check
 
 Name: kernel-image-rk3588
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.6
+%define kernel_sublevel	.7
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -401,6 +401,14 @@ fi
 %modules_dir/build
 
 %changelog
+* Sun Dec 29 2024 Alexei Takaseev <taf@altlinux.org> 6.12.7-alt1
+- v6.12.7 (2024-12-27).
+- config: Enable more zram compression backends.
+    * CONFIG_ACPI_APEI_EINJ=y
+    * CONFIG_XEN_NETDEV_FRONTEND=m
+    * CONFIG_DW_WATCHDOG=y
+    * CONFIG_TRUSTED_KEYS=y
+
 * Wed Dec 25 2024 Alexei Takaseev <taf@altlinux.org> 6.12.6-alt2
 - build rockchip pmic drivers as built-in:
     * CONFIG_REGMAP_SPI=y
