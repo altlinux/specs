@@ -1,10 +1,10 @@
 Name: beecrypt
 Version: 4.2.1
-Release: alt8
+Release: alt9
 
 Summary: The BeeCrypt Cryptography Library
 License: LGPLv2+
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: https://sourceforge.net/projects/beecrypt
 
 Source: beecrypt-%version.tar
@@ -76,6 +76,9 @@ bzip2 -9k BENCHMARKS
 sed -i 's/^AC_PROG_CC/&\nAC_SYS_LARGEFILE/' configure.ac
 
 %build
+%ifarch x86_64
+%add_optflags -fanalyzer
+%endif
 %autoreconf
 
 %configure \
@@ -109,6 +112,9 @@ mv -f CONTRIBUTORS.utf8 CONTRIBUTORS
 %_includedir/*
 
 %changelog
+* Thu Dec 26 2024 Vitaly Chikunov <vt@altlinux.org> 4.2.1-alt9
+- Fix gcc14-related build problems.
+
 * Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 4.2.1-alt8
 - Disabled build and packaging of libbeecrypt.a.
 - Built with LFS support enabled.
