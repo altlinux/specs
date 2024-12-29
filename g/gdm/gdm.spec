@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 47
 %define beta %nil
@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -309,6 +309,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt2
+- updated to 47.0-29-gbe3a3de71
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
