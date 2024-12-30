@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: Python interface to Graphiz's Dot
@@ -58,6 +58,9 @@ python3 test/test_pydot.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.3-alt1
+- Automatically updated to 3.0.3.
+
 * Tue Oct 15 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
 - Automatically updated to 3.0.2.
 
