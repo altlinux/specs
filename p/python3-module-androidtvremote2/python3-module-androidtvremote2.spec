@@ -2,12 +2,14 @@
 %define module_name androidtvremote2
 
 Name: python3-module-%module_name
-Version: 0.0.14
+Version: 0.1.2
 Release: alt1
 Summary: A Python library implementing the Android TV Remote protocol v2
 License: Apache-2.0
 Group: Development/Python3
-Url: https://github.com/tronikos/androidtvremote2
+Url: https://pypi.org/project/androidtvremote2
+VCS: https://github.com/tronikos/androidtvremote2
+
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -40,6 +42,9 @@ on most Android TV devices.
 %exclude %python3_sitelibdir/__pycache__/demo.*.pyc
 
 %changelog
+* Mon Dec 30 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.2-alt1
+- Updated to version 0.1.2.
+
 * Sun Feb 11 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.0.14-alt1
 - Initial build for ALT.
 
