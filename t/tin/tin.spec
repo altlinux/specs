@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -11,7 +11,7 @@ Source0: ftp://ftp.tin.org/pub/news/clients/tin/stable/%name-%version.tar.xz
 Source1: tin.watch
 Source2: tin.attributes
 
-Patch1: tin-2.0.1-enable_coloring.patch
+Patch1: tin-2.6.4-enable_coloring.patch
 Patch2: tin-2.0.1-charset.patch
 
 # Automatically added by buildreq on Wed Dec 28 2011
@@ -22,6 +22,11 @@ BuildRequires: /usr/sbin/sendmail
 # utils
 BuildRequires: perl(Net/NNTP.pm)
 BuildRequires: perl(Term/ReadLine.pm)
+BuildRequires: perl(Pod/Usage.pm)
+
+# Global symbol "$mod" requires explicit package name (did you forget to declare "my $mod"?) at /usr/src/tmp/tin-buildroot/usr/bin/opt-case.pl line 27.
+%add_findreq_skiplist %_bindir/opt-case.pl
+%add_findreq_skiplist %_bindir/w2r.pl
 
 %description
 Tin is a basic, easy to use Internet news reader. Tin can read news locally or
@@ -85,6 +90,10 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %_bindir/*.pl
 
 %changelog
+* Sun Dec 29 2024 Michael Shigorin <mike@altlinux.org> 2.6.4-alt1
+- new version (watch file uupdate)
+- update enable_coloring patch
+
 * Tue Dec 26 2023 Michael Shigorin <mike@altlinux.org> 2.6.3-alt1
 - new version (watch file uupdate)
 - added utils subpackage
