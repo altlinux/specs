@@ -3,13 +3,16 @@
 %define pypi_name python-vlc
 
 Name: python3-module-%modname
-Version: 3.0.20123
+Version: 3.0.21203
 Release: alt1
 Summary: Binding for the native libvlc API
 License: LGPL-2.1+
 Group: Development/Python3
-Url: https://github.com/oaubert/python-vlc
+Url: https://pypi.org/project/python-vlc
+VCS: https://github.com/oaubert/python-vlc
+
 Source: %name-%version.tar
+Patch: alt-fix-setup-file.patch
 
 BuildArch: noarch
 
@@ -27,6 +30,7 @@ video player. Note that it relies on an already present install of VLC.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -36,11 +40,14 @@ video player. Note that it relies on an already present install of VLC.
 
 %files
 %python3_sitelibdir/%modname.py
-%python3_sitelibdir/*/*.pyc
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%doc examples
+%python3_sitelibdir/__pycache__/vlc.cpython-*.pyc
+%python3_sitelibdir/%{pyproject_distinfo python_vlc}
+%doc COPYING examples
 
 %changelog
+* Mon Dec 30 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.21203-alt1
+- Updated to version 3.0.21203.
+
 * Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.20123-alt1
 - Updated to version 3.0.20123.
 
