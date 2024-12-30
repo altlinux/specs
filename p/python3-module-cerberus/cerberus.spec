@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: Extensible validation for Python dictionaries
@@ -53,6 +53,9 @@ for custom validation.
 %python3_sitelibdir/Cerberus-%version.dist-info
 
 %changelog
+* Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt1
+- Automatically updated to 1.3.6.
+
 * Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt1
 - Automatically updated to 1.3.5.
 
