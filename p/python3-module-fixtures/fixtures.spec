@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt1.1
+Version: 4.2.2
+Release: alt1
 
 Summary: Fixtures, reusable state for writing clean tests and more
 
@@ -52,6 +52,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
+- Automatically updated to 4.2.2.
+
 * Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.1
 - Fixed URL.
 
