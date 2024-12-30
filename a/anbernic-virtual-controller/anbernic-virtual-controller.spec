@@ -1,5 +1,5 @@
 Name: anbernic-virtual-controller
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Set of tools to combine several input devices into one virtual controller on Anbernic handhelds
@@ -49,6 +49,9 @@ install -m 0644 gamecontrollerdb.anbernic.txt %buildroot%_datadir/gamecontroller
 %_datadir/gamecontrollerdb.anbernic.txt
 
 %changelog
+* Sat Dec 28 2024 Artyom Bystrov <arbars@altlinux.org> 0.3-alt1
+- Added new devices: RG353P and ARC S
+
 * Sun Dec 22 2024 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
 - Add keybinding file for keyboard emulator (needed for gptokeyb)
 - Change type of systemd service
