@@ -2,7 +2,7 @@ BuildRequires: desktop-file-utils
 
 Name:		rpminstall
 Version:	1.1.4
-Release:	alt1
+Release:	alt2
 Summary:	Graphical application for install RPM packages using apt-get
 
 License:	GPL
@@ -45,10 +45,13 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %_datadir/apps/%name/*
 %_desktopdir/%name.desktop
 %_datadir/services/apt.protocol
-%_niconsdir/%name.png
+%_iconsdir/hicolor/128x128/apps/%name.png
 %_libdir/firefox/defaults/preferences/apturl.js
 
 %changelog
+* Sun Dec 29 2024 Anton Kurachenko <srebrov@altlinux.org> 1.1.4-alt2
+- Increased application icon size.
+
 * Fri Nov 02 2018 Sergey V Turchin <zerg at altlinux dot org> 1.1.4-alt1
 - port to Qt5
 
