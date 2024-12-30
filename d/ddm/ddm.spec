@@ -5,14 +5,14 @@
 
 Name: ddm
 Version: 0.1.9
-Release: alt1
+Release: alt1.1
 
 Summary: DDM is a fork of SDDM for DDE
 
-License: GPL-2.0-only
+License: GPL-2.0-only or GPL-3.0-only or LGPL-3.0-only or Apache-2.0 and LGPL-2.1-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/treeland
-Vcs: git://github.com/linuxdeepin/treeland.git
+Url: https://github.com/linuxdeepin/ddm
+Vcs: git://github.com/linuxdeepin/ddm.git
 
 Source: %url/archive/%version/%name-%version.tar.xz
 Patch: ddm-0.1.9-alt-pam.patch
@@ -146,5 +146,9 @@ exit 0
 %_libdir/cmake/DDM/Auth*.cmake
 
 %changelog
+* Mon Dec 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.1.9-alt1.1
+- Fixed url and vcs tag.
+- Updated license tag.
+
 * Mon Dec 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.1.9-alt1
 - Initial build for ALT Sisyphus.
