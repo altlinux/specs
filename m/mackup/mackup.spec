@@ -1,12 +1,15 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
 
 Name: mackup
-Version: 0.8.40
+Version: 0.8.41
 Release: alt1
 Summary: Keep your application settings in sync
 License: GPL-3.0
 Group: Other
-Url: https://github.com/lra/mackup
+Url: https://pypi.org/project/mackup
+VCS: https://github.com/lra/mackup
+
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -14,6 +17,13 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-poetry
 Requires: python3-module-%name
+
+%if_with check
+BuildRequires: python3-module-docopt
+BuildRequires: python3-module-pytest
+BuildRequires: python3-modules-sqlite3
+BuildRequires: /proc
+%endif
 
 %description
 What does it do:
@@ -35,12 +45,16 @@ This package contains python module for %name
 
 %prep
 %setup
+sed -i '/version/s/0.8.40/%version/' pyproject.toml
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+%check
+%pyproject_run_pytest
 
 %files
 %_bindir/%name
@@ -51,6 +65,10 @@ This package contains python module for %name
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Mon Dec 30 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.41-alt1
+- Updated to version 0.8.41.
+- Enabled check.
+
 * Sat Jan 20 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.40-alt1
 - Updated to version 0.8.40.
 
