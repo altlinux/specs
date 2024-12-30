@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 
 Summary: Bootstrap-based sphinx theme from the PyData community
@@ -65,6 +65,9 @@ python3 -m nodeenv --node=system --prebuilt --clean-src $PWD/.nodeenv
 %python3_sitelibdir/pydata_sphinx_theme-%version.dist-info
 
 %changelog
+* Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt1
+- Build new version.
+
 * Wed Nov 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.16.0-alt1
 - Build new version.
 
