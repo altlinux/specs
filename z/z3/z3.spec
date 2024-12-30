@@ -1,9 +1,8 @@
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
 Name: z3
-Version: 4.13.3
+Version: 4.13.4
 Release: alt1
 Summary: High-performance theorem prover (SMT solver)
 License: MIT
@@ -119,6 +118,9 @@ python3 examples/python/example.py
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Mon Dec 23 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.4-alt1
+- Automatically updated to 4.13.4.
+
 * Sat Oct 12 2024 Grigory Ustinov <grenka@altlinux.org> 4.13.3-alt1
 - Automatically updated to 4.13.3.
 
