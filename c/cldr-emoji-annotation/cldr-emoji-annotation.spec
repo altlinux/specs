@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cldr-emoji-annotation
-Version: %ver_major
+Version: %ver_major.1
 #.%ver_minor
 Release: alt1
 
@@ -106,6 +106,9 @@ done
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 46-alt1
 - 46
 
