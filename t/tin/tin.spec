@@ -1,6 +1,6 @@
 Name: tin
 Version: 2.6.4
-Release: alt1
+Release: alt2
 
 Summary: A basic Internet news reader
 License: BSD
@@ -11,13 +11,15 @@ Source0: ftp://ftp.tin.org/pub/news/clients/tin/stable/%name-%version.tar.xz
 Source1: tin.watch
 Source2: tin.attributes
 
-Patch1: tin-2.6.4-enable_coloring.patch
-Patch2: tin-2.0.1-charset.patch
+Patch: tin-2.6.4-enable_coloring.patch
 
 # Automatically added by buildreq on Wed Dec 28 2011
 # Manually removed from buildreq'ed string:
 # - specific MTA package (such as postfix): replace it by requirement of /usr/sbin/sendmail
-BuildRequires: gnupg libgsasl-devel libncursesw-devel libpcre-devel libuu-devel
+BuildRequires: gnupg libgsasl-devel libncursesw-devel libpcre2-devel libuu-devel
+BuildRequires: libcanlock-devel libicu-devel libidn2-devel liburiparser-devel
+BuildRequires: zlib-devel libgnutls-devel
+BuildRequires: xorg-proto-devel
 BuildRequires: /usr/sbin/sendmail
 # utils
 BuildRequires: perl(Net/NNTP.pm)
@@ -42,28 +44,30 @@ This package contains extra perl scripts for tin provided by upstream.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%patch -p1
 
 %build
 %configure \
 	--with-spooldir=/var/lib/news \
-	--enable-nntp \
-	--enable-prototypes \
+	--with-nntps=gnutls \
+	--with-screen=ncursesw \
+	--with-pcre2-config=%_bindir/pcre2-config \
+	--with-mailer=/usr/sbin/sendmail \
+	--with-nntp-default-server="news" \
+	--with-mime-default-charset="KOI8-R" \
 	--disable-mime-strict-charset \
 	--enable-color \
-	--with-screen=ncursesw \
+	--enable-nntp \
+	--enable-prototypes \
 	--enable-locale \
 	--enable-mh-mail-handling \
-	--with-pcre=/usr \
 	--enable-echo \
 	--enable-nntp-only \
-	--with-mailer=/usr/sbin/sendmail \
-	--with-nntp-default-server="news"
+	--enable-cancel-locks
 
 subst 's/(INSTALL) -s/(INSTALL)/g' src/Makefile
 
-%make_build build PCRE_CPPFLAGS="-I/usr/include/pcre"
+%make_build build
 
 %install
 %makeinstall_std
@@ -90,6 +94,12 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 %_bindir/*.pl
 
 %changelog
+* Tue Dec 31 2024 Michael Shigorin <mike@altlinux.org> 2.6.4-alt2
+- upstream suggestions (thank you, Urs!):
+  + enable cancel locks (closes: #48629)
+  + build with pcre2, icu
+  + drop tin-2.0.1-charset.patch
+
 * Sun Dec 29 2024 Michael Shigorin <mike@altlinux.org> 2.6.4-alt1
 - new version (watch file uupdate)
 - update enable_coloring patch
