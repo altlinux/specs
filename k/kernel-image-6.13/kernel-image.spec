@@ -1,5 +1,5 @@
 Name: kernel-image-6.13
-Release: alt0.rc4
+Release: alt0.rc5
 %define kernel_src_version	6.12
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
@@ -126,6 +126,7 @@ BuildRequires: ccache
 BuildRequires: iproute2
 BuildRequires: ltp >= 20210524-alt2
 BuildRequires: rpm-build-vm-run >= 1.30
+BuildRequires: rtcheck
 }}
 
 %description
@@ -499,7 +500,13 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug uname -a
+timeout 300 vm-run --loglevel=debug --append=earlycon \
+%if "%base_flavour" == "rt"
+	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
+	'uname -a; rtcheck -v'
+%else
+	'uname -a'
+%endif
 # Longer LTP tests only if there is KVM (which is present on all main arches).
 if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
 	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
@@ -593,6 +600,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Dec 31 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc5
+- Update to v6.13-rc5 (2024-12-29).
+- config: Enable more zram compression backends.
+
 * Mon Dec 23 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc4
 - Update to v6.13-rc4 (2024-12-22).
 - config: Disable CONFIG_ATM.
