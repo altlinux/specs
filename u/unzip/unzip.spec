@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: unzip
 Version: 6.0
-Release: alt6
-
-Packager: Victor Forsyuk <force@altlinux.org>
+Release: alt7
 
 Summary: An utility for unpacking zip archives
 License: Info-ZIP
@@ -172,6 +174,9 @@ ln -s unzip %buildroot%_bindir/zipinfo
 %doc BUGS LICENSE
 
 %changelog
+* Tue Dec 31 2024 Vitaly Chikunov <vt@altlinux.org> 6.0-alt7
+- NMU: Fix gcc14-related FTBFS due to configure false negatives.
+
 * Mon Oct 07 2024 Alexander Danilov <admsasha@altlinux.org> 6.0-alt6
 - fixes CVE-2019-13232, CVE-2022-0529, CVE-2022-0530.
 
