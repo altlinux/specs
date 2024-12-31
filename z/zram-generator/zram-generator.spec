@@ -1,6 +1,6 @@
 Name: zram-generator
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Systemd unit generator for zram swap devices
 
@@ -46,13 +46,16 @@ install -m 0644 %SOURCE2 %buildroot/etc/modprobe.d/blacklist-zswap.conf
 
 %files
 %config(noreplace) /etc/modprobe.d/blacklist-zswap.conf
-/usr/lib/systemd/system-generators/zram-generator
+%_systemdgeneratordir/zram-generator
 %_unitdir/systemd-zram-setup@.service
 %_docdir/zram-generator/zram-generator.conf.example
 %_man5dir/zram-generator.conf.5.xz
 %_man8dir/zram-generator.8.xz
 
 %changelog
+* Sat Dec 14 2024 Boris Yumankulov <boria138@altlinux.org> 1.2.1-alt2
+- use %_systemdgeneratordir macros in files
+
 * Mon Dec 02 2024 Boris Yumankulov <boria138@altlinux.org> 1.2.1-alt1
 - new version 1.2.1
 
