@@ -1,11 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 %define oname pyaml
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 21.10.1
-Release: alt2
+Version: 24.12.1
+Release: alt1
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
 License: WTFPL
@@ -14,7 +13,7 @@ Url: https://pypi.org/project/pyaml/
 # https://github.com/mk-fg/pretty-yaml.git
 BuildArch: noarch
 
-Source0: %oname-%version.tar.gz
+Source0: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -33,7 +32,7 @@ BuildRequires: python3(tox)
 PyYAML-based module to produce pretty and readable YAML-serialized data.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %pyproject_build
@@ -46,12 +45,16 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %tox_check_pyproject
 
 %files
-%doc COPYING PKG-INFO README README.rst
+%doc COPYING README.rst
+%_bindir/pyaml
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version.dist-info/
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Dec 31 2024 Grigory Ustinov <grenka@altlinux.org> 24.12.1-alt1
+- Build new version.
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 21.10.1-alt2
 - Moved on modern pyproject macros.
 
