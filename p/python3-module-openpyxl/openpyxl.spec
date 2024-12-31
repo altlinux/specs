@@ -1,7 +1,7 @@
 %define oname openpyxl
 
 Name:    python3-module-%oname
-Version: 3.1.3
+Version: 3.1.5
 Release: alt1
 
 Summary: A Python library to read/write Excel 2010 xlsx/xlsm files
@@ -42,6 +42,9 @@ Python the Office Open XML format.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Dec 31 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt1
+- Build new version.
+
 * Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.3-alt1
 - Build new version.
 
