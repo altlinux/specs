@@ -6,8 +6,10 @@
 %define libportal_gtk4_version 0.7.1
 %define pcre_version 10.21
 
+%def_enable check
+
 Name: ptyxis
-Version: 47.5
+Version: 47.6
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -33,6 +35,12 @@ BuildRequires: pkgconfig(libpcre2-8) >= %pcre_version
 BuildRequires: libgraphene-devel
 BuildRequires: itstool
 BuildRequires: meson
+BuildRequires: /proc
+
+%if_enabled check
+BuildRequires: desktop-file-utils
+BuildRequires: %_bindir/appstream-util
+%endif
 
 Provides: Terminal = %version-%release
 Provides: x-terminal-emulator
@@ -51,11 +59,20 @@ Provides: x-terminal-emulator
 %meson_install
 %find_lang --with-gnome  %name
 
+mkdir -p %buildroot%_altdir
+cat << __EOF__ > %buildroot%_altdir/%name
+%_bindir/x-terminal-emulator	%_bindir/%name	36
+__EOF__
+
+%check
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.gnome.Ptyxis.metainfo.xml
+desktop-file-validate %buildroot%_desktopdir/org.gnome.Ptyxis.desktop
+
 %files -f %name.lang
 %doc README.md NEWS
 %doc COPYING
-%_bindir/ptyxis
-%_libexecdir/ptyxis-agent
+%_bindir/%name
+%_libexecdir/%name-agent
 %_datadir/metainfo/org.gnome.Ptyxis.metainfo.xml
 %_desktopdir/org.gnome.Ptyxis.desktop
 %dir %_datadir/dbus-1
@@ -63,9 +80,17 @@ Provides: x-terminal-emulator
 %_datadir/dbus-1/services/org.gnome.Ptyxis.service
 %_datadir/glib-2.0/schemas/org.gnome.Ptyxis.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
-%_man1dir/ptyxis.1.xz
+%_man1dir/%name.1.xz
+%_altdir/%name
 
 %changelog
+* Wed Dec 25 2024 Boris Yumankulov <boria138@altlinux.org> 47.6-alt1
+- new version 47.6
+- add x-terminal-emulator alternative
+- replace ptyxis to %name macro
+- enable check
+- add /proc to BuildRequires
+
 * Tue Nov 26 2024 Boris Yumankulov <boria138@altlinux.org> 47.5-alt1
 - new version 47.5
 
