@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.203
+Version: 4.0.4.204
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -263,6 +263,9 @@ make apidocs
 lib/test-set
 make check VERBOSE=1
 scripts/check
+rpmbuild -bE ../../SPECS/rpm-4_0.spec >a
+./rpmb   -bE ../../SPECS/rpm-4_0.spec >b
+diff -u a b
 
 %install
 %make_install DESTDIR='%buildroot' install
@@ -403,6 +406,16 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Dec 31 2024 Vitaly Chikunov <vt@altlinux.org> 4.0.4.204-alt1
+- Apply various gcc14 FTBFS fixes.
+- %%autopatch behavior change: now patches applied in Patch<N> index order
+  instead of Patch spec definition order.
+- Implement %%elif/%%elifarch.
+- Add a warning about garbage after %%else/%%endif.
+- Backport %%dnl macro (for commenting).
+- Backport %%{shrink:...} macro (for joining lines).
+- Backport support for multiline macros.
+
 * Fri Oct 25 2024 Vitaly Chikunov <vt@altlinux.org> 4.0.4.203-alt1
 - Fix packaging debuginfo for ZSTD compressed kernel modules.
 - Do not put uncompressed kernel modules into -debuginfo package.
