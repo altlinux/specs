@@ -1,6 +1,6 @@
 Name: nix
 Version: 2.24.10
-Release: alt1
+Release: alt2
 
 Summary: Nix software deployment system
 License: LGPLv2+
@@ -59,15 +59,34 @@ Summary: Development files for %name
 Group: Development/Other
 Requires: %name = %EVR
 
+%package -n  lib%name
+Summary: libs for %name
+Group: System/Libraries
+
+%description -n lib%name
+%summary.
+
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
+
+%package data
+Summary: Arch independent files for nix
+Group: System/Configuration/Packaging
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for nix to work.
 
 %prep
 %setup
 
 %build
 %autoreconf
+
+# Test disabled because rapidcheck is not builded
+# pkgconfig.prov: ERROR: %_usrsrc/tmp/librapidcheck-devel-buildroot/usr/lib64/pkgconfig/rapidcheck.pc: invalid pkg-config output: rapidcheck =
+# doc gen disabled because build with doc failed
 %configure --localstatedir=/nix/var --disable-tests --disable-unit-tests --disable-doc-gen --enable-gc
 %make_build
 
@@ -80,7 +99,6 @@ rm -r %buildroot%_sysconfdir/profile.d/nix.sh
 rm -r %buildroot%_sysconfdir/profile.d/nix.fish
 
 mkdir -p %buildroot%_sysusersdir/
-mkdir -p %buildroot%_tmpfilesdir/
 mkdir -p %buildroot%_sysconfdir/nix/
 
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/nix/nix.conf
@@ -97,7 +115,6 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %doc COPYING
 %doc README.md
 %_bindir/nix*
-%_libdir/*.so
 %config(noreplace) %_sysconfdir/nix/nix.conf
 %_sysconfdir/profile.d/nix-daemon.fish
 %_sysconfdir/profile.d/nix-daemon.sh
@@ -115,7 +132,13 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %_includedir/nix/
 %_pkgconfigdir/*.pc
 
+%files -n lib%name
+%_libdir/*.so
+
 %changelog
+* Wed Dec 25 2024 Boris Yumankulov <boria138@altlinux.org> 2.24.10-alt2
+- apply shared libs policy
+
 * Sun Nov 03 2024 Boris Yumankulov <boria138@altlinux.org> 2.24.10-alt1
 - new version 2.24.10
 
