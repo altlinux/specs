@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -36,6 +36,8 @@ Source: %name-%version.tar
 %endif
 
 Requires: lib%name = %EVR
+# default soundfont
+Requires: fluid-soundfont-gm
 
 %define cmake_ver 3.0.2
 %define glib_ver 2.30
@@ -221,6 +223,11 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %endif
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.2-alt1
+- 2.4.2
+- added fluid-soundfont-gm as a runtime dependency
+  for main package
+
 * Sun Dec 01 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 

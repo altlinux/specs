@@ -1,8 +1,8 @@
 %def_enable snapshot
 
-%define ver_major 0.43
+%define ver_major 0.44
 %define beta %nil
-%define rdn_name sm.puri.Phosh.OskStub
+%define rdn_name mobi.phosh.OskStub
 
 # enabled by default
 %def_disable default_osk
@@ -29,6 +29,7 @@ Source: %name-%version%beta.tar
 Provides: osk-wayland
 
 %define gmobile_ver 0.2.0
+%define gsds_ver 47
 
 Requires: dconf
 Requires: hunspell-en_US hunspell-ru-lebedev
@@ -45,7 +46,7 @@ BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(gnome-desktop-3.0)
-BuildRequires: pkgconfig(gsettings-desktop-schemas)
+BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %gsds_ver
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libsystemd)
 # compliters: default -- hunspell
@@ -105,6 +106,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
+- 0.44.0
+
 * Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
 - 0.43.0
 

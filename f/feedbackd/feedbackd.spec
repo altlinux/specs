@@ -2,7 +2,8 @@
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.5
+%define xdg_name org.sigxcpu.Feedback
+%define ver_major 0.6
 %define namespace Lfb
 %define api_ver 0.0
 
@@ -120,8 +121,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %_libexecdir/fbd-ledctrl
 %_userunitdir/fbd-alert-slider.service
 %_udevrulesdir/90-%name.rules
-%_datadir/dbus-1/interfaces/org.sigxcpu.Feedback.xml
-%_datadir/dbus-1/services/org.sigxcpu.Feedback.service
+%_datadir/dbus-1/interfaces/%xdg_name.xml
+%_datadir/dbus-1/interfaces/%xdg_name.Haptic.xml
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/org.sigxcpu.feedbackd.gschema.xml
 %{?_enable_man:%_man1dir/fbcli.1.*
@@ -147,6 +149,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %endif
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Mon Sep 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 

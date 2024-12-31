@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.43
+%define ver_major 0.44
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -11,6 +11,7 @@
 %define gmobile_ver 0.1.0
 
 # since 0.30 system 0.16 may be used but patched version required
+# system 0.18.1-alt1 not working!
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_disable embed_gmobile
@@ -60,7 +61,7 @@ BuildRequires: pkgconfig(wayland-protocols) >= %wayland_proto_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(xcb-icccm)
 %{?_disable_embed_gmobile:BuildRequires: pkgconfig(gmobile) >= %gmobile_ver}
-%{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.17.1}
+%{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= %wlroots_ver}
 %{?_enable_embed_wlroots:BuildRequires: libgbm-devel libseat1-devel
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-errors)
@@ -132,6 +133,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
+- 0.44.0
+
 * Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
 - 0.43.0
 

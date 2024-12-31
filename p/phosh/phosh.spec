@@ -1,12 +1,12 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.43
+%define ver_major 0.44
 %define beta %nil
 %define namespace Phosh
 %define api_ver %ver_major
 %define gi_api_ver 0
 %define doc_api_ver 0
-%define rdn_name sm.puri.Phosh
+%define rdn_name mobi.phosh.Shell
 %define dev_uid 1000
 
 # since 0.41 gvc & libcallui subprojects use wrap-files
@@ -24,7 +24,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -243,10 +243,10 @@ xvfb-run %__meson_test
 %files data
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/sm.puri.OSK0.desktop
-%_datadir/glib-2.0/schemas/sm.puri.phosh.gschema.xml
-%_datadir/glib-2.0/schemas/sm.puri.phosh.enums.xml
-%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.shell.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.shell.enums.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.plugins.pomodoro.gschema.xml
+%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
 %_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.upcoming-events.gschema.xml
 %_datadir/glib-2.0/schemas/00_mobi.Phosh.gschema.override
@@ -258,7 +258,7 @@ xvfb-run %__meson_test
 %_userunitdir/gnome-session@%name.target.d/session.conf
 %_userunitdir/%rdn_name.service
 %_userunitdir/%rdn_name.target
-%_datadir/xdg-desktop-portal/portals/%name.portal
+%_datadir/xdg-desktop-portal/portals/%name-shell.portal
 %_datadir/xdg-desktop-portal/%name-portals.conf
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %{?_enable_man:%_man1dir/%name.1*
@@ -283,6 +283,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
+- 0.44.0
+
 * Fri Dec 06 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.1-alt1
 - 0.43.1
 

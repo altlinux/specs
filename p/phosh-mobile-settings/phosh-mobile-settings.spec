@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.43
+%define ver_major 0.44
 %define beta %nil
 %define gmobile_ver 0.2.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -40,7 +40,7 @@ BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.74
 BuildRequires: pkgconfig(gtk4) >= 4.12.5
 BuildRequires: pkgconfig(gtk4-wayland) >= 4.4
-BuildRequires: pkgconfig(libadwaita-1) >= 1.1
+BuildRequires: pkgconfig(libadwaita-1) >= 1.5
 BuildRequires: pkgconfig(wayland-client) >= 1.14
 BuildRequires: pkgconfig(wayland-protocols) >= 1.12
 BuildRequires: pkgconfig(gsound)
@@ -95,6 +95,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
+- 0.44.0
+
 * Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.43.0-alt1
 - updated to v0.43.0-7-g2a4add4
 
