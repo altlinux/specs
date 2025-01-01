@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.10.2
+Version: 0.11.1
 Release: alt1
 
 Summary: A templating library able to output odt and pdf files
@@ -62,6 +62,9 @@ rm -r %buildroot%python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Jan 01 2025 Grigory Ustinov <grenka@altlinux.org> 0.11.1-alt1
+- Build new version.
+
 * Mon Jul 29 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
 - Build new version.
 
