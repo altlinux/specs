@@ -2,7 +2,7 @@
 %define formats text json html template
 
 Name: license-list-data
-Version: 3.25.0
+Version: 3.26.0
 Release: alt1
 
 Summary: License List Data
@@ -37,5 +37,8 @@ done
 %doc *.md
 
 %changelog
+* Wed Jan 01 2025 Yuri N. Sedunov <aris@altlinux.org> 3.26.0-alt1
+- 3.26.0
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 3.25.0-alt1
 - first build for Sisyphus.
