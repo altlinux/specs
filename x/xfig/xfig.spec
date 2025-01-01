@@ -1,6 +1,6 @@
 Name:         xfig
-Version:      3.2.9
-Release:      alt2
+Version:      3.2.9a
+Release:      alt1
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -90,6 +90,9 @@ install -D -m 644 %SOURCE5 %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Wed Jan 01 2025 Vladislav Zavjalov <slazav@altlinux.org> 3.2.9a-alt1
+- 3.2.9a
+
 * Thu Oct 19 2023 Vladislav Zavjalov <slazav@altlinux.org> 3.2.9-alt2
 - current snapshot
   https://sourceforge.net/p/mcj/xfig/ci/b163ea2fd7bdd4a7b6c0745b8b003bef75f63923/
