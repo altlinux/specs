@@ -3,8 +3,8 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.14.1
-Release: alt2
+Version: 5.15.0
+Release: alt1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
 License: Apache-2.0 and GPL-2.0
@@ -21,7 +21,6 @@ Patch2: osquery-disable-dpkg.patch
 Patch3: osquery-use-cstdint.patch
 Patch4: osquery-fix-std-types.patch
 Patch5: osquery-fix-std-functions.patch
-Patch6: osquery-fix-audit_rule_syscall_data.patch
 Patch7: osquery-sysctl.h.patch
 Patch8: osquery-no-lvm2app.h.patch
 Patch9: osquery-enable_yara_string.patch
@@ -152,6 +151,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Wed Jan 01 2025 Andrey Cherepanov <cas@altlinux.org> 5.15.0-alt1
+- New version.
+
 * Fri Dec 06 2024 Andrey Cherepanov <cas@altlinux.org> 5.14.1-alt2
 - FTBFS: fix required (thanks alton@).
 
