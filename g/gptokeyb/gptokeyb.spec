@@ -1,5 +1,5 @@
 Name:    gptokeyb
-Version: 0.2.3.1
+Version: 0.2.3.2
 Release: alt1.git2c7a017
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
@@ -70,8 +70,13 @@ install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 %_presetdir/20-%name.preset
 
 %changelog
+* Wed Jan  1 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.3.2-alt1.git2c7a017
+- Fix RG35* detection
+
+
 * Wed Jan  1 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.3.1-alt1.git2c7a017
 - Fix ARC-D detection
+
 
 * Mon Dec 23 2024 Artyom Bystrov <arbars@altlinux.org> 0.2.3-alt1.git2c7a017
 - Replace Anbernic stuff into separate package
