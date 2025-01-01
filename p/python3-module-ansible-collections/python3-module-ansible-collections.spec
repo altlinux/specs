@@ -1,5 +1,5 @@
 Name:    python3-module-ansible-collections
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 
 Summary: This repository contains the community.general and some other Ansible Collection
@@ -71,6 +71,9 @@ rm -rv %buildroot%python3_sitelibdir/ansible_collections/community/postgresql/.a
 %files -n ansible
 
 %changelog
+* Wed Jan 01 2025 Andrey Cherepanov <cas@altlinux.org> 10.2.0-alt1
+- New version.
+
 * Tue Dec 03 2024 Andrey Cherepanov <cas@altlinux.org> 10.1.0-alt1
 - New version.
 
