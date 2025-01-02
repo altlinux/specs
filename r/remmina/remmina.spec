@@ -6,7 +6,7 @@
 %def_with freerdp3
 
 Name: remmina
-Version: 1.4.36
+Version: 1.4.37
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -295,6 +295,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_iconsdir/hicolor/*/emblems/org.remmina.Remmina-ssh-symbolic.svg
 %_iconsdir/hicolor/*/emblems/org.remmina.Remmina-sftp-symbolic.svg
 %_iconsdir/hicolor/*/emblems/org.remmina.Remmina-tool-symbolic.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-status-green.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-status-grey.svg
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-status-red.svg
 %_iconsdir/hicolor/*/status/org.remmina.Remmina-status.svg
 %_datadir/%name
 %_man1dir/remmina.1.*
@@ -363,6 +366,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jan 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.4.37-alt1
+- New version 1.4.37.
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.36-alt1
 - New version 1.4.36.
 
