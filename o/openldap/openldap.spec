@@ -19,7 +19,7 @@
 
 Name: openldap
 Version: 2.6.9
-Release: alt1
+Release: alt2
 
 Obsoletes: openldap2.4 < %version-%release
 
@@ -378,6 +378,7 @@ export PKG_CONFIG=pkg-config
 %if_enabled debug
 	--enable-debug \
 %endif
+	--with-systemd \
 	--without-fetch \
 	--with-threads \
 	--with-pic \
@@ -567,6 +568,10 @@ rm -f /var/lib/ldap/%_lib/*.so*
 
 %files -n libldap%{so_ver}
 %_libdir/*.so.*
+%if_enabled slapi
+%exclude %_libdir/libslapi*.so.*
+%endif
+
 
 %files -n libldap-devel
 %_libdir/*.so
@@ -718,6 +723,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Jan 02 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.9-alt2
+- Fixed start service.
+
 * Thu Dec 12 2024 Alexey Shabalin <shaba@altlinux.org> 2.6.9-alt1
 - 2.6.9
 
