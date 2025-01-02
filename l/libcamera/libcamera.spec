@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 Epoch: 1
 
@@ -32,6 +32,7 @@ BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(libyuv)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
@@ -143,6 +144,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.4.0-alt1
+- 0.4.0
+
 * Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.3.2-alt1
 - 0.3.2
 
