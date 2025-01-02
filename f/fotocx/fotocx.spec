@@ -1,6 +1,6 @@
 Name: fotocx
-Version: 24.70
-Release: alt1.1
+Version: 25.0
+Release: alt1
 
 %define app_id kornelix.%name
 
@@ -85,6 +85,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Jan 02 2025 Yuri N. Sedunov <aris@altlinux.org> 25.0-alt1
+- 25.0
+
 * Thu Dec 05 2024 Yuri N. Sedunov <aris@altlinux.org> 24.70-alt1.1
 - fotocx-data obsoletes fotoxx-data
 
