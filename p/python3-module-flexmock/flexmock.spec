@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.12.1
+Version: 0.12.2
 Release: alt1
 
 Summary: Mock/Stub/Spy library for Python
@@ -49,6 +49,9 @@ sed -i '/python tests\/test_teamcity.py/d' tox.ini
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Jan 03 2025 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt1
+- New version 0.12.2.
+
 * Tue Apr 09 2024 Anton Vyatkin <toni@altlinux.org> 0.12.1-alt1
 - New version 0.12.1.
 
