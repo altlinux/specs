@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 Name: timg
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: terminal image viewer
@@ -9,10 +9,11 @@ License: GPL-2.0
 Group: Graphics
 Url: https://timg.sh
 
+Vcs: https://github.com/hzeller/timg.git
+
 %if_disabled snapshot
 Source: https://github.com/hzeller/timg/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/hzeller/timg.git
 Source: %name-%version.tar
 %endif
 
@@ -58,6 +59,9 @@ character blocks if these are not available.
 %doc README*
 
 %changelog
+* Fri Jan 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Fri Jan 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 

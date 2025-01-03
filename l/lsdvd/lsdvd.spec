@@ -1,17 +1,23 @@
+%def_enable check
+
 Name: lsdvd
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: list contents of DVD disks
 Group: Video
-License: GPLv2
+License: GPL-2.0-only
 Url: https://sourceforge.net/projects/lsdvd/
 
-# VCS: git://git.code.sf.net/p/lsdvd/git
+Vcs: git://git.code.sf.net/p/lsdvd/git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libdvdread-devel >= 4.1.3
+BuildRequires: libdvdread-devel >= 4.1.3 libxml2-devel
+# /usr/share/k3b/extra/k3bphotovcd.mpg
+%{?_enable_check:BuildRequires: k3b ffmpeg dvdauthor libdvdcss
+BuildRequires: xmllint jq ruby /proc}
 
 %description
 lsdvd is a program that reads information about a DVD and outputs it to
@@ -24,11 +30,15 @@ XML.
 
 %build
 %autoreconf
-%configure
+%configure PYTHON=%__python3
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+export LC_ALL=en_US.UTF-8
+%make -k check VERBOSE=1
 
 %files
 %_bindir/%name
@@ -36,6 +46,10 @@ XML.
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Fri Jan 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.19-alt1
+- 0.19
+- enabled %%check
+
 * Wed Feb 17 2016 Yuri N. Sedunov <aris@altlinux.org> 0.17-alt1
 - pre0.18 from new upstream git (ALT #31771)
 
