@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.8
+Version:      2.9
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -13,7 +13,7 @@ Source:        %name-%version.tar
 BuildRequires: gcc-c++ libgtkmm3-devel libcairomm-devel
 BuildRequires: libjansson-devel libxml2-devel libzip-devel zlib-devel libproj-devel
 BuildRequires: libjpeg-devel libgif-devel libtiff-devel libpng-devel libdb4.7-devel
-BuildRequires: librsvg-devel libcurl-devel
+BuildRequires: librsvg-devel libcurl-devel libsqlite3-devel
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html /usr/bin/unzip
 BuildRequires: transfig ImageMagick-tools
 %description
@@ -48,17 +48,10 @@ export SKIP_IMG_DIFFS=1
 %dir %_datadir/mapsoft2
 %_datadir/mapsoft2/mapsoft2.css
 %_datadir/mapsoft2/maps_menu.json
+%_datadir/applications/ms2view.desktop
 
 %files vmap-data
-%_bindir/vmaps.sh
-%_bindir/vmaps_get_fig
-%_bindir/vmaps_in
-%_bindir/vmaps_mbtiles
-%_bindir/vmaps_out
-%_bindir/vmaps_preview
-%_bindir/vmaps_sqlitedb
-%_bindir/vmaps_wp_parse
-%_bindir/vmaps_wp_update
+%_bindir/vmaps*
 %_datadir/mapsoft2/render.cfg
 %_datadir/mapsoft2/types.cfg
 %_datadir/mapsoft2/pics
@@ -67,6 +60,52 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Fri Jan 03 2025 Vladislav Zavjalov <slazav@altlinux.org> 2.9-alt1
+- Improve support for tiled maps. Add MBTiles support
+  Now ms2view and ms2render can use mbtiles as input map format,
+  ms2render can render tiles directly to mbtiles.
+- Support for Finnish standard maps (e.g. V51) and Finnish grid.
+- Rewrite map rendering scripts (vmap_data/scripts). Direct rendering
+  to mbtiles. Update map data. Important fix of Garmin TYP file.
+- Add ms2view desktop (#70, thanks to sikmir)
+- Fix and improve contour rendering and smoothing (image_cnt module, ms2geofig program)
+- vmap2:
+  - allow larger type numbers (3-bytes instead of 2)
+  - new features for rendering vmaps: "grid_labels", "draw_pos fill"
+  - add a few functions for custom map filtering
+  - support for objects types > 0xFFFF
+- write_geoimg:
+  - mbtiles support
+  - default background: transparent for tiled maps, white for others
+  - add --fillcolor, --zfill, --swapy options
+- viewer:
+  - Objects can check drawing range, in advance. This is used in
+    tile rendering to avoid reading/creating tiles which are not needed
+    (slazav/mapsoft2#61).
+  - Get rid of prepare_range mechanism. It was an attempt to do
+    parallel downloading of tiles, but it ignored caching and did a lot more
+    additional work. Now tile downloading is requested one by one, during
+    rendering.
+- geo_mkref:
+  - rearrange code, move creation of individual reftypes to separate functions
+  - fix --border_file option for multi-segment tracks
+  - move geo_mkref module inside geo_data
+- geom:
+  - rect_to_line for empty rectangle gives empty line instead of exception
+  - line filtering with Ramer-Douglas-Peucker algorithm
+- conv: fix ConvBase::frw_acc for conversions with different x,y,z scaling (such as geo projections)
+- image: fix error in coordinate range check
+- shape:
+  - fix reading objects with nParts=0
+  - add shape_dump program
+  - add methods for getting dbf field parameters
+- pulkovo grid: fix zone boundaries
+- rainbow: return lowest color for NaN value
+- filename: add ls, glob, remove wrappers
+- module system: fix multi-threaded builds (slazav/mapsoft2#69)
+- geo_data: fix error in writing Ozi map reference
+- jnx module: a playground for jnx format
+
 * Tue Nov 05 2024 Vladislav Zavjalov <slazav@altlinux.org> 2.8-alt1
 build system:
  - notests makefile target: much faster build without tests
