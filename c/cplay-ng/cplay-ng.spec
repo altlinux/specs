@@ -1,5 +1,5 @@
 Name: cplay-ng
-Version: 5.3.1
+Version: 5.4.0
 Release: alt1
 
 Summary: A simple curses audio player
@@ -39,6 +39,9 @@ filelist and playlist control.
 
 
 %changelog
+* Fri Jan 03 2025 Anton Vyatkin <toni@altlinux.org> 5.4.0-alt1
+- New version 5.4.0.
+
 * Wed Aug 07 2024 Anton Vyatkin <toni@altlinux.org> 5.3.1-alt1
 - New version 5.3.1.
 
