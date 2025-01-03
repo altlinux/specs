@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-argcomplete
-Version: 3.5.2
+Version: 3.5.3
 Release: alt1
 
 Summary: Bash tab completion for argparse
@@ -18,9 +18,8 @@ Patch: argcomplete-3.5.0-skip-test.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -67,6 +66,9 @@ export PATH=$PATH:%buildroot%_bindir
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Fri Jan 03 2025 Anton Vyatkin <toni@altlinux.org> 3.5.3-alt1
+- New version 3.5.3.
+
 * Sun Dec 08 2024 Anton Vyatkin <toni@altlinux.org> 3.5.2-alt1
 - New version 3.5.2.
 
