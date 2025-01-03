@@ -3,7 +3,7 @@
 %def_disable docs
 
 Name: python3-module-%oname
-Version: 1.5.21
+Version: 1.5.30
 Release: alt1
 Summary: Cross-platform windowing and multimedia library
 
@@ -14,14 +14,15 @@ URL: http://www.pyglet.org/
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-html5lib python3-module-sphinx
 
 %add_python3_req_skip Cocoa CoreFoundation LaunchServices Quartz
 %filter_from_requires /darwin/d
 %filter_from_requires /carbon/d
 %filter_from_requires /win32/d
+
+# Automatically added by buildreq on Thu Jan 02 2025
+# optimized out: bash5 libgpg-error openssl-config python3 python3-base python3-dev python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-jaraco.collections python3-module-jaraco.context python3-module-jaraco.functools python3-module-jaraco.text python3-module-jinja2 python3-module-more-itertools python3-module-packaging python3-module-pkg_resources python3-module-py3dephell python3-module-sphinx python3-module-wheel sh5
+BuildRequires: python3-module-genshi python3-module-pyproject-installer python3-module-setuptools
 
 %description
 pyglet provides an object-oriented programming interface for developing
@@ -29,6 +30,9 @@ games and other visually-rich applications for Windows, Mac OS X and
 Linux.
 
 %if_enabled docs
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-html5lib python3-module-sphinx
 
 %package pickles
 Summary: Pickles for cross-platform windowing and multimedia library
@@ -65,10 +69,10 @@ touch tools/__init__.py
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 pushd %buildroot%python3_sitelibdir/%oname
 rm -fR */win32* libs/darwin input/*win* */*carbon.* \
 	image/codecs/quicktime.* image/codecs/gdiplus.*
@@ -102,6 +106,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jan 02 2025 Fr. Br. George <george@altlinux.org> 1.5.30-alt1
+- New version 1.5.30.
+
 * Thu Jan 13 2022 Grigory Ustinov <grenka@altlinux.org> 1.5.21-alt1
 - Automatically updated to 1.5.21.
 
