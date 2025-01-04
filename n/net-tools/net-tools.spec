@@ -1,6 +1,6 @@
 Name: net-tools
 Version: 1.60
-Release: alt19
+Release: alt20
 
 Summary: The basic tools for setting up networking
 License: GPLv2+
@@ -81,6 +81,7 @@ Patch83: net-tools-1.60-rh-mii-refactor.patch
 Patch84: net-tools-1.60-deb-large-indexes.patch
 
 Patch85: net-tools-1.60-alt-iptunnel-includes.patch
+Patch86: net-tools-1.60-alt-fix-implicit-declaration-safe_strncpy.patch
 
 # due to hostname
 Requires: coreutils >= 0:5.3.1-alt0.2
@@ -165,6 +166,7 @@ Most of them are obsolete.  For replacement check iproute2 package.
 %patch83 -p1
 %patch84 -p1
 %patch85 -p1
+%patch86 -p1
 
 find -type f -name \*.orig -delete
 
@@ -212,6 +214,9 @@ rm -r %buildroot%_mandir/*_*
 %doc README* TODO
 
 %changelog
+* Sun Jan 05 2025 Ivan A. Melnikov <iv@altlinux.org> 1.60-alt20
+- NMU: fix building with gcc14
+
 * Fri Jun 23 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.60-alt19
 - Update to build with recent glibc headers
 
