@@ -3,25 +3,26 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: XML/HTML parsing library
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/%pypi_name
+
 Vcs: https://github.com/scrapy/parsel.git
 
-Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
+#Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
+Source: https://github.com/scrapy/parsel/archive/v%version/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-w3lib
-BuildRequires: python3-module-pytest-cov python3-module-sybil
-BuildRequires: python3-module-six python3-module-lxml python3(cssselect)
-BuildRequires: python3-module-psutil python3-module-jmespath /proc}
+%{?_enable_check:BuildRequires: python3(tox) python3-module-tox-no-deps python3-module-tox-console-scripts
+BuildRequires: python3(lxml) python3(cssselect) python3(psutil) python3(jmespath)
+BuildRequires: python3(w3lib) python3(sybil) python3(pytest_cov) /proc}
 
 %description
 Parsel is a Python library to extract and remove data from HTML and XML
@@ -38,15 +39,17 @@ expressions.
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-py.test3
+%tox_check
 
 %files
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Mon Apr 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 
