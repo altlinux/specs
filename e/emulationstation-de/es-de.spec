@@ -5,7 +5,7 @@
 Summary: A cross-platform graphical front-end for emulators - desktop edition
 Name: emulationstation-de
 Version: 3.1.0
-Release: alt1
+Release: alt1.1
 License: MIT
 Group: Emulators
 Url: https://gitlab.com/es-de/emulationstation-de
@@ -28,10 +28,7 @@ BuildRequires:  libfreeimageplus-devel libfreeimage-devel
 BuildRequires:  libfreetype-devel
 BuildRequires:  gcc-c++ cmake
 BuildRequires:  libSDL2-devel
-BuildRequires:  libboost_date_time1.85.0
-BuildRequires:  libboost_filesystem1.85.0
-BuildRequires:  libboost_locale1.85.0
-BuildRequires:  libboost_system1.85.0
+BuildRequires:  boost-devel
 BuildRequires:  libcurl-devel libvlc-devel libavcodec-devel libavfilter-devel libavformat-devel libgit2-devel libpoppler-devel libswresample-devel libswscale-devel libpostproc-devel libpoppler-gir-devel libpoppler-cpp-devel
 BuildRequires:  libpugixml-devel
 BuildRequires:  libcec-devel libudev-devel
@@ -108,6 +105,9 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+* Sat Jan  4 2025 Artyom Bystrov <arbars@altlinux.org> 3.1.0-alt1.1
+- Fix build
+
 * Tue Sep 17 2024 Artyom Bystrov <arbars@altlinux.org> 3.1.0-alt1
 - update boost version
 
