@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Library with GTK4 widget to display maps
@@ -23,10 +23,11 @@ Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/GNOME/libshumate
 
+Vcs: https://gitlab.gnome.org/GNOME/libshumate.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/libshumate.git
 Source: %name-%version.tar
 %endif
 
@@ -147,6 +148,9 @@ xvfb-run -s -noreset %__meson_test -v
 %endif
 
 %changelog
+* Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
