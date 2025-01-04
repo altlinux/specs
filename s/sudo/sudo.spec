@@ -1,11 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %define statusdir /var/run/control
 %def_enable python
 %def_with selinux
 %def_with audit
 
-
 Name: sudo
-Version: 1.9.16
+Version: 1.9.16p2
 Release: alt1
 Epoch: 1
 
@@ -119,6 +120,7 @@ configure_options='
 --docdir=%_datadir/doc/%name-%version
 --with-plugindir=%_libdir/sudo
 --libexecdir=%_libdir
+--enable-tmpfiles.d=%_tmpfilesdir
 --with-secure-path=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin'
 
 %configure $configure_options --with-passprompt='[sudo] password for %%p:'
@@ -217,6 +219,7 @@ fi
 %attr(600,root,root) %config(noreplace) %_sysconfdir/sudo.conf
 %attr(400,root,root) %config(noreplace) %_sysconfdir/sudoers
 %attr(600,root,root) %config(noreplace) %_sysconfdir/pam.d/sudo
+%_tmpfilesdir/%name.conf
 %_bindir/sudoedit
 %dir %_libdir/sudo
 %if_with selinux
@@ -263,6 +266,20 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Fri Dec 27 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16p2-alt1
+- Update to latest stable bugfix release:
+ + Sudo now passes the terminal device number to the policy plugin even if it
+   cannot resolve it to a path name (GitHub#421).
+ + On Linux systems, sudo will now attempt to use the symbolic links in
+   /proc/self/fd/{0,1,2} when resolving the terminal device number.
+ + Fixed the date used by the exit record in sudo-format log files.
+   This was a regression introduced in sudo 1.9.16 and only affected
+   file-based logs, not syslog (GitHub#405).
+ + When a duplicate alias is found in the sudoers file, the warning message now
+   includes the file and line number of the previous definition.
+ + Sudo no longer sends mail when a user runs "sudo -nv" or "sudo -nl", even
+   if "mail_badpass" or "mail_always" are set.
+
 * Fri Oct 25 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16-alt1
 - Update to latest stable release:
  + Added the cmddenial_message sudoers option to provide additional information
