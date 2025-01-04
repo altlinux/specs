@@ -122,7 +122,7 @@
 
 Name:    samba
 Version: 4.20.6
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2232,6 +2232,10 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Dec 27 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.6-alt3
+- gse_krb5: gain root privilege during get server keytab (thx Ivan Volchenko).
+  Fix PAM Winbind kerberos auth requires user access to keytab (Samba#12491).
+
 * Fri Dec 06 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.6-alt2
 - auth: Don't fallback to NTLMv1 in anonymous connections (thx Ivan Volchenko).
   Disable "not doing NTLM2 without a password" in function
