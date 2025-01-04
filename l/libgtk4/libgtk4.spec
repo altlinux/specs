@@ -38,7 +38,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.7
+Version: %ver_major.12
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -132,8 +132,7 @@ GTK is a multi-platform toolkit for creating graphical user interfaces.
 Offering a complete set of widgets, GTK is suitable for projects
 ranging from small one-off projects to complete application suites.
 
-This package contains X11 part of GTK. It is required for GNOME 3 desktop
-and programs.
+This package provides GTK%api_ver_major shared libraries.
 
 %package devel
 Summary: Development files and tools for GTK%api_ver_major applications
@@ -419,6 +418,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 4.16.12-alt1
+- 4.16.12
+
 * Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.7-alt1
 - 4.16.7
 

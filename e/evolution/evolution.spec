@@ -18,13 +18,15 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
 License: GPL-2.0-or-later and LGPL-3.0-or-later
 Group: Office
 Url: https://wiki.gnome.org/Apps/Evolution
+
+Vcs: https://gitlab.gnome.org/GNOME/evolution.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -271,6 +273,9 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 
 
 %changelog
+* Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.3-alt1
+- 3.54.3
+
 * Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.2-alt1
 - 3.54.2
 

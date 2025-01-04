@@ -33,13 +33,15 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Evolution Data Server
 License: %lgpl2plus
 Group: Graphical desktop/GNOME
-URL: https://wiki.gnome.org/Apps/Evolution
+Url: https://wiki.gnome.org/Apps/Evolution
+
+Vcs: https://gitlab.gnome.org/GNOME/evolution-data-server.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -294,6 +296,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.3-alt1
+- 3.54.3
+
 * Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.2-alt1
 - 3.54.2
 
