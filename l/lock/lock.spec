@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lock
-Version: 1.3.4
+Version: 1.3.8
 Release: alt1
 
 Summary: Process data with GnuPG
@@ -67,6 +67,9 @@ Manage your GnuPG keyring:
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Jan 04 2025 Oleg Shchavelev <oleg@altlinux.org> 1.3.8-alt1
+- New version 1.3.8
+
 * Sun Dec 15 2024 Oleg Shchavelev <oleg@altlinux.org> 1.3.4-alt1
 - New version 1.3.4
 - Update BuildRequires
