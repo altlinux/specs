@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.1
-Release: alt1.1
+Release: alt1.2
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python3
@@ -72,12 +72,15 @@ popd
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/%oname
-%python3_sitelibdir/Routes-%version.dev20241115.dist-info
+%python3_sitelibdir/Routes-%version.dev*.dist-info
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.2
+- Fixed FTBFS.
+
 * Fri Nov 15 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.1
 - Moved on pyproject macros.
 
