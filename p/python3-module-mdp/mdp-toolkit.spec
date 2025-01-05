@@ -1,7 +1,7 @@
 %define oname mdp
 
 # 16 tests (test_dtype_consistency) fail on armh
-%ifnarch armh
+%ifnarch armh aarch64
 %def_with check
 %else
 %def_without check
@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %release_tag.0%commit_num%commit_id
-Release: alt3
+Release: alt4
 
 Summary: Modular toolkit for Data Processing
 
@@ -25,6 +25,8 @@ VCS: https://github.com/mdp-toolkit/mdp-toolkit
 Source: %name-%version.tar
 Source1: MDP-tutorial.pdf
 
+Patch: no_future.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -33,12 +35,11 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-future
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-zombie-imp
 %endif
 
-%add_python3_req_skip shogun UserDict pp libsvm.svmutil
+%add_python3_req_skip shogun UserDict pp libsvm.svmutil __future__
 
 %description
 Modular toolkit for Data Processing (MDP) is a Python data processing
@@ -84,6 +85,9 @@ This package contains documentation for MDP.
 
 %prep
 %setup
+
+%patch -p1
+
 install -p -m644 %SOURCE1 .
 
 sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
@@ -117,6 +121,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt4
+- Removed dependency on future.
+
 * Tue Feb 06 2024 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt3
 - Fixed FTBFS.
 
