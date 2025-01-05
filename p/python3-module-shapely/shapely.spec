@@ -9,7 +9,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.6
-Release: alt2
+Release: alt3
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -18,6 +18,8 @@ Group: Development/Python3
 Url: http://pypi.python.org/pypi/Shapely
 # Source-url: https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
+
+Patch: shapely-2.0.6-fix_incompatible_pointer_type.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
@@ -70,6 +72,9 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+
+%patch -p1
+
 # workaround for versioneer
 rm versioneer.py
 grep -qsF ' export-subst' .gitattributes || exit 1
@@ -118,6 +123,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.6-alt3
+- Fixed FTBFS.
+
 * Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 2.0.6-alt2
 - Migrated from removed setuptools' test command (see #50996).
 
