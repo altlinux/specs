@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Typed interactions with the GitHub API v3
 License: LGPL-3.0
@@ -34,6 +34,10 @@ Buildrequires: python3-module-cryptography
 BuildArch: noarch
 
 Source:  %name-%version.tar
+
+# https://github.com/PyGithub/PyGithub/pull/3102
+Patch: 10a7135a04f71e6101f8b013aded8a662d08fd1f.patch
+
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %oname} = %EVR
@@ -45,6 +49,7 @@ and organizations in your Python applications.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -63,6 +68,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt2
+- Fixed FTBFS.
+
 * Thu Nov 07 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Automatically updated to 2.5.0.
 
