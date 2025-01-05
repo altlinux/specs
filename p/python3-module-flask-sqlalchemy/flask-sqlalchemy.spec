@@ -4,7 +4,7 @@
 
 Name: python3-module-flask-sqlalchemy
 Version: 3.1.1
-Release: alt1
+Release: alt2
 
 Summary: Adds SQLAlchemy support to your Flask application
 
@@ -28,6 +28,7 @@ BuildRequires: python3-module-flit
 BuildRequires: python3-module-pdm-pep517
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-sqlalchemy
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-greenlet
@@ -77,7 +78,9 @@ export PYTHONPATH=$PWD
 %pyproject_install
 
 %check
-%tox_check_pyproject
+# skip tests that are broken with SQLAlchemy 2.0.36
+# https://github.com/pallets-eco/flask-sqlalchemy/issues/1378
+%pyproject_run_pytest -k 'not test_model_bind'
 
 %files
 %doc README.rst
@@ -89,6 +92,9 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt2
+- Fixed FTBFS.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
 - Build new version.
 
