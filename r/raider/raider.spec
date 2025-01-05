@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: raider
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: Permanently delete your files
@@ -10,16 +10,17 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
 Url: https://apps.gnome.org/Raider
-Vcs: https://github.com/ADBeveridge/raider/tree/develop
+Vcs: https://github.com/ADBeveridge/raider
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: blueprint-compiler
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(gtk4) >= 4.12.0
+BuildRequires: pkgconfig(libadwaita-1) >= 1.4.0
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstreamcli
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
 %endif
 
 %description
@@ -53,5 +54,10 @@ specialized software and hardware.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sun Jan 05 2025 Oleg Shchavelev <oleg@altlinux.org> 3.0.2-alt1
+- New version 3.0.2
+- Update Vcs URL
+- Update build dependencies
+
 * Sat Oct 26 2024 Oleg Shchavelev <oleg@altlinux.org> 3.0.1-alt1
 - Initial build
