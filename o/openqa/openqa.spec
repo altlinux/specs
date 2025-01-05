@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt17.git60a7833ba
+Release: alt18.git60a7833ba
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -51,7 +51,6 @@ BuildRequires: sass
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-requests
-BuildRequires: python3-module-future
 
 Requires: openqa-common = %EVR
 Requires: openqa-client = %EVR
@@ -166,7 +165,7 @@ helper for interacting with the openQA REST API.
 %package python-scripts
 Summary:        Additional scripts in python
 Group:          Development/Tools
-Requires:       python3-module-requests python3-module-future
+Requires:       python3-module-requests
 
 
 %description python-scripts
@@ -518,6 +517,9 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 4.6-alt18.git60a7833ba
+- removed unnessesary dependency on future
+
 * Wed Dec 11 2024 Alexandr Antonov <aas@altlinux.org> 4.6-alt17.git60a7833ba
 - update to current version
 - Commit hash: 60a7833ba
