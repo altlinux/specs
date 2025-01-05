@@ -3,14 +3,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 24.12.1
+Version: 25.1.0
 Release: alt1
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
 License: WTFPL
 Group: Development/Python3
-Url: https://pypi.org/project/pyaml/
-# https://github.com/mk-fg/pretty-yaml.git
+URL: https://pypi.org/project/pyaml
+VCS: https://github.com/mk-fg/pretty-yaml
 BuildArch: noarch
 
 Source0: %name-%version.tar.gz
@@ -52,6 +52,9 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 25.1.0-alt1
+- Automatically updated to 25.1.0.
+
 * Tue Dec 31 2024 Grigory Ustinov <grenka@altlinux.org> 24.12.1-alt1
 - Build new version.
 
