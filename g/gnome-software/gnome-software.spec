@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 47
 %define beta %nil
@@ -40,7 +40,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -206,6 +206,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sun Jan 05 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
+- 47.3
+
 * Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
