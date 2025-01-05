@@ -1,5 +1,5 @@
 Name: fsearch
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: A fast file search utility for Unix-like systems based on GTK+3
@@ -11,6 +11,8 @@ Url: http://cboxdoerfer.github.io/fsearch
 
 # Source-url: https://github.com/cboxdoerfer/fsearch/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+
+ExcludeArch: %ix86
 
 BuildRequires: meson
 BuildRequires: libpcre2-devel
@@ -77,6 +79,10 @@ FSearch - это быстрая утилита для поиска файлов,
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Jan 05 2025 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt1
+- new version (0.2.3) with rpmgs script
+- ExcludeArch: %%ix86
+
 * Mon Aug 22 2022 Evgeny Chuck <koi@altlinux.org> 0.2.2-alt1
 - new version (0.2.2) with rpmgs script
 
