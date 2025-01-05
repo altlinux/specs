@@ -1,29 +1,35 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: catfish
-Version: 4.18.0
+Version: 4.20.0
 Release: alt1
 Summary: A handy file search tool
 
 Group: File tools
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://gitlab.xfce.org/apps/catfish
 # Source-url: https://gitlab.xfce.org/apps/catfish/-/archive/catfish-%version/catfish-catfish-%version.tar.gz
 Source: %name-%version.tar.gz
 BuildArch: noarch
 Patch: catfish-%version-ALT-searchODF.patch
 
-##BuildRequires: intltool python-module-PyXML python-module-distutils-extra python-module-pexpect python-module-zeitgeist2.0 python3-dev
-# Automatically added by buildreq on Mon Jun 10 2019
-# optimized out: at-spi2-atk fontconfig gobject-introspection gobject-introspection-x11 libat-spi2-core libatk-gir libcairo-gobject libgdk-pixbuf libgdk-pixbuf-gir libgpg-error libgtk+3-gir libpango-gir libwayland-client libwayland-cursor libwayland-egl perl perl-Encode perl-XML-Parser perl-parent python-base python-modules python3 python3-base python3-module-dbus python3-module-ptyprocess python3-module-pygobject3 sh4
-BuildRequires: intltool python3-dev python3-module-distutils-extra python3-module-pexpect python3-module-zeitgeist2.0
-BuildRequires: python3-module-pygobject3
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: rpm-build-python3
+#BuildRequires: intltool python3-dev python3-module-distutils-extra python3-module-pexpect python3-module-zeitgeist2.0
+#BuildRequires: python3-module-pygobject3
 BuildRequires: rpm-build-gir
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(dbus)
+BuildRequires: python3(gi)
+BuildRequires: python3(pexpect)
+BuildRequires: pkgconfig(gdk-3.0)
+BuildRequires: pkgconfig(libxfconf-0)
 
 # search engine
 Requires: %_bindir/locate
 Requires: %_bindir/find
-Requires: python3-module-catfish
+Requires: python3-module-catfish = %EVR
 
 # XXX /etc/mime.types belongs here
 Requires: mailcap
@@ -38,48 +44,51 @@ configuration options from the command line.
 
 %package -n python3-module-catfish
 Group: Development/Python3
-License: GPLv2+
 Summary: Supplemental module for catfish
 
 Requires: typelib(Gtk) = 3.0
 
 %description -n python3-module-catfish
-Supplemental Python3 module for catfish, a handy file search tool
+Supplemental Python3 module for catfish, a handy file search tool.
 
 %prep
 %setup -n %name-%version
 %patch -p2
 
 %build
-%pyproject_build
+%meson
+%meson_build
 
 %install
 # XXX upstream cant' handle this :)
-install -D build/share/applications/*.desktop %buildroot/%_desktopdir/org.xfce.Catfish.desktop
+#install -D build/share/applications/*.desktop %buildroot/%_desktopdir/org.xfce.Catfish.desktop
 
-%pyproject_install
+%meson_install
 
-cp -a build/mo %buildroot%_datadir/locale
-rm -rf %buildroot%_defaultdocdir/%name
+rm -r %buildroot%_defaultdocdir/%name
 
-%find_lang %name
+# remove non-scallable icons
+rm -vr %buildroot%_iconsdir/hicolor/*x*/
 
-%files -f %name.lang
+%find_lang catfish
+
+%files -f catfish.lang
 %doc AUTHORS COPYING README.md
-
-%_bindir/*
-%_desktopdir/*.desktop
-%_datadir/%name
-%_datadir/metainfo/*
-%_datadir/icons/hicolor/scalable/apps/*.svg
-%_man1dir/*
+%_bindir/catfish
+%_desktopdir/org.xfce.Catfish.desktop
+%_datadir/catfish
+%_datadir/metainfo/catfish.appdata.xml
+%_iconsdir/hicolor/scalable/apps/org.xfce.catfish.svg
+%_man1dir/catfish.1.*
 
 %files -n python3-module-catfish
-%python3_sitelibdir_noarch/%name
-%python3_sitelibdir_noarch/%{name}_lib
-%python3_sitelibdir_noarch/%name-%version.dist-info
+%python3_sitelibdir_noarch/catfish
+%python3_sitelibdir_noarch/catfish_lib
 
 %changelog
+* Sat Jan 04 2025 Anton Midyukov <antohami@altlinux.org> 4.20.0-alt1
+- new version (4.20.0) with rpmgs script
+
 * Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 4.18.0-alt1
 - Updated to upstream version 4.18.0
 
