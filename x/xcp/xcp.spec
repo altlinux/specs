@@ -1,12 +1,13 @@
-%def_without check
+%def_with check
 
 Name: xcp
-Version: 0.21.3
+Version: 0.23.0
 Release: alt1
 Summary: An extended cp
 License: GPL-3.0
 Group: File tools
-Url: https://github.com/tarka/xcp
+Url: https://crates.io/crates/xcp
+VCS: https://github.com/tarka/xcp
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -17,6 +18,10 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: cargo-vendor-checksum
 BuildRequires: diffstat
 BuildRequires: rust-cargo
+
+%if_with check
+BuildRequires: libacl-devel
+%endif
 
 %description
 xcp is a (partial) clone of the Unix cp command. It is not intended
@@ -48,12 +53,15 @@ diffstat -p1 -l < %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checks
 %rust_install
 
 %check
-%rust_test
+./tests/scripts/test-linux.sh
 
 %files
 %_bindir/%name
 
 %changelog
+* Sun Jan 05 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.23.0-alt1
+- Updated to version 0.23.0.
+
 * Fri Sep 27 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.3-alt1
 - Updated to version 0.21.3.
 
