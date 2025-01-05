@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%oname.core
-Version: 4.5.4
+Version: 4.6.0
 Release: alt1
 
 Summary: Chameleon Template Compiler
@@ -91,6 +91,9 @@ cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc _build/html/*
 
 %changelog
+* Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 4.5.4-alt1
 - Automatically updated to 4.5.4.
 
