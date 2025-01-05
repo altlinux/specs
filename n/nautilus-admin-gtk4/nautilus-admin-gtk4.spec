@@ -2,7 +2,7 @@
 
 Name: nautilus-admin-gtk4
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Extension for Nautilus to do administrative operations
 License: GPL-3.0
@@ -13,8 +13,7 @@ Vcs: https://github.com/MacTavishAO/nautilus-admin-gtk4
 
 Source0: %name-%version.tar
 
-# Update ru.po by winter-sunny-morning  https://github.com/MacTavishAO/nautilus-admin-gtk4/pull/7
-Source1: ru.po
+Patch: nautilus-admin-1.2.0-alt1-fixes.patch
 
 Requires: nautilus-python
 %add_python3_path %_datadir/nautilus-python/extensions
@@ -34,7 +33,8 @@ manager that adds some administrative actions to the right-click menu:
 
 %prep
 %setup
-cp -a %SOURCE1 po/
+
+%patch -p0
 
 %build
 %cmake
@@ -50,6 +50,10 @@ cp -a %SOURCE1 po/
 %_datadir/nautilus-python/extensions/__pycache__/*
 
 %changelog
+* Sun Jan 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt3
+- drop ru.po
+- fix for translated locales
+
 * Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt2
 - use rpm-build-{python3,gir} to find runtime dependencies
 - spec cleanup
