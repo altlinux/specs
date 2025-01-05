@@ -1,6 +1,6 @@
 Name: recordmydesktop
 Version: 0.3.8.1
-Release: alt2
+Release: alt3
 
 Summary: Captures audio-video data of a linux desktop session (screencasting)
 Group: Video
@@ -11,9 +11,12 @@ Source: %name-%version.tar.gz
 
 Patch1: %name-0.3.8.1-alt-headers.patch
 Patch2: %name-sane-theora-defaults.patch
+Patch3: recordmydesktop-0.3.8.1-alt-fix-gzfile-pointer.patch
 
 # Automatically added by buildreq on Sun Sep 21 2008
 BuildRequires: jackit-devel libX11-devel libXext-devel libSM-devel libXdamage-devel libXext-devel libalsa-devel libtheora-devel libvorbis-devel xorg-cf-files zlib-devel
+
+BuildRequires: pipewire-jack-libs-devel
 
 %description 
 recordMyDesktop is a command line screencasting program
@@ -27,8 +30,10 @@ that have changed.
 %setup -q -n %name-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
+export LDFLAGS=$(pkg-config --libs-only-L jack)
 %configure
 %make_build
 
@@ -41,6 +46,10 @@ that have changed.
 %_man1dir/*
 
 %changelog
+* Sun Jan 05 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.8.1-alt3
+- fix FTBFS with gcc14
+- build with pipewire's jack support
+
 * Tue Aug 23 2011 Sergey Kurakin <kurakin@altlinux.org> 0.3.8.1-alt2
 - encoding with libtheora 1.1 fixed (patch from Fedora)
 
