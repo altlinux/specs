@@ -2,7 +2,7 @@
 
 Name: clean
 Version: 3.1
-Release: alt4
+Release: alt5
 Summary: The Clean programming language compiler and environment
 Summary(ru_RU.UTF-8): Компилятор и системная библиотека для языка Clean
 License: BSD license
@@ -104,6 +104,9 @@ touch "/usr/lib64/clean/StdEnv/Clean System Files"/*.o
 %docdir/*
 
 %changelog
+* Sat Jan 04 2025 Andrey Bergman <vkni@altlinux.org> 3.1-alt5
+- Update to intermediate release.
+
 * Mon Dec 25 2023 Andrey Bergman <vkni@altlinux.org> 3.1-alt4
 - Update to intermediate release.
 
