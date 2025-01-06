@@ -3,7 +3,7 @@
 
 Name: gnome-session-alt
 Version: 47.0
-Release: alt4
+Release: alt5
 Summary: Session GNOME Shell for Alt distributions
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -55,6 +55,9 @@ install -m644 alt-gnome-xorg.desktop \
 %_datadir/xsessions/gnome-alt-xorg.desktop
 
 %changelog
+* Mon Jan 06 2025 Anton Midyukov <antohami@altlinux.org> 47.0-alt5
+- Fix session desktop files for compatible with xdg-utils
+
 * Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 47.0-alt4
 - Rename session desktop files for compatible with xdg-utils
 
