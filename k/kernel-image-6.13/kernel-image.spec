@@ -1,5 +1,5 @@
 Name: kernel-image-6.13
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.12
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
@@ -600,6 +600,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jan 06 2025 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc6
+- Update to v6.13-rc6 (2025-01-05).
+
 * Tue Dec 31 2024 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc5
 - Update to v6.13-rc5 (2024-12-29).
 - config: Enable more zram compression backends.
