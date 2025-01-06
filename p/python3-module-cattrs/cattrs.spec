@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 23.2.3
+Version: 24.1.2.0.7.git31eff82
 Release: alt1
 
 Summary: Complex custom class converters for attrs.
@@ -32,6 +32,7 @@ BuildRequires: python3-module-ujson
 BuildRequires: python3-module-orjson
 BuildRequires: python3-module-cbor2
 BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-msgspec
 %endif
 
 %description
@@ -61,11 +62,10 @@ your classes and enumerations into dictionaries, integers and strings.
 %setup
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export SETUPTOOLS_SCM_PRETEND_VERSION="24.1.2"
 %pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
@@ -76,9 +76,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc LICENSE *.md
 %python3_sitelibdir/cattr
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}
+%python3_sitelibdir/%oname-24.1.2.dist-info
 
 %changelog
+* Mon Jan 06 2025 Grigory Ustinov <grenka@altlinux.org> 24.1.2.0.7.git31eff82-alt1
+- Build from snapshot.
+
 * Tue Dec 12 2023 Grigory Ustinov <grenka@altlinux.org> 23.2.3-alt1
 - Automatically updated to 23.2.3.
 
