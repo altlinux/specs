@@ -1,5 +1,5 @@
 Name: anbernic-virtual-controller
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Set of tools to combine several input devices into one virtual controller on Anbernic handhelds
@@ -49,6 +49,10 @@ install -m 0644 gamecontrollerdb.anbernic.txt %buildroot%_datadir/gamecontroller
 %_datadir/gamecontrollerdb.anbernic.txt
 
 %changelog
+
+* Mon Jan  6 2025 Artyom Bystrov <arbars@altlinux.org> 0.3.1-alt1
+- Remove udev rule for uinput (moved to gptokeyb)
+
 * Sat Dec 28 2024 Artyom Bystrov <arbars@altlinux.org> 0.3-alt1
 - Added new devices: RG353P and ARC S
 
