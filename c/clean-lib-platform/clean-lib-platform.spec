@@ -1,7 +1,7 @@
 %define srcName clean-platform
 
 Name: clean-lib-platform
-Version: 3.10.0
+Version: 3.44.0
 Release: alt1
 Summary: Clean platform libraries
 Summary(ru_RU.UTF-8): Библиотеки платформы языка Clean (дополнительные к StdEnv)
@@ -47,8 +47,35 @@ rm -rf target/clean-lib-platform/lib/Platform/Internet/
 
 rm -rf target/clean-lib-platform/lib/Platform/Data/Dynamic.*
 rm -rf target/clean-lib-platform/lib/Platform/Data/Maybe/Gast.*
+rm -rf target/clean-lib-platform/lib/Platform/Data/Maybe/GenBinary.*
+rm -rf target/clean-lib-platform/lib/Platform/Data/Either/GenPrint.*
 rm -rf target/clean-lib-platform/lib/Platform/Data/Set/Gast.*
 rm -rf target/clean-lib-platform/lib/Platform/Data/Data.*
+rm -rf target/clean-lib-platform/lib/Platform/Data/Encoding/*
+rm -rf target/clean-lib-platform/lib/Platform/Data/IntMap*
+rm -rf target/clean-lib-platform/lib/Platform/Data/CircularStack*
+rm -rf target/clean-lib-platform/lib/Platform/Data/Graph*
+
+rm -f target/clean-lib-platform/lib/Platform/Text/Unicode/Encodings/UTF8/GenHash.*cl
+rm -rf target/clean-lib-platform/lib/Platform/Crypto/*
+rm -rf target/clean-lib-platform/lib/Platform/Database/*
+rm -rf target/clean-lib-platform/lib/Platform/System/AsyncIO*
+rm -rf target/clean-lib-platform/lib/Platform/System/_AsyncIO*
+rm -rf target/clean-lib-platform/lib/Platform/System/_CopyFile*
+rm -rf target/clean-lib-platform/lib/Platform/System/Directory*
+rm -rf target/clean-lib-platform/lib/Platform/System/_Directory*
+rm -rf target/clean-lib-platform/lib/Platform/System/File*
+rm -rf target/clean-lib-platform/lib/Platform/System/_File*
+rm -rf target/clean-lib-platform/lib/Platform/System/Process*
+rm -rf target/clean-lib-platform/lib/Platform/System/_Process*
+rm -rf target/clean-lib-platform/lib/Platform/System/Socket*
+rm -rf target/clean-lib-platform/lib/Platform/System/_Socket*
+rm -rf target/clean-lib-platform/lib/Platform/System/TTS*
+rm -rf target/clean-lib-platform/lib/Platform/System/_TTS*
+rm -rf target/clean-lib-platform/lib/Platform/Message/*
+rm -rf target/clean-lib-platform/lib/Platform/Network/*
+rm -rf target/clean-lib-platform/lib/Platform/Testing/Options*
+rm -rf target/clean-lib-platform/lib/Platform/Debug/Performance*
 
 cd target/clean-lib-platform/lib/Platform
 
@@ -79,6 +106,12 @@ find /usr/lib64/clean/Platform -name "*.o" -exec touch {} \;
 %_libdir/*
 
 %changelog
+* Sun Jan 05 2025 Andrey Bergman <vkni@altlinux.org> 3.44.0-alt1
+- Update to new version (upstream version is 0.3.44)
+
+* Sun Jan 01 2023 Andrey Bergman <vkni@altlinux.org> 3.19.0-alt1
+- Update to new version (upstream version is 0.3.19)
+
 * Tue Oct 25 2022 Andrey Bergman <vkni@altlinux.org> 3.10.0-alt1
 - Update to new version (upstream version is 0.3.10)
 
