@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2019.1
-Release: alt1
+Release: alt2
 
 Summary: C metaprogramming toolkit for Python
 License: MIT
@@ -14,19 +14,22 @@ Url: https://documen.tician.de/codepy/
 VCS: https://github.com/inducer/codepy
 
 Source: %name-%version.tar
+Patch: prefer_platformdirs.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytools
 BuildRequires: gcc-c++
-BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-platformdirs
 %endif
 
 Requires: gcc-c++
-Requires: python3-module-appdirs
+Requires: python3-module-platformdirs
 
 %description
 CodePy is a C metaprogramming toolkit for Python. It handles two aspects
@@ -44,15 +47,16 @@ supported in Linux with the GNU toolchain.
 
 %prep
 %setup
+%patch -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=$PWD
@@ -61,10 +65,13 @@ py.test-3
 %files
 %doc *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Mon Jan 06 2025 Anton Vyatkin <toni@altlinux.org> 2019.1-alt2
+- replace appdirs with platformdirs
+
 * Mon Feb 27 2023 Anton Vyatkin <toni@altlinux.org> 2019.1-alt1
 - new version 2019.1
 
