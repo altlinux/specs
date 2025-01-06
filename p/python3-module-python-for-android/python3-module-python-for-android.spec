@@ -4,7 +4,7 @@
 
 Name: python3-module-python-for-android
 Version: 2024.1.21
-Release: alt1
+Release: alt2
 
 Summary: Turn your Python application into an Android APK
 
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/python-for-android
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: replace-appdirs.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -23,7 +24,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-sh
 BuildRequires: python3-module-colorama
-BuildRequires: python3-module-appdirs
+BuildRequires: python3-module-platformdirs
 BuildRequires: python3-module-toml
 BuildRequires: python3-module-build
 BuildRequires: python3-module-jinja2
@@ -41,6 +42,7 @@ into standalone android APKs.
 
 %prep
 %setup
+%patch -p2
 
 # drop distutils
 sed -i 's/distutils.core/setuptools/' pythonforandroid/recipes/android/src/setup.py
@@ -75,6 +77,9 @@ and not test_get_package_name"
 %python3_sitelibdir/ci/
 
 %changelog
+* Mon Jan 06 2025 Anton Vyatkin <toni@altlinux.org> 2024.1.21-alt2
+- use platformdirs
+
 * Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 2024.1.21-alt1
 - new version 2024.1.21
 
