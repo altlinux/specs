@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define pkgtestsdir %_libexecdir/lutok/tests
 %define pkgdocdir %_defaultdocdir/%name-%version
 %define sover 3
 
+%def_enable atf
 %def_with doxygen
-%def_disable check
+%def_enable check
 
 Name: lutok
-Version: 0.4
+Version: 0.6
 Release: alt1
 
 Summary: Lightweight C++ API library for Lua
@@ -16,23 +17,23 @@ License: BSD-3-Clause
 Group: Development/Tools
 Url: https://github.com/jmmv/lutok
 
+Vcs: https://github.com/jmmv/lutok.git
+
 %if_disabled snapshot
 Source: https://github.com/jmmv/%name/archive/%name-%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/jmmv/lutok.git
 Source: %name-%version.tar
 %endif
 Patch1: %name-0.4-alt-testdir.patch
 
-%define lua_ver 5.3
+%define lua_ver 5.4
 Requires: lua%lua_ver
 
 BuildRequires: gcc-c++
-BuildRequires: libatf-c++-devel >= 0.20
-BuildRequires: libatf-sh-devel
+%{?_enable_atf:BuildRequires: libatf-c++-devel >= 0.21 libatf-sh-devel}
 BuildRequires: liblua%lua_ver-devel >= %lua_ver
 %{?_with_doxygen:BuildRequires: doxygen}
-%{?_enable_check:BuildRequires: kuya}
+%{?_enable_check:BuildRequires: kyua}
 
 %description
 Lutok provides thin C++ wrappers around the Lua C API to ease the
@@ -107,6 +108,7 @@ $ kyua test -k %pkgtestsdir/Kyuafile
 %configure \
     --disable-static \
     %{subst_with doxygen} \
+    %{subst_enable atf} \
     --docdir=%pkgdocdir \
     --htmldir=%pkgdocdir/html
 %nil
@@ -120,6 +122,7 @@ $ kyua test -k %pkgtestsdir/Kyuafile
 
 %files -n lib%name
 %_libdir/lib%name.so.%{sover}*
+%doc README* NEWS*
 
 %files -n lib%name-devel
 %_includedir/%name
@@ -129,10 +132,16 @@ $ kyua test -k %pkgtestsdir/Kyuafile
 %files -n lib%name-devel-doc
 %pkgdocdir/
 
+%if_enabled atf
 %files tests
-%pkgtestsdir
+%pkgtestsdir/
+%endif
 
 %changelog
+* Fri Jan 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
+- 0.6 (ported to lua-5.4)
+- enabled %%check
+
 * Wed Aug 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - first build for Sisyphus (0.4-15-g8f8eaef)
 
