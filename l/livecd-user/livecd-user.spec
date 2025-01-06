@@ -1,5 +1,5 @@
 Name: livecd-user
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Create LiveCD user
@@ -22,6 +22,7 @@ Requires: autologin-sh-functions
 %build
 
 %install
+install -pDm755 %name %buildroot%_prefix/libexec/%name
 install -pDm755 %name.init %buildroot%_initdir/%name
 install -pDm644 %name.service %buildroot%_unitdir/%name.service
 install -pDm600 %name.conf %buildroot%_sysconfdir/sysconfig/%name.conf
@@ -34,9 +35,13 @@ fi
 %files
 %_sysconfdir/sysconfig/%name.conf
 %_initdir/%name
+%_prefix/libexec/%name
 %_unitdir/%name.service
 
 %changelog
+* Mon Jan 06 2025 Anton Midyukov <antohami@altlinux.org> 0.3.3-alt1
+- separate script livecd-user from livecd-user.init
+
 * Wed Sep 11 2024 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
 - Add parameter LIVECD_SESSION (disable by default)
 
