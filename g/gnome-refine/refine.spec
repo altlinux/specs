@@ -9,7 +9,7 @@
 
 Name: gnome-%__name
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Tweak various aspects of GNOME
 License: GPL-3.0-or-later
@@ -30,7 +30,7 @@ BuildArch: noarch
 
 %define adw_ver 1.6
 
-Requires: typelib(Adw) = 1 dconf
+Requires: typelib(Adw) = 1 typelib(XdpGtk4) dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson blueprint-compiler
@@ -70,6 +70,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Mon Jan 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1.1
+- explicitly required typelib(XdpGtk4)
+
 * Mon Jan 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus (0.2.0-4-gf0c5802)
 
