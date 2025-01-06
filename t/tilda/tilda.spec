@@ -1,9 +1,9 @@
 Name: tilda
-Version: 1.5.5
+Version: 2.0.0
 Release: alt1
 
 Summary: A Linux terminal taking after the likeness of many terminals from fps games
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Terminals
 Url: https://github.com/lanoxx/%name
 
@@ -34,22 +34,23 @@ the desktop until a key is pressed.
 %makeinstall_std
 %find_lang %name
 
-desktop-file-install --dir %buildroot%_desktopdir \
-	--remove-category=Utility \
-	--remove-category=Application \
-	--add-category=System \
-	--add-category=GTK \
-	%buildroot%_desktopdir/tilda.desktop
+%check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
+%_desktopdir/%name-dbus.desktop
 %_pixmapsdir/%name.png
 %_datadir/metainfo/%name.appdata.xml
+%_man1dir/%name.1*
 %doc AUTHORS ChangeLog README.md TODO.md
 
 
 %changelog
+* Mon Jan 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Tue Feb 06 2024 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
 - 1.5.5
 
