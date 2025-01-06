@@ -1,11 +1,11 @@
 Name:     zxing-cpp
 Version:  2.3.0
-Release:  alt2
+Release:  alt3
 
 Summary:  C++ port of ZXing
-License:  Apache-2.0 and LGPL-2.0 with exceptions
+License:  Apache-2.0
 Group:    System/Libraries
-Url:      https://github.com/nu-book/zxing-cpp
+Url:      https://github.com/zxing-cpp/zxing-cpp
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -14,12 +14,8 @@ Source: %name-%version.tar
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-multimedia-devel
 BuildRequires: libfmt-devel
 BuildRequires: libstb-devel
-BuildRequires: libopencv-devel
 
 %description
 ZXing-C++ ("zebra crossing") is an open-source, multi-format 1D/2D barcode
@@ -78,6 +74,11 @@ sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/
 %_libdir/pkgconfig/zxing.pc
 
 %changelog
+* Mon Jan 06 2025 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt3
+- Remove qt and opencv requires because they are needed by examples.
+- Set license to Apache-2.0.
+- Official URL https://github.com/zxing-cpp/zxing-cpp.
+
 * Sat Jan 04 2025 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt2
 - Packaged executables.
 
