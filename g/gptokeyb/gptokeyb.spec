@@ -1,5 +1,5 @@
 Name:    gptokeyb
-Version: 0.2.3.2
+Version: 0.2.4
 Release: alt1.git2c7a017
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
@@ -14,6 +14,7 @@ Source4: Anbernic-RG-552.gptk
 Source5: gamepadtokeyboard
 Source6: gptokeyb.service
 Source7: 20-gptokeyb.preset
+Source8: 65-gptokeyb-uinput.rules
 
 BuildRequires(pre): cmake rpm-build-cmake
 BuildRequires: gcc-c++ libSDL2-devel libevdev-devel
@@ -24,6 +25,7 @@ gptokeyb provides a kill switch for an application and mapping of gamepad button
 %package -n %name-handheld-control
 Summary: Service for UI control on handhelds (f.e., Anbernic consoles)
 Group: Games/Other
+Requires: %name
 
 %description -n %name-handheld-control
 Service for UI control on handhelds (f.e., Anbernic consoles)
@@ -37,6 +39,8 @@ Service for UI control on handhelds (f.e., Anbernic consoles)
 
 %install
 install -Dm0755 ./%_cmake__builddir/gptokeyb %buildroot%_bindir/%name
+install -Dm0644 %SOURCE8 %buildroot%_udevrulesdir/65-gptokeyb-uinput.rules
+
 mkdir -p %buildroot%_sysconfdir/%name
 cp configs/default.gptk %buildroot%_sysconfdir/%name
 
@@ -59,6 +63,7 @@ install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 %doc *.md
 %_bindir/%name
 %_sysconfdir/%name/default.gptk
+%_udevrulesdir/65-gptokeyb-uinput.rules
 
 %files -n %name-handheld-control
 
@@ -70,9 +75,11 @@ install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 %_presetdir/20-%name.preset
 
 %changelog
+* Sat Jan  4 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.4-alt1.git2c7a017
+- Replace udev rule from anbernic-virtual-controller
+
 * Wed Jan  1 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.3.2-alt1.git2c7a017
 - Fix RG35* detection
-
 
 * Wed Jan  1 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.3.1-alt1.git2c7a017
 - Fix ARC-D detection
