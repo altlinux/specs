@@ -3,7 +3,7 @@
 %def_without telescopecontrol
 
 Name: stellarium
-Version: 24.3
+Version: 24.4
 Release: alt1
 
 Summary: Astronomical Sky Simulator
@@ -94,6 +94,9 @@ find %buildroot -name 'DejaVuSans*.ttf' -delete
 %_datadir/mime/packages/stellarium.xml
 
 %changelog
+* Mon Jan 06 2025 Grigory Ustinov <grenka@altlinux.org> 24.4-alt1
+- Automatically updated to 24.4 (Closes: #52591).
+
 * Thu Nov 07 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 24.3-alt1
 - NMU: Build new version.
 
