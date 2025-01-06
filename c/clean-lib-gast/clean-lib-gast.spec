@@ -2,7 +2,7 @@
 
 Name: clean-lib-gast
 Version: 1.0.0
-Release: alt5
+Release: alt6
 Summary: GAST: A Generic Automatic Software Test-system for Clean
 Summary(ru_RU.UTF-8): Библиотека автоматического тестирования для языка Clean
 License: BSD license
@@ -52,6 +52,9 @@ find /usr/lib64/clean/Gast -name "*.o" -exec touch {} \;
 %_libdir/*
 
 %changelog
+* Sun Jan 05 2025 Andrey Bergman <vkni@altlinux.org> 1.0.0-alt6
+- Update sources to version 0.4.9
+
 * Tue Jan 03 2023 Andrey Bergman <vkni@altlinux.org> 1.0.0-alt5
 - Add gen for 9-tuples.
 
