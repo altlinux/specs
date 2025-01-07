@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.2
+%define ver_major 0.3
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
@@ -9,15 +9,16 @@ Name: livi
 Version: %ver_major.0
 Release: alt1
 
-Summary: Livi is a Light Video player
+Summary: Livi is a Light Video player for Wayland
 License: GPL-3.0-or-later
 Group: Video
 Url: https://gitlab.gnome.org/guidog/livi
 
+Vcs: https://gitlab.gnome.org/guidog/livi.git
+
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/guidog/livi.git
 Source: %name-%version.tar
 %endif
 
@@ -40,8 +41,9 @@ BuildRequires: pkgconfig(gstreamer-gl-1.0)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
-Minimalistic video player using GTK4 and GStreamer. The main purpose is
-to make playing hw accelerated videos with hantro and OpenGL simple.
+Minimalistic video player for Wayland using GTK4 and GStreamer. The main
+purpose is to make playing hw accelerated videos with hantro and OpenGL
+simple.
 
 %prep
 %setup -n %name-%version
@@ -66,6 +68,9 @@ to make playing hw accelerated videos with hantro and OpenGL simple.
 %doc README* NEWS
 
 %changelog
+* Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Thu Jun 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
