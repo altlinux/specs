@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: typos
-Version: 1.28.1
+Version: 1.29.4
 Release: alt1
 Summary: Source code spell checker
 License: Apache-2.0 or MIT
@@ -65,5 +65,8 @@ echo Millenium  > /tmp/example.txt
 %_bindir/typos
 
 %changelog
+* Sat Jan 04 2025 Vitaly Chikunov <vt@altlinux.org> 1.29.4-alt1
+- Update to v1.29.4 (2025-01-03).
+
 * Wed Nov 27 2024 Vitaly Chikunov <vt@altlinux.org> 1.28.1-alt1
 - First import v1.28.1 (2024-11-26).
