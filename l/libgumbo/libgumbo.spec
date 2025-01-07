@@ -2,11 +2,11 @@
 %def_with docs
 %def_with python
 
-%define soname 2
+%define soname 3
 
 Name: libgumbo
-Version: 0.12.2
-Release: alt3
+Version: 0.13.0
+Release: alt1
 
 Summary: An HTML5 parsing library
 License: Apache-2.0
@@ -138,6 +138,9 @@ make check
 %endif
 
 %changelog
+* Tue Jan 07 2025 Mikhail Efremov <sem@altlinux.org> 0.13.0-alt1
+- Updated to 0.13.0.
+
 * Fri Nov 15 2024 Mikhail Efremov <sem@altlinux.org> 0.12.2-alt3
 - Use old python macros again.
 
