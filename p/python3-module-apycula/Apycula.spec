@@ -2,13 +2,14 @@
 %define modulename apycula
 
 Name:    python3-module-%modulename
-Version: 0.11.1
+Version: 0.15
 Release: alt1
 
 Summary: Documentation and open source tools for the Gowin FPGA bitstream format
 License: MIT
 Group:   Development/Python3
 Url:     https://github.com/YosysHQ/apicula
+Vcs:     https://github.com/YosysHQ/apicula
 
 # Source-url: %__pypi_url %srcname
 Source: %srcname-%version.tar
@@ -42,6 +43,10 @@ BuildRequires: python3(wheel)
 %doc *.md doc/*
 
 %changelog
+* Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 0.15-alt1
+- new version (0.15) with rpmgs script
+- add Vcs
+
 * Sat Feb 10 2024 Anton Midyukov <antohami@altlinux.org> 0.11.1-alt1
 - new version (0.11.1) with rpmgs script
 
