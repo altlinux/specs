@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 55
+%define ver_major 56
 %define beta %nil
 %define uuid %_name@amezin.github.com
 %define xdg_name com.github.amezin.%_name
@@ -12,7 +12,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt0.9%beta
+Release: alt1%beta
 
 %define gettext_domain %name
 
@@ -31,10 +31,11 @@ Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
 Source: %_name-%version%beta.tar
 %endif
 Source1: %name-%version-npm.tar
-Patch1: %name-%version-alt-no_npm.patch
+Patch1: %name-55-alt-no_npm.patch
 
 Requires: gnome-shell >= 47
 Requires: typelib(Adw) = 1 typelib(Vte) = 3.91
+Requires: typelib(Handy) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson npm xvfb-run
@@ -48,7 +49,7 @@ BuildRequires: /usr/bin/glib-compile-schemas /usr/bin/gapplication xsltproc
 
 %prep
 %setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
-%patch1 -b .no_npm
+#%%patch1 -b .no_npm
 %{?_enable_bootstrap:
 npm install && npm audit fix &&
 tar -cf %name-%version-npm.tar node_modules && \
@@ -76,6 +77,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 56-alt1
+- 56
+
 * Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 55-alt0.9
 - first build for Sisyphus
 
