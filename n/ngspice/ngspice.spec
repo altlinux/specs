@@ -2,23 +2,26 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
-%define majver 41
+%define majver 44
+%define sover 0
 
 Name: ngspice
-Version: %majver
+Version: 44
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
 License: BSD
 Group: Engineering
 Url: http://ngspice.sourceforge.net
+Vcs: https://git.code.sf.net/p/ngspice/ngspice
 
 Source: %name-%version.tar
 Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%majver/ngspice-%majver-manual.pdf
+Patch: %name-%version-%release.patch
 
 # Link libspice.so with -lBLT or -lBLIlite, depending on whether in tk mode or
 # not (bug 1047056, debian bug 737279)
-Patch: ngspice-37-blt-linkage-workaround.patch
+Patch1: ngspice-37-blt-linkage-workaround.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel flex glibc-kernheaders-generic
@@ -30,7 +33,7 @@ BuildRequires: libfftw3-devel
 BuildRequires: libncurses-devel
 BuildRequires: libreadline-devel
 Requires: %name-data = %EVR
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 
 %description
 Ngspice is a general-purpose circuit simulator program.
@@ -57,29 +60,32 @@ It can be used for VLSI simulations as well.
 Group: Engineering
 Summary: Data files for %name, a circuit simulator
 Buildarch: noarch
+Requires: %name = %EVR
 
 %description data
 Data files for %name, a circuit simulator.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Main library for %name
 Group: System/Libraries
+Obsoletes: lib%name < %EVR
 
-%description -n lib%name
+%description -n lib%name%sover
 This package contains the library needed to run programs dynamically
 linked with %name.
 
 %package devel
 Group: Engineering
 Summary: Header files for %name, a circuit simulator
-Requires: lib%name = %EVR
+Requires: lib%name%sover = %EVR
 
 %description devel
 Header files for %name, a circuit simulator.
 
 %prep
 %setup
-%patch -p2 -b .link
+%patch -p1
+%patch1 -p2 -b .link
 
 # make sure the examples are UTF-8...
 for nonUTF8 in \
@@ -93,7 +99,7 @@ do
     mv -f $nonUTF8.conv $nonUTF8
 done
 
-%ifarch x86_64 sparc64 ppc64 amd64
+%ifarch x86_64
 %__subst "s|@XSPICEINIT@ codemodel @prefix@/@libname@|@XSPICEINIT@ codemodel %_libdir|" \
     src/spinit.in
 %endif
@@ -103,12 +109,14 @@ sed -i \
     "s|AM_CPPFLAGS =|AM_CPPFLAGS = -I\$(top_srcdir)/src/maths/ni |" \
     src/spicelib/analysis/Makefile.am
 
-export ACLOCAL_FLAGS=-Im4
-./autogen.sh --adms
+#export ACLOCAL_FLAGS=-Im4
+#./autogen.sh --adms
 
-chmod +x configure
+#chmod +x configure
 
 %build
+%autoreconf
+
 for opt in without-ngshared with-ngshared
 do
 %configure \
@@ -124,7 +132,7 @@ do
     --enable-predictor \
     --with-readline=yes
 
-make clean
+%make clean
 %make_build
 
 # Once install to the temp dir
@@ -165,22 +173,29 @@ cp -a \
 
 %files
 %_bindir/*
+%_libdir/ngspice/
 
-%files -n lib%name
-%_libdir/*.so.*
-%_libdir/%name/
+%files -n lib%name%sover
+%_libdir/libngspice.so.%sover
+%_libdir/libngspice.so.%sover.*
 
 %files data
-%_datadir/%name/
-%_man1dir/*
+%_datadir/ngspice/
+%_man1dir/ngspice.1.*
 %doc %_pkgdocdir
 
 %files devel
-%_libdir/*.so
-%_includedir/%name
-%_pkgconfigdir/%name.pc
+%_libdir/libngspice.so
+%_includedir/ngspice
+%_pkgconfigdir/ngspice.pc
 
 %changelog
+* Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 44-alt1
+- New version 44.
+- Add Vcs
+- Fix pack library
+- Add depenedency on ngspice for ngspice-data 
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 41-alt1
 - new version 41
 
