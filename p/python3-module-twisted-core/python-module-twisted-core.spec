@@ -1,5 +1,5 @@
 %define pypi_name Twisted
-%define major 24.7
+%define major 24.11
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
@@ -513,6 +513,9 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Tue Jan 07 2025 Grigory Ustinov <grenka@altlinux.org> 24.11.0-alt1
+- Build new version.
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 24.7.0-alt1
 - Build new version.
 
