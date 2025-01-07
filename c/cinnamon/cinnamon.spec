@@ -4,7 +4,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.4.3
+Version: 6.4.4
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -220,6 +220,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Mon Jan 06 2025 Anton Midyukov <antohami@altlinux.org> 6.4.4-alt1
+- New version 6.4.4.
+
 * Mon Dec 23 2024 Anton Midyukov <antohami@altlinux.org> 6.4.3-alt1
 - New version 6.4.3.
 - Disable internal polkit agent
