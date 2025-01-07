@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 3.6
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -36,6 +36,7 @@ Patch13: lazarus-customform-sigsegv-fix.patch
 Patch14: lazarus_fpc_3.2.3-alt.patch
 
 BuildRequires(pre): qt5-base-devel
+BuildRequires(pre): qt6-base-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: fpc >= 3.2.2 fpc-utils glibc-devel libgtk+2-devel libXi-devel desktop-file-utils
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
@@ -126,6 +127,22 @@ Requires: qt5pas = %EVR
 %description -n qt5pas-devel
 The qt5pas-devel package contains libraries and header files for
 developing applications that use qt5pas.
+
+%package -n qt6pas
+Summary: Qt6 bindings for Pascal
+Group:   Development/Other
+
+%description -n qt6pas
+Qt6 bindings for Pascal from Lazarus.
+
+%package -n qt6pas-devel
+Summary: Development files for qt5pas
+Group:   Development/Other
+Requires: qt6pas = %EVR
+
+%description -n qt6pas-devel
+The qt6pas-devel package contains libraries and header files for
+developing applications that use qt6pas.
 
 %prep
 %setup
@@ -229,6 +246,12 @@ pushd lcl/interfaces/qt5/cbindings/
     %make_build
 popd
 
+# Build Qt6 bindings
+pushd lcl/interfaces/qt6/cbindings/
+    %qmake_qt6
+    %make_build
+popd
+
 export LCL_PLATFORM=
 #export LCL_PLATFORM=gtk2
 #export FPCDIR=%%_libdir/fpc
@@ -293,7 +316,11 @@ echo -e "begin\nend." > %buildroot$LAZARUSDIR/compilertest.pas
 pushd lcl/interfaces/qt5/cbindings/
     %makeinstall_std INSTALL_ROOT=%buildroot
 popd
+pushd lcl/interfaces/qt6/cbindings/
+    %makeinstall_std INSTALL_ROOT=%buildroot
+popd
 rm -rf %buildroot$LAZARUSDIR/lcl/interfaces/qt5/cbindings
+rm -rf %buildroot$LAZARUSDIR/lcl/interfaces/qt6/cbindings
 rm -rf %buildroot$LAZARUSDIR/lazarus.app
 
 # Make executable symlink to selected program
@@ -321,6 +348,7 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %dir %_datadir/fpcsrc/rtl/inc
 %dir %_datadir/fpcsrc/packages/fcl-base
 %exclude %_libdir/libQt5Pas.so*
+%exclude %_libdir/libQt6Pas.so*
 %_iconsdir/hicolor/48x48/mimetypes/*.png
 %exclude %_libdir/lazarus/components/fortes4lazarus
 %exclude %_libdir/lazarus/components/fpspreadsheet
@@ -367,7 +395,18 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %files -n qt5pas-devel
 %_libdir/libQt5Pas.so
 
+%files -n qt6pas
+%doc lcl/interfaces/qt6/cbindings/COPYING.TXT
+%doc lcl/interfaces/qt6/cbindings/README.TXT
+%_libdir/libQt6Pas.so.*
+
+%files -n qt6pas-devel
+%_libdir/libQt6Pas.so
+
 %changelog
+* Tue Jan 07 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.6-alt3
+- Built qt6pas (thanks Max Pozdeev) (ALT #49932).
+
 * Sat Dec 14 2024 Artem Kurashov <saahriktu@altlinux.org> 1:3.6-alt2
 - Fixed for build with fpc 3.2.3.
 
