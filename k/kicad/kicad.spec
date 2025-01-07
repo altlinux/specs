@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 8.0.7
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -75,7 +75,7 @@ Requires: kicad-footprints >= %majver
 Requires: kicad-templates >= %majver
 Requires: %name-doc >= %epoch:%majver
 Requires: %name-common >= %EVR
-Requires: libngspice
+Requires: ngspice
 
 %add_python3_path %_datadir/%name
 
@@ -191,6 +191,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.7-alt2
+- add dependency on ngspice instead libngspice
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.7-alt1
 - New version 8.0.7.
 
