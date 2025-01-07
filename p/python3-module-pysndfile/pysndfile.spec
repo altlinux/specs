@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 # see _pysndfile_version in _pysndfile.pyx
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 
 Summary: Cython wrapper class for reading/writing soundfiles using libsndfile
@@ -37,9 +37,9 @@ and derived formats) can be read and written with PySndfile.
 
 %prep
 %setup -n %pypi_name-%version
-# fix libdir
-#sed -i 's|"lib"|"%_lib"|' setup.py
-echo -e "\nsndfile-libdir=%_libdir\n" >> setup.cfg
+# fix lib/inc dirs
+echo -e "sndfile_libdir=%_libdir" >> setup.cfg
+echo -e "sndfile_incdir=%_includedir" >> setup.cfg
 
 %build
 %pyproject_build
@@ -62,6 +62,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1
+- 1.4.7
+
 * Thu Oct 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.6-alt1
 - 1.4.6
 
