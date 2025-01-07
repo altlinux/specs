@@ -1,12 +1,13 @@
 %def_with check
 
 Name: gping
-Version: 1.17.3
+Version: 1.19.0
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
 Group: Networking/Other
-Url: https://github.com/orf/gping
+Url: https://crates.io/crates/gping
+VCS: https://github.com/orf/gping
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -24,7 +25,7 @@ BuildRequires: iputils
 %prep
 %setup -a 1
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -39,12 +40,19 @@ EOF
 %rust_install
 
 %check
-%rust_test
+# ping: operation not permitted
+%rust_test -- \
+    --skip test_integration_any \
+    --skip test_integration_ip6 \
+    --skip test_integration_ipv4
 
 %files
 %_bindir/%name
 
 %changelog
+* Mon Jan 06 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.19.0-alt1
+- Updated to version 1.19.0.
+
 * Sat Aug 24 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.17.3-alt1
 - Updated to version 1.17.3.
 
