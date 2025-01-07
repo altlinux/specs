@@ -4,9 +4,9 @@
 %set_verify_elf_method strict
 
 Name: bzip3
-Version: 1.4.0
+Version: 1.5.1
 Release: alt1
-Summary: A better and stronger spiritual successor to BZip2.
+Summary: A better and stronger spiritual successor to BZip2
 # bzip3 as a whole is licensed under LGPLv3 only. It is not dual-licensed
 # under LGPLv3 and Apache 2.0.
 License: LGPL-3.0-only
@@ -86,15 +86,18 @@ head -2333444c /dev/urandom > testfile
 %_man1dir/b*.1*
 
 %files -n libbzip3
-%doc LICENSE
-%_libdir/libbzip3.so.0*
+%doc LICENSE 3rdparty/libsais-LICENSE
+%_libdir/libbzip3.so.1*
 
 %files -n libbzip3-devel
-%doc doc/*.md
+%doc doc/*.md examples etc/*
 %_includedir/libbz3.h
 %_libdir/libbzip3.so
 %_pkgconfigdir/bzip3.pc
 
 %changelog
+* Tue Dec 24 2024 Vitaly Chikunov <vt@altlinux.org> 1.5.1-alt1
+- Update to 1.5.1-2-g61c764f (2024-12-17). Soname is changed.
+
 * Sat Mar 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.0-alt1
 - First import 1.4.0-5-gf55631b (2024-01-14).
