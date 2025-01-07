@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libiio
-Version: 0.25
+Version: 0.26
 Release: alt1
 Summary: Library for Industrial IO
 License: LGPL-2.0
@@ -116,5 +116,8 @@ find %buildroot -name '*.la' -delete
 %python3_sitelibdir_noarch/pylibiio*
 
 %changelog
+* Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 0.26-alt1
+- new version (0.26) with rpmgs script
+
 * Mon Aug 12 2024 Anton Midyukov <antohami@altlinux.org> 0.25-alt1
 - Initial build
