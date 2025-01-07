@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.21.0
-Release: alt2
+Release: alt3
 %K6init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 %_tmpfilesdir/sddm.conf
 
 %changelog
+* Tue Jan 07 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.21.0-alt3
+- alt sddm.conf: comment the parameter '[Theme] Current='
+
 * Fri Dec 27 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.21.0-alt2
 - build with qt6
 - drop alt-sddm-greeter-swbackend.patch
