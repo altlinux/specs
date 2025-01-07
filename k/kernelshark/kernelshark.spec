@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:     kernelshark
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
 Epoch:    1
@@ -85,6 +85,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Tue Jan 07 2025 Vitaly Chikunov <vt@altlinux.org> 1:2.3.2-alt1
+- Update to kernelshark-v2.3.2 (2025-01-01).
+
 * Sun Dec 22 2024 Vitaly Chikunov <vt@altlinux.org> 1:2.3.1-alt2
 - Fix FTBFS with gcc14.
 - spec: Move desktop/appdata validation tests into %%check section.
