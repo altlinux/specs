@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.02
+Version: %ver_major.07
 Release: alt1
 
 Summary: A Flash Player emulator written in Rust
@@ -20,7 +20,7 @@ Vcs: https://github.com/ruffle-rs/ruffle.git
 %define git_ver nightly-%(echo %version|tr . -)
 
 %if_disabled snapshot
-Source: %url/archive/%git_ver/%_name-%version.tar.gz
+Source: https://github.com/ruffle-rs/ruffle/archive/%git_ver/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -99,6 +99,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.01.07-alt1
+- nightly-2025-01-07
+
 * Thu Jan 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.01.02-alt1
 - nightly-2025-01-02
 

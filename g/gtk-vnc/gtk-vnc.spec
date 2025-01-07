@@ -1,18 +1,21 @@
-%define ver_major 1.3
+%define ver_major 1.4
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable vala
 %def_enable check
+%def_disable docs
 
 Name: gtk-vnc
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: VNC viewer widget
 Group: System/Libraries
-License: LGPLv2.1+
+License: LGPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/gtk-vnc
+
+Vcs: https://gitlab.gnome.org/GNOME/gtk-vnc.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: gtk-vnc-1.2.0-alt-e2k-makecontext.patch
@@ -22,19 +25,21 @@ Requires: libgtk3vnc = %EVR
 %define glib_ver 2.56
 %define gtk_ver 3.22
 %define gnutls_ver 3.6.0
-%define gcrypt_ver 1.8.0
 %define sasl_ver 2.1.27
+%define gmp_ver 6.0.0
 
 BuildRequires(pre): meson
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel >= %gcrypt_ver
+BuildRequires: libgnutls-devel >= %gnutls_ver
+BuildRequires: pkgconfig(gmp) >= %gmp_ver
 BuildRequires: libcairo-gobject-devel libsasl2-devel >= %sasl_ver
 BuildRequires: libpulseaudio-devel zlib-devel perl-Text-CSV
 BuildRequires: %_bindir/pod2man
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: libgtk+3-gir-devel}
 %{?_with_python:BuildRequires: python-module-pygobject-devel}
+%{?_enable_docs:BuildRequires: gi-docgen}
 
 %description
 gtk-vnc is a project providing client side APIs for the RFB protocol/VNC
@@ -156,7 +161,9 @@ library.
 
 %build
 %meson \
-%{?_enable_vala:-Dwith-vala=enabled}
+    %{subst_enable_meson_feature vala with-vala} \
+    %{subst_enable_meson_feature docs gi-docs}
+%nil
 %meson_build
 
 %install
@@ -164,8 +171,7 @@ library.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -222,6 +228,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - 1.3.1
 
