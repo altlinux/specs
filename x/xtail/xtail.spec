@@ -5,7 +5,7 @@
 
 Name: xtail
 Version: 2.1
-Release: alt1
+Release: alt2
 Summary: Like "tail -f", but works on truncated files, directories, more
 Group: System/Base
 License: MIT
@@ -38,5 +38,8 @@ mkdir -p %buildroot%_bindir %buildroot%_man1dir
 %_man1dir/xtail.*
 
 %changelog
+* Wed Dec 25 2024 Vitaly Chikunov <vt@altlinux.org> 2.1-alt2
+- Update to debian/2.1-11 (2024-12-25) which only fixes compilation warnings.
+
 * Thu May 26 2022 Vitaly Chikunov <vt@altlinux.org> 2.1-alt1
 - First import debian/2.1-8-5-g6c3aeef (2021-10-09).
