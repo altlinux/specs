@@ -2,23 +2,24 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name smile
-%define ver_major 2.9
+%define ver_major 2.10
 %define rdn_name it.mijorus.smile
 
 # <screenshot> height too large
 %def_disable check
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: An emoji picker
 Group: Graphical desktop/GNOME
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://github.com/mijorus/smile
 
-%if_enabled snapshot
 Vcs: https://github.com/mijorus/smile.git
+
+%if_enabled snapshot
 Source: %_name-%version.tar
 %else
 Source: %url/archive/%version/%_name-%version.tar.gz
@@ -27,10 +28,11 @@ Source: %url/archive/%version/%_name-%version.tar.gz
 BuildArch: noarch
 %add_python3_path %_datadir/%_name
 
-%define adw_ver 1.4
+%define adw_ver 1.6
 
 Requires: dconf font(notocoloremoji)
 Requires: typelib(Adw) = 1
+Requires: /usr/bin/wl-copy
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson
@@ -68,6 +70,9 @@ ln -sf ../../fonts/ttf/google-noto-emoji/NotoColorEmoji.ttf \
 %doc README*
 
 %changelog
+* Fri Jan 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt1
+- 2.10.1
+
 * Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 2.9.5-alt1
 - 2.9.5
 
