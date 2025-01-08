@@ -4,15 +4,14 @@
 
 Name:    universal-ctags
 Version: 6.1.0
-Release: alt1
+Release: alt1.20250105.0
 Epoch:   1
 
 Summary: Universal Ctags generates an index of language objects found in source
 License: GPL-2.0-only
 Group:   Development/Other
 Url:     https://ctags.io/
-Vcs:     https://github.com/universal-ctags/ctags.git
-# Docs:  https://docs.ctags.io
+Vcs:     https://github.com/universal-ctags/ctags
 Conflicts: ctags < %EVR
 Provides:  ctags = %EVR
 
@@ -59,6 +58,7 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 
 %check
 ./ctags --version
+./ctags --list-features
 %make_build check
 
 %files
@@ -73,6 +73,9 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %_man7dir/ctags-*.7*
 
 %changelog
+* Wed Jan 08 2025 Vitaly Chikunov <vt@altlinux.org> 1:6.1.0-alt1.20250105.0
+- Update to p6.1.20250105.0 (2025-01-03).
+
 * Mon Jan 08 2024 Vitaly Chikunov <vt@altlinux.org> 1:6.1.0-alt1
 - Update to v6.1.0 (2023-12-29).
 
