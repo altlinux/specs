@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.14.1
+Version: 0.14.2
 Release: alt1
 
 Summary: CacheControl is a port of the caching algorithms in httplib2
@@ -14,10 +14,11 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/ionrock/cachecontrol
 
+Vcs: https://github.com/ionrock/cachecontrol.git
+
 %if_disabled snapshot
 Source: https://github.com/ionrock/cachecontrol/archive/v%version/%pypi_name-%version.tar.gz
 %else
-Vcs: https://github.com/ionrock/cachecontrol.git
 Source: %pypi_name-%version.tar
 %endif
 
@@ -60,6 +61,9 @@ CacheControl is a port of the caching algorithms in "httplib2" for use with
 %doc README*
 
 %changelog
+* Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
+- 0.14.2
+
 * Tue Nov 05 2024 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
 - 0.14.1
 
