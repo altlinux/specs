@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: eartag
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Small and simple audio file tag editor
@@ -14,10 +14,11 @@ License: MIT
 Group: Sound
 Url: https://gitlab.gnome.org/World/eartag
 
-%if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
-%else
 Vcs: https://gitlab.gnome.org/World/eartag.git
+
+%if_disabled snapshot
+Source: %url/-/archive/%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
 %endif
 
@@ -69,6 +70,9 @@ BuildRequires: python3(acoustid)}
 %doc README*
 
 %changelog
+* Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Sat Nov 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - 0.6.3
 

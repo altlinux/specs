@@ -2,14 +2,14 @@
 
 %define _name Refine
 %define __name refine
-%define ver_major 0.2
+%define ver_major 0.3
 %define beta %nil
 %define rdn_name page.tesk.%_name
 %def_enable check
 
 Name: gnome-%__name
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: Tweak various aspects of GNOME
 License: GPL-3.0-or-later
@@ -49,7 +49,7 @@ Refine helps discover advanced and experimental features in GNOME.
 
 %install
 %meson_install
-%find_lang --with-gnome --output=%name.lang %name %rdn_name
+%find_lang --with-gnome --output=%name.lang %__name %rdn_name
 
 # conflicts with /usr/bin/refine from argyllcms
 mv %buildroot%_bindir/%__name %buildroot%_bindir/%rdn_name
@@ -70,6 +70,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- updated to 0.3.0-7-g6e5271f
+
 * Mon Jan 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1.1
 - explicitly required typelib(XdpGtk4)
 

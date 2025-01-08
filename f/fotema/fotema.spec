@@ -4,14 +4,14 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 1.18
+%define ver_major 1.19
 %define rdn_name app.fotema.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A photo gallery for GNOME
@@ -85,7 +85,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 mkdir onnxruntime
 %ifarch x86_64
 tar zxf %SOURCE4 --strip-components=1 -C onnxruntime
-%else %ifarch aarch64
+%elifarch aarch64
 tar zxf %SOURCE5 --strip-components=1 -C onnxruntime
 %endif
 
@@ -112,6 +112,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README*
 
 %changelog
+* Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0
+
 * Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1
 - 1.18.3
 
