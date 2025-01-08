@@ -1,6 +1,6 @@
 Name: bitcoin
-Version: 28.0
-Release: alt2
+Version: 28.1
+Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -59,6 +59,9 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Wed Jan 08 2025 Alexei Takaseev <taf@altlinux.org> 28.1-alt1
+- 28.1
+
 * Mon Dec 23 2024 Alexei Takaseev <taf@altlinux.org> 28.0-alt2
 - Build with libdb-6.1
 
