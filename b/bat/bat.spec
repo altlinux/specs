@@ -1,10 +1,12 @@
 Name: bat
-Version: 0.24.0
-Release: alt2
+Version: 0.25.0
+Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
-Url: https://github.com/sharkdp/bat
+Url: https://crates.io/crates/bat
+VCS: https://github.com/sharkdp/bat
+
 Source: %name-%version.tar
 Source1: vendor.tar
 
@@ -31,6 +33,10 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
+
+[profile.release]
+debug = true
+strip = false
 EOF
 
 %build
@@ -57,6 +63,9 @@ cargo test -- --skip no_args_doesnt_break
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Thu Jan 09 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.25.0-alt1
+- Updated to version 0.25.0.
+
 * Mon Oct 30 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.0-alt2
 - Filtered requires on GLIBC_PRIVATE for i586 and armh.
 
