@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.4.5
+Version: 6.5.2
 Release: alt1
 Summary: Read resources from Python packages
 License: Apache-2.0
@@ -59,6 +59,9 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 6.5.2-alt1
+- 6.4.5 -> 6.5.2.
+
 * Tue Sep 10 2024 Stanislav Levin <slev@altlinux.org> 6.4.5-alt1
 - 6.4.0 -> 6.4.5.
 
