@@ -1,15 +1,18 @@
 Name: libm4rie
+Version: 20250103
+Release: alt1
+
 # Note that libm4rie is not always updated in lockstep with libm4ri,
 # and that is absolutely normal.
-%define lname libm4rie0
-Version: 20220305
-Release: alt1
+%define lname libm4rie0.0.%version
+
 Summary: Library for linear arithmetic over GF(2^e)
+
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://bitbucket.org/malb/m4rie
+Vcs: git://bitbucket.org/malb/m4rie.git
 
-# Git-Clone:	https://bitbucket.org/malb/m4rie.git
 Source: https://bitbucket.org/malb/m4rie/downloads/m4rie-%version.tar.gz
 
 BuildRequires: libm4ri-devel
@@ -50,7 +53,7 @@ applications that want to make use of libm4rie.
 %makeinstall_std
 
 %files -n %lname
-%_libdir/libm4rie-0.0.20200125.so
+%_libdir/libm4rie-0.0.%version.so
 
 %files devel
 %_libdir/libm4rie.so
@@ -58,6 +61,10 @@ applications that want to make use of libm4rie.
 %_includedir/m4rie/
 
 %changelog
+* Thu Jan 09 2025 Leontiy Volodin <lvol@altlinux.org> 20250103-alt1
+- New version 20250103.
+- Added vcs tag.
+
 * Thu Oct 03 2024 Leontiy Volodin <lvol@altlinux.org> 20220305-alt1
 - New version 20220305.
 
