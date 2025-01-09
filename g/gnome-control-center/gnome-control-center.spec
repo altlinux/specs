@@ -16,8 +16,8 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.2
-Release: alt1.1%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -83,6 +83,8 @@ Requires: gnome-user-share
 Requires: rygel
 # for desktop sharing
 Requires: gnome-remote-desktop
+# for power management
+Requires: power-profiles-daemon
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
@@ -210,6 +212,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Thu Jan 09 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
+- 47.3
+
 * Wed Nov 27 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1.1
 - fixed datetime panel crash (ALT #52217)
 
