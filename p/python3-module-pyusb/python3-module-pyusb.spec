@@ -1,6 +1,6 @@
 %global modulename pyusb
 Name: python3-module-pyusb
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Python module which provides easy USB access
@@ -42,6 +42,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Thu Jan 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- New version.
+
 * Thu Jan 02 2025 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - New version.
 
