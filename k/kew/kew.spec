@@ -1,5 +1,5 @@
 Name: kew
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 
 Summary: A terminal music player
@@ -15,7 +15,6 @@ BuildRequires: pkgconfig(faad2)
 BuildRequires: pkgconfig(fftw3f)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(libnotify)
 BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(opusfile)
@@ -50,5 +49,8 @@ OPTFLAGS='%optflags' \
 %_man1dir/kew.1*
 
 %changelog
+* Fri Dec 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.2-alt1
+- 3.0.2 released
+
 * Tue Dec 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.1-alt1
 - 3.0.1 released
