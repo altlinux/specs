@@ -1,5 +1,5 @@
 Name: thunar-archive-plugin
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Thunar archive plugin
@@ -11,9 +11,9 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-archive-plugin.git
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4util-devel libthunar-devel libexo-gtk3-devel
-BuildRequires: libgtk+3-devel intltool libxml2-devel
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel libthunar-devel libexo-gtk3-devel
+BuildRequires: libgtk+3-devel
 
 Requires: thunar
 
@@ -58,6 +58,9 @@ using a single click.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-archive-plugin.mo
 
 %changelog
+* Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
+- Updated to 0.5.3.
+
 * Mon Oct 30 2023 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
