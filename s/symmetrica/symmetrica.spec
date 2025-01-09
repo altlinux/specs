@@ -1,5 +1,5 @@
 Name: symmetrica
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: Symmetrica is a C library developed by Lehrstuhl Mathematik II of the University of Bayreuth 
@@ -48,5 +48,8 @@ rm -f %buildroot%_defaultdocdir/symmetrica/README.md
 %_includedir/*
 
 %changelog
+* Thu Jan 09 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Tue Jun 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - Initial build in Sisyphus.
