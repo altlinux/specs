@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.0
-Release: alt3
+Release: alt4
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -118,6 +118,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Thu Jan 09 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt4
+- 10-vm-profile.sh; extent single / partition to all available disk size.
+
 * Tue Dec 24 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt3
 - Removed requiirement of installer-feature-repo-add.
 
