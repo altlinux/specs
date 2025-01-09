@@ -1,6 +1,6 @@
 Name: xfce4-windowck-plugin
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 
 Summary: Put the maximized window title and windows buttons in the panel
 License: GPLv3+
@@ -13,11 +13,10 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
+BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
 BuildRequires: libwnck3-devel
-BuildRequires: intltool
 
-Requires: xfce4-panel >= 4.14
+Requires: xfce4-panel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -53,6 +52,9 @@ export NPROCS=1
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.2.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt2
 - Fixed build: added intltool to BR.
 
