@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 24.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Remote access
@@ -15,7 +15,7 @@ License: GPL-2.0-or-later
 
 Provides: kde5-krdc = %EVR
 Obsoletes: kde5-krdc < %EVR
-Requires: xfreerdp freerdp-plugins-standard
+Requires: freerdp-plugins-standard
 
 Source: %rname-%version.tar
 
@@ -96,6 +96,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
+- update requires
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
