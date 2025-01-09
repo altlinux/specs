@@ -1,17 +1,22 @@
-%define oname Beaker
+%define _unpackaged_files_terminate_build 1
+%define pypi_name Beaker
+%define pypi_nname beaker
+%define mod_name %pypi_nname
 
-Name: python3-module-beaker
-Version: 1.12.1
+Name: python3-module-%pypi_nname
+Version: 1.13.0
 Release: alt1
 
 Summary: A Session and Caching library with WSGI Middleware
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/bbangert/beaker
+Url: https://pypi.org/project/Beaker/
+Vcs: https://github.com/bbangert/beaker
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
+Patch0: beaker-1.13.0-drop-support-for-unmaintained-python-nss.patch
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
@@ -32,12 +37,13 @@ from MyghtyUtils, then refactored and extended with database support.
 
 %prep
 %setup
+%autopatch -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # need servers running
 #check
@@ -45,10 +51,13 @@ from MyghtyUtils, then refactored and extended with database support.
 
 %files
 %doc README.rst
-%python3_sitelibdir/beaker/
-%python3_sitelibdir/Beaker-*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
+- 1.12.1 -> 1.13.0.
+
 * Sun Apr 23 2023 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
 - new version 1.12.1 (with rpmrb script)
 
