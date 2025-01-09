@@ -1,5 +1,5 @@
 Name: drumstick
-Version: 2.9.1
+Version: 2.10.0
 Release: alt1
 
 Summary: MIDI C++ Libraries for Qt
@@ -90,6 +90,9 @@ This package contains set of example programs using drumstick
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.10.0-alt1
+- 2.10.0 released
+
 * Thu Nov 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.9.1-alt1
 - 2.9.1 released
 
