@@ -1,6 +1,6 @@
 Name:		cqrlog
 Version:	2.5.2
-Release:	alt1
+Release:	alt2.gitba97c3b
 Summary:	An amateur radio contact logging program
 
 Group:		Communications
@@ -10,6 +10,8 @@ Source0:	%name-%version.tar
 # VCS:		https://github.com/ok2cqr/cqrlog
 
 Patch0:		cqrlog-install.patch
+Patch1:     cqrlog-fpc-3.2.3.patch
+Patch2:     cqrlog-mysqld-path.patch
 
 ExclusiveArch:  %ix86 x86_64
 
@@ -35,6 +37,8 @@ and strongly focused on easy operation and maintenance.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 chmod -x src/*.pas \
          voice_keyer/voice_keyer.sh
@@ -43,7 +47,7 @@ chmod -x src/*.pas \
 %make_build
 
 %install
-%makeinstall_std
+%{makeinstall_std}/usr
 
 find %buildroot%_datadir/%name -name \*.txt | xargs subst 's/\r//'
 subst 's/\r//' %buildroot%_datadir/%name/ctyfiles/CountryDel.tab
@@ -52,24 +56,21 @@ subst 's/\r//' %buildroot%_datadir/%name/ctyfiles/MASTER.SCP
 iconv -f iso8859-1 -t utf-8 %buildroot%_datadir/%name/ctyfiles/eqsl.txt > eqsl.txt.conv && /bin/mv -f eqsl.txt.conv %buildroot%_datadir/%name/ctyfiles/eqsl.txt
 
 rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
-# Move icons to appropriate places
-for i in 32 48 64 128 256; do
-	install -Dm 0644 %buildroot%_iconsdir/%name/${i}x${i}/%name.png %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
-done
-
-rm -rf %buildroot%_iconsdir/%{name}*
 
 %files
 %doc README.md AUTHORS CHANGELOG
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_datadir/appdata/%name.appdata.xml
-%_pixmapsdir/%name/
+%_datadir/metainfo/*.appdata.xml
 %_man1dir/%name.1.*
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Jan 09 2025 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt2.gitba97c3b
+- New snapshot.
+- FTBFS: fix build with fpc 3.2.3.
+
 * Sat Feb 13 2021 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt1
 - New version.
 
