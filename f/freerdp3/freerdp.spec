@@ -12,7 +12,7 @@
 
 Name: freerdp%sover
 Version: 3.9.0
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -32,7 +32,6 @@ Source5: freerdp-server.pam
 Patch0: freerdp-alt-pam-check.patch
 Patch1: freerdp-alt-connection-scripts.patch
 Patch2: freerdp-alt-use-pam-module-freerdp-server.patch
-Patch2000: freerdp-e2k.patch
 
 Requires: xfreerdp%sover = %EVR
 Requires: wlfreerdp%sover = %EVR
@@ -239,9 +238,6 @@ the RDP protocol.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%ifarch %e2k
-%patch2000 -p1
-%endif
 
 %build
 %cmake \
@@ -449,6 +445,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Jan 09 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.9.0-alt1.1
+- Obsolete e2k patch removed.
+
 * Tue Oct 22 2024 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
 - New version.
 
