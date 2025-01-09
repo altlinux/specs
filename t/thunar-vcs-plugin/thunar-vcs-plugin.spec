@@ -2,8 +2,8 @@
 %def_enable subversion
 
 Name: thunar-vcs-plugin
-Version: 0.2.0
-Release: alt2
+Version: 0.3.0
+Release: alt1
 
 Summary: Version Contol System plugin for Thunar
 License: GPL-2.0-or-later
@@ -20,7 +20,6 @@ BuildRequires: libgtk+3-devel
 %if_enabled subversion
 BuildRequires: libapr1-devel libsubversion-devel libaprutil1-devel
 %endif
-BuildRequires: intltool
 
 %define _unpackaged_files_terminate_build 1
 
@@ -55,6 +54,10 @@ menu. It also shows the svn file status in the file properties window.
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Fixed build with libaprutil1.
+- Updated to 0.3.0.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt2
 - Fixed build: added intltool to BR.
 - Added Vcs tag.
