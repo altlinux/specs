@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.31.2
-Release: alt2
+Version: 0.31.4
+Release: alt1
 
 Summary: A pure python module to access memcached via it's binary protocol with SASL auth support
 
@@ -56,6 +56,9 @@ binary protocol and support authentication, so it can work with Heroku for examp
 %python3_sitelibdir/python_binary_memcached-%version.dist-info
 
 %changelog
+* Thu Jan 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.31.4-alt1
+- Automatically updated to 0.31.4.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 0.31.2-alt2
 - Dropped dependency on m2r2.
 - Built wih check.
