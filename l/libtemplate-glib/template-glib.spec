@@ -5,18 +5,22 @@
 %define libname libtemplate_glib
 %define ver_major 3.36
 %define api_ver 1.0
+%define namespace Template
 
 %def_enable introspection
 %def_enable gtk_doc
+%def_enable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A templating library for GLib
 Group: System/Libraries
-License: LGPLv2.1
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/TemplateGlib
+
+Vcs: https://gitlab.gnome.org/GNOME/template-glib.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -25,8 +29,9 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson bison flex gtk-doc vala-tools
+BuildRequires: meson bison flex vala-tools
 BuildRequires: libgio-devel
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 %description
@@ -39,7 +44,7 @@ custom functions, and more with the embedded expression language.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -48,7 +53,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -57,8 +62,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
@@ -76,7 +81,9 @@ This package contains development documentation for %name
 %setup -n %_name-%version
 
 %build
-%meson %{?_enable_gtk_doc:-Dgtk_doc=true}
+%meson \
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
+%nil
 %meson_build
 
 %install
@@ -85,7 +92,7 @@ This package contains development documentation for %name
 %find_lang %_name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %_name.lang
 %_libdir/%libname-%api_ver.so.*
@@ -100,10 +107,10 @@ This package contains development documentation for %name
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Template-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Template-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -112,6 +119,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Thu Jan 09 2025 Yuri N. Sedunov <aris@altlinux.org> 3.36.3-alt1
+- 3.36.3
+
 * Tue Mar 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
 - 3.36.2
 
