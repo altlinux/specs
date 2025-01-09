@@ -1,5 +1,5 @@
 Name: libfcft
-Version: 3.1.9
+Version: 3.1.10
 Release: alt1
 
 Summary: A small font loading and glyph rasterization library
@@ -56,6 +56,9 @@ This package contains development part of libfcft.
 %doc %_defaultdocdir/fcft
 
 %changelog
+* Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.10-alt1
+- 3.1.10 released
+
 * Wed Oct 23 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.9-alt1
 - 3.1.9 released
 
