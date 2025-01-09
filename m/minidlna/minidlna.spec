@@ -1,6 +1,6 @@
 Name: minidlna
 Version: 1.3.3
-Release: alt1
+Release: alt2
 
 Summary: DLNA AV Media Server
 License: GPLv2
@@ -63,6 +63,9 @@ mkdir -p %buildroot%_cachedir/%name
 %dir %attr(0770,root,_minidlna) %_cachedir/%name
 
 %changelog
+* Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.3-alt2
+- rebuilt with ffmpeg 7.x
+
 * Thu Jun 01 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.3-alt1
 - 1.3.3 released
 
