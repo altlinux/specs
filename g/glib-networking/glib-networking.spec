@@ -16,13 +16,15 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Networking support for GIO
 Group: System/Libraries
 License: LGPL-2.0-or-later
-Url: http://www.gnome.org
+Url: https://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/glib-networking
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -78,12 +80,12 @@ the functionality of the installed %name package.
 
 %build
 %meson \
-	%{?_enable_tls:-Dgnutls=enabled} \
-	%{?_enable_ssl:-Dopenssl=enabled} \
-	%{?_enable_libproxy:-Dlibproxy=enabled} \
-	%{?_enable_gnome_proxy:-Dgnome_proxy=enabled} \
-	%{?_enable_environment_proxy:-Denvironment_proxy=enabled} \
-	%{?_enable_installed_tests:-Dinstalled_tests=true}
+    %{subst_enable_meson_feature tls gnutls} \
+    %{subst_enable_meson_feature ssl openssl} \
+    %{subst_enable_meson_feature libproxy libproxy} \
+    %{subst_enable_meson_feature gnome_proxy gnome_proxy} \
+    %{subst_enable_meson_feature environment_proxy environment_proxy} \
+    %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
 
@@ -119,6 +121,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Thu Jan 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.80.1-alt1
+- 2.80.1
+
 * Fri Mar 15 2024 Yuri N. Sedunov <aris@altlinux.org> 2.80.0-alt1
 - 2.80.0
 
