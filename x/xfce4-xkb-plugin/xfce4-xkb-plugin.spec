@@ -1,6 +1,6 @@
 Name: xfce4-xkb-plugin
-Version: 0.8.3
-Release: alt2
+Version: 0.8.5
+Release: alt1
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
@@ -14,9 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libgarcon-devel
+BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libgarcon-devel
 BuildRequires: librsvg-devel libwnck3-devel libxklavier-devel xorg-cf-files libnotify-devel
-BuildRequires: intltool
 
 Requires: xfce4-panel
 
@@ -63,6 +62,9 @@ XFce panel.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.8.5-alt1
+- Updated to 0.8.5.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt2
 - Fixed build: added intltool to BR.
 
