@@ -1,6 +1,6 @@
 Name: orage
-Version: 4.18.0
-Release: alt2
+Version: 4.20.0
+Release: alt1
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
@@ -16,7 +16,6 @@ Patch: %name-%version-%release.patch
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel
 BuildRequires: libnotify-devel libical-devel
-BuildRequires: intltool
 
 Requires: xfce4-common
 
@@ -42,7 +41,7 @@ Xfce.
 	--enable-libnotify \
 	--enable-archive \
 	--enable-libxfce4ui \
-	--enable-x11-tray-icon \
+	--disable-x11-tray-icon \
 	--enable-debug=minimum
 %make_build
 
@@ -59,8 +58,13 @@ Xfce.
 %_iconsdir/hicolor/*/apps/*
 %_datadir/dbus-1/services/*.service
 %_datadir/metainfo/org.xfce.orage.appdata.xml
+%_datadir/themes/Default/orage-4.0/
 
 %changelog
+* Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Disabled X11 tray icon.
+- Updated to 4.20.0.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt2
 - Fixed build: added intltool to BR.
 
