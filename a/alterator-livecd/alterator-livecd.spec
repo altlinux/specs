@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.9
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: special steps for LiveCD installers
 License: GPL
@@ -16,7 +16,7 @@ Requires: libshell
 Requires: alterator-l10n >= 2.5-alt1
 Requires: alterator-browser-qt >= 2.17.0
 Requires: alterator-lookout => 2.4-alt1
-Requires: installer-scripts-remount-stage2
+Requires: installer-scripts-remount-stage2 >= 0.6.5
 Requires: losetup
 Requires: util-linux
 BuildRequires: rpm-macros-alterator
@@ -44,6 +44,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jan 08 2025 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- livecd-install: do not made remount, only mount chroot
+
 * Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 0.8.9-alt2
 - NMU: replace egrep with grep -E
 

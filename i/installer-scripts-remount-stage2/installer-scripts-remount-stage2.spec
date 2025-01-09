@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,10 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Thu Jan 09 2025 Anton Midyukov <antohami@altlinux.org> 0.6.5-alt1
+- mount cgroups in the $destination
+- mount /sys, /proc to destination with option --bind
+
 * Wed Nov 22 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.6.4-alt1
 - Create correct block device nodes for paritions instead of broken ones
   produces as a side effect of EVMS trickery. Fixes installation when
