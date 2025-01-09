@@ -1,5 +1,5 @@
 Name: tree-sitter-c
-Version: 0.23.2
+Version: 0.23.4
 Release: alt1
 
 Summary: C grammar for tree-sitter
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-c
 %_libdir/tree-sitter-c
 
 %changelog
+* Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.23.4-alt1
+- 0.23.4 released
+
 * Tue Nov 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.23.2-alt1
 - 0.23.2 released
 
