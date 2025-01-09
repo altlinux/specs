@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -29,7 +29,7 @@ save space and reporting time.
 %setup
 
 %build
-%make includedir=%_includedir libdir=%_libdir
+%make CFLAGS='%optflags' includedir=%_includedir libdir=%_libdir
 
 %install
 %makeinstall initdir=%buildroot%_initdir unitdir=%buildroot%_unitdir
@@ -54,6 +54,10 @@ echo "d /run/squidmill squid squid 775" >   %buildroot/%_tmpfilesdir/squidmill.c
 %attr(0775, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Thu Jan 09 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.1-alt2
+- Build with the standard %%optflags.
+- Honor CFLAGS for compilation.
+
 * Tue Feb 14 2023 Paul Wolneykien <manowar@altlinux.org> 2.6.1-alt1
 - Bump version to 2.6.1.
 - Workaround define-structure issue.

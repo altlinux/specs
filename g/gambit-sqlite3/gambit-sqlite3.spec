@@ -1,6 +1,6 @@
 Name: gambit-sqlite3
 Version: 1.3.1
-Release: alt1
+Release: alt2
 Summary: SQLite3 database library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -30,7 +30,8 @@ This package contains the library link file
 %setup -q
 
 %build
-%make_build
+%add_optflags -Wno-discarded-qualifiers -Wno-incompatible-pointer-types
+%make_build CFLAGS='%optflags'
 
 %install
 %makeinstall
@@ -46,6 +47,11 @@ This package contains the library link file
 %{_includedir}/gambit/*.c
 
 %changelog
+* Thu Jan 09 2025 Paul Wolneykien <manowar@altlinux.org> 1.3.1-alt2
+- Ignore some compilation warnings to fix the build with GCC14.
+- Build with the standard %%optflags.
+- Honor CFLAGS for compilation.
+
 * Mon Feb 13 2023 Paul Wolneykien <manowar@altlinux.org> 1.3.1-alt1
 - Fix compilation with new Gambit: Replace [] with ().
 

@@ -1,6 +1,6 @@
 Name: gambit-signal
 Version: 1.2
-Release: alt4
+Release: alt5
 
 Summary: UNIX signal handling library for Gambit-C Scheme programming system
 License: GPLv3+
@@ -28,7 +28,8 @@ This package contains the library link file
 %setup
 
 %build
-%make_build
+%add_optflags -Wno-discarded-qualifiers -Wno-incompatible-pointer-types
+%make_build CFLAGS='%optflags'
 
 # workaround non-blocking i/o: https://unix.stackexchange.com/questions/437409
 cat >> nonblock.c << EOF
@@ -50,6 +51,11 @@ make nonblock && ./nonblock
 %{_includedir}/gambit/*.c
 
 %changelog
+* Thu Jan 09 2025 Paul Wolneykien <manowar@altlinux.org> 1.2-alt5
+- Ignore some compilation warnings to fix the build with GCC14.
+- Build with the standard %%optflags.
+- Honor CFLAGS for compilation.
+
 * Mon Feb 11 2019 Michael Shigorin <mike@altlinux.org> 1.2-alt4
 - Ensure sane stdin state (even --without check)
 - Minor spec cleanup
