@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 17.0.0
+Version: 17.1.0
 Release: alt1
 Summary: A module wrapper for os.path
 License: MIT
@@ -51,6 +51,9 @@ common operations on files to be invoked on those path objects directly.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 17.1.0-alt1
+- 17.0.0 -> 17.1.0.
+
 * Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 17.0.0-alt1
 - 16.14.0 -> 17.0.0.
 
