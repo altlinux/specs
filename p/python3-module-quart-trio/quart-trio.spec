@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.1
-Release: alt2
+Version: 0.12.0
+Release: alt1
 Summary: A Quart extension to provide trio support
 License: MIT
 Group: Development/Python3
@@ -54,6 +54,9 @@ library and supported by default in Quart.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
+- 0.11.1 -> 0.12.0.
+
 * Mon May 27 2024 Stanislav Levin <slev@altlinux.org> 0.11.1-alt2
 - Fixed FTBFS (trio 0.25.0).
 
