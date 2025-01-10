@@ -1,7 +1,7 @@
 %define plugin hyprscroller
 
 Name: hyprland-plugin-%plugin
-Version: 0.45.2
+Version: 46.2
 Release: alt1
 License: MIT
 
@@ -19,12 +19,14 @@ BuildRequires: gcc-c++ cmake
 
 BuildRequires: hyprland-devel
 BuildRequires: pkgconfig(hyprlang)
+BuildRequires: pkgconfig(hyprgraphics)
 BuildRequires: pkgconfig(aquamarine)
 
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(pangocairo)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libglvnd)
 
@@ -46,6 +48,9 @@ install %plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Mon Dec 23 2024 Kirill Unitsaev <fiersik@altlinux.org> 46.2-alt1
+- new version 46.2 (with rpmrb script)
+
 * Thu Nov 21 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.2-alt1
 - new version 0.45.2 (with rpmrb script)
 

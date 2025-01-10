@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: hyprcursor
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: Hyprland configuration library
@@ -65,6 +65,9 @@ This packaage provides Hyprlang shared library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Dec 23 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.11-alt1
+- new version 0.1.11 (with rpmrb script)
+
 * Fri Oct 04 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.10-alt1
 - new version 0.1.10 (with rpmrb script)
 

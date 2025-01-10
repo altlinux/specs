@@ -1,7 +1,7 @@
 %define plugin hyprsplit
 
 Name: hyprland-plugin-%plugin
-Version: 0.45.2
+Version: 0.46.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -19,6 +19,7 @@ BuildRequires: gcc-c++
 
 BuildRequires: hyprland-devel
 BuildRequires: pkgconfig(hyprlang)
+BuildRequires: pkgconfig(hyprgraphics)
 BuildRequires: pkgconfig(aquamarine)
 
 BuildRequires: pkgconfig(pixman-1)
@@ -46,6 +47,10 @@ install %plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.46.2-alt1
+- new version 0.46.2 (with rpmrb script)
+- switch build to commit-based
+
 * Thu Nov 21 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.2-alt1
 - new version 0.45.2 (with rpmrb script)
 

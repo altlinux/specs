@@ -1,5 +1,5 @@
 Name: hyprpaper
-Version: 0.7.1
+Version: 0.7.3
 Release: alt1
 License: BSD-3-Clause
 
@@ -12,19 +12,33 @@ Url: https://github.com/hyprwm/hyprpaper
 Vcs: https://github.com/hyprwm/hyprpaper.git
 
 ExcludeArch: i586
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: gcc-c++ cmake file
-BuildRequires: libpango-devel libcairo-devel
-BuildRequires: wayland-devel wayland-protocols
-BuildRequires: libhyprlang-devel libglvnd-devel
-BuildRequires: libwebp-devel libjpeg-devel libmagic-devel
-BuildRequires: libwayland-client-devel libwayland-cursor-devel
+BuildRequires: gcc-c++ cmake
 
 BuildRequires: pkgconfig(hyprwayland-scanner)
-BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(hyprgraphics)
+BuildRequires: pkgconfig(hyprutils) >= 0.2.4
+BuildRequires: pkgconfig(hyprlang) >= 0.6.0
+
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-protocols)
+
+BuildRequires: pkgconfig(libmagic)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(pangocairo)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libwebp)
+
+BuildRequires: pkgconfig(libjxl)
+BuildRequires: pkgconfig(libjxl_cms)
+BuildRequires: pkgconfig(libjxl_threads)
+
+BuildRequires: libglvnd-devel
 
 %description
 Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
@@ -36,7 +50,7 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %setup
 
 %build
-%cmake
+%cmake -DCMAKE_INSTALL_LIBDIR=lib
 %cmake_build
 
 %install
@@ -45,8 +59,14 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %files
 %doc README.md LICENSE
 %_bindir/%name
+%_userunitdir/%name.service
 
 %changelog
+* Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.3-alt1
+- new version 0.7.3 (with rpmrb script)
+- add a systemd service
+- cleanup spec
+
 * Sat Aug 17 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.7.1-alt1
 - new version 0.7.1 (with rpmrb script)
 - drop i586 support

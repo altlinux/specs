@@ -2,7 +2,7 @@
 %define upstream hyprland
 
 Name: hyprland-legacyrenderer
-Version: 0.45.2
+Version: 0.46.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor (legacy renderer)
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(hyprcursor)
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprwayland-scanner)
 BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(hyprgraphics)
 BuildRequires: pkgconfig(aquamarine)
 
 BuildRequires: gcc-c++ >= 14
@@ -38,6 +39,7 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(gbm) >= 17.1.0
 BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(re2)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(libdrm) >= 2.4.118
@@ -83,10 +85,7 @@ model allowing for a lot of customization, and more.
 subst '/generateVersion\.sh/d' meson.build
 
 %build
-%meson \
-    -Dwlroots:xcb-errors=enabled \
-    -Dwlroots:examples=false \
-    -Dlegacy_renderer=enabled
+%meson -Dlegacy_renderer=enabled
 %meson_build
 
 %install
@@ -120,6 +119,10 @@ rm -rf %buildroot%_datadir/pkgconfig/hyprland.pc
 %_datadir/zsh/site-functions/_hyprpm
 
 %changelog
+* Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.46.2-alt1
+- new version 0.46.2 (with rpmrb script)
+- spec: drop outdated build flags
+
 * Thu Nov 21 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.45.2-alt1
 - new version 0.45.2 (with rpmrb script)
 

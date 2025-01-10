@@ -1,7 +1,7 @@
-%define soversion 1
+%define soversion 2
 
 Name: libhyprutils
-Version: 0.2.6
+Version: 0.3.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -62,6 +62,9 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprutils.pc
 
 %changelog
+* Mon Dec 23 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Tue Nov 19 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.2.6-alt1
 - new version 0.2.6 (with rpmrb script)
 
