@@ -1,14 +1,16 @@
+%define _libexecdir %_prefix/lib/dbus-1
+
 %define dbus_user      messagebus
 %define dbus_group     messagebus
 
 %define system_socket_dir /run/dbus
 %define session_socket_dir %system_socket_dir/users
 %define system_socket %system_socket_dir/system_bus_socket
-%define	systemdsystemunitdir /lib/systemd/system
+%define	systemdsystemunitdir %_prefix/lib/systemd/system
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.14.10
+Version: 1.16.0
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -20,9 +22,10 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 PreReq: shadow-utils
 Requires: lib%name = %version-%release
+Provides: /bin/dbus-run-session /bin/dbus-send
 
-BuildRequires: autoconf-archive doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel libaudit-devel libcap-ng-devel
-BuildRequires: libsystemd-daemon-devel libsystemd-login-devel libsystemd-journal-devel
+BuildRequires: doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel libaudit-devel libcap-ng-devel
+BuildRequires: libsystemd-daemon-devel libsystemd-login-devel libsystemd-journal-devel meson
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
@@ -85,50 +88,29 @@ This package contains D-BUS development files (headers and libraries links)
 %setup -q
 %patch -p1
 
-mkdir -p m4
-sed -i 's|@CODE_COVERAGE_RULES@|#CODE_COVERAGE_RULES#|' $(find -name Makefile.am)
-
 %build
-%autoreconf
-%configure \
-	--disable-tests \
-	--disable-asserts \
-	--enable-xml-docs \
-	--enable-doxygen-docs \
-	--enable-inotify \
-	--enable-libaudit \
-	--enable-selinux \
-	--enable-systemd \
-	--enable-user-session \
-	--bindir=/bin \
-	--libexecdir=/lib/dbus-1 \
-	--with-system-pid-file=/run/messagebus.pid \
-	--with-system-socket=%system_socket \
-	--with-session-socket-dir=%session_socket_dir \
-	--with-systemdsystemunitdir=%systemdsystemunitdir \
-	--localstatedir=%_var \
-	--disable-static
+%meson \
+	-Dasserts=false \
+	-Dxml_docs=enabled \
+	-Ddoxygen_docs=enabled \
+	-Dinotify=enabled \
+	-Dlibaudit=enabled \
+	-Dselinux=enabled \
+	-Dsystemd=enabled \
+	-Duser_session=true \
+	-Dsystem_pid_file=/run/messagebus.pid \
+	-Dsystem_socket=%system_socket \
+	-Dsession_socket_dir=%session_socket_dir \
+	-Dsystemd_system_unitdir=%systemdsystemunitdir
 
-%make_build
-
-doxygen Doxyfile
+%meson_build -v
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
-mkdir -p %buildroot/{%_lib,%_bindir}
-for f in %buildroot%_libdir/lib*.so; do
-	t=$(readlink "$f")
-	ln -sf ../../%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
-ln -sf ../../bin/dbus-launch %buildroot%_bindir/dbus-launch
-ln -sf ../../bin/dbus-send %buildroot%_bindir/dbus-send
-ln -sf dbus.service %buildroot/lib/systemd/system/messagebus.service
+ln -sf dbus.service %buildroot/%systemdsystemunitdir/messagebus.service
 
 install -pD -m0755 bus/messagebus.in %buildroot%_initdir/messagebus
-
-cp -a doc/api/html api
 
 mkdir -p %buildroot%_sysconfdir/dbus-1/system.d
 mkdir -p %buildroot%_sysconfdir/dbus-1/session.d
@@ -139,8 +121,8 @@ mkdir -p %buildroot%_localstatedir/dbus
 touch %buildroot%_localstatedir/dbus/machine-id
 touch %buildroot%_sysconfdir/machine-id
 
-mkdir -p %buildroot/lib/tmpfiles.d
-cat << __EOF__ > %buildroot/lib/tmpfiles.d/%name.conf
+mkdir -p %buildroot%_tmpfilesdir
+cat << __EOF__ > %buildroot%_tmpfilesdir/%name.conf
 d /run/dbus 0755 root root -
 d /run/dbus/users 1777 root root -
 __EOF__
@@ -155,7 +137,7 @@ if [ $1 -eq 1 ] ; then
 else
 	/sbin/chkconfig messagebus resetpriorities
 fi
-/bin/dbus-uuidgen --ensure
+%_bindir/dbus-uuidgen --ensure
 
 %preun
 %preun_service messagebus
@@ -169,24 +151,23 @@ fi
 %_initdir/messagebus
 %systemdsystemunitdir/*
 %systemdsessionunitdir/*
-/lib/tmpfiles.d/%name.conf
-/lib/sysusers.d/%name.conf
-/bin/dbus-cleanup-sockets
-/bin/dbus-daemon
-/bin/dbus-uuidgen
-/bin/dbus-run-session
-/bin/dbus-update-activation-environment
-%dir /lib/dbus-1
-%attr(4510,root,messagebus) /lib/dbus-1/dbus-daemon-launch-helper
+%_tmpfilesdir/%name.conf
+%_prefix/lib/sysusers.d/%name.conf
+%_bindir/dbus-cleanup-sockets
+%_bindir/dbus-daemon
+%_bindir/dbus-uuidgen
+%_bindir/dbus-run-session
+%_bindir/dbus-update-activation-environment
+%dir %_prefix/lib/dbus-1
+%attr(4510,root,messagebus) %_prefix/lib/dbus-1/dbus-daemon-launch-helper
 %dir %_datadir/dbus-1
+%dir %_datadir/dbus-1/interfaces
 %dir %_datadir/dbus-1/system.d
 %dir %_datadir/dbus-1/session.d
 %dir %_datadir/dbus-1/services
 %dir %_datadir/dbus-1/system-services
 %_datadir/dbus-1/session.conf
 %_datadir/dbus-1/system.conf
-#attr(0755,root,root) #dir #system_socket_dir
-#attr(1777,root,root) #dir #session_socket_dir
 %dir %_localstatedir/dbus
 %ghost %_localstatedir/dbus/machine-id
 %_man1dir/dbus-cleanup-sockets.1*
@@ -196,23 +177,21 @@ fi
 %_man1dir/dbus-update-activation-environment.1*
 
 %files tools
-/bin/dbus-send
-/bin/dbus-monitor
+%_bindir/dbus-monitor
 %_bindir/dbus-send
 %_man1dir/dbus-send.1*
 %_man1dir/dbus-monitor.1*
 
 %files tools-gui
-%_sysconfdir/X11/xinit.d/*
-/bin/dbus-launch
+%attr(0755,root,root) %_sysconfdir/X11/xinit.d/00-start-message-bus.sh
 %_bindir/dbus-launch
 %_man1dir/dbus-launch.1*
 
 %files -n lib%name
-/%_lib/libdbus-1.so.*
+%_libdir/libdbus-1.so.*
 
 %files -n lib%name-devel
-/bin/dbus-test-tool
+%_bindir/dbus-test-tool
 %_datadir/doc/%name
 %_includedir/dbus-1.*
 %_libdir/libdbus-1.so
@@ -225,6 +204,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Wed Dec 18 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.16.0-alt1
+- 1.16.0
+
 * Mon Sep 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.14.10-alt1
 - 1.14.10
 
