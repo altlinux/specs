@@ -1,6 +1,6 @@
 Name: rman
 Version: 3.2
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: reverse compile man pages from formatted form to a number of source formats
 License: Artistic
@@ -10,8 +10,6 @@ Url: http://polyglotman.sourceforge.net/rman.html
 Source: %name-%version.tar.gz
 
 Patch1: rman-3.2-alt-make.patch
-
-Packager: XOrg Maintainer Team <xorg@packages.altlinux.org>
 
 %description
 PolyglotMan   takes  man pages from most of the popular flavors of UNIX
@@ -29,6 +27,7 @@ matted translation as a backup.
 %setup -q
 
 %patch1 -p1
+sed -i '/^CFLAGS/ s/$/ -Wno-error=incompatible-pointer-types/' Makefile
 
 %build
 %make_build
@@ -41,6 +40,9 @@ matted translation as a backup.
 %_man1dir/*
 
 %changelog
+* Fri Jan 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.2-alt1.qa2
+- NMU: fix FTBFS with gcc14.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 3.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
