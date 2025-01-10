@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtk6gui
-Version: 6.0.24.0.1.81b6
+Version: 6.0.27
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -18,7 +18,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake dtk6-common-devel dqt6-base-devel dqt6-wayland-devel libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel libwayland-egl-devel
+BuildRequires: cmake dtk6-common-devel dqt6-base-devel dqt6-wayland-devel libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel libwayland-egl-devel treeland-protocols
 # waiting Qt6XdgIconLoaderConfig.cmake
 # BuildRequires: libdqt6xdg-devel
 %if_enabled clang
@@ -37,6 +37,7 @@ Provides: libdtk6-gui = %EVR
 Obsoletes: libdtk6-gui < %EVR
 Requires: libdqt6-core = %_dqt6_version
 Requires: libdqt6-gui = %_dqt6_version
+Requires: libdqt6-waylandclient = %_dqt6_version
 
 %description -n lib%{name}6
 DtkGui is used for DDE look and feel.
@@ -70,7 +71,7 @@ export READELF="llvm-readelf"
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_libdir \
   -DLIBRARY_INSTALL_DIR=%_lib \
-  -DDTK_VERSION=6.0.24 \
+  -DDTK_VERSION=%version \
   -DBUILD_DOCS=OFF \
   %if_enabled clang
   -DLLVM_USE_LINKER=lld \
@@ -78,7 +79,7 @@ export READELF="llvm-readelf"
 #
 
 %install
-%DQ6install_qt
+%DQ6install
 
 %files
 %doc README.md LICENSE
@@ -101,6 +102,10 @@ export READELF="llvm-readelf"
 %_libdir/lib%name.so
 
 %changelog
+* Fri Jan 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.27-alt1
+- New version 6.0.27.
+- Added treeland support.
+
 * Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.24.0.1.81b6-alt1
 - New version 6.0.24-1-g81b6af1.
 - Added vcs tag.
