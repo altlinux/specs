@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 Epoch: 1
 
@@ -104,7 +104,6 @@ This package provides the Linux NFS stats utilities.
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
-    --disable-nfsdcld \
     --disable-static \
     --disable-sbin-override \
     #
@@ -127,7 +126,8 @@ ln -s rpc-gssd.service %buildroot%systemd_unitdir/gssd.service
 ln -s rpc-statd.service %buildroot%systemd_unitdir/nfslock.service
 ln -s rpc-svcgssd.service %buildroot%systemd_unitdir/svcgssd.service
 
-mkdir -p %buildroot%_localstatedir/nfs/{rpc_pipefs,v4recovery}
+mkdir -p %buildroot%_localstatedir/nfs/{nfsdcld,rpc_pipefs,v4recovery}
+touch %buildroot%_localstatedir/nfs/nfsdcld/main.sqlite
 
 #-------------------------------------------------------------------------------
 %pre clients
@@ -194,7 +194,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/idmapd.service
 %systemd_unitdir/svcgssd.service
 %systemd_unitdir/fsidd.service
-
+%systemd_unitdir/nfsdcld.service
 %systemd_unitdir/nfs-server.service
 %systemd_unitdir/nfs-mountd.service
 %systemd_unitdir/nfs-idmapd.service
@@ -204,7 +204,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %systemd_unitdir/nfsv4-exportd.service
 
 %_sbindir/nfsdctl
-%_sbindir/nfsdcltrack
+%_sbindir/nfsdcld
+%_sbindir/nfsdclddb
 %_sbindir/exportfs
 %_sbindir/fsidd
 %_sbindir/nfsref
@@ -222,7 +223,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/rpc.idmapd.*
 %_man8dir/nfsref.*
 %_man8dir/nfsstat.*
-%_man8dir/nfsdcltrack.*
+%_man8dir/nfsdcld.*
+%_man8dir/nfsdclddb.*
 %_man8dir/mountd.*
 %_man8dir/rpc.mountd.*
 %_man8dir/nfsdctl.*
@@ -236,6 +238,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %config(noreplace) %_localstatedir/nfs/etab
 %config(noreplace) %_localstatedir/nfs/rmtab
 %dir %_localstatedir/nfs/v4recovery
+%dir %attr(700,root,root) %_localstatedir/nfs/nfsdcld
+%ghost %_localstatedir/nfs/nfsdcld/main.sqlite
 
 #-------------------------------------------------------------------------------
 %files clients
@@ -317,6 +321,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Fri Jan 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.2-alt1
+- 2.8.2 released
+
 * Mon Oct 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.8.1-alt1
 - 2.8.1 released
 
