@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 1.15.1
+Version: 1.15.2
 Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
@@ -58,6 +58,9 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
+- 1.15.2
+
 * Thu Oct 26 2023 Yuri N. Sedunov <aris@altlinux.org> 1.15.1-alt1
 - 1.15.1
 
