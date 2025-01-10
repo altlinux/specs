@@ -7,7 +7,7 @@
 %endif
 
 Name:    retext
-Version: 8.0.2
+Version: 8.1.0
 Release: alt1
 License: GPL-3.0+
 Summary: Text editor for Markdown and reStructuredText
@@ -85,14 +85,14 @@ popd
 
 %check
 %if_with tests
-appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml ||:
+appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xml ||:
 python3 setup.py test
 %endif
 
 %files -f retext.lang
 %doc changelog.md configuration.md README.md LICENSE_GPL
 %_bindir/%name
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/%name.*
 %_man1dir/*.1*
@@ -100,6 +100,9 @@ python3 setup.py test
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Fri Jan 10 2025 Andrey Cherepanov <cas@altlinux.org> 8.1.0-alt1
+- New version.
+
 * Sat Mar 16 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
 - New version.
 
