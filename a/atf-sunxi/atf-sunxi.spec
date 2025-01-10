@@ -1,5 +1,5 @@
 Name: atf-sunxi
-Version: 2.10
+Version: 2.12
 Release: alt1
 
 Summary: ARM Trusted Firmware
@@ -19,8 +19,9 @@ This release provides support for the Allwinner A64/H5/H6 SoC families.
 %setup
 
 %build
+export CROSS_COMPILE=aarch64-alt-linux-
 for plat in sun50i_a64 sun50i_r329 sun50i_h6 sun50i_h616; do
-	make PLAT=$plat bl31
+	make -j8 PLAT=$plat bl31
 	install -pm0644 -D build/$plat/release/bl31.bin out/$plat/bl31.bin
 	make distclean
 done
@@ -33,6 +34,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Fri Jan 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12-alt1
+- 2.12 released
+
 * Thu Apr 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.10-alt1
 - 2.10 released
 
