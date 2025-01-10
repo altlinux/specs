@@ -2,7 +2,7 @@
 %define xdg_name de.philippun1.Snoop
 
 Name: snoop
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Snoop through your files
@@ -46,6 +46,9 @@ BuildRequires: pkgconfig(gtksourceview-5)
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Jan 10 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.2-alt1
+- New version 0.4.2
+
 * Fri Nov 22 2024 Alexey Volkov <qualimock@altlinux.org> 0.4.1-alt1
 - New version 0.4.1
 
