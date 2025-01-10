@@ -10,8 +10,8 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.23
-Release: alt2
+Version: 3.4.24
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -84,6 +84,9 @@ __EOF__
 
 
 %changelog
+* Fri Jan 10 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.24-alt1
+- port away from QXmlSimpleReader (thanks proskur@alt)
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg at altlinux dot org> 3.4.23-alt2
 - obsolete alterator-browser (bug#51411)
 
