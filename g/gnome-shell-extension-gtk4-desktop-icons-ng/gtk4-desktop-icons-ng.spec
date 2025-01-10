@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 87
+Version: 89
 Release: alt1
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
@@ -67,5 +67,8 @@ rm -r %buildroot%_sysconfdir/apparmor.d
 %doc README.md
 
 %changelog
+* Fri Jan 10 2025 Anton Midyukov <antohami@altlinux.org> 89-alt1
+- New version 89.
+
 * Thu Dec 19 2024 Anton Midyukov <antohami@altlinux.org> 87-alt1
 - initial build
