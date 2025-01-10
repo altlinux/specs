@@ -1,21 +1,21 @@
 %def_enable snapshot
 %define ver_major 1.0
 %define beta .alpha.5
-%define rdn_name com.system76.CosmicNotifications
+%define rdn_name com.system76.CosmicPlayer
 
 %def_disable bootstrap
 %def_enable check
 
-Name: cosmic-notifications
+Name: cosmic-player
 Version: %ver_major.0
 Release: alt0.5%beta
 
-Summary: COSMIC Notifications Service
-License: MPL-2.0
+Summary: COSMIC Media Player
+License: GPL-3.0
 Group: Graphical desktop/Other
-Url: https://github.com/pop-os/cosmic-notifications
+Url: https://github.com/pop-os/cosmic-player
 
-Vcs: https://github.com/pop-os/cosmic-notifications.git
+Vcs: https://github.com/pop-os/cosmic-player.git
 
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
@@ -24,14 +24,30 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
 
-BuildRequires(pre): rpm-build-rust
-BuildRequires: just
-BuildRequires: pkgconfig(xkbcommon)
+ExcludeArch: %ix86 armh ppc64le
 
-#ExcludeArch: %ix86 armh
+%define gst_api_ver 1.0
+
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
+Requires: gst-libav
+
+BuildRequires(pre): rpm-build-rust
+BuildRequires: just clang-devel
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(gstreamer-video-%gst_api_ver)
+#BuildRequires: pkgconfig(libavcodec)
+#BuildRequires: pkgconfig(libavdevice)
+#BuildRequires: pkgconfig(libavfilter)
+#BuildRequires: pkgconfig(libavformat)
+#BuildRequires: pkgconfig(libswscale)
+#BuildRequires: pkgconfig(libswresample)
 
 %description
-Layer Shell notifications daemon which integrates with COSMIC.
+Media player for the COSMIC desktop environment.
 
 %prep
 %setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
@@ -54,19 +70,9 @@ just rootdir=%buildroot install
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
 
 %changelog
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
-- 1.0.0-alpha.5
-
-* Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
-- 1.0.0-alpha.4
-
-* Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.2.alpha.2
-- 1.0.0-alpha.2
-
-* Sun Aug 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
-- first build for Sisyphus
+- first build for Sisyphus (52b9439)
 
 

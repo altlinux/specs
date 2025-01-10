@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.4
+%define beta .alpha.5
 %define rdn_name com.system76.Cosmic
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-comp
 Version: %ver_major.0
-Release: alt0.4%beta
+Release: alt0.5%beta
 
 Summary: COSMIC Wayland Compositor
 License: GPL-3.0
@@ -35,6 +35,7 @@ BuildRequires: pkgconfig(libseat)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(gbm)
+BuildRequires: pkgconfig(libdisplay-info)
 
 %description
 Wayland compositor for the COSMIC desktop environment.
@@ -65,6 +66,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_datadir/cosmic/com.system76.CosmicSettings.WindowRules/v1/tiling_exception_defaults
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
+- 1.0.0-alpha.5
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
 - updated to epoch-1.0.0-alpha.4-4-g7829e76
 

@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.4
+%define beta .alpha.5
 %define rdn_name com.system76.CosmicSettings
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-settings
 Version: %ver_major.0
-Release: alt0.4%beta
+Release: alt0.5%beta
 
 Summary: COSMIC Settings
 License: GPL-3.0
@@ -72,6 +72,7 @@ just rootdir=%buildroot install
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/%rdn_name.*.desktop
 %_datadir/polkit-1/rules.d/%name.rules
+%_datadir/polkit-1/actions/%rdn_name.Users.policy
 %_datadir/cosmic/com.system76.CosmicTheme.Dark.Builder/
 %_datadir/cosmic/com.system76.CosmicTheme.Light.Builder/
 %_datadir/cosmic/com.system76.CosmicTheme.Dark/
@@ -82,6 +83,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
+- 1.0.0-alpha.5
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
 - 1.0.0-alpha.4
 

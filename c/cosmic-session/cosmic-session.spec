@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.4
+%define beta .alpha.5
 %define rdn_name com.system76.CosmicSession
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-session
 Version: %ver_major.0
-Release: alt0.4%beta
+Release: alt0.5%beta
 
 Summary: COSMIC Session Manager
 License: GPL-3.0
@@ -49,7 +49,8 @@ Requires: xdg-desktop-portal-cosmic
 Requires: cosmic-files
 #Requires: cosmic-store
 Requires: cosmic-term
-#Requires: cosmic-wallpapers
+Requires: cosmic-player
+Requires: cosmic-wallpapers
 Requires: orca
 
 BuildRequires(pre): rpm-build-rust
@@ -87,6 +88,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
+- updated to epoch-1.0.0-alpha.5-1-g38e3686
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
 - updated to epoch-1.0.0-alpha.4-1-g78316ba
 

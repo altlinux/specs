@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.4
+%define beta .alpha.5
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-randr
 Version: %ver_major.0
-Release: alt0.4%beta
+Release: alt0.5%beta
 
 Summary: COSMIC RandR
 License: MPL-2.0
@@ -55,6 +55,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
+- 1.0.0-alpha.5
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
 - 1.0.0-alpha.4
 

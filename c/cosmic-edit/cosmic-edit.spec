@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define ver_major 1.0
-%define beta .alpha.4
+%define beta .alpha.5
 %define rdn_name com.system76.CosmicEdit
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-edit
 Version: %ver_major.0
-Release: alt0.4%beta
+Release: alt0.5%beta
 
 Summary: COSMIC Text Editor
 License: GPL-3.0
@@ -68,6 +68,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
+- 1.0.0-alpha.5
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.4.alpha.4
 - 1.0.0-alpha.4
 
