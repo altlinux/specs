@@ -1,6 +1,6 @@
 Name: u-boot-qemu
-Version: 2024.10
-Release: alt2
+Version: 2025.01
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -61,6 +61,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Fri Jan 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.01-alt1
+- 2025.01 released
+
 * Tue Dec 17 2024 Ivan A. Melnikov <iv@altlinux.org> 2024.10-alt2
 - riscv64: switch to s-mode binary
 - drop all MIPS support from spec (qemu_mips machine was removed
