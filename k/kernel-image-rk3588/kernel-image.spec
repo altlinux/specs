@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.8
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -402,6 +402,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Jan 10 2025 Alexei Takaseev <taf@altlinux.org> 6.12.9-alt1
+- v6.12.9 (2025-01-09).
+
 * Mon Jan 06 2025 Alexei Takaseev <taf@altlinux.org> 6.12.8-alt1
 - v6.12.8 (2025-01-02).
 
