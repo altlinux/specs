@@ -4,7 +4,7 @@
 
 Name: python3-module-curio
 Version: 1.6
-Release: alt1
+Release: alt1.11.g5a64e81
 Summary: Coroutine-based library for concurrent Python systems programming using async/await
 License: BSD-3-Clause
 Group: Development/Python3
@@ -14,7 +14,6 @@ Vcs: https://github.com/dabeaz/curio.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: add-py312-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -33,7 +32,6 @@ You'll find it to be familiar, small, fast, and fun.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 %pyproject_build
@@ -42,7 +40,8 @@ You'll find it to be familiar, small, fast, and fun.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -m 'not internet'
+# https://github.com/dabeaz/curio/issues/368
+%pyproject_run_pytest -v -m 'not internet' -k 'not test_cpu'
 
 %files
 %python3_sitelibdir/%oname
@@ -50,6 +49,9 @@ You'll find it to be familiar, small, fast, and fun.
 %doc README.rst CHANGES
 
 %changelog
+* Sat Jan 11 2025 Anton Vyatkin <toni@altlinux.org> 1.6-alt1.11.g5a64e81
+- Update to 1.6.0.11.g5a64e81.
+
 * Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 1.6-alt1
 - new version 1.6
 
