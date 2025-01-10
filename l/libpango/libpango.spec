@@ -2,11 +2,12 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name pango
-%define ver_major 1.55
+%define ver_major 1.56
 %define api_ver 1.0
 %define module_ver 1.8.0
 %def_disable static
 %def_enable docs
+%def_enable man
 %def_enable introspection
 # no installed tests since 1.54.0
 %def_disable installed_tests
@@ -31,10 +32,11 @@ License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://www.pango.org/
 
+Vcs: https://gitlab.gnome.org/GNOME/pango.git
+
 %if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/pango.git
 Source: %_name-%version.tar
 %endif
 
@@ -51,10 +53,9 @@ Provides: %_name = %version
 Obsoletes: %_name < %version
 Obsoletes: gscript
 
-# from meson.build
 %define meson_ver 1.2
-%define glib_ver 2.62
-%define cairo_ver 1.12.10
+%define glib_ver 2.80
+%define cairo_ver 1.18
 %define gi_docgen_ver 2021.3
 %define xft_ver 2.0.0
 %define fontconfig_ver 2.15.0
@@ -65,18 +66,18 @@ Obsoletes: gscript
 %define fribidi_ver 1.0.6
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson >= %meson_ver gcc-c++
+BuildRequires: meson >= %meson_ver gcc-c++ /proc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libharfbuzz-devel >= %hb_ver
 BuildRequires: libfribidi-devel >= %fribidi_ver
-BuildRequires: help2man /proc
 %{?_enable_xft:BuildRequires: libXft-devel >= %xft_ver}
 %{?_enable_fontconfig:BuildRequires: fontconfig-devel >= %fontconfig_ver}
 %{?_enable_freetype:BuildRequires: libfreetype-devel >= %freetype_ver}
 %{?_enable_cairo:BuildRequires: libcairo-devel >= %cairo_ver libcairo-gobject-devel}
 %{?_enable_libthai:BuildRequires: libthai-devel >= %thai_ver}
 # since 1.48.3 gi-docgen used
-%{?_enable_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
+%{?_enable_docs:BuildRequires: gi-docgen >= %gi_docgen_ver /usr/bin/rst2html5}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
@@ -159,6 +160,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
     %{?_disable_libthai:-Dlibthai=disabled} \
     %{?_disable_introspection:-Dintrospection=disabled} \
     %{subst_enable_meson_bool docs documentation} \
+    %{subst_enable_meson_bool man man-pages} \
     %{?_enable_sysprof:-Dsysprof=enabled}
 %nil
 %meson_build
@@ -177,7 +179,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %_libdir/%{name}cairo-%api_ver.so.*
 %_libdir/%{name}ft2-%api_ver.so.*
 %_libdir/%{name}xft-%api_ver.so.*
-%_man1dir/%_name-view.*
+%{?_enable_man:%_man1dir/%_name-view.1*
+%_man1dir/%_name-list.1*
+%_man1dir/%_name-segmentation.1*}
 %doc NEWS README*
 
 %files devel
@@ -222,6 +226,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.56.0-alt1
+- 1.56.0
+
 * Wed Nov 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.55.0-alt1
 - 1.55.0
 
