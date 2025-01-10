@@ -6,7 +6,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 43.0.0
+Version: 44.0.0
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -55,7 +55,7 @@ digests and key derivation functions.
 %setup -a1
 
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -88,8 +88,12 @@ py.test3
 %files
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version.dist-info/
+%exclude %python3_sitelibdir/rust
 
 %changelog
+* Thu Jan 9 2025 Vladimir Didenko <cow@altlinux.ru> 44.0.0-alt1
+- new version
+
 * Tue Jul 23 2024 Vladimir Didenko <cow@altlinux.ru> 43.0.0-alt1
 - new version
 
