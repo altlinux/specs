@@ -2,13 +2,13 @@
 
 %define _name time-tracker
 %define __name TimeTracker
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name com.lynnmichaelmartin.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Time Tracker for GNOME
@@ -71,6 +71,9 @@ software (since it's a CSV file).
 %doc README*
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - 2.0.3
 
