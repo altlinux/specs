@@ -1,6 +1,6 @@
 Name: alterator-users
 Version: 10.24
-Release: alt2
+Release: alt3
 
 Summary: alterator module for system users administration
 License: GPL
@@ -52,6 +52,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Fri Jan 10 2025 Dmitry Terekhin <jqt4@altlinux.org> 10.24-alt3
+- Add spaces between form fields
+
 * Tue Nov 12 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.24-alt2
 - Add localadmin as the default login
 
