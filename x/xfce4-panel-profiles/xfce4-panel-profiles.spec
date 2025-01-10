@@ -1,5 +1,5 @@
 Name: xfce4-panel-profiles
-Version: 1.0.14
+Version: 1.0.15
 Release: alt1
 
 Summary: A simple application to manage Xfce panel layouts
@@ -14,7 +14,6 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: intltool
 %add_python3_path %_datadir/%name
 
 Requires: xfce4-panel
@@ -53,6 +52,10 @@ export these panel layouts.
 %_man1dir/%name.*
 
 %changelog
+* Fri Jan 10 2025 Mikhail Efremov <sem@altlinux.org> 1.0.15-alt1
+- Fixed installed files mode.
+- Updated to 1.0.15.
+
 * Mon Jun 05 2023 Mikhail Efremov <sem@altlinux.org> 1.0.14-alt1
 - Dropped Simply Linux 9 profile.
 - Added Simply Linux 10 profile.
