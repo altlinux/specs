@@ -1,6 +1,6 @@
 Name: parole
-Version: 4.18.1
-Release: alt2
+Version: 4.18.2
+Release: alt1
 
 %def_enable clutter
 %if_xfce4_wayland_support
@@ -26,7 +26,7 @@ BuildRequires: libgtk+3-devel libnotify-devel libtag-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
 %{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel}
-BuildRequires: intltool gtk-doc
+BuildRequires: gtk-doc
 
 Requires: gstreamer1.0
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
@@ -52,7 +52,6 @@ for developing plugins for %name.
 %prep
 %setup
 %patch -p1
-mkdir m4
 
 # Merge our own and upstream Russian translations
 msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
@@ -90,6 +89,9 @@ mv -f merged_ru.po po/ru.po
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jan 10 2025 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
+- Updated to 4.18.2 (closes: #51616, #48707, #46116).
+
 * Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt2
 - Enabled wayland support in the Sisyphus only.
 
