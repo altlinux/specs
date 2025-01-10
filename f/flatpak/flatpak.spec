@@ -8,18 +8,18 @@
 %def_enable docs
 %def_enable gtk_doc
 %def_disable selinux
-%def_with system_dbus_proxy
-%def_with systemd
+%def_enable system_dbus_proxy
+%def_enable systemd
 # cannot run bwrap in hasher
 %def_disable check
 
 Name: flatpak
-Version: 1.14.10
-Release: alt1.1
+Version: 1.16.0
+Release: alt1
 
 Summary: Application deployment framework for desktop apps
 Group: Development/Tools
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Url: https://flatpak.org/
 
 Vcs: https://github.com/flatpak/flatpak.git
@@ -32,31 +32,33 @@ Patch1: flatpak-1.12.2-alt-flatpak.sh.patch
 
 %define glib_ver 2.60
 %define ostree_ver 2020.8
-%define bwrap_ver 0.10.0
+%define bwrap_ver 0.11.0
 %define libarchive_ver 2.8.0
 %define zstd_ver 0.8.1
 %define malcontent_ver 0.4.0
 %define curl_ver 7.29
 %define appstream_ver 0.12
+%define dbus_proxy_ver 0.1.6
 
 Requires: lib%name = %version-%release
-Requires: %_bindir/fusermount
+Requires: %_bindir/fusermount3
 Requires: %_bindir/bwrap
 Requires: bubblewrap >= %bwrap_ver
-%{?_with_system_dbus_proxy:Requires: xdg-dbus-proxy}
+%{?_enable_system_dbus_proxy:Requires: xdg-dbus-proxy}
 Requires: ostree >= %ostree_ver
 Requires: dconf
-Requires: fuse
+Requires: fuse3
 Requires: p11-kit-server
 
-BuildRequires(pre): rpm-build-python3 rpm-build-systemd
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-systemd
+BuildRequires: meson socat
 BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libarchive) >= %libarchive_ver
 BuildRequires: pkgconfig(libcurl) >= %curl_ver
 BuildRequires: pkgconfig(ostree-1) >= %ostree_ver
-BuildRequires: pkgconfig(polkit-gobject-1)
+BuildRequires: pkgconfig(polkit-gobject-1) /usr/bin/pkcheck
 BuildRequires: pkgconfig(libseccomp)
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: pkgconfig(libxml-2.0)
@@ -67,12 +69,14 @@ BuildRequires: pkgconfig(dconf)
 BuildRequires: libattr-devel
 BuildRequires: libcap-devel
 BuildRequires: libgpgme-devel
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: udev-rules
 BuildRequires: %_bindir/bwrap
 BuildRequires: bubblewrap >= %bwrap_ver
-%{?_with_system_dbus_proxy:BuildRequires: xdg-dbus-proxy}
-%{?_with_systemd:BuildRequires: pkgconfig(systemd)}
+BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(wayland-client) /usr/bin/wayland-scanner
+%{?_enable_system_dbus_proxy:BuildRequires: xdg-dbus-proxy >= %dbus_proxy_ver}
+%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_selinux:BuildRequires: selinux-policy-devel}
 BuildRequires: %_bindir/xsltproc
 %{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
@@ -92,7 +96,7 @@ more information.
 %package -n lib%name
 Summary: Libraries for %name
 Group: Development/Other
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Requires: %_bindir/bwrap
 
 %description -n lib%name
@@ -101,7 +105,7 @@ This package contains libflatpak.
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/Other
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -121,26 +125,26 @@ This package contains developer documentation for lib%name.
 %patch1
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure --with-priv-mode=none \
-           --with-system-bubblewrap \
-           %{?_enable_docs:--enable-docbook-docs} \
-           %{?_enable_gtk_doc:--enable-gtk-doc} \
-           %{?_enable_selinux:--enable-selinux-module} \
-           %{subst_with systemd} \
-           %if_with systemd
-           --with-systemdsystemunitdir=%_unitdir \
-           --with-systemduserunitdir=%_userunitdir \
-           --with-sysusersdir=%_sysusersdir \
-           --with-systemdsystemenvgendir=%_env_gen_dir \
-           --with-tmpfilesdir=%_tmpfilesdir \
-           %endif
-           %{?_with_system_dbus_proxy:DBUS_PROXY=%_bindir/xdg-dbus-proxy}
+%meson \
+    -Dsystem_bubblewrap=%_bindir/bwrap \
+    -Dsystem_fusermount=%_bindir/fusermount3 \
+    %{subst_enable_meson_feature docs docbook_docs} \
+    %{subst_enable_meson_feature gtk_doc gtkdoc} \
+    %{subst_enable_meson_feature selinux selinux_module} \
+    %{subst_enable_meson_feature systemd systemd} \
+    %if_with systemd
+    -Dsystemdsystemunitdir=%_unitdir \
+    -Dsystemduserunitdir=%_userunitdir \
+    -Dsysusersdir=%_sysusersdir \
+    -Dsystemdsystemenvgendir=%_env_gen_dir \
+    -Dtmpfilesdir=%_tmpfilesdir \
+    %endif
+    %{?_enable_system_dbus_proxy:-Dsystem_dbus_proxy=%_bindir/xdg-dbus-proxy}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 # The system repo is not installed by the flatpak build system.
 install -d %buildroot%_localstatedir/lib/flatpak
 
@@ -156,7 +160,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_bindir/flatpak remote-list --system >/dev/null 2>&1 ||:
 
 %check
-%make check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -185,7 +189,7 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_datadir/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
 %_datadir/dbus-1/services/org.flatpak.Authenticator.Oci.service
 
-%if_with systemd
+%if_enabled systemd
 %_unitdir/%name-system-helper.service
 %_userunitdir/%name-portal.service
 %_userunitdir/%name-session-helper.service
@@ -221,6 +225,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 1.14.10-alt1.1
 - added p11-kit-server to runtime dependencies (ALT #51496)
 
