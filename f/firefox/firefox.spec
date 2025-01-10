@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 133.0.3
+Version: 134.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -36,7 +36,6 @@ Patch007: 0007-ALT-fix-double_t-redefinition.patch
 Patch008: 0008-build-Disable-Werror.patch
 Patch009: 0009-Add-dbus-cflags.patch
 Patch010: 0010-FEDORA-enable-vaapi.patch
-Patch011: 0011-UPSTREAM-fix-ftbfs-with-python-3.12.8.patch
 ### End Patches
 
 Provides: webclient
@@ -384,6 +383,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Jan 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 134.0-alt1
+- New version (134.0).
+- Security fixes:
+  + CVE-2025-0244: Address bar spoofing using an invalid protocol scheme on Firefox for Android
+  + CVE-2025-0245: Lock screen setting bypass in Firefox Focus for Android
+  + CVE-2025-0246: Address bar spoofing using an invalid protocol scheme on Firefox for Android
+  + CVE-2025-0237: WebChannel APIs susceptible to confused deputy attack
+  + CVE-2025-0238: Use-after-free when breaking lines in text
+  + CVE-2025-0239: Alt-Svc ALPN validation failure when redirected
+  + CVE-2025-0240: Compartment mismatch when parsing JavaScript JSON module
+  + CVE-2025-0241: Memory corruption when using JavaScript Text Segmentation
+  + CVE-2025-0242: Memory safety bugs fixed in Firefox 134, Thunderbird 134, Firefox ESR 115.19, Firefox ESR 128.6, Thunderbird 115.19, and Thunderbird 128.6
+  + CVE-2025-0243: Memory safety bugs fixed in Firefox 134, Thunderbird 134, Firefox ESR 128.6, and Thunderbird 128.6
+  + CVE-2025-0247: Memory safety bugs fixed in Firefox 134 and Thunderbird 134
+
 * Fri Dec 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 133.0.3-alt1
 - New version (133.0.3).
 - Fix FTBFS with python 3.12.8.
