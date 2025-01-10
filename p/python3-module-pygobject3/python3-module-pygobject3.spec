@@ -11,7 +11,7 @@
 
 Name: python3-module-%{_name}3
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
@@ -69,7 +69,7 @@ as a Python API without the need for intermediate Python glue.
 %package nox
 Summary: PyGObject w/o Cairo dependencies
 Group: Development/Python3
-Requires: %name = %EVR
+#Requires: %name = %EVR
 %filter_from_requires /typelib(cairo)/d
 
 %description nox
@@ -152,6 +152,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt2.1
+- made nox subpackage independent of main package (ALT #51976)
+
 * Thu Nov 07 2024 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt2
 - new Cairo-free "-nox" subpackage (ALT #51976)
 
