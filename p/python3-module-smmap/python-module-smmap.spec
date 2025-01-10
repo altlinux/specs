@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.1
-Release: alt2
+Version: 5.0.2
+Release: alt1
 
 Summary:  Sliding window memory map manager
 
@@ -60,6 +60,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
+- 5.0.1 -> 5.0.2.
+
 * Fri Oct 25 2024 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
 - migrated from removed setuptools' test command (see #50996).
 
