@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: GPT applier
@@ -195,6 +195,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Jan 10 2025 Valery Sinelnikov <greh@altlinux.org> 0.12.1-alt1
+- Fixed checking the path for existence (closes:52597)
+
 * Tue Dec 10 2024 Valery Sinelnikov <greh@altlinux.org> 0.12.0-alt1
 - Special thanks to Andrey Belgorodtsev (andrey@net55.su)
   for valuable pre-release testing and feedback
