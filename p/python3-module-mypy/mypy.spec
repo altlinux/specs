@@ -11,9 +11,9 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
-Summary: Optional static typing for Python 3 and 2 (PEP 484)
+Summary: Optional static typing for Python
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/mypy/
@@ -39,11 +39,11 @@ BuildRequires: python3-module-editables
 BuildRequires: help2man
 
 %description
-Mypy is an optional static type checker for Python.  You can add type
-hints to your Python programs using the upcoming standard for type
-annotations introduced in Python 3.5 beta 1 (PEP 484), and use mypy to
-type check them statically. Find bugs in your programs without even
-running them!
+Mypy is an optional static type checker for Python that aims to combine the
+benefits of dynamic (or "duck") typing and static typing. Mypy combines the
+expressive power and convenience of Python with a powerful type system and
+compile-time type checking. Mypy type checks standard Python programs; run them
+using any Python VM with basically no runtime overhead.
 
 %if_with mypyc
 %package -n python3-module-mypyc
@@ -134,6 +134,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %endif
 
 %changelog
+* Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 1.14.1-alt1
+- 1.14.0 -> 1.14.1.
+
 * Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 1.14.0-alt1
 - 1.13.0 -> 1.14.0.
 
