@@ -8,7 +8,7 @@
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.0.35
-Release: alt3
+Release: alt4
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -94,6 +94,9 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Fri Jan 10 2025 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt4
+- 8.0.35-32
+
 * Fri Jun 21 2024 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt3
 - 8.0.35-31
 
