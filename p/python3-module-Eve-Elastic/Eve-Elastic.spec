@@ -4,14 +4,14 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 7.4.1
+Version: 7.4.3
 Release: alt1
 
 Summary: Elasticsearch data layer for eve rest framework
-License: GPLv3
+License: GPL-3.0
 Group: Development/Python3
 Url: https://pypi.org/project/Eve-Elastic
-Vcs: https://github.com/petrjasek/eve-elastic.git
+Vcs: https://github.com/superdesk/eve-elastic
 
 Source: %name-%version.tar
 
@@ -23,7 +23,6 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-eve
-BuildRequires: python3-module-werkzeug
 BuildRequires: python3-module-elasticsearch
 BuildRequires: python3-module-arrow
 BuildRequires: python3-module-ciso8601
@@ -62,6 +61,9 @@ Features:
 
 
 %changelog
+* Fri Jan 10 2025 Anton Vyatkin <toni@altlinux.org> 7.4.3-alt1
+- New version 7.4.3.
+
 * Thu Mar 28 2024 Anton Vyatkin <toni@altlinux.org> 7.4.1-alt1
 - New version 7.4.1.
 
