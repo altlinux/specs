@@ -1,8 +1,8 @@
 %define rname kwayland-integration
 
 Name: %rname
-Version: 6.2.4
-Release: alt3
+Version: 6.2.5
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -45,6 +45,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
+- new version
+
 * Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
 - return obsoletes
 

@@ -4,11 +4,17 @@
 
 %define rname plasma-desktop
 %def_disable scim
+%def_disable bootstrap
+
+%if_enabled bootstrap
+%def_disable accounts
+%else
 %def_enable accounts
+%endif
 
 Name: %rname
-Version: 6.2.4
-Release: alt3
+Version: 6.2.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -254,6 +260,12 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
+- new version
+
+* Thu Jan 09 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.2.4-alt4
+- update the applet's pager resizing patch (closes: 44693)
+
 * Thu Dec 05 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 6.2.4-alt3
 - fix the resizing of the pager applet
 

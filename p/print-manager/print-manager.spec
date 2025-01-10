@@ -6,7 +6,7 @@
 %define libkcupslib libkcupslib%sover
 
 Name: %rname
-Version: 6.2.4
+Version: 6.2.5
 Release: alt1
 %K6init
 
@@ -88,6 +88,11 @@ msgcat --use-first po/ru/plasma_applet_org.kde.plasma.printmanager.po %SOURCE10 
 cat "$tmp_file" >po/ru/plasma_applet_org.kde.plasma.printmanager.po
 rm -f "$tmp_file"
 
+%if_enabled installer
+%else
+sed -i '/find_package.*PackageKitQt6/s|PackageKitQt6|PackageKitQt6-for-system-config-printer|' CMakeLists.txt
+%endif
+
 %build
 %K6build \
 %if_enabled installer
@@ -123,6 +128,9 @@ rm -f "$tmp_file"
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
+- new version
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 

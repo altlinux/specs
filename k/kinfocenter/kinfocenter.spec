@@ -4,7 +4,7 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.2.4
+Version: 6.2.5
 Release: alt1
 %K6init
 
@@ -91,6 +91,8 @@ Requires: /usr/sbin/dmidecode
 Requires: /usr/bin/ip
 # Audio
 Requires: /usr/bin/pactl
+# Block Devices
+Requires: lsblk
 %description maxi
 %name maximum package.
 
@@ -168,6 +170,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
+- new version
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 

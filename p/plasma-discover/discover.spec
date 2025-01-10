@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.2.4
-Release: alt3
+Version: 6.2.5
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -341,6 +341,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
+- new version
+
 * Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
 - fix russian translation
 

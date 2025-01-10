@@ -4,7 +4,7 @@
 %define libkbolt libkbolt%sover
 
 Name: %rname
-Version: 6.2.4
+Version: 6.2.5
 Release: alt1
 %K6init
 
@@ -78,6 +78,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
+- new version
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 

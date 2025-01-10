@@ -1,34 +1,36 @@
-%define rname kmenuedit
+%define rname plasma-sdk
+%filter_from_requires /inkscape/d
 
-Name: %rname
+Name: plasma-sdk
 Version: 6.2.5
 Release: alt1
 %K6init
 
-Group: Graphical desktop/KDE
-Summary: KDE Frameworks 6 Menu Editor
+Group: Development/KDE and QT
+Summary: KDE Frameworks 6 Applications useful for Plasma Development
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Provides: plasma5-kmenuedit = %EVR
-Obsoletes: plasma5-kmenuedit < %EVR
+Requires: kf6-kirigami
+Provides: plasma5-sdk = %EVR
+Obsoletes: plasma5-sdk < %EVR
 
 Source: %rname-%version.tar
-Patch1: alt-menueditor.patch
+Patch1: alt-fix-lnf-double-create.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-svg-devel qt6-5compat-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
-BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
-BuildRequires: kf6-kdoctools kf6-kdoctools-devel
-BuildRequires: kf6-kglobalaccel-devel kf6-kguiaddons-devel kf6-kxmlgui-devel kf6-kio-devel
-BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel  kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel
-BuildRequires: kf6-kjobwidgets-devel kf6-knotifications-devel kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel
-BuildRequires: kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
+BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdeclarative-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel
+BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knewstuff-devel kf6-kpackage-devel kf6-kparts-devel kf6-kservice-devel
+BuildRequires: kf6-ktexteditor-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kdbusaddons-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kdoctools-devel kf6-syntax-highlighting-devel kf6-ksvg-devel kf6-kirigami-devel
+BuildRequires: plasma6-lib-devel plasma6-plasma5support-devel
 
 %description
-Menu Editor
+Applications useful for Plasma Development.
 
 
 %prep
@@ -36,21 +38,25 @@ Menu Editor
 %patch1 -p1
 
 %build
-%K6build
+%K6build \
+    #
+#    -DPLASMATE_BUILD_WITH_KDEVPLATFORM=ON \
 
 %install
 %K6install
-%K6install_move data kmenuedit
+%K6install_move data kpackage
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
-%_datadir/qlogging-categories6/*.*categories
 %_K6bin/*
-%_K6data/kmenuedit/
 %_K6xdgapp/*.desktop
-%_K6icon/*/*/apps/kmenuedit.*
+%_K6plug/ktexteditor/
+%_K6data/plasma/shells/*/
+%_K6data/kpackage/
+%_datadir/zsh/site-functions/_*
 %_datadir/metainfo/*.xml
+
 
 
 %changelog
