@@ -1,5 +1,5 @@
 Name: userpasswd
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Group: System/Configuration/Other
@@ -36,6 +36,10 @@ graphical tool for changing password.
 %_datadir/pixmaps/*
 
 %changelog
+* Thu Jan 09 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt1
+- Fixed regression with hang on waitpid (Closes: #52549)
+  Thanks to Ivan Volchenko for the fix
+
 * Wed Dec 11 2024 Maria Alexeeva <alxvmr@altlinux.org> 0.3.5-alt1
 - Fixed a false message about successful password change (Closes: #49619)
   Thanks to Ivan Volchenko for the fix
