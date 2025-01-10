@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %define pypi_name ruff
 
 %define bash_completionsdir %_datadir/bash-completion/completions
@@ -6,7 +7,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: %pypi_name
-Version: 0.8.6
+Version: 0.9.0
 Release: alt1
 
 Summary: An extremely fast Python linter, written in Rust
@@ -43,12 +44,12 @@ Requires: %pypi_name = %EVR
 
 %prep
 %setup -a1
-%__cat %SOURCE2 >> .cargo/config.toml
+cat %SOURCE2 >> .cargo/config.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
 # do not ship dependencies lists
-%__rm -rv docs/requirements*.txt docs/.gitignore docs/.overrides
+rm -rv docs/requirements*.txt docs/.gitignore docs/.overrides
 
 %build
 %ifarch aarch64
@@ -67,11 +68,11 @@ export CFLAGS="$CFLAGS -fno-stack-protector"
 %install
 %pyproject_install
 
-%__chmod 755 %buildroot%_bindir/%pypi_name
+chmod 755 %buildroot%_bindir/%pypi_name
 
-%__mkdir_p %buildroot%bash_completionsdir
-%__mkdir_p %buildroot%fish_completionsdir
-%__mkdir_p %buildroot%zsh_completionsdir
+mkdir -p %buildroot%bash_completionsdir
+mkdir -p %buildroot%fish_completionsdir
+mkdir -p %buildroot%zsh_completionsdir
 
 %buildroot%_bindir/%pypi_name generate-shell-completion bash \
     > %buildroot%bash_completionsdir/%pypi_name
@@ -82,8 +83,8 @@ export CFLAGS="$CFLAGS -fno-stack-protector"
 
 # move python-module to noarch-directory
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
-%__mkdir_p %buildroot%python3_sitelibdir_noarch
-%__mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
+mkdir -p %buildroot%python3_sitelibdir_noarch
+mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %endif
 
 %files
@@ -98,6 +99,9 @@ export CFLAGS="$CFLAGS -fno-stack-protector"
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Thu Jan 09 2025 Anton Zhukharev <ancieg@altlinux.org> 0.8.6-alt1
 - Updated to 0.8.6.
 
