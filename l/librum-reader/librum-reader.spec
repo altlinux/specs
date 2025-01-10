@@ -1,6 +1,6 @@
 Name: librum-reader
 Version: 0.12.2
-Release: alt2
+Release: alt3
 Summary: Librum is an application designed to make reading enjoyable and straightforward for everyone.
 
 Source:  %name-%version.tar
@@ -12,6 +12,7 @@ Source5: %name-%version-libs-di.tar
 
 Patch0: python_mupdf_build.patch
 Patch1: cmake_build.patch
+Patch2: mupdf_disable_strip.patch
 Group: Office
 Url: https://github.com/Librum-Reader/Librum
 License: GPLv3
@@ -34,15 +35,19 @@ It's not just an e-book reader. With Librum, you can manage your own online libr
 %package lib
 Summary: shared libs for librum package
 Group: Office
+Requires: qt6-declarative qt6-svg qt6-svg-common  qt6-qtbase
+Requires: libqt6-concurrent libqt6-labsanimation libqt6-labsfolderlistmodel
+Requires: libqt6-labsqmlmodels libqt6-labssettings libqt6-labssharedimage
+Requires: libqt6-labswavefrontmesh libqt6-openglwidgets libqt6-printsupport
+Requires: libqt6-qmlcompiler libqt6-qmlcore libqt6-qmllocalstorage libqt6-qmlworkerscript
+Requires: libqt6-qmlxmllistmodel libqt6-quickdialogs2 libqt6-quickdialogs2quickimpl
+Requires: libqt6-quickdialogs2utils libqt6-quicklayouts libqt6-quickparticles
+Requires: libqt6-quickshapes libqt6-quicktest libqt6-quickwidgets
+Requires: libqt6-sql libqt6-svg libqt6-test libqt6-xml
+
+
 %description lib
 shared libraries for librum
-Requires: qt6-declarative qt6-svg qt6-svg-common  qt6-qtbase libleptonica tesseract libharfbuzz libcurl libfreeglut libfreetype jbig2dec zlib libgumbo2
-Requires: libqt6-concurrent libqt6-labsanimation libqt6-labsfolderlistmodel libqt6-labsqmlmodels libqt6-labssettings libqt6-labssharedimage
-Requires: libqt6-labswavefrontmesh libqt6-openglwidgets libqt6-printsupport libqt6-qmlcompiler libqt6-qmlcore
-Requires: libqt6-qmllocalstorage libqt6-qmlworkerscript libqt6-qmlxmllistmodel libqt6-quickdialogs2 libqt6-quickdialogs2quickimpl
-Requires: libqt6-quickdialogs2utils libqt6-quicklayouts libqt6-quickparticles  libqt6-quickshapes libqt6-quicktest libqt6-quickwidgets
-Requires: libqt6-sql libqt6-svg libqt6-test libqt6-xml
-Requires: gdcm libopenjpeg2.0 liblcms2
 
 %package client
 Summary: executable file for package
@@ -54,9 +59,10 @@ executable for librum package
 
 %prep
 %setup -a0 -a1 -a2 -a3 -a4 -a5
-
 %patch0
 %patch1
+ls libs/mupdf
+%patch2
 
 %build
 # patch correct library dest
@@ -95,6 +101,9 @@ done
 %_datadir/pixmaps/librum.svg
 
 %changelog
+* Thu Jan 09 2025 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt3
+- Fix requires (Closes: #52643)
+
 * Thu Dec 12 2024 Oleg Proskurin <proskur@altlinux.org> 0.12.2-alt2
 - Remove redundant mupdf dependency
 
