@@ -1,8 +1,7 @@
-%define oname ftxui
 %define abiversion 0
 
-Name:    FTXUI
-Version: 5.0.0
+Name:    ftxui
+Version: 5.1.0
 Release: alt1
 
 Summary: Functional Terminal (X) User interface
@@ -17,27 +16,25 @@ BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(gtest)
 BuildRequires: pkgconfig(benchmark)
-
-%define common_descr \
-C++ Functional Terminal User Interface \
-\
-A simple cross-platform C++ library for terminal based user interfaces.
+Provides:      FTXUI = %EVR
+Obsoletes:     FTXUI < %EVR
+%define common_descr A simple cross-platform C++ library for terminal based user interfaces.
 
 %description
 %common_descr
 
-%package -n lib%oname%abiversion
+%package -n lib%name%abiversion
 Group:   Development/C++
 Summary: %summary library
 
-%description -n lib%oname%abiversion
+%description -n lib%name%abiversion
 %common_descr
 
-%package -n lib%oname-devel
+%package -n lib%name-devel
 Group:   Development/C++
 Summary: %summary development files and headers
 
-%description -n lib%oname-devel
+%description -n lib%name-devel
 %common_descr
 
 %prep
@@ -55,16 +52,19 @@ Summary: %summary development files and headers
 %check
 %ctest
 
-%files -n lib%oname%abiversion
-%_libdir/lib%oname-*.so.*
+%files -n lib%name%abiversion
+%_libdir/lib%name-*.so.*
 
-%files -n lib%oname-devel
+%files -n lib%name-devel
 %doc *.md LICENSE
-%_cmakedir/%oname
-%_includedir/%oname
-%_libdir/lib%oname-*.so
-%_pkgconfigdir/%oname.pc
+%_cmakedir/%name
+%_includedir/%name
+%_libdir/lib%name-*.so
+%_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Jan 09 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.1.0-alt1
+- 5.0.0 -> 5.1.0.
+
 * Wed Dec 18 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.0.0-alt1
 - Initial build for Sisyphus.
