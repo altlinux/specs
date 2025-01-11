@@ -1,7 +1,7 @@
 %define APP_ID io.github.radiolamp.mangojuice
 
 Name: mangojuice
-Version: 0.7.9
+Version: 0.8.0
 Release: alt1
 
 Summary: A graphical user interface for MangoHud configuration
@@ -44,6 +44,9 @@ temperature, CPU and GPU statistics, and more.
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Fri Jan 10 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.0-alt1
+- New version 0.8.0
+
 * Sat Jan 04 2025 Oleg Shchavelev <oleg@altlinux.org> 0.7.9-alt1
 - New version 0.7.9
 
