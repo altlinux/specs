@@ -4,7 +4,7 @@
 
 Name: openrazer
 Version: 3.9.0
-Release: alt2
+Release: alt3
 
 Summary: Open source driver and user-space daemon for managing Razer devices
 License: GPL-2.0
@@ -22,6 +22,8 @@ Requires: openrazer-daemon
 Requires: python3-module-openrazer
 BuildRequires: python3-module-setuptools
 %if_with check
+BuildRequires: meson
+BuildRequires: systemd
 BuildRequires: dbus-tools-gui
 BuildRequires: python3-module-setproctitle
 BuildRequires: python3-module-dbus
@@ -121,6 +123,9 @@ fi
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Jan 11 2025 Anton Kurachenko <srebrov@altlinux.org> 3.9.0-alt3
+- Fix FTBFS.
+
 * Sun Nov 03 2024 Anton Kurachenko <srebrov@altlinux.org> 3.9.0-alt2
 - Updated post script in the spec.
 
