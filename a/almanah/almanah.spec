@@ -1,16 +1,21 @@
 %def_enable snapshot
 
 %define ver_major 0.12
+%define xdg_name org.gnome.Almanah
+
 %def_enable eds
+%def_enable check
 
 Name: almanah
-Version: %ver_major.3
-Release: alt3
+Version: %ver_major.4
+Release: alt1
 
 Summary: Diary editor for GNOME
-License: LGPLv3+
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://wiki.gnome.org/Apps/Almanah_Diary
+
+Vcs: https://gitlab.gnome.org/GNOME/almanah.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -18,13 +23,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.62
+%define glib_ver 2.68
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson desktop-file-utils libappstream-glib-devel
-BuildRequires: libgio-devel >= %glib_ver libgtksourceview3-devel libgtkspell3-devel
-BuildRequires: libsqlite3-devel libcryptui-devel gcr-libs-devel libgpgme-devel
+BuildRequires: meson
+BuildRequires: libgio-devel >= %glib_ver pkgconfig(gtksourceview-4) pkgconfig(gtkspell3-3.0)
+BuildRequires: pkgconfig(sqlite3) libcryptui-devel pkgconfig(gcr-4) libgpgme-devel
 %{?_enable_eds:BuildRequires: evolution-data-server-devel >= 3.5.91}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Almanah is a small GTK+3 application to allow you to keep a diary of your life.
@@ -34,7 +40,7 @@ Almanah is a small GTK+3 application to allow you to keep a diary of your life.
 
 %build
 %meson \
-	%{?_disable_eds:-Devolution=false}
+    %{subst_enable_meson_feature eds evolution}
 %meson_build
 
 %install
@@ -42,20 +48,26 @@ Almanah is a small GTK+3 application to allow you to keep a diary of your life.
 %find_lang --with-gnome %name
 
 desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=TextTools \
-	%buildroot%_desktopdir/almanah.desktop
+    --add-category=TextTools \
+    %buildroot%_desktopdir/%xdg_name.desktop
+
+%check
+%__meson_test
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/applications/*
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/*/%name-*.svg
+%_bindir/%name
+%_desktopdir/%xdg_name.desktop
+%_iconsdir/hicolor/*x*/apps/%xdg_name.png
+%_iconsdir/hicolor/scalable/*/%xdg_name-*.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
-%_datadir/GConf/gsettings/%name.convert
-%_datadir/metainfo/%name.appdata.xml
-%doc README* AUTHORS NEWS
+#%_datadir/GConf/gsettings/%name.convert
+%_datadir/metainfo/%xdg_name.metainfo.xml
+%doc README* AUTHORS NEWS*
 
 %changelog
+* Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.4-alt1
+- updated to 0.12.4-16-gf7047ea
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt3
 - updated to 0.12.3-13-gfe197a0 (fixed build with meson >= 0.61)
 
