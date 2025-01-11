@@ -1,7 +1,7 @@
 %define sover 1.5
 
 Name: zycore
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Zyan Core Library for C
@@ -58,6 +58,9 @@ Header files for lib%name
 %_man3dir/*
 
 %changelog
+* Sat Jan 11 2025 Nazarov Denis <nenderus@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 1.5.0-alt1
 - New version 1.5.0.
 
