@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20241210
+Version: 20250109
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -15,6 +15,7 @@ BuildArch: noarch
 Provides: linux-firmware
 
 BuildRequires: hardlink
+BuildRequires: parallel /proc
 BuildRequires: python3
 Requires: udev
 AutoReqProv: no
@@ -72,9 +73,10 @@ firmware for Mellanox Spectrum switchdev
 
 %prep
 %setup
+awk /mellanox/ RS=^-{74} WHENCE > LICENSE.Mellanox
 
 %install
-DESTDIR=%buildroot FIRMWAREDIR=lib/firmware make install-xz
+DESTDIR=%buildroot FIRMWAREDIR=lib/firmware %make_build install-xz
 du -shc %buildroot/lib/firmware
 hardlink -cv %buildroot/lib/firmware
 
@@ -84,6 +86,7 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 %check
 # Ensure that compression mode is correct.
 xz -l %buildroot/lib/firmware/i915/mtl_gsc_1.bin.xz | grep -w CRC32
+grep -c Mellanox LICENSE.Mellanox
 
 %files
 %doc WHENCE LICEN?E.* Apache-2 GPL-2 GPL-3
@@ -111,10 +114,17 @@ xz -l %buildroot/lib/firmware/i915/mtl_gsc_1.bin.xz | grep -w CRC32
 /lib/firmware/mrvl
 
 %files mellanox
-%doc WHENCE
+%doc LICENSE.Mellanox
 /lib/firmware/mellanox
 
 %changelog
+* Sat Jan 11 2025 Vitaly Chikunov <vt@altlinux.org> 20250109-alt1
+- Update to 20250109 (2025-01-09).
+- spec: Remove non-installed blobs (mostly nouveau but also iwlwifi-3945-1)
+  from the source package, syncing the package completely with the upstream,
+  making it 0-diff with verifiable tag.
+- spec: Twice speed up build by using GNU parallel.
+
 * Wed Dec 11 2024 Vitaly Chikunov <vt@altlinux.org> 20241210-alt1
 - Update to 20241210 (2024-12-10).
 
