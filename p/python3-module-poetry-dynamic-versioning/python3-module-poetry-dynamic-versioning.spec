@@ -3,14 +3,14 @@
 %define srcname poetry_dynamic_versioning
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Plugin for Poetry to enable dynamic versioning based on VCS tags
 License: MIT
 Group: Development/Python3
 URL: https://pypi.org/project/poetry-dynamic-versioning/
-Vcs: https://github.com/mtkennerly/poetry-dynamic-versioning
+Vcs: https://github.com/mtkennerly/poetry-dynamic-versioning.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -46,6 +46,9 @@ control systems are supported, including Git and Mercurial.
 %python3_sitelibdir/%{pyproject_distinfo %srcname}
 
 %changelog
+* Sat Jan 11 2025 Anton Kurachenko <srebrov@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Wed Sep 11 2024 Anton Kurachenko <srebrov@altlinux.org> 1.4.1-alt1
 - New version 1.4.1.
 
