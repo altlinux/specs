@@ -1,9 +1,10 @@
 %define rname miniupnpc
-%define soversion 16
+%define soversion 18
 
 Name: %rname%soversion
-Version: 2.0
-Release: alt3
+Version: 2.2.8
+Release: alt2
+Epoch: 1
 
 Summary: UPnP client library
 License: BSD
@@ -12,7 +13,8 @@ Group: System/Legacy libraries
 Url: http://miniupnp.free.fr/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://miniupnp.free.fr/files/%rname-%version.tar.gz
+# http://miniupnp.free.fr/files/%rname-%version.tar.gz
+Source: %rname-%version.tar
 
 BuildRequires: cmake
 
@@ -32,33 +34,35 @@ to dialog with Internet Gateway Devices.
 %setup -n %rname-%version
 
 %build
-
-%__mkdir_p %_target_platform
-pushd %_target_platform
-
-cmake .. \
-	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_BUILD_TYPE:STRING='Release' \
-	-DUPNPC_BUILD_STATIC:BOOL=FALSE \
-%if "%_lib" == "lib64"
-	-DLIB_SUFFIX=64
-%endif
-
-popd
-
-%make_build -C %_target_platform
+%cmake -DUPNPC_BUILD_STATIC:BOOL=FALSE
+%cmake_build
 
 %install
-%makeinstall_std -C %_target_platform
+%cmakeinstall_std
 
 %files -n lib%rname%soversion
-%doc Changelog.txt LICENSE README VERSION
-%_libdir/lib%rname.so.*
+%doc README
+%_libdir/lib%rname.so.%version
+%_libdir/lib%rname.so.%soversion
 
 %changelog
-* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 2.0-alt3
+* Sat Jan 11 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.2.8-alt2
 - Build as legacy library
+
+* Mon Nov 04 2024 Nazarov Denis <nenderus@altlinux.org> 1:2.2.8-alt1
+- New version 2.2.8.
+
+* Sun May 28 2023 Nazarov Denis <nenderus@altlinux.org> 2.3.3-alt1
+- New version 2.3.3.
+
+* Sat Mar 26 2022 Nazarov Denis <nenderus@altlinux.org> 2.2.3-alt1
+- Version 2.2.3
+
+* Thu Mar 04 2021 Nazarov Denis <nenderus@altlinux.org> 2.2.2-alt1
+- Version 2.2.2
+
+* Sun Feb 14 2021 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt1
+- Version 2.2.1
 
 * Thu Apr 12 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt2
 - fixed packaging on 64bit arches other than x86_64
