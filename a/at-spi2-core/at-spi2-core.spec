@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -24,7 +24,7 @@ Url: https://wiki.gnome.org/Accessibility
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: dbus-tools-gui
 # /etc/xdg/Xwayland-session.d/00-at-spi uses busctl from systemd
 #%%filter_from_requires /^systemd/d
@@ -35,7 +35,7 @@ Requires: dbus-tools-gui
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg
 BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver
-BuildRequires: /bin/dbus-daemon libdbus-devel >= %dbus_ver
+BuildRequires: /usr/bin/dbus-daemon libdbus-devel >= %dbus_ver
 BuildRequires: libxml2-devel pkgconfig(libei-1.0) pkgconfig(xkbcommon)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
@@ -254,6 +254,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
+- 2.54.1
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
 - 2.54.0
 

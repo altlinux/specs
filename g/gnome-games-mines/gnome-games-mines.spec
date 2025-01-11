@@ -1,15 +1,18 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 %define _name mines
 %define __name gnome-%_name
-%define ver_major 40
+%define ver_major 48
+%define beta .alpha.2
 %define xdg_name org.gnome.Mines
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Classic find the mines in the minefield game
 Group: Games/Boards
@@ -17,9 +20,9 @@ License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Mines
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
 %else
-Source: %__name-%version.tar
+Source: %__name-%version%beta.tar
 %endif
 
 Provides:  %__name = %EVR
@@ -27,20 +30,21 @@ Obsoletes: gnome-games-gnomine
 Provides:  gnome-games-gnomine = %EVR
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.22.23
+%define gtk_ver 4.6
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
-BuildRequires: libgnome-games-support-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) librsvg-devel
+BuildRequires: pkgconfig(libgnome-games-support-2)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 NOME Mines is a variation of the popular logic puzzle minesweeper.
 
 %prep
-%setup -n %__name-%version
+%setup -n %__name-%version%beta
 
 %build
 %meson
@@ -50,6 +54,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %meson_install
 %find_lang --with-gnome %__name
 
+%check
+%__meson_test
+
 %files -f gnome-%_name.lang
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
@@ -57,9 +64,12 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_iconsdir/hicolor/*/apps/*.svg
 %_man6dir/%__name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha.2
+- 48.alpha.2 (ported to GTK4/Libadwaita)
+
 * Fri Feb 16 2024 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt2
 - 40.1-14-g389c92e (updated translations)
 

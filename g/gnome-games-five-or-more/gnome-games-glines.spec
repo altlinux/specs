@@ -1,39 +1,44 @@
 %def_disable snapshot
 %define _unpackaged_files_terminate_build 1
-
-%define _name five-or-more
-%define xdg_name org.gnome.%_name
-%define ver_major 3.32
 %define _libexecdir %_prefix/libexec
 
+%define _name five-or-more
+%define ver_major 48
+%define beta .alpha
+%define xdg_name org.gnome.%_name
+
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: A GNOME version of the color lines program
 Group: Games/Boards
-License: GPLv3+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Five-or-more
 
+Vcs: https://gitlab.gnome.org/GNOME/five-or-more.git
+
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
-Source: %_name-%version.tar
+Source: %_name-%version%beta.tar
 %endif
 
-Provides:  %_name = %version-%release
+Provides:  %_name = %EVR
 Obsoletes: gnome-games-glines
-Provides:  gnome-games-glines = %version-%release
+Provides:  gnome-games-glines = %EVR
 
 %define glib_ver 2.32
-%define gtk_ver 3.22.0
+%define gtk_ver 3.24.0
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver librsvg-devel
 BuildRequires: pkgconfig(libgnome-games-support-1)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Glines, is the GNOME port of the once popular Windows game called Color
@@ -42,7 +47,7 @@ or more of the same color causing them to disappear, play as long as
 possible, and be #1 in the High Scores.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 %build
 %meson
@@ -52,16 +57,23 @@ possible, and be #1 in the High Scores.
 %meson_install
 %find_lang --with-gnome %_name
 
+%check
+%__meson_test
+
 %files -f %_name.lang
-%attr(2711,root,games) %_bindir/%_name
+%_bindir/%_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%_name/
+%_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha
+- 48.alpha
+
 * Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 3.32.3-alt1
 - 3.32.3
 

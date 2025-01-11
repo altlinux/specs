@@ -2,30 +2,35 @@
 
 %define _name lightsoff
 %define xdg_name org.gnome.LightsOff
-%define ver_major 46
+%define ver_major 48
+%define beta .alpha
 %define _libexecdir %_prefix/libexec
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Lights Off is a puzzle game
 Group: Games/Boards
-License: GPLv3+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Lightsoff
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+
+Vcs: https://gitlab.gnome.org/GNOME/lightsoff.git
 
 Provides:  %_name = %EVR
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.24.0
+%define gtk_ver 4.14
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
-BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools yelp-tools
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: librsvg-devel
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 Lights Off is a puzzle game, where the objective is to turn off all of
@@ -33,7 +38,7 @@ the tiles on the board. Each click toggles the state of the clicked tile
 and its non-diagonal neighbors.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 %build
 %meson
@@ -43,6 +48,9 @@ and its non-diagonal neighbors.
 %meson_install
 %find_lang --with-gnome %_name
 
+%check
+%__meson_test
+
 %files -f %_name.lang
 %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
@@ -50,10 +58,13 @@ and its non-diagonal neighbors.
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man6dir/%_name.6*
 
 %changelog
+* Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha
+- 48.alpha (ported to GTK4)
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

@@ -3,23 +3,27 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name swell-foop
-%define ver_major 46
+%define ver_major 48
+%define beta .alpha
 %define xdg_name org.gnome.SwellFoop
 
+%def_enable check
+
 Name: gnome-games-%_name
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: The "Same Game" puzzle
 Group: Games/Boards
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Swell-Foop
 
-%if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-%else
 Vcs: https://gitlab.gnome.org/GNOME/swell-foop.git
-Source: %_name-%version.tar
+
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+%else
+Source: %_name-%version%beta.tar
 %endif
 
 Provides:  %_name = %EVR
@@ -28,18 +32,19 @@ Provides:  %_name = %EVR
 %define gtk_ver 4.10
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: pkgconfig(libgnome-games-support-2)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 The objective of same-gnome is to remove as many balls from the playing
 area in as few moves as possible.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-%version%beta
 
 %build
 %meson
@@ -47,19 +52,24 @@ area in as few moves as possible.
 
 %install
 %meson_install
-
 %find_lang --with-gnome %_name
 
+%check
+%__meson_test
+
 %files -f %_name.lang
-%attr(-,root,games) %_bindir/%_name
+%_bindir/%_name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*x*/apps/%xdg_name.png
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha
+- 48.alpha (ported to Libadwaita)
+
 * Sun Mar 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0 (ported to GTK4)
 
