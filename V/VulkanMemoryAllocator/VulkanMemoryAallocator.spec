@@ -1,7 +1,5 @@
-%define git_commit 6eb62e1515072827db992c2befd80b71b2d04329
-
 Name: VulkanMemoryAllocator
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Vulkan Memory Allocator
@@ -46,9 +44,13 @@ Easy to integrate Vulkan memory allocation library.
 %_includedir/vk_mem_alloc.h
 %dir %_datadir/cmake/%name
 %_datadir/cmake/%name/%{name}Config.cmake
+%_datadir/cmake/%name/%{name}ConfigVersion.cmake
 %_defaultdocdir/%name
 
 %changelog
+* Sat Jan 11 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Tue May 28 2024 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1
 - New version 3.1.0.
 
