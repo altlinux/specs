@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 7.0.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -152,10 +152,15 @@ BuildArch: noarch
 Summary: %name java gateway
 Group: Monitoring
 Requires: %name-common = %EVR
+# actually 1.8.0+ as declared it seems
+%ifarch %e2k
+Requires: jre-openjdk >= 8
+%else
 %ifarch ppc64le %ix86
 Requires: jre-openjdk >= 17
 %else
 Requires: jre-openjdk >= 21
+%endif
 %endif
 %filter_from_requires /^\/etc\/sysconfig\/network/d
 %filter_from_requires /^\/etc\/sysconfig\/zabbix-java-gateway/d
@@ -861,6 +866,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Jan 10 2025 Michael Shigorin <mike@altlinux.org> 1:7.0.8-alt2
+- E2K: require java8+ as per official docs (thx taf@)
+
 * Wed Jan 08 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.8-alt1
 - 7.0.8
 
