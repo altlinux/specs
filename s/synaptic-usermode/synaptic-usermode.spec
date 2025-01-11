@@ -1,6 +1,6 @@
 Name: synaptic-usermode
 Version: 1.3
-Release: alt3
+Release: alt4
 
 Summary: Usermode bindings for synaptic
 Group: System/Configuration/Packaging
@@ -30,9 +30,8 @@ mkdir -p %buildroot%_bindir
 ln -s $(relative %conshelpdir/helper %_bindir/) %buildroot%_bindir/synaptic
 install -pD -m640 synaptic.pamd %buildroot%_sysconfdir/pam.d/synaptic
 install -pD -m640 synaptic.security %buildroot%_sysconfdir/security/console.apps/synaptic
-install -pD -m644 synaptic-16.png %buildroot%_miconsdir/synaptic.png
-install -pD -m644 synaptic-32.png %buildroot%_niconsdir/synaptic.png
-install -pD -m644 synaptic-48.png %buildroot%_liconsdir/synaptic.png
+install -pD -m644 synaptic-256.png %buildroot%_iconsdir/hicolor/256x256/apps/synaptic.png
+install -pD -m644 synaptic-scalable.svg %buildroot%_iconsdir/hicolor/scalable/apps/synaptic.svg
 install -pD -m644 synaptic.desktop %buildroot%_datadir/applications/synaptic.desktop
 
 %files
@@ -40,11 +39,13 @@ install -pD -m644 synaptic.desktop %buildroot%_datadir/applications/synaptic.des
 %config(noreplace) %_sysconfdir/security/console.apps/synaptic
 %_bindir/synaptic
 %_datadir/applications/synaptic.desktop
-%_miconsdir/synaptic.png
-%_niconsdir/synaptic.png
-%_liconsdir/synaptic.png
+%_iconsdir/hicolor/256x256/apps/synaptic.png
+%_iconsdir/hicolor/scalable/apps/synaptic.svg
 
 %changelog
+* Sat Jan 11 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3-alt4
+- Added a better quality desktop icon.
+
 * Fri May 27 2011 Lenar Shakirov <snejok@altlinux.ru> 1.3-alt3
 - System category replaced by Settings in desktop file
 
