@@ -3,7 +3,7 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 8.0.7
+Version: 8.0.8
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -205,6 +205,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.8-alt1
+- new version (8.0.8) with rpmgs script
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.7-alt1
 - new version (8.0.7) with rpmgs script
 
