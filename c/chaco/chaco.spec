@@ -3,7 +3,7 @@
 %define rname chaco2
 Name: chaco
 Version: 2.2
-Release: alt8
+Release: alt9
 Summary: Matrix Orders, Colorings, and Partitionings
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -136,6 +136,8 @@ ln -s lib%rname.so.%sover lib%rname.so.%somver
 ln -s lib%rname.so.%somver lib%rname.so
 popd
 
+rm -v %buildroot%_libdir/*.a
+
 %files
 %_bindir/*
 %_datadir/%name
@@ -149,10 +151,10 @@ popd
 %files -n lib%name-devel
 %_libdir/*.so
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.2-alt9
+- Fixed FTBFS.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 2.2-alt8
 - Fixed FTBFS.
 
