@@ -21,7 +21,7 @@
 
 Name: telegram-desktop
 Version: 5.9.0
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -87,6 +87,7 @@ Requires: qt6-imageformats
 
 BuildRequires: libenchant2-devel
 BuildRequires: libhunspell-devel
+BuildRequires: libpostproc-devel
 
 # for autoupdater (included ever if disabled)
 # TODO:
@@ -160,7 +161,7 @@ BuildRequires: libqrcodegen-cpp-devel
 
 # C++ sugar
 %if_with gsl
-BuildRequires: libmicrosoft-gsl-devel >= 1:4.0.0-alt2
+BuildRequires: libmicrosoft-gsl-devel >= 1:4.1.0
 %endif
 
 # https://github.com/telegramdesktop/tdesktop/issues/8471
@@ -376,6 +377,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 5.9.0-alt2
+- Update BR for build on p11
+
 * Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 5.9.0-alt1
 - new version 5.9.0 (with rpmrb script)
 
