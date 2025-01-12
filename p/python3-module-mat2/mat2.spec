@@ -2,7 +2,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.13.5
-Release: alt1.d61fb7f7
+Release: alt2
 
 License: LGPL-3.0
 Group:   Development/Python3
@@ -43,5 +43,8 @@ metadata.
 %doc *.md LICENSE
 
 %changelog
+* Thu Jan 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.5-alt2
+- upstream update to git.6c966f2a
+
 * Sat Nov 23 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.13.5-alt1.d61fb7f7
 - Initial build for Sisyphus.
