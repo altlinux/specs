@@ -1,8 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 0.26
+%define ver_major 0.27
 %define beta %nil
-%define efl_ver_major 1.27
+%define efl_ver_major 1.28
 %define efl_ver %efl_ver_major.0
 
 %def_enable bluetooth
@@ -48,8 +48,6 @@ Patch1: e17-0.17.0-alt-g-s-d_path.patch
 Patch2: enlightenment-0.22.4-alt-e_sys_nosuid.patch
 Patch3: auto-ptrace-disable.patch
 Patch4: enlightenment-0.19.0-alt-pam-helper.patch
-
-Patch10: enlightenment-0.25.4-alt-ddcutil-2.0.patch
 
 Provides: e19 = %EVR
 # Obsoletes/Provides old eNN
@@ -124,7 +122,6 @@ Development headers for Enlightenment.
 %patch1 -p1 -b .gsd
 %{?_without_suid_binaries:%patch2 -p1 -b .nosuid}
 #%patch3 -p2 -b .ptrace
-%patch10 -p1 -b .ddcutil
 
 # fix logic
 sed -i "s/\(if config_h\.has('HAVE_WAYLAND') == \)false/\1true/" data/session/meson.build
@@ -183,7 +180,7 @@ install -pD -m 644 %SOURCE8 %buildroot%_desktopdir/%name.desktop
 
 # fix Name in session desktop files
 sed -i 's/^\(Name.*=Enlightenment\)$/\1 on Xorg/' %buildroot%_datadir/xsessions/%name.desktop
-sed -i 's/^\(Name.*=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/wayland-sessions/%name.desktop
+sed -i 's/^\(Name.*=Enlightenment\)$/\1 on Wayland/' %buildroot%_datadir/wayland-sessions/%name-wayland.desktop
 # rename xsession file
 mv %buildroot%_datadir/xsessions/%name.desktop %buildroot%_datadir/xsessions/%name-xorg.desktop
 
@@ -226,7 +223,7 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_bindir/start_%name
 %_datadir/%name/
 %_datadir/xsessions/%name-xorg.desktop
-%exclude %{?_enable_wayland:%_datadir/wayland-sessions/%name.desktop}
+%exclude %{?_enable_wayland:%_datadir/wayland-sessions/%name-wayland.desktop}
 %_pixmapsdir/%name-askpass.png
 %_desktopdir/*.desktop
 %{?_enable_systemd:%_prefix/lib/systemd/user/%name.service}
@@ -240,6 +237,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.27.0-alt1
+- 0.27.0
+
 * Sun Dec 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1:0.26.0-alt1
 - 0.26.0
 - removed unusable wayland session

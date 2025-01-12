@@ -2,7 +2,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.27
+%define ver_major 1.28
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -43,12 +43,12 @@
 %def_disable elua
 %endif
 
-# lua-5.1 not supported anymore
+# 5.1, 5.2 supported
 %def_enable lua
 
 Name: efl
 Version: %ver_major.0
-Release: alt1.2
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -62,7 +62,6 @@ Source: %name-%version.tar
 %endif
 Patch: efl-1.15.0-alt-ecore_fb.patch
 Patch1: efl-1.19.1-luajitfix.patch
-Patch10: efl-1.27.0-up-ppc-no-altivec.patch
 Patch2000: efl-1.25.1-alt-e2k.patch
 
 # to skip libreoffice dependency for evas_generic_loaders
@@ -250,8 +249,6 @@ developing applications that use Elementary libraries.
 %patch -p1
 %patch1 -p1
 
-%patch10 -p1
-
 %ifarch %e2k
 %patch2000 -p1
 # SIGILL workaround
@@ -268,6 +265,7 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 	%{subst_enable_meson_bool drm drm} \
 	%{subst_enable_meson_bool fb fb} \
 	%{subst_enable_meson_bool elua elua} \
+	-Dlua-interpreter=luajit \
 	%{subst_enable_meson_bool tslib tslib} \
 	%{subst_enable_meson_bool gstreamer gstreamer} \
 	%{subst_enable_meson_bool avahi avahi} \
@@ -331,6 +329,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_libdir/evas/
 %_datadir/dbus-1/services/org.enlightenment.Ethumb.service
 %_datadir/ecore/
+# empty file
+%dir %_datadir/ecore_con
+%_datadir/ecore_con/checkme
 %_datadir/ecore_imf/
 %_datadir/ecore_x/
 %_datadir/edje/
@@ -459,6 +460,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.27.0-alt1.2
 - fixed build for ppc64le
 
