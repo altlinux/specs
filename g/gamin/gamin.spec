@@ -1,6 +1,6 @@
 Name: gamin
 Version: 0.1.10
-Release: alt7
+Release: alt8
 
 %def_disable debug
 %def_disable check
@@ -74,6 +74,7 @@ a subset of the FAM (File Alteration Monitor) system.
 %patch12
 
 %build
+export CFLAGS="-std=gnu89"
 %autoreconf
 %configure --disable-static \
     %{subst_enable debug} \
@@ -115,6 +116,9 @@ rm -fv %buildroot%_libdir/libgamin_shared.a
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Jan 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.1.10-alt8
+- Fixed FTBFS: used c89 standart for gcc14.
+
 * Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.10-alt7
 - Fixed FTBFS: rebuild without static library.
 
