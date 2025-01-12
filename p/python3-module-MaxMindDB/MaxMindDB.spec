@@ -2,7 +2,7 @@
 %define  fname maxminddb
 
 Name:    python3-module-%oname
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: Python MaxMind DB reader extension
@@ -76,6 +76,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%fname/
 %python3_sitelibdir/%fname/pickle
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.3-alt1
+- Automatically updated to 2.6.3.
+
 * Mon Jul 01 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt1
 - Automatically updated to 2.6.2.
 
