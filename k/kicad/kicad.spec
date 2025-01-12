@@ -4,8 +4,8 @@
 %define majver 8.0
 
 Name: kicad
-Version: 8.0.7
-Release: alt2
+Version: 8.0.8
+Release: alt1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -191,6 +191,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.8-alt1
+- New version 8.0.8.
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 1:8.0.7-alt2
 - add dependency on ngspice instead libngspice
 
