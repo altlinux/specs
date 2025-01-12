@@ -1,15 +1,17 @@
-Summary: Remote control program for Pentax DSLR cameras
 Name: pktriggercord
 Version: 0.85.00
-Release: alt1
-License: GPLv3
+Release: alt2
 
+Summary: Remote control program for Pentax DSLR cameras
+
+License: GPLv3
 Group: Graphics
-Source: %name-%version.tar
 URL: http://pktriggercord.melda.info
 VCS: https://github.com/asalamon74/pktriggercord
 
-BuildRequires: libglade-devel
+Source: %name-%version.tar
+
+BuildRequires: libgtk+2-devel
 
 %description
 pkTriggerCord is a remote control program for Pentax DSLR cameras.
@@ -34,6 +36,9 @@ mv -v %buildroot/etc/udev/samsung.rules %buildroot/lib/udev/rules.d/025-samsung-
 /lib/udev/rules.d/*.rules
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.85.00-alt2
+- Cleanup spec.
+
 * Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.85.00-alt1
 - Build new version.
 
