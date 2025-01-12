@@ -1,7 +1,7 @@
 %define oname unicodedata2
 
 Name: python3-module-%oname
-Version: 15.1.0
+Version: 16.0.0
 Release: alt1
 
 Summary: Unicodedata backport for python 2 updated to the latest unicode version
@@ -39,6 +39,9 @@ backports support for named aliases and named sequences to python2.
 %python3_sitelibdir/unicodedata2.cpython*.so
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 16.0.0-alt1
+- Automatically updated to 16.0.0.
+
 * Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 15.1.0-alt1
 - Automatically updated to 15.1.0.
 
