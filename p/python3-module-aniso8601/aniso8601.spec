@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 9.0.1
+Version: 10.0.0
 Release: alt1
 
 Summary: Another ISO 8601 parser for Python
@@ -44,6 +44,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt1
+- Automatically updated to 10.0.0.
+
 * Fri Aug 05 2022 Grigory Ustinov <grenka@altlinux.org> 9.0.1-alt1
 - Build new version.
 
