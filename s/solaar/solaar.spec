@@ -1,6 +1,6 @@
 Name:    solaar
-Version: 1.1.13
-Release: alt2
+Version: 1.1.14
+Release: alt1
 
 Summary: Device manager for Logitech Unifying Receiver
 License: GPL-2.0-or-later
@@ -91,6 +91,9 @@ tools/po-compile.sh
 %_udevrulesdir/*.rules
 
 %changelog
+* Sun Jan 12 2025 Andrey Cherepanov <cas@altlinux.org> 1.1.14-alt1
+- New version.
+
 * Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.13-alt2
 - Install alternative udev rules for wayland compatibility.
 - Use rpm macros for install udev rules.
