@@ -11,7 +11,7 @@
 
 Name: dbus
 Version: 1.16.0
-Release: alt1
+Release: alt2
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -121,6 +121,8 @@ mkdir -p %buildroot%_localstatedir/dbus
 touch %buildroot%_localstatedir/dbus/machine-id
 touch %buildroot%_sysconfdir/machine-id
 
+mkdir -p %buildroot/run/dbus/users
+
 mkdir -p %buildroot%_tmpfilesdir
 cat << __EOF__ > %buildroot%_tmpfilesdir/%name.conf
 d /run/dbus 0755 root root -
@@ -176,6 +178,9 @@ fi
 %_man1dir/dbus-run-session.1*
 %_man1dir/dbus-update-activation-environment.1*
 
+%dir %attr(0755,root,root) /run/dbus
+%dir %attr(1777,root,root) /run/dbus/users
+
 %files tools
 %_bindir/dbus-monitor
 %_bindir/dbus-send
@@ -204,6 +209,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Sun Jan 12 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.16.0-alt2
+- created /run/dbus/users (closes: #52662)
+
 * Wed Dec 18 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.16.0-alt1
 - 1.16.0
 
