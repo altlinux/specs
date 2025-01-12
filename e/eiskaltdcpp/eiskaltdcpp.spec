@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.4.2.0.21.git918a6cd
-Release: alt1
+Release: alt2
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -9,6 +9,8 @@ Group: Networking/File transfer
 Url: https://sourceforge.net/projects/eiskaltdcpp
 
 Source: %name-%version.tar
+
+Patch: 5ab5e1137a46864b6ecd1ca302756da8b833f754.patch
 
 BuildRequires: bzlib-devel cmake gcc-c++
 BuildRequires: libaspell-devel libgtk+2-devel libidn2-devel liblua-devel
@@ -29,7 +31,6 @@ with all common DC hub software.
 Group: Networking/File transfer
 Summary: Common files for %name
 Requires: lib%name = %EVR
-BuildArch: noarch
 %description common
 Common files for %name
 
@@ -88,6 +89,9 @@ command line interface for XML-RPC Daemon
 
 %prep
 %setup
+
+%patch -p1
+
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar \*|g_autofree_edg_ex(gchar,std::string) |" eiskaltdcpp-gtk/src/{adlsearch,hub,mainwindow,uploadqueue}.cc
@@ -175,6 +179,9 @@ otherflags="$(pkg-config libpcre --cflags) $(pkg-config harfbuzz --cflags)"
 %_datadir/%name/cli
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.2.0.21.git918a6cd-alt2
+- Fixed FTBFS.
+
 * Tue Mar 29 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.2.0.21.git918a6cd-alt1
 - Build from commit (fixes utf emojis).
 
