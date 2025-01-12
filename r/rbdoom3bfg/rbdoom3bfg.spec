@@ -1,6 +1,6 @@
 Name: rbdoom3bfg
-Version: 1.4.0
-Release: alt1.1
+Version: 1.5.1
+Release: alt1
 
 Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
 License: GPLv3
@@ -11,9 +11,9 @@ Url: https://github.com/RobertBeckebans/RBDOOM-3-BFG
 Source: %name-%version.tar
 Source2: %name.png
 
-ExclusiveArch: %ix86 x86_64 %e2k loongarch64
+ExclusiveArch: x86_64 %e2k loongarch64
 
-BuildRequires: cmake gcc-c++ rpm-macros-cmake libjpeg-devel libSDL2-devel ffmpeg libopenal-devel libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libGLU-devel libswresample-devel
+BuildRequires: cmake gcc-c++ rpm-macros-cmake libjpeg-devel libSDL2-devel ffmpeg libopenal-devel libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libGLU-devel libswresample-devel vulkan-devel vulkan-headers glslang-devel libshaderc-devel glslc DirectXShaderCompiler libncurses-devel libstdc++-devel-static
 
 Summary(ru_RU.UTF-8): Doom 3: BFG Edition с мягкими тенями, приведёнными в порядок исходниками, поддержкой Linux и 64-битной архитектуры
 
@@ -57,6 +57,7 @@ $HOME/.rbdoom3bfg/
 	-DCMAKE_BUILD_TYPE=Release \
 	-DONATIVE=ON \
 	-DSDL2=ON \
+	-DUSE_VMA=OFF \
 %ifnarch %ix86 x86_64
 	-DUSE_INTRINSICS=OFF \
 %ifnarch %e2k
@@ -95,6 +96,10 @@ install -Dpm0644 %SOURCE2 %buildroot/%_iconsdir/%name.png
 %_iconsdir/%name.png
 
 %changelog
+* Sun Jan 12 2025 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt1
+- Update version to 1.5.1
+- Disable ix86 arch :(
+
 * Fri Mar 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.4.0-alt1.1
 - NMU: build for LoongArch
 
