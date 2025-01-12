@@ -1,14 +1,13 @@
 Summary: Remote control program for Pentax DSLR cameras
 Name: pktriggercord
-Version: 0.77.10
-Release: alt2
+Version: 0.85.00
+Release: alt1
 License: GPLv3
 
 Group: Graphics
-Source: pkTriggerCord-%version.src.tar.gz
-Url: http://pktriggercord.sourceforge.net
-
-Patch1: pktriggercord-0.77.10-alt-makefile.patch
+Source: %name-%version.tar
+URL: http://pktriggercord.melda.info
+VCS: https://github.com/asalamon74/pktriggercord
 
 BuildRequires: libglade-devel
 
@@ -16,18 +15,16 @@ BuildRequires: libglade-devel
 pkTriggerCord is a remote control program for Pentax DSLR cameras.
 
 %prep
-%setup -q
-%patch1 -p2
+%setup
 
 %build
-make clean
-make PREFIX=/usr CFLAGS="$CFLAGS -fcommon"
+make PREFIX=%_prefix CFLAGS="$CFLAGS -Isrc/external/js0n"
 
 %install
-make install PREFIX=%buildroot/usr/
+make install PREFIX=%_prefix DESTDIR=%buildroot
 mkdir -p %buildroot/lib/udev/rules.d/
-mv %buildroot/etc/udev/pentax.rules %buildroot/lib/udev/rules.d/025-pentax-dslr.rules
-mv %buildroot/etc/udev/samsung.rules %buildroot/lib/udev/rules.d/025-samsung-dslr.rules
+mv -v %buildroot/etc/udev/pentax.rules %buildroot/lib/udev/rules.d/025-pentax-dslr.rules
+mv -v %buildroot/etc/udev/samsung.rules %buildroot/lib/udev/rules.d/025-samsung-dslr.rules
 
 %files
 %doc Changelog BUGS
@@ -37,6 +34,9 @@ mv %buildroot/etc/udev/samsung.rules %buildroot/lib/udev/rules.d/025-samsung-dsl
 /lib/udev/rules.d/*.rules
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.85.00-alt1
+- Build new version.
+
 * Mon Mar 29 2021 Grigory Ustinov <grenka@altlinux.org> 0.77.10-alt2
 - Fixed FTBFS with -fcommon.
 
