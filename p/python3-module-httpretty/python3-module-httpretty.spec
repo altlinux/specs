@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.1.4
-Release: alt2
+Release: alt3
 
 Summary: HTTP client mocking tool for Python - inspired by Fakeweb for Ruby
 License: MIT
@@ -34,11 +34,14 @@ BuildArch: noarch
 
 Source: %modulename-%version.tar
 
+Patch: 8e96b1e312d473429fbd08bc867376e9932ad42a.patch
+
 %description
 %summary
 
 %prep
 %setup -n %modulename-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -67,6 +70,9 @@ export EVENTLET_NO_GREENDNS=yes
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.1.4-alt3
+- Fixed FTBFS.
+
 * Sat Feb 03 2024 Anton Vyatkin <toni@altlinux.org> 1.1.4-alt2
 - Fixed FTBFS.
 
