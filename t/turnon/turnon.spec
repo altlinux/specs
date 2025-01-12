@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name turnon
-%define ver_major 2.2
+%define ver_major 2.3
 %define rdn_name de.swsnr.%_name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -61,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.2-alt1
 - 2.2.2
 

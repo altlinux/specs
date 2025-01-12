@@ -1,21 +1,22 @@
-%def_enable snapshot
+%def_disable snapshot
 %define pypi_name typogrify
 
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.0.7
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: Filters to enhance web typography
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.org/project/%pypi_name
 
+Vcs: https://github.com/mintchaos/typogrify.git
+
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/t/%pypi_name/%pypi_name-%version.tar.gz
 %else
-Vcs: https://github.com/mintchaos/typogrify
 Source: %pypi_name-%version.tar
 %endif
 
@@ -30,8 +31,9 @@ Requires: python3-module-smartypants >= 1.8.3
 %filter_from_requires /^python3(jinja/d
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(wheel) python3(poetry-core)
-%{?_enable_check:BuildRequires: python3(pytest) python3(smartypants)}
+BuildRequires: python3(wheel) python3(hatchling)
+%{?_enable_check:BuildRequires: python3(smartypants) python3(pytest)
+BuildRequires: python3(pytest_cov) python3(pytest_sugar)}
 
 %description
 Typogrify provides a set of custom filters that automatically apply
@@ -53,11 +55,14 @@ py.test-3 --doctest-modules typogrify/filters.py typogrify/packages/titlecase/te
 
 %files
 %python3_sitelibdir_noarch/%pypi_name
-#%%exclude %python3_sitelibdir_noarch/%pypi_name/packages/titlecase/tests.py
+%exclude %python3_sitelibdir_noarch/%pypi_name/packages/titlecase/tests.py
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Wed Aug 30 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt3
 - updated to 2.0.7-27-g053a8b8
 - ported to %%pyproject macros
