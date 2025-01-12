@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 56
+%define ver_major 57
 %define beta %nil
 %define uuid %_name@amezin.github.com
 %define xdg_name com.github.amezin.%_name
@@ -77,6 +77,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 57-alt1
+- 57
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 56-alt1
 - 56
 
