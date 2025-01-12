@@ -1,7 +1,7 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 4.2
-Release: alt1.1
+Version: 4.3
+Release: alt1
 
 License: GPLv2
 Url: http://golly.sourceforge.net/
@@ -9,8 +9,6 @@ Source: %name-%version-src.tar.gz
 Source1: %name.sh
 Source2: %name.desktop
 Group: Education
-
-%add_python_req_skip glife golly
 
 Requires: %name-data = %EVR
 
@@ -84,6 +82,9 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Mon Jan 13 2025 Grigory Ustinov <grenka@altlinux.org> 4.3-alt1
+- Build new version.
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.2-alt1.1
 - NMU: fixed FTBFS.
 
