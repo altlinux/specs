@@ -1,6 +1,6 @@
 Name: prboom-plus
-Version: 2.5.1.3
-Release: alt2
+Version: 2.6.66
+Release: alt1
 
 Summary: Doom - classic 3D shoot-em-up game
 Group: Games/Arcade
@@ -9,13 +9,11 @@ License: GPLv2
 
 Source0: %name-%version.tar.gz
 
-Patch0: prboom-plus-2.5.0.3-alt-build.patch
+Patch0: gcc14.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Thu Apr 12 2012
-# optimized out: dumb libGL-devel libGLU-devel libSDL-devel libogg-devel libpng-devel libvorbis-devel zlib-devel
-BuildRequires: dumb-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libfluidsynth-devel libmad-devel libpcre-devel libpng-devel
+BuildRequires: cmake dumb-devel gcc-c++ libSDL2-devel libfluidsynth-devel libmad-devel libpcre-devel
 
 %description
 Doom is the classic 3D shoot-em-up game. It must have been one of the best
@@ -27,28 +25,28 @@ could play them.
 
 %prep
 %setup
-%patch0 -p1
+%patch0 -p0
 
 %build
-%add_optflags -fcommon
-%configure \
-	--disable-cpu-opt
-%make_build
+pushd prboom2
+%cmake -DDOOMWADDIR=%{_datadir}/doom
+%cmake_build
 
 %install
-%make_install DESTDIR=%buildroot docdir=%_docdir/%name-%version/ install
-
-rm -rf %buildroot%_docdir/%name-%version/COPYING
+pushd prboom2
+%cmake_install
 
 %files
-%dir %_docdir/prboom-plus-%version
-%_docdir/%name-%version/*
-%_gamesbindir/*
-%_gamesdatadir/doom/prboom-plus.wad
+%_bindir/*
+%_datadir/prboom-plus/*
 %_man5dir/*
 %_man6dir/*
+%_docdir/*
 
 %changelog
+* Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.66-alt1
+- Build new version.
+
 * Tue Mar 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.1.3-alt2
 - Fixed FTBFS with -fcommon.
 - Fixed license tag.
