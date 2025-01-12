@@ -1,13 +1,15 @@
 Name: ubridge
-Version: 0.9.18
-Release: alt2
+Version: 0.9.19
+Release: alt1
 
 Summary: Bridge for UDP tunnels, Ethernet, TAP and VMnet interfaces
 License: GPL-3.0-or-later
 Group: Networking/Other
 Url: https://github.com/GNS3/ubridge
+Vcs: https://github.com/GNS3/ubridge.git
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: libpcap-devel
 BuildRequires: libiniparser-devel
@@ -22,6 +24,7 @@ interfaces is supported. Packet capture is also supported.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %make_build SYSTEM_INIPARSER=1 CFLAGS="-DLINUX_RAW $RPM_OPT_FLAGS -lnl-3"
@@ -34,10 +37,13 @@ install -p -m4755 %name %buildroot%_bindir
 setcap cap_net_admin,cap_net_raw=ep %_bindir/%name
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.md
 %attr(0755,root,root) %_bindir/%name
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 0.9.19-alt1
+- New version 0.9.19.
+
 * Sat Nov 18 2023 Anton Midyukov <antohami@altlinux.org> 0.9.18-alt2
 - unboundle libiniparser, liblnl
 - fix setcap with first install

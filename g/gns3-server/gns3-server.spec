@@ -10,18 +10,19 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.49
+Version: 2.2.52
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
 License: GPL-3.0-or-later
 Group: Emulators
 Url: https://github.com/GNS3/gns3-server
+Vcs: https://github.com/GNS3/gns3-server.git
 
 Buildarch: noarch
 
 Source: %name-%version.tar
-Patch: 0001-changing-busybox-udhcpc-script-path.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3 rpm-build-gir
@@ -53,7 +54,7 @@ Documentation for %name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 echo '' > requirements.txt
 
 # Don't bundle busybox with the package
@@ -113,6 +114,9 @@ cp -fp /bin/busybox %python3_sitelibdir/gns3server/compute/docker/resources/bin/
 %doc docs/_build/html
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 2.2.52-alt1
+- New version 2.2.52.
+
 * Sat Aug 10 2024 Anton Midyukov <antohami@altlinux.org> 2.2.49-alt1
 - New version 2.2.49.
 

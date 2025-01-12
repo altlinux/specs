@@ -2,13 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gns3-gui
-Version: 2.2.49
+Version: 2.2.52
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
 License: GPL-3.0-or-later
 Group: Emulators
 Url: https://github.com/GNS3/gns3-gui
+Vcs: https://github.com/GNS3/gns3-gui.git
 
 Buildarch: noarch
 
@@ -90,6 +91,9 @@ find %buildroot/%python3_sitelibdir/ -type f -exec chmod -x {} \;
 %files -n gns3
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 2.2.52-alt1
+- New version 2.2.52.
+
 * Sat Aug 10 2024 Anton Midyukov <antohami@altlinux.org> 2.2.49-alt1
 - New version 2.2.49.
 
