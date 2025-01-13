@@ -1,6 +1,6 @@
 Name: enchant
 Version: 1.6.0
-Release: alt3.qa1
+Release: alt3.qa2
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
 License: LGPL
@@ -39,6 +39,7 @@ using libenchant.
 %setup -q
 
 %build
+%add_optflags -Wno-incompatible-pointer-types
 %autoreconf
 %configure \
 	--with-myspell-dir=%_datadir/myspell \
@@ -80,6 +81,9 @@ EOF
 %_pkgconfigdir/*
 
 %changelog
+* Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.6.0-alt3.qa2
+- fix FTBFS with gcc14
+
 * Mon Apr 11 2016 Gleb F-Malinovskiy (qa) <qa_glebfm@altlinux.org> 1.6.0-alt3.qa1
 - Rebuilt for gcc5 C++11 ABI.
 
