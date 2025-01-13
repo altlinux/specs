@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: picker
-Version: 1.1.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Randomly pick something to do
@@ -56,5 +56,8 @@ meals in and let the Picker choose one for you.
 %_datadir/%name
 
 %changelog
+* Mon Jan 13 2025 Oleg Shchavelev <oleg@altlinux.org> 1.3.0-alt1
+- New version 1.3.0
+
 * Fri Nov 15 2024 Oleg Shchavelev <oleg@altlinux.org> 1.1.1-alt1
 - Initial build
