@@ -1,7 +1,7 @@
 Summary:    Small, simple HTTP daemon, supports SSL
 Name:       mini_httpd
 Version:    1.30
-Release:    alt1
+Release:    alt1.1
 License:    freely distributable
 Group:      Networking/WWW
 Source0:    %name-%version.tar
@@ -43,6 +43,9 @@ Simple and small HTTP daemon without supporting SSL.
 sed -i  's/htpasswd/mini_htpasswd/g' Makefile
 mv htpasswd.c mini_htpasswd.c
 mv htpasswd.1 mini_htpasswd.1
+
+# Quick hotfix for gcc14
+sed -i '58a#include <grp.h>' mini_httpd.c
 
 %build
 # Build single version without SSL support
@@ -103,6 +106,9 @@ sed -e 's,@DOCROOT@,%htmldir,' %SOURCE2 > %buildroot/%_sysconfdir/sysconfig/%nam
 %attr(755,root,root) %_bindir/%name-single
 
 %changelog
+* Mon Jan 13 2025 Grigory Ustinov <grenka@altlinux.org> 1.30-alt1.1
+- Fixed FTBFS with gcc14.
+
 * Wed Oct 07 2020 Grigory Ustinov <grenka@altlinux.org> 1.30-alt1
 - Build new version.
 - Fix htpasswd name conflict (#39048).
