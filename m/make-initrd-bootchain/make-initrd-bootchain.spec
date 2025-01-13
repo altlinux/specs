@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt27
+Release: alt28
 
 Summary: %child modules set for %parent
 License: GPL-3.0
@@ -208,6 +208,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sat Jan 11 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt28
+- fixed uninitialized value of variable (ALT #52670)
+
 * Mon Dec 16 2024 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt27
 - added a new argument to control memory overflow
 - added a new parameter to change TMPFS size
