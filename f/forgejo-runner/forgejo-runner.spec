@@ -1,8 +1,8 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: forgejo-runner
-Version: 5.0.3
-Release: alt2
+Version: 6.0.1
+Release: alt1
 
 Summary: Forgejo Runner
 License: MIT
@@ -98,6 +98,9 @@ exit 0
 %_userunitdir/%name.service
 
 %changelog
+* Mon Jan 13 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt2
 - move systemd unit from system to user
 - adapt systemd unit for run as user service and rootless podman
