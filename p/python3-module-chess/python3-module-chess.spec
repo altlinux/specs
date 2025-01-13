@@ -3,15 +3,13 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.10.0
+Version: 1.11.1
 Release: alt1
 
 Summary: A chess library for Python
 License: GPL-3.0
 Group:   Development/Python3
 URL:     https://github.com/niklasf/python-chess
-
-Packager: Leonid Znamenok <respublica@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -46,6 +44,9 @@ tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jan 10 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.1-alt1
+- New version 1.11.1.
+
 * Mon Aug 07 2023 Leonid Znamenok <respublica@altlinux.org> 1.10.0-alt1
 - New version 1.10.0.
 
