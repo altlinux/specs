@@ -1,5 +1,5 @@
 Name: slade
-Version: 3.2.6
+Version: 3.2.7
 Release: alt1
 
 Summary: SLADE3 Doom editor
@@ -92,6 +92,7 @@ done
 
 %files
 %_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/net.mancubus.SLADE.svg
 %doc README.md LICENSE
 %_bindir/%name
 %_datadir/slade3/
@@ -99,6 +100,9 @@ done
 %_datadir/metainfo/net.mancubus.SLADE.metainfo.xml
 
 %changelog
+* Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 3.2.7-alt1
+- Update to new version
+
 * Sat Oct 26 2024 Artyom Bystrov <arbars@altlinux.org> 3.2.6-alt1
 - Update to new version
 - Fix FTBFS (disable system libfmt)
