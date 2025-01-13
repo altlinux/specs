@@ -1,9 +1,7 @@
-# Qt6WebEngineCore is only available on those architectures
-ExclusiveArch: x86_64 aarch64
 
 Name: rssguard
 Version: 4.8.1
-Release: alt2
+Release: alt2.1
 
 Summary: RSS Guard is a simple RSS/ATOM feed reader
 Summary(ru_RU.UTF-8): RSS Guard - программа для чтения RSS/ATOM 
@@ -13,11 +11,13 @@ License: GPL-3.0-or-later
 Url: https://github.com/martinrotter/rssguard
 VCS: https://github.com/martinrotter/rssguard
 
+ExclusiveArch: %qt6_qtwebengine_arches
+
 Packager: Alexei Mezin <alexvm@altlinux.ru>
 
 Source: %name-%version.tar.gz
 
-BuildPreReq: rpm-macros-cmake rpm-macros-qt6
+BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6 rpm-macros-qt6-webengine
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
@@ -94,6 +94,10 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssgua
 %_libdir/%name/*
 
 %changelog
+* Mon Jan 13 2025 Ivan A. Melnikov <iv@altlinux.org> 4.8.1-alt2.1
+- NMU: Use rpm-macros-qt6-webengine to detect Qt6WebEngineCore
+  presence (adds loongarch64 support)
+
 * Sun Jan 12 2025 Alexei Mezin <alexvm@altlinux.org> 4.8.1-alt2
 - Disable build on architectures without QtWebEngineCore
 
