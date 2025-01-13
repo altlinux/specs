@@ -1,31 +1,32 @@
-%define        _unpackaged_files_terminate_build 1
-%define        pypiname msal-extensions
-%define        modname msal_extensions
-%define        distname %modname
-%def_disable   check
+%define _unpackaged_files_terminate_build 1
+%define pypi_name msal-extensions
+%define mod_name msal_extensions
+%def_with check
 
-Name:          python3-module-%pypiname
-Version:       1.0.0
-Release:       alt1.1
-Summary:       Microsoft Authentication Library extensions (MSAL EX)
-License:       MIT
-Group:         Development/Python3
-Url:           https://github.com/AzureAD/microsoft-authentication-extensions-for-python
-Vcs:           https://github.com/AzureAD/microsoft-authentication-extensions-for-python.git
+Name: python3-module-%pypi_name
+Version: 1.2.0
+Release: alt1
+Summary: Microsoft Authentication Library extensions (MSAL EX)
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/msal-extensions/
+Vcs: https://github.com/AzureAD/microsoft-authentication-extensions-for-python.git
 
-BuildArch:     noarch
-Source:        %name-%version.tar
-Patch:         %name-%EVR.patch
+BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%EVR.patch
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-%{?!_disable_doc:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
-%if_enabled check
-BuildRequires: python3(pytest)
-BuildRequires: python3(msal)
-BuildRequires: python3(portalocker)
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+# .github/workflows/python-package.yml
 BuildRequires: python3(gi)
-BuildRequires: python3-module-pygobject
+BuildRequires: libsecret-gir
+BuildRequires: /usr/bin/gnome-keyring-daemon
+BuildRequires: /bin/dbus-run-session
 %endif
 
 %description
@@ -46,10 +47,14 @@ Authentication Extensions makes this simpler.
 
 The supported platforms are Windows, Mac and Linux.
 
-
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -58,15 +63,20 @@ The supported platforms are Windows, Mac and Linux.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
-%pyproject_run_unittest
+# .github/workflows/python-package.yml
+echo 'echo secret_placeholder | gnome-keyring-daemon --unlock ; pytest -vra' > linux_test.sh
+chmod +x linux_test.sh
+%pyproject_run -- dbus-run-session -- ./linux_test.sh
 
 %files
-%doc *.md
-%python3_sitelibdir/%{distname}/
-%python3_sitelibdir/%{modname}*/METADATA
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.0.0 -> 1.2.0 (closes: #52422).
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 
