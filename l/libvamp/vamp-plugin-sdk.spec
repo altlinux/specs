@@ -1,8 +1,9 @@
 %set_verify_elf_method relaxed
+%def_disable static
 
 Name: libvamp
 Version: 2.10.0
-Release: alt2
+Release: alt3
 Summary: An API for audio analysis and feature extraction plugins
 
 License: BSD
@@ -37,15 +38,6 @@ Obsoletes: vamp-plugin-sdk-devel < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-# %package static
-# Summary: Static libraries for %name
-# Group:  System/Libraries
-# Requires: %name-devel = %version-%release
-
-# %description static
-# The %name-static package contains library files for
-# developing static applications that use %name.
-
 %prep
 %setup -n vamp-plugin-sdk-%version
 touch examples/Makefile
@@ -57,8 +49,8 @@ subst 's|/lib/vamp|/%_lib/vamp|g' src/vamp-hostsdk/PluginHostAdapter.cpp
 subst 's|/lib/|/%_lib/|g' src/vamp-hostsdk/PluginLoader.cpp
 
 %build
-%configure
-%make_build
+%configure --disable-static
+make
 
 %install
 # fix libdir
@@ -80,10 +72,10 @@ make clean -C examples
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-# %files static
-# %_libdir/*.a
-
 %changelog
+* Fri Nov 15 2024 Artyom Bystrov <arbars@altlinux.org> 2.10.0-alt3
+- Disable build static libs on level of build macros
+
 * Tue May 09 2023 Andrey Cherepanov <cas@altlinux.org> 2.10.0-alt2
 - FTBFS: do not build static library.
 
