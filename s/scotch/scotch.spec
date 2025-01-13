@@ -5,14 +5,13 @@
 
 Name: scotch
 Version: 5.1.12b
-Release: alt5.svn20110910
+Release: alt6.svn20110910
 
 Summary: Package and libraries for sequential and parallel graph partitioning
 License: CeCILL-C
 Group: Sciences/Mathematics
 
 Url: http://www.labri.fr/perso/pelegrin/scotch/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # svn://scm.gforge.inria.fr/svn/scotch
 Source0: %{name}_%version.tar.gz
@@ -21,9 +20,9 @@ Source2: Makefile.inc
 Source3: Makefile.inc.esmumps
 Source4: %name.pc
 
-BuildPreReq: gcc-fortran libgfortran-devel bison flex chrpath
-BUildPreReq: libibverbs-devel libibumad-devel zlib-devel
-BuildPreReq: glibc-devel %mpiimpl-devel
+BuildRequires: gcc-fortran libgfortran-devel bison flex chrpath
+BuildRequires: libibverbs-devel libibumad-devel zlib-devel
+BuildRequires: glibc-devel %mpiimpl-devel
 
 %description
 Scotch is a software package and libraries for sequential and parallel graph
@@ -185,6 +184,7 @@ for i in $(ls *.a|sed 's|\.a||'); do
 	rm -f *.o
 done
 popd
+rm -f %buildroot%_libdir/*.a
 
 %files
 %doc LICENSE_en.txt doc/CeCILL-C_V1-en.txt
@@ -209,6 +209,9 @@ popd
 %_datadir/%name/tgt
 
 %changelog
+* Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.1.12b-alt6.svn20110910
+- Fix FTBFS with gcc14.
+
 * Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 5.1.12b-alt5.svn20110910
 - Fixed 64-bit builds for non-x86.
 - Minor spec cleanup.
