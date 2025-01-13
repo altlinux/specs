@@ -9,7 +9,7 @@
 %def_with pcap
 
 Name: ppp
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: The PPP daemon and documentation
@@ -201,6 +201,9 @@ install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/%name/radius/
 
 %changelog
+* Sun Jan 05 2025 Alexey Shabalin <shaba@altlinux.org> 2.5.2-alt1
+- 2.5.2.
+
 * Tue Oct 08 2024 Alexey Shabalin <shaba@altlinux.org> 2.5.1-alt1
 - 2.5.1.
 
