@@ -7,7 +7,7 @@
 
 Name: gd3
 Version: 2.3.3
-Release: alt3
+Release: alt4
 Summary: A graphics library for drawing image files in various formats
 License: BSD-style
 Group: Graphics
@@ -131,7 +131,7 @@ resampling (smooth resizing of truecolor images) and so forth.
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 %autoreconf
-%configure %{subst_enable static}
+%configure --enable-gd-formats %{subst_enable static}
 %make_build
 
 %install
@@ -166,6 +166,9 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Mon Jan 13 2025 Alexander Danilov <admsasha@altlinux.org> 2.3.3-alt4
+- Enable gd formats.
+
 * Tue Nov 26 2024 Kirill Izmestev <felixz@altlinux.org> 2.3.3-alt3
 - Fixed bug in HEIF usage, stride is require by patch from upstream.
 
