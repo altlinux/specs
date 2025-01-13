@@ -9,8 +9,8 @@
 %define libusbguard libusbguard%sover
 
 Name: usbguard
-Version: 1.1.2
-Release: alt2
+Version: 1.1.3
+Release: alt1
 
 Group: System/Servers
 Summary: A tool for implementing USB device usage policy
@@ -30,11 +30,12 @@ Patch1: usbguard-gcc13.patch
 # Automatically added by buildreq on Fri Aug 04 2017 (-bi)
 # optimized out: elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libcap-ng libdbus-devel libdbus-glib libgpg-error libgpg-error-devel libqt4-devel libqt5-core libqt5-gui libqt5-svg libqt5-widgets libqt5-xml libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xml-utils xz
 #BuildRequires: aspell catch-devel glibc-devel-static libcap-ng-devel libdbus-glib-devel libgcrypt-devel libgio-devel libprotobuf-devel libqb-devel libseccomp-devel pegtl-devel protobuf-compiler python-module-google python3-dev python3-module-zope qt5-svg-devel qt5-tools rpm-build-ruby xsltproc
-BuildRequires: glibc-devel libcap-ng-devel libgcrypt-devel libseccomp-devel
+BuildRequires: glibc-devel libcap-ng-devel libsodium-devel libseccomp-devel
+BuildRequires: gcc-c++
 #BuildRequires: catch pegtl-devel
-BuildRequires: xsltproc asciidoctor
+BuildRequires: xsltproc asciidoctor asciidoc-a2x
 BuildRequires: libsystemd-devel libaudit-devel
-BuildRequires: qt5-svg-devel qt5-tools
+#BuildRequires: qt5-svg-devel qt5-tools
 BuildRequires: libprotobuf-devel protobuf-compiler libqb-devel
 BuildRequires: libumockdev-devel
 %if_enabled dbus
@@ -130,7 +131,7 @@ done
     --without-dbus \
     --without-polkit \
 %endif
-    --with-crypto-library=gcrypt \
+    --with-crypto-library=sodium \
     #
 %make_build
 asciidoctor -v -b html README.adoc -o README.html
@@ -156,6 +157,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/usbguard/rules.conf
 %_unitdir/usbguard.service
 #%_datadir/bash-completion/completions/usbguard
+%_man1dir/usbguard*
+%_man5dir/usbguard*
+%_man8dir/usbguard-daemon.*
 
 %files -n %libusbguard
 %_libdir/libusbguard.so.%sover
@@ -183,9 +187,13 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/usbguard/usbguard-daemon.conf
 %_datadir/dbus-1/system.d/org.usbguard1.conf
 %_datadir/polkit-1/actions/org.usbguard1.policy
 %_unitdir/usbguard-dbus.service
+%_man8dir/usbguard-dbus.*
 %endif
 
 %changelog
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.3-alt1
+- new version
+
 * Fri Apr 12 2024 Sergey V Turchin <zerg@altlinux.org> 1.1.2-alt2
 - package /etc/usbguard/rules.d/
 
