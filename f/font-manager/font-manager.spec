@@ -4,11 +4,11 @@
 %define rdn_name com.github.FontManager.FontManager
 %define rdn_name1 com.github.FontManager.FontViewer
 
-%def_with nautilus
+%def_enable nautilus
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -23,7 +23,7 @@ Vcs: https://github.com/FontManager/font-manager.git
 Source: %name-%version.tar
 %endif
 
-Requires: file-roller
+Requires: file-roller yelp
 
 %define vala_ver 0.42
 %define pango_ver 1.4
@@ -38,9 +38,7 @@ BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel gir(Adw) = 1
 BuildRequires: pkgconfig(webkitgtk-6.0)
-%if_with nautilus
-BuildRequires: libnautilus-devel
-%endif
+%{?_enable_nautilus:BuildRequires: libnautilus-devel}
 
 %description
 Font Manager is an application that allows users to easily manage fonts
@@ -60,8 +58,9 @@ Enlightenment, and even KDE.
 
 %build
 %meson \
-	-Dreproducible=true \
-	%{?_with_nautilus:-Dnautilus=true}
+    -Dreproducible=true \
+    %{subst_enable_meson_bool nautilus nautilus}
+%nil
 %meson_build
 
 %install
@@ -84,11 +83,14 @@ Enlightenment, and even KDE.
 %_man1dir/%name.1.*
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/metainfo/%rdn_name1.metainfo.xml
-%{?_with_nautilus:%nautilus_extdir/*.so}
+%{?_enable_nautilus:%nautilus_extdir/*.so}
 %doc README* CHANGELOG
 
 
 %changelog
+* Mon Jan 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- updated to 0.9.1-1-ga5b90037
+
 * Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0-1-g77df195c (ported to GTK4/Libadwaita)
 
