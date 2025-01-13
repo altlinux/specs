@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: netsleuth
-Version: 1.0.5
+Version: 1.1.0
 Release: alt1
 
 Summary: Calculate IP subnets
@@ -23,8 +23,8 @@ BuildRequires: rpm-build-python3
 BuildRequires: gtk4-update-icon-cache
 BuildRequires: pkgconfig(gio-2.0)
 %if_enabled check
-BuildRequires: %_bindir/desktop-file-validate
-BuildRequires: %_bindir/appstreamcli
+BuildRequires: desktop-file-utils
+BuildRequires: appstream
 %endif
 
 BuildArch: noarch
@@ -49,12 +49,20 @@ to simplify network configuration tasks.
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/netsleuth_search_provider
 %_desktopdir/%APP_ID.desktop
+%_desktopdir/%APP_ID.SearchProvider.desktop
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 %_datadir/metainfo/%APP_ID.metainfo.xml
+%_datadir/dbus-1/services/%APP_ID.SearchProvider.service
+%_datadir/gnome-shell/search-providers/%APP_ID.search-provider.ini
 %_datadir/%name
 
 %changelog
+* Sun Jan 12 2025 Oleg Shchavelev <oleg@altlinux.org> 1.1.0-alt1
+- New version 1.1.0 (ALT #52672)
+- Update build dependencies for check
+
 * Fri Nov 15 2024 Oleg Shchavelev <oleg@altlinux.org> 1.0.5-alt1
 - New version 1.0.5
 
