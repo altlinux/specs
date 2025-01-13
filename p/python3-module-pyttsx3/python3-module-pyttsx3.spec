@@ -7,7 +7,7 @@
 Name: python3-module-%pypi_name
 
 Version: 2.98
-Release: alt1
+Release: alt1.1
 Summary: Offline Text To Speech (TTS) converter for Python 
 License: MPL-2.0
 Group: Development/Python3
@@ -23,6 +23,7 @@ BuildRequires: python3(wheel)
 BuildRequires: espeak
 BuildRequires: ffmpeg
 BuildRequires: libespeak
+BuildRequires: alsa-utils
 
 %py3_provides %pypi_name
 
@@ -50,5 +51,8 @@ BuildRequires: libespeak
 %exclude %python3_sitelibdir/%pypi_name/drivers/sapi5.py
 
 %changelog
+* Mon Jan 13 2025 Pavel Shilov <zerospirit@altlinux.org> 2.98-alt1.1
+- add build requires alsa-utils for tests
+
 * Tue Nov 12 2024 Pavel Shilov <zerospirit@altlinux.org> 2.98-alt1
 - initial build for Sisyphus
