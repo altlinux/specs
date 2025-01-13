@@ -5,21 +5,24 @@
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
 Version: 1.9.6
-Release: alt1.1
+Release: alt2
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
 
 Patch2000: %name-e2k.patch
 Patch1: fix_orphans_int_i.patch
+Patch2: deadbeef-1.9.6-ffmpeg7_build_fix.patch
 Group: Sound
 License: Zlib and GPLv2 and LGPLv2.1
 
 # Source-url: https://sourceforge.net/projects/deadbeef/files/travis/linux/%version/deadbeef-%version.tar.bz2
 Source: %name-%version.tar
 
+Source2: ru.po
+
 ExcludeArch: ppc64le
 
-BuildRequires: clang intltool swig gcc-c++
+BuildRequires: clang intltool swig libstdc++-devel
 BuildRequires:perl(Exporter.pm) perl(FindBin.pm) perl(IO/Handle.pm) perl(IPC/Open2.pm) perl(IPC/Open3.pm) perl(Locale/Country.pm) perl(Locale/Language.pm) perl(base.pm)
 BuildRequires:libX11-devel libatk-devel libcairo-devel libcddb-devel libcdio-devel libcdparanoia-devel libcurl-devel libdispatch-devel libfaad-devel libflac-devel libgdk-pixbuf-devel libjpeg-devel libmad-devel libmpg123-devel libogg-devel libpango-devel pipewire-libs-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel zlib-devel
 BuildRequires: pkgconfig(alsa) pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-3.0) pkgconfig(imlib2) pkgconfig(jansson) pkgconfig(libavcodec) pkgconfig(libavformat) pkgconfig(libavutil) pkgconfig(libpulse-simple) pkgconfig(libzip) pkgconfig(samplerate)
@@ -567,6 +570,8 @@ ReplayGain-Scanner plugin for DeaDBeeF
 %patch2000 -p1
 %endif
 %patch1 -p1
+%patch2 -p1
+
 %ifnarch %ix86 x86_64 %e2k
 sed -i \
 	external/ddb_dsp_libretro/Makefile.am \
@@ -574,6 +579,9 @@ sed -i \
 %add_optflags -Wno-unused-variable
 %endif
 sed -i '/m4/ d' Makefile.am
+# russian translation
+install -m 0644  %SOURCE2 po/ru.po
+echo "ru" >> po/LINGUAS
 
 %build
 %autoreconf
@@ -767,6 +775,10 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Mon Dec 30 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.9.6-alt2
+- fix build with ffmpeg 7
+- added russian translation (ALT bug: 50294)
+
 * Mon May 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.9.6-alt1.1
 - NMU: fixed FTBFS on arm64 and LoongArch (SSE3 is available only on
   some x86 machines).
