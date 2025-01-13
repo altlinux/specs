@@ -1,13 +1,13 @@
 Name: lzlib
-Version: 1.14
+Version: 1.15
 Release: alt1
 
-Summary: The lzlib compression library provides in-memory LZMA compression and decompression functions
+Summary: Provides in-memory LZMA (de)compression functions
 License: GPLv3+
 Group: System/Libraries
 
-URL: http://www.nongnu.org/lzip/lzlib.html
-Source: http://download.savannah.gnu.org/releases-noredirect/lzip/lzlib-%version.tar.gz
+URL: http://savannah.nongnu.org/projects/lzip
+Source: http://download.savannah.gnu.org/releases/lzip/lzlib-%version.tar.gz
 Source100: lzlib.watch
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -30,14 +30,13 @@ which will use the %name library.
 %setup
 
 %build
-subst 's/ ldconfig/ true/' Makefile.in
-./configure --prefix=/usr --libdir=%_libdir --enable-shared CFLAGS="%optflags"
+sed -i 's/ ldconfig/ true/' Makefile.in
+./configure --prefix=%_usr --libdir=%_libdir --enable-shared CFLAGS="%optflags"
 %make_build
 make check
 
 %install
 %makeinstall_std
-
 rm -fv %buildroot%_libdir/*.a
 
 %files
@@ -49,6 +48,10 @@ rm -fv %buildroot%_libdir/*.a
 %_infodir/*.info*
 
 %changelog
+* Mon Jan 13 2025 Michael Shigorin <mike@altlinux.org> 1.15-alt1
+- new version (watch file uupdate)
+- minor spec cleanup
+
 * Tue Jan 23 2024 Michael Shigorin <mike@altlinux.org> 1.14-alt1
 - new version (watch file uupdate)
 
