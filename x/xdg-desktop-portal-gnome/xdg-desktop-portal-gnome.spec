@@ -8,7 +8,7 @@
 
 Name: xdg-desktop-portal-gnome
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Desktop Portal
 Group: Graphical desktop/GNOME
@@ -20,8 +20,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+# part of 4cb1575
+Patch10: %name-47.1-up-portal-1.19.1.patch
 
-%define xdg_desktop_portal_ver 1.18.2
+%define xdg_desktop_portal_ver 1.19.1
 %define adw_ver 1.6
 %define gsds_ver 47
 
@@ -41,6 +43,7 @@ to provide various portal features.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1
 
 %build
 %meson
@@ -64,6 +67,9 @@ to provide various portal features.
 
 
 %changelog
+* Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1.1
+- upgrade portal to >= 1.19.1
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 
