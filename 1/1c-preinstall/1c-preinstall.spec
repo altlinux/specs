@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt20
+Release: alt21
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -31,7 +31,6 @@ Requires: libcom_err
 Requires: libcups
 Requires: libdatrie
 Requires: libdbus
-Requires: libenchant
 Requires: libepoxy
 Requires: libexpat
 Requires: libffi7
@@ -122,6 +121,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Mon Jan 13 2025 Pavel Isopenko <pauli@altlinux.org> 8.3-alt21
+- minus libenchant
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 8.3-alt20
 - remove requires incompatible with p10 (libcrypto3 and libssl3)
 
