@@ -19,9 +19,9 @@
 %endif
 
 %define nv_version 550
-%define nv_release 135
+%define nv_release 142
 %define nv_minor   %nil
-%define pkg_rel alt3
+%define pkg_rel alt1
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -268,6 +268,9 @@ done
 %endif
 
 %changelog
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 550.142-alt1
+- new version
+
 * Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 550.135-alt3
 - fix package nvidia-dbus.conf for nvidia-powerd
 
