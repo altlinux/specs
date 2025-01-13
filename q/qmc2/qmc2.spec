@@ -1,7 +1,7 @@
 Name:           qmc2
-Version:        0.243
+Version:        0.243.14
 Group: Games/Arcade
-Release:        alt1.1
+Release:        alt1
 Summary:        M.A.M.E. Catalog / Launcher II
 
 #PDF.js is ASL 2.0
@@ -13,6 +13,8 @@ Source:        %name-%version.tar.gz
 #Fedora-specific configuration
 Patch0:         %{name}-ini.patch
 Patch1:		QWebengine.patch
+Patch2: 0001-Update-headers-for-minizip-ng.patch
+Patch3: 0002-Fix-LZMA-for-qmc2-arcade.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libarchive-devel
@@ -26,7 +28,7 @@ BuildRequires:  qt5-webengine-devel
 BuildRequires:  qt5-xmlpatterns-devel
 BuildRequires:  rsync
 BuildRequires:  libSDL2-devel
-Requires: mame mame-tools mame-data mame-data-software-lists
+Requires: mame mame-tools mame-data mame-data-software-lists qt5-declarative-devel
 
 ExclusiveArch: aarch64 x86_64
 
@@ -57,8 +59,10 @@ the games"
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+# %%patch0 -p1
+#% %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 #ensure system minizip and zlib are used
 #https://bugzilla.redhat.com/show_bug.cgi?id=1998742
 rm -rf src/minizip
@@ -124,6 +128,10 @@ desktop-file-validate $RPM_BUILD_ROOT%{_datadir}/applications/qchdman.desktop
 
 
 %changelog
+* Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 0.243.14-alt1
+- Fix FTBFS
+- Switch to minizip-ng 4.0.8 
+
 * Mon Feb  5 2024 Artyom Bystrov <arbars@altlinux.org> 0.243-alt1.1
 - Add qt5-declarative-devel in BR
 
