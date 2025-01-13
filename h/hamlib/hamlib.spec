@@ -2,7 +2,7 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        4.4
+Version:        4.6
 Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
@@ -110,12 +110,12 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 %build
 %undefine _configure_gettext
 %configure \
-	PYTHON=%__python \
+        PYTHON=%__python \
 %if_with usrp
-	--enable-usrp \
+        --enable-usrp \
 %endif
 %if_with winradio
-	--enable-winradio \
+        --enable-winradio \
 %endif
         --with-cxx-binding \
         --with-lua-binding \
@@ -177,6 +177,7 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_includedir/hamlib/rotlist.h
 %_includedir/hamlib/amplifier.h
 %_includedir/hamlib/amplist.h
+%_includedir/hamlib/multicast.h
 %_libdir/pkgconfig/hamlib.pc
 %_man7dir/hamlib*.7*
 
@@ -205,6 +206,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6-alt1
+- New version.
+
 * Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 4.4-alt1
 - New version.
 
