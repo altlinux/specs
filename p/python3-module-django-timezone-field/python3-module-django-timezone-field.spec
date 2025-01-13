@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Summary: A Django app providing DB, form, and REST framework fields for zoneinfo and pytz timezone objects
@@ -19,7 +19,7 @@ BuildRequires: python3-module-django
 BuildRequires: python3-module-djangorestframework
 BuildRequires: python3-module-pytest-django
 BuildRequires: python3-module-django-dbbackend-sqlite3
-BuildRequires: python3-module-pytest-lazy-fixture
+BuildRequires: python3-module-pytest-lazy-fixtures
 BuildRequires: python3-module-pytz
 %endif
 
@@ -48,6 +48,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 13 2025 Anton Vyatkin <toni@altlinux.org> 7.1-alt1
+- New version 7.1.
+
 * Tue Aug 06 2024 Anton Vyatkin <toni@altlinux.org> 7.0-alt1
 - New version 7.0.
 
