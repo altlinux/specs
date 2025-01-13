@@ -22,7 +22,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 Epoch: 1
 
@@ -290,6 +290,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Mon Jan 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1:47.4-alt1
+- 47.4
+
 * Sat Dec 07 2024 Yuri N. Sedunov <aris@altlinux.org> 1:47.3-alt1
 - 47.3
 
