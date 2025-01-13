@@ -4,7 +4,7 @@
 %def_with ldap
 
 Name: audit
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
@@ -188,6 +188,7 @@ fi
 %attr(700,root,root) %_logdir/audit
 %_unitdir/auditd.service
 %_unitdir/audit-rules.service
+%_tmpfilesdir/audit.conf
 
 %_datadir/audit-rules
 %_man5dir/*
@@ -237,6 +238,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 13 2025 Egor Ignatov <egori@altlinux.org> 4.0.3-alt1
+- new version 4.0.3
+
 * Fri Aug 09 2024 Egor Ignatov <egori@altlinux.org> 4.0.2-alt1
 - new version 4.0.2
 
