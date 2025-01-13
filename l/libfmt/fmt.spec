@@ -1,7 +1,7 @@
 %define sover 11
 
 Name: libfmt
-Version: 11.0.2
+Version: 11.1.2
 Release: alt1
 Epoch: 1
 
@@ -67,6 +67,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Mon Jan 13 2025 Nazarov Denis <nenderus@altlinux.org> 1:11.1.2-alt1
+- New version 11.1.2.
+
 * Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 1:11.0.2-alt1
 - New version 11.0.2.
 
