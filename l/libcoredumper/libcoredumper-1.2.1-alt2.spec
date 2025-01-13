@@ -5,7 +5,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define bname coredumper
 Name: lib%bname
 Version: 1.2.1
-Release: alt3
+Release: alt4
 Summary: Library to create core dumps of the running program
 Group: System/Libraries
 License: %bsdstyle
@@ -66,6 +66,7 @@ This package includes examples of using %name.
 sed -i '/#include <sys\/sysctl.h>/d' src/elfcore.c
 
 %build
+export CFLAGS="-std=gnu89"
 %configure %{subst_enable shared} --disable-static
 %make_build
 
@@ -101,6 +102,9 @@ install -m 0644 examples/* %buildroot%_docdir/%name-%version/examples/
 
 
 %changelog
+* Mon Jan 13 2025 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt4
+- Fixed FTBFS.
+
 * Fri Oct 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt3
 - Fixed FTBFS.
 
