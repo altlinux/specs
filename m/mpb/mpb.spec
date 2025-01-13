@@ -1,15 +1,15 @@
 Name: mpb
-Version: 1.5
-Release: alt5
+Version: 1.11.1
+Release: alt1
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
 Url: http://ab-initio.mit.edu/wiki/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Vcs: https://github.com/stevengj/mpb.git
 
 Source: %name-%version.tar
 
-BuildPreReq: /proc
+BuildRequires: /proc
 # Automatically added by buildreq on Sun Dec 10 2017
 # optimized out: glibc-kernheaders-generic guile18 guile18-devel indent libgfortran-devel libgmp-devel libhdf5-8-seq libltdl7-devel libopenblas-devel libquadmath-devel perl python-base zlib-devel
 BuildRequires: gcc-fortran libctl-devel libfftw3-devel libhdf5-devel
@@ -68,9 +68,13 @@ This package contains development files of MIT Photonic Bands (MPB).
 rm -fR autom4te.cache
 
 %build
+export ac_cv_path_SH_JOB=/bin/bash
+
 %autoreconf
 
 %add_optflags -I%_includedir/ctl -I%_libdir/hdf5-seq/include
+%add_optflags -Wno-int-conversion -Wno-implicit-function-declaration
+
 export CPPFLAGS="%optflags"
 
 %configure \
@@ -100,6 +104,9 @@ export CPPFLAGS="%optflags"
 %_libdir/*.so
 
 %changelog
+* Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.11.1-alt1
+- 1.11.1
+
 * Mon Jun 29 2020 Grigory Ustinov <grenka@altlinux.org> 1.5-alt5
 - Add explicit BR on libctl-devel (Closes: #38587).
 
