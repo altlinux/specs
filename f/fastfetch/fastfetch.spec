@@ -1,5 +1,5 @@
 Name: fastfetch
-Version: 2.22.0
+Version: 2.34.0
 Release: alt1
 Summary: Like neofetch, but much faster because written in c
 
@@ -78,7 +78,10 @@ popd
 %files bash-completion
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
+
 %changelog
+* Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 2.34.0-alt1
+- Update to new version
 
 * Mon Aug 26 2024 Artyom Bystrov <arbars@altlinux.org> 2.22.0-alt1
 - Update to new version
