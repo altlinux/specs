@@ -2,7 +2,7 @@
 
 Name: glaxnimate
 Version: 0.5.4
-Release: alt2
+Release: alt3
 
 Summary: A simple vector graphics animation program
 License: BSD-2-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and Unicode-TOU
@@ -65,6 +65,9 @@ sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
 %doc *.md
 
 %changelog
+* Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 0.5.4-alt3
+- Fix FTBFS (https://invent.kde.org/graphics/glaxnimate/-/merge_requests/53/diffs)
+
 * Fri Nov 15 2024 Michael Shigorin <mike@altlinux.org> 0.5.4-alt2
 - E2K: fix build with lcc 1.29 (ilyakurdyukov@)
 - Minor spec cleanup
