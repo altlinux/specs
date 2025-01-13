@@ -1,7 +1,7 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -67,6 +67,7 @@ export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 export PATH=%_qt6_bindir:$PATH
+export LC_ALL=C.UTF-8
 
 %cmake \
   -GNinja \
@@ -92,6 +93,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Mon Jan 13 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.4-alt1
+- New version 1.2.4.
+
 * Mon Dec 09 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.3-alt1
 - New version 1.2.3.
 
