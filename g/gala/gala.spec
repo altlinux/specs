@@ -4,8 +4,8 @@
 %define service_name io.elementary.gala
 
 Name: %_name
-Version: 8.0.4
-Release: alt0.5
+Version: 8.1.0
+Release: alt1
 
 Summary: Pantheon Window Manager
 Group: Graphical desktop/Other
@@ -118,6 +118,9 @@ install -p -m644 vapi/xfixes-4.0.vapi  %buildroot%_vapidir/
 
 
 %changelog
+* Mon Jan 13 2025 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
+- 8.1.0-4-g56d8cafe
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0.4-alt0.5
 - 8.0.4-15-g4f38089f
 
