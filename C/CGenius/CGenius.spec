@@ -2,7 +2,7 @@
 
 Name: CGenius
 Version: 3.5.1
-Release: alt1
+Release: alt2
 
 Summary: the clone of Commander Keen
 License: GPL2
@@ -10,6 +10,7 @@ Group: Games/Arcade
 Url: http://clonekeenplus.sourceforge.net
 
 Source: https://gitlab.com/Dringgstein/Commander-Genius/-/archive/v%version/Commander-Genius-v%version.tar.bz2
+Patch0: 0001-Fix-SDL_TrueTypeFont.patch
 
 # Automatically added by buildreq on Fri Feb 08 2019
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libsasl2-3 libstdc++-devel python-base python-modules python3 python3-base sh4 xorg-proto-devel
@@ -73,6 +74,7 @@ added to Episode 1, 2, 3 and 4 so far. More is about to come!
 %prep
 %setup -n Commander-Genius-v%version
 rm -rf Build dlls
+%patch0 -p1
 
 %build
 %cmake \
@@ -104,6 +106,9 @@ cp -a hqp/{games,global} %buildroot%_gamesdatadir/commandergenius/
 %_gamesdatadir/commandergenius/global/snd
 
 %changelog
+* Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 3.5.1-alt2
+- Fix FTBFS
+
 * Fri Nov  8 2024 Artyom Bystrov <arbars@altlinux.org> 3.5.1-alt1
 - Update to new version
 
