@@ -1,9 +1,10 @@
 %def_with libidn2
+%def_with dbus
 
 Name: dnsmasq
 Version: 2.90
 
-Release: alt2
+Release: alt3
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -15,6 +16,7 @@ Source2: %name.sysconfig
 Source3: %name-helper
 Source4: %name.service
 Source5: %name@.service
+Source6: dbus.conf
 Patch: %name-%version-%release.patch
 
 # Patch from upstream git, must be dropped during update to new version.
@@ -31,6 +33,9 @@ BuildRequires: libidn-devel
 
 # DNSSEC
 BuildRequires: libnettle-devel libgmp-devel
+
+# DBUS
+%{?_with_dbus:BuildRequires: libdbus-devel}
 
 %define sysconfig_file %_sysconfdir/sysconfig/%name
 %define _unpackaged_files_terminate_build 1
@@ -83,6 +88,11 @@ sed -i 's;/\* #define HAVE_IDN \*/;#define HAVE_IDN;' src/config.h
 #enable DNSSEC support
 sed -i 's;/\* #define HAVE_DNSSEC \*/;#define HAVE_DNSSEC;' src/config.h
 
+%if_with dbus
+#enable DBUS support
+sed -i 's;/\* #define HAVE_DBUS \*/;#define HAVE_DBUS;' src/config.h
+%endif
+
 %build
 # E2K: EDG-based compiler has many false positives
 %ifnarch %e2k
@@ -111,16 +121,13 @@ install -pD -m 644 contrib/lease-tools/dhcp_lease_time.1 %buildroot%_man1dir/dhc
 # For DNSSEC support
 install -pD -m 644 trust-anchors.conf %buildroot%_datadir/%name/trust-anchors.conf
 
+%if_with dbus
+# Install DBus conf file
+install -pD -m 644 %SOURCE6 %buildroot%_datadir/dbus-1/system.d/dnsmasq.conf
+%endif
+
+
 %pre
-# Upgrade configuration from previous versions
-if test -e %sysconfig_file; then
-if grep -Eq '^[^#]*ALL *=' %sysconfig_file; then
-    if ! grep -Eq '^[^#]*ALL_DEV *=' %sysconfig_file; then
-	echo 'NOTE: You should put ALL_DEV=<interface> to %sysconfig_file'
-	echo '      for keeping DHCP broadcasts mode.'
-    fi
-fi
-fi
 # Create dnsmasq user
 groupadd -r -f _dnsmasq ||:
 useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
@@ -137,6 +144,9 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %dir %_datadir/%name/
 %config(noreplace) %_datadir/%name/trust-anchors.conf
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%if_with dbus
+%config %_datadir/dbus-1/system.d/dnsmasq.conf
+%endif
 %dir %_sysconfdir/dnsmasq.conf.d
 %_unitdir/%name.service
 %_unitdir/%name@.service
@@ -150,6 +160,10 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Jan 13 2025 Mikhail Efremov <sem@altlinux.org> 2.90-alt3
+- Enabled DBus support (closes: #52595).
+- Dropped "Broadcast routing" feature leftovers.
+
 * Fri Dec 20 2024 Mikhail Efremov <sem@altlinux.org> 2.90-alt2
 - Added patch from upstream git:
   + Fix crash when reloading DHCP config on SIGHUP.
