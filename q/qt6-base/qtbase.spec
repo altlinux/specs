@@ -32,7 +32,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.7.2
-Release: alt6
+Release: alt7
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -395,7 +395,7 @@ OpenGL widgets library for the Qt%major toolkit
 %endif
 %patch1006 -p1
 #
-%patch2000 -p1
+#%patch2000 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -833,6 +833,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt7
+- temporaty disable qmenu_fix_shortcuts.patch (see bug#52611)
+
 * Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt6
 - switch to legacy implementation of QCryptographicHash while openssl3 not ready (closes: 48923)
 
