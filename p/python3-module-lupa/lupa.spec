@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2
+Version: 2.3
 Release: alt1
 Summary: Python wrapper around Lua and LuaJIT
 License: MIT
@@ -72,6 +72,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 2.3-alt1
+- 2.2 -> 2.3.
+
 * Mon Jun 03 2024 Stanislav Levin <slev@altlinux.org> 2.2-alt1
 - 2.1 -> 2.2.
 
