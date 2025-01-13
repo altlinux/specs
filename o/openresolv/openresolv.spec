@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.13.2
-Release: alt1
+Release: alt2
 
 Summary: A framework for managing DNS information 
 License: BSD-2-Clause
@@ -145,10 +145,13 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Mon Jan 13 2025 Mikhail Efremov <sem@altlinux.org> 3.13.2-alt2
+- dnsmasq: Don't pull dbus-tools.
+
 * Wed Dec 20 2023 Mikhail Efremov <sem@altlinux.org> 3.13.2-alt1
 - Use /run as rundir.
 - Updated Vcs tag.
-- Updated to 3.12.2.
+- Updated to 3.13.2.
 
 * Sun Sep 18 2022 Alexey Shabalin <shaba@altlinux.org> 3.12.0-alt2
 - Build without PowerDNS Recursor support.
