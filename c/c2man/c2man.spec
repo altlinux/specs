@@ -1,9 +1,11 @@
+%ifnarch %e2k
 %set_gcc_version 13
+%endif
 
 Name: c2man
 #catalog:version:2.0 patchlevel 40
 Version: 2.0.40
-Release: alt1.2
+Release: alt1.3
 
 Summary: C Source Manual Page Extraction Tool
 Group: Development/Other
@@ -59,6 +61,9 @@ install -m644 %name.1 %buildroot%_man1dir/
 
 
 %changelog
+* Mon Jan 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.40-alt1.3
+- E2K: just the single lcc version is available (mike@)
+
 * Wed Nov 13 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.40-alt1.2
 - rebuilt with gcc-13
 
