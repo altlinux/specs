@@ -2,8 +2,10 @@
 %define pypi_name icecream
 %define mod_name %pypi_name
 
+%def_with check
+
 Name: python3-module-%pypi_name
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 Summary: Never use print() to debug again
 License: MIT
@@ -18,6 +20,9 @@ Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 Never use print() to debug again; inspect variables, expressions, and program
@@ -35,8 +40,11 @@ execution with a single, simple function call.
 %install
 %pyproject_install
 
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/tests
+
 %check
-# upstream still sits on dead nose
+%pyproject_run_unittest -v
 
 %files
 %doc README.*
@@ -44,5 +52,8 @@ execution with a single, simple function call.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 2.1.4-alt1
+- 2.1.3 -> 2.1.4.
+
 * Wed Apr 26 2023 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - Initial build for Sisyphus.
