@@ -1,10 +1,7 @@
-%define soversion 0
-%define abiversion 1.4.4
-# It seems, upstream still choose correct versioning of ABI
-# so we fill soversion as package name suffix.
+%define soversion 1
 
 Name:    QXlsx
-Version: 1.4.9
+Version: 1.5.0
 Release: alt1
 
 Summary: Excel file(*.xlsx) reader/writer library
@@ -14,8 +11,6 @@ Url:     https://qtexcel.github.io/QXlsx
 Vcs:     https://github.com/QtExcel/QXlsx
 
 Source: %name-%version.tar
-Patch0: QXlsx-1.4.9-alt-private-str.patch
-# Fix string comparison with Latin1 encoded slash (thx Fedora).
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -41,7 +36,6 @@ Requires: lib%name%soversion = %EVR
 
 %prep
 %setup
-%patch0
 
 %build
 pushd QXlsx
@@ -55,8 +49,8 @@ pushd QXlsx
 popd
 
 %files -n lib%name%soversion
-%_libdir/lib%{name}Qt6.so.%abiversion
-%_libdir/lib%{name}Qt6.so.%soversion.%abiversion
+%_libdir/lib%{name}Qt6.so.%soversion
+%_libdir/lib%{name}Qt6.so.%soversion.*
 
 %files -n lib%name-devel
 %doc *.md
@@ -65,5 +59,8 @@ popd
 %_cmakedir/%{name}Qt6
 
 %changelog
+* Tue Jan 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.5.0-alt1
+- 1.4.9 -> 1.5.0.
+
 * Tue Nov 05 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.4.9-alt1
 - Initial build for Sisyphus.
