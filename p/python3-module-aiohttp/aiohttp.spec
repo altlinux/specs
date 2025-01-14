@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp
-Version: 3.10.10
+Version: 3.11.11
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -19,6 +19,7 @@ BuildRequires: python3(multidict)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-cov)
 BuildRequires: python3(pytest-mock)
+BuildRequires: python3(xdist)
 BuildRequires: python3(attr)
 BuildRequires: python3(yarl)
 BuildRequires: python3(aiosignal)
@@ -64,8 +65,15 @@ make cythonize
 %pyproject_install
 
 %check
-%pyproject_run_pytest -m 'not dev_mode and not internal' --ignore=tests/autobahn \
-	--ignore=tests/test_proxy_functional.py tests ||:
+export AIOHTTP_NO_EXTENSIONS=1
+%pyproject_run_pytest -m 'not dev_mode and not internal' \
+	--ignore=tests/autobahn \
+	--ignore=tests/test_proxy_functional.py \
+	--ignore-glob='tests/test_benchmarks_*' \
+	tests \
+%ifarch i586 ppc64le
+	||: careometer=0
+%endif
 
 %files
 %doc *.txt *.rst examples
@@ -79,6 +87,9 @@ make cythonize
 %python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.11-alt1
+- 3.11.11 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.10-alt1
 - 3.10.10 released
 
