@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _name Curtail
-%define ver_major 1.11
+%define ver_major 1.12
 %define xdg_name com.github.huluti.%_name
 
 %def_enable check
 
 Name: curtail
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An Image Compressor for GNOME
@@ -72,6 +72,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Sun Oct 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.11.1-alt1
 - 1.11.1
 

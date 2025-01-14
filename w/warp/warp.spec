@@ -10,8 +10,8 @@
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Fast and secure file transfer tool
 License: GPL-3.0-or-later
@@ -98,6 +98,9 @@ ln -s %_datadir/license-list-data vendor/license/license-list-data
 
 
 %changelog
+* Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- updated to v0.8.1-3-g06ab98e
+
 * Thu Dec 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt2
 - updated aperture to 0.8.0 (ALT #52478)
 
