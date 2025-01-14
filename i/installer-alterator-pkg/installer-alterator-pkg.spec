@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
-Version: 3.1.8
-Release: alt2
+Version: 3.1.9
+Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jan 10 2025 Anton Midyukov <antohami@altlinux.org> 3.1.9-alt1
+- pkg-install: export DURING_INSTALL=1, when exist $destdir/_NEW_SYSTEM_
+
 * Tue Sep 03 2024 Dmitry Terekhin <jqt4@altlinux.org> 3.1.8-alt2
 - notification about transferring the selection of profiles and groups
   to the installed system

@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -36,6 +36,9 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Jan 10 2025 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
+- backend3/preinstall: set default for ALTERATOR_DESTDIR when is not set
+
 * Thu Sep 14 2023 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
 - change alteratord_socket_dir="/run/alteratord", like alterator 5.4.3
 

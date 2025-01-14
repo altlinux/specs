@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.15.16
+Version: 1.16.1
 Release: alt1
 
 Summary: Installer common parts
@@ -88,6 +88,16 @@ Requires: alterator-net-eth chkconfig etcnet
 %description common-stage3
 This package contains common installer stage3 files and dependencies.
 
+%package common-desktop
+Summary: Installer files for run on Desktop
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: installer-common-stage2 = %EVR
+Conflicts: livecd-install
+
+%description common-desktop
+This package contains installer files for run on Desktop.
+
 %prep
 %setup
 
@@ -99,6 +109,7 @@ This package contains common installer stage3 files and dependencies.
 
 %files common-stage2
 %_bindir/*
+%exclude %_bindir/install2
 %_sbindir/*
 %_datadir/install2
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
@@ -108,7 +119,22 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
+%files common-desktop
+%_bindir/install2
+%_desktopdir/install2.desktop
+%_sysconfdir/pam.d/install2
+%_sysconfdir/security/console.apps/install2
+%_sysconfdir/X11/profile.d/zdg-user-dirs-install.sh
+
 %changelog
+* Mon Jan 13 2025 Anton Midyukov <antohami@altlinux.org> 1.16.1-alt1
+- Add subpackage installer-common-desktop
+
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 1.16.0-alt1
+- install2: adapt for works without install2-init and run in graphical session
+- Do not run scripts, which do not need...
+- initinstall.d: add script for create /mnt/destination
+
 * Fri Nov 29 2024 Anton Midyukov <antohami@altlinux.org> 1.15.16-alt1
 - 90-firsttime.sh: do'nt create /etc/firsttime.flag, if /etc/firsttime.d/
   is empty
