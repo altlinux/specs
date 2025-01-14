@@ -1,31 +1,31 @@
-%global nnuehash 5af11540bbfe
+%global nnuehash1 1111cefa1111
+%global nnuehash2 37f18f62d772
 
 Name: stockfish
-Version: 16
-Release: alt2
+Version: 17
+Release: alt1
 Group: Games/Boards
 
 Summary: Powerful open source chess engine
+
 # CC0 is for the NNUE network file (see https://tests.stockfishchess.org/nns)
 License: GPLv3+ and CC0
-Url: http://stockfishchess.org
-Packager: Leonid Znamenok <respublica@altlinux.org>
+
+Url: https://stockfishchess.org
+VCS: https://github.com/official-stockfish/Stockfish
 
 # Main source
 # https://github.com/official-%name/Stockfish/archive/sf_%version.tar.gz
 Source0: %name-%version.tar
 
 # the NN file
-Source1: https://tests.stockfishchess.org/api/nn/nn-%nnuehash.nnue
+Source1: https://tests.stockfishchess.org/api/nn/nn-%nnuehash1.nnue
+Source2: https://tests.stockfishchess.org/api/nn/nn-%nnuehash2.nnue
 
 # steal some documentation
 Source10: https://raw.githubusercontent.com/frankkopp/FrankyUCIChessEngine/master/engine-interface.txt
 # polyglot support
 Source20: https://raw.githubusercontent.com/spinkham/stockfish/master/polyglot.ini
-
-# Patch removes check for the existence of curl or wget in the makefile
-Patch0: stockfish-16-alt-remove-nnue-downloading-makefile.patch
-Patch3500: stockfish-loongarch64.patch
 
 BuildRequires: gcc-c++
 BuildRequires: make
@@ -39,12 +39,11 @@ information about how to use Stockfish with your GUI.
 
 %prep
 # verify the NNUE net checksum early to catch maintainer error
-test %nnuehash = "$(sha256sum %SOURCE1 | cut -c1-12)"
+test %nnuehash1 = "$(sha256sum %SOURCE1 | cut -c1-12)"
+test %nnuehash2 = "$(sha256sum %SOURCE2 | cut -c1-12)"
 
 %setup
 
-%patch0 -p1
-%patch3500 -p1
 %ifarch %e2k
 # SSSE3 is available on e2k, but assembly is different
 sed -i '/#define USE_INLINE_ASM/d' src/nnue/layers/simd.h
@@ -52,6 +51,7 @@ sed -i '/#define USE_INLINE_ASM/d' src/nnue/layers/simd.h
 
 cp %SOURCE10 ./
 cp %SOURCE1 ./src/
+cp %SOURCE2 ./src/
 
 # W: wrong-file-end-of-line-encoding
 sed -i 's,\r$,,' engine-interface.txt
@@ -113,6 +113,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 17-alt1
+- New version 17.
+
 * Fri Oct 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 16-alt2
 - NMU: fixed FTBFS on LoongArch
 
