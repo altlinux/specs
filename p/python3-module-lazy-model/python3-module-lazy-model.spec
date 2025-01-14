@@ -3,7 +3,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Lazy parsing for Pydantic models
 License: Apache-2.0
@@ -34,10 +34,12 @@ field on demand.
 
 %files
 %doc *.md
-%doc %python3_sitelibdir/LICENSE
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2
+- Fixed FTBFS (poetry-core 2.0).
+
 * Wed Aug 07 2024 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus.

@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.9
-Release: alt1
+Release: alt2
 
 Summary: A fast asyncio MySQL/MariaDB driver with replication protocol support
 License: Apache-2.0
@@ -47,9 +47,6 @@ and aiomysql but rewrite core protocol with cython to speedup.
 %install
 %pyproject_install
 
-# remove wrong-installed docs
-rm %buildroot%python3_sitelibdir/{README.md,CHANGELOG.md,LICENSE}
-
 %check
 %pyproject_run -- pytest -vra --import-mode append tests
 
@@ -59,6 +56,9 @@ rm %buildroot%python3_sitelibdir/{README.md,CHANGELOG.md,LICENSE}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 0.2.9-alt2
+- Fixed FTBFS (poetry-core 2.0).
+
 * Sun Dec 31 2023 Anton Zhukharev <ancieg@altlinux.org> 0.2.9-alt1
 - Updated to 0.2.9.
 

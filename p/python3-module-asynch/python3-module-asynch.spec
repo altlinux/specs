@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: An asyncio ClickHouse Python Driver with native (TCP) interface support
 License: Apache-2.0
@@ -56,9 +56,6 @@ support, which reuse most of clickhouse-driver and comply with PEP249.
 %install
 %pyproject_install
 
-# remove wrong-installed docs
-rm %buildroot%python3_sitelibdir/{CHANGELOG.md,README.md,LICENSE}
-
 %check
 %pyproject_run_pytest -vra
 
@@ -70,6 +67,9 @@ rm %buildroot%python3_sitelibdir/{CHANGELOG.md,README.md,LICENSE}
 %files -n %name+compression
 
 %changelog
+* Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 0.2.5-alt2
+- Fixed FTBFS (poetry-core 2.0).
+
 * Tue Oct 22 2024 Anton Zhukharev <ancieg@altlinux.org> 0.2.5-alt1
 - Updated to 0.2.5.
 

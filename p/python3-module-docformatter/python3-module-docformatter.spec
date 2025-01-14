@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.5
-Release: alt2
+Release: alt3
 
 Summary: Formats docstrings to follow PEP 257
 License: MIT
@@ -46,9 +46,6 @@ BuildRequires(pre): rpm-build-pyproject
 %install
 %pyproject_install
 
-# remove wrongly installed LICENSE file
-rm %buildroot%python3_sitelibdir/LICENSE
-
 %check
 %pyproject_run_pytest -vra -k 'not test_no_pre_summary_space_using_pyproject'
 
@@ -59,6 +56,9 @@ rm %buildroot%python3_sitelibdir/LICENSE
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 1.7.5-alt3
+- Fixed FTBFS (poetry-core 2.0).
+
 * Thu May 23 2024 Anton Zhukharev <ancieg@altlinux.org> 1.7.5-alt2
 - Fixed FTBFS.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Summary: Middleware that enables single request-response cycle tracing by injecting a unique ID into project logs
 License: MIT
@@ -52,8 +52,10 @@ a unique ID attached to it, making debugging simple.
 %doc README.*
 %python3_sitelibdir/django_guid
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%exclude %python3_sitelibdir/CHANGELOG.rst
 
 %changelog
+* Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 3.5.0-alt2
+- Fixed FTBFS (poetry-core 2.0).
+
 * Mon Jul 22 2024 Anton Vyatkin <toni@altlinux.org> 3.5.0-alt1
 - Initial build for Sisyphus.

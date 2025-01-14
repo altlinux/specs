@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.13
-Release: alt1
+Release: alt2
 
 Summary: A generator library for concise, unambiguous and URL-safe UUIDs
 
@@ -39,8 +39,6 @@ letters and numbers.
 %pyproject_install
 # strip tests
 rm %buildroot%python3_sitelibdir/%oname/test_shortuuid.py
-# remove strange COPYING file
-rm %buildroot%python3_sitelibdir/COPYING
 
 %check
 %pyproject_run_pytest -v
@@ -52,6 +50,9 @@ rm %buildroot%python3_sitelibdir/COPYING
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 1.0.13-alt2
+- Fixed FTBFS (poetry-core 2.0).
+
 * Tue Mar 12 2024 Anton Vyatkin <toni@altlinux.org> 1.0.13-alt1
 - new version 1.0.13
 
