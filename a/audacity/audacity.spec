@@ -17,7 +17,7 @@
 
 Name: audacity
 Version: 3.7.1
-Release: alt2
+Release: alt2.1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -267,6 +267,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Tue Jan 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.7.1-alt2.1
+- Fixed build for Elbrus
+
 * Sun Dec 15 2024 Ivan A. Melnikov <iv@altlinux.org> 3.7.1-alt2
 - require the latest ffmpeg libraries
 
