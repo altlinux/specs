@@ -4,7 +4,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.4.4
+Version: 6.4.6
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -220,6 +220,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 6.4.6-alt1
+- New version 6.4.6.
+
 * Mon Jan 06 2025 Anton Midyukov <antohami@altlinux.org> 6.4.4-alt1
 - New version 6.4.4.
 
