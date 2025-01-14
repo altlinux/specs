@@ -1,5 +1,5 @@
 Name: python3-module-transmission-rpc
-Version: 7.0.8
+Version: 7.0.11
 Release: alt1
 
 Summary: Transmission JSON RPC wrapper
@@ -32,6 +32,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/transmission_rpc-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 7.0.11-alt1
+- 7.0.11 released
+
 * Wed Jun 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 7.0.8-alt1
 - 7.0.8 released
 
