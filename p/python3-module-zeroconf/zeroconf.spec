@@ -1,5 +1,5 @@
 Name: python3-module-zeroconf
-Version: 0.136.0
+Version: 0.139.0
 Release: alt1
 
 Summary: Python Multicast DNS Service Discovery Library
@@ -17,6 +17,7 @@ BuildRequires: python3(cython)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-cov)
 BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(pytest_codspeed)
 BuildRequires: python3(pytest_timeout)
 BuildRequires: python3(ifaddr)
 
@@ -41,6 +42,9 @@ export SKIP_IPV6=1
 %python3_sitelibdir/zeroconf-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.139.0-alt1
+- 0.139.0 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.136.0-alt1
 - 0.136.0 released
 
