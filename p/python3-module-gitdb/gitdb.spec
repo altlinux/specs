@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.11
+Version: 4.0.12
 Release: alt1
 Summary: IO of git-style object databases
 License: BSD
@@ -65,6 +65,9 @@ rm -vr gitdb/ext/*
 %python3_sitelibdir/gitdb/test/
 
 %changelog
+* Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 4.0.12-alt1
+- 4.0.11 -> 4.0.12.
+
 * Thu Feb 15 2024 Stanislav Levin <slev@altlinux.org> 4.0.11-alt1
 - 4.0.10 -> 4.0.11.
 
