@@ -1,6 +1,6 @@
 Name: python3-module-av
-Version: 13.0.0
-Release: alt2
+Version: 14.0.1
+Release: alt1
 
 Summary: Python bindings for ffmpeg libraries
 License: BSD
@@ -28,8 +28,6 @@ BuildRequires: pkgconfig(libswresample)
 %setup
 
 %build
-# support for ffmpeg 6.x isn't perfect
-%add_optflags -Wno-incompatible-pointer-types -Wno-incompatible-function-pointer-types
 %pyproject_build
 
 %install
@@ -41,6 +39,9 @@ BuildRequires: pkgconfig(libswresample)
 %python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.0.1-alt1
+- 14.0.1 released
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 13.0.0-alt2
 - rebuilt with gcc14
 
