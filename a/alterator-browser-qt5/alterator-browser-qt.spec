@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.24
+Version: 3.4.25
 Release: alt1
 
 Source:%name-%version.tar
@@ -84,6 +84,9 @@ __EOF__
 
 
 %changelog
+* Tue Jan 14 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.25-alt1
+- fix using internal mailbox with new xml parser (thanks proskur@alt)
+
 * Fri Jan 10 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.24-alt1
 - port away from QXmlSimpleReader (thanks proskur@alt)
 
