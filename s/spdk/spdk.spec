@@ -10,7 +10,7 @@
 
 Name: spdk
 Version: 23.09
-Release: alt1
+Release: alt1.1
 
 Summary: Storage Performance Development Kit
 
@@ -50,7 +50,7 @@ Requires: systemd-utils
 
 # Automatically added by buildreq on Mon Oct 16 2023
 # optimized out: bash5 bashrc glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libncurses-devel libstdc++-devel libtinfo-devel pkg-config python3 python3-base python3-dev sh5
-BuildRequires: libaio-devel libfuse3-devel libisal-devel libssl-devel libuuid-devel python3-module-setuptools
+BuildRequires: libaio-devel libfuse3-devel libisal-devel libssl-devel libuuid-devel python3-module-setuptools libsystemd-devel
 BuildRequires: rdma-core-devel zlib-devel libpcap-devel libdbus-devel libelf-devel libzstd-devel libjansson-devel
 %if_enabled clang
 #BuildRequires(pre): rpm-macros-llvm-common
@@ -305,6 +305,9 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir_noarch/%{name}-*
 
 %changelog
+* Tue Jan 14 2025 Leontiy Volodin <lvol@altlinux.org> 23.09-alt1.1
+- Fixed FTBFS.
+
 * Mon Oct 16 2023 Leontiy Volodin <lvol@altlinux.org> 23.09-alt1
 - New version 23.09.
 - Fixed build with python 3.11.6.
