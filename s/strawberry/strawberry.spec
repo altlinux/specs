@@ -2,7 +2,7 @@
 
 Name: strawberry
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: Audio player and music collection organizer
 
@@ -59,6 +59,9 @@ Features:
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "s/u'\\\\0'/(QChar)&/" src/tagreader/tagreadergme.cpp
+%endif
 
 %build
 %if_with clang
@@ -93,6 +96,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Thu Jan 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.4-alt2
+- Fixed build for Elbrus.
+
 * Mon Jan 13 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.4-alt1
 - New version 1.2.4.
 
