@@ -1,5 +1,5 @@
 Name: python3-module-aiosignal
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: A project to manage callbacks in asyncio projects.
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/aiosignal-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.2-alt1
+- 1.3.2 released
+
 * Tue Jan 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
 - 1.3.1 released
 
