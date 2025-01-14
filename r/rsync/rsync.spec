@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.7
-Release: alt1
+Release: alt2
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -114,6 +114,11 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Tue Jan 14 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt2
+- Applied security fixes made by Red Hat (fixes: CVE-2024-12084,
+  CVE-2024-12085, CVE-2024-12086, CVE-2024-12087, CVE-2024-12088,
+  CVE-2024-12747).
+
 * Fri Oct 21 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.7-alt1
 - v3.2.6 -> v3.2.7.
 
