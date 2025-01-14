@@ -1,6 +1,6 @@
 %global import_path github.com/bluenviron/mediamtx
 Name:    mediamtx
-Version: 1.5.1
+Version: 1.11.0
 Release: alt1
 
 Summary: Ready-to-use SRT / WebRTC / RTSP / RTMP / LL-HLS media server
@@ -9,10 +9,15 @@ Group:   Other
 Url:     https://github.com/bluenviron/mediamtx
 
 Source: %name-%version.tar
+
+Source1: %name.service
+
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+
+BuildRequires: /proc
 
 %description
 MediaMTX (formerly rtsp-simple-server) is a ready-to-use and zero-dependency
@@ -40,11 +45,29 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
+mkdir -p %buildroot%_sysconfdir/%name
+install -m0644 mediamtx.yml %buildroot%_sysconfdir/%name/mediamtx.yml
+
+mkdir -p %buildroot%_unitdir
+install -m0644 %SOURCE1 %buildroot%_unitdir/%name.service
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %doc LICENSE *.md
 %_bindir/mediamtx
+%_unitdir/%name.service
+%config(noreplace) %_sysconfdir/%name/mediamtx.yml
 
 %changelog
+* Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.0-alt1
+- New version 1.11.0.
+- Added default config and service files.
+
 * Mon Feb 19 2024 Leonid Znamenok <respublica@altlinux.org> 1.5.1-alt1
 - New version 1.5.1.
 
