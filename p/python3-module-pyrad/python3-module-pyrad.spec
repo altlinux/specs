@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.4
-Release: alt4
+Release: alt5
 
 Summary: Python RADIUS Implementation
 License: BSD-3-Clause
@@ -46,10 +46,12 @@ decoding responses.
 %files
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
-%exclude %python3_sitelibdir/example
 %doc *.rst
 
 %changelog
+* Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 2.4-alt5
+- Fixed FTBFS (poetry-core 2.0).
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 2.4-alt4
 - Fixed FTBFS.
 

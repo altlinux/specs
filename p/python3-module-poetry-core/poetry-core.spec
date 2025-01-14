@@ -10,7 +10,7 @@
 %def_without vendored
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 Summary: Poetry Core
 License: MIT
@@ -88,6 +88,9 @@ unset SOURCE_DATE_EPOCH
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 2.0.0 -> 2.0.1.
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.9.1 -> 2.0.0.
 
