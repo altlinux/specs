@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp-fast-zlib
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Another nothingburger
@@ -30,6 +30,9 @@ BuildRequires: python3(poetry.core)
 %python3_sitelibdir/aiohttp_fast_zlib-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.0-alt1
+- 0.2.0 released
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.1-alt1
 - 0.1.1 released
 
