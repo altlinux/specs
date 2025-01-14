@@ -1,5 +1,5 @@
 Name: python3-module-smbus2
-Version: 0.4.2
+Version: 0.5.0
 Release: alt1
 
 Summary: Python implementation of of the python-smbus package
@@ -32,6 +32,9 @@ smbus2 is drop-in replacement of lm-sensors smbus package
 %python3_sitelibdir/smbus2-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.0-alt1
+- 0.5.0 released
+
 * Wed Dec 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt1
 - 0.4.2 released
 
