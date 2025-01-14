@@ -1,13 +1,12 @@
 Name:     asusctl
 Version:  6.0.12
-Release:  alt1.1
+Release:  alt1.2
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
 License:  MPL-2.0
 Group:    System/Configuration/Hardware
 Url:      https://asus-linux.org
-# GiSource   https://gitlab.com/asus-linux/asusctl
-
+Vcs:      https://gitlab.com/asus-linux/asusctl
 
 ExclusiveArch: x86_64
 
@@ -27,11 +26,9 @@ BuildRequires(pre): rust-cargo
 # optimized out: ca-trust glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libudev-devel libwayland-server llvm17.0-libs pkg-config python3 python3-base python3-dev rust rust-cargo sh5
 BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope
 
-Buildrequires: git libayatana-indicator-devel libappindicator-gtk3 libxkbcommon-x11-devel cargo-vendor-filterer 
+Buildrequires: libxkbcommon-x11-devel cargo-vendor-filterer
 
 # For Version 6.x BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope rust-cargo
-
-BuildRequires: cmake 
 
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -66,8 +63,7 @@ asusd - утилита для Linux, позволяющая управлять �
 %package rog-gui
 Summary: An experimental GUI for %name
 Group:    System/Configuration/Hardware
-ExclusiveArch: x86_64
-Requires: libappindicator-gtk3 libayatana-appindicator3-1
+Requires: %name = %EVR
 
 %description rog-gui
 A one-stop-shop GUI tool for asusd/asusctl. It aims to provide most controls,
@@ -132,6 +128,12 @@ install data/asusd.service %buildroot/%_unitdir/asusd.service
 %_datadir/rog-gui/*
 
 %changelog
+* Sun Jan 05 2025 Anton Midyukov <antohami@altlinux.org> 6.0.12-alt1.2
+- NMU:
+  + remove unnecessary BuildRequires and Requires
+  + rog-gui: add Requires on asusctl
+  + add Vcs
+
 * Sat Oct 26 2024 Hihin Ruslan <ruslandh@altlinux.ru> 6.0.12-alt1.1
 - Update buildreq
 - Update vendors
