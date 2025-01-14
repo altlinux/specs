@@ -10,7 +10,7 @@
 %define binname docker-compose
 
 Name:		docker-compose-v2
-Version:	2.32.1
+Version:	2.32.3
 Release:	alt1
 Summary:	Multi-container orchestration for Docker
 
@@ -58,6 +58,9 @@ install -Dpm0755 %binname %buildroot%{_libexecdir}/docker/cli-plugins
 %{_libexecdir}/docker/cli-plugins/%binname
 
 %changelog
+* Tue Jan 14 2025 Vladimir Didenko <cow@altlinux.org> 2.32.3-alt1
+- New version
+
 * Mon Dec 16 2024 Vladimir Didenko <cow@altlinux.org> 2.32.1-alt1
 - New version
 
