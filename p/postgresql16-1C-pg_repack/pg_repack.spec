@@ -8,8 +8,8 @@
 %endif
 
 Name: postgresql%pg_ver-pg_repack
-Version: 1.5.1
-Release: alt2
+Version: 1.5.2
+Release: alt1
 
 Summary: pg_repack is a PostgreSQL extension which lets you remove bloat from tables and indexes
 License: BSD
@@ -52,6 +52,9 @@ CLUSTER directly.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Jan 14 2025 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 1.5.1-alt2
 - Fix BuildReq
 
