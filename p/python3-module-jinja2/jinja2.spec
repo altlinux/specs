@@ -1,5 +1,5 @@
 Name: python3-module-jinja2
-Version: 3.1.4
+Version: 3.1.5
 Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
@@ -15,6 +15,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(pytest)
 %pyproject_builddeps_build
+%pyproject_builddeps_check
 %pyproject_builddeps_metadata
 
 %description
@@ -26,6 +27,7 @@ sandboxed environment.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
 
 %build
 %pyproject_build
@@ -41,6 +43,9 @@ sandboxed environment.
 %python3_sitelibdir/jinja2-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.5-alt1
+- 3.1.5 released
+
 * Fri May 17 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.4-alt1
 - 3.1.4 released
 
