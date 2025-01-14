@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.12
+Version: 0.6.0
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -38,6 +38,12 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Tue Jan 14 2025 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1
+- Rockchips-aarch64.sh: Improvements for support U-Boot of vendor
+- Rockchips-aarch64.sh: add compressed u-boot images support (zstd)
+- Update supported boards for u-boot-rockchip 2025.01
+- Drop support Sunxi armh and Raspberry Pi
+
 * Thu Jun 06 2024 Anton Midyukov <antohami@altlinux.org> 0.5.12-alt1
 - add anbernic-rg552-rk3399 support
 
