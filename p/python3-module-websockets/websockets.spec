@@ -1,11 +1,11 @@
 Name: python3-module-websockets
-Version: 14.0
+Version: 14.1
 Release: alt1
 
 Summary: Python WebSocket library
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/aaugustin/websockets
+Url: https://github.com/python-websockets/websockets
 
 Source0: %name-%version-%release.tar
 
@@ -33,6 +33,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/websockets-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.1-alt1
+- 14.1 released
+
 * Mon Nov 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 14.0-alt1
 - 14.0 released
 
