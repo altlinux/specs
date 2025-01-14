@@ -1,5 +1,5 @@
 Name: python3-module-pyotp
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Summary: Python library for generating and verifying one-time passwords.
@@ -32,6 +32,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/pyotp-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.9.0-alt1
+- 2.9.0 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.8.0-alt1
 - 2.8.0 released
 
