@@ -4,28 +4,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
-
 Summary: Object-oriented paths
 License: Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/p1c2u/pathable
 Url: https://pypi.org/project/pathable
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(poetry-core)
-
-%if_with check
-BuildRequires: python3(pytest)
-%endif
-
+Vcs: https://github.com/p1c2u/pathable
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Object-oriented paths.
@@ -37,6 +33,11 @@ Key features:
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -45,8 +46,7 @@ Key features:
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -54,5 +54,8 @@ Key features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 0.4.4-alt1
+- 0.4.3 -> 0.4.4.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.4.3-alt1
 - Initial build for Sisyphus.
