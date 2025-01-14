@@ -1,11 +1,11 @@
 Name: python3-module-dbus-fast
-Version: 2.24.3
+Version: 2.28.0
 Release: alt1
 
 Summary: Python library for DBus
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/sensor-state-data
+Url: https://pypi.org/project/dbus-fast
 
 Source0: %name-%version-%release.tar
 Source1: pyproject_deps.json
@@ -32,6 +32,9 @@ BuildRequires: python3(pytest)
 %python3_sitelibdir/dbus_fast-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.28.0-alt1
+- 2.28.0 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.24.3-alt1
 - 2.24.3 released
 
