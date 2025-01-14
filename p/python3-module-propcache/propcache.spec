@@ -1,5 +1,5 @@
 Name: python3-module-propcache
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Fast implementation of cached properties
@@ -16,6 +16,7 @@ BuildRequires: python3(cython)
 BuildRequires: python3(expandvars)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-cov)
+BuildRequires: python3(pytest_codspeed)
 BuildRequires: python3(xdist)
 
 %description
@@ -38,5 +39,8 @@ BuildRequires: python3(xdist)
 %python3_sitelibdir/propcache-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.1-alt1
+- 0.2.1 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.0-alt1
 - 0.2.0 released
