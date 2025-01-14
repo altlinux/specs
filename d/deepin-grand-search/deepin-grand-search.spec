@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 5.4.9
+Version: 5.5.11
 Release: alt1
 
 Summary: Basic search tool for DDE
@@ -11,10 +11,10 @@ Summary: Basic search tool for DDE
 License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-grand-search
+Vcs: git://github.com/linuxdeepin/dde-grand-search.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: deepin-grand-search-5.4.5-alt-fix-GNUInstallDirs.patch
+Patch: deepin-grand-search-5.4.5-alt-fix-GNUInstallDirs.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -22,9 +22,9 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Tue Jan 09 2024
-# optimized out: alt-os-release bash5 bashrc cmake cmake-modules dtkcore gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-common dqt5-base-devel sh5 zlib-devel
-BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel gsettings-qt-devel libdeepin-pdfium-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libjpeg-devel libtag-devel dqt5-base-devel dqt5-tools libicu-devel
+# Automatically added by buildreq on Tue Jan 14 2025
+# optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt5-base-common dtkcore gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdeepin-qdbus-service0 libdouble-conversion3 libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xml libdtkcore-devel libdtkgui-devel libdtklog-devel libglvnd-devel libgpg-error libgsettings-qt1 libp11-kit libqt5-svg libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor pkg-config python3 python3-base sh5 zlib-devel
+BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dqt5-base-devel dqt5-tools libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libgsettings-qt-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel
 # aarch64
 BuildRequires: libpcre-devel
 
@@ -65,12 +65,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %files -f %repo.lang
 %doc README.md LICENSE.txt
 %_bindir/dde-grand-search*
-%_desktopdir/dde-grand-search-daemon.desktop
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libddegrandsearch_dockplugin.so
 %dir %_libdir/dde-grand-search-daemon/
-%_libdir/dde-grand-search-daemon/libdde-grand-search-daemon.so
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
 %_libdir/dde-grand-search-daemon/plugins/searcher/.readme
@@ -79,13 +77,22 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_libdir/dde-grand-search/plugins/preview/
 %_libdir/dde-grand-search/plugins/preview/*.conf
 %_libdir/dde-grand-search/plugins/preview/*.so
+%dir %_datadir/deepin-service-manager/
+%dir %_datadir/deepin-service-manager/other/
+%_datadir/deepin-service-manager/other/grand-search-daemon.json
+%dir %_datadir/dde-grand-search/
+%dir %_datadir/dde-grand-search/translations/
 %_datadir/dde-grand-search/translations/dde-grand-search.qm
 %_datadir/dbus-1/interfaces/com.deepin.dde.GrandSearch.xml
 %_datadir/dbus-1/services/com.deepin.dde.GrandSearch.service
-%_datadir/dbus-1/services/com.deepin.dde.daemon.GrandSearch.service
+%_datadir/dbus-1/services/org.deepin.dde.GrandSearchDaemon.service
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.grand-search.gschema.xml
 
 %changelog
+* Tue Jan 14 2025 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt1
+- New version 5.5.11.
+- Added vcs tag.
+
 * Fri May 31 2024 Leontiy Volodin <lvol@altlinux.org> 5.4.9-alt1
 - New version 5.4.9.
 - Built via separate qt5 instead system (ALT #48138).
