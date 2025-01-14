@@ -1,5 +1,5 @@
 Name: git
-Version: 2.42.2
+Version: 2.42.4
 Release: alt1
 
 Summary: Git core and tools
@@ -539,6 +539,9 @@ popd
 %endif #doc
 
 %changelog
+* Tue Nov 26 2024 Dmitry V. Levin <ldv@altlinux.org> 2.42.4-alt1
+- 2.42.2 -> 2.42.4 (fixes: CVE-2024-50349, CVE-2024-52006).
+
 * Fri Apr 19 2024 Dmitry V. Levin <ldv@altlinux.org> 2.42.2-alt1
 - 2.42.1 -> 2.42.2.
 
