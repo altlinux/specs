@@ -14,7 +14,7 @@
 
 Name: %rname
 Version: 6.2.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -175,7 +175,7 @@ SDDM breeze theme
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
-%patch24 -p1
+#
 
 msgcat --use-first po/ru/kcm_touchpad.po %SOURCE11 > po/ru/kcm_touchpad.po.tmp
 cat po/ru/kcm_touchpad.po.tmp >po/ru/kcm_touchpad.po
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Mon Jan 13 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 6.2.5-alt2
+- disable pager resize path(closes: 52671)
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 
