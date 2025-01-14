@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp-session
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 
 Summary: Sessions for aiohttp.web
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/aiohttp_session-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12.1-alt1
+- 2.12.1 released
+
 * Thu May 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12.0-alt1
 - 2.12.0 released
 
