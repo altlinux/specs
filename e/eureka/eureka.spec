@@ -1,5 +1,5 @@
 Name: eureka
-Version: 1.27b
+Version: 2.0.2
 Release: alt1
 Summary: A cross-platform map editor for the classic DOOM games
 Summary(ru_RU.UTF-8): Кросплатформенный редактор карт классического Doom
@@ -11,7 +11,10 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 Patch0: eureka-1.27-Makefile.patch
 Patch1: 0001-fix-loading-wad-files-on-aarch64.patch
+Patch2: 0001-no-cc0-code.patch
+Patch3: 0000-quoted-cflags.patch
 
+BuildRequires(Pre): rpm-macros-cmake cmake
 BuildRequires: gcc-c++
 BuildRequires: binutils
 BuildRequires: make
@@ -28,6 +31,9 @@ BuildRequires: libpng-devel
 BuildRequires: libX11-devel
 BuildRequires: libGL-devel
 BuildRequires: xdg-utils
+BuildRequires: bzlib-devel
+BuildRequires: libXpm-devel
+BuildRequires: ImageMagick-tools
 
 %description
 Eureka is a cross-platform map editor for the classic DOOM games.
@@ -47,29 +53,48 @@ Eureka - кросплатформенный редактор карт класс
 
 %prep
 %setup -n %name-%version
-%patch0 -p1 
+#%%patch0 -p1 
+
+%patch2 -p1
+%patch3 -p1
+
+# Remove CC0-licensed code
+rm -rf src/tl/
 
 %ifarch aarch64
 %patch1 -p1
 %endif
 
 %build
-make OPTIMISE="%optflags"
+%cmake -DENABLE_UNIT_TESTS=OFF
+%cmake_build 
 
 
 %install
-mkdir -p %buildroot%prefix
-%makeinstall_std PREFIX=%_prefix
+%cmake_install
+
+install -m 755 -d %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+magick convert misc/eureka.ico %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/eureka.png
+ 
+install -m 755 -d %{buildroot}/%{_mandir}/man6/
+install -m 644 -p misc/eureka.6 %{buildroot}%{_mandir}/man6/%{name}.6
+ 
+install -m 755 -d %{buildroot}%{_datadir}/applications
+install -m 644 -p misc/eureka.desktop %{buildroot}%{_datadir}/applications/%{name}.desktop
+ 
 
 %files
-%doc AUTHORS.txt CHANGES.txt README.txt TODO.txt GPL.txt docs/*
+%doc README.txt TODO.txt GPL.txt docs/*
 %_bindir/%name
 %_datadir/%name/
+%_iconsdir/hicolor/128x128/apps/eureka.png
 %_datadir/applications/%name.desktop
-%_datadir/pixmaps/%name.xpm
 %_man6dir/%name.6.xz
 
 %changelog
+* Tue Jan 14 2025 Artyom Bystrov <arbars@altlinux.org> 2.0.2-alt1
+- Update to new version
+
 * Thu Feb 15 2024 Artyom Bystrov <arbars@altlinux.org> 1.27b-alt1
 - Update to new version
 
