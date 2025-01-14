@@ -2,7 +2,7 @@
 
 Name: spdlog
 Version: 1.13.0
-Release: alt2
+Release: alt3
 
 Summary: Super fast C++ logging library
 
@@ -16,6 +16,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 # https://github.com/gabime/spdlog/pull/3130
 Patch0: %name-fmt11.patch
+# https://github.com/gabime/spdlog/pull/3301
+Patch1: %name-fmt11.1.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: ctest
@@ -77,6 +79,9 @@ export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %_pkgconfigdir/spdlog.pc
 
 %changelog
+* Tue Jan 14 2025 Nazarov Denis <nenderus@altlinux.org> 1.13.0-alt3
+- add patch to compatible with fmt 11.1 (ALT #52696)
+
 * Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 1.13.0-alt2
 - add patch to compatible with fmt 11
 
