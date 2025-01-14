@@ -1,5 +1,5 @@
 Name: kernel-image-6.13
-Release: alt0.rc6
+Release: alt0.rc7
 %define kernel_src_version	6.12
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
@@ -46,29 +46,32 @@ Patch0: %name-%version-%release.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
+%elif "%base_flavour" == "rt"
+ExclusiveArch: x86_64 aarch64
 %else
 ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 %endif
 
-%define make_target bzImage
 %ifarch ppc64le
 %define make_target vmlinux
-%endif
-%ifarch aarch64
+%elifarch aarch64
 %define make_target Image
-%endif
-%ifarch %arm
+%elifarch %arm
 %define make_target zImage
+%else
+%define make_target bzImage
 %endif
 
-%define image_path arch/%base_arch/boot/%make_target
 %ifarch ppc64le
 %define image_path %make_target.stripped
+%else
+%define image_path arch/%base_arch/boot/%make_target
 %endif
 
-%define arch_dir %base_arch
 %ifarch %ix86 x86_64
 %define arch_dir x86
+%else
+%define arch_dir %base_arch
 %endif
 
 %define kvm_modules_dir arch/%arch_dir/kvm
@@ -205,11 +208,9 @@ technical reasons.
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common
-%if "%sub_flavour" == "def"
-Provides: kernel-headers = %version
-%endif
 AutoReqProv: nocpp
 %if "%sub_flavour" == "def"
+Provides: kernel-headers = %version
 Provides: kernel-headers-%kernel_latest = %version-%release
 %endif
 
@@ -278,6 +279,11 @@ tar -xf %kernel_src/kernel-source-%kernel_src_version.tar
 %define _default_patch_flags -s
 %autopatch -p1
 
+%if "%base_flavour" == "rt"
+# fix -rt suffix
+rm -f localversion*
+%endif
+
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
@@ -304,13 +310,12 @@ echo "Building Kernel $KernelVer"
 
 #configuration construction
 CONFIGS="config config-%_target_cpu"
-%if "%base_flavour" == "std"
-CONFIGS="$CONFIGS config-std"
+%if "%base_flavour" == "rt"
+CONFIGS="$CONFIGS config-rt"
 %endif
 %if "%sub_flavour" == "pae"
 CONFIGS="$CONFIGS config-pae"
-%endif
-%if "%sub_flavour" == "debug"
+%elif "%sub_flavour" == "debug"
 CONFIGS="$CONFIGS config-debug"
 %endif
 scripts/kconfig/merge_config.sh -m $CONFIGS
@@ -484,9 +489,11 @@ popd
 # ghostify *.bin files
 truncate -s0 %buildroot%modules_dir/modules.*.bin
 
+%if "%sub_flavour" == "def"
 # install documentation
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
+%endif
 
 # On some architectures (at least ppc64le) kernel image is ELF and
 # eu-findtextrel will fail if it is not a DSO or PIE.
@@ -571,8 +578,10 @@ check-pesign-helper
 %dir %modules_dir/
 %modules_dir/build
 
+%if "%sub_flavour" == "def"
 %files -n kernel-doc-%base_flavour
 %doc %_docdir/kernel-doc-%base_flavour-%version
+%endif
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
@@ -600,6 +609,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jan 14 2025 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc7
+- Update to v6.13-rc7 (2025-01-12).
+
 * Mon Jan 06 2025 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc6
 - Update to v6.13-rc6 (2025-01-05).
 
