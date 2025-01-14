@@ -2,7 +2,7 @@
 
 Name: gpg-tui
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Terminal User Interface for GnuPG
 License: MIT
@@ -69,13 +69,16 @@ install -Dm 644 completions/_%name \
 %files
 %doc README* demo LICENSE
 %_bindir/%name
-%_man1dir/%name.1.*
-%_man5dir/%name.toml.5.*
+%_man1dir/%name.1*
+%_man5dir/%name.toml.5*
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
 %exclude %_bindir/%name-completions
 
 %changelog
+* Thu Nov 28 2024 Denis Rastyogin <gerben@altlinux.org> 0.11.0-alt2
+- Removed unnecessary vendor files.
+
 * Fri May 31 2024 Denis Rastyogin <gerben@altlinux.org> 0.11.0-alt1
 - Initial build for ALT Sisyphus.
