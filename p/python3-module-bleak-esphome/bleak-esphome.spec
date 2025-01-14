@@ -1,5 +1,5 @@
 Name: python3-module-bleak-esphome
-Version: 1.0.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Bleak backend of ESPHome
@@ -15,6 +15,8 @@ BuildRequires: rpm-build-pyproject
 BuildRequires: python3(poetry-core)
 BuildRequires: python3(aioesphomeapi)
 BuildRequires: python3(habluetooth)
+BuildRequires: python3(pytest-asyncio)
+BuildRequires: python3(pytest_codspeed)
 BuildRequires: python3(pytest-cov)
 BuildRequires: python3(lru)
 
@@ -38,6 +40,9 @@ BuildRequires: python3(lru)
 %python3_sitelibdir/bleak_esphome-%version.dist-info
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
+- 2.0.0 released
+
 * Thu Mar 14 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
 - 1.0.0 released
 
