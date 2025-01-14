@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: alacarte
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -59,6 +59,9 @@ specification.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.1-alt1
+- 3.54.1
+
 * Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
 - 3.54.0
 
