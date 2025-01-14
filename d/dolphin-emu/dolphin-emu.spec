@@ -8,7 +8,7 @@
 
 Name: dolphin-emu
 Version: 2412
-Release: alt1
+Release: alt1.1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -33,6 +33,8 @@ Source4: tinygltf-%tinygltf_commit.tar
 Source5: zlib-ng-%zlib_ng_commit.tar
 
 Patch0: dolphin-gbacore-alt.patch
+Patch1: dolphin-fmt11.patch
+Patch2: dolphin-minizip-ng-4.0.8.patch
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -89,6 +91,8 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
 
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 export LDFLAGS="-Wl,--copy-dt-needed-entries"
@@ -122,6 +126,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Tue Jan 14 2025 Nazarov Denis <nenderus@altlinux.org> 2412-alt1.1
+- Fix FTBFS
+
 * Thu Dec 12 2024 Nazarov Denis <nenderus@altlinux.org> 2412-alt1
 - Version 2412
 
