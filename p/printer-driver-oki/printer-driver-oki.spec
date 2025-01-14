@@ -1,5 +1,5 @@
 Name:     printer-driver-oki
-Version:  1.0.1
+Version:  1.0.2
 Release:  alt1
 
 Summary:  OKI Data printer drivers for Linux
@@ -54,5 +54,8 @@ install -d %buildroot%_libexecdir/cups/filter
 %_datadir/ppd/okidata
 
 %changelog
+* Tue Jan 14 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt1
+- New version.
+
 * Tue Oct 20 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
