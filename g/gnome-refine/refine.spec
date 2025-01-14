@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Refine
 %define __name refine
-%define ver_major 0.3
+%define ver_major 0.4
 %define beta %nil
 %define rdn_name page.tesk.%_name
 %def_enable check
@@ -70,6 +70,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - updated to 0.3.0-7-g6e5271f
 
