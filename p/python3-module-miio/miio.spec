@@ -1,6 +1,6 @@
 Name: python3-module-miio
 Version: 0.5.12
-Release: alt1
+Release: alt2
 
 Summary: Python miIO library
 License: BSD
@@ -48,6 +48,9 @@ find %buildroot%python3_sitelibdir -type d -name tests |\
 %_bindir/*
 
 %changelog
+* Tue Jan 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.12-alt2
+- avoid appdirs dependency
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.12-alt1
 - 0.5.12 released
 
