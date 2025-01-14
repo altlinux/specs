@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: Simple cron-like parser for Python, which determines if current datetime matches conditions
@@ -50,6 +50,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 14 2025 Anton Vyatkin <toni@altlinux.org> 3.1.2-alt1
+- New version 3.1.2.
+
 * Mon Sep 30 2024 Anton Vyatkin <toni@altlinux.org> 3.1.1-alt1
 - New version 3.1.1.
 
