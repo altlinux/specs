@@ -1,5 +1,5 @@
 Name: hass
-Version: 2024.11.1
+Version: 2025.1.2
 Release: alt1
 
 Summary: Home automation platform
@@ -39,9 +39,9 @@ BuildRequires: python3(zlib_ng)
 Summary: Home automation platform
 Group: System/Servers
 Requires: python3-module-pip >= 21.0
-Requires: python3-module-hass-frontend >= 20241106.2
+Requires: python3-module-hass-frontend >= 20250103.0
 Requires: python3-module-aiohttp-fast-zlib >= 0.1.1
-Requires: python3-module-go2rtc-client >= 0.1.0
+Requires: python3-module-go2rtc-client >= 0.1.2
 Requires: python3(uv)
 
 %package -n python3-module-hass
@@ -108,6 +108,9 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.1.2-alt1
+- 2025.1.2 released
+
 * Mon Nov 11 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.11.1-alt1
 - 2024.11.1 released
 
