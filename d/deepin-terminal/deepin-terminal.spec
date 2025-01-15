@@ -2,7 +2,7 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.0.16
+Version: 6.0.17
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -115,10 +115,10 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_datadir/%name/translations/%name.qm
 
 %files -n libterminalwidget5
-%doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG}
 %_libdir/libterminalwidget5.so.%{twver}*
 
 %files -n terminalwidget5-data -f terminalwidget5.lang
+%doc 3rdparty/terminalwidget/{AUTHORS,LICENSE*,CHANGELOG}
 %dir %_datadir/terminalwidget5/
 %dir %_datadir/terminalwidget5/translations/
 %_datadir/terminalwidget5/kb-layouts/
@@ -131,6 +131,9 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Jan 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.17-alt1
+- New version 6.0.17.
+
 * Tue Dec 03 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.16-alt1
 - New version 6.0.16.
 - Added vcs tag.
