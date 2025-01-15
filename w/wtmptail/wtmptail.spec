@@ -1,19 +1,12 @@
 Summary: generate wtmp statistics
 Name: wtmptail
 Version: 1.3
-Release: alt1.qa1
-License: GPL
+Release: alt2
+License: GPL-2.0
 Group: Monitoring
 URL: http://www.vanheusden.com/wtmptail/
 Packager: Mikhail Pokidko <pma@altlinux.ru>
-Source0: %name-%version.tgz
-Patch0: %name.patch
-
-#BuildRequires: libncurses-devel
-
-
-# Automatically added by buildreq on Wed Nov 15 2006
-BuildRequires: libncurses-devel
+Source: %name-%version.tar
 
 %description
  The  program  wtmptail  shows  all  new entries in the wtmp-file (which
@@ -21,19 +14,14 @@ resides usually in /var/log). This way one can watch  users  login  and
 logout.  Optionally,  a  filename  can be given. That file will then be
 used instead of the default which is /var/log/wtmp.
 
-
 %prep
-%setup -q
-%patch0 -p0
-
+%setup
 
 %build
-make
+%make
 
 %install
-mkdir -p %buildroot%_bindir
-
-%make_install DESTDIR="%buildroot" install
+%make_install DESTDIR=%buildroot install
 
 %files
 %doc license.txt
@@ -41,6 +29,10 @@ mkdir -p %buildroot%_bindir
 %_bindir/%name
 
 %changelog
+* Tue Jan 14 2025 Ulysses Apokin <ulysses@altlinux.org> 1.3-alt2
+- Fixed FTBS
+- Memory leak fixed
+
 * Thu Nov 17 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.3-alt1.qa1
 - Fixed FTBFS (manpage packaging).
 
