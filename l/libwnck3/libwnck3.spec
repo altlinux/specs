@@ -10,13 +10,15 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
 License: LGPL-2.0-or-later
 Group: System/Libraries
 Url: https://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/libwnck.git
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
@@ -118,6 +120,9 @@ GObject introspection devel data for the Window Navigator Construction Kit libra
 
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 - drop upstreamed patches

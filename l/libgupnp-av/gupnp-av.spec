@@ -1,8 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gupnp-av
 %define ver_major 0.14
 %define api_ver 1.0
+%define namespace GUPnPAV
 
 %def_enable introspection
 %def_enable vala
@@ -10,15 +11,16 @@
 %def_enable check
 
 Name: libgupnp-av
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: http://www.gupnp.org/
 
 Vcs: https://gitlab.gnome.org/GNOME/gupnp-av.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
@@ -99,9 +101,9 @@ GObject introspection devel data for the GUPnP A/V library
 %add_optflags -Wno-error=deprecated-declarations
 %endif
 %meson \
-%{?_disable_introspection:-Dintrospection=false} \
-%{?_disable_vala:-Dvapi=false} \
-%{?_enable_gtk_doc:-Dgtk_doc=true}
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
 %nil
 %meson_build
 
@@ -130,14 +132,17 @@ GObject introspection devel data for the GUPnP A/V library
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GUPnPAV-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GUPnPAV-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
+- 0.14.3
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt2
 - updated to 0.14.1-9-g1e10a41 (fixed build with libxml2-2.12.x)
 

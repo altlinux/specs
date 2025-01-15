@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 47
 %define beta %nil
@@ -40,13 +40,15 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Software
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-software.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -206,6 +208,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt1
+- 47.4
+
 * Sun Jan 05 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
 - 47.3
 
