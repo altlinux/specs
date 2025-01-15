@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 88.0
+Version: 89.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -161,6 +161,9 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Wed Jan 15 2025 L.A. Kostis <lakostis@altlinux.ru> 89.0-alt1
+- 89.0.
+
 * Fri Oct 25 2024 L.A. Kostis <lakostis@altlinux.ru> 88.0-alt1
 - 88.0.
 - BR: fix QtDBus deps.
