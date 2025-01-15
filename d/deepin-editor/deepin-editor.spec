@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.5.6.0.3.6d5f
+Version: 6.5.11
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -9,6 +9,7 @@ Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
 Group: Editors
 Url: https://github.com/linuxdeepin/deepin-editor
+Vcs: git://github.com/linuxdeepin/deepin-editor.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-6.0.16-armh-ppc64le.patch
@@ -84,6 +85,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Wed Jan 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.11-alt1
+- New version 6.5.11.
+- Added vcs tag.
+
 * Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.6.0.3.6d5f-alt1
 - New version 6.5.6-3-g6d5f7a36.
 
