@@ -4,7 +4,7 @@
 %define rname kio-gdrive
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -18,7 +18,7 @@ Obsoletes: kde5-kio-gdrive < %EVR
 Requires: kaccounts-providers signon-plugin-oauth2
 
 Source: %rname-%version.tar
-Source10: kio5_gdrive_ru.po
+Source10: kio6_gdrive_ru.po
 
 BuildRequires(pre): rpm-build-kf6
 
@@ -42,8 +42,8 @@ in the application launcher (which will open Dolphin with the `gdrive:/` URL) or
 %setup -q -n %rname-%version
 
 tmp_file=`mktemp`
-msgcat --use-first po/ru/kio5_gdrive.po %SOURCE10 >"$tmp_file"
-cat "$tmp_file" >po/ru/kio5_gdrive.po
+msgcat --use-first po/ru/kio6_gdrive.po %SOURCE10 >"$tmp_file"
+cat "$tmp_file" >po/ru/kio6_gdrive.po
 rm -f "$tmp_file"
 
 %build
@@ -72,6 +72,9 @@ rm -f "$tmp_file"
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

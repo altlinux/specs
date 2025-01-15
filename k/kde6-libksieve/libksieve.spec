@@ -13,7 +13,7 @@
 %define libkpim6ksievecore libpim6ksievecore%sover
 
 Name: kde6-%rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -39,7 +39,7 @@ BuildRequires: kf6-ktextwidgets-devel kf6-kunitconversion-devel kf6-kwallet-deve
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-syntax-highlighting-devel
 BuildRequires: kf6-ktextaddons-devel
 BuildRequires: kpimtextedit-devel kde6-libkdepim-devel pimcommon-devel
-BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel akonadi-notes-devel
+BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 
 %description
 %summary.
@@ -146,6 +146,9 @@ done
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

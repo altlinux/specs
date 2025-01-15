@@ -4,7 +4,7 @@
 %define libkpim6calendarsupport libkpim6calendarsupport%sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -30,7 +30,7 @@ BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-deve
 BuildRequires: akonadi-calendar-devel kf6-kcalendarcore-devel kcalutils-devel kf6-kcontacts-devel kf6-kholidays-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kmime-devel kpimtextedit-devel 
 BuildRequires: pimcommon-devel
-BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel akonadi-notes-devel
+BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 
 %description
 %summary.
@@ -83,6 +83,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

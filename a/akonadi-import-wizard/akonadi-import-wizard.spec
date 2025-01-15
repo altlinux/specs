@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpim6importwizard%sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -94,6 +94,9 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

@@ -11,7 +11,7 @@
 %define libkpimgapitasks libkpim6gapitasks%sover
 
 Name: kde6-%rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -159,6 +159,9 @@ done
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpim6incidenceeditor libkpim6incidenceeditor%sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -32,7 +32,7 @@ BuildRequires: kde6-kdiagram-devel
 BuildRequires: akonadi-calendar-devel calendarsupport-devel eventviews-devel kf6-kcalendarcore-devel kcalutils-devel
 BuildRequires: kf6-kcontacts-devel kidentitymanagement-devel kldap-devel kmailtransport-devel
 BuildRequires: kmime-devel kpimtextedit-devel kde6-libkdepim-devel 
-BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel akonadi-notes-devel
+BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: pimcommon-devel kimap-devel
 
 %description
@@ -85,6 +85,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

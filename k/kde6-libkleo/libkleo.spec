@@ -4,7 +4,7 @@
 %define libkpim6libkleo libkpim6libkleo%sover
 
 Name: kde6-%rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -67,11 +67,13 @@ Requires: %name-common
 %config(noreplace) %_K6xdgconf/*rc
 %_datadir/qlogging-categories6/*.*categories
 %_K6data/libkleopatra/
+%dir %_K6data/KPim?Libkleo/
 
 %files devel
-%_includedir/KPim6/Libkleo/
+%_includedir/KPim?/Libkleo/
 %_K6link/lib*.so
 %_K6lib/cmake/K*Libkleo/
+%_K6data/KPim?Libkleo/find-modules/
 
 %files -n %libkpim6libkleo
 %_K6lib/libKPim6Libkleo.so.%sover
@@ -79,6 +81,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

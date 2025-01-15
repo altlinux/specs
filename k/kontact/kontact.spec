@@ -4,8 +4,8 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: %rname
-Version: 24.08.3
-Release: alt2
+Version: 24.12.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -101,6 +101,9 @@ Obsoletes: libkontactprivate5 < %EVR
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Wed Dec 11 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 24.08.3-alt2
 - fix the kontact crash when you click on "Setup your Accounts"
 

@@ -5,7 +5,7 @@
 %define libkalarmplugin libkalarmplugin%pim_sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -98,6 +98,8 @@ Obsoletes: libkalarmplugin5 < %EVR
 %_K6notif/kalarm.notifyrc
 %_datadir/polkit-1/actions/org.kde.kalarm.rtcwake.policy
 %_datadir/metainfo/*.xml
+%_K6conf_bin/kalarm-3.10.0-run_mode
+%_K6conf_up/kalarm.upd
 
 %files -n %libkalarmcalendar
 %_K6lib/libkalarmcalendar.so.%pim_sover
@@ -109,6 +111,9 @@ Obsoletes: libkalarmplugin5 < %EVR
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

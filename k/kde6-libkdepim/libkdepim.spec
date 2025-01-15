@@ -5,7 +5,7 @@
 %define libkpim6libkdepimakonadi libkpim6libkdepimakonadi%sover
 
 Name: kde6-%rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel-static
 BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: akonadi-search-devel kf6-kcalendarcore-devel kf6-kcontacts-devel kldap-devel kmime-devel
-BuildRequires: boost-devel akonadi-devel akonadi-mime-devel akonadi-contacts-devel akonadi-notes-devel
+BuildRequires: boost-devel akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools-devel
@@ -92,6 +92,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

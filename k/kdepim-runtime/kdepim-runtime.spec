@@ -9,7 +9,7 @@
 %define libnewmailnotifier libnewmailnotifier%pim_sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -42,7 +42,7 @@ BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-deve
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kholidays-devel kf6-ktexttemplate-devel
 BuildRequires: akonadi-calendar-devel kcalutils-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kmbox-devel kmime-devel kpimtextedit-devel
-BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel akonadi-notes-devel pimcommon-devel
+BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel pimcommon-devel
 BuildRequires: kde6-libkgapi-devel kde6-libkdepim-devel kldap-devel grantleetheme-devel
 
 %description
@@ -175,6 +175,9 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

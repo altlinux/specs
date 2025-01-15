@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%gui_sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -88,20 +88,17 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,6}-kleopatra.xml
 %doc LICENSES/*
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/mime/packages/*kleopatra*.xml
+%config(noreplace) %_K6xdgconf/*kleopatra*
 
 %files
 %_K6bin/kleopatra
+%_K6bin/kwatchgnupg
 %_K6xdgapp/*kleopatra*.desktop
 %_K6xdgapp/*kwatchgnupg*.desktop
-%_K6data/kleopatra/
 %_K6plug/pim6/kcms/kleopatra/kleopatra_config_gnupgsystem.so
 %_K6icon/*/*/apps/*kleopatra.*
 %_K6icon/*/*/apps/*kwatchgnupg.*
 %_K6data/kio/servicemenus/*.desktop
-#
-%_K6bin/kwatchgnupg
-%_K6data/kwatchgnupg/
-#
 %_datadir/metainfo/*.xml
 
 %files -n %libkleopatraclientcore
@@ -113,6 +110,9 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,6}-kleopatra.xml
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

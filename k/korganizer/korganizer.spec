@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -28,7 +28,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel qt6-phonon-devel qt6-tools-dev
 BuildRequires: boost-devel libXres-devel libassuan-devel libldap-devel libsasl2-devel
 BuildRequires: kf6-kcmutils-devel kf6-kdoctools-devel kf6-kio-devel kf6-knewstuff-devel kf6-kwallet-devel kf6-kholidays-devel kf6-kcalendarcore-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kparts-devel kf6-kitemmodels-devel kf6-ktexttemplate-devel
-BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel akonadi-notes-devel
+BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
 BuildRequires: akonadi-search-devel calendarsupport-devel eventviews-devel incidenceeditor-devel
 BuildRequires: kcalutils-devel kf6-kcontacts-devel kidentitymanagement-devel kimap-devel
 BuildRequires: kldap-devel kmailtransport-devel kmime-devel kontactinterface-devel kpimtextedit-devel
@@ -129,6 +129,9 @@ Obsoletes: libkorganizerprivate5 < %EVR
 
 
 %changelog
+* Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
