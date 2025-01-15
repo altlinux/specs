@@ -1,13 +1,16 @@
 Name: argtable2
 Version: 13
-Release: alt1
+Release: alt2
 
 Summary: An ANSI C library for parsing GNU style command line arguments
-License: LGPL
+License: LGPL-2.0
 Group: System/Libraries
 
 Url: http://argtable.sf.net/
 Source: %name-%version.tar.gz
+Patch0: 0001-Added-header-file-ctype.h.patch
+Patch1: 0002-Added-header-file-string.h.patch
+Patch2: 0003-Added-compile-option--std-c99.patch
 
 BuildPreReq: gcc-c++
 
@@ -72,6 +75,9 @@ Examples for developing programs based on %name.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -107,6 +113,9 @@ Examples for developing programs based on %name.
 
 
 %changelog
+* Thu Jan 09 2025 Ulysses Apokin <ulysses@altlinux.org> 13-alt2
+- Fix FTBFS.
+
 * Wed Sep 03 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 13-alt1
 - Version 13
 
