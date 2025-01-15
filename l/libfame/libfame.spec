@@ -1,6 +1,6 @@
 Name: libfame
 Version: 0.9.1
-Release: alt5.qa1
+Release: alt5.qa2
 
 Summary: library for fast MPEG video encoding
 License: LGPL
@@ -16,6 +16,7 @@ Patch1: libfame-0.9.1-mmx_sse.patch
 Patch2: libfame-0.9.1-x86_64.patch
 Patch3: libfame-ac_fixes.patch
 Patch4: libfame-0.9.1-alt-soname.patch
+Patch5: libfame-0.9.1-add-string-include.patch
 
 %description
 libFAME is a library for fast (real-time) MPEG video encoding, written
@@ -45,6 +46,7 @@ This package contains development files for libfame.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 rm -f acinclude.m4
 
@@ -77,6 +79,9 @@ rm -f acinclude.m4
 %endif
 
 %changelog
+* Wed Jan 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.9.1-alt5.qa2
+- NMU: fix FTBFS with gcc14
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.9.1-alt5.qa1
 - NMU: rebuilt for debuginfo.
 
