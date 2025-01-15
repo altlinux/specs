@@ -7,7 +7,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 0.15.4
+Version: 0.15.5
 Release: alt1
 
 Summary: Sparse multi-dimensional arrays for the PyData ecosystem
@@ -65,5 +65,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 15 2025 Grigory Ustinov <grenka@altlinux.org> 0.15.5-alt1
+- Automatically updated to 0.15.5.
+
 * Tue Nov 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.15.4-alt1
 - Initial build for Sisyphus.
