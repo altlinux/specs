@@ -1,5 +1,5 @@
 Name: python3-module-ha-ffmpeg
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: Home-Assistant ffmpeg interface
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/ha_ffmpeg-%version.dist-info
 
 %changelog
+* Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.2-alt1
+- 3.2.2 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.1-alt1
 - 3.2.1 released
 
