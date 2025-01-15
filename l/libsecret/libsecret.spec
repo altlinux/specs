@@ -2,6 +2,7 @@
 
 %define ver_major 0.21
 %define api_ver 1
+%define namespace Secret
 
 %def_disable static
 %def_enable introspection
@@ -15,7 +16,7 @@
 %define crypto libgcrypt
 
 Name: libsecret
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -23,10 +24,11 @@ Group: System/Libraries
 License: LGPL-2.1
 Url: https://wiki.gnome.org/Projects/Libsecret
 
+Vcs: https://gitlab.gnome.org/GNOME/libsecret.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/libsecret.git
 Source: %name-%version.tar
 %endif
 Patch: %name-0.20.0-alt-python3_shebang.patch
@@ -109,11 +111,11 @@ GObject introspection devel data for %name.
 
 %build
 %meson \
--Dcrypto='%crypto' \
-%{?_disable_introspection:-Dintrospection=false} \
-%{?_disable_vala:-Dvapi=false} \
-%{?_disable_gtk_doc:-Dgtk_doc=false} \
-%{?_disable_man:-Dmanpage=false}
+    -Dcrypto='%crypto' \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool man manpage}
 %nil
 %meson_build
 
@@ -147,14 +149,17 @@ dbus-run-session %__meson_test
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Secret-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Secret-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt1
+- 0.21.5
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.21.4-alt1
 - 0.21.4
 
