@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.1
+Version: 1.16.2
 Release: alt1
 
 Summary: Installer common parts
@@ -124,9 +124,17 @@ This package contains installer files for run on Desktop.
 %_desktopdir/install2.desktop
 %_sysconfdir/pam.d/install2
 %_sysconfdir/security/console.apps/install2
-%_sysconfdir/X11/profile.d/zdg-user-dirs-install.sh
+%_sysconfdir/profile.d/zdg-user-dirs-install.sh
 
 %changelog
+* Wed Jan 15 2025 Anton Midyukov <antohami@altlinux.org> 1.16.2-alt1
+- install2: Do not unmount /mnt/destination before saving log
+- install2: create empty logs with strict rights
+- install2: stderr >/tmp/install2.log
+- zdg-user-dirs-install.sh: fix mistake when copypaste from livecd-install
+- zdg-user-dirs-install.sh: install to /etc/profile.d (for wayland support)
+- zdg-user-dirs-install.sh: fix incorrect value of the specified parameter gio
+
 * Mon Jan 13 2025 Anton Midyukov <antohami@altlinux.org> 1.16.1-alt1
 - Add subpackage installer-common-desktop
 
