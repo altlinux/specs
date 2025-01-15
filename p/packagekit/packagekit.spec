@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5.0.0.30
-Release:   alt3
+Release:   alt4
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -33,8 +33,6 @@ BuildRequires: bash-completion
 
 BuildRequires: vala-tools
 BuildRequires: libgtk+3-devel
-
-BuildRequires: boost-devel
 
 # It provides the stuff needed to run the APT backend: the download methods
 # (/usr/lib*/apt/methods/), conf files (/etc/apt/), and cache dirs
@@ -305,6 +303,12 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon May 13 2024 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.30-alt4
+- Modified the appearance of the Origin-Suite for ALT repositories
+  (already shortened in 1.1.12-alt9), so that the allowed symbols
+  are the same as in the general case; don't use parentheses anymore.
+- Adapted matchPackage() to ALT's devel package suffixes.
+
 * Tue May 07 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.5.0.0.30-alt3
 - Add new appstream support from upstream.
 
