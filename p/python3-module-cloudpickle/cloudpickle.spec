@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 Summary: Extended pickling support for Python objects
 License: BSD
@@ -62,6 +62,9 @@ export PYTHONPATH=tests/cloudpickle_testpkg
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 15 2025 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
+- 3.1.0 -> 3.1.1.
+
 * Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 3.0.0 -> 3.1.0.
 
