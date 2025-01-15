@@ -2,8 +2,8 @@
 %define oname trytond_currency
 
 Name: python3-module-%oname
-Version: 6.2.0
-Release: alt2
+Version: 7.4.0
+Release: alt1
 
 Summary: Tryton module with currencies
 License: GPL-3
@@ -11,10 +11,11 @@ Group: Development/Python3
 Url: https://pypi.org/project/trytond-currency/
 BuildArch: noarch
 
-Source0: https://files.pythonhosted.org/packages/5a/d3/97635ff5dfb7d90fbd9a3578f3d7e069b6ebf8fd9f553fa409e51f696f12/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 The currency module of the Tryton application platform.
@@ -33,10 +34,10 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
@@ -49,6 +50,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt1
+- new version 7.4.0
+
 * Tue Aug 09 2022 Danil Shein <dshein@altlinux.org> 6.2.0-alt2
  - update homepage and license
 

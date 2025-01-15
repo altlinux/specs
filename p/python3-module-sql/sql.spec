@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.4.3
+Version: 1.5.2
 Release: alt1
 
 Summary: Library to write SQL queries
@@ -50,6 +50,9 @@ rm -r %buildroot%python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/python_sql-%version.dist-info
 
 %changelog
+* Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 1.5.2-alt1
+- new version 1.5.2
+
 * Wed Jan 24 2024 Anton Vyatkin <toni@altlinux.org> 1.4.3-alt1
 - new version 1.4.3
 

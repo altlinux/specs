@@ -2,18 +2,20 @@
 %define oname trytond_company
 
 Name: python3-module-%oname
-Version: 6.2.0
+Version: 7.4.1
 Release: alt1
 
 Summary: The company module of the Tryton application platform
-License: GPL
+License: GPL-3
 Group: Development/Python3
 Url: https://pypi.org/project/trytond-company
 
-Source0: https://files.pythonhosted.org/packages/44/74/e264195515796a71df000e1cc0e70f958125bba8b536a58bf0809bc3e5b4/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar
 BuildArch: noarch
 
-BuildPreReq: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Tryton module with companies and employees.
@@ -32,10 +34,10 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
@@ -47,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 7.4.1-alt1
+- version updated to 7.4.1
+
 * Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.0-alt1
 - Version updated to 6.2.0
 

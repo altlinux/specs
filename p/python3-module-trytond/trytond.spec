@@ -4,18 +4,20 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 6.4.5
-Release: alt2.1
+Version: 7.4.3
+Release: alt1
 
 Summary: Tryton server
 License: GPL-3
 Group: Development/Python3
 Url: https://www.tryton.org
 
-Source0: https://files.pythonhosted.org/packages/4e/43/b565c06310a2c00bc09ee676c07f71bd40290353a03bc84c5c458a765f99/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: python3-module-werkzeug
 BuildRequires: python3-module-lxml
@@ -25,7 +27,6 @@ BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-polib
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-relatorio
-BuildRequires: python3-module-wrapt
 BuildRequires: python3-module-passlib
 %endif
 
@@ -55,15 +56,11 @@ This package contains tests for %oname.
 %prep
 %setup -q -n %{oname}-%{version}
 
-# hotfix for python3.12
-# https://foss.heptapod.net/tryton/tryton/-/commit/b097604b69b899117a9d3c00c3fdae8487356e48
-sed -i 's/\.not_called()/\.assert_not_called()/' trytond/tests/test_transaction.py
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir/
@@ -80,6 +77,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 7.4.3-alt1
+- new version 7.4.3
+
 * Mon Jan 29 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.5-alt2.1
 - NMU: fixed FTBFS.
 

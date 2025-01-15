@@ -2,18 +2,20 @@
 %define oname trytond_country
 
 Name: python3-module-%oname
-Version: 6.2.1
+Version: 7.4.0
 Release: alt1
 Summary: Tryton module with countries
 
-License: GPL
+License: GPL-3
 Group: Development/Python3
 Url: https://pypi.org/project/trytond-country
 BuildArch: noarch
 
-Source0: https://files.pythonhosted.org/packages/02/b4/4e8ee584437d3bef7bce36c3dd3a9b6def2a5d9fd9abfae51e51b5de91da/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 The country module of the Tryton application platform.
@@ -32,10 +34,10 @@ This package contains tests for %oname.
 %setup -q -n %{oname}-%{version}
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc CHANGELOG COPYRIGHT README.rst LICENSE doc/*
@@ -48,6 +50,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt1
+- version updated to 7.4.0
+
 * Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.1-alt1
 - Version updated to 6.2.1
 
