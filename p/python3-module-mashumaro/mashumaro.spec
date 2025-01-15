@@ -1,5 +1,5 @@
 Name: python3-module-mashumaro
-Version: 3.14
+Version: 3.15
 Release: alt1
 
 Summary: Fast and well tested serialization library
@@ -44,5 +44,8 @@ BuildRequires: python3(yaml)
 %python3_sitelibdir/mashumaro-%version.dist-info
 
 %changelog
+* Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.15-alt1
+- 3.15 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.14-alt1
 - 3.14 released
