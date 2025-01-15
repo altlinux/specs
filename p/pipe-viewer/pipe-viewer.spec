@@ -1,6 +1,6 @@
 Name:    pipe-viewer
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 
 Summary: A lightweight YouTube client for Linux, without requiring an API key.
 License: Artistic-2.0
@@ -16,7 +16,7 @@ Patch0: Fix-run-after-update-to-0.4.9.patch
 BuildArch: noarch
 
 BuildRequires(Pre): rpm-build-perl
-BuildRequires: perl-devel perl-Unicode-LineBreak perl-Gtk3 perl-Memoize perl-libwww perl-Module-Build perl-Data-Dump perl-LWP-Protocol-https perl-JSON perl-File-ShareDir perl-Term-ReadLine-Gnu libgtk+3-devel json ImageMagick-tools
+BuildRequires: perl-devel perl-Unicode-LineBreak perl-Gtk3 perl-Memoize perl-libwww perl-Module-Build perl-Data-Dump perl-LWP-Protocol-https perl-JSON perl-File-ShareDir perl-Term-ReadLine-Gnu libgtk+3-devel ImageMagick-tools
 Requires: perl-LWP-Protocol-https
 
 %description
@@ -69,6 +69,10 @@ done
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed Jan 15 2025 Ivan A. Melnikov <iv@altlinux.org> 0.5.3-alt1.1
+- NMU: Drop BR on json java library (not really used)
+  to fix building on riscv64
+
 * Tue Jan 14 2025 Artyom Bystrov <arbars@altlinux.org> 0.5.3-alt1
 - Update to new version
 
