@@ -1,7 +1,7 @@
 %define pg_ver 15
 
 Name:    postgresql%pg_ver-pgauditlogtofile
-Version: 1.6.2
+Version: 1.6.4
 Release: alt1
 
 Summary: pgAuditlogtofile addon to redirect audit entries to an independent file
@@ -46,6 +46,9 @@ echo "ALTER EXTENSION pgauditlogtofile UPDATE;                                  
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Jan 15 2025 Alexei Takaseev <taf@altlinux.org> 1.6.4-alt1
+- 1.6.4
+
 * Wed Sep 04 2024 Alexei Takaseev <taf@altlinux.org> 1.6.2-alt1
 - 1.6.2
 

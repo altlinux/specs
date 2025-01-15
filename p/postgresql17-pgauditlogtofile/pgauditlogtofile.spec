@@ -1,4 +1,4 @@
-%define pg_ver 14
+%define pg_ver 17
 
 Name:    postgresql%pg_ver-pgauditlogtofile
 Version: 1.6.4
