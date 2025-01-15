@@ -2,12 +2,13 @@
 
 Name: hwinfo
 %define lname lib%name
-Version: 21.23
-Release: alt1.3
+Version: 23.3
+Release: alt1
 Summary: Hardware detection tool
 License: GPLv2
 Group: System/Kernel and hardware
-URL: http://download.opensuse.org/source/factory/repo/oss/suse/src
+URL:            https://github.com/opensuse/hwinfo
+#http://download.opensuse.org/source/factory/repo/oss/suse/src
 # http://download.opensuse.org/source/factory/repo/oss/suse/src/%name-%version-2.1.src.rpm
 Source: %name-%version.tar
 Patch0: %name-14.19-kbd.c-tiocgdev_undefined.patch
@@ -24,6 +25,9 @@ Requires: %lname = %version-%release
 BuildRequires: doxygen flex perl-XML-Parser perl-XML-Writer perl-devel
 BuildRequires: rpm-build-licenses
 BuildRequires: libdbus-devel
+BuildRequires: pkg-config
+BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(uuid)
 %ifarch %ix86 x86_64
 BuildRequires: libx86emu-devel
 %endif
@@ -88,12 +92,12 @@ on a system.
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 %patch1 -p0
-%patch2 -p1
+#patch2 -p1
 %patch3 -p1
 %patch4 -p2
-%patch5 -p2
+#patch5 -p2
 %patch3500 -p1
 
 
@@ -148,6 +152,10 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Wed Jan 15 2025 Ilya Mashkin <oddity@altlinux.ru> 23.3-alt1
+- 23.3 (Closes: #52649)
+- Update Url
+
 * Thu Oct 26 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 21.23-alt1.3
 - NMU: fixed FTBFS on LoongArch.
 
