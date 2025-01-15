@@ -2,8 +2,8 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.0.0
-Release: alt3
+Version: 2.0.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Workspace 6 Plasma weather addon
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Wed Jan 15 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.0.1-alt1
+- fix the assignment of "undefined" to the angle
+
 * Tue Sep 03 2024 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.0.0-alt3
 - fix manual location setting (closes: 51300)
 
