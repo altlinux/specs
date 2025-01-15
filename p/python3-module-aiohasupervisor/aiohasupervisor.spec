@@ -1,5 +1,5 @@
 Name: python3-module-aiohasupervisor
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Client Library for Home Assistant Supervisor
@@ -32,5 +32,8 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/aiohasupervisor-%version.dist-info
 
 %changelog
+* Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.2-alt1
+- 0.2.2 released
+
 * Fri Nov 08 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.1-alt1
 - 0.2.1 released
