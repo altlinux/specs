@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Jan 15 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt3
+- fix some typos (closes #52644)
+- add pve-ceph
+
 * Sat Nov 02 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt2
 - kubernetes: fix manifests url
 
