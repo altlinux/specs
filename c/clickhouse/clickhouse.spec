@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 24.8.9.95
+Version: 24.8.12.28
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -262,6 +262,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Wed Jan 15 2025 Anton Farygin <rider@altlinux.ru> 24.8.12.28-alt1
+- 24.8.9.95 -> 24.8.12.28
+
 * Fri Dec 27 2024 Anton Farygin <rider@altlinux.ru> 24.8.9.95-alt1
 - 24.8.8.17 -> 24.8.9.95
 
