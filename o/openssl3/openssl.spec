@@ -2,8 +2,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl3
-Version: 3.1.7
-Release: alt3
+Version: 3.3.2
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: Apache-2.0
@@ -30,7 +30,7 @@ Group: System/Libraries
 Provides: libcrypto = %version-%release
 Provides: openssl-providers = %EVR
 Obsoletes: openssl-providers < %EVR
-Requires: openssl-config >= 3.1.1-alt1
+Requires: openssl-config >= 3.2.0-alt1
 # due to openssldir migration
 Conflicts: openssl < 0:0.9.8d-alt1
 # due to runtime openssl version check
@@ -350,6 +350,7 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %_bindir/openssl-config
 %_libdir/*.so
 %_libdir/pkgconfig/*
+%_libdir/cmake/OpenSSL
 %_includedir/*
 
 %files -n libssl-devel-static
@@ -380,6 +381,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Wed Jan 15 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.2-alt1
+- Updated to openssl-3.3.2.
+
 * Thu Dec 26 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.7-alt3
 - Dropped Conflicts: erlang <= 0:R9C.0-alt2 (ALT#52025).
 - Moved openssl.cnf to a separate package (openssl-config).
