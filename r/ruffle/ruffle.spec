@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.07
+Version: %ver_major.15
 Release: alt1
 
 Summary: A Flash Player emulator written in Rust
@@ -99,6 +99,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.01.15-alt1
+- nightly-2025-01-15
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.01.07-alt1
 - nightly-2025-01-07
 
