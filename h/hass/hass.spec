@@ -1,6 +1,6 @@
 Name: hass
 Version: 2025.1.2
-Release: alt1
+Release: alt2
 
 Summary: Home automation platform
 License: APL
@@ -16,7 +16,6 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(atomicwrites)
 BuildRequires: python3(awesomeversion)
 BuildRequires: python3(aiohttp_fast_url_dispatcher)
-BuildRequires: python3(aiohttp_zlib_ng)
 BuildRequires: python3(black)
 BuildRequires: python3(ciso8601)
 BuildRequires: python3(dateutil)
@@ -33,7 +32,6 @@ BuildRequires: python3(ulid_transform)
 BuildRequires: python3(voluptuous)
 BuildRequires: python3(voluptuous_serialize)
 BuildRequires: python3(yaml)
-BuildRequires: python3(zlib_ng)
 
 %package core
 Summary: Home automation platform
@@ -108,6 +106,9 @@ sed -re 's,^,%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.1.2-alt2
+- dropped obsolete buildreqs
+
 * Wed Jan 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.1.2-alt1
 - 2025.1.2 released
 
