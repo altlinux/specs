@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
-Summary: Linux AMDGPU Control Application
+Summary: Linux GPU Control Application
 License: MIT
 Group: Monitoring
 
@@ -20,21 +20,25 @@ Source1: crates.tar
 
 Source2: config
 
+BuildRequires(pre): clang-devel
+
 BuildRequires: blueprint-compiler
-BuildRequires: libdrm-devel
 BuildRequires: libgtk4-devel
+BuildRequires: llvm-devel
 BuildRequires: rust-cargo
 
 %description
-This application allows you to control your AMD GPU on a Linux system.
+This application allows you to control your AMD, Nvidia or Intel GPU on a Linux system.
 
 Current features:
 
    - Viewing information about the GPU
-   - Power/thermals monitoring
-   - Fan curve control
-   - Overclocking (GPU/VRAM clockspeed, voltage)
-   - Power states configuration
+   - Power and thermals monitoring, power limit configuration
+   - Fan curve control (AMD and Nvidia)
+   - Overclocking (GPU/VRAM clockspeed and voltage)
+   - Power states configuration (AMD only)
+
+All of the functionality works regardless of the desktop session (there is no dependency on X11 extensions).
 
 %prep
 %setup -n LACT-%version
@@ -64,6 +68,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Wed Jan 15 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Sat Nov 16 2024 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 
