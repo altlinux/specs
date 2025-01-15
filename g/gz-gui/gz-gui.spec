@@ -3,19 +3,18 @@
 
 Name:    gz-gui
 Version: %ver.0.0
-Release: alt1
+Release: alt2
 
 Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
 License: Apache-2.0
 Group:   Development/C++
-Url:     https://github.com/gazebosim/gz-gui
 
+Url:      https://github.com/gazebosim/gz-gui
+Source:   %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version.tar
-
 # Same as for ogre-next via libgz-rendering-devel
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -35,8 +34,8 @@ BuildRequires: libstdc++-devel-static
 
 %description
 Gazebo GUI builds on top of Qt to provide widgets which are useful when
-developing robotics applications, such as a 3D view, plots, dashboard, etc, and
-can be used together in a convenient unified interface.
+developing robotics applications, such as a 3D view, plots, dashboard, etc,
+and can be used together in a convenient unified interface.
 
 %package -n lib%name
 Summary: Library of %name
@@ -78,10 +77,14 @@ cp %buildroot%_libdir/gz-gui-%ver/plugins/{libGridConfig.so,libGrid3D.so}
 
 %files -n lib%{name}-devel
 %_includedir/gz/*
-%_libdir/cmake/*
-%_libdir/pkgconfig/*.pc
+%_cmakedir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 9.0.0-alt2
+- E2K: builds fine.
+- Minor spec cleanup.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - New version.
 

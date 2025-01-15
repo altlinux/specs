@@ -3,19 +3,18 @@
 
 Name:    gz-sim
 Version: %ver.0.0
-Release: alt1
+Release: alt2
 
 Summary: Open source robotics simulator. The latest version of Gazebo.
 License: Apache-2.0
 Group:   Other
-Url:     https://github.com/gazebosim/gz-sim
 
+Url:      https://github.com/gazebosim/gz-sim
+Source:   %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version.tar
-
 # Same as for ogre-next
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -79,13 +78,13 @@ BuildRequires: libdart-devel
 %endif
 BuildRequires: libfmt-devel
 
-# Requires to gz
+# gz deps
 Requires: gz-tools >= 2.0.0
 Requires: libgz-sim = %EVR
 
 %description
-Gazebo simulates multiple robots in a 3D environment, with extensive dynamic
-interaction between objects.
+Gazebo simulates multiple robots in a 3D environment
+with extensive dynamic interaction between objects.
 
 %package -n lib%name
 Summary: Library of %name
@@ -111,8 +110,8 @@ Group: Development/C++
 
 %install
 %ninja_install -C "%_cmake__builddir"
-install -Dpm 0644 "%_cmake__builddir"/gz-sim%ver.desktop %buildroot%_desktopdir/gz-sim%ver.desktop
-install -Dpm 0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-logo%ver.svg
+install -Dpm0644 "%_cmake__builddir"/gz-sim%ver.desktop %buildroot%_desktopdir/gz-sim%ver.desktop
+install -Dpm0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-logo%ver.svg
 
 %files
 %doc AUTHORS README.md
@@ -132,10 +131,14 @@ install -Dpm 0644 "%_cmake__builddir"/gz-logo%ver.svg %buildroot%_pixmapsdir/gz-
 
 %files -n lib%{name}-devel
 %_includedir/gz/*
-%_libdir/cmake/*
-%_libdir/pkgconfig/*.pc
+%_cmakedir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 9.0.0-alt2
+- E2K: builds fine.
+- Minor spec cleanup.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - New version.
 

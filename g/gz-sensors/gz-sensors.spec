@@ -2,19 +2,18 @@
 
 Name:    gz-sensors
 Version: 9.0.0
-Release: alt1
+Release: alt2
 
 Summary: Provides numerous sensor models designed to generate realistic data from simulation environments
 License: Apache-2.0
 Group:   Development/C++
-Url:     https://github.com/gazebosim/gz-sensors
 
+Url:      https://github.com/gazebosim/gz-sensors
+Source:   %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: %name-%version.tar
-
 # Same as for ogre-next via libgz-rendering-devel
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -64,10 +63,14 @@ Group: Development/C++
 
 %files -n lib%{name}-devel
 %_includedir/gz/sensors*
-%_libdir/cmake/*
-%_libdir/pkgconfig/*.pc
+%_cmakedir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 9.0.0-alt2
+- E2K: builds fine.
+- Minor spec cleanup.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - New version.
 

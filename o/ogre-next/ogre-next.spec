@@ -6,16 +6,17 @@
 
 Name: ogre-next
 Version: 2.3.3
-Release: alt4
+Release: alt5
+
 Summary: Object-Oriented Graphics Rendering Engine 
 # CC-BY-SA is for devel docs
 License: MIT
 Group: System/Libraries
-Url: https://ogrecave.github.io/ogre-next/api/latest/
 
+Url: https://ogrecave.github.io/ogre-next/api/latest/
 # https://github.com/OGRECave/ogre
 Source: %name-%version.tar
-Patch0: 0001-fix-ogre-next-version.patch
+Patch: 0001-fix-ogre-next-version.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: zziplib-devel libfreetype-devel libgtk+2-devel libois-devel openexr-devel cppunit-devel
@@ -32,7 +33,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: zlib-devel
 Conflicts: ogre
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 %description
 OGRE (Object-Oriented Graphics Rendering Engine) is a scene-oriented,
@@ -93,21 +94,10 @@ samples.
 
 %prep
 %setup
-
-%patch0 -p1
-
-%ifarch %e2k
-# strip UTF-8 BOM for lcc < 1.24
-find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
-    xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
-%endif
+%patch -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-%add_optflags -std=c++11
-%endif
 
 %cmake \
 	-DOGRE_LIB_DIRECTORY=%_lib \
@@ -124,7 +114,7 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %install
 %cmakeinstall_std
 
-# cmake macros should be in the cmake directory, not an Ogre directory
+# cmake macros should be in the cmake prefix, not Ogre one
 mkdir -p %buildroot%_datadir/cmake/Modules
 mv %buildroot%_libdir/%oname/cmake/* %buildroot%_datadir/cmake/Modules
 
@@ -139,7 +129,6 @@ mv %buildroot%_libdir/%oname/cmake/* %buildroot%_datadir/cmake/Modules
 %config(noreplace) %_datadir/%oname/HiddenAreaMeshVr.cfg
 %config(noreplace) %_datadir/%oname/plugins_tools.cfg
 %config(noreplace) %_datadir/%oname/resources2.cfg
-
 %_datadir/%oname/Media
 
 %files -n lib%name
@@ -149,7 +138,7 @@ mv %buildroot%_libdir/%oname/cmake/* %buildroot%_datadir/cmake/Modules
 
 %files  -n lib%name-devel
 %_libdir/libOgre*.so
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 %_datadir/cmake/Modules
 %_includedir/%oname
 
@@ -160,6 +149,10 @@ mv %buildroot%_libdir/%oname/cmake/* %buildroot%_datadir/cmake/Modules
 %_bindir/Sample_*
 
 %changelog
+* Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 2.3.3-alt5
+- E2K: builds fine
+- minor spec cleanup
+
 * Mon Apr  1 2024 Artyom Bystrov <arbars@altlinux.org> 2.3.3-alt4
 - test build
 

@@ -3,20 +3,19 @@
 
 Name:    gz-rendering
 Version: %ver.0.0
-Release: alt1
+Release: alt2
 
 Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
 License: Apache-2.0
 Group:   Development/C++
+
 Url:     https://github.com/gazebosim/gz-rendering
-
 Packager: Andrey Cherepanov <cas@altlinux.org>
-
 Source: %name-%version.tar
-Patch0: gz-rendering-orge-next-2.3.3.patch
+Patch: gz-rendering-orge-next-2.3.3.patch
 
 # Same as for ogre-next
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -51,15 +50,15 @@ Group: Development/C++
 
 %prep
 %setup
-%patch0 -p1
-subst 's/2\.3\.1/2.3.3/' CMakeLists.txt
+%patch -p1
+sed -i 's/2\.3\.1/2.3.3/' CMakeLists.txt
 
 %build
 %cmake -GNinja -Wno-dev \
        -DBUILD_TESTING=OFF \
        -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON
 %ninja_build -C "%_cmake__builddir"
-cp %_cmake__builddir/lib/libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir
+cp -a %_cmake__builddir/lib/libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir
 ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering%ver-ogre2.so
 ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering-ogre2.so
 
@@ -75,10 +74,14 @@ ln -s libgz-rendering%ver-ogre2.so.%ver %_cmake__builddir/libgz-rendering-ogre2.
 
 %files -n lib%{name}-devel
 %_includedir/gz/rendering*
-%_libdir/cmake/*
-%_libdir/pkgconfig/*.pc
+%_cmakedir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 9.0.0-alt2
+- E2K: builds fine.
+- Minor spec cleanup.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
 - New version.
 
