@@ -4,7 +4,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 8.13.52
+Version: 8.13.53
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -13,6 +13,7 @@ Group: System/Libraries
 Url: https://github.com/google/libphonenumber
 
 Vcs: https://github.com/google/libphonenumber.git
+
 Source: %url/archive/v%version/%name-%version.tar.gz
 # link libgeocoding against libphonenumber
 Patch1: %name-8.13.4-alt-link.patch
@@ -82,6 +83,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 8.13.53-alt1
+- 8.13.53
+
 * Fri Dec 13 2024 Yuri N. Sedunov <aris@altlinux.org> 8.13.52-alt1
 - 8.13.52
 
