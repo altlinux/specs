@@ -7,14 +7,13 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.48
+Version: 1.1.54
 Release: alt1
 Summary: Fast Expat based Erlang XML parsing library
 Group: Development/Erlang
 License: Apache-2.0
 Url: https://github.com/processone/fast_xml
-
-# https://github.com/processone/fast_xml.git
+VCS: https://github.com/processone/fast_xml.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -59,6 +58,9 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %_erllibdir/%realname-%version
 
 %changelog
+* Wed Jan 15 2025 Anton Farygin <rider@altlinux.ru> 1.1.54-alt1
+- 1.1.48 -> 1.1.54
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.48-alt1
 - Updated to upstream version 1.1.48.
 
