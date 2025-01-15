@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name cosmic-workspaces
 %define git_name %_name-epoch
 %define ver_major 1.0
-%define beta .alpha.5
+%define beta .alpha.5.1
 %define rdn_name com.system76.CosmicWorkspaces
 
 %def_disable bootstrap
@@ -11,7 +11,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt0.5%beta
+Release: alt0.51%beta
 
 Summary: COSMIC Workspaces
 License: GPL-3.0
@@ -22,13 +22,13 @@ Vcs: https://github.com/pop-os/cosmic-workspaces-epoch.git
 
 Provides: %git_name = %EVR
 
+%define git_ver epoch-%version%(echo %beta|sed 's/^\./-/')
 %if_disabled snapshot
-Source: %url/archive/%version/%git_name-%version.tar.gz
+Source: %url/archive/%git_ver/%git_name-%version%beta.tar.gz
 %else
 Source: %git_name-%version%beta.tar
 %endif
 Source1: %git_name-%version%beta-cargo.tar
-Patch10: cosmic-term-1.0.0-alt-linux-raw-sys-char-loongarch64.patch
 
 # rustc-LLVM ERROR: out of memory
 # Allocation failed
@@ -45,15 +45,11 @@ BuildRequires: pkgconfig(gbm)
 %summary
 
 %prep
-%setup -n %git_name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %git_name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver} %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%git_name-%version%beta-cargo.tar .cargo/ vendor/}
-
-%patch10 -p1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    vendor/linux-raw-sys/.cargo-checksum.json
 
 %build
 %rust_build
@@ -72,6 +68,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 #%doc README*
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.51.alpha.5.1
+- 1.0.0-alpha.5.1
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
 - 1.0.0-alpha.5
 

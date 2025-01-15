@@ -1,13 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name cosmic-icons
 %define ver_major 1.0
-%define beta .alpha.5
+%define beta .alpha.5.1
 
 %def_disable check
 
 Name: icon-theme-cosmic
 Version: %ver_major.0
-Release: alt0.5%beta
+Release: alt0.51%beta
 
 Summary: COSMIC Icons
 License: CC-BY-SA-4.0
@@ -20,8 +20,9 @@ BuildArch: noarch
 
 Provides: %_name = %EVR
 
+%define git_ver epoch-%version%(echo %beta|sed 's/^\./-/')
 %if_disabled snapshot
-Source: %url/archive/v%version/%_name-%version.tar.gz
+Source: %url/archive/%git_ver/%_name-%version%beta.tar.gz
 %else
 Source: %_name-%version%beta.tar
 %endif
@@ -34,7 +35,7 @@ BuildRequires: /usr/bin/appstreamcli /usr/bin/desktop-file-validate
 Icons for the COSMIC desktop environment.
 
 %prep
-%setup -n %_name-%version%beta
+%setup -n %_name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver}
 
 %install
 just rootdir=%buildroot install
@@ -44,6 +45,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.51.alpha.5.1
+- 1.0.0-alpha.5.1
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
 - 1.0.0-alpha.5
 

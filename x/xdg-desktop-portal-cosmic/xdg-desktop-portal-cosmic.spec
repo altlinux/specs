@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 1.0
-%define beta .alpha.5
+%define beta .alpha.5.1
 %define rdn_name com.system76.CosmicPortal
 %define dbus_name org.freedesktop.impl.portal.desktop.cosmic
 
@@ -11,7 +11,7 @@
 
 Name: xdg-desktop-portal-cosmic
 Version: %ver_major.0
-Release: alt0.5%beta
+Release: alt0.51%beta
 
 Summary: COSMIC Desktop Portal
 License: GPL-3.0
@@ -20,8 +20,9 @@ Url: https://github.com/pop-os/xdg-desktop-portal-cosmic
 
 Vcs: https://github.com/pop-os/xdg-desktop-portal-cosmic.git
 
+%define git_ver epoch-%version%(echo %beta|sed 's/^\./-/')
 %if_disabled snapshot
-Source: %url/archive/v%version/%name-%version.tar.gz
+Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -43,7 +44,7 @@ ExcludeArch: %ix86 armh
 XDG Desktop Portal implementation for COSMIC desktop environment.
 
 %prep
-%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver} %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -77,6 +78,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 #%doc README*
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.51.alpha.5.1
+- 1.0.0-alpha.5.1
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
 - 1.0.0-alpha.5
 

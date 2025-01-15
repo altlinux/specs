@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.5
+%define beta .alpha.5.1
 %define rdn_name com.system76.CosmicBackground
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-bg
 Version: %ver_major.0
-Release: alt0.5%beta
+Release: alt0.51%beta
 
 Summary: COSMIC Background Service
 License: MPL-2.0
@@ -17,8 +17,9 @@ Url: https://github.com/pop-os/cosmic-bg
 
 Vcs: https://github.com/pop-os/cosmic-bg.git
 
+%define git_ver epoch-%version%(echo %beta|sed 's/^\./-/')
 %if_disabled snapshot
-Source: %url/archive/v%version/%name-%version.tar.gz
+Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -34,7 +35,7 @@ BuildRequires: pkgconfig(xkbcommon)
 COSMIC session service which applies backgrounds to displays.
 
 %prep
-%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver} %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -58,6 +59,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.51.alpha.5.1
+- 1.0.0-alpha.5.1
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.alpha.5
 - 1.0.0-alpha.5
 
