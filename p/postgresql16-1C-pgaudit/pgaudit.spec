@@ -1,4 +1,4 @@
-%define pg_ver 16
+%define pg_ver 16-1C
 
 Name:    postgresql%pg_ver-pgaudit
 Version: 17.0
