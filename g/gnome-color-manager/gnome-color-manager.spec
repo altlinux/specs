@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -7,8 +7,8 @@
 %def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.0
-Release: alt3
+Version: %ver_major.2
+Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
 License: GPL-2.0
@@ -73,7 +73,7 @@ This project has the following features:
 %build
 %meson \
     -Dtests=true \
-    %{?_disable_packagekit:-Dpackagekit=false}
+    %{subst_enable_meson_bool packagekit packagekit}
 %meson_build
 
 %install
@@ -84,7 +84,7 @@ ln -sf %_licensedir/GPL-2 COPYING
 %find_lang --with-gnome %name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/gcm-import
@@ -101,6 +101,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.36.2-alt1
+- 3.36.2
+
 * Mon Dec 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt3
 - updated to GNOME_COLOR_MANAGER_3_36_0-58-ga53973f5
 
