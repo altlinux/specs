@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.0
+Version: 0.13.2
 Release: alt1
 
 Summary: Opinionated components for Rich
@@ -58,6 +58,9 @@ applications. It is based on Rich.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 15 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.13.2-alt1
+- Updated to 0.13.2.
+
 * Sat Dec 28 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.0-alt1
 - Initial build for ALT Sisyphus.
 
