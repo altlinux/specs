@@ -1,6 +1,6 @@
 Name: xbill
 Version: 2.1.0gtk2
-Release: alt1
+Release: alt2
 
 Summary: Stop Bill from loading his OS into all the computers
 Summary(ru_RU.UTF-8): Помешайте Биллу поставить свою ОС на все компьютеры
@@ -9,8 +9,8 @@ License: GPL
 Group: Games/Arcade
 Url: http://www.xbill.org/
 
-# Source-url: https://github.com/alistairmcmillan/Xbill/archive/master.zip
 Source: %name-%version.tar
+Patch: xbill-throw-away-strcasecmp-func.patch
 
 BuildRequires: flex gcc-c++ imake libXt-devel libgtk+2-devel
 
@@ -27,6 +27,7 @@ and it is very popular at Red Hat.
 
 %prep
 %setup
+%patch -p1
 
 %build
 autoconf
@@ -61,6 +62,9 @@ EOF
 %_man6dir/%name.*
 
 %changelog
+* Wed Jan 15 2025 Ulysses Apokin <ulysses@altlinux.org> 2.1.0gtk2-alt2
+- Fix FTBFS.
+
 * Tue Jul 03 2018 Vitaly Lipatov <lav@altlinux.ru> 2.1.0gtk2-alt1
 - build GTK+2 version from https://github.com/alistairmcmillan/Xbill
 
