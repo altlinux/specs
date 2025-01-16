@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt21
+Release: alt22
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -95,7 +95,6 @@ Requires: libzstd
 Requires: zlib
 
 Requires: libstdc++6
-Requires: fonts-ttf-ms
 
 %description
 This metapackage is intend to deploy correct environment for 1C:Enterprise platform installation.
@@ -121,6 +120,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Thu Jan 16 2025 Sergey V Turchin <zerg@altlinux.org> 8.3-alt22
+- remove proptietary requires because distros incompatiblity (closes: 52065)
+
 * Mon Jan 13 2025 Pavel Isopenko <pauli@altlinux.org> 8.3-alt21
 - minus libenchant
 
