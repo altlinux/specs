@@ -1,6 +1,6 @@
 Name: apt-scripts
-Version: 0.1.4
-Release: alt2
+Version: 0.1.5
+Release: alt1
 
 Summary: Lua scripts for APT
 License: GPL-2.0-or-later
@@ -49,6 +49,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Wed Jan 15 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.1.5-alt1
+- fixed dedup 'egrep is obsolescent' spam (closes: #48319)
+
 * Wed Jun 19 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1.4-alt2
 - apt-get dedup implies Apt::Get::Fix-Broken
 
