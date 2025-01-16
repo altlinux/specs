@@ -3,7 +3,7 @@
 
 Name: stockfish
 Version: 17
-Release: alt1
+Release: alt1.1
 Group: Games/Boards
 
 Summary: Powerful open source chess engine
@@ -13,6 +13,8 @@ License: GPLv3+ and CC0
 
 Url: https://stockfishchess.org
 VCS: https://github.com/official-stockfish/Stockfish
+
+Packager: Leonid Znamenok <respublica@altlinux.org>
 
 # Main source
 # https://github.com/official-%name/Stockfish/archive/sf_%version.tar.gz
@@ -94,6 +96,10 @@ sed -e 's,\(EngineDir = \).*,\1%_bindir,' \
 %global sfarch loongarch64
 %endif
 
+%ifarch riscv64
+%global sfarch riscv64
+%endif
+
 %make_build -C src build ARCH=%sfarch
 
 %install
@@ -113,6 +119,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Thu Jan 16 2025 Ivan A. Melnikov <iv@altlinux.org> 17-alt1.1
+- NMU: build on riscv64.
+
 * Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 17-alt1
 - New version 17.
 
