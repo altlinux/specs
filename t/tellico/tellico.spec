@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 4.0.1
+Version: 4.1
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -101,6 +101,9 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Thu Jan 16 2025 Andrey Cherepanov <cas@altlinux.org> 4.1-alt1
+- New version.
+
 * Tue Dec 17 2024 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
 - New version.
 - Build with KF6.
