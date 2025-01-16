@@ -12,7 +12,7 @@
 
 Name: shotwell
 Version: %ver_major.10
-Release: alt1
+Release: alt1.1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -64,6 +64,12 @@ mode, and export them to share with others.
 %prep
 %setup
 %patch -b .no_dark_theme
+
+%ifarch %e2k
+sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
+  subprojects/shotwell-facedetect/shotwell-facedetect.cpp
+%endif
+
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
 %define vala_ver %(rpm -q --qf '%%{VERSION}' vala)
@@ -115,6 +121,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Thu Jan 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.32.10-alt1.1
+- fixed build for E2K (ilyakurdyukov@)
+
 * Mon Oct 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.32.10-alt1
 - 0.32.10
 
