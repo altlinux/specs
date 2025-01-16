@@ -5,8 +5,8 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.2.5.0.0.30
-Release:   alt4
+Version:   1.2.5.0.0.32
+Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -113,7 +113,7 @@ Python3 backend for PackageKit.
 %patch1 -p1
 %ifarch %e2k
 # workaround for EDG frontend
-sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" backends/aptcc/apt-{utils,intf}.cpp
+sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" backends/apt/apt-{utils,job}.cpp
 %endif
 
 %build
@@ -124,7 +124,7 @@ sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" backends/aptcc/apt-{utils
 %endif
 %add_optflags -D_FILE_OFFSET_BITS=64
 %meson \
-	-Dpackaging_backend=aptcc \
+	-Dpackaging_backend=apt \
 	-Dsystemd=true \
 	-Doffline_update=true \
 	-Dgtk_doc=true \
@@ -154,14 +154,14 @@ mkdir -p %{buildroot}%{_unitdir}/system-update.target.wants/
 ln -sf ../packagekit-offline-update.service %{buildroot}%{_unitdir}/system-update.target.wants/packagekit-offline-update.service
 
 # get rid of test backend
-rm -f %buildroot%_libdir/packagekit-backend/libpk_backend_test_*.so
-rm -rf %buildroot%_datadir/PackageKit/helpers/test_spawn
+rm %buildroot%_libdir/packagekit-backend/libpk_backend_test_*.so
+rm -r %buildroot%_datadir/PackageKit/helpers/test_spawn
 
 # Following scripts seems unused, and it needs to be patched for ALT should it be used
-rm -f %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
+rm %buildroot%_datadir/PackageKit/pk-upgrade-distro.sh
 
 # Remove unused files
-rm -f %buildroot%_datadir/PackageKit/helpers/aptcc/pkconffile.nodiff
+rm %buildroot%_datadir/PackageKit/helpers/apt/pkconffile.nodiff
 
 touch %buildroot%_localstatedir/PackageKit/upgrade_lock
 
@@ -249,7 +249,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %_unitdir/system-update.target.wants/
 %_libexecdir/pk-*offline-update
 %config %_sysconfdir/apt/apt.conf.d/20packagekit
-%_libdir/packagekit-backend/libpk_backend_aptcc.so
+%_libdir/packagekit-backend/libpk_backend_apt.so
 %_libexecdir/pk-invoke-filetriggers.sh
 %_sysconfdir/NetworkManager/dispatcher.d/pre-up.d/packagekit.sh
 
@@ -303,6 +303,10 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Wed Jan 15 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.32-alt1
+- Rebased onto a large upstream commit: "Refactor backend and rename to apt".
+  (Thx Dmitrii Fomchenkov sirius@ for clarifying the renames in the code.)
+
 * Mon May 13 2024 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.30-alt4
 - Modified the appearance of the Origin-Suite for ALT repositories
   (already shortened in 1.1.12-alt9), so that the allowed symbols
