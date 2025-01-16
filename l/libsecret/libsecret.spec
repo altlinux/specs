@@ -9,6 +9,7 @@
 %def_enable vala
 %def_enable gtk_doc
 %def_enable man
+%def_disable bash_completion
 %def_enable check
 
 # since 0.21.2
@@ -16,7 +17,7 @@
 %define crypto libgcrypt
 
 Name: libsecret
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -49,6 +50,7 @@ BuildRequires: libtpm2-tss-devel >= %tss_ver
 %{?_enable_vala:BuildRequires: vala-tools >= %vala_ver}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
+%{?_enable_bash_completion:BuildRequires: pkgconfig(bash-completion)}
 %{?_enable_check:
 BuildRequires: /proc fuse-gvfs dbus-tools-gui python3-module-dbus-gobject
 BuildRequires: python3-module-pygobject3 python3-module-mock libgjs}
@@ -115,6 +117,7 @@ GObject introspection devel data for %name.
     %{subst_enable_meson_bool introspection introspection} \
     %{subst_enable_meson_bool vala vapi} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_feature bash_completion bash_completion} \
     %{subst_enable_meson_bool man manpage}
 %nil
 %meson_build
@@ -130,6 +133,7 @@ dbus-run-session %__meson_test
 %_bindir/secret-tool
 %_libdir/%name-%api_ver.so.*
 %{?_enable_man:%_man1dir/secret-tool.1.*}
+%{?_enable_bash_completion:%_datadir/bash-completion/completions/secret-tool}
 %doc README* NEWS
 
 %files devel
@@ -157,6 +161,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Thu Jan 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.6-alt1
+- 0.21.6
+
 * Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.21.5-alt1
 - 0.21.5
 
