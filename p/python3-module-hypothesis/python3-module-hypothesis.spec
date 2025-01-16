@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.123.11
+Version: 6.123.17
 Release: alt1
 
 Summary: A library for property based testing
@@ -71,7 +71,12 @@ cp %SOURCE1 ./
 # Ignoring of UserWarning for dateutile.zoneinfo is needed, because there's a
 # flaw of python3-module-dateutil packaging and we don't create and package
 # dateutil-zoneinfo.tar.gz. But it doesn't influence on the test execution.
-%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo tests
+#
+# tests/crosshair: skipping this directory because there's no crosshair backend
+# in Sisyphus yet
+%pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo \
+    --ignore="tests/crosshair" \
+    tests
 
 %files
 %doc README.rst
@@ -86,6 +91,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Wed Jan 15 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.123.17-alt1
+- Updated to 6.123.17.
+
 * Thu Jan 09 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.123.11-alt1
 - Updated to 6.123.11.
 

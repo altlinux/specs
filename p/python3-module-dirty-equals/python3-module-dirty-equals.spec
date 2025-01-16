@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: Doing dirty (but extremely useful) things with equals
@@ -64,6 +64,9 @@ touch pytest.ini
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 15 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Thu Aug 29 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.0-alt1
 - Updated to 0.8.0.
 
