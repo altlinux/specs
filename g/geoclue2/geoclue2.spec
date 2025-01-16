@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name geoclue
 %define xdg_name org.freedesktop.GeoClue2
@@ -15,7 +15,7 @@
 
 Name: %{_name}2
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The Geoinformation Service
 Group: System/Libraries
@@ -141,6 +141,13 @@ mkdir -p %buildroot%_sysconfdir/%_name/conf.d
 echo 'd %_localstatedir/%_name 0755 %_name %_name' | \
 install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 
+cat > %buildroot%_sysconfdir/%_name/conf.d/20-beacondb.conf << _EOF_
+# https://beacondb.net & https://beacondb.net/map
+[wifi]
+enable=true
+url=https://api.beacondb.net/v1/geolocate
+_EOF_
+
 %check
 %__meson_test
 
@@ -152,6 +159,7 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %files
 %_libexecdir/%_name
 %dir %_sysconfdir/%_name/conf.d
+%_sysconfdir/%_name/conf.d/20-beacondb.conf
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/dbus-1/system.d/%xdg_name.Agent.conf
 %_datadir/dbus-1/interfaces/%xdg_name.Agent.xml
@@ -203,6 +211,10 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt2
+- 2.7.2-19-gca898d5 (adapted for BeaconDB)
+- added config for beacondb.net
+
 * Wed Sep 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
 - 2.7.2
 
