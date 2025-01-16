@@ -1,5 +1,5 @@
 Name: python3-module-certifi
-Version: 2024.8.30
+Version: 2024.12.14
 Release: alt1
 
 Summary: Python package for providing Mozilla's CA Bundle
@@ -37,6 +37,9 @@ is derived from Mozilla Firefox's canonical set.
 %python3_sitelibdir/certifi-%version.dist-info
 
 %changelog
+* Thu Jan 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.12.14-alt1
+- 2024.12.14 released
+
 * Thu Sep 05 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2024.8.30-alt1
 - 2024.8.30 released
 
