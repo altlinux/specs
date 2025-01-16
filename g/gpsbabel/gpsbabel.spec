@@ -8,7 +8,7 @@
 %endif
 
 Name: gpsbabel
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: A tool to convert between various formats used by GPS devices
 License: GPLv2
@@ -103,6 +103,9 @@ install -m 0644 -p %SOURCE2 %buildroot%_datadir/icons/hicolor/256x256/apps/
 %endif
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
+- 1.9.0 -> 1.10.0
+
 * Wed Jul 10 2024 Anton Farygin <rider@altlinux.ru> 1.9.0-alt1
 - 1.7.0 -> 1.9.0 (Closes: #42138)
 
