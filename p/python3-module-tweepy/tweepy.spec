@@ -1,8 +1,8 @@
 %define oname tweepy
 
 Name:    python3-module-%oname
-Version: 4.14.0
-Release: alt2
+Version: 4.15.0
+Release: alt1
 
 Summary: Twitter library for python
 
@@ -16,8 +16,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
 Source0: %name-%version.tar
-# Removes dependency on imghdr
-Patch: 661d4ba7d04911e76a5903154cc7567595d9c711.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -31,7 +29,9 @@ entire API, and streaming API.
 
 %prep
 %setup
-%patch -p1
+
+sed -i 's/4.14/4.15/' tweepy/__init__.py
+
 
 %build
 %pyproject_build
@@ -47,6 +47,9 @@ rm -rf %buildroot%python3_sitelibdir/examples
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jan 16 2025 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt1
+- Automatically updated to 4.15.0.
+
 * Fri Dec 13 2024 Grigory Ustinov <grenka@altlinux.org> 4.14.0-alt2
 - Removed dependency on python3(imghdr).
 
