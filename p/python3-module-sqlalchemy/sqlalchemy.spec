@@ -1,5 +1,5 @@
 Name: python3-module-sqlalchemy
-Version: 2.0.36
+Version: 2.0.37
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -74,6 +74,9 @@ This package contains tests for SQLAlchemy.
 %python3_sitelibdir/*/testing
 
 %changelog
+* Thu Jan 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.37-alt1
+- 2.0.37 released
+
 * Wed Nov 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.36-alt1
 - 2.0.36 released
 
