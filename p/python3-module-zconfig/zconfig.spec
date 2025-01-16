@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.1
-Release: alt2
+Version: 4.2
+Release: alt1
 
 Summary: Python configuration module from Zope
 License: ZPL-2.1
@@ -26,7 +26,6 @@ BuildRequires: python3-module-zope.testrunner
 BuildRequires: python3-module-manuel
 BuildRequires: python3-module-manuel-tests
 BuildRequires: python3-module-docutils
-BuildRequires: python3-module-six
 %endif
 
 Conflicts: python-module-%oname < 3.2.0-alt2
@@ -69,9 +68,6 @@ This package contains tests for ZConfig.
 %prep
 %setup
 
-sed -i 's/unittest.TestCase.assertRaisesRegexp/unittest.TestCase.assertRaisesRegex/' \
-	src/ZConfig/tests/support.py
-
 %build
 %pyproject_build
 
@@ -94,6 +90,9 @@ sed -i 's/unittest.TestCase.assertRaisesRegexp/unittest.TestCase.assertRaisesReg
 
 
 %changelog
+* Thu Jan 16 2025 Anton Vyatkin <toni@altlinux.org> 4.2-alt1
+- New version 4.2.
+
 * Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 4.1-alt2
 - Fixed FTBFS.
 
