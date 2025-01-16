@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.34.0.12.8cf0
+Version: 5.7.8
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
@@ -11,17 +11,18 @@ Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkgui
+Vcs: git://github.com/linuxdeepin/dtkgui.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: dtkgui-alt-git.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static -> libQt5XkbCommonSupport.a
 # Automatically added by buildreq on Wed Oct 18 2023
 # optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libcairo-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt liblcms2-devel libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-svg libdqt5-widgets libdqt5-xml libsasl2-3 libssl-devel libstdc++-devel pkg-config python3 python3-base dqt5-base-devel dqt5-svg-devel sh5 xorg-proto-devel
-BuildRequires: cmake extra-cmake-modules dtk6-common-devel dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel
+BuildRequires: cmake extra-cmake-modules dtk6-common-devel dqt5-base-devel-static dqt5-svg-devel dqt5-wayland-devel libdtkcore-devel libfreeimage-devel libgomp-devel libqtxdg-devel libraw-devel librsvg-devel treeland-protocols
 # BuildRequires: libpcre2-devel libffi-devel libmount-devel libblkid-devel libselinux-devel libjpeg-devel libtiff-devel bzlib-devel libbrotli-devel libexpat-devel libpixman-devel
 # BuildRequires: libXdmcp-devel
 %if_enabled clang
@@ -57,7 +58,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
@@ -69,10 +70,10 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 export PATH=%_dqt5_bindir:$PATH
+export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_PREFIX_PATH=%_dqt5_libdir/cmake \
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
   -DMKSPECS_INSTALL_DIR=%_dqt5_archdatadir/mkspecs/modules/ \
@@ -80,7 +81,7 @@ export PATH=%_dqt5_bindir:$PATH
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_libdir \
   -DLIBRARY_INSTALL_DIR=%_lib \
-  -DDTK_VERSION=5.6.34 \
+  -DDTK_VERSION=%version \
   -DBUILD_DOCS=OFF \
   %if_enabled clang
   -DLLVM_USE_LINKER=lld \
@@ -112,6 +113,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Thu Jan 16 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.8-alt1
+- New version 5.7.8.
+- Added vcs tag.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34.0.12.8cf0-alt1
 - New version 5.6.34-12-g8cf037d.
 

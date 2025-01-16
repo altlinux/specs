@@ -2,12 +2,16 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.6.34.0.2.38e3
+Version: 5.7.8
 Release: alt1
+
 Summary: Deepin tool kit widget modules
+
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkwidget
+Vcs: git://github.com/linuxdeepin/dtkwidget.git
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
@@ -105,7 +109,7 @@ export PATH=%_dqt5_bindir:$PATH
 %endif
   -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
-  -DDTK_VERSION=5.6.34 \
+  -DDTK_VERSION=%version \
   -DBUILD_PLUGINS=OFF \
 #
 cmake --build %_cmake__builddir -j%__nprocs
@@ -140,6 +144,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_docdir/dtkwidget.qch
 
 %changelog
+* Thu Jan 16 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.8-alt1
+- New version 5.7.8.
+- Added vcs tag.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34.0.2.38e3-alt1
 - New version 5.6.34-2-g38e3cc14.
 

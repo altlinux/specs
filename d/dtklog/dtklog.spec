@@ -1,14 +1,15 @@
 %def_disable clang
 
 Name: dtklog
-Version: 0.0.1
-Release: alt2
+Version: 0.0.2
+Release: alt1
 
 Summary: Deepin tool kit log modules
 
 License: LGPL-2.1
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtklog
+Vcs: git://github.com/linuxdeepin/dtklog.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
@@ -85,6 +86,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_archdatadir/mkspecs/modules/qt_lib_dtklog.pri
 
 %changelog
+* Thu Jan 16 2025 Leontiy Volodin <lvol@altlinux.org> 0.0.2-alt1
+- New version 0.0.2.
+- Added vcs tag.
+
 * Thu Sep 12 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1-alt2
 - Moved mkspecs module to dqt5's default place.
 

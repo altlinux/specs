@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtkcore
-Version: 5.6.34
+Version: 5.7.8
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -12,9 +12,10 @@ Summary: Deepin tool kit core modules
 License: LGPL-2.1+ and LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkcore
+Vcs: git://github.com/linuxdeepin/dtkcore.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Patch: dtkcore-alt-uos.patch
 
 Provides: libdtk5-core = %EVR
 Obsoletes: libdtk5-core < %EVR
@@ -70,7 +71,7 @@ This package provides %name documantation.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -127,6 +128,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Thu Jan 16 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.8-alt1
+- New version 5.7.8.
+- Added vcs tag.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34-alt1
 - New version 5.6.34.
 

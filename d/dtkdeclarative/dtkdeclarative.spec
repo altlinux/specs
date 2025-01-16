@@ -3,17 +3,19 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 5.6.34.0.5.a2a9
+Version: 5.7.8
 Release: alt1
+
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
+
 License: LGPL-3.0+
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
+Vcs: git://github.com/linuxdeepin/dtkdeclarative.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: dtkdeclarative-5.6.28-alt-pkgconfig-find-requires.patch
+Patch: dtkdeclarative-5.6.28-alt-pkgconfig-find-requires.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -102,8 +104,7 @@ QtCreator Data files for %name.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 export PATH=%_dqt5_bindir:$PATH
@@ -131,7 +132,7 @@ export READELF="llvm-readelf"
   -DINCLUDE_INSTALL_DIR=include \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_lib \
-  -DDTK_VERSION=5.6.34 \
+  -DDTK_VERSION=%version \
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -164,6 +165,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Thu Jan 16 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.8-alt1
+- New version 5.7.8.
+- Added vcs tag.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34.0.5.a2a9-alt1
 - New version 5.6.34-5-ga2a9088.
 
