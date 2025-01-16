@@ -1,52 +1,42 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name zope.deprecation
 
 %def_with check
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 5.0
-Release: alt2
+Version: 5.1
+Release: alt1
 
 Summary: Zope Deprecation Infrastructure
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.deprecation/
 Vcs: https://github.com/zopefoundation/zope.deprecation.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+Requires: python3-module-zope
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope
 
 %description
 This package provides a simple function called deprecated(names, reason)
 to mark deprecated modules, classes, functions, methods and properties.
 
-%package tests
-Summary: Tests for Zope 3 Deprecation Infrastructure (Python 3)
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.testing
-%add_python3_req_skip deprecation
-
-%description tests
-This package provides a simple function called deprecated(names, reason)
-to mark deprecated modules, classes, functions, methods and properties.
-
-This package contains tests for Zope Deprecation Infrastructure.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -64,18 +54,17 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt
+%doc README.*
 %python3_sitelibdir/zope/deprecation/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/__pycache__/tests.*
 
-%files tests
-%python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/__pycache__/tests.*
-
 %changelog
+* Thu Jan 16 2025 Stanislav Levin <slev@altlinux.org> 1:5.1-alt1
+- 5.0 -> 5.1.
+
 * Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 1:5.0-alt2
 - Mapped PyPI name to distro's one.
 
