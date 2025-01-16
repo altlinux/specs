@@ -3,13 +3,14 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 24.4.0
+Version: 25.1.0
 Release: alt1
 
 Summary: structlog is the production-ready logging solution for Python
 Group: Development/Python3
 License: Apache-2.0 OR MIT
 Url: https://pypi.python.org/pypi/%pypi_name
+
 Vcs: https://github.com/hynek/structlog.git
 
 Source: https://pypi.io/packages/source/s/%pypi_name/%pypi_name-%version.tar.gz
@@ -44,6 +45,9 @@ BuildRequires: python3(pre_commit) python3(sphinx) python3(mypy)}
 %doc README* COPYRIGHT CHANGELOG*
 
 %changelog
+* Thu Jan 16 2025 Yuri N. Sedunov <aris@altlinux.org> 25.1.0-alt1
+- 25.1.0
+
 * Wed Jul 17 2024 Yuri N. Sedunov <aris@altlinux.org> 24.4.0-alt1
 - 24.4.0
 
