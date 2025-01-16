@@ -1,8 +1,8 @@
 %define script_name winbind-dnsupdate
 
 Name: samba-winbind-dnsupdate
-Version: 0.5
-Release: alt2
+Version: 0.6
+Release: alt1
 
 Summary: Dynamic dns update for winbind backend
 License: GPLv3
@@ -42,6 +42,8 @@ install -Dm 644 %script_name.service %buildroot%_unitdir/%script_name.service
 install -Dm 644 %script_name.sysconfig %buildroot%_sysconfdir/sysconfig/%script_name
 install -Dm 644 doc/winbind-dnsupdate.1 %buildroot/%_man1dir/winbind-dnsupdate.1
 install -Dm 644 %script_name.ini %buildroot%_sysconfdir/dconf/db/policy.d/%script_name.ini
+install -Dm 644 org.altlinux.winbind.dnsupdate.gschema.xml \
+      %buildroot%_datadir/glib-2.0/schemas/org.altlinux.winbind.dnsupdate.gschema.xml
 
 %check
 %ifnarch %e2k
@@ -57,11 +59,20 @@ shellcheck %script_name
 %_sysconfdir/sysconfig/%script_name
 %_man1dir/winbind-dnsupdate.1.*
 %_sysconfdir/dconf/db/policy.d/%script_name.ini
+%_datadir/glib-2.0/schemas/org.altlinux.winbind.dnsupdate.gschema.xml
 
 %post
 dconf compile %_sysconfdir/dconf/db/policy %_sysconfdir/dconf/db/policy.d/
 
 %changelog
+* Thu Jan 16 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.6-alt1
+- Change the method of getting parameters from dconf to gsettings
+- Change dconf path in winbind dnsupdate.ini
+- Add gsettings schema file
+- Fix typo in man file (ALT #51551)
+- Changing the default behavior of working with dconf (ALT #51611)
+- Fix typo (ALT #51552)
+
 * Mon Sep 30 2024 Michael Shigorin <mike@altlinux.org> 0.5-alt2
 - E2K: avoid shellcheck due to ghc still lacking
 
