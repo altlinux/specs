@@ -3,10 +3,11 @@
 
 %define caddy_user _caddy
 %define caddy_group _caddy
+%def_disable check
 
 Name: caddy
-Version: 2.8.4
-Release: alt2
+Version: 2.9.1
+Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
 Url: https://caddyserver.com
@@ -123,6 +124,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Jan 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.9.1-alt1
+- New version 2.9.1.
+
 * Tue Jul 16 2024 Alexey Shabalin <shaba@altlinux.org> 2.8.4-alt2
 - fix add user
 
