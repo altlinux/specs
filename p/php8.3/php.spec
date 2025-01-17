@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  3
-%define _php_release_version 15
+%define _php_release_version 16
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -400,6 +400,7 @@ rm -f tests/basic/bug54514.phpt
 # the test fails due to an error in glibc-2.27 packaged for ALT: https://bugzilla.altlinux.org/show_bug.cgi?id=37368
 rm -f ext/standard/tests/strings/setlocale_variation2.phpt
 # the test always fails when run in the hasher environment
+rm -f ext/standard/tests/http/gh16810.phpt
 rm -f ext/standard/tests/file/bug69442.phpt
 rm -f ext/posix/tests/posix_ttyname_error_wrongparams.phpt
 rm -f ext/standard/tests/general_functions/sys_getloadavg.phpt
@@ -490,6 +491,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 8.3.16-alt1
+- 8.3.15 -> 8.3.16
+
 * Tue Dec 24 2024 Anton Farygin <rider@altlinux.ru> 8.3.15-alt1
 - 8.3.14 -> 8.3.15
 
