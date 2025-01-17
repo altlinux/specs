@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit cefc43e4daa4cbb490ef6726ea374e26a93eb85e
+%global commit 16f8cf1c52f0a77eeb8f7565aaf7f7df12454583
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2024-11-07T00-52-20Z
-%define version 2024.11.07
+%global tag RELEASE.2024-12-18T13-15-44Z
+%define version 2024.12.18
 
 %global _unpackaged_files_terminate_build 1
 
@@ -97,6 +97,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Tue Jan 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 2024.12.18-alt1
+- Update to RELEASE.2024-12-18T13-15-44Z (Fixes: CVE-2024-55949)
+
 * Mon Dec 09 2024 Alexey Shabalin <shaba@altlinux.org> 2024.11.07-alt1
 - Update to RELEASE.2024-11-07T00-52-20Z (Fixes: CVE-2024-36107)
 
