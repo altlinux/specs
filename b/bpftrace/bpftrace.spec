@@ -6,7 +6,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.21.3
+Version: 0.22.1
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -47,9 +47,11 @@ BuildRequires: xxd
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires(pre): rpm-build-kernel
+BuildRequires: bpftool
 BuildRequires: dwarves
 BuildRequires: kernel-headers-modules-%kernel_latest
 BuildRequires: libgtest-devel
+BuildRequires: python3(looseversion)
 BuildRequires: rpm-build-vm
 }}
 
@@ -113,6 +115,7 @@ if kvm-ok; then
 	delete-blocks tracetest_testprobe_semaphore	tests/runtime/usdt
 	delete-blocks uaddr	tests/runtime/call
 	delete-blocks watchpoint	tests/runtime/watchpoint
+	delete-blocks hardware	tests/runtime/probe
 %ifarch aarch64
 	delete-blocks kfunc	tests/runtime/regression
 	delete-blocks task	tests/runtime/basic
@@ -130,6 +133,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Fri Jan 17 2025 Vitaly Chikunov <vt@altlinux.org> 0.22.1-alt1
+- Update to v0.22.1 (2025-01-16).
+
 * Tue Dec 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.21.3-alt1
 - Update to v0.21.3 (2024-12-16).
 - spec: Fix FTBFS due to removal of un-def kernel flavour.

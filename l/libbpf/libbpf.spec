@@ -9,7 +9,7 @@
 %endif
 
 Name: libbpf
-Version: 1.4.7
+Version: 1.5.0
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -25,7 +25,6 @@ BuildRequires: clang
 BuildRequires: libstdc++-devel
 BuildRequires: /proc
 }}
-
 
 %description
 Library to access Linux kernel BPF API.
@@ -54,8 +53,9 @@ cd src
 %makeinstall_std LIBSUBDIR=%_lib STATIC_LIBS=
 
 %check
-# libbpf does not provide easy accessible or built-in unit tests.
-# Smoke testing with libFuzzer.
+
+# libbpf does not provide easy accessible or built-in unit tests, using
+# kselftests tree. So, do a little smoke testing with libFuzzer.
 clang -Isrc fuzz/bpf-object-fuzzer.c -fsanitize=fuzzer,address,undefined -Lsrc -lbpf
 LD_LIBRARY_PATH=$PWD/src ./a.out -verbosity=99 -max_total_time=11
 
@@ -69,6 +69,9 @@ LD_LIBRARY_PATH=$PWD/src ./a.out -verbosity=99 -max_total_time=11
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Fri Jan 17 2025 Vitaly Chikunov <vt@altlinux.org> 1.5.0-alt1
+- Update to v1.5.0 (2024-10-24).
+
 * Wed Oct 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.7-alt1
 - Update to v1.4.7 (2024-10-29).
 
