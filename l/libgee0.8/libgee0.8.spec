@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name libgee
 %define ver_major 0.20
@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.8
+Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
 License: LGPL-2.1-or-later
@@ -101,7 +101,7 @@ applications with %name.
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_libdir/libgee-%api_ver.so.*
@@ -125,6 +125,9 @@ applications with %name.
 %endif
 
 %changelog
+* Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.20.8-alt1
+- 0.20.8
+
 * Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.20.6-alt2
 - updated to 0.20.6-3-gce8461f
 
