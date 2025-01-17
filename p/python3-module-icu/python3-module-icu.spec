@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 %define modname icu
 %define pypi_name PyICU
@@ -8,31 +8,32 @@
 
 Name: python3-module-%modname
 # python3 setup.py -V|tail -1
-Version: 2.12
-Release: alt2
+Version: 2.14
+Release: alt1
 
 Summary: Python extension wrapping the ICU C++ API
 Group: Development/Python3
 License: MIT
 Url: https://gitlab.pyicu.org/main/pyicu
 
+Vcs: https://gitlab.pyicu.org/main/pyicu.git
+
 %if_disabled snapshot
 Source: https://pypi.python.org/packages/source/P/PyICU/%pypi_name-%version.tar.gz
 %else
-Vcs: https://gitlab.pyicu.org/main/pyicu.git
 Source: %pypi_name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libicu-devel >= %icu_ver
-BuildRequires: python3-devel python3-module-wheel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-pytest}
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest)}
 
 %description
 PyICU - Python 3 extension wrapping the ICU C++ API.
 
 %prep
-%setup -n %pypi_name-%version
+%setup -n %{?_enable_snapshot:%pypi_name}%{?_disable_snapshot:pyicu}-%version
 
 %build
 %pyproject_build
@@ -51,6 +52,9 @@ PyICU - Python 3 extension wrapping the ICU C++ API.
 
 
 %changelog
+* Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
+- 2.14
+
 * Sat Mar 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.12-alt2
 - updated to v2.12-9-g0cc78e3
 
