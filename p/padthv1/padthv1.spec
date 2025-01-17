@@ -1,5 +1,5 @@
 Name: padthv1
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Polyphonic additive synthesizer
@@ -61,6 +61,9 @@ This package contains LV2 plugin.
 %_datadir/padthv1
 
 %changelog
+* Fri Jan 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
+- 1.3.0 released
+
 * Thu Jan 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
 - 1.2.0 released
 
