@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 6.6.3
+Version: 6.9
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -98,6 +98,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Fri Jan 17 2025 Grigory Ustinov <grenka@altlinux.org> 6.9-alt1
+- Build new version.
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 6.6.3-alt1
 - Build new version.
 
