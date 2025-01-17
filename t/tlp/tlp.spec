@@ -1,5 +1,5 @@
 Name: tlp
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 Summary: Optimize laptop battery life
@@ -98,6 +98,8 @@ appstream-util validate-relax --nonet \
 %_udevrulesdir/85-tlp.rules
 %_udevrulesdir/../tlp-usb-udev
 %_datadir/bash-completion/completions/*
+%_datadir/fish/vendor_completions.d/*
+%_datadir/zsh/site-functions/*
 %exclude %_datadir/bash-completion/completions/tlp-rdw
 %_unitdir/*.service
 %_unitdir/../system-sleep
@@ -123,6 +125,9 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.7.0-alt1
+- NMU: New version 1.7.0.
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.6.1-alt1
 - new version 1.6.1 (with rpmrb script)
 
