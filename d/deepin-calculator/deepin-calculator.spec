@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 6.5.2
+Version: 6.5.4
 Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-2.0+ and GPL-3.0+
@@ -71,6 +71,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Fri Jan 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.4-alt1
+- New version 6.5.4.
+
 * Thu Dec 05 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
 - New version 6.5.2.
 - Added vcs tag.
