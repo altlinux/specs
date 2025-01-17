@@ -1,26 +1,17 @@
+%def_with check
+
 Name: e2tools
-Version: 0.0.16
-Release: alt2.qa1
+Version: 0.1.2
+Release: alt1
 
 Summary: Manipulate files in unmounted ext2/ext3 filesystems
-License: GPL+
+License: GPL-2.0
 Group: File tools
-Url: http://home.earthlink.net/~k_sheff/sw/e2tools/
-Packager: Kirill A. Shutemov <kas@altlinux.org>
-# http://home.earthlink.net/~k_sheff/sw/e2tools/%name-%version.tar.gz
-Source0: %name-%version.tar
-Source1: e2tools-test.sh
-# Thank you very much for the man pages from Debian package.
-Source2: e2cp.1
-Source3: e2ln.1
-Source4: e2ls.1
-Source5: e2mkdir.1
-Source6: e2mv.1
-Source7: e2rm.1
-Source8: e2tail.1
-Source9: e2tools.7
-Patch1: e2tools-fedora-fixes.patch
-Patch2: e2tools-printf-lld-64bit.patch
+
+Url: https://e2tools.github.io/
+Vcs: https://github.com/e2tools/e2tools
+
+Source: %name-%version.tar
 
 BuildRequires: e2fsprogs libcom_err-devel libe2fs-devel
 
@@ -36,39 +27,27 @@ The utilities are: e2cp e2ln e2ls e2mkdir e2mv e2rm e2tail
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 
 %build
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall_std
-mkdir -p %buildroot%_man1dir %buildroot%_man7dir
-install -pm644 \
-    %SOURCE2 \
-    %SOURCE3 \
-    %SOURCE4 \
-    %SOURCE5 \
-    %SOURCE6 \
-    %SOURCE7 \
-    %SOURCE8 \
-    %buildroot%_man1dir/
-install -pm644 %SOURCE9 %buildroot%_man7dir/
 
 %check
-for e in e2ln e2ls e2mkdir e2mv e2rm e2tail; do
-	ln -s e2cp $e
-done
-sh %SOURCE1
+%make check
 
 %files
-%doc README COPYING ChangeLog TODO AUTHORS
+%doc COPYING ChangeLog TODO AUTHORS
 %_bindir/*
 %_mandir/man?/*
 
 %changelog
+* Fri Jan 17 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1.2-alt1
+- New version.
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.0.16-alt2.qa1
 - NMU: rebuilt for updated dependencies.
 
