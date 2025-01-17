@@ -1,6 +1,6 @@
 %define rname kreslimit
 Name: kreslimit
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 %K6init altplace
@@ -13,6 +13,7 @@ Provides: kde5-kreslimit = %EVR
 Obsoletes: kde5-kreslimit < %EVR
 
 Source: %name-%version.tar
+Patch1: alt-fix-apply-btn.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -24,6 +25,7 @@ Resource limit for launched applications
 
 %prep
 %setup 
+%patch1 -p1
 
 %build
 %K6cmake \
@@ -43,6 +45,9 @@ Resource limit for launched applications
 
 
 %changelog
+* Fri Jan 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.0.1-alt1
+- fix the change in the state of the "Apply" btn
+
 * Mon Aug 19 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.0.0-alt1
 - port to KF6
 
