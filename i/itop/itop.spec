@@ -1,14 +1,14 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: itop
-Version: 3.1.1.1
+Version: 3.2.0.2
 Release: alt1
 
 Summary: IT Operations Portal
 License: AGPL-3.0
 Group: Networking/Other
 
-URL: http://www.combodo.com/-Overview-.html
+URL: https://github.com/Combodo/iTop
 Packager: Pavel Zilke <zidex at altlinux dot org>
 BuildArch: noarch
 
@@ -17,6 +17,7 @@ Source1: apache2.conf
 Source2: README.ALT
 Source3: UPGRADE.ALT
 
+AutoReq: no
 Requires: webserver-common php-engine graphviz
 BuildRequires(pre): rpm-macros-webserver-common
 
@@ -36,12 +37,33 @@ Apache 2.x web-server configuration for %name
 %package php8.1
 Summary: PHP8.1 dependencies for %name
 Group: Networking/Other
-Requires: %name = %version-%release, 
+Requires: %name = %version-%release
 Requires: php8.1-mysqli, php8.1-ldap, php8.1-soap, php8.1-mcrypt, php8.1-xmlreader, php8.1-gd2, php8.1-zip, php8.1-openssl
-Requires: php8.1-mbstring, php8.1-fileinfo, php8.1-curl
+Requires: php8.1-mbstring, php8.1-fileinfo, php8.1-curl, php8.1-apcu
 
 %description php8.1
 PHP8.1 dependencies for %name
+
+%package php8.2
+Summary: PHP8.2 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.2-mysqli, php8.2-ldap, php8.2-soap, php8.2-mcrypt, php8.2-xmlreader, php8.2-gd2, php8.2-zip, php8.2-openssl
+Requires: php8.2-mbstring, php8.2-fileinfo, php8.2-curl, php8.2-apcu
+
+%description php8.2
+PHP8.2 dependencies for %name
+
+%package php8.3
+Summary: PHP8.3 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.3-mysqli, php8.3-ldap, php8.3-soap, php8.3-mcrypt, php8.3-xmlreader, php8.3-gd2, php8.3-zip, php8.3-openssl
+Requires: php8.3-mbstring, php8.3-fileinfo, php8.3-curl, php8.3-apcu
+
+%description php8.3
+PHP8.3 dependencies for %name
+
 
 %prep
 %setup
@@ -113,6 +135,7 @@ fi
 %installdir/node_modules
 %installdir/pages
 %installdir/portal
+%installdir/resources
 %installdir/setup
 %installdir/sources
 %installdir/synchro
@@ -122,7 +145,6 @@ fi
 %installdir/*.xml
 %installdir/*.config
 %doc LICENSE
-%doc README
 %doc README.ALT
 %doc UPGRADE.ALT
 
@@ -130,10 +152,28 @@ fi
 %files apache2
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-
 %files php8.1
 
+%files php8.2
+
+%files php8.3
+
 %changelog
+* Fri Jan 17 2025 Pavel Zilke <zidex@altlinux.org> 3.2.0.2-alt1
+- New version 3.2.0.2
+- Added itop-php8.2
+- Added itop-php8.3
+- Security fixes:
+ + CVE-2023-46734 : Potential XSS vulnerabilities in TWIG CodeExtension filters
+ + CVE-2023-45808 : Can create objects in non allowed org by forging http query in both Console and Portal
+ + CVE-2023-43790 : XSS in friendlyname in object details
+ + CVE-2023-44396 : XSS vulnerabilities in dashlet ajax operations
+ + CVE-2023-47626 : Fix stored XSS in authent token
+ + CVE-2023-48709 : Fix CSV injection in Excel from an iTop CSV export file
+ + CVE-2023-48710 : Limit pages/exec.php script to PHP files
+ + CVE-2024-31448 : Fix XSS vulnerability in link CSV import
+ + CVE-2024-32870 : itop hub connector Information disclosure
+
 * Thu Jan 04 2024 Pavel Zilke <zidex@altlinux.org> 3.1.1.1-alt1
 - New version 3.1.1.1
 - Security fixes:
