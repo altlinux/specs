@@ -7,7 +7,7 @@
 
 Name: libcxx
 Version: %libcxx_version%{?rc_ver:~rc%rc_ver}
-Release: alt1
+Release: alt2
 Summary: C++ standard library targeting C++11
 Group: System/Libraries
 License: Apache-2.0 WITH LLVM-exception OR MIT OR NCSA
@@ -33,6 +33,8 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3-module-sphinx
 
 Requires: libcxxabi = %EVR
+Provides: libc++1 = %EVR
+Obsoletes: libc++1 < %EVR
 
 %description
 libc++ is a new implementation of the C++ standard library, targeting C++11.
@@ -56,6 +58,8 @@ Summary: Static libraries for libcxx
 %package -n libcxxabi
 Group: System/Libraries
 Summary: Low level support for a standard C++ library
+Provides: libc++abi1 = %EVR
+Obsoletes: libc++abi1 < %EVR
 
 %description -n libcxxabi
 libcxxabi provides low level support for a standard C++ library.
@@ -237,6 +241,9 @@ rm %buildroot%_docdir/html/libunwind/.buildinfo
 %_docdir/html/libunwind
 
 %changelog
+* Wed Jan 15 2025 Andrey Cherepanov <cas@altlinux.org> 19.1.5-alt2
+- Fix conflicts with libc++1 and libc++abi1.
+
 * Thu Dec 19 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.5-alt1
 - Rebuild for ALTLinux.
 - spec based on libcxx-19.1.5-1.fc42.
