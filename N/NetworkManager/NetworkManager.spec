@@ -42,7 +42,7 @@
 
 Name: NetworkManager
 Version: 1.50.1
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -640,6 +640,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 10 2025 Anton Golubev <golubevan@altlinux.org> 1.50.1-alt2
+- agent: avoid some unnecessary authorization (closes: #52406)
+
 * Fri Dec 27 2024 Mikhail Efremov <sem@altlinux.org> 1.50.1-alt1
 - Used macros from rpm-macros-meson.
 - Updated to 1.50.1.
