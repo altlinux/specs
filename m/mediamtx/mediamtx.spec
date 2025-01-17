@@ -1,6 +1,6 @@
 %global import_path github.com/bluenviron/mediamtx
 Name:    mediamtx
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: Ready-to-use SRT / WebRTC / RTSP / RTMP / LL-HLS media server
@@ -11,6 +11,8 @@ Url:     https://github.com/bluenviron/mediamtx
 Source: %name-%version.tar
 
 Source1: %name.service
+
+Source100: %name.watch
 
 Patch: %name-%version.patch
 
@@ -64,6 +66,10 @@ install -m0644 %SOURCE1 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/%name/mediamtx.yml
 
 %changelog
+* Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.1-alt1
+- New version 1.11.1.
+- Added watch file.
+
 * Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.0-alt1
 - New version 1.11.0.
 - Added default config and service files.
