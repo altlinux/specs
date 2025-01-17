@@ -3,7 +3,7 @@ Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.71
+%define kernel_sublevel	.72
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -48,32 +48,44 @@ Patch0: %name-%version-%release.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
+%elif "%base_flavour" == "rt"
+ExclusiveArch: x86_64 aarch64
 %else
 ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 %endif
 
-%define make_target bzImage
 %ifarch ppc64le
 %define make_target vmlinux
-%endif
-%ifarch aarch64
+%elifarch aarch64
 %define make_target Image
-%endif
-%ifarch %arm
+%elifarch %arm
 %define make_target zImage
+%else
+%define make_target bzImage
 %endif
 
-%define image_path arch/%base_arch/boot/%make_target
 %ifarch ppc64le
 %define image_path %make_target.stripped
+%else
+%define image_path arch/%base_arch/boot/%make_target
 %endif
 
-%define arch_dir %base_arch
 %ifarch %ix86 x86_64
 %define arch_dir x86
+%else
+%define arch_dir %base_arch
 %endif
 
 %define kvm_modules_dir arch/%arch_dir/kvm
+
+# On some architectures (at least ppc64le) kernel image is ELF and
+# eu-findtextrel will fail if it is not a DSO or PIE.
+%add_verify_elf_skiplist /boot/vmlinuz-*
+
+%define _unpackaged_files_terminate_build 1
+%ifnarch ppc64le
+%define _stripped_files_terminate_build 1
+%endif
 
 ExclusiveOS: Linux
 
@@ -127,6 +139,7 @@ BuildRequires: ccache
 BuildRequires: iproute2
 BuildRequires: ltp >= 20210524-alt2
 BuildRequires: rpm-build-vm-run >= 1.30
+BuildRequires: rtcheck
 }}
 
 %description
@@ -205,11 +218,9 @@ technical reasons.
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
 Requires: kernel-headers-common
-%if "%sub_flavour" == "def"
-Provides: kernel-headers = %version
-%endif
 AutoReqProv: nocpp
 %if "%sub_flavour" == "def"
+Provides: kernel-headers = %version
 Provides: kernel-headers-%kernel_latest = %version-%release
 %endif
 
@@ -278,6 +289,11 @@ tar -xf %kernel_src/kernel-source-%kernel_src_version.tar
 %define _default_patch_flags -s
 %autopatch -p1
 
+%if "%base_flavour" == "rt"
+# fix -rt suffix
+rm -f localversion*
+%endif
+
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
@@ -304,14 +320,14 @@ echo "Building Kernel $KernelVer"
 
 #configuration construction
 CONFIGS="config config-%_target_cpu"
-%if "%base_flavour" == "std"
-CONFIGS="$CONFIGS config-std"
+%if "%base_flavour" == "rt"
+CONFIGS="$CONFIGS config-rt"
 %endif
 %if "%sub_flavour" == "pae"
 CONFIGS="$CONFIGS config-pae"
-%endif
-%if "%sub_flavour" == "debug"
-CONFIGS="$CONFIGS config-debug"
+%elif "%sub_flavour" == "kasan"
+CONFIGS="$CONFIGS config-kasan"
+%undefine _stripped_files_terminate_build
 %endif
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
@@ -483,25 +499,24 @@ popd
 # ghostify *.bin files
 truncate -s0 %buildroot%modules_dir/modules.*.bin
 
+%if "%sub_flavour" == "def"
 # install documentation
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-
-# On some architectures (at least ppc64le) kernel image is ELF and
-# eu-findtextrel will fail if it is not a DSO or PIE.
-%add_verify_elf_skiplist /boot/vmlinuz-*
-
-%define _unpackaged_files_terminate_build 1
-%ifnarch ppc64le
-%define _stripped_files_terminate_build 1
 %endif
 
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug uname -a
+timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
+%if "%base_flavour" == "rt"
+	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
+	'uname -a; rtcheck -v'
+%else
+	'uname -a'
+%endif
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
+if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
 	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
 	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
 	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
@@ -557,8 +572,10 @@ check-pesign-helper
 %dir %modules_dir/
 %modules_dir/build
 
+%if "%sub_flavour" == "def"
 %files -n kernel-doc-%base_flavour
 %doc %_docdir/kernel-doc-%base_flavour-%version
+%endif
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
@@ -579,6 +596,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jan 17 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.72-alt1
+- v6.6.72 (2025-01-17).
+- Add support for Baikal-M SoC family.
+- spec: check: Improve boot testing sensitivity.
+
 * Fri Jan 10 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.71-alt1
 - v6.6.71 (2025-01-10).
 
