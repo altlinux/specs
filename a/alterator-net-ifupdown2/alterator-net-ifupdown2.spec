@@ -2,14 +2,16 @@
 
 
 Name: alterator-net-ifupdown2
-Version: 1.0.1
-Release: alt0.1
+Version: 1.0.2
+Release: alt1
 
 Source:%name-%version.tar
 
 Summary: Alterator module for PVE network setup
 License: GPLv3
 Group: System/Configuration/Other
+
+BuildArch: noarch
 Requires: alterator >= 5.0 libshell >= 0.1.3
 Requires: alterator-l10n >= 2.1-alt9
 Requires: alterator-sh-functions >= 0.12-alt1
@@ -38,9 +40,13 @@ Alterator module for PVE network setup
 %_alterator_datadir/applications/*
 %_alterator_datadir/ui/*/
 %_alterator_backend3dir/*
-%_alterator_libdir/ui/*
 
 %changelog
+* Fri Jan 17 2025 Sergey Konev <darisishe@altlinux.org> 1.0.2-alt1
+- Provided functionality to set VLAN ID for bridge vmbr0 (optionally)
+- Minor bug with interface's on-back button was fixed
+- Got rid of web-interface (needless for this module)
+
 * Wed Nov 20 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt0.1
 - Initial build package (based on alterator-net-eth)
 
