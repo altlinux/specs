@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.12
+%define major 22.13
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -16,7 +16,7 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.9.0
+%define npm_version 10.9.2
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -29,7 +29,7 @@
 %define zlib_version 1.3.0.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.34.3
+%define c_ares_version 1.34.4
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 9.2.1
@@ -41,7 +41,7 @@
 %def_with systemssl
 
 # check deps/uv/include/uv/version.h
-%define libuv_version 1.49.1
+%define libuv_version 1.49.2
 %def_with systemuv
 
 # check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
@@ -511,6 +511,11 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Thu Jan 16 2025 Vitaly Lipatov <lav@altlinux.ru> 22.13.0-alt1
+- 2025-01-07, Version 22.13.0 'Jod' (LTS), @ruyadorno
+- set npm >= 10.9.2
+- set libuv >= 1.49.2, c-ares >= 1.34.4
+
 * Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 22.12.0-alt1
 - 2024-12-03, Version 22.12.0 'Jod' (LTS), @ruyadorno
 - set npm >= 10.9.0, c-ares >= 1.34.3, openssl >= 3.0.15
