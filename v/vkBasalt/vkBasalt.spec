@@ -5,7 +5,7 @@
 
 Name: vkBasalt
 Version: 0.3.2.10
-Release: alt1.1
+Release: alt1.2
 Summary: Vulkan post processing layer
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 # The entire source code is zlib except:
@@ -48,6 +48,9 @@ It is also possible to use Reshade Fx shaders.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/module _module;/using edg_module=module; edg_&/' src/reshade/effect_codegen.hpp
+%endif
 
 %build
 %meson \
@@ -67,6 +70,9 @@ install -Dpm 0644 config/%name.conf -t %buildroot%_sysconfdir/
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Fri Jan 17 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.2.10-alt1.2
+- e2k build fix
+
 * Tue Dec 12 2023 Mikhail Tergoev <fidel@altlinux.org> 0.3.2.10-alt1.1
 - NMU: removed goverlay from dependencies (ALT bug: 48779)
 
