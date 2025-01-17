@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.25
+Version: 3.4.26
 Release: alt1
 
 Source:%name-%version.tar
@@ -84,6 +84,9 @@ __EOF__
 
 
 %changelog
+* Fri Jan 17 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.26-alt1
+- allow to use Qt6 Palette in design.ini
+
 * Tue Jan 14 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.25-alt1
 - fix using internal mailbox with new xml parser (thanks proskur@alt)
 
