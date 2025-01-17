@@ -5,8 +5,8 @@ Summary: A python module for system storage configuration
 Name: blivet
 Group: System/Configuration/Other
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.6.0
-Release: alt2
+Version: 3.11.0
+Release: alt1
 License: GPLv2+
 
 Source0: http://github.com/storaged-project/blivet/archive/%name-%version.tar.gz
@@ -17,7 +17,7 @@ BuildArch: noarch
 %global partedver 1.8.1
 %global pypartedver 3.10.4
 %global utillinuxver 2.15.1
-%global libblockdevver 2.24
+%global libblockdevver 3.2.0
 %global libbytesizever 0.3
 %global pyudevver 0.18
 
@@ -44,19 +44,21 @@ Summary: A python3 package for examining and modifying storage configuration
 Group: Development/Python3
 
 Requires: parted
-#Recommends: libblockdev-btrfs >= %libblockdevver
-#Recommends: libblockdev-crypto >= %libblockdevver
-#Recommends: libblockdev-dm >= %libblockdevver
-#Recommends: libblockdev-fs >= %libblockdevver
-#Recommends: libblockdev-kbd >= %libblockdevver
-#Recommends: libblockdev-loop >= %libblockdevver
-#Recommends: libblockdev-lvm >= %libblockdevver
-#Recommends: libblockdev-mdraid >= %libblockdevver
-#Recommends: libblockdev-mpath >= %libblockdevver
-#Recommends: libblockdev-nvdimm >= %libblockdevver
-#Recommends: libblockdev-part >= %libblockdevver
-#Recommends: libblockdev-swap >= %libblockdevver
-#Recommends: libblockdev-s390 >= %libblockdevver
+# Requires: python3-module-selinux
+Requires: python3-module-libmount
+Requires: python3-module-blockdev >= %libblockdevver
+Requires: libblockdev-btrfs >= %libblockdevver
+Requires: libblockdev-crypto >= %libblockdevver
+Requires: libblockdev-dm >= %libblockdevver
+Requires: libblockdev-fs >= %libblockdevver
+Requires: libblockdev-loop >= %libblockdevver
+Requires: libblockdev-lvm >= %libblockdevver
+Requires: libblockdev-mdraid >= %libblockdevver
+Requires: libblockdev-mpath >= %libblockdevver
+Requires: libblockdev-nvme >= %libblockdevver
+Requires: libblockdev-part >= %libblockdevver
+Requires: libblockdev-swap >= %libblockdevver
+
 Requires: util-linux
 Requires: lsof
 Requires: %name-data = %EVR
@@ -88,6 +90,10 @@ make PYTHON=%__python3 DESTDIR=%buildroot install
 %python3_sitelibdir/*
 
 %changelog
+* Mon Dec 30 2024 Sergey Konev <darisishe@altlinux.org> 3.11.0-alt1
+- 3.11.0
+- Updated Requires for python module
+
 * Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 3.6.0-alt2
 - fix %%_unitdir in %%setup section
 

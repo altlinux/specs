@@ -1,7 +1,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.39.2
-Release: alt1
+Release: alt2
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -46,6 +46,7 @@ BuildRequires: zlib-devel
 BuildRequires: libncursesw-devel
 BuildRequires: libpopt-devel
 BuildRequires: libcap-ng-devel
+BuildRequires: python3-devel
 %{?_with_selinux:BuildRequires: libselinux-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
 %{?_with_udev:BuildRequires: libudev-devel}
@@ -377,6 +378,17 @@ Requires: libmount-devel = %version-%release
 %description -n libmount-devel-static
 This is the device mounting development static library.
 
+%package -n python3-module-libmount
+Summary: Python bindings for the libmount library
+Group: Development/Python3
+Requires: libmount = %version-%release
+
+%description -n python3-module-libmount
+This package contains a module that permits applications
+written in the Python programming language to use the interface
+supplied by the libmount library to work with mount tables (fstab,
+mountinfo, etc) and mount filesystems.
+
 %package -n libsmartcols
 Summary: table or tree library
 Group: System/Libraries
@@ -491,8 +503,7 @@ automake --add-missing --force-missing
 	--disable-last \
 	--disable-mesg \
 	--disable-chfn-chsh \
-	--disable-pylibmount \
-	--without-python \
+	--with-python=3 \
 	--enable-partx \
 	--enable-write \
 	--enable-rdev \
@@ -920,6 +931,9 @@ fi
 %files -n libmount-devel-static
 %_libdir/libmount.a
 
+%files -n python3-module-libmount
+%python3_sitelibdir/libmount/
+
 %files -n libsmartcols
 /%_lib/libsmartcols.so.*
 
@@ -958,6 +972,10 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Tue Dec 31 2024 Sergey Konev <darisishe@altlinux.org> 2.39.2-alt2
+- Introduce a new python3-module-libmount subpackage that includes
+  Python bindings for the libmount library.
+
 * Wed Sep 13 2023 Alexey Gladkov <legion@altlinux.ru> 2.39.2-alt1
 - New version (2.39.2) (ALT#47566).
 
