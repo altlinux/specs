@@ -8,7 +8,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt8.g%{git}
+Release: alt9.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
 License: Propreitary
@@ -69,6 +69,12 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Fri Jan 17 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt9.g6adc981
+- Apply some fixes from debian:
+  + wl: Avoid disconnecting invalid interface
+  + wl: Fix get/set values for tx_power
+  + wl: Make sure power_mgmt settings are honored
+
 * Fri Dec 20 2024 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt8.g6adc981
 - Added fix for kernels 6.12+ (due upstream 5f60d5f6 commit).
 
