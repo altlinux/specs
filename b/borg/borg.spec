@@ -1,5 +1,5 @@
 Name: borg
-Version: 1.2.8
+Version: 1.4.0
 Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: gcc-c++
 BuildRequires: libacl-devel ipython3 python3-module-Cython libssl-devel python3-dev
-BuildRequires: python3-module-setuptools-wheel python3-module-setuptools_scm python3-module-pytest python3-module-msgpack python3-module-pkgconfig
+BuildRequires: python3-module-setuptools-wheel python3-module-setuptools_scm python3-module-pytest python3-module-msgpack python3-module-pkgconfig python3-module-argon2-cffi
 BuildRequires: liblz4-devel libzstd-devel libb2-devel libxxhash-devel
 
 Requires: python3-module-zmq python3-module-msgpack
@@ -42,14 +42,12 @@ fully trusted targets.
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export BORG_OPENSSL_PREFIX="/usr/include/openssl"
-#pyproject_build
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export BORG_OPENSSL_PREFIX="/usr/include/openssl"
-#pyproject_install
-%python3_install
+%pyproject_install
 
 %check
 export LANG=en_US.UTF-8
@@ -58,10 +56,14 @@ export PYTHONVER="%__python3_version"
 export PYTHONPATH="$(pwd)/build/lib.linux-$(uname -m)-cpython-${PYTHONVER//./}"
 
 # copy missing files
-cp -a src/borg/testsuite/attic.tar.gz $PYTHONPATH/borg/testsuite/
 cp -a src/borg/paperkey.html $PYTHONPATH/borg
 
 TEST_SELECTOR="not test_fuse and not test_readonly_mount and not benchmark"
+
+# Borg server is too old for info. Required version 2.0.0a3
+TEST_SELECTOR="${TEST_SELECTOR} and not remote_repository and not test_remote_invalid_rpc \
+	and not test_remote_rpc_exception_transport and not test_remote_ssh_cmd and not test_remote_borg_cmd"
+
 py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 %files
@@ -69,10 +71,13 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 %_bindir/borg
 %_bindir/borgfs
 %python3_sitelibdir/borg/
-%python3_sitelibdir/borgbackup-*.egg-info/
+%python3_sitelibdir/borgbackup-*.dist-info
 
 
 %changelog
+* Fri Jan 17 2025 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.0-alt1
+- 1.4.0 release
+
 * Thu Jun 13 2024 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.2.8-alt1
 - 1.2.8 release
 
