@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        131.0.6778.264
+Version:        132.0.6834.83
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -65,7 +65,7 @@ Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
-Patch010: 0010-ALT-use-system-libdrm-library.patch
+# Patch010: 0010-ALT-use-system-libdrm-library.patch
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
 # Patch012: 0012-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
@@ -96,13 +96,9 @@ Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
-# Patch044: 0044-DEBIAN-perfetto.patch
 Patch045: 0045-DEBIAN-mojo-null.patch
 
-# Patch060: 0060-DEBIAN-lex-3way.patch
-Patch061: 0061-DEBIAN-gpu-crash.patch
 Patch062: 0062-DEBIAN-cacheline.patch
-Patch063: 0063-DEBIAN-freetype.patch
 
 ### End Patches
 
@@ -129,7 +125,7 @@ BuildRequires:  libcxxabi-devel
 BuildRequires:  libcxxabi-static
 BuildRequires:  llvm-libunwind-devel
 BuildRequires:  llvm-libunwind-static
-BuildRequires:  libtiff-devel
+#BuildRequires:  libtiff-devel
 BuildRequires:  ninja-build
 BuildRequires:  node
 BuildRequires:  nvidia-settings-devel
@@ -315,7 +311,7 @@ gn_arg+=( use_system_freetype=true )
 gn_arg+=( use_system_harfbuzz=true )
 gn_arg+=( use_system_lcms2=true )
 gn_arg+=( use_system_libffi=true )
-gn_arg+=( use_system_libdrm=true )
+gn_arg+=( use_system_libdrm=false )
 gn_arg+=( use_system_libjpeg=true )
 gn_arg+=( use_system_libopenjpeg2=true )
 gn_arg+=( use_system_libpng=true )
@@ -395,13 +391,13 @@ gn_arg+=( enable_vulkan=false )
 %else
 gn_arg+=( enable_vulkan=true )
 %endif
-gn_arg+=( allow_warnings=true )
 gn_arg+=( use_system_jsoncpp=false )
 gn_arg+=( use_bundled_jsoncpp=true )
 gn_arg+=( use_system_woff2=false )
 gn_arg+=( use_bundled_woff2=true )
 gn_arg+=( use_system_snappy=false )
 gn_arg+=( use_bundled_snappy=true )
+gn_arg+=( use_system_libtiff=false )
 
 %if_enabled google_api_keys
 ### From 2013 until early 2021, Google permitted distribution builds of
@@ -551,6 +547,23 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jan 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 132.0.6834.83-alt1
+- New version (132.0.6834.83).
+- Security fixes:
+  + CVE-2025-0434: Out of bounds memory access in V8
+  + CVE-2025-0435: Inappropriate implementation in Navigation
+  + CVE-2025-0436: Integer overflow in Skia
+  + CVE-2025-0437: Out of bounds read in Metrics
+  + CVE-2025-0438: Stack buffer overflow in Tracing
+  + CVE-2025-0439: Race in Frames
+  + CVE-2025-0440: Inappropriate implementation in Fullscreen
+  + CVE-2025-0441: Inappropriate implementation in Fenced Frames
+  + CVE-2025-0442: Inappropriate implementation in Payments
+  + CVE-2025-0443: Insufficient data validation in Extensions
+  + CVE-2025-0446: Inappropriate implementation in Extensions
+  + CVE-2025-0447: Inappropriate implementation in Navigation
+  + CVE-2025-0448: Inappropriate implementation in Compositing
+
 * Thu Jan 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 131.0.6778.264-alt1
 - New version (131.0.6778.264).
 - Security fixes:
