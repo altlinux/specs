@@ -21,7 +21,7 @@
 
 Name: kexi
 Version: 3.2.0
-Release: alt6
+Release: alt7
 %K5init no_altplace
 
 Group: Databases
@@ -168,9 +168,7 @@ Requires: %name-common = %EVR
 %patch2 -p1
 %endif
 %ifarch %e2k
-# strip UTF-8 BOM for lcc < 1.24
-find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' |
-	xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
+find -name '*.h' -type f -exec sed -i 's/Q_REQUIRED_RESULT//' {} \;
 %endif
 
 %build
@@ -241,6 +239,9 @@ done
 %_libdir/libkexidatatable%sover.so.*
 
 %changelog
+* Fri Jan 17 2025 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt7
+- update workwround against e2k (thanks mike@alt)
+
 * Mon Apr 12 2021 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt6
 - fix compile with new glib
 
