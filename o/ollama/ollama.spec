@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.5.1
+Version: 0.5.7
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -33,6 +33,9 @@ BuildRequires: golang
 BuildRequires: gcc12-c++
 BuildRequires: nvidia-cuda-devel-static
 %endif
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: curl
+}}
 
 %description
 %summary.
@@ -43,25 +46,17 @@ Note: You should have at least 8 GB of RAM available to run the 7B models,
 
 %prep
 %setup
+sed -i '/_GOFLAGS/s/-s\|-trimpath//' make/*
 
 %build
 export NPROCS="%__nprocs"
-# First step builds several llama.cpp servers in
-# ./llm/build/linux/*/*/bin/ (gzipped).
-export OLLAMA_SKIP_PATCHING=1
 %if_with cuda
 # NVCC cannot compile using gcc-13: https://github.com/ggerganov/llama.cpp/issues/8000
 export OLLAMA_CUSTOM_CUDA_DEFS="-DCMAKE_CUDA_HOST_COMPILER=gcc-12"
 export CUDA_LIB_DIR=%_libdir
 %endif
-export GOFLAGS='-buildmode=pie'
-go generate ./...
-go build -v \
-	-buildmode=pie \
-	-ldflags="
-	-X=github.com/ollama/ollama/version.Version=%version
-	-X=github.com/ollama/ollama/server.mode=release
-	"
+%make_build VERSION=%version
+find -type f -perm -1 -ls
 
 %install
 install -Dp ollama %buildroot%_bindir/ollama
@@ -77,6 +72,12 @@ cat /proc/loadavg
 go test -v ./...
 %buildroot%_bindir/ollama --version | grep -Fx 'Warning: client version is %version'
 ldd %buildroot%_bindir/ollama
+%buildroot%_bindir/ollama serve &
+sleep 1
+curl -sSf http://127.0.0.1:11434/api/version | grep '"version":"%version"'
+curl -sSf http://127.0.0.1:11434/api/tags
+curl -sSf http://127.0.0.1:11434/api/ps
+kill %%?ollama
 
 %pre
 %sysusers_create_package %name %SOURCE3
@@ -89,7 +90,7 @@ ldd %buildroot%_bindir/ollama
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md docs examples
+%doc LICENSE README.md docs SECURITY.md
 %_bindir/ollama
 %_datadir/ollama
 %_datadir/bash-completion/completions/ollama
@@ -98,6 +99,9 @@ ldd %buildroot%_bindir/ollama
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Sat Jan 18 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.7-alt1
+- Update to v0.5.7 (2025-01-16).
+
 * Sat Dec 07 2024 Vitaly Chikunov <vt@altlinux.org> 0.5.1-alt1
 - Update to v0.5.1 (2024-12-06).
 
