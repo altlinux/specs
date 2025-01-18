@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.14
+%define ver_major 0.16
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_enable docs
@@ -8,17 +8,18 @@
 
 Name: blueprint-compiler
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
 License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/jwestman/blueprint-compiler
 
+Vcs: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
+
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version%beta.tar.bz2
 %else
-Vcs: https://gitlab.gnome.org/jwestman/blueprint-compiler.git
 Source: %name-%version%beta.tar
 %endif
 
@@ -29,7 +30,7 @@ Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
-%{?_enable_check:BuildRequires: xvfb-run /bin/dbus-launch python3-module-pygobject3
+%{?_enable_check:BuildRequires: xvfb-run /usr/bin/dbus-launch python3-module-pygobject3
 BuildRequires: fontconfig at-spi2-core typelib(Adw) = 1}
 %{?_enable_docs:BuildRequires: /usr/bin/sphinx-build-3 python3(sphinx_basic_ng) python3(furo)}
 
@@ -40,7 +41,7 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 %prep
 %setup -n %name-%version%beta
 # https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/178
-rm -r tests/sample_errors/deprecations.*
+#rm -r tests/sample_errors/deprecations.*
 
 %build
 %meson \
@@ -70,6 +71,9 @@ xvfb-run %__meson_test -t 2
 %doc NEWS* README* %{?_enable_docs:html/}
 
 %changelog
+* Sat Jan 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Thu Oct 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1.1
 - temporarily skip a failed tests
 
