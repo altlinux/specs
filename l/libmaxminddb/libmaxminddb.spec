@@ -1,6 +1,6 @@
 # Project uses submodule scheme and not allows to use system libtap=(
 Name:    libmaxminddb
-Version: 1.12.0
+Version: 1.12.2
 Release: alt1
 
 Summary: C library for the MaxMind DB file format
@@ -32,6 +32,7 @@ and the mmdblookup utility which allows IP address lookup in a MaxMind DB file.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 # remove embeded RPATH
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -61,6 +62,9 @@ LD_PRELOAD=%buildroot%_libdir/libmaxminddb.so make check
 %_man3dir/*
 
 %changelog
+* Sat Jan 18 2025 Grigory Ustinov <grenka@altlinux.org> 1.12.2-alt1
+- Build new version.
+
 * Wed Jan 08 2025 Grigory Ustinov <grenka@altlinux.org> 1.12.0-alt1
 - Build new version.
 
