@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.83.0
+Version: 1.84.0
 Release: alt1
 Epoch: 1
 
@@ -20,7 +20,6 @@ VCS: https://github.com/rust-lang/rust
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: %name-%version.tar
-Patch0001: 0001-ALT-Disable-lint-tests.patch
 
 Requires: /proc
 Requires: gcc
@@ -283,6 +282,7 @@ prefix = "%prefix"
 
 [rust]
 channel = "stable"
+download-rustc = false
 codegen-tests = false
 backtrace = true
 jemalloc = false
@@ -440,6 +440,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Jan 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.84.0-alt1
+- New version (1.84.0).
+
 * Fri Dec 20 2024 Ajrat Makhmutov <rauty@altlinux.org> 1:1.83.0-alt1
 - New version (1.83.0).
 - Change the llvm version to 18.
