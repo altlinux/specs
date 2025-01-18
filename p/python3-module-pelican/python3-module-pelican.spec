@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.9.1
-Release: alt2
+Version: 4.11.0
+Release: alt1
 Summary: Static site generator that supports Markdown and reST syntax
 License: AGPL-3.0
 Group: Development/Python3
@@ -14,7 +14,6 @@ Url: http://getpelican.com/
 Vcs: https://github.com/getpelican/pelican
 BuildArch: noarch
 Source: %pypi_name-%version.tar
-Patch0: pelican-4.9.1-tests-make-test_deprecated_attribute-compatible-with.patch
 
 Requires: python3-module-beautifulsoup4
 Requires: python3-module-markdown
@@ -97,9 +96,10 @@ Pelican is a static site generator, written in Python.
 
 This package contains tests for %pypi_name.
 
+%add_python3_req_skip pelican.tests.dummy_plugins.normal_plugin
+
 %prep
 %setup -n %pypi_name-%version
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -117,7 +117,11 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v
+# https://github.com/getpelican/pelican/issues/2846
+%pyproject_run_pytest -v -n auto -k "\
+not test_basic_generation_works \
+and not test_custom_generation_works \
+and not test_custom_locale_generation_works"
 
 %files
 %if_with docs
@@ -139,6 +143,9 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 %files -n %pypi_name
 
 %changelog
+* Sat Jan 18 2025 Anton Vyatkin <toni@altlinux.org> 4.11.0-alt1
+- New version 4.11.0.
+
 * Wed May 29 2024 Stanislav Levin <slev@altlinux.org> 4.9.1-alt2
 - Fixed FTBFS (Pytest 8.2.0).
 
