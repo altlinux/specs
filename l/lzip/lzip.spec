@@ -1,5 +1,5 @@
 Name: lzip
-Version: 1.24.1
+Version: 1.25
 Release: alt1
 
 Summary: LZMA file compressor
@@ -57,6 +57,9 @@ make all info
 %_infodir/lzip.info*
 
 %changelog
+* Sat Jan 18 2025 Michael Shigorin <mike@altlinux.org> 1.25-alt1
+- new version (watch file uupdate)
+
 * Sat Mar 02 2024 Michael Shigorin <mike@altlinux.org> 1.24.1-alt1
 - new version (watch file uupdate)
 
