@@ -1,9 +1,10 @@
 %define pypi_name referencing
+%define _python3_req_method strict
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.35.1
+Version: 0.36.1
 Release: alt1
 
 Summary: Cross-specification JSON referencing (JSON Schema, OpenAPI, and the one you just made up!)
@@ -23,6 +24,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-subtests
 BuildRequires: python3-module-rpds-py
 BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-typing_extensions
 %endif
 
 %description
@@ -66,6 +68,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jan 17 2025 Anton Vyatkin <toni@altlinux.org> 0.36.1-alt1
+- New version 0.36.1.
+
 * Thu May 02 2024 Anton Vyatkin <toni@altlinux.org> 0.35.1-alt1
 - New version 0.35.1.
 
