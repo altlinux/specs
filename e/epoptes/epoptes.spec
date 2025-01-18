@@ -3,10 +3,11 @@
 %filter_from_requires /^\/sbin\/poweroff/d
 %filter_from_requires /^\/sbin\/reboot/d
 %filter_from_requires /^\/usr\/share\/ltsp\/ltsp_config/d
+%filter_from_requires /^\/etc\/locale.conf/d
 
 Name:           epoptes
 Version:        22.01
-Release:        alt1.2
+Release:        alt1.3
 
 Summary:        Computer lab management tool
 Summary(ru_RU.UTF-8): Инструмент управления компьютерным классом
@@ -33,6 +34,8 @@ Requires: twisted-core-tools
 Requires: cert-sh-functions
 Requires: python3-module-service_identity
 Requires: python3-module-hamcrest
+Requires: libnotify-gir
+Requires: python3-module-twisted-core-gui-gnome
 
 %description
 Epoptes is an open source computer lab management and monitoring tool.
@@ -51,6 +54,11 @@ Summary:       Epoptes client
 Summary(ru_RU.UTF-8): Клиент Epoptes
 Group:         Networking/Remote access
 BuildArch:     noarch
+
+# x11vnc is needed for Broadcasts (Monitor and Assist)
+Requires: x11vnc
+# tigervnc viewer is needed for Broadcasts (fullscreen, windowed)
+Requires: tigervnc
 
 %description client
 This is a client part of Epoptes Computer lab management tool
@@ -107,7 +115,7 @@ getent group epoptes >/dev/null || groupadd -f -r epoptes
 %_datadir/ltsp/
 %python3_sitelibdir_noarch/%name/
 %python3_sitelibdir_noarch/twisted/
-%python3_sitelibdir_noarch/%{name}-22.1.*.egg-info
+%python3_sitelibdir_noarch/%{name}-22.*.egg-info
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.svg
 %_man1dir/*.1*
@@ -121,6 +129,13 @@ getent group epoptes >/dev/null || groupadd -f -r epoptes
 %_man8dir/*.8*
 
 %changelog
+* Fri Jan 17 2025 Nikolay Strelkov <snk@altlinux.org> 22.01-alt1.3
+- NMU: filter out /etc/locale.conf.
+- NMU: added python3-module-twisted-core-gui-gnome for Sisyphus.
+- NMU: added missed x11vnc dependency (closes: #44543).
+- NMU: added missed libnotify-gir dependency.
+- NMU: added missed tigervnc dependency (closes: #44544).
+
 * Sun Dec 15 2024 Grigory Ustinov <grenka@altlinux.org> 22.01-alt1.2
 - NMU: dropped dependency on pipes.
 
