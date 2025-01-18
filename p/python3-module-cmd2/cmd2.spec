@@ -1,10 +1,10 @@
 %define oname cmd2
 
-%def_with docs
+%def_without docs
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.5.8
+Version: 2.5.9
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -38,6 +38,8 @@ BuildRequires: python3-module-pyperclip
 BuildRequires: pytest3
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-wcwidth
+BuildRequires: python3-module-pyperclip
 %endif
 
 %description
@@ -115,6 +117,10 @@ pytest3
 %endif
 
 %changelog
+* Sat Jan 18 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.9-alt1
+- Automatically updated to 2.5.9.
+- Build without docs.
+
 * Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.8-alt1
 - Automatically updated to 2.5.8.
 
