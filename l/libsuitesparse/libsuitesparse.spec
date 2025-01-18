@@ -22,8 +22,8 @@
 
 
 Name: libsuitesparse
-Version: 7.7.0
-Release: alt2
+Version: 7.8.2
+Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
 License: BSD-3-Clause AND LGPL-2.1-or-later AND GPL-2.0-or-later
@@ -378,6 +378,9 @@ sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' \
 %_bindir/suitesparse_mongoose
 
 %changelog
+* Sat Jan 18 2025 Anton Farygin <rider@altlinux.ru> 7.8.2-alt1
+- 7.7.0 -> 7.8.2
+
 * Thu May 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.7.0-alt2
 - fix e2k build
 
