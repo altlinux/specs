@@ -1,6 +1,6 @@
 %define libname mdx
 Name: ocaml-%libname
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 Summary: Executable code blocks inside markdown files
 Group: Development/ML
@@ -55,6 +55,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 2.5.0-alt1
+- 2.4.1 -> 2.5.0
+
 * Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 2.4.1-alt1
 - 2.3.1 -> 2.4.1
 

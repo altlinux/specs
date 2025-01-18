@@ -1,7 +1,7 @@
 %define libname uuidm
 Name: ocaml-%libname
-Version: 0.9.8
-Release: alt2
+Version: 0.9.9
+Release: alt1
 Summary: Universally unique identifiers (UUIDs) for OCaml
 License: ISC
 Group: Development/ML
@@ -46,6 +46,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 0.9.9-alt1
+- 0.9.8 -> 0.9.9
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.9.8-alt2
 - added support for bytecode-only version of the ocaml package
 

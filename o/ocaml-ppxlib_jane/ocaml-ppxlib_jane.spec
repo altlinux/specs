@@ -1,6 +1,6 @@
 %define libname ppxlib_jane
 Name: ocaml-%libname
-Version: 0.17.0
+Version: 0.17.2
 Release: alt1
 Summary: Utilities for working with Jane Street AST constructs
 License: MIT
@@ -54,5 +54,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 0.17.2-alt1
+- 0.17.0 -> 0.17.2
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
 - first build for ALT Linux

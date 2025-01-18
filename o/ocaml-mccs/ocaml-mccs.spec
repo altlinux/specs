@@ -1,5 +1,5 @@
 Name: ocaml-mccs
-Version: 1.1.18
+Version: 1.1.19
 Release: alt1
 Summary: Multi Criteria CUDF Solver with OCaml bindings
 License: LGPL-2.1-only WITH OCaml-LGPL-linking-exception and BSD-3-Clause and GPL-3.0-only
@@ -48,6 +48,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 1.1.19-alt1
+- 1.1+19
+
 * Tue Sep 10 2024 Anton Farygin <rider@altlinux.ru> 1.1.18-alt1
 - 1.1+18
 

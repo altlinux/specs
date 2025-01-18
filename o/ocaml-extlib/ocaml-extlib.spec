@@ -1,5 +1,5 @@
 Name: ocaml-extlib
-Version: 1.7.9
+Version: 1.8.0
 Release: alt1
 Summary: extended standard library for OCaml
 License: LGPLv2 with OCaml-LGPL-linking-exception
@@ -52,6 +52,9 @@ developing applications that use %name.
 %doc CHANGES
 
 %changelog
+* Fri Sep 20 2024 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+
 * Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 1.7.9-alt1
 - 1.7.9
 

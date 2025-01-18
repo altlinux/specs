@@ -1,6 +1,6 @@
 %define pkgname merlin
 Name: ocaml-%pkgname
-Version: 5.1.502
+Version: 5.4.503
 Release: alt1
 Summary: Editor helper, provides completion, typing and source browsing in Vim and Emacs
 License: MIT
@@ -15,6 +15,7 @@ BuildRequires: ocaml-odoc-devel
 BuildRequires: ocaml-menhir
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-csexp-devel
+BuildRequires: ocaml-alcotest-devel
 BuildRequires: jq
 
 %description
@@ -53,5 +54,8 @@ sed -si 's;lib/ocaml;%_libdir/ocaml;' tests/test-dirs/locate/context-detection/c
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 5.4.503-alt1
+- 5.1.502 -> 5.4.503
+
 * Mon Sep 16 2024 Anton Farygin <rider@altlinux.ru> 5.1.502-alt1
 - first build for ALT Linux

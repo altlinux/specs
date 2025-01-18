@@ -1,6 +1,6 @@
 %define ocamlmod fileutils
 Name: ocaml-%ocamlmod
-Version: 0.6.4
+Version: 0.6.6
 Release: alt1
 Summary: OCaml library for common file and filename operations
 Group: Development/ML
@@ -52,6 +52,9 @@ sed -i 's/stdlib-shims//;s/seq//' *.opam src/lib/fileutils/dune test/dune
 %doc LICENSE.txt CHANGES.md README.md
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 0.6.6-alt1
+- 0.6.4 -> 0.6.6
+
 * Mon Nov 06 2023 Anton Farygin <rider@altlinux.ru> 0.6.4-alt1
 - 0.6.3 -> 0.6.4
 - added patch from fedora with fix broken FuleUtils.cmp

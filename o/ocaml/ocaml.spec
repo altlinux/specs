@@ -10,14 +10,17 @@
 %def_without nativeocaml
 %def_without check
 %endif
-
+# Dynlink_cmo_format and Dynlink_cmxs_format is symlink to cmo_format.mli and cmxs_format.mli without implementation
+%filter_from_requires /Dynlink_cmo_format/d
+%filter_from_requires /Dynlink_cmxs_format/d
 # https://github.com/ocaml/ocaml/issues/9050
 %filter_from_requires /Backend_intf/d
 %filter_from_requires /Inlining_decision_intf/d
 %filter_from_requires /Simplify_boxed_integer_ops_intf/d
 
+
 Name: ocaml
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Summary: The Objective Caml compiler and programming environment
@@ -28,8 +31,8 @@ Url: https://caml.inria.fr/
 Vcs: https://github.com/ocaml/ocaml
 Source0: %name-%version.tar
 
-Patch1: ocaml-5.2.0-alt-reqprov-objinfo.patch
-Patch2: ocaml-5.2.0-fedora-configure-Allow-user-defined-C-compiler-flags.patch
+Patch1: ocaml-5.3.0-alt-reqprov-objinfo.patch
+Patch2: ocaml-5.3.0-fedora-configure-Allow-user-defined-C-compiler-flags.patch
 Patch3: ocaml-4.14.1-more-source-artifacts.patch
 Patch4: ocaml-5.2.0-alt-ocamldoc-install-all-cmti.patch
 Patch5: ocaml-5.2.0-fedora-Reload-exception-pointer-register-in-caml_c_call.patch
@@ -128,11 +131,11 @@ may not be portable between versions.
 %endif
 	%nil
 
-%make_build world
+%make_build world V=1
 
 %if_with nativeocaml
-%make_build opt
-%make_build opt.opt
+%make_build opt V=1
+%make_build opt.opt V=1
 %endif
 
 %install
@@ -301,6 +304,9 @@ popd
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
+- 5.2.0 -> 5.3.0
+
 * Fri Aug 09 2024 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
 - 5.2.0
 - implementation of the ocaml-reqprov moved into

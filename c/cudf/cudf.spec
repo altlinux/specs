@@ -2,7 +2,7 @@
 Summary: CUDF (Common Upgradeability Description Format) tools and libraries
 Name: cudf
 Version: 0.10
-Release: alt1
+Release: alt2
 VCS: https://gitlab.com/irill/cudf.git
 Source: %name-%version.tar
 Url: https://www.mancoosi.org/cudf/
@@ -63,7 +63,7 @@ programs.
 %dune_install
 
 %check
-%dune_check
+%dune_check --release
 
 %files tools
 %_bindir/cudf-check
@@ -73,6 +73,9 @@ programs.
 %_libdir/ocaml/cudf
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 0.10-alt2
+- made the launch of the tests in the release mode
+
 * Sat Jul 15 2023 Anton Farygin <rider@altlinux.ru> 0.10-alt1
 - 0.10
 

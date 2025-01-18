@@ -1,6 +1,6 @@
 Name: ocaml-ocamlnet
 Version: 4.1.9
-Release: alt4
+Release: alt5
 Summary: Network protocols for OCaml
 License: BSD-3-Clause
 Group: Development/ML
@@ -10,6 +10,7 @@ VCS: https://gitlab.com/gerdstolpmann/lib-ocamlnet3.git
 Source0:%name-%version.tar
 Patch0: ocamlnet-upstream-ocaml5-support.patch
 Patch1: ocaml-ocamlnet-ocaml5.patch
+Patch2: ocaml-ocamlnet-configure-c99.patch
 
 BuildPreReq: /dev/shm
 BuildRequires: ocaml >= 4.04
@@ -17,7 +18,7 @@ BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-labltk-devel
 BuildRequires: ocaml-pcre-devel
-BuildRequires: ocaml-zip-devel
+BuildRequires: ocaml-camlzip-devel
 BuildRequires: libgnutls-devel libnettle-devel
 BuildRequires: libkrb5-devel
 BuildRequires: libncurses-devel
@@ -101,6 +102,7 @@ files for developing applications that use %name-nethttpd.
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p1
 sed -i 's/^\(version=\).*/\1"%{version}"/' configure
 sed -i 's,ocamlopt -shared -o \.dummy\.cmxs >/dev/null 2>/dev/null,true,' configure
 sed -i 's,ocamlc -safe-string >/dev/null 2>/dev/null,true,' configure
@@ -174,6 +176,10 @@ echo -e '-b /usr/bin/netplex-admin\n-b /usr/bin/ocamlrpcgen' \
 %_libdir/ocaml/nethttpd/*.mli
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 4.1.9-alt5
+- renamed build dependency ocaml-zip-devel to ocaml-camlzip-devel
+- fixed build with gcc 14
+
 * Thu Sep 12 2024 Anton Farygin <rider@altlinux.ru> 4.1.9-alt4
 - ocaml 5.2: added patches from upstream git and fedora
 

@@ -17,7 +17,7 @@
 %endif
 
 Name: ocaml-%libname
-Version: 0.33.0
+Version: 0.34.0
 Release: alt1
 Summary: Base library and tools for ppx rewriters.
 License: MIT
@@ -77,6 +77,9 @@ rm -rf %buildroot%_bindir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 0.34.0-alt1
+- 0.33.0 -> 0.34.0
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 0.33.0-alt1
 - 0.31.0 -> 0.33.0
 

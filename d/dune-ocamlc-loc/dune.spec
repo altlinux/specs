@@ -9,6 +9,8 @@
 # - xdg
 # - dune-build-info
 # - ocamlc-loc
+# - chrome-trace
+# - dune-rpc
 
 %define dune_pkg ocamlc-loc
 %if "%dune_pkg" != "bootstrap"
@@ -22,7 +24,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.16.0
+Version: 3.17.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -181,6 +183,39 @@ BuildRequires: ocaml-dyn = %version
 This library offers no backwards compatibility guarantees. Use at your own risk.
 %endif
 
+%if "%dune_pkg" == "chrome-trace"
+%define pkgname %dune_pkg
+%package -n ocaml-%pkgname
+Group: Development/ML
+Summary: Chrome trace event generation library
+Requires: dune = %EVR
+BuildRequires: dune = %version
+BuildRequires: ocaml-dyn = %version
+%description -n ocaml-%pkgname
+%summary
+
+This library offers no backwards compatibility guarantees. Use at your own risk.
+%endif
+
+%if "%dune_pkg" == "dune-rpc"
+%define pkgname %dune_pkg
+%package -n ocaml-%pkgname
+Group: Development/ML
+Summary: Communicate with dune using rpc
+Requires: dune = %EVR
+BuildRequires: dune = %version
+BuildRequires: ocaml-dyn = %version
+BuildRequires: ocaml-csexp-devel
+BuildRequires: ocaml-ordering-devel
+BuildRequires: ocaml-stdune-devel >= %version
+BuildRequires: ocaml-pp-devel
+BuildRequires: ocaml-xdg-devel
+BuildRequires: ocaml-odoc-devel
+%description -n ocaml-%pkgname
+Library to connect and control a running dune instance.
+
+%endif
+
 %if_with subpackage
 %package -n ocaml-%pkgname-devel
 Summary: Development files for %name
@@ -223,7 +258,7 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %check
-./dune.exe runtest test/unit-tests
+./dune.exe runtest test/unit-tests --release
 
 %if_without subpackage
 %files
@@ -263,9 +298,11 @@ rm -rf vendor/csexp vendor/pp
 %_man1dir/dune-monitor.1.*
 %_man1dir/dune-ocaml.1.*
 %_man1dir/dune-pkg.1.*
+%_man1dir/dune-package.1.*
 %_man1dir/dune-rpc.1.*
 %_man1dir/dune-show.1.*
 %_man1dir/dune-shutdown.1.*
+%_man1dir/dune-tools.1.*
 %_man1dir/dune-promotion.1.*
 
 %files -n emacs-dune
@@ -279,6 +316,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 3.17.1-alt1
+- 3.16.0 -> 3.17.1
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 3.16.0-alt1
 - 3.11.1 -> 3.16.0
 

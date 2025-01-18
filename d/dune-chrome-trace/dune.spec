@@ -24,7 +24,7 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.16.0
+Version: 3.17.1
 Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
@@ -258,7 +258,7 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %check
-./dune.exe runtest test/unit-tests
+./dune.exe runtest test/unit-tests --release
 
 %if_without subpackage
 %files
@@ -298,9 +298,11 @@ rm -rf vendor/csexp vendor/pp
 %_man1dir/dune-monitor.1.*
 %_man1dir/dune-ocaml.1.*
 %_man1dir/dune-pkg.1.*
+%_man1dir/dune-package.1.*
 %_man1dir/dune-rpc.1.*
 %_man1dir/dune-show.1.*
 %_man1dir/dune-shutdown.1.*
+%_man1dir/dune-tools.1.*
 %_man1dir/dune-promotion.1.*
 
 %files -n emacs-dune
@@ -314,6 +316,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 3.17.1-alt1
+- 3.16.0 -> 3.17.1
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 3.16.0-alt1
 - 3.11.1 -> 3.16.0
 

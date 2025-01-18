@@ -5,7 +5,7 @@
 %endif
 Name: ocaml-dose3
 Version: 7.0.0
-Release: alt3
+Release: alt4
 Summary: Framework for managing distribution packages and dependencies
 Group: Development/ML
 
@@ -27,7 +27,7 @@ BuildRequires: ocaml-camlbz2-devel
 BuildRequires: ocaml-base64-devel
 BuildRequires: ocaml-parmap-devel
 BuildRequires: ocaml-odoc
-BuildRequires: ocaml-zip-devel
+BuildRequires: ocaml-camlzip-devel
 BuildRequires: ocaml-camlp-streams-devel
 %if_with check
 BuildRequires: ocaml-ounit-devel
@@ -117,12 +117,15 @@ install -m0644 doc/manpages/*.5 %buildroot%_man5dir/
 %_bindir/dose-builddebcheck
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 7.0.0-alt4
+- renamed build dependency ocaml-zip-devel to ocaml-camlzip-devel
+
 * Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 7.0.0-alt3
 - fixed URL
 - disabled check on i586
 
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 7.0.0-alt2
-- fixed build with ocamlgraph 2.1.0 
+- fixed build with ocamlgraph 2.1.0
 - updated BuildRequires for ocaml-4.14 environment
 
 * Thu Nov 04 2021 Anton Farygin <rider@altlinux.ru> 7.0.0-alt1
@@ -138,7 +141,7 @@ install -m0644 doc/manpages/*.5 %buildroot%_man5dir/
 - fixed build with ounit2
 
 * Sat Mar 16 2019 Anton Farygin <rider@altlinux.ru> 5.0.1-alt6.5.2git2c1b8df
-- build with curl, bz2 and xml-light support  
+- build with curl, bz2 and xml-light support
 
 * Mon Oct 29 2018 Anton Farygin <rider@altlinux.ru> 5.0.1-alt5.5.2git2c1b8df
 - rebuild with ocaml-re

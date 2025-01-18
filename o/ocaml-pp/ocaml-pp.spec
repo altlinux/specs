@@ -1,7 +1,7 @@
 %def_without check
 %define  modulename pp
 Name:    ocaml-%modulename
-Version: 1.2.0
+Version: 2.0.0
 Release: alt1
 Summary: An OCaml pretty-printing library
 License: MIT
@@ -57,5 +57,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 2.0.0-alt1
+- 1.2.0 -> 2.0.0
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
 - first build for ALT

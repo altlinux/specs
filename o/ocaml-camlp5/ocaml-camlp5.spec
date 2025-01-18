@@ -1,12 +1,17 @@
+# Dynlink_cmo_format and Dynlink_cmxs_format is symlink to cmo_format.mli and cmxs_format.mli without implementation
+%filter_from_requires /Dynlink_cmo_format/d
+%filter_from_requires /Dynlink_cmxs_format/d
+
 %define module camlp5
 Name: ocaml-camlp5
-Version: 8.03.00
+Version: 8.03.01
 Release: alt1
 
 Summary: preprocessor-pretty-printer of OCaml
 License: BSD-3-Clause
 Group: Development/ML
 Url: https://camlp5.github.io/
+VCS: https://github.com/camlp5/camlp5
 
 Source: %name-%version.tar
 Provides: camlp5 = %EVR
@@ -55,6 +60,9 @@ install -p -m644 compile/pa_o_fast.cmi %buildroot%_ocamldir/%module/
 %_man1dir/*5*.1*
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 8.03.01-alt1
+- 8.03.01
+
 * Thu Sep 05 2024 Anton Farygin <rider@altlinux.ru> 8.03.00-alt1
 - 8.03.00
 

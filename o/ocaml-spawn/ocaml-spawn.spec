@@ -1,6 +1,6 @@
 %define libname spawn
 Name: ocaml-%libname
-Version: 0.15.1
+Version: 0.17.0
 Release: alt1
 Summary: OCAML SPAWN - spawning system process
 License: MIT
@@ -58,5 +58,8 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
+- 0.17.0
+
 * Fri Sep 13 2024 Anton Farygin <rider@altlinux.ru> 0.15.1-alt1
 - first build for ALT Linux

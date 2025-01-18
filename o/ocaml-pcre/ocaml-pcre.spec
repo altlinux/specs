@@ -1,6 +1,6 @@
 Name: ocaml-pcre
-Version: 7.5.0
-Release: alt2
+Version: 8.0.2
+Release: alt1
 
 Summary: Perl compatibility regular expressions (PCRE) for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -50,6 +50,9 @@ developing applications that use %name.
 %doc README.md
 
 %changelog
+* Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 8.0.2-alt1
+- 7.5.0 -> 8.0.2
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 7.5.0-alt2
 - add VCS tag and update URL
 

@@ -3,8 +3,8 @@
 %endif
 %define pkgname camlzip
 Name: ocaml-%pkgname
-Version: 1.12
-Release: alt2
+Version: 1.13
+Release: alt1
 Summary: OCaml library for reading and writing zip, jar and gzip files
 Group: Development/ML
 License: LGPLv2.1+ with OCaml-LGPL-linking-exception
@@ -60,6 +60,9 @@ mkdir -p %buildroot%_ocamldir
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 17 2025 Anton Farygin <rider@altlinux.ru> 1.13-alt1
+- 1.12 -> 1.13
+
 * Wed Sep 18 2024 Anton Farygin <rider@altlinux.ru> 1.12-alt2
 - renamed to camlzip in accordance with the upstream name
 
