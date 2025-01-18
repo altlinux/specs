@@ -5,7 +5,7 @@
 
 Name: qtermwidget6
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Unicode-enabled, embeddable Qt6 terminal widget
 License: GPL-2.0-or-later
@@ -13,6 +13,7 @@ Group: Terminals
 
 Url: https://github.com/lxqt/qtermwidget
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -63,6 +64,7 @@ This package contains the development headers for %name library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -86,6 +88,9 @@ This package contains the development headers for %name library.
 %_libdir/cmake/%name/
 
 %changelog
+* Sat Jan 18 2025 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2
+- lib/Pty.cpp: do not set LANGUAGE to a null string (See ALT bug 52728)
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - New version 2.1.0
 
