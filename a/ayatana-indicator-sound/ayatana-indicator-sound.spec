@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-sound
-Version: 24.5.0
+Version: 24.5.1
 Release: alt1
 
 Summary: Ayatana Indicator for managing system sound
@@ -11,6 +11,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-sound
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 ExcludeArch: ppc64le
 
@@ -101,6 +103,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.sound.AccountsService.rules
 
 %changelog
+* Fri Jan 17 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
+- New version 24.5.1.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
 - New version 24.5.0.
 

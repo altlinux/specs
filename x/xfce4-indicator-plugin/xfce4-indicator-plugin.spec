@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xfce4-indicator-plugin
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: Plugin to display information from applications in the Xfce panel
@@ -10,6 +10,8 @@ Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/panel-plugins/xfce4-indicator-plugin
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4
 
@@ -27,9 +29,6 @@ Ubuntu's MessagingMenu design specification.
 
 %prep
 %setup
-
-# Don't use git tag in version.
-%xfce4_drop_gitvtag indicator_version_tag configure.ac.in
 
 %build
 %xfce4reconf
@@ -50,6 +49,10 @@ Ubuntu's MessagingMenu design specification.
 %_datadir/xfce4/panel/plugins/indicator.desktop
 
 %changelog
+* Fri Jan 17 2025 Nikolay Strelkov <snk@altlinux.org> 2.4.3-alt1
+- Dropped %%xfce4_drop_gitvtag macro.
+- New version 2.4.3.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 2.4.2-alt1
 - New version 2.4.2.
 
