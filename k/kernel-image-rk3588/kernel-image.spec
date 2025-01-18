@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -88,6 +88,15 @@ ExclusiveArch: aarch64
 %define arch_dir %base_arch
 %define kvm_modules_dir arch/%arch_dir/kvm
 
+# On some architectures (at least ppc64le) kernel image is ELF and
+# eu-findtextrel will fail if it is not a DSO or PIE.
+%add_verify_elf_skiplist /boot/vmlinuz-*
+
+%define _unpackaged_files_terminate_build 1
+%ifnarch ppc64le
+%define _stripped_files_terminate_build 1
+%endif
+
 ExclusiveOS: Linux
 
 Requires(pre,postun): bootloader-utils
@@ -125,7 +134,7 @@ BuildRequires: ccache
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
-your system and supports ARM Rockhip SoC rk3588.
+your system and supports ARM Rockchip SoC rk3588.
 
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
@@ -348,24 +357,13 @@ popd
 # ghostify *.bin files
 truncate -s0 %buildroot%modules_dir/modules.*.bin
 
-# On some architectures (at least ppc64le) kernel image is ELF and
-# eu-findtextrel will fail if it is not a DSO or PIE.
-%add_verify_elf_skiplist /boot/vmlinuz-*
-
-%define _unpackaged_files_terminate_build 1
-
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug --append=earlycon \
-%if "%base_flavour" == "rt"
-	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
-	'uname -a; rtcheck -v'
-%else
+timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 	'uname -a'
-%endif
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
+if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
 	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
 	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
 	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
@@ -402,6 +400,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Jan 18 2025 Alexei Takaseev <taf@altlinux.org> 6.12.10-alt1
+- v6.12.10 (2025-01-17).
+
 * Fri Jan 10 2025 Alexei Takaseev <taf@altlinux.org> 6.12.9-alt1
 - v6.12.9 (2025-01-09).
 
