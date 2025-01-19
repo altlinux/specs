@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kio-admin
-Version: 24.12.0
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -51,6 +51,9 @@ operations in root-scope.
 %_datadir/polkit-1/actions/*kio*.policy
 
 %changelog
+* Sun Jan 19 2025 Anton Kurachenko <srebrov@altlinux.org> 24.12.1-alt1
+- New version 24.12.1.
+
 * Mon Dec 23 2024 Anton Kurachenko <srebrov@altlinux.org> 24.12.0-alt1
 - New version 24.12.0.
 
