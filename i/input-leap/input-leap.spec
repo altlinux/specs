@@ -2,7 +2,7 @@
 
 Name: input-leap
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: Open-source KVM software
 Summary(ru_RU.UTF-8): Программное обеспечение KVM с открытым исходным кодом
@@ -35,7 +35,7 @@ Leap does this in software, allowing you to tell it which machine to
 control by moving your mouse to the edge of the screen, or by using a
 keypress to switch focus to a different system.
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Input Leap — это программное обеспечение, которое имитирует функциональность
 переключателя KVM, который исторически позволял вам использовать одну 
 клавиатуру и мышь для управления несколькими компьютерами, физически 
@@ -71,5 +71,8 @@ export CXX=clang++
 %doc *.md 
 
 %changelog
+* Sun Jan 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.2-alt2
+- fix %%description -l ru_RU.UTF-8
+
 * Sat Jan 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.2-alt1
 - Initial build for Sisyphus.

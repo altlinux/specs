@@ -2,7 +2,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.13.5
-Release: alt2
+Release: alt3
 
 License: LGPL-3.0
 Group:   Development/Python3
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 This is precisely the job of mat2: getting rid, as much as possible, of
 metadata.
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Основная задача mat2: избавиться, насколько это возможно, от метаданных.
 
 %prep
@@ -43,6 +43,9 @@ metadata.
 %doc *.md LICENSE
 
 %changelog
+* Sun Jan 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.5-alt3
+- fix %%description -l ru_RU.UTF-8
+
 * Thu Jan 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.5-alt2
 - upstream update to git.6c966f2a
 
