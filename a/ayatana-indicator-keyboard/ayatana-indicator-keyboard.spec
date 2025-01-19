@@ -9,7 +9,7 @@
 
 Name: ayatana-indicator-keyboard
 Version: 24.7.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator for managing keyboard layout and desktop language
 License: GPLv3
@@ -17,6 +17,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/AyatanaIndicators/ayatana-indicator-keyboard
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
@@ -45,6 +47,8 @@ BuildRequires: libxml2-devel
 BuildRequires: mate-themes
 BuildRequires: pkg-config
 BuildRequires: zlib-devel
+
+Requires: matekbd-keyboard-display
 
 %description
 This package contains the keyboard indicator, which should show
@@ -102,6 +106,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Sun Jan 19 2025 Nikolay Strelkov <snk@altlinux.org> 24.7.0-alt2
+- Added matekbd-keyboard-display to Requires for the full functionality
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.7.0-alt1
 - New version 24.7.0.
 
