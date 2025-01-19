@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 2.33.0
+Version: 25.1.0
 Release: alt1
-Summary: Personal finances manager for KF5
+Summary: A personal finances manager, powered by KDE
 License: %gpl2plus
 Group: Office
 URL: http://skrooge.org/
@@ -12,113 +12,107 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar.xz
 Source1:%name.po
 
-ExcludeArch: ppc64le
+ExcludeArch: ppc64le armh %ix86
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: grantlee5-devel
-BuildRequires: kf5-kactivities-devel
-BuildRequires: kf5-karchive-devel
-BuildRequires: kf5-kauth-devel
-BuildRequires: kf5-kbookmarks-devel
-BuildRequires: kf5-kcodecs-devel
-BuildRequires: kf5-kcompletion-devel
-BuildRequires: kf5-kconfig-devel
-BuildRequires: kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel
-BuildRequires: kf5-kcrash-devel
-BuildRequires: kf5-kdbusaddons-devel
-BuildRequires: kf5-kdeclarative-devel
-BuildRequires: kf5-kdelibs4support
-BuildRequires: kf5-kdelibs4support-devel
-BuildRequires: kf5-kdesignerplugin-devel
-BuildRequires: kf5-kdoctools
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-kdoctools-devel-static
-BuildRequires: kf5-kemoticons-devel
-BuildRequires: kf5-kguiaddons-devel
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kiconthemes-devel
-BuildRequires: kf5-kinit-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: kf5-kitemmodels-devel
-BuildRequires: kf5-kitemviews-devel
-BuildRequires: kf5-kjobwidgets-devel
-BuildRequires: kf5-knewstuff-devel
-BuildRequires: kf5-knotifications-devel
-BuildRequires: kf5-knotifyconfig-devel
-BuildRequires: kf5-kpackage-devel
-BuildRequires: kf5-kparts-devel
-BuildRequires: kf5-krunner-devel
-BuildRequires: kf5-kservice-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-ktextwidgets-devel
-BuildRequires: kf5-kunitconversion-devel
-BuildRequires: kf5-kwallet-devel
-BuildRequires: kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel
-BuildRequires: kf5-kxmlgui-devel
-BuildRequires: kf5-plasma-framework-devel
-BuildRequires: kf5-solid-devel
-BuildRequires: kf5-sonnet-devel
+BuildRequires: kf6-karchive-devel
+BuildRequires: kf6-kauth-devel
+BuildRequires: kf6-kbookmarks-devel
+BuildRequires: kf6-kcodecs-devel
+BuildRequires: kf6-kcompletion-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kdbusaddons-devel
+BuildRequires: kf6-kdeclarative-devel
+BuildRequires: kf6-kdoctools
+BuildRequires: kf6-kdoctools-devel
+BuildRequires: kf6-kdoctools-devel-static
+BuildRequires: kf6-kguiaddons-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kiconthemes-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kitemmodels-devel
+BuildRequires: kf6-kitemviews-devel
+BuildRequires: kf6-kjobwidgets-devel
+BuildRequires: kf6-knewstuff-devel
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-knotifyconfig-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-kparts-devel
+BuildRequires: kf6-krunner-devel
+BuildRequires: kf6-kservice-devel
+BuildRequires: kf6-ktexttemplate-devel
+BuildRequires: kf6-ktextwidgets-devel
+BuildRequires: kf6-kunitconversion-devel
+BuildRequires: kf6-kwallet-devel
+BuildRequires: kf6-kwidgetsaddons-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kxmlgui-devel
+BuildRequires: kf6-solid-devel
+BuildRequires: kf6-sonnet-devel
 BuildRequires: libofx-devel
-BuildRequires: libqca-qt5-devel
+#BuildRequires: libqca-qt6-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libsqlcipher-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-script-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-webengine-devel
-BuildRequires: qt5-webkit-devel
-BuildRequires: qt5-xmlpatterns-devel
+BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-webengine-devel
 
 Requires: libgrantlee_templates5
-Requires: kf5-kinit kf5-kio
-
-Requires: libqt5-core = %_qt5_version
+Requires: kf6-kio
+Requires: libqt6-core = %_qt6_version
 
 %description
-Skrooge is a personal finances manager for KF5, aiming at being simple
-and intuitive.
+A personal finances manager, powered by KDE.
 
 %prep
 %setup
-cp -f %SOURCE1 po/ru/skrooge.po
+#cp -f %SOURCE1 po/ru/skrooge.po
 
 %build
-%K5init no_altplace
-%K5build -DSKG_CIPHER=OFF \
+%K6init no_altplace
+%K6build -DSKG_CIPHER=OFF \
+         -DQT_MAJOR_VERSION=6 \
+         -DKDE_INSTALL_KXMLGUIDIR=%_K6xmlgui \
          -DSKG_BUILD_TEST=OFF
 
 %install
-%K5install
+%K6install
 %find_lang --with-kde %name
 
 %files -f %name.lang
 %doc AUTHORS CHANGELOG README.md
-%_K5bin/*
-%_K5cfg/*
-%_K5srv/*
-%_K5srvtyp/*
-%_K5lib/libskg*
-%_qt5_plugindir/designer/libsk*.so*
-%_qt5_plugindir/sqldrivers/libsk*.so
-%_qt5_plugindir/sk*
-%_K5xdgmime/*
-%_K5xdgapp/*%name.desktop
+%_K6bin/*
+%_K6cfg/*
+%_K6lib/libskg*
+%_qt6_plugindir/sqldrivers/libsk*.so
+%_qt6_plugindir/sk*
+%_K6xdgmime/*
+%_K6xdgapp/*%name.desktop
 %_iconsdir/*/*/*/*
-%_K5xmlgui/*
-%_K5plug/grantlee/*/grantlee_skgfilters.so
-%_K5notif/%name.notifyrc
+%_K6xmlgui/*
+%_K6plug/kf6/ktexttemplate/grantlee_skgfilters.so
+%_K6notif/%name.notifyrc
 %_datadir/%name
 %_datadir/knsrcfiles/*.knsrc
 %_datadir/metainfo/*.appdata.xml
+%_datadir/skrooge_import_backend/*.json
+%_datadir/skrooge_source/*.json
 
 %changelog
+* Sat Jan 18 2025 Andrey Cherepanov <cas@altlinux.org> 25.1.0-alt1
+- New version 25.1.0.
+- Build with KF6.
+- Build only for x86_64 and aarch64.
+
 * Fri Sep 27 2024 Andrey Cherepanov <cas@altlinux.org> 2.33.0-alt1
 - New version 2.33.0.
 
