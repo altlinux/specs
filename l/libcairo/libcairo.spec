@@ -2,7 +2,7 @@
 
 Name: libcairo
 Version: 1.18.2
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Multi-platform 2D graphics library
 License: LGPL
@@ -73,7 +73,7 @@ This package contains tools for working with the cairo graphics library.
 %if_with docs
 	-Dgtk_doc=true \
 %endif
-	-Dtests=disabled \
+	-Dtests=disabled
 %meson_build
 
 %install
@@ -108,6 +108,9 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/cairo
 
 %changelog
+* Sun Jan 19 2025 Anton Kurachenko <srebrov@altlinux.org> 1:1.18.2-alt1.1
+- NMU: removed excess symbol from %build section(fix FTBFS).
+
 * Tue Sep 10 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.18.2-alt1
 - 1.18.2
 
