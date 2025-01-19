@@ -1,8 +1,8 @@
-%define uversion 20220115
-
 Name: AlephOne
-Version: 1.0.2
-Release: alt1.2
+Version: 1.10
+%define uversion 20240822
+
+Release: alt1
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -20,22 +20,22 @@ Source2: %name-48x48.png
 Source3: alephone-wrapper.sh
 
 #Patch0: %name-1.0.1-gcc8-fix.patch
-Patch1: ax_boost_base-loongarch64.patch
+
+BuildRequires(pre): rpm-build-licenses autoconf-archive
+
+#BuildPreReq: libSDL2-devel libSDL2_image-devel libSDL2_net-devel  boost-program_options-devel
+#BuildPreReq: libsdl2_sound-devel libSDL2_ttf-devel boost-filesystem-devel
 
 
-BuildRequires(pre): rpm-build-licenses
+# Automatically added by buildreq on Sun Jan 19 2025
+# optimized out: boost-devel boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libSDL2-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel perl pkg-config python3 python3-base sh5 zlib-devel
+BuildRequires: boost-filesystem-devel boost-lockfree-devel gcc-c++ libGLU-devel libSDL2_image-devel libSDL2_net-devel libSDL2_ttf-devel
+BuildRequires: libcurl-devel libminiupnpc-devel libopenal-devel libpng-devel libsndfile-devel perl-parent python3-dev
 
-BuildPreReq: libSDL2-devel libSDL2_image-devel libSDL2_net-devel  boost-program_options-devel
-BuildPreReq: libsdl2_sound-devel libSDL2_ttf-devel boost-filesystem-devel
+#BuildRequires: libmad-devel libsmpeg-devel libspeex-devel libspeexdsp-devel
+#BuildRequires: libvorbis-devel lua5.3 python3-dev libopenal-devel zlib-devel   /usr/bin/python3
 
-
-# Automatically added by buildreq on Sat Jul 16 2022
-# optimized out: boost-devel boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libglvnd-devel libgpg-error libogg-devel libsasl2-3 libstdc++-devel perl pkg-config python3 python3-base sh4 zlib-devel zziplib
-BuildRequires: boost-filesystem-devel gcc-c++ libGLU-devel libSDL2_image-devel libSDL2_net-devel libSDL2_ttf-devel libalsa-devel
-BuildRequires: libcurl-devel libmad-devel libminiupnpc-devel libpng-devel libsmpeg-devel libsndfile-devel libspeex-devel libspeexdsp-devel
-BuildRequires: libvorbis-devel lua5.3 python3-dev zziplib-devel /usr/bin/python3
-
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils  autoconf-archive
 
 %description
 Aleph One is an Open Source 3D first-person shooter game, based on the game
@@ -54,11 +54,6 @@ alephone "~/Marathon Infinity"
 %prep
 %setup -n %name-%uversion
 #patch0 -p2
-%patch1 -p1
-%ifarch %e2k
-sed -i 's,aarch64,&|e2k,' m4/ax_boost_base.m4
-%endif
-
 
 %build
 #add_optflags -fpermissive
@@ -67,6 +62,7 @@ sed -i 's,aarch64,&|e2k,' m4/ax_boost_base.m4
 
 %autoreconf
 
+%add_optflags -fpermissive -Wmisleading-indentation
 %configure \
 --enable-dependency-tracking
 
@@ -79,7 +75,7 @@ sed -i 's,aarch64,&|e2k,' m4/ax_boost_base.m4
 #install -pD -m755 %SOURCE3 %buildroot%_gamesbindir/
 
 %files
-%doc AUTHORS COPYING INSTALL.Unix README docs/*.html examples
+%doc AUTHORS COPYING README.md docs/README.txt docs/*.html examples
 %_bindir/alephone
 #%_datadir/AlephOne/Fonts
 %_datadir/AlephOne/MML
@@ -104,11 +100,14 @@ sed -i 's,aarch64,&|e2k,' m4/ax_boost_base.m4
 
 
 %changelog
-* Thu Dec 07 2023 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1.2
-- E2K: fix boost detection
+* Sun Jan 19 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1.10-alt1
+- Update to git commit  (20240822)
 
-* Mon Nov 20 2023 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1.1
-- NMU: fix FTBFS on loongarch64
+* Fri Mar 10 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.1-alt0_1_20230305
+- Update to git commit 386f63e3 (2023-03-05)
+
+* Sun Feb 12 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.6.1-alt1
+- Update to git commit 7169509f (2023-02-11)
 
 * Sun Jul 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.2-alt1
 - Update to Release 20220115 from github
