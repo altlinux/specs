@@ -14,7 +14,7 @@
 %endif
 
 Name:    qgis
-Version: 3.40.2
+Version: 3.40.3
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
@@ -309,9 +309,6 @@ cp tests/src/python/utilities.py %buildroot%_datadir/qgis/python/plugins/process
 %endif
 
 %find_lang %name --with-qt
-# Add missing localization
-echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hans.qm" >> %name.lang
-echo "%%lang(zh) /usr/share/qgis/i18n/qgis_zh-Hant.qm" >> %name.lang
 
 %if_disabled devel
 rm -rf %buildroot%_datadir/%name/FindQGIS.cmake \
@@ -401,6 +398,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Sat Jan 18 2025 Andrey Cherepanov <cas@altlinux.org> 3.40.3-alt1
+- New version.
+
 * Sat Dec 21 2024 Andrey Cherepanov <cas@altlinux.org> 3.40.2-alt1
 - New version.
 
