@@ -2,8 +2,8 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 3.6
-Release: alt3
+Version: 3.8
+Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -136,7 +136,7 @@ Group:   Development/Other
 Qt6 bindings for Pascal from Lazarus.
 
 %package -n qt6pas-devel
-Summary: Development files for qt5pas
+Summary: Development files for qt6pas
 Group:   Development/Other
 Requires: qt6pas = %EVR
 
@@ -404,6 +404,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt6Pas.so
 
 %changelog
+* Sat Jan 18 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.8-alt1
+- New version.
+
 * Tue Jan 07 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.6-alt3
 - Built qt6pas (thanks Max Pozdeev) (ALT #49932).
 
