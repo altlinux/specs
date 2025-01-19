@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define rdn_name com.github.FontManager.FontManager
@@ -8,18 +8,19 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
-Url: http://fontmanager.github.io/
+Url: https://fontmanager.github.io/
+
+Vcs: https://github.com/FontManager/font-manager.git
 
 %if_disabled snapshot
 Source: https://github.com/FontManager/%name/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/FontManager/font-manager.git
 Source: %name-%version.tar
 %endif
 
@@ -88,6 +89,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Sun Jan 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Mon Jan 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - updated to 0.9.1-1-ga5b90037
 
