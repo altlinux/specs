@@ -5,8 +5,8 @@
 %endif
 
 Name: unison
-Version: 2.53.5
-Release: alt2
+Version: 2.53.7
+Release: alt1
 
 Summary: File-synchronization tool
 
@@ -83,6 +83,9 @@ make test %unison_native
 %_iconsdir/hicolor/scalable/apps/unison.svg
 
 %changelog
+* Sat Jan 18 2025 Anton Farygin <rider@altlinux.ru> 2.53.7-alt1
+- 2.53.2 -> 2.53.7
+
 * Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 2.53.5-alt2
 - added CAMLLDFLAGS=-output-complete-exe on non-native architectures
   (which i lost in 2.35.5-alt1)
