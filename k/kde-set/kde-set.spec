@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 24.02.2
+Version: 25.01.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -32,7 +32,7 @@ Requires: plasma5-breeze plasma5-integration kwayland-integration
 Summary: %summary
 Group: Graphical desktop/KDE
 Requires: qt6-phonon-backend qt6-5compat qt6-declarative qt6-svg qt6-imageformats qt6-translations qt6-wayland
-Requires: kf6-kio kf6-kded
+Requires: kf6-kio kf6-kded kf6-qqc2-desktop-style
 Requires: plasma6-breeze plasma6-integration
 %description -n kde-runtime
 %summary
@@ -278,6 +278,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 25.01.0-alt1
+- kde-runtime require kf6-qqc2-desktop-style (closes: 52715)
+
 * Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt1
 - update requires
 
