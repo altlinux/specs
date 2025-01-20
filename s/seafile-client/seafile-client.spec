@@ -1,17 +1,16 @@
 Name: seafile-client
-Version: 9.0.5
-Release: alt2
+Version: 9.0.11
+Release: alt1
 
 Summary: Seafile client GUI (Qt-based)
+
 License: Apache License
 Group: Networking/File transfer
-
 Url: https://github.com/haiwen/seafile-client
-Packager: Denis Baranov <baraka@altlinux.ru>
 
-# Source-url: https://github.com/haiwen/seafile-client/archive/v%version.tar.gz
+# Source0-url: https://github.com/haiwen/seafile-client/archive/v%version.tar.gz
 Source0: %name-%version.tar
-Source1: seafile.desktop
+Source1: com.seafile.seafile-applet.desktop
 
 Patch0: seafile-client-no-return-error.patch
 Patch1: 86ebea086c6b78738b3140c922c909331d2b9a94.patch
@@ -63,6 +62,8 @@ This package contains desktop GUI client.
 # https://github.com/haiwen/seafile-client/pull/1346
 subst -p '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' \
 	CMakeLists.txt
+subst 's/seafile.desktop/com.seafile.seafile-applet.desktop/' \
+	CMakeLists.txt
 cp -a %SOURCE1 data/
 
 %build
@@ -83,11 +84,15 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %files -f %name.lang
 %_bindir/seafile-applet
 %_bindir/%name
-%_desktopdir/*
+%_desktopdir/com.seafile.seafile-applet.desktop
 %_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 
 %changelog
+* Mon Jan 20 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.11-alt1
+- new version 9.0.11 (with rpmrb script)
+- rename seafile.desktop to com.seafile.seafile-applet.desktop
+
 * Wed Mar 06 2024 Michael Shigorin <mike@altlinux.org> 9.0.5-alt2
 - switch back to qt5-webkit on arches lacking qt6-webengine
 - spec cleanup (see also ALT#46206)

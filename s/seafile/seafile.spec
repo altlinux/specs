@@ -1,6 +1,6 @@
 Name: seafile
-Version: 9.0.5
-Release: alt2
+Version: 9.0.11
+Release: alt1
 
 Summary: Full-fledged cloud storage platform
 
@@ -36,6 +36,7 @@ BuildRequires: pkgconfig(libevent) >= 2.0
 BuildRequires: pkgconfig(zlib) >= 1.2.0
 BuildRequires: pkgconfig(libcurl) >= 7.17
 BuildRequires: pkgconfig(libwebsockets) >= 4.0.20
+BuildRequires: pkgconfig(libargon2)
 
 Requires: lib%name = %EVR
 
@@ -134,6 +135,10 @@ cp %SOURCE1 .
 %_pkgconfigdir/libseafile.pc
 
 %changelog
+* Mon Jan 20 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.11-alt1
+- new version 9.0.11 (with rpmrb script)
+- add BR: pkgconfig(libargon2)
+
 * Thu Mar 07 2024 Michael Shigorin <mike@altlinux.org> 9.0.5-alt2
 - bump release following seafile-client to satisfy its dependency
 
