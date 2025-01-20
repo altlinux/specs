@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.11
+Version: 0.44.12
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -178,6 +178,10 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Dec 24 2024 Evgenii Sozonov <arzdez@altlinux.org> 0.44.12-alt1
+- system-auth: ad: add enable winbind-dnsupdate.timer in winbind mode
+- system-auth: ad: add timer enable and disable func
+
 * Mon Oct 14 2024 Andrey Cherepanov <cas@altlinux.org> 0.44.11-alt1
 - system-auth: added support spaces in OU for registered computers (ALT #51675).
 - system-auth: fixed show version.
