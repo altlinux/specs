@@ -1,11 +1,11 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 21.5.7
+Version: 21.5.9
 Release: alt1
 
 Summary: Adaptive stream addon for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/peak3d/inputstream.adaptive/
+Url: https://github.com/xbmc/inputstream.adaptive
 
 Source: %name-%version.tar
 
@@ -30,6 +30,9 @@ BuildRequires: libexpat-devel libgtest-devel libap4-devel-static libpugixml-deve
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.5.9-alt1
+- 21.5.9 released
+
 * Mon Nov 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 21.5.7-alt1
 - 21.5.7 released
 
