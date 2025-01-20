@@ -2,7 +2,7 @@
 
 Name: x-cursor-themes-%_name
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: An opensource cursor theme inspired by Google
 
@@ -12,7 +12,9 @@ URL: https://github.com/ful1e5/Google_Cursor
 VCS: https://github.com/ful1e5/Google_Cursor.git
 
 BuildArch: noarch
-ExclusiveArch: x86_64 aarch64
+ExcludeArch: %ix86 ppc64le
+
+Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 Source1: node_modules.tar.gz
@@ -42,5 +44,8 @@ cp -a ./themes/%_name-* %buildroot%_iconsdir
 %exclude %_iconsdir/%_name-*-Windows
 
 %changelog
+* Tue Jan 21 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt1.1
+- build on more architectures, including loongarch64 and riscv64
+
 * Thu Dec 26 2024 Alexander Kovalev <alexvk@altlinux.org> 2.0.0-alt1
 - Initial build for ALT.
