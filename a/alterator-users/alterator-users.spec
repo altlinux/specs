@@ -1,6 +1,6 @@
 Name: alterator-users
 Version: 10.24
-Release: alt4
+Release: alt5
 
 Summary: alterator module for system users administration
 License: GPL
@@ -52,6 +52,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_bindir/alterator_users_helper
 
 %changelog
+* Mon Jan 20 2025 Michael Shigorin <mike@altlinux.org> 10.24-alt5
+- Remove localadmin as the default login (see also #52476)
+
 * Mon Jan 13 2025 Dmitry Terekhin <jqt4@altlinux.org> 10.24-alt4
 - Clarify description and fix GECOS for localadmin (ALT #52476)
 
