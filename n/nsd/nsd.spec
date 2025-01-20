@@ -1,7 +1,7 @@
 %set_autoconf_version 2.71
 
 Name: nsd
-Version: 4.11.0
+Version: 4.11.1
 Release: alt1
 
 Summary: Name Server Daemon
@@ -48,7 +48,7 @@ tar -xf %SOURCE101 -C simdzone
   --with-difffile=%_localstatedir/%name/ixfr.db \
   --with-xfrdfile=%_localstatedir/%name/xfrd.state \
   --localstatedir=%_var
-%make_build -j1
+%make_build
 
 %install
 %makeinstall_std
@@ -93,6 +93,10 @@ fi
 %doc doc contrib %name.conf.sample
 
 %changelog
+* Mon Jan 20 2025 Alexei Takaseev <taf@altlinux.org> 4.11.1-alt1
+- 4.11.1
+- Use multiprocess build (Fix in upstream)
+
 * Thu Dec 12 2024 Alexei Takaseev <taf@altlinux.org> 4.11.0-alt1
 - 4.11.0
 
