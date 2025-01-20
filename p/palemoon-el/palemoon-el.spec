@@ -4,15 +4,15 @@
 %define cid_dict       el@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	33.4.0
-%define max_version	34.5.*
+%define min_version	33.5.0
+%define max_version	34.6.*
 
 %define bname		newmoon
 %define newmoon_dir 	%palemoon_datadir/browser/
 
 Name: palemoon-el
 
-Version: 33.4.0
+Version: 33.5.0
 Release: alt1
 
 Summary: Greek (EL) Language Pack for Pale Moon
@@ -22,14 +22,11 @@ ExclusiveArch: x86_64 aarch64
 Group: Networking/WWW
 Url: http://www.palemoon.org/langpacks.shtml
 
-Packager: Hihin Ruslan <ruslandh@altlinux.ru>
-
 Source: el_palemoon_%version.xpi
 Source2: el_GR_%version.tar
 
 Requires: hunspell-el
-Requires: palemoon >= 33.4.0
-
+Requires: palemoon >= 33.5.0
 
 BuildRequires(pre):	rpm-build-palemoon
 
@@ -73,6 +70,9 @@ ln -s %_datadir/myspell/el_GR.dic %buildroot/%cid_dict_dir/dictionaries/el_GR.di
 
 
 %changelog
+* Mon Jan 20 2025 Hihin Ruslan <ruslandh@altlinux.ru> 33.5.0-alt1
+- Version 33.5.0
+
 * Sat Oct 12 2024 Hihin Ruslan <ruslandh@altlinux.ru> 33.4.0-alt1
 - Version 33.4.0
 

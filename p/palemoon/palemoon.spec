@@ -1,10 +1,10 @@
-# git commit 778d030afdd47f1226010353e892fc04dd8a1e0f
+# git commit 9b1a67e34a3a86514dcb25f38398ec8e83ce93ac
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.4.1
+Version: 33.5.1
 
 Release: alt1
 
@@ -131,7 +131,7 @@ The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
@@ -163,7 +163,7 @@ The %sname project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
-%description -n %bname -l ru_RU.UTF8
+%description -n %bname -l ru_RU.UTF-8
 Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
@@ -509,6 +509,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sun Jan 19 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.5.1-alt1
+- New Version (CVE-2025-0239, CVE-2025-0238, CVE-2024-11693, CVE-2024-11704)
+
 * Sat Nov 23 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.4.1-alt1
 - New Version (CVE-2024-10463)
 
