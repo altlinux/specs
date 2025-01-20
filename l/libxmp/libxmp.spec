@@ -2,17 +2,18 @@
 %global soname 4
 
 Name: libxmp
-Version: 4.5.0
-Release: alt2
+Version: 4.6.1
+Release: alt1
 
 Summary: Module Player library for MOD, S3M, IT and others
-License: LGPLv2.1
+License: MIT
 Group: System/Libraries
 
 Url: http://xmp.sf.net/
 Source0: http://downloads.sf.net/xmp/%name-%version.tar.gz
 Source100: %name.watch
-Patch0: %{name}-fix-lto.patch
+
+BuildRequires: rpm-macros-cmake
 
 %description
 libxmp is a module player library which supports many module formats,
@@ -38,7 +39,6 @@ libxmp.
 
 %prep
 %setup
-%patch0 -p1 -b .lto
 
 %build
 %configure
@@ -57,16 +57,25 @@ mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 %files -n %name
 %_libdir/libxmp.so.%{soname}
 %_libdir/libxmp.so.%{soname}.*
-%doc docs/COPYING.LIB
+%doc docs/COPYING*
 
 %files devel
 %_includedir/xmp.h
 %_libdir/libxmp.so
-%_libdir/pkgconfig/libxmp.pc
-%_mandir/man3/libxmp.3*
+%_pkgconfigdir/libxmp.pc
+%_cmakedir/%name/
+%_man3dir/libxmp.3*
 %_docdir/%name/
 
 %changelog
+* Mon Jan 20 2025 Michael Shigorin <mike@altlinux.org> 4.6.1-alt1
+- new version (watch file uupdate)
+- updated License: to MIT
+- minor spec cleanup
+
+* Fri Jun 23 2023 Michael Shigorin <mike@altlinux> 4.6.0-alt1
+- new version (watch file uupdate)
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 4.5.0-alt2
 - picked from orphaned
 - fixed build
