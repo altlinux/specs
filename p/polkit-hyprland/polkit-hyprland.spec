@@ -1,7 +1,7 @@
 %define _libexecdir %prefix/libexec
 
 Name: polkit-hyprland
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -28,9 +28,9 @@ BuildRequires: pkgconfig(polkit-qt6-1)
 
 BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-declarative-devel qt6-tools-devel
-BuildRequires: kf6-qqc2-desktop-style-devel
+BuildRequires: hyprland-qt-support
 
-Requires: kf6-kirigami libqt6-quickcontrols2 kf6-qqc2-desktop-style libkf6sonnetui
+Requires: kf6-kirigami libqt6-quickcontrols2 hyprland-qt-support libkf6sonnetui
 
 %description
 A simple polkit authentication agent for Hyprland, written in QT/QML.
@@ -53,5 +53,8 @@ A simple polkit authentication agent for Hyprland, written in QT/QML.
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Sat Jan 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt1
+- new version 0.1.2 (with rpmrb script)
+
 * Sat Dec 28 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.1-alt1
 - Initial build
