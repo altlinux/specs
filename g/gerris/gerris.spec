@@ -1,7 +1,7 @@
 %define         optflags_lto %nil
 Name:           gerris
 Version:        20131206
-Release:        alt1
+Release:        alt2
 
 Summary:        Gerris Flow Solver
 
@@ -11,6 +11,7 @@ URL:            http://gfs.sourceforge.net
 
 Source:         %name-%version.tar
 Patch:          Port-to-Python-3.patch
+Patch1:         gcc-14.patch
 
 BuildRequires: rpm-build-python3
 BuildRequires: libgts-devel
@@ -25,6 +26,7 @@ describing fluid flow.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -82,5 +84,8 @@ rm -fv %buildroot%_bindir/gfs2doc
 %_libdir/libgfs?D-1.3.so.2*
 
 %changelog
+* Mon Jan 20 2025 Grigory Ustinov <grenka@altlinux.org> 20131206-alt2
+- Fixed FTBFS.
+
 * Sat Apr 06 2024 Grigory Ustinov <grenka@altlinux.org> 20131206-alt1
 - Initial build for Sisyphus (Closes: #49940).
