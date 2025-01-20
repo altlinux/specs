@@ -3,7 +3,7 @@
 %def_with check
 
 Name:     python3-module-%oname
-Version:  0.44.0
+Version:  0.45.0
 Release:  alt1
 
 Summary:  An opinionated HarfBuzz Python binding
@@ -52,6 +52,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 20 2025 Grigory Ustinov <grenka@altlinux.org> 0.45.0-alt1
+- Build new version.
+
 * Wed Jan 01 2025 Grigory Ustinov <grenka@altlinux.org> 0.44.0-alt1
 - Build new version.
 
