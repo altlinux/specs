@@ -67,8 +67,8 @@
 %define  Name MPD
 
 Name:    mpd
-Version: 0.23.15
-Release: alt2
+Version: 0.23.16
+Release: alt1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
@@ -83,9 +83,12 @@ Source3: %name.init.in
 Source4: %name.logrotate
 Source5: %name.tmpfile
 
-Patch: %name-0.23.8-alt-fluidsynth-fix-sound-font-location.patch
-# https://github.com/MusicPlayerDaemon/MPD/pull/2069
-Patch1: %name-0.23.15-alt-support-build-with-libfmt-11.patch
+Patch0: %name-0.23.8-alt-fluidsynth-fix-sound-font-location.patch
+# https://github.com/MusicPlayerDaemon/MPD/pull/2181
+# should fix build with libfmt-11.1.0
+Patch1: 2181.patch
+# and some leftovers
+Patch2: mpd-0.23.16-libfmt11-fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-meson
@@ -164,8 +167,7 @@ This package contains %Name documentation.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -279,6 +281,10 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Mon Jan 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.23.16-alt1
+- 0.23.16.
+- fix build with libfmt-11.1.0 (upstream PR#2181).
+
 * Sat Oct 19 2024 Nazarov Denis <nenderus@altlinux.org> 0.23.15-alt2
 - lib/fmt: support build with libfmt-11
 
