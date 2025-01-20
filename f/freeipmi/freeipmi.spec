@@ -1,15 +1,21 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+# TODO:  soname change - split libfreeipmi
+%define freeipmi_soname 17
+%define ipmiconsole_soname 2
+%define ipmidetect_soname 0
+%define ipmimonitoring_soname 6
+
 %define docdir %_defaultdocdir/%name-%version
 
 Name: freeipmi
-Version: 1.6.14
-Release: alt2
+Version: 1.6.15.1
+Release: alt1
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
 License: GPLv3
-Url: http://www.gnu.org/software/freeipmi/
+Url: https://www.gnu.org/software/freeipmi/
 VCS: https://git.savannah.gnu.org/git/freeipmi.git
 
 PreReq: lib%name = %EVR
@@ -141,6 +147,14 @@ touch %_localstatedir/%name/ipckey
 
 %files -n lib%name
 %_libdir/lib*.so.*
+%_libdir/libfreeipmi.so.%{freeipmi_soname}
+%_libdir/libfreeipmi.so.%{freeipmi_soname}.*
+%_libdir/libipmiconsole.so.%ipmiconsole_soname
+%_libdir/libipmiconsole.so.%ipmiconsole_soname.*
+%_libdir/libipmidetect.so.%ipmidetect_soname
+%_libdir/libipmidetect.so.%ipmidetect_soname.*
+%_libdir/libipmimonitoring.so.%ipmimonitoring_soname
+%_libdir/libipmimonitoring.so.%ipmimonitoring_soname.*
 %dir %_sysconfdir/%name
 %config %_sysconfdir/%name/libipmiconsole.conf
 %dir %_localstatedir/%name
@@ -177,6 +191,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Mon Jan 20 2025 Anton Farygin <rider@altlinux.ru> 1.6.15.1-alt1
+- 1.6.14 -> 1.6.15.1
+
 * Sun Dec 01 2024 Anton Farygin <rider@altlinux.ru> 1.6.14-alt2
 - added fix for building with gcc 14
 
