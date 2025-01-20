@@ -1,6 +1,6 @@
 Name: pdf2djvu
 Version: 0.9.19
-Release: alt2
+Release: alt3
 
 Summary: PDF to DjVu converter
 License: GPL-2.0
@@ -27,7 +27,7 @@ pdf2djvu creates DjVu files from PDF files. It's able to extract:
 %setup
 
 %build
-%add_optflags -std=c++17
+%add_optflags -std=c++20
 private/autogen
 %configure
 %make_build
@@ -46,6 +46,9 @@ popd
 %_mandir/*/man1/*
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 0.9.19-alt3
+- fix compile with new poppler
+
 * Thu Jul 20 2023 Sergey V Turchin <zerg@altlinux.org> 0.9.19-alt2
 - fix compile with gcc-10
 
