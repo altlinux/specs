@@ -1,6 +1,6 @@
 Name: lilv
-Version: 0.24.24
-Release: alt2
+Version: 0.24.26
+Release: alt1
 
 Summary: An LV2 Resource Description Framework Library
 License: 0BSD
@@ -82,6 +82,9 @@ This package contains the python bindings for lilv.
 %python3_sitelibdir_noarch/*/lilv.*
 
 %changelog
+* Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.24.26-alt1
+- 0.24.26 released
+
 * Tue Feb 27 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24.24-alt2
 - fix devel subpackage naming (closes: 49521)
 

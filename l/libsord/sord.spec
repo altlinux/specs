@@ -1,5 +1,5 @@
 Name: libsord
-Version: 0.16.16
+Version: 0.16.18
 Release: alt1
 
 Summary: Lightweight C library for storing RDF statements in memory
@@ -45,5 +45,8 @@ Group: Development/C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.18-alt1
+- 0.16.18 released
+
 * Mon Feb 26 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.16.16-alt1
 - 0.16.16 released
