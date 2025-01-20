@@ -16,7 +16,7 @@
 
 Name: netgen
 Version: 6.2.2303
-Release: alt1
+Release: alt2
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -46,6 +46,7 @@ Patch8: 0008-Add-missing-ldl.patch
 Patch9: netgen-alt-nglib-link-public-libraries.patch
 Patch12: netgen-alt-fix-build-i586.patch
 Patch13: netgen-alt-build-shared-togl.patch
+Patch14: netgen-6.2.2303-alt-migrate-distutils.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
@@ -77,6 +78,7 @@ BuildRequires: libGLU-devel
 BuildRequires: git-core
 BuildRequires: libfreetype-devel
 BuildRequires: fontconfig-devel
+BuildRequires: python3(setuptools)
 
 Requires: lib%name = %EVR tcl-tix
 
@@ -203,6 +205,7 @@ tar xf %SOURCE4
 #%%patch8 -p1
 %patch9 -p1
 %patch12 -p1
+%patch14 -p1
 %ifarch %e2k
 sed -i "/data{_mm/{s|{|(|;s|}|)|}" libsrc/core/simd_{sse,avx}.hpp
 sed -i "s|defined(__FMA__) && !defined(__AVX512F__)|& \&\& !defined(__e2k__)|" libsrc/core/simd_avx.hpp
@@ -404,6 +407,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Jan 20 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2303-alt2
+- NMU: fixed FTBFS.
+
 * Sat Jul 01 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.2303-alt1
 - New version.
 
