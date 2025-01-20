@@ -1,20 +1,19 @@
 %define unpackaged_files_terminate_build 1
 
 Name: qtl866
-Version: 1.0.0
-Release: alt1
+Version: 0
+Release: alt1.git1173c3e0
+Epoch: 1
 
 Summary: GUI driver for minipro EPROM/Device programmer software
-License: %gpl3plus
-
-Requires: minipro
+License: GPL-3.0-or-later
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
 
 Group: Other
 Url: https://github.com/wd5gnr/qtl866
-Source0: %name-%version.tar
+Source0: %name-%version-%release.tar
 
 BuildRequires: cmake
 BuildRequires: cmake-modules
@@ -23,14 +22,17 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
 
+Requires: minipro
+
 %description
 GUI driver for minipro EPROM/Device programmer software
 
 %prep
-%setup -q
+%setup -q -n %name-%version-%release
 
 %build
 %cmake
+
 %install
 %cmakeinstall_std
 install -v -p -m 655 -D ./binhexedit %buildroot%_bindir/binhexedit
@@ -40,6 +42,10 @@ install -v -p -m 655 -D ./binhexedit %buildroot%_bindir/binhexedit
 %_bindir/binhexedit
 
 %changelog
+* Thu Dec 19 2024 Aleksey Saprunov <sav@altlinux.org> 1:0-alt1.git1173c3e0
+- Fixed version according to package versioning rules
+- Fixed commit history
+
 * Tue Feb 10 2023 Aleksey Saprunov <sav@altlinux.org> 1.0.0-alt1
 - Initial release
 
