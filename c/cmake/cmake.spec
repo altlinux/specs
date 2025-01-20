@@ -12,7 +12,7 @@
 
 Name: cmake
 Version: 3.31.3
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -324,6 +324,9 @@ popd
 
 
 %changelog
+* Mon Jan 20 2025 Vitaly Lipatov <lav@altlinux.ru> 3.31.3-alt2
+- update sources to 3.31.3
+
 * Mon Dec 23 2024 Anton Farygin <rider@altlinux.ru> 3.31.3-alt1
 - 3.31.2 -> 3.31.3
 - fixed URL and VCS tags
