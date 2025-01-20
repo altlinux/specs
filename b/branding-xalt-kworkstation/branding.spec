@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.12
+Release: alt0.13
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -44,7 +44,7 @@ BuildRequires: cpio gfxboot /usr/bin/fribidi
 %endif
 
 BuildRequires: libalternatives-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru Рабочая станция К
@@ -498,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Jan 17 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.13
+- add Qt6 support
+
 * Wed Dec 18 2024 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.12
 - set default light and dark Plasma themes for new users
 
