@@ -11,8 +11,8 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 3.31.3
-Release: alt2
+Version: 3.31.4
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -324,6 +324,9 @@ popd
 
 
 %changelog
+* Mon Jan 20 2025 Vitaly Lipatov <lav@altlinux.ru> 3.31.4-alt1
+- new version 3.31.4 (with rpmrb script)
+
 * Mon Jan 20 2025 Vitaly Lipatov <lav@altlinux.ru> 3.31.3-alt2
 - update sources to 3.31.3
 
