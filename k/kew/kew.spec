@@ -1,5 +1,5 @@
 Name: kew
-Version: 3.0.2
+Version: 3.0.3
 Release: alt1
 
 Summary: A terminal music player
@@ -49,6 +49,9 @@ OPTFLAGS='%optflags' \
 %_man1dir/kew.1*
 
 %changelog
+* Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.3-alt1
+- 3.0.3 released
+
 * Fri Dec 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.2-alt1
 - 3.0.2 released
 
