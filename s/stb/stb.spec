@@ -1,5 +1,5 @@
-%define git 013ac3b
-%define snapdate 20240531
+%define git 40adb99
+%define snapdate 20241008
 
 # ORIGINAL DESCRIPTION FROM FEDORA PACKAGE
 # We choose not to package the "stb_include" library (stb_include.h) because,
@@ -20,7 +20,7 @@
 
 Name: stb
 Version: 2.38
-Release: alt6.g%git.%snapdate
+Release: alt7.g%git.%snapdate
 
 Summary: single-file libraries for C/C++
 License: MIT or ALT-Public-Domain
@@ -177,6 +177,21 @@ Patch16: %url/pull/1553.patch
 
 Patch17: alt-stb-loongarch64-and-riscv64-support.patch
 
+# Fix root-cause of CVE-2021-45340 : dereference of NULL ptr.
+# https://github.com/nothings/stb/pull/1736
+#
+# Fixes:
+# Nothings stb 2.28 was discovered to contain a Null Pointer Dereference
+# via the function stbi__convert_format. This vulnerability allows
+# attackers to cause a Denial of Service (DoS) via a crafted pic file.
+# https://github.com/nothings/stb/issues/1452 (CVE-2023-43898)
+#
+# In Libsixel prior to and including v1.10.3, a NULL pointer dereference
+# in the stb_image.h component of libsixel allows attackers to cause
+# a denial of service (DOS) via a crafted PICT file.
+# https://github.com/libsixel/libsixel/issues/51 (CVE-2021-45340)
+Patch18: %url/pull/1736.patch
+
 %global stb_c_lexer_version 0.12
 %global stb_connected_components_version 0.96
 %global stb_divide_version 0.94
@@ -187,7 +202,7 @@ Patch17: alt-stb-loongarch64-and-riscv64-support.patch
 %global stb_hexwave_version 0.5
 %global stb_image_version 2.30
 %global stb_image_resize_version 0.97
-%global stb_image_resize2_version 2.07
+%global stb_image_resize2_version 2.12
 %global stb_image_write_version 1.16
 %global stb_include_version 0.2
 %global stb_leakcheck_version 0.6
@@ -357,12 +372,17 @@ EOF
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jan 20 2025 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt7.g40adb99.20241008
+- Rebased to 40adb99:
+  + stb_image_resize2 updated to 2.12.
+- Apply fix for CVE-2021-45340 and CVE-2023-43898.
+
 * Tue Aug 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.38-alt6.g013ac3b.20240531
 - fix stbsp__uintptr for all GNU compilers
 
 * Tue Jun 25 2024 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt5.g013ac3b.20240531
 - Rebased to 013ac3beddff3dbffafd5177e7972067cd2b5083:
-  stb_resize2 updated to 2.07.
+  stb_image_resize2 updated to 2.07.
   stb_image updated to 2.30.
 
 * Fri Feb 23 2024 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt4.gae721c5.20240212
