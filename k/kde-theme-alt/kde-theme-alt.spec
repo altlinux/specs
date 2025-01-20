@@ -1,5 +1,5 @@
 Name: kde-theme-alt
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: ALT KDE theme
@@ -32,6 +32,9 @@ cp -ar desktoptheme/altos-* %buildroot/%_datadir/plasma/desktoptheme/
 %_datadir/plasma/desktoptheme/altos-*/
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg at altlinux dot org> 0.3.1-alt1
+- fix taskbar task group popup list (closes: 52742)
+
 * Mon Dec 23 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3-alt1
 - update icons
 
