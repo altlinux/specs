@@ -1,6 +1,6 @@
 Name: kubo
 Version: 0.32.1
-Release: alt1
+Release: alt1.1
 
 Summary: IPFS implementation in Go
 
@@ -8,10 +8,14 @@ License: MIT
 Group: File tools
 Url: https://github.com/ipfs/kubo
 
+Packager: Vitaly Lipatov <lav@altlinux.ru>
+
 # Source-url: https://github.com/ipfs/kubo/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
+
+Patch1: kubo-vendored-sources-loongarch64-support.patch
 
 BuildRequires(pre): rpm-macros-golang
 # systemd macro
@@ -38,6 +42,7 @@ world at /ipfs.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
 export GOTAGS=openssl
@@ -81,6 +86,9 @@ EOF
 %doc docs/*
 
 %changelog
+* Mon Jan 20 2025 Ivan A. Melnikov <iv@altlinux.org> 0.32.1-alt1.1
+- NMU: loongarch64 support
+
 * Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 0.32.1-alt1
 - new version 0.32.1 (with rpmrb script)
 
