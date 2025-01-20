@@ -1,9 +1,6 @@
-#define git_date .git20111111
-%define git_date %nil
-
 Name: thunar-shares-plugin
-Version: 0.3.2
-Release: alt1%git_date
+Version: 0.4.0
+Release: alt1
 Epoch: 1
 Summary: Thunar file manager extension to share files using Samba
 Summary(ru_RU.UTF8): Расширение файлового менеджера Thunar для предоставления доступа к папкам по сети.
@@ -16,9 +13,9 @@ Source:   %name-%version.tar
 Patch:    %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libthunar-devel
-BuildRequires: intltool
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libthunar-devel
+BuildRequires: libxfconf-devel >= 4.12.0
 
 # Can be used by shareman too.
 #Requires: Thunar
@@ -56,6 +53,9 @@ is based on nautilus-share.
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Jan 20 2025 Mikhail Efremov <sem@altlinux.org> 1:0.4.0-alt1
+- Updated to 0.4.0.
+
 * Fri Jan 06 2023 Mikhail Efremov <sem@altlinux.org> 1:0.3.2-alt1
 - Updated to 0.3.2.
 
