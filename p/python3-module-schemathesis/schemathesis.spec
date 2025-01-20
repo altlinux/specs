@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.39.5
+Version: 3.39.7
 Release: alt1
 
 Summary:   Property-based testing framework for Open API and GraphQL based apps
@@ -61,6 +61,10 @@ BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-rfc3339-validator
 %endif
 
+Requires: python3-module-backoff
+Requires: python3-module-pyrate-limiter
+Requires: python3-module-httpx
+
 %description
 Schemathesis is an API testing tool that automatically
 finds crashes and validates spec compliance.
@@ -86,5 +90,9 @@ finds crashes and validates spec compliance.
 %_bindir/st
 
 %changelog
+* Fri Jan 17 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.39.7-alt1
+  - New version 3.39.7
+  - Fix missing runtime dependencies
+
 * Thu Jan 09 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.39.5-alt1
   - Initial build for ALT.
