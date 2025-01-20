@@ -1,5 +1,6 @@
 %def_with mdns
 %def_with python
+%def_without bookmarks
 
 %define avahi_user _avahi
 %define autoipd_user _autoipd
@@ -9,7 +10,7 @@
 
 Name: avahi
 Version: 0.8
-Release: alt4
+Release: alt5
 
 Summary: Local network service discovery
 License: LGPLv2
@@ -371,9 +372,11 @@ fi
 %_libdir/avahi/service-types.db
 
 %if_with python
+%if_with bookmarks
 %files bookmarks
 %_bindir/avahi-bookmarks
 %_man1dir/avahi-bookmarks.*
+%endif # bookmarks
 %endif # python
 
 %files tools
@@ -466,6 +469,10 @@ fi
 %endif
 
 %changelog
+* Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8-alt5
+- updated to v0.9-rc2
+- fixes: CVE-2024-52616
+
 * Wed Apr 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8-alt4
 - complete avahi-browser python deps (closes: 49873)
 
