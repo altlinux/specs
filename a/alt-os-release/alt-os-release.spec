@@ -1,5 +1,5 @@
 Name: alt-os-release
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: RPM filetrigger to generate /etc/os-release file
@@ -25,6 +25,9 @@ install -pDm755 alt-os-release.filetrigger %buildroot%_rpmlibdir/alt-os-release.
 %_rpmlibdir/alt-os-release.filetrigger
 
 %changelog
+* Mon Jan 20 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.0-alt1
+- Added support for saving VARIANT and VARIANT_ID identifiers.
+
 * Fri Oct 01 2021 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
 - Fixed cleanup_handler() (thx andy@).
 
