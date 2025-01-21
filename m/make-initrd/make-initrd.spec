@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.50.0
+Version: 2.51.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -283,6 +283,14 @@ Make-initrd guestfs feature.
 	--with-lzma \
 	--with-zstd \
 	#
+
+%ifnarch %{ix86} x86_64
+sed -r -i \
+	-e 's/^(CONFIG_SHA1_HWACCEL)=y/# \1 is not set/' \
+	-e 's/^(CONFIG_SHA256_HWACCEL)=y/# \1 is not set/' \
+	external/busybox/config
+%endif
+
 make
 
 %install
@@ -391,6 +399,23 @@ fi
 %endif
 
 %changelog
+* Tue Jan 21 2025 Alexey Gladkov <legion@altlinux.ru> 2.51.0-alt1
+- Feature kickstart:
+  + Allow to disable kickstart from cmdline.
+  + Fix specifying label for f2fs.
+  + Add mkfs for f2fs filesystem if needed.
+  + Add crc32-generic for f2fs.
+  + Add more nls modules for vfat kernel module.
+- Feature pipeline:
+  + Add ability to check gpg signatures for mounted files in pipeline.
+- Feature ucode:
+  + Fix the dependency on compress.
+- Feature compress:
+  + Attempt to detect and use the number of physical CPU cores.
+- Misc:
+  + Update libshell to v0.4.13 .
+  + Update busybox to 1.37.0 .
+
 * Mon Dec 23 2024 Alexey Gladkov <legion@altlinux.ru> 2.50.0-alt1
 - New features:
   + New feature to add block device modules.
