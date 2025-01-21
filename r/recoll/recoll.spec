@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.41.1
+Version: 1.42.0
 Release: alt1
 
 Summary: A personal full text search package
@@ -140,7 +140,7 @@ This package contains Python bindings for Recoll.
 
 %prep
 %setup -n %name-%version%pre
-%patch0 -p2
+#patch0 -p2
 
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
@@ -223,6 +223,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Jan 22 2025 Ilya Mashkin <oddity@altlinux.ru> 1.42.0-alt1
+- 1.42.0
+
 * Mon Dec 16 2024 Ilya Mashkin <oddity@altlinux.ru> 1.41.1-alt1
 - 1.41.1
 
