@@ -7,8 +7,8 @@
 %def_enable check
 
 Name: xdg-desktop-portal-gnome
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: GNOME Desktop Portal
 Group: Graphical desktop/GNOME
@@ -67,6 +67,9 @@ to provide various portal features.
 
 
 %changelog
+* Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
+- 47.2
+
 * Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1.1
 - upgrade portal to >= 1.19.1
 
