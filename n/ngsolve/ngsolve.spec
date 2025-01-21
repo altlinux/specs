@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2304
+Version: 6.2.2406
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -33,6 +33,7 @@ BuildRequires: pybind11-devel
 BuildRequires: python3-devel
 BuildRequires: libnetgen-devel
 BuildRequires: netgen
+BuildRequires: python3-module-netgen
 %if_with shared_togl
 BuildRequires: tcl-togl-devel
 %endif
@@ -134,6 +135,9 @@ doxygen
 %install
 %cmakeinstall_std
 
+sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngscxx
+sed -i "s|/usr/bin/bash|/bin/bash|" %buildroot%_bindir/ngsld
+
 %files
 %_bindir/ngsolve.tcl
 %_datadir/%name
@@ -154,8 +158,12 @@ doxygen
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name
+%python3_sitelibdir/%name-py3.egg-info
 
 %changelog
+* Mon Jan 20 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt1
+- NMU: new version for netgen 6.2.2406
+
 * Wed Jul 12 2023 Andrey Cherepanov <cas@altlinux.org> 6.2.2304-alt1
 - NMU: new version for netgen 6.2.2303
 

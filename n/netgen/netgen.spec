@@ -15,8 +15,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2303
-Release: alt2
+Version: 6.2.2406
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -46,7 +46,7 @@ Patch8: 0008-Add-missing-ldl.patch
 Patch9: netgen-alt-nglib-link-public-libraries.patch
 Patch12: netgen-alt-fix-build-i586.patch
 Patch13: netgen-alt-build-shared-togl.patch
-Patch14: netgen-6.2.2303-alt-migrate-distutils.patch
+Patch14: netgen-6.2.2406-alt-using-namespace-std-in-enconding.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
@@ -228,11 +228,8 @@ sed -i 's|@UINT64_C@|ULL|' ng/ngpkg.cpp
 
 #repair default (R)PATHs
 sed -i 's|NG_INSTALL_DIR_LIB_DEFAULT lib|NG_INSTALL_DIR_LIB_DEFAULT lib${LIB_SUFFIX}|' CMakeLists.txt
-#TODO: uncomment and apply if no MPI version to be assembled in future
+#applied for changing hardcoded "lib" in path to cmake files on value of "%%_libdir"
 sed -i 's|NG_INSTALL_DIR_CMAKE_DEFAULT lib/cmake/${NG_INSTALL_SUFFIX}|NG_INSTALL_DIR_CMAKE_DEFAULT %_libdir/cmake/%name|' CMakeLists.txt
-#sed -i 's|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH}|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH};%%mpidir/lib:%%_tcllibdir|' CMakeLists.txt
-#sed -i 's|${NG_RPATH_TOKEN};${NG_RPATH_TOKEN}/${NETGEN_RPATH}|%%_tcllibdir|' CMakeLists.txt
-#sed -i 's|${NG_RPATH_TOKEN}/../${NETGEN_PYTHON_RPATH}||' ng/CMakeLists.txt
 
 %if_without shared_togl
 sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
@@ -260,6 +257,7 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
 %ifarch aarch64
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
+    -DPython3_INCLUDE_DIR=%__python3_includedir \
 %endif
     -DUSE_JPEG=1 \
     -DUSE_OCC=1 \
@@ -407,6 +405,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Jan 20 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt1
+- New version 6.2.2406.
+
 * Mon Jan 20 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2303-alt2
 - NMU: fixed FTBFS.
 
