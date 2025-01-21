@@ -1,11 +1,14 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname addressable
 
 Name:          gem-addressable
-Version:       2.8.1
+Version:       2.8.7
 Release:       alt1
 Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library
-Summary(ru_RU.UTF-8): "Адресуемь" есть заменою являещегося частью стандартной библиотеки рубина модуля URI
+Summary(ru_RU.UTF-8): "Адресуемь" как замена стандартного рубимодуля URI
 License:       Apache-2.0
 Group:         Development/Ruby
 Url:           https://github.com/sporkmonger/addressable
@@ -15,34 +18,33 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
 BuildRequires: gem(bundler) >= 1.0
+BuildRequires: gem(launchy) >= 2.4.3
+BuildRequires: gem(memory_profiler) >= 0
+BuildRequires: gem(public_suffix) >= 2.0.2
+BuildRequires: gem(rake) >= 12.3.3
+BuildRequires: gem(yard) >= 0
+BuildConflicts: gem(bundler) >= 3
+BuildConflicts: gem(launchy) >= 3
+BuildConflicts: gem(public_suffix) >= 7.0
+%if_enabled check
+BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(rspec) >= 3.8
 BuildRequires: gem(rspec-its) >= 1.3
-BuildRequires: gem(coveralls) > 0.7
 BuildRequires: gem(simplecov) >= 0
-BuildRequires: gem(launchy) >= 2.4.3
-BuildRequires: gem(redcarpet) >= 0
-BuildRequires: gem(yard) >= 0
-BuildRequires: gem(memory_profiler) >= 0
-BuildRequires: gem(rake) >= 12.3.3
-BuildRequires: gem(idn-ruby) >= 0
-BuildRequires: gem(public_suffix) >= 2.0.2
-BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rspec-its) >= 2
-BuildConflicts: gem(launchy) >= 3
-BuildConflicts: gem(public_suffix) >= 6.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 2.2
 Requires:      gem(public_suffix) >= 2.0.2
-Conflicts:     gem(public_suffix) >= 6.0
+Conflicts:     gem(public_suffix) >= 7.0
 Obsoletes:     ruby-addressable < %EVR
 Provides:      ruby-addressable = %EVR
-Provides:      gem(addressable) = 2.8.1
-
+Provides:      addressable = %EVR
+Provides:      gem(addressable) = 2.8.7
 
 %description
 Addressable is a replacement for the URI implementation that is part of Ruby's
@@ -55,15 +57,16 @@ standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
 RFC 6570 (уровня 4), поддержиивая IRI и URI шаблоны.
 
 
+%if_enabled    doc
 %package       -n gem-addressable-doc
-Version:       2.8.1
+Version:       2.8.7
 Release:       alt1
 Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета addressable
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(addressable) = 2.8.1
+Requires:      gem(addressable) = 2.8.7
 
 %description   -n gem-addressable-doc
 Addressable is a replacement for the URI implementation that is part of Ruby's
@@ -75,32 +78,32 @@ standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
 
 %description   -n gem-addressable-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета addressable.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-addressable-devel
-Version:       2.8.1
+Version:       2.8.7
 Release:       alt1
 Summary:       Addressable is a replacement for the URI implementation that is part of Ruby's standard library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета addressable
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(addressable) = 2.8.1
+Requires:      gem(addressable) = 2.8.7
+Requires:      gem(bigdecimal) >= 0
 Requires:      gem(bundler) >= 1.0
-Requires:      gem(rspec) >= 3.8
-Requires:      gem(rspec-its) >= 1.3
-Requires:      gem(coveralls) > 0.7
-Requires:      gem(simplecov) >= 0
 Requires:      gem(launchy) >= 2.4.3
-Requires:      gem(redcarpet) >= 0
-Requires:      gem(yard) >= 0
 Requires:      gem(memory_profiler) >= 0
 Requires:      gem(rake) >= 12.3.3
-Requires:      gem(idn-ruby) >= 0
+Requires:      gem(rspec) >= 3.8
+Requires:      gem(rspec-its) >= 1.3
+Requires:      gem(simplecov) >= 0
+Requires:      gem(yard) >= 0
 Conflicts:     gem(bundler) >= 3
+Conflicts:     gem(launchy) >= 3
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rspec-its) >= 2
-Conflicts:     gem(launchy) >= 3
 
 %description   -n gem-addressable-devel
 Addressable is a replacement for the URI implementation that is part of Ruby's
@@ -112,6 +115,7 @@ standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
 
 %description   -n gem-addressable-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета addressable.
+%endif
 
 
 %prep
@@ -127,19 +131,26 @@ standard library. It more closely conforms to RFC 3986, RFC 3987, and RFC 6570
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-addressable-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-addressable-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
+%endif
 
 
 %changelog
+* Mon Jan 20 2025 Pavel Skrylev <majioa@altlinux.org> 2.8.7-alt1
+- ^ 2.8.1 -> 2.8.7
+
 * Fri Mar 10 2023 Pavel Skrylev <majioa@altlinux.org> 2.8.1-alt1
 - ^ 2.8.0 -> 2.8.1
 
