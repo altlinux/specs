@@ -1,6 +1,6 @@
 Name: parole
 Version: 4.18.2
-Release: alt1
+Release: alt2
 
 %def_enable clutter
 %if_xfce4_wayland_support
@@ -30,6 +30,7 @@ BuildRequires: gtk-doc
 
 Requires: gstreamer1.0
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
+Requires: xfconf-utils
 
 %define _unpackaged_files_terminate_build 1
 
@@ -89,6 +90,9 @@ mv -f merged_ru.po po/ru.po
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt2
+- Added xfconf-utils to requires (closes: #48707, #51616).
+
 * Fri Jan 10 2025 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Updated to 4.18.2 (closes: #51616, #48707, #46116).
 
