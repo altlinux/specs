@@ -2,7 +2,7 @@
 %define defaultsdir /lib/alterator/defaults
 
 Name: alterator-default-configs
-Version: 0.0.3
+Version: 0.1
 Release: alt1
 
 Source: %name-%version.tar
@@ -40,6 +40,9 @@ install -Dm 0755 default-restore %buildroot%_sbindir/default-restore
 %_sbindir/default-restore
 
 %changelog
+* Tue Jan 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.1-alt1
+- Remove krb5.keytab when restore defaults
+
 * Tue Nov 22 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.0.3-alt1
 - Update samba defaults from samba-4.16.6-alt1 release.
 - Update restore script with default configuration files actually placed in
