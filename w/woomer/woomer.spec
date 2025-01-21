@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Zoomer application for wayland
 License: MIT
@@ -22,6 +22,8 @@ Source: https://github.com/coffeeispower/woomer/archive/%version/%name-%version.
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
+
+Patch: woomer-0.1.0-crate-raylib-c_char.patch
 
 # due raylib
 ExcludeArch: aarch64 ppc64le
@@ -48,6 +50,10 @@ boomer (https://github.com/tsoding/boomer) written in rust.
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+%patch -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    ./vendor/raylib/.cargo-checksum.json
+
 %build
 %rust_build
 
@@ -59,6 +65,10 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Jan 20 2025 Ilya Sorochan <k0tran@altlinux.org> 0.1.0-alt2
+- add patch that fixes raylib crate build for different c_char
+  signedness
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
 - first build for Sisyphus (0.1.0-12-g62400d1)
 
