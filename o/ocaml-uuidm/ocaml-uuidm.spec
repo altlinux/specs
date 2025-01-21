@@ -1,7 +1,7 @@
 %define libname uuidm
 Name: ocaml-%libname
 Version: 0.9.9
-Release: alt1
+Release: alt2
 Summary: Universally unique identifiers (UUIDs) for OCaml
 License: ISC
 Group: Development/ML
@@ -9,7 +9,7 @@ Url: https://erratique.ch/software/uuidm
 VCS: https://github.com/dbuenzli/uuidm
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
 BuildRequires: ocaml-cmdliner-devel ocaml-result-devel
 BuildRequires: rpm-build-ocaml >= 1.6
 
@@ -46,6 +46,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 0.9.9-alt2
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 0.9.9-alt1
 - 0.9.8 -> 0.9.9
 
