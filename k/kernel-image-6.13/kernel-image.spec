@@ -1,11 +1,11 @@
 Name: kernel-image-6.13
-Release: alt0.rc7
-%define kernel_src_version	6.12
+Release: alt1
+%define kernel_src_version	6.13
 %define kernel_base_version	6.13
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest1
 Version: %kversion
 
 %define krelease	%release
@@ -75,6 +75,15 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 %endif
 
 %define kvm_modules_dir arch/%arch_dir/kvm
+
+# On some architectures (at least ppc64le) kernel image is ELF and
+# eu-findtextrel will fail if it is not a DSO or PIE.
+%add_verify_elf_skiplist /boot/vmlinuz-*
+
+%define _unpackaged_files_terminate_build 1
+%ifnarch ppc64le
+%define _stripped_files_terminate_build 1
+%endif
 
 ExclusiveOS: Linux
 
@@ -315,8 +324,9 @@ CONFIGS="$CONFIGS config-rt"
 %endif
 %if "%sub_flavour" == "pae"
 CONFIGS="$CONFIGS config-pae"
-%elif "%sub_flavour" == "debug"
-CONFIGS="$CONFIGS config-debug"
+%elif "%sub_flavour" == "kasan"
+CONFIGS="$CONFIGS config-kasan"
+%undefine _stripped_files_terminate_build
 %endif
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
@@ -495,19 +505,10 @@ install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %endif
 
-# On some architectures (at least ppc64le) kernel image is ELF and
-# eu-findtextrel will fail if it is not a DSO or PIE.
-%add_verify_elf_skiplist /boot/vmlinuz-*
-
-%define _unpackaged_files_terminate_build 1
-%ifnarch ppc64le
-%define _stripped_files_terminate_build 1
-%endif
-
 %check
 banner check
 # First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug --append=earlycon \
+timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 %if "%base_flavour" == "rt"
 	--tcg --mem=1G --cpu=1 --qemu="-rtc clock=vm -icount 0,sleep=on" \
 	'uname -a; rtcheck -v'
@@ -515,7 +516,7 @@ timeout 300 vm-run --loglevel=debug --append=earlycon \
 	'uname -a'
 %endif
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond --klog --append=altha=1 \
+if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
 	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
 	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
 	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
@@ -609,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jan 20 2025 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt1
+- Update to v6.13 (2025-01-19).
+
 * Tue Jan 14 2025 Vitaly Chikunov <vt@altlinux.org> 6.13.0-alt0.rc7
 - Update to v6.13-rc7 (2025-01-12).
 
