@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.6.5
+Version: 1.7.0
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -370,6 +370,62 @@ Requires: pip
 %description university
 %{summary}.
 
+%package xfce
+Summary(ru_RU.UTF-8): Среда XFCE для Альт Образование
+Summary: XFCE for Alt Education
+Group: Education
+# slinux/base
+Requires: xfce4-full
+Requires: thunar-shares-plugin
+Requires: xfce4-screensaver
+Requires: libcanberra-gtk2
+Requires: alacarte
+Requires: screenkey
+# Graphics
+Requires: atril-gtk
+Requires: atril-gtk-djvu
+Requires: atril-gtk-pixbuf
+Requires: atril-gtk-xps
+# Append all modules from xscreensaver                                                        
+Requires: desktop-screensaver-modules-xscreensaver
+Requires: desktop-screensaver-modules-xscreensaver-gl
+# Package managenment                                                                         
+Requires: synaptic
+Requires: synaptic-usermode
+# Menu
+Requires: altlinux-freedesktop-menu-shallow-menu
+Requires: altlinux-freedesktop-menu-mate-like-menu
+Requires: altlinux-freedesktop-menu-icon-theme-default
+%ifarch %e2k
+# better optimized for 8C
+Requires: mplayer
+%endif
+%ifarch x86_64
+Requires: libva-driver-intel
+Requires: libva-intel-media-driver
+Requires: vulkan-amdgpu
+%endif
+# Multimedia                                                                                  
+Requires: vlc-maxi
+Requires: simplescreenrecorder
+Requires: quick-usb-formatter
+#ifnarch armh
+Requires: %{lo_name}-gtk3
+#endif
+%ifnarch %e2k ppc64le
+Requires: nextcloud-client
+%endif
+Requires: branding-alt-education-xfce-settings
+Requires: xdg-user-dirs-gtk
+Requires: libgtk2-engine-adwaita
+Requires: parted
+Requires: xorg-drv-synaptics
+Requires: xorg-conf-synaptics
+Requires: xinput
+Requires: xorg-drv-libinput
+%description xfce
+%{summary}.
+
 %package kde
 Summary(ru_RU.UTF-8): Среда KDE для Альт Образование
 Summary: KDE for Alt Education
@@ -404,6 +460,28 @@ Requires: %{lo_name}-kde6
 Requires: nextcloud-client-kde
 %endif
 Requires: branding-alt-education-kde-settings
+# Append all modules from xscreensaver                                                        
+Requires: desktop-screensaver-modules-xscreensaver
+Requires: desktop-screensaver-modules-xscreensaver-gl
+# Package managenment                                                                         
+Requires: synaptic
+Requires: synaptic-usermode
+# Menu
+Requires: altlinux-freedesktop-menu-shallow-menu
+Requires: altlinux-freedesktop-menu-mate-like-menu
+Requires: altlinux-freedesktop-menu-icon-theme-default
+%ifarch %e2k
+# better optimized for 8C
+Requires: mplayer
+%endif
+%ifarch x86_64
+Requires: libva-driver-intel
+Requires: libva-intel-media-driver
+Requires: vulkan-amdgpu
+%endif
+# Multimedia                                                                                  
+Requires: simplescreenrecorder
+Requires: quick-usb-formatter
 %description kde
 %{summary}.
 
@@ -537,6 +615,8 @@ Requires: task-edu-teacher
 
 %files university
 
+%files xfce
+
 %ifnarch %e2k
 %files kde
 %endif
@@ -552,6 +632,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- Add task-edu-xfce metapackage.
+
 * Mon Dec 16 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.5-alt1
 - Remove chromium from requrements.
 
