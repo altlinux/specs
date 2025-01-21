@@ -7,7 +7,7 @@
 
 Name: libowt-tg
 Version: 4.3.0.12
-Release: alt1
+Release: alt2
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -119,6 +119,8 @@ develop programs which make use of %name.
 %patch3 -p2
 %ifarch %e2k
 %patch2000 -p2
+sed -i 's/~Result() = default;//' src/modules/congestion_controller/goog_cc/loss_based_bwe_v2.h
+sed -i 's/_thread()){this}/_thread())=rtc::WeakPtrFactory<DataChannelController>{this}/' src/pc/data_channel_controller.h
 %endif
 
 # TODO (used in cmake checks):
@@ -178,6 +180,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Mon Jan 20 2025 Michael Shigorin <mike@altlinux.org> 4.3.0.12-alt2
+- E2K: lcc 1.29.06 ftbfs workaround (ilyakurdyukov@)
+
 * Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.12-alt1
 - new version 4.3.0.12 (with rpmrb script)
 
