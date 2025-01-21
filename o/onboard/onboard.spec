@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.2
+Version: 1.4.2.1
 Release: alt1
 
 Summary: Simple on-screen Keyboard
@@ -98,13 +98,16 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/sounds/freedesktop/stereo/onboard-key-feedback.oga
 %_datadir/dbus-1/services/*
 %python3_sitelibdir/Onboard/
-%python3_sitelibdir/%name-%version.dist-info
+%python3_sitelibdir/%name-*.dist-info
 %_datadir/help/C/%name
 
 %files gnome
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.2.1-alt1
+- New version.
+
 * Wed Nov 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
 - New version from https://github.com/dr-ni/onboard (ALT #52032)
 - Build using pyproject macros.
