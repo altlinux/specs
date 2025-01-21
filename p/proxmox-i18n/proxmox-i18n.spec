@@ -2,7 +2,7 @@
 
 Name: proxmox-i18n
 Summary: Internationalization support for Proxmox
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 License: AGPL-3.0+
 Group: System/Internationalization
@@ -56,6 +56,10 @@ Group: System/Internationalization
 %_datadir/pve-i18n
 
 %changelog
+* Tue Jan 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.3.3-alt1
+- 3.3.3
+- update Russian translation (Closes: #52784)
+
 * Mon Dec 16 2024 Sergey Konev <darisishe@altlinux.org> 3.3.2-alt1
 - 3.3.2
 
