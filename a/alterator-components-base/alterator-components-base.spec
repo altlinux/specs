@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-components-base
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Base set of Alterator components.
@@ -59,6 +59,9 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Tue Jan 21 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.5-alt1
+- Added components of the gnome environment (thx Sergey Savelev)
+
 * Tue Dec 24 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
 - Add stdout_strings to components status method to get list of installed
   packages.
