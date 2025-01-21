@@ -41,8 +41,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.50.1
-Release: alt2
+Version: 1.50.2
+Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -640,6 +640,10 @@ fi
 %endif
 
 %changelog
+* Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 1.50.2-alt1
+- Added fake changelog entry.
+- Updated to 1.50.2.
+
 * Fri Jan 10 2025 Anton Golubev <golubevan@altlinux.org> 1.50.1-alt2
 - agent: avoid some unnecessary authorization (closes: #52406)
 
@@ -649,6 +653,9 @@ fi
 
 * Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 1.50.0-alt1
 - Updated to 1.50.0.
+
+* Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 1.48.12-alt1
+- Updated to 1.48.12.
 
 * Tue Sep 17 2024 Mikhail Efremov <sem@altlinux.org> 1.49.91-alt1
 - Updated to 1.49.91 (1.50-rc2).
