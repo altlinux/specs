@@ -1,7 +1,7 @@
 %define libname fpath
 Name:           ocaml-%libname
 Version:        0.7.3
-Release:        alt3
+Release:        alt4
 Summary:        File system paths for OCaml
 License:        ISC
 Group:          Development/ML
@@ -9,7 +9,7 @@ Url:            https://erratique.ch/software/fpath
 VCS:		https://github.com/dbuenzli/fpath
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
 BuildRequires: ocaml-result ocaml-astring-devel
 BuildRequires: rpm-build-ocaml >= 1.6
 
@@ -44,6 +44,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 0.7.3-alt4
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.7.3-alt3
 - added support for bytecode-only version of the ocaml package
 
