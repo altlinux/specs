@@ -1,7 +1,7 @@
 %define libname rresult
 Name:           ocaml-%libname
 Version:        0.7.0
-Release:        alt2
+Release:        alt3
 Summary:        Result value combinators for OCaml
 License:        ISC
 Group:          Development/ML
@@ -9,7 +9,7 @@ Url: https://erratique.ch/software/rresult
 VCS: https://github.com/dbuenzli/rresult
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -45,6 +45,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 0.7.0-alt3
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
 - added support for bytecode-only version of the ocaml package
 
