@@ -1,7 +1,7 @@
 %def_with gtk
 
 Name: doublecmd
-Version: 1.1.21
+Version: 1.1.22
 Release: alt1
 Epoch: 1
 
@@ -27,7 +27,7 @@ BuildRequires: fpc-src
 BuildRequires: libgtk+2-devel
 %endif
 BuildRequires: lazarus >= 1.0.10
-BuildRequires: qt5pas-devel
+BuildRequires: qt6pas-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: libdbus-devel
 BuildRequires: bzlib-devel
@@ -59,7 +59,7 @@ Group: File tools
 Requires: %name-common
 
 %description -n %name-qt
-Double Commander Qt5 is a cross platform open source file manager with
+Double Commander Qt is a cross platform open source file manager with
 two panels side by side.  It is inspired by Total Commander and features
 some new ideas.
 
@@ -76,7 +76,7 @@ Common files for Double Commander
 
 %build
 export MAKEOPTS="-XX"
-./build.sh debug qt5
+./build.sh debug qt6
 cp ./%name ./%name-qt
 %if_with gtk
 ./clean.sh
@@ -145,6 +145,10 @@ convert -resize 16x16 pixmaps/mainicon/alt/256px-dcfinal.png %buildroot%_miconsd
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.1.22-alt1
+- New version.
+- Built with Qt6.
+
 * Mon Dec 02 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.1.21-alt1
 - New version.
 
