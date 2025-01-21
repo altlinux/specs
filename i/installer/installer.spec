@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.2
+Version: 1.16.3
 Release: alt1
 
 Summary: Installer common parts
@@ -19,6 +19,8 @@ Summary: Installer common stage2
 Group: System/Configuration/Other
 Provides: %name-stage2 = %version-%release
 Obsoletes: %name-stage2 < %version-%release
+# filter out unnecessary dependency
+%filter_from_requires /^alterator-wizardface-usermode/d
 # because of replace /var/run/alteratord -> /run/alteratord
 Requires: alterator >= 5.4.3
 # installer-preinstall.desktop
@@ -64,8 +66,6 @@ Requires: xorg-xvfb
 Requires: libdevmapper-event
 
 Conflicts: alterator-pkg < 1.2-alt1, alterator-sysconfig < 0.6-alt1, alterator-datetime < 4.3.0-alt1
-# stage2 and stage3 are mutually exclusive
-Conflicts: %name-common-stage3
 
 %description common-stage2
 This package contains common installer stage2 files and dependencies.
@@ -108,10 +108,10 @@ This package contains installer files for run on Desktop.
 %makeinstall
 
 %files common-stage2
-%_bindir/*
-%exclude %_bindir/install2
 %_sbindir/*
+%exclude %_sbindir/install2
 %_datadir/install2
+%_prefix/libexec/install2
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 %exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
@@ -121,12 +121,20 @@ This package contains installer files for run on Desktop.
 
 %files common-desktop
 %_bindir/install2
+%_sbindir/install2
 %_desktopdir/install2.desktop
 %_sysconfdir/pam.d/install2
 %_sysconfdir/security/console.apps/install2
-%_sysconfdir/profile.d/zdg-user-dirs-install.sh
 
 %changelog
+* Thu Jan 16 2025 Anton Midyukov <antohami@altlinux.org> 1.16.3-alt1
+- Replace all binaries and scripts to %%_prefix/libexec/install2, except
+  functions
+- postinstall.d/00-remove-installer-pkgs.sh: add hack for alterator-kopidel
+- install2: fix unmount destination
+- Remove zdg-user-dirs-install.sh
+- Remove conflict stage2 with stage3 (required for alterator-kopidel)
+
 * Wed Jan 15 2025 Anton Midyukov <antohami@altlinux.org> 1.16.2-alt1
 - install2: Do not unmount /mnt/destination before saving log
 - install2: create empty logs with strict rights

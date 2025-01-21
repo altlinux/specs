@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-kopidel
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 
 Summary: Creating a bootable iso that copies the file system
-License: GPL
+License: GPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://www.altlinux.org/Alterator
 # grub-pc architectures:
@@ -34,7 +34,6 @@ Requires: libevms
 Requires: installer-alterator-fs
 Requires: installer-common-stage2
 Requires: installer-scripts-remount-stage2
-Requires: installer-feature-alterator-setup-stage2
 Requires: console-scripts
 Requires: kbd
 
@@ -69,6 +68,11 @@ it on other machines, then you have found what you were looking for!
 %_libexecdir/alterator-kopidel/
 
 %changelog
+* Mon Jan 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.0.3-alt1
+- Add support for the new install2-init path.
+- Remove dependency on installer-feature-alterator-setup-stage2.
+- Clarify the license in the spec file.
+
 * Sun Dec 22 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.0.2-alt1
 - Fix the creation of a workdir for the first use.
 
