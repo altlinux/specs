@@ -1,12 +1,12 @@
 Name: ocaml-uutf
 Version: 1.0.3
-Release: alt2
+Release: alt3
 Summary: Non-blocking streaming codec for UTF-8, UTF-16, UTF-16LE and UTF-16BE
 License: BSD3
 Group: Development/ML
 Url: https://erratique.ch/software/uutf
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-cmdliner-devel
 BuildRequires: ocaml-result-devel
@@ -52,6 +52,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %doc test/
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 1.0.3-alt2
 - added support for bytecode-only version of the ocaml package- 
 
