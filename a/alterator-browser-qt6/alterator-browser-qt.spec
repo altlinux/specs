@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Tue Jan 21 2025 Sergey V Turchin <zerg at altlinux dot org> 3.5.1-alt1
+- preserve newlines on xml input (thanks proskur@alt) (closes: 52769)
+
 * Thu Jan 16 2025 Sergey V Turchin <zerg at altlinux dot org> 3.5.0-alt1
 - port to Qt6
 
