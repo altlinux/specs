@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -56,14 +56,10 @@ export PYTHONVER="%__python3_version"
 export PYTHONPATH="$(pwd)/build/lib.linux-$(uname -m)-cpython-${PYTHONVER//./}"
 
 # copy missing files
+cp -a src/borg/testsuite/attic.tar.gz $PYTHONPATH/borg/testsuite/
 cp -a src/borg/paperkey.html $PYTHONPATH/borg
 
 TEST_SELECTOR="not test_fuse and not test_readonly_mount and not benchmark"
-
-# Borg server is too old for info. Required version 2.0.0a3
-TEST_SELECTOR="${TEST_SELECTOR} and not remote_repository and not test_remote_invalid_rpc \
-	and not test_remote_rpc_exception_transport and not test_remote_ssh_cmd and not test_remote_borg_cmd"
-
 py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 %files
@@ -75,6 +71,9 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Tue Jan 21 2025 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.0-alt2
+- 1.4.0 release (actual 1.4.0, fix  previous erroneous build of f5c9e250)
+
 * Fri Jan 17 2025 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.0-alt1
 - 1.4.0 release
 
