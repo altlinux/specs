@@ -5,7 +5,7 @@
 %define        gemname libv8-node
 
 Name:          gem-libv8-node
-Version:       22.5.1.0
+Version:       22.7.0.2
 Release:       alt1
 Summary:       Node.JS's V8 JavaScript engine
 License:       MIT
@@ -15,8 +15,10 @@ Vcs:           https://github.com/rubyjs/libv8-node.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         fix-ext.patch
 BuildRequires(pre): rpm-build-ruby
+%ifarch i586 x86_64
+BuildRequires: libv8-3.14-devel
+%endif
 %if_enabled check
 BuildRequires: gem(rake) >= 12
 BuildRequires: gem(rubocop) >= 1.15.0
@@ -27,7 +29,7 @@ BuildConflicts: gem(rubocop) >= 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
-Provides:      gem(libv8-node) = 22.5.1.0
+Provides:      gem(libv8-node) = 22.7.0.2
 
 
 %description
@@ -36,14 +38,14 @@ Node.JS's V8 JavaScript engine for multiplatform goodness
 
 %if_enabled    doc
 %package       -n gem-libv8-node-doc
-Version:       22.5.1.0
+Version:       22.7.0.2
 Release:       alt1
 Summary:       Node.JS's V8 JavaScript engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libv8-node
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(libv8-node) = 22.5.1.0
+Requires:      gem(libv8-node) = 22.7.0.2
 
 %description   -n gem-libv8-node-doc
 Node.JS's V8 JavaScript engine documentation files.
@@ -57,14 +59,14 @@ Node.JS's V8 JavaScript engine for multiplatform goodness
 
 %if_enabled    devel
 %package       -n gem-libv8-node-devel
-Version:       22.5.1.0
+Version:       22.7.0.2
 Release:       alt1
 Summary:       Node.JS's V8 JavaScript engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libv8-node
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(libv8-node) = 22.5.1.0
+Requires:      gem(libv8-node) = 22.7.0.2
 Requires:      gem(rake) >= 12
 Requires:      gem(rubocop) >= 1.15.0
 Conflicts:     gem(rake) >= 14
@@ -88,6 +90,9 @@ Node.JS's V8 JavaScript engine for multiplatform goodness
 
 %install
 %ruby_install
+%ifarch i586 x86_64
+install ext/libv8-node/.location.yml %buildroot%ruby_gemlibdir/ext/libv8-node/.location.yml
+%endif
 
 %check
 %ruby_test
@@ -111,6 +116,11 @@ Node.JS's V8 JavaScript engine for multiplatform goodness
 
 
 %changelog
+* Sat Jan 18 2025 Pavel Skrylev <majioa@altlinux.org> 22.7.0.2-alt1
+- ^ 22.5.1.0 -> 22.7.0.2
+- * rebased to upstream master
+- ! fixed FTBFS
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 22.5.1.0-alt1
 - ^ 16.10.0.0p1 -> 22.5.1.0
 
