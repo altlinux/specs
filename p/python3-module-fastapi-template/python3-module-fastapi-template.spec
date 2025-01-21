@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 5.1.0
-Release: alt1.git8c5f2813
+Version: 5.1.3
+Release: alt1
 
 Summary: Flexible general-purpose template for FastAPI
 License: MIT
@@ -19,7 +19,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: instead_of_pytests.sh
-Patch: fastapi-template-5.1.0-alt-fix_dependencies.patch
+Patch: fastapi-template-5.1.3-alt-fix_version.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -105,5 +105,8 @@ _FASTAPI_TEMPLATE_COMPLETE=fish_source \
 %_datadir/fish/vendor_completions.d/%pypi_name.fish
 
 %changelog
+* Tue Jan 21 2025 Denis Rastyogin <gerben@altlinux.org> 5.1.3-alt1
+- Updated to 5.1.3.
+
 * Tue Jul 23 2024 Denis Rastyogin <gerben@altlinux.org> 5.1.0-alt1.git8c5f2813
 - Initial build for ALT Sisyphus.
