@@ -1,9 +1,9 @@
 %define soversion 1
 %define llvmversion 14
-%define oclocversion 24.48.1
+%define oclocversion 24.52.1
 
 Name: intel-compute-runtime
-Version: 24.48.31907.6
+Version: 24.52.32224.7
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -13,7 +13,6 @@ URL: https://github.com/intel/compute-runtime
 Source: %name-%version.tar
 
 Patch1: intel-compute-runtime-24.35.30872.18-alt-build.patch
-Patch2: intel-compute-runtime-24.39.31294.12-arch-disable-werror.patch
 
 BuildRequires: cmake
 BuildRequires: gcc
@@ -97,7 +96,6 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 mkdir -p build
@@ -137,6 +135,9 @@ mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Jan 20 2025 Andrey Kovalev <ded@altlinux.org> 24.52.32224.7-alt1
+- Updated to upstream version 24.52.32224.7.
+
 * Thu Dec 12 2024 Andrey Kovalev <ded@altlinux.org> 24.48.31907.6-alt1
 - Updated to upstream version 24.48.31907.6.
 
