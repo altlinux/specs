@@ -1,19 +1,18 @@
 Name: pam-redhat
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Red Hat additional Pluggable Authentication Modules
 License: GPL-2.0-or-later
 Group: System/Base
 Url: https://releases.pagure.org/pam-redhat/
 
-%define helperdir /sbin
 %define _secdir %_sysconfdir/security
 
 Source: %name-%version-%release.tar
 
 BuildRequires(pre): rpm-macros-pam
-BuildRequires: flex libpam-devel
+BuildRequires: flex libpam-devel >= 1.7.0-alt1
 
 %package -n %{make_pam_name console}
 Summary: PAM console session module
@@ -23,6 +22,7 @@ Epoch: 1
 Provides: pam_console = %epoch:%version-%release
 Obsoletes: pam_console, pam_console0
 Provides: %_secdir/console.apps
+Provides: /sbin/pam_console_apply
 
 %package -n %{make_pam_name chroot}
 Summary: PAM chroot session module
@@ -55,13 +55,13 @@ directory.
 
 %build
 %autoreconf
-%configure --libdir=/%_lib --sbindir=/sbin
+%configure
 make
 
 %install
 %makeinstall_std
 rm -f %buildroot%_pam_modules_dir/*.la
-mkdir -p %buildroot{%_secdir/console.apps,/var/run/console}
+mkdir -p %buildroot%_secdir/console.apps
 
 # Documentation
 for f in pam_*/README; do
@@ -71,8 +71,8 @@ for f in pam_*/README; do
 done
 
 # ALT#25584
-mkdir -p %buildroot/etc/tmpfiles.d
-echo 'd /var/run/console 0711 root root -' > %buildroot/etc/tmpfiles.d/pamconsole.conf
+mkdir -p %buildroot%_tmpfilesdir
+echo 'd /run/console 0711 root root -' > %buildroot%_tmpfilesdir/pamconsole.conf
 
 # Make sure that all modules are built.
 >check.log
@@ -109,7 +109,7 @@ done
 >check.log
 for f in %buildroot%_pam_modules_dir/pam*.so; do
 	LD_LIBRARY_PATH="%buildroot/%_lib" ldd -r "$f" 2>&1 |
-		fgrep -q libpthread ||
+		grep -F -q libpthread ||
 			continue
 	echo "ERROR: ${f##*/} pulls in libpthread." >&2
 	echo "${f##*/}" >>check.log
@@ -117,9 +117,9 @@ done
 ! [ -s check.log ] || exit 1
 
 %post -n %{make_pam_name console}
-/usr/sbin/groupadd -r -f scanner
-/usr/sbin/groupadd -r -f xgrp
-%helperdir/pam_console_apply
+groupadd -r -f scanner
+groupadd -r -f xgrp
+pam_console_apply
 
 %triggerpostun -n %{make_pam_name console} -- pam, pam_console
 f=%_secdir/console.perms
@@ -130,12 +130,12 @@ if [ ! -f "$f" ]; then
 		cp -pf "$f.rpmnew" "$f"
 	fi
 fi
-%helperdir/pam_console_apply
+pam_console_apply
 
 %triggerpostun -n %{make_pam_name console} -- %{make_pam_name console} < 0:0.79
-if [ -f /var/run/console.lock -a ! -f /var/run/console/console.lock ]; then
-	mv /var/run/console.lock /var/run/console/ &&
-		%helperdir/pam_console_apply ||:
+if [ -f /run/console.lock -a ! -f /run/console/console.lock ]; then
+	mv /run/console.lock /run/console/ &&
+		pam_console_apply ||:
 fi
 
 %triggerpostun -n %{make_pam_name chroot} -- pam < 0:1.1.0-alt4
@@ -154,11 +154,10 @@ fi
 %attr(600,root,root) %config(noreplace) %_secdir/console.perms.d/*
 %attr(600,root,root) %config(noreplace) %_secdir/console.handlers
 %attr(711,root,root) %dir %_secdir/console.apps
-%attr(700,root,root) %helperdir/pam_console_apply
+%attr(700,root,root) %_sbindir/pam_console_apply
 %_pam_modules_dir/pam_console.so
 %_mandir/man[58]/*console*
-%dir %attr(711,root,root) /var/run/console
-/etc/tmpfiles.d/pamconsole.conf
+%_tmpfilesdir/pamconsole.conf
 %_docdir/pam_console
 
 %files -n %{make_pam_name chroot}
@@ -167,6 +166,12 @@ fi
 %_docdir/pam_chroot
 
 %changelog
+* Sat Dec 14 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.0-alt2
+- Move modules in /lib and utils in /sbin to /usr.
+- Move tmpfiles config to %%_tmpfilesdir.
+- Not use full path for utils in %%post.
+- Define /run/console in tmpfiles as runtime dir.
+
 * Thu Jan 03 2019 Dmitry V. Levin <ldv@altlinux.org> 1.0.0-alt1
 - 0.99.10.1 -> 1.0.0.
 
@@ -487,7 +492,7 @@ fi
 - Relocated helpers back to /sbin/.
 - Updated console.perms to new scheme.
 - Moved pam_console stuff to separate subpackage.
-- Run %helperdir/pam_console_apply in pam_console %%post.
+- Run %%helperdir/pam_console_apply in pam_console %%post.
 
 * Thu Dec 13 2001 Dmitry V. Levin <ldv@alt-linux.org> 0.75-alt12
 - Merged RH patches (rh release 20).
@@ -507,7 +512,7 @@ fi
 - Moved changable system-auth config to pam-config package.
 
 * Fri Sep 07 2001 Dmitry V. Levin <ldv@altlinux.ru> 0.75-alt8
-- Relocated helper programs to %helperdir.
+- Relocated helper programs to %%helperdir.
 - Rebuilt to get more dependencies.
 
 * Wed Aug 22 2001 Dmitry V. Levin <ldv@altlinux.ru> 0.75-alt7
