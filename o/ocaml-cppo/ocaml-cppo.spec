@@ -1,14 +1,14 @@
 %define libname cppo_ocamlbuild
 Name: ocaml-cppo
 Version: 1.8.0
-Release: alt1
+Release: alt2
 Summary: Equivalent of the C preprocessor for OCaml programs
 License: BSD
 Group: Development/ML
-Url: http://mjambon.com/cppo.html
-# https://github.com/mjambon/cppo
+Url: https://github.com/mjambon/cppo 
+VCS: https://github.com/mjambon/cppo 
 Source0: %name-%version.tar
-BuildRequires: dune ocaml ocaml-ocamlbuild-devel ocaml-findlib
+BuildRequires: dune ocaml ocaml-ocamlbuild-devel ocaml-findlib-devel
 
 %description
 Cppo is an equivalent of the C preprocessor targeted at the OCaml
@@ -63,6 +63,9 @@ developing applications that use %name-ocamlbuild.
 %exclude %_libdir/ocaml/cppo/dune-package
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 1.8.0-alt2
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 
