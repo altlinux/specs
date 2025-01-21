@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.26
+Version: 3.4.27
 Release: alt1
 
 Source:%name-%version.tar
@@ -84,6 +84,10 @@ __EOF__
 
 
 %changelog
+* Tue Jan 21 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.27-alt1
+- preserve newlines on xml input (thanks proskur@alt) (closes: 52769)
+- fix crash
+
 * Fri Jan 17 2025 Sergey V Turchin <zerg at altlinux dot org> 3.4.26-alt1
 - allow to use Qt6 Palette in design.ini
 
