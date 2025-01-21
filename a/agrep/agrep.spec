@@ -1,17 +1,17 @@
 Name: agrep
-Version: 2.04
-Release: alt1.qa2
+Version: 3.41.5
+Release: alt1
 
 Summary: Approximate grep
-License: distributable not for profit, free use
+License: ISC
 Group: Text tools
-URL: http://webglimpse.net
+URL: https://github.com/Wikinaut/agrep/
+Vcs: https://github.com/Wikinaut/agrep.git
 
 # NB: we have permission to redistribute agrep package
 # with boxed distributions -- mike
 
-Source0: ftp://ftp.cs.arizona.edu/agrep/%name-%version.tar.Z
-Source1: %name-README.ALT
+Source: %name-%version.tar
 
 Summary(ru_RU.KOI8-R): "Ó≈ﬁ≈‘À… " grep
 Summary(uk_UA.KOI8-U): "Ó≈ﬁ¶‘À… " grep
@@ -34,24 +34,25 @@ agrep jest narzÍdziem podobnym do grep, ale umoøliwia przeszukiwanie
 przybliøone.
 
 %prep
-%setup -q
+%setup
 
 %build
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error=int-conversion -D__APPLE__ -DHAVE_DIRENT_H"
 
 %install
 install -pD -m755 agrep %buildroot%_bindir/agrep
 install -pD -m644 agrep.1 %buildroot%_man1dir/agrep.1
-install -pD -m644 %SOURCE1 $RPM_BUILD_DIR/%name-%version/README.ALT
 
 %files
-%doc COPYRIGHT README agrep.algorithms agrep.chronicle contribution.list
-%doc README.ALT
+%doc COPYRIGHT README.md agrep.algorithms agrep.chronicle contribution.list
 %_bindir/*
-%_mandir/man1/*
+%_man1dir/*
 
-%define date	%(echo `LC_ALL="C" date +"%a %b %d %Y"`)
 %changelog
+* Tue Jan 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.41.5-alt1
+- new version
+- change building scheme
+
 * Sun Feb 18 2018 Igor Vlasenko <viy@altlinux.ru> 2.04-alt1.qa2
 - added URL: http://webglimpse.net (for distromap)
 
@@ -60,7 +61,7 @@ install -pD -m644 %SOURCE1 $RPM_BUILD_DIR/%name-%version/README.ALT
 
 * Sun Jun 08 2003 Michael Shigorin <mike@altlinux.ru> 2.04-alt1
 - built for ALT Linux
-- based on PLD spec; 
+- based on PLD spec;
   All persons listed below can be reached at <cvs_login>@pld.org.pl
   qboosh
   - which was in turn taken from some -contrib
