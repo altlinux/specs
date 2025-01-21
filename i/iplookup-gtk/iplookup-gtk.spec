@@ -1,6 +1,8 @@
+%def_disable snapshot
+
 %define _name iplookup
 %define __name %{_name}-gtk
-%define ver_major 0.3.4
+%define ver_major 0.4.0
 %define rdn_name io.github.bytezz.IPLookup
 
 # online screenshots
@@ -18,7 +20,12 @@ Url: https://github.com/bytezz/iplookup-gtk
 BuildArch: noarch
 
 Vcs: https://github.com/Bytezz/IPLookup-gtk.git
-Source0: %__name-%version.tar
+
+%if_disabled snapshot
+Source: https://github.com/Bytezz/IPLookup-gtk/archive/v%version/%__name-%version.tar.gz
+%else
+Source: %__name-%version.tar
+%endif
 
 %add_python3_path %_datadir/%_name
 
@@ -32,7 +39,7 @@ BuildRequires: meson gtk4-update-icon-cache
 Look up details such as the internet provider and geographic location for an IP address.
 
 %prep
-%setup
+%setup -n %{?_enable_snapshot:%__name}%{?_disable_snapshot:IPLookup-gtk}-%version
 
 # with appstream-util "Validate appstream file" failed
 sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
@@ -58,6 +65,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README.*
 
 %changelog
+* Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
