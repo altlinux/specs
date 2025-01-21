@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.12
+Version: 0.45
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -10,7 +10,7 @@ Group: System/Configuration/Other
 
 Requires: alterator >= 4.7-alt4
 Requires: alterator-l10n >= 2.9.114-alt1
-Requires: pam-config >= 1.7.0-alt1
+Requires: pam-config >= 1.9.1-alt1
 Requires: pam_krb5
 Requires: libnss-myhostname
 Requires: libnss-role >= 0.5.6-alt1
@@ -42,7 +42,6 @@ Requires: krb5-kinit
 Requires: pam_mount
 Requires: libnss-role
 Requires: alterator-datetime
-Requires: pam_propperpwnam
 Requires: samba-winbind-dnsupdate
 Requires: system-report
 Requires: diag-domain-client
@@ -67,7 +66,6 @@ Requires: alterator-roles-common
 Requires: samba-winbind-clients
 Requires: sssd-tools
 Requires: adcli
-Requires: pam_propperpwnam
 Requires: system-report
 Requires: diag-domain-client
 Requires: samba
@@ -107,7 +105,6 @@ Requires: libnss-role
 Requires: libsss_sudo
 Requires: alterator-datetime
 Requires: alterator-roles-common
-Requires: pam_propperpwnam
 
 %description -n task-auth-freeipa
 Metapackage to authenticate in FreeIPA domain.
@@ -178,6 +175,13 @@ rm -f %buildroot%_libexecdir/alterator/hooks/auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Jan 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.45-alt1
+- spec: remove pam_propperpwnam from task-auth-ad-sss and
+  task-auth-ad-winbind requirements
+- system-auth: ad: add additional SPN's for long machine names
+- system-auth: ad: add long (more than 15 chars) machine names
+  support
+
 * Tue Dec 24 2024 Evgenii Sozonov <arzdez@altlinux.org> 0.44.12-alt1
 - system-auth: ad: add enable winbind-dnsupdate.timer in winbind mode
 - system-auth: ad: add timer enable and disable func
