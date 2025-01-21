@@ -3,7 +3,7 @@ Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.72
+%define kernel_sublevel	.73
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -596,6 +596,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jan 21 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.73-alt1
+- v6.6.73 (2025-01-21).
+
 * Fri Jan 17 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.72-alt1
 - v6.6.72 (2025-01-17).
 - Add support for Baikal-M SoC family.
