@@ -1,7 +1,7 @@
 %define libname ppx_sexp_conv
 Name: ocaml-%libname
 Version: 0.17.0
-Release: alt1
+Release: alt2
 Summary: Generation of S-expression conversion functions from type definitions
 License: Apache-2.0
 Group: Development/ML
@@ -12,7 +12,7 @@ BuildRequires: dune
 BuildRequires: ocaml-sexplib0-devel
 BuildRequires: ocaml-ppxlib-devel >= %version
 BuildRequires: ocaml-base-devel >= %version
-BuildRequires: ocaml-ppxlib_jane >= %version
+BuildRequires: ocaml-ppxlib_jane-devel >= %version
 
 %description
 ppx_sexp_conv is a PPX syntax extension that generates code for converting OCaml
@@ -46,6 +46,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 0.17.0-alt2
+- changed BR - use ocaml-ppxlib_jane-devel instead of the ocaml-ppxlib_jane
+
 * Wed Sep 04 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
 - 0.17.0
 
