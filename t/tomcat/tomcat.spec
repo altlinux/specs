@@ -16,7 +16,7 @@ BuildRequires: jpackage-generic-compat
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.83
+%define version 9.0.98
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 83
+%global micro_version 98
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -128,6 +128,9 @@ Source44: import.info
 Patch33: tomcat-8.0.46-alt-tomcat-jasper.pom.patch
 Source45: tomcat.init
 Source46: tomcat-sysv.wrapper
+
+# Filter symlink to init-functions from lsb-init
+%filter_from_requires s;/usr/lib/lsb/init-functions;/lib/lsb/init-functions;
 
 %description
 Tomcat is the servlet container that is used in the official Reference
@@ -216,7 +219,7 @@ find . -type f \( -name "*.bat" -o -name "*.class" -o -name Thumbs.db -o -name "
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
-%patch4 -p0
+%patch4 -p1
 %patch6 -p0
 
 # Remove webservices naming resources as it's generally unused
@@ -567,6 +570,21 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Fri Jan 17 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.98-alt1_1jpp11
+- NMU: new version
+- suppress unmet lsb-init symlink
+- security fixes:
+  + CVE-2024-23672: Denial of Service
+  + CVE-2024-24549: Denial of Service
+  + CVE-2024-38286: Denial of Service
+  + CVE-2024-34750: Denial of Service
+  + CVE-2024-52316: Authentication Bypass
+  + CVE-2024-52317: Request and/or response mix-up
+  + CVE-2024-52318: XSS in generated JSPs
+  + CVE-2024-50379: Remote Code Execution via write enabled Default Servlet
+  + CVE-2024-54677: DoS in examples web application
+  + CVE-2024-56337: Remote Code Execution via write enabled Default Servlet
+
 * Tue Dec 12 2023 Igor Vlasenko <viy@altlinux.org> 1:9.0.83-alt1_1jpp11
 -new version
 
