@@ -2,11 +2,17 @@
 %def_enable providers
 %endif
 
+%if "%(rpmquery --qf '%%{VERSION}' libbpf-devel)" < "1"
+%def_disable xsk
+%else
+%def_enable xsk
+%endif
+
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
 Version: 1.9.8
-Release: alt1
+Release: alt2
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -19,7 +25,10 @@ Source: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
 # Automatically added by buildreq on Fri Nov 08 2024
 # optimized out: boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libabseil-cpp-devel libabseil-cpp2407.0.0 libgpg-error libstdc++-devel node perl pkg-config sh5 systemd
 BuildRequires: boost-devel boost-lockfree-devel gcc-c++ libcap-devel libcdb-devel libedit-devel libfstrm-devel liblmdb-devel libnghttp2-devel libre2-devel libsodium-devel libssl-devel libsystemd-devel node-uglify-js perl-parent
-BuildRequires: systemd libxdp-devel libbpf-devel
+BuildRequires: systemd libbpf-devel
+%if_enabled xsk
+BuildRequires: libxdp-devel
+%endif
 %ifarch %ix86 x86_64 %mips aarch64 loongarch64
 BuildRequires: libluajit-devel
 %else
@@ -54,7 +63,12 @@ sed -i '/^ExecStart/ s/dnsdist/dnsdist -u dnsdist -g dnsdist/' dnsdist.service.i
     --with-cdb \
     --with-lmdb \
     --with-nghttp2 \
-    --with-re2
+    --with-re2 \
+%if_disabled xsk
+    --with-ebpf=no \
+    --with-xsk=no \
+%endif
+#
 
 rm html/js/*
 make min_js
@@ -95,6 +109,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Tue Jan 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.8-alt2
+- Simplified backport to older branches (XSK support).
+
 * Wed Dec 18 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.8-alt1
 - New version (1.9.8) with rpmgs script.
 
