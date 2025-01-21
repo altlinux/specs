@@ -1,5 +1,5 @@
 Name:    ibus-m17n
-Version: 1.4.34
+Version: 1.4.35
 Release: alt1
 Group:   System/Libraries
 Summary: The M17N engine for IBus platform
@@ -44,11 +44,14 @@ make check
 %_libexecdir/ibus-setup-m17n
 %_datadir/ibus-m17n
 %_datadir/ibus/component/*
-%_datadir/metainfo/m17n.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 %_desktopdir/ibus-setup-m17n.desktop
 %_datadir/glib-2.0/schemas/org.freedesktop.ibus.engine.m17n.gschema.xml
 
 %changelog
+* Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.35-alt1
+- New version.
+
 * Thu Nov 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.4.34-alt1
 - New version.
 
