@@ -2,7 +2,7 @@
 
 Name: xfce4
 Version: 4.20
-Release: alt1
+Release: alt2
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
 Group: Graphical desktop/XFce
@@ -105,6 +105,7 @@ Requires: xfce4-systemload-plugin \
 Requires: xfce4-time-out-plugin \
 Requires: xfce4-timer-plugin \
 Requires: xfce4-verve-plugin \
+Requires: xfce4-wavelan-plugin \
 Requires: xfce4-weather-plugin \
 Requires: xfce4-whiskermenu-plugin \
 Requires: xfce4-xkb-plugin
@@ -165,6 +166,9 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 4.20-alt2
+- full,regular: Add xfce4-wavelan-plugin.
+
 * Sun Dec 15 2024 Mikhail Efremov <sem@altlinux.org> 4.20-alt1
 - default->full: Move xfce4-notification-plugin back to full.
 - default->full: Move xfce4-pulseaudio-plugin and pavucontrol back
