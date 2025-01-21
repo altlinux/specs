@@ -25,7 +25,7 @@
 
 Name: dune%subpackagename
 Version: 3.17.1
-Release: alt1
+Release: alt2
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -176,7 +176,7 @@ Group: Development/ML
 Summary: Parse ocaml compiler output into structured form
 Requires: dune = %EVR
 BuildRequires: dune = %version
-BuildRequires: ocaml-dyn = %version
+BuildRequires: ocaml-dyn-devel = %version
 %description -n ocaml-%pkgname
 %summary
 
@@ -190,7 +190,7 @@ Group: Development/ML
 Summary: Chrome trace event generation library
 Requires: dune = %EVR
 BuildRequires: dune = %version
-BuildRequires: ocaml-dyn = %version
+BuildRequires: ocaml-dyn-devel = %version
 %description -n ocaml-%pkgname
 %summary
 
@@ -204,7 +204,7 @@ Group: Development/ML
 Summary: Communicate with dune using rpc
 Requires: dune = %EVR
 BuildRequires: dune = %version
-BuildRequires: ocaml-dyn = %version
+BuildRequires: ocaml-dyn-devel = %version
 BuildRequires: ocaml-csexp-devel
 BuildRequires: ocaml-ordering-devel
 BuildRequires: ocaml-stdune-devel >= %version
@@ -316,6 +316,11 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 3.17.1-alt2
+- updated build dependencies in ocamlc-loc, chrome-trace
+  and dune-rpc packages (ocaml-dyn -> ocaml-dyn-devel)
+- applied fix from upstream for compatibility with ocaml 5.3
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 3.17.1-alt1
 - 3.16.0 -> 3.17.1
 
