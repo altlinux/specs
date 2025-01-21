@@ -1,13 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 0.6
+%define ver_major 0.8
 %define api_ver 0.0
 %define rdn_name com.github.rafostar.Clapper
 
+%def_enable enhancers_loader
 %def_enable check
 
 Name: clapper
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Clapper is a GNOME media player
@@ -15,17 +16,18 @@ License: GPL-3.0-or-later
 Group: Video
 Url: https://github.com/Rafostar/clapper
 
+Vcs: https://github.com/Rafostar/clapper.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/Rafostar/clapper.git
 Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.76
 %define gtk_ver 4.10
 %define adw_ver 1.4.0
-%define gst_ver 1.20
+%define gst_ver 1.24
 
 Requires: lib%name = %EVR
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -52,6 +54,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gtk) = 4.0
 BuildRequires: gir(Gst) gir(GstAudio) gir(GstBase)
 BuildRequires: gir(GstPbutils) gir(GstTag) gir(GstVideo)
+%{?_enable_enhancers_loader:BuildRequires: pkgconfig(libpeas-2)}
 %{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
 
 %description
@@ -77,7 +80,9 @@ This package provides development files for Clapper libraries.
 %setup -n %name-%version
 
 %build
-%meson
+%meson \
+    %{subst_enable_meson_feature enhancers_loader enhancers-loader}
+%nil
 %meson_build
 
 %install
@@ -131,6 +136,9 @@ ln -s gstreamer-1.0/libgst%name.so %buildroot%_libdir/libgst%name.so
 %_vapidir/%name-gtk-%api_ver.*
 
 %changelog
+* Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
