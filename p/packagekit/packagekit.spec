@@ -5,7 +5,7 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.2.5.0.0.32
+Version:   1.2.5.0.0.36
 Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
@@ -117,11 +117,6 @@ sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" backends/apt/apt-{utils,j
 %endif
 
 %build
-%ifnarch %e2k
-%add_optflags -std=c++17
-%else
-%add_optflags -std=c++14
-%endif
 %add_optflags -D_FILE_OFFSET_BITS=64
 %meson \
 	-Dpackaging_backend=apt \
@@ -303,6 +298,11 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Wed Jan 22 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.36-alt1
+- Rebased onto upstream b233f3634 (apt: Generate logging output properly).
+- Tiny adaptions and enhancements to the source code driven by compiler
+  warnings. (Thx Dmitrii Fomchenkov sirius@ for the fixes.)
+
 * Wed Jan 15 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.32-alt1
 - Rebased onto a large upstream commit: "Refactor backend and rename to apt".
   (Thx Dmitrii Fomchenkov sirius@ for clarifying the renames in the code.)
