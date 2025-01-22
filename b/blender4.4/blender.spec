@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
-%define git 22bda12af7e
+%define git 416085d893a
 %define kern_dir scripts/addons_core/cycles/lib
 %define project blender
 %define gcc_ver 13
@@ -58,7 +58,7 @@
 
 Name: %{project}4.4
 Version: 4.4.0
-Release: alt0.5.g%{git}
+Release: alt0.7.g%{git}
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -75,7 +75,7 @@ Patch21: blender-2.77-alt-enable-localization.patch
 Patch22: blender-2.92-alt-include-deduplication-check-skip.patch
 Patch23: blender-2.80-alt-use-system-glog.patch
 Patch24: blender-2.90-alt-non-x86_64-linking.patch
-Patch25: blender-3.4.1-gcc-13-fix.patch
+# Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
@@ -158,10 +158,6 @@ BuildRequires: hip-devel
 
 %if_with hiprt
 BuildRequires: hiprt-devel clang-rocm-devel
-# hiprtCreateGeometry relies on hardcoded headers
-# in /usr/include
-# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
-Requires: hiprt-devel
 %endif
 
 %if_with openpgl
@@ -275,6 +271,10 @@ Group: System/Libraries
 Requires: %name = %EVR, hip-runtime-amd
 %if_with hiprt
 Requires: libhiprt
+# hiprtCreateGeometry relies on hardcoded headers
+# in /usr/include
+# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
+Requires: hiprt-devel
 %endif
 Conflicts: %project-cycles-hip-kernels
 
@@ -306,7 +306,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
-%patch25 -p1
+#%%patch25 -p1
 %patch26 -p1
 #%%patch30 -p1
 %patch31 -p1
@@ -485,8 +485,16 @@ popd
 %endif
 
 %changelog
+* Wed Jan 22 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.7.g416085d893a
+- 4.4.0 GIT 416085d893a (fixing cycles build without embree).
+
+* Thu Jan 16 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.6.gf105366d73b
+- 4.4.0 GIT f105366d73b.
+- Fix hiprt requires (as mentioned in #52732).
+- Update/rediffed cycles patches.
+
 * Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.5.g22bda12af7e
-- 4.4.0 GIT g22bda12af7e.
+- 4.4.0 GIT 22bda12af7e.
 - Replace pulseaudio with pipewire.
 - scripts/addons_core/io_scene_gltf2/blender/imp/draco.py: use system libdraco.
 
