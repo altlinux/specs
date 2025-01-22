@@ -15,7 +15,7 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 6.0.2
+Version: 6.0.3
 Release: alt1
 Summary: Linux Containers
 License: LGPL-2.1-or-later
@@ -290,6 +290,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.3-alt1
+- 6.0.3.
+
 * Thu Nov 28 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.2-alt1
 - 6.0.2.
 
