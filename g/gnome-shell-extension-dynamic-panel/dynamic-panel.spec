@@ -2,8 +2,8 @@
 %define nameU dynamic-panel
 
 Name: gnome-shell-extension-dynamic-panel
-Version: 4.8
-Release: alt2
+Version: 4.8.1
+Release: alt1
 
 Summary: Dynamic top panel
 Summary(ru_RU.UTF-8): Динамическая верхняя панель
@@ -20,10 +20,14 @@ Source: %nameU-%version.tar
 Requires: gnome-shell >= 47.0
 
 %description
-The design of the floating panel inspired by KDE Plasma6 presents a translucent floating bar effect when there is no window nearby, and a solid panel style when the window is close. Supports gnome's dark mode and light mode switching.
+The design of the floating panel inspired by KDE Plasma6 presents a translucent floating bar effect 
+when there is no window nearby, and a solid panel style when the window is close. Supports gnome's 
+dark mode and light mode switching.
 
 %description -l ru_RU.UTF-8
-Дизайн плавающей панели, вдохновленный KDE Plasma6, представляет собой эффект полупрозрачной плавающей панели, когда рядом нет окна, и сплошной стиль панели, когда окно закрыто. Поддерживает переключение темного и светлого режимов gnome.
+Дизайн плавающей панели, вдохновленный KDE Plasma6, представляет собой эффект полупрозрачной плавающей 
+панели, когда рядом нет окна, и сплошной стиль панели, когда окно закрыто. Поддерживает переключение 
+темного и светлого режимов gnome.
 
 %prep
 %setup -n %nameU-%version
@@ -44,6 +48,9 @@ cp metadata.json %buildroot%_datadir/gnome-shell/extensions/%exID/metadata.json
 %doc *.md LICENSE 
 
 %changelog
+* Wed Jan 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.8.1-alt1
+- Update to version 4.8.1
+
 * Sun Jan 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.8-alt2
 - fix %%description -l ru_RU.UTF-8
 
