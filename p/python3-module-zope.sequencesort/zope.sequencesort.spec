@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Sequence Sorting
@@ -70,6 +70,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Jan 22 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Sat May 20 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version  5.0.
 
