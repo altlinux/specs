@@ -1,6 +1,6 @@
 Name: clisp
 Version: 2.49.92
-Release: alt2.2
+Release: alt2.3
 Epoch: 1
 
 Summary: Common Lisp (ANSI CL) implementation
@@ -75,6 +75,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Wed Jan 22 2025 Ivan A. Melnikov <iv@altlinux.org> 1:2.49.92-alt2.3
+- Fix building with more recent gdbm version (fixes build
+  on loongarch64).
+
 * Wed Jan 22 2025 Ivan A. Melnikov <iv@altlinux.org> 1:2.49.92-alt2.2
 - Backport upstream fixes for bdb module to fix FTBFS.
 
