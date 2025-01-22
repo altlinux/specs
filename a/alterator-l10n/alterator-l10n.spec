@@ -1,6 +1,6 @@
 Name: alterator-l10n
-Version: 2.9.149
-Release: alt2
+Version: 2.9.150
+Release: alt1
 
 Summary: translations for all alterator modules
 License: GPL
@@ -122,6 +122,10 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 2.9.150-alt1
+- Revert "alterator-users: clarify description and fix GECOS for localadmin"
+- Revert "alterator-users: add localadmin as the default login"
+
 * Mon Jan 13 2025 Dmitry Terekhin <jqt4@altlinux.org> 2.9.149-alt2
 - alterator-users: clarify description and fix GECOS for localadmin
 
