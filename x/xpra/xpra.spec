@@ -1,11 +1,11 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 4.4.4
-Release: alt4.1
+Version: 6.2.3
+Release: alt1
 
 Summary: X Persistent Remote Applications
-License: GPLv2
+License: GPL-2.0-or-later AND LicenseRef-Callaway-BSD AND LGPL-3.0-or-later AND LicenseRef-Callaway-MIT
 Group: Networking/Remote access
 
 Url: http://xpra.org/
@@ -16,12 +16,14 @@ Source: https://xpra.org/src/xpra-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libXres-devel libxkbfile-devel libpam0-devel libsystemd-devel
-
+BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libXres-devel libxkbfile-devel libpam0-devel libsystemd-devel libdrm-devel
+BuildRequires: libxxhash-devel libproc2-devel
 BuildRequires: libgtk+3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
 
 # Video
 BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel liblz4-devel
+
+%global gnome_shell_extension input-source-manager@xpra_org
 
 # p9+
 %def_without ffmpeg_static
@@ -29,7 +31,7 @@ BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-de
 %if_with ffmpeg_static
 BuildRequires: libffmpeg-devel-static
 %else
-BuildRequires: libavformat-devel libavcodec-devel libswscale-devel
+BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libavutil-devel
 %endif
 
 # Sound
@@ -72,7 +74,7 @@ AutoProv: yes, nopython3
 # disabled during build
 %add_python3_req_skip xpra.net.mdns
 
-%add_python3_req_skip win32security pyopencl xpra.platform.win32.common
+%add_python3_req_skip win32security pyopencl xpra.platform.win32.common xpra.platform.win32.auth
 
 # prefer dbus notification
 %add_python3_req_skip pynotify
@@ -85,7 +87,7 @@ BuildRequires(pre): rpm-build-gir rpm-build-intro rpm-macros-kde-common-devel
 # TODO:
 %add_typelib_req_skiplist typelib(GdkGLExt) typelib(GtkGLExt)
 
-BuildRequires: libqrencode4-devel
+BuildRequires: libqrencode4-devel libavif-devel
 
 # Note: we have no linking requires to libwebp.so.x
 Requires: libwebp
@@ -127,18 +129,40 @@ We can then attach to this session from the same machine, with:
 If connecting from a remote machine, you would use something like (or you can also use the GUI):
 > xpra attach ssh:serverhostname:100
 
+%package -n gnome-shell-extension-%name
+Summary: Gnome integration for the xpra client
+Group: Networking/Remote access
+#Requires: %name-client-gtk3 = %EVR
+Requires: gnome-shell-extension-appindicator
+Provides: %name-client-gnome = %EVR
+
+%description -n gnome-shell-extension-%name
+This package installs the GNOME Shell extensions
+that can help in restoring the system tray functionality.
+It also includes the %{gnome_shell_extension} extension which
+is required for querying and activating keyboard input sources.
 
 %prep
 %setup
 # instal service file in anyway
 sed -i "s|/bin/systemctl|/bin/true|g" setup.py
+# pkg-config --cflags pam,pam_misc does not report the proper include path expected by xpra
+sed -i 's|if pkg_config_ok("--exists", "pam", "pam_misc"):|if False:|' setup.py
 
 %build
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 
-%python3_build_debug --without-strict %py_flags %_smp_mflags
+%python3_build_debug \
+	--without-strict \
+	--without-nvidia \
+	--without-pandoc_lua \
+	--with-vpx \
+	--with-Xdummy \
+	--with-Xdummy_wrapper \
+	%py_flags \
+	%_smp_mflags
 
 %install
 %python3_install %py_flags
@@ -161,11 +185,8 @@ mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
 # TODO
 rm -v %buildroot/usr/lib/sysusers.d/xpra.conf
 
-# remove obsoleted (python2 only) examples
-rm -rv %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
-
 %pre
-%_sbindir/groupadd -r -f xpra &>/dev/null ||:
+groupadd -r -f xpra &>/dev/null ||:
 
 %post
 # Create SSL certificate for xpra
@@ -205,7 +226,13 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %dir %_sysconfdir/%name/ssl/certs
 %attr(0700, root, root) %dir %_sysconfdir/%name/ssl/private
 
+%files -n gnome-shell-extension-%name
+%_datadir/gnome-shell/extensions/%{gnome_shell_extension}
+
 %changelog
+* Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 6.2.3-alt1
+- NMU: 6.2.3
+
 * Mon Jul 29 2024 Ivan A. Melnikov <iv@altlinux.org> 4.4.4-alt4.1
 - NMU: adapt %%install section to work with current
   %%_tmpfilesdir and %%_udevrulesdir values (fixes FTBFS).
