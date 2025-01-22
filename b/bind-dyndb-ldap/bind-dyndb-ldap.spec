@@ -4,8 +4,8 @@
 %define restart_flag /run/named/named.restart
 
 Name: bind-dyndb-ldap
-Version: 11.10
-Release: alt8
+Version: 11.11
+Release: alt1
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -106,6 +106,9 @@ sed -i.bak --follow-symlinks -e "$SEDSCRIPT" /etc/named.conf
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Wed Jan 22 2025 Stanislav Levin <slev@altlinux.org> 11.11-alt1
+- 11.10 -> 11.11.
+
 * Wed Sep 04 2024 Stanislav Levin <slev@altlinux.org> 11.10-alt8
 - Fixed support of bind 9.16.
 
