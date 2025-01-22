@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name silx
+%define mod_name silx
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 Summary: Software library for X-Ray data analysis
 License: MIT
@@ -99,7 +100,7 @@ This package contains examples for %pypi_name.
 cp -a examples %buildroot%python3_sitelibdir/silx/
 
 %check
-%pyproject_run -- python run_tests.py --installed -ra -Wignore --low-mem
+%pyproject_run -- python -c "import %mod_name.test, sys; sys.exit(%mod_name.test.run_tests(verbosity=1, args=['-ra', '-Wignore', '--low-mem']))"
 
 %files
 %doc CHANGELOG.rst README.rst
@@ -145,6 +146,9 @@ cp -a examples %buildroot%python3_sitelibdir/silx/
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Wed Jan 22 2025 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.2 -> 2.2.0.
+
 * Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 2.1.2-alt1
 - 2.1.1 -> 2.1.2.
 
