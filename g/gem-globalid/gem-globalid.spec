@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname globalid
 
 Name:          gem-globalid
-Version:       1.0.0.1
+Version:       1.2.1
 Release:       alt1
 Summary:       Identify app models with a URI
 License:       MIT
@@ -13,19 +17,21 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(activesupport) >= 5.0
 BuildRequires: gem(rake) >= 0
+%if_enabled check
+BuildRequires: gem(activemodel) >= 0
+BuildRequires: gem(activesupport) >= 6.1
+BuildRequires: gem(railties) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(activesupport) >= 5.0
+Requires:      ruby >= 2.7.0
+Requires:      gem(activesupport) >= 6.1
 Obsoletes:     ruby-globalid < %EVR
 Provides:      ruby-globalid = %EVR
-Provides:      gem(globalid) = 1.0.0.1
-
-%ruby_use_gem_version globalid:1.0.0.1
+Provides:      globalid = %EVR
+Provides:      gem(globalid) = 1.2.1
 
 %description
 Zeitwerk implements constant autoloading with Ruby semantics. Each gem and
@@ -34,15 +40,16 @@ configuration, inflector, and logger. Supports autoloading, reloading, and eager
 loading.
 
 
+%if_enabled    doc
 %package       -n gem-globalid-doc
-Version:       1.0.0.1
+Version:       1.2.1
 Release:       alt1
 Summary:       Identify app models with a URI documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета globalid
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(globalid) = 1.0.0.1
+Requires:      gem(globalid) = 1.2.1
 
 %description   -n gem-globalid-doc
 Identify app models with a URI documentation files.
@@ -54,17 +61,21 @@ loading.
 
 %description   -n gem-globalid-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета globalid.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-globalid-devel
-Version:       1.0.0.1
+Version:       1.2.1
 Release:       alt1
 Summary:       Identify app models with a URI development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета globalid
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(globalid) = 1.0.0.1
+Requires:      gem(globalid) = 1.2.1
+Requires:      gem(activemodel) >= 0
+Requires:      gem(railties) >= 0
 Requires:      gem(rake) >= 0
 
 %description   -n gem-globalid-devel
@@ -77,6 +88,7 @@ loading.
 
 %description   -n gem-globalid-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета globalid.
+%endif
 
 
 %prep
@@ -92,21 +104,28 @@ loading.
 %ruby_test
 
 %files
-%doc README.md
+%doc MIT-LICENSE README.md CHANGELOG.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-globalid-doc
-%doc README.md
+%doc MIT-LICENSE README.md CHANGELOG.md CONTRIBUTING.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-globalid-devel
-%doc README.md
+%doc MIT-LICENSE README.md CHANGELOG.md CONTRIBUTING.md
+%endif
 
 
 %changelog
+* Tue Jan 21 2025 Pavel Skrylev <majioa@altlinux.org> 1.2.1-alt1
+- ^ 1.0.0[1] -> 1.2.1
+
 * Sun Oct 09 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.0.1-alt1
-- ^ 1.0.0 -> 1.0.0.1
+- ^ 1.0.0 -> 1.0.0[1]
 
 * Thu Sep 01 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - ^ 0.4.2 -> 1.0.0

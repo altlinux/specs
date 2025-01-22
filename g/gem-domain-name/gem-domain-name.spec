@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname domain_name
 
 Name:          gem-domain-name
-Version:       0.5.20190712
+Version:       0.6.20240107
 Release:       alt1
 Summary:       Domain Name manipulation library for Ruby
 License:       BSD-2-Clause or BSD-3-Clause or MPL-2.0
@@ -13,43 +17,37 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(test-unit) >= 2.5.5
 BuildRequires: gem(bundler) >= 1.2.0
-BuildRequires: gem(rake) >= 0.9.2.2
+BuildRequires: gem(rake) >= 0
+%if_enabled check
 BuildRequires: gem(rdoc) >= 2.4.2
-BuildRequires: gem(unf) >= 0.0.5
-BuildConflicts: gem(test-unit) >= 4
-BuildConflicts: gem(unf) >= 1.0.0
+BuildRequires: gem(test-unit) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency test-unit >= 3.3.5,test-unit < 4
 %ruby_alias_names domain_name,domain-name
-%ruby_ignore_names rails
-Requires:      gem(unf) >= 0.0.5
-Conflicts:     gem(unf) >= 1.0.0
+%ruby_ignore_names _names
+Requires:      ruby >= 2.7.0
 Obsoletes:     ruby-domain_name < %EVR
 Provides:      ruby-domain_name = %EVR
-Provides:      gem(domain_name) = 0.5.20190712
-
-%ruby_use_gem_version domain_name:0.5.20190712
+Provides:      gem(domain_name) = 0.6.20240107
 
 %description
 This is a Domain Name manipulation library for Ruby. It can also be used for
 cookie domain validation based on the Public Suffix List.
 
 
+%if_enabled    doc
 %package       -n gem-domain-name-doc
-Version:       0.5.20190712
+Version:       0.6.20240107
 Release:       alt1
 Summary:       Domain Name manipulation library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета domain_name
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(domain_name) = 0.5.20190712
+Requires:      gem(domain_name) = 0.6.20240107
 
 %description   -n gem-domain-name-doc
 Domain Name manipulation library for Ruby documentation files.
@@ -59,22 +57,23 @@ cookie domain validation based on the Public Suffix List.
 
 %description   -n gem-domain-name-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета domain_name.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-domain-name-devel
-Version:       0.5.20190712
+Version:       0.6.20240107
 Release:       alt1
 Summary:       Domain Name manipulation library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета domain_name
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(domain_name) = 0.5.20190712
-Requires:      gem(test-unit) >= 2.5.5
+Requires:      gem(domain_name) = 0.6.20240107
 Requires:      gem(bundler) >= 1.2.0
-Requires:      gem(rake) >= 0.9.2.2
+Requires:      gem(rake) >= 0
 Requires:      gem(rdoc) >= 2.4.2
-Conflicts:     gem(test-unit) >= 4
+Requires:      gem(test-unit) >= 0
 
 %description   -n gem-domain-name-devel
 Domain Name manipulation library for Ruby development package.
@@ -84,6 +83,7 @@ cookie domain validation based on the Public Suffix List.
 
 %description   -n gem-domain-name-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета domain_name.
+%endif
 
 
 %prep
@@ -99,19 +99,26 @@ cookie domain validation based on the Public Suffix List.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-domain-name-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-domain-name-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
+%endif
 
 
 %changelog
+* Tue Jan 21 2025 Pavel Skrylev <majioa@altlinux.org> 0.6.20240107-alt1
+- ^ 0.5.20190712 -> 0.6.20240107
+
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 0.5.20190712-alt1
 - ^ 0.5.20190701 -> 0.5.20190712
 
