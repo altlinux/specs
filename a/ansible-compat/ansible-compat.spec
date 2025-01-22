@@ -1,6 +1,6 @@
 
 Name: ansible-compat
-Version: 24.9.1
+Version: 25.0.0
 Release: alt1
 Summary: Ansible python helper functions
 
@@ -55,6 +55,8 @@ echo "ref-names: tag: v%version" >> .git_archival.txt
  and not test_install_collection_git \
  and not test_runtime_scan_path \
  and not test_runtime_has_playbook \
+ and not test_load_plugins \
+ and not test_runtime_install_role \
  "
 
 %files -n python3-module-%name
@@ -62,6 +64,12 @@ echo "ref-names: tag: v%version" >> .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 25.0.0-alt1
+- New version 25.0.0.
+
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 24.10.0-alt1
+- New version 24.10.0.
+
 * Mon Oct 14 2024 Alexey Shabalin <shaba@altlinux.org> 24.9.1-alt1
 - New version 24.9.1.
 

@@ -1,5 +1,5 @@
 Name: ansible-lint
-Version: 24.9.2
+Version: 25.1.0
 Release: alt1
 
 Summary: Best practices checker for Ansible
@@ -20,16 +20,18 @@ BuildRequires: python3-module-setuptools_scm >= 7.0.5
 BuildRequires: python3-module-rich >= 12.0.0
 BuildRequires: python3-module-ruamel-yaml >= 0.18.5
 BuildRequires: python3-module-yamllint >= 1.30.0
-BuildRequires: ansible-core >= 2.17.4 python3-module-ansible-compat >= 24.9.1
+BuildRequires: ansible-core >= 2.17.6 python3-module-ansible-compat >= 24.10.0
 
 # for tests
 #BuildRequires: python3-module-yaml >= 5.4.1
 #BuildRequires: python3-module-pytest >= 7.2.2 python3-module-pytest-xdist >= 2.1.0
 #BuildRequires: python3-module-pylint python3-module-mypy python3-module-black
+#BuildRequires: python3-module-importlib-metadata
+#BuildRequires: python3-module-ansible-collections
 #BuildRequires: python3-module-wcmatch
 
-Requires: ansible-core >= 2.17.1
-Requires: ansible-compat >= 24.5.0
+Requires: ansible-core >= 2.17.6
+Requires: ansible-compat >= 24.10.0
 Requires: python3-module-yamllint
 
 %description
@@ -55,6 +57,12 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 25.1.0-alt1
+- New version 25.1.0.
+
+* Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 24.10.0-alt1
+- New version 24.10.0.
+
 * Mon Oct 14 2024 Alexey Shabalin <shaba@altlinux.org> 24.9.2-alt1
 - New version 24.9.2.
 
