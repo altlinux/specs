@@ -5,9 +5,13 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+
+%def_disable py_module
+# see https://bugzilla.altlinux.org/52768
+
 Name:           libkdtree++
 Version:        0.7.0
-Release:        alt2_24
+Release:        alt3
 Summary:        C++ template container implementation of kd-tree sorting
 URL:            http://libkdtree.alioth.debian.org/
 License:        Artistic 2.0
@@ -42,7 +46,7 @@ BuildArch:      noarch
 %description devel
 %{summary}.
 
-
+%if_enabled py_module
 %package -n python3-module-libkdtree++
 Group: System/Libraries
 Provides: %{name}-python3 = %{version}-%{release}
@@ -50,6 +54,7 @@ Summary:        Python3 language bindings for libkdtree++
 
 %description -n python3-module-libkdtree++
 %{summary}.
+%endif
 
 
 %package examples
@@ -110,11 +115,13 @@ install -pm 0644 python-bindings/kdtree.py %{buildroot}%{python3_sitelibdir_noar
 %{_includedir}/kdtree++/
 %{_datadir}/pkgconfig/*.pc
 
+%if_enabled py_module
 %files -n python3-module-libkdtree++
 %doc COPYING AUTHORS README NEWS TODO ChangeLog
 %{python3_sitelibdir}/_kdtree.so
 %{python3_sitelibdir_noarch}/kdtree.py
 %{python3_sitelibdir_noarch}/__pycache__/*
+%endif
 
 %files examples
 %doc examples/CMakeLists.txt
@@ -122,6 +129,9 @@ install -pm 0644 python-bindings/kdtree.py %{buildroot}%{python3_sitelibdir_noar
 %doc examples/test*.cpp
 
 %changelog
+* Wed Jan 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt3
+- disabled python module (close #52768)
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_24
 - update to new release by fcimport
 
