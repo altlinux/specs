@@ -1,6 +1,6 @@
 Name: alterator-netinst
-Version: 1.9.1
-Release: alt9
+Version: 1.9.2
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -41,6 +41,9 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Tue Jan 21 2025 Anton Midyukov <antohami@altlinux.org> 1.9.2-alt1
+- Add /etc/locale.conf and /etc/localtime support
+
 * Tue Oct 08 2024 Anton Midyukov <antohami@altlinux.org> 1.9.1-alt9
 - Add dependency on curl (Closes: 51661)
 
