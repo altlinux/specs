@@ -1,5 +1,5 @@
 %global singulardir %_libdir/Singular
-%global upstreamver	4-4-0
+%global upstreamver	4-4-1
 %global py3_slim_version %(rpm --eval %_python3_version | tr -d .)
 %global patchver p6
 
@@ -12,7 +12,7 @@
 %endif
 
 Name: Singular
-Version: 4.4.0.7
+Version: 4.4.1
 Release: alt1
 
 Summary: Computer Algebra System for polynomial computations
@@ -104,7 +104,7 @@ BuildRequires: lrcalc
 BuildRequires: texlive-dist
 BuildRequires: texlive-collection-basic
 # BuildRequires: TOPCOM
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 Requires: environment-modules
 Requires: less
 # Requires: surf-geometry
@@ -115,17 +115,24 @@ special emphasis on commutative and non-commutative algebra, algebraic
 geometry, and singularity theory.
 
 %package libs
-Summary: Singular library
+Summary: Common Singular libraries
 Group: System/Libraries
 
 %description libs
-This package contains the main Singular library.
+This package contains common Singular libraries.
+
+%package -n libSingular%version
+Summary: Singular library
+Group: System/Libraries
+
+%description -n libSingular%version
+This package contains libSingular library.
 
 %package devel
 Summary: Singular development files
 Group: Development/Other
-Requires: %name-libs = %version-%release
-Requires: libpolys-devel = %version-%release
+Requires: %name-libs = %EVR
+Requires: libpolys-devel = %EVR
 
 %description devel
 This package contains the Singular development files.
@@ -146,12 +153,12 @@ Requires: emacs-common
 %description emacs
 Emacs interface to Singular.
 
-%package -n libfactory4
+%package -n libfactory%version
 Summary: C++ class library for multivariate polynomial data
 Group: System/Libraries
-Requires: libfactory-gftables = %version-%release
+Requires: libfactory-gftables = %EVR
 
-%description -n libfactory4
+%description -n libfactory%version
 Factory is a C++ class library that implements a recursive
 representation of multivariate polynomial data.  It handles sparse
 multivariate polynomials over different coefficient domains, such as Z,
@@ -161,10 +168,24 @@ multivariate gcds, resultants, chinese remainders, and algorithms to
 factorize multivariate polynomials and to compute the absolute
 factorization of multivariate polynomials with integer coefficients.
 
+%package -n libomalloc0.9.6
+Summary: libomalloc library for %name
+Group: System/Libraries
+
+%description -n libomalloc0.9.6
+This package contains libomalloc library for %name.
+
+%package -n libsingular_resources%version
+Summary: libsingular_resources library for %name
+Group: System/Libraries
+
+%description -n libsingular_resources%version
+This package contains libsingular_resources library for %name.
+
 %package -n libfactory-devel
 Summary: Development files for the Singular factory
 Group: Development/Other
-Requires: libfactory4 = %version-%release
+Requires: libfactory%version = %EVR
 Requires: libgmp-devel
 
 %description -n libfactory-devel
@@ -178,20 +199,20 @@ BuildArch: noarch
 %description -n libfactory-gftables
 Factory uses addition tables to calculate in GF(p^n) in an efficient way.
 
-%package -n libpolys4
+%package -n libpolys%version
 Summary: C++ class library for polynomials in Singular
 Group: System/Libraries
-Requires: libfactory4 = %version-%release
+Requires: libfactory%version = %EVR
 
-%description -n libpolys4
+%description -n libpolys%version
 Libpolys contains the data structures and basic algorithms for
 polynomials in Singular.
 
 %package -n libpolys-devel
 Summary: Development files for libpolys
 Group: Development/Other
-Requires: %name-libs = %version-%release
-Requires: libfactory-devel = %version-%release
+Requires: %name-libs = %EVR
+Requires: libfactory-devel = %EVR
 Requires: libflint2-devel
 
 %description -n libpolys-devel
@@ -200,8 +221,9 @@ Development files for libpolys.
 %package surfex
 Summary: Singular java interface
 Group: Development/Java
+BuildArch: noarch
 Requires: %_bindir/java
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description surfex
 This package contains the Singular java interface.
@@ -370,7 +392,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 make check
 
 %files
-%doc README.md
 %_bindir/Singular
 %_bindir/TSingular
 %_man1dir/Singular.1*
@@ -384,16 +405,14 @@ make check
 %singulardir/TSingular
 
 %files libs
-%doc libpolys/README
-%doc COPYING
-%doc GPL2
-%doc GPL3
-%_libdir/libSingular-4.4.0.so
 %_libdir/singular/
 %dir %_datadir/singular/
 %_datadir/singular/LIB/
 %exclude %_datadir/singular/LIB/surfex.lib
 #%%exclude %%_datadir/singular/LIB/surfex
+
+%files -n libSingular%version
+%_libdir/libSingular-%version.so
 
 %files devel
 %_bindir/libsingular-config
@@ -407,15 +426,28 @@ make check
 %doc dox/*.html
 %doc dox/*.png
 %doc dox/*.css
+%doc factory/COPYING
+%doc factory/README
+%doc factory/examples
+%doc libpolys/COPYING
+%doc libpolys/README
+%doc README.md
+%doc COPYING
+%doc GPL2
+%doc GPL3
+%if_with emacs
+%doc emacs/COPYING
+%doc emacs/BUGS
+%endif
 %_desktopdir/Singular-manual.desktop
 
 %if_with emacs
 %files emacs
-%doc emacs/COPYING
-%doc emacs/BUGS
 %_bindir/ESingular
 %_man1dir/ESingular.1*
+%dir %_datadir/singular/
 %_datadir/singular/emacs/
+%dir %singulardir/
 %singulardir/ESingular
 %endif
 
@@ -424,15 +456,16 @@ make check
 %_datadir/singular/LIB/surfex.lib
 #%%_datadir/singular/LIB/surfex/
 
-%files -n libfactory4
-%doc factory/COPYING
-%doc factory/README
-%_libdir/libfactory-4.4.0.so
+%files -n libfactory%version
+%_libdir/libfactory-%version.so
+
+%files -n libomalloc0.9.6
 %_libdir/libomalloc-0.9.6.so
-%_libdir/libsingular_resources-4.4.0.so
+
+%files -n libsingular_resources%version
+%_libdir/libsingular_resources-%version.so
 
 %files -n libfactory-devel
-%doc factory/examples
 %_includedir/factory/
 %_includedir/omalloc/
 %_includedir/resources/
@@ -446,10 +479,8 @@ make check
 %files -n libfactory-gftables
 %_datadir/factory/
 
-%files -n libpolys4
-%doc libpolys/COPYING
-%doc libpolys/README
-%_libdir/libpolys-4.4.0.so
+%files -n libpolys%version
+%_libdir/libpolys-%version.so
 
 %files -n libpolys-devel
 %_bindir/libpolys-config
@@ -463,6 +494,9 @@ make check
 %_pkgconfigdir/libpolys.pc
 
 %changelog
+* Wed Jan 22 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1-alt1
+- New version Release-4-4-1.
+
 * Mon Dec 09 2024 Leontiy Volodin <lvol@altlinux.org> 4.4.0.7-alt1
 - New version Release-4-4-0p7.
 
