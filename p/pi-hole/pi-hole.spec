@@ -8,7 +8,7 @@
 
 Name:    pi-hole
 Version: 5.18.4
-Release: alt1
+Release: alt2
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
 License: EUPL-1.2
@@ -114,13 +114,14 @@ EOF
 cat >%buildroot%_sysconfdir/%_name/versions <<EOF
 CORE_BRANCH=master
 CORE_HASH=891da4da
+CORE_VERSION=v%version
 GITHUB_CORE_VERSION=v%version
 GITHUB_CORE_HASH=2cf046d5
 FTL_VERSION=v5.25.2
 FTL_BRANCH=master
 FTL_HASH=8943e260
-GITHUB_FTL_VERSION=""
-GITHUB_FTL_HASH=""
+GITHUB_FTL_VERSION=v5.25.2
+GITHUB_FTL_HASH=8943e260
 EOF
 
 %files
@@ -138,6 +139,9 @@ EOF
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt2
+- fix version printing (Closes: #52792)
+
 * Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt1
 - v5.18.4
 
