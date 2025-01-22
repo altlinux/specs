@@ -1,5 +1,5 @@
 Name: rg552-fancontrol-quick-setting
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Change the fan mode on the RG552
@@ -14,12 +14,9 @@ Requires: rg552-hw-control
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: pkgconfig(gobject-2.0)
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: pkgconfig(libnm)
-BuildRequires: pkgconfig(phosh-plugins)
-BuildRequires: pkgconfig(libphosh-0.44)
+BuildRequires: pkgconfig(gobject-2.0) >= 2.76
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
+BuildRequires: libphosh-devel
 
 ExclusiveArch: aarch64
 
@@ -42,6 +39,10 @@ Change the fan mode on the RG552.
 %_libdir/phosh/plugins/%name.plugin
 
 %changelog
+* Tue Jan 21 2025 Oleg Shchavelev <oleg@altlinux.org> 0.1.3-alt1
+- New version 0.1.3
+- Update build dependencies
+
 * Sun Jan 05 2025 Oleg Shchavelev <oleg@altlinux.org> 0.1.2-alt1
 - New version 0.1.2
 - Update BuildRequires
