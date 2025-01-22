@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-mew
 Version: 0.1.0
-Release: alt3
+Release: alt4
 Summary: Modal Editing Witch
 
 Group: Development/ML
@@ -36,7 +36,7 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build
+%dune_build --release
 
 %check
 %dune_check
@@ -50,6 +50,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.1.0-alt4
+- built in dune "release mode"
+
 * Mon Nov 13 2023 Anton Farygin <rider@altlinux.ru> 0.1.0-alt3
 - updated BuildRequires
 
