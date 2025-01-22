@@ -1,6 +1,6 @@
 Name: dia2code
 Version: 0.8.8
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: Development/Tools
 Summary: This program generates code for many languages from an UML Dia Diagram
@@ -8,6 +8,7 @@ Url: http://dia2code.sourceforge.net
 Source: %name-%version.tar.gz
 Source1: examples-%version.tar.gz
 Patch1: %name-%version-gcc-10.patch
+Patch2: %name-%version-gcc-14.patch
 
 # Automatically added by buildreq on Thu Sep 05 2013
 BuildRequires: libxml2-devel
@@ -25,6 +26,7 @@ the structure of the classes in an Object Oriented language
 %prep
 %setup -a1
 %patch1 -p2
+%patch2 -p2
 sed -i 's@/usr/local/bin@%_bindir@' dia2code.kaptn
 
 %build
@@ -44,6 +46,9 @@ install -D dia2code.kaptn %buildroot%_datadir/kaptain/dia2code.kaptn
 %_datadir/kaptain/dia2code.kaptn
 
 %changelog
+* Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.8.8-alt3
+- Fix build with with gcc-14 (missing prototypes)
+
 * Mon Mar 29 2021 Slava Aseev <ptrnine@altlinux.org> 0.8.8-alt2
 - Fix build with with gcc-10 (-fno-common)
 
