@@ -1,7 +1,7 @@
 %define libname logs
 Name:           ocaml-%libname
 Version:        0.7.0
-Release:        alt2
+Release:        alt3
 Summary:        Logging infrastructure for OCaml
 License:        ISC
 Group:          Development/ML
@@ -9,8 +9,8 @@ Url:            https://erratique.ch/software/logs
 VCS: https://github.com/dbuenzli/logs
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
-BuildRequires: ocaml-fmt ocaml-lwt-devel
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
+BuildRequires: ocaml-fmt-devel ocaml-lwt-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6.1
 
 %package devel
@@ -49,6 +49,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.7.0-alt3
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Thu Nov 16 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt2
 - added support for bytecode-only version of the ocaml package
 
