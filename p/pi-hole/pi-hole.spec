@@ -7,10 +7,10 @@
 %define _servicename pi-hole
 
 Name:    pi-hole
-Version: 5.18.3
+Version: 5.18.4
 Release: alt1
 
-Summary: he Pi-hole is an advertising-aware DNS/Web server
+Summary: The Pi-hole is an advertising-aware DNS/Web server
 License: EUPL-1.2
 Group:   System/Servers
 Url:     https://github.com/pi-hole/pi-hole
@@ -113,12 +113,12 @@ EOF
 
 cat >%buildroot%_sysconfdir/%_name/versions <<EOF
 CORE_BRANCH=master
-CORE_HASH=60b6a101
+CORE_HASH=891da4da
 GITHUB_CORE_VERSION=v%version
-GITHUB_CORE_HASH=60b6a10
+GITHUB_CORE_HASH=2cf046d5
 FTL_VERSION=v5.25.2
 FTL_BRANCH=master
-FTL_HASH=d201776e
+FTL_HASH=8943e260
 GITHUB_FTL_VERSION=""
 GITHUB_FTL_HASH=""
 EOF
@@ -138,6 +138,9 @@ EOF
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt1
+- v5.18.4
+
 * Tue Nov 12 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.18.3-alt1
 - Initial build for ALT.
 
