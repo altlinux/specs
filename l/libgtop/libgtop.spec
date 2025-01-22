@@ -1,39 +1,46 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define oldname libgtop2
 %define ver_major 2.41
 %define api_ver 2.0
+%define namespace GTop
 
 %def_disable static
 %def_with examples
 %def_enable introspection
+%def_enable daemon
 %def_enable check
 
 Name: libgtop
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: LibGTop library
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
 Url: ftp://ftp.gnome.org
 
 Obsoletes: %oldname < 2.14.2
 Provides: %oldname = %EVR
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Patch2: %name-2.0.0-texinfo.patch
 Patch4: %name-2.9.90-alt-examples_makefile.patch
 
 # from configure.ac
 %define glib_ver 2.26.0
 
-BuildPreReq: rpm-build-gnome
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: gtk-doc >= 1.4
+BuildRequires(pre): rpm-build-gir
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: gtk-doc >= 1.4
 BuildRequires: makeinfo
 BuildRequires: libICE-devel libX11-devel perl-XML-Parser
-%{?_enable_static:BuildPreReq: glibc-devel-static}
+%{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7}
 
 %description
@@ -44,9 +51,18 @@ On Linux systems, this information is taken directly from the /proc
 filesystem while on other systems a server is used to read that
 information from other /dev/kmem, among others.
 
+%package daemon
+Summary: The LibGTop Daemon
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description daemon
+This package provides setuid root server/daemon which is usually does
+not required on Linux systems.
+
 %package examples
-Group: Development/GNOME and GTK+
 Summary: The LibGTop samples
+Group: Development/GNOME and GTK+
 Obsoletes: %oldname-examples < 2.14.2
 Provides: %oldname-examples = %EVR
 Requires: %name = %EVR
@@ -121,9 +137,9 @@ rm -rf doc/*.info
 %build
 %autoreconf
 %configure \
-	%{subst_enable static} \
-	--enable-gtk-doc \
-	%{subst_with examples}
+    %{subst_enable static} \
+    --enable-gtk-doc \
+    %{subst_with examples}
 %make_build
 
 %install
@@ -134,10 +150,17 @@ rm -rf doc/*.info
 %make -k check VERBOSE=1
 
 %files -f %name.lang
-%_libexecdir/%{name}_daemon2
-%attr(4711,root,root) %_libexecdir/%{name}_server2
 %_libdir/*.so.*
 %doc AUTHORS NEWS README
+
+%if_enabled daemon
+%files daemon
+%_libexecdir/%{name}_daemon2
+%attr(4711,root,root) %_libexecdir/%{name}_server2
+%else
+%exclude %_libexecdir/%{name}_daemon2
+%exclude %_libexecdir/%{name}_server2
+%endif
 
 %if_with examples
 %files examples
@@ -161,13 +184,17 @@ rm -rf doc/*.info
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GTop-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GTop-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %changelog
+* Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.41.3-alt2
+- updated to 2.41.3-6-gc4472848
+- moved daemon/server to separate optional subpackage (ALT #41695)
+
 * Fri Feb 16 2024 Yuri N. Sedunov <aris@altlinux.org> 2.41.3-alt1
 - 2.41.3
 
