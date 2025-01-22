@@ -8,7 +8,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Graphical system information tool
 License: GPL-3.0-or-later
@@ -68,6 +68,9 @@ The commands are already installed on any system usually.
 %doc README*
 
 %changelog
+* Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
+- v0.2.0-12-gaf2950c (updated translations)
+
 * Sun Jul 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus (v0.2.0-3-g80e077b)
 
