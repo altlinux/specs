@@ -2,11 +2,13 @@
 
 %define oname PasteScript
 
+%def_with check
+
 %def_without bootstrap
 
 Name: python3-module-%oname
 Epoch:   1
-Version: 3.6.0
+Version: 3.7.0
 Release: alt1
 Summary: A pluggable command-line frontend
 License: MIT/X11
@@ -16,7 +18,6 @@ Url: https://pypi.org/project/PasteScript/
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch: py313-logging.patch
 
 %py3_provides %oname
 
@@ -27,7 +28,9 @@ BuildRequires: python3(Cheetah)
 %endif
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx python3-module-Pygments
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %add_python3_req_skip new
 
 %if_with bootstrap
@@ -45,20 +48,22 @@ package file layouts.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 
 %build
 export PYTHONPATH=$PWD
 sed -i 's|%_bindir/env python|%_bindir/env python3|' \
 	tests/test_logging_config.py scripts/paster
 sed -i 's|\(sphinx-build\)|\1-3|' regen-docs
-%python3_build
+%pyproject_build
 
 ./regen-docs
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/paster %buildroot%_bindir/paster3
+
+%check
+%pyproject_run_unittest discover tests -v
 
 %files
 %doc docs/_build/*
@@ -67,6 +72,9 @@ mv %buildroot%_bindir/paster %buildroot%_bindir/paster3
 %_bindir/paster3
 
 %changelog
+* Wed Jan 22 2025 Anton Vyatkin <toni@altlinux.org> 1:3.7.0-alt1
+- new version 3.7.0
+
 * Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 1:3.6.0-alt1
 - New version 3.6.0.
 
