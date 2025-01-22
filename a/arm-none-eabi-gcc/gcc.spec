@@ -1,6 +1,6 @@
 Name: arm-none-eabi-gcc
 Version: 14.2.0
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 License: GPLv3+
@@ -134,6 +134,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Wed Jan 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt2
+- aligned with 14.2rel1 arm toolchain
+
 * Tue Oct 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt1
 - 14.2.0 released
 

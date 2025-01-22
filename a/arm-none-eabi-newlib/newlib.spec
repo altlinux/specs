@@ -1,6 +1,6 @@
 Name: arm-none-eabi-newlib
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
 Summary: C library intended for use on embedded systems
 License: BSD and MIT and LGPLv2+ and ISC
@@ -95,6 +95,9 @@ rm -rf %buildroot%_infodir
 %_libexecdir/%target/lib/*
 
 %changelog
+* Wed Jan 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt2
+- aligned with 14.2rel1 arm toolchain
+
 * Tue Jan 09 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.0-alt1
 - 4.4.0 released
 
