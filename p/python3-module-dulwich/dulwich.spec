@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.22.1
-Release: alt2
+Version: 0.22.7
+Release: alt1
 
 Summary: Python Git Library
 License: Apache-2.0 or GPL-2.0-or-later
@@ -87,13 +87,16 @@ popd
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/contrib
 %doc AUTHORS COPYING NEWS docs/*.txt
-%doc docs/tutorial PKG-INFO README* examples
+%doc docs/tutorial README* examples
 
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/contrib
 
 %changelog
+* Wed Jan 22 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.22.7-alt1
+- NMU: 0.22.7 (Closes: #52703).
+
 * Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 0.22.1-alt2
 - Fix FTBFS: add semantic_version to BR.
 
