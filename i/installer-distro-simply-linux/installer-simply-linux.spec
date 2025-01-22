@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
-Version: 11.0.0
-Release: alt2
+Version: 11.1.0
+Release: alt1
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -110,6 +110,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Wed Jan 22 2025 Mikhail Efremov <sem@altlinux.org> 11.1.0-alt1
+- stage2: Replace vm step with vm-ortodox.
+
 * Tue Aug 20 2024 Mikhail Efremov <sem@altlinux.org> 11.0.0-alt2
 - all: Make the whole package noarch.
 
