@@ -1,4 +1,4 @@
-Name: arm-none-eabi-binutils
+Name: aarch64-none-elf-binutils
 Version: 2.43.1
 Release: alt2
 
@@ -23,7 +23,7 @@ Binutils is a collection of binary utilities, including:
 + strings: listing printable strings from files;
 + strip: discarding symbols.
 
-%define target arm-none-eabi
+%define target aarch64-none-elf
 %define _libexecdir /usr/libexec
 
 %prep
@@ -34,7 +34,8 @@ Binutils is a collection of binary utilities, including:
             --host=%_configure_platform \
             --build=%_configure_platform \
             --enable-initfini-array \
-            --enable-multilib \
+            --enable-64-bit-bfd \
+            --enable-targets=arm-none-eabi,aarch64-none-elf \
             --enable-plugins \
             --disable-nls \
             --disable-shared \
