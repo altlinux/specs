@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Poetry plugin that allows the export of locked packages to various formats.
@@ -14,17 +14,18 @@ License: MIT
 Group: Development/Python3
 Url: https://python-poetry.org/
 
+Vcs: https://github.com/python-poetry/poetry-plugin-export.git
+
 %if_disabled snapshot
 Source: https://github.com/python-poetry/%modname/archive/%version/%modname-%version.tar.gz
 %else
-Vcs: https://github.com/python-poetry/poetry-plugin-export.git
 Source: %pypi_name-%version.tar
 %endif
 
 BuildArch: noarch
 
 %define core_ver 1.9.0
-%define poetry_ver 1.8.2
+%define poetry_ver 2.0
 
 Requires: python3-module-poetry-core >= %core_ver
 
@@ -64,6 +65,9 @@ Poetry which it will eventually replace.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue May 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
