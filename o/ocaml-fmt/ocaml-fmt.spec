@@ -1,7 +1,7 @@
 %define libname fmt
 Name:           ocaml-%libname
 Version:        0.9.0
-Release:        alt3
+Release:        alt4
 Summary:        OCaml Format pretty-printer combinators
 License:        ISC
 Group:          Development/ML
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.07.1 opam
-BuildRequires: ocaml-cmdliner
+BuildRequires: ocaml-cmdliner-devel
 
 %package devel
 Summary: Development files for programs which will use the %name
@@ -44,6 +44,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.9.0-alt4
+- changed BR - use ocaml-cmdliner-devel instead of the ocaml-cmdliner
+
 * Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 0.9.0-alt3
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 
