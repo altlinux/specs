@@ -4,10 +4,11 @@
 
 %def_with check
 
-%def_with doc
+# sphinx_nefertiti theme is not packaged yet
+%def_without doc
 
 Name: python3-module-%oname
-Version: 3.0.48
+Version: 3.0.50
 Release: alt1
 Summary: Library for building powerful interactive command lines in Python
 License: BSD-3-Clause
@@ -110,6 +111,10 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Jan 22 2025 Anton Vyatkin <toni@altlinux.org> 3.0.50-alt1
+- New version 3.0.50.
+- Build without doc.
+
 * Thu Sep 26 2024 Anton Vyatkin <toni@altlinux.org> 3.0.48-alt1
 - New version 3.0.48.
 
