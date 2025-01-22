@@ -1,6 +1,6 @@
 %def_enable introspection
 %def_enable vala
-%def_disable glibtop
+%def_enable glibtop
 
 %if_disabled glibtop
 %def_disable epoxy
@@ -14,7 +14,7 @@
 
 Name: libxfce4ui
 Version: 4.20.0
-Release: alt1
+Release: alt2
 
 Summary: Various GTK widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
@@ -209,6 +209,9 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Wed Jan 22 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
+- Enabled libgtop support (closes: #46132).
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 
