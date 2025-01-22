@@ -13,7 +13,7 @@
 
 Name: Singular
 Version: 4.4.1
-Release: alt1
+Release: alt2
 
 Summary: Computer Algebra System for polynomial computations
 # License analysis:
@@ -128,13 +128,15 @@ Group: System/Libraries
 %description -n libSingular%version
 This package contains libSingular library.
 
-%package devel
+%package -n libSingular-devel
 Summary: Singular development files
-Group: Development/Other
+Group: Development/C++
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 Requires: %name-libs = %EVR
 Requires: libpolys-devel = %EVR
 
-%description devel
+%description -n libSingular-devel
 This package contains the Singular development files.
 
 %package doc
@@ -168,12 +170,28 @@ multivariate gcds, resultants, chinese remainders, and algorithms to
 factorize multivariate polynomials and to compute the absolute
 factorization of multivariate polynomials with integer coefficients.
 
+%package -n libfactory-devel
+Summary: Development files for the Singular factory
+Group: Development/C++
+Requires: libfactory%version = %EVR
+Requires: libgmp-devel
+
+%description -n libfactory-devel
+Development files for the Singular factory.
+
 %package -n libomalloc0.9.6
 Summary: libomalloc library for %name
 Group: System/Libraries
 
 %description -n libomalloc0.9.6
 This package contains libomalloc library for %name.
+
+%package -n libomalloc-devel
+Summary: Development files for the Singular omalloc
+Group: Development/C++
+
+%description -n libomalloc-devel
+Development files for the Singular omalloc.
 
 %package -n libsingular_resources%version
 Summary: libsingular_resources library for %name
@@ -182,14 +200,12 @@ Group: System/Libraries
 %description -n libsingular_resources%version
 This package contains libsingular_resources library for %name.
 
-%package -n libfactory-devel
-Summary: Development files for the Singular factory
-Group: Development/Other
-Requires: libfactory%version = %EVR
-Requires: libgmp-devel
+%package -n libsingular_resources-devel
+Summary: Development files for the Singular resources
+Group: Development/C++
 
-%description -n libfactory-devel
-Development files for the Singular factory.
+%description -n libsingular_resources-devel
+Development files for the Singular resources.
 
 %package -n libfactory-gftables
 Summary: Singular factory addition tables
@@ -210,7 +226,7 @@ polynomials in Singular.
 
 %package -n libpolys-devel
 Summary: Development files for libpolys
-Group: Development/Other
+Group: Development/C++
 Requires: %name-libs = %EVR
 Requires: libfactory-devel = %EVR
 Requires: libflint2-devel
@@ -414,7 +430,7 @@ make check
 %files -n libSingular%version
 %_libdir/libSingular-%version.so
 
-%files devel
+%files -n libSingular-devel
 %_bindir/libsingular-config
 %_includedir/singular/kernel/
 %_includedir/singular/Singular/
@@ -459,21 +475,25 @@ make check
 %files -n libfactory%version
 %_libdir/libfactory-%version.so
 
+%files -n libfactory-devel
+%_includedir/factory/
+%_libdir/libfactory.so
+%_pkgconfigdir/factory.pc
+
 %files -n libomalloc0.9.6
 %_libdir/libomalloc-0.9.6.so
+
+%files -n libomalloc-devel
+%_includedir/omalloc/
+%_libdir/libomalloc.so
+%_pkgconfigdir/omalloc.pc
 
 %files -n libsingular_resources%version
 %_libdir/libsingular_resources-%version.so
 
-%files -n libfactory-devel
-%_includedir/factory/
-%_includedir/omalloc/
+%files -n libsingular_resources-devel
 %_includedir/resources/
-%_libdir/libfactory.so
-%_libdir/libomalloc.so
 %_libdir/libsingular_resources.so
-%_pkgconfigdir/factory.pc
-%_pkgconfigdir/omalloc.pc
 %_pkgconfigdir/singular_resources.pc
 
 %files -n libfactory-gftables
@@ -494,6 +514,11 @@ make check
 %_pkgconfigdir/libpolys.pc
 
 %changelog
+* Wed Jan 22 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1-alt2
+- Renamed Singular-devel to libSingular-devel.
+- libfactory-devel packaged more separately.
+- Minor spec cleanup.
+
 * Wed Jan 22 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1-alt1
 - New version Release-4-4-1.
 
