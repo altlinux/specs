@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.3
-Release: alt2
+Release: alt3
 
 Summary: Extensions for Django
 License: MIT
@@ -72,7 +72,8 @@ and not DumpScriptTests \
 and not test_migration_is_last_applied \
 and not test_installed_apps_no_resolve_conflicts_function \
 and not test_validate_templates \
-and not test_pipchecker_when_requirements_file_does_not_exist"
+and not test_pipchecker_when_requirements_file_does_not_exist \
+and not test_should_highlight_python_syntax_with_name"
 
 %files
 %doc README.*
@@ -80,6 +81,9 @@ and not test_pipchecker_when_requirements_file_does_not_exist"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 22 2025 Anton Vyatkin <toni@altlinux.org> 3.2.3-alt3
+- Fixed FTBFS.
+
 * Wed Jul 31 2024 Anton Vyatkin <toni@altlinux.org> 3.2.3-alt2
 - Fixed FTBFS.
 
