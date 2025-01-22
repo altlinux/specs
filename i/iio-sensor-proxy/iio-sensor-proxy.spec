@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: IIO sensors to input device proxy
@@ -69,9 +69,9 @@ Developer documentation for %name.
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_enable_check:-Dtests=true} \
-	%{?_disable_gtk_tests:-Dgtk-tests=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool check tests} \
+    %{subst_enable_meson_bool gtk_tests gtk-tests}
 %nil
 %meson_build
 
@@ -99,6 +99,9 @@ dbus-run-session %__meson_test -t 4
 
 
 %changelog
+* Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
+- 3.6
+
 * Wed Jul 26 2023 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
 - 3.5
 

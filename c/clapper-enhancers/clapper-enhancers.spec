@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: %_name-enhancers
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Plugins enhancing Clapper library capabilities
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 %define adw_ver 1.4.0
 %define gst_ver 1.24
 
-Requires: %_name >= %EVR
+Requires: %_name >= %ver_major
 %{?_enable_yt_dlp:Requires: yt-dlp}
 
 %add_python3_path %_libdir/%_name-%api_ver/enhancers
@@ -76,6 +76,9 @@ Plugins enhancing Clapper media player library capabilities.
 %doc README*
 
 %changelog
+* Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - first build for Sisyphus
 

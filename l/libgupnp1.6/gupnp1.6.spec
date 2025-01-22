@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -138,6 +138,9 @@ sed -i 's/-Werror/-Wno-error/g' meson.build
 
 
 %changelog
+* Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.8-alt1
+- 1.6.8
+
 * Mon Sep 23 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt1
 - 1.6.7
 
