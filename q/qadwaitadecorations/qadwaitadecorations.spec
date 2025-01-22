@@ -2,7 +2,7 @@
 %def_with qt6
 
 Name: qadwaitadecorations
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
@@ -11,8 +11,6 @@ URL: https://github.com/FedoraQt/QAdwaitaDecorations
 
 # Source-url: https://github.com/FedoraQt/QAdwaitaDecorations/archive/%version/QAdwaitaDecorations-%version.tar.gz
 Source: QAdwaitaDecorations-%version.tar
-# https://github.com/FedoraQt/QAdwaitaDecorations/commit/f40f31dadc074bd989db6dd90e52eecf33c4567b.patch
-Patch: f40f31da.patch
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
@@ -49,7 +47,7 @@ BuildRequires: qt6-svg-devel >= 6.5.0
 
 %prep
 %setup -n QAdwaitaDecorations-%version
-%patch -p1
+%autopatch -p1
 
 %build
 %if_with qt5
@@ -88,5 +86,8 @@ BuildRequires: qt6-svg-devel >= 6.5.0
 %endif
 
 %changelog
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt1
+- new version (0.1.6) with rpmgs script
+
 * Mon Sep 30 2024 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt1
 - Initial build
