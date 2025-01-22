@@ -2,7 +2,7 @@
 
 Name: cifs-utils
 Version: 7.1
-Release: alt1
+Release: alt2
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -57,7 +57,7 @@ provide these credentials to the kernel automatically at login.
 %build
 %autoreconf
 %configure \
-	--with-pamdir=/%_lib/security \
+	--with-pamdir=%_pam_modules_dir \
 %if_with doc
 	--enable-man \
 %endif
@@ -119,6 +119,9 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 7.1-alt2
+- Fix FTBFS: use %%_pam_modules_dir for configure.
+
 * Sat Oct 12 2024 Evgeny Sinelnikov <sin@altlinux.org> 7.1-alt1
 - Update to latest stable release supported latest kernel 6.11.
 - Major fixes from upstream:
@@ -172,13 +175,13 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 - dropped %%ubt macro
 - minor spec cleanup
 
-* Mon Sep 24 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.8-alt2%ubt
+* Mon Sep 24 2018 Anton V. Boyarshinov <boyarsh@altlinux.org> 6.8-alt2
 - build fixed
 
-* Tue Aug 21 2018 Evgeny Sinelnikov <sin@altlinux.org> 6.8-alt1%ubt
+* Tue Aug 21 2018 Evgeny Sinelnikov <sin@altlinux.org> 6.8-alt1
 - Update to latest release 6.8
 
-* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 6.7-alt1%ubt
+* Mon Apr 10 2017 Evgeny Sinelnikov <sin@altlinux.ru> 6.7-alt1
 - 6.7
 - Build package with unified build tag aka ubt macros
 
