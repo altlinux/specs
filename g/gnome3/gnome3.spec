@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -82,6 +82,7 @@ Provides: gnome-minimal = %version-%release
 # GNOME Desktop Core
 Requires: gnome-session-wayland >= %session_ver
 Requires: gnome-session-xsession
+Requires: gnome-session-classic
 Requires: pipewire wireplumber
 Requires: gnome-control-center >= %ver_major
 #Requires: power-profiles-daemon
@@ -478,6 +479,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1.2
+- minimal: added gnome-session-classic
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1.1
 - minimal: terminal -> console
 

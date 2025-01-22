@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -44,12 +44,20 @@ GNOME Shell Extensions is a collection of extensions providing additional
 and optional functionality to GNOME Shell.
 See %_docdir/%name-%version/README for more information.
 
+%package -n gnome-session-classic
+Summary: GNOME Classic sessions
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+
+%description -n gnome-session-classic
+This package provides files required for GNOME Classic mode.
+
 %prep
 %setup -n %name-%version%beta
 
 %build
 %meson \
-    %{?_enable_classic_mode:-Dclassic_mode=true} \
+    %{subst_enable_meson_bool classic_mode classic_mode} \
     -Dextension_set=all
 %meson_build
 
@@ -60,9 +68,10 @@ See %_docdir/%name-%version/README for more information.
 %check
 %__meson_test
 
-%files -f %name.lang
+
 # Classic mode
 %if_enabled classic_mode
+%files -n gnome-session-classic
 %_datadir/xsessions/gnome-classic.desktop
 %_datadir/wayland-sessions/gnome-classic-wayland.desktop
 %_datadir/wayland-sessions/gnome-classic.desktop
@@ -71,6 +80,7 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
 %endif
 
+%files -f %name.lang
 ## Extensions
 %dir %_datadir/gnome-shell/extensions
 # light-style
@@ -175,6 +185,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1.1
+- new gnome-session-classic subpackage (ALT #52786)
+
 * Mon Jan 13 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
 - 47.3
 
