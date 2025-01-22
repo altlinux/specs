@@ -1,7 +1,7 @@
 %set_verify_elf_method textrel=relaxed
 Name: ocaml-mew_vi
 Version: 0.5.0
-Release: alt3
+Release: alt4
 Summary: Modal editing witch, VI interpreter
 
 Group: Development/ML
@@ -10,7 +10,7 @@ Url: https://github.com/kandu/mew_vi
 Source: %name-%version.tar
 
 BuildRequires: dune ocaml-react-devel ocaml-mew-devel
-BuildPreReq: rpm-build-ocaml >= 1.1
+BuildPreReq: rpm-build-ocaml >= 1.6
 
 %description
 This is a vi-like modal editing engine generator.
@@ -28,7 +28,7 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build
+%dune_build --release
 
 %install
 %dune_install
@@ -39,6 +39,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.5.0-alt4
+- built in dune "release" mode
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.5.0-alt3
 - changed BR - use ocaml-react-devel instead of the ocaml-react
 
