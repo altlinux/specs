@@ -2,7 +2,7 @@
 %define emacsbin emacs
 # define emacsbin emacs-nox
 %define ModeName auctex
-%define emacs_version %(%emacsbin --version | head --lines=1 | cut -d' ' --fields=3 | cut -d. --fields=1,2)
+%define emacs_version %(%emacsbin --version | head --lines=1 | cut -d' ' --fields=3 | cut -d. --fields=1,2,3)
 %if "%emacs_version" == ""
 # Not to leave the macro undefined in case of no emacs.
 %define emacs_version 0
@@ -11,7 +11,7 @@
 
 Name: emacs-mode-%ModeName
 Version: 13.3
-Release: alt2
+Release: alt2.1
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPLv3
@@ -203,6 +203,10 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 %endif
 
 %changelog
+* Wed Jan 22 2025 Ivan A. Melnikov <iv@altlinux.org> 13.3-alt2.1
+- NMU: update emacs_version macro to match emacs 30
+  extension installation path (fixes FTBFS)
+
 * Mon Apr 15 2024 Ilya Mashkin <oddity@altlinux.ru> 13.3-alt2
 - use emacs_version macro
 
