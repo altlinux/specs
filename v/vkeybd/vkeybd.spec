@@ -2,7 +2,7 @@
 
 Name: vkeybd
 Version: 0.1.18d
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Virtual keyboard for MIDI and ALSA drivers
@@ -14,6 +14,7 @@ Url: http://www.alsa-project.org/~iwai/alsa.html
 # repacked ftp://ftp.suse.com/pub/people/tiwai/vkeybd/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.png
+Patch0: 0001-vkb.c-Fixed-function-argument-from-const-char-to-char.patch
 
 %define tcl_ver 8.5.1-alt1
 %define tk_ver 8.5.1-alt1
@@ -47,6 +48,7 @@ Vkeybd — это виртуальная клавиатура для MIDI- и AL
 
 %prep
 %setup -q -n %name
+%patch0 -p2
 
 %build
 %add_optflags -DUSE_NON_CONST
@@ -72,6 +74,9 @@ Vkeybd — это виртуальная клавиатура для MIDI- и AL
 %doc README
 
 %changelog
+* Wed Jan 22 2025 Ulysses Apokin <ulysses@altlinux.org> 1:0.1.18d-alt2
+- Fix FTBFS.
+
 * Tue Jun 18 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.18d-alt1
 - 0.1.18d
 
