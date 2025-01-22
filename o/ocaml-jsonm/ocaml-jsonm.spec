@@ -1,17 +1,17 @@
 Name: ocaml-jsonm
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Non-blocking streaming codec to decode and encode JSON
-License: BSD3
+License: ISC
 Group: Development/ML
-Url: http://erratique.ch/software/jsonm
+Url: https://erratique.ch/software/jsonm
+VCS: https://github.com/dbuenzli/jsonm
 Source0: %name-%version.tar
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-ocamldoc
-BuildRequires: ocaml-ocamlbuild opam ocaml-topkg
-BuildRequires: ocaml-uutf 
-Requires: ocaml-uutf
+BuildRequires: ocaml-ocamlbuild opam ocaml-topkg-devel
+BuildRequires: ocaml-uutf-devel
 BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 
@@ -29,7 +29,6 @@ Jsonm is made of a single module and depends on Uutf.
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
-Requires: ocaml-uutf-devel
 
 %description devel
 The %name-devel package contains libraries and signature files for
@@ -53,6 +52,10 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %doc doc/
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 1.0.2-alt2
+- updated BR to fix build with rpm-build-ocaml >= 1.7
+- fixed license
+
 * Sun Nov 12 2023 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
