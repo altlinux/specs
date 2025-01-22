@@ -1,7 +1,7 @@
 %define libname uuseg
 Name: ocaml-%libname
 Version: 16.0.0
-Release: alt1
+Release: alt2
 Summary: Unicode text segmentation for OCaml
 License: ISC
 Group: Development/ML
@@ -10,7 +10,7 @@ VCS: https://github.com/dbuenzli/uuseg
 Source0: %name-%version.tar
 BuildRequires: ocaml >= 4.14.0
 BuildRequires: opam
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml-findlib-devel
 BuildRequires: ocaml-ocamlbuild
 BuildRequires: ocaml-topkg-devel
 BuildRequires: ocaml-uucp-devel >= 15.1.0
@@ -47,6 +47,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 16.0.0-alt2
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Wed Sep 11 2024 Anton Farygin <rider@altlinux.ru> 16.0.0-alt1
 - 16.0.0
 
