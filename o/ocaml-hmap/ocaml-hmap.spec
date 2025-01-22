@@ -1,7 +1,7 @@
 %define libname hmap
 Name: ocaml-%libname
 Version: 0.8.1
-Release: alt1
+Release: alt2
 Summary: Heterogeneous value maps for OCaml
 License: ISC
 Group: Development/ML
@@ -9,7 +9,7 @@ Url: https://github.com/dbuenzli/hmap
 VCS: https://github.com/dbuenzli/hmap
 Source: %name-%version.tar
 
-BuildRequires: ocaml-findlib ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.14.1 opam
+BuildRequires: ocaml-findlib-devel ocaml-ocamlbuild ocaml-topkg-devel ocaml >= 4.14.1 opam
 BuildRequires(pre): rpm-build-ocaml >= 1.6
 
 %package devel
@@ -44,5 +44,8 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 0.8.1-alt2
+- changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
+
 * Wed Sep 18 2024 Anton Farygin <rider@altlinux.ru> 0.8.1-alt1
 - first build for Sisyphus
