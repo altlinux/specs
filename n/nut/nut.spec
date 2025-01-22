@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.2
-Release: alt4
+Release: alt5
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -365,7 +365,6 @@ mv %buildroot%_udev_rulesdir/52-nut-ipmipsu.rules %buildroot%_udev_rulesdir/98-n
 %if_with systemd
 # Add symlink for SysV compatibility
 ln -s nut-monitor.service %buildroot%_unitdir/upsmon.service
-ln -s nut-driver@.service %buildroot%_unitdir/upsdrv.service
 ln -s nut-server.service %buildroot%_unitdir/upsd.service
 %endif
 
@@ -407,12 +406,18 @@ fi
 	-c "NUT information server" -n upsd >/dev/null 2>&1 ||:
 
 %post server
+%if_without systemd
 %post_service upsdrv
+%endif
+
 %post_service upsd
 
 %preun server
 %preun_service upsd
+
+%if_without systemd
 %preun_service upsdrv
+%endif
 
 %files
 %doc COPYING MAINTAINERS NEWS docs/*.txt conf/upsmon.conf.sample conf/upssched.conf.sample conf/nut.conf.sample
@@ -460,7 +465,6 @@ fi
 %_unitdir/nut-server.service
 %_unitdir/upsd.service
 %_unitdir/nut-driver@.service
-%_unitdir/upsdrv.service
 %_unitdir/nut-driver-enumerator.path
 %_unitdir/nut-driver-enumerator.service
 %_unitdir/nut-driver.target
@@ -594,6 +598,9 @@ fi
 %python3_sitelibdir/test_nutclient.py
 
 %changelog
+* Thu Jan 21 2025 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt5
+- Removed upsdrv.service (closes: #51566)
+
 * Fri Dec 06 2024 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt4
 - Fixed an error with the nut-server installation (closes: #51566)
 
