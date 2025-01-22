@@ -3,7 +3,7 @@
 
 Name: dia
 Version: 0.97.4
-Release: alt0.9
+Release: alt0.9.1
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -22,6 +22,8 @@ Source2: ru.po
 Patch: alt-dia-fix-help.patch
 Patch2: alt-dia-improve-translation.patch
 Patch3: CVE-2019-19451-adapted-fix.patch
+Patch4: dia-0.97.3-get_data_size.patch
+Patch5: dia-configure-c99.patch
 
 BuildRequires: pkgconfig(gtk+-2.0) pkgconfig(libxml-2.0) pkgconfig(libart-2.0)
 BuildRequires: gcc-c++ libfreetype-devel libpng-devel
@@ -54,10 +56,11 @@ PostScript(TM), SVG, CGM или PNG.
 
 %prep
 %setup
-#patch -p1
 %patch -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 cp -f %SOURCE2 po/ru.po
 
@@ -110,6 +113,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_mandir/fr/man1/*
 
 %changelog
+* Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.97.4-alt0.9.1
+- NMU: fix FTBFS
+
 * Wed Nov 03 2021 Vitaly Lipatov <lav@altlinux.ru> 0.97.4-alt0.9
 - drop --integrated (does not supported)
 
