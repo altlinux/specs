@@ -1,22 +1,25 @@
 Name: aarch64-none-elf-gcc
 Version: 14.2.0
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 License: GPLv3+
 Group: Development/C
 Url: https://gcc.gnu.org/
 
+Requires: aarch64-none-elf-newlib
+
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen
 BuildRequires: aarch64-none-elf-binutils >= 2.41
+BuildRequires: aarch64-none-elf-newlib
 
 Requires: aarch64-none-elf-binutils >= 2.41
 %add_python_req_skip libstdcxx gdb
 
 %package c++
-Summary: Cross Compiling GNU GCC targeted at arm-none-eabi
+Summary: Cross Compiling GNU GCC targeted at aarch64-none-elf
 Group: Development/Tools
 AutoReq: yes, nopython
 Requires: %name = %version-%release
@@ -31,7 +34,7 @@ This package adds C++ support to the GNU Compiler Collection.
 It includes support for most of the current C++ specification,
 including templates and exception handling.
 
-%define target aarch64-none-elf
+%define target         aarch64-none-elf
 %define _libexecdir /usr/libexec
 %brp_strip_none %_libexecdir/*
 
@@ -68,16 +71,17 @@ mkdir obj-%target; cd obj-%target
             --disable-tls \
             \
             --enable-checking=release \
-            --enable-languages=c \
-            --disable-plugins \
+            --enable-languages=c,c++ \
+            --enable-plugins \
             --with-newlib \
             --with-gnu-as \
             --with-gnu-ld \
-            --disable-multilib \
+            --enable-multilib \
+            --with-multilib-list=ilp32,lp64 \
             --with-gmp \
             --with-mpfr \
             --with-mpc \
-            --without-headers \
+            --with-headers=yes \
             --with-system-zlib \
             --with-sysroot=%_libexecdir/%target
 
@@ -103,10 +107,22 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %files
 %doc COPYING* README
 %_bindir/%target-*
+%exclude %_bindir/%target-?++
 %_libexecdir/gcc/%target
 %_man1dir/%target-*.1*
+%exclude %_man1dir/%target-?++.1*
+%exclude %_libexecdir/gcc/%target/*/cc1plus
+
+%files c++
+%_bindir/%target-?++
+%_libexecdir/%target
+%_man1dir/%target-g++.1*
+%_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Wed Jan 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt2
+- aligned with 14.2rel1 arm toolchain
+
 * Tue Oct 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt1
 - 14.2.0 released
 
