@@ -10,7 +10,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.3.301
+%define _vk_api_version 1.4.303
 
 %def_with clang
 %def_with wayland
@@ -26,8 +26,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2024.Q4.2
-Release: alt2
+Version: 2024.Q4.3
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -124,6 +124,15 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Thu Jan 23 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.Q4.3-alt1
+- 2024-12-23 update:
+  + icd: bump vulkan version
+  + llvm-project: Updated to 70c9463695fa
+  + gpurt: Updated to c3a4d170f0ba
+  + llpc: Updated to 6aecd3da132c
+  + pal: Updated to c7fc61289a6e
+  + xgl: Updated to 62710fd4e7cc
+
 * Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.Q4.2-alt2
 - %%ix86: disable debuginfo (should reduce memory consumption during
   build).
