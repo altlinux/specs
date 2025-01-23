@@ -1,7 +1,7 @@
 %define script_name winbind-dnsupdate
 
 Name: samba-winbind-dnsupdate
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: Dynamic dns update for winbind backend
@@ -41,7 +41,6 @@ install -Dm 644 %script_name.timer %buildroot%_unitdir/%script_name.timer
 install -Dm 644 %script_name.service %buildroot%_unitdir/%script_name.service
 install -Dm 644 %script_name.sysconfig %buildroot%_sysconfdir/sysconfig/%script_name
 install -Dm 644 doc/winbind-dnsupdate.1 %buildroot/%_man1dir/winbind-dnsupdate.1
-install -Dm 644 %script_name.ini %buildroot%_sysconfdir/dconf/db/policy.d/%script_name.ini
 install -Dm 644 org.altlinux.winbind.dnsupdate.gschema.xml \
       %buildroot%_datadir/glib-2.0/schemas/org.altlinux.winbind.dnsupdate.gschema.xml
 
@@ -58,13 +57,12 @@ shellcheck %script_name
 %_datadir/bash-completion/completions/%script_name
 %_sysconfdir/sysconfig/%script_name
 %_man1dir/winbind-dnsupdate.1.*
-%_sysconfdir/dconf/db/policy.d/%script_name.ini
 %_datadir/glib-2.0/schemas/org.altlinux.winbind.dnsupdate.gschema.xml
 
-%post
-dconf compile %_sysconfdir/dconf/db/policy %_sysconfdir/dconf/db/policy.d/
-
 %changelog
+* Wed Jan 22 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7-alt1
+- Remove ini file
+
 * Thu Jan 16 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.6-alt1
 - Change the method of getting parameters from dconf to gsettings
 - Change dconf path in winbind dnsupdate.ini
