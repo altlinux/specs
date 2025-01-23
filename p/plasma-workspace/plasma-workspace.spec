@@ -35,7 +35,7 @@
 
 Name: %rname
 Version: 6.2.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -84,7 +84,7 @@ Patch1: kdebug-490582.patch
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
-Patch102: alt-def-wallpaper-image.patch
+#
 Patch103: alt-wait-drkonqi.patch
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-menu-no-comment.patch
@@ -314,7 +314,7 @@ Requires: %name-common >= %EVR
 %patch1 -p1
 %patch100 -p1 -b .startkde
 %patch101 -p1
-%patch102 -p1
+#
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
@@ -601,6 +601,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Jan 23 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.2.5-alt2
+- don't force default desktop wallpaper
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.2.5-alt1
 - new version
 
