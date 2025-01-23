@@ -1,6 +1,6 @@
 Name: taucs
 Version: 2.2
-Release: alt12.1
+Release: alt13
 
 Summary: C library of sparse linear solvers
 License: MIT
@@ -9,6 +9,7 @@ Group: Sciences/Mathematics
 Url: http://www.tau.ac.il/~stoledo/taucs/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar.gz
+Patch0: 0001-Fix-taucs_config.c-add-sys-stat.h-header-file.patch
 
 Requires: lib%name = %version-%release
 
@@ -60,6 +61,7 @@ This package contains development files of TAUCS.
 %setup
 rm -fR $(find ./ -name CVS) external/lib
 rm -f progs/taucs_cilk_test.c
+%patch0 -p1
 
 %ifarch %e2k
 # ...at least with lcc 1.26.16; looks like it's somewhat common case
@@ -113,6 +115,9 @@ install -p -m644 doc/%name.pdf %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Wed Jan 22 2025 Ulysses Apokin <ulysses@altlinux.org> 2.2-alt13
+- Fixed build: add sys/stat.h header
+
 * Sun Apr 16 2023 Michael Shigorin <mike@altlinux.org> 2.2-alt12.1
 - E2K: fix build with lcc 1.26.16
 - Minor spec cleanup
