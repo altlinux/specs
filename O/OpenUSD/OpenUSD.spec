@@ -3,9 +3,9 @@
 %set_verify_elf_method strict
 
 %define soname 0
+# endless sigh
+%define lversion 25.2
 %define qt_ver 6
-# FIXME!
-%define lversion 24.8
 
 %def_enable alembic
 %def_enable draco
@@ -21,8 +21,8 @@
 %def_enable hdf5
 
 Name: OpenUSD
-Version: 24.08
-Release: alt0.2
+Version: 25.02
+Release: alt0.1
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -46,6 +46,9 @@ Patch1: embree4.patch
 # SONAME patch from Fedora/RH
 Patch2: 0001-Downstream-only-add-an-SONAME-version.patch
 Patch3: remove-distutils.patch
+# Fix blender GL errors when using Hydra
+# https://github.com/PixarAnimationStudios/OpenUSD/pull/2550
+Patch4: 2550.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
@@ -343,6 +346,7 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %_bindir/usdstitchclips
 %_bindir/usdtree
 %_bindir/usdzip
+%_bindir/usdmeasureperformance
 %if_enabled usdview
 %_desktopdir/org.openusd.usdview.desktop
 %_bindir/testusdview
@@ -369,6 +373,7 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %_man1dir/usdstitchclips.1*
 %_man1dir/usdtree.1*
 %_man1dir/usdzip.1*
+%_man1dir/usdmeasureperformance.1*
 %if_enabled usdview
 %_man1dir/testusdview.1*
 %_man1dir/usdview.1*
@@ -388,6 +393,15 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Wed Jan 22 2025 L.A. Kostis <lakostis@altlinux.ru> 25.02-alt0.1
+- 25.02.
+- embree4: rebase patch.
+- hydra: Fix issues using Hydra and Storm with OpenGL core
+  profile (upstream PR #2550).
+
+* Tue Nov 19 2024 L.A. Kostis <lakostis@altlinux.ru> 24.11-alt0.1
+- 24.11.
+
 * Sun Aug 18 2024 L.A. Kostis <lakostis@altlinux.ru> 24.08-alt0.2
 - Use PySlide6 for usdview (closes #51184, tnx to grenka@).
 
