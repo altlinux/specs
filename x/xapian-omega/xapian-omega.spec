@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xapian-omega
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
 
 Summary: A CGI search frontend and indexers built on Xapian
@@ -84,6 +84,9 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.27-alt1
+- Update to 1.4.27 (2024-12-06).
+
 * Sat Aug 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.26-alt1
 - NMU: Update to 1.4.26 (2024-07-18) to match xapian-core.
 

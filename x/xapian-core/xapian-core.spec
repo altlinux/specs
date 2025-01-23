@@ -3,23 +3,21 @@
 %set_verify_elf_method strict
 
 Name: xapian-core
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
 %define sover 30
-
 Summary: Xapian is an open source search engine library
-
 License: GPL-2.0-or-later
-Group: Databases
+Group: Development/Databases
 Url: http://www.xapian.org
 Vcs: https://github.com/xapian/xapian/
 
 Source: http://www.oligarchy.co.uk/xapian/%version/%{name}-%{version}.tar
 Source100: %name.watch
 
-Packager: Michael Shigorin <mike@altlinux.org>
-
-BuildRequires: gcc-c++ zlib-devel libuuid-devel
+BuildRequires: gcc-c++
+BuildRequires: libuuid-devel
+BuildRequires: zlib-devel
 
 %description
 Xapian is a highly adaptable toolkit which allows developers to easily
@@ -145,12 +143,10 @@ time %make_build check
 %doc docs/apidoc/html/
 %doc HACKING
 
-# NOTE:
-# - do NOT build this package from git unless you want to maintain it
-#   with xapian-bindings, and perhaps xapian-omega too.
-#   I use watch file and it's more convenient to do that with srpms
-
 %changelog
+* Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.27-alt1
+- Update to 1.4.27 (2024-12-06).
+
 * Sat Aug 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.26-alt1
 - Update to 1.4.26 (2024-07-18).
 

@@ -14,19 +14,17 @@
 %def_without doc
 
 Name: xapian-bindings
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
-
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
 Group: Development/Databases
-
 Url: http://www.xapian.org/
 Vcs: git://git.xapian.org/xapian
 
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar
 Source100: xapian-bindings.watch
-Patch1: xapian-bindings-1.4.15-alt-no-docs.patch
+Patch1: xapian-bindings-1.4.27-alt-no-docs.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libruby-devel
@@ -48,6 +46,8 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx-devel
 %endif
 
+%define libxapianEVR %(rpm -q libxapian-devel --requires | grep ^libxapian 2>/dev/null || echo unknown)
+
 %description
 Xapian is a highly adaptable toolkit which allows developers to easily
 add advanced indexing and search facilities to their own applications.
@@ -59,6 +59,7 @@ This package contains programming language bindings.
 %package -n python-module-xapian
 Summary: Python bindings for Xapian search engine
 Group: Development/Python
+Requires: %libxapianEVR
 
 %description -n python-module-xapian
 Xapian is a highly adaptable toolkit which allows developers to easily
@@ -72,6 +73,7 @@ which use Xapian.
 %package -n python3-module-xapian
 Summary: Python 3 bindings for Xapian search engine
 Group: Development/Python3
+Requires: %libxapianEVR
 
 %description -n python3-module-xapian
 Xapian is a highly adaptable toolkit which allows developers to easily
@@ -85,6 +87,7 @@ which use Xapian.
 %package -n ruby-xapian
 Summary: Ruby bindings for Xapian search engine
 Group: Development/Ruby
+Requires: %libxapianEVR
 
 %description -n ruby-xapian
 Xapian is a highly adaptable toolkit which allows developers to easily
@@ -125,13 +128,13 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %check
 %if_with ruby
   ruby -Iruby -Iruby/.libs -rxapian -e '(p Xapian.version_string) == "%version"'
-  make -C ruby check
+  make -C ruby check VERBOSE=1
 %endif
 %if_with python
-  make -C python check
+  make -C python check VERBOSE=1
 %endif
 %if_with python3
-  make -C python3 check
+  make -C python3 check VERBOSE=1
 %endif
 
 %if_with python
@@ -154,6 +157,10 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %endif
 
 %changelog
+* Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.27-alt1
+- Update to 1.4.27 (2024-12-06).
+- spec: Make strict dependence to libxapian.
+
 * Sat Aug 03 2024 Vitaly Chikunov <vt@altlinux.org> 1.4.26-alt1
 - Update to 1.4.26 (2024-07-18).
 
