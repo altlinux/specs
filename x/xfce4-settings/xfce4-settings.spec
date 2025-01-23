@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.20.0
-Release: alt1
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -91,6 +91,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %exclude %_libdir/gtk-3.0/modules/*.la
 
 %changelog
+* Thu Jan 23 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
+- Added fake changelog entry.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 
@@ -100,6 +103,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 * Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - settings-manager: returned xscreensaver properties.
 - Updated to 4.19.3.
+
+* Tue Jun 11 2024 Mikhail Efremov <sem@altlinux.org> 4.18.6-alt1
+- Updated to 4.18.6.
 
 * Wed May 29 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt1
 - Updated to 4.19.2.
