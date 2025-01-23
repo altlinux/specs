@@ -16,12 +16,14 @@
 
 Name: netgen
 Version: 6.2.2406
-Release: alt1
+Release: alt2
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
 Url: https://github.com/NGSolve/netgen
 #Git: https://github.com/NGSolve/netgen.git
+
+ExcludeArch: i586
 
 Source: %name-%version.tar
 Source1: netgen.png
@@ -44,17 +46,15 @@ Patch7: 0007-Add-missing-USE_JPEG-propagation.patch
 # Add missing -ldl
 Patch8: 0008-Add-missing-ldl.patch
 Patch9: netgen-alt-nglib-link-public-libraries.patch
-Patch12: netgen-alt-fix-build-i586.patch
 Patch13: netgen-alt-build-shared-togl.patch
 Patch14: netgen-6.2.2406-alt-using-namespace-std-in-enconding.patch
+Patch15: netgen-debian-fix-version-exception.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): ccmake
 
-%ifarch aarch64
 BuildRequires: clang
-%endif
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 BuildRequires: opencascade-devel
@@ -204,8 +204,9 @@ tar xf %SOURCE4
 %patch7 -p1
 #%%patch8 -p1
 %patch9 -p1
-%patch12 -p1
 %patch14 -p1
+%patch15 -p1
+
 %ifarch %e2k
 sed -i "/data{_mm/{s|{|(|;s|}|)|}" libsrc/core/simd_{sse,avx}.hpp
 sed -i "s|defined(__FMA__) && !defined(__AVX512F__)|& \&\& !defined(__e2k__)|" libsrc/core/simd_avx.hpp
@@ -239,10 +240,9 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
 %ifarch %e2k
 %add_optflags -DNETGEN_ARCH_AMD64 -Wno-return-type -Wno-sign-compare
 %endif
-%ifarch aarch64
+
 # clang doesn't support -flto=auto
 %define optflags_lto %nil
-%endif
 
 ###########################################################################
 ###################          SERIAL VER           #########################
@@ -254,11 +254,9 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DNG_INSTALL_DIR_BIN=%_bindir \
     -DNG_INSTALL_DIR_INCLUDE=%_includedir/%name \
-%ifarch aarch64
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DPython3_INCLUDE_DIR=%__python3_includedir \
-%endif
     -DUSE_JPEG=1 \
     -DUSE_OCC=1 \
     -DPYBIND_INCLUDE_DIR=%_includedir \
@@ -405,6 +403,11 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Wed Jan 22 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt2
+- Added patch from debian for correct version processing (closes: #43541).
+- Built with clang instead of gcc (thx andy@).
+- Excluded i586 architecture.
+
 * Mon Jan 20 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt1
 - New version 6.2.2406.
 
