@@ -2,7 +2,7 @@
 %def_with gtk4
 
 Name: NetworkManager-strongswan
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: NetworkManager strongSwan IPSec VPN plug-in
@@ -19,8 +19,7 @@ BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: pkgconfig(libnm) >= 1.1.0
 BuildRequires: pkgconfig(libnma) >= 1.1.0
-BuildRequires: intltool
-BuildRequires: libtool
+BuildRequires: gettext >= 0.19
 %{?_with_gtk4:BuildRequires: pkgconfig(gtk4) >= 4.0 pkgconfig(libnma-gtk4) >= 1.8.33}
 
 Requires: NetworkManager
@@ -93,6 +92,9 @@ This package contains files for GTK4 applications to use %name.
 %endif
 
 %changelog
+* Thu Jan 23 2025 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
+- new version 1.6.1
+
 * Tue Jun 18 2024 Alexey Shabalin <shaba@altlinux.org> 1.6.0-alt1
 - new version 1.6.0
 - dropped libnm-glib support from spec
