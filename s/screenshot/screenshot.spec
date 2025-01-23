@@ -2,22 +2,27 @@
 %define xdg_name org.adishatz.Screenshot
 
 Name: screenshot
-Version: 0.6.0
+Version: 0.7.1
 Release: alt1
 
 Summary: A screenshot app for GNOME based desktops
 License: GPL-3.0
-Group: Sound
+Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/gnumdk/screenshot
 VCS: https://gitlab.gnome.org/gnumdk/screenshot
 
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson cmake
-BuildRequires: blueprint-compiler desktop-file-utils
-BuildRequires: libgtk4-devel libadwaita-gir-devel libadwaita-devel
-BuildRequires: libportal-devel libportal-gtk4-devel
+BuildRequires: meson
+BuildRequires: cmake
+BuildRequires: blueprint-compiler
+BuildRequires: desktop-file-utils
+BuildRequires: libgtk4-devel
+BuildRequires: libadwaita-gir-devel
+BuildRequires: libadwaita-devel
+BuildRequires: libportal-devel
+BuildRequires: libportal-gtk4-devel
 
 %description
 %summary.
@@ -33,7 +38,7 @@ BuildRequires: libportal-devel libportal-gtk4-devel
 %meson_install
 %find_lang %name
 
-%files
+%files -f %name.lang
 %_bindir/%xdg_name
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_desktopdir/%xdg_name.desktop
@@ -41,5 +46,8 @@ BuildRequires: libportal-devel libportal-gtk4-devel
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Jan 23 2025 Alexey Volkov <qualimock@altlinux.org> 0.7.1-alt1
+- New version 0.7.1
+
 * Sun Sep 15 2024 Alexey Volkov <qualimock@altlinux.org> 0.6.0-alt1
 - Initial build for ALT
