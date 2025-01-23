@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.1.4
-Release: alt2
+Version: 7.1.6
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -919,6 +919,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Thu Jan 23 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.6-alt1
+- Update to newest version 7.1.6
+
 * Thu Dec 19 2024 Valery Sinelnikov <greh@altlinux.org> 7.1.4-alt2
 - Fixed virtualbox.service (closes: 52274)
 
