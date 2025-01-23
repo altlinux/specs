@@ -1,6 +1,6 @@
 Name: altcenter
 Version: 1.0
-Release: alt0.2
+Release: alt0.3
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -45,6 +45,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Jan 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.3
+- about: fixed using float for setPointSize.
+
 * Thu Jan 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.2
 - Made unify spec for sisyphus and p11.
 - Put application to autostart.
