@@ -79,7 +79,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -511,6 +511,14 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Wed Jan 22 2025 Vitaly Lipatov <lav@altlinux.ru> 22.13.1-alt1
+- new version 22.13.1 (with rpmrb script)
+- fixed CVEs:
+ + CVE-2025-23083: src,loader,permission: throw on InternalWorker use when permission model is enabled (High)
+ + CVE-2025-23085: src: fix HTTP2 mem leak on premature close and ERR_PROTO (Medium)
+ + CVE-2025-23084: path: fix path traversal in normalize() on Windows (Medium)
+ + CVE-2025-22150: Use of Insufficiently Random Values in undici fetch() (Medium)
+
 * Thu Jan 16 2025 Vitaly Lipatov <lav@altlinux.ru> 22.13.0-alt1
 - 2025-01-07, Version 22.13.0 'Jod' (LTS), @ruyadorno
 - set npm >= 10.9.2
