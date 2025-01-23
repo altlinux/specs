@@ -1,12 +1,16 @@
 Summary: The Wake On Lan client
 Name: wol
 Version: 0.7.1
-Release: alt3.1
-License: GPL
+Release: alt4
+License: GPL-2.0
 Group: Networking/Other
 Url: http://ahh.sf.net/wol/
 Packager: Mikhail Pokidko <pma@altlinux.ru>
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Patch0: 0001-Throw-out-obsolete-AC_HEADER_STDC.patch
+Patch1: 0002-Fix-config.h-test-consumption.patch
+Patch2: 0003-Fix-malloc-detection.patch
+Patch3: 0004-Fix-xmalloc.patch
 
 BuildRequires: perl-podlators
 # explicitly added texinfo for info files
@@ -20,9 +24,14 @@ provided by wol.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-%configure
+%autoreconf
+%configure \ --with-gnu-ld
 %make %?_smp_mflags
 
 %install
@@ -42,6 +51,9 @@ provided by wol.
 %_bindir/*
 
 %changelog
+* Wed Jan 22 2025 Ulysses Apokin <ulysses@altlinux.org> 0.7.1-alt4
+- Fix FTBFS.
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3.1
 - NMU: added BR: texinfo
 
@@ -53,4 +65,3 @@ provided by wol.
 
 * Tue Feb 06 2007 Mikhail Pokidko <pma@altlinux.ru> 0.7.1-alt1
 - 1st build
-
