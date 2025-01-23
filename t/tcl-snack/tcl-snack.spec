@@ -4,14 +4,16 @@
 
 Name: tcl-snack
 Version: 2.2.10
-Release: alt4.qa2
+Release: alt5
 
 Summary: Snack - a sound toolkit for scripting languages
-License: GPL
+License: GPLv2
 Group: Development/Tcl
 Url: http://www.speech.kth.se/snack/
 
 Source: %name-%version-%release.tar
+
+Patch0: tcl-snack-alt-type-fixes.patch
 
 Requires: tcl >= 8.4.0-alt1 tcl-sound = %version-%release
 
@@ -25,7 +27,7 @@ Obsoletes: %teaname
 
 %package -n tcl-sound
 Summary: Snack - a sound toolkit for scripting languages
-License: GPL
+License: GPLv2
 Group: Development/Tcl
 
 %package demos
@@ -59,6 +61,8 @@ the features of Snack
 
 %prep
 %setup
+
+%patch0 -p1
 
 %build
 cd unix
@@ -104,6 +108,9 @@ chmod 0644 doc/*
 %_tcldatadir/%teaname%version/demos
 
 %changelog
+* Sun Jan 19 2025 Leonid Znamenok <respublica@altlinux.org> 2.2.10-alt5
+- NMU: fixed FTBFS.
+
 * Thu Mar 28 2019 Vitaly Lipatov <lav@altlinux.ru> 2.2.10-alt4.qa2
 - NMU: add missed zlib-devel
 
