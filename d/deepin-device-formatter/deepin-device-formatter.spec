@@ -1,17 +1,21 @@
 %global repo dde-device-formatter
 
 Name: deepin-device-formatter
-Version: 0.0.1.16
+Version: 1.5.2
 Release: alt1
+
 Summary: Device formatter for Deepin Desktop Environment
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-device-formatter
+Vcs: git://github.com/linuxdeepin/dde-device-formatter.git
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ dqt5-base-devel dqt5-tools deepin-gettext-tools udisks2-qt5-devel dtk5-widget-devel dqt5-x11extras-devel
+BuildRequires: gcc-c++ cmake dqt6-base-devel dqt6-tools-devel deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libudisks2-qt6-devel
 #Requires: icon-theme-hicolor
 
 %description
@@ -21,18 +25,14 @@ BuildRequires: gcc-c++ dqt5-base-devel dqt5-tools deepin-gettext-tools udisks2-q
 %setup -n %repo-%version
 
 %build
-export PATH=%_dqt5_bindir:$PATH
-%qmake_dqt5 \
-  DEFINES+="VERSION=%version" \
-  CONFIG+=nostrip \
-  VERSION=%version \
-  LIB_INSTALL_DIR=%_libdir \
-  QMAKE_RPATHDIR=%_dqt5_libdir \
-  #
-%make_build
+export LC_ALL=C.UTF-8
+%DQ6build \
+  -DVERSION=%version \
+  -DLIB_INSTALL_DIR=%_libdir \
+#
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%DQ6install
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
@@ -44,6 +44,11 @@ export PATH=%_dqt5_bindir:$PATH
 %_datadir/%repo/translations/%repo.qm
 
 %changelog
+* Thu Jan 23 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.2-alt1
+- New version 1.5.2.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Fri May 31 2024 Leontiy Volodin <lvol@altlinux.org> 0.0.1.16-alt1
 - New version 0.0.1.16.
 - Built via separate qt5 instead system (ALT #48138).
