@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -423,6 +423,9 @@ Requires: xorg-drv-synaptics
 Requires: xorg-conf-synaptics
 Requires: xinput
 Requires: xorg-drv-libinput
+%ifnarch ppc64le armh
+Requires: altcenter
+%endif
 %description xfce
 %{summary}.
 
@@ -482,6 +485,9 @@ Requires: vulkan-amdgpu
 # Multimedia                                                                                  
 Requires: simplescreenrecorder
 Requires: quick-usb-formatter
+%ifnarch ppc64le armh
+Requires: altcenter
+%endif
 %description kde
 %{summary}.
 
@@ -632,6 +638,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Jan 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
+- task-edu-kde, task-edu-xfce: add altcenter
+
 * Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
 - Add task-edu-xfce metapackage.
 
