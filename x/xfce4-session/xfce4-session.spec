@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.20.0
-Release: alt1
+Release: alt2
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -84,6 +84,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_datadir/xdg-desktop-portal/xfce-portals.conf
 
 %changelog
+* Thu Jan 23 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
+- Added fake changelog entry.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 
@@ -95,6 +98,10 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 
 * Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt3.g605c7c75
 - Upstream git snapshot (master branch).
+
+* Mon Jun 10 2024 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
+- xinitrc: Don't use absolute path for sd_booted.
+- Updated to 4.18.4.
 
 * Wed Jun 05 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt2
 - Packaged autostart xscreensaver desktop file again.
