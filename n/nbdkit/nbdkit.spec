@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=relaxed
 
 Name: nbdkit
-Version: 1.41.8
+Version: 1.41.9
 Release: alt1
 Summary: NBD server with stable plugin ABI and permissive license
 License: BSD-3-Clause
@@ -144,6 +144,9 @@ nbdkit -U - memory 1G --run 'nbdinfo "$uri"'
 %files checkinstall
 
 %changelog
+* Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.41.9-alt1
+- Update to v1.41.9 (2025-01-08).
+
 * Mon Nov 25 2024 Vitaly Chikunov <vt@altlinux.org> 1.41.8-alt1
 - Update to v1.41.8 (2024-10-14).
 
