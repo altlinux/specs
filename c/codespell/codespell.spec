@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: codespell
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Summary: Check code for common misspellings
 Group: Development/Tools
@@ -81,6 +81,9 @@ echo Millenium  > /tmp/example.txt
 %_datadir/codespell
 
 %changelog
+* Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 2.4.0-alt1
+- Update to v2.4.0 (2025-01-21).
+
 * Fri May 24 2024 Vitaly Chikunov <vt@altlinux.org> 2.3.0-alt1
 - Update to v2.3.0 (2024-05-21).
 
