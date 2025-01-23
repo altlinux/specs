@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.25
-Release: alt2
+Version: 0.1.26
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -85,6 +85,10 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 
 %changelog
+* Thu Jan 23 2025 Ivan Savin <svn17@altlinux.org> 0.1.26-alt1
+- Add sorting for output of methods in org.altlinux.alterator.manager
+  (GetObjects, GetInterfaces, GetAllObjects, GetAllInterfaces).
+
 * Thu Dec 12 2024 Ivan Savin <svn17@altlinux.org> 0.1.25-alt2
 - Fix setting a thread limit.
 
