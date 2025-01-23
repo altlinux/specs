@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        132.0.6834.83
+Version:        132.0.6834.110
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -89,16 +89,17 @@ Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-libavif-deps.patch
 # Patch033: 0033-ALT-rename-std::powf.patch
 # Patch034: 0034-DEBIAN-span-optional.patch
-Patch035: 0035-DEBIAN-mojo.patch
+# Patch035: 0035-DEBIAN-mojo.patch
 Patch036: 0036-DEBIAN-ruy-include.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
-Patch045: 0045-DEBIAN-mojo-null.patch
+# Patch045: 0045-DEBIAN-mojo-null.patch
 
 Patch062: 0062-DEBIAN-cacheline.patch
+Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
 
 ### End Patches
 
@@ -547,6 +548,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Jan 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 132.0.6834.110-alt1
+- New version (132.0.6834.110).
+- Security fixes:
+  + CVE-2025-0611: Object corruption in V8.
+  + CVE-2025-0612: Out of bounds memory access in V8.
+
 * Wed Jan 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 132.0.6834.83-alt1
 - New version (132.0.6834.83).
 - Security fixes:
