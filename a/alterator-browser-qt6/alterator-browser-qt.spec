@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.5.3
+Version: 3.5.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Thu Jan 23 2025 Sergey V Turchin <zerg at altlinux dot org> 3.5.4-alt1
+- completly port to new object connection style
+
 * Tue Jan 21 2025 Sergey V Turchin <zerg at altlinux dot org> 3.5.3-alt1
 - fix to accept right xml newlines
 
