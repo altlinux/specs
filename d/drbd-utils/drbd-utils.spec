@@ -1,5 +1,5 @@
 %def_without xen
-%define githash ba2ce9037989b6141222c7901d1219cf852949f1
+%define githash 36ea199f38b543b2da92219109c2832e122e5bf9
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -7,7 +7,7 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.29.0
+Version: 9.30.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -155,6 +155,7 @@ make test
 %_sbindir/drbdadm
 %_sbindir/drbdmeta
 %_sbindir/drbdmon
+%_sbindir/drbd-events-log-supplier
 %dir /usr/lib/drbd
 /usr/lib/drbd/drbdadm-*
 /usr/lib/drbd/drbdsetup-*
@@ -171,6 +172,8 @@ make test
 %dir %_var/lib/drbd
 %_man8dir/drbd*
 %_man7dir/*
+%exclude %_man7dir/ocf_linbit_drbd.*
+%exclude %_man7dir/ocf_linbit_drbd-attr.*
 %_man5dir/drbd*
 %_sysconfdir/bash_completion.d/*
 
@@ -186,12 +189,17 @@ make test
 /usr/lib/ocf/resource.d/linbit/drbd-attr
 /usr/lib/drbd/crm-*fence-peer.sh
 /usr/lib/drbd/stonith_admin-fence-peer.sh
+%_man7dir/ocf_linbit_drbd.*
+%_man7dir/ocf_linbit_drbd-attr.*
 
 %files rgmanager
 %_datadir/cluster/drbd.sh
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Thu Jan 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.30.0-alt1
+- 9.30.0
+
 * Tue Oct 29 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.29.0-alt1
 - 9.29.0
 
