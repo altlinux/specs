@@ -1,18 +1,17 @@
 Name: pychess
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 
 Summary: Chess game for GNOME
 License: GPLv2
 Group: Games/Boards
 Url: https://github.com/pychess/pychess/
 VCS: https://github.com/pychess/pychess.git
-Packager: Leonid Znamenok <respublica@altlinux.org>
 
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch0: hasher-fix_1.0.3.patch
+Patch0: pychess-alt-fix-sysprefix-processing-in-hasher.patch
 Patch1: pr2235.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
@@ -26,6 +25,7 @@ BuildRequires: python3(gi)
 BuildRequires: python3(cairo)
 BuildRequires: gobject-introspection-devel
 BuildRequires: librsvg-gir-devel
+BuildRequires: python3-module-pygobject3-pygtkcompat
 
 # needed:
 Requires: gnome-icon-theme
@@ -69,6 +69,9 @@ PYTHONPATH=lib %__python3 create_theme_preview.py
 %_man1dir/*
 
 %changelog
+* Thu Jan 23 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.5-alt1
+- New version 1.0.5.
+
 * Thu Dec 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt2
 - Dropped dependency on telnetlib.
 
