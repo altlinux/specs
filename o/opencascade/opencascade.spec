@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 7.7.2
-Release: alt2
+Release: alt2.1
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -12,6 +12,7 @@ Url: http://www.opencascade.org
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
+Patch3: opencascade-ustream-use-unsigned-point-and-countur-indexing.patch
 Patch2000: opencascade-e2k-disable-fenv.patch
 
 Requires: lib%name = %version-%release
@@ -81,6 +82,7 @@ This package contains documentation for Open CASCADE.
 %ifarch %arm
 %patch2 -p2
 %endif
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -131,6 +133,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 7.7.2-alt2.1
+- NMU: Backport upstream fix for FTBFS.
+
 * Mon Jan 29 2024 Anton Farygin <rider@altlinux.ru> 7.7.2-alt2
 - built with  vtk 9.3
 
