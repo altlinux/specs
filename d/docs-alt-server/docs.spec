@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Jan 23 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt3
+- fix some typos (closes #52514)
+- PBS: added notifications
+- update SambaDC, FreeIPA, Zabbix, Nextcloud
+
 * Tue Nov 12 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt2
 - fix some typos (#51918, #51955)
 - fix PBS (closes: #51979, #51973, #51966, #51965, #51915, #51988, #52022)
