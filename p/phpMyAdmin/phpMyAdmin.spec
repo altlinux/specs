@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -40,6 +40,11 @@ AutoReq:yes,noshell,nomingw32,nopython
 %if_feature php82 8.2.0
 %def_with php82
 %define defphp php8.2
+%endif
+
+%if_feature php83 8.3.0
+%def_with php83
+%define defphp php8.3
 %endif
 
 %if_feature php81 8.1.0
@@ -239,6 +244,47 @@ manual. Currently phpMyAdmin can:
 
 Install this package if you need phpMyAdmin for apache 2.4 and php8.2.
 
+%package apache2-php8.3
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php8.3)
+Group: System/Servers
+Requires: %name = %EVR
+Requires: apache2-mod_php8.3
+Requires: apache2-base
+
+# from composer.json
+Requires: php8.3-mysqlnd-mysqli
+Requires: php8.3-openssl
+Requires: php8.3-curl
+Requires: php8.3-opcache
+#Requires: php7-zlib
+Requires: php8.3-bz2
+Requires: php8.3-zip
+Requires: php8.3-gd2
+Requires: php8.3-mbstring
+Requires: php8.3-mcrypt
+
+Conflicts: %name-apache2
+Conflicts: %name-apache2-php7
+
+%description apache2-php8.3
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 2.4 and php8.3.
+
 %prep
 %setup
 
@@ -318,7 +364,24 @@ fi
 #attr(755,root,root) %_controldir/%name-apache2
 %endif
 
+%if_with php83
+%files apache2-php8.3
+%config(noreplace) %apache2_extra_available/%name.conf
+%apache2_extra_enabled/%name.conf
+#attr(755,root,root) %_controldir/%name-apache2
+%endif
+
 %changelog
+* Thu Jan 23 2025 Vitaly Lipatov <lav@altlinux.ru> 5.2.2-alt1
+- new version 5.2.2 (with rpmrb script)
+- added php8.3 support
+- fixed CVEs:
+ + fix possible security issue in sql-parser which could cause long execution times
+ + PMASA-2025-1: fix an XSS vulnerability in the check tables feature
+ + PMASA-2025-2P: fix an XSS vulnerability in the Insert tab
+ + CVE-2023-30536: fix possible security issue with library code slim/psr7
+ + CVE-2024-2961, PMASA-2025-3: fix possible security issue relating to iconv
+
 * Thu Mar 23 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
 - new version 5.2.1 (with rpmrb script)
  + PMASA-2023-01: fix for an XSS vulnerability in the drag-and-drop upload functionality
