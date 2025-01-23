@@ -1,6 +1,6 @@
 Name: rootfiles
 Version: alt
-Release: alt13
+Release: alt14
 
 Summary: The basic required files for the root user's directory
 License: GPLv2+
@@ -31,6 +31,9 @@ chmod -R go-rwx %buildroot/root
 %dir /root/tmp
 
 %changelog
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> alt-alt14
+- NMU: .i18n: set LANG=C.UTF-8 and LANGUAGE=C.UTF-8 always (Closes: 52675)
+
 * Thu Apr 04 2024 Arseny Maslennikov <arseny@altlinux.org> alt-alt13
 - .bashrc, .zshenv: dropped the PATH setting.
 - .tcshrc: put /bin after /usr/bin.
