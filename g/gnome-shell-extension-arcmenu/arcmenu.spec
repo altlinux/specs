@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-arcmenu
-Version: 63
-Release: alt1
+Version: 64
+Release: alt2
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -40,5 +40,11 @@ shortcuts, and much more!
 %doc README.md
 
 %changelog
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 64-alt2
+- extension.js: Remove UpdateNotifier
+
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 64-alt1
+- New version 64.
+
 * Thu Dec 19 2024 Anton Midyukov <antohami@altlinux.org> 63-alt1
 - initial build
