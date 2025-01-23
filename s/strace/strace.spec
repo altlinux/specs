@@ -1,5 +1,5 @@
 Name: strace
-Version: 6.12
+Version: 6.13
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -41,7 +41,7 @@ purposes.
 %prep
 %setup -n %name-%version-%release
 echo -n %version-%release > .tarball-version
-echo -n 2024 > .year
+echo -n 2025 > .year
 date +%%Y-%%m-%%d > doc/.strace.1.in.date
 date +%%Y-%%m-%%d > doc/.strace-log-merge.1.in.date
 
@@ -89,6 +89,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Thu Jan 23 2025 Dmitry V. Levin <ldv@altlinux.org> 6.13-alt1
+- v6.12 -> v6.13.
+
 * Mon Nov 18 2024 Dmitry V. Levin <ldv@altlinux.org> 6.12-alt1
 - v6.11 -> v6.12.
 
