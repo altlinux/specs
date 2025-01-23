@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.7.1
-Release: alt1
+Release: alt1.1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -9,7 +9,10 @@ Group:   Education
 
 URL:     http://altlinux.org/education
 
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
 BuildRequires(pre): rpm-macros-qt6-webengine
+BuildRequires(pre): rpm-macros-qt5-webengine
 
 # Education (base part)
 Requires: task-edu-lite = %EVR
@@ -423,7 +426,7 @@ Requires: xorg-drv-synaptics
 Requires: xorg-conf-synaptics
 Requires: xinput
 Requires: xorg-drv-libinput
-%ifnarch ppc64le armh
+%ifnarch %not_qt5_qtwebengine_arches
 Requires: altcenter
 %endif
 %description xfce
@@ -485,7 +488,7 @@ Requires: vulkan-amdgpu
 # Multimedia                                                                                  
 Requires: simplescreenrecorder
 Requires: quick-usb-formatter
-%ifnarch ppc64le armh
+%ifnarch %not_qt5_qtwebengine_arches
 Requires: altcenter
 %endif
 %description kde
@@ -638,6 +641,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 1.7.1-alt1.1
+- NMU: rpm-macros-qt5-webengine to determine altcenter presence
+  (fixes build on loongarch64)
+
 * Thu Jan 23 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.1-alt1
 - task-edu-kde, task-edu-xfce: add altcenter
 
