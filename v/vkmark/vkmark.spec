@@ -1,15 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %ix86
-# https://github.com/vkmark/vkmark/issues/59
-%def_without check
-%else
 %def_with check
-%endif
 
 Name: vkmark
-Version: 2017.08
-Release: alt3.git.ab6e6f340
+Version: 2025.01
+Release: alt1
 
 Summary: Vulkan benchmark
 License: LGPL-2.1-or-later
@@ -52,16 +47,17 @@ scenes.
 
 %files
 %_bindir/vkmark
-%dir %_libdir/%name
-%_libdir/%name/wayland.so
-%_libdir/%name/xcb.so
-%_libdir/%name/kms.so
+%_libdir/%name
 %_man1dir/%name.1*
 %_datadir/%name
 
 %changelog
+* Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 2025.01-alt1
+- 2025.01
+- re-enable tests on %%ix86
+
 * Tue Feb 27 2024 Ivan A. Melnikov <iv@altlinux.org> 2017.08-alt3.git.ab6e6f340
-- disable tests on %ix86.
+- disable tests on %%ix86.
 
 * Tue Feb 27 2024 Ivan A. Melnikov <iv@altlinux.org> 2017.08-alt2.git.ab6e6f340
 - restore package in Sisyphus;
