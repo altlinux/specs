@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 89
-Release: alt1
+Version: 90
+Release: alt2
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -67,6 +67,12 @@ rm -r %buildroot%_sysconfdir/apparmor.d
 %doc README.md
 
 %changelog
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 90-alt2
+- Revert "Hard code for Ptyxis terminal for new Fedora"
+
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 90-alt1
+- New version 90.
+
 * Fri Jan 10 2025 Anton Midyukov <antohami@altlinux.org> 89-alt1
 - New version 89.
 
