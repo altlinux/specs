@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-dash-to-panel
-Version: 64
+Version: 65
 Release: alt1
 
 %define sname dash-to-panel
@@ -16,8 +16,6 @@ License: GPL-2.0
 Group:  Graphical desktop/GNOME
 Url: https://github.com/home-sweet-gnome/dash-to-panel
 Vcs: https://github.com/home-sweet-gnome/dash-to-panel
-
-Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -59,6 +57,10 @@ rm -vr %buildroot%_datadir/gnome-shell/extensions/%eid/schemas
 %doc README.md
 
 %changelog
+* Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 65-alt1
+- New version 65.
+- Remove Packager
+
 * Sat Dec 21 2024 Anton Midyukov <antohami@altlinux.org> 64-alt1
 - spec: fix install glibc schema
 - Update .gear/rules for build from git tag, generate patch
