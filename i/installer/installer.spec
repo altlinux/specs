@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.3
+Version: 1.16.4
 Release: alt1
 
 Summary: Installer common parts
@@ -93,6 +93,7 @@ Summary: Installer files for run on Desktop
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: installer-common-stage2 = %EVR
+Requires: polkit
 Conflicts: livecd-install
 
 %description common-desktop
@@ -120,13 +121,14 @@ This package contains installer files for run on Desktop.
 %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
 %files common-desktop
-%_bindir/install2
-%_sbindir/install2
+%_bindir/install2-desktop
 %_desktopdir/install2.desktop
-%_sysconfdir/pam.d/install2
-%_sysconfdir/security/console.apps/install2
 
 %changelog
+* Thu Jan 23 2025 Anton Midyukov <antohami@altlinux.org> 1.16.4-alt1
+- install2-common-desktop: replace consolehelper with pkexec
+- Check variable WAYLAND_DISPLAY in conditions for run on desktop
+
 * Thu Jan 16 2025 Anton Midyukov <antohami@altlinux.org> 1.16.3-alt1
 - Replace all binaries and scripts to %%_prefix/libexec/install2, except
   functions
