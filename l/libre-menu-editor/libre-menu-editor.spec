@@ -1,11 +1,11 @@
 %def_disable snapshot
 
 %define _name libre-menu-editor
-%define ver_major 1.8
+%define ver_major 1.9
 %define rdn_name page.codeberg.libre_menu_editor.LibreMenuEditor
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Menu editor
@@ -19,6 +19,7 @@ Vcs: https://codeberg.org/libre-menu-editor/libre-menu-editor.git
 BuildArch: noarch
 
 %if_disabled snapshot
+#Source: %url/archive/v%version/%name-%version.tar.gz
 Source: %url/archive/v%version.tar.gz
 %else
 Source: %name-%version.tar
@@ -50,6 +51,9 @@ Menu editor for GNOME.
 %doc readme.*
 
 %changelog
+* Thu Jan 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.0-alt1
+- 1.9.0
+
 * Wed Dec 11 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.8.2-alt1
 - 1.8.2
 
