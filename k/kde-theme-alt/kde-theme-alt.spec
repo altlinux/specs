@@ -1,5 +1,5 @@
 Name: kde-theme-alt
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: ALT KDE theme
@@ -14,6 +14,8 @@ BuildArch: noarch
 Requires: icon-theme-altos
 Requires: x-cursor-themes-breezex
 Requires: gtk-theme-breeze
+# alt-desktop-wallpapers for AltElbrus
+Requires: alt-desktop-wallpapers
 
 %description
 ALT theme for KDE.
@@ -32,6 +34,9 @@ cp -ar desktoptheme/altos-* %buildroot/%_datadir/plasma/desktoptheme/
 %_datadir/plasma/desktoptheme/altos-*/
 
 %changelog
+* Thu Jan 23 2025 Sergey V Turchin <zerg at altlinux dot org> 0.3.2-alt1
+- update default wallpaper
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg at altlinux dot org> 0.3.1-alt1
 - fix taskbar task group popup list (closes: 52742)
 
