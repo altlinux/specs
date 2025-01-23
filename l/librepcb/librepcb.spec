@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librepcb
-Version: 1.0.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: A powerful, innovative and intuitive EDA suite for everyone
 Summary(ru_RU.UTF-8): Мощный, инновационный и интуитивно понятный пакет EDA для всех
@@ -13,37 +13,38 @@ Url:     https://librepcb.org
 
 # Source-url: https://download.librepcb.org/releases/%version/%name-%version-source.zip
 Source: %name-%version.tar
+Patch: alt-qt6-support.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-tools
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+#BuildRequires: qt6-quickcontrols2-devel
+BuildRequires: qt6-tools
 BuildRequires: opencascade-devel
 BuildRequires: libGLU-devel
 BuildRequires: libgtest-devel
 BuildRequires: libfreetype-devel
-BuildRequires: pkgconfig(Qt5Concurrent)
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Help)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: pkgconfig(Qt5OpenGL)
-BuildRequires: pkgconfig(Qt5PrintSupport)
-BuildRequires: pkgconfig(Qt5Sql)
-BuildRequires: pkgconfig(Qt5Svg)
-BuildRequires: pkgconfig(Qt5Test)
-BuildRequires: pkgconfig(Qt5Widgets)
-BuildRequires: pkgconfig(Qt5Xml)
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Help)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6OpenGL)
+BuildRequires: pkgconfig(Qt6PrintSupport)
+BuildRequires: pkgconfig(Qt6Sql)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6Test)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Xml)
 BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(sfml-graphics)
-BuildRequires: quazip-qt5-devel
+BuildRequires: quazip-qt6-devel
 BuildRequires: libdxflib-devel
 BuildRequires: libpolyclipping-devel
 BuildRequires: libgtest-devel
 BuildRequires: libmuparser-devel
-BuildRequires: fontobene-qt5-devel
+BuildRequires: fontobene-qt6-devel
 
 %description
 LibrePCB is a free, cross-platform, easy-to-use electronic design automation
@@ -58,10 +59,12 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%cmake  -DUNBUNDLE_DXFLIB=ON \
-	-DUNBUNDLE_FONTOBENE_QT5=ON \
+%cmake  -DQT_MAJOR_VERSION=6 \
+	-DUNBUNDLE_DXFLIB=ON \
+	-DUNBUNDLE_FONTOBENE_QT=ON \
 	-DUNBUNDLE_GTEST=ON \
 	-DUNBUNDLE_HOEDOWN=OFF \
 	-DUNBUNDLE_MUPARSER=ON \
@@ -85,6 +88,9 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 %_datadir/mime/packages/org.%name.LibrePCB.xml
 
 %changelog
+* Thu Jan 23 2025 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- new version (1.2.0) with rpmgs script
+
 * Wed Sep 27 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt2
 - unbundle FONTOBENE_QT5
 
