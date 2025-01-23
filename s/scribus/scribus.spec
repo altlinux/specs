@@ -1,5 +1,5 @@
 Name: scribus
-Version: 1.6.1
+Version: 1.6.3
 Release: alt1
 Epoch: 1
 
@@ -178,6 +178,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Thu Jan 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.3-alt1
+- new version 1.6.3 (with rpmrb script)
+
 * Wed Feb 28 2024 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt1
 - new version 1.6.1 (with rpmrb script)
 - build with libpodofo 0.10
