@@ -1,6 +1,6 @@
 Name: opam
 Version: 2.3.0
-Release: alt1
+Release: alt2
 Summary: A source-based package manager for OCaml
 License: LGPLv3
 Group: Development/ML
@@ -9,11 +9,13 @@ Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 BuildRequires: ocaml
 BuildRequires: libacl-devel
+BuildRequires: dune
 BuildRequires: ocaml-opam-file-format-devel
 BuildRequires: ocaml-cppo_ocamlbuild-devel
 BuildRequires: ocaml-cppo
 BuildRequires: ocaml-mccs-devel
-BuildRequires: ocaml-findlib
+BuildRequires: ocaml-findlib-devel
+BuildRequires: ocaml-uutf-devel
 BuildRequires: ocaml-ocamldoc
 BuildRequires: ocaml-cudf-devel
 BuildRequires: ocaml-ocamlgraph-devel
@@ -27,8 +29,7 @@ BuildRequires: ocaml-spdx_licenses-devel
 BuildRequires: ocaml-sha-devel
 BuildRequires: ocaml-opam-0install-cudf-devel
 BuildRequires: ocaml-swhid_core-devel
-
-BuildRequires: curl dune ocaml-omd gcc-c++
+BuildRequires: curl gcc-c++
 
 %description
 OPAM stands for OCaml PAckage Manager.
@@ -96,6 +97,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Fri Jan 24 2025 Anton Farygin <rider@altlinux.ru> 2.3.0-alt2
+- changed BR to fix build with rpm-build-ocaml >= 1.7
+
 * Tue Dec 24 2024 Anton Farygin <rider@altlinux.ru> 2.3.0-alt1
 - 2.2.1 -> 2.3.0
 
