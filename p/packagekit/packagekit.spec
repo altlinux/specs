@@ -5,7 +5,7 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.2.5.0.0.36
+Version:   1.2.6
 Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
@@ -114,6 +114,19 @@ Python3 backend for PackageKit.
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar) |" backends/apt/apt-{utils,job}.cpp
+
+# Explanation: The workaround is needed only for C++:
+#
+# lcc: "/usr/include/glib-2.0/glib/gmacros.h", line 1365: warning #3330:
+#           attribute "cleanup" is not yet supported in C++ mode
+#           [-Wignored-attribute-cleanup]
+#     __attribute__((cleanup(func))) \
+#                    ^
+#  in expansion of macro "_GLIB_CLEANUP" at line 1473
+#  in expansion of macro "g_autofree" at line 755 of
+#
+# Let's catch the missed problems:
+%add_optflags -Werror=ignored-attribute-cleanup
 %endif
 
 %build
@@ -298,6 +311,10 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Fri Jan 24 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.2.6-alt1
+- v1.2.6 (with the "support for Packages signal to emit many packages at once").
+- Ensured that it builds on e2k.
+
 * Wed Jan 22 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5.0.0.36-alt1
 - Rebased onto upstream b233f3634 (apt: Generate logging output properly).
 - Tiny adaptions and enhancements to the source code driven by compiler
