@@ -1,6 +1,6 @@
 Name: arm-none-eabi-gcc
 Version: 14.2.0
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 License: GPLv3+
@@ -36,7 +36,10 @@ including templates and exception handling.
 
 %define target         arm-none-eabi
 %define _libexecdir /usr/libexec
-%brp_strip_none %_libexecdir/*
+%brp_strip_none %_libexecdir/%target/*
+%brp_strip_none %_libexecdir/gcc/%target/*.[oa]
+%add_verify_elf_skiplist %_libexecdir/%target/*
+%add_verify_elf_skiplist %_libexecdir/gcc/%target/*
 
 %prep
 %setup
@@ -134,6 +137,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Fri Jan 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt3
+- stripped host binaries
+
 * Wed Jan 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt2
 - aligned with 14.2rel1 arm toolchain
 
