@@ -1,6 +1,6 @@
 Name:		mdevctl
-Version:	1.3.0
-Release:	alt3
+Version:	1.4.0
+Release:	alt1
 Summary:	Mediated device management and persistence utility
 
 Group:		System/Configuration/Hardware
@@ -69,6 +69,9 @@ cargo test --release --no-fail-fast
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Jan 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Sun Jan 14 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.3.0-alt3
 - add scripts.d subdirs (Closes: #49068)
 
