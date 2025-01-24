@@ -1,7 +1,7 @@
 %def_with check
 Name: ocaml-re
 Version: 1.11.0
-Release: alt1
+Release: alt2
 Summary: A regular expression library for OCaml
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
 Url: https://github.com/ocaml/ocaml-re
@@ -34,6 +34,9 @@ developing applications that use %name.
 %prep
 %setup
 %patch0 -p1
+# set version in source code, 
+echo "(version %version)" >>dune-project
+sed -i "1a version: \"%version\"" re.opam
 
 %build
 %dune_build -p re
@@ -51,6 +54,10 @@ sed -si 's,oUnit,ounit2,' lib_test/fort_unit/dune
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Jan 24 2025 Anton Farygin <rider@altlinux.ru> 1.11.0-alt2
+- added version injection into dune-project and re.opam to include version info
+  absent in the Git repository but present in the tarball
+
 * Fri Nov 03 2023 Anton Farygin <rider@altlinux.ru> 1.11.0-alt1
 - 1.11.0
 
