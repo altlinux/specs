@@ -1,6 +1,6 @@
 Name: wiki-js
 Version: 2.5.305
-Release: alt1
+Release: alt2
 Summary: A modern and powerful wiki app built on Node.js
 License: AGPL-3.0
 Group: System/Servers
@@ -12,6 +12,7 @@ Source1: node_modules.tar
 Source2: %name.service
 Patch: alt-fix-config-dir.patch
 Patch1: alt-fix-node-options.patch
+Patch2: alt-fix-osinfo.patch
 
 BuildRequires: yarn
 BuildRequires: /proc
@@ -32,6 +33,7 @@ A modern, lightweight and powerful wiki app built on NodeJS, Git and Markdown.
 # node < v17 not supported option openssl-legacy-provider
 %patch1 -p1
 %endif
+%patch2 -p1
 sed -i -e '/version/s/2.0.0/%version/' -e '/dev/s/true/false/' package.json
 sed -i '/dataPath/s|./data|%_sharedstatedir/%name/data|' config.sample.yml
 
@@ -66,5 +68,8 @@ cp -r server assets node_modules package.json %buildroot%_libexecdir/%name
 %doc LICENSE
 
 %changelog
+* Fri Jan 24 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.5.305-alt2
+- Fixed OS information (closes: #52813).
+
 * Sun Jan 12 2025 Alexander Makeenkov <amakeenk@altlinux.org> 2.5.305-alt1
 - Initial build for ALT.
