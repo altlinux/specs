@@ -6,8 +6,8 @@
 %set_autoconf_version 2.71
 
 Name: lib%oname
-Version: 1.14.3
-Release: alt3
+Version: 1.14.5
+Release: alt1
 
 Summary: Hierarchical Data Format 5 library
 License: BSD
@@ -76,20 +76,6 @@ requirements of modern systems and applications.
 
 This package contains tools for work with HDF5.
 
-%package -n %oname-examples
-Summary: HDF5 examples
-Group: Development/Documentation
-BuildArch: noarch
-
-%description -n %oname-examples
-HDF5 is a completely new Hierarchical Data Format product consisting
-of a data format specification and a supporting library
-implementation. HDF5 is designed to address some of the limitations of
-the older HDF product and to address current and anticipated
-requirements of modern systems and applications.
-
-This package contains examples for HDF5.
-
 %prep
 %setup
 %patch -p1
@@ -157,14 +143,14 @@ EOF
 # used to show configuration at runtime
 %_libdir/libhdf5.settings
 
-%files -n %oname-examples
-%_datadir/hdf5_examples
-
 %changelog
+* Fri Oct 18 2024 Anton Farygin <rider@altlinux.ru> 1.14.5-alt1
+- 1.14.3 -> 1.14.5
+
 * Thu Aug 29 2024 Alexander Danilov <admsasha@altlinux.org> 1.14.3-alt3
 - Set the version of autoconf to 2.71 to simplify the build
   into the old branches.
-  
+
 * Wed Feb 28 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.14.3-alt2
 - Fixed build for Elbrus
 
