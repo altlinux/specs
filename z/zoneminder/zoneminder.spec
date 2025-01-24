@@ -6,8 +6,8 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.35
-Release: alt1
+Version: 1.37.61
+Release: alt5.gitb5ee966d9
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -37,7 +37,12 @@ Requires: perl-SOAP-WSDL perl-Class-Std-Fast perl-Data-UUID perl-IO-Socket-Multi
 Requires: perl-Digest-SHA perl-Class-Date perl-DateTime perl-Date-Manip perl-libwww
 Requires: perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable
 AutoReq: noperl
-BuildRequires: bzlib-devel ffmpeg gcc-c++ libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel libuuid-devel libselinux-devel libblkid-devel libmp4v2
+BuildRequires: bzlib-devel ffmpeg gcc-c++ libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel
+BuildRequires: libuuid-devel
+BuildRequires: libselinux-devel
+BuildRequires: libblkid-devel
+BuildRequires: libmp4v2
+BuildRequires: nlohmann-json-devel
 
 %description
 ZoneMinder is a set of applications which is intended to provide a complete
@@ -78,7 +83,6 @@ CREATE user 'zmuser'@localhost identified by 'zmpass';
 grant select,insert,update,delete on zm.* to 'zmuser'@localhost;
 EOF
 
-./utils/zmeditconfigdata.sh ZM_OPT_CAMBOZOLA yes
 ./utils/zmeditconfigdata.sh ZM_OPT_CONTROL yes
 ./utils/zmeditconfigdata.sh ZM_CHECK_FOR_UPDATES no
 ./utils/zmeditconfigdata.sh ZM_DYN_SHOW_DONATE_REMINDER no
@@ -173,6 +177,21 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Tue Jan 14 2025 Anton Farygin <rider@altlinux.ru> 1.37.61-alt5.gitb5ee966d9
+- update to upstream b5ee966d9
+
+* Thu Dec 26 2024 Anton Farygin <rider@altlinux.ru> 1.37.61-alt4.git24ad12fa2
+- update to upstream 24ad12fa2
+
+* Thu Dec 12 2024 Anton Farygin <rider@altlinux.ru> 1.37.61-alt3.git3fbb8bdac
+- update to upstream git 3fbb8bdac
+
+* Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 1.37.61-alt2.git15dfaa5f
+- update to upstream git 15dfaa5f
+
+* Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 1.37.61-alt1
+- 1.36.35 -> 1.37.61
+
 * Fri Nov 22 2024 Anton Farygin <rider@altlinux.ru> 1.36.35-alt1
 - 1.36.34 -> 1.36.35
 
