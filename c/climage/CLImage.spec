@@ -1,5 +1,5 @@
 Name: climage
-Version: 0.2.0
+Version: 0.2.2
 Release: alt1
 
 Summary: Convert images to beautiful ANSI escape codes for display in command line interfaces.
@@ -44,5 +44,8 @@ Summary: Convert images to beautiful ANSI escape codes for display in command li
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Fri Jan 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt1
+- update to [NFC] Release 0.2.2 (git.ad17f75b)
+
 * Tue Jan 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus.
