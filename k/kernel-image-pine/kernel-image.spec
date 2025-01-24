@@ -6,7 +6,7 @@ epoch:1
 %define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	6.12
-%define kernel_sublevel .10
+%define kernel_sublevel .11
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -424,6 +424,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jan 24 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.11-alt1
+- 6.12.11
+- config-aarch64: CONFIG_MODEM_POWER is not set
+- dts: rk3399-pinephone-pro: add modem RI pin
+
+* Fri Jan 24 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.10-alt2
+- config-aarch64: CONFIG_TYPEC_MUX_GPIO_SBU=y
+
 * Mon Jan 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.10-alt1
 - 6.12.10
 
