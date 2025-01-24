@@ -13,7 +13,7 @@
 # published by the Open Source Initiative.
 
 Name: liblnk
-Version: 20240120
+Version: 20240423
 Release: alt1
 
 Summary: Library and tools to access the Windows Shortcut File (LNK) format
@@ -25,11 +25,27 @@ Url: https://github.com/libyal/liblnk.git
 Source: %name-alpha-%version.tar.gz
 Source1: Windows_Shortcut_File_(LNK)_format.pdf
 Source2: %name.watch
-Packager: Michael Shigorin <mike@altlinux.org>
 
+BuildRequires: pkg-config
 BuildRequires: python3-dev
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: pkgconfig(libbfio) >= 20240414
+BuildRequires: pkgconfig(libcdata) >= 20240414
+BuildRequires: pkgconfig(libcfile) >= 20240414
+BuildRequires: pkgconfig(libclocale) >= 20240414
+BuildRequires: pkgconfig(libcnotify) >= 20240414
+BuildRequires: pkgconfig(libcpath) >= 20240414
+BuildRequires: pkgconfig(libcsplit) >= 20240414
+BuildRequires: pkgconfig(libfdatetime) >= 20240415
+BuildRequires: pkgconfig(libfguid) >= 20240415
+BuildRequires: pkgconfig(libuna) >= 20240414
+BuildRequires: pkgconfig(libcerror) >= 20240413
+BuildRequires: pkgconfig(libcthreads) >= 20240413
+# the below are not released as standalone packages by upstream
+#BuildRequires:  pkgconfig(libfwsi) >= 20120426
+#BuildRequires:  pkgconfig(libcsystem) >= 20120425
+#BuildRequires:  pkgconfig(libcstring) >= 20120425
 
 %description
 liblnk is a library to access Windows Shortcut File (LNK) files.
@@ -68,7 +84,6 @@ cp -a "%SOURCE1" .
 
 %build
 %autoreconf
-
 %configure \
 	--disable-static \
 	--enable-wide-character-type \
@@ -98,8 +113,12 @@ cp -a "%SOURCE1" .
 %files -n python3-module-%name
 %doc AUTHORS README
 %python3_sitelibdir/pylnk.so
+%python3_sitelibdir/pylnk.la
 
 %changelog
+* Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240423-alt1
+- New version 20240423 (Closes #45855).
+
 * Tue Feb 13 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240120-alt1
 - new version 20240120
 - build and pack pylnk as module

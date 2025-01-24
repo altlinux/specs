@@ -13,20 +13,16 @@
 # published by the Open Source Initiative.
 
 Name: libcfile
-Version: 20130809
-Release: alt2
+Version: 20240414
+Release: alt1
 
 Summary: Library for cross-platform C file functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libcfile/
-#Git-Clone: http://code.google.com/p/libcfile
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSem41RXpvQkIyZlU/libcfile-alpha-20130809.tar.gz
+Url: https://github.com/libyal/libcfile
+#DL-URL: https://github.com/libyal/libcfile/releases/download/20240414/libcfile-alpha-20240414.tar.gz
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
-
-Patch1: %name-%version-alt-gcc6.patch
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130609
@@ -53,7 +49,6 @@ applications that want to make use of libcfile.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %configure \
@@ -63,6 +58,9 @@ applications that want to make use of libcfile.
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %doc AUTHORS ChangeLog
@@ -75,8 +73,14 @@ applications that want to make use of libcfile.
 %_man3dir/*
 
 %changelog
+* Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
+- New version 20240414.
+
 * Fri Jul 14 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 20130809-alt2
 - Fixed build with gcc-6
+
+* Tue Jun 03 2014 Michael Shigorin <mike@altlinux.org> 20130809-alt0.M70T.1
+- built for t7/branch
 
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130809-alt1
 - initial build for ALT Linux Sisyphus

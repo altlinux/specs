@@ -13,16 +13,15 @@
 # published by the Open Source Initiative.
 
 Name: libfdatetime
-Version: 20130904
+Version: 20240415
 Release: alt1
 
 Summary: A library for date and time data types
 License: LGPL-3.0+
 Group: Development/C
 
-Url: http://code.google.com/p/libfdatetime/
-#Git-Clone: http://code.google.com/p/libfdatetime
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSQlBfaUlYTmhzUjQ/libfdatetime-alpha-20130904.tar.gz
+Url: https://github.com/libyal/libfdatetime
+#DL-URL: https://github.com/libyal/libfdatetime/releases/download/20240415/libfdatetime-alpha-20240415.tar.gz
 Source: %name-alpha-%version.tar.gz
 
 BuildRequires: pkg-config
@@ -56,6 +55,9 @@ applications that want to make use of libfdatetime.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %doc AUTHORS ChangeLog
 %_libdir/*.so.*
@@ -67,6 +69,9 @@ applications that want to make use of libfdatetime.
 %_man3dir/*
 
 %changelog
+* Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240415-alt1
+- New version 20240415.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130904-alt1
 - initial build for ALT Linux Sisyphus
 

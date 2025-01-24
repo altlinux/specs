@@ -13,18 +13,16 @@
 # published by the Open Source Initiative.
 
 Name: libcthreads
-Version: 20130723
+Version: 20240413
 Release: alt1
 
 Summary: Library for cross-platform C threads functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libcthreads/
-#Git-Clone: http://code.google.com/p/libcthreads
-#DL-URL:        https://googledrive.com/host/0B3fBvzttpiiSdlBOeGZJeml1T1k/libcthreads-experimental-20130723.tar.gz
+Url: https://github.com/libyal/libcthreads
+#DL-URL: https://github.com/libyal/libcthreads/releases/download/20240413/libcthreads-alpha-20240413.tar.gz
 Source: %name-experimental-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130904
@@ -59,6 +57,9 @@ applications that want to make use of libcthreads.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %doc AUTHORS ChangeLog
 %_libdir/*.so.*
@@ -70,6 +71,9 @@ applications that want to make use of libcthreads.
 %_man3dir/*
 
 %changelog
+* Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240413-alt1
+- New version 20240413.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130723-alt1
 - initial build for ALT Linux Sisyphus
 

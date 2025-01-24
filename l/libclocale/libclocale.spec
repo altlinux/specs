@@ -13,18 +13,16 @@
 # published by the Open Source Initiative.
 
 Name: libclocale
-Version: 20130609
+Version: 20240414
 Release: alt1
 
 Summary: Library for cross-platform C locale functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libclocale/
-#Git-Clone: http://code.google.com/p/libcerror
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSNVJabTctdi1qblE/libclocale-experimental-20130609.tar.gz
+Url: https://github.com/libyal/libclocale
+#DL-URL: https://github.com/libyal/libclocale/releases/download/20240414/libclocale-alpha-20240414.tar.gz
 Source: %name-experimental-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130609
@@ -55,6 +53,9 @@ applications that want to make use of libclocale.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %doc AUTHORS ChangeLog
 %_libdir/*.so.*
@@ -66,6 +67,9 @@ applications that want to make use of libclocale.
 %_man3dir/*
 
 %changelog
+* Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
+- New version 20240414.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130609-alt1
 - initial build for ALT Linux Sisyphus
 

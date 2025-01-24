@@ -13,21 +13,18 @@
 # published by the Open Source Initiative.
 
 Name: libcerror
-Version: 20130904
+Version: 20240413
 Release: alt1
 
 Summary: Library for cross-platform C error functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libcerror/
-#Git-Clone: http://code.google.com/p/libcerror
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSV2xnMTZjSk5WVTg/libcerror-alpha-20130904.tar.gz
+#DL-URL: https://github.com/libyal/libcerror/releases/download/20240413/libcerror-beta-20240413.tar.gz
+Url: https://github.com/libyal/libcerror
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
-#BuildRequires:  pkgconfig(libcstring) >= 20121224
 
 %description
 A library for cross-platform C error functions.
@@ -50,6 +47,7 @@ applications that want to make use of libcerror.
 %setup
 
 %build
+./autogen.sh
 %configure \
 	--disable-static \
 	--enable-wide-character-type
@@ -58,17 +56,24 @@ applications that want to make use of libcerror.
 %install
 %makeinstall_std
 
+%check
+./runtests.sh
+
 %files
-%doc AUTHORS ChangeLog
-%_libdir/*.so.*
+%_libdir/%name.so.*
 
 %files devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
-%_man3dir/*
+%doc AUTHORS ChangeLog COPYING* NEWS README
+%_includedir/%name.h
+%_includedir/%name
+%_libdir/%name.so
+%_pkgconfigdir/%name.pc
+%_man3dir/%name.3.*
 
 %changelog
+* Thu Dec 26 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240413-alt1
+- New version 20240413.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130904-alt1
 - initial build for ALT Linux Sisyphus
 

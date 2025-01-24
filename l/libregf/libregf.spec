@@ -13,21 +13,22 @@
 # published by the Open Source Initiative.
 
 Name: libregf
-Version: 20140427
-Release: alt3
+Version: 20240421
+Release: alt1
 
 Summary: Library to access Windows REGF-type Registry files
 License: LGPL-3.0+ and GFDL-1.3+
 Group: File tools
 
-Url: http://code.google.com/p/libregf/
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSSC1yUDZpb3l0UHM/libregf-alpha-20140427.tar.gz
+Url: https://github.com/libyal/libregf
+#DL-URL: https://github.com/libyal/libregf/releases/download/20240421/libregf-alpha-20240421.tar.gz
 Source0: %name-alpha-%version.tar.gz
 Source1: Windows_NT_Registry_File_(REGF)_format.pdf
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
-BuildRequires: python-dev
+BuildRequires: python3-dev
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: pkgconfig(fuse) >= 2.6
 BuildRequires: pkgconfig(libbfio) >= 20131003
 BuildRequires: pkgconfig(libcdata) >= 20130904
@@ -40,8 +41,8 @@ BuildRequires: pkgconfig(libfdatetime) >= 20130317
 BuildRequires: pkgconfig(libuna) >= 20130728
 # Using these packages from factory causes build failures, so use the internal version instead
 # Verified 11/15/2013
-#BuildRequires:  pkgconfig(libfguid) >= 20120426
-#BuildRequires:  pkgconfig(libcerror) >= 20120425
+BuildRequires: pkgconfig(libfguid) >= 20120426
+BuildRequires: pkgconfig(libcerror) >= 20120425
 # These packages are not yet released by upstream as standalone packages
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 #BuildRequires:  pkgconfig(libcsystem) >= 20120425
@@ -76,12 +77,12 @@ type (a non-text representation).
 This subpackage contains libraries and header files for developing
 applications that want to make use of %name.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for libregf, a library to access Windows REGF Registry files
 License: LGPL-3.0+
 Group: Development/Python
 
-%description -n python-module-%name
+%description -n python3-module-%name
 libregf is a library to access Windows Registry files of the REGF
 type (a non-text representation).
 
@@ -95,7 +96,8 @@ cp -a "%SOURCE1" .
 %configure \
 	--disable-static \
 	--enable-wide-character-type \
-	--enable-python
+	--enable-python \
+	--with-pythondir=%python3_sitelibdir
 %make_build
 
 %install
@@ -112,16 +114,19 @@ cp -a "%SOURCE1" .
 %files devel
 %doc Windows_NT_Registry_File*.pdf
 %_includedir/*
-%_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
-%files -n python-module-%name
+%files -n python3-module-%name
 %doc AUTHORS README
-%python_sitelibdir/pyregf.so
+%python3_sitelibdir/pyregf.so
+%python3_sitelibdir/pyregf.la
 
 %changelog
+* Thu Jan 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240421-alt1
+- New version 20240421.
+
 * Fri Apr 01 2022 Grigory Ustinov <grenka@altlinux.org> 20140427-alt3
 - Simple rebuild with release rising.
 

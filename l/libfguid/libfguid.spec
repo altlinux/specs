@@ -13,18 +13,15 @@
 # published by the Open Source Initiative.
 
 Name: libfguid
-Version: 20130904
+Version: 20240415
 Release: alt1
 
 Summary: A library for GUID/UUID data types
 License: LGPLv3+
 Group: Development/C
-
-Url: http://code.google.com/p/libfguid/
-#Git-Clone: http://code.google.com/p/libfguid
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSRXdGUVRlX2JQWk0/libfguid-alpha-20130904.tar.gz
+Url: https://github.com/libyal/libfguid
+#DL-URL: https://github.com/libyal/libfguid/releases/download/20240415/libfguid-alpha-20240415.tar.gz
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130609
@@ -57,6 +54,9 @@ applications that want to make use of libfguid.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %doc AUTHORS ChangeLog
 %_libdir/*.so.*
@@ -68,6 +68,9 @@ applications that want to make use of libfguid.
 %_man3dir/*
 
 %changelog
+* Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240415-alt1
+- New version 20240415.
+
 * Sat May 10 2014 Michael Shigorin <mike@altlinux.org> 20130904-alt1
 - initial build for ALT Linux Sisyphus
 

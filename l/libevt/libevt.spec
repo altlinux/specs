@@ -13,27 +13,26 @@
 # published by the Open Source Initiative.
 
 Name: libevt
-Version: 20140411
-Release: alt2
+Version: 20240421
+Release: alt1
 
 Summary: Library and tools to access the Windows Event Log (EVT) format
 License: LGPLv3+ and GFDLv1.3+
 Group: File tools
 
-Url: http://code.google.com/p/libevt/
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSYm01VnUtLXNUZ2M/libevt-alpha-20131013.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
+Url: https://github.com/libyal/libevt
+#DL-URL: https://github.com/libyal/libevt/releases/download/20240421/libevt-alpha-20240421.tar.gz
 Source: %name-alpha-%version.tar.gz
 Source1: Windows_Event_Log_(EVT).pdf
 Source2: %name.watch
-
-Patch1: upstream-CVE-2018-8754.patch
 
 # Some dependencies are missing on excluded architectures
 ExcludeArch: %arm aarch64
 
 BuildRequires: pkg-config
-BuildRequires: python-dev
+BuildRequires: python3-dev
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: pkgconfig(libbfio) >= 20120426
 BuildRequires: pkgconfig(libcdata) >= 20120425
 BuildRequires: pkgconfig(libcfile) >= 20120526
@@ -49,7 +48,7 @@ BuildRequires: pkgconfig(libuna) >= 20120425
 BuildRequires: pkgconfig(libwrc) >= 20120405
 # build fails with version in factory, use internal version
 #verified 10/13/2013
-#BuildRequires:  pkgconfig(libcerror) >= 20130904
+BuildRequires: pkgconfig(libcerror) >= 20130904
 # not released as a package by upstream
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 #BuildRequires:  pkgconfig(libcsystem) >= 20120425
@@ -89,24 +88,24 @@ libevt is a library to access the Windows Event Log (EVT) format.
 This subpackage contains libraries and header files for developing
 applications that want to make use of %name.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for libevt, a Windows event file parser
 License: LGPLv3+
 Group: Development/Python
 
-%description -n python-module-%name
+%description -n python3-module-%name
 Python bindings for libevt, which can read Windows event files.
 
 %prep
 %setup
-%patch1 -p1
 cp -a "%SOURCE1" .
 
 %build
 %configure \
 	--disable-static \
 	--enable-wide-character-type \
-	--enable-python
+	--enable-python \
+	--with-pythondir=%python3_sitelibdir
 %make_build
 
 %install
@@ -128,11 +127,15 @@ cp -a "%SOURCE1" .
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
-%files -n python-module-%name
+%files -n python3-module-%name
 %doc AUTHORS ChangeLog README
-%python_sitelibdir/pyevt.so
+%python3_sitelibdir/pyevt.so
+%python3_sitelibdir/pyevt.la
 
 %changelog
+* Thu Jan 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240421-alt1
+- New version 20240421.
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 20140411-alt2
 - Applied security fix from upstream (Fixes CVE-2018-8754).
 

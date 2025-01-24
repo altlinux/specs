@@ -13,18 +13,16 @@
 # published by the Open Source Initiative.
 
 Name: libcnotify
-Version: 20130609
+Version: 20240414
 Release: alt1
 
 Summary: Library for cross-platform C notify functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libcnotify/
-#Git-Clone: http://code.google.com/p/libcnotify
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSb0xsMGNocEtGUjQ/libcnotify-alpha-20130609.tar.gz
+Url: https://github.com/libyal/libcnotify
+#DL-URL: https://github.com/libyal/libcnotify/releases/download/20240414/libcnotify-beta-20240414.tar.gz
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130609
@@ -57,6 +55,9 @@ applications that want to make use of libcnotify.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %doc AUTHORS ChangeLog
 %_libdir/*.so.*
@@ -68,6 +69,9 @@ applications that want to make use of libcnotify.
 %_man3dir/*
 
 %changelog
+* Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
+- New version 20240414.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130609-alt1
 - initial build for ALT Linux Sisyphus
 

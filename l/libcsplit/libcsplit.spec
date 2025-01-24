@@ -13,18 +13,16 @@
 # published by the Open Source Initiative.
 
 Name: libcsplit
-Version: 20130904
+Version: 20240414
 Release: alt1
 
 Summary: Library for cross-platform C split string functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libcsplit/
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSeE44MVpGWnpNeVU/libcsplit-alpha-20130904.tar.gz
-#Git-Clone: http://code.google.com/p/libcsplit
+Url: https://github.com/libyal/libcsplit
+#DL-URL: https://github.com/libyal/libcsplit/releases/download/20240414/libcsplit-beta-20240414.tar.gz
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcerror) >= 20130904
@@ -70,6 +68,9 @@ applications that want to make use of libcsplit.
 %install
 %makeinstall_std
 
+%check
+%make check
+
 %files
 %doc AUTHORS ChangeLog
 %_libdir/*.so.*
@@ -81,6 +82,9 @@ applications that want to make use of libcsplit.
 %_man3dir/*
 
 %changelog
+* Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
+- New version 20240414.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130904-alt1
 - initial build for ALT Linux Sisyphus
 

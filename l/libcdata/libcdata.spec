@@ -13,21 +13,19 @@
 # published by the Open Source Initiative.
 
 Name: libcdata
-Version: 20130904
+Version: 20240414
 Release: alt1
 
 Summary: Library for cross-platform C generic data functions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libcdata/
-#Git-Clone: http://code.google.com/p/libcdata
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSRzFtamhtVUlwYm8/libcdata-alpha-20130904.tar.gz
+Url: https://github.com/libyal/libcdata
+#DL-URL: https://github.com/libyal/libcdata/releases/download/20240414/libcdata-alpha-20240414.tar.gz
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
-BuildRequires: pkgconfig(libcerror) >= 20130904
+BuildRequires: pkgconfig(libcerror) >= 20240101
 #not (yet) released as a standalone package by upstream
 #BuildRequires:  pkgconfig(libcstring) >= 20120425
 
@@ -52,6 +50,8 @@ applications that want to make use of libcdata.
 %setup
 
 %build
+%autoreconf
+
 %configure \
 	--disable-static \
 	--enable-wide-character-type
@@ -59,6 +59,9 @@ applications that want to make use of libcdata.
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %doc AUTHORS ChangeLog
@@ -71,6 +74,9 @@ applications that want to make use of libcdata.
 %_man3dir/*
 
 %changelog
+* Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
+- New version 20240103.
+
 * Fri May 09 2014 Michael Shigorin <mike@altlinux.org> 20130904-alt1
 - initial build for ALT Linux Sisyphus
 

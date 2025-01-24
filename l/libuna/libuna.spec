@@ -13,24 +13,22 @@
 # published by the Open Source Initiative.
 
 Name: libuna
-Version: 20130728
-Release: alt1.1
+Version: 20240414
+Release: alt1
 
 Summary: Library to support Unicode and ASCII (byte string) conversions
 License: LGPLv3+
 Group: Development/C
 
-Url: http://code.google.com/p/libuna/
-#DL-URL: https://googledrive.com/host/0B3fBvzttpiiSaXBjN1ZJVzVsbjQ/libuna-alpha-20130728.tar.gz
+Url: https://github.com/libyal/libuna
+#DL-URL: https://github.com/libyal/libuna/releases/download/20240414/libuna-alpha-20240414.tar.gz
 Source: %name-alpha-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: pkgconfig(libcfile) >= 20120526
 BuildRequires: pkgconfig(libclocale) >= 20120425
 BuildRequires: pkgconfig(libcnotify) >= 20121224
-# these fail to build with factory version, so use internal version.  Verified 10/20/13
-#BuildRequires:  pkgconfig(libcerror) > 20130904
+BuildRequires: pkgconfig(libcerror) >= 20240413
 
 %description
 libuna is a library to support Unicode and ASCII (byte string)
@@ -59,7 +57,6 @@ applications that want to make use of libuna.
 
 %prep
 %setup
-subst "s| inline\$| /* inline */|" libuna/libuna_inline.h
 
 %build
 %configure \
@@ -70,6 +67,9 @@ subst "s| inline\$| /* inline */|" libuna/libuna_inline.h
 
 %install
 %makeinstall_std
+
+%check
+%make check
 
 %files
 %doc AUTHORS ChangeLog ABOUT-NLS
@@ -86,6 +86,9 @@ subst "s| inline\$| /* inline */|" libuna/libuna_inline.h
 %_man3dir/*
 
 %changelog
+* Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
+- New version 20240414.
+
 * Wed Mar 27 2019 Vitaly Lipatov <lav@altlinux.ru> 20130728-alt1.1
 - fix build
 

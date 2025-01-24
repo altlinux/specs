@@ -13,14 +13,15 @@
 # published by the Open Source Initiative.
 
 Name: libpff
-Version: 20161119
-Release: alt2
+Version: 20231205
+Release: alt1
 
 Summary: Library and tools to access Microsoft PFF and OFF format files
 License: LGPLv3+ and GFDLv1.1+ and GFDLv1.3+
 Group: File tools
 
 Url: https://github.com/libyal/libpff
+#DL_URL: https://github.com/libyal/libpff/releases/download/20231205/libpff-alpha-20231205.tar.gz
 Source0: %name-experimental-%version.tar.gz
 Source1: %name.watch
 Source2: PFF_Forensics_-_analyzing_the_horrible_reference_file_format.pdf
@@ -28,7 +29,6 @@ Source3: PFF_forensics_-_e-mail_and_appoinment_falsification_analysis.pdf
 Source4: Personal_Folder_File_(PFF)_format.pdf
 Source5: MAPI_definitions.pdf
 Source6: libpff-libfdata.pdf
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: pkg-config
 BuildRequires: python-dev
@@ -37,12 +37,13 @@ BuildRequires: pkgconfig(libcfile) >= 20130609
 BuildRequires: pkgconfig(libcpath) >= 20130609
 BuildRequires: pkgconfig(libclocale) >= 20130609
 BuildRequires: pkgconfig(libbfio) >= 20130721
+BuildRequires: pkgconfig(libcdata) >= 20240414
 # fails to build with factory package, use internal
 # verified 7/31/2013
-#BuildRequires:  pkgconfig(libcerror) >= 20120425
-#BuildRequires:  pkgconfig(libcnotify) >= 20120425
-#BuildRequires:  pkgconfig(libfguid) >= 20120426
-#BuildRequires:  pkgconfig(libuna) >= 20120425
+BuildRequires:  pkgconfig(libcerror) >= 20120425
+BuildRequires:  pkgconfig(libcnotify) >= 20120425
+BuildRequires:  pkgconfig(libfguid) >= 20120426
+BuildRequires:  pkgconfig(libuna) >= 20120425
 #BuildRequires:  pkgconfig(libfdatetime) >= 20120522
 # not (yet) released as packages by upstream
 #BuildRequires:  pkgconfig(libfmapi) >= 20120405
@@ -132,8 +133,12 @@ cp -a "%{S:2}" "%{S:3}" "%{S:4}" "%{S:5}" "%{S:6}" .
 
 %files -n python-module-%name
 %python_sitelibdir/pypff.so
+%python_sitelibdir/pypff.la
 
 %changelog
+* Wed Jan 22 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20231205-alt1
+- New version 20231205.
+
 * Sat May 02 2020 Michael Shigorin <mike@altlinux.org> 20161119-alt2
 - minor spec cleanup (thx ldv@)
 
