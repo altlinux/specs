@@ -1,12 +1,12 @@
 Summary: Simple FastCGI wrapper for CGI scripts
 Name: fcgiwrap
 Version: 1.1.0
-Release: alt5
-License: BSD-style
+Release: alt6
+License: MIT
 Group: System/Servers
-URL: http://nginx.localdomain.pl/wiki/FcgiWrap
+URL: https://github.com/gnosek/fcgiwrap
+VCS: https://github.com/gnosek/fcgiwrap
 Source: %name-%version.tar
-# git://github.com/gnosek/fcgiwrap.git
 Patch0: %name-%version-alt.patch
 
 # Automatically added by buildreq on Tue Oct 19 2010
@@ -32,17 +32,38 @@ autoreconf -fisv
 %install
 %makeinstall_std
 
+mkdir -p %buildroot%_sysconfdir/sysconfig
+
+cat > %buildroot%_sysconfdir/sysconfig/fcgiwrap<< EOF
+# fcgiwrap configuration parameters
+# Specify the number of fcgiwrap processes to prefork
+DAEMON_PROCS=1
+# Specify additional daemon options. See man fcgiwrap.
+DAEMON_OPTS=-f
+EOF
+
 %pre
 %_sbindir/groupadd -r -f _webserver ||:
 %_sbindir/useradd -r -g _webserver -G _webserver -d /dev/null -s /dev/null -n _fcgiwrap \
         2> /dev/null > /dev/null ||:
 
 %files
+%_sysconfdir/sysconfig/fcgiwrap
 %_sbindir/fcgiwrap
 %_unitdir/*
 %_man8dir/*
 
 %changelog
+* Fri Jan 24 2025 Anton Farygin <rider@altlinux.ru> 1.1.0-alt6
+- updated License
+- added configuration file /etc/sysconfig/fcgiwrap
+- updated systemd unit files for fcgiwrap: Refactored fcgiwrap.socket into a
+  template-based fcgiwrap@.socket to support per-user instances and renamed
+  fcgiwrap.service to fcgiwrap@.service
+- apply fixes from fedora:
+  * Declare cgi_error noreturn
+  * 1.fix: kill() parameter sequence wrong
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt5
 - NMU: remove rpm-build-ubt from BR:
 
