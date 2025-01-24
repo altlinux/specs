@@ -1,5 +1,5 @@
 Name: rpm-build-xfce4
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: comfort build environment for xfce4 and plugins
@@ -46,6 +46,9 @@ install -m644 %SOURCE0 %buildroot%_rpmmacrosdir/xfce4
 
 
 %changelog
+* Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- if_xfce4_wayland_support: Update for Xfce-4.20 -> p11.
+
 * Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Changed license to GPL-2.0-or-later.
 - Added %%if_xfce4_wayland_support macro.
