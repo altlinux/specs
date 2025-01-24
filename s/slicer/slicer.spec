@@ -5,7 +5,7 @@
 %define slicerver 5.6
 Name: slicer
 Version: %slicerver.2
-Release: alt1
+Release: alt2
 Summary: Multi-platform, free open source software for visualization and image computing
 License: 3D-Slicer-1.0
 Group: Sciences/Medicine
@@ -57,6 +57,7 @@ BuildRequires: rapidjson-devel
 BuildRequires: bzip2-devel
 BuildRequires: libniftilib-devel liblpsolve-devel
 BuildRequires: doxygen /usr/bin/dot
+BuildRequires: libcpp-base64-devel
 
 %add_python3_path %_libdir/Slicer-%slicerver
 
@@ -138,7 +139,7 @@ find . -name '*.py' | xargs sed -i \
 
 jqplotdir="$(pwd)/jqPlot"
 
-%cmake \
+%cmake -Wno-dev \
 	-DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
 	-DSlicer_DEFAULT_RELEASE_TYPE:STRING=Stable \
 	-DSlicer_VERSION:STRING=%slicerver \
@@ -230,6 +231,9 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Tue Jan 21 2025 Constantin Sunzow <protvin@altlinux.org> 5.6.2-alt2
+- FTBFS: new build require cpp-base64 inherited from itk.
+
 * Mon Dec 16 2024 Anton Farygin <rider@altlinux.ru> 5.6.2-alt1
 - 5.6.1 -> 5.6.2
 

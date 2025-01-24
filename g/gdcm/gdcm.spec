@@ -2,9 +2,27 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define abiversion 3.0
+%define vtksoname 1
+%define vtkversion 9.3
+%define socketxxsoname 1.2
+
+%define libgdcm_common libgdcmcommon%abiversion
+%define libgdcm_dict libgdcmdict%abiversion
+%define libgdcm_dsed libgdcmdsed%abiversion
+%define libgdcm_iod libgdcmiod%abiversion
+%define libgdcm_jpeg8 libgdcmjpeg8_%abiversion
+%define libgdcm_jpeg12 libgdcmjpeg12_%abiversion
+%define libgdcm_jpeg16 libgdcmjpeg16_%abiversion
+%define libgdcm_md5 libgdcmmd5_%abiversion
+%define libgdcm_mexd libgdcmmexd%abiversion
+%define libgdcm_msff libgdcmmsff%abiversion
+%define libgdcm_socketxx libgdcmsocketxx%socketxxsoname
+%define libgdcm_vtk libgdcmvtk%{vtkversion}_%vtksoname
+
 Name: gdcm
 Version: 3.0.24
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform DICOM implementation
 License: BSD
@@ -17,7 +35,7 @@ Source1: gdcmData.tar
 Patch0: gdcm-3.0.1-unknown-use-copyright.patch
 Patch1: gdcm-3.0.24-upstream-gnu-install-dirs.patch
 Patch2: gdcm-3.0.24-upstream-vtk-9.3-support.patch
-Patch3: gdcm-unknown-fix-export-variables.patch
+Patch3: gdcm-3.0.24-alt-export-variables.patch
 
 BuildRequires(pre): rpm-build-java
 BuildRequires(pre): rpm-build-python3
@@ -60,6 +78,112 @@ PS 3.3 & 3.6 are distributed as XML files.
 It also provides PS 3.15 certificates and password based mecanism
 to anonymize and de-identify DICOM datasets.
 
+%package -n %libgdcm_common
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_common
+%summary.
+
+%package -n %libgdcm_dict
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_dict
+%summary.
+
+%package -n %libgdcm_dsed
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_dsed
+%summary.
+
+%package -n %libgdcm_iod
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_iod
+%summary.
+
+%package -n %libgdcm_jpeg8
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_jpeg8
+%summary.
+
+%package -n %libgdcm_jpeg12
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_jpeg12
+%summary.
+
+%package -n %libgdcm_jpeg16
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_jpeg16
+%summary.
+
+%package -n %libgdcm_md5
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_md5
+%summary.
+
+%package -n %libgdcm_mexd
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_mexd
+%summary.
+
+%package -n %libgdcm_msff
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_msff
+%summary.
+
+%package -n %libgdcm_socketxx
+Summary: %summary
+Group: System/Libraries
+
+Obsoletes: gdcm < %EVR
+
+%description -n %libgdcm_socketxx
+%summary.
+
+%package -n %libgdcm_vtk
+Summary: %summary
+Group: System/Libraries
+
+%description -n %libgdcm_vtk
+%summary.
+
 %package doc
 Summary: Documentation for gdcm
 Group: Documentation
@@ -72,7 +196,6 @@ access upstream documentation for gdcm.
 %package applications
 Summary: Includes command line programs for GDCM
 Group: Development/Tools
-Requires: gdcm = %version-%release
 
 %description applications
 You should install the gdcm-applications package if you would like to
@@ -83,17 +206,15 @@ anonymize, manipulate, concatenate, and view DICOM files.
 Summary: Libraries and headers for GDCM
 Group: Development/Other
 
-Requires: gdcm-applications = %version-%release
-Requires: gdcm = %version-%release
+Requires: gdcm-applications
 
 %description devel
 You should install the gdcm-devel package if you would like to
-compile applications based on gdcm
+compile applications based on gdcm.
 
 %package examples
 Summary: CSharp, C++, Java, PHP and Python example programs for GDCM
 Group: Development/Other
-Requires: gdcm = %version-%release
 
 %description examples
 GDCM examples
@@ -102,11 +223,9 @@ GDCM examples
 Summary: Python binding for GDCM
 Group: Development/Other
 
-Requires: %name = %version-%release
-
 %description -n python3-module-gdcm
 You should install the python3-gdcm package if you would like to
-used this library with python
+used this library with python.
 
 %prep
 %setup -a1
@@ -116,9 +235,19 @@ sed -i \
   's/^GENERATE_LATEX.*=.*YES/GENERATE_LATEX = NO/' \
   Utilities/doxygen/doxyfile.in
 
+rm -rf \
+  Utilities/gdcmcharls \
+  Utilities/gdcmexpat \
+  Utilities/gdcmopenjpeg \
+  Utilities/gdcmutfcpp \
+  Utilities/gdcmuuid \
+  Utilities/gdcmzlib \
+  #
+
 %build
-# i586
+%ifarch %ix86
 %add_optflags -D_FILE_OFFSET_BITS=64
+%endif
 # vtk module require using relative path from prefix
 %cmake -Wno-dev -Wno-unused-variable \
   -DCMAKE_BUILD_TYPE:STRING=Release \
@@ -136,10 +265,11 @@ sed -i \
   -DGDCM_DATA_ROOT:PATH=../gdcmData \
   -DGDCM_DOCUMENTATION:BOOL=ON \
   -DGDCM_DOXYGEN_NO_FOOTER:BOOL=ON \
-  -DGDCM_INSTALL_DOC_DIR:PATH=%_docdir/%name \
+  -DGDCM_INSTALL_DOC_DIR:PATH=%_docdir/gdcm \
+  -DGDCM_INSTALL_INCLUDE_DIR:PATH=include/gdcm \
   -DGDCM_INSTALL_LIB_DIR:PATH=%_lib \
   -DGDCM_INSTALL_MAN_DIR:PATH=%_mandir \
-  -DGDCM_INSTALL_PACKAGE_DIR:PATH=%_lib/cmake/%name \
+  -DGDCM_INSTALL_PACKAGE_DIR:PATH=%_lib/cmake/gdcm \
   -DGDCM_INSTALL_PYTHONMODULE_DIR:STRING=%_lib/python3/site-packages \
   -DGDCM_NO_PYTHON_LIBS_LINKING:BOOL=ON \
   -DGDCM_NO_VTKJAVA_LIBS_LINKING:BOOL=ON \
@@ -147,7 +277,7 @@ sed -i \
   -DGDCM_USE_JPEGLS:BOOL=ON \
   -DGDCM_USE_PARAVIEW:BOOL=OFF \
   -DGDCM_USE_PVRG:BOOL=ON \
-  -DGDCM_USE_SYSTEM_CHARLS:BOOL=OFF \
+  -DGDCM_USE_SYSTEM_CHARLS:BOOL=ON \
   -DGDCM_USE_SYSTEM_EXPAT:BOOL=ON \
   -DGDCM_USE_SYSTEM_JSON:BOOL=ON \
   -DGDCM_USE_SYSTEM_LIBXML2:BOOL=ON \
@@ -167,7 +297,7 @@ sed -i \
   -DPYTHON_VERSION_MAJOR=3 \
   -DVTKGDCM_WRAP_JAVA:BOOL=OFF \
   -DVTKGDCM_WRAP_PYTHON:BOOL=ON \
-%nil
+  #
 
 %cmake_build
 
@@ -177,7 +307,7 @@ install -d \
   %buildroot%python3_sitelibdir \
   %buildroot%_datadir/%name/Examples \
   %buildroot%_includedir/%name \
-%nil
+  #
 install -Dm 644 Utilities/gdcm_zlib.h \
   -t %buildroot%_includedir
 
@@ -186,30 +316,60 @@ cp -rv Examples/* %buildroot%_datadir/%name/Examples
 %check
 export LD_LIBRARY_PATH="%buildroot%_libdir"
 export PYTHONPATH="%buildroot%python3_sitelibdir"
-%ctest || exit 0
+%ctest ||:
 
-%files
+%files -n %libgdcm_common
 %doc AUTHORS README.md
-%_libdir/libgdcm*
-%_libdir/libsocketxx.so.*
-%_libdir/libvtkgdcm-*.so.*
+%_libdir/libgdcmCommon.so.%{abiversion}*
+
+%files -n %libgdcm_dsed
+%_libdir/libgdcmDSED.so.%{abiversion}*
+
+%files -n %libgdcm_dict
+%_libdir/libgdcmDICT.so.%{abiversion}*
+
+%files -n %libgdcm_iod
+%_libdir/libgdcmIOD.so.%{abiversion}*
+
+%files -n %libgdcm_jpeg8
+%_libdir/libgdcmjpeg8.so.%{abiversion}*
+
+%files -n %libgdcm_jpeg12
+%_libdir/libgdcmjpeg12.so.%{abiversion}*
+
+%files -n %libgdcm_jpeg16
+%_libdir/libgdcmjpeg16.so.%{abiversion}*
+
+%files -n %libgdcm_md5
+%_libdir/libgdcmmd5.so.%{abiversion}*
+
+%files -n %libgdcm_mexd
+%_libdir/libgdcmMEXD.so.%{abiversion}*
+
+%files -n %libgdcm_msff
+%_libdir/libgdcmMSFF.so.%{abiversion}*
+
+%files -n %libgdcm_socketxx
+%_libdir/libsocketxx.so.%{socketxxsoname}*
+
+%files -n %libgdcm_vtk
+%_libdir/libvtkgdcm-%vtkversion.so.*
 
 %files doc
-%doc %_docdir/%name/html
+%_docdir/gdcm/html
 
 %files applications
-%doc %_man1dir/gdcm*
 %_bindir/gdcm*
+%_man1dir/gdcm*
 
 %files devel
-%_datadir/gdcm-*/XML
-%_includedir/gdcm-*
+%_datadir/gdcm-*/XML/
+%_includedir/gdcm/
 %_includedir/gdcm_zlib.h
 %_includedir/vtkgdcmpython.h
-%_libdir/cmake/gdcm
-%_libdir/libsocketxx.so
-%_libdir/libvtkgdcm-*.so
-%_libdir/vtk-*/hierarchy/vtkgdcm/vtkgdcm-hierarchy.txt
+%_libdir/cmake/gdcm/
+%_libdir/lib*.so
+%_libdir/vtk-%vtkversion/hierarchy/vtkgdcm/vtkgdcm-hierarchy.txt
 
 %files examples
 %_datadir/gdcm/Examples
@@ -218,12 +378,19 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/gdcm.py
 %python3_sitelibdir/gdcmswig.py
 %python3_sitelibdir/_gdcmswig.so
-%python3_sitelibdir/__pycache__
-%python3_sitelibdir/vtkgdcm/__init__.py
-%python3_sitelibdir/vtkgdcm/__pycache__
-%python3_sitelibdir/vtkgdcm/vtkgdcm.cpython-*.so
+%python3_sitelibdir/__pycache__/
+%python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Thu Jan 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt2
+- Build against system CharLS.
+
+* Thu Jan 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt1.p11.1
+- Apply export include directory from prefix.
+- Compliance with Shared Libs Policy.
+- Remove bundled libraries.
+- Clean lost files.
+
 * Thu Dec 26 2024 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt1
 - Purge archive extracted source code.
 - Build from git tag.

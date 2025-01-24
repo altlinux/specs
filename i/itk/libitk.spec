@@ -1,17 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
-%define _cmake__builddir BUILD
-
-%define itkver 5.3
+%define itkver 5.4
 
 Name: itk
-Version: %itkver.0
+Version: %itkver.2
 Release: alt1
 
 Group: System/Libraries
-Summary: Toolkit for N-dimensional scientific image processing, segmentation, and registration.
+Summary: N-dimensional scientific image processing, segmentation, registration
 License: Apache-2.0
 Url: https://itk.org
+VCS: https://github.com/InsightSoftwareConsortium/ITK.git
 
 # https://github.com/InsightSoftwareConsortium/ITK
 Source: %name-%version.tar
@@ -26,7 +25,7 @@ Source105: %name-%version-BoneMorphometry.tar
 Source106: %name-%version-BSplineGradient.tar
 Source107: %name-%version-Cleaver.tar
 Source108: %name-%version-Cuberille.tar
-Source109: %name-%version-NeuralNetworks.tar
+Source109: %name-%version-FastBilateral.tar
 Source110: %name-%version-FixedPointInverseDisplacementField.tar
 Source111: %name-%version-FPFH.tar
 Source112: %name-%version-GenericLabelInterpolator.tar
@@ -73,40 +72,60 @@ Source152: %name-%version-VariationalRegistration.tar
 Source153: %name-%version-VkFFTBackend.tar
 Source154: %name-%version-WebAssemblyInterface.tar
 
-Patch: %name-%version-alt.patch
-
-Patch1: %name-5.1.2-RTK.patch
+Patch1: itk-5.4.2-alt-RTK.patch
 Patch2: %name-5.1.2-VariationalRegistration.patch
-Patch3: %name-5.1.2-PerformanceBenchmarking.patch
-Patch4: %name-5.3.0-WebAssemblyInterface.patch
-Patch5: %name-5.3.0-Cleaver.patch
-Patch6: %name-5.3.0-VkFFTBackend.patch
-Patch7: %name-5.3.0-MathematicalMorphology.patch
+Patch3: itk-5.4.2-alt-PerformanceBenchmarking.patch
+Patch4: itk-5.4.2-alt-WebAssemblyInterface.patch
+Patch5: itk-5.4.2-alt-Cleaver.patch
+Patch6: itk-5.4.2-alt-VkFFTBackend.patch
+Patch7: itk-5.4.2-alt-BioCell.patch
+Patch8: itk-5.4.2-upstream-LesionSizingToolkit.patch
+Patch9: itk-5.4.2-alt-netlib.patch
 
-BuildRequires: gcc-c++ cmake /proc
-BuildRequires: gdcm-devel castxml graphviz libhdf5-devel
-BuildRequires: libjpeg-devel libpng-devel libtiff-devel libxml2-devel
-BuildRequires: libvxl-devel libvtk-devel zlib-devel
-BuildRequires: libblas-devel liblapack-devel libnetcdf-devel jsoncpp-devel
-BuildRequires: libexpat-devel dcmtk
-
-BuildRequires: libfftw3-devel libgtest-devel libgmock-devel eigen3-devel
-BuildRequires: libminc-devel
-BuildRequires: libniftilib-devel
-BuildRequires: libXext-devel
-BuildRequires: libdouble-conversion-devel
-
-BuildRequires: libnumpy-py3-devel
-BuildRequires: liblpsolve-devel
-BuildRequires: opencl-headers ocl-icd-devel
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: castxml
 BuildRequires: cleaver-devel
+BuildRequires: cli11-devel
+BuildRequires: cmake
+BuildRequires: dcmtk
+BuildRequires: eigen3-devel
+BuildRequires: gcc-c++
+BuildRequires: gdcm-devel
+BuildRequires: graphviz
+BuildRequires: jsoncpp-devel
+BuildRequires: libblas-devel
+BuildRequires: libcbor-devel
+BuildRequires: libcpp-base64-devel
+BuildRequires: libdouble-conversion-devel
+BuildRequires: libexpat-devel
+BuildRequires: libfftw3-devel
+BuildRequires: libgmock-devel
+BuildRequires: libgtest-devel
+BuildRequires: libhdf5-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblapack-devel
+BuildRequires: liblpsolve-devel
+BuildRequires: libminc-devel
+BuildRequires: libnetcdf-devel
+BuildRequires: libniftilib-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libpng-devel
+BuildRequires: libtiff-devel
+BuildRequires: libvtk-devel
+BuildRequires: libvxl-devel
+BuildRequires: libXext-devel
+BuildRequires: libxml2-devel
+BuildRequires: ocl-icd-devel
+BuildRequires: opencl-headers
+BuildRequires: rang-devel
+BuildRequires: rapidjson-devel
+BuildRequires: zlib-devel
 %ifnarch ppc64le
 # VkFFT currently fails compilation on ppc64le
 # with options other than gcc++11
 # https://github.com/DTolm/VkFFT/issues/51
 BuildRequires: VkFFT-devel
 %endif
-BuildRequires: cli11-devel libcbor-devel rapidjson-devel rang-devel
 
 %define _description \
 The Insight Toolkit (ITK) is an open-source, cross-platform toolkit for \
@@ -192,9 +211,12 @@ This package contains shared libraries for VTK bindings to ITK.
 %_description
 
 %prep
-%setup -a100 -a101 -a102 -a103 -a104 -a105 -a106 -a107 -a108 -a109 -a110 -a111 -a112 -a113 -a114 -a115 -a116 -a117 -a118 -a119 -a120 -a121 -a122 -a123 -a124 -a125 -a126 -a127 -a128 -a129 -a130 -a131 -a132 -a133 -a134 -a135 -a136 -a137 -a138 -a139 -a140 -a141 -a142 -a143 -a144 -a145 -a146 -a147 -a148 -a149 -a150 -a151 -a152 -a153 -a154
+%setup -a100 -a101 -a102 -a103 -a104 -a105 -a106 -a107 -a108 -a110 -a111 -a112 -a113 -a114 -a115 -a116 -a117 -a118 -a119 -a120 -a121 -a122 -a123 -a124 -a125 -a126 -a127 -a128 -a129 -a130 -a131 -a132 -a133 -a134 -a135 -a136 -a137 -a138 -a139 -a140 -a141 -a142 -a143 -a144 -a145 -a146 -a147 -a148 -a149 -a150 -a151 -a152 -a153 -a154
 
-%patch -p1
+rm -rf \
+  Modules/ThirdParty/GDCM/src/gdcm \
+  Modules/ThirdParty/VNL/src/vxl \
+  #
 
 pushd Modules/Remote/RTK
 %patch1 -p1
@@ -220,7 +242,15 @@ pushd Modules/Remote/VkFFTBackend
 %patch6 -p1
 popd
 
+pushd Modules/Remote/BioCell
 %patch7 -p1
+popd
+
+pushd Modules/Remote/LesionSizingToolkit
+%patch8 -p1
+popd
+
+%patch9 -p1
 
 # Save an unbuilt copy of the Example's sources for %%doc
 mkdir itk-examples
@@ -253,25 +283,22 @@ if [ %__nprocs -gt 8 ] ; then
 	export NPROCS=8
 fi
 %endif
-
 # XXX: itk-examples (ex-Examples) for some reason are linked with the build
 # artifact dir in the runpath, so we pass -DCMAKE_SKIP_RPATH=ON.
 # remote modules go last
-%cmake \
+%cmake -Wno-dev \
        %_cmake_skip_rpath \
-       -DPYTHON_EXECUTABLE=%__python3 \
        -DSYSCONF_INSTALL_DIR=%_sysconfdir \
-       -DSHARE_INSTALL_PREFIX:PATH="%{_datadir}" \
+       -DSHARE_INSTALL_PREFIX:PATH="%_datadir" \
        -DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
        -DCMAKE_VERBOSE_MAKEFILE=ON \
-       -DCMAKE_CXX_FLAGS:STRING="-std=gnu++14 %{optflags}" \
+       -DCMAKE_CXX_FLAGS:STRING="-std=gnu++14 %optflags" \
        -DBUILD_SHARED_LIBS:BOOL=ON \
        -DBUILD_TESTING=OFF \
        -DBUILD_EXAMPLES:BOOL=OFF \
        -DBUILD_DOCUMENTATION:BOOL=OFF \
        -DITK_BUILD_DEFAULT_MODULES:BOOL=ON \
        -DITK_WRAP_PYTHON:BOOL=OFF \
-       -DITK_WRAP_JAVA:BOOL=OFF \
        -DITK_INSTALL_LIBRARY_DIR=%_lib/ \
        -DITK_INSTALL_INCLUDE_DIR=include/%name \
        -DITK_INSTALL_PACKAGE_DIR=%_lib/cmake/%name/ \
@@ -361,7 +388,7 @@ fi
        -DModule_VkFFTBackend:BOOL=OFF \
        %endif
      -DModule_WebAssemblyInterface:BOOL=ON \
-    %nil
+     #
 
 %cmake_build
 
@@ -371,7 +398,7 @@ fi
 # Don't install test driver as example
 rm -f %_cmake__builddir/bin/itkTestDriver
 
-install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
+install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 
 %files -n lib%name%itkver
 %_libdir/lib*-%itkver.so.*
@@ -396,10 +423,22 @@ install -D -m755 -t %buildroot%_libdir/%name-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Thu Jan 23 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.2-alt1
+- Added upstream patch (LesionSizingToolkit) to provide compat with cxx-17.
+- Rebase ALT patches (Cleaver, RTK, VkFFTBackend, WebAssemblyInterface).
+- contrib: fix broken script (update-remote-modules.sh).
+- Remove deprecated remote module (NeuralNetworks).
+- Remove obsoleted patch (MathematicalMorphology).
+- Added patch (BioCell).
+- Spec cleanup.
+- New version.
+
 * Fri May 26 2023 Elizaveta Morozova <morozovaes@altlinux.org> 5.3.0-alt1
 - Updated to upstream version 5.3.0.
-- Added patches for new remote modules (use system dependencies): itk-5.3.0-WebAssemblyInterface, itk-5.3.0-VkFFTBackend, itk-5.3.0-Cleaver.
-- Added upstream patch (itk-5.3.0-Mathematical Morphology) to avoid build errors when using gcc13.
+- Added patches for new remote modules (use system dependencies):
+  itk-5.3.0-WebAssemblyInterface, itk-5.3.0-VkFFTBackend, itk-5.3.0-Cleaver.
+- Added upstream patch (itk-5.3.0-Mathematical Morphology) to avoid build
+  errors when using gcc13.
 - Removed patches accepted into upstream (itk-5.1.2-TubeTK).
 
 * Fri Jul 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt5

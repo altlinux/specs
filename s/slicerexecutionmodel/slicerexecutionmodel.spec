@@ -2,15 +2,16 @@
 
 Name: slicerexecutionmodel
 Version: 2.0.0
-Release: alt2.git.f19d6e8
+Release: alt3
+
 Summary: An open-source CMake-based project that provides macros and associated tools for the easy building of 3D Slicer command line interface (CLI) modules
-License: BSD-style
+License: 3D-Slicer-1.0
 Group: Development/Tools
 Url: https://www.slicer.org/wiki/Documentation/Nightly/Developers/SlicerExecutionModel
+VCS: https://github.com/Slicer/SlicerExecutionModel.git
 
 ExcludeArch: %arm
 
-# https://github.com/Slicer/SlicerExecutionModel.git
 Source: %name-%version.tar
 
 Patch1: slicerexecutionmodel-alt-install.patch
@@ -120,6 +121,9 @@ rm -rf tclap
 %_libdir/cmake/*
 
 %changelog
+* Wed Jan 22 2025 Constantin Sunzow <protvin@altlinux.org> 2.0.0-alt3
+- Rebuild from upstream/master for compatibility with itk.
+
 * Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2.git.f19d6e8
 - Rebuilt with system tclap.
 
