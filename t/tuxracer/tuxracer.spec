@@ -1,6 +1,6 @@
 Name: tuxracer
 Version: 0.61
-Release: alt13.qa4
+Release: alt13.qa5
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -56,7 +56,7 @@ subst 's/malign/falign/g' configure.in
 mv configure.in configure.ac
 %autoreconf
 
-export CPPFLAGS="-DGLX_GLXEXT_LEGACY"
+export CPPFLAGS="-DGLX_GLXEXT_LEGACY -Wno-error=incompatible-pointer-types"
 %configure \
 	--datadir=%_gamesdatadir/tuxracer \
 	--bindir=%_gamesbindir \
@@ -88,6 +88,9 @@ install -pD -m644 %SOURCE5 %buildroot%_desktopdir/tuxracer.desktop
 %_gamesdatadir/tuxracer/
 
 %changelog
+* Fri Jan 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.61-alt13.qa5
+- NMU: fix FTBFS with gcc14.
+
 * Tue Dec 29 2020 Andrey Cherepanov <cas@altlinux.org> 0.61-alt13.qa4
 - Do not set up specific autoconf and automake versions by macros.
 
