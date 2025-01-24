@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.13
+Release: alt0.14
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -49,8 +49,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
-%define status ALPHA
-%define status_ru АЛЬФА
+%define status BETA
+%define status_ru БЕТА
 %define ProductName %Brand %Theme %altversion
 %define ProductName_ru %Brand_ru %Theme_ru %altversion
 %define branding_data_dir %_datadir/branding-data-current
@@ -498,6 +498,11 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Jan 23 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.14
+- update status to beta
+- update backgrounds
+- update color scheme
+
 * Fri Jan 17 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.13
 - add Qt6 support
 
