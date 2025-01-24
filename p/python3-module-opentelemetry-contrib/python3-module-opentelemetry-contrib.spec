@@ -6,16 +6,22 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.47b0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
 Group:   Development/Python3
 URL:     https://github.com/open-telemetry/opentelemetry-python-contrib
 
+Packager: Alexander Burmatov <thatman@altlinux.org>
+
+Source: %pypi_name-%version.tar
+Patch: opentelemetry-contrib-alt-fix-mock-teardown.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-hatchling
+
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -28,8 +34,6 @@ BuildRequires: python3-module-pytest-benchmark
 %endif
 
 BuildArch: noarch
-
-Source: %pypi_name-%version.tar
 
 %description
 %summary.
@@ -76,6 +80,7 @@ Starlette, FastAPI, etc.) to track requests timing through OpenTelemetry.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 
 %build
 pushd ./%mod_name-instrumentation
@@ -188,5 +193,8 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Fri Jan 24 2025 Ivan A. Melnikov <iv@altlinux.org> 0.47b0-alt1.1
+- NMU: fix FTBFS.
+
 * Wed Aug 07 2024 Alexander Burmatov <thatman@altlinux.org> 0.47b0-alt1
 - Initial build for Sisyphus.
