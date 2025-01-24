@@ -1,19 +1,20 @@
 Name: deepin-picker
-Version: 6.0.1
-Release: alt2
+Version: 6.0.4
+Release: alt1
 
 Summary: Color picker tool for deepin
 
 License: GPL-3.0+
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-picker
+Vcs: git://github.com/linuxdeepin/deepin-picker.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): desktop-file-utils
-BuildRequires: dqt5-linguist libdtkwidget-devel libX11-devel libxcb-devel libxcbutil-devel libXext-devel libXtst-devel dqt5-base-devel dqt5-svg-devel dqt5-x11extras-devel
+BuildRequires: dqt6-linguist libdtk6widget-devel libX11-devel libxcb-devel libxcbutil-devel libXext-devel libXtst-devel dqt6-base-devel dqt6-svg-devel
 
 Requires: icon-theme-hicolor
 
@@ -22,17 +23,21 @@ Simplest color picker.
 
 %prep
 %setup
+sed -i -e 's|/usr/lib/qt6/bin/lrelease|%_dqt6_bindir/lrelease|; s|/usr/lib/qt6/bin/lupdate|%_dqt6_bindir/lupdate|;' \
+	deepin-picker.pro
 
 %build
-export PATH=%_dqt5_bindir:$PATH
-%qmake_dqt5 \
+export PATH=%_dqt6_bindir:$PATH
+export LC_ALL=C.UTF-8
+%qmake_dqt6 \
   CONFIG+=nostrip \
   PREFIX=%_prefix \
-  QMAKE_RPATHDIR=%_dqt5_libdir \
+  QMAKE_RPATHDIR=%_dqt6_libdir \
 #
 %make_build
 
 %install
+export LC_ALL=C.UTF-8
 %makeinstall INSTALL_ROOT=%buildroot
 %find_lang --with-qt %name
 
@@ -44,12 +49,17 @@ export PATH=%_dqt5_bindir:$PATH
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/dbus-1/services/com.deepin.Picker.service
 # package translations outside find_lang
-#%%dir %%_datadir/%%name/
-#%%dir %%_datadir/%%name/translations/
-#%%_datadir/%%name/translations/deepin-picker.qm
-#%%_datadir/%%name/translations/deepin-picker_es_419.qm
+%dir %_datadir/%%name/
+%dir %_datadir/%%name/translations/
+%_datadir/%name/translations/deepin-picker.qm
+%_datadir/%name/translations/deepin-picker_es_419.qm
 
 %changelog
+* Fri Jan 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
+- New version 6.0.4.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
