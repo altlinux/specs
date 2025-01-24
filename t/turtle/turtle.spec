@@ -35,7 +35,7 @@
 %define turtle_nemo_plg turtle_nemo.py
 
 Name: turtle
-Version: 0.11
+Version: 0.11.1
 Release: alt1
 
 Summary: Turtle is a graphical interface for version control intended to run on gnome and nautilus
@@ -143,6 +143,10 @@ install -pDm 644 data/%turtle_desktop %buildroot%_desktopdir/%turtle_desktop
 # install bash copletion
 install -pDm 644 data/completions/%turtle_completion %buildroot%_bshcompldir/%turtle_completion
 
+# install man pages
+install -pDm 644 data/man/turtle_cli.1 %buildroot%_man1dir/turtle_cli.1
+install -pDm 644 data/man/turtle_service.1 %buildroot%_man1dir/turtle_service.1
+
 # install dbus service
 install -pDm 644 data/%turtle_dbus_service %buildroot%_dbussrvsdir/%turtle_dbus_service
 
@@ -162,7 +166,9 @@ python3 -m compileall %buildroot%nemo_extdir/%turtle_nemo_plg
 %files
 %doc README.md
 %_bindir/%turtle_cli
+%_man1dir/turtle_cli.1*
 %_bindir/%turtle_service
+%_man1dir/turtle_service.1*
 %_scliconsdir/%turtle_svg
 %_symiconsdir/%turtle_symbolic_svg
 %glib_schemasdir/%turtle_schema
@@ -186,6 +192,9 @@ python3 -m compileall %buildroot%nemo_extdir/%turtle_nemo_plg
 %nemo_extdir/__pycache__/turtle_*
 
 %changelog
+* Thu Jan 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.1-alt1
+- Updated to 0.11.1.
+
 * Thu Dec 12 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.11-alt1
 - Updated to 0.11.
 
