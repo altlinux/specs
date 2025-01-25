@@ -16,6 +16,11 @@
 %define defphp php8.1
 %endif
 
+%if_feature php83 8.3.0
+%def_with php83
+%define defphp php8.3
+%endif
+
 # default
 %if_feature php82 8.2.0
 %def_with php82
@@ -24,7 +29,7 @@
 
 
 Name: mediawiki
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
@@ -32,6 +37,7 @@ Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL sup
 License: %gpl2plus
 Group: Networking/WWW
 Url: http://www.mediawiki.org/
+Vcs: https://github.com/wikimedia/mediawiki
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -74,7 +80,7 @@ configuration.
 
 This is a typical %name installation (with Apache2 and MySQL support).
 
-Also you can install %name-php8.0 (%name-php8.1, %name-php7)
+Also you can install %name-php8.2 (%name-php8.1, %name-php8.0, %name-php7)
 package to get all needed php requires.
 
 If you wish %name without any php dependencies, install only %name-common package.
@@ -140,6 +146,21 @@ Requires: php8.2-openssl
 
 Requires: %name-common = %EVR
 
+%package -n %name-php8.3
+Summary: Mediawiki's requires for php 8.2
+Group: Networking/WWW
+Requires: webserver-common
+# https://www.mediawiki.org/wiki/Compatibility
+Requires: php8.3-libs >= 8.2.0
+# inside php8.1-libs
+# Requires: php8.3-ctype php8.3-iconv php8.3-json php8.3-xml
+Requires: php8.3-dom php8.3-fileinfo php8.3-intl php8.3-mbstring
+Requires: php8.3-mcrypt php8.3-xmlreader php8.3-gd
+Requires: php8.3-opcache php8.3-apcu
+Requires: php8.3-openssl
+
+Requires: %name-common = %EVR
+
 
 %package -n %name-common
 Summary: Common files for %name
@@ -194,7 +215,7 @@ Provides: mediawiki-extensions-Vector
 Provides: mediawiki-extensions-ExpandTemplates
 Provides: mediawiki-extensions-AssertEdit
 
-# since 1.27?
+# since 1.27
 Provides: mediawiki-extensions-CiteThisPage
 Provides: mediawiki-extensions-Gadgets
 
@@ -222,17 +243,40 @@ Obsoletes: mediawiki-extensions-StubManager
 # we pack separate subpackage since 1.37.1
 #Provides: mediawiki-extensions-Scribunto
 #Obsoletes: mediawiki-extensions-Scribunto
+Provides: mediawiki-extensions-PageImages
+Obsoletes: mediawiki-extensions-PageImages
+Provides: mediawiki-extensions-TextExtracts
+Obsoletes: mediawiki-extensions-TextExtracts
 
 # since 1.35
 Provides: mediawiki-extensions-VisualEditor
 Obsoletes: mediawiki-extensions-VisualEditor
-
 Provides: mediawiki-extensions-Parsoid
 Obsoletes: mediawiki-extensions-Parsoid
+Provides: mediawiki-extensions-SecureLinkFixer
+Obsoletes: mediawiki-extensions-SecureLinkFixer
+Provides: mediawiki-extensions-TemplateData
+Obsoletes: mediawiki-extensions-TemplateData
 
 # since 1.39
 # we pack separate subpackage since 1.39
 #Provides: mediawiki-extensions-Math
+
+Provides: mediawiki-extensions-AbuseFilter
+Obsoletes: mediawiki-extensions-AbuseFilter
+
+# since 1.40
+Provides: mediawiki-extensions-DiscussionTools
+Obsoletes: mediawiki-extensions-DiscussionTools
+Provides: mediawiki-extensions-Echo
+Obsoletes: mediawiki-extensions-Echo
+Provides: mediawiki-extensions-Linter
+Obsoletes: mediawiki-extensions-Linter
+Provides: mediawiki-extensions-LoginNotify
+Obsoletes: mediawiki-extensions-LoginNotify
+Provides: mediawiki-extensions-Thanks
+Obsoletes: mediawiki-extensions-Thanks
+
 
 %description -n %name-common
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -273,6 +317,15 @@ range of features and support for high-traffic websites using multiple
 servers.
 
 This package contains all needed php8.2 requires.
+
+%description -n %name-php8.3
+MediaWiki is the software used for Wikipedia and the other Wikimedia
+Foundation websites. Compared to other wikis, it has an excellent
+range of features and support for high-traffic websites using multiple
+servers.
+
+This package contains all needed php8.3 requires.
+
 
 %package -n %name-apache2
 Summary: Apache2's requires and config files for %name
@@ -539,6 +592,11 @@ fi
 %files -n %name-php8.2
 %endif
 
+
+%if_with php83
+%files -n %name-php8.3
+%endif
+
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
 %_mediawikidir/
@@ -593,6 +651,12 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.42.4-alt1
+- new version 1.42.4 (with rpmrb script)
+- add Vcs tag
+- add php8.3 support
+- update provided extensions list
+
 * Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 1.42.3-alt1
 - new version 1.42.3 (with rpmrb script)
 - (T372998, CVE-2024-PENDING) SECURITY: abusefiltercheckmatch does not check the user for the abusefilter-log-detail right before matching against log details.
