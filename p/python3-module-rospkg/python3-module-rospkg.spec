@@ -1,7 +1,7 @@
 %define  modulename rospkg
 
 Name:    python3-module-%modulename
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: rospkg Python library for ROS
@@ -39,6 +39,9 @@ Standalone Python library for the ROS package system.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jan 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
+- New version.
+
 * Sun Apr 21 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.1-alt1
 - New version.
 
