@@ -16,7 +16,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Library with GTK4 widget to display maps
 Group: System/Libraries
@@ -50,7 +50,7 @@ BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
-%{?_enable_check:BuildRequires: /proc xvfb-run librsvg /bin/dbus-launch at-spi2-core}
+%{?_enable_check:BuildRequires: /proc xvfb-run librsvg /usr/bin/dbus-launch at-spi2-core}
 
 %description
 libshumate is a GTK4 widget to display maps.
@@ -148,6 +148,9 @@ xvfb-run -s -noreset %__meson_test -v
 %endif
 
 %changelog
+* Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1.1
+- fixed BR
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - 1.3.1
 
