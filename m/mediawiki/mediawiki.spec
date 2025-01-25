@@ -1,5 +1,5 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.42
+%define major 1.43
 
 %if_feature php7 7.4.3
 %def_with php7
@@ -29,7 +29,7 @@
 
 
 Name: mediawiki
-Version: %major.4
+Version: %major.0
 Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
@@ -651,6 +651,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt1
+- new LTS release 1.43.0
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.42.4-alt1
 - new version 1.42.4 (with rpmrb script)
 - add Vcs tag
