@@ -1,23 +1,24 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 2024.11
+%define ver_major 2025.1
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.7
+Version: %ver_major.24
 Release: alt1
 
-Summary: Download manager based on aria2
+Summary: Quick and efficient download manager
 License: MPL-2.0
 Group: Networking/WWW
 Url: https://github.com/giantpinkrobots/varia
 
-%if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
-%else
 Vcs: https://github.com/giantpinkrobots/varia.git
+
+%if_disabled snapshot
+Source: %url/archive/v%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
 %endif
 
@@ -25,6 +26,7 @@ Source: %name-%version.tar
 
 Requires: /usr/bin/aria2p /usr/bin/aria2c
 Requires: typelib(Adw) = 1 libadwaita >= %adw_ver
+Requires: yt-dlp
 Requires: dconf yelp
 
 BuildArch: noarch
@@ -38,8 +40,10 @@ BuildRequires: pkgconfig(libadwaita-1)
 
 %description
 Varia is a simple download manager that conforms to the latest
-Libadwaita design guidelines, integrating nicely with GNOME.
-It uses the amazing aria2 to handle the downloads.
+Libadwaita design guidelines, integrating nicely with GNOME. It utilizes
+aria2 and yt-dlp to handle regular files, torrents and video/audio
+stream downloads.
+
 
 %prep
 %setup
@@ -62,11 +66,15 @@ It uses the amazing aria2 to handle the downloads.
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/*/%{rdn_name}*.svg
+%_iconsdir/hicolor/symbolic/apps/network-computer-symbolic.svg
 %_xdgmimedir/packages/io.github.giantpinkrobots.varia.mime.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.1.24-alt1
+- 2025.1.24
+
 * Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.11.7-alt1
 - updated to v2024.11.7-1
 
