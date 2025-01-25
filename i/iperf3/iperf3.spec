@@ -4,7 +4,7 @@
 %define use_chrpath 1
 
 Name: iperf3
-Version: 3.17.1
+Version: 3.18.1
 Release: alt1
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
@@ -112,6 +112,9 @@ chrpath -d %buildroot/%_bindir/iperf3
 %_libdir/lib%native.so
 
 %changelog
+* Sat Jan 25 2025 Sergey Y. Afonin <asy@altlinux.org> 3.18.1-alt1
+- New version
+
 * Thu Sep 26 2024 Sergey Y. Afonin <asy@altlinux.org> 3.17.1-alt1
 - New version
 
