@@ -1,6 +1,6 @@
 Name: installer-distro-regular
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Installer configuration for ALT Regular
 License: GPL-2.0-or-later
@@ -45,6 +45,7 @@ Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
 Requires: alterator-luks
 Requires: alterator-hostname
+Requires: alterator-notes
 
 %description stage3
 This package contains installer configuration for
@@ -70,6 +71,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Sat Jan 25 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt3
+- stage3: add dependency on alterator-notes
+
 * Mon Jan 13 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
 - stage3: add dependency on alterator-hostname
 
