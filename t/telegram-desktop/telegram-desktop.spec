@@ -20,7 +20,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 5.10.3
+Version: 5.10.5
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -28,6 +28,7 @@ Summary: Telegram Desktop messaging app
 License: GPLv3 with OpenSSL exception
 Group: Networking/Instant messaging
 Url: https://telegram.org/
+Vcs: https://github.com/telegramdesktop/tdesktop
 
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
@@ -377,6 +378,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 5.10.5-alt1
+- new version (5.10.5) with rpmgs script
+
 * Sat Jan 18 2025 Vitaly Lipatov <lav@altlinux.ru> 5.10.3-alt1
 - new version 5.10.3 (with rpmrb script)
 
