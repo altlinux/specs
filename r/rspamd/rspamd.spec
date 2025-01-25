@@ -2,7 +2,7 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 3.8.4
+Version: 3.11.0
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -10,6 +10,7 @@ Summary: Fast and modular antispam system written in C
 License: BSD
 Group: Networking/Other
 Url: https://rspamd.com/
+Vcs: https://github.com/rspamd/rspamd
 
 # Source-url: https://github.com/rspamd/rspamd/archive/%version.tar.gz
 Source: %name-%version.tar
@@ -19,13 +20,16 @@ Source4: %name.sysconfig
 Source5: %name.logrotate
 
 Patch1: rspamd-fix-error.patch
+Patch2: rspamd-fix-build.patch
 Patch3500: rspamd-loongarch.patch
 
 BuildRequires: gcc-c++
-BuildRequires: cmake libdb4-devel libevent-devel libgmime-devel liblua5-devel
+BuildRequires: cmake libevent-devel libgmime-devel liblua5-devel
 BuildRequires: libpcre2-devel libsqlite3-devel libunwind-devel libicu-devel
-BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel libsodium-devel
+BuildRequires: libssl-devel libmagic-devel zlib-devel libluajit-devel
 BuildRequires: libxxhash-devel libzstd-devel doctest-devel libfmt-devel
+BuildRequires: pkgconfig(libsodium) >= 1.0.0
+BuildRequires: pkgconfig(libarchive) >= 3.0.0
 
 BuildRequires: perl-XML-Parser perl-Term-Cap perl-Pod-Usage
 
@@ -49,6 +53,7 @@ anywhere in code.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
 %patch3500 -p1
 
 %build
@@ -99,6 +104,8 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %_libdir/%name/
 %dir %attr(0750,root,rspamd) %_sysconfdir/%name/local.d/
 %dir %attr(0750,root,rspamd) %_sysconfdir/%name/override.d/
+%dir %attr(0750,root,rspamd) %_sysconfdir/%name/lua.local.d/
+%dir %attr(0750,root,rspamd) %_sysconfdir/%name/modules.local.d/
 %config(noreplace) %_sysconfdir/%name/*.conf
 %config(noreplace) %_sysconfdir/%name/maps.d/*.inc
 %config(noreplace) %_sysconfdir/%name/modules.d/*.conf
@@ -106,6 +113,11 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %config(noreplace) %_sysconfdir/%name/*.inc
 %config(noreplace) %_sysconfigdir/%name
 %config(noreplace) %_logrotatedir/%name
+%_sysconfdir/%name/local.d/module.conf.example
+%_sysconfdir/%name/lua.local.d/module.lua.example
+%_sysconfdir/%name/modules.local.d/module.conf.example
+%_sysconfdir/%name/override.d/module.conf.example
+
 %_bindir/rspamc*
 %_bindir/rspamd*
 %_bindir/rspamadm*
@@ -119,6 +131,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 3.11.0-alt1
+- new version 3.11.0 (with rpmrb script)
+
 * Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 3.8.4-alt1
 - new version 3.8.4 (with rpmrb script)
 
