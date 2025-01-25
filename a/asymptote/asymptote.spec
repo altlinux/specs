@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 2.88
+Version: 2.89
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -96,6 +96,9 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 2.89-alt1
+- new version 2.89 (with rpmrb script)
+
 * Sun Mar 17 2024 Vitaly Lipatov <lav@altlinux.ru> 2.88-alt1
 - new version 2.88 (with rpmrb script)
 
