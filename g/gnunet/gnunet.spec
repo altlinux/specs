@@ -1,6 +1,6 @@
 %def_with postgresql
 Name: gnunet
-Version: 0.23.0
+Version: 0.23.1
 Release: alt1
 
 Summary: Peer-to-peer framework
@@ -304,6 +304,9 @@ rm -rv %buildroot%_datadir/gnunet/services/
 %_datadir/aclocal/gnunet.m4
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.23.1-alt1
+- new version 0.23.1 (with rpmrb script)
+
 * Sat Dec 14 2024 Vitaly Lipatov <lav@altlinux.ru> 0.23.0-alt1
 - new version 0.23.0 (with rpmrb script)
 - temp. disabled service file
