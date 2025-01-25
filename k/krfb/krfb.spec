@@ -4,7 +4,7 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -97,6 +97,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

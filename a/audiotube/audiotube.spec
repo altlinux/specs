@@ -4,7 +4,7 @@
 %define libaudiotubecore libaudiotubecore%sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -45,6 +45,13 @@ Convergent YouTube Music client.
 
 %install
 %K6install
+
+mkdir -p %buildroot/%_K6data/audiotube/
+## gen dep for ytmusicapi
+#TESTED_YTMUSICAPI=`grep TESTED_YTMUSICAPI_VERSION src/ytmusic.h | sed -e 's|^\(.*\)".*|\1|' -e 's|^.*"||'`
+#[ -n "$TESTED_YTMUSICAPI" ] || exit 1
+#ln -sf /usr/share/doc/python3-module-ytmusicapi-"$TESTED_YTMUSICAPI"/README.rst %buildroot/%_K6data/audiotube/README-ytmusicapi.rst
+
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -52,10 +59,17 @@ Convergent YouTube Music client.
 %_K6bin/*
 %_K6xdgapp/*audiotube.desktop
 %_K6icon/*/*/apps/*%{rname}*
+%_K6data/audiotube/
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
+* Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
+- generate deps for ytmusicapi
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

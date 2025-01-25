@@ -1,7 +1,7 @@
 %define rname kruler
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kcolorscheme-devel kf6-kstatusnotifieritem-devel
 BuildRequires: kf6-ki18n-devel kf6-knotifications-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
+BuildRequires: kf6-kcrash-devel
 
 %description
 %summary.
@@ -46,6 +47,9 @@ BuildRequires: kf6-ki18n-devel kf6-knotifications-devel kf6-kwidgetsaddons-devel
 
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

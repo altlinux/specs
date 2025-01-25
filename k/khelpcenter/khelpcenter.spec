@@ -1,7 +1,7 @@
 %define rname khelpcenter
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -21,9 +21,11 @@ Requires(post,preun): alternatives >= 0.2
 Source: %rname-%version.tar
 
 Patch1: khelpcenter-alt-hide-links-on-contents-screen.patch
+Patch2: alt-paths.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-webengine-devel
+BuildRequires: rpm-build-python3
 BuildRequires: libxapian-devel libxml2-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools-devel
@@ -36,7 +38,8 @@ KDE help center.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p2
+#%patch1 -p2
+%patch2 -p1
 
 %build
 %K6build
@@ -69,6 +72,9 @@ fi
 
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Wed Nov 13 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

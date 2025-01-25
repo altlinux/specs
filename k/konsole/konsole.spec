@@ -8,8 +8,8 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 24.08.3
-Release: alt3
+Version: 24.12.1
+Release: alt1
 %K6init no_altplace
 
 Group: Terminals
@@ -27,7 +27,6 @@ Obsoletes: kde4-konsole < %EVR
 
 Source: %rname-%version.tar
 Source10: profiles.tar
-Patch1: kdebug-482149.patch
 #
 Patch11: alt-sover.patch
 Patch12: alt-def-font.patch
@@ -96,7 +95,6 @@ Obsoletes: libkonsoleapp1 < %EVR
 
 %prep
 %setup -q -n %rname-%version -a10
-%patch1 -p1
 #
 %patch11 -p1
 #patch12 -p1
@@ -166,6 +164,9 @@ __EOF__
 
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt3
 - update provides/obsoletes
 

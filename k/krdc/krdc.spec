@@ -4,8 +4,8 @@
 %define libkrdccore libkrdccore%sover
 
 Name: %rname
-Version: 24.08.3
-Release: alt2
+Version: 24.12.1
+Release: alt1
 %K6init
 
 Group: Networking/Remote access
@@ -71,11 +71,15 @@ Requires: %name-common
 %install
 %K6install
 %K6install_move data krdc kio
+
+mv %buildroot/%_datadir/mime/packages/org.kde.krdc{,6}-mime.xml
+
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
 %_datadir/qlogging-categories6/*.*categories
+%_datadir/mime/packages/*krdc*.xml
 
 %files
 %_K6bin/krdc
@@ -96,6 +100,9 @@ Requires: %name-common
 
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
 - update requires
 

@@ -11,8 +11,8 @@
 %add_findreq_skiplist %_K6data/%rname/scripts/*.py
 
 Name: %rname
-Version: 24.08.3
-Release: alt2
+Version: 24.12.1
+Release: alt1
 %K6init
 
 Group:     Networking/File transfer
@@ -27,8 +27,7 @@ Source: %rname-%version.tar
 
 # ALT
 Patch10: alt-defaults.patch
-Patch11: alt-short-date.patch
-Patch12: alt-find-taglib.patch
+Patch11: alt-find-taglib.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 
@@ -63,7 +62,6 @@ KTorrent library
 %setup -q -n %rname-%version
 %patch10 -p1 -b .defaults
 %patch11 -p1
-%patch12 -p1
 
 #sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
@@ -106,6 +104,9 @@ done
 %_libdir/libktcore.so.*
 
 %changelog
+* Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Fri Nov 15 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
 - fix package kxmlgui files
 
