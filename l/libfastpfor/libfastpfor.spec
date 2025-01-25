@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libfastpfor
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: The FastPFOR C++ library: Fast integer compression
@@ -57,6 +57,9 @@ subst "s|/lib/Release|/%_lib|" %buildroot%_libdir/cmake/FastPFOR/*.cmake
 %_includedir/fastpfor/
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.3.0-alt1
+- new version 0.3.0 (with rpmrb script)
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - new version 0.2.0 (with rpmrb script)
 
