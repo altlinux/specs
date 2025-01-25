@@ -3,7 +3,7 @@
 
 Name:    eg25-manager
 Version: 0.5.2
-Release: alt1
+Release: alt2
 
 Summary: Manager daemon for the Quectel EG25 mobile broadband modem
 License: GPL-3.0-or-later
@@ -11,6 +11,7 @@ Group:   Other
 Url:     https://gitlab.com/mobian1/eg25-manager
 
 Source: %name-%version.tar
+Source1: mobile-tweaks.conf
 Patch0: %name-dirs.patch
 
 BuildRequires(pre): meson
@@ -51,10 +52,9 @@ It implements the following features:
 %install
 %meson_install
 
-# Enable service automatically if modem found
-cat>%buildroot%_udevrulesdir/90-eg25-service.rules<<EOF
-SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="2c7c", ATTRS{idProduct}=="0125", ENV{SYSTEMD_WANTS}="eg25-manager.service", TAG+="systemd"
-EOF
+# For fast on-call wakeups ModemManager needs to be started with
+# --test-quick-suspend-resume
+install -Dp -m 644 %SOURCE1 %buildroot%_unitdir/ModemManager.service.d/mobile-tweaks.conf
 
 %preun
 %preun_service %name
@@ -66,10 +66,15 @@ EOF
 %doc *.md
 %_bindir/%name
 %_unitdir/%name.service
+%_unitdir/ModemManager.service.d/mobile-tweaks.conf
 %_udevrulesdir/*.rules
 %_datadir/%name
 
 %changelog
+* Sat Jan 25 2025 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt2
+- Enable fast wake-up on incoming calls.
+- Drop useless udev-based autostart.
+
 * Wed Oct 30 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.2-alt1
 - New version.
 
