@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name clapper
 %define ver_major 0.8
@@ -13,7 +13,7 @@
 
 Name: %_name-enhancers
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Plugins enhancing Clapper library capabilities
 License: GPL-3.0-or-later
@@ -34,6 +34,7 @@ Source: %name-%version.tar
 %define gst_ver 1.24
 
 Requires: %_name >= %ver_major
+Requires: libpeas2-python3-loader
 %{?_enable_yt_dlp:Requires: yt-dlp}
 
 %add_python3_path %_libdir/%_name-%api_ver/enhancers
@@ -76,6 +77,11 @@ Plugins enhancing Clapper media player library capabilities.
 %doc README*
 
 %changelog
+* Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1.1
+- updated to 0.8.1-1-gbe60a2b 
+  (peertube: Fix regex for video IDs containing "-" characters)
+- explicitly required libpeas2-python3-loader
+
 * Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 

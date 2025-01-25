@@ -1,22 +1,26 @@
-%def_disable snapshot
+%def_enable snapshot
+
 %define _name connections
 %define xdg_name org.gnome.Connections
 %define ver_major 47
 %define beta %nil
 
+%def_enable check
+
 Name: gnome-%_name
-Version: %ver_major.0
+Version: %ver_major.2.1
 Release: alt1%beta
 
 Summary: GNOME Connections
 Group: Graphical desktop/GNOME
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://apps.gnome.org/Connections
+
+Vcs: https://gitlab.gnome.org/GNOME/connections.git
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/connections.git
 Source: %name-%version.tar
 %endif
 
@@ -24,22 +28,22 @@ Source: %name-%version.tar
 %define gtk_ver 3.22.0
 %define handy_ver 1.6
 %define fuse_ver 3.9.1
-%define freerdp_ver 2.0.0
+%define freerdp_ver 3.6.3
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(gtk-vnc-2.0)
 # for gtk-frdp
-BuildRequires: pkgconfig(freerdp2) >= %freerdp_ver
+BuildRequires: pkgconfig(freerdp3) >= %freerdp_ver
 BuildRequires: pkgconfig(winpr2)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: pkgconfig(fuse3) >= %fuse_ver
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 %summary
@@ -73,6 +77,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2.1-alt1
+- 47.2.1 (build against freerdp3 libraries)
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
