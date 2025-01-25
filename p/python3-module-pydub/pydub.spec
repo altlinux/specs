@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.25.1
-Release: alt1
+Release: alt2
 
 Summary: Manipulate audio with a simple and easy high level interface
 
@@ -24,6 +24,9 @@ Source:  %modulename-%version.tar
 %prep
 %setup -n %modulename-%version
 
+# Hotfix for python3.12
+sed -i 's/re\.match(/re\.match(r/g' pydub/utils.py
+
 %build
 %python3_build
 
@@ -36,6 +39,9 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jan 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.25.1-alt2
+- Fixed regular expressions for python3.12 (Closes: #52814).
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 0.25.1-alt1
 - Automatically updated to 0.25.1.
 
