@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
@@ -8,7 +8,7 @@
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 %def_disable static
@@ -216,6 +216,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.78.3-alt1
+- 0.78.3
+
 * Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.78.2-alt1
 - 0.78.2
 

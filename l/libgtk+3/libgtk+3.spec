@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gtk+
 %define ver_major 3.24
@@ -24,7 +24,7 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.43
+Version: %ver_major.48
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -443,6 +443,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.48-alt1
+- 3.24.48
+
 * Thu Jul 11 2024 Yuri N. Sedunov <aris@altlinux.org> 3.24.43-alt1
 - 3.24.43 (fixed CVE-2024-6655)
 

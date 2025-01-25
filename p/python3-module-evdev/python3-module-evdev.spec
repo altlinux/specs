@@ -1,7 +1,7 @@
 %define pypi_name evdev
 
 Name: python3-module-%pypi_name
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 
 Summary: Python3 bindings to the generic input event interface
@@ -37,6 +37,9 @@ typically located in /dev/input/
 %doc README*
 
 %changelog
+* Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Wed May 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
