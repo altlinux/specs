@@ -4,7 +4,7 @@
 %define cargo_test %rust_test
 
 Name: lsd
-Version: 1.1.2
+Version: 1.1.5
 Release: alt1
 
 Summary: Ls command with a lot of pretty colors and some other stuff
@@ -49,6 +49,9 @@ EOF
 %_bindir/lsd
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.5-alt1
+- new version 1.1.5 (with rpmrb script)
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - new version 1.1.2 (with rpmrb script)
 
