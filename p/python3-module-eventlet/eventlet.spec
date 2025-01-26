@@ -1,6 +1,6 @@
 %define oname eventlet
 
-%ifnarch armh
+%ifnarch armh ppc64le
 %def_with check
 %else
 %def_without check
@@ -9,7 +9,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.38.2
+Version: 0.39.0
 Release: alt1
 
 Summary: Highly concurrent networking library
@@ -32,13 +32,11 @@ BuildRequires: python3-module-hatch-vcs
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-six
 BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-dns
 %endif
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-six
 BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-dns
 BuildRequires: python3-module-psycopg2
@@ -141,6 +139,9 @@ and not test_raise_dns_tcp"
 %endif
 
 %changelog
+* Sun Jan 26 2025 Anton Vyatkin <toni@altlinux.org> 0.39.0-alt1
+- new version 0.39.0
+
 * Sat Dec 14 2024 Anton Vyatkin <toni@altlinux.org> 0.38.2-alt1
 - new version 0.38.2
 
