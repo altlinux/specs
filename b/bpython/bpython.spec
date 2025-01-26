@@ -1,14 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define oname bpython
+
 %def_with doc
 %def_without check
-
-%def_with curses
 %def_with urwid
 
-Name: bpython3
-Version: 0.24
-Release: alt2
+Name: bpython
+Version: 0.25
+Release: alt1
 
 Summary: Fancy curses interface to the Python 3 interactive interpreter
 
@@ -23,8 +21,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+
 %if_with check
 BuildRequires: /dev/pts
 BuildRequires: python3-module-pyxdg
@@ -32,6 +32,12 @@ BuildRequires: python3-module-curtsies
 BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-typing_extensions
 %endif
+
+Provides: bpython3 = %EVR
+Obsoletes: bpython3
+
+Provides: bpython3-curses = %EVR
+Obsoletes: bpython3-curses
 
 %description
 bpython is a fancy interface to the Python interpreter for
@@ -51,6 +57,9 @@ It has the following features:
 Group: Development/Python3
 Summary: Documentation for bpython
 
+Provides: bpython3-doc = %EVR
+Obsoletes: bpython3-doc
+
 %description doc
 Documentation for bpython
 
@@ -59,16 +68,11 @@ Group: Development/Python3
 Summary: Urwid front-end for bpython
 Requires: %name = %EVR
 
+Provides: bpython3-urwid = %EVR
+Obsoletes: bpython3-urwid
+
 %description urwid
 Urwid front-end for bpython
-
-%package curses
-Group: Development/Python
-Summary: Curses front-end for bpython
-Requires: %name = %EVR
-
-%description curses
-Curses front-end for bpython
 
 %prep
 %setup
@@ -80,7 +84,7 @@ ln -s ../objects.inv doc/sphinx/source/
 %endif
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with doc
 pushd doc/sphinx/source
@@ -89,14 +93,7 @@ popd
 %endif
 
 %install
-%python3_install
-mv %buildroot%python3_sitelibdir/%oname/urwid.py %buildroot%python3_sitelibdir/%oname/urwid_.py
-mv %buildroot/%_bindir/%oname %buildroot/%_bindir/%name
-mv %buildroot/%_bindir/%oname-urwid %buildroot/%_bindir/%name-urwid
-mv %buildroot/%_bindir/%oname-curses %buildroot/%_bindir/%name-curses
-
-subst "s|bpython|bpython3|" %buildroot%_datadir/applications/*
-mv %buildroot%_pixmapsdir/%oname.png %buildroot%_pixmapsdir/%name.png
+%pyproject_install
 
 %check
 python3 setup.py test
@@ -104,24 +101,19 @@ python3 setup.py test
 %files
 %_bindir/bpdb
 %_bindir/%name
-%python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/%oname/urwid_.py
-%exclude %python3_sitelibdir/%oname/cli.py
-%exclude %python3_sitelibdir/%oname/test
+%python3_sitelibdir/%name/
+%exclude %python3_sitelibdir/%name/urwid.py
+%exclude %python3_sitelibdir/%name/test
 %python3_sitelibdir/bpdb/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/bpython-%version.dist-info
 %_datadir/metainfo/*
 %_datadir/applications/*
 %_pixmapsdir/%name.png
-#%%_man1dir/*
-#%%_man5dir/*
+%_man1dir/*
+%_man5dir/*
 
 %if_without urwid
 %exclude %_bindir/%{name}-urwid
-%endif
-
-%if_without curses
-%exclude %_bindir/%{name}-curses
 %endif
 
 
@@ -134,16 +126,16 @@ python3 setup.py test
 %if_with urwid
 %files urwid
 %_bindir/%{name}-urwid
-%python3_sitelibdir/%oname/urwid_.py
-%endif
-
-%if_with curses
-%files curses
-%_bindir/%{name}-curses
-%python3_sitelibdir/%oname/cli.py
+%python3_sitelibdir/%name/urwid.py
 %endif
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.25-alt1
+- new version 0.25
+- renamed to bpython again
+- switch to pyproject
+- there is no more cli backend
+
 * Mon Jul 17 2023 Artyom Bystrov <arbars@altlinux.org> 0.24-alt2
 - Disable man pages
 
