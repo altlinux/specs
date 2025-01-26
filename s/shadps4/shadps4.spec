@@ -1,5 +1,4 @@
 %define cryptopp_cmake_commit 2c384c28265a93358a2455e610e76393358794df
-%define sdl3_commit 3a1d76d298db023f6cf37fb08ee766f20a4e12ab
 %define vma_commit 5a53a198945ba8260fbc58fadb788745ce6aa263
 %define robin_map_commit fe845fd7852ef541c5479ae23b3d36b57f8608ee
 %define magic_enum_commit 1a1824df7ac798177a521eed952720681b0bf482
@@ -14,7 +13,7 @@
 
 Name: shadps4
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -29,74 +28,53 @@ ExclusiveArch: x86_64
 Source0: shadPS4-v.%version.tar
 # https://github.com/shadps4-emu/ext-cryptopp-cmake/archive/%cryptopp_cmake_commit/ext-cryptopp-cmake-%cryptopp_cmake_commit.tar.gz
 Source1: ext-cryptopp-cmake-%cryptopp_cmake_commit.tar
-# https://github.com/shadps4-emu/ext-SDL/archive/%sdl3_commit/ext-SDL-%sdl3_commit.tar.gz
-Source2: ext-SDL-%sdl3_commit.tar
 # https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/%vma_commit/VulkanMemoryAllocator-%vma_commit.tar.gz
-Source3: VulkanMemoryAllocator-%vma_commit.tar
+Source2: VulkanMemoryAllocator-%vma_commit.tar
 # https://github.com/Tessil/robin-map/archive/%robin_map_commit/robin-map-%robin_map_commit.tar.gz
-Source4: robin-map-%robin_map_commit.tar
+Source3: robin-map-%robin_map_commit.tar
 # https://github.com/Neargye/magic_enum/archive/%magic_enum_commit/magic_enum-%magic_enum_commit.tar.gz
-Source5: magic_enum-%magic_enum_commit.tar
+Source4: magic_enum-%magic_enum_commit.tar
 # https://github.com/shadps4-emu/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
-Source6: sirit-%sirit_commit.tar
+Source5: sirit-%sirit_commit.tar
 # https://github.com/shadps4-emu/tracy/archive/%tracy_commit/tracy-%tracy_commit.tar.gz
-Source7: tracy-%tracy_commit.tar
+Source6: tracy-%tracy_commit.tar
 # https://github.com/shadps4-emu/ext-cryptopp/archive/%cryptopp_commit/ext-cryptopp-%cryptopp_commit.tar.gz
-Source8: ext-cryptopp-%cryptopp_commit.tar
+Source7: ext-cryptopp-%cryptopp_commit.tar
 # https://github.com/zyantific/zydis/archive/%zydis_commit/zydis-%zydis_commit.tar.gz
-Source9: zydis-%zydis_commit.tar
+Source8: zydis-%zydis_commit.tar
 # https://github.com/shadps4-emu/ext-imgui/archive/%dear_imgui_commit/ext-imgui-%dear_imgui_commit.tar.gz
-Source10: ext-imgui-%dear_imgui_commit.tar
+Source9: ext-imgui-%dear_imgui_commit.tar
 # https://github.com/shadps4-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
-Source11: ext-discord-rpc-%discord_rpc_commit.tar
+Source10: ext-discord-rpc-%discord_rpc_commit.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
-Source12: Vulkan-Headers-%vulkan_headers_version.tar
+Source11: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/shadps4-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
-Source13: ext-LibAtrac9-%libatrac9_commit.tar
+Source12: ext-LibAtrac9-%libatrac9_commit.tar
 
 BuildRequires: boost-asio-devel
 BuildRequires: cmake
 BuildRequires: glslang-devel
-BuildRequires: ilmbase-devel
-BuildRequires: libXext-devel
-BuildRequires: libalsa-devel
+BuildRequires: libGLU-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
-BuildRequires: libdbusmenu-gtk3
-BuildRequires: libdecor-devel
-BuildRequires: libdrm-devel
-BuildRequires: libe2fs
 BuildRequires: libfmt-devel
-BuildRequires: libgbm-devel
-BuildRequires: libgtk-layer-shell
-BuildRequires: libgtkmm3
 BuildRequires: libhalf-devel
-BuildRequires: libmpdclient
-BuildRequires: libnl3
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
-BuildRequires: libqt5-eglfskmssupport
-BuildRequires: libqt5-quickshapes
-BuildRequires: libspdlog1.13
 BuildRequires: libspirv-tools-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libtoml11-devel
-BuildRequires: libunwind-devel
-BuildRequires: libupower
-BuildRequires: libusb-devel
 BuildRequires: libvulkan-memory-allocator-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel
 BuildRequires: libxbyak-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzydis-devel
-BuildRequires: pipewire-jack-libs-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: rapidjson-devel
 BuildRequires: spirv-headers
-BuildRequires: zlib-ng-devel
+
 
 Provides: %name-qt = %EVR
 Obsoletes: %name-qt <= 0.2.0-alt1
@@ -105,10 +83,9 @@ Obsoletes: %name-qt <= 0.2.0-alt1
 shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
-%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12 -b 13
+%setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
 
 %__mv -Tf ../ext-cryptopp-cmake-%cryptopp_cmake_commit externals/cryptopp-cmake
-%__mv -Tf ../ext-SDL-%sdl3_commit externals/sdl3
 %__mv -Tf ../VulkanMemoryAllocator-%vma_commit externals/vma
 %__mv -Tf ../robin-map-%robin_map_commit externals/robin-map
 %__mv -Tf ../magic_enum-%magic_enum_commit externals/magic_enum
@@ -150,6 +127,9 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %_libexecdir/%name
 
 %changelog
+* Sun Jan 26 2025 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt2
+- Build with system SDL3
+
 * Sat Dec 28 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt1
 - Version 0.5.0
 
