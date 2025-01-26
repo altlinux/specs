@@ -1,7 +1,7 @@
 %define rdn_name net.sourceforge.liferea
 
 Name: liferea
-Version: 1.15.8
+Version: 1.15.9
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -13,6 +13,7 @@ Obsoletes: %name-gtkhtml < %version-%release %name-xulrunner < %version-%release
 Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %name-xulrunner = %version-%release
 
 Vcs: https://github.com/lwindolf/liferea.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -23,7 +24,7 @@ Requires: typelib(Gtk) = 3.0 libpeas-python3-loader
 %add_typelib_req_skiplist typelib(AppIndicator3)
 
 BuildRequires(pre): gobject-introspection-devel rpm-build-gir >= 0.7.3-alt3
-BuildRequires(pre): rpm-build-python3 python3-devel
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: xvfb-run gcc-c++ intltool
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.24.0
@@ -102,12 +103,17 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/trayicon.*
 %_libdir/%name/plugins/add-bookmark-site*
 %_libdir/%name/plugins/__pycache__/add-bookmark-site.*
+%_libdir/%name/plugins/download-manager.*
+%_libdir/%name/plugins/__pycache__/download-manager.*
 
 %files plugins-gnome-keyring
 %_libdir/%name/plugins/gnome-keyring.*
 %_libdir/%name/plugins/__pycache__/gnome-keyring.*
 
 %changelog
+* Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.15.9-alt1
+- updated to v1.15.9-5-g718f71252
+
 * Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.15.8-alt1
 - 1.15.8
 
