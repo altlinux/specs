@@ -3,10 +3,10 @@
 %def_disable snapshot
 
 %define _name Hieroglyphic
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name io.github.finefindus.%_name
 
-%def_disable check
+%def_enable check
 %def_disable bootstrap
 
 Name: hieroglyphic
@@ -70,6 +70,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Wed Oct 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0
 
