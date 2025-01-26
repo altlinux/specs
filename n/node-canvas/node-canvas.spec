@@ -1,8 +1,8 @@
 %define pname canvas
 
 Name: node-canvas
-Version: 3.0.0
-Release: alt0.rc3
+Version: 3.1.0
+Release: alt1
 
 Summary: node-canvas is a Cairo-backed Canvas implementation for Node.js
 
@@ -58,6 +58,9 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/{prebuild,examples,src,test,binding.gyp
 %nodejs_sitelib/%pname/
 
 %changelog
+* Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0 (with rpmrb script)
+
 * Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt0.rc3
 - new version (3.0.0) with rpmgs script
 
