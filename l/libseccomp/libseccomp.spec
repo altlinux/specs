@@ -3,10 +3,10 @@
 %set_verify_elf_method strict
 
 Name: libseccomp
-Version: 2.5.6
+Version: 2.6.0
 Release: alt1
-Summary: High level interface to the Linux Kernel's seccomp filter
-License: LGPLv2.1+
+Summary: An interface to the Linux Kernel's seccomp(2) filter
+License: LGPL-2.1-only
 Group: System/Libraries
 Url: https://github.com/seccomp/libseccomp
 
@@ -51,20 +51,14 @@ This package contains development files of %name.
 
 %install
 %makeinstall_std V=1
-
-# Relocate shared library from %_libdir/ to /%_lib/.
-mkdir -p %buildroot/%_lib
-for f in %buildroot%_libdir/*.so; do
-        t=$(readlink -v "$f")
-        ln -rsnf %buildroot/%_lib/"$t" "$f"
-done
-mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
-
 install -p tools/scmp_api_level     %buildroot%_bindir
 install -p tools/scmp_app_inspector %buildroot%_bindir
 install -p tools/scmp_arch_detect   %buildroot%_bindir
 install -p tools/scmp_bpf_disasm    %buildroot%_bindir
 install -p tools/scmp_bpf_sim       %buildroot%_bindir
+
+# To stabilize location of syscalls.csv
+%define _customdocdir %_docdir/%name
 
 %check
 unset MAKEFLAGS
@@ -73,13 +67,11 @@ export  LIBSECCOMP_TSTCFG_JOBS=0 \
 	LIBSECCOMP_TSTCFG_MODE_LIST=c
 %make_build check V=1
 
-%define _customdocdir %_docdir/%name
-
 %files
-/%_lib/lib*.so.*
+%_libdir/lib*.so.*
 
 %files devel
-%doc CHANGELOG CREDITS *.md src/syscalls.csv
+%doc LICENSE CHANGELOG CREDITS *.md src/syscalls.csv
 %_bindir/scmp_*
 %_includedir/*
 %_libdir/*.so
@@ -88,6 +80,10 @@ export  LIBSECCOMP_TSTCFG_JOBS=0 \
 %_man3dir/*
 
 %changelog
+* Sun Jan 26 2025 Vitaly Chikunov <vt@altlinux.org> 2.6.0-alt1
+- Update to v2.6.0 (2025-01-23).
+- spec: Minor usrmerge-related change (do not move libs to /lib).
+
 * Sun Jan 26 2025 Vitaly Chikunov <vt@altlinux.org> 2.5.6-alt1
 - Update to v2.5.6 (2025-01-24).
 
