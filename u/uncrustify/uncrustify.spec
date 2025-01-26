@@ -1,5 +1,5 @@
 Name: uncrustify
-Version: 0.79.0
+Version: 0.80.1
 Release: alt1
 
 Summary: Uncrustify is a source code beautifier
@@ -47,6 +47,9 @@ configurable, and is easy to modify.
 %_man1dir/*
 
 %changelog
+* Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 0.80.1-alt1
+- new version 0.80.1 (with rpmrb script)
+
 * Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 0.79.0-alt1
 - new version 0.79.0 (with rpmrb script)
 
