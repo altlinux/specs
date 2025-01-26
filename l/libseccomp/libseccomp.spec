@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: libseccomp
-Version: 2.5.5
+Version: 2.5.6
 Release: alt1
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
@@ -88,6 +88,9 @@ export  LIBSECCOMP_TSTCFG_JOBS=0 \
 %_man3dir/*
 
 %changelog
+* Sun Jan 26 2025 Vitaly Chikunov <vt@altlinux.org> 2.5.6-alt1
+- Update to v2.5.6 (2025-01-24).
+
 * Sat Dec 02 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.5-alt1
 - Update to v2.5.5 (2023-12-01).
 
