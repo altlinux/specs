@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.1.8
+Version: 3.2.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -11,8 +11,8 @@ Group: System/Libraries
 Url: https://www.libsdl.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# https://github.com/libsdl-org/SDL/archive/preview-%version/SDL-preview-%version.tar.gz
-Source: SDL-preview-%version.tar
+# https://github.com/libsdl-org/SDL/archive/release-%version/SDL-release-%version.tar.gz
+Source: SDL-release-%version.tar
 
 BuildRequires: cmake
 BuildRequires: fcitx5-devel
@@ -71,28 +71,33 @@ This is the libraries, include files and other resources you can use
 to develop SDL applications.
 
 %prep
-%setup -n SDL-preview-%version
+%setup -n SDL-release-%version
 
 %build
-%cmake
+%cmake \
+	-DSDL_TEST_LIBRARY:BOOL=OFF \
+	-DSDL_INSTALL_DOCS:BOOL=ON
 %cmake_build
 
 %install
 %cmake_install
-%__rm %buildroot%_libdir/*.a
 %__rm -r %buildroot%_datadir/licenses
 
 %files -n lib%name
-%doc BUGS.txt CREDITS.md INSTALL.md LICENSE.txt README*.txt WhatsNew.txt
+%doc BUGS.txt CREDITS.md INSTALL.md LICENSE.txt README.md WhatsNew.txt
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
 %_includedir/%name
 %_libdir/lib%name.so
 %_libdir/cmake/%name
+%_man3dir/SDL*.3*
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Sun Jan 26 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Sat Jan 11 2025 Nazarov Denis <nenderus@altlinux.org> 3.1.8-alt1
 - New version 3.1.8.
 
