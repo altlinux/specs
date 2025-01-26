@@ -1,7 +1,7 @@
 # http://bugzilla.gnome.org/show_bug.cgi?id=347922
 # guile -c "(use-modules (ice-9 slib)) (require 'printf)"
 Name: slib
-Version: 3b7
+Version: 3c1
 Release: alt1
 
 Summary: platform independent library for scheme
@@ -122,6 +122,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 #%ghost %_libdir/plt2/slibcat
 
 %changelog
+* Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 3c1-alt1
+- new version 3c1 (with rpmrb script)
+
 * Wed Jun 07 2023 Vitaly Lipatov <lav@altlinux.ru> 3b7-alt1
 - new version 3b7 (with rpmrb script)
 
