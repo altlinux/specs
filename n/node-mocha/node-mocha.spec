@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-mocha
-Version: 9.1.3
+Version: 11.1.0
 Release: alt1
 
 Summary: simple, flexible, fun javascript test framework for node.js & the browser
@@ -76,6 +76,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 #doc docs
 
 %changelog
+* Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 11.1.0-alt1
+- new version 11.1.0 (with rpmrb script)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 9.1.3-alt1
 - new version 9.1.3 (with rpmrb script)
 
