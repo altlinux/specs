@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.25.0
-Release: alt1
+Release: alt2
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -108,6 +108,12 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Sat Jan 25 2025 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt2
+- Use less strict seccomp (and thus more robust) hardening by default (without
+  aborting whole process).
+- Add '--no-sandbox' command line and 'sandbox = off' config options to make it
+  easier to turn off sandboxing for end users.
+
 * Tue Nov 12 2024 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt1
 - Update to v1.25.0 (2024-11-10) (fixes: CVE-2024-10524).
 
