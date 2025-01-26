@@ -3,7 +3,7 @@
 
 Name:    librepcb
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: A powerful, innovative and intuitive EDA suite for everyone
 Summary(ru_RU.UTF-8): Мощный, инновационный и интуитивно понятный пакет EDA для всех
@@ -62,6 +62,11 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 %autopatch -p1
 
 %build
+%ifarch %e2k
+# "relocation truncated to fit: R_E2K_32_ABS"
+%define optflags_debug -g0
+%endif
+
 %cmake  -DQT_MAJOR_VERSION=6 \
 	-DUNBUNDLE_DXFLIB=ON \
 	-DUNBUNDLE_FONTOBENE_QT=ON \
@@ -88,6 +93,9 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 %_datadir/mime/packages/org.%name.LibrePCB.xml
 
 %changelog
+* Sun Jan 26 2025 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
+- E2K: disable debuginfo (oversized for cpio)
+
 * Thu Jan 23 2025 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - new version (1.2.0) with rpmgs script
 
