@@ -1,5 +1,5 @@
 Name: rustdesk-server
-Version: 1.1.12
+Version: 1.1.14
 Release: alt1
 
 Summary: RustDesk Server Program
@@ -12,20 +12,25 @@ ExcludeArch: ppc64le
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Source2: hbb_common.tar
 Patch: %name-%version-alt-vendoring-config.patch
 Patch1: %name-%version-alt-hbbs-unit-fix.patch
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
+BuildRequires: cargo-vendor-checksum
 
 %description
 Self-host your own RustDesk server, it is free and open source.
 
 %prep
-%setup -a1
+%setup -a1 -a2
 %autopatch -p1
+#move hbb_common files to libs
+mv -v hbb_common/* libs/hbb_common
 
 %build
+cargo-vendor-checksum --all
 cargo build %_smp_mflags --offline --release
 
 %install
@@ -59,5 +64,8 @@ install -D systemd/rustdesk-hbbs.service -t %buildroot%_unitdir/
 %_logdir/%name
 
 %changelog
+* Sun Jan 26 2025 Anton Kurachenko <srebrov@altlinux.org> 1.1.14-alt1
+- New version 1.1.14.
+
 * Tue Dec 10 2024 Anton Kurachenko <srebrov@altlinux.org> 1.1.12-alt1
 - Initial build for Sisyphus.
