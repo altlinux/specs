@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 3.54
 %define xdg_name org.gnome.Terminal
@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Terminal
@@ -113,6 +113,9 @@ EOF
 %endif
 
 %changelog
+* Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.3-alt1
+- 3.54.3
+
 * Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.2-alt1
 - 3.54.2
 
