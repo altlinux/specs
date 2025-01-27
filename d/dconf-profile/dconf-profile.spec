@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: dconf-profile
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Dconf-profile configuration
@@ -27,14 +29,21 @@ in the /run/dconf/user/UID file.
 %setup -q
 
 %install
-mkdir -p %buildroot%_sysconfdir/dconf/{profile,db/{default,local,policy}.d/locks}
+mkdir -p %buildroot%_sysconfdir/dconf/{profile,db/{default,local,policy,distr}.d/locks}
 
 install -Dm0644 dconf_mandatory_dir.conf \
 	--target-directory %buildroot%_tmpfilesdir
 install -Dm0644 user system \
 	--target-directory %buildroot%_sysconfdir/dconf/profile/
 install -Dm0644 user system user_mandatory.template \
+		user_original.template user_old_policy.template service.template \
 	--target-directory %buildroot%_datadir/%name/default/
+
+%triggerpostun -- %name < 0:0.2
+if cmp -s "%_datadir/%name/default/user_original.template" "%_sysconfdir/dconf/profile/user" ||
+	cmp -s "%_datadir/%name/default/user_old_policy.template" "%_sysconfdir/dconf/profile/user"; then
+	cp -f %_datadir/%name/default/user %_sysconfdir/dconf/profile/user
+fi
 
 %files
 %_tmpfilesdir/dconf_mandatory_dir.conf
@@ -50,5 +59,10 @@ install -Dm0644 user system user_mandatory.template \
 %_datadir/%name/default/
 
 %changelog
+* Fri Jan 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2-alt1
+- Add support distr profile layer
+- Add service specific system profile template
+- Update obsoletes default user profile during upgrade
+
 * Wed Jul 26 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.1-alt1
 - Initial release
