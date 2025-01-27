@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Jan 27 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt2
+- update to latest public distr
+- educational-resources: add mediawiki; update moodle, nextcloud
+
 * Fri Oct 25 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt1
 - update to ALT Education 10.4
 - fix some typos (closes: #50840, #50847)
