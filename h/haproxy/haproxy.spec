@@ -8,7 +8,7 @@
 
 Name: haproxy
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -48,13 +48,14 @@ risking the system's stability.
 export VERDATE="$(date '+%%+4Y/%%m/%%d')"
 export VERSION="%version"
 export SUBVERS="-%release"
-%make_build V=1 CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
+%make_build V=1 CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_QUIC=1 USE_QUIC_OPENSSL_COMPAT=1 \
+    USE_PCRE2=1 USE_PCRE2_JIT=1 \
+    USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
 %ifarch mipsel
     USE_LIBATOMIC=1 \
 %endif
-    USE_SYSTEMD=1 USE_PROMEX=1 USE_LINUX_CAP=1 PREFIX="%_prefix"  DEFINE=-DMAX_SESS_STKCTR=12 ADDINC="%optflags"
-
-%make admin/halog/halog ADDINC="%optflags"
+    USE_SYSTEMD=1 USE_PROMEX=1 USE_LINUX_CAP=1 PREFIX="%_prefix"  DEFINE=-DMAX_SESS_STKCTR=12 ADDINC="%optflags" \
+    EXTRA=admin/halog/halog
 
 %install
 %make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix" TARGET="linux-glibc"
@@ -100,6 +101,10 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Mon Jan 27 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.7-alt2
+- Fixed start systemd unit (ALT#52808).
+- Enable QUIC support.
+
 * Wed Jan 22 2025 Semen Fomchenkov <armatik@altlinux.org> 3.0.7-alt1
 - 3.0.7
 
