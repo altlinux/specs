@@ -3,13 +3,14 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Python library of web-related functions
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/%pypi_name
+
 Vcs: https://github.com/scrapy/w3lib.git
 
 Source: https://pypi.io/packages/source/w/%pypi_name/%pypi_name-%version.tar.gz
@@ -52,6 +53,9 @@ extract arguments from urls
 %doc README*
 
 %changelog
+* Mon Jan 27 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Wed Jun 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.1-alt1
 - 2.2.1
 
