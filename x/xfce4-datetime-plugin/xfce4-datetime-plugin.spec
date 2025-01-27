@@ -1,6 +1,6 @@
 Name: xfce4-datetime-plugin
 Version: 0.8.3
-Release: alt2
+Release: alt3
 
 Summary: Datetime plugin for the Xfce panel
 License: GPLv2+
@@ -22,6 +22,8 @@ Requires: xfce4-panel >= 4.14
 
 %description
 %name is the datetime plugin for the Xfce panel.
+WARNING: This plugin is deprecated and will be removed soon.
+Please consider switching to clock plugin from xfce4-panel package.
 
 %prep
 %setup
@@ -45,6 +47,9 @@ Requires: xfce4-panel >= 4.14
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Mon Jan 27 2025 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt3
+- Added note "plugin deprecated" to description.
+
 * Thu Oct 03 2024 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt2
 - Fixed build: added intltool to BR.
 
