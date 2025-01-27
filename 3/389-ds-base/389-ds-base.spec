@@ -17,7 +17,7 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: 389 Directory Server (base)
@@ -328,6 +328,7 @@ fi
 %_bindir/ds-logpipe.py
 %_bindir/ldclt
 %_bindir/logconv.pl
+%_bindir/logconv.py
 %_bindir/pwdhash
 
 %_sbindir/ldap-agent
@@ -351,6 +352,7 @@ fi
 %_man1dir/ds-logpipe.py.1.*
 %_man1dir/ldclt.1.*
 %_man1dir/logconv.pl.1.*
+%_man1dir/logconv.py.1.*
 %_man1dir/pwdhash.1.*
 %_man1dir/ldap-agent.1.*
 %_man8dir/ns-slapd.8.*
@@ -410,6 +412,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 24 2025 Stanislav Levin <slev@altlinux.org> 3.1.2-alt1
+- 3.1.1 -> 3.1.2.
+
 * Tue Dec 17 2024 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
 - 2.4.6 -> 3.1.1.
 
