@@ -2,7 +2,7 @@
 %define oname grok
 
 Name: libgrokj2k
-Version: 11.0.0
+Version: 14.3.0
 Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: perl-base perl-devel perl-Image-ExifTool
 BuildRequires: zlib-devel libpng-devel libtiff-devel liblcms2-devel libjpeg-devel
-BuildRequires: libwebp-devel libzstd-devel liblzma-devel libdeflate-devel
+BuildRequires: libwebp-devel libzstd-devel liblzma-devel libdeflate-devel cli11-devel
 
 BuildRequires: cmake gcc-c++
 
@@ -106,6 +106,10 @@ rm -rf thirdparty/libz
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 14.3.0-alt1
+- new version 14.3.0 (with rpmrb script)
+- add BR: cli11-devel
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 11.0.0-alt1
 - new version 11.0.0 (with rpmrb script)
 
