@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Jan 27 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt4
+- small improvements (PBS, Nextcloud)
+
 * Thu Jan 23 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt3
 - fix some typos (closes #52514)
 - PBS: added notifications
