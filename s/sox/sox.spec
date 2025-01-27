@@ -1,7 +1,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
 Version: 14.4.2
-Release: alt7
+Release: alt8
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
@@ -35,6 +35,7 @@ Patch23: sox-14.4.2-debian-handle-vorbis-analysis-headerout-errors.patch
 Patch24: sox-14.4.2-debian-fix-hcom-big-endian.patch
 Patch25: sox-14.4.2-debian-fix-resource-leak-comments.patch
 Patch26: sox-14.4.2-debian-fix-resource-leak-hcom.patch
+Patch27: sox-14.4.2-sox_sample_test-clean-up-nonsense.patch
 Requires: sox-play = %version-%release
 Requires: sox-base = %version-%release
 Requires: libsox-fmt-alsa = %version-%release
@@ -394,6 +395,9 @@ rm -rf %buildroot%_libdir/sox/*.a
 
 %files play
 %changelog
+* Mon Jan 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.4.2-alt8
+- fixed FTBFS by b/porting upstream changes
+
 * Thu Mar 28 2024 Andrey Kovalev <ded@altlinux.org> 14.4.2-alt7
 - Added patches from debian and fix vulnerabilities (Fixes: CVE-2017-15371,
 CVE-2019-8355, CVE-2021-33844, CVE-2017-15370, CVE-2019-8356, CVE-2021-3643,
