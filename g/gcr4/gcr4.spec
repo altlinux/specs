@@ -2,23 +2,22 @@
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
-%define ver_major 4.2
+%define ver_major 4.3
 %define gcr_api_ver 4
 %define gck_api_ver 2
 
-%def_enable gtk4
 %def_enable ssh_agent
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
 
 Name: gcr%gcr_api_ver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/GnomeKeyring
 
 %if_disabled snapshot
@@ -37,13 +36,15 @@ Requires: libtasn1-utils
 %define gtk_ver 3.22
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
+%define gnutls_ver 3.8.5
 %define gcrypt_ver 1.4.5
 %define secret_ver 0.20
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver
-%{?_enable_gtk4:BuildRequires: libgtk4-devel}
+BuildRequires: libgtk4-devel
+BuildRequires: pkgconfig(gnutls) >= %gnutls_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libsecret-devel >= %secret_ver %_bindir/ssh-agent %_bindir/ssh-add
@@ -131,20 +132,11 @@ This package contains development documentation for GCR libraries.
 %meson_install
 %find_lang %_name-%gcr_api_ver
 
-# gcr-ssh-agent.socket and gcr-ssh-agent.service
-# should be enabled
-
-#$ cat /etc/profile.d/gcr-ssh-agent.sh
-
-#if [ -z "$SSH_AUTH_SOCK" ]; then
-#    export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
-#fi
-
 %check
-xvfb-run %__meson_test -t 6
+xvfb-run %__meson_test -t 8
 
 %files -f %_name-%gcr_api_ver.lang
-%{?_enable_gtk4:%_bindir/%_name-viewer-gtk4}
+%_bindir/%_name-viewer-gtk4
 %_libexecdir/%name-ssh-askpass
 %{?_enable_ssh_agent:
 %_libexecdir/%_name-ssh-agent
@@ -186,6 +178,9 @@ xvfb-run %__meson_test -t 6
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
+- 4.3.0
+
 * Mon Mar 04 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
