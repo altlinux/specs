@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 3.8.4
-Release: alt1
+Release: alt2
 
 Summary: Matlab(TM) style python plotting package
 
@@ -57,7 +57,6 @@ BuildRequires: python3-module-contourpy
 %{?_with_qt5:BuildRequires: python3-module-PyQt5}
 %{?_with_qt6:BuildRequires: python3-module-PyQt6}
 
-Requires: python3-module-%oname-tk
 Requires: python3-module-mpl_toolkits = %EVR
 Requires: %name-data = %EVR
 %add_python3_req_skip builtins fontTools
@@ -248,6 +247,7 @@ py.test-3 --pyargs matplotlib \
 %python3_sitelibdir/matplotlib/py.typed
 %exclude %python3_sitelibdir/matplotlib/backends/_backend_tk.py
 %exclude %python3_sitelibdir/matplotlib/backends/_backend_gtk.py
+%exclude %python3_sitelibdir/matplotlib/backends/_tkagg.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_cairo.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_nbagg.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_gtk3.*
@@ -259,6 +259,9 @@ py.test-3 --pyargs matplotlib \
 %exclude %python3_sitelibdir/matplotlib/backends/backend_qt5.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_qt5agg.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_qt5cairo.py*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qt.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qtagg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qtcairo.py*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_tkagg.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_tkcairo.*
 %exclude %python3_sitelibdir/matplotlib/backends/backend_webagg.*
@@ -282,6 +285,9 @@ py.test-3 --pyargs matplotlib \
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5.*.py*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5agg.*.py*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5cairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtagg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtcairo.*.py*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkagg.*.py*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkcairo.*.py*
 %exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg.*.py*
@@ -332,6 +338,7 @@ py.test-3 --pyargs matplotlib \
 %python3_sitelibdir/matplotlib/backends/_backend_tk.py*
 %python3_sitelibdir/matplotlib/backends/backend_tkagg.py*
 %python3_sitelibdir/matplotlib/backends/backend_tkcairo.py*
+%python3_sitelibdir/matplotlib/backends/_tkagg.*
 %python3_sitelibdir/matplotlib/backends/__pycache__/_backend_tk.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkagg.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkcairo.*.py*
@@ -360,8 +367,12 @@ py.test-3 --pyargs matplotlib \
 
 %if_with qt6
 %files qt6
-# This is handled by backend_qt*.py (no number), so the package exists only for
-# the dependencies.
+%python3_sitelibdir/matplotlib/backends/backend_qt.py*
+%python3_sitelibdir/matplotlib/backends/backend_qtagg.py*
+%python3_sitelibdir/matplotlib/backends/backend_qtcairo.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtagg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qtcairo.*.py*
 %endif
 
 %if_with wx
@@ -389,6 +400,9 @@ py.test-3 --pyargs matplotlib \
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Mon Jan 27 2025 Grigory Ustinov <grenka@altlinux.org> 3.8.4-alt2
+- Removed dependencies on own subpackages (Closes: #50004).
+
 * Wed Apr 10 2024 Grigory Ustinov <grenka@altlinux.org> 3.8.4-alt1
 - Automatically updated to 3.8.4 (Closes: #45501).
 - Added python3-module-matplotlib-qt6 subpackage (Closes: #49264).
