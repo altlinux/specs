@@ -1,6 +1,6 @@
 Name: rustdesk
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
 License: AGPL-3.0
@@ -111,6 +111,9 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Mon Jan 27 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.7-alt2
+- Updated the vcpkg-env to ensure compatibility with vcpkg 2025.01.11(Fix FTBFS).
+
 * Sat Jan 25 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.7-alt1
 - New version 1.3.7.
 
