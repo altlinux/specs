@@ -4,7 +4,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 8.3
-%define ver_minor 1
+%define ver_minor 3
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
@@ -142,6 +142,10 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Fri Jan 24 2025 Sergey Konev <darisishe@altlinux.org> 8.3.3-alt1
+- 8.3.3
+- Fix UTF-8 presentation (thx @kustovdv)
+
 * Mon Dec 16 2024 Sergey Konev <darisishe@altlinux.org> 8.3.1-alt1
 - 8.3.1
 
