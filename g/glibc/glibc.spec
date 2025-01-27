@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.76.e9f05fa1c6
+Version: 2.38.0.123.650a0
 
 Release: alt1
 Epoch: 6
@@ -487,6 +487,10 @@ done
 (
 	cd %buildroot%_prefix/lib/locale
 	for f in *; do
+		# C.utf8 files go into glibc-core.
+		case "$f" in
+			C.*) continue ;;
+		esac
 		n=${f%%%%@*}
 		n=${n%%%%.*}
 		n=${n%%%%_*}
@@ -677,6 +681,10 @@ fi
 %config(noreplace) %_sysconfdir/ld.so.conf
 %config(noreplace) %_sysconfdir/nsswitch.conf
 %config(noreplace) %_sysconfdir/rpc
+%if_with locales
+%dir %_prefix/lib/locale
+%_prefix/lib/locale/C.*
+%endif #with locales
 
 %files pthread
 /%_lib/lib*thread*.so*
@@ -695,6 +703,7 @@ fi
 %dir %_prefix/lib/locale
 %if_disabled langify
 %_prefix/lib/locale/*
+%exclude %_prefix/lib/locale/C.*
 %endif #disabled langify
 %endif #with locales
 
@@ -778,6 +787,12 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Mon Jan 27 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.123.650a0-alt1
+- Updated to glibc-2.38-123-g650a0aaaff (fixes FTBFS on Linux 6.9+ kernels
+  which support RWF_NOAPPEND flag) (fixes CVE-2025-0395).
+- Moved C.utf8 locale from the glibc-locales subpackage into
+  the glibc-core subpackage.
+
 * Mon Apr 29 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.76.e9f05fa1c6-alt1
 - Updated to glibc-2.38-76-ge9f05fa1c6 (fixes CVE-2024-33599, CVE-2024-33600,
   CVE-2024-33601, CVE-2024-33602).
