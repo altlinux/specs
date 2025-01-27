@@ -8,7 +8,7 @@
 
 Name:    pi-hole
 Version: 5.18.4
-Release: alt2
+Release: alt3
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
 License: EUPL-1.2
@@ -124,6 +124,22 @@ GITHUB_FTL_VERSION=v5.25.2
 GITHUB_FTL_HASH=8943e260
 EOF
 
+cat >%buildroot%_datadir/%_name/update.sh <<EOF
+#!/bin/sh
+
+echo "Update is not supported, use 'apt-get dist-upgrade'"
+exit 0
+EOF
+
+cat >%buildroot%_datadir/%_name/uninstall.sh <<EOF
+#!/bin/sh
+
+echo "Uninstall is not supported, use 'apt-get remove'"
+exit 0
+EOF
+
+chmod 0755 %buildroot%_datadir/%_name/update.sh %buildroot%_datadir/%_name/uninstall.sh
+
 %files
 %doc *.md LICENSE
 %_bindir/*
@@ -139,6 +155,9 @@ EOF
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Mon Jan 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt3
+- print information about update/uninstall actions (Closes: #52794)
+
 * Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt2
 - fix version printing (Closes: #52792)
 
