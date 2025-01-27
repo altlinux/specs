@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Mon Jan 27 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.1.1-alt1
+- display available forecast info for day 10
+
 * Thu Jan 23 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.1.0-alt1
 - add scrolling while in tray(closes: 52687)
 - fix crashes caused by forecast width change
