@@ -1,6 +1,6 @@
 Name: control
-Version: 0.8.0
-Release: alt3
+Version: 0.8.1
+Release: alt1
 
 Summary: A set of scripts to control installed system facilities
 License: GPLv2+
@@ -59,6 +59,9 @@ bash -n bash_completions
 %_datadir/bash-completion/completions/control
 
 %changelog
+* Sun Jan 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt1
+- Highlight the selected setting in the list of supported settings.
+
 * Sun Nov 03 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt3
 - Make bash completions script compatible with bash-completion < 2.12.0 and
   with non-usrmerged filesystems.
