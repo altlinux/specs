@@ -2,7 +2,7 @@
 
 Name: gpg-tui
 Version: 0.11.0
-Release: alt2
+Release: alt3
 
 Summary: Terminal User Interface for GnuPG
 License: MIT
@@ -12,6 +12,8 @@ Vcs: https://github.com/orhun/gpg-tui
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+
+Patch0: gpg-tui-0.11.0-crate-nix-loongarch64-support.patch
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
@@ -50,6 +52,10 @@ rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
 strip = false
 EOF
 
+%patch0 -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+    ./vendor/nix/.cargo-checksum.json
+
 %build
 cargo build %_smp_mflags --offline --release
 mkdir completions/
@@ -77,6 +83,9 @@ install -Dm 644 completions/_%name \
 %exclude %_bindir/%name-completions
 
 %changelog
+* Mon Jan 27 2025 Ilya Sorochan <k0tran@altlinux.org> 0.11.0-alt3
+- Add patch for nix crate for loongarch64 support.
+
 * Thu Nov 28 2024 Denis Rastyogin <gerben@altlinux.org> 0.11.0-alt2
 - Removed unnecessary vendor files.
 
