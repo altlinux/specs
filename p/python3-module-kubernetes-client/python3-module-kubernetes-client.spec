@@ -1,7 +1,7 @@
 %define  modulename kubernetes-client
 
 Name:     python3-module-%modulename
-Version:  31.0.0
+Version:  32.0.0
 Release:  alt1
 
 Summary:  Kubernetes Python Client
@@ -36,6 +36,9 @@ cp -pr kubernetes/e2e_test %buildroot%python3_sitelibdir/kubernetes/
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 32.0.0-alt1
+- 32.0.0
+
 * Tue Sep 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 31.0.0-alt1
 - 31.0.0
 
