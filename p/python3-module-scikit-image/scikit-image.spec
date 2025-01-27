@@ -7,7 +7,7 @@
 %def_with pythran
 
 Name: python3-module-%oname
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
@@ -181,6 +181,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 27 2025 Anton Vyatkin <toni@altlinux.org> 0.25.1-alt1
+- New version 0.25.1.
+
 * Sat Dec 14 2024 Anton Vyatkin <toni@altlinux.org> 0.25.0-alt1
 - New version 0.25.0.
 
