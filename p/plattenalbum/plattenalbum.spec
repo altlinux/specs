@@ -3,7 +3,7 @@
 
 Name: plattenalbum
 Version: 2.2.1
-Release: alt1
+Release: alt2
 Summary: Connect to your music
 License: GPL-3.0
 Group: Sound
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rpm-build-python3
 BuildRequires: python3-module-mpd python3-module-pygobject3
 BuildRequires: libgio gtk4-update-icon-cache
+
+Requires: libgtk4-gir libadwaita-gir
 
 %description
 A client for the Music Player Daemon (MPD).
@@ -45,5 +47,8 @@ managing playlists.
 
 
 %changelog
+* Mon Jan 27 2025 Andrey Kovalev <ded@altlinux.org> 2.2.1-alt2
+- Added missing requires (closes: #52835)
+
 * Fri Jan 24 2025 Andrey Kovalev <ded@altlinux.org> 2.2.1-alt1
 - Initial build for Sisyphus.
