@@ -1,6 +1,6 @@
 Name: alternatives
-Version: 0.5.2
-Release: alt2
+Version: 0.5.3
+Release: alt1
 
 Summary: alternatives support
 License: GPLv2+
@@ -98,6 +98,9 @@ ln -s /bin/true %buildroot%_sbindir/update-alternatives
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 0.5.3-alt1
+- alternatives-manual: run without <candidate> shows all available candidates.
+
 * Wed Feb 15 2023 Anton Farygin <rider@altlinux.ru> 0.5.2-alt2
 - Set filetrigger priority to fix the launch order (closes: #44018)
 
