@@ -1,5 +1,5 @@
 Name: sway
-Version: 1.10
+Version: 1.10.1
 Release: alt1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
@@ -109,6 +109,9 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Mon Jan 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.10.1-alt1
+- 1.10.1 released
+
 * Mon Oct 28 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.10-alt1
 - 1.10 released
 
