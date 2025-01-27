@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: livi
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Livi is a Light Video player for Wayland
@@ -54,12 +54,12 @@ simple.
 
 %install
 %meson_install
-%find_lang %rdn_name
+%find_lang %name
 
 %check
 %__meson_test
 
-%files -f %rdn_name.lang
+%files -f %name.lang
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -68,6 +68,9 @@ simple.
 %doc README* NEWS
 
 %changelog
+* Mon Jan 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
