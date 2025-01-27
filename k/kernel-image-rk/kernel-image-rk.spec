@@ -3,7 +3,7 @@
 %def_disable domU
 
 Name: kernel-image-rk
-Release: alt2
+Release: alt3
 
 %define kernel_base_version	6.1
 %define kernel_sublevel	.75
@@ -411,6 +411,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jan 27 2025 Nazarov Denis <nenderus@altlinux.org> 6.1.75-alt3
+- Update config
+
 * Tue Nov 19 2024 Nazarov Denis <nenderus@altlinux.org> 6.1.75-alt2
 - Update to v24.11.1 tag
 
