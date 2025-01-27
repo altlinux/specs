@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define efi_arches %ix86 x86_64 aarch64 riscv64
+%define efi_arches %ix86 x86_64 aarch64 riscv64 loongarch64
 
 # SBAT generation number for ALT
 # Refer to https://github.com/rhboot/shim/blob/main/SBAT.md
+%global grub_gen_number 4
 %global alt_gen_number 1
 
 # grub modules' architecture is heavily dependent on custom ELF sections.
@@ -19,12 +20,15 @@
 %add_python3_compile_exclude %_libdir/grub
 %add_python3_req_skip %_libdir/grub/*/gdb_helper.py
 
-# NB: not a fashion but the critical need to fit into 62 sectors
+# NB: not a fashion but the critical need to fit into 62 sectors.
+# Irrelevant on EFI-only architectures.
+%ifarch %ix86 x86_64
 %define _optlevel s
+%endif
 
 Name: grub
 Version: 2.12
-Release: alt3
+Release: alt4
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -32,7 +36,7 @@ Group: System/Kernel and hardware
 
 Url: http://www.gnu.org/software/grub
 
-ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64
+ExclusiveArch: %ix86 x86_64 aarch64 ppc64le riscv64 loongarch64
 
 Source0: %name-%version.tar
 Source1: grub2-sysconfig
@@ -54,8 +58,6 @@ Source12: grub-entries
 Source13: grub-entries.8
 
 Source14: grub-efi.filetrigger
-
-Source15: sbat.csv.in
 
 Source16: grub-dumpsbat.c
 
@@ -104,6 +106,12 @@ Requires: gettext
 %global linux_module_name linux
 %global efi_suff riscv64
 %endif
+%ifarch loongarch64
+%global grubefiarch loongarch64-efi
+%global linux_module_name linux
+%global efi_suff loongarch64
+%endif
+
 
 %package common
 Summary: GRand Unified Bootloader (common part)
@@ -139,7 +147,7 @@ Requires: %name-common = %EVR
 Provides: grub2-efi = %EVR
 Obsoletes: grub2-efi < %EVR
 Requires(pre): efibootmgr >= 15
-%ifarch aarch64
+%ifarch aarch64 loongarch64 riscv64
 Provides: grub2 = %EVR
 Provides: grub = %EVR
 %endif
@@ -201,10 +209,10 @@ This package enables EFI signature verification.
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 
-# append ALT data to SBAT section
-# make sure upstream data is set appropriately in sbat.csv.in too
-cat %SOURCE15 > sbat.csv
-echo "grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,http://git.altlinux.org/gears/g/grub.git" >> sbat.csv
+# Create ALT data to SBAT section
+echo "sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md" > sbat.csv
+echo "grub,%grub_gen_number,Free Software Foundation,grub,%version,https://www.gnu.org/software/grub/" >> sbat.csv
+echo "grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,https://git.altlinux.org/gears/g/grub.git" >> sbat.csv
 
 # Check gnulib version
 grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
@@ -334,6 +342,7 @@ install -pDm755 %SOURCE6 %buildroot%_sbindir/grub-autoupdate
 %ifarch %efi_arches
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
 install -pDm755 %SOURCE14 %buildroot%_rpmlibdir/grub-efi.filetrigger
+install -pDm644 sbat.csv %buildroot%_datadir/grub/sbat.csv
 %endif
 install -pDm755 %SOURCE12 %buildroot%_sbindir/grub-entries
 
@@ -458,6 +467,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sbindir/grub-efi-autoupdate
 %_libdir/grub/%grubefiarch
 %_rpmlibdir/grub-efi.filetrigger
+%_datadir/grub/sbat.csv
 
 %files efi-checkinstall
 %endif
@@ -494,6 +504,13 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Jan 22 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt4
+- fix 'error: not a correct XFS inode.' flood on boot (closes: #51238)
+- build on loongarch64 (iv@, asheplyakov@)
+- fix Install Russian translations (closes: #52741) (cas@)
+- add l10n for Alt distro names (cas@)
+- package sbat.csv file
+
 * Tue Aug 13 2024 Egor Ignatov <egori@altlinux.org> 2.12-alt3
 - fix boot from encrypted partition in Legacy install
 - fix error in bash-completion script
