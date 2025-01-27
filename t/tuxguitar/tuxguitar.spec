@@ -1,5 +1,5 @@
 Name: tuxguitar
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: A multitrack guitar tablature editor and player
@@ -104,6 +104,9 @@ end
 %_bindir/tuxguitar
 
 %changelog
+* Fri Jan 24 2025 Andrey Kovalev <ded@altlinux.org> 1.6.6-alt1
+- update to 1.6.6
+
 * Wed Dec 25 2024 Andrey Kovalev <ded@altlinux.org> 1.6.5-alt1
 - update to 1.6.5
 
