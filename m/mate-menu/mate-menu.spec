@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 22.04.2
-Release: alt8
+Release: alt9
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -23,6 +23,7 @@ Requires: mate-menu-editor
 Requires: altlinux-mime-defaults > 0.17
 Requires: typelib(Gtk) = 3.0
 Requires: python3(cairo)
+Requires: python3-module-pygobject3
 
 BuildArch: noarch
 
@@ -65,6 +66,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt9
+- Added requirements of python3-module-pygobject3.
+
 * Sat Nov 02 2024 Maria Alexeeva <alxvmr@altlinux.org> 22.04.2-alt8
 - Fixed a memory leak in the application plugin.
 - Previously class instances were not released from memory due to references.
