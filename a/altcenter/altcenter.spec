@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.4
+Release: alt0.5
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -26,7 +26,7 @@ ExcludeArch: ppc64le armh
 
 BuildRequires(pre): rpm-build-python3
 
-%add_python3_req_skip mainwindow my_utils
+%add_python3_req_skip mainwindow my_utils my_utils_pyqt5
 
 %description
 This is the grapical plugin-based application for show information and
@@ -54,6 +54,10 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.5
+- Open the desired plugin via command line parameter.
+- Remove unused code.
+
 * Fri Jan 24 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.4
 - Used correct user settings program for current DE (ALT #52797).
 - Unset minimal size for mobile device (ALT #52798).
