@@ -5,19 +5,26 @@
 %def_disable bootstrap
 %def_enable check
 
+# https://bugzilla.altlinux.org/52839
+%def_enable alt_patches
+
 Name: impression
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Impression is a tool to create bootable drives
 License: GPL-3.0-or-later
 Group: System/Configuration/Other
 Url: https://gitlab.com/adhami3310/Impression
 
+Vcs: https://gitlab.com/adhami3310/Impression.git
+
+Patch1: %name-3.3.0-alt-collect-distro-information.patch
+Patch2: %name-3.3.0-alt-add-alt-to-list.patch
+
 %if_disabled snapshot
 Source: %url/-/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.com/adhami3310/Impression.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
@@ -45,6 +52,10 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+%{?_enable_alt_patches:
+%patch1 -p1
+%patch2 -p1}
+
 %build
 %meson
 %meson_build
@@ -67,6 +78,11 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Jan 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt2
+- qualimock@:
+  rewrite osinfo-db parser to support multiple distro variants for one OS version
+  add ALT Linux to GOOD_DISTROS list
+
 * Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
