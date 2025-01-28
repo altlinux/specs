@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	550.142
+%define package_version	550.144.03
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 28 2025 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
+-  new release (550.144.03) (closes: CVE-2024-0131, CVE-2024-0147, CVE-2024-0149, CVE-2024-0150, CVE-2024-53869)
 
 * Mon Jan 13 2025 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
 - new release (550.142)
