@@ -290,9 +290,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 5
+%global updatever 6
 %global patchver 0
-%global buildver 11
+%global buildver 7
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -501,6 +501,8 @@ Source16: CheckVendor.java
 
 # Ensure translations are available for new timezones
 Source18: TestTranslations.java
+
+Source19: openjdk21.watch
 
 #############################################
 #
@@ -1987,6 +1989,12 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 0:21.0.6.0.7-alt1
+- New version.
+- Security fixes:
+  - CVE-2025-21502
+- Add watch file
+
 * Fri Nov 08 2024 Andrey Cherepanov <cas@altlinux.org> 0:21.0.5.0.11-alt1
 - New version.
 - Security fixes:
