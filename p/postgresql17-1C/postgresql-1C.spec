@@ -4,6 +4,11 @@
 # Use ICU
 %def_with icu
 
+%ifarch x86_64
+# Use coverage
+%def_without coverage
+%endif
+
 %ifarch loongarch64
 # XXX: support of LoongArch targets is available in llvm versions >= 16
 # However psql JIT code makes use of deprecated typed pointers which
@@ -18,9 +23,9 @@
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
-%define postgresql_major     16
-%define postgresql_minor     4
-%define postgresql_altrel    7
+%define postgresql_major     17
+%define postgresql_minor     2
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -76,6 +81,11 @@ BuildRequires: libicu-devel
 %endif
 %if_with jit
 BuildRequires: llvm18.1-devel clang18.1-devel gcc-c++
+%endif
+# Need for make check
+BuildRequires: rpm-build-vm rpm-build-vm-createimage
+%if_with coverage
+BuildRequires: lcov
 %endif
 
 %description
@@ -175,6 +185,7 @@ Conflicts: %libecpg_name-13
 Conflicts: %libecpg_name-14
 Conflicts: %libecpg_name-15
 Conflicts: %libecpg_name-16
+Conflicts: %libecpg_name-16-1C
 Conflicts: %libecpg_name-17
 
 %description -n %libecpg_name-%postgresql_major-1C
@@ -201,6 +212,7 @@ Conflicts: %libecpg_name-13-devel
 Conflicts: %libecpg_name-14-devel
 Conflicts: %libecpg_name-15-devel
 Conflicts: %libecpg_name-16-devel
+Conflicts: %libecpg_name-16-1C-devel
 Conflicts: %libecpg_name-17-devel
 
 %description -n %libecpg_name-%postgresql_major-1C-devel
@@ -239,6 +251,7 @@ Conflicts: %{prog_name}13-server-devel
 Conflicts: %{prog_name}14-server-devel
 Conflicts: %{prog_name}15-server-devel
 Conflicts: %{prog_name}16-server-devel
+Conflicts: %{prog_name}16-1C-server-devel
 Conflicts: %{prog_name}17-server-devel
 
 %description server-devel
@@ -357,11 +370,7 @@ export LLVM_CONFIG=/usr/bin/llvm-config-18
 export CLANG=/usr/bin/clang-18
 %endif
 
-%ifnarch armh
  %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%else
-%remove_optflags %optflags_lto
-%endif
 
 %autoreconf
 
@@ -376,6 +385,9 @@ export CLANG=/usr/bin/clang-18
 %endif
 %if_with jit
     --with-llvm \
+%endif
+%if_with coverage
+    --enable-coverage \
 %endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
@@ -406,6 +418,11 @@ popd
 find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 	-e "s,http://docbook.sourceforge.net/release/xsl/current,/usr/share/xml/docbook/xsl-stylesheets,g" --
 %make_build -C doc all
+
+%ifnarch %ix86
+%check
+vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+%endif
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
@@ -460,7 +477,7 @@ popd
 # Copy pg_config for server-devel
 cp -a %buildroot%_bindir/pg_config %buildroot%_bindir/pg_server_config
 
-cp -a COPYRIGHT README \
+cp -a COPYRIGHT README.md \
     doc/{KNOWN_BUGS,MISSING_FEATURES,TODO} \
     src/tutorial %buildroot%docdir/
 
@@ -474,6 +491,7 @@ cp -a COPYRIGHT README \
 %find_lang pg_config-%postgresql_major
 %find_lang pg_controldata-%postgresql_major
 %find_lang pg_ctl-%postgresql_major
+%find_lang pg_createsubscriber-%postgresql_major
 %find_lang pg_dump-%postgresql_major
 %find_lang pg_resetwal-%postgresql_major
 %find_lang pg_rewind-%postgresql_major
@@ -481,6 +499,7 @@ cp -a COPYRIGHT README \
 %find_lang pg_test_timing-%postgresql_major
 %find_lang pg_upgrade-%postgresql_major
 %find_lang pg_waldump-%postgresql_major
+%find_lang pg_walsummary-%postgresql_major
 %find_lang pgscripts-%postgresql_major
 %find_lang plperl-%postgresql_major
 %find_lang plpgsql-%postgresql_major
@@ -489,12 +508,14 @@ cp -a COPYRIGHT README \
 %find_lang postgres-%postgresql_major
 %find_lang psql-%postgresql_major
 %find_lang pg_checksums-%postgresql_major
+%find_lang pg_combinebackup-%postgresql_major
 %find_lang pg_verifybackup-%postgresql_major
 
 cat psql-%postgresql_major.lang \
     pg_dump-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
+    pg_combinebackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
     pg_test_timing-%postgresql_major.lang \
     pg_verifybackup-%postgresql_major.lang \
@@ -509,7 +530,9 @@ cat postgres-%postgresql_major.lang \
     pg_upgrade-%postgresql_major.lang \
     pg_resetwal-%postgresql_major.lang \
     pg_waldump-%postgresql_major.lang \
-    pg_checksums-%postgresql_major.lang > server.lang
+    pg_walsummary-%postgresql_major.lang \
+    pg_checksums-%postgresql_major.lang \
+    pg_createsubscriber-%postgresql_major.lang > server.lang
 
 cat pg_config-%postgresql_major.lang > devel.lang
 
@@ -549,12 +572,6 @@ then
        cp -fp postmaster %_libdir/%PGSQL/backup
    fi
 fi
-
-echo "########################################################################"
-echo "                             Attention!"
-echo "               For PostgreSQL 15.6 and old need to run the file"
-echo " /usr/share/pgsql/fix-CVE-2024-4317.sql for all databases in an existing"
-echo " cluster."
 
 %post server
 echo PGLIB=%_datadir/%PGSQL >> ~postgres/.bash_profile
@@ -609,6 +626,11 @@ if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
 
+%triggerpostun -- %{prog_name}17-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
 %files -f main.lang
 %_bindir/clusterdb
 %_bindir/createdb
@@ -623,6 +645,7 @@ fi
 %_bindir/reindexdb
 %_bindir/vacuumdb
 %_bindir/pg_basebackup
+%_bindir/pg_combinebackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
 %_bindir/pg_isready
@@ -643,6 +666,7 @@ fi
 %_man1dir/reindexdb.1*
 %_man1dir/vacuumdb.1*
 %_man1dir/pg_basebackup.1*
+%_man1dir/pg_combinebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
 %_man1dir/pg_verifybackup.1*
@@ -652,7 +676,7 @@ fi
 %docdir/MISSING_FEATURES
 %docdir/TODO
 %docdir/COPYRIGHT
-%docdir/README
+%docdir/README.md
 
 %files docs
 %dir %docdir
@@ -682,9 +706,6 @@ fi
 %_libdir/%PGSQL/_int.so
 %_datadir/%PGSQL/extension/intarray-*.sql
 %_datadir/%PGSQL/extension/intarray.control
-%_libdir/%PGSQL/adminpack.so
-%_datadir/%PGSQL/extension/adminpack-*.sql
-%_datadir/%PGSQL/extension/adminpack.control
 %_libdir/%PGSQL/amcheck.so
 %_datadir/%PGSQL/extension/amcheck-*.sql
 %_datadir/%PGSQL/extension/amcheck.control
@@ -772,9 +793,6 @@ fi
 %_libdir/%PGSQL/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
-%_libdir/%PGSQL/old_snapshot.so
-%_datadir/%PGSQL/extension/old_snapshot-*.sql
-%_datadir/%PGSQL/extension/old_snapshot.control
 %_libdir/%PGSQL/pageinspect.so
 %_datadir/%PGSQL/extension/pageinspect-*.sql
 %_datadir/%PGSQL/extension/pageinspect.control
@@ -856,6 +874,7 @@ fi
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_controldata
+%_bindir/pg_createsubscriber
 %_bindir/pg_ctl
 %_bindir/postgres
 %_bindir/pg_upgrade
@@ -864,10 +883,12 @@ fi
 %_bindir/pg_resetwal
 %_bindir/pg_waldump
 %_bindir/pg_checksums
+%_bindir/pg_walsummary
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
 %_man1dir/pg_ctl.1*
+%_man1dir/pg_createsubscriber.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
 %_man1dir/pg_rewind.1*
@@ -875,6 +896,7 @@ fi
 %_man1dir/pg_resetwal.1*
 %_man1dir/pg_waldump.1*
 %_man1dir/pg_checksums.1*
+%_man1dir/pg_walsummary.1*
 
 %dir %_libdir/%PGSQL
 %dir %_datadir/%PGSQL/extension
@@ -913,8 +935,6 @@ fi
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
 %_unitdir/*
-# Fix CVE-2024-4317
-%_datadir/%PGSQL/fix-CVE-2024-4317.sql
 
 %files server-devel
 %_bindir/pg_server_config
@@ -1010,6 +1030,12 @@ fi
 %endif
 
 %changelog
+* Mon Jan 27 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt1
+- 17.2
+- Update 1C patch
+- Add coverage support
+- Add run test regressions (64-bit arch only)
+
 * Wed Nov 20 2024 Alexei Takaseev <taf@altlinux.org> 16.4-alt7
 - Fix ABI break in struct ResultRelInfo.
 - Fix per-session activation of ALTER {ROLE|DATABASE} SET role.
