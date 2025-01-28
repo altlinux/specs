@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version:  0.13.2
-Release:  alt1
+Release:  alt1.1
 
 Summary:  OpenShift python client
 License:  Apache-2.0
@@ -18,7 +18,9 @@ Source:   %modulename-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-BuildRequires: python3-module-flake8 pytest3 python3-module-openshift
+
+BuildRequires: python3(kubernetes)
+BuildRequires: python3-module-flake8 pytest3
 
 %description
 Python client for the Kubernetes and OpenShift APIs.
@@ -40,13 +42,17 @@ sed -i -e 's/ test-integration$//' Makefile
 rm -rf %buildroot/usr/requirements.txt
 
 %check
-make test PYTHON=%__python3
+make test-lint
+%pyproject_run_pytest test/unit -v -r s
 
 %files
 %doc *.md LICENSE *.txt
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 28 2025 Ivan A. Melnikov <iv@altlinux.org> 0.13.2-alt1.1
+- NMU: Avoid build dependency on itself.
+
 * Wed Jul 26 2023 Andrew A. Vasilyev <andy@altlinux.org> 0.13.2-alt1
 - 0.13.2
 - move on modern pyproject macros
