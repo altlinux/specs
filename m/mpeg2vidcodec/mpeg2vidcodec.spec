@@ -1,6 +1,6 @@
 Name: mpeg2vidcodec
 Version: 1.2
-Release: alt1.qa1
+Release: alt2
 
 Summary: MPEG-2 Encoder / Decoder 
 Summary(ru_RU.UTF-8): MPEG-2 кодер и декодер
@@ -8,6 +8,7 @@ License: as-is
 Group: Video
 URL: http://www.mpeg.org/MPEG/MSSG
 Source0: %{name}_v12.tar.gz
+Patch1: %name-fix-compilation.patch
 
 %description
 This package contains an implementation of an ISO/IEC DIS 13818-2
@@ -21,6 +22,7 @@ video coded bitstream sequences, and vice versa.
 
 %prep
 %setup -c -q
+%patch1 -p1
 
 %build
 cd mpeg2
@@ -36,6 +38,9 @@ cd mpeg2
 %doc mpeg2/README mpeg2/doc/* mpeg2/src/mpeg2dec/EXAMPLES mpeg2/src/mpeg2dec/IEEE1180 mpeg2/src/mpeg2dec/SPATIAL.DOC
 
 %changelog
+* Tue Jan 28 2025 Anton Meleshnikov <alton@altlinux.org> 1.2-alt2
+- Fixed FTBFS.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
