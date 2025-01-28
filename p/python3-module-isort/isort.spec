@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.13.2
+Version: 6.0.0
 Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
@@ -31,7 +31,7 @@ BuildRequires: /usr/bin/git
 %add_pyproject_deps_check_filter portray
 %add_pyproject_deps_check_filter requirementslib
 %add_pyproject_deps_check_filter safety
-%add_pyproject_deps_check_filter smmap2
+%add_pyproject_deps_check_filter hatch
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -42,22 +42,23 @@ Python utility / library to sort Python imports
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry dev
-%endif
 
-# remove bunled(for tests only) plugins/profiles,
+# remove bundled (for tests only) plugins/profiles,
 # they cannot be loaded within venv and break tests assumptions
 rm -r \
     example_shared_isort_profile \
     example_isort_sorting_plugin \
     example_isort_formatting_plugin \
-    %nil
 
 # unvendor distributions
 rm -r isort/_vendored/*
+
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -77,6 +78,9 @@ mv %buildroot%_bindir/isort{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 28 2025 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
+- 5.13.2 -> 6.0.0.
+
 * Thu Feb 15 2024 Stanislav Levin <slev@altlinux.org> 5.13.2-alt1
 - 5.12.0 -> 5.13.2.
 
