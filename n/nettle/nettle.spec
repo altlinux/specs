@@ -6,7 +6,7 @@
 %set_verify_elf_method strict
 
 Name: nettle
-Version: 3.9.1
+Version: 3.10.1
 Release: alt1
 Summary: A low-level cryptographic library
 
@@ -81,6 +81,9 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
+%ifarch ppc64le
+	--disable-assembler \
+%endif
 	--disable-static
 %make_build LIBTARGETS= DOCTARGETS=nettle.info
 
@@ -109,6 +112,13 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Jan 28 2025 Mikhail Efremov <sem@altlinux.org> 3.10.1-alt1
+- Disabled assembler on ppc64le.
+- Updated to 3.10.1.
+
+* Wed Jun 19 2024 Mikhail Efremov <sem@altlinux.org> 3.10-alt1
+- Updated to 3.10.
+
 * Tue Jun 06 2023 Mikhail Efremov <sem@altlinux.org> 3.9.1-alt1
 - Updated to 3.9.1.
 
