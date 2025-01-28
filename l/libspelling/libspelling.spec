@@ -9,7 +9,7 @@
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A spellcheck library for GTK 4
@@ -17,10 +17,11 @@ Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/GNOME/libspelling
 
+Vcs: https://gitlab.gnome.org/GNOME/libspelling.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/libspelling.git
 Source: %name-%version.tar
 %endif
 
@@ -127,6 +128,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Jan 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.6-alt1
+- 0.4.6
+
 * Sat Nov 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
