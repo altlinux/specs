@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.10.1
-Release: alt2
+Release: alt3
 
 Summary: A pytest plugin for testing Jupyter libraries and extensions
 License: BSD-3-Clause
@@ -17,6 +17,8 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
+Requires: libgio
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 %if_with check
@@ -26,6 +28,7 @@ BuildRequires: python3-module-nbformat
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-jupyter_server
+BuildRequires: libgio
 %endif
 
 %description
@@ -49,6 +52,9 @@ A set of pytest plugins for Jupyter libraries and extensions.
 %python3_sitelibdir/pytest_jupyter-%version.dist-info
 
 %changelog
+* Wed Jan 29 2025 Anton Vyatkin <toni@altlinux.org> 0.10.1-alt3
+- Fix FTBFS.
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 0.10.1-alt2
 - Fix FTBFS.
 
