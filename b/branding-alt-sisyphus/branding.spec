@@ -17,7 +17,7 @@
 
 Name: branding-%flavour
 Version: 20240122
-Release: alt3
+Release: alt4
 
 Url: http://en.altlinux.org
 
@@ -42,7 +42,7 @@ Source: branding.tar
 
 Group: Graphics
 Summary: System/Base
-License: GPLv2+
+License: GPL-2.0-or-later
 
 %description
 Distro-specific packages with design and texts
@@ -50,8 +50,11 @@ Distro-specific packages with design and texts
 %package bootloader
 Group: System/Configuration/Boot and Init
 Summary: Graphical theme for grub2
-License: GPL
+License: GPL-2.0-or-later
 
+%ifarch %grub_arches
+Requires: grub-common
+%endif
 Requires: coreutils
 Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-altlinux-%theme-bootloader
 
@@ -80,7 +83,7 @@ This package contains graphics for boot process, displayed via Plymouth
 
 %package alterator
 Summary: Design for alterator for %Brand %Theme
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 BuildArch: noarch
 Provides: design-alterator-browser-%theme branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
@@ -225,6 +228,7 @@ install slideshow/* %buildroot/usr/share/install2/slideshow/
 %ifarch %grub_arches
 #bootloader
 %post bootloader
+[ "$1" -eq 1 ] || exit 0
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
@@ -239,6 +243,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 #bootsplash
 %post bootsplash
+[ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %files alterator
@@ -285,6 +290,11 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Jan 28 2025 Anton Midyukov <antohami@altlinux.org> 20240122-alt4
+- bootloader, bootsplash: run %%post when first install package
+- bootloader: add dependency on grub-common for %%grub_arches
+- convert License tags to SPDX-format
+
 * Mon Jan 29 2024 Anton Midyukov <antohami@altlinux.org> 20240122-alt3
 - spec:
   + indexhtml: BuildArch: noarch
