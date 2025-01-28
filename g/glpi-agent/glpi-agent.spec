@@ -1,6 +1,6 @@
 Name:    glpi-agent
 Version: 1.12
-Release: alt1
+Release: alt2
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -85,7 +85,7 @@ OPTIONS="--debug "
 # Mode, change to "cron" to activate
 # - none (default on install) no activity
 # - cron (inventory only) use the cron.hourly
-AGENTMODE[0]=none
+#AGENTMODE[0]=none
 # FusionInventory Inventory or GLPI server URI
 # AGENTSERVER[0]=your.server.name
 # AGENTSERVER[0]=http://your.server.name/
@@ -93,9 +93,9 @@ AGENTMODE[0]=none
 # corresponds with --local=%_localstatedir/%name
 # AGENTSERVER[0]=local
 # Wait before inventory (for cron mode)
-AGENTPAUSE[0]=120
+#AGENTPAUSE[0]=120
 # Administrative TAG (optional, must be filed before first inventory)
-AGENTTAG[0]=
+#AGENTTAG[0]=
 EOF
 
 %build
@@ -140,6 +140,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 1.12-alt2
+- Comment unused parameters.
+
 * Sat Jan 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.12-alt1
 - New version.
 
