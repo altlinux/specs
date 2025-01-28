@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.4
+Version: 1.16.5
 Release: alt1
 
 Summary: Installer common parts
@@ -125,6 +125,9 @@ This package contains installer files for run on Desktop.
 %_desktopdir/install2.desktop
 
 %changelog
+* Tue Jan 28 2025 Anton Midyukov <antohami@altlinux.org> 1.16.5-alt1
+- install2-desktop.sh: do not setup QT_QPA_PLATFORMTHEME
+
 * Thu Jan 23 2025 Anton Midyukov <antohami@altlinux.org> 1.16.4-alt1
 - install2-common-desktop: replace consolehelper with pkexec
 - Check variable WAYLAND_DISPLAY in conditions for run on desktop

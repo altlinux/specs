@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.10
+Version: 3.1.11
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -57,6 +57,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Jan 28 2025 Anton Midyukov <antohami@altlinux.org> 3.1.11-alt1
+- pkg-install: fix set DURING_INSTALL=1
+
 * Sat Jan 18 2025 Anton Midyukov <antohami@altlinux.org> 3.1.10-alt1
 - initinstall.d/90-pkg.sh: add support installer >= 1.16.3
 
