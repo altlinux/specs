@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		f6fc7395b73
+%define svnrev		05b8b05eefe
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 7.0.8
-Release: alt2
+Version: 7.0.9
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -866,6 +866,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Jan 28 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.9-alt1
+- 7.0.9
+
 * Fri Jan 10 2025 Michael Shigorin <mike@altlinux.org> 1:7.0.8-alt2
 - E2K: require java8+ as per official docs (thx taf@)
 
