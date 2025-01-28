@@ -1,9 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define abiversion 2
 
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 Name: CharLS
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: C++ JPEG-LS library implementation
 License: BSD-3-Clause
@@ -14,6 +17,8 @@ VCS: https://github.com/team-charls/charls.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-cmake
+BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-macros-ifver
 BuildRequires: cmake
 BuildRequires: ctest
 BuildRequires: gcc-c++
@@ -21,14 +26,18 @@ BuildRequires: gcc-c++
 %description
 %summary.
 
-%package -n lib%name%abiversion
+%package -n libcharls%abiversion
 Summary: %summary
 Group: System/Libraries
 
 Provides: charls = %EVR
 Provides: CharLS = %EVR
+%ifver_gteq %ubt_id M120
+Provides: libCharLS2 = %EVR
+Obsoletes: libCharLS2 < %EVR
+%endif
 
-%description -n lib%name%abiversion
+%description -n libcharls%abiversion
 CharLS is a C++ implementation of the JPEG-LS standard
 for lossless and near-lossless image compression and decompression.
 JPEG-LS is a low-complexity image compression standard
@@ -40,7 +49,6 @@ Group: Development/C++
 
 Provides: charls-devel = %EVR
 Provides: CharLS-devel = %EVR
-Requires: lib%name%abiversion = %EVR
 
 %description -n lib%name-devel
 %summary.
@@ -65,7 +73,7 @@ Requires: lib%name%abiversion = %EVR
 %check
 %ctest
 
-%files -n lib%name%abiversion
+%files -n libcharls%abiversion
 %_libdir/libcharls.so.%abiversion
 %_libdir/libcharls.so.%version
 
@@ -79,6 +87,9 @@ Requires: lib%name%abiversion = %EVR
 %_libdir/pkgconfig/charls.pc
 
 %changelog
+* Mon Jan 27 2025 Constantin Sunzow <protvin@altlinux.org> 2.4.2-alt2
+- Changed binary package name for library.
+
 * Thu Dec 26 2024 Constantin Sunzow <protvin@altlinux.org> 2.4.2-alt1
 - Purge archive extracted source code.
 - Build from git tag.
