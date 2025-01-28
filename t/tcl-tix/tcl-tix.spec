@@ -3,7 +3,7 @@
 
 Name: tcl-tix
 Version: 8.4.3
-Release: alt4
+Release: alt5
 
 Summary: A set of capable widgets for Tk
 License: BSD
@@ -11,6 +11,13 @@ Group: Development/Tcl
 Url: http://tix.sourceforge.net/
 
 Source: %name-%version-%release.tar
+
+Patch0: tix-8.4.2-fedora-link.patch
+Patch1: tix-8.4.3-fedora-covscan-fixes.patch
+Patch2: tix-8.4.3-fedora-tcl86.patch
+Patch3: tix-fedora-c89.patch
+Patch4: tix-fedora-configure-c99.patch
+Patch5: tix-fedora-implicit-int.patch
 
 BuildRequires(pre): rpm-build-tcl >= 0.5.2-alt1
 BuildRequires: tk-devel >= 8.5.0
@@ -52,6 +59,12 @@ the features of the Tix widget set.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %tea_patch
 
 %build
@@ -59,7 +72,7 @@ the features of the Tix widget set.
 %configure
 %make_build
 
-%install 
+%install
 # FIXME: improve %%tea_patch
 mkdir -p %buildroot%_tcldatadir/Tix%version
 %makeinstall
@@ -82,6 +95,10 @@ cp -a demos %buildroot%_tcldatadir/Tix%version
 %_tcldatadir/Tix%version/demos
 
 %changelog
+* Tue Jan 28 2025 Leonid Znamenok <respublica@altlinux.org> 8.4.3-alt5
+- NMU: Fixed FTBS (thx to Fedora for patches).
+- Added .gear dir.
+
 * Sun Jul 04 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.4.3-alt4
 - Built with %%tea_patch.
 
