@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: aiosmtpd
-Version: 1.4.2
+Version: 1.4.6
 Release: alt1
 
 Summary: A reimplementation of the Python stdlib smtpd.py based on asyncio.
@@ -64,6 +64,9 @@ rm -rfv %buildroot/%python3_sitelibdir/%name/{qa,testing,docs}
 
 
 %changelog
+* Tue Jan 28 2025 Alexander Danilov <admsasha@altlinux.org> 1.4.6-alt1
+- new version (1.4.6).
+
 * Thu Apr 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
 - new version (1.4.2) with rpmgs script (ALT bug 42360)
 
