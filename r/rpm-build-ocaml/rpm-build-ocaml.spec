@@ -1,5 +1,5 @@
 Name: rpm-build-ocaml
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 BuildArch: noarch
 
@@ -34,6 +34,15 @@ install -p -m755 ocaml.{req,prov}{.files,} ocaml-functions %buildroot%_rpmlibdir
 %_rpmlibdir/ocaml*
 
 %changelog
+* Mon Jan 20 2025 Anton Farygin <rider@altlinux.ru> 1.6.4-alt1
+- enabled parallel build in Dune with %_smp_mflags
+- remove ocaml-cmi dependencies for .cmt and .cmti files in devel packages
+- refined OCaml packaging logic to accurately include/exclude relevant files
+- moved .cma and .cmi files to the devel package and .cmo files to the runtime
+  package to ensure proper separation
+- move META file to the devel package as it is used only during development for
+  dependency resolution and library configuration, not needed at runtime
+
 * Tue Sep 03 2024 Anton Farygin <rider@altlinux.ru> 1.6.3-alt1
 - provide (in addition to implementation) version for interface (ocaml-cmi)
   from .cmx files

@@ -1,7 +1,7 @@
 %define libname uuseg
 Name: ocaml-%libname
 Version: 16.0.0
-Release: alt2
+Release: alt3
 Summary: Unicode text segmentation for OCaml
 License: ISC
 Group: Development/ML
@@ -25,6 +25,8 @@ character properties of the Unicode character database
 Summary: Development files for %name
 Group: Development/ML
 Requires: %name = %EVR
+# findreq can't find this dependency via cmt/cmti files on bytecode ocaml
+Requires: ocaml-uucp-devel
 
 %description devel
 The %name-devel package contains libraries and signature
@@ -47,6 +49,9 @@ opam-installer --prefix=%buildroot%prefix --libdir=%buildroot%_libdir/ocaml
 %files devel -f ocaml-files.devel
 
 %changelog
+* Mon Jan 27 2025 Anton Farygin <rider@altlinux.ru> 16.0.0-alt3
+- added ocaml-uucp-devel dependency to ocaml-uuseg-devel package
+
 * Wed Jan 22 2025 Anton Farygin <rider@altlinux.ru> 16.0.0-alt2
 - changed BR - use ocaml-findlib-devel instead of the ocaml-findlib
 

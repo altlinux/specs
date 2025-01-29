@@ -21,7 +21,7 @@
 
 Name: ocaml
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Summary: The Objective Caml compiler and programming environment
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -31,7 +31,7 @@ Url: https://caml.inria.fr/
 Vcs: https://github.com/ocaml/ocaml
 Source0: %name-%version.tar
 
-Patch1: ocaml-5.3.0-alt-reqprov-objinfo.patch
+Patch1: %name-%version-%release.patch
 Patch2: ocaml-5.3.0-fedora-configure-Allow-user-defined-C-compiler-flags.patch
 Patch3: ocaml-4.14.1-more-source-artifacts.patch
 Patch4: ocaml-5.2.0-alt-ocamldoc-install-all-cmti.patch
@@ -304,6 +304,11 @@ popd
 %_libdir/ocaml/ocamldoc/
 
 %changelog
+* Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 5.3.0-alt2
+- ocaml-reqprov: added cmxs support
+- reduce flaky test_dropped_events.ml failures in bytecode on aarch64 by
+  ensuring event registration is not optimized away;
+
 * Thu Jan 16 2025 Anton Farygin <rider@altlinux.ru> 5.3.0-alt1
 - 5.2.0 -> 5.3.0
 
