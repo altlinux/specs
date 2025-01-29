@@ -3,13 +3,13 @@
 Name: pve-network
 Summary: PVE SDN package
 Version: 0.10.0
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 
 Source: %name-%version.tar
-Patch: alt-config-path.patch
+Patch: alt-dnsmasq.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -74,6 +74,9 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Mon Jan 27 2025 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt2
+- Fixed dnsmasq dbus config, allow policy user _dnsmasq.
+
 * Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 0.10.0-alt1
 - 0.10.0
 - Fixed config path for dnsmasq

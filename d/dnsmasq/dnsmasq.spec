@@ -1,10 +1,12 @@
 %def_with libidn2
 %def_with dbus
+%def_with conntrack
+%def_with nftset
 
 Name: dnsmasq
 Version: 2.90
 
-Release: alt3
+Release: alt4
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -22,7 +24,7 @@ Patch: %name-%version-%release.patch
 # Patch from upstream git, must be dropped during update to new version.
 Patch100: Fix-crash-when-reloading-DHCP-config-on-SIGHUP.patch
 
-BuildPreReq: glibc-kernheaders
+BuildRequires: glibc-kernheaders
 
 # IDN
 %if_with libidn2
@@ -36,6 +38,12 @@ BuildRequires: libnettle-devel libgmp-devel
 
 # DBUS
 %{?_with_dbus:BuildRequires: libdbus-devel}
+
+# CONNTRACK
+%{?_with_conntrack:BuildRequires: pkgconfig(libnetfilter_conntrack)}
+
+# NFTSET
+%{?_with_nftset:BuildRequires: pkgconfig(libnftables)}
 
 %define sysconfig_file %_sysconfdir/sysconfig/%name
 %define _unpackaged_files_terminate_build 1
@@ -93,6 +101,16 @@ sed -i 's;/\* #define HAVE_DNSSEC \*/;#define HAVE_DNSSEC;' src/config.h
 sed -i 's;/\* #define HAVE_DBUS \*/;#define HAVE_DBUS;' src/config.h
 %endif
 
+%if_with conntrack
+#enable CONNTRACK support
+sed -i 's;/\* #define HAVE_CONNTRACK \*/;#define HAVE_CONNTRACK;' src/config.h
+%endif
+
+%if_with nftset
+#enable NFTSET support
+sed -i 's;/\* #define HAVE_NFTSET \*/;#define HAVE_NFTSET;' src/config.h
+%endif
+
 %build
 # E2K: EDG-based compiler has many false positives
 %ifnarch %e2k
@@ -105,6 +123,7 @@ sed -i 's;/\* #define HAVE_DBUS \*/;#define HAVE_DBUS;' src/config.h
 %makeinstall_std PREFIX=%prefix
 
 install -d -m770 %buildroot%_sysconfdir/dnsmasq.conf.d
+ln -r -s %buildroot%_sysconfdir/dnsmasq.conf.d %buildroot%_sysconfdir/dnsmasq.d
 install -pD -m744 %SOURCE1            %buildroot%_initdir/%name
 install -pD -m600 %SOURCE2            %buildroot%sysconfig_file
 install -pD -m600 %name.conf.example  %buildroot%_sysconfdir/%name.conf
@@ -148,6 +167,7 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %config %_datadir/dbus-1/system.d/dnsmasq.conf
 %endif
 %dir %_sysconfdir/dnsmasq.conf.d
+%_sysconfdir/dnsmasq.d
 %_unitdir/%name.service
 %_unitdir/%name@.service
 %_initdir/%name
@@ -160,6 +180,14 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Jan 27 2025 Alexey Shabalin <shaba@altlinux.org> 2.90-alt4
+- Enable CONNTRACK support.
+- Enable NFTSET support.
+- Allow redefine conf-dir for dnsmasq instance.
+- Add symlink /etc/dnsmasq.d -> /etc/dnsmasq.conf.d
+  for compat with other distos.
+- Add DNSMASQ_OPTS support for compat with Debian.
+
 * Mon Jan 13 2025 Mikhail Efremov <sem@altlinux.org> 2.90-alt3
 - Enabled DBus support (closes: #52595).
 - Dropped "Broadcast routing" feature leftovers.
