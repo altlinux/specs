@@ -1,3 +1,5 @@
+%define sover 1
+
 %def_enable static
 
 %if_enabled static
@@ -5,24 +7,20 @@
 %endif
 
 Name: m4ri
-Version: 20240729
-Release: alt2
+Version: 20250128
+Release: alt1
+
 Summary: Linear Algebra over F_2
+
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://bitbucket.org/malb/m4ri
 
 Source: %url/downloads/%name-%version.tar.gz
+Vcs: git://github.com/malb/m4ri.git
 
-# This patch will not be sent upstream, as it is Fedora-specific.
-# Permanently disable SSE3 and SSSE3 detection.  Without this patch, the
-# config file tends to be regenerated at inconvenient times.
-Patch: m4ri-20240729-no-sse3.patch
 # Fix a format specifier.
-Patch1: m4ri-20240729-printf.patch
-# Remove an unnecessary direct library dependency from the pkgconfig file,
-# and also cflags used to compile m4ri, but not needed by consumers of m4ri.
-Patch2: m4ri-20240729-pkgconfig.patch
+Patch: m4ri-20240729-printf.patch
 
 BuildRequires: doxygen
 BuildRequires: gcc
@@ -34,11 +32,11 @@ The name M4RI comes from the first implemented algorithm: The "Method
 of the Four Russians" inversion algorithm published by Gregory Bard.
 M4RI is used by the Sage mathematics software and the BRiAl library.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: %summary
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%sover
 M4RI is a library for fast arithmetic with dense matrices over F_2.
 The name M4RI comes from the first implemented algorithm: The "Method
 of the Four Russians" inversion algorithm published by Gregory Bard.
@@ -53,6 +51,14 @@ Provides: bundled(jquery)
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package doc
+Summary: Documentation files for %name
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+The package contains documentation for %name.
+
 %if_enabled static
 %package -n lib%name-devel-static
 Summary: Static library files for %name
@@ -65,8 +71,6 @@ The %name-static package contains the static %name library.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
 
 # Fix the version number in the documentation, and generate only HTML
 %__subst 's/20140914/%version/;/GENERATE_LATEX/s/YES/NO/' m4ri/Doxyfile
@@ -112,16 +116,17 @@ rm -f %buildroot%_libdir/lib%name.a
 %check
 make check LD_LIBRARY_PATH=$PWD/.libs
 
-%files -n lib%name
-%doc AUTHORS
-%doc COPYING
-%_libdir/lib%name-0.0.%version.so
+%files -n lib%name%sover
+%_libdir/lib%name.so.%{sover}*
 
 %files -n lib%name-devel
-%doc doc/html
 %_includedir/%name
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
+
+%files doc
+%doc AUTHORS COPYING
+%doc doc/html
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -129,6 +134,11 @@ make check LD_LIBRARY_PATH=$PWD/.libs
 %endif
 
 %changelog
+* Wed Jan 29 2025 Leontiy Volodin <lvol@altlinux.org> 20250128-alt1
+- New version 20250128.
+- Added vcs tag.
+- Packaged documentation separately.
+
 * Thu Oct 03 2024 Leontiy Volodin <lvol@altlinux.org> 20240729-alt2
 - Fixed build libm4rie.
 

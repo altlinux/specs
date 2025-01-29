@@ -1,10 +1,8 @@
-Name: libm4rie
-Version: 20250103
-Release: alt1
+%define sover 1
 
-# Note that libm4rie is not always updated in lockstep with libm4ri,
-# and that is absolutely normal.
-%define lname libm4rie0.0.%version
+Name: libm4rie
+Version: 20250128
+Release: alt1
 
 Summary: Library for linear arithmetic over GF(2^e)
 
@@ -21,11 +19,11 @@ BuildRequires: libm4ri-devel
 M4RIE is a library for arithmetic with dense matrices over the
 Galois Field GF(2^e).
 
-%package -n %lname
+%package -n %name%sover
 Summary: Library for linear arithmetic over GF(2^e)
 Group: System/Libraries
 
-%description -n %lname
+%description -n %name%sover
 M4RIE is a library for arithmetic with dense matrices over the
 Galois Field GF(2^e).
 
@@ -52,8 +50,8 @@ applications that want to make use of libm4rie.
 %install
 %makeinstall_std
 
-%files -n %lname
-%_libdir/libm4rie-0.0.%version.so
+%files -n %name%sover
+%_libdir/libm4rie.so.%{sover}*
 
 %files devel
 %_libdir/libm4rie.so
@@ -61,6 +59,9 @@ applications that want to make use of libm4rie.
 %_includedir/m4rie/
 
 %changelog
+* Wed Jan 29 2025 Leontiy Volodin <lvol@altlinux.org> 20250128-alt1
+- New version 20250128.
+
 * Thu Jan 09 2025 Leontiy Volodin <lvol@altlinux.org> 20250103-alt1
 - New version 20250103.
 - Added vcs tag.
