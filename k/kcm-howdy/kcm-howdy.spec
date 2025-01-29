@@ -3,7 +3,7 @@
 %define rname kcm-howdy
 
 Name: %rname
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 
 Summary: KDE Workspace 6 Howdy configuration module
@@ -84,6 +84,9 @@ sed -i "s/^minimum-uid=.*/minimum-uid=$UID_MIN/" %module_config_file
 %_K6dbus_sys_srv/org.kde.kcontrol.kcmhowdy.service
 
 %changelog
+* Wed Jan 29 2025 Anton Golubev <golubevan@altlinux.org> 6.0.1-alt1
+- reset the user interface after an action error
+
 * Fri Jan 24 2025 Anton Golubev <golubevan@altlinux.org> 6.0.0-alt1
 - rename package kde5-kcm-howdy -> kcm-howdy
 - port to kde6
