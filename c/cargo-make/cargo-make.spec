@@ -2,7 +2,7 @@
 
 Name: cargo-make
 Version: 0.37.24
-Release: alt1
+Release: alt2
 
 Summary: Rust task runner and build tool
 License: Apache-2.0
@@ -13,6 +13,8 @@ Vcs: https://github.com/sagiegurari/cargo-make
 Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
+
+Requires: rust-cargo
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
@@ -68,6 +70,9 @@ install -pDm644 extra/shell/makers-completion.bash \
 %_datadir/bash-completion/completions/makers
 
 %changelog
+* Wed Jan 29 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.37.24-alt2
+- Added dependency on rust-cargo.
+
 * Sun Jan 26 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.37.24-alt1
 - Built again after deleting as FTBFS package by reminder.
 
