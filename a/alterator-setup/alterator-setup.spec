@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.4.2
-Release: alt2
+Version: 0.4.3
+Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
 License: GPLv2
@@ -102,6 +102,12 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Wed Jan 29 2025 Anton Midyukov <antohami@altlinux.org> 0.4.3-alt1
+- setup-postinstall.d: run apt-get autoremove after remove alterator-setup
+- setup-postinstall.d: remove livecd-* alterator-setup* also
+- setup-postinstall.d: run make-initrd after remove packages
+- Disable plymouth by alterator-setup itself
+
 * Mon Nov 11 2024 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt2
 - Remove conflicts with alterator-livecd, installer-common-stage2
 
