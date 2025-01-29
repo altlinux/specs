@@ -4,7 +4,7 @@
 %define libkmixcore libkmixcore%sover
 
 Name: %rname
-Version: 24.11.90
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -94,6 +94,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libkmixcore.so.%sover
 
 %changelog
+* Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Fri Dec 06 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt1
 - beta with KF6
 

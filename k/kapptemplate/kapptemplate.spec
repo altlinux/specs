@@ -1,7 +1,7 @@
 %define rname kapptemplate
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -12,9 +12,9 @@ License: GPL-2.0-or-later
 
 Provides:  kde5-kapptemplate = %EVR
 Obsoletes: kde5-kapptemplate < %EVR
+Requires: kf6-kirigami-addons
 
 Source: %rname-%version.tar
-Patch1: alt-wordwrap.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -23,6 +23,7 @@ BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel
 BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel
+BuildRequires: kf6-kirigami-addons-devel
 
 %description
 KAppTemplate provide a skeleton and example of what the code typically looks like.
@@ -30,7 +31,6 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build
@@ -52,6 +52,9 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 
 
 %changelog
+* Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

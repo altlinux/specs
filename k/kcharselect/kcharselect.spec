@@ -1,7 +1,7 @@
 %define rname kcharselect
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -43,6 +43,9 @@ BuildRequires: kf6-kcrash-devel
 
 
 %changelog
+* Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname keysmith
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.1
 Release: alt1
 %K6init
 
@@ -20,7 +20,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: libsodium-devel
 BuildRequires: qt6-declarative-devel qt6-svg-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kirigami-devel kf6-kwindowsystem-devel
-BuildRequires: kf6-qqc2-desktop-style-devel
+BuildRequires: kf6-qqc2-desktop-style-devel kf6-kcoreaddons-devel
 
 %description
 Keysmith is an application to generate two-factor authentication (2FA)
@@ -47,6 +47,9 @@ tokens when logging in to your (online) accounts.
 
 
 %changelog
+* Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Mon Nov 18 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - new version
 
