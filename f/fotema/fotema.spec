@@ -11,8 +11,8 @@
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A photo gallery for GNOME
 License: GPL-3.0-or-later
@@ -118,6 +118,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README*
 
 %changelog
+* Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.19.1-alt1
+- 1.19.1
+
 * Tue Jan 14 2025 Ilya Sorochan <k0tran@altlinux.org> 1.19.0-alt2
 - add patch for ort crate to fix build on loongarch64
 
