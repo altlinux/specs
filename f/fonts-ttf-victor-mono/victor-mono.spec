@@ -3,7 +3,7 @@
 %define fname victor-mono
 
 Name: fonts-ttf-%fname
-Version: 1.5.5
+Version: 1.5.6
 Release: alt1
 
 Summary: A free programming font with cursive italics and ligatures
@@ -39,6 +39,9 @@ cd TTF
 %doc LICENSE.txt
 
 %changelog
+* Wed Jan 29 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.6-alt1
+- Updated to 1.5.6.
+
 * Wed Sep 27 2023 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.5-alt1
 - Initial build for ALT Sisyphus
 
