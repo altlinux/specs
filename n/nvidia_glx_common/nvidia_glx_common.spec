@@ -23,7 +23,7 @@
 %define nv_version 550
 %define nv_release 144
 %define nv_minor 03
-%define pkg_rel alt283
+%define pkg_rel alt284
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -367,6 +367,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt284
+- set NVreg_PreserveVideoMemoryAllocations=1 for nvidia module
+
 * Tue Jan 28 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt283
 - new version
 
