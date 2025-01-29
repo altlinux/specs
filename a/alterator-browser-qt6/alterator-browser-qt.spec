@@ -11,7 +11,7 @@
 
 Name: %bin_name
 Version: 3.5.4
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -36,8 +36,8 @@ Provides: alterator-browser-qt = %version-%release
 Obsoletes: alterator-browser-qt < %version-%release
 Provides: alterator-browser-qt4 = %version-%release
 Obsoletes: alterator-browser-qt4 < %version-%release
-#Provides: alterator-browser-qt5 = %version-%release
-#Obsoletes: alterator-browser-qt5 < %version-%release
+Provides: alterator-browser-qt5 = %version-%release
+Obsoletes: alterator-browser-qt5 < %version-%release
 Obsoletes: alterator-look-qt
 
 BuildRequires: libalternatives-devel
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Wed Jan 29 2025 Sergey V Turchin <zerg at altlinux dot org> 3.5.4-alt2
+- obsolete alterator-browser-qt5
+
 * Thu Jan 23 2025 Sergey V Turchin <zerg at altlinux dot org> 3.5.4-alt1
 - completly port to new object connection style
 
