@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Wikipedia reader for the GNOME Desktop
@@ -13,9 +13,10 @@ License: GPL-3.0-or-later
 Group: Education
 Url: https://apps.gnome.org/Wike
 
+Vcs: https://github.com/hugolabe/Wike.git
+
 BuildArch: noarch
 
-Vcs: https://github.com/hugolabe/Wike.git
 Source0: %name-%version.tar
 Patch0: wike-3.0.1-alt-data_dynamic_default_language.patch
 
@@ -62,6 +63,9 @@ articles.
 %doc README.*
 
 %changelog
+* Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
+- 3.1.1
+
 * Wed Aug 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
