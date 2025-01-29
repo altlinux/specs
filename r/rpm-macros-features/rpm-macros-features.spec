@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20240408
+Version: 20250130
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -62,6 +62,10 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Wed Jan 29 2025 Vitaly Lipatov <lav@altlinux.ru> 20250130-alt1
+- update features' versions
+- removed php 8.1
+
 * Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 20240408-alt1
 - add qt6_webengine feature
 - macros: add osmesa, webkit2gtk
