@@ -2,12 +2,12 @@
 
 %define zmuser apache2
 %define zmgroup _webserver
-%define phpver 8.1
+%define phpver 8.3
 ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.37.61
-Release: alt7.gitec41f603a
+Release: alt8.git0c3a7e673
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -177,6 +177,10 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Wed Jan 29 2025 Anton Farygin <rider@altlinux.ru> 1.37.61-alt8.git0c3a7e673
+- updated to upstream 0c3a7e673
+- changed default php version from 8.1 to 8.3
+
 * Tue Jan 28 2025 Anton Farygin <rider@altlinux.ru> 1.37.61-alt7.gitec41f603a
 - update to upstream ec41f603a
 
