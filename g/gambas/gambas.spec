@@ -19,7 +19,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:    gambas
 Version: 3.20.1
-Release: alt1
+Release: alt2
 
 Summary: IDE based on a basic interpreter with object extensions
 License: GPL-2.0+
@@ -230,6 +230,7 @@ Requires: %name-gb-web = %EVR
 # New components
 Requires: %name-gb-form-editor = %EVR
 Requires: %name-gb-qt5 = %EVR
+Requires: %name-gb-qt5-wayland = %EVR
 Requires: %name-gb-qt5-opengl = %EVR
 Requires: %name-gb-qt5-webkit = %EVR
 Requires: %name-gb-qt5-ext = %EVR
@@ -321,6 +322,7 @@ Requires: %name-gb-image-effect = %EVR
 Requires: %name-gb-markdown = %EVR
 Requires: %name-gb-qt5 = %EVR
 Requires: %name-gb-qt5-x11 = %EVR
+Requires: %name-gb-qt5-wayland = %EVR
 Requires: %name-gb-qt5-webkit = %EVR
 Requires: %name-gb-qt5-webview = %EVR
 Requires: %name-gb-settings = %EVR
@@ -2030,6 +2032,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Wed Jan 29 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.1-alt2
+- Added gambas-gb-qt5-wayland (ALT #52836).
+
 * Sat Jan 25 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.1-alt1
 - New version.
 
