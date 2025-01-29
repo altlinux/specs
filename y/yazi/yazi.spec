@@ -1,6 +1,6 @@
 Name: yazi
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
 License: MIT
@@ -13,6 +13,8 @@ Source1: vendor.tar
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
+#to display the icons correctly
+Requires: fonts-ttf-3270NerdFont
 
 %description
 Yazi (means "duck") is a terminal file manager written in Rust, based on
@@ -97,6 +99,9 @@ install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh
 
 %changelog
+* Wed Jan 29 2025 Anton Kurachenko <srebrov@altlinux.org> 0.4.2-alt2
+- Added fonts-ttf-3270NerdFont to requires(#52861).
+
 * Wed Dec 25 2024 Anton Kurachenko <srebrov@altlinux.org> 0.4.2-alt1
 - New version 0.4.2.
 
