@@ -3,12 +3,13 @@
 
 Name:    cloud-init
 Version: 24.2
-Release: alt2
+Release: alt3
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
 License: GPLv3
 Url:     http://launchpad.net/cloud-init
+Vcs:     https://github.com/canonical/cloud-init
 
 Source0: %name-%version.tar
 
@@ -232,6 +233,9 @@ python3 -m pytest -v tests/unittests \
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Jan 29 2025 Alexander Stepchenko <geochip@altlinux.org> 24.2-alt3
+- Implement expiring passwords for ALT
+
 * Fri Nov 22 2024 Alexander Stepchenko <geochip@altlinux.org> 24.2-alt2
 - NMU: Fix update_hostname module (Closes: 52029)
 
