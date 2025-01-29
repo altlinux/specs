@@ -1,6 +1,6 @@
 Name: sdcc
-Version: 4.4.0
-Release: alt4
+Version: 4.5.0
+Release: alt1
 Epoch: 1
 
 Summary: Small Device C Compiler
@@ -10,13 +10,12 @@ Url: http://sdcc.sourceforge.net
 
 Source: %name-%version.tar
 
-%set_gcc_version 13
-
 BuildRequires: rpm-build-python3
-BuildRequires: flex gcc13-c++ boost-devel >= 1:1.85.0-alt3 gputils >= 1.5.2
+BuildRequires: flex gcc-c++ boost-devel >= 1:1.85.0-alt3 gputils >= 1.5.2
 BuildRequires: zlib-devel
 
-Requires: %name-common = %EVR
+Provides: sdcc-common = %EVR sdcc-doc = %EVR
+Obsoletes: sdcc-common sdcc-doc
 
 %description
 SDCC is a free open source, retargettable, optimizing ANSI C compiler
@@ -64,8 +63,6 @@ microprocessors.
 %setup
 find support -type f |xargs grep -l 'env python' |\
 	xargs sed -ri '/^#!\/usr\/bin\/env python$/ s,env python,python3,'
-sed -ri '/^extern char \*(copying|warranty)/ s,char ,const char ,' \
-	sim/ucsim/globals.h
 
 %build
 export CC=gcc CXX=g++
@@ -85,16 +82,15 @@ rm -vf %buildroot%_man1dir/serialview*
 
 %files 
 %_bindir/*
+%_datadir/%name
 %_libexecdir/sdcc
 %_man1dir/ucsim.1*
-
-%files common
-%_datadir/%name
-
-%files doc
 %_docdir/%name-%version
 
 %changelog
+* Wed Jan 29 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.5.0-alt1
+- 4.5.0 released
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.4.0-alt4
 - pin gcc13 for build
 
