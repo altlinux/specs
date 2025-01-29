@@ -11,7 +11,7 @@
 %def_enable theme_kde
 
 Name: gnome-games-%_name
-Version: %ver_major.34
+Version: %ver_major.35
 Release: alt1
 
 Summary: A collection of card games
@@ -53,9 +53,9 @@ which are easy to play with the aid of a mouse.
 
 %build
 %meson \
-	-Ddefault_theme_format='svg-rsvg' \
-	%{?_disable_theme_kde:-Dtheme_kde=false} \
-	%{?_enable_theme_kde:-Dtheme_kde_path=%_datadir/kf5/carddecks}
+    -Ddefault_theme_format='svg-rsvg' \
+    %{subst_enable_meson_bool theme_kde theme_kde} \
+    %{?_enable_theme_kde:-Dtheme_kde_path=%_datadir/kf5/carddecks}
 %nil
 %meson_build
 
@@ -64,7 +64,7 @@ which are easy to play with the aid of a mouse.
 %find_lang --with-gnome %_name
 
 %files -f %_name.lang
-%attr(-,root,games) %_bindir/sol
+%_bindir/sol
 %_libdir/%_name/
 %dir %_libexecdir/%_name
 %_libexecdir/%_name/ar-cards-renderer
@@ -79,6 +79,9 @@ which are easy to play with the aid of a mouse.
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.22.35-alt1
+- 3.22.35
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 3.22.34-alt1
 - 3.22.34
 
