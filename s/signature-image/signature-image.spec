@@ -4,7 +4,7 @@
 %define lib_c_wrapper_name signimage_c_wrapper
 
 Name: signature-image
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: A library for creating a digital signature image
@@ -54,6 +54,8 @@ Requires: lib%lib_c_wrapper_name%sover = %EVR
 
 %prep
 %setup
+
+%build
 %cmake -DBUILD_TESTS=OFF
 %cmake_build
 
@@ -77,6 +79,12 @@ Requires: lib%lib_c_wrapper_name%sover = %EVR
 %_libdir/cmake/SignatureImageCWrapper/*.cmake
 
 %changelog
+* Thu Jan 30 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.4-alt1
+- the scaling of the stamp logo has been fixed (scaling occurs along the
+  larger side of the logo) (closes: 52872)
+- the stamp logo is centering if its total width is less than the
+  requested width
+
 * Wed Dec 18 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3-alt1
 - Update the tests
 - Add a logo image resizing test
