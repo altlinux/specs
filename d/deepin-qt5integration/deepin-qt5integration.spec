@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5integration
-Version: 5.6.34
+Version: 5.7.9
 Release: alt1
 
 Summary: Qt platform theme integration plugins for DDE
@@ -11,6 +11,7 @@ Summary: Qt platform theme integration plugins for DDE
 License: LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/qt5integration
+Vcs: git://github.com/linuxdeepin/qt5integration.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
@@ -62,6 +63,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/styles/libchameleon.so
 
 %changelog
+* Thu Jan 30 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
+- New version 5.7.9.
+- Added vcs tag.
+
 * Wed Oct 23 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34-alt1
 - New version 5.6.34.
 

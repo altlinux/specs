@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.34
+Version: 5.7.9
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -11,10 +11,10 @@ Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/qt5platform-plugins
+Vcs: git://github.com/linuxdeepin/qt5platform-plugins.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
+Patch: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5EdidSupport.a
@@ -38,7 +38,6 @@ Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-way
 %prep
 %setup -n %repo-%version
 %patch -p1
-%patch1 -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
 
 %build
@@ -73,6 +72,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Thu Jan 30 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
+- New version 5.7.9.
+- Added vcs tag.
+
 * Wed Oct 23 2024 Leontiy Volodin <lvol@altlinux.org> 5.6.34-alt1
 - New version 5.6.34.
 
