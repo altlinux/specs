@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.6.1
+Version: 3.7.0
 Release: alt1
 
 Summary: Non-blocking MongoDB driver for Tornado
@@ -52,6 +52,9 @@ applications.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Wed Jan 15 2025 Grigory Ustinov <grenka@altlinux.org> 3.6.1-alt1
 - Automatically updated to 3.6.1.
 
