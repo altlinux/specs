@@ -1,6 +1,6 @@
 Name: procps
-Version: 4.0.4
-Release: alt3
+Version: 4.0.5
+Release: alt1
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -9,6 +9,8 @@ Release: alt3
 %else
 %def_with systemd
 %endif
+
+%define soname 1
 
 Summary: System and process monitoring utilities
 License: GPLv2+ and LGPLv2+
@@ -22,7 +24,7 @@ Source: %name-%version-%release.tar
 # it is actually procps-ng
 Provides: procps-ng = %version-%release
 
-Requires: libproc2 = %version-%release
+Requires: libproc2_%soname = %version-%release
 
 # Due to kill(1) relocation to coreutils.
 Requires: coreutils >= 0:5.2.1-alt2
@@ -40,7 +42,7 @@ This package contains a set of system utilities which provide system
 information.  procps includes: free, pgrep, pkill, pmap, ps, pwdx,
 skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w, watch.
 
-%package -n libproc2
+%package -n libproc2_%soname
 Summary: %name shared library
 License: LGPLv2+
 Group: System/Libraries
@@ -49,9 +51,9 @@ Group: System/Libraries
 Summary: Development files for building %name-aware applications
 License: LGPLv2+
 Group: Development/C
-Requires: libproc2 = %version-%release
+Requires: libproc2_%soname = %version-%release
 
-%description -n libproc2
+%description -n libproc2_%soname
 This package contains libproc2 runtime library.
 
 %description -n libproc2-devel
@@ -116,14 +118,22 @@ make check
 %_mandir/man?/*
 %doc AUTHORS doc/bugs.md doc/FAQ NEWS README.md src/top/README.top doc/TODO
 
-%files -n libproc2
-/%_lib/*
+%files -n libproc2_%soname
+/%_lib/libproc2.so.%soname
+/%_lib/libproc2.so.%soname.*
 
 %files -n libproc2-devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Mon Jan 27 2025 Mikhail Efremov <sem@altlinux.org> 4.0.5-alt1
+- tests: Workaround for VmRSS: 0k on ppc64le.
+- Renamed libproc2 subpackage to libproc2_%%soname.
+- tests: Fixed build with -Werror.
+- w: Fixed "unused variable" warning.
+- Updated to v4.0.5.
+
 * Thu Nov 09 2023 Michael Shigorin <mike@altlinux.org> 4.0.4-alt3
 - E2K: lcc 1.26.20 ftbfs workaround (ilyakurdyukov@).
 

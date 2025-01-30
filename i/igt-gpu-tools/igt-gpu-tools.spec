@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: igt-gpu-tools
-Version: 1.29
+Version: 1.30
 Release: alt1
 
 Summary: IGT gpu tools and tests
@@ -10,6 +10,8 @@ Group: Development/Debug
 
 Url: https://gitlab.freedesktop.org/drm/igt-gpu-tools
 Source: %name-%version.tar
+
+Patch0: %name-%version-alt.patch
 
 Provides: intel-gpu-tools = %EVR
 Obsoletes: intel-gpu-tools < %EVR
@@ -87,6 +89,8 @@ Group: Development/Documentation
 %prep
 %setup
 
+%patch0 -p1
+
 # fix: warning: "_FORTIFY_SOURCE" redefined
 sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 
@@ -125,6 +129,9 @@ sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 %_pkgconfigdir/intel-gen4asm.pc
 
 %changelog
+* Tue Jan 28 2025 Egor Ignatov <egori@altlinux.org> 1.30-alt1
+- new version 1.30
+
 * Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 1.29-alt1
 - new version 1.29
 

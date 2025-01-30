@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.9.1
+Version: 4.9.2
 Release: alt1
 Group: Education
 License: GPLv2
@@ -141,6 +141,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Thu Jan 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.2-alt1
+- New version.
+
 * Wed Dec 04 2024 Ajrat Makhmutov <rauty@altlinux.org> 4.9.1-alt1
 - New version.
 - Configurator: add Russian translation to PolicyKit file.
