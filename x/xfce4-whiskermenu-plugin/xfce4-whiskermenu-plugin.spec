@@ -1,9 +1,6 @@
-#define git_date .git20140106
-%define git_date %nil
-
 Name: xfce4-whiskermenu-plugin
-Version: 2.8.4
-Release: alt1%git_date
+Version: 2.9.0
+Release: alt1
 
 Summary: Alternate Xfce menu
 License: GPLv2+
@@ -23,7 +20,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
 BuildRequires: gcc-c++ rpm-macros-cmake cmake
-BuildRequires: libxfce4panel-gtk3-devel >= 4.14.0 libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libgarcon-devel libexo-gtk3-devel
 BuildRequires: libaccountsservice-devel
 %{?_enable_wayland:Buildrequires: libgtk-layer-shell-devel}
@@ -66,6 +63,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Thu Jan 30 2025 Mikhail Efremov <sem@altlinux.org> 2.9.0-alt1
+- Updated to 2.9.0.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 2.8.4-alt1
 - Updated to 2.8.4.
 
