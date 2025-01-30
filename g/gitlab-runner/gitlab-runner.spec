@@ -2,7 +2,7 @@
 %define config_dir gitlab-runner.d
 
 Name:    gitlab-runner
-Version: 16.11.3 
+Version: 17.8.0
 Release: alt1
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
@@ -48,11 +48,11 @@ install -pDm644 %SOURCE1 %buildroot%_unitdir/%name.service
 install -pDm755 %SOURCE2 %buildroot%_initdir/%name
 install -pDm644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
 install -pDm640 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
-install -pDm644 ./config.toml.example %buildroot%_sysconfdir/%config_dir/config.toml
+install -pDm644 ./config.toml.example %buildroot%_sysconfdir/%name/config.toml
 install -dm775 %buildroot%_localstatedir/%name
 
 %pre
-if [ $1 == 1 ]; then
+if [ $1 -eq 1 ]; then
 #Add the "gitlab-runner" user
 	%_sbindir/groupadd -r -f gitlab-runner 2>/dev/null ||:
 	%_sbindir/useradd  -r -g gitlab-runner -c 'Gitlab-runner daemon' \
@@ -66,11 +66,19 @@ fi
 %_initdir/%name
 %_sysconfdir/sysconfig/%name
 %_tmpfilesdir/%name.conf
-%attr(0770,root,gitlab-runner) %dir %_sysconfdir/%config_dir
-%config(noreplace) %_sysconfdir/%config_dir/config.toml
+%attr(0770,root,gitlab-runner) %dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/%name/config.toml
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Thu Jan 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 17.8.0-alt1
+- New version 17.8.0
+
+* Wed Jan 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 16.11.3-alt2
+- Fix:
+  + condition in %%pre to create new user/group on install
+  + change config directory
+
 * Sun Aug 11 2024 Nikolay Burykin <bne@altlinux.org> 16.11.3-alt1
 - New version 16.11.3
 
