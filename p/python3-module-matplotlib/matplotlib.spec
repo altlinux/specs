@@ -1,6 +1,6 @@
 %define oname matplotlib
 
-# 9 failed tests with dateutil
+# Failed lots of tests because of freetype version mismatch
 %def_without check
 
 %def_with gtk4
@@ -9,8 +9,8 @@
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.8.4
-Release: alt2
+Version: 3.10.0
+Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -21,15 +21,17 @@ URL: https://pypi.org/project/matplotlib
 VCS: https://github.com/matplotlib/matplotlib
 
 Source: %oname-%version.tar
-Source1: mplsetup.cfg
 
 Patch: matplotlibrc-path-search-fix.patch
-Patch1: matplotlib-Set-FreeType-version-to-2.13.0-and-update-tolerances.patch
+Patch1: matplotlib-build-options.patch
+Patch2: matplotlib-Set-FreeType-version-to-2.13.3-and-update-tolerances.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-mesonpy
+BuildRequires: meson
 
 BuildRequires: gcc-c++
 BuildRequires: tk-devel
@@ -187,8 +189,7 @@ Data used by python-matplotlib
 %setup
 %patch -p1
 %patch1 -p1
-
-install -p -m644 %SOURCE1 .
+%patch2 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -214,20 +215,14 @@ mv %buildroot%python3_sitelibdir/matplotlib/mpl-data \
    %buildroot%_datadir/matplotlib
 
 %check
-# These files confuse pytest, and we want to test the installed copy.
-rm -rv build*/
-PYTHONPATH=%buildroot%python3_sitelibdir \
-MPLCONFIGDIR=%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc \
+export PYTHONPATH=%buildroot%python3_sitelibdir
+export MPLCONFIGDIR=%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
 xvfb-run -a -s "-screen 0 640x480x24" \
-py.test-3 --pyargs matplotlib \
-                           mpl_toolkits.axes_grid1 \
-                           mpl_toolkits.axisartist \
-                           mpl_toolkits.mplot3d \
+py.test-3 --pyargs matplotlib.tests \
+                           mpl_toolkits.axes_grid1.tests \
+                           mpl_toolkits.axisartist.tests \
+                           mpl_toolkits.mplot3d.tests \
                            -m "not network" \
-# image comparison failures due to precisions dicrepancies to the x86 produced references
-                           -k "not png and not svg and not pdf" \
-# problems with math fonts
-                           --deselect tests/test_mathtext.py
 
 %files
 %doc README.md
@@ -400,6 +395,9 @@ py.test-3 --pyargs matplotlib \
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
+- Automatically updated to 3.10.0.
+
 * Mon Jan 27 2025 Grigory Ustinov <grenka@altlinux.org> 3.8.4-alt2
 - Removed dependencies on own subpackages (Closes: #50004).
 
