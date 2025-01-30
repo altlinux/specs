@@ -22,7 +22,7 @@
 
 Name: gdcm
 Version: 3.0.24
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform DICOM implementation
 License: BSD
@@ -67,6 +67,18 @@ BuildRequires: python3-devel
 BuildRequires: swig
 BuildRequires: xsltproc
 
+Requires: %libgdcm_common
+Requires: %libgdcm_dict
+Requires: %libgdcm_dsed
+Requires: %libgdcm_iod
+Requires: %libgdcm_jpeg8
+Requires: %libgdcm_jpeg12
+Requires: %libgdcm_jpeg16
+Requires: %libgdcm_md5
+Requires: %libgdcm_mexd
+Requires: %libgdcm_msff
+Requires: %libgdcm_socketxx
+
 %description
 Grassroots DiCoM is a C++ library for DICOM medical files. It is
 accessible from Python, C#, Java and PHP. It supports RAW, JPEG, JPEG
@@ -82,7 +94,7 @@ to anonymize and de-identify DICOM datasets.
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_common
 %summary.
@@ -91,7 +103,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_dict
 %summary.
@@ -100,7 +112,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_dsed
 %summary.
@@ -109,7 +121,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_iod
 %summary.
@@ -118,7 +130,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_jpeg8
 %summary.
@@ -127,7 +139,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_jpeg12
 %summary.
@@ -136,7 +148,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_jpeg16
 %summary.
@@ -145,7 +157,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_md5
 %summary.
@@ -154,7 +166,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_mexd
 %summary.
@@ -163,7 +175,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_msff
 %summary.
@@ -172,7 +184,7 @@ Obsoletes: gdcm < %EVR
 Summary: %summary
 Group: System/Libraries
 
-Obsoletes: gdcm < %EVR
+Conflicts: gdcm < 3.0.22
 
 %description -n %libgdcm_socketxx
 %summary.
@@ -318,6 +330,8 @@ export LD_LIBRARY_PATH="%buildroot%_libdir"
 export PYTHONPATH="%buildroot%python3_sitelibdir"
 %ctest ||:
 
+%files
+
 %files -n %libgdcm_common
 %doc AUTHORS README.md
 %_libdir/libgdcmCommon.so.%{abiversion}*
@@ -382,6 +396,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Wed Jan 29 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt3
+- Stub package for old name.
+
 * Thu Jan 23 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt2
 - Build against system CharLS.
 
