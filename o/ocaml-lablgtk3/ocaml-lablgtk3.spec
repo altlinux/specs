@@ -1,7 +1,7 @@
 %define libname lablgtk3
 Name: ocaml-%libname
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 Summary: Objective Caml interface to gtk+
 
@@ -19,6 +19,8 @@ BuildRequires:  ocaml-odoc
 BuildRequires:  pkgconfig(gtk+-3.0)
 BuildRequires:  pkgconfig(gtksourceview-3.0)
 BuildRequires:  pkgconfig(gtkspell3-3.0)
+BuildRequires:  pkgconfig(librsvg-2.0)
+BuildRequires:  pkgconfig(goocanvas-2.0)
 
 %description
 LablGTK is is an Objective Caml interface to gtk+.
@@ -42,16 +44,18 @@ developing applications that use %name.
 %setup
 
 %build
-%dune_build -p %libname
+%dune_build --release
 
 %install
-%dune_install -p %libname
+%dune_install
 
 %check
-%dune_check -p %libname
+%dune_check
 
 %files -f ocaml-files.runtime
 %doc LICENSE
+%_docdir/%libname
+%_docdir/%libname-*
 
 %files devel -f ocaml-files.devel
 %_bindir/*
@@ -59,6 +63,9 @@ developing applications that use %name.
 %doc README.md CHANGES.md
 
 %changelog
+* Sat Jan 25 2025 Leonid Znamenok <respublica@altlinux.org> 3.1.5-alt2
+- NMU: rebuild with goocanvas2, gtkspell3, rsvg2 and sourceview3
+
 * Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 3.1.5-alt1
 - 2.18.11 -> 3.1.5
 
