@@ -3,7 +3,7 @@
 %define incususer incusadm
 
 Name:		incus
-Version:	6.8.0
+Version:	6.9.0
 Release:	alt1
 Summary:	Incus is a system container and virtual machine manager
 
@@ -46,10 +46,10 @@ BuildRequires: /proc
 Requires:       %name-client = %version-%release
 Requires:       attr
 Requires:       dnsmasq
+Requires:       shadow-submap
 Requires:       iptables, ebtables
 Requires:       lxcfs >= 6.0.0
 Requires:       rsync
-Requires:       shadow-utils
 Requires:       squashfs-tools
 Requires:       tar
 Requires:       xdelta
@@ -81,7 +81,7 @@ License:        Apache-2.0
 Group:          Development/Other	
 Requires:       %name = %version-%release
 # fuidshift is also shipped with lxd
-Conflicts:      lxd-tools
+Conflicts:      lxd
 	
 %description -n %name-tools
 Incus offers a REST API to remotely manage containers over the network,
@@ -227,6 +227,11 @@ usermod --add-subuids 100000-165535 %incususer ||:
 %_man1dir/%name-agent.*
 
 %changelog
+* Wed Jan 29 2025 Nadezhda Fedorova <fedor@altlinux.org> 6.9.0-alt1
+- Updated to 6.9.0.
+- Fix conflicts list for incus-tools (closes #51736).
+- Fix incus requires (closes #51069).
+
 * Fri Dec 20 2024 Mikhail Gordeev <obirvalger@altlinux.org> 6.8.0-alt1
 - Updated to 6.8.0.
 
