@@ -8,7 +8,7 @@
 
 %global v_major 19
 %global v_majmin %v_major.1
-%global v_full %v_majmin.5
+%global v_full %v_majmin.7
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -104,11 +104,10 @@ AutoProv: nopython
 %def_without lldb_lua
 %endif
 
-%define tarversion %v_full%rcsuffix
 %if "%rcsuffix" == ""
-%define mversion %v_full
+%define tarversion %v_full
 %else
-%define mversion %v_full%{?rcsuffix:-%rcsuffix}
+%define tarversion %v_full%{?rcsuffix:-%rcsuffix}
 %endif
 
 Name: %llvm_name
@@ -119,7 +118,7 @@ Summary: The LLVM Compiler Infrastructure
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 Url: http://llvm.org
-# Source-URL: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-project-%tarversion.src.tar.xz
+# Source-URL: https://github.com/llvm/llvm-project/releases/download/llvmorg-%tarversion/llvm-project-%tarversion.src.tar.xz
 Source: llvm-project-%{v_major}.tar
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
@@ -1507,6 +1506,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Wed Jan 29 2025 Arseny Maslennikov <arseny@altlinux.org> 19.1.7-alt0.1
+- Update to 19.1.7.
+
 * Mon Dec 09 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.5-alt0.1
 - Update to 19.1.5.
 - BR: Added fonts-ttf-dejavu (should fix ALT#52353, tnx to iv@).
