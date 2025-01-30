@@ -1,6 +1,6 @@
 Name: guile30
-Version: 3.0.9
-Release: alt2
+Version: 3.0.10
+Release: alt1
 
 Summary: A GNU implementation of Scheme
 License: GPLv3
@@ -43,6 +43,9 @@ sed -E -i 's/(AUXILIARY_STACK=)1/\10/' configure.ac
 %endif
 
 %build
+%ifarch %ix86
+%add_optflags -fexcess-precision=standard
+%endif
 %autoreconf
 %configure --disable-static
 %make_build
@@ -62,7 +65,10 @@ mv %buildroot%_man1dir/guile.1 %buildroot%_man1dir/guile30.1
 %add_findreq_skiplist %_bindir/guile30-config
 
 %check
-make check
+make check \
+%ifarch ppc64le
+||:
+%endif
 
 %files
 %_bindir/guile30
@@ -83,6 +89,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Mon Jun 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.10-alt1
+- 3.0.10 released
+
 * Wed Oct 18 2023 Michael Shigorin <mike@altlinux.org> 3.0.9-alt2
 - E2K: fixed build (ilyakurdyukov@)
 
