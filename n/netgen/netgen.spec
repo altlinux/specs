@@ -3,6 +3,11 @@
 #TODO: try bulding against OpenMPI only when version upgrade 2.1->3.1
 %def_without openmpi
 %def_with ffmpeg
+%ifarch %e2k
+%def_without clang
+%else
+%def_with clang
+%endif
 
 %define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
@@ -16,7 +21,7 @@
 
 Name: netgen
 Version: 6.2.2406
-Release: alt2
+Release: alt3
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -54,7 +59,9 @@ BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): ccmake
 
+%if_with clang
 BuildRequires: clang
+%endif
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 BuildRequires: opencascade-devel
@@ -210,6 +217,8 @@ tar xf %SOURCE4
 %ifarch %e2k
 sed -i "/data{_mm/{s|{|(|;s|}|)|}" libsrc/core/simd_{sse,avx}.hpp
 sed -i "s|defined(__FMA__) && !defined(__AVX512F__)|& \&\& !defined(__e2k__)|" libsrc/core/simd_avx.hpp
+sed -i "s/_mm_pause/__builtin_ia32_pause/" libsrc/core/{utils.hpp,taskmanager.cpp}
+sed -i "/-fabi-version=/d" libsrc/core/CMakeLists.txt
 %endif
 
 echo -n v%version > version.txt
@@ -240,9 +249,10 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
 %ifarch %e2k
 %add_optflags -DNETGEN_ARCH_AMD64 -Wno-return-type -Wno-sign-compare
 %endif
-
+%if_with clang
 # clang doesn't support -flto=auto
 %define optflags_lto %nil
+%endif
 
 ###########################################################################
 ###################          SERIAL VER           #########################
@@ -254,8 +264,10 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DNG_INSTALL_DIR_BIN=%_bindir \
     -DNG_INSTALL_DIR_INCLUDE=%_includedir/%name \
+%if_with clang
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
+%endif
     -DPython3_INCLUDE_DIR=%__python3_includedir \
     -DUSE_JPEG=1 \
     -DUSE_OCC=1 \
@@ -403,6 +415,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Wed Jan 29 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.2.2406-alt3
+- Fixed build for Elbrus.
+
 * Wed Jan 22 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt2
 - Added patch from debian for correct version processing (closes: #43541).
 - Built with clang instead of gcc (thx andy@).
