@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gstreamer-vaapi
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -84,6 +84,9 @@ GStreamer applications.
 
 
 %changelog
+* Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.12-alt1
+- 1.24.12
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.11-alt1
 - 1.24.11
 
