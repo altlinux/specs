@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.8.1
+Version: 5.0.1
 Release: alt1
 
 Summary: %descr
@@ -79,6 +79,9 @@ rm -rf html/.{buildinfo,doctrees}
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
+- Automatically updated to 5.0.1.
+
 * Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.1-alt1
 - Automatically updated to 4.8.1.
 
