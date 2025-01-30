@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        132.0.6834.110
+Version:        132.0.6834.159
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -548,6 +548,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jan 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 132.0.6834.159-alt1
+- New version (132.0.6834.159).
+- Change startup options (Closes: #52826).
+- Security fixes:
+  + CVE-2025-0762: Use after free in DevTools
+
 * Thu Jan 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 132.0.6834.110-alt1
 - New version (132.0.6834.110).
 - Security fixes:
