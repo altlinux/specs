@@ -1,8 +1,12 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname fog-vsphere
 
 Name:          gem-fog-vsphere
-Version:       3.5.2
-Release:       alt1.1
+Version:       3.7.0
+Release:       alt1
 Summary:       Fog for vSphere
 License:       MIT
 Group:         Development/Ruby
@@ -13,46 +17,61 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(fog-core) >= 0
-BuildRequires: gem(rbvmomi) >= 1.9 gem(rbvmomi) < 4
 BuildRequires: gem(bundler) >= 0
-BuildRequires: gem(pry) >= 0.10 gem(pry) < 1
+BuildRequires: gem(fog-core) >= 0
+BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(mocha) >= 1.11.2
+BuildRequires: gem(pry) >= 0.10
 BuildRequires: gem(rake) >= 12.3.3
-BuildRequires: gem(minitest) >= 5.8 gem(minitest) < 6
-BuildRequires: gem(rubocop) >= 0.50.0 gem(rubocop) < 2
-BuildRequires: gem(mocha) >= 1.8 gem(mocha) < 2
-BuildRequires: gem(shindo) >= 0.3 gem(shindo) < 1
-BuildRequires: gem(webmock) >= 3.5 gem(webmock) < 4
-BuildRequires: gem(vcr) >= 4.0 gem(vcr) < 7
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(shindo) >= 0.3
+BuildRequires: gem(vcr) >= 6.0
+BuildRequires: gem(webmock) >= 3.5
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(mocha) >= 3
+BuildConflicts: gem(pry) >= 1
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(shindo) >= 1
+BuildConflicts: gem(vcr) >= 7
+BuildConflicts: gem(webmock) >= 4
+%if_enabled check
+BuildRequires: gem(codeclimate-test-reporter) >= 0
+BuildRequires: gem(rbvmomi2) >= 3.0
+BuildRequires: gem(rubocop-minitest) >= 0
+BuildRequires: gem(rubocop-performance) >= 0
+BuildRequires: gem(rubocop-rake) >= 0
+BuildConflicts: gem(rbvmomi2) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rbvmomi >= 3.0,rbvmomi < 4
+%ruby_use_gem_dependency mocha >= 1.11.2,mocha < 2
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency vcr >= 6.0.0,vcr < 7
+%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+Requires:      ruby >= 2.7
 Requires:      gem(fog-core) >= 0
-Requires:      gem(rbvmomi) >= 1.9 gem(rbvmomi) < 4
+Requires:      gem(rbvmomi2) >= 3.0
+Conflicts:     gem(rbvmomi2) >= 4
 Obsoletes:     ruby-fog-vsphere < %EVR
 Provides:      ruby-fog-vsphere = %EVR
-Provides:      gem(fog-vsphere) = 3.5.2
-
+Provides:      fog-vsphere = %EVR
+Provides:      gem(fog-vsphere) = 3.7.0
 
 %description
 The VMware vSphere provider allows you to use the abstractions of the Fog cloud
 services library to communicate with vSphere.
 
 
+%if_enabled    doc
 %package       -n gem-fog-vsphere-doc
-Version:       3.5.2
-Release:       alt1.1
+Version:       3.7.0
+Release:       alt1
 Summary:       Fog for vSphere documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-vsphere
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(fog-vsphere) = 3.5.2
+Requires:      gem(fog-vsphere) = 3.7.0
 
 %description   -n gem-fog-vsphere-doc
 Fog for vSphere documentation files.
@@ -62,26 +81,39 @@ services library to communicate with vSphere.
 
 %description   -n gem-fog-vsphere-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета fog-vsphere.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-fog-vsphere-devel
-Version:       3.5.2
-Release:       alt1.1
+Version:       3.7.0
+Release:       alt1
 Summary:       Fog for vSphere development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-vsphere
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(fog-vsphere) = 3.5.2
+Requires:      gem(fog-vsphere) = 3.7.0
 Requires:      gem(bundler) >= 0
-Requires:      gem(pry) >= 0.10 gem(pry) < 1
+Requires:      gem(codeclimate-test-reporter) >= 0
+Requires:      gem(minitest) >= 5.17.0
+Requires:      gem(mocha) >= 1.11.2
+Requires:      gem(pry) >= 0.10
 Requires:      gem(rake) >= 12.3.3
-Requires:      gem(minitest) >= 5.8 gem(minitest) < 6
-Requires:      gem(rubocop) >= 0.50.0 gem(rubocop) < 2
-Requires:      gem(mocha) >= 1.8 gem(mocha) < 2
-Requires:      gem(shindo) >= 0.3 gem(shindo) < 1
-Requires:      gem(webmock) >= 3.5 gem(webmock) < 4
-Requires:      gem(vcr) >= 4.0 gem(vcr) < 7
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(rubocop-minitest) >= 0
+Requires:      gem(rubocop-performance) >= 0
+Requires:      gem(rubocop-rake) >= 0
+Requires:      gem(shindo) >= 0.3
+Requires:      gem(vcr) >= 6.0
+Requires:      gem(webmock) >= 3.5
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(mocha) >= 3
+Conflicts:     gem(pry) >= 1
+Conflicts:     gem(rubocop) >= 2
+Conflicts:     gem(shindo) >= 1
+Conflicts:     gem(vcr) >= 7
+Conflicts:     gem(webmock) >= 4
 
 %description   -n gem-fog-vsphere-devel
 Fog for vSphere development package.
@@ -91,6 +123,7 @@ services library to communicate with vSphere.
 
 %description   -n gem-fog-vsphere-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета fog-vsphere.
+%endif
 
 
 %prep
@@ -106,19 +139,26 @@ services library to communicate with vSphere.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTORS.md LICENSE.md README.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-fog-vsphere-doc
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTORS.md LICENSE.md README.md CONTRIBUTING.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-fog-vsphere-devel
-%doc README.md
+%doc CHANGELOG.md CONTRIBUTORS.md LICENSE.md README.md CONTRIBUTING.md
+%endif
 
 
 %changelog
+* Mon Jan 13 2025 Pavel Skrylev <majioa@altlinux.org> 3.7.0-alt1
+- ^ 3.5.2 -> 3.7.0
+
 * Tue Dec 06 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1.1
 - !fix dep to rbvmomi gem
 

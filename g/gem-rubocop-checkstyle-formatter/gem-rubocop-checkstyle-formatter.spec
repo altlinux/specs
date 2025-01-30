@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname rubocop-checkstyle_formatter
 
 Name:          gem-rubocop-checkstyle-formatter
-Version:       0.4.0
+Version:       0.6.0
 Release:       alt1
 Summary:       A formatter for rubocop that outputs in checkstyle format
 License:       MIT
@@ -13,69 +17,72 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rubocop) >= 0.35.1 gem(rubocop) < 2
-BuildRequires: gem(appraisal) >= 1.0.0 gem(appraisal) < 3
-BuildRequires: gem(bundler) >= 1.3 gem(bundler) < 3
-BuildRequires: gem(rake) >= 10.1 gem(rake) < 14
-BuildRequires: gem(rspec) >= 3.5.0 gem(rspec) < 4
+%if_enabled check
+BuildRequires: gem(appraisal) >= 2.4.0
+BuildRequires: gem(bundler) >= 2.1.4
+BuildRequires: gem(rake) >= 12.3.3
+BuildRequires: gem(rspec) >= 3.5.0
+BuildRequires: gem(rubocop) >= 1.14.0
+BuildConflicts: gem(appraisal) >= 3
+BuildConflicts: gem(rspec) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency appraisal >= 2.4.0,appraisal < 3
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency rubocop >= 1.13.0,rubocop < 2
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-Requires:      gem(rubocop) >= 0.35.1 gem(rubocop) < 2
-Provides:      gem(rubocop-checkstyle_formatter) = 0.4.0
+%ruby_alias_names rubocop-checkstyle_formatter,rubocop-checkstyle-formatter
+Requires:      gem(rubocop) >= 1.14.0
+Provides:      gem(rubocop-checkstyle_formatter) = 0.6.0
 
 
 %description
 A formatter for rubocop that outputs in checkstyle format
 
 
+%if_enabled    doc
 %package       -n gem-rubocop-checkstyle-formatter-doc
-Version:       0.4.0
+Version:       0.6.0
 Release:       alt1
 Summary:       A formatter for rubocop that outputs in checkstyle format documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop-checkstyle_formatter
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubocop-checkstyle_formatter) = 0.4.0
+Requires:      gem(rubocop-checkstyle_formatter) = 0.6.0
 
 %description   -n gem-rubocop-checkstyle-formatter-doc
-A formatter for rubocop that outputs in checkstyle format documentation
-files.
-
-A formatter for rubocop that outputs in checkstyle format
+A formatter for rubocop that outputs in checkstyle format documentation files.
 
 %description   -n gem-rubocop-checkstyle-formatter-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rubocop-checkstyle_formatter.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-rubocop-checkstyle-formatter-devel
-Version:       0.4.0
+Version:       0.6.0
 Release:       alt1
 Summary:       A formatter for rubocop that outputs in checkstyle format development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop-checkstyle_formatter
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubocop-checkstyle_formatter) = 0.4.0
-Requires:      gem(appraisal) >= 1.0.0 gem(appraisal) < 3
-Requires:      gem(bundler) >= 1.3 gem(bundler) < 3
-Requires:      gem(rake) >= 10.1 gem(rake) < 14
-Requires:      gem(rspec) >= 3.5.0 gem(rspec) < 4
+Requires:      gem(rubocop-checkstyle_formatter) = 0.6.0
+Requires:      gem(appraisal) >= 2.4.0
+Requires:      gem(bundler) >= 2.1.4
+Requires:      gem(rake) >= 12.3.3
+Requires:      gem(rspec) >= 3.5.0
+Conflicts:     gem(appraisal) >= 3
+Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-rubocop-checkstyle-formatter-devel
-A formatter for rubocop that outputs in checkstyle format development
-package.
-
-A formatter for rubocop that outputs in checkstyle format
+A formatter for rubocop that outputs in checkstyle format development package.
 
 %description   -n gem-rubocop-checkstyle-formatter-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rubocop-checkstyle_formatter.
+%endif
 
 
 %prep
@@ -95,14 +102,21 @@ A formatter for rubocop that outputs in checkstyle format
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-rubocop-checkstyle-formatter-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-rubocop-checkstyle-formatter-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Tue Oct 01 2024 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt1
+- ^ 0.4.0 -> 0.6.0
+
 * Wed Jun 23 2021 Pavel Skrylev <majioa@altlinux.org> 0.4.0-alt1
 - + packaged gem with Ruby Policy 2.0
