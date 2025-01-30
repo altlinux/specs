@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.6.11
+Version: 1.7.0
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,25 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Jan 30 2025 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
+- ntp: initial target use/ntp/timesyncd (thanks shaba@)
+- net: initial target use/net/ifupdown2 ()
+- live-install: add use/live-install/desktop
+- live: use classic installer in use/live/install
+- auto-resize: use make-initrd-kickstart
+- grub, install2, stage2: add new PATH to install2-init support
+- rescue: do not cleanup locales
+- cleanup: do not cleanup locales in live
+- cleanup: run 'apt-get autoremove -y' after remove packages
+- regular.mk: refactor regular-jeos, regular-server
+- Remove unused server.mk, test.mk, desktop.mk, homeros.mk
+- Remove profiles of distribution: workstation, kworkstation, alt-server,
+  server-v, education (will be developed in a separate git's)
+- branding: do not install branding-bootloader to live
+- e2k: generate menu when generate profile
+- e2k: other commits from mike@
+- other improvements
+
 * Thu Dec 26 2024 Anton Midyukov <antohami@altlinux.org> 1.6.11-alt1
 - efi: add use/efi/dtb to +efi target
 - tar2fs: copy default devicetree to ESP
