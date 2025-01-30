@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.38.0.123.650a0
+Version: 2.40.0.69.8566822197
 
 Release: alt1
 Epoch: 6
@@ -531,48 +531,7 @@ cat /proc/self/maps >/dev/null
 export TIMEOUTFACTOR=10
 
 cat > %buildtarget/xfail.mk <<@@@
-export test-xfail-XPG4/unistd.h/linknamespace = yes
-export test-xfail-tst-resolv-search=yes
 export test-xfail-tst-default-attr=yes
-%ifarch x86_64
-export test-xfail-test-ildouble=yes
-%endif
-%ifarch %ix86
-export test-xfail-test-double-finite=yes
-export test-xfail-test-double=yes
-export test-xfail-test-float-finite-y0=yes
-export test-xfail-test-float-y0=yes
-export test-xfail-test-float32-finite-y0=yes
-export test-xfail-test-float32-y0=yes
-export test-xfail-test-float64x-clog10=yes
-export test-xfail-test-float64x-finite-clog10=yes
-export test-xfail-test-float64x-finite-lgamma=yes
-export test-xfail-test-float64x-lgamma=yes
-export test-xfail-test-idouble=yes
-export test-xfail-test-ifloat-y0=yes
-export test-xfail-test-ifloat32-y0=yes
-export test-xfail-test-ifloat64x-clog10=yes
-export test-xfail-test-ifloat64x-lgamma=yes
-export test-xfail-test-ildouble-acosh=yes
-export test-xfail-test-ildouble-clog10=yes
-export test-xfail-test-ildouble-lgamma=yes
-export test-xfail-test-ildouble=yes
-export test-xfail-test-ldouble-clog10=yes
-export test-xfail-test-ldouble-finite-clog10=yes
-export test-xfail-test-ldouble-finite-lgamma=yes
-export test-xfail-test-ldouble-finite=yes
-export test-xfail-test-ldouble-lgamma=yes
-export test-xfail-test-ldouble=yes
-export test-xfail-tst-malloc-usable-tunables=yes
-%endif
-%ifarch aarch64
-export test-xfail-test-errno-linux=yes
-export test-xfail-tst-mlock2=yes
-export test-xfail-tst-pkey=yes
-export test-xfail-tst-clock2=yes
-export test-xfail-tst-rwlock9=yes
-export test-xfail-tst-rwlock18=yes
-%endif
 
 include Makefile
 @@@
@@ -787,6 +746,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Mon Jan 27 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.69.8566822197-alt1
+- Updated to glibc-2.40-69-g8566822197.
+
 * Mon Jan 27 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.38.0.123.650a0-alt1
 - Updated to glibc-2.38-123-g650a0aaaff (fixes FTBFS on Linux 6.9+ kernels
   which support RWF_NOAPPEND flag) (fixes CVE-2025-0395).
