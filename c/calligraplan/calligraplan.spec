@@ -2,7 +2,7 @@
 %define koffice_ver 4:2.3.70
 %define oname calligra-plan
 
-%define sover 17
+%define sover 18
 %define libplankernel libplankernel%sover
 %define libplanmodels libplanmodels%sover
 %define libplanui libplanui%sover
@@ -17,7 +17,7 @@
 %define libplanworkfactory libplanworkfactory%sover
 
 Name: calligraplan
-Version: 3.2.2
+Version: 3.3.0
 Release: alt1
 Epoch: 0
 %K5init
@@ -34,16 +34,16 @@ Requires: kf5-kreport
 Source: http://download.kde.org/stable/calligra/%version/calligraplan-%version.tar
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: extra-cmake-modules
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-x11extras-devel
+BuildRequires: libqca-qt5-devel
 BuildRequires: kf5-karchive-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel
 BuildRequires: kf5-kinit-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kcmutils-devel
 BuildRequires: kf5-kio-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-kactivities-devel kf5-khtml-devel kde5-kholidays-devel kf5-kdiagram-devel
-BuildRequires: kf5-kjs-devel kf5-kitemmodels-devel
-BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-akonadi-devel kde5-akonadi-contacts-devel
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-x11extras-devel
+BuildRequires: kf5-kactivities-devel kde5-kholidays-devel kf5-kdiagram-devel kf5-khtml-devel
+BuildRequires: kf5-kjs-devel kf5-kitemmodels-devel kf5-kcalcore-devel kf5-kdoctools-devel
 BuildRequires: zlib-devel
 
 %description
@@ -247,6 +247,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Thu Jan 30 2025 Sergey V Turchin <zerg@altlinux.org> 0:3.3.0-alt1
+- new version
+
 * Wed Aug 26 2020 Sergey V Turchin <zerg@altlinux.org> 0:3.2.2-alt1
 - new version
 
