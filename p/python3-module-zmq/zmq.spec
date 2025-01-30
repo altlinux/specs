@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 26.2.0
+Version: 26.2.1
 Release: alt1
 
 Summary: Software library for fast, message-based applications
@@ -132,6 +132,9 @@ echo asyncio_default_fixture_loop_scope="function" >> pytest.ini
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 26.2.1-alt1
+- Automatically updated to 26.2.1.
+
 * Wed Nov 06 2024 Grigory Ustinov <grenka@altlinux.org> 26.2.0-alt1
 - Automatically updated to 26.2.0.
 
