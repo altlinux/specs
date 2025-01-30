@@ -5,7 +5,7 @@
 %define _home %_localstatedir/%_user
 
 Name: byedpi
-Version: 0.16.0.8.d587
+Version: 0.16.2
 Release: alt1
 
 Summary: A local proxy for DPI environments
@@ -51,10 +51,14 @@ useradd -g %_user -c 'The byedpi daemon' \
 %dir %attr(0770,root,%_user) %_home
 %_initdir/%name
 %_unitdir/%name.service
-%_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Thu Jan 30 2025 Andrew Savchenko <bircoph@altlinux.org> 0.16.2-alt1
+- Version bump
+- Mark config as noreplace (closes: 52868)
+
 * Sat Jan 25 2025 Andrew Savchenko <bircoph@altlinux.org> 0.16.0.8.d587-alt1
 - Version bump
 - init: upstream now support daemon mode, so switch back to normal
