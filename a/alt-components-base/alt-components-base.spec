@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: alterator-components-base
-Version: 0.1.5
+Name: alt-components-base
+Version: 0.2.0
 Release: alt1
 
-Summary: Base set of Alterator components.
+Summary: Base set of ALT Distributions components
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-components-base
+URL: https://gitlab.basealt.space/alt/alt-components-base
 
 BuildArch: noarch
 
@@ -16,6 +16,9 @@ Source0: %name-%version.tar
 BuildRequires: cmark
 
 Requires: alterator-interface-component >= 0.1.6
+
+Provides: alterator-components-base = 0.1.5
+Obsoletes: alterator-components-base < 0.2.0
 
 %description
 %summary.
@@ -59,6 +62,9 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Jan 31 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.0-alt1
+- Rename to alt-components-base (this is common part of alt descriptions).
+
 * Tue Jan 21 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.5-alt1
 - Added components of the gnome environment (thx Sergey Savelev)
 
