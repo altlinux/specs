@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Jan 31 2025 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt1
+- live: add use/cleanup to use/live
+- live: cleanup livecd-main-repo when use/live/repo
+- profile.mk: add fakeroot to COMMON_PACKAGES
+- rescue: cleanup all locales except C.UTF-8, set locale C.UTF-8
+- rescue: do not use locale of ssh clients
+- cleanup: refactoring live/image-scripts.d/80-locales
+- sub.in/rootfs: add image-scripts.d/00-lang-C for set LANG=C.UTF-8
+- live-install: add use/l10n for set one en_US locale by default
+- live: add image-scripts.d/50-openssh
+- live: enable root login via ssh using password in Live Rescue
+- tty: add setup serial console for grub to 50-serial
+
 * Thu Jan 30 2025 Anton Midyukov <antohami@altlinux.org> 1.7.0-alt1
 - ntp: initial target use/ntp/timesyncd (thanks shaba@)
 - net: initial target use/net/ifupdown2 ()
