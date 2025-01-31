@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.7
-Release: alt2
+Release: alt3
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -114,6 +114,13 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Fri Jan 31 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt3
+- Backported upstream bugfix commits:
+  + rsync crashes with "*** buffer overflow detected ***: terminated
+    (thx Jiri Slaby) (ALT#52889);
+  + Fix FLAG_GOT_DIR_FLIST collission with FLAG_HLINKED (thx Natanael Copa);
+  + Fix use-after-free in generator (thx Natanael Copa).
+
 * Tue Jan 14 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.2.7-alt2
 - Applied security fixes made by Red Hat (fixes: CVE-2024-12084,
   CVE-2024-12085, CVE-2024-12086, CVE-2024-12087, CVE-2024-12088,
