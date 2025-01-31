@@ -1,14 +1,14 @@
 %define rname taglib
+%define _K6link %_K6lib
 
 Name: libtag
-Version: 1.12
+Version: 1.13.1
 Release: alt1
 
-Summary: TagLib, is well, a library for reading and editing audio meta data
-License: LGPL / MPL
 Group: System/Libraries
+Summary: TagLib, is well, a library for reading and editing audio meta data
+License: (LGPL-2.1-only OR MPL-1.1) AND BSD-2-Clause AND LGPL-2.1-only
 Url: http://taglib.github.io/
-Packager: Sergey V Turchin <zerg@altlinux.org>
 
 Provides: %rname = %version-%release
 
@@ -20,9 +20,10 @@ Patch2: taglib-1.8-ds-rusxmms-r2.patch
 # ALT
 Patch10: taglib-1.8-alt-versioning.patch
 
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: gcc-c++ zlib-devel
 #BuildRequires: librcc-devel
-BuildRequires: doxygen graphviz cmake kde-common-devel
+BuildRequires: doxygen graphviz cmake
 
 %description
 TagLib, is well, a library for reading and editing audio meta data,
@@ -60,7 +61,7 @@ install -m0644 %SOURCE2 ./
 
 
 %build
-%Kcmake \
+%K6cmake \
     -DINCLUDE_INSTALL_DIR=%_includedir \
     -DWITH_ASF:BOOL=ON \
     -DWITH_MP4:BOOL=ON \
@@ -68,11 +69,11 @@ install -m0644 %SOURCE2 ./
     -DBUILD_TESTS:BOOL=OFF \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     #
-%Kmake
-%Kmake docs
+%K6make
+%K6make docs
 
 %install
-%Kinstall
+%K6install
 
 %files
 %doc AUTHORS NEWS
@@ -82,7 +83,7 @@ install -m0644 %SOURCE2 ./
 %_libdir/libtag_c.so.0.*
 
 %files devel
-%doc BUILD-*/doc/html AUTHORS NEWS
+%doc BUILD*/doc/html AUTHORS NEWS
 %_bindir/taglib-config
 %_libdir/libtag.so
 %_libdir/libtag_c.so
@@ -92,6 +93,9 @@ install -m0644 %SOURCE2 ./
 %_includedir/taglib/*.tcc
 
 %changelog
+* Fri Jan 31 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt1
+- new version
+
 * Mon May 17 2021 Sergey V Turchin <zerg@altlinux.org> 1.12-alt1
 - new version
 
