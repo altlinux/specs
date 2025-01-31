@@ -1,16 +1,16 @@
-%define _unpackaged_files_terminate_build 1
 %define oname semver
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.2
+Version: 3.0.4
 Release: alt1
 
 Summary: Python package to work with Semantic Versioning
 
 Group: Development/Python3
 License: BSD-3-Clause
-Url: https://pypi.org/project/semver/
+URL: https://pypi.org/project/semver
+VCS: https://github.com/python-semver/python-semver
 
 Source: %name-%version.tar
 
@@ -33,7 +33,6 @@ A Python module for semantic versioning. Simplifies comparing versions.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -51,6 +50,9 @@ A Python module for semantic versioning. Simplifies comparing versions.
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.4-alt1
+- Build new version.
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
 - Build new version.
 
