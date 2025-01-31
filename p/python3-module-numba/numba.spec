@@ -14,7 +14,7 @@
 
 Name:    python3-module-%oname
 Version: 0.61.0
-Release: alt1
+Release: alt1.1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -101,6 +101,9 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 0.61.0-alt1.1
+- Switch for building from tag.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 0.61.0-alt1
 - Build new version.
 
