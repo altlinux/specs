@@ -1,4 +1,5 @@
 %add_findreq_skiplist %_datadir/qmmp/scripts/*.sh
+%define _K6link %_K6lib
 
 %define major 2
 %define sover 2
@@ -7,10 +8,10 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 2.1.9
+Version: 2.2.3
 Release: alt1
 Epoch: 1
-%K5init no_altplace appdata
+%K6init no_altplace appdata
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -22,8 +23,9 @@ Patch2: alt-def-plugins.patch
 Patch3: alt-def-statusicon.patch
 Patch4: alt-hide-on-close.patch
 Patch5: alt-def-id3v1-encoding.patch
+Patch6: alt-ftbfs.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-wlskins
+BuildRequires(pre): rpm-build-kf6 rpm-build-wlskins
 BuildRequires: cmake doxygen qt6-tools-devel qt6-multimedia-devel
 BuildRequires: libmms-devel libtag-devel
 %ifnarch %arm
@@ -204,17 +206,18 @@ Qmmp Shared library
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
-%K5build \
+%K6build \
     -DQMMP_DEFAULT_OUTPUT=pipewire \
     -DQMMP_DEFAULT_UI=qsui \
     #
 cd doc && doxygen Doxyfile
 
 %install
-%K5install
-%K5install_move data solid
+%K6install
+%K6install_move data solid
 
 # allow to find skins
 mkdir -p %buildroot/%_datadir/%rname
@@ -245,9 +248,12 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %files devel
 %_includedir/%{rname}*
 %_pkgconfigdir/%{rname}*.pc
-%_K5link/lib*.so
+%_libdir/lib*.so
 
 %changelog
+* Fri Jan 31 2025 Sergey V Turchin <zerg@altlinux.org> 1:2.2.3-alt1
+- new version
+
 * Wed Sep 18 2024 Sergey V Turchin <zerg@altlinux.org> 1:2.1.9-alt1
 - new version
 
