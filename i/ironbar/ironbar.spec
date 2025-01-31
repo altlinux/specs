@@ -1,6 +1,6 @@
 Name: ironbar
 Version: 0.16.1
-Release: alt1
+Release: alt2
 License: MIT
 
 Summary: Customisable Wayland gtk bar
@@ -51,9 +51,13 @@ EOF
 %rust_install
 
 %files
+%doc README.md LICENSE
 %_bindir/%name
 
 %changelog
+* Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.16.1-alt2
+- pack README.md and LICENSE
+
 * Thu Nov 28 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.16.1-alt1
 - new version (0.16.1) with rpmgs script
 

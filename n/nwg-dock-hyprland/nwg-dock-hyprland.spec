@@ -1,6 +1,6 @@
 Name: nwg-dock-hyprland
 Version: 0.3.2
-Release: alt1
+Release: alt2
 License: MIT
 
 Summary: GTK3-based dock for Hyprland
@@ -24,8 +24,6 @@ BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gdk-3.0)
 
-Requires: libgtk-layer-shell libgtk+3
-
 %description
 Configurable (w/ command line arguments and css) dock, written in Go,
 aimed exclusively at the Hyprland Wayland compositor.
@@ -45,10 +43,15 @@ mkdir -p %buildroot%_datadir/%name
 cp config/* %buildroot%_datadir/%name
 
 %files
+%doc README.md LICENSE
 %_bindir/%name
 %_datadir/%name/
 
 %changelog
+* Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3.2-alt2
+- drop manual dependencies
+- pack README.md and LICENSE
+
 * Sun Nov 03 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.2-alt1
 - new version (0.3.2) with rpmgs script
 

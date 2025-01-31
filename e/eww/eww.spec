@@ -1,6 +1,6 @@
 Name: eww
 Version: 0.6.0
-Release: alt1
+Release: alt2
 License: MIT
 
 Summary: ElKowars wacky widgets
@@ -21,8 +21,6 @@ BuildRequires: /proc
 BuildRequires: libdbusmenu-gtk3-devel
 BuildRequires: libgtk-layer-shell-devel
 BuildRequires: libgtk+3-devel
-
-Requires: libgtk-layer-shell libgtk+3
 
 %description
 Elkowars Wacky Widgets is a standalone widget system 
@@ -47,14 +45,15 @@ EOF
 
 %install
 %rust_install
-install -d %buildroot%_sysconfdir/xdg/%name/
-cp -r examples/eww-bar %buildroot%_sysconfdir/xdg/%name/
 
 %files
-%doc README.md LICENSE CHANGELOG.md 
+%doc README.md LICENSE CHANGELOG.md examples/eww-bar
 %_bindir/%name
-%_sysconfdir/xdg/%name
 
 %changelog
+* Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.6.0-alt2
+- drop manual dependencies
+- move examples/eww-bar to doc
+
 * Tue Sep 24 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.6.0-alt1
 - Initial build

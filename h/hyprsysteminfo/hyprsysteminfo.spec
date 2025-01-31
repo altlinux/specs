@@ -1,6 +1,6 @@
 Name: hyprsysteminfo
 Version: 0.1.3
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Summary: A tiny qt6/qml application to display information about the running system
@@ -26,7 +26,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-declarative-devel qt6-tools-devel
 BuildRequires: hyprland-qt-support
 
-Requires: kf6-kirigami libqt6-quickcontrols2 hyprland-qt-support
+Requires: kf6-kirigami hyprland-qt-support
 
 %description
 A tiny qt6/qml application to display information about
@@ -50,6 +50,9 @@ the running system, or copy diagnostics data, without the terminal.
 %_desktopdir/hyprsysteminfo.desktop
 
 %changelog
+* Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt2
+- drop manual dependencies
+
 * Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt1
 - new version 0.1.3 (with rpmrb script)
 

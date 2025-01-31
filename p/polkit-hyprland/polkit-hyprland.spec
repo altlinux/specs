@@ -2,7 +2,7 @@
 
 Name: polkit-hyprland
 Version: 0.1.2
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Summary: A polkit authentication agent written in QT/QML
@@ -30,7 +30,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-declarative-devel qt6-tools-devel
 BuildRequires: hyprland-qt-support
 
-Requires: kf6-kirigami libqt6-quickcontrols2 hyprland-qt-support libkf6sonnetui
+Requires: kf6-kirigami hyprland-qt-support libkf6sonnetui
 
 %description
 A simple polkit authentication agent for Hyprland, written in QT/QML.
@@ -53,6 +53,9 @@ A simple polkit authentication agent for Hyprland, written in QT/QML.
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt2
+- drop manual dependencies
+
 * Sat Jan 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt1
 - new version 0.1.2 (with rpmrb script)
 

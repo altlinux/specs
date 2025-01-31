@@ -1,6 +1,6 @@
 Name: hyprland-qtutils
 Version: 0.1.3
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Summary: Hyprland QT/qml utility apps
@@ -28,7 +28,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-declarative-devel qt6-tools-devel
 BuildRequires: hyprland-qt-support
 
-Requires: kf6-kirigami libqt6-quickcontrols2 hyprland-qt-support
+Requires: kf6-kirigami hyprland-qt-support
 
 %description
 Qt/qml utilities that might be used by various hypr* apps.
@@ -51,6 +51,9 @@ Qt/qml utilities that might be used by various hypr* apps.
 %_bindir/hyprland-donate-screen
 
 %changelog
+* Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt2
+- drop manual dependencies
+
 * Sat Jan 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt1
 - new version 0.1.3 (with rpmrb script)
 - new utility: hyprland-donate-screen
