@@ -3,8 +3,8 @@
 %define major 4
 %define sover %major
 Name: projectm
-Version: 4.0.0
-Release: alt2
+Version: 4.1.4
+Release: alt1
 
 %define libprojectm libprojectm%{major}_%{sover}
 %define libprojectm_playlist libprojectm%{major}-playlist%{sover}
@@ -15,6 +15,7 @@ License: LGPL-2.1-or-later
 Url: http://projectm.sourceforge.net/
 
 Source: %name-%version.tar
+Source1: projectm-eval.tar
 
 # Automatically added by buildreq on Mon Oct 30 2023 (-bi)
 # optimized out: cmake-modules debugedit elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libctf-nobfd0 libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel python-modules python2-base python3 python3-base python3-dev python3-module-paste rpm-build-file rpm-build-python3 sh5 tzdata xorg-proto-devel
@@ -63,7 +64,9 @@ Requires: %name-devel
 Static projectM library.
 
 %prep
-%setup
+%setup -a1
+rm -rf vendor/projectm-eval/
+mv projectm-eval vendor/
 %ifarch %e2k
 # This line from "libvisual.h" is poisonous to some system headers:
 # "#define inline  inline __attribute__ ((always_inline))"
@@ -102,6 +105,9 @@ Static projectM library.
 %_libdir/cmake/projectM%{major}*/
 
 %changelog
+* Fri Jan 31 2025 Sergey V Turchin <zerg@altlinux.org> 4.1.4-alt1
+- new version
+
 * Fri Nov 17 2023 Sergey V Turchin <zerg@altlinux.org> 4.0.0-alt2
 - require projectm-presets
 
