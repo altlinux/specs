@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gparted
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -18,10 +18,11 @@ Group: System/Configuration/Hardware
 License: %gpl2plus
 Url: http://%name.sourceforge.net/
 
+Vcs: https://gitlab.gnome.org/GNOME/gparted.git
+
 %if_disabled snapshot
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gparted.git
 Source: %name-%version.tar
 %endif
 Source1: %name-pam
@@ -130,6 +131,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Tue Feb 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
