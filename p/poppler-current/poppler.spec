@@ -16,6 +16,7 @@
 %def_enable utils
 %def_enable xpdfheaders
 %def_enable gir
+%def_enable cryptopro
 %else
 %def_disable cpp
 %def_disable glib
@@ -47,7 +48,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -84,6 +85,7 @@ Source: %rname-%version.tar
 # ALT
 Patch10: alt-e2k.patch
 Patch11: alt-openjpeg-version.patch
+Patch12: alt-add-cryptopro-sign-validation.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -111,6 +113,10 @@ BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
 BuildRequires: boost-devel libgpgme-devel
+%if_enabled cryptopro
+BuildRequires: libcspforpoppl-devel
+BuildRequires: libgtest-devel
+%endif
 
 %description
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -315,6 +321,9 @@ GObject introspection devel data for the Poppler library
 %setup -n %rname-%version
 %patch10 -p1
 %patch11 -p1
+%if_enabled cryptopro
+%patch12 -p1
+%endif
 
 %build
 %if_enabled qt4
@@ -324,6 +333,7 @@ export QT4DIR=%_qt4dir
     -DSHARE_INSTALL_DIR=%_datadir \
     -DBUILD_SHARED_LIBS=ON \
     -DENABLE_GPGME=ON \
+    -DDEFAULT_SIGNATURE_BACKEND=%{?_enable_cryptopro:"CRYPTOPRO"}%{!?_enable_cryptopro:""} \
     -DENABLE_LIBCURL=ON \
     -DENABLE_ZLIB=OFF \
     -DENABLE_CMS=lcms2 \
@@ -452,6 +462,12 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Thu Dec 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 24.08.0-alt2
+- add backend validation of signature signed with CryptoPro
+- set the CryptoPro backend by default
+- add tests for interfaction between the CryptoPro backend and Poppler
+- add tests for the signature verification class
+
 * Thu Dec 19 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.0-alt1
 - new version
 
