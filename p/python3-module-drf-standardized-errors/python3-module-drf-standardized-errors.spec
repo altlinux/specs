@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: Standardize your DRF API error responses.
@@ -40,6 +40,7 @@ the necessary django error views.
 
 %prep
 %setup
+sed -i 's|ip.error_codes == {"invalid", "null_characters_not_allowed"}|ip.error_codes == {"max_length", "invalid", "null_characters_not_allowed"}|g' tests/test_openapi_utils.py
 
 %build
 %pyproject_build
@@ -58,6 +59,9 @@ rm -rf %buildroot%python3_sitelibdir/%mod_name-%version/docs
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 31 2025 Alexander Burmatov <thatman@altlinux.org> 0.14.1-alt1
+- Update version to 0.14.1.
+
 * Mon Aug 05 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 0.14.0-alt1
 - Initial build for ALT Linux
 

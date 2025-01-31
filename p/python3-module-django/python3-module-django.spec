@@ -1,4 +1,4 @@
-%define branch 5.0
+%define branch 5.1
 %define origname Django
 %define oname django
 
@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.10
+Version: %branch.5
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -124,11 +124,11 @@ find -type f -name '*.py*' -exec sed -i 's|%_bindir/env python|%_bindir/python3|
 find -type f -name '*.py' -exec sed -i 's|.*from future_builtins import zip.*||' -- '{}' +
 
 %build
-%python3_build
+%pyproject_build
 
 %install
 export LC_ALL=en_US.UTF-8
-%python3_install
+%pyproject_install
 
 # install man pages (for the main executable only)
 mkdir -p %buildroot%_man1dir
@@ -184,6 +184,17 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Thu Jan 30 2025 Alexander Burmatov <thatman@altlinux.org> 5.1.5-alt1
+- New version 5.1.5.
+- Use pyproject build and install.
+- Fixes for the following security vulnerabilities:
+  + CVE-2024-56374: Potential denial-of-service vulnerability in IPv6 validation
+  + CVE-2024-45230: Potential denial-of-service vulnerability in django.utils.html.urlize()
+  + CVE-2024-45231: Potential user email enumeration via response status on password reset
+  + CVE-2024-53907: Denial-of-service possibility in strip_tags()
+  + CVE-2024-53908: Potential SQL injection via HasKey(lhs, rhs) on Oracle
+- Some bugfixes.
+
 * Wed Dec 18 2024 Alexander Burmatov <thatman@altlinux.org> 5.0.10-alt1
 - New version 5.0.10.
 - Fixes for the following security vulnerabilities:

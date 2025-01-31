@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.6.0
-Release: alt10
+Release: alt11
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -156,6 +156,9 @@ cert-sh generate nginx-openuds ||:
 %_tmpfilesdir/openuds.conf
 
 %changelog
+* Fri Jan 31 2025 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt11
+- Replaced session PickleSerializer with Json-bases serializer (custom one).
+
 * Mon Dec 25 2023 Alexander Burmatov <thatman@altlinux.org> 3.6.0-alt10
 - Set the correct runtime dir.
 

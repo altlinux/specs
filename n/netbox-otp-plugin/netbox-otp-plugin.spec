@@ -1,5 +1,5 @@
 Name:    netbox-otp-plugin
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Summary: This netbox plugin adds support for one-time password (OTP) to Netbox
@@ -42,6 +42,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-otp-plugin/README
 %_defaultdocdir/netbox-otp-plugin/README
 
 %changelog
+* Thu Jan 30 2025 Alexander Burmatov <thatman@altlinux.org> 1.3.2-alt1
+- New 1.3.2 version.
+
 * Fri Nov 08 2024 Alexander Burmatov <thatman@altlinux.org> 1.3.0-alt1
 - New 1.3.0 version.
 
