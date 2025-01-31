@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Low Complexity Communication Codec (LC3)
@@ -15,6 +15,7 @@ Group: System/Libraries
 Url: https://github.com/google/liblc3
 
 Vcs: https://github.com/google/liblc3.git
+
 Source: https://github.com/google/liblc3/archive/v%version/%name-%version.tar.gz
 Patch10: liblc3-1.1.1-up-rpath.diff
 
@@ -74,6 +75,9 @@ This package provides LC3 tools.
 %endif
 
 %changelog
+* Sat Feb 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Sat Apr 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 

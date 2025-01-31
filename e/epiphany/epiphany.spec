@@ -8,7 +8,7 @@
 %define xdg_name org.gnome.Epiphany
 
 Name: epiphany
-Version: %ver_major.2
+Version: %ver_major.3.1
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -16,6 +16,8 @@ Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для граф
 Group: Networking/WWW
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Web
+
+Vcs: https://gitlab.gnome.org/GNOME/epiphany.git
 
 %if_enabled snapshot
 Source: %name-%version%beta.tar
@@ -119,6 +121,9 @@ _EOF_
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Sat Feb 01 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3.1-alt1
+- 47.3.1
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
