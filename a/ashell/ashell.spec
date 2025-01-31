@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 License: MIT
 
@@ -8,9 +8,11 @@ Summary: A ready to go Wayland status bar for Hyprland
 Group: Graphical desktop/Other
 
 Url: https://github.com/MalpenZibo/ashell
+Vcs: https://github.com/MalpenZibo/ashell.git
 
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
+Source2: config.toml
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust clang-devel
@@ -21,45 +23,12 @@ BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(dbus-1)
 
-Requires: fonts-ttf-symbols-nerd
-
 %description
 %summary.
 
 %prep
 %setup -a1
-
-mkdir -p .cargo
-cat <<EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/MalpenZibo/hyprland-rs"]
-git = "https://github.com/MalpenZibo/hyprland-rs"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/MalpenZibo/iced_sctk"]
-git = "https://github.com/MalpenZibo/iced_sctk"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/Smithay/client-toolkit?rev=3bed072"]
-git = "https://github.com/Smithay/client-toolkit"
-rev = "3bed072"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/pop-os/smithay-clipboard?tag=pop-dnd-4"]
-git = "https://github.com/pop-os/smithay-clipboard"
-tag = "pop-dnd-4"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/pop-os/window_clipboard.git?tag=pop-dnd-6"]
-git = "https://github.com/pop-os/window_clipboard.git"
-tag = "pop-dnd-6"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+install -vD %SOURCE2 .cargo/config.toml
 
 %build
 %rust_build
@@ -71,6 +40,12 @@ EOF
 %_bindir/%name
 
 %changelog
+* Wed Jan 22 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
+- new version (0.4.0) with rpmgs script
+- re-drop Requires: fonts-ttf-symbols-nerd
+- The Cargo config is moved to a separate file.
+- spec: add vcs
+
 * Fri Dec 13 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.3.1-alt1
 - new version 0.3.1 (with rpmrb script)
 
