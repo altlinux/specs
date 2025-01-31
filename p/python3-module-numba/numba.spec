@@ -13,8 +13,8 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.59.1
-Release: alt2
+Version: 0.61.0
+Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -56,8 +56,13 @@ C callbacks.
 
 %prep
 %setup
-sed -i 's/@VERSION@/%version/' setup.py
-sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
+# workaround for versioneer
+rm versioneer.py
+grep -qsF ' export-subst' .gitattributes || exit 1
+vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
+echo 'def get_versions():return {"version": "%version"}' > "$vers_f"
+echo 'def get_cmdclass(): return {}' > versioneer.py
+echo 'def get_version(): return "%version"' >> versioneer.py
 
 %ifarch %e2k
 # error: misspelling pragma string
@@ -96,6 +101,9 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 0.61.0-alt1
+- Build new version.
+
 * Sat Nov 09 2024 Grigory Ustinov <grenka@altlinux.org> 0.59.1-alt2
 - Cut out tests from the package.
 
