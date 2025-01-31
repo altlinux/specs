@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.4.0
+Version: 3.5.0
 Release: alt1
 
 Summary: OpenStack Oslo Versioned Objects library
@@ -14,8 +14,6 @@ Url: https://pypi.org/project/oslo.versionedobjects
 
 Source: %oname-%version.tar
 Source1: %oname.watch
-
-Patch1: oslo.versionedobjects-fix-test_get_hashes-with-python3.12.patch
 
 BuildArch: noarch
 
@@ -43,9 +41,7 @@ BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -84,7 +80,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch1 -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -131,6 +126,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 

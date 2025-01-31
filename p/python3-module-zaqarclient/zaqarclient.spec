@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.8.0
+Version: 2.10.0
 Release: alt1
 
 Summary: Client Library for OpenStack Zaqar Messaging API
@@ -15,8 +15,6 @@ Url: https://pypi.org/project/python-zaqarclient
 Source: %oname-%version.tar
 Source1: %oname.watch
 
-Patch: remove-distutils-for-python-3.12.patch
-
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -25,7 +23,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
@@ -71,7 +69,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch -p2
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -116,6 +113,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
+- Automatically updated to 2.10.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
 - Automatically updated to 2.8.0.
 

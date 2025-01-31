@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: OpenStack Orchestration API Client Library
@@ -122,6 +122,9 @@ install -pDm 644 tools/heat.bash_completion \
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 

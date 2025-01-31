@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.5.0
+Version: 5.6.0
 Release: alt1
 
 Summary: OpenStack Oslo Serialization library
@@ -109,6 +109,9 @@ install -pDm 644 man/osloserialization.1 %buildroot%_man1dir/osloserialization.1
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.6.0-alt1
+- Automatically updated to 5.6.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
 - Automatically updated to 5.5.0.
 

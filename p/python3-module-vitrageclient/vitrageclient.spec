@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.1.1
+Version: 5.2.0
 Release: alt1
 
 Summary: OpenStack Vitrage Client API Library
@@ -35,7 +35,7 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.3.0
 BuildRequires: python3-module-oslo.log >= 4.4.0
 BuildRequires: python3-module-pydot >= 1.4.1
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 7.0.0
 BuildRequires: python3-module-testscenarios >= 0.5.0
 %endif
 
@@ -121,6 +121,9 @@ install -pDm 644 tools/vitrage.bash_completion \
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
 - Automatically updated to 5.1.1.
 

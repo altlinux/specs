@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Sphinx Extensions to support API reference sites in OpenStack
@@ -34,7 +34,7 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
-BuildRequires: python3-module-sphinx >= 4.0.0
+BuildRequires: python3-module-sphinx >= 7.2.0
 BuildRequires: python3-module-openstackdocstheme >= 2.2.1
 %endif
 
@@ -114,6 +114,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Fri Jul 28 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 

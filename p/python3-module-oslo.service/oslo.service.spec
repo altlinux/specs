@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 4.0.0
 Release: alt1
 
 Summary: OpenStack Oslo Service library
@@ -27,7 +27,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-webob >= 1.7.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-eventlet >= 0.25.2
+BuildRequires: python3-module-eventlet >= 0.27.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-greenlet >= 0.4.15
 BuildRequires: python3-module-oslo.utils >= 3.40.2
@@ -123,6 +123,9 @@ install -pDm 644 man/osloservice.1 %buildroot%_man1dir/osloservice.1
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
 - Automatically updated to 3.5.0.
 

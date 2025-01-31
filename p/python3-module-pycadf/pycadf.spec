@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.1
-Release: alt1.1
+Version: 4.0.1
+Release: alt1
 
 Summary: CADF Library
 
@@ -23,16 +23,14 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-pytz >= 2013.6
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-debtcollector >= 1.2.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-hacking >= 6.1.0
+BuildRequires: python3-module-flake8-import-order >= 0.18.0
 %endif
 
 %if_with docs
@@ -101,9 +99,11 @@ mv %buildroot/usr/etc/%oname/*_api_audit_map.conf %buildroot%_sysconfdir/%oname
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %dir %_sysconfdir/%oname
-%config(noreplace) %_sysconfdir/%oname/ceilometer_api_audit_map.conf
 %config(noreplace) %_sysconfdir/%oname/cinder_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/heat_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/ironic_api_audit_map.conf
 %config(noreplace) %_sysconfdir/%oname/glance_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/gnocchi_api_audit_map.conf
 %config(noreplace) %_sysconfdir/%oname/neutron_api_audit_map.conf
 %config(noreplace) %_sysconfdir/%oname/nova_api_audit_map.conf
 %config(noreplace) %_sysconfdir/%oname/swift_api_audit_map.conf
@@ -122,6 +122,9 @@ mv %buildroot/usr/etc/%oname/*_api_audit_map.conf %buildroot%_sysconfdir/%oname
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Automatically updated to 4.0.1.
+
 * Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1.1
 - Moved on modern pyproject macros.
 

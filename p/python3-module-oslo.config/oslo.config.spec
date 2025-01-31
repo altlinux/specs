@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 9.6.0
+Version: 9.7.0
 Release: alt1
 
 Summary: OpenStack Oslo Configuration API
@@ -14,7 +14,6 @@ Url: https://pypi.org/project/oslo.config
 
 Source: %oname-%version.tar
 Source1: %oname.watch
-Patch: 972d304bb23baef538ce759004410a20d8109ccb.patch
 
 BuildArch: noarch
 
@@ -43,9 +42,7 @@ BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-mypy >= 0.720
 BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-requests-mock
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -84,7 +81,6 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
-%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -131,6 +127,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 9.7.0-alt1
+- Automatically updated to 9.7.0.
+
 * Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 9.6.0-alt1
 - Automatically updated to 9.6.0.
 

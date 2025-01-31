@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Manage dynamic plugins for Python applications
@@ -113,6 +113,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1
+- Automatically updated to 5.4.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
 - Automatically updated to 5.3.0.
 

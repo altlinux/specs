@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 41.0.0
+Version: 42.0.0
 Release: alt1
 
 Summary: OpenStack Integration Testing
@@ -31,7 +31,7 @@ BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-oslo.utils >= 4.7.0
+BuildRequires: python3-module-oslo.utils >= 7.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-yaml >= 3.12
 BuildRequires: python3-module-subunit
@@ -144,6 +144,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 42.0.0-alt1
+- Automatically updated to 42.0.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 41.0.0-alt1
 - Automatically updated to 41.0.0.
 

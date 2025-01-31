@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 18.7.0
+Version: 18.8.0
 Release: alt1
 
 Summary: Client library for OpenStack Compute API
@@ -35,7 +35,6 @@ BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires(pre): openssl
 BuildRequires: python3-module-keystoneclient >= 3.8.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
-BuildRequires: python3-module-glanceclient >= 2.8.0
 BuildRequires: python3-module-neutronclient >= 6.7.0
 BuildRequires: python3-module-bandit >= 1.1.0
 BuildRequires: python3-module-coverage >= 4.4.1
@@ -129,6 +128,9 @@ install -pDm 644 tools/nova.bash_completion \
 %endif
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 18.8.0-alt1
+- Automatically updated to 18.8.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 18.7.0-alt1
 - Automatically updated to 18.7.0.
 
