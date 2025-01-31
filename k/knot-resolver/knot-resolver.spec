@@ -4,7 +4,7 @@
 %def_disable dnstap
 
 Name: knot-resolver
-Version: 6.0.8
+Version: 6.0.10
 Release: alt1
 Summary: Caching full DNS Resolver
 Group: System/Servers
@@ -28,14 +28,14 @@ BuildRequires(pre): meson >= 0.49 rpm-macros-luajit rpm-macros-systemd rpm-macro
 BuildRequires: gcc-c++ luajit
 BuildRequires: python3-module-setuptools
 BuildRequires: pkgconfig(cmocka)
-BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(gnutls) >= 3.4
 BuildRequires: pkgconfig(libknot) >= 3.1
 BuildRequires: pkgconfig(libzscanner) >= 3.1
 BuildRequires: pkgconfig(libdnssec) >= 3.1
 BuildRequires: pkgconfig(libnghttp2)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(libcap-ng)
-BuildRequires: pkgconfig(libuv) >= 1.7
+BuildRequires: pkgconfig(libuv) >= 1.27
 BuildRequires: pkgconfig(luajit) >= 2.0
 BuildRequires: pkgconfig(openssl)
 BuildRequires: liblmdb-devel
@@ -95,23 +95,13 @@ tar -xf %SOURCE11 -C modules/policy/lua-aho-corasick
     %{?_enable_dnstap:-Ddnstap=enabled}
 
 %meson_build
-pushd manager
 %python3_build
-popd
 
 %install
 %meson_install
 # install knot-resolver-manager
-pushd manager
 %python3_install
-install -m 644 -D etc/knot-resolver/config.yaml %buildroot%_sysconfdir/knot-resolver/config.yaml
-install -m 644 -D shell-completion/client.bash %buildroot%_datadir/bash-completion/completions/kresctl
-install -m 644 -D shell-completion/client.fish %buildroot%_datadir/fish/completions/kresctl.fish
-popd
-
-# add knot-resolver.service to multi-user.target.wants to support enabling kresd services
-install -m 0755 -d %buildroot%_unitdir/multi-user.target.wants
-ln -s ../knot-resolver.service %buildroot%_unitdir/multi-user.target.wants/knot-resolver.service
+install -m 644 -D etc/config/config.yaml %buildroot%_sysconfdir/%name/config.yaml
 
 # remove modules with missing dependencies
 #rm %buildroot%_libdir/%name/kres_modules/etcd.lua
@@ -159,10 +149,8 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_bindir/kresctl
 %_bindir/knot-resolver
 %_unitdir/knot-resolver.service
-%_unitdir/multi-user.target.wants/knot-resolver.service
 %_datadir/bash-completion/completions/kresctl
-%_datadir/fish/completions/kresctl.fish
-%python3_sitelibdir/knot_resolver_manager*
+%python3_sitelibdir/knot_resolver*
 
 %files -n libkres
 %_libdir/libkres.so.*
@@ -179,6 +167,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Knot Resolver" -g %nam
 %_libdir/%name/kres_modules/prometheus.lua
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.10-alt1
+- 6.0.10
+
 * Thu Sep 26 2024 Alexey Shabalin <shaba@altlinux.org> 6.0.8-alt1
 - 6.0.8
 - Merge manager package into main.
