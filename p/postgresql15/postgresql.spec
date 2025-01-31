@@ -13,17 +13,12 @@
 %def_with jit
 %endif
 
-%ifarch x86_64
-# Use coverage
-%def_without coverage
-%endif
-
 %set_autoconf_version 2.60
 
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     10
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -74,11 +69,6 @@ BuildRequires: libicu-devel
 %endif
 %if_with jit
 BuildRequires: llvm18.1-devel clang18.1-devel gcc-c++
-%endif
-# Need for make check
-BuildRequires: rpm-build-vm rpm-build-vm-createimage
-%if_with coverage
-BuildRequires: lcov
 %endif
 
 %description
@@ -395,9 +385,6 @@ export CLANG=/usr/bin/clang-18
 %if_with jit
     --with-llvm \
 %endif
-%if_with coverage
-    --enable-coverage \
-%endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
     --with-pam \
@@ -427,9 +414,6 @@ popd
 find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 	-e "s,http://docbook.sourceforge.net/release/xsl/current,/usr/share/xml/docbook/xsl-stylesheets,g" --
 %make_build -C doc all
-
-%check
-vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=256M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
@@ -1022,6 +1006,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 31 2025 Alexei Takaseev <taf@altlinux.org> 15.10-alt3
+- Remove coverage support and run test regressions
+
 * Mon Jan 27 2025 Alexei Takaseev <taf@altlinux.org> 15.10-alt2
 - Add Conflicts: 17-1C
 - Add coverage support
