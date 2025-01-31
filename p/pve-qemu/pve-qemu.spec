@@ -14,7 +14,7 @@
 
 Name: pve-%rname
 Version: 9.1.2
-Release: alt1
+Release: alt3
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -234,7 +234,7 @@ rm -f %buildroot%_datadir/%rname/slof.bin
 rm -f %buildroot%_datadir/%rname/u-boot*
 rm -f %buildroot%_datadir/%rname/palcode-clipper
 rm -f %buildroot%_datadir/%rname/opensbi*
-#rm -f %%buildroot%%_datadir/%%rname/edk2-*
+rm -f %buildroot%_datadir/%rname/edk2-*
 rm -f %buildroot%_datadir/%rname/firmware/*
 rm -f %buildroot%_datadir/%rname/qemu-nsis.bmp
 rm -rf %buildroot%_includedir
@@ -330,6 +330,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 1:9.1.2-alt3
+- 9.1.2-3
+
 * Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 1:9.1.2-alt1
 - 9.1.2-1
 
