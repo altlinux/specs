@@ -27,8 +27,8 @@
 %endif
 
 Name: bind
-Version: 9.18.32
-%define src_version 9.18.32
+Version: 9.18.33
+%define src_version 9.18.33
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -86,6 +86,8 @@ BuildRequires: python3-module-dnspython
 BuildRequires: python3(hypothesis)
 # /usr/bin/gnutls-cli is required by doth tests
 BuildRequires: gnutls-utils
+# taskset is required by cpu tests
+BuildRequires: schedutils
 %if_with enginepkcs11
 # requires only for pkcs11 tests
 BuildRequires: softhsm
@@ -601,6 +603,9 @@ fi
 %endif
 
 %changelog
+* Thu Jan 30 2025 Stanislav Levin <slev@altlinux.org> 9.18.33-alt1
+- 9.18.32 -> 9.18.33 (fixes: CVE-2024-11187, CVE-2024-12705).
+
 * Thu Dec 12 2024 Stanislav Levin <slev@altlinux.org> 9.18.32-alt1
 - 9.18.31 -> 9.18.32.
 
