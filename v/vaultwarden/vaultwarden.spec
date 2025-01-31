@@ -1,8 +1,8 @@
 %def_without check
 
 Name:    vaultwarden
-Version: 1.32.0
-Release: alt4
+Version: 1.33.0
+Release: alt1
 
 Summary: Unofficial Bitwarden compatible server
 License: AGPL-3.0
@@ -16,6 +16,7 @@ Source3: %name.service
 Source4: %name.sysusers
 
 Patch0: vaultwarden-1.32.0-alt-mysqlclient-crate-loongarch64.patch
+Patch1: vaultwarden-1.33.0-alt-lock-update.patch
 
 # 32bit incompatible, unable to build vendored mysqlclient-sys on ppc
 ExcludeArch: %ix86 armh ppc64le
@@ -26,6 +27,8 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(mariadb)
 BuildRequires: pkgconfig(libpq)
+# Uncomment req below to vendor dependencies inside chrooted env correctly.
+# BuildRequires: cargo-vendor-filterer
 %ifarch loongarch64
 BuildRequires: llvm17.0 libclang17 rustfmt rust-bindgen
 %endif
@@ -41,6 +44,11 @@ formerly known as bitwarden_rs.
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/BlackDex/yubico-rs?rev=00df14811f58155c0f02e3ab10f1570ed3e115c6"]
+git = "https://github.com/BlackDex/yubico-rs"
+rev = "00df14811f58155c0f02e3ab10f1570ed3e115c6"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -68,6 +76,7 @@ bindgen --allowlist-function "mysql.*" --allowlist-function "mariadb.*" --allowl
  		--default-enum-style rust_non_exhaustive vendor/mysqlclient-sys/bindings/wrapper.h -- -I/usr/include/mysql \
  		-I/usr/lib/llvm-17.0/lib64/clang/17/include/ > ./vendor/mysqlclient-sys/bindings/bindings_mariadb_11_4_loongarch64_linux.rs
 %endif
+%patch1
 
 %build
 %rust_build --features sqlite,mysql,postgresql
@@ -108,6 +117,9 @@ echo "in %{_sysconfdir}/%{name}/%{name}.cfg"
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Fri Jan 31 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.33.0-alt1
+- New version.
+
 * Wed Jan 15 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.32.0-alt4
 - Configure SQLite as default database (Closes #52663).
 
