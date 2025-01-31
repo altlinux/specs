@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -62,6 +62,11 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Jan 31 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.1-alt1
+- Added category for Alt SP (thx Sergey Savelev)
+- Added subcategory for fonts (thx Anna Fomina)
+- Added category for alterator modules (thx Sergey Savelev)
+
 * Fri Jan 31 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.0-alt1
 - Rename to alt-components-base (this is common part of alt descriptions).
 
