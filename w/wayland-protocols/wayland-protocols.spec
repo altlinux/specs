@@ -1,4 +1,4 @@
-%define ver_major 1.39
+%define ver_major 1.40
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -16,6 +16,7 @@ Group: System/X11
 Url: https://wayland.freedesktop.org/
 
 Vcs: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
+
 Source: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/%version/downloads/%name-%version.tar.xz
 #Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
 
@@ -53,6 +54,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md GOVERNANCE* MEMBERS*
 
 %changelog
+* Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.40-alt1
+- 1.40
+
 * Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.39-alt1
 - 1.39
 
