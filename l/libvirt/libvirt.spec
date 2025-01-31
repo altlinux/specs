@@ -171,7 +171,7 @@
 %endif
 
 Name: libvirt
-Version: 10.10.0
+Version: 11.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
@@ -1541,6 +1541,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt1
+- 11.0.0
+
 * Tue Dec 10 2024 Alexey Shabalin <shaba@altlinux.org> 10.10.0-alt1
 - 10.10.0
 - Build with json-c
