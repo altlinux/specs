@@ -1,9 +1,9 @@
 %define oname Kivy
 
-%def_without check
+%def_with check
 
 Name: python3-module-kivy
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Open source UI framework written in Python
@@ -14,9 +14,6 @@ Url: https://pypi.org/project/Kivy
 
 Source: %name-%version.tar
 Patch2: kivy-2.2.1-alt-do_not_use_ffpyplayer.patch
-Patch3: 0002-Fix-SDL_EventFilter-definitions.patch
-Patch4: 0003-Fix-ftbfs-with-GCC-14.patch
-Patch5: 0004-Replace-deprecated-imghdr-with-filetype.patch
 
 Requires: python3-module-docutils
 Requires: python3-module-Pygments
@@ -44,6 +41,7 @@ BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-responses
 BuildRequires: libmtdev
 BuildRequires: python3-module-certifi
+BuildRequires: python3-module-filetype
 %endif
 
 %add_python3_req_skip AppKit PyInstaller.depend android android.runnable gimpfu picamera pyobjus pyobjus.dylib_manager
@@ -68,11 +66,6 @@ This package contains tests for %oname.
 %prep
 %setup
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-
-sed -i 's/distutils.cmd/setuptools/' kivy/tools/packaging/factory.py
 
 # remove the legacy garden install script as python requirement, get it from PyPI
 # or https://github.com/kivy-garden/garden/ if you need it
@@ -88,7 +81,6 @@ export KIVY_SPLIT_EXAMPLES=1
 
 %install
 %pyproject_install
-rm -vrf %buildroot/usr/share/kivy-examples/
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -110,6 +102,10 @@ and not test_local_zipsequence"
 %python3_sitelibdir/kivy/tests
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
+- Automatically updated to 2.3.1.
+- Built with check.
+
 * Tue Dec 24 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 
