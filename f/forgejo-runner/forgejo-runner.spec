@@ -1,7 +1,7 @@
 %global import_path gitea.com/gitea/act_runner
 
 Name: forgejo-runner
-Version: 6.0.1
+Version: 6.2.2
 Release: alt1
 
 Summary: Forgejo Runner
@@ -98,6 +98,9 @@ exit 0
 %_userunitdir/%name.service
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 6.2.2-alt1
+- New version 6.2.2.
+
 * Mon Jan 13 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.1-alt1
 - 6.0.1
 
