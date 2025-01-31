@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.11.0
+Version: 3.12.1
 Release: alt1
 
 Summary: Fast string Python 3 matching library for Python and C++
@@ -12,6 +12,7 @@ License: MIT
 Url: http://pypi.python.org/pypi/%pypi_name
 
 Vcs: https://github.com/maxbachmann/RapidFuzz.git
+
 Source: https://pypi.io/packages/source/r/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
@@ -48,6 +49,9 @@ py.test3
 
 
 %changelog
+* Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Wed Dec 18 2024 Yuri N. Sedunov <aris@altlinux.org> 3.11.0-alt1
 - 3.11.0
 
