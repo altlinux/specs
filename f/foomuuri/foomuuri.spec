@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: foomuuri
-Version: 0.26
+Version: 0.27
 Release: alt1
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
@@ -62,7 +62,7 @@ sed -i \
 
 %build
 %install
-SYSTEMD_SYSTEM_LOCATION=%_unitdir %makeinstall_std
+SYSTEMD_SYSTEM_LOCATION=%_unitdir BINDIR=%_sbindir %makeinstall_std
 
 %check
 %make test
@@ -92,6 +92,9 @@ SYSTEMD_SYSTEM_LOCATION=%_unitdir %makeinstall_std
 %_datadir/%name/dbus-firewalld.conf
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 0.27-alt1
+- New version 0.27.
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 0.26-alt1
 - New version 0.26.
 
