@@ -2,7 +2,7 @@
 %define tool_chain_tag GCC5
 %def_disable skip_enroll
 
-%define DBXDATE 20230509
+%define DBXDATE 20241101
 
 %ifndef _priority_distbranch
 # We have it defined in macros but not in buildmacros.
@@ -12,8 +12,8 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20240811
-Release: alt2
+Version: 20241122
+Release: alt1
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -370,6 +370,9 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 20241122-alt1
+- edk2-stable202411
+
 * Mon Oct 28 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt2
 - Fix build on p10
 - Backports:

@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20240811
+Version: 20241122
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -206,6 +206,9 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 20241122-alt1
+- edk2-stable202411
+
 * Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 20240811-alt1
 - edk2-stable202408
 
