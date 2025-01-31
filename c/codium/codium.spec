@@ -1,5 +1,5 @@
 Name:    codium
-Version: 1.82.0.23250
+Version: 1.96.4.25026
 Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
@@ -10,16 +10,22 @@ Url:     https://github.com/VSCodium/vscodium
 
 #Source0-url: https://github.com/VSCodium/vscodium/releases/download/%{version}/VSCodium-linux-x64-%{version}.tar.gz
 Source0: %name-x64-%version.tar
-#Source1-url: https://github.com/VSCodium/vscodium/releases/download/%{version}/VSCodium-linux-armhf-%{version}.tar.gz
-Source1: %name-armhf-%version.tar
-#Source2-url: https://github.com/VSCodium/vscodium/releases/download/%{version}/VSCodium-linux-arm64-%{version}.tar.gz
-Source2: %name-arm64-%version.tar
+#Source1-url: https://github.com/VSCodium/vscodium/releases/download/%{version}/VSCodium-linux-arm64-%{version}.tar.gz
+Source1: %name-arm64-%version.tar
 
-Source3: codium.desktop
-Source4: codium.png
+Source2: codium.desktop
+Source3: codium.png
 
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
+
+%filter_from_requires /deepin-api/d
+%filter_from_requires /enlightenment/d
+%filter_from_requires /exo-utils/d
+%filter_from_requires /kde-cli-tools/d
+%filter_from_requires /gnustep-Backbone/d
+%filter_from_requires /pcmanfm/d
+%filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
 BuildRequires: electron23
 BuildRequires: libgio
@@ -51,7 +57,7 @@ BuildRequires: libxkbfile
 
 Provides: vscodium = %EVR
 
-ExclusiveArch: x86_64 armh aarch64
+ExclusiveArch: x86_64 aarch64
 
 %description
 Community-driven, freely-licensed binary distribution of Microsoft's editor VSCode
@@ -64,11 +70,8 @@ See FAQ at https://code.visualstudio.com/docs/setup/linux .
 %ifarch x86_64
     tar -xf %SOURCE0
 %endif
-%ifarch armh
-    tar -xf %SOURCE1
-%endif
 %ifarch aarch64
-    tar -xf %SOURCE2
+    tar -xf %SOURCE1
 %endif
 
 %build
@@ -84,8 +87,8 @@ chmod 4711 %buildroot%_libdir/%name/chrome-sandbox
 ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/codium
 ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/vscodium
 
-install -m644 -D %SOURCE3 %buildroot%_desktopdir/%name.desktop
-install -m644 -D %SOURCE4 %buildroot%_pixmapsdir/codium.png
+install -m644 -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
+install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/codium.png
 
 %files
 %_bindir/%name
@@ -95,6 +98,10 @@ install -m644 -D %SOURCE4 %buildroot%_pixmapsdir/codium.png
 %_pixmapsdir/codium.png 
 
 %changelog
+* Thu Jan 30 2025 Semen Fomchenkov <armatik@altlinux.org> 1.96.4.25026-alt1
+- new version (1.96.4.25026) (Closes: 50953, 52311)
+- drop arm-32bit version
+
 * Sun Sep 10 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.82.0.23250-alt1
 - new version (1.82.0.23250) (Closes: 46710)
 
