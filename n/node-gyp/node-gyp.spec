@@ -1,6 +1,6 @@
 Name: node-gyp
 Version: 10.1.0
-Release: alt1
+Release: alt2
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -37,6 +37,8 @@ Patch2: node-gyp-system-gyp.patch
 # use system node dir (/usr)
 Patch3: node-gyp-system-nodedir.patch
 
+Patch4: node-gyp-install-stop.patch
+
 BuildRequires(pre): rpm-macros-nodejs
 
 #gyp is the actual build framework node-gyp uses
@@ -60,13 +62,14 @@ node-gyp is a cross-platform command-line tool written in Node.js for compiling
 native addon modules for Node.js, which takes away the pain of dealing with the
 various differences in build platforms.
 
-Install gcc-c++ package for compiling native addon modules for Node.js.
+You need also Install gcc-c++ package for compiling native addon modules for Node.js.
 
 %prep
 %setup -a 2
 #patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 # use system gyp
 %__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
@@ -110,6 +113,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 10.1.0-alt2
+- node-gyp install: interrrupt for the current version
+
 * Thu Apr 04 2024 Vitaly Lipatov <lav@altlinux.ru> 10.1.0-alt1
 - new version 10.1.0 (with rpmrb script)
 - set gyp to v0.16.1
