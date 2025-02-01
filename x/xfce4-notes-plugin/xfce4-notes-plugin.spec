@@ -1,5 +1,5 @@
 Name: xfce4-notes-plugin
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1
 
 Summary: Sticky notes plugin for the Xfce panel
@@ -56,6 +56,9 @@ BuildRequires: vala
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Sun Feb 02 2025 Mikhail Efremov <sem@altlinux.org> 1.11.2-alt1
+- Updated to 1.11.2.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 1.11.1-alt1
 - Updated to 1.11.1.
 
