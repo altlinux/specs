@@ -37,7 +37,7 @@
 
 Name: LibreOffice-still
 %define hversion 24.8
-%define urelease 3.2
+%define urelease 4.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -847,6 +847,12 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Jan 31 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.4.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-12425 Path traversal leading to arbitrary .ttf file write
+  + CVE-2024-12426 URL fetching can be used to exfiltrate arbitrary INI file values and environment variables
+
 * Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 24.8.3.2-alt1
 - New version.
 
