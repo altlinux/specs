@@ -13,7 +13,7 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          30
-%define cri_o_patch          6
+%define cri_o_patch          9
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -42,7 +42,7 @@ Requires: socat
 Requires: conmon
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires(pre): golang >= 1.21
+BuildRequires(pre): golang >= 1.22
 BuildRequires: glib2-devel
 BuildRequires: glibc-devel-static
 BuildRequires: libbtrfs-devel
@@ -136,6 +136,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sun Jan 26 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.9-alt1
+- 1.30.6 -> 1.30.9
+
 * Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.6-alt1
 - 1.30.5 -> 1.30.6
 

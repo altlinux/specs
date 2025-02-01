@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     29
-%define kubernetes_patch     10
+%define kubernetes_patch     13
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -52,7 +52,7 @@ Conflicts: %prog_name > %EVR
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires(pre): golang >= 1.21
+BuildRequires(pre): golang >= 1.22
 BuildRequires: /proc
 BuildRequires: rpm-build-golang
 BuildRequires: rsync
@@ -394,6 +394,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Sun Jan 26 2025 Alexander Stepchenko <geochip@altlinux.org> 1.29.13-alt1
+- 1.29.10 -> 1.29.13 (Fixes: CVE-2024-9042)
+
 * Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 1.29.10-alt1
 - 1.29.9 -> 1.29.10
 
