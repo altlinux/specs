@@ -1,6 +1,10 @@
+%ifarch %ix86
+%set_verify_elf_method textrel=relaxed
+%endif
+
 Name: ppsspp
 Version: 1.18.1
-Release: alt2
+Release: alt3
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -33,13 +37,8 @@ BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: libGLEW-devel
 BuildRequires: libSDL2_ttf-devel
-BuildRequires: libavdevice-devel
-BuildRequires: libavfilter-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libpostproc-devel
 BuildRequires: libsnappy-devel
-BuildRequires: libswresample-devel
-BuildRequires: libswscale-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
@@ -105,7 +104,6 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
-	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
 	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
 	-DHEADLESS:BOOL=TRUE \
@@ -127,7 +125,6 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
-	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
 	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
 	-DLIBRETRO:BOOL=TRUE \
@@ -149,7 +146,6 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 	-DCMAKE_BUILD_TYPE:STRING=Release \
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
-	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_ZSTD:BOOL=TRUE \
 	-DUSE_SYSTEM_MINIUPNPC:BOOL=TRUE \
 	-DUSING_QT_UI:BOOL=TRUE \
@@ -195,6 +191,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Sat Feb 01 2025 Nazarov Denis <nenderus@altlinux.org> 1.18.1-alt3
+- build with bundled ffmpeg (ALT #51464)
+
 * Mon Nov 18 2024 Ilya Sorochan <k0tran@altlinux.org> 1.18.1-alt2
 - add patch that fixes FTBFS on loongarch64
 
