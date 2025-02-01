@@ -1,5 +1,5 @@
 %define  oname llvmlite
-%define  llvm_version 14.0
+%define  llvm_version 15.0
 %define  optflags_lto -flto=thin
 
 #[armh] LLVM ERROR: Symbol not found: __aeabi_unwind_cpp_pr0
@@ -10,7 +10,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.43.0
+Version: 0.44.0
 Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
@@ -26,6 +26,8 @@ BuildRequires(pre): rpm-build-python3 python3-module-setuptools python3-module-w
 BuildRequires: clang%{llvm_version} llvm%{llvm_version}-devel libstdc++-devel lld%{llvm_version}
 
 Source:  %name-%version.tar
+
+Patch: llvmlite-alt-normalize-i586-name.patch
 
 %description
 A lightweight LLVM python binding for writing JIT compilers
@@ -46,6 +48,8 @@ following approach:
 
 %prep
 %setup
+%patch -p1
+
 sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %build
@@ -68,6 +72,9 @@ export LDFLAGS='-fuse-ld=lld'
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 0.44.0-alt1
+- Automatically updated to 0.44.0.
+
 * Sun Jun 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.43.0-alt1
 - Automatically updated to 0.43.0.
 
