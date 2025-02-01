@@ -1,8 +1,8 @@
 %define freetype_commit 12c5e620858bd503731091e9371d06c0a3e7c967
-%define harfbuzz_commit 516b7ed0b022ab0ffeb0cee87d31d9c40d3a54df
+%define harfbuzz_commit e18e66409d0136cc8f8b05aac791f84314520676
 
 Name: SDL2_ttf
-Version: 2.22.0
+Version: 2.24.0
 Release: alt2
 Epoch: 1
 
@@ -95,6 +95,9 @@ EOF
 %_libdir/cmake/%name
 
 %changelog
+* Sat Feb 01 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.24.0-alt2
+- Update to version 2.24.0
+
 * Sat Feb 01 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.22.0-alt2
 - Rollback to version 2.22.0
 
