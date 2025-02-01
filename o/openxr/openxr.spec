@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: openxr
-Version: 1.1.42
+Version: 1.1.43
 Release: alt1
 
 Summary: An API for writing VR and AR software
@@ -94,6 +94,9 @@ rm -v %buildroot%_docdir/openxr/LICENSE
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Feb 01 2025 Mikhail Tergoev <fidel@altlinux.org> 1.1.43-alt1
+- 1.1.43
+
 * Thu Nov 07 2024 Mikhail Tergoev <fidel@altlinux.org> 1.1.42-alt1
 - 1.1.42
 
