@@ -1,16 +1,17 @@
 %define pypi_name cotyledon
 
 Name: python3-module-%pypi_name
-Version: 1.7.3
+Version: 2.0.0
 Release: alt1
 
 Summary: Cotyledon provides a framework for defining long-running services
 
 Group: Development/Python3
-License: ASL 2.0
-Url: https://github.com/sileht/cotyledon
+License: Apache-2.0
+URL: https://pypi.org/project/cotyledon
+VCS: https://github.com/sileht/cotyledon
 
-Source: %pypi_name-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -38,10 +39,11 @@ Group: Development/Documentation
 Documentation for %pypi_name library.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 pushd doc
@@ -51,18 +53,21 @@ popd
 rm -fr doc/build/html/.buildinfo
 
 %install
-%python3_install
-
-rm -fr %buildroot%python3_sitelibdir/*/tests
+%pyproject_install
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%version.dist-info
+%exclude %python3_sitelibdir/%pypi_name/tests
 
 %files doc
 %doc doc/build/html
 
 %changelog
+* Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1
 - Automatically updated to 1.7.3.
 
