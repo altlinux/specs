@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.9.2
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -141,6 +141,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_datadir/%name
 
 %changelog
+* Sat Feb 01 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.2-alt2
+- Fix the Russian translation of the character '&&' (logical AND).
+
 * Thu Jan 30 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.2-alt1
 - New version.
 
