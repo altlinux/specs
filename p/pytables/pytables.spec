@@ -14,8 +14,8 @@ relational or object oriented databases.
 
 %define oname tables
 
-# Tests fail on armh, on aarch64 - segfault
-%ifarch armh aarch64
+# Tests fail on armh
+%ifarch armh
 %def_disable check
 %endif
 
@@ -23,8 +23,8 @@ relational or object oriented databases.
 %def_without docs
 
 Name: py%oname
-Version: 3.10.1
-Release: alt2
+Version: 3.10.2
+Release: alt1
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -35,9 +35,10 @@ Url: http://www.pytables.org/
 
 VCS: https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar
+Source1: hdf5-blosc-%version.tar
 
 Patch1: 0004-remove-gtags.patch
-Patch5: pytables-3.9.2-test-package-fix.patch
+Patch2: pytables-3.10.2-fix-test-package-fix.patch
 
 Requires: python3-module-%oname = %EVR
 Requires: libblosc2
@@ -110,7 +111,7 @@ BuildArch: noarch
 This package contains documentation for PyTables.
 
 %prep
-%setup
+%setup -a1
 %autopatch -p1
 
 %build
@@ -156,6 +157,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/nodes/tests/
 
 %changelog
+* Sat Feb 01 2025 Anton Vyatkin <toni@altlinux.org> 1:3.10.2-alt1
+- New version 3.10.2.
+
 * Mon Dec 02 2024 Anton Vyatkin <toni@altlinux.org> 1:3.10.1-alt2
 - Disable tests on aarch64.
 
