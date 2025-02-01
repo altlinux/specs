@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.8.0
+Version: 6.10.0
 Release: alt1
 
 Summary: OpenStack Cinder brick library for managing local volume attaches
@@ -35,7 +35,7 @@ BuildRequires: python3-module-requests >= 2.25.1
 BuildRequires: python3-module-tenacity >= 6.3.1
 
 %if_with check
-BuildRequires: python3-module-hacking >= 6.0.0
+BuildRequires: python3-module-hacking >= 7.0.0
 BuildRequires: python3-module-coverage >= 5.5
 BuildRequires: python3-module-ddt >= 1.4.1
 BuildRequires: python3-module-testtools >= 2.4.0
@@ -47,9 +47,11 @@ BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-mypy >= 1.2.0
 BuildRequires: python3-module-castellan-tests
+BuildRequires: python3-module-psutil >= 5.7.2
 BuildRequires: python3-module-oslotest >= 4.5.0
 BuildRequires: python3-module-testscenarios >= 0.5.0
 BuildRequires: python3-module-eventlet >= 0.30.1
+BuildRequires: /proc
 %endif
 
 %if_with docs
@@ -134,6 +136,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %endif
 
 %changelog
+* Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 6.10.0-alt1
+- Automatically updated to 6.10.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 6.8.0-alt1
 - Automatically updated to 6.8.0.
 

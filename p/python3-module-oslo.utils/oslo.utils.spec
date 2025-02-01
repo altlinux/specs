@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.2.0
+Version: 8.0.0
 Release: alt1
 
 Summary: OpenStack Oslo Utility library
@@ -26,8 +26,6 @@ BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-netaddr >= 0.10.0
-BuildRequires: python3-module-netifaces >= 0.10.4
-BuildRequires: python3-module-pytz >= 2013.6
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-pyparsing >= 2.1.0
 BuildRequires: python3-module-packaging >= 20.4
@@ -43,6 +41,8 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-tzdata >= 2022.4
+BuildRequires: python3-module-psutil >= 3.2.2
+BuildRequires: qemu-img
 %endif
 
 %if_with docs
@@ -119,6 +119,9 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 %endif
 
 %changelog
+* Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 8.0.0-alt1
+- Automatically updated to 8.0.0.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 7.2.0-alt1
 - Automatically updated to 7.2.0.
 

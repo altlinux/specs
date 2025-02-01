@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.8.0
+Version: 5.9.1
 Release: alt1
 
 Summary: Authentication Library for OpenStack Identity
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-iso8601 >= 2.0.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-os-service-types >= 1.2.0
@@ -122,6 +122,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 5.9.1-alt1
+- Automatically updated to 5.9.1.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 5.8.0-alt1
 - Automatically updated to 5.8.0.
 
