@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.422.b05
+%define version 1.8.0.442.b06
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -294,8 +294,8 @@ BuildRequires: /proc rpm-build-java
 
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
-%global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u422-b05
+%global shenandoah_repo jdk8u
+%global shenandoah_revision jdk8u442-b06
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -380,7 +380,7 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.b05
+Version: %{javaver}.%{updatever}.b06
 Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
@@ -417,12 +417,13 @@ URL:      http://openjdk.java.net/
 # FILE_NAME_ROOT=%%{shenandoah_project}-%%{shenandoah_repo}-${VERSION}
 # REPO_ROOT=<path to checked-out repository> generate_source_tarball.sh
 # where the source is obtained from http://hg.openjdk.java.net/%%{project}/%%{repo}
-Source0: gnu-andrew-%{shenandoah_revision}.tar.xz
+Source0: open%{shenandoah_revision}.tar.xz
 
 # Custom README for -src subpackage
 Source2: README.md
 
 # Release notes
+# https://mail.openjdk.org/pipermail/jdk8u-dev/
 Source7: NEWS
 
 # Use 'icedtea_sync.sh' to update the following
@@ -451,6 +452,8 @@ Source20: repackReproduciblePolycies.sh
 # New versions of config files with aarch64 support. This is not upstream yet.
 Source100: config.guess
 Source101: config.sub
+
+Source110: openjdk8.watch
 
 
 ############################################
@@ -510,11 +513,11 @@ Patch112: %name-gcc11.patch
 # OpenJDK 8u.
 #############################################
 # s390: PR3593: Use "%z" for size_t on s390 as size_t != intptr_t
-Patch103: pr3593-s390_use_z_format_specifier_for_size_t_arguments_as_size_t_not_equals_to_int.patch
+#Patch103: pr3593-s390_use_z_format_specifier_for_size_t_arguments_as_size_t_not_equals_to_int.patch
 # x86: S8199936, PR3533: HotSpot generates code with unaligned stack, crashes on SSE operations (-mstackrealign workaround)
 Patch105: jdk8199936-pr3533-enable_mstackrealign_on_x86_linux_as_well_as_x86_mac_os_x.patch
 # S390 ambiguous log2_intptr calls
-Patch107: s390-8214206_fix.patch
+#Patch107: s390-8214206_fix.patch
 
 #############################################
 #
@@ -543,6 +546,7 @@ Patch205: jdk8281098-pr3836-pass_compiler_flags_to_adlc.patch
 Patch206: jdk8282231-x86_32-missing_call_effects.patch
 Patch207: rh1582504-rsa_default_for_keytool.patch
 Patch208: rh1648249-add_commented_out_nss_cfg_provider_to_java_security.patch
+Patch209: 0001-8162545-Mac-build-failure.patch
 
 #############################################
 #
@@ -1048,6 +1052,7 @@ sh %{SOURCE12}
 %patch206
 %patch207
 %patch208
+%patch209 -d openjdk
 
 # System security policy fixes
 %patch400
@@ -1057,8 +1062,8 @@ sh %{SOURCE12}
 
 # s390 build fixes
 %patch102
-%patch103
-%patch107
+#patch103
+#patch107
 
 # x86 fixes
 %patch105
@@ -1164,7 +1169,7 @@ export CFLAGS="$CFLAGS -mieee"
 # We use ourcppflags because the OpenJDK build seems to
 # pass EXTRA_CFLAGS to the HotSpot C++ compiler...
 # Explicitly set the C++ standard as the default has changed on GCC >= 6
-EXTRA_CFLAGS="%ourcppflags -Wno-error"
+EXTRA_CFLAGS="%ourcppflags -Wno-error -Wno-int-conversion"
 EXTRA_CPP_FLAGS="%ourcppflags"
 
 %ifarch %{power64} ppc
@@ -2133,6 +2138,17 @@ fi
 %endif
 
 %changelog
+* Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.442.b06-alt1_1jpp8
+- New version.
+
+* Mon Dec 02 2024 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.432.b06-alt1_1jpp8
+- New version.
+- Security fixes:
+  - CVE-2024-21208
+  - CVE-2024-21210
+  - CVE-2024-21217
+  - CVE-2024-21235
+
 * Sun Aug 25 2024 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.422.b05-alt1_1jpp8
 - New version.
 - Security fixes:
