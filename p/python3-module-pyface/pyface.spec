@@ -1,7 +1,7 @@
 %define oname pyface
 
 Name: python3-module-%oname
-Version: 7.4.4
+Version: 8.0.0
 Release: alt1
 
 Summary: Traits-capable windowing framework
@@ -16,15 +16,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.4
-
-BuildRequires: python3 >= 3.8
-# As of Python 3.8, this functionality has been added to the Python standard library.
-#py3_use importlib-metadata
-#py3_use importlib-resources >= 1.1.0
-%py3_use traits >= 6
-
-# TODO: extra requires
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 # skip wx requirements
 %add_python3_req_skip pyface.ui.wx.split_dialog pyface.ui.wx.grid.combobox_focus_handler IPython.frontend.wx.wx_frontend IPython.kernel.core.interpreter
@@ -40,15 +33,12 @@ back-end take care of the details of displaying them.
 
 %prep
 %setup
-# Users of Python 3.9 and beyond should use the standard library module
-subst 's|importlib_resources|importlib.resources|' pyface/resource/resource_manager.py pyface/tests/test_image_resource.py
-sed -i -e 's|"importlib-resources>=1.1.0",||' -e 's|"importlib-metadata",||' pyface/__init__.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 # not all tests are removed. remove remaining ones
@@ -63,9 +53,12 @@ rm -f \
 %doc image_LICENSE*.txt LICENSE.txt
 %doc README.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Jan 27 2025 Anton Vyatkin <toni@altlinux.org> 8.0.0-alt1
+- New version 8.0.0.
+
 * Thu Dec 22 2022 Grigory Ustinov <grenka@altlinux.org> 7.4.4-alt1
 - Automatically updated to 7.4.4.
 

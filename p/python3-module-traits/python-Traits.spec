@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 6.4.3
+Version: 7.0.2
 Release: alt1
 
 Summary: Observable typed attributes for Python classes
@@ -103,16 +103,12 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 %doc README.rst LICENSE.txt LICENSE-CC-BY-3.0.txt
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
-%exclude %python3_sitelibdir/%oname/testing
 %if_with doc
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
 
 %files tests
 %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/tests
-%python3_sitelibdir/%oname/testing
 
 %if_with doc
 %files doc
@@ -125,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Mon Jan 27 2025 Anton Vyatkin <toni@altlinux.org> 7.0.2-alt1
+- New version 7.0.2.
+
 * Wed Oct 11 2023 Anton Vyatkin <toni@altlinux.org> 6.4.3-alt1
 - New version 6.4.3.
 
