@@ -2,7 +2,7 @@
 %define pg_ver 15
 
 Name: postgresql%pg_ver-postgis
-Version: 3.5.0
+Version: 3.5.2
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
@@ -89,6 +89,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/pgsql/extension
 
 %changelog
+* Sun Feb 02 2025 Andrey Cherepanov <cas@altlinux.org> 3.5.2-alt1
+- New version.
+
 * Fri Oct 04 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version.
 
