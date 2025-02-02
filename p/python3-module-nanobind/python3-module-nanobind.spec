@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: A small binding library that exposes C++ types in Python and vice versa
@@ -45,11 +45,6 @@ BuildRequires: cmake gcc-c++
 %install
 %pyproject_install
 
-#mkdir -p %buildroot/%_datadir/cmake/%pypi_name
-#for f in %python3_sitelibdir_noarch/%pypi_name/cmake/*.cmake; do
-#    ln -s $f %buildroot/%_datadir/cmake/%pypi_name/$(basename $f)
-#done
-
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 py.test-3
@@ -57,10 +52,12 @@ py.test-3
 %files
 %python3_sitelibdir_noarch/%pypi_name/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
-#%_datadir/cmake/%pypi_name/
 %doc README*
 
 %changelog
+* Sun Feb 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0
+
 * Fri Dec 06 2024 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 

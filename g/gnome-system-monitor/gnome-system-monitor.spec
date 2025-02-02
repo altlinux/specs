@@ -10,13 +10,15 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Simple process monitor
-License: GPL-2.0
+License: LGPL-2.0-or-later
 Group: Monitoring
 Url: https://apps.gnome.org/SystemMonitor
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-system-monitor.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
@@ -58,8 +60,8 @@ Gnome-system-monitor is a simple process and system monitor.
 
 %build
 %meson \
-    %{?_enable_systemd:-Dsystemd=true} \
-    %{?_enable_wnck:-Dwnck=true}
+    %{subst_enable_meson_bool systemd systemd} \
+    %{subst_enable_meson_bool wnck wnck}
 %nil
 %meson_build
 
@@ -86,6 +88,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sun Feb 02 2025 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
+- 47.1
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
