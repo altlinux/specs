@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-tqdm
-Version: 4.66.5
-Release: alt2
+Version: 4.67.1
+Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
 
@@ -60,6 +60,9 @@ sed -ie 's/timeout = 30/timeout = 60/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Feb 02 2025 Anton Vyatkin <toni@altlinux.org> 4.67.1-alt1
+- new version 4.67.1
+
 * Fri Oct 25 2024 Ilya Sorochan <k0tran@altlinux.org> 4.66.5-alt2
 - fix tests on risc-v (increase pytest timeout)
 
