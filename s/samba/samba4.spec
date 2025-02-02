@@ -121,8 +121,8 @@
 %endif
 
 Name:    samba
-Version: 4.20.6
-Release: alt3
+Version: 4.20.7
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2232,6 +2232,16 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Jan 27 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.7-alt1
+- Update to maintenance release of Samba 4.20
+- Major fixes from upstream (Samba#15780, Samba#15771, Samba#15765, Samba#15778):
+  + Increasing slowness of sharesec performance with high number of
+    registry shares.
+  + Memory leak wbcCtxLookupSid (in samba-4.21.2).
+  + Fix heap-user-after-free with association groups.
+  + Kerberos referral tickets are generated for principals in our domain if we
+    have a trust to a top level domain.
+
 * Fri Dec 27 2024 Evgeny Sinelnikov <sin@altlinux.org> 4.20.6-alt3
 - gse_krb5: gain root privilege during get server keytab (thx Ivan Volchenko).
   Fix PAM Winbind kerberos auth requires user access to keytab (Samba#12491).
