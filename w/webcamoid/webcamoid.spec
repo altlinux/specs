@@ -1,9 +1,9 @@
 %define subname		avkys
-%define major		9.1
+%define major	9.2
 %define libname lib%name
 
 Name: webcamoid
-Version: %major.1
+Version: %major.3
 Release: alt1
 
 Summary: A webcam funny video tool
@@ -18,14 +18,15 @@ Packager: Alexei Mezin <alexvm@altlinux.ru>
 Source: %name-%version.tar
 Patch0: %{name}_manpath.patch
 
-BuildPreReq: rpm-macros-cmake cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires: cmake
 
-BuildRequires: pkgconfig(Qt5Concurrent)
-BuildRequires: pkgconfig(Qt5Multimedia)
-BuildRequires: pkgconfig(Qt5OpenGL)
-BuildRequires: pkgconfig(Qt5QuickControls2)
-BuildRequires: pkgconfig(Qt5Svg)
-BuildRequires: pkgconfig(Qt5Xml)
+
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-charts-devel
+
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires: pkgconfig(gstreamer-app-1.0)
 BuildRequires: pkgconfig(gstreamer-1.0)
@@ -81,6 +82,7 @@ applications which will use avkys library as webcamoid.
 %prep
 %setup
 #patch0 -p1
+sed -i -e 's|/qt/qml|/qt6/qml|' -e 's|/qt/plugins|/qt6/plugins|' CMakeLists.txt libAvKys/cmake/ProjectCommons.cmake
 
 %build
 %cmake
@@ -95,8 +97,7 @@ applications which will use avkys library as webcamoid.
 %_desktopdir/webcamoid.desktop
 %_iconsdir/hicolor/*/apps/webcamoid.*
 %_man1dir/webcamoid.1*
-%_libdir/avkys
-# libdir/qt5/qml/AkQml
+%_qt6_plugindir/avkys/
 %_datadir/licenses/webcamoid/COPYING
 %_datadir/metainfo/io.github.webcamoid.Webcamoid.metainfo.xml
 
@@ -108,6 +109,10 @@ applications which will use avkys library as webcamoid.
 %_libdir/*.so
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 9.2.3-alt1
+- new version 9.2.3
+- the project switched to Qt6 since 9.2.0
+
 * Tue Sep 19 2023 Artyom Bystrov <arbars@altlinux.org> 9.1.1-alt1
 - New version
 
