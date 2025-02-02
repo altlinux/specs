@@ -1,6 +1,6 @@
 Name: sylpheed
 Version: 3.7.0
-Release: alt0.6
+Release: alt0.7
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 License: GPLv2+
@@ -41,6 +41,9 @@ Patch25: %name-3.7.0-tofu.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1988552
 Patch26:         sylpheed-3.7.0-uri-check.patch
 
+# various type and format related fixes
+Patch27:         sylpheed-3.7.0-types.patch
+
 
 # old patches - not applied, should be obsolete now
 Patch1000: %name-0.9.3cvs9-alt-wm_race.patch
@@ -56,7 +59,8 @@ Requires: libgpgme >= 1.7.0
 # then manually edited to remove libldap-devel and libpilot-link-devel
 # (conditional dependencies) and other crap
 BuildRequires: flex fontconfig glib2-devel libatk-devel libcompface-devel libgpg-error-devel libgpgme-devel libgtk+2-devel libpango-devel libssl-devel pkg-config
-
+BuildRequires: gcc13
+BuildRequires:  xdg-utils
 #BuildRequires: libdbus-glib-devel
 
 %description
@@ -116,12 +120,13 @@ This package contains development files.
 %patch24 -p2
 %patch25 -p1
 %patch26 -p1 -b .uri-check
-
+%patch27 -p1
 
 cp -a %SOURCE5 README.actions
 bzip2 -9fk ChangeLog
 
 %build
+%set_gcc_version 13
 %ifarch %e2k
 %add_optflags -lm
 %endif
@@ -169,6 +174,9 @@ autoconf
 %_includedir/sylpheed/
 
 %changelog
+* Sun Feb 02 2025 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.7
+- Fix FTBFS
+
 * Sun Sep 05 2021 Ilya Mashkin <oddity@altlinux.ru> 3.7.0-alt0.6
 - Disabled LTO
 
