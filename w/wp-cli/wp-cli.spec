@@ -1,21 +1,8 @@
-%if_feature php80 8.0.0
-%def_with php80
-%define defphp php8.0
-%endif
-
-%if_feature php81 8.1.0
-%def_with php81
-%define defphp php8.1
-%endif
-
-%if_feature php7 7.4.3
-%def_with php7
-%define defphp php7
-%endif
+%define defphp php%php_defver
 
 Name: wp-cli
-Version: 2.8.1
-Release: alt2
+Version: 2.11.0
+Release: alt1
 
 Summary: WP-CLI is a set of command-line tools for managing WordPress installations.
 
@@ -23,8 +10,8 @@ License: MIT
 Group: System/Configuration/Packaging
 Url: https://github.com/wp-cli/wp-cli
 
-# Source-url: https://github.com/wp-cli/wp-cli-bundle/archive/v%version.tar.gz
-Source: %name-%version.tar
+# Source0-url: https://github.com/wp-cli/wp-cli-bundle/archive/v%version.tar.gz
+Source0: %name-%version.tar
 
 Source1: %name-vendor-%version.tar
 
@@ -33,6 +20,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-features
+BuildRequires(pre): rpm-build-php >= 8.4
 BuildRequires: %defphp %defphp-openssl %defphp-readline
 
 %define wpcli %_datadir/wp-cli
@@ -61,6 +49,9 @@ test "$(%buildroot%_bindir/wp cli version)" = "WP-CLI %version"
 %_bindir/wp
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version, use php_defver from rpm-macros-php
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt2
 - use php8.1 if php7.4 is missed
 
