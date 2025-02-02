@@ -1,6 +1,6 @@
 Name: ncftp
 Version: 3.2.7
-Release: alt1
+Release: alt2
 Serial: 1
 
 Packager: Ilya Mashkin <oddity at altlinux dot ru>
@@ -34,7 +34,7 @@ Patch8:		ncftp-3.2.3-fix-help-cmd.patch
 Patch9:         ncftp-3.2.6-gcc10.patch
 
 # Automatically added by buildreq on Sun Feb 06 2005
-BuildRequires: libncurses-devel libtinfo-devel gcc
+BuildRequires: libncurses-devel libtinfo-devel gcc13
 
 %description
 Ncftp is an improved FTP client.  Ncftp's improvements include support
@@ -65,7 +65,7 @@ NcFTP - это улучшенный консольный FTP клиент. Улучшения включают в себя
 
 
 %build
-#set_gcc_version 8
+%set_gcc_version 13
 %configure --enable-signals --enable-ipv6
 %make_build
 
@@ -108,6 +108,9 @@ find doc -type f -exec chmod 0644 {} \;
 %_liconsdir/%name.png
 
 %changelog
+* Sun Feb 02 2025 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.7-alt2
+- Fix FTBFS
+
 * Thu Mar 21 2024 Ilya Mashkin <oddity@altlinux.ru> 1:3.2.7-alt1
 - 3.2.7
 
