@@ -1,5 +1,4 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %ifarch %ix86
 %set_verify_elf_method relaxed
@@ -11,11 +10,11 @@
 
 # TODO: build docs
 
-%define soname 2.3
+%define soname 2.4
 
 Name: opencolorio
-Version: 2.3.0
-Release: alt2.2
+Version: 2.4.1
+Release: alt1
 
 Summary: Enables color transforms and image display across graphics apps
 License: BSD-3-Clause
@@ -24,12 +23,10 @@ Group: System/Libraries
 URL: https://%name.org/
 
 # https://github.com/imageworks/OpenColorIO.git
-Source: OpenColorIO-%version.tar
+Source: %name-%version.tar
 
 Patch1: %name-alt-install.patch
 Patch2: %name-alt-armh-multiple-definition.patch
-Patch3: %name-yaml-cpp-0.8.patch
-Patch4: %name-i586.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -107,13 +104,9 @@ Group: Development/Python3
 %name python3 module.
 
 %prep
-%setup -n OpenColorIO-%version
+%setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%ifarch %ix86
-%patch4 -p1
-%endif
 %ifarch %e2k
 # ld: multiple definition of LoadLutFile
 sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
@@ -137,6 +130,7 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 	-DOCIO_WARNING_AS_ERROR:BOOL=OFF \
 %ifnarch x86_64 %e2k
 	-DOCIO_USE_SSE=OFF \
+	-DOCIO_USE_SSE2=OFF \
 %endif
 %ifnarch %e2k
 	-DOCIO_USE_GLVND:BOOL=ON \
@@ -206,6 +200,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Sun Feb 02 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
+- Automatically updated to 2.4.1.
+
 * Sun Dec 31 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2.2
 - Build without check for python3.12.
 
