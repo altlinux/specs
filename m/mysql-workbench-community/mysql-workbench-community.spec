@@ -1,7 +1,7 @@
 %define gdal_version 36
 
 Name: mysql-workbench-community
-Version: 8.0.40
+Version: 8.0.41
 Release: alt1
 
 Summary: A MySQL visual database modeling tool
@@ -16,7 +16,7 @@ Source0: %name-%version.tar
 Source1: antlr-4.13.2-complete.jar
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
-# ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64 aarch64
 
 Patch0: mysql-workbench-community-8.0.32-alt-suppress-unsupported.patch
 Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
@@ -135,7 +135,7 @@ BuildRequires: python3-dev
 BuildRequires: libantlr4-devel
 
 # 8.0.33 antlr-4.11.1-complete.jar
-BuildRequires: java-11-openjdk
+BuildRequires: java-21-openjdk
 
 # Runtime dependencies
 Requires: libpcrecpp3 libmysqlcppconn7 libantlr4 libvsqlite++ libgdal%gdal_version
@@ -202,6 +202,9 @@ sed -i "/token.h/d" library/grt/src/python_context.cpp
 %add_optflags -I/usr/include/pcre
 
 %cmake -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_RPATH=%_libdir/mysql-workbench \
+    -DCMAKE_SKIP_INSTALL_RPATH=FALSE \
     -DWITH_ANTLR_JAR=%SOURCE1 \
 #
 
@@ -218,6 +221,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbench-32.png %buildroot%_nico
 mkdir -p %buildroot%_iconsdir/hicolor/32x32/mimetypes
 cp %_builddir/%name-%version/images/icons/MySQLPlugin-32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-plugin.png
 cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-model.png
+
+# Remove unused stuff
+rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 
 %files
 #exclude %_libdir/mysql-workbench/modules/*.py?
@@ -252,6 +258,10 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Sun Feb 02 2025 Andrey Cherepanov <cas@altlinux.org> 8.0.41-alt1
+- New version.
+- Build only for x86_64 and aarch64.
+
 * Tue Nov 12 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.40-alt1
 - New version.
 
