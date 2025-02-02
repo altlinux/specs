@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veracrypt
-Version: 1.26.15
+Version: 1.26.18
 Release: alt1
 
 Summary: Disk encryption software
@@ -13,7 +13,7 @@ Url: https://www.veracrypt.fr
 # Source-url: https://github.com/veracrypt/VeraCrypt/archive/VeraCrypt_%version.tar.gz?/VeraCrypt_%version.tar.gz
 Source: %name-%version.tar
 
-ExcludeArch: %ix86
+ExcludeArch: %ix86 ppc64le
 
 BuildRequires: pkgconfig(fuse)
 BuildRequires: /usr/bin/convert
@@ -62,6 +62,9 @@ rm -rv %buildroot%_bindir/%name-uninstall.sh
 
 
 %changelog
+* Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 1.26.18-alt1
+- new version 1.26.18 (with rpmrb script)
+
 * Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 1.26.15-alt1
 - new version 1.26.15 (with rpmrb script)
 
