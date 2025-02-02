@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2024.12.1
+Version: 2025.2.1
 Release: alt1
 
 Summary: Serve self-contained distribution builds of Swagger UI and Redoc with Django
@@ -39,6 +39,9 @@ BuildRequires: python3-module-wheel
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Sun Feb 02 2025 Anton Vyatkin <toni@altlinux.org> 2025.2.1-alt1
+- New version 2025.2.1.
+
 * Thu Dec 05 2024 Anton Vyatkin <toni@altlinux.org> 2024.12.1-alt1
 - New version 2024.12.1.
 
