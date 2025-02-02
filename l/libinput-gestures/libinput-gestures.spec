@@ -1,5 +1,5 @@
 Name: libinput-gestures
-Version: 2.78
+Version: 2.79
 Release: alt1
 
 Summary: Actions gestures on your touchpad using libinput
@@ -55,6 +55,9 @@ cp -v ./%name ./%name-%version
 %_systemd_dir/user/%name.service
 
 %changelog
+* Sun Feb 02 2025 Anton Kurachenko <srebrov@altlinux.org> 2.79-alt1
+- New version 2.79.
+
 * Sun Nov 24 2024 Anton Kurachenko <srebrov@altlinux.org> 2.78-alt1
 - New version 2.78.
 
