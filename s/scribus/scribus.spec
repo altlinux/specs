@@ -1,5 +1,5 @@
 Name: scribus
-Version: 1.6.3
+Version: 1.7.0
 Release: alt1
 Epoch: 1
 
@@ -16,47 +16,70 @@ Source: %name-%version.tar
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake zlib-devel libssl-devel
-BuildRequires: libpoppler-devel libpoppler-cpp-devel
-BuildRequires: qt5-imageformats qt5-declarative-devel qt5-tools-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: cmake >= 3.16
+
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-imageformats
+BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-declarative-devel
+# needs for smiles and emojicons
+Requires: qt6-imageformats
 
 # Required from BUILDING file
-BuildRequires: qt5-base-devel >= 5.5.0
-BuildRequires: libfreetype-devel >= 2.1.7
+BuildRequires: libfreetype-devel >= 2.3.0
 BuildRequires: libcairo-devel >= 1.14.0
-BuildRequires: libtiff-devel >= 3.6.0
-BuildRequires: liblcms2-devel >= 2.1
-BuildRequires: libjpeg-devel
-BuildRequires: libharfbuzz-devel >= 0.9.42
+BuildRequires: libharfbuzz-devel >= 1.05
 BuildRequires: libicu-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel >= 1.6.0
+BuildRequires: libtiff-devel >= 3.6.0
+BuildRequires: libxml2-devel >= 2.6.0
+BuildRequires: liblcms2-devel >= 2.1
+BuildRequires: libpoppler-devel >= 0.62.0
+BuildRequires: libpoppler-cpp-devel >= 0.62.0
 
 # Recommended from BUILDING file
 BuildRequires: libcups-devel
 BuildRequires: fontconfig-devel >= 2.0
-BuildRequires: libxml2-devel >= 2.6.0
-BuildRequires: ghostscript > 9.0
-BuildRequires: libhunspell-devel
+BuildRequires: ghostscript >= 9.0
+BuildRequires: python3-dev
+# tkinter for the font sampler script
+BuildRequires: python3-modules-tkinter
+# python-imaging for the font sampler preview
+BuildRequires: python3-module-Pillow
+BuildRequires: libhunspell-devel >= 1.6
+# podofo - 0.7.0+ for enhanced Illustrator AI/EPS import, svn versions
 BuildRequires: libpodofo-devel >= 0.9.7
 # boost used only for 2geom
 BuildRequires: boost-devel-headers
 BuildRequires: GraphicsMagick
 BuildRequires: libGraphicsMagick-c++-devel
 
-BuildRequires: rpm-build-python3 python3-dev
-BuildRequires: python3-module-Pillow
+# for import filters
+BuildRequires: librevenge-devel
+BuildRequires: libfreehand-devel
+BuildRequires: libcdr-devel
+BuildRequires: libmspub-devel >= 0.1
+BuildRequires: libpagemaker-devel
+BuildRequires: libqxp-devel
+BuildRequires: libvisio-devel
+BuildRequires: libzmf-devel
 
-# TODO: build with OSG
+# Manually
+# (commented out in CMakeFiles.txt)
+#BuildRequires: libjxl-devel
+BuildRequires: zlib-devel libssl-devel
 
 # TODO: use system libs instead third_party
 #BuildPreReq: libhyphen-devel lib2geom-devel
 
-# For import filters
-BuildRequires: libfreehand-devel libpagemaker-devel libmspub-devel libcdr-devel 
-BuildRequires: libwmf-devel libvisio-devel libqxp-devel libzmf-devel
-
 Requires: %name-doc >= %epoch:%version
 Requires: %name-data >= %epoch:%version
-Requires: aspell-en
+#Requires: aspell-en
 
 AutoProv:no
 
@@ -110,10 +133,8 @@ BuildArch: noarch
 %prep
 %setup
 %patch1 -p2
-
-# don't do that
-# brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
-#sed -i 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
+# hack to ignore new broken checking
+subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
 %build
 %cmake \
@@ -123,9 +144,9 @@ BuildArch: noarch
 	-DWANT_NORPATH=true \
 	-DWANT_DISTROBUILD=true \
 	-DWANT_CCACHE=true \
-	-DWANT_CPP17=true \
 	-DWANT_GRAPHICSMAGICK=true \
-	-DFONTCONFIG_CONFIG:FILEPATH=%_pkgconfigdir/fontconfig.pc \
+	-DWANT_HUNSPELL=true \
+	-DWITH_PODOFO=true \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags"
 
@@ -133,6 +154,10 @@ BuildArch: noarch
 
 %install
 %cmake_install
+rm -rv %buildroot%_libdir/cmake/
+rm -v %buildroot%_libdir/libqt6advanceddocking_static.a
+rm -rv %buildroot%_includedir/qt6advanceddocking/
+rm -rv %buildroot/usr/license
 
 pushd %buildroot%_docdir/%name
 for i in $(ls ChangeLog*); do
@@ -178,6 +203,11 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sat Feb 01 2025 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
+- new version 1.7.0 (with rpmrb script)
+- change BR to Qt6: the project have switched to Qt6
+- update all BR
+
 * Thu Jan 23 2025 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.3-alt1
 - new version 1.6.3 (with rpmrb script)
 
