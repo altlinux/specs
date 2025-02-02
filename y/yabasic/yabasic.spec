@@ -1,6 +1,6 @@
 Name: yabasic
 Version: 2.91.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Small basic interpreter with printing and graphics
@@ -14,8 +14,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: https://2484.de/yabasic/download/%name-%version.tar
 
-# Automatically added by buildreq on Wed Oct 22 2008
-BuildRequires: imake libXt-devel libncurses-devel
+BuildRequires: libX11-devel libXt-devel
+BuildRequires: libncurses-devel
 BuildRequires: libffi-devel
 
 BuildPreReq: bison flex
@@ -44,6 +44,9 @@ no extra effort. Yabasic runs under Unix and Windows; it is small
 %_man1dir/*
 
 %changelog
+* Mon Feb 03 2025 Vitaly Lipatov <lav@altlinux.ru> 1:2.91.1-alt2
+- cleanup BR (remove imake)
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1:2.91.1-alt1
 - new version, update URL
 
