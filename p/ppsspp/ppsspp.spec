@@ -1,10 +1,21 @@
+%define armips_commit a8d71f0f279eb0d30ecf6af51473b66ae0cf8e8d
+%define discord_rpc_commit 963aa9f3e5ce81a4682c6ca3d136cddda614db33
+%define glslang_commit b34f619e1c85810dcb3c578107d2e48ba4ee2b37
+%define spirv_cross_commit 4212eef67ed0ca048cb726a6767185504e7695e5
+%define cpu_features_commit fd4ffc1632db7b4e763bd28ffa6fc9d761cf3587
+%define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
+%define ffmpeg_commit 82049cca2e4c1516ed00a77b502a21f91b7843f4
+%define rcheevos_commit 32917bdddf4982e62047862c6633e7671aaaf2cb
+%define libchdr_commit 26d27ca4903aaccd3ef41337b29bf5ecafb1f0ca
+%define rapidjson_commit 73063f5002612c6bf64fe24f851cd5cc0d83eef9
+
 %ifarch %ix86
 %set_verify_elf_method textrel=relaxed
 %endif
 
 Name: ppsspp
 Version: 1.18.1
-Release: alt3
+Release: alt4
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -15,23 +26,36 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExcludeArch: ppc64le
 
-# Source-url: https://github.com/hrydgard/%name/releases/download/v%version/%name-%version.tar.xz
-Source: %name-%version.tar
+# https://github.com/hrydgard/%name/releases/download/v%version/%name-%version.tar.xz
+Source0: %name-%version.tar
+# https://github.com/Kingcom/armips/archive/%armips_commit/armips-%armips_commit.tar.gz
+Source1: armips-%armips_commit.tar
+# https://github.com/discord/discord-rpc/archive/%discord_rpc_commit/discord-rpc-%discord_rpc_commit.tar.gz
+Source2: discord-rpc-%discord_rpc_commit.tar
+# https://github.com/hrydgard/glslang/archive/%glslang_commit/glslang-%glslang_commit.tar.gz
+Source3: glslang-%glslang_commit.tar
+# https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
+Source4: SPIRV-Cross-%spirv_cross_commit.tar
+# https://github.com/google/cpu_features/archive/%cpu_features_commit/cpu_features-%cpu_features_commit.tar.gz
+Source5: cpu_features-%cpu_features_commit.tar
+# https://github.com/Kingcom/filesystem/archive/%filesystem_commit/filesystem-%filesystem_commit.tar.gz
+Source6: filesystem-%filesystem_commit.tar
+# https://github.com/hrydgard/%name-ffmpeg/archive/%ffmpeg_commit/%name-ffmpeg-%ffmpeg_commit.tar.gz
+Source7: %name-ffmpeg-%ffmpeg_commit.tar
+# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
+Source8: rcheevos-%rcheevos_commit.tar
+# https://github.com/rtissera/libchdr/archive/%libchdr_commit/libchdr-%libchdr_commit.tar.gz
+Source9: libchdr-%libchdr_commit.tar
+# https://github.com/Tencent/rapidjson/archive/%rapidjson_commit/rapidjson-%rapidjson_commit.tar.gz
+Source10: rapidjson-%rapidjson_commit.tar
 
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-miniupnpc.patch
 Patch2: %name-1.18.1-alt-loongarch-always-return.patch
+# https://github.com/hrydgard/ppsspp/pull/19840
+Patch3: %name-1.18.1-sdl2_ttf.patch
 
 Requires: %name-common = %EVR
-
-BuildRequires(pre): bzlib-devel
-BuildRequires(pre): fontconfig-devel
-BuildRequires(pre): libexpat-devel
-BuildRequires(pre): libffi-devel
-BuildRequires(pre): libpcre2-devel
-BuildRequires(pre): libpng-devel
-BuildRequires(pre): libbrotli-devel
-BuildRequires(pre): zlib-devel
 
 BuildRequires: /proc
 BuildRequires: cmake
@@ -44,6 +68,7 @@ BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libzip-devel
 BuildRequires: libzstd-devel
+BuildRequires: openxr-devel
 BuildRequires: qt5-multimedia-devel
 
 %description
@@ -85,11 +110,23 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+
+%__mv -Tf ../armips-%armips_commit ext/armips
+%__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
+%__mv -Tf ../glslang-%glslang_commit ext/glslang
+%__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
+%__mv -Tf ../cpu_features-%cpu_features_commit ext/cpu_features
+%__mv -Tf ../filesystem-%filesystem_commit ext/armips/ext/filesystem
+%__mv -Tf ../%name-ffmpeg-%ffmpeg_commit ffmpeg
+%__mv -Tf ../rcheevos-%rcheevos_commit ext/rcheevos
+%__mv -Tf ../libchdr-%libchdr_commit ext/libchdr
+%__mv -Tf ../rapidjson-%rapidjson_commit ext/rapidjson
 
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
 
 %build
 %add_optflags -Wno-error=return-type
@@ -191,6 +228,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Sun Feb 02 2025 Nazarov Denis <nenderus@altlinux.org> 1.18.1-alt4
+- Switched to use .gear/tags
+
 * Sat Feb 01 2025 Nazarov Denis <nenderus@altlinux.org> 1.18.1-alt3
 - build with bundled ffmpeg (ALT #51464)
 
