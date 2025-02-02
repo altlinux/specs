@@ -1,21 +1,22 @@
 Name: yabasic
-Version: 2.763
-Release: alt3.qa1
+Version: 2.91.1
+Release: alt1
+Epoch: 1
 
 Summary: Small basic interpreter with printing and graphics
 
-License: Public Domain
+License: MIT
 Group: Development/Other
 Url: http://www.yabasic.de/
+Vcs: https://github.com/marcIhm/yabasic
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://www.yabasic.de/download/%name-%version.tar.bz2
-Patch: %name-make.patch
+Source: https://2484.de/yabasic/download/%name-%version.tar
 
-# manually removed: xorg-cf-files
 # Automatically added by buildreq on Wed Oct 22 2008
 BuildRequires: imake libXt-devel libncurses-devel
+BuildRequires: libffi-devel
 
 BuildPreReq: bison flex
 
@@ -27,8 +28,7 @@ no extra effort. Yabasic runs under Unix and Windows; it is small
 (less than 200KB) and free.
 
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
 %autoreconf
@@ -44,6 +44,9 @@ no extra effort. Yabasic runs under Unix and Windows; it is small
 %_man1dir/*
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1:2.91.1-alt1
+- new version, update URL
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.763-alt3.qa1
 - NMU: rebuilt for debuginfo.
 
