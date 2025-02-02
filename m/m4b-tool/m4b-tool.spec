@@ -1,16 +1,8 @@
-%if_feature php81 8.1.0
-%def_with php81
-%define defphp php8.1
-%endif
-
-%if_feature php7 7.4.3
-%def_with php7
-%define defphp php7
-%endif
+%define defphp php%php_defver
 
 Name: m4b-tool
 Version: 0.4.2
-Release: alt4
+Release: alt5
 
 Summary: m4b-tool is a command line utility to merge, split and chapterize audiobook files such as mp3, ogg, flac, m4a or m4b
 
@@ -30,6 +22,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-features >= 0.8
+BuildRequires(pre): rpm-build-php >= 8.4
 
 #composer
 # fdkaac
@@ -73,8 +66,11 @@ install -m755 dist/m4b-tool.phar %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt5
+- use php_defver
+
 * Sat Aug 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt4
-- use php8.1 if php8.4 is missed
+- use php8.1 if php7.4 is missed
 
 * Fri May 28 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt3
 - add patch fix issue https://github.com/sandreas/m4b-tool/issues/47
