@@ -1,7 +1,7 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: snx-rs
-Version: 2.0.1
-Release: alt2
+Version: 2.9.0
+Release: alt1
 
 Summary: Open source VPN client for Checkpoint security gateways
 
@@ -9,7 +9,7 @@ License: AGPL-3.0
 Group: System/Servers
 Url: https://github.com/ancwrd1/snx-rs
 
-# Source-url: https://github.com/ancwrd1/snx-rs/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/ancwrd1/snx-rs/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
@@ -90,6 +90,9 @@ install -D -m 0644 assets/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.d
 %_sysconfdir/snx-rs/snx-rs.conf
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version (2.9.0) with rpmgs script
+
 * Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt2
 - build snx-rs-gui only if webkit2gtk is present
 
