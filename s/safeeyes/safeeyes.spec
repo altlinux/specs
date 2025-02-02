@@ -1,6 +1,6 @@
 Name: safeeyes
-Version: 2.1.6
-Release: alt1.2
+Version: 2.2.3
+Release: alt1
 
 Summary: Tool for reminding the user to take breaks
 
@@ -27,7 +27,7 @@ at the computer in an effort to alleviate eye strain (asthenopia).
 
 %prep
 %setup
-%patch -p2
+#patch -p2
 
 %build
 %python3_build
@@ -44,6 +44,9 @@ at the computer in an effort to alleviate eye strain (asthenopia).
 %python3_sitelibdir/%name-%version-py*.egg-info
 
 %changelog
+* Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
+- new version 2.2.3 (with rpmrb script)
+
 * Tue Sep 17 2024 Andrey Cherepanov <cas@altlinux.org> 2.1.6-alt1.2
 - NMU: added requirements of libayatana-appindicator3-gir (ALT #45647).
 
