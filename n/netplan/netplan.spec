@@ -1,5 +1,5 @@
 Name:    netplan
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Backend-agnostic network configuration in YAML
@@ -74,6 +74,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Fri Jan 31 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.2-alt1
+- New version 1.1.2.
+
 * Wed Nov 20 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.1-alt1
 - New version 1.1.1 (Fixes: CVE-2022-4968).
 
