@@ -1,56 +1,81 @@
 %define _unpackaged_files_terminate_build 1
-
-%ifarch i586 ppc64le armh
-%def_without check
-%endif
+%define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.1.2
+Version: 0.2.1
 Release: alt1
 
-Summary: Common files for [Alterator Entry] specification
+Summary: Common files for Alterator Entry specification
 License: GPLv3+
 Group: Other
 URL: https://gitlab.basealt.space/alt/alterator-entry
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-alterator
-Requires: libshell
-
-%ifnarch i586 ppc64le armh
-BuildRequires: taplo
-%endif
+BuildRequires(pre): rpm-macros-features
 
 %description
 Common files for Alterator Entry specification:
 - specification documents
-- source shell alterator-entry-sh-functions
+- TOML schemas for Alterator Entry types
+- alterator-entry script to validate Alterator Entry files and extract data
+
+%package -n python3-module-alterator-entry
+Summary: Python3 module to validate and extract fields from Alterator Entry
+Group: Development/Python3
+
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+
+%if_feature python3 3.11
+%filter_from_requires /python3(toml)/d
+%else
+%filter_from_requires /python3(tomllib)/d
+%endif
+
+%description -n python3-module-alterator-entry 
+%summary.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%build
+%pyproject_build
 
 %install
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_alterator_datadir/schemas
-
-find ./schemas/ -type f -exec install -v -p -m 644 -D  {} %buildroot%_alterator_datadir/schemas/ \;
-install -v -p -m 644 -D alterator-entry-sh-functions %buildroot%_bindir/
-install -v -p -m 755 -D alterator-entry %buildroot%_bindir/
-sed -i 's/@VERSION@/%version/' %buildroot%_bindir/alterator-entry
-
-%check
-export ALTERATOR_SCHEMAS_DIR=%buildroot%_alterator_datadir/schemas
-PATH="$PATH:." find ./examples -type f -exec alterator-entry -v {} \+
+%pyproject_install
+install -D -m 755 alterator_entry/cli %buildroot%_bindir/%name
+mkdir -p %buildroot%_alterator_datadir
+cp -r ./schemas %buildroot%_alterator_datadir/schemas 
 
 %files
 %doc COPYING
+%doc %_alterator_datadir/schemas/
 %_bindir/alterator-entry
-%_bindir/alterator-entry-sh-functions
-%dir %_alterator_datadir/schemas
-%_alterator_datadir/schemas/*
+
+%files -n python3-module-alterator-entry
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Sun Feb 02 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.1-alt1
+- Build with oldest rpm-build-pyproject and python3-module-pyproject-installer
+  (which not support of using default pyproject.toml if it not found).
+- Avoid of using special release for python3-module-alterator-entry.
+
+* Thu Jan 30 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.0-alt1
+- Switch from using bash and taplo to python tool for validating files
+- Schema changes in components and editions
+  + Add supported arches to components
+  + Remove region from editions
+
 * Tue Dec 24 2024 Andrey Limachko <liannnix@altlinux.org> 0.1.2-alt1
 - Make stub to build package for all architectures
 
