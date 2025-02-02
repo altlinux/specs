@@ -1,23 +1,37 @@
 %define oname pifpaf
 
-Summary: Suite of tools and fixtures to manage daemons for testing
+%def_without check
+
 Name: python3-module-%oname
-Version: 3.1.5
-Release: alt2
-Url: https://pypi.org/project/pifpaf
-Source: %oname-%version.tar.gz
-Patch: remove-distutils-for-python-3.12.patch
-License: Apache-2.0
+Version: 3.2.3
+Release: alt1
+
+Summary: Suite of tools and fixtures to manage daemons for testing
+
 Group: Development/Python3
+License: Apache-2.0
+URL: https://pypi.org/project/pifpaf
+VCS: https://github.com/jd/pifpaf
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pbr
-BuildRequires: python3-module-cliff
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-six
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-fixtures
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-daiquiri
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-pyxattr
+BuildRequires: python3-module-requests
+BuildRequires: memcached
+%endif
 
 %add_python3_req_skip swift.common
 
@@ -27,36 +41,32 @@ and stop daemons for a quick throw-away usage. This is typically useful when
 needing these daemons to run integration testing. It originaly evolved from
 its precussor overtest.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
-
 %prep
-%setup -n %oname-%version
-%patch -p2
+%setup
 
 %build
-export LANG=en_US.UTF-8
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-export LANG=en_US.UTF-8
-%python3_install
+%pyproject_install
+
+cp -av %oname/drivers %buildroot%python3_sitelibdir/%oname
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%pyproject_run_pytest
 
 %files
 %doc README.rst
-%_bindir/pifpaf
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.2.3-alt1
+- Build new version.
+
 * Tue Dec 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt2
 - Drop dependency on distutils.
 
