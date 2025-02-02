@@ -1,11 +1,11 @@
 Name: xsane
 Version: 0.999
-Release: alt6.2
+Release: alt7
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
 
-License: GPL
+License: GPLv2
 Group: Graphics
 Url: http://www.xsane.org
 
@@ -22,6 +22,7 @@ Patch5: alt-gimp_acquire_menu-ru.patch
 # Debian
 Patch10: 0105-deb_gimp_acquire_menu.patch
 Patch11: 0125-desktop_file.patch
+Patch12: xsane-configure-add-stdlib-to-conftest.patch
 
 BuildPreReq: libjpeg-devel libusb-devel libpng-devel
 
@@ -32,6 +33,8 @@ BuildRequires: libgimp-devel libgphoto2-devel libjpeg-devel liblcms2-devel libsa
 BuildPreReq: recode
 # for help
 #Requires: webclient
+
+%add_optflags -Wno-incompatible-pointer-types
 
 %description
 XSane is a graphical frontend for SANE library,
@@ -90,11 +93,13 @@ Documentation for XSANE
 %patch5 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+
 cp -f %SOURCE3 po/ru.po
 #__subst "s|\"/usr/local/share/sane/|\"%_docdir/sane/|" doc/sane-backends-doc.html
 
 # Set browser by default
-%__subst 's|BROWSER "netscape|BROWSER "url_handler.sh|g' src/xsane.h
+%__subst 's|BROWSER "netscape|BROWSER "xdg-open|g' src/xsane.h
 
 %build
 %configure --enable-gtk2 --enable-gimp --enable-lcms
@@ -138,6 +143,10 @@ ln -s %_docdir/sane-backends/sane-backends.html %buildroot/%_docdir/%name/sane-b
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt7
+- fix build with gcc 14
+- use xdg-open for URL opening
+
 * Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 0.999-alt6.2
 - NMU: fix GIMP menu entry
 - NMU: fix GIMP menu entry russian translation
