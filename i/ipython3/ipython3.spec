@@ -4,11 +4,11 @@
 
 %define oname ipython
 
-%def_with doc
+%def_without doc
 %def_with check
 
 Name: ipython3
-Version: 8.31.0
+Version: 8.32.0
 Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
@@ -49,6 +49,8 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3(ipykernel)
 BuildRequires: python3(matplotlib)
+BuildRequires: python3-module-matplotlib-inline
+BuildRequires: python3-module-matplotlib-tk
 BuildRequires: python3(stack_data)
 BuildRequires: python3(exceptiongroup)
 BuildRequires: python3(testpath)
@@ -227,6 +229,9 @@ popd
 %endif
 
 %changelog
+* Sat Feb 01 2025 Anton Vyatkin <toni@altlinux.org> 8.32.0-alt1
+- New version 8.32.0.
+
 * Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 8.31.0-alt1
 - New version 8.31.0.
 
