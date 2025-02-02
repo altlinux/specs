@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde-rounded-corners
-Version: 0.7.0
-Release: alt2
+Version: 0.7.1
+Release: alt1
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -14,7 +14,6 @@ Provides: kde5-rounded-corners = %EVR
 Obsoletes: kde5-rounded-corners < %EVR
 
 Source: %name-%version.tar
-Patch: %name-%version-git-add-locale-ru.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
@@ -51,6 +50,9 @@ BuildRequires: qt6-declarative-devel
 %_K6plug/kwin/effects/plugins/kwin4_effect_shapecorners.so
 
 %changelog
+* Sun Feb 02 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7.1-alt1
+- New version 0.7.1.
+
 * Fri Jan 24 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7.0-alt2
 - Added RU translation.
 
