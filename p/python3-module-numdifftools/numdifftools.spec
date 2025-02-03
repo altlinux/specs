@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.9.41
-Release: alt2
+Release: alt3
 
 Summary: Solves automatic numerical differentiation problems in one or more variables
 
@@ -20,9 +20,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_with check
+BuildRequires: xvfb-run
 BuildRequires: python3-module-algopy
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-matplotlib-tk
 BuildRequires: python3-module-statsmodels
 BuildRequires: python3-module-pandas-tests
 %endif
@@ -59,7 +61,9 @@ This package contains tests for %oname.
 
 %check
 # support numpy 1.25.2 https://github.com/pbrod/numdifftools/issues/72
-%pyproject_run_pytest -v src/%oname/tests/ -k "\
+#export PYTHONPATH=%buildroot%python3_sitelibdir
+xvfb-run -a -s "-screen 0 640x480x24" \
+py.test-3 -v src/%oname/tests/ -k "\
 not test_high_order_derivative \
 and not test_low_order_derivative_on_example_functions \
 and not test_sinx_div_x \
@@ -76,6 +80,9 @@ and not test_complex_hessian_issue_35"
 %doc LICENSE.txt *.rst
 
 %changelog
+* Mon Feb 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.41-alt3
+- Fixed FTBFS.
+
 * Wed Sep 13 2023 Anton Vyatkin <toni@altlinux.org> 0.9.41-alt2
 - Fix FTBFS.
 
