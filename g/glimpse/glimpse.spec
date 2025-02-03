@@ -1,7 +1,7 @@
 %define _libexecdir %_usr/libexec
 
 Name: glimpse
-Version: 4.12.6
+Version: 4.18.7
 Release: alt1
 Summary: Powerful file indexing and query system
 
@@ -53,5 +53,8 @@ rm -v %buildroot%_bindir/agrep %buildroot%_man1dir/agrep.1*
 
 
 %changelog
+* Mon Feb 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.18.7-alt1
+- Update version.
+
 * Mon Jan 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.12.6-alt1
 - Initial build for ALT.
