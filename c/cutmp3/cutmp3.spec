@@ -2,15 +2,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cutmp3
-Version: 2.1.1
+Version: 3.0.3
 Release: alt1
 
 Summary: small console editor mp3 files without quality loss
 License: GPLv2
 Group: Sound
 Url: http://www.puchalla-online.de/cutmp3.html
+Vcs: git://github.com/tarjanm-movidius/cutmp3.git
 
-Source: http://www.puchalla-online.de/%name-%version.tar.bz2
+Source: %name-%version.tar
 
 Requires: mpg123
 
@@ -39,6 +40,9 @@ segment with 'a' and 'b' and save the segment with 's'.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Jan 30 2025 Anton Meleshnikov <alton@altlinux.org> 3.0.3-alt1
+- New version 3.0.3.
+
 * Fri Sep 05 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.1-alt1
 - Version 2.1.1
 
