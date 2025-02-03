@@ -2,7 +2,7 @@
 
 Name:    ltfs
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Summary: HPE Linear Tape File System
 License: LGPL-2.1
@@ -14,7 +14,8 @@ Packager: Sergey Gvozdetskiy <serjigva@altlinux.org>
 Source:  %name-%version.tar
 Source1: ltfs.service
 Source2: %name.pc.in
-Patch:  service_file.patch
+Patch0:  service_file.patch
+Patch1:  ltfs-3.5-alt-fix-x86-incompatible-ptr.patch
 
 BuildRequires: libicu-devel
 BuildRequires: fuse libfuse-devel
@@ -49,7 +50,8 @@ Shared libraries for running LTFS applications
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 # Changing due to https://elixir.bootlin.com/glibc/glibc-2.32/source/NEWS#L614
 subst 's|sys/sysctl.h|linux/sysctl.h|g' src/libltfs/arch/arch_info.c
 
@@ -122,5 +124,8 @@ find %buildroot -type f '(' -iname \*.a -o -iname \*.la ')' -print -delete
 %_libdir/lib%name.so.*
 
 %changelog
+* Mon Feb 03 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.0-alt2
+- Fix FTBFS: incompatible pointer type error fix on i586.
+
 * Fri Mar 29 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.5.0-alt1
 - Initial build for Sisyphus (Closes: #48688)
