@@ -2,8 +2,8 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 47.0
-Release: alt2
+Version: 47.3
+Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
 License: GPL-2.0
@@ -121,6 +121,9 @@ Requires: %name-gir = %EVR
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Feb 03 2025 Anton Zhukharev <ancieg@altlinux.org> 47.3-alt1
+- Updated to 47.3.
+
 * Mon Sep 23 2024 Anton Zhukharev <ancieg@altlinux.org> 47.0-alt2
 - Fixed value of the group tag (closes 51526).
 
