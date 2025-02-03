@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
-Release: alt2
+Version: 2.1.1
+Release: alt1
 Epoch: 1
 
 Summary: HTML form validation, generation, and convertion package for Python
@@ -59,6 +59,9 @@ for filling and generating forms.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 1:2.1.1-alt1
+- 2.1.0 -> 2.1.1.
+
 * Thu Dec 12 2024 Stanislav Levin <slev@altlinux.org> 1:2.1.0-alt2
 - Backported fix for Python 3.13 compatibility.
 
