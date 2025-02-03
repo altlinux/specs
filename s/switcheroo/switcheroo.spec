@@ -1,13 +1,13 @@
 %def_enable snapshot
 %define _name Switcheroo
-%define ver_major 2.2
+%define ver_major 2.3
 %define xdg_name io.gitlab.adhami3310.Converter
 
 %def_enable check
 %def_disable bootstrap
 
 Name: switcheroo
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Simple App to Convert Photo Images
@@ -16,11 +16,12 @@ Group: Graphics
 Url: https://apps.gnome.org/Converter
 
 Vcs: https://gitlab.com/adhami3310/Switcheroo.git
+
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.6
-%define adwaita_ver 1.2.0
+%define gtk_ver 4.16
+%define adwaita_ver 1.6.0
 
 Requires: ImageMagick-tools
 
@@ -37,7 +38,7 @@ Convert between different image filetypes and resize them easily.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -62,6 +63,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Feb 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 - enabled %%check
