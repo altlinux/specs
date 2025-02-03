@@ -1,5 +1,5 @@
 Name: picat
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Summary: Picat logical programming language
@@ -46,11 +46,11 @@ cd emu
 mkdir -p %buildroot%_bindir/
 install -pm755 emu/picat %buildroot%_bindir/
 
-mkdir -p %buildroot%libdir
 mkdir -p %buildroot%libdir/preloaded
 
 install -pm644 lib/*.pi %buildroot%libdir/preloaded
-install -pm644 lib2/*.pi %buildroot%libdir/
+# В версии 3.8.0 почему-то удалены эти библиотеки
+#%%install -pm644 lib2/*.pi %buildroot%libdir/
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
@@ -69,11 +69,13 @@ install -pm644 README %buildroot%docdir/
 %docdir/*
 
 %dir %libdir
-%libdir/*.pi
 %dir %libdir/preloaded
 %libdir/preloaded/*.pi
 
 %changelog
+* Sun Feb 02 2025 Andrey Bergman <vkni@altlinux.org> 3.8.0-alt1
+- Version update.
+
 * Wed Aug 28 2024 Andrey Bergman <vkni@altlinux.org> 3.7.0-alt1
 - Version update.
 
