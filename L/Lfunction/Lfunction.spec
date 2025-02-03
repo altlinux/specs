@@ -1,7 +1,7 @@
-%define soname 1
+%define soname 2
 
 Name: Lfunction
-Version: 2.0.5
+Version: 2.1.0
 Release: alt1
 
 Summary: C++ L-function command line interface
@@ -11,10 +11,7 @@ Group: Sciences/Mathematics
 Url: https://gitlab.com/sagemath/lcalc
 
 Source: %url/-/archive/%version/lcalc-%version.tar.bz2
-
-# Fix use of the wrong delete operator
-# https://gitlab.com/sagemath/lcalc/-/merge_requests/5
-Patch: L-function-mismatched-delete.patch
+Vcs: git://gitlab.com/sagemath/lcalc.git
 
 Provides: L-function = %version-%release
 
@@ -43,7 +40,6 @@ Headers and libraries for development with %name.
 
 %prep
 %setup -n lcalc-%version
-%patch -p1
 
 %build
 %autoreconf
@@ -64,7 +60,7 @@ rm %buildroot%_libdir/libLfunction.la
 rm -fr %buildroot%_docdir/lcalc
 
 %files
-%doc doc/{ChangeLog,CONTRIBUTORS,README.md,COPYING}
+%doc doc/{ChangeLog,CONTRIBUTORS,COPYING} README.md
 %_bindir/lcalc
 %_man1dir/lcalc.1*
 
@@ -78,6 +74,10 @@ rm -fr %buildroot%_docdir/lcalc
 %_pkgconfigdir/lcalc.pc
 
 %changelog
+* Mon Feb 03 2025 Leontiy Volodin <lvol@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+- Added vcs tag.
+
 * Thu Mar 02 2023 Leontiy Volodin <lvol@altlinux.org> 2.0.5-alt1
 - New version.
 - Updated url and source links.
