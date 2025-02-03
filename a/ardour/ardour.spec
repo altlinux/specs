@@ -1,5 +1,5 @@
 Name: ardour
-Version: 8.10
+Version: 8.11
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -26,7 +26,6 @@ BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libcurl)
 BuildRequires: pkgconfig(liblo)
-BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libxml-2.0)
@@ -134,6 +133,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Mon Feb 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 8.11-alt1
+- 8.11 released
+
 * Thu Oct 17 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 8.10-alt1
 - 8.10 released
 
