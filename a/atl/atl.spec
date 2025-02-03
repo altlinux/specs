@@ -1,6 +1,6 @@
 Name: atl
 Version: 2.0.13
-Release: alt1.rev20268.svn20150203
+Release: alt2.rev20268.svn20150203
 Summary: %name package for EVpath
 License: BSD
 Group: Development/Other
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # login: anon
 # password: anon
 Source: %name-%version.tar
+Patch: atl-2.0.13-alt-fixes-compilation.patch
 
 BuildPreReq: cmake ctest libcercs_env-devel gcc-c++
 
@@ -40,6 +41,7 @@ This package contains development files of %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -70,6 +72,9 @@ cmake \
 %_libdir/*.so
 
 %changelog
+* Fri Jan 31 2025 Anton Meleshnikov <alton@altlinux.org> 2.0.13-alt2.rev20268.svn20150203
+- Fixed FTBFS
+
 * Thu Mar 05 2015 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.13-alt1.rev20268.svn20150203
 - Initial build for Sisyphus
 

@@ -1,6 +1,6 @@
 Name: speyes
 Version: 1.2.0
-Release: alt6.qa1
+Release: alt7
 
 Packager: Alexey Voinov <voins@altlinux.ru>
 
@@ -11,6 +11,7 @@ Group: Graphical desktop/Window Maker
 URL: http://okb-1.org/speyes/speyes.html
 Source: http://okb-1.org/speyes/%name-%version.tar.bz2
 Source1: %name.menu
+Patch: speyes-1.2.0-alt-fixes-compilation.patch
 
 # Automatically added by buildreq on Tue Nov 14 2006
 BuildRequires: imake libX11-devel libXext-devel libXmu-devel libXpm-devel xorg-cf-files
@@ -25,6 +26,7 @@ But why?:
 
 %prep
 %setup -q
+%patch -p2
 %__subst 's/OBJS =.*/OBJS = %name.o/' Imakefile
 
 %build
@@ -42,6 +44,9 @@ install -D -pm644 %SOURCE1 $RPM_BUILD_ROOT%_menudir/%name
 %_menudir/*
 
 %changelog
+* Fri Jan 31 2025 Anton Meleshnikov <alton@altlinux.org> 1.2.0-alt7
+- Fixed FTBFS.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2.0-alt6.qa1
 - NMU: rebuilt for debuginfo.
 
