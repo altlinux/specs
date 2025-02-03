@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 Summary: CLI tool to convert a python project's %-formatted strings to f-strings
 License: MIT
 Group: Development/Python3
@@ -53,6 +53,9 @@ from old "%-formatted" and .format(...) strings into Python 3.6+'s "f-strings".
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
+- 1.0.1 -> 1.0.2.
+
 * Mon Feb 12 2024 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2
 - Fixed FTBFS (Python 3.12).
 
