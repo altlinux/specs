@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: protobuf-c
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: Google's Protocol Buffers implementation in C
 
@@ -79,6 +79,9 @@ ln -s /usr/include/google google
 %doc TODO CHANGELOG.md README.md LICENSE
 
 %changelog
+* Mon Feb 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Fri Dec 01 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
