@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.7.9
-Release: alt1
+Release: alt2
 
 Summary: Django middleware to capture current request and user
 License: BSD-3-Clause
@@ -14,6 +14,7 @@ URL: https://github.com/ninemoreminutes/django-crum
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: crum-0.7.9-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -32,6 +33,7 @@ and user in thread local storage.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 sed -i '/addopts/d' setup.cfg
 
@@ -50,5 +52,8 @@ sed -i '/addopts/d' setup.cfg
 %python3_sitelibdir/django_crum-%version.dev0.dist-info
 
 %changelog
+* Mon Feb 03 2025 Anton Vyatkin <toni@altlinux.org> 0.7.9-alt2
+- Fixed FTBFS.
+
 * Mon Jul 22 2024 Anton Vyatkin <toni@altlinux.org> 0.7.9-alt1
 - Initial build for Sisyphus
