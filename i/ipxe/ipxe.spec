@@ -1,10 +1,4 @@
 
-# With the addition of HTTPS support, we need to drop
-# efi_ia32 so qemu roms still stay in the expected size
-# range. If no one complains we can drop the efi_ia32
-# infrastructure in 2021 IMO
-%def_disable efi_ia32
-
 %define formats rom
 # PCI IDs (vendor,product) of the ROMS we want for QEMU
 #
@@ -17,13 +11,22 @@
 #     e1000e: 0x8086 0x10d3
 #    vmxnet3: 0x15ad 0x07b0
 
-%define qemuroms 10222000 10ec8029 8086100e 10ec8139 1af41000 80861209 808610d3 15ad07b0
+%global qemuroms \\\
+  10222000:pcnet \\\
+  10ec8029:ne2k_pci \\\
+  10ec8139:rtl8139 \\\
+  15ad07b0:vmxnet3 \\\
+  80861209:eepro100 \\\
+  8086100e:e1000 \\\
+  1af41000:virtio \\\
+  808610d3:e1000e
+
 %define date 20250122
 %define hash c2f21a21
 
 Name: ipxe
 Version: %date
-Release: alt1.git%{hash}
+Release: alt2.git%{hash}
 Epoch: 1
 
 Summary: PXE boot firmware
@@ -124,7 +127,6 @@ make_ipxe() {
 }
 
 make_ipxe bin-i386-efi/ipxe.efi \
-        bin-i386-efi/snponly.efi \
         bin-x86_64-efi/ipxe.efi \
         bin-x86_64-efi/snponly.efi
 
@@ -139,28 +141,28 @@ make_ipxe ISOLINUX_BIN=/usr/lib/syslinux/isolinux.bin \
 
 # build roms with efi support for qemu
 mkdir bin-combined
-for rom in %qemuroms; do
+for romstr in %qemuroms; do
+  rom=$(echo "$romstr" | cut -d ":" -f 1)
+
   make_ipxe CONFIG=qemu bin/${rom}.rom
-%if_enabled efi_ia32
-  make_ipxe CONFIG=qemu bin-i386-efi/${rom}.efidrv
-%endif
   make_ipxe CONFIG=qemu bin-x86_64-efi/${rom}.efidrv
   vid="0x${rom%%????}"
   did="0x${rom#????}"
   EfiRom -f "$vid" -i "$did" --pci23 \
-         -b  bin/${rom}.rom \
-%if_enabled efi_ia32
-         -ec bin-i386-efi/${rom}.efidrv \
-%endif
          -ec bin-x86_64-efi/${rom}.efidrv \
-         -o  bin-combined/${rom}.rom
+         -o  bin-combined/${rom}.eficrom
 
+  util/catrom.pl \
+      bin/${rom}.rom \
+      bin-combined/${rom}.eficrom \
+      > bin-combined/${rom}.rom
   EfiRom -d  bin-combined/${rom}.rom
   # truncate to at least 256KiB
   truncate -s \>256K bin-combined/${rom}.rom
   # verify rom fits in 256KiB
   test $(stat -c '%%s' bin-combined/${rom}.rom) -le $((256 * 1024))
 done
+
 
 %install
 mkdir -p %buildroot%_datadir/%name
@@ -179,7 +181,6 @@ done
 popd
 
 cp -a src/bin-i386-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-i386.efi
-cp -a src/bin-i386-efi/snponly.efi %buildroot/%_datadir/%name/snponly-i386.efi
 cp -a src/bin-x86_64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-x86_64.efi
 cp -a src/bin-x86_64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-x86_64.efi
 cp -a src/bin-arm64-efi/ipxe.efi %buildroot/%_datadir/%name/ipxe-arm64.efi
@@ -187,27 +188,18 @@ cp -a src/bin-arm64-efi/snponly.efi %buildroot/%_datadir/%name/snponly-arm64.efi
 
 # the roms supported by qemu will be packaged separatedly
 # remove from the main rom list and add them to qemu.list
-for rom in %qemuroms; do
+for romstr in %qemuroms; do
+  rom=$(echo "$romstr" | cut -d ":" -f 1)
+  qemuname=$(echo "$romstr" | cut -d ":" -f 2)
   sed -i -e "/\/${rom}.rom/d" rom.list
   echo %_datadir/%name/${rom}.rom >> qemu.rom.list
-
+ 
   cp src/bin-combined/${rom}.rom %buildroot/%_datadir/%name.efi/
   echo %_datadir/%name.efi/${rom}.rom >> qemu.rom.list
+
+  ln -r -s %buildroot%_datadir/%name/${rom}.rom %buildroot%_datadir/%name/pxe-${qemuname}.rom
+  ln -r -s %buildroot%_datadir/%name.efi/${rom}.rom %buildroot%_datadir/%name.efi/efi-${qemuname}.rom
 done
-
-pxe_link() {
-  ln -r -s %buildroot%_datadir/%name/$1.rom %buildroot%_datadir/%name/pxe-$2.rom
-  ln -r -s %buildroot%_datadir/%name.efi/$1.rom %buildroot%_datadir/%name.efi/efi-$2.rom
-}
-
-pxe_link 8086100e e1000
-pxe_link 10ec8029 ne2k_pci
-pxe_link 10222000 pcnet
-pxe_link 10ec8139 rtl8139
-pxe_link 1af41000 virtio
-pxe_link 80861209 eepro100
-pxe_link 808610d3 e1000e
-pxe_link 15ad07b0 vmxnet3
 
 %files bootimgs
 %_datadir/%name/ipxe.iso
@@ -215,7 +207,6 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name/ipxe.dsk
 %_datadir/%name/ipxe.lkrn
 %_datadir/%name/ipxe-i386.efi
-%_datadir/%name/snponly-i386.efi
 %_datadir/%name/ipxe-x86_64.efi
 %_datadir/%name/snponly-x86_64.efi
 %_datadir/%name/undionly.kpxe
@@ -234,6 +225,10 @@ pxe_link 15ad07b0 vmxnet3
 %_datadir/%name.efi/efi-*.rom
 
 %changelog
+* Mon Feb 03 2025 Alexey Shabalin <shaba@altlinux.org> 1:20250122-alt2.gitc2f21a21
+- Use util/catrom.pl for merge combined roms.
+- Enable NFS support.
+
 * Thu Jan 23 2025 Alexey Shabalin <shaba@altlinux.org> 1:20250122-alt1.gitc2f21a21
 - Update to latest upstream snapshot.
 
