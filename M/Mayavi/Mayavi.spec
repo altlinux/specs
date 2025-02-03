@@ -11,7 +11,7 @@ ExcludeArch: %ix86
 
 Name:           Mayavi
 Version:        4.8.2
-Release:        alt3
+Release:        alt4
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -36,6 +36,7 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-pyface
 BuildRequires: xvfb-run
+BuildRequires: python3-module-apptools
 %endif
 %if_enabled docs
 BuildRequires: python3-module-setupdocs
@@ -216,6 +217,9 @@ export ETS_TOOLKIT=null
 %endif
 
 %changelog
+* Mon Feb 03 2025 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt4
+- Fixed FTBFS.
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt3
 - Drop dependency on imghdr.
 
