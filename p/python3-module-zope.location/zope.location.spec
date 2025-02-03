@@ -1,52 +1,40 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.location
+%define pypi_name zope.location
+%define ns_name zope
+%define mod_name location
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 5.0
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 5.1
+Release: alt1
 Summary: Zope Location
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.location/
 Vcs: https://github.com/zopefoundation/zope.location.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately in python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
-BuildRequires: python3-module-zope.copy
-BuildRequires: python3-module-zope.component
-BuildRequires: python3-module-zope.configuration
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope.configuration
-%py3_requires zope.interface
-%py3_requires zope.proxy
-%py3_requires zope.schema
 
 %description
 In Zope3, location are special objects that has a structural location.
 
-%package tests
-Summary: Tests for Zope Location
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -64,16 +52,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc LICENSE.txt *.rst
-%python3_sitelibdir/zope/location/
-%python3_sitelibdir/%oname-%version.dist-info/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/zope/location/tests
-
-%files tests
-%python3_sitelibdir/zope/location/tests
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Jan 31 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 5.0 -> 5.1.
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
 - NMU: mapped PyPI name to distro's one.
 

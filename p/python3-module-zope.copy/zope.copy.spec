@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt1
+Release: alt2
 
 Summary: Pluggable object copying mechanism
 License: ZPL-2.1
@@ -14,7 +14,9 @@ Url: https://pypi.org/project/zope.copy/
 Vcs: https://github.com/zopefoundation/zope.copy.git
 
 Source: %name-%version.tar
-
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -73,6 +75,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/zope/copy/tests
 
 %changelog
+* Fri Jan 31 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt2
+- Mapped PyPI name to the distro's one.
+
 * Fri Oct 25 2024 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 
