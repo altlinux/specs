@@ -3,8 +3,8 @@
 %define pkgname attrs
 
 Name: python3-module-%pkgname
-Version: 24.2.0
-Release: alt2
+Version: 25.1.0
+Release: alt1
 
 Summary: Python attributes without boilerplate
 
@@ -51,6 +51,9 @@ fi
 %python3_sitelibdir/%newoname-%version.dist-info/
 
 %changelog
+* Mon Feb 3 2025 Vladimir Didenko <cow@altlinux.org> 25.1.0-alt1
+- New version
+
 * Tue Aug 20 2024 Vladimir Didenko <cow@altlinux.org> 24.2.0-alt2
 - Return back non-packed dist-info
 
