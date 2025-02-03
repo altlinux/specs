@@ -2,8 +2,10 @@
 %def_enable vala
 %def_disable docs
 
+%define gtk3_soname 4
+
 Name: xfce4-panel
-Version: 4.20.0
+Version: 4.20.2
 Release: alt1
 
 Summary: Panel for Xfce
@@ -20,7 +22,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1
 BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.11.2 libgarcon-gtk3-devel >= 4.17.0
-Buildrequires: libxfce4windowing-devel >= 4.19.6-alt1
+Buildrequires: libxfce4windowing-devel >= 4.20.1-alt1
 BuildRequires: libX11-devel libXext-devel libwnck3-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libwayland-client-devel libgtk-layer-shell-devel
@@ -154,7 +156,8 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %files -n libxfce4panel-gtk3
-%_libdir/%libxfce4panel_name_gtk3.so.*
+%_libdir/%libxfce4panel_name_gtk3.so.%gtk3_soname
+%_libdir/%libxfce4panel_name_gtk3.so.%gtk3_soname.*
 %_libdir/xfce4/panel/%wrapper_name_gtk3
 
 %files -n libxfce4panel-gtk3-devel
@@ -176,6 +179,10 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Mon Feb 03 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
+- Added soname check.
+- Updated to 4.20.2.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 

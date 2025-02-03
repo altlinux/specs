@@ -1,8 +1,9 @@
 %def_enable introspection
 %def_disable docs
+%define soname 0
 
 Name: libxfce4windowing
-Version: 4.20.0
+Version: 4.20.2
 Release: alt1
 
 Summary: Xfce-related windowing concept abstraction library for X11 and Wayland
@@ -91,7 +92,8 @@ GObject introspection devel data for %name.
 
 %files -f %name.lang
 %doc README.md NEWS
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files devel
 %if_enabled docs
@@ -111,6 +113,10 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Feb 03 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
+- Added soname check.
+- Updated to 4.20.2.
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 
