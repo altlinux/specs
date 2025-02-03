@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define nsight_compute_ver 2023.3.1
-%define nsight_sys_ver 2023.3.3
-%define min_driver_ver 525.60.13
+%define nsight_compute_ver 2024.1.1
+%define nsight_sys_ver 2023.4.4
+%define min_driver_ver 550.54.15
 %define cuda_release 12
-%define cuda_major 3
+%define cuda_major 4
 
 %global __find_debuginfo_files %nil
 
@@ -20,7 +20,7 @@
 %add_findprov_skiplist %_libdir/nsight-compute-%nsight_compute_ver/*
 
 Name: nvidia-cuda-toolkit
-Version: 12.3.2
+Version: 12.4.1
 Release: alt1
 
 Summary: NVIDIA CUDA Toolkit libraries
@@ -733,6 +733,9 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_bindir/nvprof
 
 %changelog
+* Mon Feb 03 2025 Mikhail Tergoev <fidel@altlinux.org> 12.4.1-alt1
+- updated to 12.4.1
+
 * Mon Jan 29 2024 Mikhail Tergoev <fidel@altlinux.org> 12.3.2-alt1
 - updated to 12.3.2 (ALT bug: 49154)
 - returned requires nvidia-cuda-toolkit to nvidia-cuda-devel
