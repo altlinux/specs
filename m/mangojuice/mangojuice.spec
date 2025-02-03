@@ -1,7 +1,7 @@
 %define APP_ID io.github.radiolamp.mangojuice
 
 Name: mangojuice
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: A graphical user interface for MangoHud configuration
@@ -36,14 +36,18 @@ temperature, CPU and GPU statistics, and more.
 
 %install
 %meson_install
-%find_lang --with-gnome %APP_ID
+%find_lang --with-gnome %name
 
-%files -f %APP_ID.lang
+%files -f %name.lang
 %_bindir/%name
 %_desktopdir/%APP_ID.desktop
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Sat Feb 01 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.1-alt1
+- New version 0.8.1
+- Changed macro variable for searching language files
+
 * Fri Jan 10 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.0-alt1
 - New version 0.8.0
 
