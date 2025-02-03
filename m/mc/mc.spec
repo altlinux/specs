@@ -3,11 +3,11 @@
 %define fullname MidnightCommander
 
 Name: mc
-Version: 4.8.32
-Release: alt2
+Version: 4.8.33
+Release: alt1
 
 # '-gitYYYYMMDD' or ''
-%define ver_date '-git20240916'
+%define ver_date ''
 
 License: GPL-3.0-or-later
 Summary: An user-friendly file manager and visual shell
@@ -40,7 +40,7 @@ Patch101: mc-4.8.30-savannah-edit-homekey.patch
 Patch102: mc-4.8.32-alt-forceexec.patch
 
 # http://www.midnight-commander.org/ticket/34
-Patch103: mc-4.8.30-alt-extfs-udar.patch
+Patch103: mc-4.8.33-alt-extfs-udar.patch
 
 # https://src.fedoraproject.org/rpms/mc/raw/rawhide/f/mc-python3.patch
 # https://github.com/MidnightCommander/mc/pull/149
@@ -219,6 +219,7 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %config(noreplace) %_sysconfdir/mc/mc.keymap
 %config(noreplace) %_sysconfdir/mc/mc.default.keymap
 %config(noreplace) %_sysconfdir/mc/mc.emacs.keymap
+%config(noreplace) %_sysconfdir/mc/mc.vim.keymap
 %config(noreplace) %_sysconfdir/mc/mc.menu
 %config(noreplace) %_sysconfdir/mc/sfs.ini
 
@@ -239,6 +240,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Mon Feb 03 2025 Sergey Y. Afonin <asy@altlinux.org> 4.8.33-alt1
+- 4.8.33
+- updated alt-extfs-udar.patch
+
 * Tue Sep 24 2024 Sergey Y. Afonin <asy@altlinux.org> 4.8.32-alt2
 - returned -r option for run mc (lost when alt-wrapper.patch was
   disabled)
