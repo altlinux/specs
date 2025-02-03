@@ -3,7 +3,7 @@
 
 Name: qt6-virtualkeyboard
 Version: 6.7.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -11,6 +11,7 @@ Url: http://qt.io/
 License: GPL-3.0-only
 
 Requires: %name-common
+Requires: qt6-declarative
 Provides: qml6(QtQuick.VirtualKeyboard)
 
 Source: %qt_module-everywhere-src-%version.tar
@@ -150,6 +151,9 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?VirtualKeyboardSettings.so.*
 
 %changelog
+* Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
+- fix requires (closes: 52887)
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 
