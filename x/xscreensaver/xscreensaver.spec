@@ -10,7 +10,7 @@
 
 Name: xscreensaver
 Version: 5.45
-Release: alt4
+Release: alt5
 
 Summary: A screen saver and locker for the X window system
 
@@ -336,6 +336,9 @@ find %buildroot -name "*handsy*" -delete
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Mon Feb 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.45-alt5
+- Do not claim on even older version.
+
 * Wed Dec 13 2023 Andrey Cherepanov <cas@altlinux.org> 5.45-alt4
 - Remove drug molecules.
 
