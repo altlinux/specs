@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.19
+Version: 1.3.20
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,13 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Sun Feb 02 2025 Kirill Izmestev <felixz@altlinux.org> 1.3.20-alt1
+- Add Tatar and Mari languages:
+  1. Show Russian labels when a program has not yet been translated to
+     the language of small nation of Russia.
+  2. Take into account the absence of the utf8 substring in the names
+     of the Mari and Tatar locales.
+
 * Sat Dec 28 2024 Anton Midyukov <antohami@altlinux.org> 1.3.19-alt1
 - Refactoring write_gnome_kbd:
   1. Remove unsupported keyboard shortcuts for keyboard layout switcher
