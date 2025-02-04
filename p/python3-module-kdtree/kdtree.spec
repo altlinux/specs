@@ -1,8 +1,6 @@
-%define pypi_name kdtree
-
-Name: python3-module-%pypi_name
+Name: python3-module-kdtree
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: A Python implementation of a kd-tree
 License: ISC
@@ -14,9 +12,10 @@ Vcs: https://github.com/stefankoegl/kdtree
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 
-# Conflicts: python3-module-libkdtree++
-
 BuildArch: noarch
+
+Provides: python3-module-libkdtree++ = %EVR
+Obsoletes: python3-module-libkdtree++ < %EVR
 
 Source: %name-%version.tar
 
@@ -37,5 +36,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.16-alt2
+- added obsoletes and provides (ALT #52916)
+
 * Tue Jan 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.16-alt1
 - Initial build for Sisyphus
+
