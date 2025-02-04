@@ -3,7 +3,7 @@
 
 Name: vim-plugin-editorconfig
 Summary: EditorConfig plugin for Vim
-Version: 1.1.1
+Version: 1.2.1
 Release: alt1
 License: BSD-2-Clause and Python-2.0
 Group: Editors
@@ -30,12 +30,15 @@ are easily readable and they work nicely with version control systems.
 
 %install
 mkdir -p %buildroot%vim_runtime_dir
-cp -av autoload doc plugin %buildroot%vim_runtime_dir
+cp -av autoload doc ftdetect plugin %buildroot%vim_runtime_dir
 
 %files
-%doc README.md CONTRIBUTORS
+%doc LICENSE README.md CONTRIBUTORS
 %vim_runtime_dir/*/*
 
 %changelog
+* Mon Jan 27 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
+- Update to v1.2.1 (2024-11-08).
+
 * Thu Nov 11 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
 - First import of v1.1.1-7-g3078cd1 (2021-07-25).
