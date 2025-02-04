@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.2
-Release: alt2.1
+Release: alt3
 
 Summary: Easy Twitter integration for Django
 License: MIT
@@ -18,6 +18,7 @@ Patch0: port-on-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-django
+BuildRequires: python3-module-requests
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -79,6 +80,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Tue Feb 04 2025 Anton Vyatkin <toni@altlinux.org> 1.2.2-alt3
+- Fixed FTBFS.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.2.2-alt2.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
