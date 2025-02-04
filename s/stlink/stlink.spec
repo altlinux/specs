@@ -1,26 +1,22 @@
-%define _unpackaged_files_terminate_build 1
-%def_without static
-
 Name: stlink
-Version: 1.6.1
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Epoch: 1
 
 Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2/v2-1/v3
 License: BSD-3-Clause
 Group: Development/Other
+Url: https://github.com/stlink-org/stlink
 
-URL: https://github.com/texane/stlink.git
+Conflicts: stlink-gui < 1.8.0
+
 Source0: %name-%version.tar
+Patch0: Post-release-patch-for-v1.8.0.patch
 
 BuildRequires: cmake
 BuildRequires: libgtk+3-devel
 BuildRequires: libusb-devel
 BuildRequires: pandoc
-BuildRequires: libpcre-devel
-BuildRequires: libffi-devel
-BuildRequires: bzlib-devel
-BuildRequires: libbrotli-devel
 
 %description
 
@@ -73,68 +69,67 @@ GUI for stlink
 
 %prep
 %setup
-# restore pkgconfig generation
-# FIXME: resulting pkgconfig is broken anyway
-sed -i 's|#add_subdirectory(cmake\/pkgconfig)|add_subdirectory(cmake/pkgconfig)|' CMakeLists.txt
-# NB: this may become way too generic in future
-sed -i 's|\(.*DESTINATION.*\)\(${PROJECT_NAME}\/\)\(.*\)|\1\3|g' doc/man/CMakeLists.txt src/stlink-gui/CMakeLists.txt
-# move stlink-gui.ui out of %%_bindir
-sed -i 's|stlink-gui.ui DESTINATION ${CMAKE_INSTALL_BINDIR}|stlink-gui.ui DESTINATION %_datadir/%name|' src/stlink-gui/CMakeLists.txt
-sed -i 's|STLINK_UI_DIR="${CMAKE_INSTALL_PREFIX}/bin"|STLINK_UI_DIR="%_datadir/%name"|' src/stlink-gui/CMakeLists.txt
+%patch0 -p1
+# no need to set it explicitly
+sed -i '/("-D_FORTIFY_SOURCE=2")/d' cmake/modules/c_flags.cmake
+echo %version > .version
 
 %build
-# sysconf/udev policy - /etc is for user
-mkdir -p %buildroot%_udevrulesdir/
 %cmake \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DINCLUDE_INSTALL_DIR=%_includedir \
-	-DSTLINK_LIBRARY_PATH=%_libdir \
 	-DSTLINK_GENERATE_MANPAGES=ON \
 	-DSTLINK_UDEV_RULES_DIR=%_udevrulesdir \
-	-DSTLINK_MODPROBED_DIR=%_sysconfdir/modprobe.d
+	-DSTLINK_MODPROBED_DIR=%_modprobedir
 
-# parallel build is broken with NPROCS >=8 and even >=4 on ppc64le
-export NPROCS=1
-%cmake_build
+%cmake_build -j1
 
 %install
 %cmakeinstall_std
+rm -v %buildroot/%_libdir/lib%name.a
+# upstream dropped pc generator altogether
+mkdir -p %buildroot%_pkgconfigdir
+cat > %buildroot%_pkgconfigdir/stlink.pc << 'E_O_F'
+prefix=%_prefix
+exec_prefix=%_prefix
+libdir=%_libdir
+includedir=%_includedir
 
-
-%if_without static
-rm -f %buildroot/%_libdir/lib%name.a
-%endif
+Name: stlink
+Description: STLINK library
+Version: %version
+Libs: -lstlink
+Cflags: -I${includedir}/stlink
+E_O_F
 
 %files
 %doc CHANGELOG.md LICENSE.md README.md
-%_sysconfdir/modprobe.d/*
+%_modprobedir/*
 %_udevrulesdir/*
 %_bindir/st-*
+%_datadir/stlink
+%exclude %_datadir/stlink/stlink-gui.ui
 %_man1dir/*
 
 %files gui
-%_bindir/%name-gui
-%dir %_datadir/%name
-%_datadir/%name/%name-gui.ui
-%_datadir/applications/*
-%_iconsdir/hicolor/scalable/apps/*.svg
+%_bindir/stlink-gui
+%_datadir/stlink/stlink-gui.ui
+%_desktopdir/*.desktop
+%_iconsdir/*/*/*/*.svg
 
 %files -n lib%name
-%_libdir/lib%name.so*
+%_libdir/libstlink.so.*
 
 %files -n lib%name-devel
-%if_with static
-%_libdir/*.a
-%endif
-%dir %_includedir/%name
-%_includedir/%name.h
-# stm32.h: https://github.com/stlink-org/stlink/issues/976
-%_includedir/stm32.h
-%_includedir/%name/*.h
-%_pkgconfigdir/%name.pc
+%_includedir/stlink
+%_libdir/libstlink.so
+%_pkgconfigdir/stlink.pc
 
 %changelog
+* Tue Feb 04 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.8.0-alt1
+- 1.8.0 released
+
 * Mon Jan 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:1.6.1-alt2
 - Revived the package (no code changes). It's useful, and it has been deleted
   due to a bogus compiler warning:
