@@ -2,7 +2,7 @@
 
 Name: python3-module-shazamio
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Is a free asynchronous library from reverse engineered Shazam API written in Python 3.8+ with asyncio and aiohttp.
 License: MIT
@@ -28,6 +28,8 @@ Includes all the methods that Shazam has, including searching for a song by file
 %prep
 %setup
 
+subst "s|from shazamio_core import Recognizer, Signature|from shazamio_core.shazamio_core import Recognizer, Signature|" shazamio/api.py
+
 %build
 %pyproject_build
 
@@ -40,5 +42,8 @@ Includes all the methods that Shazam has, including searching for a song by file
 %python3_sitelibdir/%{pyproject_distinfo %pypname}
 
 %changelog
+* Tue Feb 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt2
+- fixed for new shazamio core v1.1.1
+
 * Thu Jan 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.

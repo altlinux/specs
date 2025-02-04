@@ -1,7 +1,7 @@
 %define nameD shazamio_core
  
 Name:    python3-module-shazamio-core
-Version: 1.0.7
+Version: 1.1.1
 Release: alt1
 
 Summary: shazamio-core
@@ -18,7 +18,7 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: libalsa-devel python3-module-maturin
 BuildRequires: /proc
 
-%add_python3_path %python3_sitelibdir/%name/
+%add_python3_path %python3_sitelibdir/%nameD/
 
 %description
 %summary
@@ -45,8 +45,12 @@ tar -xf %SOURCE1 -C %_builddir/%name-%version/
 %files
 %doc *.md LICENSE
 %python3_sitelibdir/%nameD/
-%python3_sitelibdir/%{pyproject_distinfo %nameD}
+# %python3_sitelibdir/%{pyproject_distinfo %nameD}
+%python3_sitelibdir/shazamio_core-1.1.0.dist-info/
 
 %changelog
+* Tue Feb 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt1
+- Update to version 1.1.1
+
 * Thu Jan 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.7-alt1
 - Initial build for Sisyphus
