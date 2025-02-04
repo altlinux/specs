@@ -1,5 +1,5 @@
 Name:    csvlens
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: Command line csv viewer
@@ -13,6 +13,8 @@ Source2: vendor.tar
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo /proc
+# Uncomment req below to vendor dependencies inside chrooted env correctly.
+# BuildRequires: cargo-vendor-filterer
 
 %description
 csvlens is a command line CSV file viewer.
@@ -60,6 +62,9 @@ install -pv %SOURCE1 %buildroot%_man1dir
 %_man1dir/%{name}*
 
 %changelog
+* Tue Feb 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.11.0-alt1
+- New version.
+
 * Thu Sep 19 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.10.1-alt1
 - New version
 
