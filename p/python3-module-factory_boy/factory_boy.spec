@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.3.3
 Release: alt1
 
 Summary: A test fixtures replacement for Python
@@ -38,10 +38,7 @@ maintain fixtures with easy-to-use factories for complex object.
 %prep
 %setup
 %autopatch -p1
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
-    $(find ./ -name '*.py')
-
+%python3_fix_shebang .
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -60,6 +57,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 3.3.3-alt1
+- 3.3.1 -> 3.3.3.
+
 * Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.3.0 -> 3.3.1.
 
