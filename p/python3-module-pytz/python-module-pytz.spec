@@ -1,24 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytz
+%define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Epoch: 1
-Version: 2024.1
+Version: 2025.1
 Release: alt1
-
+Epoch: 1
 Summary: World timezone definitions, modern and historical
-Source0: %pypi_name-%version.tar
 License: MIT
 Group: Development/Python
-BuildArch: noarch
 Url: https://pypi.org/project/pytz
 VCS: https://github.com/stub42/pytz
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildArch: noarch
+Source0: %pypi_name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%endif
 
 %description
 pytz brings the Olson tz database into Python. This library allows accurate and
@@ -28,6 +29,8 @@ read more about in the Python Library Reference (datetime.tzinfo).
 
 %prep
 %setup -n %pypi_name-%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -37,19 +40,21 @@ read more about in the Python Library Reference (datetime.tzinfo).
 
 %check
 # sync to .github/workflows/main.yml
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    python pytz/tests/test_lazy.py -vv
-    python pytz/tests/test_tzinfo.py -vv
-EOF
-%tox_check_pyproject
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+python %mod_name/tests/test_lazy.py -vv
+python %mod_name/tests/test_tzinfo.py -vv
+python %mod_name/tests/test_docs.py -vv
+ENDTESTS
 
 %files
-%python3_sitelibdir/pytz/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 1:2025.1-alt1
+- 2024.1 -> 2025.1.
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 1:2024.1-alt1
 - Build new version.
 
