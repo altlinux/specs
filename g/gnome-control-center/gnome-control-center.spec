@@ -16,7 +16,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -77,6 +77,8 @@ Requires: NetworkManager-openvpn-gtk4
 Requires: NetworkManager-pptp-gtk4
 Requires: NetworkManager-vpnc-gtk4
 Requires: NetworkManager-l2tp-gtk4
+Requires: NetworkManager-openconnect-gtk4
+
 # for sharing
 Requires: gnome-user-share
 # for media sharing
@@ -212,6 +214,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Tue Feb 04 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt1
+- 47.4
+
 * Thu Jan 09 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
 - 47.3
 
