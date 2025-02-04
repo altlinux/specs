@@ -5,7 +5,7 @@
 %define gtk3_soname 4
 
 Name: xfce4-panel
-Version: 4.20.2
+Version: 4.20.3
 Release: alt1
 
 Summary: Panel for Xfce
@@ -179,6 +179,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Tue Feb 04 2025 Mikhail Efremov <sem@altlinux.org> 4.20.3-alt1
+- Updated to 4.20.3.
+
 * Mon Feb 03 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
 - Added soname check.
 - Updated to 4.20.2.
