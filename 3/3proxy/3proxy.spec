@@ -5,13 +5,13 @@
 
 Name: 3proxy
 Version: 0.6.1
-Release: alt2
+Release: alt3
 
 Summary: Proxy server
 
-License: GPL
+License: BSD-3-Clause
 Group: System/Servers
-Url: http://securityvulns.ru/soft/
+Url: https://github.com/3proxy/3proxy
 
 
 Source: %name-%version.tar
@@ -30,7 +30,7 @@ Packager: Afanasov Dmitry <ender@altlinux.org>
 BuildRequires: libcap-devel
 
 %description
-3proxy -- light proxy server. 
+3proxy -- light proxy server.
 
 %prep
 %setup -q 
@@ -39,6 +39,7 @@ BuildRequires: libcap-devel
 %patch3 -p1
 
 %build
+sed -i '/^CFLAGS/s/$/ -Wno-error=incompatible-pointer-types -Wno-pointer-sign/' Makefile.Linux Makefile.unix
 %make_build -f Makefile.Linux
 cp %SOURCE5 %SOURCE4 ./
 
@@ -96,6 +97,10 @@ install -pD -m644 README-ALT* %buildroot%_datadir/%name-%version/
 %_datadir/%name-%version
 
 %changelog
+* Tue Feb 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.6.1-alt3
+- NMU: fix FTBFS with gcc14
+- spec: fix License and URL
+
 * Wed Dec 09 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.1-alt2
 - Applied security fix from upstream (Fixes: CVE-2019-14495).
 
