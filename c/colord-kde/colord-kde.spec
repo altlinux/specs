@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 24.12.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -37,7 +37,7 @@ KDE support for colord including KDE Daemon module and System Settings module.
 %patch1 -p1
 
 mv po/ru/colord-kde.po{,.old}
-msgcat --use-first %SOURCE10 po/ru/colord-kde.po.old > po/ru/colord-kde.po
+msgcat --use-first po/ru/colord-kde.po.old %SOURCE10 > po/ru/colord-kde.po
 rm -f po/ru/colord-kde.po.old
 cp -ar po/ru/colord-kde.po po/ru/kcm_colord.po
 
@@ -58,6 +58,9 @@ cp -ar po/ru/colord-kde.po po/ru/kcm_colord.po
 
 
 %changelog
+* Tue Feb 04 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt2
+- fix russian translation
+
 * Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 
