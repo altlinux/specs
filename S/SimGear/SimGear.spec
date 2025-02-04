@@ -3,7 +3,7 @@
 
 Name: SimGear
 Version: %origver
-Release: alt2
+Release: alt3
 
 Summary: Simulator Construction Tools
 License: GPLv2+
@@ -14,8 +14,9 @@ Url: http://www.flightgear.org
 Source: %name-%version.tar
 Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
-Patch2: %name-g++8.patch
+Patch2: SimGear-g++8.patch
 Patch3: simgear-2020.3.17-fix-build.patch
+Patch4: simgear-2020.3.17-alt-gcc14.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 03 2012
@@ -71,6 +72,7 @@ This package contains header files for SimGear.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch4 -p2
 %ifarch %e2k
 sed -i "/__x86_64__/{N;/<x86intrin.h>/s/__x86_64__/__e2k__/}" simgear/math/simd.hxx
 %else
@@ -116,6 +118,9 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Tue Feb 04 2025 Anton Meleshnikov <alton@altlinux.org> 2020.3.17-alt3
+- Fix FTBFS
+
 * Sun Oct 15 2023 Anton Midyukov <antohami@altlinux.org> 2020.3.17-alt2
 - Fix FTBFS
 
