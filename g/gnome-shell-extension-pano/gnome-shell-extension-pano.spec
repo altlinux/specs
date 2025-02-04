@@ -12,7 +12,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt0.1%beta
+Release: alt0.2%beta
 
 Summary: Next-gen Clipboard manager for Gnome Shell
 Group: Graphical desktop/GNOME
@@ -30,7 +30,9 @@ Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
 Source: %__name-%version%beta.tar
 %endif
-Source1: %_name-%version%beta-node.tar
+Source1: %__name-%version%beta-node.tar
+# https://github.com/lukasgeiter/gettext-extractor/pull/71
+Patch1: %__name-23-alt-build.patch
 
 Requires: gnome-shell >= 45
 Requires: typelib(Adw) = 1
@@ -47,8 +49,9 @@ BuildRequires: /usr/bin/glib-compile-schemas
 
 %prep
 %setup -n %__name-%version%beta %{?_disable_bootstrap:-a1}
+%patch1
 %{?_enable_bootstrap:yarn install
-tar cf %_sourcedir/%_name-%version%beta-node.tar node_modules/}
+tar cf %_sourcedir/%__name-%version%beta-node.tar node_modules/}
 
 %build
 yarn run --offline build
@@ -66,7 +69,6 @@ install -D -p -m 0644 \
     %buildroot%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 popd
 
-
 %find_lang %gettext_domain
 
 %files -f %gettext_domain.lang
@@ -75,6 +77,10 @@ popd
 %doc README.md
 
 %changelog
+* Tue Feb 4 2025 Yuri N. Sedunov <aris@altlinux.org> 23-alt0.2.alpha3
+- updated to v23-alpha3-9-g49cd32f
+- fixed FTBFS (ALT #52804)
+
 * Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 23-alt0.1.alpha3
 - v23-alpha3
 
