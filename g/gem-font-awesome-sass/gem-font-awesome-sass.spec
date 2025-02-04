@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname font-awesome-sass
 
 Name:          gem-font-awesome-sass
-Version:       6.1.1
+Version:       6.5.2
 Release:       alt1
 Summary:       Font-Awesome SASS gem for use in Ruby projects
 License:       MIT
@@ -13,7 +17,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
+%if_enabled check
 BuildRequires: gem(bundler) >= 1.3
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(sassc) >= 2.0
@@ -24,7 +28,7 @@ BuildConflicts: gem(sassc) >= 3
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      gem(sassc) >= 2.0
 Conflicts:     gem(sassc) >= 3
-Provides:      gem(font-awesome-sass) = 6.1.1
+Provides:      gem(font-awesome-sass) = 6.5.2
 
 
 %description
@@ -36,15 +40,16 @@ Refactored to support more Ruby environments with code and documentation humbly
 used from the excellent bootstrap-sass project by the Bootstrap team.
 
 
+%if_enabled    doc
 %package       -n gem-font-awesome-sass-doc
-Version:       6.1.1
+Version:       6.5.2
 Release:       alt1
 Summary:       Font-Awesome SASS gem for use in Ruby projects documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета font-awesome-sass
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(font-awesome-sass) = 6.1.1
+Requires:      gem(font-awesome-sass) = 6.5.2
 
 %description   -n gem-font-awesome-sass-doc
 Font-Awesome SASS gem for use in Ruby projects documentation
@@ -59,17 +64,19 @@ used from the excellent bootstrap-sass project by the Bootstrap team.
 
 %description   -n gem-font-awesome-sass-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета font-awesome-sass.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-font-awesome-sass-devel
-Version:       6.1.1
+Version:       6.5.2
 Release:       alt1
 Summary:       Font-Awesome SASS gem for use in Ruby projects development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета font-awesome-sass
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(font-awesome-sass) = 6.1.1
+Requires:      gem(font-awesome-sass) = 6.5.2
 Requires:      gem(bundler) >= 1.3
 Requires:      gem(rake) >= 0
 
@@ -86,6 +93,7 @@ used from the excellent bootstrap-sass project by the Bootstrap team.
 
 %description   -n gem-font-awesome-sass-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета font-awesome-sass.
+%endif
 
 
 %prep
@@ -105,15 +113,22 @@ used from the excellent bootstrap-sass project by the Bootstrap team.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-font-awesome-sass-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-font-awesome-sass-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Thu Oct 17 2024 Pavel Skrylev <majioa@altlinux.org> 6.5.2-alt1
+- ^ 6.1.1 -> 6.5.2
+
 * Mon Jan 30 2023 Pavel Skrylev <majioa@altlinux.org> 6.1.1-alt1
 - ^ 5.15.1 -> 6.1.1
 

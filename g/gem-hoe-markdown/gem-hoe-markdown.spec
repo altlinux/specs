@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname hoe-markdown
 
 Name:          gem-hoe-markdown
-Version:       1.4.0
+Version:       1.7.0
 Release:       alt1
 Summary:       Hoe (rubygem) plugin to hyperlink your markdown documentation
 License:       MIT
@@ -14,13 +18,19 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rake) > 0
+%if_enabled check
+BuildRequires: gem(rspec) >= 3.0
+BuildConflicts: gem(rspec) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+Requires:      ruby >= 2.3.0
 Requires:      gem(rake) > 0
-Provides:      gem(hoe-markdown) = 1.4.0
-
+Requires:      gem(rspec) >= 3.0
+Conflicts:     gem(rspec) >= 4
+Provides:      hoe-markdown = %EVR
+Provides:      gem(hoe-markdown) = 1.7.0
 
 %description
 Hoe plugin with markdown helpers, for example to hyperlink github issues and
@@ -31,15 +41,16 @@ intended for gem maintainers, but the underlying library of markdown
 manipulation methods might be generally useful.
 
 
+%if_enabled    doc
 %package       -n gem-hoe-markdown-doc
-Version:       1.4.0
+Version:       1.7.0
 Release:       alt1
 Summary:       Hoe (rubygem) plugin to hyperlink your markdown documentation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hoe-markdown
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(hoe-markdown) = 1.4.0
+Requires:      gem(hoe-markdown) = 1.7.0
 
 %description   -n gem-hoe-markdown-doc
 Hoe (rubygem) plugin to hyperlink your markdown documentation documentation
@@ -54,17 +65,19 @@ manipulation methods might be generally useful.
 
 %description   -n gem-hoe-markdown-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета hoe-markdown.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-hoe-markdown-devel
-Version:       1.4.0
+Version:       1.7.0
 Release:       alt1
 Summary:       Hoe (rubygem) plugin to hyperlink your markdown documentation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hoe-markdown
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(hoe-markdown) = 1.4.0
+Requires:      gem(hoe-markdown) = 1.7.0
 
 %description   -n gem-hoe-markdown-devel
 Hoe (rubygem) plugin to hyperlink your markdown documentation development
@@ -79,6 +92,7 @@ manipulation methods might be generally useful.
 
 %description   -n gem-hoe-markdown-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета hoe-markdown.
+%endif
 
 
 %prep
@@ -94,19 +108,26 @@ manipulation methods might be generally useful.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-hoe-markdown-doc
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-hoe-markdown-devel
-%doc README.md
+%doc CHANGELOG.md CODE_OF_CONDUCT.md LICENSE.txt README.md
+%endif
 
 
 %changelog
+* Fri Jan 10 2025 Pavel Skrylev <majioa@altlinux.org> 1.7.0-alt1
+- ^ 1.4.0 -> 1.7.0
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 1.4.0-alt1
 - ^ 1.1.0 -> 1.4.0
 

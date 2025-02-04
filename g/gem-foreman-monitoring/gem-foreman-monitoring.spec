@@ -1,8 +1,12 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname foreman_monitoring
 
 Name:          gem-foreman-monitoring
-Version:       2.1.0
-Release:       alt2
+Version:       3.2.0
+Release:       alt1
 Summary:       Foreman plugin for monitoring system integration
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -12,66 +16,64 @@ Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         foreman-3.5.0.patch
 BuildRequires(pre): rpm-build-ruby
-%if_with check
+%if_enabled check
 BuildRequires: gem(rdoc) >= 0
-BuildRequires: gem(rubocop) >= 0.80.0 gem(rubocop) < 2
-BuildRequires: gem(rubocop-minitest) >= 0
-BuildRequires: gem(rubocop-performance) >= 0
-BuildRequires: gem(rubocop-rails) >= 0
-BuildRequires: gem(deface) < 2.0
+BuildRequires: gem(theforeman-rubocop) >= 0.1.0
+BuildConflicts: gem(theforeman-rubocop) >= 0.2
+BuildConflicts: gem(deface) >= 2.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-Requires:      gem(deface) < 2.0
-Provides:      gem(foreman_monitoring) = 2.1.0
-
 %ruby_alias_names foreman_monitoring,foreman-monitoring
+Conflicts:     gem(deface) >= 2.0
+Provides:      gem(foreman_monitoring) = 3.2.0
+
 
 %description
 Foreman plugin for monitoring system integration.
 
 
+%if_enabled    doc
 %package       -n gem-foreman-monitoring-doc
-Version:       2.1.0
-Release:       alt2
+Version:       3.2.0
+Release:       alt1
 Summary:       Foreman plugin for monitoring system integration documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_monitoring
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_monitoring) = 2.1.0
+Requires:      gem(foreman_monitoring) = 3.2.0
 
 %description   -n gem-foreman-monitoring-doc
 Foreman plugin for monitoring system integration documentation files.
 
 %description   -n gem-foreman-monitoring-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета foreman_monitoring.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-foreman-monitoring-devel
-Version:       2.1.0
-Release:       alt2
+Version:       3.2.0
+Release:       alt1
 Summary:       Foreman plugin for monitoring system integration development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_monitoring
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman_monitoring) = 2.1.0
+Requires:      gem(foreman_monitoring) = 3.2.0
 Requires:      gem(rdoc) >= 0
-Requires:      gem(rubocop) >= 0.80.0 gem(rubocop) < 2
-Requires:      gem(rubocop-minitest) >= 0
-Requires:      gem(rubocop-performance) >= 0
-Requires:      gem(rubocop-rails) >= 0
+Requires:      gem(theforeman-rubocop) >= 0.1.0
+Conflicts:     gem(theforeman-rubocop) >= 0.2
 
 %description   -n gem-foreman-monitoring-devel
 Foreman plugin for monitoring system integration development package.
 
 %description   -n gem-foreman-monitoring-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета foreman_monitoring.
+%endif
 
 
 %prep
@@ -92,15 +94,22 @@ Foreman plugin for monitoring system integration development package.
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-foreman-monitoring-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-foreman-monitoring-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Fri Oct 04 2024 Pavel Skrylev <majioa@altlinux.org> 3.2.0-alt1
+- ^ 2.1.0 -> 3.2.0
+
 * Wed Jul 05 2023 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt2
 - ! fixed patch for proper defaults
 

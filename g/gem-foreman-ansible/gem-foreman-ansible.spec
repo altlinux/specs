@@ -1,8 +1,12 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname foreman_ansible
 
 Name:          gem-foreman-ansible
-Version:       10.0.1
-Release:       alt1.1
+Version:       15.0.1
+Release:       alt1
 Summary:       Ansible integration in Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -12,37 +16,31 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Source1:       public.tar
+Source1:       .public.tar
 BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(rubocop) >= 0.87.0
-BuildRequires: gem(rubocop-minitest) >= 0.9.0
-BuildRequires: gem(rubocop-performance) >= 1.5.2
-BuildRequires: gem(rubocop-rails) >= 2.7.1
+%if_enabled check
+BuildRequires: gem(theforeman-rubocop) >= 0.1.0
 BuildRequires: gem(acts_as_list) >= 1.0.3
-BuildRequires: gem(foreman_remote_execution) >= 8.0.0
-BuildRequires: gem(foreman-tasks) >= 7.0.0
-BuildConflicts: gem(rubocop) >= 2
-BuildConflicts: gem(rubocop-minitest) >= 1
-BuildConflicts: gem(rubocop-performance) >= 2
-BuildConflicts: gem(rubocop-rails) >= 3
+BuildRequires: gem(foreman_remote_execution) >= 14.0
+BuildRequires: gem(foreman-tasks) >= 10.0
+BuildConflicts: gem(theforeman-rubocop) >= 0.2
 BuildConflicts: gem(acts_as_list) >= 1.1
 BuildConflicts: gem(deface) >= 2.0
+BuildConflicts: gem(foreman_remote_execution) >= 15
+BuildConflicts: gem(foreman-tasks) >= 11
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency rubocop-minitest >= 0.13.0,rubocop-minitest < 1
-%ruby_use_gem_dependency rubocop-rails >= 2.11.0,rubocop-rails < 3
-%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
 %ruby_alias_names foreman_ansible,foreman-ansible
 Requires:      gem(acts_as_list) >= 1.0.3
-Requires:      gem(foreman_remote_execution) >= 8.0.0
-Requires:      gem(foreman-tasks) >= 7.0.0
+Requires:      gem(foreman_remote_execution) >= 14.0
+Requires:      gem(foreman-tasks) >= 10.0
 Conflicts:     gem(acts_as_list) >= 1.1
 Conflicts:     gem(deface) >= 2.0
-Provides:      gem(foreman_ansible) = 10.0.1
+Conflicts:     gem(foreman_remote_execution) >= 15
+Conflicts:     gem(foreman-tasks) >= 11
+Provides:      gem(foreman_ansible) = 15.0.1
 
 
 %description
@@ -57,15 +55,16 @@ after an ansible run.
 foreman_ansible_inventory
 
 
+%if_enabled    doc
 %package       -n gem-foreman-ansible-doc
-Version:       10.0.1
-Release:       alt1.1
+Version:       15.0.1
+Release:       alt1
 Summary:       Ansible integration in Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_ansible
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(foreman_ansible) = 10.0.1
+Requires:      gem(foreman_ansible) = 15.0.1
 
 %description   -n gem-foreman-ansible-doc
 Ansible integration in Foreman documentation files.
@@ -82,25 +81,21 @@ foreman_ansible_inventory
 
 %description   -n gem-foreman-ansible-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета foreman_ansible.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-foreman-ansible-devel
-Version:       10.0.1
-Release:       alt1.1
+Version:       15.0.1
+Release:       alt1
 Summary:       Ansible integration in Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_ansible
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(foreman_ansible) = 10.0.1
-Requires:      gem(rubocop) >= 0.87.0
-Requires:      gem(rubocop-minitest) >= 0.9.0
-Requires:      gem(rubocop-performance) >= 1.5.2
-Requires:      gem(rubocop-rails) >= 2.7.1
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(rubocop-minitest) >= 1
-Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(rubocop-rails) >= 3
+Requires:      gem(foreman_ansible) = 15.0.1
+Requires:      gem(theforeman-rubocop) >= 0.1.0
+Conflicts:     gem(theforeman-rubocop) >= 0.2
 
 %description   -n gem-foreman-ansible-devel
 Ansible integration in Foreman development package.
@@ -117,10 +112,10 @@ foreman_ansible_inventory
 
 %description   -n gem-foreman-ansible-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета foreman_ansible.
+%endif
 
 
 %prep
-%setup
 %setup -a 1
 
 %build
@@ -129,7 +124,7 @@ foreman_ansible_inventory
 %install
 %ruby_install
 install -d %buildroot%_datadir/foreman
-cp -rp public %buildroot%_datadir/foreman
+cp -rp .public %buildroot%_datadir/foreman/public
 
 %check
 %ruby_test
@@ -140,15 +135,22 @@ cp -rp public %buildroot%_datadir/foreman
 %ruby_gemlibdir
 %_datadir/foreman/public
 
+%if_enabled    doc
 %files         -n gem-foreman-ansible-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-foreman-ansible-devel
 %doc README.md
+%endif
 
 
 %changelog
+* Fri Oct 04 2024 Pavel Skrylev <majioa@altlinux.org> 15.0.1-alt1
+- ^ 10.0.1 -> 15.0.1
+
 * Thu Apr 06 2023 Pavel Skrylev <majioa@altlinux.org> 10.0.1-alt1.1
 - ! public webpack and assets
 

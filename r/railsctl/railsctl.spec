@@ -1,5 +1,5 @@
 Name:          railsctl
-Version:       1.0.1
+Version:       1.0.2
 Release:       alt1
 Summary:       Ruby-on-Rails control script
 License:       MIT
@@ -24,6 +24,9 @@ install -D -m 755 %name %buildroot%_sbindir/%name
 
 
 %changelog
+* Mon Feb 03 2025 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1
+- * changed bunlde function to apply install with test,dev first before update
+
 * Wed Jan 15 2025 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
 - + added GEM_HOME for proper run of rails
 - - disabled apipie, and encryption

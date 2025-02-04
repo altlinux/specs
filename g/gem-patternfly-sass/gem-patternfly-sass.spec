@@ -1,8 +1,9 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname patternfly-sass
 
 Name:          gem-patternfly-sass
 Version:       3.59.5.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Red Hat's Patternfly, converted to Sass and ready to drop into Rails
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -12,6 +13,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Source1:       dist.tar
 Patch:         lost-file.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
@@ -47,7 +49,7 @@ information? See the RCUE Quick Start Guide.
 
 %package       -n gem-patternfly-sass-doc
 Version:       3.59.5.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Red Hat's Patternfly, converted to Sass and ready to drop into Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета patternfly-sass
 Group:         Development/Documentation
@@ -71,7 +73,7 @@ information? See the RCUE Quick Start Guide.
 
 %package       -n gem-patternfly-sass-devel
 Version:       3.59.5.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Red Hat's Patternfly, converted to Sass and ready to drop into Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета patternfly-sass
 Group:         Development/Ruby
@@ -95,7 +97,7 @@ information? See the RCUE Quick Start Guide.
 
 
 %prep
-%setup
+%setup -a 1
 %autopatch
 
 %build
@@ -121,6 +123,9 @@ information? See the RCUE Quick Start Guide.
 
 
 %changelog
+* Thu Oct 17 2024 Pavel Skrylev <majioa@altlinux.org> 3.59.5.1-alt0.2
+- + added precompiled dist sources to the gem
+
 * Wed Jan 25 2023 Pavel Skrylev <majioa@altlinux.org> 3.59.5.1-alt0.1
 - ^ 3.59.5 -> 3.59.5[1]
 

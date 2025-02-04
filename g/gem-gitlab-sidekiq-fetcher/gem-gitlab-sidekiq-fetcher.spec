@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname gitlab-sidekiq-fetcher
 
 Name:          gem-gitlab-sidekiq-fetcher
-Version:       0.8.0
+Version:       0.9.0
 Release:       alt1
 Summary:       Redis reliable queue pattern implemented in Sidekiq
 License:       LGPL-3.0
@@ -13,13 +17,25 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(sidekiq) >= 6.1 gem(sidekiq) < 7
+%if_enabled check
+BuildRequires: gem(json) >= 2.3.0
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(rspec) >= 3
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(sidekiq) >= 6.1
+BuildRequires: gem(stub_env) >= 1.0
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(sidekiq) >= 8
+BuildConflicts: gem(stub_env) >= 2
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(sidekiq) >= 6.1 gem(sidekiq) < 7
-Provides:      gem(gitlab-sidekiq-fetcher) = 0.8.0
-
+%ruby_use_gem_dependency sidekiq >= 7.3.8,sidekiq < 8
+Requires:      gem(json) >= 2.3.0
+Requires:      gem(sidekiq) >= 6.1
+Conflicts:     gem(sidekiq) >= 8
+Provides:      gem(gitlab-sidekiq-fetcher) = 0.9.0
 
 %description
 gitlab-sidekiq-fetcher is an extension to Sidekiq that adds support for reliable
@@ -39,15 +55,16 @@ Compared to the reliable fetch strategy, it does not increase pressure on Redis
 significantly.
 
 
+%if_enabled    doc
 %package       -n gem-gitlab-sidekiq-fetcher-doc
-Version:       0.8.0
+Version:       0.9.0
 Release:       alt1
 Summary:       Redis reliable queue pattern implemented in Sidekiq documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gitlab-sidekiq-fetcher
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gitlab-sidekiq-fetcher) = 0.8.0
+Requires:      gem(gitlab-sidekiq-fetcher) = 0.9.0
 
 %description   -n gem-gitlab-sidekiq-fetcher-doc
 Redis reliable queue pattern implemented in Sidekiq documentation
@@ -71,17 +88,25 @@ significantly.
 
 %description   -n gem-gitlab-sidekiq-fetcher-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета gitlab-sidekiq-fetcher.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-gitlab-sidekiq-fetcher-devel
-Version:       0.8.0
+Version:       0.9.0
 Release:       alt1
 Summary:       Redis reliable queue pattern implemented in Sidekiq development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gitlab-sidekiq-fetcher
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gitlab-sidekiq-fetcher) = 0.8.0
+Requires:      gem(gitlab-sidekiq-fetcher) = 0.9.0
+Requires:      gem(pry) >= 0
+Requires:      gem(rspec) >= 3
+Requires:      gem(simplecov) >= 0
+Requires:      gem(stub_env) >= 1.0
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(stub_env) >= 2
 
 %description   -n gem-gitlab-sidekiq-fetcher-devel
 Redis reliable queue pattern implemented in Sidekiq development
@@ -105,6 +130,7 @@ significantly.
 
 %description   -n gem-gitlab-sidekiq-fetcher-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета gitlab-sidekiq-fetcher.
+%endif
 
 
 %prep
@@ -120,19 +146,26 @@ significantly.
 %ruby_test
 
 %files
-%doc README.md
+%doc CONTRIBUTING.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
+%if_enabled    doc
 %files         -n gem-gitlab-sidekiq-fetcher-doc
-%doc README.md
+%doc CONTRIBUTING.md LICENSE README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-gitlab-sidekiq-fetcher-devel
-%doc README.md
+%doc CONTRIBUTING.md LICENSE README.md
+%endif
 
 
 %changelog
+* Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.9.0-alt1
+- ^ 0.8.0 -> 0.9.0
+
 * Thu Apr 21 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - ^ 0.5.2 -> 0.8.0
 
