@@ -35,7 +35,7 @@
 
 Name: %rname
 Version: 6.2.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -601,6 +601,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Tue Feb 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.2.5-alt3
+- fix applications menu actions (closes: 52907)
+
 * Thu Jan 23 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.2.5-alt2
 - don't force default desktop wallpaper
 
