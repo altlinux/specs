@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: A tool that automatically formats Python code to conform to the PEP 8 style guide
@@ -61,6 +61,9 @@ of the formatting issues that can be reported by pycodestyle.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 04 2025 Anton Zhukharev <ancieg@altlinux.org> 2.3.2-alt1
+- Updated to 2.3.2.
+
 * Mon Jul 01 2024 Anton Zhukharev <ancieg@altlinux.org> 2.3.1-alt1
 - Updated to 2.3.1.
 
