@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 21.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Low-level Python CFFI Bindings for Argon2
 
@@ -21,6 +21,10 @@ BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cffi
 BuildRequires: libargon2-devel
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 Source: %name-%version.tar
 
@@ -47,5 +51,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/argon2_cffi_bindings-%version.dist-info
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 21.2.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 21.2.0-alt1
 - Initial build for Sisyphus.
