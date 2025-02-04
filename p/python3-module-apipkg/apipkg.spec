@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Version:        3.0.2
-Release:        alt1
+Release:        alt1.1
 
 Summary:        A Python namespace control and lazy-import mechanism
 
@@ -20,6 +20,9 @@ BuildArch:      noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-hatch-vcs
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 With apipkg you can control the exported namespace of a Python package
@@ -42,13 +45,16 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%tox_check_pyproject -k'not test_get_distribution_version'
+%tox_check_pyproject -- -k'not test_get_distribution_version'
 
 %files
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 3.0.2-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sun Jun 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
 - Automatically updated to 3.0.2.
 
