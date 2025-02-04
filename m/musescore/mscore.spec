@@ -3,16 +3,17 @@
 
 Name: musescore
 Version: %mversion.2
-Release: alt2
+Release: alt3
 
 Summary: Music notation and composition software
 
 License: GPLv2
 Group: Sound
 Url: https://musescore.org
+Vcs: https://github.com/musescore/MuseScore.git
 
-# https://github.com/musescore/MuseScore
 Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
 ExcludeArch: ppc64le
 
@@ -43,6 +44,7 @@ Music notation and composition software
 
 %prep
 %setup
+%autopatch -p1
 
 # Remove -lporttime on RPM-based systems where PortTime is part of PortMidi
 sed -i 's/ -lporttime//' mscore/CMakeLists.txt
@@ -90,11 +92,15 @@ chrpath -d %buildroot%_bindir/mscore
 %_datadir/mscore-%mversion
 %_man1dir/*
 %_xdgmimedir/packages/musescore.xml
-%_iconsdir/hicolor/16x16/apps/mscore.png
-%_iconsdir/hicolor/32x32/apps/mscore.png
-%_iconsdir/hicolor/48x48/apps/mscore.png
+%_iconsdir/hicolor/*/apps/mscore.*
+%_iconsdir/hicolor/*/mimetypes/application-x-musescore.*
+%_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Wed Feb 05 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt3
+- fix FTBFS
+- package more icons
+
 * Mon Jun 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.6.2-alt2
 - exclude build on ppc64le (due missed qt5-webengine-devel)
 
