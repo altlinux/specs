@@ -1,14 +1,15 @@
 Name: tuxmath
 Group: Games/Other
 Version: 2.0.3
-Release: alt6
+Release: alt7
 Summary: Educational math tutor for children
 
 License: GPLv3 AND CC-BY-SA-3.0 AND OFL-1.1
 Url: https://github.com/tux4kids/tuxmath
-Source0: %{name}-%version.tar
+Source0: %name-%version.tar
 Source1: %name.appdata.xml
 Patch0: tuxmath-update-russian-po.patch
+Patch1: tuxmath-2.0.3-alt-ftbfs.patch
 
 BuildRequires: gcc-c++ libxml2-devel pkgconfig(cairo)
 BuildRequires: desktop-file-utils libappstream-glib
@@ -28,6 +29,7 @@ different types of gameplay, at a variety of difficulty levels.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -67,6 +69,10 @@ appstream-util validate-relax --nonet \
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Feb 04 2025 Ulysses Apokin <ulysses@altlinux.org> 2.0.3-alt7
+- cleanup spec
+- fixed ftbfs
+
 * Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt6
 - fixed ftbfs
 
@@ -135,4 +141,3 @@ appstream-util validate-relax --nonet \
 
 * Wed Feb 16 2011 Igor Vlasenko <viy@altlinux.ru> 1.8.0-alt1_2
 - converted from Fedora by srpmconvert script
-
