@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: apa
-Version: 0.1.7.alpha
+Version: 0.1.8.alpha
 Release: alt1
 
 Summary: An assistant for working with packages in your ALT distros
@@ -53,6 +53,9 @@ Use `apa help` for more information.
 %_bindir/%name
 
 %changelog
+* Tue Feb 4 2025 Alexey Volkov <qualimock@altlinux.org> 0.1.8.alpha-alt1
+- New version 0.1.8.alpha (closes: #52652, #52654)
+
 * Fri Jan 3 2025 Alexey Volkov <qualimock@altlinux.org> 0.1.7.alpha-alt1
 - New version 0.1.7.alpha (closes: #52430, #52499, #52555, #52566)
 
