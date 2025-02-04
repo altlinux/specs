@@ -6,7 +6,7 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
-%{expand:%%pyproject_runtimedeps_metadata -- --extra %1} \
+%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 Summary: SSH2 protocol for python
 License: LGPL-2.1
@@ -72,6 +72,9 @@ entirely in python (no C or platform-dependent code).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
+- 3.5.0 -> 3.5.1.
+
 * Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
 - 3.4.1 -> 3.5.0.
 
