@@ -1,18 +1,18 @@
 Name: alvr
-Version: 20.11.1
-Release: alt8
+Version: 20.12.1
+Release: alt1
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
 Group: Games/Other
 Url: https://github.com/alvr-org/ALVR
 
-Source: %name-%version.tar
-Source1: %name-%version-openvr.tar
-Source2: %name-%version-vendor.tar
+Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+
 # alvr helper script
 Source10: alvr.sh
-Source11: %{version}_session.json
+Source11: 20.12.1_session.json
 
 Patch1: use-static-x264-ffmpeg.patch
 Patch2: alvr-default-settings.patch
@@ -72,9 +72,11 @@ ALVR is an open source remote VR display which allows playing SteamVR games on
 a standalone headset such as Pico, Gear VR or Oculus Go/Quest.
 
 %prep
-%setup -a1 -a2
+%setup -a1
 %autopatch -p1
 
+rm -rv openvr
+mv vendor/openvr openvr
 mv vendor/ffmpeg deps
 
 mkdir -p .cargo
@@ -147,9 +149,10 @@ sed -i "s|Exec=alvr_dashboard|Exec=%name|" alvr/xtask/resources/%name.desktop
 install -Dm644 alvr/xtask/resources/%name.desktop -t %buildroot%_desktopdir/
 
 # Icons
+
 for res in 16 32 48 128 256; do
     mkdir -p %buildroot%_iconsdir/hicolor/$res'x'$res/apps/
-    convert resources/alvr.png -resize $res'x'$res %buildroot%_iconsdir/hicolor/$res'x'$res/apps/%name.png
+    convert alvr/xtask/flatpak/alvr_icon.png -resize $res'x'$res %buildroot%_iconsdir/hicolor/$res'x'$res/apps/%name.png
 done
 
 %files
@@ -163,6 +166,10 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Tue Feb 04 2025 Mikhail Tergoev <fidel@altlinux.org> 20.12.1-alt1
+- updated to version: 20.12.1
+- fixed FTBFS with nvidia-cuda-toolkit 12.4.1
+
 * Tue Dec 17 2024 Mikhail Tergoev <fidel@altlinux.org> 20.11.1-alt8
 - replacing some dependencies with ffmpeg
 
