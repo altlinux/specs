@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.31.4
-Release: alt1
+Release: alt1.1
 
 Summary: A pure python module to access memcached via it's binary protocol with SASL auth support
 
@@ -29,6 +29,7 @@ BuildRequires: python3-module-trustme
 BuildRequires: python3-module-six
 BuildRequires: python3-module-flake8
 BuildRequires: memcached
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -56,6 +57,9 @@ binary protocol and support authentication, so it can work with Heroku for examp
 %python3_sitelibdir/python_binary_memcached-%version.dist-info
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 0.31.4-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Thu Jan 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.31.4-alt1
 - Automatically updated to 0.31.4.
 
