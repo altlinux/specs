@@ -4,7 +4,7 @@
 
 Name:    gdbgui
 Version: 0.15.2.0
-Release: alt2
+Release: alt3
 
 Summary: Browser-based frontend to gdb (gnu debugger)
 License: GPL-3.0
@@ -24,7 +24,9 @@ BuildRequires: node-cross-spawn
 
 %if_with check
 %pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest
+# required by some tests (e.g. tests/test_ptylib.py::test_pty)
+BuildRequires: /dev/pts
 %endif
 
 BuildArch: noarch
@@ -69,8 +71,8 @@ yarn build --offline
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+# see .github/workflows/tests.yml and noxfile.py
+%pyproject_run_pytest -vra
 
 %files
 %doc *.md
@@ -83,6 +85,9 @@ yarn build --offline
 %doc examples
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 0.15.2.0-alt3
+- Fixed FTBFS (tox 4).
+
 * Sat Oct 28 2023 Andrey Limachko <liannnix@altlinux.org> 0.15.2.0-alt2
 - Fix missing js files
 
