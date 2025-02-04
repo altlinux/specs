@@ -4,7 +4,7 @@
 
 Name: python3-module-grimp
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Queryable graph of the imports
 License: BSD-2-Clause
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-maturin
 
 %if_with check
+BuildRequires: python3-module-requests
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-django
 BuildRequires: python3-module-flask
@@ -52,5 +53,8 @@ mv ./vendor ./rust/vendor
 %python3_sitelibdir/grimp-%version.dist-info/
 
 %changelog
+* Mon Feb 03 2025 Yaroslav Bahtin <alpacost@altlinux.org> 3.5-alt2
+- Fix FTBFS.
+
 * Wed Nov 20 2024 Yaroslav Bahtin <alpacost@altlinux.org> 3.5-alt1
 - Initial build.
