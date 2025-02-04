@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define soname 0
 
 Name: libdqlite
-Version: 1.16.4
+Version: 1.18.0
 Release: alt1
 Summary: Library for distributed SQLite database
 License: Apache-2.0
@@ -11,8 +12,8 @@ URL: https://github.com/CanonicalLtd/dqlite
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: libuv-devel >= 1.8.0
-BuildRequires: libsqlite3-devel
+BuildRequires: libuv-devel >= 1.34.0
+BuildRequires: libsqlite3-devel >= 3.22.0
 BuildRequires: liblz4-devel >= 1.7.1
 
 %description
@@ -20,10 +21,20 @@ This package provides the `dqlite` C library (libdqlite), which can be used
 to expose a SQLite database over the network and replicate it across a cluster
 of peers, using the Raft algorithm.
 
+%package -n %name%soname
+Summary: Library for distributed SQLite database
+Group: Development/Databases
+Obsoletes: libdqlite < 1.18.0
+
+%description -n %name%soname
+This package provides the `dqlite` C library (libdqlite), which can be used
+to expose a SQLite database over the network and replicate it across a cluster
+of peers, using the Raft algorithm.
+
 %package devel
 Summary: Library for distributed SQLite database (development files)
 Group: Development/Databases
-Requires: %name = %version-%release
+Requires: %name%soname = %EVR
 
 %description devel
 This package provides the `dqlite` C library (libdqlite), which can be used
@@ -43,9 +54,10 @@ of peers, using the Raft algorithm.
 %install
 %make_install install DESTDIR=%buildroot
 
-%files
+%files -n %name%soname
 %doc AUTHORS README.md LICENSE
-%_libdir/%name.so.*
+%_libdir/*.so.%soname.*
+%_libdir/*.so.%soname
 
 %files devel
 %_includedir/dqlite.h
@@ -53,6 +65,10 @@ of peers, using the Raft algorithm.
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Wed Jan 29 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.18.0-alt1
+- new version 1.18.0
+- renamed according to SharedLibsPolicy
+
 * Tue May 07 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.16.4-alt1
 - new version 1.16.4
 
