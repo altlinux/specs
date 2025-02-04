@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 3.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python module for formatting Arabic sentences
 
@@ -19,6 +19,9 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
 
@@ -44,6 +47,9 @@ applications that do not support Arabic.
 %python3_sitelibdir/arabic_reshaper-%version.dist-info
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
 - Removed extra build dependency on future module.
 
