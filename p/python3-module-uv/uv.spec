@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.26
+Version: 0.5.27
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Source1: vendor_rust.tar
 Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+Requires: %pypi_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -29,6 +30,15 @@ BuildRequires: libssl-devel
 %description
 An extremely fast Python package installer and resolver, written in Rust.
 Designed as a drop-in replacement for common pip and pip-tools workflows.
+
+%package -n %pypi_name
+Summary: %summary
+Group: Development/Python3
+# uv executable was shipped in python package
+Conflicts: python3-module-%pypi_name <= 0.5.26-alt1
+
+%description -n %pypi_name
+%summary.
 
 %prep
 %setup -a1
@@ -53,13 +63,18 @@ export CARGO_PROFILE_RELEASE_LTO=thin
 %pyproject_run -- uv --help
 
 %files
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+
+%files -n %pypi_name
 %doc README.*
 %_bindir/uv
 %_bindir/uvx
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 0.5.27-alt1
+- 0.5.26 -> 0.5.27.
+
 * Mon Feb 03 2025 Stanislav Levin <slev@altlinux.org> 0.5.26-alt1
 - 0.5.25 -> 0.5.26.
 
