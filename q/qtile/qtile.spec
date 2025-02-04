@@ -6,7 +6,7 @@
 %def_without docs
 
 Name: qtile
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
@@ -27,7 +27,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cairocffi
 BuildRequires: python3-module-cffi
-BuildRequires: python3-module-dbus-next
+BuildRequires: python3-module-dbus-fast
 BuildRequires: python3-module-pywlroots
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-xcffib
@@ -127,6 +127,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Thu Jan 16 2025 Egor Ignatov <egori@altlinux.org> 0.30.0-alt1
+- new version 0.30.0
+
 * Wed Oct 30 2024 Egor Ignatov <egori@altlinux.org> 0.29.0-alt1
 - new version 0.29.0
 
