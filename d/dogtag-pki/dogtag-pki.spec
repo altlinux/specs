@@ -21,7 +21,7 @@
 
 Name: dogtag-pki
 Version: 11.4.3
-Release: alt4
+Release: alt5
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -80,6 +80,7 @@ BuildRequires: python3-module-lxml
 BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-six
 BuildRequires: python3-module-requests
+BuildRequires: python3-module-pytest
 #
 BuildRequires: python3-module-pyflakes
 BuildRequires: python3-module-selinux
@@ -754,6 +755,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Tue Feb 04 2025 Stanislav Levin <slev@altlinux.org> 11.4.3-alt5
+- Fixed FTBFS (tox 4).
+
 * Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 11.4.3-alt4
 - Fixed FTBFS (removed obsolete selinux-policy-alt).
 
