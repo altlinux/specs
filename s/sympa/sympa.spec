@@ -1,5 +1,5 @@
 Name: sympa
-Version: 6.2.74
+Version: 6.2.76
 Release: alt1
 
 %def_without authorcheck
@@ -759,6 +759,9 @@ fi
 %static_content
 
 %changelog
+* Tue Feb 04 2025 L.A. Kostis <lakostis@altlinux.ru> 6.2.76-alt1
+- 6.2.76.
+
 * Mon Dec 16 2024 L.A. Kostis <lakostis@altlinux.ru> 6.2.74-alt1
 - 6.2.74:
   - remove obsoleted crawlers_detection.conf.
