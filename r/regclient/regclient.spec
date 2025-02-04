@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           regclient
-Version:        0.6.0
+Version:        0.8.0
 Release:        alt1
 
 Summary:        Client interface for the registry API
@@ -35,9 +35,7 @@ export GOPATH="$BUILDDIR:%go_path"
 export TAGS="nolegacy"
 
 %golang_prepare
-pushd $BUILDDIR/src/%import_path
 %golang_build cmd/*
-popd
 
 $BUILDDIR/bin/regbot completion bash > regbot.bash
 $BUILDDIR/bin/regbot completion zsh > regbot.zsh
@@ -79,6 +77,9 @@ install -Dm 644 regsync.fish %buildroot%_datadir/fish/vendor_completions.d/regsy
 %_datadir/fish/vendor_completions.d/*.fish
 
 %changelog
+* Thu Jan 30 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.8.0-alt1
+- update to 0.8.0
+
 * Thu Mar 28 2024 Nadezhda Fedorova <fedor@altlinux.org> 0.6.0-alt1
 - 0.6.0
 - initial build for ALT Linux
