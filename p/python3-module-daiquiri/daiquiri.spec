@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Library to configure Python logging easily
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-python-json-logger
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -49,6 +50,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 3.3.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Tue Dec 17 2024 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
