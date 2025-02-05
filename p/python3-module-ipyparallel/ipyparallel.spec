@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 9.0.0
-Release: alt1
+Release: alt1.1
 Summary: Interactive Parallel Computing with IPython
 License: BSD-3-Clause
 Group: Development/Python3
@@ -23,7 +23,6 @@ BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-entrypoints
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-ipython
@@ -105,6 +104,9 @@ export TMPDIR=/tmp
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 9.0.0-alt1.1
+- NMU: dropped no longer needed dependency on entrypoints.
+
 * Fri Nov 22 2024 Anton Vyatkin <toni@altlinux.org> 9.0.0-alt1
 - New version 9.0.0.
 
