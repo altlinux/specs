@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Brotli compression format
 License: MIT
@@ -49,13 +49,16 @@ The specification of the Brotli Compressed Data Format is defined in RFC 7932.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+# see .github/workflows/build_test.yml and setup.py
+%pyproject_run_unittest discover -v -p '*_test.py' -s python/
 
 %files
 %doc *.md
 %python3_sitelibdir/*
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sat Oct 21 2023 Andrey Limachko <liannnix@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
