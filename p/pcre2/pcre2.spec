@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: pcre2
-Version: 10.43
+Version: 10.45
 Release: alt1
 
 Summary: Perl-compatible regular expression library
@@ -113,7 +113,7 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 /%_lib/lib%name-32.so.*
 /%_lib/lib%name-8.so.*
 /%_lib/lib%name-posix.so.*
-%doc LICENCE AUTHORS ChangeLog NEWS README
+%doc LICENCE* AUTHORS* ChangeLog NEWS README
 
 %files -n lib%name-devel
 %_bindir/%name-config
@@ -123,7 +123,7 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %_man1dir/%name-config.1.*
 %_man3dir/*
 %doc doc/html
-%doc HACKING ./src/%{name}demo.c
+%doc HACKING* ./src/%{name}demo.c
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -139,6 +139,9 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 10.45-alt1
+- 10.45
+
 * Sat Feb 17 2024 Yuri N. Sedunov <aris@altlinux.org> 10.43-alt1
 - 10.43
 

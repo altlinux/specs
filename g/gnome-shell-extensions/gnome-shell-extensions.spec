@@ -9,8 +9,8 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.3
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -185,6 +185,9 @@ This package provides files required for GNOME Classic mode.
 %doc NEWS README.md
 
 %changelog
+* Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt1
+- 47.4
+
 * Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1.1
 - new gnome-session-classic subpackage (ALT #52786)
 
