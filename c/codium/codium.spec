@@ -1,12 +1,15 @@
+%define app_id com.vscodium.codium
+
 Name:    codium
 Version: 1.96.4.25026
-Release: alt1
+Release: alt2
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
 
 License: MIT 
 Group:   Development/Other
 Url:     https://github.com/VSCodium/vscodium
+Vcs:     https://github.com/VSCodium/vscodium
 
 #Source0-url: https://github.com/VSCodium/vscodium/releases/download/%{version}/VSCodium-linux-x64-%{version}.tar.gz
 Source0: %name-x64-%version.tar
@@ -14,7 +17,8 @@ Source0: %name-x64-%version.tar
 Source1: %name-arm64-%version.tar
 
 Source2: codium.desktop
-Source3: codium.png
+Source3: codium.svg
+Source4: %app_id.metainfo.xml
 
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
@@ -25,9 +29,10 @@ Source3: codium.png
 %filter_from_requires /kde-cli-tools/d
 %filter_from_requires /gnustep-Backbone/d
 %filter_from_requires /pcmanfm/d
+%filter_from_requires /github-cli/d
 %filter_from_requires /^\/usr\/lib\/ld-linux-aarch64.*/d
 
-BuildRequires: electron23
+BuildRequires: electron29
 BuildRequires: libgio
 BuildRequires: libnss
 BuildRequires: libnspr
@@ -88,16 +93,26 @@ ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/codium
 ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/vscodium
 
 install -m644 -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
-install -m644 -D %SOURCE3 %buildroot%_pixmapsdir/codium.png
+install -m644 -D %SOURCE3 %buildroot%_iconsdir/hicolor/scalable/apps/codium.svg
+install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
+
 
 %files
 %_bindir/%name
 %_bindir/vs%name
 %_libdir/%name/
 %_desktopdir/%name.desktop
-%_pixmapsdir/codium.png 
+%_iconsdir/hicolor/scalable/apps/codium.svg
+%_datadir/appdata/%app_id.metainfo.xml
 
 %changelog
+* Sat Feb 01 2025 Semen Fomchenkov <armatik@altlinux.org> 1.96.4.25026-alt2
+- add Wayland support (Closes: 47792)
+- add appstream-data (Closes: 52900)
+- remove gitlab-ci dependency (Closes: 52896)
+- new .svg icon instead of the old .png
+- add Vcs tag to spec-file (Closes: 52899)
+
 * Thu Jan 30 2025 Semen Fomchenkov <armatik@altlinux.org> 1.96.4.25026-alt1
 - new version (1.96.4.25026) (Closes: 50953, 52311)
 - drop arm-32bit version
