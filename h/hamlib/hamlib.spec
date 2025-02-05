@@ -3,7 +3,7 @@
 
 Name:           hamlib
 Version:        4.6.1
-Release:        alt1
+Release:        alt2
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -13,9 +13,10 @@ Source0:        %name-%version.tar
 
 # Install python and perl bindings into proper dirs
 Patch0:         hamlib-3.2-bindings.patch
+BuildRequires(pre): rpm-build-python3
 BuildRequires:  gcc-c++
-BuildRequires:  python-devel, swig, libgd2-devel, libxml2-devel, tcl-devel
-BuildRequires:  libusb-devel, pkgconfig, boost-devel, libltdl-devel
+BuildRequires:  python3-dev swig libgd2-devel libxml2-devel tcl-devel
+BuildRequires:  libusb-devel pkgconfig boost-devel libltdl-devel
 BuildRequires:  doxygen
 BuildRequires:  perl-devel
 BuildRequires:  libusb-compat-devel
@@ -85,13 +86,14 @@ Requires: hamlib = %version-%release
 %description perl
 Hamlib PERL Language bindings to allow radio control from PERL scripts.
 
-%package -n python-module-hamlib
+%package -n python3-module-hamlib
 Summary: Hamlib radio control library Python binding
 Group: Development/Python
-Provides: %name-python = %version-%release
+Provides: %name-python3 = %version-%release
 Requires: hamlib = %version-%release
+Obsoletes: python-module-hamlib < %EVR
 
-%description -n python-module-hamlib
+%description -n python3-module-hamlib
 Hamlib Python Language bindings to allow radio control from Python scripts.
 
 %package tcl
@@ -110,7 +112,7 @@ Hamlib TCL Language bindings to allow radio control from TCL scripts.
 %build
 %undefine _configure_gettext
 %configure \
-        PYTHON=%__python \
+        PYTHON=%__python3 \
 %if_with usrp
         --enable-usrp \
 %endif
@@ -198,14 +200,18 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %files perl
 %perl_vendorarch/*
 
-%files -n python-module-hamlib
-%python_sitelibdir/*.py*
-%python_sitelibdir/_Hamlib.so
+%files -n python3-module-hamlib
+%python3_sitelibdir/Hamlib.py
+%python3_sitelibdir/__pycache__/Hamlib.*
+%python3_sitelibdir/_Hamlib.so
 
 %files tcl
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Wed Feb 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.1-alt2
+- Build with Python3 support.
+
 * Wed Jan 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.1-alt1
 - New version.
 
