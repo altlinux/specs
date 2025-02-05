@@ -4,14 +4,15 @@
 
 Name: folio
 Version: 24.14
-Release: alt1
+Release: alt1.1
 
 Summary: A beautiful markdown note-taking app for GNOME
 License: GPL-3.0
 Group: Office
-
 Url: https://github.com/toolstack/Folio
+
 Vcs: https://github.com/toolstack/Folio
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -21,7 +22,7 @@ BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
-BuildRequires: gir(GtkSource)
+BuildRequires: gir(GtkSource) = 5
 %if_enabled check
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
@@ -75,6 +76,9 @@ Some features include:
 %doc README.md
 
 %changelog
+* Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 24.14-alt1.1
+- explicitly BR "gir(GtkSource) = 5"
+
 * Tue Nov 24 2024 Semen Fomchenkov <armatik@altlinux.org> 24.14-alt1
 - 24.14
 
