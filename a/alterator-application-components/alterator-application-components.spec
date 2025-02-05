@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.10
-Release: alt3
+Version: 0.1.11
+Release: alt1
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -64,6 +64,9 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/%name
 
 %changelog
+* Wed Feb 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.11-alt1
+- Fix DBus timeout when applying changes.
+
 * Mon Feb 03 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.10-alt3
 - Add alterator-backend-component and alterator-backend-component_categories to
   dependencies.
