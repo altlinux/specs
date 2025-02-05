@@ -3,7 +3,7 @@
 
 Name: musescore
 Version: %mversion.2
-Release: alt3
+Release: alt4
 
 Summary: Music notation and composition software
 
@@ -15,8 +15,6 @@ Vcs: https://github.com/musescore/MuseScore.git
 Source: %name-%version.tar
 Patch:  %name-%version-%release.patch
 
-ExcludeArch: ppc64le
-
 BuildPreReq: chrpath rpm-build-xdg
 
 # Automatically added by buildreq on Thu Jan 06 2011
@@ -26,7 +24,10 @@ BuildRequires: qt5-designer qt5-base-devel libpulseaudio-devel libfreetype-devel
 BuildRequires: liblame-devel qt5-tools-devel qt5-webkit-devel qt5-declarative-devel
 BuildRequires: qt5-script-devel qt5-xmlpatterns-devel qt5-quick1-devel qt5-svg-devel
 BuildRequires: qt5-tools-devel-static zlib-devel libvorbis-devel libportmidi-devel
-BuildRequires: qt5-webengine-devel qt5-quickcontrols2-devel
+BuildRequires: qt5-quickcontrols2-devel
+
+# for pallets panel:
+Requires: qt5-quickcontrols2 qt5-graphicaleffects
 
 %description
 Music notation and composition software
@@ -97,6 +98,10 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Wed Feb 05 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt4
+- drop unused BR on Qt5 WebEngine
+- add missing Qt5 Quick dependencies
+
 * Wed Feb 05 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt3
 - fix FTBFS
 - package more icons
