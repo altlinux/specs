@@ -26,8 +26,8 @@
 
 
 Name: openblas
-Version: 0.3.28
-Release: alt1
+Version: 0.3.29
+Release: alt2
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -132,6 +132,7 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
     OPENBLAS_LIBRARY_DIR=%_libdir \
     OPENBLAS_INCLUDE_DIR=%_includedir/openblas \
     %{?oblas_target:TARGET=%oblas_target} \
+    %{?_without_lapack:NO_LAPACK=1} \
     %nil
 
 %check
@@ -157,6 +158,13 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Wed Feb 05 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.29-alt2
+- fix tests on ppc64le via reverting one upstream commit
+- avoid installing lapack headers (ALT#38974)
+
+* Mon Jan 13 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.29-alt1
+- 0.3.29.
+
 * Mon Sep 02 2024 Ivan A. Melnikov <iv@altlinux.org> 0.3.28-alt1
 - 0.3.28;
 - disable dynamic_arch on riscv64.
