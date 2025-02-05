@@ -1,6 +1,6 @@
 Name: stereograph
 Version: 0.30a
-Release: alt3
+Release: alt4
 
 Summary: Stereogram generator
 
@@ -12,6 +12,7 @@ Packager: Dmitry Derjavin <dd@altlinux.org>
 
 Source: %name-%version.tar
 Patch1: stereograph-0.30a-alt-libpng-1.5.x.patch
+Patch2: stereograph-0.30a-alt-gcc14.patch
 
 BuildRequires: zlib-devel libpng-devel
 
@@ -27,6 +28,7 @@ regard them - everyone can learn it.
 %setup -q
 
 %patch1 -p0
+%patch2 -p1
 
 %build
 for module in stereograph renderer gfxio; do
@@ -44,6 +46,9 @@ install -pD -m 644 %name\.1 %buildroot%_man1dir/%name\.1
 %doc README ChangeLog AUTHORS
 
 %changelog
+* Tue Feb 04 2025 Anton Meleshnikov <alton@altlinux.org> 0.30a-alt4
+- Fixed FTBFS for gcc14.
+
 * Tue Apr 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.30a-alt3
 - Fixed FTBFS with -fcommon.
 - Fixed license tag.
