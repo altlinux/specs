@@ -14,7 +14,7 @@
 
 Name: %rname
 Version: 6.2.5
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Graphical desktop/KDE
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Wed Feb 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt3
+- set keyboard layout switch to window class by default
+
 * Mon Jan 13 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 6.2.5-alt2
 - disable pager resize path(closes: 52671)
 
