@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-component_categories
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Backend for components categories
@@ -11,8 +11,10 @@ URL: https://gitlab.basealt.space/alt/alterator-backend-component_categories
 
 BuildArch: noarch
 
+BuildRequires: python3-devel
+
 Requires: alterator-interface-component_categories
-Requires: alterator-entry >= 0.1.1
+Requires: alterator-entry >= 0.2.0
 Requires: alterator-module-executor >= 0.1.14
 
 Source0: %name-%version.tar
@@ -60,6 +62,9 @@ install -v -p -m 755 -D list-component-categories %buildroot%_libexecdir/%name
 %_datadir/polkit-1/actions/org.altlinux.alterator.component-categories1.policy
 
 %changelog
+* Sat Jan 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
+- Rewrite scripts to python using alterator_entry module.
+
 * Fri Dec 13 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - Allow to call methods in parallel.
 

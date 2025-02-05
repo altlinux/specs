@@ -2,7 +2,7 @@
 
 Name: alterator-application-components
 Version: 0.1.10
-Release: alt1
+Release: alt3
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -19,12 +19,13 @@ BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-de
 BuildRequires: boost-devel-headers
 BuildRequires: libqbase-devel
 BuildRequires: libtomlplusplus-devel
+BuildRequires: alterator-entry >= 0.2.0
 
-%ifarch x86_64
-BuildRequires: alterator-entry
-%endif
-
-Requires: alterator-backend-packages alterator-entry libqbase alterator-interface-component alterator-backend-component_categories
+Requires: alterator-backend-packages
+Requires: alterator-backend-component
+Requires: alterator-backend-component_categories
+Requires: libqbase
+Requires: alt-components-base
 
 %description
 Alterator application for managing system components.
@@ -51,10 +52,8 @@ install -v -p -m 644 -D alterator/components-app.backend %buildroot%_datadir/alt
 install -v -p -m 644 -D setup/org.altlinux.alterator.components1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D setup/org.altlinux.alterator.components1.xml %buildroot%_datadir/dbus-1/interfaces
 
-%ifarch x86_64
 %check
-find ./alterator/ -type f -exec alterator-entry --verbose {} \+
-%endif
+find ./alterator/ -type f -exec alterator-entry validate {} \+
 
 %files
 %_datadir/alterator/applications/*.application
@@ -65,6 +64,14 @@ find ./alterator/ -type f -exec alterator-entry --verbose {} \+
 %_bindir/%name
 
 %changelog
+* Mon Feb 03 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.10-alt3
+- Add alterator-backend-component and alterator-backend-component_categories to
+  dependencies.
+
+* Fri Jan 24 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.10-alt2
+- Enable %check on all arches.
+- Add alt-components-base to dependencies.
+
 * Fri Dec 27 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.10-alt1
 - Add welcome screen in description text box.
 - Show packages install status in packages list.

@@ -3,7 +3,7 @@
 
 Name: alterator-entry
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: Common files for Alterator Entry specification
 License: GPLv3+
@@ -16,7 +16,6 @@ Source1: %pyproject_deps_config_name
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-alterator
-BuildRequires(pre): rpm-macros-features
 
 %description
 Common files for Alterator Entry specification:
@@ -31,12 +30,6 @@ Group: Development/Python3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
-%if_feature python3 3.11
-%filter_from_requires /python3(toml)/d
-%else
-%filter_from_requires /python3(tomllib)/d
-%endif
 
 %description -n python3-module-alterator-entry 
 %summary.
@@ -65,6 +58,9 @@ cp -r ./schemas %buildroot%_alterator_datadir/schemas
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Feb 03 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.1-alt2
+- Remove feature filtering for toml and tompllib as it is no longer needed.
+
 * Sun Feb 02 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.1-alt1
 - Build with oldest rpm-build-pyproject and python3-module-pyproject-installer
   (which not support of using default pyproject.toml if it not found).
