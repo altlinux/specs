@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python wrapper generator for ctypes
 License: BSD-2-Clause
@@ -21,6 +21,9 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 ctypesgen is a pure-python ctypes wrapper generator. It parses C header files
@@ -60,6 +63,9 @@ fi
 
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Apr 03 2023 Anton Vyatkin <toni@altlinux.org> 1.1.1-alt1
 - New version 1.1.1
 
