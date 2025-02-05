@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.13.0
-Release:       alt1
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -310,7 +310,7 @@ Requires:      postgresql-server
 Requires:      dynflow
 Requires:      node
 Requires:      nginx
-Requires:      railsctl >= 1.0.1-alt1
+Requires:      railsctl >= 1.0.1-alt2
 Requires:      ruby >= 3.1.2
 Obsoletes:     foreman-addons
 Conflicts:     foreman-addons
@@ -333,7 +333,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.13.0
-Release:       alt1
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -379,7 +379,7 @@ rm -rf %buildroot%_localstatedir/%name
 rm -rf %buildroot%_libexecdir/%name/tmp
 cp -rf config %buildroot%_libexecdir/%name/config
 cp -rf lib %buildroot%_libexecdir/%name/
-mkdir -p %buildroot%_datadir/%name \
+mkdir -p %buildroot%_datadir \
          %buildroot%_sbindir \
          %buildroot/run/%name \
          %buildroot%_spooldir/%name/tmp \
@@ -411,8 +411,8 @@ install -Dm0644 config.ru %buildroot%_libexecdir/%name/config.ru
 touch %buildroot%_cachedir/%name/Gemfile.lock
 
 mv %buildroot%_libexecdir/%name/public %buildroot%_datadir/%name
-ln -svr %buildroot%_datadir/%name/public %buildroot%_libexecdir/%name/public
-ln -svr %buildroot%_datadir/%name/public %buildroot%_localstatedir/%name/public
+ln -svr %buildroot%_datadir/%name %buildroot%_libexecdir/%name/public
+ln -svr %buildroot%_datadir/%name %buildroot%_localstatedir/%name/public
 ln -svr %buildroot%_sysconfdir/%name/plugins %buildroot%_libexecdir/%name/config/settings.plugins.d
 ln -svr %buildroot%_sysconfdir/%name/settings.yml %buildroot%_libexecdir/%name/config/settings.yaml
 ln -svr %buildroot%_sysconfdir/%name/database.yml %buildroot%_libexecdir/%name/config/database.yml
@@ -429,7 +429,7 @@ install -d %buildroot%_logdir/%name
 
 # symlinking publics
 # NOTE restores required resources for production as symlynks to real ones
-pushd %buildroot%_datadir/%name/public/
+pushd %buildroot%_datadir/%name
 find assets -type f | while read -r f
 do
    if [[ "$f" =~ \.css(|.gz)$ ]]; then
@@ -452,11 +452,6 @@ do
    fi
 done
 popd
-#ln -rvs %buildroot%_libexecdir/%name/app/assets/config/ %buildroot%_datadir/%name/public/config
-#ln -rvs %buildroot%_libexecdir/%name/app/assets/images/ %buildroot%_datadir/%name/public/images
-#ln -rvs %buildroot%_libexecdir/%name/app/assets/javascripts/ %buildroot%_datadir/%name/public/javascripts
-#ln -rvs %buildroot%_libexecdir/%name/app/assets/stylesheets/ %buildroot%_datadir/%name/public/stylesheets
-#false
 
 %check
 %ruby_test
@@ -483,7 +478,7 @@ cp -fp /etc/puppet/ssl/private_keys/$(hostname).pem /etc/foreman/ssl_key.pem 2>/
 
 ln -sf /etc/nginx/sites-available.d/foreman.conf /etc/nginx/sites-enabled.d/ 2>/dev/null
 
-railsctl setup foreman 2>&1 >/dev/null
+railsctl setup foreman 2>&1 >/dev/null || true
 
 %post_service foreman
 %post_service foreman-jobs
@@ -531,6 +526,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Wed Feb 05 2025 Pavel Skrylev <majioa@altlinux.org> 3.13.0-alt2
+- * moved public to a signle level up in %%datadir
+
 * Mon Sep 30 2024 Pavel Skrylev <majioa@altlinux.org> 3.13.0-alt1
 - ^ 3.5.1 -> 3.13.0
 - ! fixed CVE-2024-8553
