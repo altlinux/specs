@@ -4,8 +4,8 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.1.9
-Release: alt1.1
+Version: 0.1.10
+Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
 
@@ -88,7 +88,7 @@ export LC_ALL=C.UTF-8
 # DDM runs as its own user.
 getent group ddm >/dev/null || groupadd -r ddm
 getent passwd ddm >/dev/null || \
-    useradd -r -g ddm -d %_localstatedir/ddm -s /bin/bash \
+    useradd -r -g ddm -d %_localstatedir/ddm -s /bin/false \
     -c "ddm user" ddm
 exit 0
 
@@ -146,6 +146,10 @@ exit 0
 %_libdir/cmake/DDM/Auth*.cmake
 
 %changelog
+* Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 0.1.10-alt1
+- New version 0.1.10.
+- Fixed preinstall command.
+
 * Mon Dec 30 2024 Leontiy Volodin <lvol@altlinux.org> 0.1.9-alt1.1
 - Fixed url and vcs tag.
 - Updated license tag.
