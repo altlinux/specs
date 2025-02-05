@@ -24,7 +24,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1023,6 +1023,11 @@ fi
 %endif
 
 %changelog
+* Wed Feb 05 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt3
+- Add PGCHECK var
+- Add start pg_checksums_ext if set PGCHECK and installed
+  postgresql-deploy-cert (owner /usr/bin/pw_krb_blocker)
+
 * Mon Jan 27 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt2
 - Add Conflicts: 17-1C
 - Add coverage support

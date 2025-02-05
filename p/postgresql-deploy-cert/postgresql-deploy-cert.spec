@@ -1,6 +1,6 @@
 Name:    postgresql-deploy-cert
 Version: 0.8
-Release: alt8
+Release: alt9
 
 Summary: deploy script for postgresql cert config
 License: MIT
@@ -39,6 +39,7 @@ install -Dm 0644 main.yml  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 postgresql.pam  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 postgresql.logrotate  %buildroot/%_datadir/deploy/postgresql-cert/tasks
 install -Dm 0644 pw_blocker.sysconfig %buildroot/%_datadir/deploy/postgresql-cert/tasks
+install -Dm 0755 postgresql-check-db.cron %buildroot/%_datadir/deploy/postgresql-cert/tasks
 mkdir -p %buildroot/%_bindir
 install -Dm 0750 pw_krb_blocker %buildroot/%_bindir
 install -Dm 0750 pw_krb_unblocker %buildroot/%_bindir
@@ -56,6 +57,9 @@ install -Dm 0750 pw_krb_unblocker %buildroot/%_bindir
 
 
 %changelog
+* Tue Feb 04 2025 Alexei Takaseev <taf@altlinux.org> 0.8-alt9
+- Add cron.hourly script for check databases
+
 * Tue Oct 22 2024 Denis Medvedev <nbr@altlinux.org> 0.8-alt8
 - audit and other changes in conf
 
