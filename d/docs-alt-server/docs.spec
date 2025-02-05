@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Feb 05 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt5
+- bug fixes (closes #52884, #52883, #52885, #52915)
+- update to ALT Server 10.4rc4
+- alterator: added usbguard, usbmount, kiosk
+
 * Mon Jan 27 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt4
 - small improvements (PBS, Nextcloud)
 
