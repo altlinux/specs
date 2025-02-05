@@ -24,8 +24,8 @@
 %endif
 
 Name: dune%subpackagename
-Version: 3.17.1
-Release: alt2
+Version: 3.17.2
+Release: alt1
 Summary: A composable build system for OCaml
 Group: Development/ML
 License: MIT
@@ -316,6 +316,9 @@ rm -rf vendor/csexp vendor/pp
 %endif
 
 %changelog
+* Tue Jan 28 2025 Anton Farygin <rider@altlinux.ru> 3.17.2-alt1
+- 3.17.1 -> 3.17.2
+
 * Tue Jan 21 2025 Anton Farygin <rider@altlinux.ru> 3.17.1-alt2
 - updated build dependencies in ocamlc-loc, chrome-trace
   and dune-rpc packages (ocaml-dyn -> ocaml-dyn-devel)
