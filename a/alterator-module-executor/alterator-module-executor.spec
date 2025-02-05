@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -9,9 +9,9 @@ URL: https://gitlab.basealt.space/alt/alterator-module-executor
 
 BuildRequires: cmake gcc libtomlc99-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
-BuildRequires: alterator-manager-devel >= 0.1.24
+BuildRequires: alterator-manager-devel >= 0.1.27
 
-Requires: alterator-manager >= 0.1.25-alt1
+Requires: alterator-manager >= 0.1.27-alt1
 Requires: libtomlc99 >= 1.0
 
 Source: %name-%version.tar
@@ -35,6 +35,11 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Feb 05 2025 Ivan Savin <svn17@altlinux.org> 0.1.15-alt1
+- Extend control of environment variables. You can now add environment
+  variables for a method only if they are specified in the configuration file.
+  You can also set default values for these variables.
+
 * Fri Dec 06 2024 Ivan Savin <svn17@altlinux.org> 0.1.14-alt1
 - Transition backend files to toml format.
 

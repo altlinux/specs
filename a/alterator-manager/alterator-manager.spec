@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.26
+Version: 0.1.27
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -85,6 +85,12 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 
 %changelog
+* Wed Feb 05 2025 Ivan Savin <svn17@altlinux.org> 0.1.27-alt1
+- Extend control of environment variables. You can now add environment
+  variables for a method only if they are specified in the configuration file.
+  You can also set default values for these variables.
+- Update docs/README-ru.md.
+
 * Thu Jan 23 2025 Ivan Savin <svn17@altlinux.org> 0.1.26-alt1
 - Add sorting for output of methods in org.altlinux.alterator.manager
   (GetObjects, GetInterfaces, GetAllObjects, GetAllInterfaces).
