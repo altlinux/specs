@@ -5,7 +5,7 @@
 
 Name: python3-module-flask-migrate
 Version: 4.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: SQLAlchemy database migrations for Flask applications using Alembic
 
@@ -28,6 +28,7 @@ BuildRequires: python3-module-flask
 BuildRequires: python3-module-alembic >= 1.7.0
 BuildRequires: python3-module-flask-sqlalchemy
 BuildRequires: python3-module-greenlet
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -54,6 +55,9 @@ under the flask db command.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 4.0.4-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Tue Mar 21 2023 Danil Shein <dshein@altlinux.org> 4.0.4-alt1
 - new version 4.0.4
   + fix FTBFS
