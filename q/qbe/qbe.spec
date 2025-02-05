@@ -1,10 +1,9 @@
 Name: qbe
-Version: 1.1
+Version: 1.2
 Release: alt1
 Epoch: 1
 Group: Development/C
-Source: %name-%version.tar.xz
-Patch: return.patch
+Source: %name-%version.tar
 License: BSD
 
 Summary: C Compiler Backend
@@ -21,7 +20,6 @@ trivial integration and great flexibility.
 
 %prep
 %setup
-%patch -p1
 
 %build
 make CC=gcc
@@ -39,6 +37,9 @@ install -D minic/minic %buildroot%_bindir/%name-minic
 make check
 
 %changelog
+* Thu Jan 30 2025 Ulysses Apokin <ulysses@altlinux.org> 1:1.2-alt1
+- New version.
+
 * Mon Jan 08 2024 Fr. Br. George <george@altlinux.org> 1:1.1-alt1
 - Autobuild version bump to 1.1
 
