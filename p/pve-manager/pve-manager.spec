@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -142,6 +142,9 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Wed Feb 05 2025 Alexey Shabalin <shaba@altlinux.org> 8.3.3-alt2
+- Revert "ALT: fix UTF-8 presentation".
+
 * Fri Jan 24 2025 Sergey Konev <darisishe@altlinux.org> 8.3.3-alt1
 - 8.3.3
 - Fix UTF-8 presentation (thx @kustovdv)
