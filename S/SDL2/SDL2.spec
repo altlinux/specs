@@ -7,7 +7,7 @@
 
 Name: SDL2
 Version: 2.30.12
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -29,7 +29,9 @@ BuildRequires: libXScrnSaver-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: libalsa-devel
 %{?_with_nas:BuildRequires: libaudio-devel}
+BuildRequires: libdrm-devel
 BuildRequires: libesd-devel
+BuildRequires: libgbm-devel
 %{?_with_ibus:BuildRequires: libibus-devel}
 BuildRequires: libjack-devel
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
@@ -119,6 +121,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Thu Feb 06 2025 Nazarov Denis <nenderus@altlinux.org> 2.30.12-alt2
+- Build with libdrm and gbm (ALT #52913)
+
 * Sun Feb 02 2025 Nazarov Denis <nenderus@altlinux.org> 2.30.12-alt1
 - New version 2.30.12.
 
