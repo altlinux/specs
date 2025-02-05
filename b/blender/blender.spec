@@ -57,7 +57,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt2.1
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -158,10 +158,6 @@ BuildRequires: hip-devel
 
 %if_with hiprt
 BuildRequires: hiprt-devel clang-rocm-devel
-# hiprtCreateGeometry relies on hardcoded headers
-# in /usr/include
-# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
-Requires: hiprt-devel
 %endif
 
 %if_with openpgl
@@ -270,6 +266,9 @@ Group: System/Libraries
 Requires: %name = %EVR, hip-runtime-amd
 %if_with hiprt
 Requires: libhiprt
+# hiprtCreateGeometry relies on hardcoded headers in /usr/include
+# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
+Requires: hiprt-devel
 %endif
 
 %description cycles-hip-kernels
@@ -280,12 +279,14 @@ This package contains binaries for AMD GPUs to use with HIP.
 %endif
 
 %if_with cuda
-%package cycles-nvidia-kernels
+%package cycles-cuda-kernels
 Summary: Cycles precompiled binaries for CUDA
 Group: System/Libraries
+Provides: cycles-nvidia-kernels = %EVR
+Obsoletes: cycles-nvidia-kernels < %EVR
 Requires: %name = %EVR, libcuda
 
-%description cycles-nvidia-kernels
+%description cycles-cuda-kernels
 Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
 graphics cards.
 
@@ -464,7 +465,7 @@ popd
 %endif
 
 %if_with cuda
-%files cycles-nvidia-kernels
+%files cycles-cuda-kernels
 %_datadir/%name/*/%kern_dir/kernel_compute*.ptx*
 %_datadir/%name/*/%kern_dir/kernel_sm_*.cubin*
 %endif
@@ -475,6 +476,10 @@ popd
 %endif
 
 %changelog
+* Tue Feb 04 2025 Egor Ignatov <egori@altlinux.org> 4.3.0-alt3
+- Move hiprt-devel dependency to cycles-hip-kernels subpackage (Closes: #52732)
+- Rename cycles-nvidia-kernels to cycles-cuda-kernels
+
 * Fri Dec 20 2024 Ivan A. Melnikov <iv@altlinux.org> 4.3.0-alt2.1
 - NMU: loongarch64 update
   + update loongarch64 patch;
