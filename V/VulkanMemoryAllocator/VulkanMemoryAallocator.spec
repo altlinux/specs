@@ -1,5 +1,5 @@
 Name: VulkanMemoryAllocator
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Vulkan Memory Allocator
@@ -48,6 +48,9 @@ Easy to integrate Vulkan memory allocation library.
 %_defaultdocdir/%name
 
 %changelog
+* Thu Feb 06 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt1
+- New version 3.2.1.
+
 * Sat Jan 11 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
