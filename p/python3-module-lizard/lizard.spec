@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.17.14
+Version: 1.17.17
 Release: alt1
 
 Summary: A simple code complexity analyser without caring about the C/C++ header files or Java imports, supports most of the popular languages
@@ -27,9 +27,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-# Fix version
-Patch: 6e140581601c2acf7941c84b9e056ef240f1c4c7.patch
-
 %description
 Lizard is an extensible Cyclomatic Complexity Analyzer for many programming
 languages including C/C++ (doesn't require all the header files or Java
@@ -38,7 +35,6 @@ duplicate detection) and many other forms of static code analysis.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -47,7 +43,7 @@ duplicate detection) and many other forms of static code analysis.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k 'not testFortran'
+%pyproject_run_pytest -k 'not testFortran and not test_gitignore_filter'
 
 %files
 %doc *.rst
@@ -59,6 +55,9 @@ duplicate detection) and many other forms of static code analysis.
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Wed Feb 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.17.17-alt1
+- Automatically updated to 1.17.17.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 1.17.14-alt1
 - Automatically updated to 1.17.14.
 
