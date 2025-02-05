@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name planify
-%define ver_major 4.11
+%define ver_major 4.12
 %define rdn_name io.github.alainm23.%_name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Planify
@@ -14,17 +14,18 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/alainm23/planify
 
+Vcs: https://github.com/alainm23/planify.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/alainm23/planify.git
 Source: %_name-%version.tar
 %endif
 
 # to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
 %add_debuginfo_skiplist %_bindir/%rdn_name
 
-%define gtk_ver 4.13.7
+%define gtk_ver 4.14
 %define adwaita_ver 1.5
 %define ecal_ver 3.45.1
 
@@ -103,6 +104,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 4.12.0-alt1
+- 4.12.0
+
 * Wed Nov 06 2024 Yuri N. Sedunov <aris@altlinux.org> 4.11.6-alt1
 - 4.11.6
 
