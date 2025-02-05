@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Validate configuration and produce human readable error messages
 
@@ -26,6 +26,7 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-covdefaults
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -50,6 +51,9 @@ BuildRequires: python3-module-covdefaults
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Tue Aug 22 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 - Build with check.
