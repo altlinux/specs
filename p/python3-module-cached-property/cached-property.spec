@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: A decorator for caching properties in classes.
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-distribute
 
 %if_with check
 BuildRequires: python3-module-freezegun
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -48,6 +49,9 @@ A decorator for caching properties in classes.
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Automatically updated to 2.0.1.
 - Built with check.
