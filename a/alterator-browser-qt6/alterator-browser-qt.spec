@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Wed Feb 05 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.1-alt1
+- fix setup localized slideshow directory
+
 * Mon Feb 03 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.0-alt1
 - support localized slideshow
 
