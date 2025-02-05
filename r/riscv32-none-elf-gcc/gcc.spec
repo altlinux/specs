@@ -1,28 +1,46 @@
 Name: riscv32-none-elf-gcc
 Version: 14.2.0
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 License: GPLv3+
 Group: Development/C
 Url: https://gcc.gnu.org/
 
+Requires: riscv32-none-elf-newlib
+
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ flex zlib-devel libgmp-devel libmpc-devel autogen
 BuildRequires: riscv32-none-elf-binutils >= 2.44
+BuildRequires: riscv32-none-elf-newlib
+BuildRequires: /usr/bin/python3
 
 Requires: riscv32-none-elf-binutils >= 2.44
 %add_python_req_skip libstdcxx gdb
+
+%package c++
+Summary: Cross Compiling GNU GCC targeted at aarch64-none-elf
+Group: Development/Tools
+AutoReq: yes, nopython
+Requires: %name = %version-%release
 
 %description
 This package contains the GNU Compiler Collection version 14.2.0.
 You'll need this package in order to compile C code.
 It is also required for all other GCC compilers.
 
+%description c++
+This package adds C++ support to the GNU Compiler Collection.
+It includes support for most of the current C++ specification,
+including templates and exception handling.
+
 %define target riscv32-none-elf
 %define _libexecdir /usr/libexec
-%brp_strip_none %_libexecdir/*
+%brp_strip_none %_libexecdir/%target/*
+%brp_strip_none %_libexecdir/gcc/%target/*.[oa]
+%add_verify_elf_skiplist %_libexecdir/%target/*
+%add_verify_elf_skiplist %_libexecdir/gcc/%target/*
 
 %prep
 %setup
@@ -57,19 +75,19 @@ mkdir obj-%target; cd obj-%target
             --disable-tls \
             \
             --enable-checking=release \
-            --enable-languages=c \
-            --disable-plugins \
+            --enable-languages=c,c++ \
+            --enable-plugins \
             --with-newlib \
             --with-gnu-as \
             --with-gnu-ld \
-            --disable-multilib \
+            --enable-multilib \
             --with-abi=ilp32d \
             --with-arch=rv32gc \
-            --with-tune=rocket \
+            --with-multilib-generator='rv32i-ilp32--;rv32iac-ilp32--;rv32im-ilp32--;rv32imac-ilp32--;rv32imafc-ilp32--' \
             --with-gmp \
             --with-mpfr \
             --with-mpc \
-            --without-headers \
+            --with-headers=yes \
             --with-system-zlib \
             --with-sysroot=%_libexecdir/%target
 
@@ -95,10 +113,21 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %files
 %doc COPYING* README
 %_bindir/%target-*
+%exclude %_bindir/%target-?++
 %_libexecdir/gcc/%target
 %_man1dir/%target-*.1*
+%exclude %_man1dir/%target-?++.1*
+%exclude %_libexecdir/gcc/%target/*/cc1plus
+
+%files c++
+%_bindir/%target-?++
+%_libexecdir/%target
+%_man1dir/%target-g++.1*
+%_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Wed Feb 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt2
+- rebuilt with multilib enabled
+
 * Wed Feb 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt1
 - initial release
-

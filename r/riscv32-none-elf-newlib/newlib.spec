@@ -1,6 +1,6 @@
 Name: riscv32-none-elf-newlib
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
 Summary: C library intended for use on embedded systems
 License: BSD and MIT and LGPLv2+ and ISC
@@ -95,6 +95,9 @@ rm -rf %buildroot%_infodir
 %_libexecdir/%target/lib/*
 
 %changelog
+* Wed Feb 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt2
+- rebuilt with multilib enabled
+
 * Wed Feb 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt1
 - initial release
 
