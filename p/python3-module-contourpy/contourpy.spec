@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python library for calculating contours in 2D quadrilateral grids
 
@@ -30,6 +30,7 @@ BuildRequires: python3-module-numpy-tests
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-wurlitzer
+BuildRequires: python3-module-pytest
 %endif
 
 # Optional dependency, that not ready for sisyphus
@@ -63,6 +64,9 @@ contouring algorithms without having to include Matplotlib as a dependency.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Tue Nov 12 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 
