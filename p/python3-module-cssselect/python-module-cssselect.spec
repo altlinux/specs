@@ -5,25 +5,22 @@
 
 Name: python3-module-%pypi_name
 Version: 1.2.0
-Release: alt1
-
+Release: alt2
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
-Group: Development/Python3
 License: BSD-3-Clause
+Group: Development/Python3
 Url: https://pypi.org/project/cssselect/
+Vcs: https://github.com/scrapy/cssselect
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python3(lxml)
-%endif
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Cssselect parses CSS3 Selectors and translates them to XPath 1.0
@@ -32,6 +29,11 @@ engine to find the matching elements in an XML or HTML document.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -40,15 +42,17 @@ engine to find the matching elements in an XML or HTML document.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
-%doc AUTHORS docs README.rst CHANGES LICENSE
+%doc README.*
 %python3_sitelibdir/cssselect/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
+- Fixed FTBFS (tox 4).
+
 * Mon Apr 03 2023 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
 - (NMU) New version 1.2.0.
 
