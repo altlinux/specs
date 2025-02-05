@@ -18,7 +18,7 @@
 
 Name: zabbix
 Version: 7.0.9
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -172,14 +172,6 @@ Group: Monitoring
 Requires: php-engine
 BuildArch: noarch
 
-%package phpfrontend-php8.1
-Summary: zabbix web frontend, edition for php8.1
-Group: Monitoring
-Requires: php8.1-gd php8.1-libs php8.1-mbstring php8.1-mysqli php8.1-openssl php8.1-pgsql php8.1-sockets
-Requires: php8.1-xmlreader php8.1-curl php8.1-ldap
-Requires: zabbix-phpfrontend-engine = %EVR
-BuildArch: noarch
-
 %package phpfrontend-php8.2
 Summary: zabbix web frontend, edition for php8.2
 Group: Monitoring
@@ -200,14 +192,6 @@ BuildArch: noarch
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
 Requires: apache2-base
-BuildArch: noarch
-
-%package phpfrontend-apache2-mod_php8.1
-Summary: Requirements for the use of apache2-mod_php8.1
-Group: Monitoring
-Requires: %name-phpfrontend-apache2
-Requires: apache2-httpd-prefork-like
-Requires: apache2-mod_php8.1
 BuildArch: noarch
 
 %package phpfrontend-apache2-mod_php8.2
@@ -231,14 +215,6 @@ Summary: %name-phpfrontend's nginx config files
 Group: Monitoring
 Requires: nginx
 Requires: %name-common
-BuildArch: noarch
-
-%package phpfrontend-nginx-php8.1-fpm-fcgi
-Summary: Requirements for the use of php8.1-fpm-fcgi
-Group: Monitoring
-Requires: %name-phpfrontend-nginx
-Requires: %name-phpfrontend-php8.1
-Requires: php8.1-fpm-fcgi
 BuildArch: noarch
 
 %package phpfrontend-nginx-php8.2-fpm-fcgi
@@ -369,10 +345,6 @@ Sudo entry for zabbix agent.
 %description phpfrontend-apache2
 zabbix's apache2 config files
 
-%description phpfrontend-apache2-mod_php8.1
-Contains requirements for the use of apache2-mod_php8.1
-in to zabbix phpfrontend
-
 %description phpfrontend-apache2-mod_php8.2
 Contains requirements for the use of apache2-mod_php8.2
 in to zabbix phpfrontend
@@ -384,10 +356,6 @@ in to zabbix phpfrontend
 %description phpfrontend-nginx
 zabbix's nginx config files
 
-%description phpfrontend-nginx-php8.1-fpm-fcgi
-Contains requirements for the use of php8.1-fpm-fcgi
-in to zabbix phpfrontend
-
 %description phpfrontend-nginx-php8.2-fpm-fcgi
 Contains requirements for the use of php8.2-fpm-fcgi
 in to zabbix phpfrontend
@@ -398,9 +366,6 @@ in to zabbix phpfrontend
 
 %description phpfrontend-engine
 a php frontend for zabbix - core
-
-%description phpfrontend-php8.1
-zabbix web frontend, edition for php8.1
 
 %description phpfrontend-php8.2
 zabbix web frontend, edition for php8.2
@@ -838,21 +803,18 @@ fi
 %webserver_webappsdir/%name
 %doc add_new_language.sh make_mo.sh update_po.sh
 
-%files phpfrontend-php8.1
 %files phpfrontend-php8.2
 %files phpfrontend-php8.3
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
-%files phpfrontend-apache2-mod_php8.1
 %files phpfrontend-apache2-mod_php8.2
 %files phpfrontend-apache2-mod_php8.3
 
 %files phpfrontend-nginx
 %config(noreplace) %_sysconfdir/%name/%{name}_nginx.conf
 
-%files phpfrontend-nginx-php8.1-fpm-fcgi
 %files phpfrontend-nginx-php8.2-fpm-fcgi
 %files phpfrontend-nginx-php8.3-fpm-fcgi
 
@@ -866,6 +828,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Feb 05 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.9-alt2
+- Remove php 8.1 support
+
 * Tue Jan 28 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.9-alt1
 - 7.0.9
 

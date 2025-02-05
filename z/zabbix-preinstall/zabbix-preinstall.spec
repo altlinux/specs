@@ -1,6 +1,6 @@
 Name: zabbix-preinstall
-Version: 2.2.2
-Release: alt2.4
+Version: 7.0
+Release: alt1
 
 Summary: One-time initialization for Zabbix server
 License: GPL
@@ -10,7 +10,7 @@ Url: http://altlinux.org/zabbix
 Source: %name-%version.tar
 BuildArch: noarch
 
-Requires: zabbix-server-mysql zabbix-phpfrontend-apache2-mod_php8.1
+Requires: zabbix-server-mysql zabbix-phpfrontend-apache2-mod_php8.3
 
 %description
 This package contains scripts to initialize Zabbix server:
@@ -34,6 +34,10 @@ cp -a zabbix-*.sh %buildroot%_sbindir
 # - support other DB/frontend types?
 
 %changelog
+* Wed Feb 05 2025 Alexei Takaseev <taf@altlinux.org> 7.0-alt1
+- Change Req: zabbix-phpfrontend-apache2-mod_php8.1 to zabbix-phpfrontend-apache2-mod_php8.3
+- Version sync with major version Zabbix
+
 * Mon Sep 11 2023 Alexei Takaseev <taf@altlinux.org> 2.2.2-alt2.4
 - Change Req: zabbix-phpfrontend-apache2-mod_php8.0 to zabbix-phpfrontend-apache2-mod_php8.1
 
