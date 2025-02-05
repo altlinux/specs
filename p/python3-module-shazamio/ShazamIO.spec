@@ -1,8 +1,8 @@
 %define pypname shazamio
 
 Name: python3-module-shazamio
-Version: 0.7.0
-Release: alt2
+Version: 0.8.0
+Release: alt1
 
 Summary: Is a free asynchronous library from reverse engineered Shazam API written in Python 3.8+ with asyncio and aiohttp.
 License: MIT
@@ -42,6 +42,9 @@ subst "s|from shazamio_core import Recognizer, Signature|from shazamio_core.shaz
 %python3_sitelibdir/%{pyproject_distinfo %pypname}
 
 %changelog
+* Wed Feb 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
+- Update to version 0.8.0
+
 * Tue Feb 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt2
 - fixed for new shazamio core v1.1.1
 

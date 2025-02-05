@@ -1,7 +1,7 @@
 %define nameD shazamio_core
  
 Name:    python3-module-shazamio-core
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: shazamio-core
@@ -45,10 +45,13 @@ tar -xf %SOURCE1 -C %_builddir/%name-%version/
 %files
 %doc *.md LICENSE
 %python3_sitelibdir/%nameD/
-# %python3_sitelibdir/%{pyproject_distinfo %nameD}
-%python3_sitelibdir/shazamio_core-1.1.0.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %nameD}
+# %python3_sitelibdir/shazamio_core-1.1.0.dist-info/
 
 %changelog
+* Wed Feb 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.2-alt1
+- Update to version 1.1.2
+
 * Tue Feb 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt1
 - Update to version 1.1.1
 
