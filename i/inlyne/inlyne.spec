@@ -1,6 +1,6 @@
 Name:    inlyne
-Version: 0.4.3
-Release: alt2
+Version: 0.5.0
+Release: alt1
 
 Summary: Introducing Inlyne, a GPU powered yet browserless tool to help you quickly view markdown files in the blink of an eye
 License: MIT
@@ -68,6 +68,9 @@ install -Dm 644 completions/%name.fish %buildroot%_datadir/fish/vendor_completio
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Feb 05 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.0-alt1
+- new version 0.5.0
+
 * Wed Nov 13 2024 Ilya Sorochan <k0tran@altlinux.org> 0.4.3-alt2
 - Add patch for loongarch64 that fixes nix crate.
 
