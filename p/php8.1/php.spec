@@ -20,7 +20,7 @@
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt1
+Release: alt2
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -498,6 +498,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Feb 05 2025 Anton Farygin <rider@altlinux.ru> 8.1.31-alt2
+- applied fixes from upstream 8.3 branch:
+   * 5ad4d4be9f8 fix tests for glibc 2.39
+   * 2f2f76eeb69 openssl_x509_parse_basic test fails with OpenSSL 3.2+
+   * d4f1aeccf05 skip test for OpenSSL bug 74341 which is not a bug
+
 * Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 8.1.31-alt1
 - 8.1.30 -> 8.1.31 (Fixes: CVE-2024-8932, CVE-2024-8929, CVE-2024-11234, CVE-2024-11233)
 
