@@ -13,7 +13,7 @@
 
 Name: glade
 Version: %ver_major.0
-Release: alt2
+Release: alt2.1
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -43,7 +43,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= %gjs_ver}
 %{?_enable_webkit2gtk:BuildRequires: pkgconfig(webkit2gtk-4.0) >= %webkit_ver}
-%{?_enable_check:BuildRequires: /bin/dbus-run-session /bin/dbus-launch xvfb-run
+%{?_enable_check:BuildRequires: /usr/bin/dbus-run-session /usr/bin/dbus-launch xvfb-run
 BuildRequires: at-spi2-core devhelp
 BuildRequires: fonts-otf-abattis-cantarell icon-theme-hicolor gnome-icon-theme xmllint}
 
@@ -163,6 +163,9 @@ dbus-run-session xvfb-run %__meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt2.1
+- BR: /bin/dbus-* -> /usr/bin/dbus-*
+
 * Sat Oct 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt2
 - GLADE_3_40_0-13-gfa7224e4 (updated translations)
 - fixed %%check
