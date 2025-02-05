@@ -1,14 +1,17 @@
 %define with_allprogs 0
 %define lname libec
-%define soname 10
+%define soname 14
 
 Name: eclib
-Version: 20230424
-Release: alt2
+Version: 20250122
+Release: alt1
+
 Summary: Tools for create the elliptic curve database
-Group: Sciences/Mathematics
+
 License: GPL-2.0+
-Url: http://homepages.warwick.ac.uk/~masgaj/mwrank/
+Group: Sciences/Mathematics
+Url: https://homepages.warwick.ac.uk/~masgaj/mwrank/
+Vcs: git://github.com/JohnCremona/eclib.git
 
 Source: https://github.com/JohnCremona/eclib/releases/download/%version/%name-%version.tar.bz2
 Patch1: ax_boost_base-loongarch64.patch
@@ -31,11 +34,13 @@ Group: System/Libraries
 %description -n %lname%soname
 Library for Computations on Elliptic Curves.
 
-%package devel
+%package -n %lname-devel
 Summary: Development Files for %name
 Group: Development/C++
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
-%description devel
+%description -n %lname-devel
 Development libraries and headers for %name.
 
 %package tools
@@ -51,18 +56,7 @@ curves defined over the rational numbers.
 %patch1 -p1
 
 %build
-# FLINT_LEVEL 2 assumes that the C int type == half the width of a limb_t.
-# This is only true on 64 bit platforms.
-# %%ifnarch armh i586
-#   export FLINT_LEVEL=2
-# %%endif
-
 export CPPFLAGS="-I %_includedir/flint"
-# %%ifarch %%ix86
-# Excess precision leads to test failures
-# export CFLAGS="%%build_cflags -ffloat-store"
-# export CXXFLAGS="$CFLAGS"
-# %%endif
 %autoreconf
 %configure \
         --disable-static \
@@ -97,7 +91,7 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n %lname%soname
 %_libdir/%lname.so.%{soname}*
 
-%files devel
+%files -n %lname-devel
 %doc doc/g0n.txt
 %_includedir/%name/
 %_libdir/%lname.so
@@ -113,6 +107,11 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/mwrank.1*
 
 %changelog
+* Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 20250122-alt1
+- New version 20250122.
+- Added vcs tag.
+- Renamed: eclib-devel -> libec-devel.
+
 * Sun Nov 05 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230424-alt2
 - NMU: fixed FTBFS on LoongArch.
 

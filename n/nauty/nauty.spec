@@ -1,7 +1,7 @@
-%define lver 2_8_8
+%define lver 2_8_9
 
 Name: nauty
-Version: 2.8.8
+Version: 2.8.9
 Release: alt1
 Epoch: 1
 
@@ -29,20 +29,23 @@ package. For example, geng can generate non-isomorphic graphs very
 quickly. There are also generators for bipartite graphs, digraphs,
 and multigraphs.
 
-%package -n lib%{name}-%lver
+%package -n lib%name%version
 Summary: Graph automorphism group computation with Nauty
 Group: System/Libraries
+Provides: lib%name-2_8_8 = %EVR
+Obsoletes: lib%name-2_8_8 < %EVR
 
-%description -n lib%{name}-%lver
+%description -n lib%name%version
 nauty and Traces are programs for computing automorphism groups of
 graphs and digraphs. They can also produce a canonical label.
 
-%package devel
+%package -n lib%name-devel
 Summary: Development files for nauty, a math library
 Group: Development/Other
-Requires: lib%{name}-%lver = %version
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
-%description devel
+%description -n lib%name-devel
 nauty and Traces are programs for computing automorphism groups of
 graphs and digraphs. They can also produce a canonical label.
 
@@ -52,42 +55,50 @@ applications that want to make use of libnauty.
 %prep
 %setup
 %patch -p1
+rm -f makefile aclocal.m4
 
 %build
-rm -f makefile
-%autoreconf
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 export CFLAGS="%optflags -Wno-unused"
-%configure --enable-generic
+%autoreconf
+%configure --enable-generic --includedir=%_includedir/nauty
 %make_build
 
 %install
 %makeinstall_std
-rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/{*.la,*.a}
 
 %files
 %_bindir/*
 %doc changes24-28.txt
 %doc COPYRIGHT
 
-%files -n lib%{name}-%lver
+%files -n lib%name%version
 %_libdir/libnauty*-%version.so
 
-%files devel
+%files -n lib%name-devel
 %_includedir/nauty/
 %_libdir/libnauty.so
-%_libdir/libnautyA1.so
-%_libdir/libnautyL0.so
+%_libdir/libnauty1.so
+%_libdir/libnautyL.so
 %_libdir/libnautyL1.so
-%_libdir/libnautyS0.so
-%_libdir/libnautyS1.so
-%_libdir/libnautyW0.so
-%_libdir/libnautyW1.so
 %ifnarch armh i586
-%_libdir/libnautyQ0.so
+%_libdir/libnautyQ.so
 %_libdir/libnautyQ1.so
 %endif
+%_libdir/libnautyS.so
+%_libdir/libnautyS1.so
+%_libdir/libnautyW.so
+%_libdir/libnautyW1.so
+%_pkgconfigdir/libnauty*.pc
 
 %changelog
+* Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 1:2.8.9-alt1
+- New version 2.8.9.
+- Renamed:
+  + lib%%name-%%lver -> lib%%name%%version.
+  + %%name-devel -> lib%%name-devel.
+
 * Wed Nov 29 2023 Leontiy Volodin <lvol@altlinux.org> 1:2.8.8-alt1
 - New version 2.8.8.
 

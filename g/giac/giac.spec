@@ -6,7 +6,7 @@
 
 Name: giac
 Version: 1.9.0.998
-Release: alt1
+Release: alt2
 
 Summary: Computer algebra system
 
@@ -20,7 +20,7 @@ Source: %name-%version.tar.gz
 # Some files is not compiled with -fpic/-fPIC on armh and ppc64le.
 ExcludeArch: armh ppc64le
 
-BuildRequires: flex gcc-c++ libXft-devel libXinerama-devel libblas-devel libcurl-devel libecm-devel libfltk-devel libgfortran-devel libglpk-devel libgsl-devel libjpeg-devel liblapack-devel libmpfi-devel libntl-devel libreadline-devel libsamplerate-devel nauty-devel pari-devel
+BuildRequires: flex gcc-c++ libXft-devel libXinerama-devel libblas-devel libcurl-devel libecm-devel libfltk-devel libgfortran-devel libglpk-devel libgsl-devel libjpeg-devel liblapack-devel libmpfi-devel libntl-devel libreadline-devel libsamplerate-devel libnauty-devel pari-devel
 %ifnarch %e2k
 BuildRequires: gcc-fortran
 %endif
@@ -58,11 +58,13 @@ A computer algebra system, compatible with existing CAS, as a C++
 library with various user interfaces (GUI with formal spreadsheet and exact
 dynamic geometry, on-line, readline, emacs, texmacs...).
 
-%package devel
+%package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C++
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
-%description devel
+%description -n lib%name-devel
 This package contains header files and libraries needed to develop
 application that use the GIAC computer algebra system.
 
@@ -181,7 +183,7 @@ rm %buildroot%_docdir/giac/Makefile.am
 %doc COPYING
 %_libdir/libgiac.so.%{soname}*
 
-%files devel
+%files -n lib%name-devel
 %doc COPYING
 %_includedir/giac/
 %_libdir/libgiac.so
@@ -200,6 +202,9 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/*
 
 %changelog
+* Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.0.998-alt2
+- Renamed giac-devel to libgiac-devel.
+
 * Wed Dec 25 2024 Leontiy Volodin <lvol@altlinux.org> 1.9.0.998-alt1
 - New version 1.9.0.998.
 
