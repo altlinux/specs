@@ -1,11 +1,10 @@
-%define _unpackaged_files_terminate_build 1
 %global oname pathlib2
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.6
-Release: alt1.1
+Version: 2.3.7
+Release: alt1
 
 Summary: Object-oriented filesystem paths
 License: MIT
@@ -31,13 +30,11 @@ BuildRequires: python3(tox)
 
 BuildArch: noarch
 
-%global _description \
-The old pathlib module on bitbucket is in bugfix-only mode. The goal of\
-pathlib2 is to provide a backport of standard pathlib module which tracks\
-the standard library module, so all the newest features of the standard\
+%description
+The old pathlib module on bitbucket is in bugfix-only mode. The goal of
+pathlib2 is to provide a backport of standard pathlib module which tracks
+the standard library module, so all the newest features of the standard
 pathlib can be used also on older Python versions.
-
-%description %_description
 
 %prep
 %setup
@@ -59,6 +56,9 @@ pathlib can be used also on older Python versions.
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Feb 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.7-alt1
+- Automatically updated to 2.3.7.
+
 * Tue Jan 30 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.6-alt1.1
 - NMU: moved on modern pyproject macros.
 
