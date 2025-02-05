@@ -1,11 +1,11 @@
 %define pypi_name dateparser
 
-# 5 failed, 23922 passed in 159.28s
+# dl.fbaipublicfiles.com
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
-Release: alt1.1
+Version: 1.2.1
+Release: alt1
 
 Summary: Python parser for human readable dates 
 License: BSD-3-Clause
@@ -13,14 +13,15 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/dateparser
 
 Vcs: https://github.com/scrapinghub/dateparser.git
+
 Source: https://github.com/scrapinghub/dateparser/archive/v%version/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 #grep calendars setup.py 
-#'calendars': ['convertdate', 'umalqurra', 'jdatetime', 'ruamel.yaml'],
+#'calendars': ['convertdate', hijridate'],
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-wheel  python3-module-setuptools
+BuildRequires: python3-devel python3(wheel) python3(setuptools)
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-parameterized
 BuildRequires: python3-module-dateutil python3-module-tzlocal
@@ -31,7 +32,7 @@ BuildRequires: python3-module-flake8 python3-module-pytest
 BuildRequires: python3-module-pytest-cov python3-module-parameterized
 BuildRequires: python3-module-convertdate
 BuildRequires: python3-module-ruamel-yaml python3-module-umalqurra
-BuildRequires: python3-module-hijri-converter python3-module-langdetect
+BuildRequires: python3-module-hijridate python3-module-langdetect
 BuildRequires: python3(fasttext) python3(parsel) python3(git)}
 
 %description
@@ -89,6 +90,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 
 %changelog
+* Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1 (ported to hijridate)
+
 * Mon Dec 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1.1
 - fixed BR
 
