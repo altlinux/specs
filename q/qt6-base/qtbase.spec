@@ -9,6 +9,8 @@
 %define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
+%add_findreq_skiplist %_qt6_plugindir/platformthemes/libqgtk?.so
+
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -32,7 +34,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.7.2
-Release: alt8
+Release: alt9
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -833,6 +835,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Feb 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt9
+- force drop requires for platformthemes/libqgtk3.so because libgtk+3 overkill requires (closes: 52831)
+
 * Wed Jan 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt8
 - fix qmenu_fix_shortcuts.patch (thanks Corwin) (closes: 52611)
 
