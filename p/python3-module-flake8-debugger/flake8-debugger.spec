@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.2
-Release: alt2
+Release: alt2.1
 
 Summary: ipdb/pdb statement checker plugin for flake8
 License: MIT
@@ -21,6 +21,7 @@ BuildRequires: python3-module-poetry-core
 %if_with check
 BuildRequires: python3-module-pycodestyle
 BuildRequires: python3-module-flake8
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides flake8_debugger
@@ -50,6 +51,9 @@ This module provides a plugin for ``flake8``, the Python code checker.
 %python3_sitelibdir/flake8_debugger-%version.dist-info
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 4.1.2-alt2.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 4.1.2-alt2
 - Fixed FTBFS (poetry-core 2.0).
 
