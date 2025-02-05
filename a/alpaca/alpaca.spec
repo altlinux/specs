@@ -3,7 +3,7 @@
 %define app_id com.jeffser.Alpaca
 
 Name: alpaca
-Version: 3.5.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Chat with local AI models
@@ -108,5 +108,8 @@ by any models.
 %files local
 
 %changelog
+* Sat Feb 01 2025 Semen Fomchenkov <armatik@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Fri Jan 24 2025 Semen Fomchenkov <armatik@altlinux.org> 3.5.0-alt1
 - Initial build.
