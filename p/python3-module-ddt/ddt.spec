@@ -5,7 +5,7 @@
 
 Name: python3-module-ddt
 Version: 1.7.2
-Release: alt1
+Release: alt1.1
 
 Summary: A Python library to multiply test cases
 
@@ -24,11 +24,10 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(yaml)
 BuildRequires: python3(aiounittest)
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
 %endif
 
 %description
@@ -56,6 +55,9 @@ combination with other testing frameworks like unittest and nose.
 %python3_sitelibdir/__pycache__
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.7.2-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Tue Mar 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
 - Automatically updated to 1.7.2.
 
