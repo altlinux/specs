@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt8
+Release: alt9
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -377,6 +377,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Feb 06 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt9
+- Add slides for slideshow in installer
+
 * Fri Dec 27 2024 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt8
 - Add gnome-settings and default background
 
