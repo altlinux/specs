@@ -1,6 +1,6 @@
 Name: shadow
-Version: 4.16.0
-Release: alt2
+Version: 4.17.2
+Release: alt1
 Epoch: 1
 
 Summary: Utilities for managing shadow password files and user/group accounts
@@ -486,6 +486,11 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Thu Feb 06 2025 Mikhail Efremov <sem@altlinux.org> 1:4.17.2-alt1
+- Returned Basename() function.
+- Dropped unused variables.
+- Updated to 4.17.2.
+
 * Thu Aug 08 2024 Mikhail Efremov <sem@altlinux.org> 1:4.16.0-alt2
 - Fixed build with lastlog enabled.
 - log: Returned lastlog (closes: #51106).
