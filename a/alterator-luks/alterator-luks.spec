@@ -1,6 +1,6 @@
 Name: alterator-luks
-Version: 0.3.1
-Release: alt2
+Version: 0.3.2
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -38,6 +38,9 @@ alterator module for for change LUKS passphrase
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Feb 05 2025 Oleg Solovyov <mcpain@altlinux.org> 0.3.2-alt1
+- use PBKDF2 when changing key
+
 * Thu Jan 16 2020 Oleg Solovyov <mcpain@altlinux.org> 0.3.1-alt2
 - Don't change password on containers having passwords (Closes: #37662)
 

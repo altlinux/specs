@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt85
+Release: alt86
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,12 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Feb 05 2025 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt86
+- LUKS: move to LUKS2
+- DOS: fix crash if placed on multipath disk
+- DOS, GPT: do not scale CHS by block size
+- LUKS: use bigger buffer to reduce slow down when committing changes
+
 * Mon Dec 16 2024 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt85
 - LUKS: fix cypher spec (Closes: #51890)
 - GPT: full support for 4k-disks
