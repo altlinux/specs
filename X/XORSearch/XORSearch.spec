@@ -1,12 +1,13 @@
 Name:		XORSearch
 Version:	1.6.0
 %define		_ver 1_6_0
-Release:	alt1.qa1
+Release:	alt2
 License:	Public domain
 Group:		File tools
 Summary:	Search for a given string in an XOR, ROL or ROT encoded binary file
 URL:		http://blog.didierstevens.com/programs/xorsearch/
 Source:		http://www.didierstevens.com/files/software/XORSearch_V%{_ver}.zip
+Patch:      XORSearch-1.6.0-alt-gcc14.patch
 
 # Automatically added by buildreq on Tue Jul 13 2010
 BuildRequires: unzip
@@ -20,6 +21,7 @@ If the search string is found, XORSearch will print it until the 0 (byte zero) i
 
 %prep
 %setup -cq
+%patch -p2
 echo "%description" > o
 %build
 gcc %name.c -o %name
@@ -31,6 +33,9 @@ install -D %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Thu Feb 06 2025 Anton Meleshnikov <alton@altlinux.org> 1.6.0-alt2
+- Fixed FTBFS.
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.6.0-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
