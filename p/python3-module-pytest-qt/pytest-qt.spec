@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.4.0
-Release: alt1
+Release: alt1.1
 Summary: pytest plugin for Qt (PyQt4, PyQt5 and PySide) application testing
 License: MIT
 Group: Development/Python3
@@ -19,6 +19,7 @@ BuildRequires: python3-module-setuptools_scm
 
 %if_with check
 BuildRequires: python3-module-PyQt5
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -62,6 +63,9 @@ export TOX_TESTENV_PASSENV="XDG_CONFIG_DIRS"
 %python3_sitelibdir/pytest_qt-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri Feb 09 2024 Anton Vyatkin <toni@altlinux.org> 4.4.0-alt1
 - New version 4.4.0.
 
