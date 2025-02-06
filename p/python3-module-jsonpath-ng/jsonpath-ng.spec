@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Summary: A final implementation of JSONPath for Python
 License: Apache-2.0
 Group: Development/Python3
@@ -39,7 +39,7 @@ tree.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
+%pyproject_deps_resync_check_tox tox.ini testenv
 %endif
 
 %build
@@ -58,6 +58,9 @@ tree.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
+- Fixed FTBFS (tox4).
+
 * Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
 - 1.6.1 -> 1.7.0.
 
