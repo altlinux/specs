@@ -1,34 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname Flask-Migrate
+%define pypi_name flask-migrate
+%define mod_name flask_migrate
+# setuptools-specific normalization
+%define distinfo_name Flask_Migrate
 
-%def_enable check
+%def_with check
 
-Name: python3-module-flask-migrate
-Version: 4.0.4
-Release: alt1.1
-
+Name: python3-module-%pypi_name
+Version: 4.1.0
+Release: alt1
 Summary: SQLAlchemy database migrations for Flask applications using Alembic
-
 License: MIT
 Group: Development/Python3
-Url: https://github.com/miguelgrinberg/Flask-Migrate
+Url: https://pypi.org/project/Flask-Migrate/
 VCS: https://github.com/miguelgrinberg/Flask-Migrate
-
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
-
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
-%if_enabled check
-BuildRequires: python3-module-flask
-BuildRequires: python3-module-alembic >= 1.7.0
-BuildRequires: python3-module-flask-sqlalchemy
-BuildRequires: python3-module-greenlet
-BuildRequires: python3-module-pytest
+Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-%release.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -40,6 +35,11 @@ under the flask db command.
 %prep
 %setup
 %patch0 -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -48,13 +48,16 @@ under the flask db command.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject -- -vra tests
+%pyproject_run_pytest -vra
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%distinfo_name-%version.dist-info/
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
+- 4.0.4 -> 4.1.0.
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 4.0.4-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
