@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 2.0.2
-Release: alt4
+Release: alt5
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
 Group: Development/Python3
@@ -25,6 +25,7 @@ BuildRequires(pre): rpm-build-pyproject
 %add_pyproject_deps_check_filter sphinx
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+BuildRequires: python3-module-six
 %endif
 
 %filter_from_requires /python3(kafka\.vendor\..*)/d
@@ -78,6 +79,9 @@ chmod -x example.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 2.0.2-alt5
+- Fixed FTBFS (tox 4).
+
 * Mon Feb 26 2024 Stanislav Levin <slev@altlinux.org> 2.0.2-alt4
 - Fixed FTBFS (Python 3.12).
 
