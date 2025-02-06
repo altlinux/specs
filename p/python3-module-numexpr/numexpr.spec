@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.10.2
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
@@ -27,7 +27,6 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: /proc
-BuildRequires: python3(tox)
 BuildRequires: python3(numpy.testing)
 %endif
 
@@ -65,17 +64,14 @@ sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
 %pyproject_install
 
 %check
+# see .github/workflows/build.yml
 cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
+changedir = empty
 commands =
-    # must be synced with CI config (e.g. travis)
     python -c 'import sys, numexpr; sys.exit(0 if numexpr.test().wasSuccessful() else 1)'
 EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.txt *.rst
@@ -83,6 +79,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 1:2.10.2-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Wed Nov 27 2024 Grigory Ustinov <grenka@altlinux.org> 1:2.10.2-alt1
 - Automatically updated to 2.10.2.
 
