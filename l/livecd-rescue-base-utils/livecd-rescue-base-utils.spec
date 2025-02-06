@@ -1,14 +1,12 @@
 Name: livecd-rescue-base-utils
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
 Group: System/Base
 
 Url: https://www.altlinux.org/Rescue
-
-BuildArch: noarch
 
 # Disk utils
 Requires: dc3dd
@@ -75,11 +73,20 @@ Requires: system-backup
 Requires: gostsum
 Requires: flashrom
 
+%ifarch x86_64
+# UEFI Secure Boot
+Requires: pesign
+Requires: mokutil
+%endif
+
 %description
 %summary.
 
 %files
 
 %changelog
+* Thu Feb 06 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt2
+- Add dependencies on pesign, mokutil (x86_64 only)
+
 * Wed Feb 05 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt1
 - initial build
