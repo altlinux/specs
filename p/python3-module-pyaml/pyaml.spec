@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 25.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
 License: WTFPL
@@ -26,6 +26,7 @@ BuildRequires: python3(yaml)
 BuildRequires: python3(unidecode)
 
 BuildRequires: python3(tox)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -52,6 +53,9 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 25.1.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 25.1.0-alt1
 - Automatically updated to 25.1.0.
 
