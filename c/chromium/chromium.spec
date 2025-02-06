@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        132.0.6834.159
+Version:        133.0.6943.53
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -71,7 +71,7 @@ Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
-Patch016: 0016-DEBIAN-use-system-libevent-library.patch
+# Patch016: 0016-DEBIAN-use-system-libevent-library.patch
 # Drop 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch when switching to libc++:
 # Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
@@ -90,7 +90,7 @@ Patch032: 0032-FEDORA-libavif-deps.patch
 # Patch033: 0033-ALT-rename-std::powf.patch
 # Patch034: 0034-DEBIAN-span-optional.patch
 # Patch035: 0035-DEBIAN-mojo.patch
-Patch036: 0036-DEBIAN-ruy-include.patch
+# Patch036: 0036-DEBIAN-ruy-include.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
@@ -548,6 +548,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Feb 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 133.0.6943.53-alt1
+- New version (133.0.6943.53).
+- Security fixes:
+  + CVE-2025-0444: Use after free in Skia.
+  + CVE-2025-0445: Use after free in V8.
+  + CVE-2025-0451: Inappropriate implementation in Extensions API.
+
 * Wed Jan 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 132.0.6834.159-alt1
 - New version (132.0.6834.159).
 - Change startup options (Closes: #52826).
