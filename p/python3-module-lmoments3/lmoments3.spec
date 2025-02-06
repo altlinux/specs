@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.8
-Release: alt1
+Release: alt1.1
 Summary: Estimate linear moments for statistical distribution functions
 License: GPLv3
 Group: Development/Python3
@@ -23,6 +23,7 @@ BuildRequires: python3-module-wheel
 BuildPreReq: python3(numpy)
 BuildPreReq: python3(numpy.testing)
 BuildPreReq: python3(scipy)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -51,6 +52,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 1.0.8-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Wed Sep 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
 - Automatically updated to 1.0.8.
 
