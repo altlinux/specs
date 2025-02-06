@@ -2,18 +2,18 @@
 %define vma_commit 5a53a198945ba8260fbc58fadb788745ce6aa263
 %define robin_map_commit fe845fd7852ef541c5479ae23b3d36b57f8608ee
 %define magic_enum_commit 1a1824df7ac798177a521eed952720681b0bf482
-%define sirit_commit 1e74f4ef8d2a0e3221a4de51977663f342b53c35
+%define sirit_commit d6f3c0d99862ab2ff8f95e9ac221560f1f97e29a
 %define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
 %define cryptopp_commit 60f81a77e0c9a0e7ffc1ca1bc438ddfa2e43b78e
 %define zydis_commit bffbb610cfea643b98e87658b9058382f7522807
 %define dear_imgui_commit 636cd4a7d623a2bc9bf59bb3acbb4ca075befba3
-%define discord_rpc_commit 4ec218155d73bcb8022f8f7ca72305d801f84beb
-%define vulkan_headers_version 1.4.303
+%define discord_rpc_commit 51b09d426a4a1bcfa6ee6d4894e57d669f4a2e65
+%define vulkan_headers_version 1.4.305
 %define libatrac9_commit 9640129dc6f2afbca6ceeca3019856e8653a5fb2
 
 Name: shadps4
-Version: 0.5.0
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -51,6 +51,8 @@ Source11: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/shadps4-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
 Source12: ext-LibAtrac9-%libatrac9_commit.tar
 
+Patch0: %name-0.6.0-vulakn-headers.patch
+
 BuildRequires: boost-asio-devel
 BuildRequires: cmake
 BuildRequires: glslang-devel
@@ -84,6 +86,8 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 
 %prep
 %setup -n shadPS4-v.%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+
+%patch0 -p1
 
 %__mv -Tf ../ext-cryptopp-cmake-%cryptopp_cmake_commit externals/cryptopp-cmake
 %__mv -Tf ../VulkanMemoryAllocator-%vma_commit externals/vma
@@ -119,7 +123,6 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %files
 %doc CONTRIBUTING.md README.md
 %_bindir/%name
-%_datadir/metainfo/releases/net.%name.shadPS4.releases.xml
 %_datadir/metainfo/net.%name.shadPS4.metainfo.xml
 %_desktopdir/net.%name.shadPS4.desktop
 %_iconsdir/hicolor/512x512/apps/net.%name.shadPS4.png
@@ -127,6 +130,9 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %_libexecdir/%name
 
 %changelog
+* Tue Feb 04 2025 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
+- Version 0.6.0
+
 * Sun Jan 26 2025 Nazarov Denis <nenderus@altlinux.org> 0.5.0-alt2
 - Build with system SDL3
 
