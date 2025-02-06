@@ -1,5 +1,5 @@
 Name: epmgpi
-Version: 1.5
+Version: 1.5.1
 Release: alt1
 
 Summary: Etersoft EPM GUI Package Installer
@@ -32,6 +32,9 @@ EPM GUI Package Installer was created to install packages
 %_pixmapsdir/%name.svg
 
 %changelog
+* Thu Feb 06 2025 Roman Alifanov <ximper@altlinux.org> 1.5.1-alt1
+- flatpak removed from mimetypes
+
 * Tue Jul 30 2024 Roman Alifanov <ximper@altlinux.org> 1.5-alt1
 - added warning about the launch of extraneous files
 - added multilingual support
