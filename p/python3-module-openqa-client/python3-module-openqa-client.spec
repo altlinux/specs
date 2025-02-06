@@ -5,7 +5,7 @@
 
 Name: python3-module-%module_name
 Version: 4.2.3
-Release: alt1
+Release: alt1.1
 Summary: Python API to access openQA server
 License: GPL-2.0
 Group: Development/Python3
@@ -22,6 +22,7 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(yaml)
 BuildRequires: python3(requests)
 BuildRequires: python3(freezegun)
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides %pypi_name
@@ -47,6 +48,9 @@ BuildRequires: python3(freezegun)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 4.2.3-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Tue Oct 10 2023 Alexander Makeenkov <amakeenk@altlinux.org> 4.2.3-alt1
 - Updated to version 4.2.3.
 
