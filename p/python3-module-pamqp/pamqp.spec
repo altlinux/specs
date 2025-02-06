@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.2.1
-Release: alt2
+Release: alt2.1
 
 Summary: RabbitMQ Focused AMQP low-level library
 License: BSD-3-Clause
@@ -21,6 +21,9 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
@@ -99,6 +102,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 3.2.1-alt2.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri Feb 02 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt2
 - Moved on modern pyproject macros.
 
