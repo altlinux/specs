@@ -1,6 +1,6 @@
 Name: lib2geom
 Version: 1.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Easy to use 2D geometry library in C++
@@ -35,6 +35,7 @@ in development of the %name-based applications.
 %ifarch %e2k
 # lcc 1.25.15 barfs at include/2geom/ord.h:54 as of 1.1
 sed -i 's|-Werror=return-type||' CMakeLists.txt
+sed -i -E 's|constexpr (bool)|\1|' tests/interval-test.cpp
 %endif
 # fix target lib dir (NB: looks like there are no CMAKE_CXX_FLAGS there in 1.1)
 sed -i "s| lib/| %_lib/|g" CMakeLists.txt
@@ -63,6 +64,9 @@ sed -i "s|/lib$|/%_lib|" %buildroot%_pkgconfigdir/*
 %_libdir/cmake/2Geom/
 
 %changelog
+* Tue Feb 04 2025 Michael Shigorin <mike@altlinux.org> 1:1.4-alt3
+- E2K: ftbfs workaround for lcc 1.29.04 (ilyakurdyukov@)
+
 * Tue Dec 17 2024 Michael Shigorin <mike@altlinux.org> 1:1.4-alt2
 - fix sed calls as %optflags can have comma too
 
