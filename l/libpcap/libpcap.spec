@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libpcap
-Version: 1.10.4
+Version: 1.10.5
 Release: alt1
 Epoch: 2
 
@@ -40,10 +40,12 @@ Summary: Development environment for the packet capture library
 Group: Development/C
 Requires: %libname = %epoch:%version-%release
 
+%if_enabled static
 %package devel-static
 Summary: Static packet capture library
 Group: Development/C
 Requires: %name-devel = %epoch:%version-%release
+%endif
 
 %description
 Libpcap provides a portable framework for low-level network monitoring.
@@ -72,6 +74,7 @@ several system-dependent packet capture modules in each application.
 This package contains development files needed to develop libpcap-based
 applications such as tcpdump, etc.
 
+%if_enabled static
 %description devel-static
 Libpcap provides a portable framework for low-level network monitoring.
 Libpcap can provide network statistics collection, security monitoring
@@ -82,13 +85,18 @@ several system-dependent packet capture modules in each application.
 
 This package contains the static pcap library needed to develop
 statically linked libpcap-based applications.
+%endif
 
 %prep
 %setup -n %name-%version-%release
 
 %build
+export PKG_CONFIG_PATH="$(pwd)/pkgconfig"
+mkdir -p pkgconfig
+sed '/^Requires.* libsystemd/d' %_pkgconfigdir/dbus-1.pc > pkgconfig/dbus-1.pc
+
 export V_RPATH_OPT=
-autoconf -f -v
+%autoreconf
 %configure \
 	%{subst_enable dbus} \
 	%{subst_enable bluetooth} \
@@ -116,12 +124,15 @@ autoconf -f -v
 %_mandir/man[135]/*
 %_libdir/pkgconfig/libpcap.pc
 
-%if_with static
+%if_enabled static
 %files devel-static
 %_libdir/*.a
 %endif
 
 %changelog
+* Wed Feb 05 2025 Arseny Maslennikov <arseny@altlinux.org> 2:1.10.5-alt1
+- 1.10.4 -> 1.10.5.
+
 * Mon Jun 05 2023 Arseny Maslennikov <arseny@altlinux.org> 2:1.10.4-alt1
 - 1.9.1 -> 1.10.4.
 
