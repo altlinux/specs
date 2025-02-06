@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.11.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library to parse gdb mi output and interact with gdb subprocesses
 License: MIT
@@ -23,6 +23,7 @@ Requires: gdb
 BuildRequires: gdb
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -60,5 +61,8 @@ component of a larger system.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.11.0.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Thu Oct 26 2023 Andrey Limachko <liannnix@altlinux.org> 0.11.0.0-alt1
 - Initial build for Sisyphus
