@@ -3,7 +3,7 @@
 
 Name:    python3-module-%oname
 Version: 0.11.0
-Release: alt1
+Release: alt1.1
 
 Summary: A low-level PDF creator
 
@@ -22,6 +22,7 @@ BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-pytest
 BuildRequires: ghostscript
 %endif
 
@@ -49,6 +50,9 @@ BuildArch: noarch
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Jul 15 2024 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
 - Automatically updated to 0.11.0.
 
