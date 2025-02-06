@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%define soname 4.5
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
@@ -14,8 +15,8 @@ American Institute of Aeronautics and Astronautics (AIAA) Recommended \
 Practice.
 
 Name: cgns
-Version: 4.4.0
-Release: alt2
+Version: 4.5.0
+Release: alt1
 Summary: CFD General Notation System
 Group: Sciences/Mathematics
 License: Zlib
@@ -23,9 +24,8 @@ URL: https://github.com/CGNS/CGNS
 VCS: https://github.com/CGNS/CGNS.git
 Source: %name-%version.tar
 
-Patch1: cgns-4.4.0-alt-install.patch
-Patch2: cgns-4.4.0-fedora-gcc14-fix.patch
-Patch3: cgns-4.4.0-fedora-c99.patch
+Patch1: cgns-4.5.0-alt-install.patch
+Patch2: cgns-4.5.0-alt-fix-build-tkint.patch
 
 BuildRequires: cmake gcc-c++ gcc-fortran zlib-devel libGL-devel tk-devel
 BuildRequires: libGLU-devel xorg-xproto-devel libXmu-devel libXtst-devel
@@ -35,7 +35,7 @@ BuildRequires: libXpm-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: libXxf86misc-devel libXinerama-devel libXxf86vm-devel
 BuildRequires: libhdf5-devel
 
-Requires: lib%name = %EVR
+Requires: lib%name%soname = %EVR
 Obsoletes: %name-seq < %EVR
 
 %description
@@ -47,11 +47,11 @@ format. The format is a conceptual entity established by the
 documentation; the software is a physical product supplied to enable
 developers to access and produce data recorded in that format.
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: Shared libraries of CFD General Notation System
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%soname
 %longdesc
 
 This package contains shared libraries of CGNS.
@@ -59,7 +59,7 @@ This package contains shared libraries of CGNS.
 %package -n lib%name-devel
 Summary: Development files of CFD General Notation System
 Group: Development/C++
-Requires: lib%name = %EVR
+Requires: lib%name%soname = %EVR
 Obsoletes: lib%name-seq-devel < %EVR
 
 %description -n lib%name-devel
@@ -81,7 +81,6 @@ This package contains development files of CGNS.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -103,10 +102,10 @@ This package contains development files of CGNS.
 %_datadir/cgnstools
 %_desktopdir/*.desktop
 
-%files -n lib%name
+%files -n lib%name%soname
 %doc license.txt
 %doc README.md
-%_libdir/*.so.*
+%_libdir/*.so.%soname
 
 %files -n lib%name-devel
 %_includedir/*
@@ -117,6 +116,10 @@ This package contains development files of CGNS.
 %_libdir/*.a
 
 %changelog
+* Tue Jan 14 2025 Anton Farygin <rider@altlinux.ru> 4.5.0-alt1
+- 4.4.0 -> 4.5.0
+- renamed package according SharedLibsPolicy
+
 * Fri Nov 29 2024 Anton Farygin <rider@altlinux.ru> 4.4.0-alt2
 - added fedora patch to fix build with gcc14
 - fixed License according SPDX
