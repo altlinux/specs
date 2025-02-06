@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.37.0
-Release: alt1
+Release: alt1.1
 Summary: A collection of Python utilities
 License: LGPLv2.1 
 Group: Development/Python3
@@ -20,13 +20,14 @@ BuildRequires: python3(wheel)
 %py3_provides %pypi_name
 
 %if_with check
-BuildRequires: python3(tox)
 BuildRequires: python3(requests-gssapi)
 BuildRequires: python3(django)
 BuildRequires: python3(mock)
 BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: mailcap
 BuildRequires: coreutils
+BuildRequires: python3-module-six
+BuildRequires: python3-module-pytest
 %endif
 
 %description 
@@ -54,6 +55,9 @@ export TOX_TESTENV_PASSENV='DJANGO_SETTINGS_MODULE'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.37.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Aug 12 2024 Mikhail Chernonog <snowmix@altlinux.org> 0.37.0-alt1
 - 0.30.1 -> 0.37.0
 
