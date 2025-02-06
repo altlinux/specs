@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Lightweight markup language-based html5 slideshow generator
 
@@ -28,6 +28,7 @@ BuildRequires: python3(markdown)
 BuildRequires: python3(pygments)
 BuildRequires: python3(six)
 BuildRequires: python3(tox)
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_requires markdown
@@ -56,6 +57,9 @@ fancy HTML5 slideshow.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri May 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Build new version.
 
