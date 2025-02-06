@@ -1,34 +1,29 @@
-%global oname pathlib2
+%define _unpackaged_files_terminate_build 1
+%define pypi_name pathlib2
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.3.7
+Name: python3-module-%pypi_name
+Version: 2.3.7.post1
 Release: alt1
-
-Summary: Object-oriented filesystem paths
+Summary: Fork of pathlib aiming to support the full stdlib Python API
 License: MIT
 Group: Development/Python3
-
-# Source-git: https://github.com/mcmtroffaes/pathlib2
 Url: https://pypi.org/project/pathlib2
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-# install_requires=
-BuildRequires: python3(six)
-
-BuildRequires: python3(test)
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-%endif
-
+Vcs: https://github.com/jazzband/pathlib2
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
+BuildRequires: python3-test
+%endif
 
 %description
 The old pathlib module on bitbucket is in bugfix-only mode. The goal of
@@ -39,6 +34,8 @@ pathlib can be used also on older Python versions.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -47,15 +44,17 @@ pathlib can be used also on older Python versions.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
-%doc CHANGELOG.rst LICENSE.rst README.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version.dist-info/
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 2.3.7.post1-alt1
+- 2.3.7 -> 2.3.7.post1.
+
 * Wed Feb 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.7-alt1
 - Automatically updated to 2.3.7.
 
