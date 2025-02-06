@@ -113,7 +113,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.13
+Version: %major.14
 Release: alt1
 Epoch: 1
 
@@ -886,6 +886,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.14-alt1
+- update patches to staging wine-9.0
+  + revert "Revert "prntvpt: Prefer builtin. (eterbug #14957)""
+
 * Fri Dec 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.13-alt1
 - update patches to staging wine-9.0
   + fixed compile error, passing incompatible types
