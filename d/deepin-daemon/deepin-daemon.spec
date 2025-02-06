@@ -3,7 +3,7 @@
 %define repo dde-daemon
 
 Name: deepin-daemon
-Version: 6.0.45
+Version: 6.1.19
 Release: alt1
 Epoch: 2
 
@@ -12,6 +12,7 @@ Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-daemon
+Vcs: git://github.com/linuxdeepin/dde-daemon.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -22,6 +23,9 @@ Source3: deepin-auth
 ExcludeArch: ppc64le
 
 # Requires: libX11 libXi libalsa glibc-core libcrypt libddcutil5 libgtk+3 libgdk-pixbuf libgdk-pixbuf-xlib libgio glib2 libgudev libinput libnl3 libpam0 libudev1
+
+# We don't use uos-ai-assistant now.
+%filter_from_requires /\/usr\/bin\/uos-ai-assistant/d
 
 Requires: bamfdaemon at-spi2-core
 %ifnarch s390 s390x %arm ppc64le
@@ -45,7 +49,6 @@ Daemon handling the DDE session settings
 
 %prep
 %setup -n %repo-%version
-patch -p1 < archlinux/dde-daemon.patch
 
 # Unpacked vendor/ into the source (used .gear/tags).
 tar -xf %SOURCE1
@@ -80,10 +83,7 @@ sed -i 's|${DESTDIR}/etc/default/grub.d|${DESTDIR}%_sysconfdir/grub.d|g' Makefil
 
 # /bin
 sed -i 's|/usr/bin/env python3|%__python3|' \
-    vendor/github.com/linuxdeepin/go-x11-client/util/wm/ewmh/a.py \
-    network/nm_generator/gen_nm_consts.py \
-    network/examples/python/utils_dbus.py \
-    network/examples/python/main.py
+    $(find ./ -name '*.py')
 sed -i 's|/bin/nologin|/sbin/nologin|' \
     accounts1/users/users_test.go
 # '/usr/bin/dcop' misc/etc/acpi/powerbtn.sh
@@ -97,7 +97,8 @@ sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
 # /lib
 sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
     bin/dde-authority/fprint_transaction.go
-sed -i 's|/lib/systemd/system|%_unitdir|g' Makefile
+sed -i 's|/lib/systemd|%_systemddir|g' Makefile
+sed -i 's|/usr/lib/systemd/user|/lib/systemd/user|g' Makefile
 sed -i 's|/lib/udev/rules.d|%_udev_rulesdir|g' Makefile
 
 # /usr/share
@@ -128,9 +129,6 @@ export LIBS+="-L%_libdir -lpam -lsystemd"
 rm -rf %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 rm -rf %buildroot%_sysconfdir/pulse/daemon.conf.d/10-deepin.conf
 
-mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
-    %buildroot%_userunitdir/
-
 %find_lang %repo
 
 %files -f %repo.lang
@@ -146,6 +144,7 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 %dir %_prefix/libexec/dde-daemon/
 %dir %_prefix/libexec/dde-daemon/keybinding/
 %_prefix/libexec/dde-daemon/keybinding/shortcut-dde-grand-search.sh
+%_prefix/libexec/dde-daemon/keybinding/shortcut-dde-script.sh
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
@@ -161,18 +160,29 @@ mv -f %buildroot/lib/systemd/user/org.dde.session.Daemon1.service \
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.fprintd.pkla
 /var/lib/polkit-1/localauthority/10-vendor.d/org.deepin.dde.grub2.pkla
 %_udev_rulesdir/80-deepin-fprintd.rules
-%_unitdir/deepin-accounts1-daemon.service
+#%%_unitdir/deepin-accounts1-daemon.service
 %_userunitdir/org.dde.session.Daemon1.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/org.dde.session.Daemon1.service
 # %%_unitdir/dbus-com.deepin.dde.lockservice.service
+%_unitdir/dde-authority.service
+%_unitdir/dde-backlight-helper.service
+%_unitdir/dde-greeter-setter.service
+%_unitdir/dde-lock-service.service
+%_unitdir/dde-system-daemon.service
+%_unitdir/deepin-grub2.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.daemon/
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
+%_datadir/locale/ky@Arab/LC_MESSAGES/dde-daemon.mo
 
 %changelog
+* Thu Feb 06 2025 Leontiy Volodin <lvol@altlinux.org> 2:6.1.19-alt1
+- New version 6.1.19.
+- Added vcs tag.
+
 * Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 2:6.0.45-alt1
 - New version 6.0.45.
 
