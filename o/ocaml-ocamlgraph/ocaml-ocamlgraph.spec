@@ -2,15 +2,14 @@
 %define modname ocamlgraph
 Name: ocaml-%modname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: OCaml library for arc and node graphs
 Group: Development/ML
 License: LGPLv2 with exceptions
 Url: https://github.com/backtracking/ocamlgraph/
 Source0: %name-%version.tar
-BuildRequires: libart_lgpl-devel
-BuildRequires: libgnomecanvas-devel
 BuildRequires: dune
+BuildRequires: libX11-devel
 BuildRequires: ocaml-ocamldoc
 %if_with check
 BuildRequires: ocaml-graphics-devel
@@ -57,6 +56,9 @@ sed -i 's,stdlib-shims,,' */dune
 %doc CHANGES.md README.md
 
 %changelog
+* Thu Feb 06 2025 Anton Farygin <rider@altlinux.ru> 2.1.0-alt2
+- cleanup BR
+
 * Fri Nov 10 2023 Anton Farygin <rider@altlinux.ru> 2.1.0-alt1
 - 2.1.0
 - enabled tests
