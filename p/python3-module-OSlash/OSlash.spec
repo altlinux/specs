@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.6.3
-Release: alt4
+Release: alt4.1
 
 Summary: Functors, Applicatives, And Monads in Python
 
@@ -24,6 +24,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -62,6 +63,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.6.3-alt4.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Apr 22 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt4
 - Very tiny spec refactoring.
 
