@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.6.6
-Release: alt1
+Release: alt1.1
 
 Summary: File identification library for Python
 
@@ -28,6 +28,7 @@ BuildRequires: python3-module-coverage
 BuildRequires: python3-module-covdefaults
 BuildRequires: python3-module-ukkonen
 BuildRequires: python3-module-cffi
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -52,6 +53,9 @@ BuildRequires: python3-module-cffi
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 2.6.6-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Thu Jan 23 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.6-alt1
 - Automatically updated to 2.6.6.
 
