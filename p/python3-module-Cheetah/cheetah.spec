@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Template engine and code-generator
 
@@ -14,6 +14,8 @@ URL: https://pypi.org/project/Cheetah3
 VCS: https://github.com/CheetahTemplate3/cheetah3
 
 Source: %name-%version.tar
+# https://github.com/CheetahTemplate3/cheetah3/issues/66
+Patch1: cheetah-3.4.0-tox-make-tox-configuration-compatible-with-both-tox3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -42,6 +44,7 @@ This package contains tests for Cheetah.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -66,6 +69,9 @@ This package contains tests for Cheetah.
 %exclude %python3_sitelibdir/%pypi_name/Tests/Performance.py*
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
 - Automatically updated to 3.4.0.
 
