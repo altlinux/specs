@@ -57,7 +57,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt3
+Release: alt4
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -282,8 +282,8 @@ This package contains binaries for AMD GPUs to use with HIP.
 %package cycles-cuda-kernels
 Summary: Cycles precompiled binaries for CUDA
 Group: System/Libraries
-Provides: cycles-nvidia-kernels = %EVR
-Obsoletes: cycles-nvidia-kernels < %EVR
+Provides: blender-cycles-nvidia-kernels = %EVR
+Obsoletes: blender-cycles-nvidia-kernels < %EVR
 Requires: %name = %EVR, libcuda
 
 %description cycles-cuda-kernels
@@ -476,6 +476,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 06 2025 Egor Ignatov <egori@altlinux.org> 4.3.0-alt4
+- Fix incorrect Provides/Obsoletes made in the previous release.
+
 * Tue Feb 04 2025 Egor Ignatov <egori@altlinux.org> 4.3.0-alt3
 - Move hiprt-devel dependency to cycles-hip-kernels subpackage (Closes: #52732)
 - Rename cycles-nvidia-kernels to cycles-cuda-kernels
