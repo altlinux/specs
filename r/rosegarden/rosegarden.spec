@@ -1,6 +1,6 @@
 Name: rosegarden
-Version: 24.12
-Release: alt3
+Version: 24.12.1
+Release: alt1
 
 Summary: MIDI sequencer and musical notation editor
 License: GPLv2
@@ -55,6 +55,9 @@ sed -i "s/UNSTABLE/STABLE/" CMakeLists.txt
 %_datadir/mime/packages/rosegarden.*
 
 %changelog
+* Thu Feb 06 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 24.12.1-alt1
+- 24.12.1 released
+
 * Tue Jan 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 24.12-alt3
 - fixed crash on delete of repeating segment
 
