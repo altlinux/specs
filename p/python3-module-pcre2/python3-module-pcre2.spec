@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.2
 Release: alt1
 
 Summary: Python bindings for the PCRE2 library created by Philip Hazel
@@ -15,10 +15,13 @@ Vcs: https://github.com/grtetrault/pcre2.py
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: python3-module-pcre2-0.4.0-alt-use-bare-cython.patch
+Source2: setup.py
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_build_filter scikit-build
+%add_pyproject_deps_build_filter cmake
 %pyproject_builddeps_build
 BuildRequires: libpcre2-devel
 %if_with check
@@ -31,7 +34,8 @@ BuildRequires: libpcre2-devel
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
+install -v %SOURCE2 setup.py
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -53,6 +57,9 @@ BuildRequires: libpcre2-devel
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 06 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.2.
+
 * Thu Apr 25 2024 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
