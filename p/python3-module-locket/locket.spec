@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: File-based locks for Python on Linux and Windows
 
@@ -21,6 +21,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-spur
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -63,5 +64,8 @@ module in the standard library. Specifically, their behaviour is:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Nov 11 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus.
