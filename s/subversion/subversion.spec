@@ -33,7 +33,6 @@
 # Use these switches to selectively turn on/off some of tests
 # These make sence only if tests enabled
 %def_with fsfs_check
-%def_with bdb_check
 %def_with pl_check
 %def_without rb_check
 %def_with javahl_check
@@ -47,11 +46,8 @@
 %define apr_name libapr1
 %define apr_ver 1.4.6-alt0.M60P.1
 %define apu_name libaprutil1
-%define apu_ver 1.5.1-alt0.M60P.1
+%define apu_ver 1.6.3-alt2
 
-# solo's macros for full libdb version to point it in requires
-# set %%libdb_soname_req (for Requires: <libname>-libdb = %%libdb_soname_req)
-%define libdb_soname_req 4%(rpm -q --whatprovides libdb4-devel | sed -r 's/^libdb4(\\.[^-]+)-devel-.+$/\\1/')
 
 %define svn_user subversion
 %define svn_group subversion
@@ -63,12 +59,12 @@
 
 Name:     subversion
 Version:  1.14.5
-Release:  alt1
+Release:  alt2
 
 Summary:  A version control system
 Group:    Development/Other
 License:  Apache-2.0
-Url:      http://subversion.apache.org/
+Url:      https://subversion.apache.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:  %name-%version%svn_ver_pre.tar.bz2
@@ -152,7 +148,6 @@ Summary: Shared libraries required for subversion
 Group: System/Libraries
 Requires: %apr_name >= %apr_ver
 Requires: %apu_name >= %apu_ver
-Requires: libaprutil1-libdb = %libdb_soname_req
 
 %description -n lib%name
 The goal of the Subversion project is to build a revision system that is
@@ -373,7 +368,6 @@ LIBTOOL_M4=%{_datadir}/libtool/aclocal ./autogen.sh
 	--disable-debug \
 	--disable-mod-activation \
         --with-custom-libtool=/usr/bin/libtool \
-        --with-berkeley-db=db.h:/usr/include/db4:%_libdir:db-4 \
         --with-apr=%prefix --with-apr-util=%prefix \
 	--with-apache-libexecdir=%apache2_moduledir \
 	--with-swig --with-serf=%prefix \
@@ -454,10 +448,6 @@ run_make_check(){
 
 %if_with fsfs_check
 run_make_check fsfs
-%endif
-
-%if_with bdb_check
-run_make_check bdb
 %endif
 
 %if %with swig_pl && %with pl_check
@@ -773,6 +763,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 06 2025 Anton Farygin <rider@altlinux.ru> 1.14.5-alt2
+- NMU: drop db4 support
+
 * Fri Dec 13 2024 Andrey Cherepanov <cas@altlinux.org> 1.14.5-alt1
 - New version.
 - Security fixes: CVE-2024-45720, CVE-2024-46901.

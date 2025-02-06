@@ -1,122 +1,49 @@
 %def_disable static
 
-# for libdb selected
-%def_without libdb42
-%def_without libdb43
-%def_without libdb44
-%def_without libdb46
-%def_without libdb47
-%def_without libdb48
-
-%def_without sqlite2
-
-# for set libdb default
-%define libdb_name libdb
-%define libdb_v1 4
-%define libdb_v2 %nil
-
-# set %%libdb_switch
-%if_with libdb42
-%define libdb_switch libdb4.2
-%endif
-%if_with libdb43
-%define libdb_switch libdb4.3
-%endif
-%if_with libdb44
-%define libdb_switch libdb4.4
-%endif
-%if_with libdb46
-%define libdb_switch libdb4.6
-%endif
-%if_with libdb47
-%define libdb_switch libdb4.7
-%endif
-%if_with libdb48
-%define libdb_switch libdb4.8
-%endif
-
-# set %%release_libdb
-%if "%{?libdb_switch}" != ""
-%define release_libdb .%{?libdb_switch}
-# reset %%libdb_*
-%define libdb_name %(echo %{?libdb_switch} | sed -r 's/^([[:alpha:]]+)[0-9]+\\.[0-9]+$/\\1/')
-%define libdb_v1 %(echo %{?libdb_switch} | sed -r 's/^[[:alpha:]]+([0-9]+)\\.[0-9]+$/\\1/')
-%define libdb_v2 %(echo %{?libdb_switch} | sed -r 's/^[[:alpha:]]+[0-9]+(\\.[0-9]+)$/\\1/')
-%else
-%undefine release_libdb
-%endif
-
-# set %%libdb_devel_build (for BuildPreReq)
-%if "%libdb_v2" == ""
-%define libdb_devel_build %libdb_name%libdb_v1-devel
-%else
-%define libdb_devel_build %libdb_name%libdb_v1.%libdb_v2-devel
-%endif
-
-# set %%libdb_v2_req (for Requires)
-%if "%libdb_v2" == ""
-%define libdb_v2_req %(rpm -q --whatprovides %libdb_devel_build | sed -r 's/^%libdb_name%libdb_v1\\.([^-]+)-devel-.+$/\\1/')
-%else
-%define libdb_v2_req %libdb_v2
-%endif
-
-# set %%libdb_devel_req (for Requires)
-%define libdb_devel_req %libdb_name%libdb_v1.%libdb_v2_req-devel
-
-# Build aprutil with corresponding apr version always
 %define aprver 1
-%define dbm_type db%libdb_v1%libdb_v2_req
 %define apudir %name-%version
 
 Name: aprutil%aprver
 Version: 1.6.3
-Release: alt1
+Release: alt2
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
-License: %asl
-Url: http://apr.apache.org/
+License: Apache-2.0
+Url: https://apr.apache.org/
 
 # Source-url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
 Source: apr-util-%version.tar
 
 Patch1: aprutil1-1.6.1-alt-mysql8-transition.patch
+Patch2: apr-util-1.6.3-lmdb-support.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-%if_disabled static
-BuildPreReq: %libdb_devel_build
-%else
-BuildPreReq: %libdb_devel_build-static
-%endif
-
 BuildRequires: libapr1-devel libexpat-devel zlib-devel libuuid-devel
+BuildRequires: libssl-devel
+BuildRequires: liblmdb-devel
 
 %package -n lib%name
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
-Provides: lib%name-libdb = %libdb_v1.%libdb_v2_req
 Requires: libapr1 > 1.3.0
 Conflicts: libaprutil
-Conflicts: libsubversion < 1.4.4-alt2.3.1
 
 %package -n lib%name-devel
 Summary: Apache Portable Runtime Utility development files
 Group: Development/C
-Requires: lib%name = %version-%release, libapr%aprver-devel > 1.3.0
-Requires: %libdb_devel_req
+Requires: lib%name = %EVR, libapr%aprver-devel > 1.3.0
 Requires: libldap-devel
-Conflicts: libaprutil-devel
 
 %if_enabled static
 %package -n lib%name-devel-static
 Summary: Apache Portable Runtime Utility static library
 Group: Development/C
-Requires: lib%name-devel = %version-%release , libapr%aprver-devel-static > 1.3.0
-Requires: %libdb_devel_req-static
+Requires: lib%name-devel = %EVR , libapr%aprver-devel-static > 1.3.0
 %endif
 
 %description
@@ -152,7 +79,7 @@ This package contains APU static library.
 Group: System/Libraries
 Summary: APR utility library PostgreSQL DBD driver
 BuildRequires: libpq5-devel
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-pgsql
 This package provides the PostgreSQL driver for the apr-util
@@ -162,30 +89,17 @@ DBD (database abstraction) interface.
 Group: System/Libraries
 Summary: APR utility library MySQL DBD driver
 BuildRequires: libMySQL-devel
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-mysql
 This package provides the MySQL driver for the apr-util DBD
 (database abstraction) interface.
 
-%if_with sqlite2
-%package -n lib%name-sqlite2
-Group: System/Libraries
-Summary: APR utility library SQLite DBD driver
-BuildRequires: libsqlite-devel >= 2.0.0
-Requires: lib%name = %version-%release
-
-%description -n lib%name-sqlite2
-This package provides the SQLite driver for the apr-util DBD
-(database abstraction) interface.
-
-%endif
-
 %package -n lib%name-sqlite3
 Group: System/Libraries
 Summary: APR utility library SQLite DBD driver
 BuildRequires: libsqlite3-devel >= 3.0.0
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-sqlite3
 This package provides the SQLite driver for the apr-util DBD
@@ -195,7 +109,7 @@ This package provides the SQLite driver for the apr-util DBD
 Group: System/Libraries
 Summary: APR utility library LDAP DBD driver
 BuildRequires: libldap-devel
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-ldap
 This package provides the LDAP driver for the apr-util DBD
@@ -205,28 +119,24 @@ This package provides the LDAP driver for the apr-util DBD
 Group: System/Libraries
 Summary: APR utility library ODBC DBD driver
 BuildRequires: libunixODBC-devel
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-odbc
 This package provides the ODBC driver for the apr-util DBD
 (database abstraction) interface.
 
+%package -n lib%name-openssl
+Group: System/Libraries
+Summary: APR utility library OpenSSL crypto support
+Requires: lib%name = %EVR
+
+%description -n lib%name-openssl
+This package provides the OpenSSL crypto support for the apr-util.
+
 %prep
 %setup -n apr-util-%version
 %patch1 -p2
-
-# my_global.h and my_sys.h are gone in MySQL8 API, so loosen autodetection restrictions
-sed -i 's|#include <my_global\.h>|#include <mysql\.h>|g' build/dbd.m4
-sed -i 's|#include <mysql\/my_global\.h>|#include <mysql\/mysql\.h>|g' build/dbd.m4
-sed -i 's|mysql\/my_global\.h||g' build/dbd.m4
-sed -i 's|my_global\.h||g' build/dbd.m4
-sed -i 's|mysql\/my_sys.h||g' build/dbd.m4
-sed -i 's|my_sys\.h||g' build/dbd.m4
-
-# GCC >= 4.6 too smart and warns about unused variable even with 'tmp=0;' line.
-# With -Werror this produce a compilation error and makes this test
-# (style of ldap_set_rebind_proc routine) permanently failed.
-sed -e 's#tmp=0;#return tmp;#' -i build/apu-conf.m4
+%patch2 -p1
 
 %build
 autoheader && autoconf
@@ -234,11 +144,11 @@ autoheader && autoconf
 	--with-apr=%prefix \
 	--with-installbuilddir=%_datadir/apr-%aprver/build \
 	--includedir=%_includedir/apu-%aprver \
-	--with-berkeley-db --with-dbm=%dbm_type \
+	--with-dbm=lmdb --with-lmdb \
 	--with-sqlite3 \
-	%{subst_with sqlite2} \
+	--with-crypto \
+	--with-openssl \
 	--with-mysql --with-pgsql \
-	--enable-dbd-dso \
 	--with-ldap \
 	%{subst_enable static}
 
@@ -261,7 +171,6 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %files -n lib%name
 %_libdir/lib*.so.*
 %dir %_libdir/apr-util-%aprver
-%_libdir/apr-util-%aprver/apr_dbm_*.so
 
 %files -n lib%name-devel
 %_bindir/*-config
@@ -269,6 +178,7 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/*.exp
 %_pkgconfigdir/apr-util-%aprver.pc
 %_includedir/*
+%_libdir/apr-util-%aprver/apr_dbm_lmdb*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -295,7 +205,15 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %files -n lib%name-odbc
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
+%files -n lib%name-openssl
+%_libdir/apr-util-%aprver/apr_crypto_openssl*.so
+
 %changelog
+* Thu Feb 06 2025 Anton Farygin <rider@altlinux.ru> 1.6.3-alt2
+- built with lmdb instead of BerkleyDB (thnx, Fedora)
+- added openssl subpackage with crypto support
+- cleanup specfile
+
 * Mon Sep 30 2024 Alexei Takaseev <taf@altlinux.org> 1.6.3-alt1
 - 1.6.3 (Fixes CVE-2022-25147)
 

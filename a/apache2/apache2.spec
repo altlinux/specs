@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.62
+Version: 2.4.63
 Release: alt1
 Epoch: 1
 
@@ -1541,6 +1541,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Feb 05 2025 Anton Farygin <rider@altlinux.ru> 1:2.4.63-alt1
+- 2.4.62 -> 2.4.63
+- sync default root directories between http and https default configurations
+
 * Mon Jul 29 2024 Anton Farygin <rider@altlinux.ru> 1:2.4.62-alt1
 - 2.4.61 -> 2.4.62
 
