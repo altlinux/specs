@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install libX11-devel
 %define _localstatedir %{_var}
 Name:           alltray
 Version:        0.71b
-Release:        alt2_18
+Release:        alt2_19
 Summary:        Dock any application in the tray
 
 License:        GPLv2+
@@ -20,6 +20,7 @@ BuildRequires:  GConf libGConf-devel libGConf-gir-devel
 BuildRequires:  libgdk-pixbuf-xlib-devel
 Source44: import.info
 Patch33: alltray-0.65-message-fix.patch
+Patch22: alltray-0.71b-alt-gcc14.patch
 
 
 %description
@@ -29,6 +30,7 @@ system tray. It works well with GNOME, KDE, XFCE 4, Fluxbox, and WindowMaker.
 %prep
 %setup -q
 %patch33 -p1
+%patch22 -p2
 
 %build
 %add_optflags -fcommon
@@ -58,6 +60,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Thu Feb 06 2025 Anton Meleshnikov <alton@altlinux.org> 0.71b-alt2_19
+- fixed FTBFS
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_18
 - fixed build
 
