@@ -1,6 +1,6 @@
 %define soname 1
 Name: flashrom
-Version: 1.4.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Universal flash programming utility
@@ -103,7 +103,7 @@ echo "MAN_DATE = `date '+%%Y-%%m-%%d'`">>versioninfo.inc
 sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/flashrom_udev.rules -i
 %meson \
   -Dman-pages=enabled \
-%ifarch ppc64le
+%ifarch ppc64le %{ix86}
   -Dtests=disabled \
 %else
   -Dtests=enabled \
@@ -111,6 +111,7 @@ sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/flashrom_udev.ru
 %ifarch %{ix86} x86_64
   -Dprogrammer=[\'auto\',\'jlink_spi\']
 %endif
+%nil
 %meson_build
 
 %install
@@ -142,6 +143,12 @@ rm -f %buildroot%_libdir/libflashrom.a
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Feb 06 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
+- 1.5.1.
+- Added patches from main:
+  + flashchips: Add Spansion S25FS512S (closes #52955).
+  + tests: disable on x86 (fails with format error).
+
 * Wed Aug 07 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
 - 1.4.0.
 - BR: added libpci-devel.
