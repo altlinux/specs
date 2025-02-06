@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Thu Feb 06 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.1.2-alt1
+- fix setting geolocation with coordinates(closes: 52948)
+
 * Mon Jan 27 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.1.1-alt1
 - display available forecast info for day 10
 
