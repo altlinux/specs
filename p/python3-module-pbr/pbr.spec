@@ -13,7 +13,7 @@ re-usable library.
 
 Name:       python3-module-%pypi_name
 Version:    6.1.0
-Release:    alt1
+Release:    alt1.1
 
 Summary:    Python Build Reasonableness
 
@@ -37,6 +37,7 @@ BuildRequires: python3-module-sphinxcontrib-apidoc
 %if_with check
 BuildRequires: python3-module-stestr
 BuildRequires: python3-module-testresources
+BuildRequires: python3-module-six
 BuildRequires: git gnupg
 %endif
 
@@ -94,6 +95,9 @@ excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_r
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - Automatically updated to 6.1.0.
 - Moved on modern pyproject macros.
