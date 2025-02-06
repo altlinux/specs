@@ -1,8 +1,10 @@
 %define  oname pae
 
+%def_with check
+
 Name:    python3-module-%oname
 Version: 0.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Pre-authentication encoding (PAE) implementation in Python
 
@@ -15,6 +17,9 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-poetry-core
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 BuildArch: noarch
 
@@ -44,5 +49,8 @@ to handle data types other than lists of byte arrays.
 %python3_sitelibdir/python_pae-%version.dist-info
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.1.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri Jul 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus.
