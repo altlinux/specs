@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.5.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python krb5 API interface
 License: MIT
@@ -24,6 +24,7 @@ BuildRequires: libkrb5-devel
 
 %if_with check
 BuildRequires: python3(k5test)
+BuildRequires: python3-module-pytest
 %endif
 
 Source: %pypi_name-%version.tar
@@ -52,6 +53,9 @@ details through GSSAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Dec 04 2023 Andrey Limachko <liannnix@altlinux.org> 0.5.1-alt1
 - New version 0.5.1.
 
