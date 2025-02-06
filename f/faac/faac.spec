@@ -1,48 +1,57 @@
 %define ABIVERSION 0
 
-Name: faac
-Version: 1.28
-Release: alt2
-Summary: FAAC is a Freeware Advanced Audio Coder
-License: LGPL
-Group: Sound
-Url: http://www.audiocoding.com
-Packager: Anton Midyukov <antohami@altlinux.org>
+Name:          faac
+Version:       1.30
+Release:       alt1
+Summary:       FAAC is a Freeware Advanced Audio Coder
+License:       LGPL
+Group:         Sound
+Url:           https://sourceforge.net/projects/faac/
+Vcs:           https://github.com/knik0/faac.git
 
-Source: %name-%version.tar
-Patch: %name-1.26-format.string.patch
-Patch1: %name-1.28-mp4v2-2.0.0.patch
-
-BuildRequires: gcc-c++ libmp4v2-devel pkgconfig(sndfile)
-
-Requires: lib%name = %version-%release
+Source:        %name-%version.tar
+BuildRequires: gcc-c++
+BuildRequires: libmp4v2-devel
+BuildRequires: pkgconfig(sndfile)
 
 %description
-FAAC is a LC, MAIN and LTP profile MPEG2 and MPEG-4 AAC coder.
+FAAC is an Advanced Audio Coder (MPEG2-AAC, MPEG4-AAC). The goal of FAAC is to
+explore the possibilities of AAC and exceed the quality of the currently best
+MP3 encoders.
 
-%package -n lib%name%ABIVERSION
-Summary: Freeware Advanced Audio Coder (FAAC) libraries
-Group: Development/Other
-Provides: lib%name = %version-%release
-Obsoletes: lib%name <= 1.26-alt1
+%package       -n lib%name
+Summary:       Freeware Advanced Audio Coder (FAAC) libraries
+Group:         Development/Other
 
-%description -n lib%name%ABIVERSION
+Obsoletes:     lib%{name}%ABIVERSION < %EVR
+Provides:      lib%{name}%ABIVERSION = %EVR
+
+%description   -n lib%name
 This package contains Freeware Advanced Audio Coder (FAAC) shared
 libraries.
 
-%package -n lib%name-devel
-Summary: Development files for the FAAC AAC coder library
-Group: Development/C
-Requires: lib%name = %version-%release
+FAAC is an Advanced Audio Coder (MPEG2-AAC, MPEG4-AAC). The goal of FAAC is to
+explore the possibilities of AAC and exceed the quality of the currently best
+MP3 encoders.
 
-%description -n lib%name-devel
+%package       -n lib%name-devel
+Summary:       Development files for the FAAC AAC coder library
+Group:         Development/C
+
+Requires:      gcc-c++
+Requires:      libmp4v2-devel
+Requires:      pkgconfig(sndfile)
+
+%description   -n lib%name-devel
 This package provides header files development libraries and
 documentation for lib%name.
 
+FAAC is an Advanced Audio Coder (MPEG2-AAC, MPEG4-AAC). The goal of FAAC is to
+explore the possibilities of AAC and exceed the quality of the currently best
+MP3 encoders.
+
 %prep
 %setup
-%patch -p1
-%patch1 -p1
 
 %build
 %autoreconf
@@ -53,23 +62,27 @@ documentation for lib%name.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall
 
 %files
 %doc docs/%name.html
 %_bindir/*
 %_man1dir/*
 
-%files -n lib%name%ABIVERSION
+%files         -n lib%name
 %doc ChangeLog NEWS README TODO
 %_libdir/*.so.*
 
-%files -n lib%name-devel
+%files         -n lib%name-devel
 %doc docs/lib%name.html
 %_includedir/*
 %_libdir/*.so
 
 %changelog
+* Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 1.30-alt1
+- * changed gear style
+- ^ 1.28 -> 1.30
+
 * Sun Aug 13 2017 Anton Midyukov <antohami@altlinux.org> 1.28-alt2
 - Return building for ALT Sisyphus
 - Build with libmp4v2-devel.
