@@ -6,7 +6,7 @@
 %def_without integration_tests
 
 Name:    cargo-vendor-filterer
-Version: 0.5.14
+Version: 0.5.17
 Release: alt1
 
 Summary: Tool to `cargo vendor` with filtering
@@ -70,6 +70,9 @@ rm -rf .cargo
 %_bindir/*
 
 %changelog
+* Mon Feb 03 2025 Anton Zhukharev <ancieg@altlinux.org> 0.5.17-alt1
+- Updated to 0.5.17.
+
 * Sun Oct 20 2024 Ivan A. Melnikov <iv@altlinux.org> 0.5.14-alt1
 - 0.5.14
 - build from gear tag
