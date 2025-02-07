@@ -8,7 +8,7 @@
 
 Name: gimp
 Version: %ver_major.38
-Release: alt1
+Release: alt2
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -125,6 +125,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/aclocal/*
 
 %changelog
+* Fri Feb 07 2025 Valery Inozemtsev <shrek@altlinux.ru> 2.10.38-alt2
+- upstream: plug-ins: Backport of fixes for gcc-14
+
 * Wed May 08 2024 Valery Inozemtsev <shrek@altlinux.ru> 2.10.38-alt1
 - 2.10.38
 
