@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname ujson
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 5.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ultra fast JSON encoder and decoder for Python
 
@@ -21,6 +23,9 @@ BuildRequires: gcc-c++ libdouble-conversion-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 UltraJSON is an ultra fast JSON encoder and decoder written in pure C with
@@ -52,6 +57,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 5.10.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Thu May 16 2024 Grigory Ustinov <grenka@altlinux.org> 5.10.0-alt1
 - Automatically updated to 5.10.0.
 
