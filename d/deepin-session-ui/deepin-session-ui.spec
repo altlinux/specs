@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.22
+Version: 6.0.25
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -20,11 +20,8 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 # %%_datadir/dbus-1/services/org.freedesktop.Notifications.service
 Conflicts: notify-osd
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Wed Oct 25 2023
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXext-devel libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgmock-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base dqt5-base-devel sh5 xorg-proto-devel
-BuildRequires: cmake dtk6-common-devel dtkcore gsettings-qt-devel libdeepin-pw-check-devel libdtkwidget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel
-BuildRequires: deepin-dock-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd
+BuildRequires: cmake dtk6-common-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel dqt6-svg-devel dqt6-tools-devel libdeepin-pw-check-devel libXext-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -45,13 +42,9 @@ This project include those sub-project:
 #    widgets/fullscreenbackground.cpp \
 #    lightdm-deepin-greeter/logintheme.qrc \
 #    dde-lock/logintheme.qrc
-sed -i 's|lib/dde-dock/|%_lib/dde-dock/|' CMakeLists.txt
 
 %build
-export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
+export LC_ALL=C.UTF-8
 %if_with clang
 export CC="clang"
 export CXX="clang++"
@@ -59,11 +52,7 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
 %ifarch aarch64 armh ppc64le
     -DSHUTDOWN_NO_QUIT=YES \
     -DLOCK_NO_QUIT=YES \
@@ -71,12 +60,12 @@ export READELF="llvm-readelf"
     -DDISABLE_TEXT_SHADOW=YES \
     -DDISABLE_ANIMATIONS=YES \
     -DUSE_CURSOR_LOADING_ANI=YES \
+    -DSYSTEMD_USER_UNIT_DIR=%_userunitdir \
 %endif
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
@@ -90,7 +79,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_libexecdir/deepin-daemon/
 %_libexecdir/deepin-daemon/dde-bluetooth-dialog
 %_libexecdir/deepin-daemon/dde-lowpower
-%_libexecdir/deepin-daemon/dde-osd
+%_libexecdir/deepin-daemon/dde-blackwidget
 %_libexecdir/deepin-daemon/dde-suspend-dialog
 %_libexecdir/deepin-daemon/dde-warning-dialog
 %_libexecdir/deepin-daemon/dde-touchscreen-dialog
@@ -98,6 +87,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libexecdir/deepin-daemon/dnetwork-secret-dialog
 %dir %_libexecdir/dde-control-center/
 %_libexecdir/dde-control-center/reset-password-dialog
+%_userunitdir/dde-blackwidget.service
 %_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
 # outside %%find_lang
@@ -107,6 +97,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Fri Feb 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt1
+- New version 6.0.25.
+- Switched to dqt6.
+
 * Mon Oct 28 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.22-alt1
 - New version 6.0.22.
 - Added vcs tag.
