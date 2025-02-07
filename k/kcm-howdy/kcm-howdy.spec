@@ -3,7 +3,7 @@
 %define rname kcm-howdy
 
 Name: %rname
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 
 Summary: KDE Workspace 6 Howdy configuration module
@@ -84,6 +84,9 @@ sed -i "s/^minimum-uid=.*/minimum-uid=$UID_MIN/" %module_config_file
 %_K6dbus_sys_srv/org.kde.kcontrol.kcmhowdy.service
 
 %changelog
+* Thu Feb 06 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt1
+- import OpenBLAS via PkgConfig (fix FTBFS)
+
 * Wed Jan 29 2025 Anton Golubev <golubevan@altlinux.org> 6.0.1-alt1
 - reset the user interface after an action error
 
