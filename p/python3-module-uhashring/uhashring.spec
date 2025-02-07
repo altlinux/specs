@@ -3,7 +3,7 @@
 
 Name:    python3-module-%oname
 Version: 2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Full featured consistent hashing python library compatible with ketama
 
@@ -22,6 +22,7 @@ BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-memcached
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -70,6 +71,9 @@ ring.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 2.3-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri Mar 24 2023 Grigory Ustinov <grenka@altlinux.org> 2.3-alt1
 - Automatically updated to 2.3.
 
