@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.17.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python 2 and 3 compatibility utilities
 License: MIT
@@ -28,6 +28,7 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-modules-tkinter
+BuildRequires: python3-module-pytest
 %endif
 
 %if_with docs
@@ -86,6 +87,9 @@ diff -y move.expected.list move.actual.list
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.17.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Thu Dec 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.17.0-alt1
 - Automatically updated to 1.17.0.
 
