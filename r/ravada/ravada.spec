@@ -11,8 +11,8 @@
 %endif
 
 Name: ravada
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -24,15 +24,15 @@ Source: %name-%version.tar
 Source1: %name-sysusers.conf
 
 Requires: perl-DBD-mysql perl-DBD-SQLite perl-Mojolicious-Plugin-I18N
-Requires: bridge-utils iproute2 iptables iptstate net-tools
-Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core
+Requires: /sbin/brctl iproute2 iptables iptstate net-tools
+Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core rrdtool
 # spice-vdagent @ VM
 
 BuildRequires(pre): rpm-build-perl
 BuildRequires(pre): rpm-macros-systemd
 
 BuildRequires: ImageMagick-tools
-BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
+BuildRequires: /sbin/brctl iproute2 net-tools qemu-img wget
 
 BuildRequires: perl-Authen-ModAuthPubTkt
 BuildRequires: perl-Authen-Passphrase
@@ -63,6 +63,7 @@ BuildRequires: perl-Net-OpenSSH
 BuildRequires: perl-Net-Ping
 BuildRequires: perl-PBKDF2-Tiny
 BuildRequires: perl-Proc-PID-File
+BuildRequires: perl-RRD
 BuildRequires: perl-Sys-Virt
 BuildRequires: perl-Test-Pod-Coverage
 BuildRequires: perl-XML-LibXML
@@ -157,6 +158,11 @@ chmod 0755 %buildroot%_bindir/kvm-spice
 # Remove empty files
 find %buildroot -size 0 -delete
 
+# fallback:
+mkdir -p %buildroot%_datadir/%name/public/fallback/
+install -p -m644 etc/fallback.conf %buildroot%_datadir/%name/fallback.conf
+install -p -m755 etc/get_fallback.pl %buildroot%_bindir/get_fallback.pl
+
 %check
 export TZ=UTC
 export PATH=$PATH:/sbin
@@ -191,6 +197,7 @@ fi
 %doc LICENSE MANIFEST README.md
 %perl_vendor_privlib/*
 %_bindir/kvm-spice
+%_bindir/get_fallback.pl
 %_sbindir/*
 %_datadir/%name
 %_localstatedir/%name
@@ -200,6 +207,10 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Fri Feb 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.2-alt1
+- 2.3.2
+- add get_fallback.pl to download web scripts and css (ALT #51894)
+
 * Thu Oct 31 2024 Andrew A. Vasilyev <andy@altlinux.org> 2.3.1-alt2
 - change fallback in config to default=0 (ALT #51894)
 - add sysusers support
