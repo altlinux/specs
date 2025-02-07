@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: NTLM authentication support for Requests
 
@@ -28,6 +28,7 @@ BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-spnego
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-flask
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -55,6 +56,9 @@ sed -i -e 's/requests.packages.\(urllib3.response\)/\1/' requests_ntlm/requests_
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Jul 01 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Automatically updated to 1.3.0.
 
