@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
 %define xdg_name org.sigxcpu.Feedback
-%define ver_major 0.6
+%define ver_major 0.7
 %define namespace Lfb
 %define api_ver 0.0
 
@@ -22,10 +22,11 @@ Group: System/Servers
 License: GPL-3.0-or-later and LGPL-2.1-or-later
 Url: https://source.puri.sm/Librem5/feedbackd
 
+Vcs: https://source.puri.sm/Librem5/feedbackd.git
+
 %if_disabled snapshot
 Source: https://source.puri.sm/Librem5/%name/-/archive/v%version/%name-v%version.tar.gz
 %else
-Vcs: https://source.puri.sm/Librem5/feedbackd.git
 Source: %name-%version.tar
 %endif
 
@@ -149,6 +150,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %endif
 
 %changelog
+* Fri Feb 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
