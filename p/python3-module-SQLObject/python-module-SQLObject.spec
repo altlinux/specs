@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.10.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: SQLObject, an object-relational mapper for Python
 License: LGPL-2.1
@@ -22,6 +22,7 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pydispatcher
 BuildRequires: python3-module-FormEncode
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -93,6 +94,9 @@ This package contains tests for %oname
 %doc docs/*
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 3.10.2-alt1.2
+- NMU: fixed FTBFS (tox 4).
+
 * Sun Aug 13 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.10.2-alt1.1
 - NMU: moved all tests to subpackage with tests to avoid dependency
        from main package on subpackage
