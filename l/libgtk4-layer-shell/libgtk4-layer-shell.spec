@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: libgtk4-layer-shell
-Version: 1.0.4
+Version: 1.1.0
 Release: alt1
 License: MIT
 
@@ -104,7 +104,7 @@ This package provides Vala language bindings for the %name library.
 %files -n %name%soversion
 %doc README.md
 %_libdir/%name.so.%soversion
-%_libdir/%name.so.*
+%_libdir/%name.so.%version
 
 %files -n %name-devel
 %_includedir/%upstream/
@@ -119,9 +119,11 @@ This package provides Vala language bindings for the %name library.
 %if_enabled introspection
 %files -n %name-gir
 %_libdir/girepository-1.0/Gtk4LayerShell-*.typelib
+%_libdir/girepository-1.0/Gtk4SessionLock-*.typelib
 
 %files -n %name-gir-devel
 %_datadir/gir-1.0/Gtk4LayerShell-*.gir
+%_datadir/gir-1.0/Gtk4SessionLock-*.gir
 %endif
 
 %if_enabled vala
@@ -131,6 +133,9 @@ This package provides Vala language bindings for the %name library.
 %endif
 
 %changelog
+* Sat Feb 08 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Thu Nov 07 2024 Kirill Unitsaev <fiersik@altlinux.org> 1.0.4-alt1
 - new version 1.0.4 (with rpmrb script)
 
