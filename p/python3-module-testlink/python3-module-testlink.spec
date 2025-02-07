@@ -5,7 +5,7 @@
 
 Name: python3-module-%module_name
 Version: 0.8.1
-Release: alt10
+Release: alt10.1
 Summary: A Python client to use the TestLink API
 License: Apache-2.0
 Group: Development/Python3
@@ -18,6 +18,10 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 TestLink-API-Python-client is a Python XML-RPC client for TestLink.
@@ -41,6 +45,9 @@ cp -r example %buildroot%python3_sitelibdir/%module_name
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 0.8.1-alt10.1
+- NMU: fixed FTBFS (tox 4).
+
 * Wed Aug 07 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt10
 - Packed examples.
 - Fixed post-install unowned files.
