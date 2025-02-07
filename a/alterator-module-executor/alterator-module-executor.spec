@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.15
+Version: 0.1.16
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -35,6 +35,14 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Feb 07 2025 Ivan Savin <svn17@altlinux.org> 0.1.16-alt1
+- Add the ability to pass a string to the stdin of the spawned process via a
+  special parameter. If the "stdin_string" field is specified in the
+  configuration file with the value "true", then one more parameter is added
+  to the list of parameters (at the end of the list) - stdin. The string from
+  this parameter will be sent to the stdin of the process immediately after
+  launch.
+
 * Wed Feb 05 2025 Ivan Savin <svn17@altlinux.org> 0.1.15-alt1
 - Extend control of environment variables. You can now add environment
   variables for a method only if they are specified in the configuration file.
