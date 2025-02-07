@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.11.1
-Release: alt1
+Release: alt1.1
 
 Summary: A templating library able to output odt and pdf files
 License: GPL-3
@@ -28,6 +28,7 @@ BuildRequires: python3(lxml)
 BuildRequires: python3(python-magic)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_no_deps)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -62,6 +63,9 @@ rm -r %buildroot%python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Wed Jan 01 2025 Grigory Ustinov <grenka@altlinux.org> 0.11.1-alt1
 - Build new version.
 
