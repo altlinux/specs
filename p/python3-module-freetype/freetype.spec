@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Freetype python bindings
 License: BSD
@@ -18,7 +18,6 @@ Patch1: %oname-1.1-alt-build.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: pyinstaller
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
@@ -27,6 +26,9 @@ BuildRequires: libfreetype
 BuildRequires: /proc
 
 Requires: lib%oname
+
+# See ALT#52966
+%add_python3_req_skip PyInstaller.utils.conftest PyInstaller.utils.hooks
 
 %description
 Freetype python provides bindings for the FreeType library. Only the
@@ -87,6 +89,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc examples doc/_build/html
 
 %changelog
+* Fri Feb 07 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt2
+- Removed dependency on PyInstaller (Closes: #53966).
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
 - Build new version.
 
