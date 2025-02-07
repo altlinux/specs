@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.2
-Release: alt2
+Release: alt2.1
 
 Summary: RobotFramework debug library and an interactive shell
 License: BSD-3-Clause
@@ -36,6 +36,7 @@ BuildRequires: python3(robotframework)
 BuildRequires: python3(coverage)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(tox)
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -67,6 +68,9 @@ sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
 %python3_sitelibdir/robotframework_debuglibrary-%version.dist-info
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 2.2.2-alt2.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sun Jan 28 2024 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt2
 - Moved on modern pyproject macros.
 
