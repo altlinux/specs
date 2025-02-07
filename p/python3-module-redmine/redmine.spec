@@ -5,7 +5,7 @@
 
 Name: python3-module-%modname
 Version: 2.5.0
-Release: alt1
+Release: alt1.1
 Summary: Library for communicating with a Redmine project management application.
 License: Apache-2.0
 Group: Development/Python3
@@ -23,6 +23,7 @@ BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(requests)
+BuildRequires: python3-module-pytest
 %endif
 
 %py3_provides %pypi_name
@@ -52,6 +53,9 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 %python3_sitelibdir/redminelib
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri Apr 19 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.5.0-alt1
 - Updated to version 2.5.0.
 
