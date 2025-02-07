@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.2.2
-Release: alt2
+Version: 0.2.3
+Release: alt1
 
 Summary: Base set of ALT Distributions components
 License: GPLv2+
@@ -62,6 +62,12 @@ find ./components -name '*.component' -type f -exec alterator-entry validate {} 
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Feb 07 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.3-alt1
+- Subcategories of desktop environments have been moved to the graphics
+  category (thx Sergey Savelyev)
+- The components with printing services, avahi, core modules, xdg and
+  cryptography are divided into several parts (thx Sergey Savelev)
+
 * Mon Feb 03 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.2-alt2
 - Remove backends from requires (alterator-backend-component and
   alterator-backend-component_categories).
