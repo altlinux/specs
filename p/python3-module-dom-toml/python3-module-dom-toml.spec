@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Dom's tools for Tom's Obvious, Minimal Language
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 07 2025 Anton Zhukharev <ancieg@altlinux.org> 2.0.1-alt1
+- Updated to 2.0.1.
+
 * Thu Apr 11 2024 Anton Zhukharev <ancieg@altlinux.org> 2.0.0-alt1
 - Updated to 2.0.0.
 
