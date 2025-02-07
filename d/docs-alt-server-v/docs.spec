@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Feb 07 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt4
+- update install PVE
+- small improvements
+
 * Wed Jan 15 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt3
 - fix some typos (closes #52644)
 - add pve-ceph
