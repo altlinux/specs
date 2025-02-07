@@ -1,7 +1,7 @@
 %define _sysusersdir %_prefix/lib/sysusers.d
 
 Name: deepin-anything
-Version: 7.0.5
+Version: 7.0.6
 Release: alt1
 
 Summary: The lightning-fast filename search for Deepin
@@ -72,6 +72,9 @@ rm -rf %name-0.0/
 %_usrsrc/kernel
 
 %changelog
+* Fri Feb 07 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.6-alt1
+- New version 7.0.6.
+
 * Fri Jan 17 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
 - New version 7.0.5.
 - Added vcs tag.
