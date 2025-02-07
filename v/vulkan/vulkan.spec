@@ -1,5 +1,5 @@
 Name: vulkan
-Version: 1.3.296
+Version: 1.4.304
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -22,9 +22,9 @@ BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel lib
 # strict requires due internal dependency
 BuildRequires: vulkan-headers = %version
 BuildRequires: vulkan-registry = %version
-BuildRequires: glslang-devel = 15.0.0
-BuildRequires: libspirv-tools-devel >= 2024.4
-BuildRequires: spirv-headers >= 1.5.5-alt15
+BuildRequires: glslang-devel = 15.1.0
+BuildRequires: libspirv-tools-devel >= 2024.4-alt0.2.rc2
+BuildRequires: spirv-headers >= 1.5.5-alt16
 # -layers need it
 BuildRequires: vulkan-utility-libraries-devel = %version librobin-hood-hashing-devel
 # -tools need it
@@ -172,6 +172,14 @@ rm -rf %buildroot%_libdir/*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Fri Feb 07 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.304-alt1
+- BR:
+  + Bump version requires.
+- Updated to sdk-1.4.304:
+  + vulkan-layers: Updated to b18ee987c9
+  + vulkan-tools: Updated to 4c25e78dd8
+  + vulkan-loader: Updated to 6a6878c614
+
 * Sat Dec 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.296-alt1
 - BR:
   + Bump version requires.

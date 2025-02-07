@@ -6,7 +6,7 @@
 
 Name: spirv-tools
 Version: 2024.4
-Release: alt0.1
+Release: alt0.2.rc2
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -24,7 +24,7 @@ BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 # due sdk requires
-BuildRequires: spirv-headers >= 2:1.5.5-alt15
+BuildRequires: spirv-headers >= 2:1.5.5-alt16
 
 %description
 The package includes an assembler, binary module parser,
@@ -96,8 +96,11 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Wed Feb 05 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2024.4-alt0.2.rc2
+- Updated to 2024.4.rc2 (for sdk-1.4.304.0).
+
 * Sat Dec 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2024.4-alt0.1
-- Updated to 2024.4 (for sdk-1.3.296.0).
+- Updated to 2024.4.rc1 (for sdk-1.3.296.0).
 
 * Wed Aug 28 2024 L.A. Kostis <lakostis@altlinux.ru> 1:2024.3-alt0.1
 - Updated to 2024.3 (for sdk-1.3.290.0).
