@@ -4,8 +4,8 @@
 %def_without cracklib
 
 Name: deepin-pw-check
-Version: 6.0.2
-Release: alt2
+Version: 6.0.4.0.1.9d86
+Release: alt1
 
 Summary: Verify the validity of the password for DDE
 
@@ -13,8 +13,9 @@ License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-pw-check
 
-Source: %url/archive/%version/%name-%version.tar.gz
-Patch: %name-%version-%release.patch
+Source0: %url/archive/%version/%name-%version.tar.gz
+Source1: vendor.tar
+Patch0: deepin-pw-check-6.0.2-alt-libdir.patch
 Patch1: deepin-pw-check-6.0.2-alt-exclude-cracklib.patch
 
 %if_enabled clang
@@ -66,13 +67,20 @@ Obsoletes: %name-static < %version
 This package provides static libraries for %name.
 
 %prep
-%setup
-%patch -p1
+%setup -a1
+%patch0 -p1
 %if_without cracklib
 %patch1 -p1
 %endif
 sed -i 's|@LIBDIR@|%_lib|' \
   misc/pkgconfig/libdeepin_pw_check.pc
+sed -i 's|os-version|uos-version|g' \
+  tool/pwd_conf_update.c
+sed -i 's|${DESTDIR}/lib/systemd/system|${DESTDIR}%_unitdir|g' \
+  Makefile
+# do not use uadp
+sed -i '/\/usr\/share\/uadp/d' \
+  misc/systemd-service/deepin-passwd-conf.service
 
 %build
 %if_enabled clang
@@ -99,6 +107,7 @@ export GO111MODULE=off
 %doc README.md LICENSE
 /%_lib/security/pam_deepin_pw_check.so
 %_bindir/pwd-conf-update
+%_unitdir/deepin-passwd-conf.service
 %_datadir/locale/*/LC_MESSAGES/%name.mo
 %_datadir/dbus-1/system-services/org.deepin.dde.PasswdConf1.service
 %_datadir/dbus-1/system.d/org.deepin.dde.PasswdConf1.conf
@@ -118,6 +127,9 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Fri Feb 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.4.0.1.9d86-alt1
+- New version 6.0.4-1-g9d86d88.
+
 * Mon May 06 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt2
 - Fixed FTBFS.
 
