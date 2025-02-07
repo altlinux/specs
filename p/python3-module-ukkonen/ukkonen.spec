@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 1.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: Implementation of bounded Levenshtein distance (Ukkonen)
 
@@ -27,6 +27,7 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-covdefaults
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -52,6 +53,9 @@ BuildRequires: python3-module-covdefaults
 %doc *.md
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.0.1-alt2.1
+- NMU: fixed FTBFS (tox 4).
+
 * Mon Dec 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt2
 - Moved on pyproject macros.
 
