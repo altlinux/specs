@@ -12,7 +12,7 @@
 
 Name: inkscape
 Version: %major
-Release: alt1
+Release: alt1.1
 
 Summary: A Vector Drawing Application
 
@@ -175,6 +175,10 @@ s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
 	src/display/{cairo-templates.h,nr-filter-morphology.cpp}
 sed -i 's/~*FontFactory();/public:&/' src/libnrtype/font-factory.h
 sed -i 's/~*PatternManager();/public:&private:/' src/pattern-manager.h
+sed -i 's/~*FontDiscovery();/public:&private:/' src/util/font-discovery.h
+sed -i 's/]: {std::tuple/]: {/;s/{C_("Grid"/std::tuple&/' \
+	src/ui/dialog/document-properties.cpp
+sed -i -E 's/if \((static.*;)(.*)$/\1 if(\2/' src/ui/widget/page-properties.cpp
 %endif
 rm -rv src/3rdparty/2geom/
 
@@ -261,6 +265,9 @@ true
 %files checkinstall
 
 %changelog
+* Wed Feb 05 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.4-alt1.1
+- e2k: build fix
+
 * Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
 - new version 1.4 (with rpmrb script)
 - require lib2geom-devel >= 1.4
