@@ -3,8 +3,8 @@
 %def_with docs
 
 Name:           ninja-build
-Version:        1.11.1
-Release:        alt3
+Version:        1.12.1
+Release:        alt1
 Epoch:          1
 
 Summary:        A small build system with a focus on speed
@@ -112,6 +112,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Fri Feb 07 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.12.1-alt1
+- New version.
+
 * Fri Apr 26 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.11.1-alt3
 - Downgraded version to 1.11.1 to build chromium.
 
