@@ -1,8 +1,10 @@
 %define oname unicodedata2
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 16.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Unicodedata backport for python 2 updated to the latest unicode version
 License: Apache-2.0
@@ -15,6 +17,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 The versions of this package match unicode versions, so
@@ -39,6 +44,9 @@ backports support for named aliases and named sequences to python2.
 %python3_sitelibdir/unicodedata2.cpython*.so
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 16.0.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 16.0.0-alt1
 - Automatically updated to 16.0.0.
 
