@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Python Language Server for the Language Server Protocol
@@ -58,6 +58,9 @@ A Python 3.7+ implementation of the Language Server Protocol.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 07 2025 Anton Zhukharev <ancieg@altlinux.org> 1.12.1-alt1
+- Updated to 1.12.1.
+
 * Thu Sep 26 2024 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
 - Updated to 1.12.0.
 
