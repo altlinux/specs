@@ -5,29 +5,24 @@
 
 Name: python3-module-%pypi_name
 Version: 0.10.2
-Release: alt3
-
+Release: alt4
 Summary: A Python library for parsing and creating TOML.
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/uiri/toml.git
 Url: https://pypi.org/project/toml/
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
-%if_with check
-BuildRequires: golang-github-burntsushi-toml-test
-BuildRequires: python3(numpy)
-%endif
-
+Vcs: https://github.com/uiri/toml
 BuildArch: noarch
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+BuildRequires: golang-github-burntsushi-toml-test
+%endif
 
 %description
 TOML aims to be a minimal configuration file format that's easy to read due to
@@ -39,6 +34,11 @@ toml file.
 %prep
 %setup
 %patch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -48,13 +48,16 @@ toml file.
 
 %check
 ln -s %_datadir/toml-test toml-test
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %python3_sitelibdir/toml/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 0.10.2-alt4
+- Fixed FTBFS (tox 4).
+
 * Thu Aug 11 2022 Stanislav Levin <slev@altlinux.org> 0.10.2-alt3
 - Modernized packaging.
 
