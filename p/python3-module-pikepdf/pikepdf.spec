@@ -7,7 +7,7 @@
 
 Name: python3-module-pikepdf
 Version: 9.4.1
-Release: alt1
+Release: alt1.1
 License: MPL-2.0
 Summary: A Python library for reading and writing PDF files
 Group: Development/Python
@@ -27,7 +27,6 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools-scm)
 BuildRequires: python3(pybind11)
 BuildRequires: python3(lxml)
-BuildRequires: python3(deprecated)
 
 %if_with docs
 BuildRequires: ctags python3-module-sphinx-issues python3-module-sphinx_design python3-module-sphinx_rtd_theme python3-module-sphinxcontrib python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-Pillow
@@ -62,6 +61,9 @@ sed -i '/autodoc_mock_imports/s/\]/, "IPython"]/
 /IPython.sphinxext/d
 ' docs/conf.py
 
+# extra dependency, that not used in code
+sed -i 's@"Deprecated", @@' pyproject.toml
+
 %build
 %pyproject_build
 
@@ -90,6 +92,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Fri Feb 07 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 9.4.1-alt1.1
+- NMU: Remove useless BR to python3(deprecated) (thx @grenka).
+
 * Thu Nov 14 2024 Grigory Ustinov <grenka@altlinux.org> 9.4.1-alt1
 - NMU: Build new version.
 
