@@ -2,7 +2,7 @@
 
 Name: dillo
 Version: 3.0.5
-Release: alt4
+Release: alt5
 
 Summary: a small FLTK-based web browser
 Group: Networking/WWW
@@ -95,6 +95,9 @@ rm -f -- doc/Makefile*
 %_man1dir/dillo.1*
 
 %changelog
+* Fri Feb 07 2025 Ivan A. Melnikov <iv@altlinux.org> 3.0.5-alt5
+- Update debian patch to fix building with gcc14.
+
 * Tue Mar 16 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.0.5-alt4
 - Fix build with GCC 10.2
 
