@@ -1,5 +1,5 @@
 # Variable _tnt_version is `git describe --long` from original Tarantool repo for this version
-%define _tnt_version %version-gdd0b70b06
+%define _tnt_version %version-gfae9c5bbe
 
 %def_disable static
 %def_enable check
@@ -7,7 +7,7 @@
 ExclusiveArch: x86_64
 
 Name: tarantool-picodata
-Version: 2.11.2.159
+Version: 2.11.5.165
 Release: alt1
 
 Summary: In-memory database and Lua application server
@@ -54,6 +54,7 @@ BuildRequires: libtool
 BuildRequires: zlib-devel
 BuildRequires: perl-podlators
 BuildRequires: tzdata
+BuildRequires: ctest
 
 BuildRequires: libcurl-devel
 BuildRequires: libcares-devel
@@ -214,6 +215,9 @@ make test-force
 %_includedir/tarantool/*.h
 
 %changelog
+* Thu Feb 06 2025 Dmitry Kibirev <kdy@altlinux.org> 2.11.5.165-alt1
+- new version
+
 * Thu Jan 09 2025 Dmitry Kibirev <kdy@altlinux.org> 2.11.2.159-alt1
 - new version with additions to sql
 
