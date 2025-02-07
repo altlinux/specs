@@ -1,8 +1,10 @@
 %define oname toolz
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: List processing tools and functional utilities
 License: BSD-3-Clause
@@ -16,6 +18,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 A set of utility functions for iterators, functions, and dictionaries.
@@ -42,6 +47,9 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- NMU: fixed FTBFS (tox 4).
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Automatically updated to 1.0.0.
 
