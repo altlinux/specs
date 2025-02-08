@@ -1,4 +1,4 @@
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 
 %def_enable introspection
@@ -28,7 +28,8 @@ Requires: libgtk3vnc = %EVR
 %define sasl_ver 2.1.27
 %define gmp_ver 6.0.0
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
+BuildRequires: meson
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgnutls-devel >= %gnutls_ver
@@ -228,6 +229,9 @@ library.
 %endif
 
 %changelog
+* Sat Feb 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
