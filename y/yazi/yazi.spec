@@ -1,6 +1,6 @@
 Name: yazi
-Version: 0.4.2
-Release: alt2
+Version: 25.2.7
+Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
 License: MIT
@@ -99,6 +99,9 @@ install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh
 
 %changelog
+* Sat Feb 08 2025 Anton Kurachenko <srebrov@altlinux.org> 25.2.7-alt1
+- New version 25.2.7.
+
 * Wed Jan 29 2025 Anton Kurachenko <srebrov@altlinux.org> 0.4.2-alt2
 - Added fonts-ttf-3270NerdFont to requires(#52861).
 
