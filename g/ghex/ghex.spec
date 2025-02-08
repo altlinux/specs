@@ -4,6 +4,7 @@
 %define beta %nil
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
+%define namespace Hex
 %define libname gtkhex-%api_ver_major
 %define xdg_name org.gnome.GHex
 
@@ -11,7 +12,7 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -20,6 +21,7 @@ License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Ghex
 
 Vcs: https://gitlab.gnome.org/GNOME/ghex.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major%beta/%name-%version%beta.tar.xz
 
 %define glib_ver 2.68
@@ -29,7 +31,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major%beta/%name-%versi
 Requires: libgtkhex = %EVR
 Requires: dconf yelp
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson glib2-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: yelp-tools
@@ -114,13 +116,16 @@ GObject introspection devel data for the GtkGHex library.
 
 %if_enabled introspection
 %files -n libgtkhex-gir
-%_typelibdir/Hex-%api_ver_major.typelib
+%_typelibdir/%namespace-%api_ver_major.typelib
 
 %files -n libgtkhex-gir-devel
-%_girdir/Hex-%api_ver_major.gir
+%_girdir/%namespace-%api_ver_major.gir
 %endif
 
 %changelog
+* Sat Feb 08 2025 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Fri Nov 15 2024 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
 - 46.1
 

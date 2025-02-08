@@ -1,13 +1,16 @@
 %define pypi_name evdev
+# /dev/uinput" does not exist or is not a character device file
+%def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Python3 bindings to the generic input event interface
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/%pypi_name
+
 Vcs: https://github.com/gvalkov/python-evdev.git
 
 Source: https://pypi.io/packages/source/e/%pypi_name/%pypi_name-%version.tar.gz
@@ -15,6 +18,7 @@ Source: https://pypi.io/packages/source/e/%pypi_name/%pypi_name-%version.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-kernheaders
 BuildRequires: python3-devel python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest)}
 
 %description
 This package provides bindings to the generic input event interface in
@@ -31,12 +35,18 @@ typically located in /dev/input/
 %install
 %pyproject_install
 
+%check
+py.test3
+
 %files
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Sat Feb 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - 1.8.0
 
