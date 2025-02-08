@@ -1,8 +1,9 @@
 %def_without nautilus
+%def_with caja
 
 Name: tortoisehg
 Version: 6.9
-Release: alt1
+Release: alt2
 
 Summary: Mercurial GUI command line tool thg
 
@@ -33,6 +34,20 @@ BuildArch: noarch
 %description
 This package contains the thg command line tool, which provides a graphical
 user interface to the Mercurial distributed revision control system.
+
+%if_with caja
+%package caja
+Summary: Mercurial GUI plug-in to the Caja file manager
+Group: Development/Other
+Requires: %name = %EVR, python3-module-caja
+Requires: gnome-icon-theme mate-icon-theme
+Requires: /usr/bin/caja
+
+%description caja
+This package contains the TortoiseHg MAT/Caja extension, which makes the
+Mercurial distributed revision control system available in the file manager
+with a graphical interface.
+%endif
 
 %if_with nautilus
 %package nautilus
@@ -75,6 +90,11 @@ desktop-file-install --dir=%buildroot%_datadir/applications contrib/thg.desktop
 
 rm -f %buildroot/%_datadir/doc/tortoisehg/COPYING.txt
 
+%if_with caja
+mkdir -p %buildroot%_datadir/caja-python/extensions/
+cp -v %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py* %buildroot%_datadir/caja-python/extensions/caja-thg.py
+%endif
+
 %if_without nautilus
 rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
@@ -97,7 +117,15 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
+%if_with caja
+%files caja
+%_datadir/caja-python/extensions/caja-thg.py*
+%endif
+
 %changelog
+* Sat Feb 08 2025 Nikolay Strelkov <snk@altlinux.org> 6.9-alt2
+- Packaged caja-thg.py (closes: #52891)
+
 * Fri Jan 17 2025 Grigory Ustinov <grenka@altlinux.org> 6.9-alt1
 - Build new version.
 
