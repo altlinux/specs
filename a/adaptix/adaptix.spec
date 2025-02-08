@@ -1,6 +1,6 @@
 Name:  adaptix
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: An extremely flexible and configurable data model conversion library.
 License: Apache-2.0
@@ -16,8 +16,6 @@ Source1: release_data.tar
 
 BuildRequires(pre):  rpm-build-python3 rpm-build-gir
 BuildRequires:  python3-module-setuptools python3-module-wheel
-
-%add_python3_path %python3_sitelibdir/%name/
 
 %description
 %summary.
@@ -46,5 +44,8 @@ tar -xf %SOURCE1 -C benchmarks/
 %python3_sitelibdir/adaptix-3.0.0b9.dist-info/
 
 %changelog
+* Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt2
+- rebuild with removed %%add_python3_path
+
 * Tue Jan 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt1
 - Initial build (version 3.0.0b9).

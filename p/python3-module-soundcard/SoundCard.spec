@@ -2,7 +2,7 @@
 
 Name: python3-module-%nameD
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: A Pure-Python Real-Time Audio Library
 License: BSD-3-Clause
@@ -13,8 +13,6 @@ Vcs: https://github.com/bastibe/SoundCard
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
-
-%add_python3_path %python3_sitelibdir/%nameD/
 
 BuildArch: noarch
 
@@ -41,5 +39,8 @@ the native audio libraries of Linux, Windows and macOS.
 %python3_sitelibdir/SoundCard-%version.dist-info/
 
 %changelog
+* Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.3-alt2
+- rebuild with removed %%add_python3_path
+
 * Fri Jan 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.3-alt1
 - Initial build for Sisyphus

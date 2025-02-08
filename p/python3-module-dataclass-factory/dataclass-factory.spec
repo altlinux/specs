@@ -2,7 +2,7 @@
 
 Name: python3-module-dataclass-factory
 Version: 2.16
-Release: alt1
+Release: alt2
 
 Summary: An utility class for creating instances of dataclasses
 License: Apache-2.0
@@ -20,8 +20,6 @@ Source1: dataclass_factory-2.16-py3-none-any.whl
 
 BuildRequires(pre):  rpm-build-python3 rpm-build-gir
 BuildRequires: python3-module-setuptools python3-module-wheel
-
-%add_python3_path %python3_sitelibdir/%name/
 
 %description
 Modern way to convert python dataclasses or other objects to and from more common types like dicts or json-like structures.
@@ -47,5 +45,8 @@ echo 'import setuptools; setuptools.setup()' > setup.py
 %python3_sitelibdir/%pip_name/
 
 %changelog
+* Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.16-alt2
+- rebuild with removed %%add_python3_path
+
 * Thu Jan 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.16-alt1
 - Initial build for Sisyphus.

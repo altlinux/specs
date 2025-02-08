@@ -2,7 +2,7 @@
  
 Name:    python3-module-shazamio-core
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: shazamio-core
 License: MIT
@@ -17,8 +17,6 @@ BuildRequires(pre): rpm-build-rust rpm-build-python3 rpm-build-gir
 BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: libalsa-devel python3-module-maturin
 BuildRequires: /proc
-
-%add_python3_path %python3_sitelibdir/%nameD/
 
 %description
 %summary
@@ -49,6 +47,9 @@ tar -xf %SOURCE1 -C %_builddir/%name-%version/
 # %python3_sitelibdir/shazamio_core-1.1.0.dist-info/
 
 %changelog
+* Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.2-alt2
+- rebuild with removed %%add_python3_path
+
 * Wed Feb 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.2-alt1
 - Update to version 1.1.2
 

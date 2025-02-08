@@ -1,6 +1,6 @@
 Name: climage
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
 Summary: Convert images to beautiful ANSI escape codes for display in command line interfaces.
 License: MIT
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre):  rpm-build-python3 rpm-build-gir
 BuildRequires:  python3-module-setuptools python3-module-wheel
-
-%add_python3_path %python3_sitelibdir/%name/
 
 %description
 %summary.
@@ -44,6 +42,9 @@ Summary: Convert images to beautiful ANSI escape codes for display in command li
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt2
+- rebuild with removed %%add_python3_path
+
 * Fri Jan 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt1
 - update to [NFC] Release 0.2.2 (git.ad17f75b)
 
