@@ -1,5 +1,5 @@
 Name: klauslang
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 Summary: Klaus programming language and environment
 Summary(ru_RU.UTF-8): Клаус - язык программирования и среда разработки
@@ -88,6 +88,9 @@ ln -sf ../%_lib/%name/amd64/klaus-course-edit %buildroot%_bindir/klaus-course-ed
 %_datadir/mime/packages/%name-teacher-mime.xml
 
 %changelog
+* Sat Feb 08 2025 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
+- New version.
+
 * Sun Feb 02 2025 Andrey Cherepanov <cas@altlinux.org> 2.6.0-alt1
 - New version.
 
