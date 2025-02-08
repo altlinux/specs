@@ -1,7 +1,3 @@
-#============================================================================
-# Please do not edit!
-# Created by specgen utility from files in specs/ subdir
-#============================================================================
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
@@ -11,14 +7,13 @@
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt7
-License: GPL
+Release: alt8
+License: GPL-2.0
 Group: Development/Other
 BuildRequires: flex gcc-c++
 %define _keep_libtool_files 1
 %set_verify_elf_method unresolved=relaxed
 Url: http://www.freehdl.seul.org/
-Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Requires: lib%name-devel = %EVR
 Requires: lib%name = %EVR
@@ -26,13 +21,17 @@ Requires: lib%name = %EVR
 Source: %name-%version.tar
 Patch1: %name-%version-alt-gcc6.patch
 Patch2: %name-0.0.8-gcc8-fix.patch
+Patch3: %name-0.0.8-fix-building-with-gcc14.patch
+
+%description
+VHDL simulator.
 
 %package -n libfreehdl
 Summary: VHDL simulator
 Group: Development/Other
 
 %description -n libfreehdl
-VHDL simulator
+VHDL simulator.
 
 %package -n libfreehdl-devel
 Summary: VHDL simulator
@@ -40,7 +39,7 @@ Group: Development/Other
 Requires: lib%name = %EVR
 
 %description -n libfreehdl-devel
-VHDL simulator
+VHDL simulator.
 
 %package -n libfreehdl-devel-static
 Summary: VHDL simulator
@@ -48,16 +47,13 @@ Group: Development/Other
 Requires: lib%name-devel = %EVR
 
 %description -n libfreehdl-devel-static
-VHDL simulator
-
-%description
-VHDL simulator
-
+VHDL simulator.
 
 %prep
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 
 %build
 sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
@@ -132,6 +128,12 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 0.0.8-alt8
+- Fix build with gcc14
+- cleanup Packager
+- fix License tag
+- remove subdir with specs
+
 * Mon Sep 13 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.0.8-alt7
 - Fixed build with LTO.
 
