@@ -6,8 +6,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.30.12
-Release: alt2
+Version: 2.32.0
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -121,6 +121,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Sat Feb 08 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.0-alt1
+- New version 2.32.0.
+
 * Thu Feb 06 2025 Nazarov Denis <nenderus@altlinux.org> 2.30.12-alt2
 - Build with libdrm and gbm (ALT #52913)
 
