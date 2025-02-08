@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: xdg-user-dirs-gtk
-Version: 0.11
+Version: 0.14
 Release: alt1
 Summary: Gnome integration of special directories
 Group: Graphical desktop/GNOME
@@ -9,10 +12,12 @@ URL: https://git.gnome.org/browse/xdg-user-dirs-gtk
 Requires: xdg-user-dirs
 
 Source: %name-%version.tar
-Patch0: user-dirs-update-gtk.desktop.in-run-in-lxqt-xfce.patch
-Patch1: fix-build-with-w-cast-align.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires: intltool pkgconfig(gtk+-3.0) xdg-user-dirs
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: xdg-user-dirs
 
 %description
 Contains some integration of xdg-user-dirs with the gnome
@@ -20,30 +25,32 @@ desktop, including creating default bookmarks and detecting
 locale changes.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+%setup
+%autopatch -p1
 
 %build
-%autoreconf
-export CFLAGS='-Wno-error=deprecated-declarations'
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 mv %buildroot%_sysconfdir/xdg/autostart/user-dirs-update-gtk.desktop \
    %buildroot%_sysconfdir/xdg/autostart/%name.desktop
+
+rm -v %buildroot%_desktopdir/user-dirs-update-gtk.desktop
 
 %find_lang %name
 
 %files -f %name.lang
 %doc NEWS AUTHORS README ChangeLog COPYING
 %_sysconfdir/xdg/autostart/%name.desktop
-%_bindir/*
+%_bindir/xdg-user-dirs-gtk-update
 
 %changelog
+* Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 0.14-alt1
+- New version 0.14
+
 * Tue Aug 08 2023 Anton Midyukov <antohami@altlinux.org> 0.11-alt1
 - New version 0.11
 - rename user-dirs-update-gtk.desktop -> %name.desktop
