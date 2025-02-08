@@ -1,5 +1,5 @@
 Name: gcodeworkshop
-Version: 202410
+Version: 202502
 Release: alt1
 
 Summary: GCodeWorkShop is text editor for CNC programmers
@@ -25,9 +25,8 @@ This is a fork of EdytorNC, a text editor for CNC programmers.
 
 %build
 %qmake_qt5 VERSION=%version PREFIX=%prefix
-%make_build lrelease
-%qmake_qt5 VERSION=%version PREFIX=%prefix
 %make_build
+%make_build i18n
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
@@ -44,6 +43,9 @@ rm -vr %buildroot/%_datadir/doc/gcodeworkshop/
 %doc LICENSE README.md doc/SerialTransmission_Help.html
 
 %changelog
+* Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 202502-alt1
+- New version 202502.
+
 * Tue Oct 22 2024 Anton Midyukov <antohami@altlinux.org> 202410-alt1
 - New version 202410.
 
