@@ -12,8 +12,8 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python3-module-%pypi_name
-Version:    6.1.0
-Release:    alt1.1
+Version:    6.1.1
+Release:    alt1
 
 Summary:    Python Build Reasonableness
 
@@ -95,6 +95,9 @@ excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_r
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Sat Feb 08 2025 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt1
+- Automatically updated to 6.1.1.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
