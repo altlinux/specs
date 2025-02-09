@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.1
-Release: alt2
+Release: alt2.1
 
 Summary: Freetype python bindings
 License: BSD
@@ -24,6 +24,7 @@ BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: libfreetype
 
 BuildRequires: /proc
+BuildRequires: python3-module-pytest
 
 Requires: lib%oname
 
@@ -89,6 +90,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc examples doc/_build/html
 
 %changelog
+* Sun Feb 09 2025 Stanislav Levin <slev@altlinux.org> 2.5.1-alt2.1
+- NMU: fixed FTBFS (tox 4).
+
 * Fri Feb 07 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt2
 - Removed dependency on PyInstaller (Closes: #53966).
 
