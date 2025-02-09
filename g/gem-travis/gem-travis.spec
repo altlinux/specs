@@ -6,7 +6,7 @@
 
 Name:          gem-travis
 Version:       1.14.0
-Release:       alt1
+Release:       alt2
 Summary:       Travis CI client
 License:       MIT
 Group:         Development/Ruby
@@ -40,7 +40,7 @@ BuildConflicts: gem(rspec) >= 4
 BuildConflicts: gem(rspec-its) >= 1.4
 BuildConflicts: gem(sinatra) >= 5
 BuildConflicts: gem(gh) >= 1
-BuildConflicts: gem(activesupport) >= 7.1
+BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(faraday-rack) >= 3
 BuildConflicts: gem(highline) >= 4
@@ -53,7 +53,7 @@ BuildConflicts: gem(rack-test) >= 2.2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-%ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
+%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
 %ruby_use_gem_dependency rack-test >= 1.1.0,rack-test < 2
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 %ruby_use_gem_dependency sinatra >= 4,sinatra < 5
@@ -84,7 +84,7 @@ CLI and Ruby client library for Travis CI
 
 %package       -n travis
 Version:       1.14.0
-Release:       alt1
+Release:       alt2
 Summary:       Travis CI client executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета travis
 Group:         Other
@@ -104,7 +104,7 @@ CLI and Ruby client library for Travis CI
 %if_enabled    doc
 %package       -n gem-travis-doc
 Version:       1.14.0
-Release:       alt1
+Release:       alt2
 Summary:       Travis CI client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета travis
 Group:         Development/Documentation
@@ -125,7 +125,7 @@ CLI and Ruby client library for Travis CI
 %if_enabled    devel
 %package       -n gem-travis-devel
 Version:       1.14.0
-Release:       alt1
+Release:       alt2
 Summary:       Travis CI client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета travis
 Group:         Development/Ruby
@@ -144,7 +144,7 @@ Requires:      gem(simplecov-console) >= 0
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rspec-its) >= 1.4
 Conflicts:     gem(sinatra) >= 5
-Conflicts:     gem(activesupport) >= 7.1
+Conflicts:     gem(activesupport) >= 8
 
 %description   -n gem-travis-devel
 Travis CI client development package.
@@ -191,5 +191,8 @@ CLI and Ruby client library for Travis CI
 
 
 %changelog
+* Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 1.14.0-alt2
+- ! fixed deps for activesupport gem
+
 * Fri Oct 18 2024 Pavel Skrylev <majioa@altlinux.org> 1.14.0-alt1
 - + packaged gem with Ruby Policy 2.0

@@ -5,8 +5,8 @@
 %define        gemname chef-zero
 
 Name:          gem-chef-zero
-Version:       15.0.12.3
-Release:       alt0.1
+Version:       15.0.16
+Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -18,51 +18,50 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(chefstyle) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(rspec) >= 3.0
 BuildRequires: gem(chef) >= 14.0
+BuildRequires: gem(chefstyle) >= 0
+BuildRequires: gem(ffi-yajl) >= 2.2
+BuildRequires: gem(hashie) >= 2.0
+BuildRequires: gem(mixlib-log) >= 2.0
 BuildRequires: gem(ohai) >= 14.0
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(pry-byebug) >= 0
 BuildRequires: gem(pry-stack_explorer) >= 0
-BuildRequires: gem(activesupport) >= 6.1
-BuildRequires: gem(mixlib-log) >= 2.0
-BuildRequires: gem(hashie) >= 2.0
+BuildRequires: gem(rack) >= 2.0.6
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec) >= 3.0
 BuildRequires: gem(uuidtools) >= 2.1
-BuildRequires: gem(ffi-yajl) >= 2.2
-BuildRequires: gem(rack) >= 2.0
 BuildRequires: gem(webrick) >= 0
-BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(chef) >= 19
-BuildConflicts: gem(ohai) >= 19
-BuildConflicts: gem(activesupport) >= 7
-BuildConflicts: gem(mixlib-log) >= 4.0
-BuildConflicts: gem(hashie) >= 5.0
-BuildConflicts: gem(uuidtools) >= 3
+BuildConflicts: gem(activesupport) >= 8
+BuildConflicts: gem(chef) >= 20
 BuildConflicts: gem(ffi-yajl) >= 3
+BuildConflicts: gem(hashie) >= 5.0
+BuildConflicts: gem(mixlib-log) >= 4.0
+BuildConflicts: gem(ohai) >= 20
+BuildConflicts: gem(rack) >= 4
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(uuidtools) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency ohai >= 18.1.16,ohai < 19
-%ruby_use_gem_dependency inspec-core < 7
-%ruby_use_gem_dependency chef < 19
-Requires:      gem(activesupport) >= 6.1
-Requires:      gem(mixlib-log) >= 2.0
-Requires:      gem(hashie) >= 2.0
-Requires:      gem(uuidtools) >= 2.1
+%ruby_use_gem_dependency rack >= 3.0.0,rack < 4
+%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
+%ruby_use_gem_dependency ohai >= 19.0,ohai < 20
+%ruby_use_gem_dependency chef >= 19.0,chef < 20
+Requires:      ruby >= 3.0
 Requires:      gem(ffi-yajl) >= 2.2
+Requires:      gem(hashie) >= 2.0
+Requires:      gem(mixlib-log) >= 2.0
 Requires:      gem(rack) >= 2.0
+Requires:      gem(uuidtools) >= 2.1
 Requires:      gem(webrick) >= 0
-Conflicts:     gem(activesupport) >= 7
-Conflicts:     gem(mixlib-log) >= 4.0
-Conflicts:     gem(hashie) >= 5.0
-Conflicts:     gem(uuidtools) >= 3
+Conflicts:     gem(activesupport) >= 8
 Conflicts:     gem(ffi-yajl) >= 3
-Provides:      gem(chef-zero) = 15.0.12.3
-
-%ruby_use_gem_version chef-zero:15.0.12.3
+Conflicts:     gem(hashie) >= 5.0
+Conflicts:     gem(mixlib-log) >= 4.0
+Conflicts:     gem(uuidtools) >= 3
+Provides:      gem(chef-zero) = 15.0.16
 
 %description
 Chef Zero is a simple, easy-install, in-memory Chef server that can be useful
@@ -79,14 +78,14 @@ Internet.
 
 
 %package       -n chef-zero
-Version:       15.0.12.3
-Release:       alt0.1
+Version:       15.0.16
+Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chef-zero
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(chef-zero) = 15.0.12.3
+Requires:      gem(chef-zero) = 15.0.16
 
 %description   -n chef-zero
 Self-contained, easy-setup, fast-start in-memory Chef server for testing and
@@ -103,22 +102,23 @@ start it.
 Because Chef Zero runs in memory, it's super fast and lightweight. This makes it
 perfect for testing against a "real" Chef Server without mocking the entire
 Internet.
+
 %description   -n chef-zero -l ru_RU.UTF-8
 Исполнямка для самоцвета chef-zero.
 
 
 %if_enabled    doc
 %package       -n gem-chef-zero-doc
-Version:       15.0.12.3
-Release:       alt0.1
+Version:       15.0.16
+Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chef-zero
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(chef-zero) = 15.0.12.3
-Obsoletes:     chef-zero-doc
-Provides:      chef-zero-doc
+Requires:      gem(chef-zero) = 15.0.16
+Obsoletes:     chef-zero-doc < %EVR
+Provides:      chef-zero-doc = %EVR
 
 %description   -n gem-chef-zero-doc
 Self-contained, easy-setup, fast-start in-memory Chef server for testing and
@@ -135,6 +135,7 @@ start it.
 Because Chef Zero runs in memory, it's super fast and lightweight. This makes it
 perfect for testing against a "real" Chef Server without mocking the entire
 Internet.
+
 %description   -n gem-chef-zero-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета chef-zero.
 %endif
@@ -142,25 +143,25 @@ Internet.
 
 %if_enabled    devel
 %package       -n gem-chef-zero-devel
-Version:       15.0.12.3
-Release:       alt0.1
+Version:       15.0.16
+Release:       alt1
 Summary:       Self-contained, easy-setup, fast-start in-memory Chef server for testing and solo setup purposes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chef-zero
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(chef-zero) = 15.0.12.3
-Requires:      gem(chefstyle) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rspec) >= 3.0
+Requires:      gem(chef-zero) = 15.0.16
 Requires:      gem(chef) >= 14.0
+Requires:      gem(chefstyle) >= 0
 Requires:      gem(ohai) >= 14.0
 Requires:      gem(pry) >= 0
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(pry-stack_explorer) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rspec) >= 3.0
+Conflicts:     gem(chef) >= 20
+Conflicts:     gem(ohai) >= 20
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(chef) >= 19
-Conflicts:     gem(ohai) >= 19
 
 %description   -n gem-chef-zero-devel
 Self-contained, easy-setup, fast-start in-memory Chef server for testing and
@@ -177,6 +178,7 @@ start it.
 Because Chef Zero runs in memory, it's super fast and lightweight. This makes it
 perfect for testing against a "real" Chef Server without mocking the entire
 Internet.
+
 %description   -n gem-chef-zero-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета chef-zero.
 %endif
@@ -195,23 +197,30 @@ Internet.
 %ruby_test
 
 %files
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n chef-zero
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
 %_bindir/chef-zero
 
 %if_enabled    doc
 %files         -n gem-chef-zero-doc
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-chef-zero-devel
+%doc LICENSE CHANGELOG.md CODE_OF_CONDUCT.md README.md
 %endif
 
 
 %changelog
+* Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 15.0.16-alt1
+- ^ 15.0.12p3 -> 15.0.16
+
 * Thu Apr 18 2024 Pavel Skrylev <majioa@altlinux.org> 15.0.12.3-alt0.1
 - ^ 15.0.0 -> 15.0.12p3
 

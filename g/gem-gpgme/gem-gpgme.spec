@@ -6,7 +6,7 @@
 
 Name:          gem-gpgme
 Version:       2.0.24.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby interface to GnuPG Made Easy
 License:       LGPL-2.1+
 Group:         Development/Ruby
@@ -17,6 +17,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libgpgme-devel
+%if_enabled check
 BuildRequires: gem(byebug) >= 0
 BuildRequires: gem(coveralls_reborn) >= 0
 BuildRequires: gem(mini_portile2) >= 2.7
@@ -26,20 +27,19 @@ BuildRequires: gem(rake) >= 0
 BuildRequires: gem(yard) >= 0.9.11
 BuildConflicts: gem(mini_portile2) >= 3
 BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(mocha) >= 2
+BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(yard) >= 1
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency mocha >= 1.11.2,mocha < 2
+%ruby_use_gem_dependency mocha >= 2.7.1,mocha < 3
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 Requires:      gem(mini_portile2) >= 2.7
-Requires:      gem(rake) >= 0
 Conflicts:     gem(mini_portile2) >= 3
 Obsoletes:     ruby-gpgme < %EVR
 Provides:      ruby-gpgme = %EVR
-Provides:      gpgme = %EVR
 Provides:      gem(gpgme) = 2.0.24.4
 
 %ruby_use_gem_version gpgme:2.0.24.4
@@ -51,7 +51,7 @@ Ruby interface to GnuPG Made Easy (GPGME).
 %if_enabled    doc
 %package       -n gem-gpgme-doc
 Version:       2.0.24.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby interface to GnuPG Made Easy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gpgme
 Group:         Development/Documentation
@@ -74,7 +74,7 @@ Ruby interface to GnuPG Made Easy (GPGME).
 %if_enabled    devel
 %package       -n gem-gpgme-devel
 Version:       2.0.24.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby interface to GnuPG Made Easy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gpgme
 Group:         Development/Ruby
@@ -85,9 +85,10 @@ Requires:      gem(byebug) >= 0
 Requires:      gem(coveralls_reborn) >= 0
 Requires:      gem(minitest) >= 2.1.0
 Requires:      gem(mocha) >= 0.9.12
+Requires:      gem(rake) >= 0
 Requires:      gem(yard) >= 0.9.11
 Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(yard) >= 1
 
 %description   -n gem-gpgme-devel
@@ -131,6 +132,9 @@ Ruby interface to GnuPG Made Easy (GPGME).
 
 
 %changelog
+* Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.24.4-alt0.2
+- ! fixed dep to mocha gem
+
 * Mon Dec 09 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.24.4-alt0.1
 - ^ 2.0.24 -> 2.0.24p4
 

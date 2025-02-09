@@ -6,7 +6,7 @@
 
 Name:          gem-gh
 Version:       0.21.0
-Release:       alt1
+Release:       alt2
 Summary:       layered github client
 License:       MIT
 Group:         Development/Ruby
@@ -33,7 +33,7 @@ BuildRequires: gem(faraday-typhoeus) >= 0
 BuildRequires: gem(multi_json) >= 1
 BuildRequires: gem(net-http-persistent) >= 4
 BuildRequires: gem(net-http-pipeline) >= 0
-BuildConflicts: gem(activesupport) >= 7.1
+BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(addressable) >= 3
 BuildConflicts: gem(faraday) >= 3
 BuildConflicts: gem(multi_json) >= 2
@@ -42,7 +42,7 @@ BuildConflicts: gem(net-http-persistent) >= 5
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
+%ruby_use_gem_dependency activesupport >= 7.1,activesupport < 8
 Requires:      gem(activesupport) >= 6.1.3.2
 Requires:      gem(addressable) >= 2.8
 Requires:      gem(faraday) >= 2
@@ -51,7 +51,7 @@ Requires:      gem(faraday-typhoeus) >= 0
 Requires:      gem(multi_json) >= 1
 Requires:      gem(net-http-persistent) >= 4
 Requires:      gem(net-http-pipeline) >= 0
-Conflicts:     gem(activesupport) >= 7.1
+Conflicts:     gem(activesupport) >= 8
 Conflicts:     gem(addressable) >= 3
 Conflicts:     gem(faraday) >= 3
 Conflicts:     gem(multi_json) >= 2
@@ -66,7 +66,7 @@ multi-layer client for the github api v3
 %if_enabled    doc
 %package       -n gem-gh-doc
 Version:       0.21.0
-Release:       alt1
+Release:       alt2
 Summary:       layered github client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gh
 Group:         Development/Documentation
@@ -87,7 +87,7 @@ multi-layer client for the github api v3
 %if_enabled    devel
 %package       -n gem-gh-devel
 Version:       0.21.0
-Release:       alt1
+Release:       alt2
 Summary:       layered github client development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gh
 Group:         Development/Ruby
@@ -139,5 +139,8 @@ multi-layer client for the github api v3
 
 
 %changelog
+* Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 0.21.0-alt2
+- ! fixed dep to activerecord
+
 * Fri Oct 18 2024 Pavel Skrylev <majioa@altlinux.org> 0.21.0-alt1
 - + packaged gem with Ruby Policy 2.0

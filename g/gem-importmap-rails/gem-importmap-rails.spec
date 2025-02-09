@@ -1,11 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname importmap-rails
 
 Name:          gem-importmap-rails
-Version:       2.0.1
+Version:       2.1.0
 Release:       alt1
 Summary:       Use ESM with importmap to manage modern JavaScript in Rails without transpiling or bundling
 License:       MIT
@@ -17,30 +17,32 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(appraisal) >= 0
-BuildRequires: gem(rails) >= 6.1.0
-BuildRequires: gem(sqlite3) >= 0
-BuildConflicts: gem(rails) >= 6.2
 %if_enabled check
 BuildRequires: gem(actionpack) >= 6.0.0
 BuildRequires: gem(activesupport) >= 6.0.0
-BuildRequires: gem(railties) >= 6.0.0
-BuildRequires: gem(turbo-rails) >= 0
-BuildRequires: gem(stimulus-rails) >= 0
+BuildRequires: gem(appraisal) >= 0
 BuildRequires: gem(byebug) >= 0
-BuildRequires: gem(rexml) >= 0
 BuildRequires: gem(capybara) >= 0
+BuildRequires: gem(rails) >= 6.1.0
+BuildRequires: gem(railties) >= 6.0.0
+BuildRequires: gem(rexml) >= 0
 BuildRequires: gem(selenium-webdriver) >= 0
+BuildRequires: gem(sqlite3) >= 1.4
+BuildRequires: gem(stimulus-rails) >= 0
+BuildRequires: gem(turbo-rails) >= 0
 BuildRequires: gem(webdrivers) >= 0
+BuildConflicts: gem(rails) >= 8
+BuildConflicts: gem(sqlite3) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(railties) >= 6.0.0
-Requires:      gem(activesupport) >= 6.0.0
+%ruby_use_gem_dependency rails >= 7.1,rails < 8
+Requires:      ruby >= 3.1.0
 Requires:      gem(actionpack) >= 6.0.0
-Provides:      gem(importmap-rails) = 2.0.1
-
+Requires:      gem(activesupport) >= 6.0.0
+Requires:      gem(railties) >= 6.0.0
+Provides:      gem(importmap-rails) = 2.1.0
 
 %description
 Use ESM with importmap to manage modern JavaScript in Rails without transpiling
@@ -49,14 +51,14 @@ or bundling.
 
 %if_enabled    doc
 %package       -n gem-importmap-rails-doc
-Version:       2.0.1
+Version:       2.1.0
 Release:       alt1
 Summary:       Use ESM with importmap to manage modern JavaScript in Rails without transpiling or bundling documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета importmap-rails
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(importmap-rails) = 2.0.1
+Requires:      gem(importmap-rails) = 2.1.0
 
 %description   -n gem-importmap-rails-doc
 Use ESM with importmap to manage modern JavaScript in Rails without transpiling
@@ -69,27 +71,26 @@ or bundling documentation files.
 
 %if_enabled    devel
 %package       -n gem-importmap-rails-devel
-Version:       2.0.1
+Version:       2.1.0
 Release:       alt1
 Summary:       Use ESM with importmap to manage modern JavaScript in Rails without transpiling or bundling development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета importmap-rails
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(importmap-rails) = 2.0.1
-Requires:      gem(rails) >= 6.1.0
-Requires:      gem(sqlite3) >= 0
-Requires:      gem(turbo-rails) >= 0
-Requires:      gem(stimulus-rails) >= 0
+Requires:      gem(importmap-rails) = 2.1.0
+Requires:      gem(appraisal) >= 0
 Requires:      gem(byebug) >= 0
-Requires:      gem(rexml) >= 0
 Requires:      gem(capybara) >= 0
+Requires:      gem(rails) >= 6.1.0
+Requires:      gem(rexml) >= 0
 Requires:      gem(selenium-webdriver) >= 0
+Requires:      gem(stimulus-rails) >= 0
+Requires:      gem(sqlite3) >= 1.4
+Requires:      gem(turbo-rails) >= 0
 Requires:      gem(webdrivers) >= 0
-Requires:      gem(railties) >= 6.0.0
-Requires:      gem(activesupport) >= 6.0.0
-Requires:      gem(actionpack) >= 6.0.0
-Conflicts:     gem(rails) >= 6.2
+Conflicts:     gem(rails) >= 8
+Conflicts:     gem(sqlite3) >= 2
 
 %description   -n gem-importmap-rails-devel
 Use ESM with importmap to manage modern JavaScript in Rails without transpiling
@@ -102,7 +103,6 @@ or bundling development package.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -131,5 +131,8 @@ or bundling development package.
 
 
 %changelog
+* Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
+- ^ 2.0.1 -> 2.1.0
+
 * Sun Apr 14 2024 Pavel Skrylev <majioa@altlinux.org> 2.0.1-alt1
 - + packaged gem with Ruby Policy 2.0
