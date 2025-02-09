@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.12
+%define kernel_sublevel	.13
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Feb 08 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.13-alt1
+- v6.12.13 (2025-02-08).
+- config: Enable CONFIG_TMPFS_INODE64=y.
+
 * Sun Feb 02 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.12-alt1
 - v6.12.12 (2025-02-01).
 - Add support for Baikal-M SoC family.
