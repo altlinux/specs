@@ -4,27 +4,31 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.27.1
-Release: alt4
+Version: 4.23.2
+Release: alt1
 
-Summary: virtualenv-based automation of test activities
+Summary: Generic virtualenv management and test command line tool
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/tox/
+Url: https://pypi.org/project/tox/
 VCS: https://github.com/tox-dev/tox
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /proc
-%pyproject_builddeps_metadata_extra testing
-# used in test_parallel_error_report,
-# upstream relies on being run within venv
-BuildRequires: python3-module-pip
+# required by test_local_execute_terminal_size
+BuildRequires: /dev/pts
+# run coverage and linting reports on diffs
+%add_pyproject_deps_check_filter diff-cover
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -44,6 +48,9 @@ can use for:
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -61,15 +68,17 @@ popd
 export VIRTUALENV_SYSTEM_SITE_PACKAGES=YES
 export TOX_LIMITED_SHEBANG=1
 export PIP_NO_BUILD_ISOLATION=NO
-%pyproject_run_pytest -vra -m "not internet"
+%pyproject_run_pytest -vra
 
 %files
 %_bindir/tox.py3
-%_bindir/tox-quickstart.py3
 %python3_sitelibdir/tox/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Dec 28 2024 Stanislav Levin <slev@altlinux.org> 4.23.2-alt1
+- 3.27.1 -> 4.23.2 (closes: #49165).
+
 * Wed Apr 17 2024 Stanislav Levin <slev@altlinux.org> 3.27.1-alt4
 - Fixed FTBFS (setuptools 69.3.0).
 

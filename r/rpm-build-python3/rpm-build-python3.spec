@@ -1,6 +1,6 @@
 Name: rpm-build-python3
-Version: 0.1.26
-Release: alt2
+Version: 0.1.27
+Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
 License: GPLv2+
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Fri Jan 17 2025 Stanislav Levin <slev@altlinux.org> 0.1.27-alt1
+- Added support for tox4.
+
 * Wed Dec 18 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.26-alt2
 - Sort py3req output.
 

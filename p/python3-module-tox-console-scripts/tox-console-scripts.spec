@@ -5,21 +5,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.2
-Release: alt2
+Version: 0.4.0
+Release: alt1
 Summary: Tox plugin for installation of console scripts for system site packages
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tox-console-scripts/
+Vcs: https://github.com/stanislavlevin/tox-console-scripts
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -50,6 +54,9 @@ environment.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 24 2025 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.2 -> 0.4.0.
+
 * Mon Feb 12 2024 Stanislav Levin <slev@altlinux.org> 0.3.2-alt2
 - Fixed FTBFS.
 
