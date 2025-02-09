@@ -1,34 +1,10 @@
-%if_feature php83 8.3.0
-%def_with php83
-%define defphp php8.3
-%endif
-
-%if_feature php80 8.0.0
-%def_with php80
-%define defphp php8.0
-%endif
-
-%if_feature php81 8.1.0
-%def_with php81
-%define defphp php8.1
-%endif
-
-%if_feature php82 8.2.0
-%def_with php82
-%define defphp php8.2
-%endif
-
-%if_feature php7 7.4.3
-%def_with php7
-%define defphp php7
-%endif
-
-%define minphp 7.3
+%define defphp php%php_defver
+%define minphp 8.0
 
 # Note: /usr/bin/compose still use php command
 
 Name: composer
-Version: 2.8.3
+Version: 2.8.5
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -52,8 +28,9 @@ Patch1: composer-compiler.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-features >= 0.8
+BuildRequires(pre): rpm-build-php >= 8.4
 BuildRequires: %defphp >= %minphp
+BuildRequires: %defphp-openssl
 
 Requires: %_bindir/%defphp
 Requires: %defphp >= %minphp
@@ -91,6 +68,10 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sat Feb 08 2025 Vitaly Lipatov <lav@altlinux.ru> 2.8.5-alt1
+- new version (2.8.5) with rpmgs script
+- switch to php_defver as php default
+
 * Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1
 - new version 2.8.3 (with rpmrb script)
 
