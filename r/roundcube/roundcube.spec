@@ -1,34 +1,10 @@
-%if_feature php83 8.3.0
-%def_with php83
-%define defphp php8.3
-%endif
-
-%if_feature php80 8.0.0
-%def_with php80
-%define defphp php8.0
-%endif
-
-%if_feature php81 8.1.0
-%def_with php81
-%define defphp php8.1
-%endif
-
-%if_feature php82 8.2.0
-%def_with php82
-%define defphp php8.2
-%endif
-
-%if_feature php7 7.4.3
-%def_with php7
-%define defphp php7
-%endif
-
+%define defphp php%php_defver
 
 %define oname roundcubemail
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.9
+Version: 1.6.10
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -45,7 +21,7 @@ Patch0: roundcube-1.2.4-sso-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-apache2
-BuildRequires(pre): rpm-macros-features >= 0.8
+BuildRequires(pre): rpm-build-php >= 8.4
 BuildRequires: rpm-macros-webserver-common
 BuildRequires: %defphp
 
@@ -170,6 +146,10 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Sat Feb 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1.6.10-alt1
+- new version 1.6.10 (with rpmrb script)
+- switch to use php_defver from rpm-build-php
+
 * Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 1.6.9-alt1
 - new version 1.6.9 (with rpmrb script)
 - fixes vulnerabilities:
