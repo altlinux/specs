@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 4.0
+%define ver_major 5.0
 %define rdn_name de.haeckerfelix.Shortwave
 
 %define optflags_lto %nil
@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: shortwave
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Shortwave is an internet radio player
@@ -90,6 +90,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
+- updated to 5.0.0-5-ga84ba20
+
 * Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - updated to 4.0.1-10-g490619d
 
