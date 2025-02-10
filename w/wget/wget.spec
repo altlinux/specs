@@ -4,7 +4,7 @@
 
 Name: wget
 Version: 1.25.0
-Release: alt2
+Release: alt4
 
 Summary: A free utility for non-interactive download of files from the Web
 License: GPL-3.0-or-later
@@ -51,6 +51,11 @@ rm -f doc/*.info*
 find doc -type f -print0 |
 	xargs -r0 grep -FZl /usr/local/ -- |
 	xargs -r0 sed -i 's,/usr/local/,/,g' --
+
+# HOSTALIASES does not work in Hasher.
+find tests util -type f -print0 |
+	xargs -0 grep -i WgetTestingServer -lZ |
+	xargs -0 sed -i s/WgetTestingServer/localhost/ig
 
 %build
 if [ ! -e .tarball-version ]; then
@@ -108,6 +113,12 @@ fi
 %_infodir/wget.info*
 
 %changelog
+* Mon Feb 10 2025 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt4
+- Update seccomp filter for gettimeofday (ALT#52946).
+
+* Sat Feb 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt3
+- spec: Enable more SSL tests.
+
 * Sat Jan 25 2025 Vitaly Chikunov <vt@altlinux.org> 1.25.0-alt2
 - Use less strict seccomp (and thus more robust) hardening by default (without
   aborting whole process).
