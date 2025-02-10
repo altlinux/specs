@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name words
-%define ver_major 0.1
+%define ver_major 0.4
 %define rdn_name page.codeberg.petsoi.%_name
 
 %def_enable check
@@ -9,7 +9,7 @@
 
 # conflicts with words-2-alt1
 Name: gnome-games-%_name
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: Words!
@@ -25,6 +25,7 @@ Source: https://codeberg.org/petsoi/words/archive/v%version/%name-%version.tar.g
 Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
+Patch1: %_name-0.4.1-alt-no-flatpak.patch
 
 %define glib_ver 2.76
 %define adwaita_ver 1.6
@@ -48,6 +49,8 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
+%patch1
+
 %build
 %meson \
     -Dprofile=default
@@ -65,6 +68,7 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %_bindir/%_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/%_name/
+%_datadir/word-lists/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
@@ -72,6 +76,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- updated to v0.4.1-3-gb6085cf
+
 * Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
 - first build for Sisyphus (v0.1.5-4-g03fcc07)
 
