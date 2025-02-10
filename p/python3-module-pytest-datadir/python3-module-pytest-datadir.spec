@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest-datadir
+%define mod_name pytest_datadir
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.6.1
 Release: alt1
 
 Summary: pytest plugin for manipulating test data directories and files
@@ -18,12 +19,9 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
-%py3_provides %pypi_name
-
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -45,14 +43,17 @@ pytest plugin for manipulating test data directories and files.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -vra
 
 %files
 %doc README.md AUTHORS
-%python3_sitelibdir/pytest_datadir/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1.6.1-alt1
+- Updated to 1.6.1.
+
 * Wed Oct 04 2023 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
 - Updated to 1.5.0.
 
