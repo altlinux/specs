@@ -1,5 +1,5 @@
 Name: rsgain
-Version: 3.5.3
+Version: 3.6
 Release: alt1
 
 Summary: ReplayGain 2.0 utility
@@ -40,6 +40,9 @@ install -pm0644 -D docs/rsgain.1 %buildroot%_man1dir/rsgain.1
 %_man1dir/rsgain.1*
 
 %changelog
+* Mon Feb 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.6-alt1
+- 3.6 released
+
 * Mon Nov 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.3-alt1
 - 3.5.3 relesed
 
