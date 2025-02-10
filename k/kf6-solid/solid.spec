@@ -1,14 +1,14 @@
 %define rname solid
 
 Name: kf6-%rname
-Version: 6.9.0
+Version: 6.10.0
 Release: alt1
 %K6init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 desktop hardware abstraction
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.1-or-later
 
 Requires: upower udisks2 media-player-info
 
@@ -87,6 +87,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/solid/predicate_lexe
 
 
 %changelog
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1
+- new version
+
 * Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
 - new version
 

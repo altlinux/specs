@@ -1,7 +1,10 @@
 %define rname kdeclarative
 
+%define sover 0
+%define libkquickcontrolsprivate libkquickcontrolsprivate%sover
+
 Name: kf6-%rname
-Version: 6.9.0
+Version: 6.10.0
 Release: alt1
 %K6init altplace
 
@@ -45,24 +48,17 @@ Requires: qt6-declarative-devel libepoxy-devel kf6-kio-devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkf6declarative
+%package -n %libkquickcontrolsprivate
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
-%description -n libkf6declarative
-KF6 library
-
-%package -n libkf6quickaddons
-Group: System/Libraries
-Summary: KF6 library
-Requires: %name-common = %version-%release
-%description -n libkf6quickaddons
+Requires: %name-common >= %EVR
+%description -n %libkquickcontrolsprivate
 KF6 library
 
 %package -n libkf6calendarevents
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n libkf6calendarevents
 KF6 library
 
@@ -91,8 +87,14 @@ KF6 library
 %files -n libkf6calendarevents
 %_K6lib/libKF6CalendarEvents.so.*
 
+%files -n %libkquickcontrolsprivate
+%_K6lib/libkquickcontrolsprivate.so.%sover
+%_K6lib/libkquickcontrolsprivate.so.*
 
 %changelog
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1
+- new version
+
 * Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
 - new version
 

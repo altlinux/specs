@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.9.0
+Version: 6.10.0
 Release: alt1
 %K6init no_altplace
 
@@ -145,6 +145,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1
+- new version
+
 * Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
 - new version
 
