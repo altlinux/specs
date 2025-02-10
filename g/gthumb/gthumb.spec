@@ -22,7 +22,7 @@
 %endif
 
 Name: gthumb
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -31,6 +31,8 @@ Summary(ru_RU.UTF-8): Просмотрщик изображений и фото�
 License: GPL-2.0-or-later
 Group: Graphics
 Url: http://gthumb.sourceforge.net/
+
+Vcs: https://gitlab.gnome.org/GNOME/gthumb.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -123,15 +125,15 @@ This package contains headers needed to build extensions for gThumb.
 %build
 %meson \
     -Dlibtiff=true \
-    %{?_disable_exiv2:-Dexiv2=false} \
-    %{?_disable_libbrasero:-Dlibbrasero=false} \
-    %{?_enable_libchamplain:-Dlibchamplain=true} \
-    %{?_disable_libraw:-Dlibraw=false} \
-    %{?_disable_libheif:-Dlibheif=false} \
-    %{?_disable_colord:-Dcolord=false} \
-    %{?_disable_gstreamer:-Dgstreamer=false} \
-    %{?_disable_clutter:-Dclutter=false} \
-    %{?_disable_libjxl:-Dlibjxl=false}
+    %{subst_enable_meson_bool exiv2 exiv2} \
+    %{subst_enable_meson_bool libbrasero libbrasero} \
+    %{subst_enable_meson_bool libchamplain libchamplain} \
+    %{subst_enable_meson_bool libraw libraw} \
+    %{subst_enable_meson_bool libheif libheif} \
+    %{subst_enable_meson_bool colord colord} \
+    %{subst_enable_meson_bool gstreamer gstreamer} \
+    %{subst_enable_meson_bool clutter clutter} \
+    %{subst_enable_meson_bool libjxl libjxl}
 %nil
 %meson_build
 
@@ -185,6 +187,9 @@ This package contains headers needed to build extensions for gThumb.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.7-alt1
+- 3.12.7
+
 * Sun Mar 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.12.6-alt1
 - 3.12.6
 

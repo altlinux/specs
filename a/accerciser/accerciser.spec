@@ -1,11 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 3.44
+%define ver_major 3.46
 %define xdg_name org.gtk.accerciser
 %define uuid %name@%name.gnome.org
 
 Name: accerciser
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Interactive Python accessibility explorer
@@ -101,6 +101,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.46.2-alt1
+- 3.46.2
+
 * Sun Aug 25 2024 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
 - 3.44.1 (ported to Meson build system)
 - new shell-extension subpackage

@@ -9,7 +9,7 @@
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: An archive manager for GNOME
@@ -18,7 +18,9 @@ Group: File tools
 License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/FileRoller
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/file-roller.git
+
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 Patch1: %name-3.3.90-alt-zip_command.patch
 
 %define glib_ver 2.36.0
@@ -127,6 +129,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 44.5-alt1
+- 44.5
+
 * Sun Nov 24 2024 Yuri N. Sedunov <aris@altlinux.org> 44.4-alt1
 - 44.4
 

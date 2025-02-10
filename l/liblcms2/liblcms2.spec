@@ -1,27 +1,35 @@
 %def_disable snapshot
+
+%def_enable fastfloat
+%def_enable threaded
+%def_enable utils
 %def_disable static
+%{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
+
 %def_enable check
 
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.16
+Version: 2.17
 Release: alt1
 
 Summary: Little cms color engine, version 2
-License: MIT
+License: MIT or GPL-3.0
 Group: System/Libraries
 Url: http://www.littlecms.com
+
+Vcs: https://github.com/mm2/Little-CMS.git
 
 %if_disabled snapshot
 Source: http://downloads.sourceforge.net/lcms/%rname-%version.tar.gz
 %else
-Vcs: https://github.com/mm2/Little-CMS.git
 Source: %rname-%version.tar
 %endif
 
-BuildRequires: autoconf-archive
-BuildRequires: gcc-c++ libjpeg-devel libtiff-devel zlib-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
+BuildRequires: libjpeg-devel libtiff-devel zlib-devel
 
 %package devel
 Summary: LCMS 2 development environment
@@ -69,23 +77,25 @@ This package contains various %name-based utilities
 %setup -n %rname-%version
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure \
-	%{subst_enable static}
+%meson \
+    %{?_enable_static:--default-library=both} \
+    %{subst_enable_meson_bool threaded  threaded} \
+    %{subst_enable_meson_bool fastfloat fastfloat} \
+    %{subst_enable_meson_bool utils utils}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
-%_libdir/%name.so.*
+%_libdir/%{name}*.so.*
 %doc AUTHORS README*
 
+%if_enabled utils
 %files -n lcms2-utils
 %_bindir/jpgicc
 %_bindir/linkicc
@@ -93,10 +103,11 @@ This package contains various %name-based utilities
 %_bindir/tificc
 %_bindir/transicc
 %_man1dir/*
+%endif
 
 %files devel
 %_includedir/*
-%_libdir/%name.so
+%_libdir/%{name}*.so
 %_pkgconfigdir/%rname.pc
 
 %if_enabled static
@@ -105,6 +116,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.17-alt1
+- 2.17 (ported to Meson build system)
+
 * Mon Dec 04 2023 Yuri N. Sedunov <aris@altlinux.org> 2.16-alt1
 - 2.16
 
