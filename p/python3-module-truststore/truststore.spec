@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Verify certificates using OS trust stores
@@ -81,6 +81,9 @@ luck!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Feb 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.1-alt1
+- Updated to 0.10.1.
+
 * Thu Nov 07 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
