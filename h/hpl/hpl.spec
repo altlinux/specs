@@ -5,10 +5,11 @@
 %define mpidir %_libdir/%mpiimpl
 
 %global optflags_lto %optflags_lto -ffat-lto-objects
+%global optflags %optflags -Ofast
 
 Name: hpl
 Version: 2.3
-Release: alt3
+Release: alt4
 
 Summary: The Linpack Benchmark
 
@@ -80,6 +81,10 @@ install -pD -m0644 -t %buildroot%_includedir/%name include/*.h
 %_docdir/%name
 
 %changelog
+* Mon Feb 10 2025 Andrew Savchenko <bircoph@altlinux.org> 2.3-alt4
+- Remove technically invalid and illigal due to NMU policy commit by
+  snk@.
+
 * Fri Feb 07 2025 Nikolay Strelkov <snk@altlinux.org> 2.3-alt3
 - Removed -Ofast as conflicting with -O2 (closes: #52969).
 
