@@ -1,9 +1,9 @@
 Name: kernel-image-6.6
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.75
+%define kernel_sublevel	.76
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -596,6 +596,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Feb 10 2025 Vitaly Chikunov <vt@altlinux.org> 1:6.6.76-alt2
+- clk: baikal-m: take into account changes in the API.
+
+* Sat Feb 08 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.76-alt1
+- v6.6.76 (2025-02-08).
+- config: Enable CONFIG_TMPFS_INODE64=y.
+
 * Sun Feb 02 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.75-alt1
 - v6.6.75 (2025-02-01).
 
