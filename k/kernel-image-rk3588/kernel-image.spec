@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.12
+%define kernel_sublevel	.13
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -400,6 +400,10 @@ fi
 %modules_dir/build
 
 %changelog
+* Mon Feb 10 2025 Alexei Takaseev <taf@altlinux.org> 6.12.13-alt1
+- v6.12.13 (2025-02-08).
+- config: Enable CONFIG_TMPFS_INODE64=y.
+
 * Mon Feb 03 2025 Alexei Takaseev <taf@altlinux.org> 6.12.12-alt1
 - v6.12.12 (2025-02-01).
 
