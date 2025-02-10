@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 %define xdg_name org.gnome.%name
@@ -20,10 +20,11 @@ License: GPL-2.0
 Group: File tools
 Url: https://gcmd.github.io
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-commander.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gnome-commander.git
 Source: %name-%version.tar
 %endif
 
@@ -89,6 +90,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
+- 1.18.2
+
 * Thu Aug 01 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.1-alt1
 - 1.18.1
 
