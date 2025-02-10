@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: thunar
-Version: 4.20.1
-Release: alt2
+Version: 4.20.2
+Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -153,6 +153,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Feb 10 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
+- Dropped fake changelog entry.
+- Updated to 4.20.2.
+
 * Thu Jan 23 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt2
 - Added fake changelog entry.
 
@@ -169,9 +173,6 @@ make check
 * Fri Nov 01 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
 - Returned dropped translations.
 - Updated to 4.19.4.
-
-* Tue Oct 22 2024 Kirill Izmestev <felixz@altlinux.org> 4.18.11-alt2
-- Add Tatar translation.
 
 * Sun Oct 20 2024 Kirill Izmestev <felixz@altlinux.org> 4.19.3-alt2
 - Add Tatar translation.
