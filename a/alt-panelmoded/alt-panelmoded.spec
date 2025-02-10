@@ -1,6 +1,6 @@
 Name: alt-panelmoded
-Version: 0.3.3
-Release: alt2
+Version: 0.4.1
+Release: alt1
 
 Summary: Used for panelmode on operating systems of the Alt family with GNOME desktop enviroment
 License: GPL-3.0-or-later
@@ -18,6 +18,14 @@ BuildRequires(pre): rpm-macros-systemd
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(gee-0.8)
+
+Requires: gnome-shell-extensions
+Requires: gnome-shell-extension-dash-to-panel
+Requires: gnome-shell-extension-arcmenu
+Requires: gnome-shell-extension-gtk4-desktop-icons-ng
+Requires: gnome-shell-extension-appindicator
+Requires: gnome-shell-extension-clipboard-indicator
 
 %description
 Used for panelmode on operating systems of the Alt family with GNOME desktop
@@ -49,6 +57,9 @@ enviroment.
 %_desktopdir/org.altlinux.panelmoded.desktop
 
 %changelog
+* Wed Feb 5 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.1-alt1
+- new version 0.4.1
+
 * Thu Dec 12 2024 Oleg Shchavelev <oleg@altlinux.org> 0.3.3-alt2
 - Fix name license
 
