@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.1
+Release: alt0.2
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -38,9 +38,12 @@ Group: Graphics
 Summary: System/Base
 License: GPLv2+
 
-%define distro_name ALT Virtualization PVE Edition %version%status_en
+%define component_name ALT Virtualization
+%define variant PVE Edition
+%define variant_id pve
+%define distro_name %component_name %variant %version%status_en
 %define distro_name_ru Альт Виртуализации редакция PVE %version%status
- 
+
 %description
 Distro-specific packages with design and texts for %distro_name.
 
@@ -209,7 +212,9 @@ cp /usr/share/distro-licenses/ALT_Product_License/license.{all,ru}.html.in notes
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' BRANCH='%altbranch' ./configure
+THEME=%theme NAME='%component_name' VARIANT='%variant' VARIANT_ID='%variant_id' BRAND_FNAME='%brand' \
+BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' \
+PRODUCT_NAME='%distro_name' CODENAME='%codename' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -285,6 +290,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Feb 10 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.2
+- Added VARIANT and VARIANT_ID fields in os-release
+- Provided links to docs and support in os-release
+
 * Fri Oct 11 2024 Alexey Shabalin <shaba@altlinux.org> 11.0-alt0.1
 - version 11.0
 - based on server-v
