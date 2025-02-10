@@ -5,7 +5,7 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.2.6
+Version:   1.3.0
 Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
@@ -227,7 +227,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 
 %files -f PackageKit.lang
 %doc COPYING
-%doc README AUTHORS NEWS
+%doc README.md AUTHORS NEWS
 %dir %_datadir/PackageKit
 %dir %_datadir/PackageKit/helpers
 %dir %_sysconfdir/PackageKit
@@ -238,7 +238,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %dir %_libdir/packagekit-backend
 %config(noreplace) %_sysconfdir/PackageKit/PackageKit.conf
 %config(noreplace) %_sysconfdir/PackageKit/Vendor.conf
-%config %_sysconfdir/dbus-1/system.d/*
+%config %_datadir/dbus-1/system.d/*
 %_man1dir/pkcon.1*
 %_man1dir/pkmon.1*
 %_datadir/polkit-1/actions/*.policy
@@ -252,6 +252,7 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %ghost %verify(not md5 size mtime) %_localstatedir/PackageKit/transactions.db
 %ghost %_localstatedir/PackageKit/upgrade_lock
 %_datadir/dbus-1/system-services/*.service
+%_datadir/metainfo/*.xml
 %_unitdir/packagekit-offline-update.service
 %_unitdir/packagekit.service
 %_unitdir/system-update.target.wants/
@@ -311,6 +312,10 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Fri Feb 07 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt1
+- Updated to upstream version 1.3.0
+- Added package changelog output for the given package.
+
 * Fri Jan 24 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.2.6-alt1
 - v1.2.6 (with the "support for Packages signal to emit many packages at once").
 - Ensured that it builds on e2k.

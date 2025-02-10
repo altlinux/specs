@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.2.5
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -56,6 +56,7 @@ Patch12: alt-send-interactive.patch
 Patch13: alt-ghns-auth.patch
 Patch14: alt-ui-remove-disttag.patch
 Patch15: alt-highlight-removed.patch
+Patch16: alt-fix-size-markdown-text.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -216,6 +217,7 @@ KF6 library
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -341,6 +343,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Thu Feb 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.2.5-alt2
+- fix the size of markdown document
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 
