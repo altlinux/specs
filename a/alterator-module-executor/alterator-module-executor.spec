@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.16
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -35,6 +35,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Feb 10 2025 Ivan Savin <svn17@altlinux.org> 0.1.16-alt2
+- Fix missing file closing.
+
 * Fri Feb 07 2025 Ivan Savin <svn17@altlinux.org> 0.1.16-alt1
 - Add the ability to pass a string to the stdin of the spawned process via a
   special parameter. If the "stdin_string" field is specified in the
