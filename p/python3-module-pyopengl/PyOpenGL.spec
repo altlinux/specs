@@ -2,11 +2,16 @@
 %define pypi_name PyOpenGL
 %define modulename python3-module-%oname
 
+# Fatal Python error: Segmentation fault
+%ifnarch ppc64le
+%def_with check
+%else
 %def_without check
+%endif
 
 Name: python3-module-pyopengl
-Version: 3.1.7
-Release: alt3
+Version: 3.1.9
+Release: alt1
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -18,8 +23,6 @@ Url: http://pyopengl.sourceforge.net
 # https://pypi.org/project/PyOpenGL-accelerate
 # https://github.com/mcfletch/pyopengl
 Source: %name-%version.tar
-Patch0: pyopengl-python3.12-support.patch
-Patch1: pyopengl-gcc14-support.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
@@ -30,9 +33,12 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pygame
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-xlib
 BuildRequires: libOSMesa-devel
 BuildRequires: libfreeglut-devel
 BuildRequires: xvfb-run
+BuildRequires: /proc
 %endif
 
 %description
@@ -76,12 +82,6 @@ operations for slow points in PyOpenGL 3.x.
 %prep
 %setup
 
-%patch0 -p2
-
-pushd accelerate
-%patch1 -p2
-popd
-
 find tests -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
 
@@ -102,7 +102,8 @@ popd
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch:%buildroot%python3_sitelibdir
-xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.test-3 tests
+xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.test-3 tests \
+    -k 'not test_check_egl_es1 and not test_check_egl_es2 and not test_egl_ext_enumerate'
 xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.test-3 accelerate/tests
 
 %files -n %modulename
@@ -120,6 +121,10 @@ xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.te
 %python3_sitelibdir/Py%{oname}_accelerate-%version.dist-info
 
 %changelog
+* Mon Feb 10 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.9-alt1
+- Build new version (Closes: #52965).
+- Build with check.
+
 * Tue Dec 24 2024 Grigory Ustinov <grenka@altlinux.org> 3.1.7-alt3
 - Build without check for python3.13.
 
