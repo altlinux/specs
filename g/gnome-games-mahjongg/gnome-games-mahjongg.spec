@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Classic Chinese Tile Game
@@ -73,6 +73,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_man6dir/%__name.*
 
 %changelog
+* Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
+- 47.2
+
 * Tue Feb 04 2025 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 
