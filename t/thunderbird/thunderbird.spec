@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 128.6.0
+Version: 128.7.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -527,6 +527,21 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Feb 10 2025 Ajrat Makhmutov <rauty@altlinux.org> 128.7.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2025-1009: Use-after-free in XSLT
+  + CVE-2025-1010: Use-after-free in Custom Highlight
+  + CVE-2025-1011: A bug in WebAssembly code generation could result in a crash
+  + CVE-2025-1012: Use-after-free during concurrent delazification
+  + CVE-2024-11704: Potential double-free vulnerability in PKCS#7 decryption handling
+  + CVE-2025-1013: Potential opening of private browsing tabs in normal browsing windows
+  + CVE-2025-1014: Certificate length was not properly checked
+  + CVE-2025-1015: Unsanitized address book fields
+  + CVE-2025-0510: Address of e-mail sender can be spoofed by malicious email
+  + CVE-2025-1016: Memory safety bugs fixed in Firefox 135, Thunderbird 135, Firefox ESR 115.20, Firefox ESR 128.7, Thunderbird 115.20, and Thunderbird 128.7
+  + CVE-2025-1017: Memory safety bugs fixed in Firefox 135, Thunderbird 135, Firefox ESR 128.7, and Thunderbird 128.7
+
 * Thu Jan 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 128.6.0-alt1
 - New version.
 - Security fixes:
