@@ -6,10 +6,10 @@
 
 Name: fonts-font-awesome
 Version: 4.7.0
-Release: alt1
+Release: alt2
 Summary: Iconic font set, web files
 Group: System/Fonts/True type
-License: OFL and MIT
+License: OFL-1.1 and MIT
 URL: http://fontawesome.io
 
 Provides: fonts-ttf-fontawesome-web = %version-%release
@@ -34,7 +34,7 @@ typically used on the web.
 %package -n fonts-otf-fontawesome
 Summary: Iconic font set
 Group: System/Fonts/True type
-License: OFL
+License: OFL-1.1
 
 Provides: fonts-ttf-fontawesome = %version-%release
 Obsoletes: fonts-ttf-fontawesome < %version-%release
@@ -60,6 +60,13 @@ install -m0644 fonts/* %buildroot%_datadir/%name/fonts/
 
 mkdir -p %buildroot%_fontsdir/otf/fontawesome
 mv %buildroot%_datadir/%name/fonts/*.otf %buildroot%_fontsdir/otf/fontawesome/
+# Save symlinks to fonts in original directory (expected by Proxmox sources)
+for fontfile in %buildroot%_fontsdir/otf/fontawesome/*.otf;
+do
+    filename="${fontfile##*/}"
+    ln -s %_fontsdir/otf/fontawesome/$filename %buildroot%_datadir/%name/fonts/$filename
+done
+
 mkfontscale %buildroot%_fontsdir/otf/fontawesome/
 ln -s fonts.scale %buildroot%_fontsdir/otf/fontawesome/fonts.dir
 
@@ -73,13 +80,20 @@ ln -s %_datadir/fontconfig/conf.avail/%fontconf %buildroot%_sysconfdir/fonts/con
 %files
 %doc README-Trademarks.txt
 %_datadir/%name
+# We don't need empty symlinks here
+%exclude %_datadir/%name/fonts/*.otf
 
 %files -n fonts-otf-fontawesome
 %_sysconfdir/X11/fontpath.d/otf-fontawesome:pri=50
 %config(noreplace) %_sysconfdir/fonts/conf.d/%fontconf
 %_datadir/fontconfig/conf.avail/%fontconf
 %_fontsdir/otf/fontawesome
+# Put symlinks in package with otfs
+%_datadir/%name/fonts/*.otf
 
 %changelog
+* Sat Feb 08 2025 Sergey Konev <darisishe@altlinux.org> 4.7.0-alt2
+- Added Proxmox-compatible symlink to fonts
+
 * Tue Aug 01 2017 Valery Inozemtsev <shrek@altlinux.ru> 4.7.0-alt1
 - 4.7.0
