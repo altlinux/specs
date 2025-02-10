@@ -6,7 +6,7 @@
 %endif
 
 Name: pc-test
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: PC Test Suite
@@ -62,8 +62,6 @@ Requires: bash update-kernel pciutils usbutils iproute2
 #Requires: kamoso
 #Requires: vlc
 #Requires: cheese
-#Requires: xdotool
-#Requires: wmctrl
 #Requires: icon-theme-adwaita
 #Requires: sound-theme-freedesktop
 #Requires: fprintd
@@ -140,6 +138,20 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Mon Feb 10 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.4-alt1
+- Added:
+  + support for ALT Workstaion 11 (alpha)
+  + support for ALT Workstaion K 11 (alpha)
+  + support for Gnome Shell and KDE6 Plasma
+  + support for Wayland and PipeWire
+  + support for new Adwaita icon theme
+  + check to non-informative kernel messages
+- Fixed:
+  + now used XDG_RUNTIME_DIR for collect some logs
+  + completely removed control of the browser window
+  + removed dependency on xdotool and wmctrl
+  + fixed autostart on some distributions
+
 * Sun Feb 02 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.3-alt1
 - Added:
   + add support for p11 and ALT SP 10.2 (c10f2)
