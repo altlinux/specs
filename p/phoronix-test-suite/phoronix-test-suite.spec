@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define phpbase php8.1
+%define phpbase php%php_defver
 
 Name: phoronix-test-suite
 Version: 10.8.4
-Release: alt2
+Release: alt3
 
 Summary: An Automated, Open-Source Testing Framework
 Summary(ru_RU.UTF8): Автоматизированная среда тестирования с открытым исходным кодом
@@ -17,6 +17,7 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-php
 BuildRequires: rpm-build-xdg
 BuildRequires: desktop-file-utils
 BuildRequires: systemd
@@ -85,6 +86,9 @@ rm -rv %buildroot%_datadir/phoronix-test-suite/pts-core/static/sample-pts-client
 %_unitdir/phoronix-result-server.service
 
 %changelog
+* Fri Feb 07 2025 Nikita Obukhov <nickf@altlinux.org> 10.8.4-alt3
+- Use php version macros.
+
 * Fri Sep 13 2024 Alexey Shabalin <shaba@altlinux.org> 10.8.4-alt2
 - fix install systemd unit.
 
