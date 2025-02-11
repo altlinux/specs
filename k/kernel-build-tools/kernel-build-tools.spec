@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.125
+Version: 0.126
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -96,6 +96,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Tue Feb 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.126-alt1
+- Update %%kernel_latest for kernel versions above 6.10.
+
 * Wed Dec 04 2024 Vitaly Chikunov <vt@altlinux.org> 0.125-alt1
 - Revert the previous change as it caused breakage and proved unhelpful, and
   update %%kernel_latest to include version dependency.
