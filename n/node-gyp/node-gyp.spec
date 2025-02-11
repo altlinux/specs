@@ -1,6 +1,6 @@
 Name: node-gyp
-Version: 10.1.0
-Release: alt2
+Version: 11.0.0
+Release: alt1
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -113,6 +113,9 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Sun Feb 09 2025 Vitaly Lipatov <lav@altlinux.ru> 11.0.0-alt1
+- new version 11.0.0 (with rpmrb script)
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 10.1.0-alt2
 - node-gyp install: interrrupt for the current version
 
