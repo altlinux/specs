@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 Summary: A Django plugin for py.test
 License: BSD
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -23,10 +25,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_metadata_extra testing
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
-
-# we have several versions of Django
-# so, we cannot rely on auto-requires
-%filter_from_requires /^python3(django\(\..*\)\?)/d
 
 %description
 pytest-django allows you to test your Django project/applications with
@@ -56,6 +54,9 @@ export PYTHONPATH=$(pwd)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 11 2025 Stanislav Levin <slev@altlinux.org> 4.10.0-alt1
+- 4.9.0 -> 4.10.0.
+
 * Tue Sep 03 2024 Stanislav Levin <slev@altlinux.org> 4.9.0-alt1
 - 4.8.0 -> 4.9.0.
 
