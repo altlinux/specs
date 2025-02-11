@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    vaultwarden
-Version: 1.33.0
+Version: 1.33.2
 Release: alt1
 
 Summary: Unofficial Bitwarden compatible server
@@ -16,7 +16,6 @@ Source3: %name.service
 Source4: %name.sysusers
 
 Patch0: vaultwarden-1.32.0-alt-mysqlclient-crate-loongarch64.patch
-Patch1: vaultwarden-1.33.0-alt-lock-update.patch
 
 # 32bit incompatible, unable to build vendored mysqlclient-sys on ppc
 ExcludeArch: %ix86 armh ppc64le
@@ -76,7 +75,6 @@ bindgen --allowlist-function "mysql.*" --allowlist-function "mariadb.*" --allowl
  		--default-enum-style rust_non_exhaustive vendor/mysqlclient-sys/bindings/wrapper.h -- -I/usr/include/mysql \
  		-I/usr/lib/llvm-17.0/lib64/clang/17/include/ > ./vendor/mysqlclient-sys/bindings/bindings_mariadb_11_4_loongarch64_linux.rs
 %endif
-%patch1
 
 %build
 %rust_build --features sqlite,mysql,postgresql
@@ -93,11 +91,13 @@ install -d %buildroot%_runtimedir/%name
 %rust_test
 
 %pre
-%sysusers_create_package %name %SOURCE4
-echo "Database for %{name} configured by default to use SQLite"
-echo "placed in %{_sharedstatedir}/%{name}/data and owned by %{name}."
-echo "To use PostgreSQL or MySQL uncomment and edit DATABASE_URL variable"
-echo "in %{_sysconfdir}/%{name}/%{name}.cfg"
+if [ $1 -eq 1 ]; then
+    %sysusers_create_package %name %SOURCE4
+    echo "Database for %{name} configured by default to use SQLite"
+    echo "placed in %{_sharedstatedir}/%{name}/data and owned by %{name}."
+    echo "To use PostgreSQL or MySQL uncomment and edit DATABASE_URL variable"
+    echo "in %{_sysconfdir}/%{name}/%{name}.cfg"
+fi
 
 %post
 %post_systemd %name.service
@@ -117,6 +117,9 @@ echo "in %{_sysconfdir}/%{name}/%{name}.cfg"
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Tue Feb 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.33.2-alt1
+- New version.
+
 * Fri Jan 31 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.33.0-alt1
 - New version.
 
