@@ -1,5 +1,5 @@
 Name: easy-rsa
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: Simple shell based CA utility
@@ -45,6 +45,9 @@ popd
 %{_datadir}/%name
 
 %changelog
+* Tue Feb 11 2025 Vladimir Didenko <cow@altlinux.org> 3.2.2-alt1
+- new version
+
 * Thu Nov 21 2024 Vladimir Didenko <cow@altlinux.org> 3.2.1-alt1
 - new version
 
