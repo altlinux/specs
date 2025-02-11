@@ -2,8 +2,8 @@
 
 Name: pve-http-server
 Summary: Proxmox Asynchrounous HTTP Server Implementation
-Version: 5.1.2
-Release: alt3
+Version: 5.2.0
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -47,6 +47,10 @@ This package is used as base to implement the REST API in all perl based
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Tue Feb 11 2025 Alexey Shabalin <shaba@altlinux.org> 5.2.0-alt1
+- 5.2.0
+- Revert "fix UTF-8 presentation"
+
 * Fri Jan 24 2025 Sergey Konev <darisishe@altlinux.org> 5.1.2-alt3
 - fix UTF-8 presentation (thx @kustovdv)
 
