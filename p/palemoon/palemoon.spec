@@ -1,10 +1,10 @@
-# git commit 9b1a67e34a3a86514dcb25f38398ec8e83ce93ac
+# git commit d6d06ae9cb6ed9fa252738e8b1f45cdc5834f8e4
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 33.5.1
+Version: 33.6.0
 
 Release: alt1
 
@@ -63,7 +63,7 @@ Patch18: mozilla_palimoon-33.4.1-bug-1153109-enable-stdcxx-compat.patch
 
 Patch22: palemoon_rpath-29.4.6.patch
 
-Patch23: palemoon_version-33.0.1.patch
+#Patch23: palemoon_version-33.6.0.patch
 Patch24: palemoon-31.0.0-ui_picker_false.patch
 #Patch25: palemoon-31.3.0.1-lock_impl_posix.patch
 
@@ -82,7 +82,7 @@ Patch115: palemoon-32.4.0-mathops.patch
 Patch116: palemoon-32.4.0-hunspell.patch
 #Patch117: palemoon-32.5.1-locale.patch
 
-Patch200: %bname-33.0.1-branding.patch
+# Patch200: %bname-33.6.0-branding.patch
 
 %set_autoconf_version 2.13
 
@@ -208,7 +208,7 @@ popd
 
 tar -xf %SOURCE1
 
-%patch23 -p1
+##patch23 -p1
 
 #Pach from Rosa
 ##patch101 -p1 -b .lang
@@ -226,9 +226,8 @@ tar -xf %SOURCE1
 %patch116 -p1
 #patch117 -p1
 
-#patch114 -p1
 
-%patch200 -p1
+##patch200 -p1
 
 cd %sname
 # icons
@@ -509,6 +508,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Tue Feb 11 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.6.0-alt1
+- New Version (CVE-2025-1009)
+
 * Sun Jan 19 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.5.1-alt1
 - New Version (CVE-2025-0239, CVE-2025-0238, CVE-2024-11693, CVE-2024-11704)
 
