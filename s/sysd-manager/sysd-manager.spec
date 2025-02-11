@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 1.12
+%define ver_major 1.13
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
@@ -67,9 +67,12 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
+%doc CHANGELOG*  README*
 
 %changelog
+* Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.2-alt1
+- 1.13.2
+
 * Sat Feb 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2
 
