@@ -6,7 +6,7 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.52
+Version: %api_ver.54
 Release: alt1
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
@@ -35,7 +35,7 @@ minimal dependencies. and a simple well defined API.
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name-gir = %version-%release
 Provides: %name-gir-devel = %version-%release
 Obsoletes: %name-gir-devel < %version-%release
 
@@ -99,6 +99,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Tue Feb 11 2025 Valery Inozemtsev <shrek@altlinux.ru> 0.4.54-alt1
+- 0.4.54
+
 * Tue Feb 04 2025 Valery Inozemtsev <shrek@altlinux.ru> 0.4.52-alt1
 - o.4.52
 
