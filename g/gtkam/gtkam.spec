@@ -1,9 +1,13 @@
+%def_without gimp
+
+%if_with gimp
 %define _gimpplugindir %(gimptool-2.0 --gimpplugindir)/plug-ins/
+%endif
 
 Summary: A GTK front-end for gPhoto2
 Name: gtkam
 Version: 1.1
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Graphics
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
@@ -13,15 +17,18 @@ Patch1: %name-%version-%release.patch
 
 Url: http://www.gphoto.org
 
-# Automatically added by buildreq on Wed Mar 20 2013
-BuildRequires(pre): libgimp-devel
-BuildRequires: intltool libexif-gtk-devel libgphoto2-devel libgtk+2-devel
+# Automatically added by buildreq on Tue Feb 11 2025
+BuildRequires: libexif-gtk-devel libgphoto2-devel
+%if_with gimp
+BuildRequires: libgimp-devel
+%endif
 Requires: gtkam-i18n = %EVR
 
 %description
 The GTKam package provides a GTK-based front-end to gPhoto2.  Install
 this package if you want to use a digital camera with Linux.
 
+%if_with gimp
 %package -n gimp-plugin-%name
 Summary: GIMP plugin to open digital camera pictures
 Group: Graphics
@@ -29,6 +36,7 @@ Requires: gtkam-i18n = %EVR gimp
 
 %description -n gimp-plugin-%name
 GIMP plugin that allows you to open pictures on a digital camera within GIMP.
+%endif
 
 %package -n %name-i18n
 Summary: Languages support for GTKam
@@ -45,7 +53,7 @@ Languages support for GTKam.
 %build
 %autoreconf
 %configure \
-	--with-gimp \
+	%{subst_with gimp} \
 	--without-gnome \
 	--without-bonobo
 %make_build
@@ -69,12 +77,17 @@ mv %buildroot%_pixmapsdir/gtkam-camera.png %buildroot%_liconsdir/
 %_pixmapsdir/*
 %doc AUTHORS NEWS README TODO
 
+%if_with gimp
 %files -n gimp-plugin-%name
 %_gimpplugindir/*
+%endif
 
 %files -n %name-i18n -f %name.lang
 
 %changelog
+* Tue Feb 11 2025 Dmitriy Khanzhin <jinn@altlinux.org> 1.1-alt2
+- Disabled gimp plugin build
+
 * Tue Nov 19 2024 Dmitriy Khanzhin <jinn@altlinux.org> 1.1-alt1
 - 1.1
 
