@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.11.0
-Release: alt1
+Release: alt2
 Summary: Static site generator that supports Markdown and reST syntax
 License: AGPL-3.0
 Group: Development/Python3
@@ -118,7 +118,7 @@ rm -rf html/_downloads/* html/.doctrees html/.buildinfo
 
 %check
 # https://github.com/getpelican/pelican/issues/2846
-%pyproject_run_pytest -v -n auto -k "\
+%pyproject_run_pytest -v -W ignore::DeprecationWarning -n auto -k "\
 not test_basic_generation_works \
 and not test_custom_generation_works \
 and not test_custom_locale_generation_works"
@@ -143,6 +143,9 @@ and not test_custom_locale_generation_works"
 %files -n %pypi_name
 
 %changelog
+* Tue Feb 11 2025 Anton Vyatkin <toni@altlinux.org> 4.11.0-alt2
+- Fixed FTBFS.
+
 * Sat Jan 18 2025 Anton Vyatkin <toni@altlinux.org> 4.11.0-alt1
 - New version 4.11.0.
 
