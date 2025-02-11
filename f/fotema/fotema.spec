@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A photo gallery for GNOME
@@ -118,6 +118,9 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %doc README*
 
 %changelog
+* Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.19.2-alt1
+- 1.19.2
+
 * Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.19.1-alt1
 - 1.19.1
 
