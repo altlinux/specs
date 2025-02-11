@@ -1,6 +1,6 @@
 Name: rustdesk
 Version: 1.3.7
-Release: alt2
+Release: alt3
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
 License: AGPL-3.0
@@ -60,8 +60,9 @@ about security. You can use our rendezvous/relay server, set up your own, or
 write your own rendezvous/relay server.
 
 NOTE: To use this program, you need to get a third-party shared library -
-libsciter-gtk.so. Run the "libsciter-install" command as root after package
-installing to download and install this library.
+libsciter-gtk.so. Run the "epm play %name-libsciter-gtk" (recommend) or
+"libsciter-install" (as root) command after package installing to download
+and install this library.
 
 %prep
 %setup -a1 -a2
@@ -111,6 +112,9 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Tue Feb 11 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.7-alt3
+- Added info about the option to use epm play to install libsciter-gtk.
+
 * Mon Jan 27 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.7-alt2
 - Updated the vcpkg-env to ensure compatibility with vcpkg 2025.01.11(Fix FTBFS).
 
