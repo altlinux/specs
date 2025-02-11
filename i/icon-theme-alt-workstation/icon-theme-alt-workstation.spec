@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: icon-theme-alt-workstation
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: ALT Workstation icon theme
@@ -11,8 +12,11 @@ Source: icon-theme-alt-workstation-%version.tar
 
 BuildArch: noarch
 
-Requires(post,preun): alternatives >= 0.2
-Obsoletes: alt-workstation-icon-theme <= %EVR
+Provides: alt-workstation-icon-theme = %EVR
+Obsoletes: alt-workstation-icon-theme < %EVR
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson icon-naming-utils gtk4-update-icon-cache
 
 %description
 ALT Workstation icon for Alterator and other ALT app icons.
@@ -20,29 +24,23 @@ ALT Workstation icon for Alterator and other ALT app icons.
 %prep
 %setup
 
+%build
+%meson
+%meson_build
+
 %install
-mkdir -p %buildroot/%_datadir/alt/desktoptheme/
-cp -ar desktoptheme/altos-icons %buildroot/%_datadir/alt/desktoptheme/
-
-# add icons alternatives
-mkdir -p %buildroot/%_sysconfdir/alternatives/packages.d/
-> %buildroot/%_sysconfdir/alternatives/packages.d/%name
-
-# for scalable
-for n in alt-distro-logo alterator alt-main-menu ; do
-cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
-%_iconsdir/hicolor/scalable/apps/${n}.svg	%_datadir/alt/desktoptheme/altos-icons/icons/${n}.svg 10
-__EOF__
-done
-cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
-%_iconsdir/hicolor/scalable/apps/altlinux.svg	%_datadir/alt/desktoptheme/altos-icons/icons/alt-distro-logo.svg 10
-__EOF__
+%meson_install
+cp -r scalable %buildroot/%_iconsdir/AltWorkstation/
+# cleanup from meson.build files
+find %buildroot/%_iconsdir/AltWorkstation/ -name meson.build -exec rm -v {} \;
 
 %files
-%config %_sysconfdir/alternatives/packages.d/%name
-%_datadir/alt/desktoptheme/altos-icons/icons/*.svg
-%_datadir/alt/desktoptheme/altos-icons/icons/*.png
+%_iconsdir/AltWorkstation/
 
 %changelog
+* Mon Feb 10 2025 Semen Fomchenkov <armatik@altlinux.org> 0.2-alt1
+- Fix overlap of a package with a different name (Closes: 52846)
+- Complies with icon theme standards
+
 * Mon Jan 27 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1-alt1
 - Initial build
