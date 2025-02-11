@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.2.13
+Version: 3.2.14
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -70,6 +70,12 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 3.2.14-alt1
+- set_eterbuilddir: exit if the utils' source tree is not found
+- fix error during the rpmbsh startup (#3)
+- get_gear_rules: move path-to-spec support to get_root_git_dir
+- is_gear: add heuristic for .gear-less git repos
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 3.2.13-alt1
 - rpmrb: use gammit for spec commit (fixed package version in a commit message)
 - rpmgs: add check for main source
