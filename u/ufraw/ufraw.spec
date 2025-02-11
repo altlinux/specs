@@ -1,20 +1,23 @@
 %def_enable snapshot
-%define gimpplugindir %(gimptool-2.0 --gimpplugindir)
+%def_without gimp
+%{?_with_gimp:%define gimpplugindir %(gimptool-2.0 --gimpplugindir)}
 
 Name: ufraw
 Version: 0.23
-Release: alt0.5
+Release: alt0.6
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
 Group: Graphics
 Url: http://ufraw.sourceforge.net/
 
+Vcs: https://github.com/sergiomb2/ufraw.git
+
 %if_disabled snapshot
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 %else
 # none-official repo
-Vcs: https://github.com/sergiomb2/ufraw.git
+
 Source: %name-%version.tar
 %endif
 # https://github.com/sergiomb2/ufraw/issues/12
@@ -31,11 +34,12 @@ BuildRequires: gettext
 # >= 0.21
 BuildRequires: liblensfun-devel >= 0.2.5
 BuildRequires: libexiv2-devel >= 0.20
-BuildRequires: liblcms2-devel libgimp-devel libgtkimageview-devel
+BuildRequires: liblcms2-devel libgtkimageview-devel
 BuildRequires: libjpeg-devel liblensfun-devel libpng-devel libtiff-devel
 BuildRequires: libcfitsio-devel zlib-devel bzlib-devel perl-podlators
 BuildRequires: libjasper-devel
 BuildRequires: libGConf-devel
+%{?_with_gimp_plugin: libgimp-devel}
 
 %package -n gimp-plugin-ufraw
 Summary: GIMP plugin for opening and converting RAW files from digital photo cameras (part of UFRaw project)
@@ -69,7 +73,9 @@ sed -i 's;\[0.21\];[0.20.2];' configure.ac
 	--enable-openmp \
 %endif
 	--enable-mime \
-	--enable-extras
+	--enable-extras \
+    %{subst_with gimp}
+%nil
 %make_build schemasdir=%_sysconfdir/gconf/schemas
 
 %install
@@ -99,10 +105,14 @@ fi
 %_datadir/appdata/%name.appdata.xml
 %doc MANIFEST README
 
+%{?_with_gimp_plugin:
 %files -n gimp-plugin-ufraw
-%gimpplugindir/plug-ins/*
+%gimpplugindir/plug-ins/*}
 
 %changelog
+* Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt0.6
+- disabled GIMP plugin
+
 * Tue Nov 07 2023 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt0.5
 - rebuilt against libexiv2.so.28
 

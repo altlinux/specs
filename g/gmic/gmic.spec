@@ -1,5 +1,6 @@
 %def_disable snapshot
-%define gimpplugindir %(gimptool-2.0 --gimpplugindir)
+%def_disable gimp_plugin
+%{?_enable_gimp_plugin:%define gimpplugindir %(gimptool-2.0 --gimpplugindir)}
 %def_enable zart
 %ifarch %e2k
 # it's impossible to use such a bad OpenMP implementation for such complex code
@@ -18,17 +19,18 @@
 
 Name: gmic
 Version: 3.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
 Group: Graphics
 Url: https://gmic.eu
 
+Vcs: https://github.com/GreycLab/gmic.git
+
 %if_disabled snapshot
 Source: http://gmic.eu/files/source/%{name}_%version.tar.gz
 %else
-Vcs: https://github.com/GreycLab/gmic.git
 Source: %name-%version.tar
 %endif
 Source1: zart-%zart_ver.tar
@@ -39,12 +41,13 @@ Requires: lib%name = %EVR
 
 BuildRequires: dos2unix
 BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
-BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
+BuildRequires: libavformat-devel libfftw3-devel libjpeg-devel libopencv-devel libpng-devel
 BuildRequires: libwebp-devel
 BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 BuildRequires: libcurl-devel
 BuildRequires: bash-completion
+%{?_enable_gimp_plugin: libgimp-devel}
 # for -zart and -qt
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel qt5-tools-devel
@@ -137,8 +140,8 @@ popd
 
 pushd %name-qt
 %define opt_qt CONFIG+=release GMIC_PATH=../src NOSTRIP=1
-%qmake_qt5 %opt_qt HOST=gimp gmic_qt.pro
-%make_build
+%{?_enable_gimp_plugin:%qmake_qt5 %opt_qt HOST=gimp gmic_qt.pro
+%make_build}
 %qmake_qt5 %opt_qt HOST=none gmic_qt.pro
 %make_build
 popd
@@ -153,6 +156,7 @@ popd
 
 %install
 cp -f gmic-community/libcgmic/COPYING COPYING-libcgmic
+mkdir -p %buildroot%_libdir
 
 pushd src
 %makeinstall_std
@@ -205,10 +209,14 @@ popd
 %doc zart/README* zart/Licence_CeCILL_V2*
 %endif
 
+%{?_enable_gimp_plugin:
 %files -n gimp-plugin-gmic
-%gimpplugindir/plug-ins/*
+%gimpplugindir/plug-ins/*}
 
 %changelog
+* Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1.1
+- disabled GIMP plugin
+
 * Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1
 - 3.5.2
 

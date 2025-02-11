@@ -9,13 +9,13 @@
 %def_enable tools
 %def_enable man
 %def_enable plugins
-%def_enable gimp_plugin
+%def_disable gimp_plugin
 %def_disable tests
 %def_disable check
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
@@ -52,7 +52,7 @@ JPEG XL image format reference implementation Library.
 Summary: JPEG XL image format reference implementation Library.
 Group: System/Libraries
 Requires: %name-pixbuf-loader = %EVR
-Obsoletes: %name < 0.10
+Obsoletes: %name < 0.9
 
 %description -n %libname
 This package provides shared JPEG XL libraries.
@@ -60,7 +60,7 @@ This package provides shared JPEG XL libraries.
 %package pixbuf-loader
 Summary: JPEG XL image loader for GTK+ applications
 Group: System/Libraries
-Conflicts: %name < 0.10
+Conflicts: %name < 0.9
 
 %description pixbuf-loader
 This package provides JPEG XL image loader for gdk-pixbuf.
@@ -146,6 +146,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1.1
+- disabled GIMP plugin build
+
 * Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
 - 0.11.1 (fixed CVE-2024-11403, CVE-2024-11498)
 
