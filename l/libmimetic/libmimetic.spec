@@ -1,18 +1,22 @@
+%define sover 0
+
 Name: libmimetic
 Version: 0.9.8
-Release: alt2
+Release: alt3
+
 Summary: A full featured C++ MIME library
+
 License: MIT
 Group: System/Libraries
-Url: http://www.codesink.org/mimetic_mime_library.html
+Url: https://www.codesink.org/mimetic_mime_library.html
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: http://www.codesink.org/download/mimetic-%version.tar.gz
-Patch: mimetic-%version-signedness-fix.patch
+Patch: mimetic-0.9.8-signedness-fix.patch
 Patch1: mimetic-gcc11.patch
 
-BuildRequires(pre): automake_1.11
+BuildRequires(pre): automake
 BuildRequires: gcc-c++ doxygen findutils
 
 %description
@@ -30,6 +34,14 @@ easily use the library whose names, whenever possible, overlap terms adopted
 in the standard RFC documents. At the very least: RFC 822, RFC 2045 and RFC
 2046.
 
+%package doc
+Summary: Documentation files for %name
+Group: Documentation
+BuildArch: noarch
+
+%description doc
+This package provides the documentation for %name.
+
 %package devel
 Summary: Development files for %name
 Group: Development/Other
@@ -40,11 +52,10 @@ developing applications that use %name.
 
 %prep
 %setup -n mimetic-%version
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 %build
-%set_automake_version 1.11
+%autoreconf
 %configure --disable-static
 %make_build
 make docs -C doc
@@ -52,20 +63,23 @@ make docs -C doc
 %install
 %makeinstall_std
 
-# %%check
-# make check
-
 %files
+%_libdir/libmimetic.so.%{sover}*
+
+%files doc
 %doc COPYING LICENSE
 %doc AUTHORS ChangeLog README
-%_libdir/libmimetic.so.*
+%doc doc/html/*
 
 %files devel
-%doc doc/html/*
 %_includedir/mimetic/
 %_libdir/libmimetic.so
 
 %changelog
+* Tue Feb 11 2025 Leontiy Volodin <lvol@altlinux.org> 0.9.8-alt3
+- Built via last version of automake.
+- Packaged the documentation separately.
+
 * Wed Sep 22 2021 Leontiy Volodin <lvol@altlinux.org> 0.9.8-alt2
 - Enabled the patch for gcc11.
 
