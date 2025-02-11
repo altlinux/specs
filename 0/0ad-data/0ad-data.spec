@@ -1,28 +1,20 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: 0ad-data
+Version: 0.27.0
+Release: alt1
 Epoch: 1
-Version: 0.0.26
 
-Release: alt0_3_alpha
-
+Summary: Data for 0ad: libre realtime strategy game of ancient warfare
+License: CC-BY-SA-3.0
+Group: Games/Strategy
+Url: https://play0ad.com/
 BuildArch: noarch
 
-Group: Games/Strategy
-Summary: Data for 0ad: free, open-source realtime strategy game of ancient warfare
+# https://releases.wildfiregames.com/0ad-%version-unix-data.tar.gz
+Source: %name-%version.tar
 
-License: GPLv2 MIT
-
-Url: http://www.wildfiregames.com/0ad/
-
-Packager: Hihin Ruslan <ruslandh@altlinux.ru>
-
-Source: 0ad-%version-rc1.tar
-
-# disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
-# ExcludeArch: ppc64le %ix86
-
-Conflicts: %name-data =< 1:0.0.25-alt1
-
-
+Requires: 0ad = %EVR
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -40,7 +32,8 @@ are available under CC-BY-SA. In short, we consider 0 A.D. an an
 educational celebration of game development and ancient history.
 
 %prep
-%setup -n 0ad-%version-rc1
+%setup
+# remove bundled fonts because used system
 rm -f binaries/data/tools/fontbuilder/fonts/*
 rmdir  binaries/data/tools/fontbuilder/fonts/
 rmdir  binaries/data/tools/fontbuilder/
@@ -53,6 +46,9 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Mon Feb 10 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.0-alt1
+- New version.
+
 * Mon Sep 26 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_3_alpha
 - Version 0.0.26-alpha
 
