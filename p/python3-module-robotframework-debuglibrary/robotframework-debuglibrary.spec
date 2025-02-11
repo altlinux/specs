@@ -1,42 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname robotframework-debuglibrary
+%define pypi_name robotframework-debuglibrary
+%define mod_name DebugLibrary
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.2.2
-Release: alt2.1
-
+Name: python3-module-%pypi_name
+Version: 2.5.0
+Release: alt1
 Summary: RobotFramework debug library and an interactive shell
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/robotframework-debuglibrary/
-
+Vcs: https://github.com/xyb/robotframework-debuglibrary/
 BuildArch: noarch
-
-# https://github.com/xyb/robotframework-debuglibrary.git
 Source: %name-%version.tar
-
-Patch1: %oname-2.2.2-tests-Drop-dependency-on-coverage.patch
-Patch2: %oname-2.2.2-fail-Fixed-expected-attr-name-for-robotframework-5.0.patch
-Patch3: %oname-2.2.2-tests-Make-selenium-tests-conditional.patch
-Patch4: %oname-2.2.2-tests-Mark-step_functional_testing-as-xfail.patch
-Patch5: %oname-2.2.2-deps-Unpin-upper-version-of-prompt-toolkit.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
+Source1: %pyproject_deps_config_name
+Patch1: %pypi_name-2.2.2-tests-Drop-dependency-on-coverage.patch
+Patch3: %pypi_name-2.2.2-tests-Make-selenium-tests-conditional.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
+%pyproject_builddeps_metadata
 BuildRequires: /dev/pts
-# install_requires=
-BuildRequires: python3(prompt_toolkit)
-BuildRequires: python3(robotframework)
-
-BuildRequires: python3(coverage)
-BuildRequires: python3(pexpect)
-BuildRequires: python3(tox)
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pexpect
 %endif
 
 %description
@@ -46,9 +33,9 @@ can be used as an interactive shell(REPL) also.
 %prep
 %setup
 %autopatch1 -p1
-
-sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%python3_fix_shebang .
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -57,17 +44,19 @@ sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+export TERM=xterm
+%pyproject_run_unittest tests.test_debuglibrary.suite
 
 %files
-%doc LICENSE
-%doc ChangeLog *.rst
+%doc README.*
 %_bindir/*
-%python3_sitelibdir/DebugLibrary
-%python3_sitelibdir/robotframework_debuglibrary-%version.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 10 2025 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.2.2 -> 2.5.0.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 2.2.2-alt2.1
 - NMU: fixed FTBFS (tox 4).
 
