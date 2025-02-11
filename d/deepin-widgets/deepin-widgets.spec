@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-widgets
-Version: 6.0.22
+Version: 6.0.25
 Release: alt1
 
 Summary: Desktop widgets service/implementation for DDE
@@ -11,10 +11,10 @@ Summary: Desktop widgets service/implementation for DDE
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-widgets
+Vcs: git://github.com/linuxdeepin/dde-widgets.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: deepin-widgets-6.0.22-upstream-link-libdde-calendarwidget-plugin.patch
+Patch: deepin-widgets-6.0.25-alt-fix-elfs.patch
 
 Provides: %repo = %EVR
 
@@ -57,7 +57,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
   -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
 #
-cmake --build %_cmake__builddir -j%__nprocs
+cmake --build %_cmake__builddir -j1
 
 %install
 %cmake_install
@@ -69,6 +69,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_userunitdir/%repo.service
 %dir %_userunitdir/dde-osd.target.wants/
 %_userunitdir/dde-osd.target.wants/%repo.service
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/translations/
 %dir %_libdir/%repo/
 %dir %_libdir/%repo/plugins/
 %_libdir/%repo/plugins/libdde-memorymonitorwidget-plugin.so
@@ -85,6 +87,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DdeWidgets/DdeWidgetsConfig.cmake
 
 %changelog
+* Tue Feb 11 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt1
+- New version 6.0.25.
+- Added vcs tag.
+
 * Fri May 31 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.22-alt1
 - New version 6.0.22.
 - Built via separate qt5 instead system (ALT #48138).
