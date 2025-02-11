@@ -3,8 +3,8 @@
 %def_without check
 
 Name: helix
-Version: 24.07
-Release: alt2
+Version: 25.01.1
+Release: alt1
 
 Summary: A post-modern modal text editor written in Rust
 License: MPL-2.0
@@ -68,6 +68,9 @@ export HELIX_DISABLE_AUTO_GRAMMAR_BUILD=1
 %_pixmapsdir/%name.png
 
 %changelog
+* Mon Feb 10 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.01.1-alt1
+- 25.01.1-alt1 (closes: 52840)
+
 * Mon Dec 02 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 24.07-alt2
 - use HELIX_DEFAULT_RUNTIME (closes: 51062)
 
