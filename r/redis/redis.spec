@@ -2,14 +2,14 @@
 %define redis_user      _redis
 %define redis_group     _redis
 
-%ifarch %arm %mips32
+%ifarch %arm %mips32 %ix86 ppc64le aarch64
 %def_disable check
 %else
 %def_enable check
 %endif
 
 Name: redis
-Version: 7.2.6
+Version: 7.2.7
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -212,6 +212,10 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Fri Feb 07 2025 Alexey Shabalin <shaba@altlinux.org> 7.2.7-alt1
+- 7.2.7 (Fixes: CVE-2024-51741, CVE-2024-46981).
+- Disable check on ppc64le, i586, aarch64.
+
 * Mon Dec 09 2024 Alexey Shabalin <shaba@altlinux.org> 7.2.6-alt1
 - 7.2.6 (Fixes: CVE-2024-31449, CVE-2024-31227, CVE-2024-31228)
 
