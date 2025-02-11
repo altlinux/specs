@@ -1,5 +1,5 @@
 Name: yazi
-Version: 25.2.7
+Version: 25.2.11
 Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
@@ -13,7 +13,7 @@ Source1: vendor.tar
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
-#to display the icons correctly
+# To display the icons correctly
 Requires: fonts-ttf-3270NerdFont
 
 %description
@@ -99,6 +99,9 @@ install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh
 
 %changelog
+* Tue Feb 11 2025 Anton Kurachenko <srebrov@altlinux.org> 25.2.11-alt1
+- New version 25.2.11.
+
 * Sat Feb 08 2025 Anton Kurachenko <srebrov@altlinux.org> 25.2.7-alt1
 - New version 25.2.7.
 
