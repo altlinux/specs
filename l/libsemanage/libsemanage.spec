@@ -10,7 +10,7 @@
 
 Name: libsemanage
 Epoch: 1
-Version: 3.7
+Version: 3.8
 Release: alt1
 Summary: Library, which provides an interface for SELinux management
 Group: System/Libraries
@@ -118,6 +118,9 @@ binary policies.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt1
+- (NMU) Updated to 3.8.
+
 * Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1:3.7-alt1
 - (NMU) Updated to 3.7.
   + Applied usrmerge paths changes.

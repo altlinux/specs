@@ -9,7 +9,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 3.7
+Version: 3.8
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -239,6 +239,7 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %_sbindir/restorecon_xattr
 %_sbindir/fixfiles
 %_sbindir/setfiles
+%_sbindir/unsetfiles
 %_sbindir/load_policy
 %_sbindir/genhomedircon
 %_sbindir/setsebool
@@ -284,6 +285,7 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %_man8dir/sestatus.*
 %_man8dir/setsebool.*
 %_man8dir/setfiles.*
+%_man1dir/unsetfiles.*
 %_man1dir/audit2allow.*
 %_man1dir/audit2why.*
 %_man8dir/chcat.*
@@ -419,6 +421,9 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt1
+- (NMU) Updated to 3.8.
+
 * Mon Sep 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1:3.7-alt1
 - (NMU) Updated to 3.7.
   + Applied usrmerge paths changes.
