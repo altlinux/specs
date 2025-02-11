@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt9
+Release: alt10
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -377,6 +377,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Feb 11 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt10
+- Add new Alt Server logo for index.html
+- Update links to some pages in English
+- Update the link to the feedback form
+
 * Thu Feb 06 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt9
 - Add slides for slideshow in installer
 
