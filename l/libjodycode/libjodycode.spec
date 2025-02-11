@@ -1,5 +1,5 @@
 Name: libjodycode
-Version: 3.1
+Version: 3.1.1
 Release: alt1
 
 Summary: General purpose utility functions
@@ -7,8 +7,9 @@ Summary: General purpose utility functions
 License: MIT
 Group: System/Libraries
 Url: https://github.com/jbruchon/libjodycode
+Vcs: https://codeberg.org/jbruchon/libjodycode
 
-# Source-url: https://github.com/jbruchon/libjodycode/archive/refs/tags/v%version.tar.gz
+# Source-url: https://codeberg.org/jbruchon/libjodycode/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 %description
@@ -54,6 +55,10 @@ rm -rf %buildroot%_man7dir
 %_libdir/libjodycode.so
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
+- new version 3.1.1
+- add Vcs, update Source URL
+
 * Sun Aug 20 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
 - new version 3.1 (with rpmrb script)
 
