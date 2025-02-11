@@ -1,7 +1,7 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.32.0.0
+Version: 3.32.1.0
 Release: alt1
 
 Summary: A professional CAD system
@@ -20,11 +20,10 @@ Source1: qcadcore_ru.ts
 Source2: qcadentity_ru.ts
 Source3: scripts_ru.ts
 
-Patch0:  %name-%version-%release.patch
-Patch2:  qcad-alt-use-system-zlib.patch
-Patch3:  qcad-alt-check-translation-file.patch
-Patch4:  qcad-disable-macos.patch
-Patch5:  qcad-fix-lto.patch
+Patch0: %name-%version-%release.patch
+Patch1: qcad-alt-use-system-zlib.patch
+Patch2: qcad-disable-macos.patch
+Patch3: qcad-fix-lto.patch
 
 BuildRequires(pre): rpm-macros-qt5-webengine
 
@@ -65,10 +64,9 @@ QCad это профессиональная CAD система. С QCad вы м
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 cp -f %SOURCE1 ts/qcadcore_ru.ts
 cp -f %SOURCE2 ts/qcadentity_ru.ts
@@ -154,6 +152,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue Feb 11 2025 Andrey Cherepanov <cas@altlinux.org> 3.32.1.0-alt1
+- New version.
+
 * Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.32.0.0-alt1
 - New version.
 
