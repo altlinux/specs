@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt7
+Release: alt8
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -14,6 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://www.xsane.org/download/%name-%version.tar
 Source1: %name-16x16.xpm
 Source3: %name-%version.ru.po
+
 Patch1: %name-0.996-ubuntu.patch
 Patch2: %name-0.998-alt-libpng15.patch
 Patch3: xsane-0.999-lcms2.patch
@@ -24,15 +25,10 @@ Patch10: 0105-deb_gimp_acquire_menu.patch
 Patch11: 0125-desktop_file.patch
 Patch12: xsane-configure-add-stdlib-to-conftest.patch
 
-BuildPreReq: libjpeg-devel libusb-devel libpng-devel
-
-# Automatically added by buildreq on Fri Jul 10 2009
-BuildRequires: libgimp-devel libgphoto2-devel libjpeg-devel liblcms2-devel libsane-devel libtiff-devel
-
-# for po recoding
-BuildPreReq: recode
-# for help
-#Requires: webclient
+BuildRequires: libjpeg-devel libusb-devel libpng-devel libtiff-devel
+BuildRequires: libgphoto2-devel liblcms2-devel
+BuildRequires: libsane-devel
+BuildRequires: libgtk+2-devel
 
 %add_optflags -Wno-incompatible-pointer-types
 
@@ -102,14 +98,14 @@ cp -f %SOURCE3 po/ru.po
 %__subst 's|BROWSER "netscape|BROWSER "xdg-open|g' src/xsane.h
 
 %build
-%configure --enable-gtk2 --enable-gimp --enable-lcms
+%configure --enable-gtk2 --disable-gimp --enable-lcms
 %make_build xsanedocdir=%_docdir/%name
 
 %install
 %makeinstall_std xsanedocdir=%_docdir/%name
 
-install -d %buildroot/%_libdir/gimp/2.0/plug-ins
-ln -s %_bindir/%name %buildroot/%_libdir/gimp/2.0/plug-ins/%name
+#install -d %buildroot/%_libdir/gimp/2.0/plug-ins
+#ln -s %_bindir/%name %buildroot/%_libdir/gimp/2.0/plug-ins/%name
 
 install -p -m644 -D %SOURCE1 %buildroot%_miconsdir/%name.xpm
 install -p -m644 -D src/%name-32x32.xpm %buildroot%_niconsdir/%name.xpm
@@ -139,10 +135,10 @@ ln -s %_docdir/sane-backends/sane-backends.html %buildroot/%_docdir/%name/sane-b
 %files doc
 %_docdir/%name/
 
-%files gimp2
-%_libdir/gimp/2.0/plug-ins/%name
-
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt8
+- update BR, drop build GIMP plugin
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt7
 - fix build with gcc 14
 - use xdg-open for URL opening

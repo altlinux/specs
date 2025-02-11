@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.7.1
-Release: alt1.1
+Release: alt1.2
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -87,7 +87,7 @@ Requires: gnome-games-mahjongg
 Requires: gnome-games-aisleriot
 %endif
 Requires: xsane
-Requires: xsane-gimp2
+#Requires: xsane-gimp2
 Requires: xsane-doc-ru
 Requires: simple-scan
 %ifnarch armh
@@ -641,6 +641,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1.2
+- NMU: remove xsane-gimp2
+
 * Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 1.7.1-alt1.1
 - NMU: rpm-macros-qt5-webengine to determine altcenter presence
   (fixes build on loongarch64)
