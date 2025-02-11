@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 4.3
+Version: 25.0
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -13,30 +13,30 @@ Source1: submodules.tar
 Source2: gcompris_qt.po
 Source3: gcompris_voices.po
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Patch0: gcompris-qt-box2d-disable-stripping.patch
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-sensors-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-xmlpatterns-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-sensors-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: libssl-devel
-BuildRequires: kf5-kdoctools-devel
-BuildRequires: kf5-kdoctools-devel-static
-BuildRequires: qt5-quickcontrols2-devel
-BuildRequires: qt5-charts-devel
+#BuildRequires: kf6-kdoctools-devel
+#BuildRequires: kf6-kdoctools-devel-static
+BuildRequires: qt6-charts-devel
+BuildRequires: qt6-wayland-devel
+BuildRequires: libvulkan-devel
+BuildRequires: chrpath
 
-Requires: libqt5-multimedia
-Requires: libqt5-svg
-Requires: qt5-graphicaleffects
-Requires: qt5-quickcontrols2
-Requires: libqt5-quickcontrols2
-Requires: libqt5-quickparticles
+Requires: libqt6-multimedia
+Requires: libqt6-svg
+Requires: libqt6-quickcontrols2
+Requires: libqt6-quickparticles
 Requires: chess sqlite3 gnucap tuxpaint
 # needed for sound support
 Requires: gst-plugins-base1.0
@@ -71,19 +71,23 @@ GCompris - набор образовательных игр и программ 
 %prep
 %setup
 tar xf %SOURCE1
+%patch0 -p1
 install -Dpm0644 %SOURCE2 poqm/ru/gcompris_qt.po
 install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
 # Remove geography activity due to non actial maps
 subst '/geography/d' src/activities/activities.txt
 
 %build
-%cmake \
+export LANG=en_US.UTF-8
+%cmake -GNinja \
        -DKDE_INSTALL_APPDIR=%_desktopdir \
        -DKDE_INSTALL_METAINFODIR=%_datadir/metainfo
-%cmake_build
+%ninja_build -C "%_cmake__builddir"
 
 %install
-%cmakeinstall_std
+export LANG=en_US.UTF-8
+%ninja_install -C "%_cmake__builddir"
+chrpath -d %buildroot%_libexecdir/qml/Box2D.2.0/libqmlbox2d.so
 %find_lang --with-qt %name
 
 %files -f %name.lang
@@ -98,6 +102,10 @@ subst '/geography/d' src/activities/activities.txt
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Tue Feb 04 2025 Andrey Cherepanov <cas@altlinux.org> 25.0-alt1
+- New version.
+- Built with Qt6.
+
 * Fri Nov 29 2024 Andrey Cherepanov <cas@altlinux.org> 4.3-alt1
 - New version.
 

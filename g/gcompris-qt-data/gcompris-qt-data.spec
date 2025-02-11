@@ -1,9 +1,9 @@
 Name:     gcompris-qt-data
-Version:  20211229
+Version:  20250104
 Release:  alt1
 
 Summary:  Contains optional data for gcompris-qt (words, background music)
-License:  GPL and other
+License:  GPL-3.0+
 Group:    Other
 Url:      https://github.com/gcompris/GCompris-data
 
@@ -12,6 +12,12 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 
 BuildArch: noarch
+
+BuildRequires: rsync
+BuildRequires: qt6-base-devel
+BuildRequires: ffmpeg
+BuildRequires: vorbis-tools
+BuildRequires: id3v2
 
 %description
 Contains optional data for gcompris-qt (words, background music).
@@ -31,6 +37,7 @@ Requires: gcompris-qt\
 \
 %files -n gcompris-qt-voices-%langcode\
 %_datadir/gcompris-qt/voices/%langcode\
+%_datadir/gcompris-qt/voices/voices-ogg-%langcode.qrc\
 
 # see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 # and https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
@@ -82,21 +89,36 @@ Requires: gcompris-qt\
 
 %prep
 %setup
+subst 's|export RCC=.*|export RCC=%_libdir/qt6/libexec/rcc|' */*.sh
+subst 's|export CODEC_LIST=.*|export CODEC_LIST="ogg"|' */*.sh
+
+%build
+export LC_ALL=en_US.UTF-8
+cd scripts
+./main_generate_rcc.sh force
+cp data-build/voices/*.qrc ../voices
+cp data-build/words/*.qrc ../words
 
 %install
 mkdir -p %buildroot%_datadir/gcompris-qt
 cp -aL voices %buildroot%_datadir/gcompris-qt
 cp -a background-music/backgroundMusic %buildroot%_datadir/gcompris-qt
-cp -a words/words words/words.qrc %buildroot%_datadir/gcompris-qt
-rm -f %buildroot%_datadir/gcompris-qt/voices/{HOWTO_ENCODE,LICENSE,README.md,*.sh}
-rm %buildroot%_datadir/gcompris-qt/voices/check_voices.py
+cp -a words/words words/words-webp words/words*.qrc %buildroot%_datadir/gcompris-qt
+rm -f %buildroot%_datadir/gcompris-qt/voices/{HOWTO_ENCODE,LICENSE,README.md,*.sh,*.py,.gitignore,.pylintrc}
 
 %files
 %_datadir/gcompris-qt/backgroundMusic/
 %_datadir/gcompris-qt/words
-%_datadir/gcompris-qt/words.qrc
+%_datadir/gcompris-qt/words-webp
+%_datadir/gcompris-qt/words*.qrc
 
 %changelog
+* Tue Feb 04 2025 Andrey Cherepanov <cas@altlinux.org> 20250104-alt1
+- New version.
+
+* Tue Apr 11 2023 Andrey Cherepanov <cas@altlinux.org> 20230307-alt1
+- New version.
+
 * Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 20211229-alt1
 - New version.
 
