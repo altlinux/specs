@@ -3,7 +3,7 @@
 
 Name: qadwaitadecorations
 Version: 0.1.6
-Release: alt1
+Release: alt2
 Summary: Qt decoration plugin implementing Adwaita-like client-side decorations
 Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
@@ -27,6 +27,7 @@ BuildRequires: qt5-base-devel >= 5.15.2
 BuildRequires: qt5-base-devel-static >= 5.15.2
 BuildRequires: qt5-wayland-devel >= 5.15.2
 BuildRequires: qt5-svg-devel >= 5.15.2
+Requires: qt5-wayland
 
 %description qt5
 %summary.
@@ -40,6 +41,7 @@ BuildRequires: qt6-base-devel >= 6.5.0
 BuildRequires: qt6-base-devel-static >= 6.5.0
 BuildRequires: qt6-wayland-devel >= 6.5.0
 BuildRequires: qt6-svg-devel >= 6.5.0
+Requires: qt6-wayland
 
 %description qt6
 %summary.
@@ -86,6 +88,9 @@ BuildRequires: qt6-svg-devel >= 6.5.0
 %endif
 
 %changelog
+* Tue Feb 11 2025 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt2
+- add dependencies on qt5-wayland and qt6-wayland (Closes: 53022)
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 0.1.6-alt1
 - new version (0.1.6) with rpmgs script
 
