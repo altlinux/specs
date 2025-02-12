@@ -1,12 +1,15 @@
 %define libname ctpl
 Name: libctpl
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 Summary: Template library and engine written in C
 Group: Development/C
 
 License: GPLv3+
 Url: http://ctpl.tuxfamily.org/
+
+Packager: Fr. Br. George <george@altlinux.ru>
+
 Source0: http://download.tuxfamily.org/ctpl/releases/ctpl-%version.tar.gz
 
 # Patch adds possibility to disable the build of the command line tool.
@@ -97,6 +100,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir make check
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Feb 12 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.5-alt1
+- 0.3.5 (fixes FTBFS)
+
 * Wed Feb 27 2019 Fr. Br. George <george@altlinux.ru> 0.3.4-alt1
 - Autobuild version bump to 0.3.4
 
