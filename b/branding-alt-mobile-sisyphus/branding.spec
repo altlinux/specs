@@ -9,7 +9,7 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2024.12
+Version: 2025.02
 Release: alt1
 
 Url: https://www.altlinux.org/ALT_Mobile
@@ -130,6 +130,7 @@ Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Summary: Distribution settings for Phosh
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
+Requires: wallpapers-alt-mobile
 BuildArch: noarch
 %branding_add_conflicts %flavour phosh-settings
 Conflicts: phosh-background-settings
@@ -198,6 +199,9 @@ ln -s /usr/share/license/GPL-3.0-or-later %buildroot/%_datadir/alt-notes/LICENSE
 # phosh settings
 cp -ar phosh/* %buildroot/
 
+install -Dm644 phosh-settings/50-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override;
+install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override;
+
 #bootsplash
 %post bootsplash
 subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
@@ -225,10 +229,26 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/*
 
 %files phosh-settings
-%_sysconfdir/dconf/db/local.d/00_background
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
+%_datadir/glib-2.0/schemas/50-background.gschema.override
+%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 
 %changelog
+* Wed Feb 12 2025 Oleg Shchavelev <oleg@altlinux.org> 2025.02-alt1
+- Bump version
+- images: added lockscreen image with a resolution of 4096x4096 pixels
+- phosh-settings: remove tweaks phosh-applist-background settings in gtk.css
+- phosh-settings: update lockscreen background image in gtk.css
+- images: update the background image has been changed to a new one,
+  and the dark version of the new image is now used for dark modes
+- phosh-settings: optimize branding background, disable camera privacy
+  and add gschema override
+- phosh-settings: add wallpapers-alt-mobile dependency
+
+* Wed Jan 29 2025 Anton Midyukov <antohami@altlinux.org> 2025.01-alt1
+- Bump version
+- phosh-settings: add gsettings override for disable camera privacy
+
 * Wed Dec 11 2024 Anton Midyukov <antohami@altlinux.org> 2024.12-alt1
 - Bump version
 
