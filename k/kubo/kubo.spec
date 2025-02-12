@@ -1,6 +1,6 @@
 Name: kubo
-Version: 0.32.1
-Release: alt1.1
+Version: 0.33.1
+Release: alt1
 
 Summary: IPFS implementation in Go
 
@@ -42,7 +42,8 @@ world at /ipfs.
 
 %prep
 %setup -a1
-%autopatch -p1
+# upstream it to github.com/cockroachdb/pebble
+#autopatch -p1
 
 %build
 export GOTAGS=openssl
@@ -86,6 +87,10 @@ EOF
 %doc docs/*
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 0.33.1-alt1
+- new version 0.33.1 (with rpmrb script)
+- disable patch with loongarch64 support
+
 * Mon Jan 20 2025 Ivan A. Melnikov <iv@altlinux.org> 0.32.1-alt1.1
 - NMU: loongarch64 support
 
