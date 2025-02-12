@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.7.1
-Release: alt1.2
+Version: 1.7.2
+Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
@@ -64,8 +64,6 @@ Requires: gcc
 Requires: inkscape
 Requires: gimp
 Requires: gimp-help-ru
-Requires: gimp-plugin-gutenprint
-Requires: gimp-plugin-refocus-it
 Requires: java-devel
 Requires: kdenlive
 Requires: scribus
@@ -87,7 +85,6 @@ Requires: gnome-games-mahjongg
 Requires: gnome-games-aisleriot
 %endif
 Requires: xsane
-#Requires: xsane-gimp2
 Requires: xsane-doc-ru
 Requires: simple-scan
 %ifnarch armh
@@ -272,8 +269,6 @@ Group: Education
 Requires: inkscape
 Requires: gimp
 Requires: gimp-help-ru
-Requires: gimp-plugin-gutenprint
-Requires: gimp-plugin-refocus-it
 %ifarch x86_64 aarch64 %e2k
 Requires: blender
 %endif
@@ -322,8 +317,6 @@ Group: Education
 Requires: inkscape
 Requires: gimp
 Requires: gimp-help-ru
-Requires: gimp-plugin-gutenprint
-Requires: gimp-plugin-refocus-it
 %ifarch x86_64 aarch64
 Requires: blender
 %endif
@@ -641,6 +634,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Feb 12 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.2-alt1
+- Remove gimp plugins.
+
 * Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 1.7.1-alt1.2
 - NMU: remove xsane-gimp2
 
