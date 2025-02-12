@@ -1,14 +1,18 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 2.10
-%define oldver 2.0
+%ifnarch %ix86 x86_64
+%define optflags_lto %nil
+%endif
+
+%define ver_major 3.0
+%define oldver 3.0
 
 %define mypaint_ver 1.3
 %define brushes_ver 1.0
 
 Name: gimp
-Version: %ver_major.38
-Release: alt2
+Version: %ver_major.0
+Release: alt0.3
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -26,13 +30,12 @@ Requires: iso-codes icc-profiles mypaint-brushes%brushes_ver
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: bzlib-devel gcc-c++ gtk-doc gvfs intltool libXcursor-devel libXmu-devel libXpm-devel libalsa-devel libexpat-devel
-BuildRequires: libgegl-devel libgexiv2-devel libgs-devel libgudev-devel liblcms2-devel liblzma-devel libmng-devel libopenjpeg2.0-devel
-BuildRequires: libpoppler-glib-devel librsvg-devel libtiff-devel libwebp-devel libwmf-devel
-BuildRequires: openexr-devel xdg-utils libpng-devel iso-codes-devel libheif-devel libXfixes-devel
-BuildRequires: python-module-pycairo-devel python-module-pygtk-devel
-BuildRequires: libmypaint-devel >= %mypaint_ver mypaint-brushes%brushes_ver-devel
+BuildPreReq: rpm-build-licenses rpm-build-python3
+BuildRequires: bzlib-devel gcc-c++ gtk-doc intltool libXcursor-devel libXfixes-devel libXmu-devel libXpm-devel libalsa-devel libappstream-glib-devel
+BuildRequires: libarchive-devel libexpat-devel libgexiv2-devel libgs-devel libgtk+3-gir-devel libgudev-devel libheif-devel liblcms2-devel liblzma-devel
+BuildRequires: libmng-devel libmypaint-devel libopenjpeg2.0-devel libpoppler-glib-devel librsvg-devel libtiff-devel libwebkit2gtk-devel libwebp-devel
+BuildRequires: libjxl-devel libwmf-devel openexr-devel python3-module-pygobject3 vala-tools xdg-utils meson cmake iso-codes-devel libbabl-devel libgegl-devel
+BuildRequires: libbabl-gir libgegl-gir libexiv2-devel mypaint-brushes%brushes_ver-devel
 
 %description
 The GIMP (GNU Image Manipulation Program) is a powerful image
@@ -58,53 +61,53 @@ may function as "GIMP plugins".
 %package -n lib%name-devel
 Summary: GIMP plugin and extension development kit
 Group: Graphics
-Requires: lib%name = %version-%release
 Obsoletes: libgimp2-devel < %version-%release
 Provides: libgimp2-devel = %version-%release
 
 %description -n lib%name-devel
 Development libraries and header files for writing GIMP plugins and extensions.
 
-%add_python_lib_path %_libdir/%name/%oldver/python
+%add_python3_path %_libdir/%name/%oldver/plug-ins
 
 %prep
 %setup -q
 %patch -p1
 
-%build
-gtkdocize
-%autoreconf
-%configure \
-	--with-gimpdir=%name \
-	--enable-gtk-doc \
-	--disable-gimp-console \
-	--enable-python
-
-%ifarch %e2k
-# FIXME: lcc 1.23.12 and sisyphus_e2k's current libgraphite2/libharfbuzz =>
-# /usr/bin/ld: core/libappcore.a(gimppickable-contiguous-region.o):
-# undefined reference to symbol `__gxx_personality_v0'
-sed -i '/^CCLD =/s/(CC)/(CXX)/' app/Makefile
+tar -xf gimp-data.tar.xz
+%ifnarch ix86
+sed 's|lib/gir|lib64/gir|' -i data/environ/python.env app/main.c
 %endif
 
-%make_build V=1
+%build
+%meson \
+	-Dgimpdir=%name \
+	-Dlua=false \
+	-Djavascript=disabled \
+	-Denable-console-bin=true \
+	-Dcheck-update=no
+
+%meson_build -v
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
+install -m644 gimp-splash.png %buildroot%_datadir/%name/%oldver/images/
+
+rm -fr %buildroot%_libdir/%name/%oldver/extensions/org.gimp.extension.goat-exercises
 find %buildroot%_libdir/%name -name \*.la -delete
 
 # Execute find_lang for all components and merge the resulting lists
-%find_lang --output=global.lang gimp20 gimp20-libgimp gimp20-std-plug-ins gimp20-script-fu gimp20-tips gimp20-python
+%find_lang --output=global.lang gimp30 gimp30-libgimp gimp30-std-plug-ins gimp30-script-fu gimp30-tips gimp30-python
 
 %files -f global.lang
 %doc AUTHORS NEWS README README.i18n
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/%oldver
 %config %_sysconfdir/%name/%oldver/*
-%_bindir/%name
+%_bindir/%name-console-*
 %_bindir/%name-*
 %_libdir/%name
+%_typelibdir/*.typelib
 %_datadir/%name
 %_datadir/metainfo/*.xml
 %_iconsdir/hicolor/*/apps/*
@@ -116,15 +119,19 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%_datadir/gtk-doc/html/*
+#%_datadir/gtk-doc/html/*
 %_includedir/*
-%_bindir/gimptool*
-%_libexecdir/gimp-debug-tool-2.0
+%_bindir/gimptool-*
+%_libexecdir/gimp-debug-tool-*
 %_libdir/*.so
+%_girdir/*
+%_vapidir/*
 %_pkgconfigdir/*.pc
-%_datadir/aclocal/*
 
 %changelog
+* Tue Feb 11 2025 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt0.3
+- 3.0.0 rc3
+
 * Fri Feb 07 2025 Valery Inozemtsev <shrek@altlinux.ru> 2.10.38-alt2
 - upstream: plug-ins: Backport of fixes for gcc-14
 
