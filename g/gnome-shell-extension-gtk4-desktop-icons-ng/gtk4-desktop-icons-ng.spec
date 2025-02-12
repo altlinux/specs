@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 90
+Version: 91
 Release: alt2
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
@@ -18,6 +18,8 @@ BuildArch: noarch
 Requires: gnome-shell >= 40.0
 Requires: nautilus >= 3.38.0
 Requires: file-roller >= 3.38.0
+# https://bugzilla.altlinux.org/53044
+Requires: libpoppler-gir
 BuildRequires: %_bindir/glib-compile-schemas
 BuildRequires: meson
 
@@ -67,6 +69,12 @@ rm -r %buildroot%_sysconfdir/apparmor.d
 %doc README.md
 
 %changelog
+* Wed Feb 12 2025 Anton Midyukov <antohami@altlinux.org> 91-alt2
+- Add dependency on libpoppler-gir (Closes: 53044)
+
+* Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 91-alt1
+- New version 91.
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 90-alt2
 - Revert "Hard code for Ptyxis terminal for new Fedora"
 
