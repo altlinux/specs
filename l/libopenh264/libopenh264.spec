@@ -2,7 +2,7 @@
 %define sover 7
 
 %def_enable check
-%ifarch %ix86 x86_64 loongarch64 riscv64
+%ifarch %ix86 x86_64 aarch64 loongarch64 riscv64 ppc64le
 %def_with meson
 %else
 %def_without meson
@@ -11,7 +11,7 @@
 %def_disable static
 
 Name: lib%_name
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: H.264 codec library
@@ -126,6 +126,10 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %changelog
+* Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+- built with meson for all arches
+
 * Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
