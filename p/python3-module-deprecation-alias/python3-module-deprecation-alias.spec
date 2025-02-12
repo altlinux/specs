@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 
 Summary: A wrapper around 'deprecation' providing support for deprecated aliases
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 12 2025 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Mon May 27 2024 Anton Zhukharev <ancieg@altlinux.org> 0.3.3-alt1
 - Updated to 0.3.3.
 
