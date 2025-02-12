@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pam_pkcs11
-Version: 0.6.12.1
-Release: alt3
+Version: 0.6.13
+Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -12,10 +12,13 @@ License: LGPL
 Url: https://github.com/OpenSC/pam_pkcs11
 
 Source: %name-%version.tar
-Patch0: %name-%version-alt-cumulative.patch
-#Patch1: pam_pkcs11-0.6.9-build-with-LibreSSL.patch
 
-%add_findreq_skiplist %_sysconfdir/pam.d/*
+Patch0: %name-%version-confdir.patch
+Patch1: %name-%version-gost.patch
+Patch2: %name-%version-query-config.patch
+Patch4: %name-%version-scconf.patch
+Patch6: %name-%version-altconf.patch
+
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
 Requires: pcsc-lite pcsc-lite-ccid
 
@@ -67,22 +70,13 @@ as a separate package.
 
 - ldap_mapper.so: LDAP-based mapper module.
 
-%package isbc
-Summary: ISBC (ESMART) low-level modules for pam_pkcs11
-Group: System/Base
-Requires: %name = %version-%release
-
-%description isbc
-This package contains ISBC (ESMART) low-level modules for pam_pkcs11
-
 %prep
 %setup
-%patch0 -p1
-#patch1 -p1
+%autopatch -p1
 
 # fixup configs
 sed -i -e '
-	s,/usr/lib/pam_pkcs11/,/%_lib/%name/,g;
+	s,/usr/lib/pam_pkcs11/,%_libdir/%name/,g;
 	s,/usr/lib/,%_libdir/,g;
 	s,/etc/pam_pkcs11/,%_sysconfdir/security/%name/,g;
 	' etc/*.example doc/*.in doc/*.xml
@@ -91,6 +85,7 @@ sed -i -e '
 %autoreconf
 #	--disable-rpath \
 %configure \
+	--libdir=%_libdir \
 	--disable-static \
 	--enable-shared \
 	--enable-debug \
@@ -128,17 +123,6 @@ install -D -m0644 \
         %buildroot%_datadir/doc/%name-%version/subject_mapping.example \
         %buildroot%_sysconfdir/security/%name/subject_mapping
 
-install -D -m0644 \
-        %buildroot%_datadir/doc/%name-%version/pam.d_ignore_no_card.example \
-        %buildroot%_sysconfdir/pam.d/system-auth-pkcs11_strict
-
-# Make additional "use_first_pass" config (needed by control system-auth):
-sed -e 's/pam_pkcs11\.so/pam_pkcs11.so use_first_pass/g' \
-    -e '/^account/ d' \
-    -e '/^session/ d' \
-    %buildroot%_sysconfdir/pam.d/system-auth-pkcs11_strict \
-    >%buildroot%_sysconfdir/pam.d/system-auth-use_first_pass-pkcs11_strict
-
 # Cleanup .la files
 rm %buildroot%_libdir/*/*.la
 
@@ -165,7 +149,6 @@ rm %buildroot%_libdir/*/*.la
 %_man1dir/*.1*
 %exclude %_man1dir/card_eventmgr.1*
 %_man8dir/*.8*
-%config(noreplace) %_sysconfdir/pam.d/*
 %_unitdir/*
 %_datadir/doc/%name-%version/*.example
 
@@ -177,10 +160,27 @@ rm %buildroot%_libdir/*/*.la
 %files ldap
 %_libdir/%name/ldap_mapper.so
 
-%files isbc
-%_libdir/%name/ll_isbc.so
-
 %changelog
+* Wed Feb 05 2025 Paul Wolneykien <manowar@altlinux.org> 0.6.13-alt1
+- Version 0.6.13
+- Added pkcs11-eventmgr systemd service unit.
+- Updated Russian translations for pam_pkcs11 (thx Max Kosmach
+  and Andrey Cherepanov).
+- Fixed possible authentication bypass: Use signatures to verify
+  authentication by default (thx Frank Morgner)
+  (Fixes: CVE-2025-24032).
+- Fixed possible authentication bypass: Restoring the original
+  card_only / wait_for_card behavior (thx Matthias Gerstner,
+  Frank Morgner) (Fixes: CVE-2025-24531).
+- Move pam_securetty.so upward in the example PAM config.
+- Set 'slot_num' configuration parameter to 0 by default
+  (thx Jpereyra316).
+- Print details about configuration parse errors (thx Jpereyra316).
+- Add Chinese (Simplified) translation.
+- Capitalize all PAM messages (thx Alynx Zhou).
+- Made pkcs11_make_hash_link support whitespaces in file names
+  (thx Ivan Skorikov).
+
 * Sat Dec 14 2024 Alexey Shabalin <shaba@altlinux.org> 0.6.12.1-alt3
 - Relocate libs from /lib to /usr/lib.
 

@@ -17,14 +17,14 @@
 %endif
 
 Name: pkcs11-profiles
-Version: 0.1.13
-Release: alt4
+Version: 0.2.1
+Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
 Group: System/Configuration/Other
 
-Conflicts: pam_pkcs11 < 0.6.9-alt30
+Requires: pam_pkcs11 >= 0.6.13-alt1
 
 Source0: %name-%version.tar
 
@@ -36,7 +36,6 @@ Summary: Control scripts for profile-based PAM PKCS11 configuration
 License: GPLv3+
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: pam_pkcs11 >= 0.6.11-alt1
 
 %description common
 Control scripts for profile-based PAM PKCS11 configuration.
@@ -46,7 +45,6 @@ Summary: RuToken ECP PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: librtpkcs11ecp >= 1.5.3.0-alt4
 
 %description rutokenecp
@@ -57,8 +55,6 @@ Summary: ESMART PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.11-alt1
-Requires: pam_pkcs11-isbc
 Requires: isbc-pkcs11
 
 %description isbc
@@ -69,7 +65,6 @@ Summary: JaCarta PAM PKCS11 module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: libjcpkcs11 >= 2.7.2-alt4
 
 %description jacarta
@@ -80,34 +75,10 @@ Summary: PKCS#11 Kit Proxy module configuration
 License: GPLv3+
 Group: System/Configuration/Other
 Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.11-alt1
 Requires: libp11-kit >= 0.23.8
 
 %description p11-kit-proxy
 PKCS#11 Kit Proxy module configuration
-
-%package zastava
-Summary: "Zastava" PAM PKCS#11 profile and configuration files
-License: GPLv3+
-Group: System/Configuration/Other
-Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.11-alt1
-Requires: %name-messages-zastava = %version-%release
-BuildArch: noarch
-
-%description zastava
-Contains profile and configuration files used for "Zastava" installation
-
-%package messages-zastava
-Summary: "Zastava" PAM PKCS#11 message set
-License: GPLv3+
-Group: System/Configuration/Other
-Requires: %name-common = %version-%release
-Requires: pam_pkcs11 >= 0.6.9-alt18
-BuildArch: noarch
-
-%description messages-zastava
-Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 
 %prep
 %setup
@@ -125,6 +96,7 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %files common
 %_controldir/*
 %dir %confdir/profiles
+%config(noreplace) %confdir/modules.avail/opensc
 %config(noreplace) %confdir/profiles/opensc
 %dir %confdir/modules.avail
 %dir %confdir/mapping.profiles
@@ -134,8 +106,6 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/mapping.profiles/snils
 %config(noreplace) %confdir/mapping.profiles/snils_scrambled
 %config(noreplace) %confdir/mapping.profiles/subject
-%dir %confdir/message.profiles
-%config(noreplace) %confdir/message.profiles/default
 %dir %confdir/param-set.d
 %config(noreplace) %confdir/param-set.d/default
 
@@ -161,14 +131,17 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/profiles/jacarta
 %endif
 
-%files zastava
-%config(noreplace) %confdir/param-set.d/zastava
-%config(noreplace) %confdir/zastava_*
-
-%files messages-zastava
-%config(noreplace) %confdir/message.profiles/zastava
-
 %changelog
+* Tue Feb 04 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
+- Fix: Added module configuration for "opensc".
+
+* Mon Jan 20 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.0-alt1
+- Fixed extra "shift" in the pam-pkcs11-profile control facility.
+- Remove pam-pkcs11-messages due to removal of custom message support
+  in pam_pkcs11.
+- Remove some ALT-specific options in the profiles due to removal of
+  ALT-specific patches in pam_pkcs11.
+
 * Sat Oct 12 2024 Michael Shigorin <mike@altlinux.org> 0.1.13-alt4
 - JaCarta: Add support for e2kv5/e2kv6 that reuses e2kv4 binaries
   (e2k == e2kv3 binaries not available at the moment).
