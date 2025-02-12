@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name caffeine
-%define ver_major 55
+%define ver_major 56
 %define beta %nil
 %define uuid %_name@patapon.info
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -63,6 +63,9 @@ popd
 %doc README.md
 
 %changelog
+* Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 56-alt1
+- 56 (GNOME 48 supported)
+
 * Mon Oct 07 2024 Yuri N. Sedunov <aris@altlinux.org> 55-alt1
 - 55
 
