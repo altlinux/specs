@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt6, PySide6 with a single codebase
 License: MIT
@@ -16,7 +16,6 @@ Vcs: https://github.com/spyder-ide/qtpy.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch0: qt6.6-deprecations.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -59,7 +58,6 @@ This package contains tests for %oname.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %pyproject_build
@@ -72,7 +70,6 @@ sed -i 's/--cov-report=term-missing --cov-report=xml//' pytest.ini
 sed -i 's/--color=yes//' pytest.ini
 %pyproject_run -- xvfb-run pytest qtpy -k "\
 not test_qttexttospeech \
-and not test_load_ui_type \
 and not test_qfiledialog_dir_compat"
 
 %files
@@ -87,6 +84,9 @@ and not test_qfiledialog_dir_compat"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Feb 12 2025 Anton Vyatkin <toni@altlinux.org> 2.4.3-alt1
+- New version 2.4.3.
+
 * Tue Nov 05 2024 Anton Vyatkin <toni@altlinux.org> 2.4.2-alt1
 - New version 2.4.2.
 
