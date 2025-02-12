@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 4.8
+%define ver_major 5.0
 %define beta %nil
 %define rdn_name org.darktable.darktable
 
@@ -22,7 +22,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1.1
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -175,6 +175,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 5.0.1-alt1
+- 5.0.1
+
 * Thu Nov 21 2024 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1.1
 - fixed build for E2K (ilyakurdyukov@)
 
