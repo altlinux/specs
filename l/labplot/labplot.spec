@@ -1,34 +1,43 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.10.1
+Version: 2.11.1
 Release: alt1
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Other
 Url: https://labplot.kde.org/
-%K5init no_altplace
+%K6init no_altplace
 
 Conflicts: labplot1.6
 Requires: ImageMagick-tools gsl pstoedit
 
-# https://invent.kde.org/education/labplot
+VCS: https://invent.kde.org/education/labplot.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake gcc-c++ extra-cmake-modules
-BuildRequires: qt5-base-devel qt5-svg-devel
-BuildRequires: kf5-karchive-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel
-BuildRequires: kf5-kdelibs4support-devel kf5-kio-devel kf5-knewstuff-devel kf5-ktextwidgets-devel
-BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel
+BuildRequires: qt6-base-devel qt6-svg-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: libfftw3-devel
+BuildRequires: liblz4-devel
+BuildRequires: libcerf-devel
+BuildRequires: libvulkan-devel
+BuildRequires: libpoppler-qt6-devel
+BuildRequires: eigen3
+BuildRequires: kf6-kparts-devel
+BuildRequires: kf6-purpose-devel
+BuildRequires: kf6-karchive-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-kdoctools-devel kf6-ki18n-devel kf6-kiconthemes-devel
+BuildRequires: kf6-kio-devel kf6-knewstuff-devel kf6-ktextwidgets-devel
+BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
 BuildRequires: libXScrnSaver-devel libXau-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel
 BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel
 BuildRequires: libgsl-devel libhdf5-devel libnetcdf-devel
 BuildRequires: libxkbfile-devel xorg-xf86vidmodeproto-devel
-BuildRequires: qt5-serialport-devel
-BuildRequires: kf5-syntax-highlighting-devel
+BuildRequires: qt6-serialport-devel
+BuildRequires: kf6-syntax-highlighting-devel
 
 %description
 This is a program for plotting of functions and data manipulation.
@@ -48,29 +57,36 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
-%K5build \
+%K6build \
+    -DQT_VERSION_MAJOR=6 \
     -DENABLE_READSTAT:BOOL=OFF \
     -DENABLE_VECTOR_BLF:BOOL=OFF \
     -DENABLE_REPRODUCIBLE:BOOL=ON \
     #
 
 %install
-%K5install
+%K6install
+
+# remove private libraries headers and symlinks
+rm -rf %buildroot%_includedir
+rm -rf %buildroot%_libdir/*.so
+
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc AUTHORS README.md LICENSES/* ChangeLog
-#config(noreplace) %_K5xdgconf/*.knsrc
-%_K5bin/*
+%_K6bin/*
 %_datadir/%{name}2/
-%_K5xdgapp/*
-%_K5icon/hicolor/*/apps/*
-%_K5xmlgui/%{name}2/
-%_K5xdgmime/%{name}2.xml
-%_K5doc/*/%{name}2/
+%_K6xdgapp/*
+%_K6icon/hicolor/*/apps/*
+%_K6xdgmime/%{name}2.xml
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Feb 12 2025 Anton Farygin <rider@altlinux.ru> 2.11.1-alt1
+- 2.10.1 -> 2.11.1
+- built for QT/KDE6 with support fo vulkan, fftw3, cerf, poopler, lz4 and eigen3
+
 * Mon Jul 10 2023 Sergey V Turchin <zerg@altlinux.org> 2.10.1-alt1
 - new veresion
 
