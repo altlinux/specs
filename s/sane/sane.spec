@@ -1,8 +1,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.2.1
-Release: alt2
+Version: 1.3.1
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -10,6 +10,7 @@ Summary(ru_RU.UTF-8): Документация и утилиты для SANE
 License: GPL
 Group: Graphics
 Url: http://www.sane-project.org/
+Vcs: https://gitlab.com/sane-project/backends
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -294,6 +295,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1 (with rpmrb script)
+
 * Tue Sep 26 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt2
 - add tmpfiles entry for /var/lock/sane (ALT bug 46255)
 
