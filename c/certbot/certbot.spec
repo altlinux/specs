@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -13,6 +13,7 @@ Summary: A free, automated certificate authority client
 License: ASL 2.0
 Group: Networking/Other
 Url: https://certbot.eff.org/
+Vcs: https://github.com/certbot/certbot
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -269,6 +270,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- new version 3.1.0 (with rpmrb script)
+
 * Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - new version 3.0.1 (with rpmrb script)
 
