@@ -7,7 +7,7 @@
 %define libfontconfig libfontconfig%sover
 
 Name: fontconfig
-Version: 2.15.0
+Version: 2.16.0
 Release: alt1
 
 Summary: Font configuration and customization utilities and library
@@ -190,6 +190,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Wed Feb 12 2025 Sergey V Turchin <zerg@altlinux.org> 2.16.0-alt1
+- new version
+
 * Thu Aug 22 2024 Sergey V Turchin <zerg@altlinux.org> 2.15.0-alt1
 - new version
 
