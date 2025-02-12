@@ -1,6 +1,6 @@
 Name: gutenprint
 Version: 5.3.4
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Gutenprint Printer Drivers
 License: GPL-2.0+
@@ -18,8 +18,9 @@ Patch1: gutenprint-5.2.9-alt-makefile.patch
 Patch2: gutenprint-alt-LFS.patch
 Patch3: gutenprint-alt-link-plugins-with-libraries.patch
 Patch4: gutenprint-alt-add-oki-mb472.patch
+Patch5: Wno-incompatible-pointer-types.patch
 
-BuildRequires: flex foomatic-db-engine libcups-devel libgimp-devel libreadline-devel
+BuildRequires: flex foomatic-db-engine libcups-devel libreadline-devel
 BuildRequires: libusb-devel
 BuildRequires: chrpath
 
@@ -94,6 +95,7 @@ This package contains PPDs for gutenprint-cups.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+%patch5 -p1
 rm -rf gutenprint/po/*.gmo
 install %SOURCE2 po/ru.po
 
@@ -111,9 +113,8 @@ find m4* -type f -name \*.m4 -print0 |
 	--disable-rpath \
 	--with-modules=dlopen \
 	--with-cups \
-	--with-gimp2 \
-	--with-gimp2-as-gutenprint \
-	--enable-libgutenprintui2 \
+	--without-gimp2 \
+	--disable-libgutenprintui2 \
 	--enable-cups-ppds \
 	--enable-cups-level3-ppds \
 	--enable-cups-ppds-at-top-level
@@ -132,10 +133,9 @@ chmod +rx %buildroot%_prefix/lib/cups/backend/gutenprint*+usb
 for file in \
   %buildroot%_bindir/* \
   %buildroot%_sbindir/cups-genppd.5.3 \
-  %buildroot%_libdir/gimp/*/plug-ins/* \
   %buildroot%_libdir/*.so.* \
   %buildroot%_libexecdir/cups/driver/* \
-  %buildroot%_libexecdir/cups/filter/* 
+  %buildroot%_libexecdir/cups/filter/*
 do \
   chrpath --delete ${file}
 done
@@ -173,8 +173,8 @@ fi
 %docdir/%name.pdf
 %docdir/reference-html
 
-%files -n gimp-plugin-%name
-%_libdir/gimp/2.0/plug-ins/%name
+#files -n gimp-plugin-%name
+#_libdir/gimp/2.0/plug-ins/%name
 
 %files cups
 %_sysconfdir/cups/*
@@ -191,6 +191,9 @@ fi
 %_datadir/cups/model/Global
 
 %changelog
+* Wed Feb 12 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:5.3.4-alt3
+- disabled gimp-plugin
+
 * Mon Oct 30 2023 Mikhail Chernonog <snowmix@altlinux.org> 1:5.3.4-alt2
 - Added support for the manually tested Oki MB472 printer.
 
