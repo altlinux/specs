@@ -1,5 +1,5 @@
 Name: ydcmd
-Version: 2.12.1
+Version: 2.12.2
 Release: alt1
 
 Summary: Command line Yandex.Disk client
@@ -28,8 +28,6 @@ Command-line tool to upload, retrieve and manage data in Yandex.Disk service
 install -d %buildroot%_bindir/
 install -d %buildroot%python3_sitelibdir/
 
-%__subst 's|env python|env python3|g' ydcmd.py
-
 install -m755 ydcmd.py %buildroot%python3_sitelibdir/ydcmd.py
 
 ln -sr %buildroot%python3_sitelibdir/ydcmd.py %buildroot%_bindir/ydcmd
@@ -52,6 +50,9 @@ install -m644 man/ydcmd.1    %buildroot%_man1dir/ydcmd.1
 #%_mandir/tr/man1/ydcmd.1*
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt1
+- new version 2.12.2 (with rpmrb script)
+
 * Sat Oct 28 2023 Vitaly Lipatov <lav@altlinux.ru> 2.12.1-alt1
 - initial build for ALT Sisyphus
 
