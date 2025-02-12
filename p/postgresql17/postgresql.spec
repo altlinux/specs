@@ -24,7 +24,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -67,9 +67,6 @@ Conflicts: %{prog_name}17-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel
-%if_without devel
-BuildRequires: postgresql-devel
-%endif
 %if_with icu
 BuildRequires: libicu-devel
 %endif
@@ -100,74 +97,135 @@ If you want to manipulate a PostgreSQL database on a remote PostgreSQL
 server, you need this package. You also need to install this package
 if you're installing the postgresql-server package.
 
-%if_with devel
-%package -n %libpq_name
+%package -n %libpq_name-%postgresql_major
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
+Provides: libpq = %EVR
+Provides: %libpq_name = %EVR
+Conflicts: %libpq_name < %EVR
+Conflicts: %libpq_name > %EVR
 
-%description -n %libpq_name
+Conflicts: %libpq_name-12
+Conflicts: %libpq_name-13
+Conflicts: %libpq_name-14
+Conflicts: %libpq_name-15
+Conflicts: %libpq_name-16
+Conflicts: %libpq_name-16-1C
+Conflicts: %libpq_name-17-1C
+
+%description -n %libpq_name-%postgresql_major
 C and C++ libraries to enable user programs to communicate with the
 PostgreSQL database backend. The backend can be on another machine and
 accessed through TCP/IP.
 
-%package -n %libpq_name-devel
+%package -n %libpq_name-%postgresql_major-devel
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Development/Databases
-Requires: %libpq_name = %EVR
+Requires: %libpq_name-%postgresql_major = %EVR
+%if_with devel
 Provides: libpq-devel = %EVR
+Provides: %libpq_name-devel = %EVR
 Obsoletes: libpq-devel < %EVR
+Obsoletes: %libpq_name-devel < %EVR
+Conflicts: %libpq_name-devel < %EVR
+Conflicts: %libpq_name-devel > %EVR
+%else
+%add_findprov_skiplist %_libdir/pkgconfig/*.pc
+%endif
+Conflicts: %libpq_name-12-devel
+Conflicts: %libpq_name-13-devel
+Conflicts: %libpq_name-14-devel
+Conflicts: %libpq_name-15-devel
+Conflicts: %libpq_name-16-devel
+Conflicts: %libpq_name-16-1C-devel
+Conflicts: %libpq_name-17-1C-devel
 
-%description -n %libpq_name-devel
+%description -n %libpq_name-%postgresql_major-devel
 The libpq package provides the essential shared library for any PostgreSQL
 client program or interface.  You will need to install this package to build any
 package or any clients that need to connect to a PostgreSQL server.
 
-%package -n %libpq_name-devel-static
+%package -n %libpq_name-%postgresql_major-devel-static
 Summary: Development static library for %libpq_name-devel
 Group: Development/Databases
-Requires: %libpq_name-devel = %EVR
+Requires: %libpq_name-%postgresql_major-devel = %EVR
+%if_with devel
 Provides: libpq-devel-static = %EVR
+Provides: %libpq_name-devel-static = %EVR
 Obsoletes: libpq-devel-static < %EVR
+Obsoletes: %libpq_name-devel-static < %EVR
+Conflicts: %libpq_name-devel-static < %EVR
+Conflicts: %libpq_name-devel-static > %EVR
+%endif
 
-%description -n %libpq_name-devel-static
+%description -n %libpq_name-%postgresql_major-devel-static
 Development static library for %libpq_name-devel
 
-%package -n %prog_name-devel
+%package devel
 Summary: PostgreSQL development header files
 Group: Development/Databases
-Requires: %libpq_name-devel = %EVR
+Requires: %libpq_name-%postgresql_major-devel = %EVR
 Requires: %libecpg_name-%postgresql_major-devel = %EVR
 Requires: %name-server-devel = %EVR
+%if_with devel
+Obsoletes: %prog_name-devel < %EVR
+Provides: %prog_name-devel = %EVR
+Conflicts: %prog_name-devel < %EVR
+Conflicts: %prog_name-devel > %EVR
+%endif
+Conflicts: %{prog_name}12-devel
+Conflicts: %{prog_name}13-devel
+Conflicts: %{prog_name}14-devel
+Conflicts: %{prog_name}15-devel
+Conflicts: %{prog_name}16-devel
+Conflicts: %{prog_name}16-1C-devel
+Conflicts: %{prog_name}17-1C-devel
 
-%description -n %prog_name-devel
+%description devel
 The postgresql-devel package contains the header files needed to compile applications
 which will directly interact with a PostgreSQL database management server.
 You need to install this package if you want to develop applications which will interact
 with a PostgreSQL server.
 
-%package -n %prog_name-devel-static
+%package devel-static
 Summary: Development static library for %libpq_name-devel and %libecpg_name-devel
 Group: Development/Databases
-Requires: %libpq_name-devel-static = %EVR
+Requires: %libpq_name-%postgresql_major-devel-static = %EVR
 Requires: %libecpg_name-%postgresql_major-devel-static = %EVR
-Requires: %prog_name-devel = %EVR
+Requires: %name-devel = %EVR
+%if_with devel
+Obsoletes: %prog_name-devel-static < %EVR
+Conflicts: %prog_name-devel-static < %EVR
+Conflicts: %prog_name-devel-static > %EVR
+Provides: %prog_name-devel-static = %EVR
+%endif
 
-%description -n %prog_name-devel-static
+%description devel-static
 Development static library for %libpq_name-devel
 and %libecpg_name-%postgresql_major-devel
 
-%package -n rpm-macros-%prog_name
+%package -n rpm-macros-%prog_name-%postgresql_major
 Summary: RPM macros to PostgreSQL
 Group: Development/Other
 BuildArch: noarch
-
-%description -n rpm-macros-%prog_name
-RPM macros to PostgreSQL for build server extentions
+%if_with devel
+Provides: rpm-macros-%prog_name
 %endif
+Conflicts: rpm-macros-%prog_name-12
+Conflicts: rpm-macros-%prog_name-13
+Conflicts: rpm-macros-%prog_name-14
+Conflicts: rpm-macros-%prog_name-15
+Conflicts: rpm-macros-%prog_name-16
+Conflicts: rpm-macros-%prog_name-16-1C
+Conflicts: rpm-macros-%prog_name-17-1C
+
+%description -n rpm-macros-%prog_name-%postgresql_major
+RPM macros to PostgreSQL for build server extentions
 
 %package -n %libecpg_name-%postgresql_major
 Summary: ECPG - Embedded SQL in C
 Group: Databases
+Requires: %libpq_name-%postgresql_major = %EVR
 %if_without devel
 %add_findprov_skiplist %_libdir/libecpg*.so*
 %add_findprov_skiplist %_libdir/libpgtypes*.so*
@@ -230,7 +288,7 @@ Development static library for %libecpg_name-%postgresql_major-devel
 %package server-devel
 Summary: PostgreSQL development header files
 Group: Development/Databases
-Requires: %libpq_name-devel
+Requires: %libpq_name-%postgresql_major-devel
 Requires: %libecpg_name-%postgresql_major-devel
 %if_with jit
 Requires: llvm18.1-devel clang18.1-devel gcc-c++
@@ -457,10 +515,8 @@ popd
 ##### end ALT-stuff
 
 # Create file for rpm-build-postgresql
-%if_with devel
 install -d %buildroot%_rpmmacrosdir
 echo "%%pg_ver %postgresql_major" > %buildroot%_rpmmacrosdir/postgresql
-%endif
 
 sed -e 's|^PGVERSION=.*$|PGVERSION=%version|' \
         -e 's|^PGDOCDIR=.*$|PGDOCDIR=%docdir|' \
@@ -986,15 +1042,14 @@ fi
 %_libdir/libpgport.a
 %_libdir/libpgport_shlib.a
 
-%if_with devel
-%files -n %prog_name-devel
-%files -n %prog_name-devel-static
+%files devel
+%files devel-static
 
-%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
+%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name-%postgresql_major
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
 
-%files -f devel.lang -n %libpq_name-devel
+%files -f devel.lang -n %libpq_name-%postgresql_major-devel
 %_bindir/pg_config
 %_includedir/%PGSQL
 %_includedir/postgresql
@@ -1008,12 +1063,11 @@ fi
 %_man1dir/pg_config.*
 %_man3dir/*
 
-%files -n %libpq_name-devel-static
+%files -n %libpq_name-%postgresql_major-devel-static
 %_libdir/libpq*.a
 
-%files -n rpm-macros-%prog_name
+%files -n rpm-macros-%prog_name-%postgresql_major
 %_rpmmacrosdir/postgresql
-%endif
 
 %if_with jit
 %files llvmjit
@@ -1023,6 +1077,13 @@ fi
 %endif
 
 %changelog
+* Fri Feb 07 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt4
+- Build libpq5, libpq5-devel, libpq5-devel-static, %%prog_name-devel,
+  %%prog_name-devel-static and rpm-macros-%%prog_name as libpq5-XY,
+  libpq5-XY-devel, libpq5-XY-devel-static, %prog_nameXY-devel,
+  %prog_nameXY-devel-static and rpm-macros-%prog_name-XY and
+  package every major version
+
 * Wed Feb 05 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt3
 - Add PGCHECK var
 - Add start pg_checksums_ext if set PGCHECK and installed
