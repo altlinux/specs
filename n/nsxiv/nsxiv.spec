@@ -1,5 +1,5 @@
 Name: nsxiv
-Version: 32
+Version: 33
 Release: alt1
 
 Summary: Neo Simple X Image Viewer
@@ -44,6 +44,9 @@ ln -s nsxiv %buildroot%_bindir/sxiv
 %doc README.md LICENSE
 
 %changelog
+* Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 33-alt1
+- new version 33 (with rpmrb script)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 32-alt1
 - new version 32 (with rpmrb script)
 
