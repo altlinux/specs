@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 
 Summary: A Python 3 wrapper for the mediainfo library
@@ -43,10 +43,13 @@ This Python3 module provides a wrapper around the MediaInfo library.
 %files
 %python3_sitelibdir_noarch/%pypi_name/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
-%doc README.rst
+%doc README*
 
 
 %changelog
+* Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 7.0.1-alt1
+- 7.0.1
+
 * Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
