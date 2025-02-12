@@ -3,7 +3,7 @@ Group: System/Libraries
 %define _localstatedir %_var
 Name: t4k_common
 Version: 0.1.1
-Release: alt5.gita6c6b15.1
+Release: alt6.gita6c6b15
 Url: https://github.com/tux4kids/t4kcommon
 Summary: Library for Tux4Kids applications
 License: GPLv3+
@@ -58,6 +58,9 @@ chmod 755 $RPM_BUILD_ROOT%_libdir/lib%name.so
 %_libdir/pkgconfig/t4k_common.pc
 
 %changelog
+* Tue Feb 11 2025 Ulysses Apokin <ulysses@altlinux.org> 0.1.1-alt6.gita6c6b15
+- fixed FTBFS
+
 * Tue Jun 11 2024 Artem Semenov <savoptik@altlinux.org> 0.1.1-alt5.gita6c6b15.1
 - Changed espeak to espeak-ng
 
