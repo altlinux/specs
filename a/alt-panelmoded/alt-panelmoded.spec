@@ -1,5 +1,5 @@
 Name: alt-panelmoded
-Version: 0.4.1
+Version: 0.4.3
 Release: alt1
 
 Summary: Used for panelmode on operating systems of the Alt family with GNOME desktop enviroment
@@ -10,9 +10,6 @@ Url: https://gitlab.gnome.org/Armatik/alt-panelmoded
 Vcs: https://gitlab.gnome.org/Armatik/alt-panelmoded
 Source: %name-%version.tar
 
-Requires: dconf
-Requires: gnome-shell-extension-dash-to-panel
-
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: meson
@@ -20,6 +17,7 @@ BuildRequires: vala
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gee-0.8)
 
+Requires: dconf
 Requires: gnome-shell-extensions
 Requires: gnome-shell-extension-dash-to-panel
 Requires: gnome-shell-extension-arcmenu
@@ -51,12 +49,17 @@ enviroment.
 %files -f %name.lang
 %_bindir/%name
 %_user_unitdir/%name.service
-%_datadir/%name
 %_datadir/glib-2.0/schemas/org.altlinux.%name.gschema.xml
 %_user_presetdir/20-%name.preset
 %_desktopdir/org.altlinux.panelmoded.desktop
 
 %changelog
+* Wed Feb 12 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.3-alt1
+- new version 0.4.3
+
+* Mon Feb 10 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.2-alt1
+- new version 0.4.2
+
 * Wed Feb 5 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.1-alt1
 - new version 0.4.1
 
