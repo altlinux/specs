@@ -2,13 +2,10 @@
 %define Brand ALT
 %define theme workstation
 %define Theme Workstation
-%define codename unknown
-%define status alpha
-%define status_en alpha
+%define codename Prometheus
+%define status beta
+%define status_en beta
 %define flavour %brand-%theme
-
-%define gtk_theme BlueMenta
-%define icon_theme Papirus
 
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
@@ -22,8 +19,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.900
-Release: alt1
+Version: 11.0
+Release: alt0.22
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -180,24 +177,16 @@ Distribution license and release notes
 В данном пакете находится лицензия и дополнительные сведения
 для дистрибутива %distro_name_ru.
 
-%package mate-settings
+%package gnome-settings
 BuildArch: noarch
-Summary: MATE settings for %distro_name
+Summary: GNOME settings for %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
-# Specified themes
-Requires: icon-theme-ePapirus
-Requires: icon-theme-Papirus
-Requires: icon-theme-Papirus-Dark
-Requires: icon-theme-Papirus-Light
-Requires: mate-themes
-Requires: theme-mate-windows
-Requires: x-cursor-theme-jimmac
+Requires: alt-gnome-desktop-wallpapers
 #
-%branding_add_conflicts %flavour mate-settings
+%branding_add_conflicts %flavour gnome-settings
 %branding_add_conflicts %flavour graphics
-Requires(post): lightdm-gtk-greeter
 Requires(post): libgio
 # To avoid install check conflicts
 Requires: %name-graphics = %EVR
@@ -206,8 +195,8 @@ Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
 Conflicts: branding-simply-linux-system-settings
 Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
 
-%description mate-settings
-MATE settings for %distro_name
+%description gnome-settings
+GNOME settings for %distro_name
 
 %package slideshow
 Summary: Slideshow for %distro_name installer
@@ -236,7 +225,6 @@ Obsoletes: indexhtml-desktop indexhtml-Desktop
 
 Requires: xdg-utils
 Requires: docs-alt-%theme
-Requires: shared-desktop-icons
 Requires: menu-icons-default
 Requires(post): indexhtml-common
 
@@ -259,7 +247,7 @@ cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
 make
 
 %install
@@ -288,7 +276,7 @@ else
 	subst "s/Theme=workstation/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 fi
 
-%post mate-settings
+%post gnome-settings
 [ "$1" -eq 1 ] || exit 0
 /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
 
@@ -312,11 +300,10 @@ fi
 %files notes
 %_datadir/alt-notes/*
 
-%files mate-settings
-%_sysconfdir/skel/.config/
-%_sysconfdir/skel/.gtkrc-2.0
-%_datadir/glib-2.0/schemas/*.gschema.override
-%_datadir/install3/*
+%files gnome-settings
+%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-dash-app-list-favorites.gschema.override
+%_datadir/glib-2.0/schemas/50_alt-gnome-appearance.gschema.override
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -329,10 +316,23 @@ fi
 %_defaultdocdir/indexhtml/*
 %_desktopdir/*
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
-%attr(0755,root,root) %_datadir/Desktop/indexhtml.desktop
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Feb 12 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt0.22
+- branding: Prepare for transition from MATE to GNOME (thx qualimock@alt)
+- indexhtml: New html page (thx oleg@alt)
+- release: New codename Prometheus
+- spec: Remove shared-desktop-icons dependency from indexhtml for fix
+  problem icon in panelmode
+- gnome-settings: Orange as default accent color
+- branding: Plymouth image fix (thx antohami@alt)
+- indexhtml: Add license to URL list in indexhtml
+- slideshow: Update images for slideshow
+- images: Blurred alt-elbrus new image for installer and grub
+- gnome-settings: more style update for system UI.
+- browser-qt: new awesome frosted glass UI style
+
 * Wed Sep 18 2024 Mikhail Efremov <sem@altlinux.org> 10.900-alt1
 - release: Set codename to unknown.
 - indexhtml: Update "Software Repository" link.
