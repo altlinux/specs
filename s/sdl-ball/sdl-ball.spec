@@ -1,7 +1,7 @@
 %define gimpver 2.0
 Name: sdl-ball
 Version: 1.03
-Release: alt1
+Release: alt2
 Summary: Free/OpenSource brick-breaking game with pretty graphics
 Group: Games/Arcade
 License: GPLv2+
@@ -10,7 +10,7 @@ Source0: http://dl.sourceforge.net/sourceforge/%name/%name-%version.tar.bz2
 Patch: %name.as-needed.patch
 
 # Automatically added by buildreq on Wed Nov 12
-BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libgimp-devel
+BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel
 
 %description
 SDL-Ball is a Free/OpenSource brick-breaking game for Linux,BSD and
@@ -46,26 +46,29 @@ s/,;/;/g
 
 %build
 %make DATADIR=%_gamesdatadir/%name/
-gimptool-%gimpver --build leveleditor/gimp-leveleditor/gimp-sdlball.c
+#gimptool-%gimpver --build leveleditor/gimp-leveleditor/gimp-sdlball.c
 
 %install
 mkdir -p %buildroot%_gamesdatadir %buildroot%_gamesbindir
-mkdir -p %buildroot%_libdir/gimp/%gimpver/plug-ins
+#mkdir -p %buildroot%_libdir/gimp/%gimpver/plug-ins
 install -Ds %name %buildroot%_gamesbindir
-install -Ds gimp-sdlball %buildroot%_libdir/gimp/%gimpver/plug-ins
+#install -Ds gimp-sdlball %buildroot%_libdir/gimp/%gimpver/plug-ins
 cp -a themes %buildroot%_gamesdatadir/%name
 
 %files
-%doc README changelog.txt leveleditor
+%doc README changelog.txt
 %_gamesbindir/%name
 %dir %_gamesdatadir/%name
 %_gamesdatadir/%name/*
 
-%files leveleditor
-%doc leveleditor
-%_libdir/gimp/2.0/plug-ins/*
+#files leveleditor
+#doc leveleditor
+#_libdir/gimp/2.0/plug-ins/*
 
 %changelog
+* Wed Feb 12 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.03-alt2
+- disabled gimp-plugin
+
 * Tue Sep 26 2017 Fr. Br. George <george@altlinux.ru> 1.03-alt1
 - Manual update to 1.03
 
