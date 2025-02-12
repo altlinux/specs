@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p11
-Release: alt1
+Release: alt2
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -132,7 +132,7 @@ Requires: rastercarve
 # engraving and v-carving
 Requires: f-engrave ttf2cxf_stream
 Requires: dmap2gcode
-Requires: gimp-plugin-laser
+#Requires: gimp-plugin-laser
 # gcode-editor
 Requires: gcodeworkshop
 
@@ -210,6 +210,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Wed Feb 12 2025 Anton Midyukov <antohami@altlinux.org> p11-alt2
+- CAM: remove gimp-plugin-laser (Closes: 53036)
+
 * Sat Sep 28 2024 Anton Midyukov <antohami@altlinux.org> p11-alt1
 - bump version
 - engineering-CAM: add gcodeworkshop
