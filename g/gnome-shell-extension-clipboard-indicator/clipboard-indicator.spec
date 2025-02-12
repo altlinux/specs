@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-clipboard-indicator
-Version: 65
+Version: 66
 Release: alt1
 Summary: Clipboard manager for GNOME Shell
 License: MIT
@@ -37,5 +37,8 @@ over 1M downloads.
 %doc README.rst
 
 %changelog
+* Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 66-alt1
+- New version 66.
+
 * Fri Dec 20 2024 Anton Midyukov <antohami@altlinux.org> 65-alt1
 - initial build
