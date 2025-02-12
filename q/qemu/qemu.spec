@@ -139,7 +139,7 @@
 %define ui_spice_list %{?_enable_spice:app core}
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
 %define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
-%define qemu_arches aarch64 alpha arm avr cris hppa loongarch m68k microblaze mips or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
+%define qemu_arches aarch64 alpha arm avr hppa loongarch m68k microblaze mips or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
 
 %global _group vmusers
 %global rulenum 90
@@ -150,7 +150,7 @@
 # }}}
 
 Name: qemu
-Version: 9.1.2
+Version: 9.2.1
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -186,9 +186,9 @@ BuildRequires: /dev/kvm
 BuildRequires: /proc /dev/pts
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: meson >= 1.1.0
+BuildRequires: meson >= 1.5.0
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static libdw-devel-static libatomic-devel-static
-BuildRequires: glib2-devel >= 2.66 libgio-devel
+BuildRequires: glib2-devel >= 2.66 libgio-devel /usr/bin/gdbus-codegen
 BuildRequires: libdw-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
 BuildRequires: libcap-ng-devel
@@ -1249,7 +1249,7 @@ echo "%_binfmtdir/qemu-i486-static.conf" >> user-static-binfmt-x86.list
 
 %check
 
-%define archs_skip_tests ppc64le
+%define archs_skip_tests ppc64le %ix86
 #%%define archs_skip_tests ""
 
 %ifarch %archs_skip_tests
@@ -1296,9 +1296,6 @@ groupadd -r -f %_group
 %attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
 
 %dir %_datadir/qemu/vhost-user
-
-%_libexecdir/virtfs-proxy-helper
-%_man1dir/virtfs-proxy-helper.*
 
 %files system -f %name.lang
 %if_enabled have_kvm
@@ -1398,6 +1395,13 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Feb 11 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.1-alt1
+- 9.2.1 (Fixes: CVE-2023-2861).
+
+* Thu Jan 23 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.0-alt1
+- 9.2.0.
+- Disable check for 32-bit x86 arch.
+
 * Mon Dec 02 2024 Alexey Shabalin <shaba@altlinux.org> 9.1.2-alt1
 - 9.1.2 (ALT#52312).
 
@@ -1429,7 +1433,7 @@ groupadd -r -f %_group
 - Add udev-rules-hotplug-cpu requires to qemu-guest-agent.
 
 * Tue May 07 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.3-alt1
-- 8.2.3 (Fixes:  CVE-2024-3446, CVE-2024-3447, CVE-2024-3567).
+- 8.2.3 (Fixes: CVE-2024-3446, CVE-2024-3447, CVE-2024-3567).
 
 * Fri May 03 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.2.2-alt4
 - LoongArch: load UEFI via pflash (like other architectures do).
@@ -1701,7 +1705,7 @@ groupadd -r -f %_group
 - 2.12.0
 - use python3 for build
 - generate binfmt configs with qemu-binfmt-conf.sh
-- build all supported arch targets (riscv too)
+%ix86- build all supported arch targets (riscv too)
 - new packages:
   + qemu-audio-alsa
   + qemu-audio-oss
