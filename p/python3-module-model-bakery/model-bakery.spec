@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.20.1
+Version: 1.20.3
 Release: alt1
 Summary: Smart object creation facility for Django
 License: Apache-2.0
@@ -50,6 +50,9 @@ code.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 12 2025 Stanislav Levin <slev@altlinux.org> 1.20.3-alt1
+- 1.20.1 -> 1.20.3.
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 1.20.1-alt1
 - 1.20.0 -> 1.20.1.
 
