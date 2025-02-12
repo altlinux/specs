@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -97,9 +97,7 @@ PYTHONPATH=%buildroot%python3_sitelibdir \
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/%pypi_name/test/
-rm -r %buildroot%python3_sitelibdir/mypyc/external/googletest/
 rm -r %buildroot%python3_sitelibdir/mypyc/test/
-rm -r %buildroot%python3_sitelibdir/mypyc/test-data/
 
 %if_without mypyc
 rm %buildroot%_bindir/mypyc
@@ -111,6 +109,9 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %ifarch %ix86 armh
 %define pytest_args --ignore mypyc/test
 %endif
+# https://github.com/python/mypy/issues/18610
+# disable CPython assertions
+export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %pyproject_run_pytest -ra %{?pytest_args}
 
 %files
@@ -128,12 +129,12 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 %files -n python3-module-mypyc
 %python3_sitelibdir/mypyc/
 %_bindir/mypyc
-# Build script for mypyc C runtime library unit tests
-%exclude %python3_sitelibdir/mypyc/lib-rt/setup.py
-%exclude %python3_sitelibdir/mypyc/lib-rt/__pycache__/setup.*
 %endif
 
 %changelog
+* Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.15.0-alt1
+- 1.14.1 -> 1.15.0.
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 1.14.1-alt1
 - 1.14.0 -> 1.14.1.
 
