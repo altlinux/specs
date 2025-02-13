@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.37.61
-Release: alt9.gitfae724a2c
+Release: alt10.git9afec506a
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -177,6 +177,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Thu Feb 13 2025 Anton Farygin <rider@altlinux.ru> 1.37.61-alt10.git9afec506a
+- updated to upstream 9afec506a
+
 * Mon Feb 10 2025 Anton Farygin <rider@altlinux.ru> 1.37.61-alt9.gitfae724a2c
 - updated to upstream fae724a2c
 - removed janus dependency in the zoneminder systemd unit file (closes: #52968)
