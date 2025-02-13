@@ -4,7 +4,7 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.13.1
+Version: 1.14.0
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -79,12 +79,10 @@ EOF
 %build
 NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 
-pushd docs
-go-md2man -in %name.1.md -out %name.1
-popd
+%make -C docs
 
 %install
-%makeinstall_std PREFIX=%_prefix SYSTEMDDIR=%_unitdir LIBEXECDIR=%_libexecdir
+%makeinstall_std PREFIX=%_prefix SYSTEMDDIR=%_unitdir LIBEXECDIR=%_libexecdir 
 
 %post
 %post_systemd_postponed %name-dhcp-proxy.service
@@ -97,10 +95,14 @@ popd
 %files
 %doc README.md
 %_libexecdir/podman/%name
-%_man1dir/%name.1*
+%_man1dir/*
+%_man7dir/*
 %_unitdir/*
 
 %changelog
+* Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
+- New version 1.14.0.
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.13.1-alt1
 - New version 1.13.1.
 
