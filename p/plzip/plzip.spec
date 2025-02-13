@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: plzip
-Version: 1.10
+Version: 1.12
 Release: alt1
 Summary: Plzip is a parallel version of the lzip data compressor
 License: GPLv3+
@@ -42,6 +42,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Fri Jan 31 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.12-alt1
+- Updated to upstream version 1.12.
+
 * Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.10-alt1
 - Updated to upstream version 1.10.
 
