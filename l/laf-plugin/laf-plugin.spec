@@ -1,16 +1,21 @@
 Name: laf-plugin
 Version: 1.0
-Release: alt3
+Release: alt3.1
 Summary: Generic plugin framework for Java look-and-feels
 Group: Development/Java
 License: BSD and zlib
 BuildArch: noarch
 Url: https://laf-plugin.dev.java.net/
 
+Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: https://laf-plugin.dev.java.net/files/documents/4261/50297/%name-all.tar
 Source1: %name-build.xml
 
-BuildRequires: ant rpm-build-java objectweb-asm java-devel
+BuildRequires: ant rpm-build-java objectweb-asm
+
+# Build this with the oldest JDK available, to allow dependent
+# packages (e,g, skinlf) use any JDK.
+BuildRequires: java-1.8.0-devel
 
 %description
 The goal of this project is to provide a generic plugin framework for
@@ -33,6 +38,9 @@ install -m644 drop/%name-50.jar -D %buildroot%_javadir/%name.jar
 %_javadir/%name.jar
 
 %changelog
+* Thu Feb 13 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0-alt3.1
+- NMU: Build with Java 1.8.0 to fix rebuilding of skinlf 6.7.
+
 * Wed Nov 15 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0-alt3
 - Fixed build dependencies.
 
