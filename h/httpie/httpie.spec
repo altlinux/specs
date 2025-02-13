@@ -1,28 +1,36 @@
-%define py3bdir ../%name-%version-python3-build
-%define realversion 2.3.0
+%define _unpackaged_files_terminate_build 1
+%define pypi_name httpie
+
+%def_with check
 
 Name: httpie
-Version: 2.3.0
+Version: 3.2.4
 Release: alt3
 
-Summary: A Curl-like tool for humans
+Summary: HTTPie: modern, user-friendly command-line HTTP client for the API era
 Group: Networking/WWW
 License: BSD
 Url: http://httpie.org
+VCS: https://github.com/httpie/cli.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-Pygments python3-module-requests
-BuildRequires: help2man
+BuildRequires: python3-module-setuptools
 
-Requires: python3-module-requests >= 2.11.0
-Requires: python3-module-Pygments >= 2.1.3
-Requires: python3-module-socks
-
-Obsoletes: httpie-python3 < %EVR
+%if_with check
+BuildRequires: python3-module-pygments
+BuildRequires: python3-module-requests_toolbelt
+BuildRequires: python3-module-rich
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-multidict
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-httpbin
+BuildRequires: python3-module-responses
+BuildRequires: python3-module-pytest-mock
+%endif
 
 %description
 HTTPie is a CLI HTTP utility built out of frustration with existing tools. The
@@ -35,33 +43,35 @@ responses.
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%autopatch -p1
 
 %build
-%__python3 setup.py build
+%pyproject_build
 
 %install
-%__python3 setup.py install --skip-build --root %buildroot
+%pyproject_install
 
-mkdir -p %buildroot/%_man1dir
-
-export PYTHONPATH=%buildroot%python3_sitelibdir
-help2man --no-discard-stderr %buildroot/%_bindir/http > %buildroot/%_man1dir/http.1
-help2man --no-discard-stderr %buildroot/%_bindir/https > %buildroot/%_man1dir/https.1
+%check
+##https://github.com/httpie/cli/issues/1276#issuecomment-1019441082
+%pyproject_run_pytest -m "not requires_installation"
 
 %files
 %_bindir/http
+%_bindir/httpie
 %_bindir/https
-%python3_sitelibdir/%name
-%python3_sitelibdir/%name-%{realversion}*
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%{version}*
 %_man1dir/http.1*
 %_man1dir/https.1*
-%doc LICENSE README.rst
-
+%_man1dir/httpie.1*
+%doc LICENSE README.md
 
 %changelog
+* Wed Jan 22 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.2.4-alt3
+- New version 3.2.4
+- Updated build system
+  + enable tests
+
 * Mon Dec 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt3
 - Updated runtime dependencies.
 
