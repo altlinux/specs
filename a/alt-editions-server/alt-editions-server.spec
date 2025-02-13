@@ -2,7 +2,7 @@
 
 Name: alt-editions-server
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Editions of BaseALT distribution ALT Server.
 License: GPLv2+
@@ -16,7 +16,6 @@ BuildRequires(pre): rpm-macros-alterator
 BuildRequires: alterator-entry >= 0.2.0
 BuildRequires: cmark
 
-Requires: alterator-interface-edition
 Requires: alt-os-editions
 
 %description
@@ -54,9 +53,13 @@ find ./editions -name '*.edition' -type f -exec alterator-entry validate {} \+
 %_alterator_datadir/editions
 
 %changelog
+* Thu Feb 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt2
+- Remove alterator-interface-edition from requires.
+- Fix bogus date in changelog.
+
 * Mon Feb 10 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.1-alt1
 - The initial basic set of components and components included in the
   server edition has been formed (thx Sergey Savelev)
 
-* Fri Jan 10 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
+* Fri Jan 10 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
 - Initial build.
