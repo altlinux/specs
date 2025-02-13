@@ -1,5 +1,5 @@
 Name: lv2-gmsynth-plugin
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: General MIDI Sample Player Plugin
@@ -34,6 +34,9 @@ cp -pv sf2/README README.sf2
 %_libdir/lv2/*
 
 %changelog
+* Thu Feb 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.2-alt1
+- 0.6.2 released
+
 * Sun Jan 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.1-alt1
 - 0.6.1 released
 
