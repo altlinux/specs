@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: usbguard-notifier
-Version: 2.1
+Version: 3.0
 Release: alt1
 
 Summary: Notification module for usbguard
@@ -12,10 +12,10 @@ Url: https://gitlab.basealt.space/fomchenkovda/usbguard-notifier
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-xdg
 BuildRequires: cmake
-BuildRequires: rpm-build-systemd
-BuildRequires: gcc-c++
-BuildRequires: qt5-tools-devel
+BuildRequires: qt6-tools-devel
+
 Requires: usbguard-dbus
 
 %description
@@ -31,21 +31,17 @@ Notification module for usbguard.
 %install
 %cmake_install
 
-%post
-%systemd_user_post %name.service
-
-%preun
-%systemd_user_preun %name.service
-
-%postun
-%systemd_user_postun %name.service
-
 %files
 %_bindir/%name
-%_datadir/%name
-%_libexecdir/systemd/user/%name.service
+%_datadir/%name/translations/*.qm
+%_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Thu Oct 31 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 3.0-alt1
+- don't use the systemd service
+- update the doc
+- migrate to qt6
+
 * Mon May 06 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.1-alt1
 - Correct the service file
 - Change the license format and macro for the build
