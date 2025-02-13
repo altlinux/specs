@@ -1,7 +1,7 @@
 %define plugin hypr-darkwindow
 
 Name: hyprland-plugin-%plugin
-Version: 0.46.2
+Version: 0.47.2
 Release: alt1
 License: MIT
 
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libglvnd)
+BuildRequires: pkgconfig(re2)
 
 %description
 %summary.
@@ -47,6 +48,9 @@ install out/%plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Thu Feb 13 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.47.2-alt1
+- new version 0.47.2 (with rpmrb script)
+
 * Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.46.2-alt1
 - new version 0.46.2 (with rpmrb script)
 - switch build to commit-based

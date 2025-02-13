@@ -1,5 +1,5 @@
 Name: hyprpaper
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 License: BSD-3-Clause
 
@@ -31,12 +31,6 @@ BuildRequires: pkgconfig(libmagic)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(pangocairo)
-BuildRequires: pkgconfig(libjpeg)
-BuildRequires: pkgconfig(libwebp)
-
-BuildRequires: pkgconfig(libjxl)
-BuildRequires: pkgconfig(libjxl_cms)
-BuildRequires: pkgconfig(libjxl_threads)
 
 BuildRequires: libglvnd-devel
 
@@ -62,6 +56,9 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %_userunitdir/%name.service
 
 %changelog
+* Thu Jan 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.4-alt1
+- new version 0.7.4 (with rpmrb script)
+
 * Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.3-alt1
 - new version 0.7.3 (with rpmrb script)
 - add a systemd service

@@ -1,7 +1,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.46.2
+Version: 0.47.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 
-BuildRequires: meson
+BuildRequires: meson cmake
 BuildRequires: jq
 
 BuildRequires: pkgconfig(hyprcursor)
@@ -65,6 +65,7 @@ BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xwayland)
 BuildRequires: libdisplay-info-devel
 BuildRequires: libtomlplusplus-devel
+BuildRequires: glaze-devel
 
 BuildRequires: pkgconfig(hwdata)
 
@@ -98,6 +99,7 @@ subst '/generateVersion\.sh/d' meson.build
 %files
 %doc README.md LICENSE
 %_bindir/Hyprland
+%_bindir/hyprland
 %_bindir/hyprctl
 %_bindir/hyprpm
 
@@ -124,6 +126,11 @@ subst '/generateVersion\.sh/d' meson.build
 %_includedir/%name
 
 %changelog
+* Fri Feb 07 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.47.2-alt1
+- new version 0.47.2 (with rpmrb script)
+- add hyprland symlink to Hyprland
+- config: master:always_center_master -> master:slave_count_for_center_master
+
 * Fri Jan 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.46.2-alt1
 - new version 0.46.2 (with rpmrb script)
 - spec: drop outdated build flags

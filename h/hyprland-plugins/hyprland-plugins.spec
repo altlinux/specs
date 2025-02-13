@@ -1,7 +1,7 @@
-%define plugins borders-plus-plus csgo-vulkan-fix hyprbars hyprexpo hyprtrails hyprwinwrap
+%define plugins borders-plus-plus csgo-vulkan-fix hyprbars hyprexpo hyprtrails hyprwinwrap xtra-dispatchers
 
 Name: hyprland-plugins
-Version: 0.46.2
+Version: 0.47.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -81,6 +81,13 @@ Group: Graphical desktop/Other
 %description -n hyprland-plugin-hyprwinwrap
 %summary.
 
+%package -n hyprland-plugin-xtra-dispatchers
+Summary: A plugin to add some extra dispatchers
+Group: Graphical desktop/Other
+
+%description -n hyprland-plugin-xtra-dispatchers
+%summary.
+
 %prep
 %setup
 
@@ -114,7 +121,14 @@ done
 %files -n hyprland-plugin-hyprwinwrap
 %_libdir/hyprland/hyprwinwrap.so
 
+%files -n hyprland-plugin-xtra-dispatchers
+%_libdir/hyprland/xtra-dispatchers.so
+
 %changelog
+* Fri Feb 07 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.47.2-alt1
+- new version 0.47.2 (with rpmrb script)
+- new plugin: xtra-dispatchers
+
 * Mon Dec 23 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.46.2-alt1
 - new version 0.46.2 (with rpmrb script)
 

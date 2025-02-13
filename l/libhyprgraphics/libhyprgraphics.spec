@@ -1,7 +1,7 @@
 %define soversion 0
 
 Name: libhyprgraphics
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -25,6 +25,7 @@ BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(libwebp)
+BuildRequires: pkgconfig(spng)
 BuildRequires: pkgconfig(libjxl)
 BuildRequires: pkgconfig(libjxl_cms)
 BuildRequires: pkgconfig(libjxl_threads)
@@ -74,5 +75,8 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprgraphics.pc
 
 %changelog
+* Fri Feb 07 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt1
+- new version 0.1.2 (with rpmrb script)
+
 * Mon Dec 23 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.1-alt1
 - Initial build
