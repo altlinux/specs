@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    blueman
-Version: 2.4.3
+Version: 2.4.4
 Release: alt1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
@@ -29,6 +29,8 @@ BuildRequires: python3-module-dbus
 
 Requires: bluez
 Requires: typelib(Gtk) = 3.0
+# https://bugzilla.altlinux.org/52950
+Requires: python3-module-pygobject3
 
 %add_python3_req_skip gi.repository.GObject
 
@@ -102,6 +104,10 @@ echo 'enable blueman-mechanism.service' >%buildroot%_presetdir/80-blueman.preset
 %_sysconfdir/xdg/autostart/blueman.desktop
 
 %changelog
+* Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 2.4.4-alt1
+- New version 2.4.4.
+- Requires: python3-module-pygobject3 (see alt bug 52950)
+
 * Sun Jul 28 2024 Anton Midyukov <antohami@altlinux.org> 2.4.3-alt1
 - new version 2.4.3
 
