@@ -6,7 +6,7 @@
 %define soname 0
 
 Name: openpgl
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 Summary: Intel(R) Open Path Guiding Library
 Group: Development/Other
@@ -83,6 +83,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_libdir/cmake/%{name}-%{version}
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 0.7.0-alt1
+- 0.7.0.
+
 * Wed Mar 06 2024 L.A. Kostis <lakostis@altlinux.ru> 0.6.0-alt1
 - 0.6.0.
 
