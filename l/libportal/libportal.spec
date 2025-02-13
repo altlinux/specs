@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: libportal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -318,6 +318,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Feb 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.1-alt1
+- 0.9.1
+
 * Sun Dec 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.0-alt1
 - 0.9.0
 
