@@ -1,5 +1,4 @@
 %def_disable snapshot
-%define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
 %def_enable man
@@ -8,7 +7,7 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.19.2
+Version: 1.19.3
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -93,7 +92,7 @@ the functionality of the installed %name.
 
 %prep
 %setup
-sed -i 's/pytest-3/py.test-3/' tests/meson.build
+sed -i 's/pytest-3/py.test-3/' meson.build
 
 %build
 %meson \
@@ -121,6 +120,7 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %_libexecdir/%name-validate-sound
 %_datadir/dbus-1/interfaces/org.freedesktop.portal.*.xml
 %_datadir/dbus-1/interfaces/org.freedesktop.impl.portal.*.xml
+%_datadir/dbus-1/interfaces/org.freedesktop.host.portal.Registry.xml
 %_datadir/dbus-1/services/org.freedesktop.portal.Desktop.service
 %_datadir/dbus-1/services/org.freedesktop.portal.Documents.service
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
@@ -143,6 +143,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Thu Feb 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.19.3-alt1
+- 1.19.3
+
 * Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.19.2-alt1
 - 1.19.2
 
