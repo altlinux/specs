@@ -3,7 +3,7 @@
 # Temporarily disable tests on i586 due to kvm bug
 # see:  https://www.mail-archive.com/qemu-devel@nongnu.org/msg928879.html
 # 1.48.6: Test suite fails on armh and ppc64le
-%ifarch i586 armh ppc64le
+%ifarch %ix86 armh ppc64le
 %def_without check
 %else
 %def_without check
@@ -30,8 +30,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.52.0
-Release: alt2
+Version: 1.54.0
+Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -40,9 +40,8 @@ Url: http://libguestfs.org/
 
 Source: %name-%version.tar
 Source2: %name-%version-common.tar
-Patch1: %name-1.52.0-alt-fixes.patch
+Patch1: %name-1.54.0-alt-fixes.patch
 Patch2: %name-1.46.0-alt-fixes-common.patch
-Patch3: 0001-Add-GOST-checksum-command-support.patch
 
 BuildRequires: /proc
 BuildRequires: gcc gcc-c++ flex
@@ -69,6 +68,7 @@ BuildRequires: libtirpc-devel
 BuildRequires: java-devel-default jpackage-utils
 
 %if_enabled introspection
+BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libgjs-devel
 %endif
 
@@ -306,7 +306,6 @@ sed -i -e 's/"cap_chown=ep"/"= cap_chown+ep"/' generator/actions_core.ml
 pushd common
 %patch2 -p1
 popd
-%patch3 -p1
 
 %build
 %autoreconf
@@ -563,6 +562,9 @@ fi
 %endif #erlang
 
 %changelog
+* Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.54.0-alt1
+- 1.54.0
+
 * Sat Feb 10 2024 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt2
 - add info about CVE to changelog
 

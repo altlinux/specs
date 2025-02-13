@@ -1,8 +1,8 @@
 # The source directory.
-%global source_directory 2.4-stable
+%global source_directory 2.6-stable
 
 Name: virt-v2v
-Version: 2.4.0
+Version: 2.6.0
 Release: alt1
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
@@ -21,12 +21,14 @@ BuildRequires: ocaml-gettext-devel
 BuildRequires: ocaml-fileutils-devel
 BuildRequires: ocaml-ounit-devel
 BuildRequires: libguestfs-devel
-BuildRequires: libnbd-devel
+BuildRequires: libnbd-devel >= 1.10 /usr/bin/nbdinfo /usr/bin/nbdcopy
+BuildRequires: /usr/bin/sqlite3
 BuildRequires: libaugeas-devel
 BuildRequires: bash-completion
 BuildRequires: gettext-tools
 BuildRequires: libjansson-devel
 BuildRequires: libosinfo-devel
+BuildRequires: libcrypt-devel
 BuildRequires: libvirt-devel
 BuildRequires: libvirt-kvm
 BuildRequires: libxml2-devel
@@ -82,6 +84,9 @@ find %buildroot -name '*.la' -delete
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
+- new version 2.6.0
+
 * Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 
