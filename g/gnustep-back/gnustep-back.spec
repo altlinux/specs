@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-back    
-Version: 0.31.0
-Release: alt2
+Version: 0.32.0
+Release: alt1
 Summary: The GNUstep back-end library
 License: LGPL-2.1+ and GPL-3.0+
 Group: Graphical desktop/GNUstep
@@ -100,6 +100,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Wed Feb 12 2025 Andrey Cherepanov <cas@altlinux.org> 0.32.0-alt1
+- New version.
+
 * Sat Jun 08 2024 Andrey Cherepanov <cas@altlinux.org> 0.31.0-alt2
 - Required gnustep-gui version greater than or equal to version of gnustep-back.
 

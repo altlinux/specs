@@ -2,9 +2,9 @@
 
 Name: gnustep-corebase
 Version: 0.2
-Release: alt4
+Release: alt6.gite598349
 Summary: Open implementation of CoreFoundation
-License: LGPLv2+, GPLv3+
+License: LGPL-2.0+ and GPL-3.0+
 Group: Graphical desktop/GNUstep
 Url: http://www.gnustep.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -12,11 +12,14 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 # https://github.com/gnustep/gnustep-corebase.git
 Source: %name-%version.tar
 
-BuildPreReq: gnustep-make-devel gnustep-base-devel
-BuildPreReq: libicu-devel /proc
-BuildPreReq: doxygen graphviz
-BuildPreReq: libgmp-devel libgnutls-devel libgcrypt-devel
-BuildPreReq: libxslt-devel libffi-devel zlib-devel
+ExcludeArch: armh ppc64le
+
+BuildRequires: gnustep-make-devel gnustep-base-devel
+BuildRequires: libicu-devel /proc
+BuildRequires: doxygen graphviz
+BuildRequires: libgmp-devel libgnutls-devel libgcrypt-devel
+BuildRequires: libxslt-devel libffi-devel zlib-devel
+BuildRequires: libdispatch-devel
 
 %description
 The GNUstep CoreBase Library is a library of general-purpose,
@@ -94,6 +97,12 @@ This package contains development files of the GNUstep CoreBase Library.
 %_libdir/*.so
 
 %changelog
+* Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 0.2-alt6.gite598349
+- Exclude armh and ppc64le.
+
+* Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 0.2-alt5.gite598349
+- FTBFS: new snapshot.
+
 * Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 0.2-alt4
 - Remove redundant clang-devel for build
 

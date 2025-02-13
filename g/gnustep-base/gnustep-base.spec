@@ -1,26 +1,21 @@
-%define _unpackaged_files_terminate_build 1                                                                                                                                                   
+%define _unpackaged_files_terminate_build 1
 %set_verify_elf_method unresolved=strict
-%define gnustep_ver 1.30
+%define gnustep_ver 1.31
 %def_without build_debug
 %def_without objc2
 %def_with doc
 
-# Apparently, modern autoconf does not support
-# setting AC_CONFIG_AUX_DIR dynamically
-%set_autoconf_version 2.60
-
 Name: gnustep-base
-Version: 1.30.0
+Version: 1.31.0
 Release: alt1
 Epoch: 1
 
 Summary: GNUstep Base library package
-
 License: LGPL-2.1+ and GPL-3.0+
 Group: Development/Objective-C
-Url: http://www.gnustep.org/
+URL: http://www.gnustep.org/
+VCS: https://github.com/gnustep/libs-base
 
-# http://svn.gna.org/svn/gnustep/libs/base/trunk/
 Source: %name-%version.tar
 Source1: %name.init
 Patch1: %name-alt-objc2.patch
@@ -173,6 +168,7 @@ fi
 %_libdir/libgnustep-base.so
 %_includedir/Foundation
 %_includedir/GNUstepBase
+%_includedir/CoreFoundation
 %_pkgconfigdir/%name.pc
 
 %if_with doc
@@ -182,6 +178,9 @@ fi
 %endif
  
 %changelog
+* Tue Feb 11 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.31.0-alt1
+- New version.
+
 * Thu May 30 2024 Andrey Cherepanov <cas@altlinux.org> 1:1.30.0-alt1
 - New version.
 
