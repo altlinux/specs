@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        133.0.6943.53
+Version:        133.0.6943.98
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -281,19 +281,26 @@ export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
 FLAGS=
-FLAGS+=' -Wno-unknown-warning-option -Wno-deprecated-declarations'
+FLAGS+=' -Wno-unknown-warning-option -Wno-deprecated-declarations -Wno-unknown-pragmas'
 FLAGS+=' -Wno-unused-command-line-argument -Wno-unused-but-set-variable'
-FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
+FLAGS+=' -Wno-unused-result -Wno-unused-function -Wno-unused-variable -Wno-unused-private-field'
 FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration'
 FLAGS+=' -Wno-unknown-attributes'
+FLAGS+=' -Wno-conversion'
+FLAGS+=' -fno-delete-null-pointer-checks'
 FLAGS+=' -DUSE_SYSTEM_MINIZIP'
 FLAGS+=' -stdlib=libc++'
-FLAGS+=' -I/usr/include/c++/v1 -I/usr/include/c++/14 -I/usr/include/c++/14/x86_64-alt-linux'
+# FLAGS+=' -I/usr/include/c++/v1 -I/usr/include/c++/14 -I/usr/include/c++/14/x86_64-alt-linux'
+FLAGS+=' -I/usr/include/c++/v1'
 FLAGS+=' -Wno-error -Wno-undef'
 
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
 export LDFLAGS="$LDFLAGS -stdlib=libc++ -L/usr/lib64 -lc++"
+
+# Debian:
+# enable_vr=false
+# enable_reading_list=false
 
 gn_arg=()
 gn_arg+=( custom_toolchain=\"//build/toolchain/linux/unbundle:default\" )
@@ -315,6 +322,7 @@ gn_arg+=( use_system_libffi=true )
 gn_arg+=( use_system_libdrm=false )
 gn_arg+=( use_system_libjpeg=true )
 gn_arg+=( use_system_libopenjpeg2=true )
+gn_arg+=( use_libjpeg_turbo=true )
 gn_arg+=( use_system_libpng=true )
 gn_arg+=( use_system_minigbm=true )
 gn_arg+=( use_system_zlib=true )
@@ -342,6 +350,9 @@ gn_arg+=( ozone_platform_x11=true )
 gn_arg+=( ozone_platform_wayland=true )
 #gn_arg+=( angle_enable_gl=true )
 #gn_arg+=( angle_enable_vulkan=true )
+gn_arg+=( angle_has_histograms=false )
+gn_arg+=( angle_build_tests=false )
+gn_arg+=( build_angle_perftests=false )
 
 # ffmpeg
 gn_arg+=( ffmpeg_branding=\"Chrome\" )
@@ -349,11 +360,14 @@ gn_arg+=( proprietary_codecs=true )
 
 # Remove debug
 gn_arg+=( is_debug=false )
+gn_arg+=( enable_iterator_debugging=false )
 gn_arg+=( dcheck_always_on=false )
 gn_arg+=( dcheck_is_configurable=false )
 gn_arg+=( symbol_level=0 )
 gn_arg+=( blink_symbol_level=0 )
 gn_arg+=( v8_symbol_level=0 )
+gn_arg+=( v8_enable_backtrace=true )
+gn_arg+=( disable_fieldtrial_testing_config=true )
 
 gn_arg+=( enable_nacl=false )
 gn_arg+=( is_component_ffmpeg=false )
@@ -385,6 +399,8 @@ gn_arg+=( rustc_version=\"$(rustc --version)\" )
 
 %ifnarch x86_64
 gn_arg+=( icu_use_data_file=false )
+%else
+gn_arg+=( icu_use_data_file=true )
 %endif
 
 %ifnarch x86_64 aarch64
@@ -393,12 +409,12 @@ gn_arg+=( enable_vulkan=false )
 gn_arg+=( enable_vulkan=true )
 %endif
 gn_arg+=( use_system_jsoncpp=false )
-gn_arg+=( use_bundled_jsoncpp=true )
 gn_arg+=( use_system_woff2=false )
 gn_arg+=( use_bundled_woff2=true )
 gn_arg+=( use_system_snappy=false )
-gn_arg+=( use_bundled_snappy=true )
 gn_arg+=( use_system_libtiff=false )
+gn_arg+=( safe_browsing_use_unrar=false )
+gn_arg+=( build_dawn_tests=false )
 
 %if_enabled google_api_keys
 ### From 2013 until early 2021, Google permitted distribution builds of
@@ -548,6 +564,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Feb 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 133.0.6943.98-alt1
+- New version (133.0.6943.98).
+- Security fixes:
+  + CVE-2025-0995: Use after free in V8
+  + CVE-2025-0996: Inappropriate implementation in Browser UI
+  + CVE-2025-0997: Use after free in Navigation
+  + CVE-2025-0998: Out of bounds memory access in V8
+
 * Wed Feb 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 133.0.6943.53-alt1
 - New version (133.0.6943.53).
 - Security fixes:
