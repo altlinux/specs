@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Utilities for handling packages
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 13 2025 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
+- Updated to 2.2.0.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 

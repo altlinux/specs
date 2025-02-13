@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 
 Summary: Parse and create Python distribution metadata
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 13 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Tue May 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.8.1-alt1
 - Updated to 0.8.1.
 
