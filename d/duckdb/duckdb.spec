@@ -7,7 +7,7 @@
 %def_without check
 
 Name: duckdb
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
 
 Summary: An analytical in-process SQL database management system
@@ -53,7 +53,7 @@ necessary to develop DuckDB applications.
 	-DOVERRIDE_GIT_DESCRIBE="v%version" \
 	-DOVERRIDE_GIT_RELEASE="%release" \
 	-DOVERRIDE_GIT_NOHASH=1 \
-	-DBUILD_EXTENSIONS="autocomplete;icu;tpch;tpcds;fts;httpfs;json;jemalloc" \
+	-DBUILD_EXTENSIONS="autocomplete;icu;tpch;tpcds;json;jemalloc" \
 	-DCMAKE_BUILD_TYPE=Release
 
 %ninja_build -C "%_cmake__builddir"
@@ -74,6 +74,9 @@ EOF
 %_libdir/libduckdb*.so
 %_libdir/duckdb/*_extension.so
 %_libdir/libsqlite3_api_wrapper.so
+%_libdir/duckdb/libduckdb_zstd.so
+%_libdir/libcore_functions_extension.so
+
 %_sysconfdir/ld.so.conf.d/duckdb.conf
 
 %files devel
@@ -81,5 +84,8 @@ EOF
 %_cmakedir/DuckDB/
 
 %changelog
+* Thu Feb 13 2025 Artem Krasovskiy <aibure@altlinux.org> 1.2.0-alt1
+- New version 1.2.0-alt1.
+
 * Sat Dec 28 2024 Artem Krasovskiy <aibure@altlinux.org> 1.1.3-alt1
 - Initial build for ALT.
