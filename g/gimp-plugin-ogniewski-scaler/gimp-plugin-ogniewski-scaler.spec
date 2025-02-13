@@ -2,12 +2,14 @@
 
 Name:          gimp-plugin-ogniewski-scaler
 Version:       20250212
-Release:       alt1
+Release:       alt1.1
 Summary:       Image scaling plugin for the GIMP
 License:       GPL-3.0-only
 Group:         Graphics
 Url:           https://github.com/pannacotta98/ogniewski-scaler
 Vcs:           https://github.com/pannacotta98/ogniewski-scaler.git
+
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires: gcc-c++
@@ -24,6 +26,10 @@ Image scaling plugin for the GIMP
 touch NEWS README AUTHORS
 
 %build
+# This project uses floor(3), so should link with libm.
+# Required at least on riscv64, should not hurt anywhere.
+export LIBS=-lm
+
 %autoreconf
 %configure
 %make_build
@@ -38,6 +44,9 @@ touch NEWS README AUTHORS
 
 
 %changelog
+* Thu Feb 13 2025 Ivan A. Melnikov <iv@altlinux.org> 20250212-alt1.1
+- NMU: explicitly link with libm (fixes build on riscv64).
+
 * Wed Feb 12 2025 Pavel Skrylev <majioa@altlinux.org> 20250212-alt1
 - 20220826 -> 20250212
 
