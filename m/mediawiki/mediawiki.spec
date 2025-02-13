@@ -1,36 +1,10 @@
+%define defphp php%php_defver
 %define webappdir %webserver_webappsdir/mediawiki
 %define major 1.43
 
-%if_feature php7 7.4.3
-%def_with php7
-%define defphp php7
-%endif
-
-%if_feature php80 8.0.0
-%def_with php80
-%define defphp php8.0
-%endif
-
-%if_feature php81 8.1.0
-%def_with php81
-%define defphp php8.1
-%endif
-
-%if_feature php83 8.3.0
-%def_with php83
-%define defphp php8.3
-%endif
-
-# default
-%if_feature php82 8.2.0
-%def_with php82
-%define defphp php8.2
-%endif
-
-
 Name: mediawiki
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -60,11 +34,9 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-mediawiki >= 0.5
 BuildRequires(pre): rpm-build-webserver-common
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-features >= 0.8
+BuildRequires(pre): rpm-build-php
 
-#BuildRequires: apache2-devel
-
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
 Requires: %name-apache2
 Requires: %defphp-mysqlnd-mysqli
 
@@ -80,84 +52,24 @@ configuration.
 
 This is a typical %name installation (with Apache2 and MySQL support).
 
-Also you can install %name-php8.2 (%name-php8.1, %name-php8.0, %name-php7)
+Also you can install %name-%defphp
 package to get all needed php requires.
 
 If you wish %name without any php dependencies, install only %name-common package.
 
-%package -n %name-php7
-Summary: Mediawiki's requires for php 7.4
+
+%package -n %name-%defphp
+Summary: Mediawiki's requires for %defphp
 Group: Networking/WWW
 Requires: webserver-common
 # https://www.mediawiki.org/wiki/Compatibility
-Requires: php7-libs >= 7.4.3
-# inside php7-libs
-# Requires: php7-ctype php7-iconv php7-json php7-xml
-Requires: php7-dom php7-fileinfo php7-intl php7-mbstring
-Requires: php7-mcrypt php7-xmlreader php7-gd
-Requires: php7-opcache php7-apcu
-Requires: php7-openssl
-
-Requires: %name-common = %EVR
-
-
-%package -n %name-php8.0
-Summary: Mediawiki's requires for php 8.0
-Group: Networking/WWW
-Requires: webserver-common
-# https://www.mediawiki.org/wiki/Compatibility
-Requires: php8.0-libs >= 8.0.0
-# inside php8.0-libs
-# Requires: php8.0-ctype php8.0-iconv php8.0-json php8.0-xml
-Requires: php8.0-dom php8.0-fileinfo php8.0-intl php8.0-mbstring
-Requires: php8.0-mcrypt php8.0-xmlreader php8.0-gd
-Requires: php8.0-opcache php8.0-apcu
-Requires: php8.0-openssl
-
-Requires: %name-common = %EVR
-
-%package -n %name-php8.1
-Summary: Mediawiki's requires for php 8.1
-Group: Networking/WWW
-Requires: webserver-common
-# https://www.mediawiki.org/wiki/Compatibility
-Requires: php8.1-libs >= 8.1.0
-# inside php8.1-libs
-# Requires: php8.1-ctype php8.1-iconv php8.1-json php8.1-xml
-Requires: php8.1-dom php8.1-fileinfo php8.1-intl php8.1-mbstring
-Requires: php8.1-mcrypt php8.1-xmlreader php8.1-gd
-Requires: php8.1-opcache php8.1-apcu
-Requires: php8.1-openssl
-
-Requires: %name-common = %EVR
-
-%package -n %name-php8.2
-Summary: Mediawiki's requires for php 8.2
-Group: Networking/WWW
-Requires: webserver-common
-# https://www.mediawiki.org/wiki/Compatibility
-Requires: php8.2-libs >= 8.2.0
-# inside php8.1-libs
-# Requires: php8.2-ctype php8.2-iconv php8.2-json php8.2-xml
-Requires: php8.2-dom php8.2-fileinfo php8.2-intl php8.2-mbstring
-Requires: php8.2-mcrypt php8.2-xmlreader php8.2-gd
-Requires: php8.2-opcache php8.2-apcu
-Requires: php8.2-openssl
-
-Requires: %name-common = %EVR
-
-%package -n %name-php8.3
-Summary: Mediawiki's requires for php 8.2
-Group: Networking/WWW
-Requires: webserver-common
-# https://www.mediawiki.org/wiki/Compatibility
-Requires: php8.3-libs >= 8.2.0
-# inside php8.1-libs
-# Requires: php8.3-ctype php8.3-iconv php8.3-json php8.3-xml
-Requires: php8.3-dom php8.3-fileinfo php8.3-intl php8.3-mbstring
-Requires: php8.3-mcrypt php8.3-xmlreader php8.3-gd
-Requires: php8.3-opcache php8.3-apcu
-Requires: php8.3-openssl
+Requires: %defphp-libs >= 8.0.0
+# inside %defphp-libs
+# Requires: %defphp-ctype %defphp-iconv %defphp-json %defphp-xml
+Requires: %defphp-dom %defphp-fileinfo %defphp-intl %defphp-mbstring
+Requires: %defphp-mcrypt %defphp-xmlreader %defphp-gd
+Requires: %defphp-opcache %defphp-apcu
+Requires: %defphp-openssl
 
 Requires: %name-common = %EVR
 
@@ -286,46 +198,13 @@ servers.
 
 %name-common have no php requires.
 
-%description -n %name-php7
+%description -n %name-%defphp
 MediaWiki is the software used for Wikipedia and the other Wikimedia
 Foundation websites. Compared to other wikis, it has an excellent
 range of features and support for high-traffic websites using multiple
 servers.
 
-This package contains all needed php7 requires.
-
-%description -n %name-php8.0
-MediaWiki is the software used for Wikipedia and the other Wikimedia
-Foundation websites. Compared to other wikis, it has an excellent
-range of features and support for high-traffic websites using multiple
-servers.
-
-This package contains all needed php8.0 requires.
-
-%description -n %name-php8.1
-MediaWiki is the software used for Wikipedia and the other Wikimedia
-Foundation websites. Compared to other wikis, it has an excellent
-range of features and support for high-traffic websites using multiple
-servers.
-
-This package contains all needed php8.1 requires.
-
-%description -n %name-php8.2
-MediaWiki is the software used for Wikipedia and the other Wikimedia
-Foundation websites. Compared to other wikis, it has an excellent
-range of features and support for high-traffic websites using multiple
-servers.
-
-This package contains all needed php8.2 requires.
-
-%description -n %name-php8.3
-MediaWiki is the software used for Wikipedia and the other Wikimedia
-Foundation websites. Compared to other wikis, it has an excellent
-range of features and support for high-traffic websites using multiple
-servers.
-
-This package contains all needed php8.3 requires.
-
+This package contains all needed %defphp requires.
 
 %package -n %name-apache2
 Summary: Apache2's requires and config files for %name
@@ -576,26 +455,7 @@ fi
 
 %files
 
-%if_with php7
-%files -n %name-php7
-%endif
-
-%if_with php80
-%files -n %name-php8.0
-%endif
-
-%if_with php81
-%files -n %name-php8.1
-%endif
-
-%if_with php82
-%files -n %name-php8.2
-%endif
-
-
-%if_with php83
-%files -n %name-php8.3
-%endif
+%files -n %name-%defphp
 
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
@@ -651,6 +511,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Thu Feb 13 2025 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt2
+- switch to use %php_defver from rpm-build-php
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.43.0-alt1
 - new LTS release 1.43.0
 
