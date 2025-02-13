@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20250109
+Version: 20250211
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -118,6 +118,9 @@ grep -c Mellanox LICENSE.Mellanox
 /lib/firmware/mellanox
 
 %changelog
+* Thu Feb 13 2025 Vitaly Chikunov <vt@altlinux.org> 20250211-alt1
+- Update to 20250211 (2025-02-10).
+
 * Sat Jan 11 2025 Vitaly Chikunov <vt@altlinux.org> 20250109-alt1
 - Update to 20250109 (2025-01-09).
 - spec: Remove non-installed blobs (mostly nouveau but also iwlwifi-3945-1)
