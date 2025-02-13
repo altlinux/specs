@@ -1,7 +1,7 @@
 %define repo dde-calendar
 
 Name: deepin-calendar
-Version: 6.5.0
+Version: 6.5.1
 Release: alt1
 
 Summary: Calendar for Deepin Desktop Environment
@@ -70,6 +70,9 @@ export LC_ALL=C.UTF-8
 %_userunitdir/%repo.service
 
 %changelog
+* Thu Feb 13 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.1-alt1
+- New version 6.5.1.
+
 * Tue Jan 21 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.0-alt1
 - New version 6.5.0.
 - Added vcs tag.
