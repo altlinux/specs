@@ -4,13 +4,18 @@
 # package are under the same license as the package itself.
 #
 
+%ifarch %ix86
+%def_disable man
+%else
+%def_enable man
+%endif
 %def_with demos
 %def_with examples
 %def_with motif
 
 Name: Inventor
-Version: 2.1.5
-Release: alt5
+Version: 2.1.6
+Release: alt1
 
 Summary: SGI Open Inventor (TM)
 
@@ -20,24 +25,14 @@ Url: https://github.com/aumuell/open-inventor
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Source: ftp://oss.sgi.com/projects/inventor/download/inventor-2.1.5-10.src.tar.gz
-Patch: Inventor-2.1.5-30.diff.bz2
-Patch1: Inventor-2.1.5-30-31.diff
-# GCC44 compatibility hacks
-Patch2: Inventor-2.1.5-31-32.diff
-# Misc C++ modernization stuff
-Patch3: Inventor-2.1.5-32-33.diff
-Patch4: Inventor-2.1.5-alt-DSO.diff
-# abs issue
-Patch5: Inventor-2.1.5-abs-c++17.patch
-# aarch64
-Patch6: Inventor-2.1.5-64bit.patch
-# freetype 2.9
-Patch7: Inventor-2.1.5-debian-freetype.patch
+Source0: %name-%version.tar
+Source1: libInventor.pc.in
+Source2: libInventorXt.pc.in
 
 %define hackcxxflags -O2 -fno-strict-aliasing
 
 # Automatically added by buildreq on Mon Mar 23 2009
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: gcc-c++ libGLw-devel libXext-devel libXi-devel libXt-devel libfreetype-devel libjpeg-devel
 
 BuildRequires: gcc-c++
@@ -142,45 +137,8 @@ SGI Open Inventor (TM) Source Examples from the Inventor books
 %endif
 
 %prep
-%setup -n inventor
-find -name CVS | xargs rm -rf
-%patch0 -p0
-%patch1 -p0
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-
-sed -i \
--e 's,^IVPREFIX =.*$,IVPREFIX = %prefix,' \
--e 's,^_BINDIR =.*$,_BINDIR = %_bindir,' \
--e 's,^_LIBDIR =.*$,_LIBDIR = %_libdir,' \
--e 's,^_HDRTOP =.*$,_HDRTOP = %_includedir/Inventor,' \
--e 's,^_MAN1DIR =.*$,_MAN1DIR = %_man1dir,' \
--e 's,^_MAN3DIR =.*$,_MAN3DIR = %_man3dir,' \
--e 's,^_FONTPATH =.*$,_FONTPATH = %_datadir/Inventor/fonts,' \
--e 's,^_HELPDIR =.*$,_HELPDIR = %_datadir/Inventor/help,' \
--e 's,^_DATADIR =.*$,_DATADIR = %_datadir/Inventor/data/models,' \
--e 's,^_MATERIALSDIR =.*$,_MATERIALSDIR = %_datadir/Inventor/data/materials,' \
--e 's,^_TEXTURESDIR =.*$,_TEXTURESDIR = %_datadir/Inventor/data/textures,' \
--e 's,^_DEMOBINDIR =.*$,_DEMOBINDIR = %_libdir/Inventor,' \
--e 's,^_DEMODATADIR =.*$,_DEMODATADIR = %_datadir/Inventor/data/demos,' \
--e 's,^OPTIMIZER = -O -DNDEBUG,OPTIMIZER = -DNDEBUG,' \
--e 's,(X11DIR)/lib,(X11DIR)/%_lib,g' \
-make/ivcommondefs
-
-for i in apps/demos/*/*.RUNME; do \
-  # \/: otherwise rpmcs might break second pattern on x86_64
-  # resulting in self-unmets in Inventor-demos
-  sed -i \
-    -e 's,/usr\/share/inventor/,%_datadir/Inventor/,g' \
-    -e 's,/usr\/lib/inventor/,%_libdir/Inventor/,g' \
-    $i
-done
-
-for i in *.pc.in; do
+%setup
+for i in %SOURCE1 %SOURCE2; do
   sed \
     -e 's,@prefix@,%prefix,g' \
     -e 's,@exec_prefix@,%_exec_prefix,g' \
@@ -190,66 +148,28 @@ for i in *.pc.in; do
     < $i > $(basename $i .in)
 done
 
-rm -f data/models/scenes/chesschairs.iv
-
 %build
-# Inventor's build system wants us to install and build everything at once.
-
-export LD_LIBRARY_PATH=%buildroot%_libdir
-export VCOPTS="%optflags -D_REENTRANT"
-export VCXXOPTS=$(echo "%optflags -D_REENTRANT -D__STDC_FORMAT_MACROS" | sed -e 's,-O2,%hackcxxflags,')
-%make_ext all \
-  FREETYPE=1 IVROOT=%buildroot \
-  LSUBDIRS="libimage tools libFL"
-%make_install install \
-  FREETYPE=1 IVROOT=%buildroot
-  LSUBDIRS="lib libSoXt"
-%make_ext all \
-  FREETYPE=1 IVROOT=%buildroot BUILDMAN=1 \
-  LSUBDIRS="doc apps data"
-
-# convert Mentor and Toolmaker examples into a standalone package
-rm -rf devel-docs
-cp -a apps/examples devel-docs
-cp -a make devel-docs
-pushd devel-docs > /dev/null
-find -name 'GNUmakefile*' | while read a; do \
-  b=`echo $a | sed 's,GNUmakefile.*$,,;s,^\./,,;s,[^/]*/,../,g;s,\/$,,;s,^$,.,'`
-  sed -i -e "s,^IVDEPTH = .*$,IVDEPTH = $b," $a
-done
-find -name '*.c++' | while read a; do \
-  sed -i -e "s,%_datadir/src/Inventor/examples/data,%_datadir/Inventor/examples/data,g" $a
-done
-subst '/^IVLIBHDRDIRS.*/,/libSoXt\/include/c\
-IVLIBHDRS = `pkg-config --cflags libInventorXt`' \
-make/ivcommondefs
-make clean
-popd > /dev/null
+%cmake \
+    %if_disabled man
+    -DINVENTOR_MAN=OFF \
+    %endif
+    -DCMAKE_INSTALL_PREFIX=%prefix
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/%_cmake__builddir/lib
+%cmake_build
 
 %install
-export LD_LIBRARY_PATH=%buildroot%_libdir
-export VCOPTS="%optflags -D_REENTRANT"
-export VCXXOPTS="%optflags -D_REENTRANT"
-%make_install install \
-  FREETYPE=1 IVROOT=%buildroot BUILDMAN=1
+export FREETYPE=1
+%cmake_install
 
 install -d -m755 %buildroot%_pkgconfigdir
-install -m644 libInventor.pc %buildroot%_pkgconfigdir
-install -m644 libInventorXt.pc %buildroot%_pkgconfigdir
+install -m644 lib%name.pc %buildroot%_pkgconfigdir
+install -m644 lib%{name}Xt.pc %buildroot%_pkgconfigdir
 
-install -d -m755 %buildroot%_libdir/Inventor
-mv devel-docs %buildroot%_datadir/Inventor/examples
-
-install -d -m755 %buildroot%_datadir/Inventor/data/materials
-install -d -m755 %buildroot%_datadir/Inventor/data/textures
-install -d -m755 %buildroot%_datadir/Inventor/fonts
-
-rm -rf %buildroot/usr/X11R6/lib64/X11/app-defaults/
-
+install -d -m755 %buildroot%_datadir/inventor/fonts
 # Map Inventor's standard fonts
 # Utopia, Helvetica and Courier to liberation-TTF fonts
 # Times-Roman is being used by some examples
-pushd %buildroot%_datadir/Inventor/fonts > /dev/null
+pushd %buildroot%_datadir/inventor/fonts > /dev/null
 ln -s Utopia-Regular Times-Roman
 ln -s %_datadir/fonts/ttf/liberation/LiberationSerif-Regular.ttf Utopia-Regular
 ln -s %_datadir/fonts/ttf/liberation/LiberationSerif-Bold.ttf Utopia-Bold
@@ -266,7 +186,7 @@ ln -s %_datadir/fonts/ttf/liberation/LiberationMono-BoldItalic.ttf Courier-BoldO
 popd > /dev/null
 
 %files
-%doc COPYING BUGS FAQ README
+%doc COPYING KNOWN.BUGS FAQ.misc README.md
 %_bindir/iv2toiv1
 %_bindir/ivcat
 %_bindir/ivdowngrade
@@ -274,14 +194,16 @@ popd > /dev/null
 %_bindir/ivinfo
 %_bindir/ivnorm
 %_bindir/ivAddVP
-%dir %_datadir/Inventor
-%_datadir/Inventor/fonts
+%dir %_datadir/inventor
+%_datadir/inventor/fonts
+%if_enabled man
 %_man1dir/inventor.*
 %_man1dir/iv2toiv1.*
 %_man1dir/ivcat.*
 %_man1dir/ivdowngrade.*
 %_man1dir/ivfix.*
 %_man1dir/ivinfo.*
+%endif
 
 %files -n lib%name
 %_libdir/libInventor.so.*
@@ -291,54 +213,68 @@ popd > /dev/null
 %_includedir/Inventor/[^X]*
 %_libdir/libInventor.so
 %_pkgconfigdir/libInventor.pc
+%if_enabled man
 %_man3dir/Sb*
 %_man3dir/So[^X]*
+%endif
 
 %if_with motif
 %files -n libInventorXt
 %_bindir/SceneViewer
 %_bindir/ivview
 %_bindir/ivperf
+%if_enabled man
 %_man1dir/SceneViewer.*
 %_man1dir/ivview.*
+%endif
 %_libdir/libInventorXt.so.*
-%dir %_datadir/Inventor
-# Used by libInventorXt
-%_datadir/Inventor/help
-# Used by SceneViewer
-%dir %_datadir/Inventor/data
-%dir %_datadir/Inventor/data/materials
-%dir %_datadir/Inventor/data/textures
+%_libdir/%{name}DSO
+%dir %_datadir/inventor
+%dir %_datadir/inventor/help
+%dir %_datadir/inventor/help/%name
+%dir %_datadir/inventor/help/ivview
+%_datadir/inventor/help/%name/*.pdf
+%dir %_datadir/inventor/data
+%_datadir/inventor/help/ivview/ivview.about.pdf
 
 %files -n libInventorXt-devel
 %dir %_includedir/Inventor
 %_includedir/Inventor/Xt
 %_libdir/libInventorXt.so
 %_pkgconfigdir/libInventorXt*.pc
+%if_enabled man
 %_man3dir/SoXt*
+%endif
 %endif
 
 %files data
-%dir %_datadir/Inventor
-%dir %_datadir/Inventor/data
-%_datadir/Inventor/data/models
-%_datadir/Inventor/data/materials
-%_datadir/Inventor/data/textures
+%dir %_datadir/inventor
+%dir %_datadir/inventor/data
+%_datadir/inventor/data/models
 
 %if_with demos
 %files demos
 # requires data, so dirs already owned
-%_datadir/Inventor/data/demos
-%_libdir/Inventor/[^e]*
+%_datadir/inventor/data/demos
+%_libdir/inventor/SceneViewer*
+%_libdir/inventor/drop
+%_libdir/inventor/gview*
+%_libdir/inventor/maze
+%_libdir/inventor/noodle*
+%_libdir/inventor/qmorf*
+%_libdir/inventor/revo*
+%_libdir/inventor/textomatic*
 %endif
 
 %if_with examples
 %files examples
-%dir %_datadir/Inventor
-%_datadir/Inventor/examples
+%dir %_datadir/inventor
 %endif
 
 %changelog
+* Wed Feb 12 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.1.6-alt1
+- New version.
+
 * Thu Jul 05 2018 Michael Shigorin <mike@altlinux.org> 2.1.5-alt5
 - rebuilt against current freetype (using debian patch)
 
