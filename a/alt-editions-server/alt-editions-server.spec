@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-editions-server
-Version: 0.1.1
-Release: alt2
+Version: 0.1.2
+Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
 License: GPLv2+
@@ -53,6 +53,10 @@ find ./editions -name '*.edition' -type f -exec alterator-entry validate {} \+
 %_alterator_datadir/editions
 
 %changelog
+* Thu Feb 13 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.2-alt1
+- The initial basic set of components and components included in the domain
+- editionhas been formed (thx Sergey Savelev)
+
 * Thu Feb 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt2
 - Remove alterator-interface-edition from requires.
 - Fix bogus date in changelog.
