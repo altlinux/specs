@@ -5,7 +5,7 @@
 %define _systemdgeneratordir %_prefix/lib/systemd/system-generators
 
 Name:     podman
-Version:  5.3.2
+Version:  5.4.0
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -187,6 +187,9 @@ ln -s ../virtiofsd %buildroot%_libexecdir/%name
 %endif
 
 %changelog
+* Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 5.4.0-alt1
+- New version 5.4.0.
+
 * Thu Jan 23 2025 Alexey Shabalin <shaba@altlinux.org> 5.3.2-alt1
 - New version 5.3.2.
 

@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.33.0
+Version:	1.33.2
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -43,6 +43,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
+export GOMAXPROCS=10
 
 %golang_prepare
 
@@ -115,6 +116,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.33.2-alt1
+- 1.33.2.
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1.33.0-alt1
 - 1.33.0
 

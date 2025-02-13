@@ -50,7 +50,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.23.6
+Version: 1.24.0
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -76,7 +76,7 @@ Requires: %name-src = %version-%release
 Requires: /proc
 
 BuildRequires(pre): rpm-build-golang rpm-build-python3
-BuildRequires: golang
+BuildRequires: golang >= 1.22.6
 BuildRequires: libselinux-utils
 BuildRequires: libpcre2-devel
 BuildRequires: glibc-devel-static
@@ -232,15 +232,14 @@ rm -rf pkg/obj/go-build/*
 
 # create the top level directories
 mkdir -p -- \
-	%buildroot%_bindir \
-	%buildroot%go_root \
-	%buildroot%_datadir/%name
+    %buildroot%_bindir \
+    %buildroot%go_root \
+    %buildroot%_datadir/%name
 
 cp -apfv api bin doc lib pkg src misc test go.env VERSION \
-	%buildroot%go_root/
+    %buildroot%go_root/
 
 find %buildroot%go_root -exec touch -r $PWD/VERSION "{}" \;
-
 
 # remove bootstrap files
 rm -rfv -- %buildroot%go_root/pkg/bootstrap
@@ -250,26 +249,24 @@ rm -rfv -- %buildroot%go_root/doc/Makefile
 
 # remove the unnecessary zoneinfo file (Go will always use the system one first)
 rm -rfv -- \
-	%buildroot%go_root/lib/time
+    %buildroot%go_root/lib/time
 
 %if_enabled shared
 mkdir -p %buildroot%golibdir
 for file in $(find %buildroot%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
-	mv  $file %buildroot%golibdir
-	pushd $(dirname $file)
-	ln -fs %golibdir/$(basename $file) $(basename $file)
-	popd
+    mv  $file %buildroot%golibdir
+    pushd $(dirname $file)
+    ln -fs %golibdir/$(basename $file) $(basename $file)
+    popd
 done
 %endif
 
 # add symlinks for binaries.
 for z in %buildroot%go_root/bin/*; do
-	[ -x "$z" ] || continue
-
-	n="${z##*/}"
-	path="$(relative "$z" "%buildroot%_bindir/$n")"
-
-	ln -sv -- "$path" %buildroot%_bindir/$n
+    [ -x "$z" ] || continue
+    n="${z##*/}"
+    path="$(relative "$z" "%buildroot%_bindir/$n")"
+    ln -sv -- "$path" %buildroot%_bindir/$n
 done
 
 # https://golang.org/doc/go1.5#moving
@@ -278,51 +275,50 @@ done
 # the external golang.org/x/tools repository, although (deprecated) source still
 # resides there for compatibility with old releases.
 for z in cover vet; do
-	z="%buildroot%go_root/pkg/tool/linux_%{go_hostarch}/$z"
-	[ -x "$z" ] || continue
+    z="%buildroot%go_root/pkg/tool/linux_%{go_hostarch}/$z"
+    [ -x "$z" ] || continue
 
-	n="${z##*/}"
-	path="$(relative "$z" "%buildroot%_bindir/$n")"
-
-	ln -sv -- "$path" %buildroot%_bindir/$n
+    n="${z##*/}"
+    path="$(relative "$z" "%buildroot%_bindir/$n")"
+    ln -sv -- "$path" %buildroot%_bindir/$n
 done
 
 # restore the gdb debugging script, needed at runtime by gdb
 mkdir -p -- %buildroot%_datadir/%name/gdb
 sed \
-	-e 's,@GOROOT@,%go_root,g' \
-	%SOURCE1 > %buildroot%_datadir/%name/gdb/golang-gdbinit
+    -e 's,@GOROOT@,%go_root,g' \
+    %SOURCE1 > %buildroot%_datadir/%name/gdb/golang-gdbinit
 
 mkdir -p -- %buildroot%_datadir/%name/src
 for n in syscall regexp; do
-	mkdir -- %buildroot%_datadir/%name/src/$n
+    mkdir -- %buildroot%_datadir/%name/src/$n
 
-	find %buildroot%go_root/src/$n \
-		\( \
-			\( -type f -name '*.sh' \) -o \
-			\( -type f -name '*.pl' \)    \
-		\) \
-			-print0 |
-		xargs -0 mv -fvt %buildroot%_datadir/%name/src/$n --
+    find %buildroot%go_root/src/$n \
+        \( \
+            \( -type f -name '*.sh' \) -o \
+            \( -type f -name '*.pl' \)    \
+        \) \
+            -print0 |
+            xargs -0 mv -fvt %buildroot%_datadir/%name/src/$n --
 done
 
 # ensure these exist and are owned
 mkdir -p -- \
-	%buildroot%go_path/src/github.com \
-	%buildroot%go_path/src/bitbucket.org \
-	%buildroot%go_path/src/code.google.com/p \
-	%buildroot%go_path/src/golang.org/x \
+    %buildroot%go_path/src/github.com \
+    %buildroot%go_path/src/bitbucket.org \
+    %buildroot%go_path/src/code.google.com/p \
+    %buildroot%go_path/src/golang.org/x \
 #
 
 # cleanup
 find \
-	%buildroot%go_root/src \
-	\( \
-		\( -type f -name '.gitignore' \) -o \
-		\( -type f -name '*.orig'     \) \
-	\) \
-		-print0 |
-	xargs -0 rm -rfv --
+    %buildroot%go_root/src \
+    \( \
+        \( -type f -name '.gitignore' \) -o \
+        \( -type f -name '*.orig'     \) \
+    \) \
+        -print0 |
+    xargs -0 rm -rfv --
 
 
 # find test files
@@ -376,6 +372,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.0-alt1
+- New version (1.24.0).
+
 * Wed Feb 05 2025 Alexey Shabalin <shaba@altlinux.org> 1.23.6-alt1
 - New version (1.23.6) (Fixes: CVE-2025-22866).
 
