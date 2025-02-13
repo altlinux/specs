@@ -14,7 +14,7 @@
 %endif
 
 Name: ascon-repo
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: ASCON GPG-key and link to the ASCON repository
@@ -39,6 +39,12 @@ This package contains just a link to the ASCON repository and public GPG-key.
 %setup
 
 %build
+%if "%altbranch" == "p11"
+( echo "rpm [ascon] %ascon_repos/p11 %_arch main"
+  echo "rpm [ascon] %ascon_repos/p11 noarch main"
+) > etc/apt/sources.list.d/ascon.list
+chmod 0644 etc/apt/sources.list.d/ascon.list
+%endif
 %if "%altbranch" == "p10"
 ( echo "rpm [ascon] %ascon_repos/p10 %_arch main"
   echo "rpm [ascon] %ascon_repos/p10 noarch main"
@@ -72,6 +78,9 @@ echo "%alt_keyring" |/usr/lib/rpm/ascon-repo.filetrigger
 /usr/lib/rpm/ascon-repo.filetrigger
 
 %changelog
+* Thu Feb 13 2025 Leonid Krivoshein <klark@altlinux.org> 1.2-alt1
+- Added support for p11 branch.
+
 * Fri Nov 22 2024 Leonid Krivoshein <klark@altlinux.org> 1.1-alt1
 - Remove GPG-key whith the package.
 - Updated ASCON GPG-key and spec.
