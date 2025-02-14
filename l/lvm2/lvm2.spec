@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.28
-%define dmversion 1.02.202
+%define lvm2version 2.03.30
+%define dmversion 1.02.204
 
 %define _runtimedir /run
 %define _lockdir /run/lock
@@ -13,6 +13,7 @@
 %def_enable lvmpolld
 %def_enable lvmlockd
 %def_enable blkid_wiping
+%def_enable libnvme
 %def_disable lvmdbusd
 %def_enable dmfilemapd
 %ifnarch %e2k
@@ -70,6 +71,7 @@ BuildRequires: autoconf-archive
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static libaio-devel-static libblkid-devel-static}
 %{?_enable_selinux:BuildRequires: libselinux-devel libsepol-devel}
 %{?_enable_blkid_wiping:BuildRequires: libblkid-devel >= 2.24}
+%{?_enable_libnvme:BuildRequires: libnvme-devel >= 1.4}
 %{?_enable_lvmlockd_sanlock:BuildRequires: sanlock-devel >= 3.3.0}
 %{?_enable_lvmlockd_dlm:BuildRequires: libdlm-devel >= 4.0.9}
 %{?_enable_cmirrord:BuildRequires: libcorosync-devel}
@@ -247,6 +249,8 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--disable-nls \
 	--disable-app-machineid \
 	--disable-systemd-journal \
+	--without-systemd \
+	--without-libnvme \
 	--enable-static_link \
 	ac_cv_lib_dl_dlopen=no \
 	--with-optimisation="%optflags -Os" \
@@ -487,6 +491,10 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 2.03.30-alt1
+- 2.03.30
+- build with libnvme
+
 * Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 2.03.28-alt1
 - 2.03.28
 - add requires thin-provisioning-tools

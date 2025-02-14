@@ -6,7 +6,7 @@
 %define nowarn -Wno-implicit-fallthrough -Wno-format-truncation -Wno-format-overflow
 
 Name: mdadm
-Version: 4.3
+Version: 4.4
 Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
@@ -59,7 +59,6 @@ BuildArch: noarch
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 %make_build mdadm mdmon raid6check CXFLAGS='%optflags %nowarn' SYSCONFDIR='%_sysconfdir'
-bzip2 -9fk ChangeLog
 
 %install
 %makeinstall_std install-systemd MANDIR=%_mandir BINDIR=%_sbindir SYSTEMD_DIR=%_unitdir UDEVDIR=%_udevdir
@@ -113,9 +112,13 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %ghost %config(noreplace,missingok) %_sysconfdir/mdadm.conf
 
 %files doc
-%doc TODO ChangeLog.* mdadm.conf-example alt/README*
+%doc README.md MAINTAINERS.md CHANGELOG.md documentation
+%doc alt/README*
 
 %changelog
+* Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 4.4-alt1
+- 4.4
+
 * Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 4.3-alt1
 - 4.3
 

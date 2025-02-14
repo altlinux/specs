@@ -6,14 +6,14 @@
 %define bindir %_sbindir
 
 Name: multipath-tools
-Version: 0.10.0
-Release: alt2
+Version: 0.11.1
+Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
 Group: System/Configuration/Hardware
 
-Url: http://christophe.varoqui.free.fr
+Url: https://github.com/opensvc/multipath-tools
 Vcs: https://github.com/opensvc/multipath-tools.git
 Source: %name-%version.tar
 Source3: multipathd.init
@@ -210,6 +210,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Fri Nov 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.10.0-alt2
 - e2k build fix
 
