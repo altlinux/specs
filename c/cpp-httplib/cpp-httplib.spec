@@ -1,7 +1,8 @@
-%define sover 0.18
+%define _unpackaged_files_terminate_build 1
+%define sover 0.19
 
 Name: cpp-httplib
-Version: 0.18.7
+Version: 0.19.0
 Release: alt1
 
 Summary: A C++11 single-file header-only cross platform HTTP/HTTPS library.
@@ -54,6 +55,7 @@ Header files for lib%name
 
 %files -n lib%name%sover
 %doc LICENSE README.md
+%_libdir/lib%name.so.%sover
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -62,6 +64,9 @@ Header files for lib%name
 %_includedir/httplib.h
 
 %changelog
+* Sat Feb 15 2025 Nazarov Denis <nenderus@altlinux.org> 0.19.0-alt1
+- New version 0.19.0.
+
 * Sun Feb 09 2025 Nazarov Denis <nenderus@altlinux.org> 0.18.7-alt1
 - New version 0.18.7.
 
