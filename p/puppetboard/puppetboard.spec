@@ -1,5 +1,5 @@
 Name:    puppetboard
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 
 Summary: Web frontend for PuppetDB
@@ -23,6 +23,7 @@ BuildRequires: python3-module-itsdangerous >= 1.1.0
 BuildRequires: python3-module-pypuppetdb >= 2.1.0
 BuildRequires: python3-module-requests >= 2.22.0
 BuildRequires: python3-module-commonmark = 0.9.1
+BuildRequires: puppetboard
 
 BuildArch: noarch
 
@@ -98,6 +99,9 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
+- New version.
+
 * Wed Nov 27 2024 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
 - New version.
 
