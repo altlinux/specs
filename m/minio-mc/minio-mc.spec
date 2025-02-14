@@ -1,8 +1,8 @@
 %global import_path github.com/minio/mc
-%global commit bb4ff4951a3e54bbee6ac75cfaf387c521e98709
+%global commit bd925c01a1ccab367993f20c251b7bae9d22f8a5
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2024-11-17T19-35-25Z
-%define version 2024.11.17
+%global tag RELEASE.2025-02-08T19-14-21Z
+%define version 2025.02.08
 
 %global _unpackaged_files_terminate_build 1
 
@@ -15,13 +15,11 @@ License: AGPL-3.0
 Url: https://www.min.io/
 
 Source: %name-%version.tar
-
 Patch: %name-%version.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
-
+BuildRequires: rpm-build-golang golang >= 1.23
 
 %description
 MinIO Client (mc) provides a modern alternative to UNIX commands
@@ -43,7 +41,7 @@ export VERSION=${TAG#RELEASE.}
 export COMMIT=%commit
 export SCOMMIT=%shortcommit
 export prefix=%import_path/cmd
-export YEAR=2024
+export YEAR=2025
 
 # setup flags like 'go run buildscripts/gen-ldflags.go' would do
 export LDFLAGS="-X $prefix.Version=$VERSION -X $prefix.ReleaseTag=$TAG -X $prefix.CommitID=$COMMIT -X $prefix.ShortCommitID=$SCOMMIT -X github.com/minio/mc/cmd.CopyrightYear=$YEAR"
@@ -70,6 +68,9 @@ install -p -m 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 2025.02.08-alt1
+- Update to RELEASE.2025-02-08T19-14-21Z
+
 * Mon Dec 09 2024 Alexey Shabalin <shaba@altlinux.org> 2024.11.17-alt1
 - Update to RELEASE.2024-11-17T19-35-25Z
 

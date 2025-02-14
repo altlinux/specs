@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 16f8cf1c52f0a77eeb8f7565aaf7f7df12454583
+%global commit 703f51164d3d0c44af41b0d86075a1f61e4779e7
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2024-12-18T13-15-44Z
-%define version 2024.12.18
+%global tag RELEASE.2025-02-07T23-21-09Z
+%define version 2025.02.07
 
 %global _unpackaged_files_terminate_build 1
 
@@ -23,7 +23,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22
+BuildRequires: rpm-build-golang golang >= 1.23
 
 %description
 MinIO is an object storage server released under Apache License v2.0.
@@ -97,6 +97,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 2025.02.07-alt1
+- Update to RELEASE.2025-02-07T23-21-09Z
+
 * Tue Jan 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 2024.12.18-alt1
 - Update to RELEASE.2024-12-18T13-15-44Z (Fixes: CVE-2024-55949)
 
