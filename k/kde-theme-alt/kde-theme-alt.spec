@@ -1,5 +1,5 @@
 Name: kde-theme-alt
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 
 Summary: ALT KDE theme
@@ -34,6 +34,9 @@ cp -ar desktoptheme/altos-* %buildroot/%_datadir/plasma/desktoptheme/
 %_datadir/plasma/desktoptheme/altos-*/
 
 %changelog
+* Fri Feb 14 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt1
+- temporary cleanup (closes: 53032)
+
 * Thu Jan 23 2025 Sergey V Turchin <zerg at altlinux dot org> 0.3.2-alt1
 - update default wallpaper
 
