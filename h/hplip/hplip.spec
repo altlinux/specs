@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.24.4
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -598,6 +598,7 @@ fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python
 rm -f hpps hpcups dat2drv
 
 %build
+%add_optflags -Wno-implicit-int -Wno-implicit-function-declaration -Wno-incompatible-pointer-types
 
 # we use source that is not pristine; in upstream they gzipped it :(
 gzip_n_mov_ppd() {
@@ -1132,6 +1133,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:3.24.4-alt2
+- NMU: fix FTBFS with gcc14
+
 * Wed Jun 19 2024 Andrey Cherepanov <cas@altlinux.org> 1:3.24.4-alt1
 - New version.
 - Added support for the following new printers:
