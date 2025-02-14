@@ -1,10 +1,12 @@
+%define _unpackaged_files_terminate_build 1
+
 %ifarch %ix86
 # libinterp/corefcn/eig.cc-tst segfaults
 %def_disable check
 %endif
 
 Name: octave
-Version: 8.4.0
+Version: 9.4.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -20,9 +22,7 @@ Source0: %name-%version-%release.tar
 Source1: octave.filetrigger
 Source2: %name.watch
 
-Patch1: octave-alt-desktop-l10n.patch
-Patch2: octave-alt-lcc.patch
-Patch3: octave-alt-fix-doc-build.patch
+Patch0: octave-alt-desktop-l10n.patch
 
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
 BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
@@ -151,8 +151,7 @@ GNU Octave является высокоуровневым языком, в пе
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
+%patch0 -p2
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -194,9 +193,6 @@ EOF
 
 mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 
-mkdir -p %buildroot%_datadir/appdata
-mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
-
 %check
 %make check
 
@@ -215,7 +211,7 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %_infodir/liboctave.info*
 %_man1dir/*
 %_desktopdir/*.desktop
-%_datadir/appdata/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 %_datadir/icons/hicolor/*/apps/octave.png
 %_datadir/icons/hicolor/*/apps/octave.svg
 %_rpmlibdir/%name.filetrigger
@@ -233,11 +229,14 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
-* Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 8.4.0-alt1
-- repocop cronbuild 20231205. At your service.
+* Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 9.4.0-alt1
+- New version (ALT #53028).
 
-* Thu Aug 10 2023 Cronbuild Service <cronbuild@altlinux.org> 8.3.0-alt1
-- repocop cronbuild 20230810. At your service.
+* Tue Nov 07 2023 Andrey Cherepanov <cas@altlinux.org> 8.4.0-alt1
+- New version.
+
+* Thu Aug 10 2023 Andrey Cherepanov <cas@altlinux.org> 8.3.0-alt1
+- New version.
 
 * Tue Apr 18 2023 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
 - New version.

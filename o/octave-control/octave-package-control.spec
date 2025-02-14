@@ -5,15 +5,15 @@ BuildRequires: /usr/bin/octave-config gcc-fortran makeinfo
 %define octpkg control
 Epoch: 1
 Name: octave-%octpkg
-Version: 3.5.0
+Version: 4.1.1
 Release: alt1
 Summary: Computer-Aided Control System Design
 
 Group: Sciences/Mathematics
 License: GPLv3+
-URL: http://www.slicot.org
+URL: https://gnu-octave.github.io/packages/control/
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Source0: https://github.com/gnu-octave/pkg-%{octpkg}/releases/download/%{octpkg}-%{version}/%{octpkg}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -47,6 +47,10 @@ Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the 
 %endif
 
 %changelog
+* Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 1:4.1.1-alt1
+- New version.
+- Update URL and source.
+
 * Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 1:3.5.0-alt1
 - regenerated from template by package builder
 
