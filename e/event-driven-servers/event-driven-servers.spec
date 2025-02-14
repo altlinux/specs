@@ -1,6 +1,6 @@
 Name: event-driven-servers
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: This is a collection of high-performance and scalable event-driven servers
 License: BSD-3-Clause
@@ -138,6 +138,7 @@ __EOF__
 # Config files
 install -Dm 0644 tac_plus-ng/sample/tac_plus-ng-simple.cfg %buildroot%_sysconfdir/tac_plus-ng.cfg
 sed -i 's!/usr/local/bin!%_bindir!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buildroot%_sysconfdir/mavis/sample/tac_plus-ng-simple.cfg
+sed -i 's!/usr/bin/env -S !!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buildroot%_sysconfdir/mavis/sample/tac_plus-ng-simple.cfg
 
 %post -n tac_plus-ng
 %post_service tac_plus-ng
@@ -177,6 +178,9 @@ sed -i 's!/usr/local/bin!%_bindir!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buil
 %python3_sitelibdir_noarch/mavis
 
 %changelog
+* Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt2
+- get rid of /usr/bin/env in config (no -S option in old version)
+
 * Mon Oct 07 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt1
 - Initial build for ALT.
 
