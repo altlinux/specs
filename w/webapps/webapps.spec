@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.8
 Release: alt1
 
 Summary: Install websites as apps
@@ -66,6 +66,9 @@ than the one installed open in a new browser window.
 %doc README.*
 
 %changelog
+* Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.8-alt1
+- updated to 0.5.8-21-gdfa1eb1
+
 * Wed Aug 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1
 - updated to 0.5.4-10-gef1f870
 
