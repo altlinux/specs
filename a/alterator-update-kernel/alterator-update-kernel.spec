@@ -1,8 +1,8 @@
 %define mname update-kernel
 
 Name: alterator-update-kernel
-Version: 1.4
-Release: alt5
+Version: 1.5
+Release: alt1
 
 Url: http://altlinux.org/alterator
 Source: %name-%version.tar
@@ -53,6 +53,12 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_datadir/dbus-1/interfaces/*.xml
 
 %changelog
+* Fri Feb 14 2025 Ivan Savin <svn17@altlinux.org> 1.5-alt1
+- Fix a bug where some modules for kernels with flavour based on the kernel
+  version were not removing. (Closes: 53019)
+- Fix a bug where when deleting a module, a module whose name only partially
+  corresponds to the selected one could be deleted.
+
 * Thu Jun 27 2024 Michael Shigorin <mike@altlinux.org> 1.4-alt5
 - NMU:
   + use guile22 on e2k too
