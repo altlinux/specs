@@ -1,7 +1,7 @@
 %global import_path github.com/hashicorp/consul
 Name:     consul
-Version:  1.20.2
-Release:  alt1.1
+Version:  1.20.3
+Release:  alt1
 
 Summary:  Consul is a tool for service discovery and configuration
 License:  MPL-2.0
@@ -49,6 +49,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri Feb 14 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.20.3-alt1
+- new version 1.20.3
+
 * Wed Jan 15 2025 Ivan A. Melnikov <iv@altlinux.org> 1.20.2-alt1.1
 - NMU: add riscv64 support
 
