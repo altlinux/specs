@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.27.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python extension for computing string edit distances and similarities
 License: GPL-2.0
@@ -21,6 +21,14 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
+
+# For reason yet unknown, dependency on 'ninja>=1.5' is generated
+# on most, platforms, but is not generated on loongarch64 and
+# riscv64. In fact, the ninja module is not required for build
+# the package, so let's just filter it out form all the stages
+# including the verification of the generated dependencies.
+%global _pyproject_deps_pep517_filter %_pyproject_deps_pep517_filter ninja
+
 %add_pyproject_deps_build_filter cmake
 %add_pyproject_deps_build_filter ninja
 %pyproject_builddeps_build
@@ -69,6 +77,10 @@ It supports both normal and Unicode strings.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 14 2025 Ivan A. Melnikov <iv@altlinux.org> 0.27.0-alt1.1
+- NMU: skip pep517 dependency on ninja (fixes build on
+  riscv64 and loongarch64).
+
 * Tue Feb 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.27.0-alt1
 - Updated to 0.27.0.
 
