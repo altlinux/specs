@@ -14,6 +14,7 @@ BuildRequires(pre): rpm-build-php8.4-version
 BuildRequires:	php-devel = %php_version
 
 BuildRequires: /proc php%_php_suffix
+BuildRequires: /dev/kvm rpm-build-vm
 
 %description
 The %name package includes a dynamic shared object (DSO) that adds 
@@ -35,13 +36,15 @@ export LDFLAGS=-lphp-%_php_version
 %php_make
 
 %check
-# PHP-8.0: Insufficient privileges for CLONE_NEWUSER
-rm -f tests/pcntl_unshare_03.phpt ||:
-# PHP-8.4.3: does not work in Hasher on the ALT build system
-#  Fatal error: Uncaught ValueError: pcntl_setcpuaffinity(): Argument #2 ($cpu_ids) invalid cpu affinity mask size or unmapped cpu id(s) in /usr/src/RPM/BUILD/php8.4-pcntl-8.4.3/tests/pcntl_cpuaffinity.php:3
-rm -f tests/pcntl_cpuaffinity.phpt ||:
+cat > test-run <<EOF
+#!/bin/h
 export TEST_PHP_ARGS="--show-diff"
+export NO_INTERACTION=1
 make test
+EOF
+# run twice - in root mode and rootless mode
+vm-run --user --sbin --udevd --kvm=cond /bin/sh test-run
+vm-run --sbin --udevd --kvm=cond /bin/sh test-run
 
 %install
 %php_make_install

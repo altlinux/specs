@@ -10,7 +10,7 @@ License: PHP-3.01
 Source1: php-cgi-alt.ini
 Source2: php-cgi-browscap.ini
 
-%if "%_php_suffix" != "8.4
+%if "%_php_suffix" != "8.4"
 Patch0: php8.2-sapi-cgi-alt-build-fastcgi.patch
 %else
 Patch0: php8.4-sapi-cgi-alt-build-fastcgi.patch

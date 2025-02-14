@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  4
-%define _php_release_version 3
+%define _php_release_version 4
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -54,7 +54,6 @@ Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
 Patch22: php-8.2-altlinux-mbstring-test.patch
 # Support for loading extensions before the run of tests in addition to tested modules
 Patch23: php-8.3-alt-preload-extensions-during-tests.patch
-Patch24: php-8.4.3-upstream-fix-pcntl-tests.patch
 
 Patch2000: php-8.1-e2k.patch
 
@@ -194,7 +193,6 @@ in use by other PHP-related packages.
 %patch19 -p1
 %patch22 -p1
 %patch23 -p1
-%patch24 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -493,6 +491,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Feb 12 2025 Anton Farygin <rider@altlinux.ru> 8.4.4-alt1
+- 8.4.3 -> 8.4.4
+
 * Wed Jan 29 2025 Anton Farygin <rider@altlinux.ru> 8.4.3-alt1
 - initial build php 8.4 for Sisyphus, based on specfile for the php 8.3
 

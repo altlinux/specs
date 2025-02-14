@@ -11,7 +11,6 @@ License:	Apache-2.0
 Group:		System/Servers
 URL:		https://pecl.php.net/package/swoole
 VCS:		https://github.com/swoole/swoole-src
-#URL:		https://www.swoole.com/coding
 Source0:	%real_name-%real_version.tar
 
 Source1:	php-%php_extension.ini
