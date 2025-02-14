@@ -1,10 +1,10 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
 
-%_K6if_ver_gteq %ubt_id M110
+%_K6if_ver_lt %ubt_id M110
 %def_disable phonenumber
 %else
-%def_disable phonenumber
+%def_enable phonenumber
 %endif
 
 %define rname kitinerary
@@ -13,7 +13,7 @@
 %define libkpimitinerary libkpim6itinerary%sover
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -28,6 +28,7 @@ Patch2: alt-old-poppler.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires: libssl-devel
 BuildRequires: libpoppler-devel libxml2-devel xsltproc zlib-devel
 BuildRequires: libzxing-cpp-devel
 %if_enabled phonenumber
@@ -100,6 +101,9 @@ done
 
 
 %changelog
+* Wed Feb 12 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

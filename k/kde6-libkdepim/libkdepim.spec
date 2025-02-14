@@ -5,7 +5,7 @@
 %define libkpim6libkdepimakonadi libkpim6libkdepimakonadi%sover
 
 Name: kde6-%rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -92,6 +92,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname signon-kwallet-extension
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -39,6 +39,9 @@ BuildRequires: kf6-kwallet-devel signon-devel
 
 
 %changelog
+* Wed Feb 12 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 
