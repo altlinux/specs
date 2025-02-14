@@ -1,4 +1,4 @@
-%define pg_ver 16
+%define pg_ver 17
 %define prog_name repmgr
 %ifarch loongarch64
 %def_without jit

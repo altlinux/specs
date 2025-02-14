@@ -7,8 +7,8 @@
 %endif
 
 Name: postgresql%pg_ver-%prog_name
-Version: 5.4.1
-Release: alt3
+Version: 5.5.0
+Release: alt1
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -29,10 +29,11 @@ Requires: postgresql%pg_ver-server
 Provides: %prog_name = %EVR
 Obsoletes: %prog_name < %EVR
 
+BuildRequires: libreadline-devel libzstd-devel perl-parent zlib-devel
 BuildRequires: flex
 BuildRequires: libssl-devel libselinux-devel liblz4-devel libxslt-devel libpam-devel
 BuildRequires: libkrb5-devel libcurl-devel libjson-c-devel
-BuildRequires: libecpg6-%pg_ver-devel-static libpq5-devel-static postgresql%pg_ver-server-devel
+BuildRequires: postgresql%pg_ver-devel-static
 # for build doc
 BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc
@@ -105,6 +106,12 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Tue Feb 11 2025 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt1
+- 5.5.0
+- Support for PostgreSQL 17 added
+- Replace BR libecpg6-%%pg_ver-devel-static libpq5-devel-static and
+  postgresql%%pg_ver-server-devel by postgresql%%pg_ver-devel-static
+
 * Tue Oct 01 2024 Alexei Takaseev <taf@altlinux.org> 5.4.1-alt3
 - /etc/sudoers.d/repmgr fix syntax for service and add support systemctl
 
