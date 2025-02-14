@@ -1,9 +1,9 @@
 %define soname 6
 
-%def_enable clang
+%def_disable clang
 
 Name: dtk6declarative
-Version: 6.0.24.0.3.ed06
+Version: 6.0.30
 Release: alt1
 
 Summary: Widget development toolkit for Deepin
@@ -34,7 +34,6 @@ BuildRequires: gcc-c++
 BuildRequires: cmake libdtk6gui-devel dqt6-tools-devel dqt6-declarative-devel dqt6-shadertools-devel
 
 Requires: libdqt6-core = %_dqt6_version libdqt6-qmlmodels = %_dqt6_version libdqt6-quickcontrols2 = %_dqt6_version
-AutoProv: yes, nodqml6
 
 %description
 dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is
@@ -101,26 +100,30 @@ QtCreator Data files for %name.
 %prep
 %setup
 %autopatch -p1
+# FAILED: examples/exhibition/CMakeFiles/dtk-exhibition.dir/dtk-exhibition_autogen/EWIEGA46WW/qrc_assets.cpp.o
+# virtual memory exhausted: Cannot allocate memory
+%ifarch i586 armh
+sed -i '/add_subdirectory(exhibition)/d' \
+  examples/CMakeLists.txt
+%endif
 
 %build
 %if_enabled clang
-
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
-
 %endif
-
+export LC_ALL=C.UTF-8
 %DQ6build \
   -DMKSPECS_INSTALL_DIR=%_dqt6_mkspecsdir/modules \
   -DBUILD_DOCS=OFF \
   -DINCLUDE_INSTALL_DIR=include \
   -DCMAKE_INSTALL_LIBDIR=%_lib \
   -DLIB_INSTALL_DIR=%_lib \
-  -DDTK_VERSION=6.0.24 \
-  -DVERSION=6.0.24 \
+  -DDTK_VERSION=%version \
+  -DVERSION=%version \
 #
 
 %install
@@ -128,9 +131,11 @@ export READELF="llvm-readelf"
 
 %files
 %doc LICENSE README.md
+%ifnarch i586 armh
 %dir %_libdir/dtk6/
 %dir %_libdir/dtk6/DDeclarative/
 %_libdir/dtk6/DDeclarative/dtk-exhibition
+%endif
 %dir %_dqt6_qmldir/Chameleon/
 %_dqt6_qmldir/Chameleon/*
 %dir %_dqt6_qmldir/org/deepin/
@@ -161,6 +166,11 @@ export READELF="llvm-readelf"
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Fri Feb 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1
+- New version 6.0.30.
+- Enabled dqml6 provides.
+- Built via gcc instead clang.
+
 * Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.24.0.3.ed06-alt1
 - New version 6.0.24-3-ged06b75.
 - Added vcs tag.

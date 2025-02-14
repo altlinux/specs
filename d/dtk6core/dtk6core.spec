@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtk6core
-Version: 6.0.27
+Version: 6.0.30
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -118,6 +118,9 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %changelog
+* Fri Feb 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1
+- New version 6.0.30.
+
 * Fri Jan 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.27-alt1
 - New version 6.0.27.
 

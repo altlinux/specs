@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtk6widget
-Version: 6.0.27
+Version: 6.0.30
 Release: alt1
 
 Summary: Deepin tool kit widget modules
@@ -132,6 +132,9 @@ export READELF="llvm-readelf"
 %_dqt6_docdir/dtkwidget.qch
 
 %changelog
+* Fri Feb 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1
+- New version 6.0.30.
+
 * Fri Jan 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.27-alt1
 - New version 6.0.27.
 
