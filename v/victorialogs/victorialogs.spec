@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victorialogs
-Version: 1.4.0
+Version: 1.10.1
 Release: alt1
 Summary: Log management and log analytics system from VictoriaMetrics
 
@@ -19,7 +19,7 @@ Patch: %name-%version.patch
 #ExclusiveArch:  %go_arches
 ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.1
+BuildRequires: rpm-build-golang golang >= 1.23.6
 
 %description
 VictoriaLogs is open source user-friendly database for logs from VictoriaMetrics.
@@ -94,6 +94,9 @@ useradd -r -g _%name -c 'Victoria Logs Daemon' \
 %doc docs/VictoriaLogs/QuickStart.md docs/VictoriaLogs/README.md docs/VictoriaLogs/data-ingestion
 
 %changelog
+* Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.1-alt1
+- 1.10.1.
+
 * Mon Dec 23 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - 1.4.0.
 - Add vlogscli to package.
