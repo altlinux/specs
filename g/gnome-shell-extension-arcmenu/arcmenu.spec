@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-arcmenu
 Version: 64
-Release: alt2
+Release: alt3
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -15,6 +15,8 @@ Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 Requires: gnome-shell >= 47.0
+# https://bugzilla.altlinux.org/53075
+Requires: libgnome-menus-gir
 BuildRequires: %_bindir/glib-compile-schemas
 
 %description
@@ -40,6 +42,9 @@ shortcuts, and much more!
 %doc README.md
 
 %changelog
+* Fri Feb 14 2025 Anton Midyukov <antohami@altlinux.org> 64-alt3
+- add dependency on libgnome-menus-gir (Closes: 53075)
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 64-alt2
 - extension.js: Remove UpdateNotifier
 
