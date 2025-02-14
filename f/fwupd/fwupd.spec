@@ -34,7 +34,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 
 Summary: Firmware update daemon
@@ -115,6 +115,7 @@ Obsoletes: fwupdate
 
 %if_with check
 BuildRequires: rpm-build-vm /dev/kvm
+BuildRequires: polkit
 %endif
 
 Requires: bubblewrap
@@ -336,6 +337,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Fri Feb 14 2025 Egor Ignatov <egori@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Tue Feb 04 2025 Egor Ignatov <egori@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
