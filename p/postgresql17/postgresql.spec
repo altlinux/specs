@@ -24,7 +24,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    4
+%define postgresql_altrel    5
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -73,6 +73,9 @@ BuildRequires: libicu-devel
 %if_with jit
 BuildRequires: llvm18.1-devel clang18.1-devel gcc-c++
 %endif
+%if_without devel
+BuildRequires: libpq5
+%endif
 # Need for make check
 BuildRequires: rpm-build-vm rpm-build-vm-createimage
 %if_with coverage
@@ -97,32 +100,27 @@ If you want to manipulate a PostgreSQL database on a remote PostgreSQL
 server, you need this package. You also need to install this package
 if you're installing the postgresql-server package.
 
+%if_with devel
 %package -n %libpq_name-%postgresql_major
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
 Provides: libpq = %EVR
+Obsoletes: libpq < %EVR
 Provides: %libpq_name = %EVR
 Conflicts: %libpq_name < %EVR
 Conflicts: %libpq_name > %EVR
-
-Conflicts: %libpq_name-12
-Conflicts: %libpq_name-13
-Conflicts: %libpq_name-14
-Conflicts: %libpq_name-15
-Conflicts: %libpq_name-16
-Conflicts: %libpq_name-16-1C
-Conflicts: %libpq_name-17-1C
 
 %description -n %libpq_name-%postgresql_major
 C and C++ libraries to enable user programs to communicate with the
 PostgreSQL database backend. The backend can be on another machine and
 accessed through TCP/IP.
+%endif
 
 %package -n %libpq_name-%postgresql_major-devel
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Development/Databases
-Requires: %libpq_name-%postgresql_major = %EVR
 %if_with devel
+Requires: %libpq_name-%postgresql_major = %EVR
 Provides: libpq-devel = %EVR
 Provides: %libpq_name-devel = %EVR
 Obsoletes: libpq-devel < %EVR
@@ -130,7 +128,9 @@ Obsoletes: %libpq_name-devel < %EVR
 Conflicts: %libpq_name-devel < %EVR
 Conflicts: %libpq_name-devel > %EVR
 %else
+Requires: libpq5
 %add_findprov_skiplist %_libdir/pkgconfig/*.pc
+%add_findprov_skiplist %_libdir/libpq*.so.*
 %endif
 Conflicts: %libpq_name-12-devel
 Conflicts: %libpq_name-13-devel
@@ -225,7 +225,7 @@ RPM macros to PostgreSQL for build server extentions
 %package -n %libecpg_name-%postgresql_major
 Summary: ECPG - Embedded SQL in C
 Group: Databases
-Requires: %libpq_name-%postgresql_major = %EVR
+Requires: %libpq_name-%postgresql_major-devel = %EVR
 %if_without devel
 %add_findprov_skiplist %_libdir/libecpg*.so*
 %add_findprov_skiplist %_libdir/libpgtypes*.so*
@@ -1045,9 +1045,11 @@ fi
 %files devel
 %files devel-static
 
+%if_with devel
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name-%postgresql_major
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
+%endif
 
 %files -f devel.lang -n %libpq_name-%postgresql_major-devel
 %_bindir/pg_config
@@ -1059,6 +1061,9 @@ fi
 %exclude %_includedir/%PGSQL/pgtypes*.h
 %exclude %_includedir/%PGSQL/sql*.h
 %_libdir/libpq*.so
+%if_without devel
+%_libdir/libpq.so.%libpq_major.*
+%endif
 %_libdir/pkgconfig/libpq.pc
 %_man1dir/pg_config.*
 %_man3dir/*
@@ -1077,6 +1082,10 @@ fi
 %endif
 
 %changelog
+* Fri Feb 14 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt5
+- Create libpq5-XY only with devel option
+- Filtered libpq.so.5 provides and exclude pack libpq.so.5 file for all non-devel version.
+
 * Fri Feb 07 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt4
 - Build libpq5, libpq5-devel, libpq5-devel-static, %%prog_name-devel,
   %%prog_name-devel-static and rpm-macros-%%prog_name as libpq5-XY,

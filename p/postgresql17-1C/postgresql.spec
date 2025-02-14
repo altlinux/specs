@@ -25,7 +25,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    1
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -51,12 +51,6 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 %define docdir %_docdir/%prog_name-%version
 
 Source0: %name-%version.tar
-Source1: README.ALT-ru_RU.UTF-8
-Source2: README.rpm-dist
-Source3: postgresql-check-db-dir
-Source4: postgresql.init.in
-Source5: postgresql.service
-Source6: postgresql.sysconfig
 
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch5: 0005-Setup-logging.patch
@@ -73,14 +67,14 @@ Conflicts: %prog_name > %EVR
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel
-%if_without devel
-BuildRequires: postgresql-devel
-%endif
 %if_with icu
 BuildRequires: libicu-devel
 %endif
 %if_with jit
 BuildRequires: llvm18.1-devel clang18.1-devel gcc-c++
+%endif
+%if_without devel
+BuildRequires: libpq5
 %endif
 # Need for make check
 BuildRequires: rpm-build-vm rpm-build-vm-createimage
@@ -107,73 +101,131 @@ server, you need this package. You also need to install this package
 if you're installing the postgresql-server package.
 
 %if_with devel
-%package -n %libpq_name
+%package -n %libpq_name-%postgresql_major-1C
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
+Provides: libpq = %EVR
+Obsoletes: libpq < %EVR
+Provides: %libpq_name = %EVR
+Conflicts: %libpq_name < %EVR
+Conflicts: %libpq_name > %EVR
 
-%description -n %libpq_name
+%description -n %libpq_name-%postgresql_major-1C
 C and C++ libraries to enable user programs to communicate with the
 PostgreSQL database backend. The backend can be on another machine and
 accessed through TCP/IP.
+%endif
 
-%package -n %libpq_name-devel
+%package -n %libpq_name-%postgresql_major-1C-devel
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Development/Databases
-Requires: %libpq_name = %EVR
+%if_with devel
+Requires: %libpq_name-%postgresql_major-1C = %EVR
 Provides: libpq-devel = %EVR
+Provides: %libpq_name-devel = %EVR
 Obsoletes: libpq-devel < %EVR
+Obsoletes: %libpq_name-devel < %EVR
+Conflicts: %libpq_name-devel < %EVR
+Conflicts: %libpq_name-devel > %EVR
+%else
+Requires: libpq5
+%add_findprov_skiplist %_libdir/pkgconfig/*.pc
+%add_findprov_skiplist %_libdir/libpq*.so.*
+%endif
+Conflicts: %libpq_name-12-devel
+Conflicts: %libpq_name-13-devel
+Conflicts: %libpq_name-14-devel
+Conflicts: %libpq_name-15-devel
+Conflicts: %libpq_name-16-devel
+Conflicts: %libpq_name-16-1C-devel
+Conflicts: %libpq_name-17-devel
 
-%description -n %libpq_name-devel
+%description -n %libpq_name-%postgresql_major-1C-devel
 The libpq package provides the essential shared library for any PostgreSQL
 client program or interface.  You will need to install this package to build any
 package or any clients that need to connect to a PostgreSQL server.
 
-%package -n %libpq_name-devel-static
+%package -n %libpq_name-%postgresql_major-1C-devel-static
 Summary: Development static library for %libpq_name-devel
 Group: Development/Databases
-Requires: %libpq_name-devel = %EVR
+Requires: %libpq_name-%postgresql_major-1C-devel = %EVR
+%if_with devel
 Provides: libpq-devel-static = %EVR
+Provides: %libpq_name-devel-static = %EVR
 Obsoletes: libpq-devel-static < %EVR
+Obsoletes: %libpq_name-devel-static < %EVR
+Conflicts: %libpq_name-devel-static < %EVR
+Conflicts: %libpq_name-devel-static > %EVR
+%endif
 
-%description -n %libpq_name-devel-static
+%description -n %libpq_name-%postgresql_major-1C-devel-static
 Development static library for %libpq_name-devel
 
-%package -n %prog_name-devel
+%package devel
 Summary: PostgreSQL development header files
 Group: Development/Databases
-Requires: %libpq_name-devel = %EVR
+Requires: %libpq_name-%postgresql_major-1C-devel = %EVR
 Requires: %libecpg_name-%postgresql_major-1C-devel = %EVR
 Requires: %name-server-devel = %EVR
+%if_with devel
+Obsoletes: %prog_name-devel < %EVR
+Provides: %prog_name-devel = %EVR
+Conflicts: %prog_name-devel < %EVR
+Conflicts: %prog_name-devel > %EVR
+%endif
+Conflicts: %{prog_name}12-devel
+Conflicts: %{prog_name}13-devel
+Conflicts: %{prog_name}14-devel
+Conflicts: %{prog_name}15-devel
+Conflicts: %{prog_name}16-devel
+Conflicts: %{prog_name}16-1C-devel
+Conflicts: %{prog_name}17-devel
 
-%description -n %prog_name-devel
+%description devel
 The postgresql-devel package contains the header files needed to compile applications
 which will directly interact with a PostgreSQL database management server.
 You need to install this package if you want to develop applications which will interact
 with a PostgreSQL server.
 
-%package -n %prog_name-devel-static
+%package devel-static
 Summary: Development static library for %libpq_name-devel and %libecpg_name-devel
 Group: Development/Databases
-Requires: %libpq_name-devel-static = %EVR
+Requires: %libpq_name-%postgresql_major-1C-devel-static = %EVR
 Requires: %libecpg_name-%postgresql_major-1C-devel-static = %EVR
-Requires: %prog_name-devel = %EVR
+Requires: %name-devel = %EVR
+%if_with devel
+Obsoletes: %prog_name-devel-static < %EVR
+Conflicts: %prog_name-devel-static < %EVR
+Conflicts: %prog_name-devel-static > %EVR
+Provides: %prog_name-devel-static = %EVR
+%endif
 
-%description -n %prog_name-devel-static
+%description devel-static
 Development static library for %libpq_name-devel
 and %libecpg_name-%postgresql_major-1C-devel
 
-%package -n rpm-macros-%prog_name
+%package -n rpm-macros-%prog_name-%postgresql_major-1C
 Summary: RPM macros to PostgreSQL
 Group: Development/Other
 BuildArch: noarch
-
-%description -n rpm-macros-%prog_name
-RPM macros to PostgreSQL for build server extentions
+%if_with devel
+Provides: rpm-macros-%prog_name
 %endif
+Conflicts: rpm-macros-%prog_name-12
+Conflicts: rpm-macros-%prog_name-13
+Conflicts: rpm-macros-%prog_name-14
+Conflicts: rpm-macros-%prog_name-15
+Conflicts: rpm-macros-%prog_name-16
+Conflicts: rpm-macros-%prog_name-16-1C
+Conflicts: rpm-macros-%prog_name-17
+
+%description -n rpm-macros-%prog_name-%postgresql_major-1C
+RPM macros to PostgreSQL for build server extentions
 
 %package -n %libecpg_name-%postgresql_major-1C
 Summary: ECPG - Embedded SQL in C
 Group: Databases
+Requires: %libpq_name-%postgresql_major-1C-devel = %EVR
 %if_without devel
 %add_findprov_skiplist %_libdir/libecpg*.so*
 %add_findprov_skiplist %_libdir/libpgtypes*.so*
@@ -236,7 +288,7 @@ Development static library for %libecpg_name-%postgresql_major-1C-devel
 %package server-devel
 Summary: PostgreSQL development header files
 Group: Development/Databases
-Requires: %libpq_name-devel
+Requires: %libpq_name-%postgresql_major-1C-devel
 Requires: %libecpg_name-%postgresql_major-1C-devel
 %if_with jit
 Requires: llvm18.1-devel clang18.1-devel gcc-c++
@@ -429,28 +481,28 @@ vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=256M /dev/shm;
 %make_build -C doc install DESTDIR=%buildroot docdir=%docdir
 
 ##### ALT-stuff
+pushd altlinux
 
 # The initscripts....
-install -p -m644 -D %SOURCE6 %buildroot%_sysconfdir/sysconfig/%prog_name
-install -p -m755 -D %SOURCE4 %buildroot%_initdir/%prog_name
+install -p -m644 -D postgresql.sysconfig %buildroot%_sysconfdir/sysconfig/%prog_name
+install -p -m755 -D postgresql.init.in %buildroot%_initdir/%prog_name
 
 # README.ALT
-install -p -m 644 -D %SOURCE1 %buildroot%docdir/README.ALT-ru_RU.UTF-8
-install -p -m 644 -D %SOURCE2 %buildroot%docdir/README.rpm-dist
+install -p -m 644 -D README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
+install -p -m 644 -D README.rpm-dist %buildroot%docdir/README.rpm-dist
 
-install -p -m 644 -D %SOURCE5 %buildroot%_unitdir/postgresql.service
+install -p -m 644 -D postgresql.service %buildroot%_unitdir/postgresql.service
 
+popd
 ##### end ALT-stuff
 
 # Create file for rpm-build-postgresql
-%if_with devel
 install -d %buildroot%_rpmmacrosdir
 echo "%%pg_ver %postgresql_major" > %buildroot%_rpmmacrosdir/postgresql
-%endif
 
 sed -e 's|^PGVERSION=.*$|PGVERSION=%version|' \
         -e 's|^PGDOCDIR=.*$|PGDOCDIR=%docdir|' \
-        < %SOURCE3 >postgresql-check-db-dir
+        < altlinux/postgresql-check-db-dir >postgresql-check-db-dir
 touch -r postgresql-check-db-dir postgresql-check-db-dir
 install -m 755 postgresql-check-db-dir %buildroot%_bindir/postgresql-check-db-dir
 
@@ -993,15 +1045,16 @@ fi
 %_libdir/libpgport.a
 %_libdir/libpgport_shlib.a
 
-%if_with devel
-%files -n %prog_name-devel
-%files -n %prog_name-devel-static
+%files devel
+%files devel-static
 
-%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name
+%if_with devel
+%files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name-%postgresql_major-1C
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
+%endif
 
-%files -f devel.lang -n %libpq_name-devel
+%files -f devel.lang -n %libpq_name-%postgresql_major-1C-devel
 %_bindir/pg_config
 %_includedir/%PGSQL
 %_includedir/postgresql
@@ -1011,16 +1064,19 @@ fi
 %exclude %_includedir/%PGSQL/pgtypes*.h
 %exclude %_includedir/%PGSQL/sql*.h
 %_libdir/libpq*.so
+# No pack libpq.so.%%libpq_major.* if major version 1C and vanilla same
+#%if_without devel
+#%_libdir/libpq.so.%libpq_major.*
+#%endif
 %_libdir/pkgconfig/libpq.pc
 %_man1dir/pg_config.*
 %_man3dir/*
 
-%files -n %libpq_name-devel-static
+%files -n %libpq_name-%postgresql_major-1C-devel-static
 %_libdir/libpq*.a
 
-%files -n rpm-macros-%prog_name
+%files -n rpm-macros-%prog_name-%postgresql_major-1C
 %_rpmmacrosdir/postgresql
-%endif
 
 %if_with jit
 %files llvmjit
@@ -1030,6 +1086,18 @@ fi
 %endif
 
 %changelog
+* Fri Feb 14 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt3
+- Create libpq5-XY only with devel option
+- Filtered libpq.so.5 provides and exclude pack libpq.so.5 file for all non-devel version.
+
+* Sat Feb 08 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt2
+- Build libpq5, libpq5-devel, libpq5-devel-static, %%prog_name-devel,
+  %%prog_name-devel-static and rpm-macros-%%prog_name as libpq5-XY,
+  libpq5-XY-devel, libpq5-XY-devel-static, %prog_nameXY-devel,
+  %prog_nameXY-devel-static and rpm-macros-%prog_name-XY and
+  package every major version
+- Move ALT specific files to catalog altlinux/ for more simplification support
+
 * Mon Jan 27 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt1
 - 17.2
 - Update 1C patch
