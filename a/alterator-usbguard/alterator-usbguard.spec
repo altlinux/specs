@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-usbguard
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 Summary: alterator module to control usb devices
 Group: System/Configuration/Other
@@ -44,6 +44,9 @@ Alterator Module to control USB devices via USBGuard.
 
 
 %changelog
+* Fri Feb 14 2025 Oleg Proskurin <proskur@altlinux.org> 0.2.2-alt1
+- Translate the module title (Closes: #52833)
+
 * Thu Jan 23 2025 Oleg Proskurin <proskur@altlinux.org> 0.2.1-alt1
 - Bugfixing (Closes: #52767, #52745)
   + fix jump back (-10)
