@@ -12,7 +12,7 @@
 %define libqcorowebsockets libqcoro%{qtmajor}websockets%sover
 
 Name: qcoro%qtmajor
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Group: System/Libraries
@@ -132,5 +132,8 @@ Summary: %name library
 %_libdir/libQCoro%{qtmajor}WebSockets.so.%sover
 
 %changelog
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt1
+- new version
+
 * Fri Jun 28 2024 Sergey V Turchin <zerg@altlinux.org> 0.10.0-alt1
 - initial build
