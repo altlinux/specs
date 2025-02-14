@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.0
-Release: alt6.git7b678f26e
+Version: 1.4.1.32
+Release: alt1.git2e6af22d7
 Summary: A music player and library organiser
 
 Group: Sound
@@ -31,11 +31,12 @@ BuildRequires: git
 BuildRequires: protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
-BuildPreReq: libavcodec-devel libavformat-devel libpcre-devel
-BuildPreReq: libprotobuf-devel qjson-qt5-devel libcdio-devel
+BuildRequires: libavcodec-devel libavformat-devel libpcre-devel
+BuildRequires: libprotobuf-devel qjson-qt5-devel libcdio-devel
 
 # Clementine crashes without it
 Requires: gst-plugins-base%{gst_api_ver}
+Requires: icon-theme-hicolor
 
 %description
 Clementine is a modern music player and library organizer
@@ -60,7 +61,7 @@ if [ ! -d .git ]; then
 fi
 
 %build
-%cmake
+%cmake -DBUNDLE_PROJECTM_PRESETS=ON -DFORCE_GIT_REVISION=%version.%release
 %cmake_build
 
 %install
@@ -80,6 +81,9 @@ fi
 
 
 %changelog
+* Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.32-alt1.git2e6af22d7
+- Update upstream source to 1.4.1-32-g2e6af22d7
+
 * Tue Oct 17 2023 Vladimir Didenko <cow@altlinux.org> 1.4.0-alt6.git7b678f26e
 - Update upstream source to 1.4.0rc1-901-g7b678f26e
 - Remove qt5-sql-sqlite3 from build requires
