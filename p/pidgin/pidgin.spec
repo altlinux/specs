@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.14.12
-Release: alt1
+Release: alt2
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPLv2
@@ -265,6 +265,7 @@ for file in finch/plugins/pietray.py libpurple/plugins/dbus-buddyicons-example.p
 done
 
 %build
+%add_optflags -Wno-error=incompatible-pointer-types
 %autoreconf
 %configure \
 	--disable-schemas-install \
@@ -318,7 +319,6 @@ done
 	--with-python3=%__python3 \
 	--with-system-ssl-certs=%_datadir/ca-certificates \
 	--with-extraversion=%release
-
 
 %make_build
 
@@ -453,6 +453,9 @@ fi
 %endif
 
 %changelog
+* Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.14.12-alt2
+- NMU: fix FTBFS with gcc14
+
 * Tue Sep 05 2023 Arseny Maslennikov <arseny@altlinux.org> 2.14.12-alt1
 - NMU: 2.14.6 -> 2.14.12.
 
