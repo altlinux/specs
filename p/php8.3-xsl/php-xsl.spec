@@ -28,16 +28,12 @@ to install this package in addition to the php package.
 %prep
 %setup -T -c
 cp -pr %php_extsrcdir/%php_extension/* .
-mkdir -p ./ext
-cp -pr %php_extsrcdir/dom ./ext/
-# use external header for dom from php-devel
-sed -i 's,../dom/,dom/,' php_xsl.h
 
 %build
 phpize
 
 BUILD_HAVE=`echo %php_extension | tr '[:lower:]-' '[:upper:]_'`
-%add_optflags -fPIC -L%_libdir
+%add_optflags -fPIC -L%_libdir -I/%php_includedir/%php_version/ext/xml
 export LDFLAGS=-lphp-%_php_version
 %configure \
 	PHP_DOM=yes \

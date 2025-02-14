@@ -1,6 +1,6 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	5.1.2
+%define		real_version	6.0.0
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
@@ -11,7 +11,6 @@ License:	Apache-2.0
 Group:		System/Servers
 URL:		https://pecl.php.net/package/swoole
 VCS:		https://github.com/swoole/swoole-src
-#URL:		https://www.swoole.com/coding
 Source0:	%real_name-%real_version.tar
 
 Source1:	php-%php_extension.ini
@@ -23,6 +22,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: php-devel = %php_version
 
 BuildRequires: boost-devel-headers gcc-c++ libbrotli-devel libcurl-devel libpcre-devel libssl-devel zlib-devel
+BuildRequires: libnghttp2-devel libssl-devel libzstd-devel
 
 # Using symbols from php-sockets and php-curl:
 Requires: php%_php_suffix-sockets php%_php_suffix-curl
@@ -53,6 +53,7 @@ Swoole main features are includes:
 %prep
 %setup -c
 %patch0 -p1
+rm -rf thirdparty/nghttp2
 
 %build
 phpize
@@ -70,7 +71,11 @@ ln -nsf -- /usr/src/php%_php_suffix-devel/ext/ .
 	--enable-swoole-json \
 	--enable-swoole-curl \
 	--enable-openssl \
+	--with-openssl-dir=%_prefix \
 	--enable-http2 \
+	--with-nghttp2-dir=%_prefix \
+	--with-brotli-dir=%_prefix \
+	--enable-zstd \
 	--enable-mysqlnd \
 	--enable-sockets \
 	%nil
@@ -91,6 +96,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Mon Feb 10 2025 Anton Farygin <rider@altlinux.ru> 6.0.0-alt1
+- 5.1.2 -> 6.0.0
 
 * Wed Feb 14 2024 Anton Farygin <rider@altlinux.ru> 5.1.2-alt1
 - 5.1.2 (Closes: #49121)

@@ -1,12 +1,7 @@
 %define php_sapi apache2-mod_php
 %define so_file  mod_php%_php_suffix.so
 
-# https://php.watch/versions/8.0/mod_php-rename
-%if "%_php_suffix" == "7"
-%define apache_module_name php%{_php_suffix}_module
-%else
 %define apache_module_name php_module
-%endif
 %define mod_conflicts %(echo "%_supported_php_suffix"|sed 's/\\<%{_php_suffix}\\>//;s/ \\+/ /g;s/^[[:space:]]*//;s/[[:space:]]*$//;s/\\([[:graph:]]*\\)/apache2-mod_php\\1/g')
 
 Name: apache2-mod_php%_php_suffix
@@ -22,7 +17,6 @@ Url: http://www.php.net/
 Source1: php.ini
 Source2: apache2-mod_php-browscap.ini
 
-Patch0: apache2-mod_php7-7.1.0.patch
 BuildRequires(pre): rpm-build-php8.3-version
 BuildRequires: php-devel = %php_version
 
@@ -36,7 +30,7 @@ Requires: apache2-httpd-prefork-like
 Requires(post): apache2-httpd-prefork-like
 Requires(post): apache2-base
 
-Conflicts: apache2-mod_php5 %mod_conflicts
+Conflicts: %mod_conflicts
 Provides: apache2-mod_php = %php_version
 Provides: php-engine = %php_version-%php_release
 
@@ -57,7 +51,8 @@ Apache2 web server.
 %prep
 %setup -T -c
 %php_sapi_prepare apache2handler
-%patch0 -p1 -b .fix
+# changed module name for easier identification in loaded modules list
+sed -i "s,apache2handler,apache2-mod_php," sapi_apache2.c
 
 %build
 rm -f internal_functions.c

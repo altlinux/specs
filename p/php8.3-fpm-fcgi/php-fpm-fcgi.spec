@@ -18,7 +18,6 @@ Source4: php-fpm.logrotate.in
 Source5: php-fpm.service.in
 Source6: php-fpm.rotate.in
 
-Patch0: php5-fpm-fcgi-5.3.3.20100722-config.m4.patch
 Patch1: php-fpm-fcgi-build.patch
 Patch2: php-fpm-fcgi-config.patch
 Patch3: php-fpm-fcgi-setproctitle.patch
@@ -50,7 +49,6 @@ against placing any interpreters into cgi-bin.
 ln -s %php_extsrcdir ext
 
 sed -i 's,@phpsuffix@,%_php_suffix,g' %_sourcedir/*.patch
-%patch0 -p1
 %patch1 -p1 -b .a
 %patch2 -p1
 %patch3 -p1

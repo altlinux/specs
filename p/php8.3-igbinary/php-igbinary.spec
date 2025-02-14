@@ -2,8 +2,8 @@
 %define		php_extension	igbinary
 
 Name:           php%_php_suffix-%php_extension
-Version:        3.2.15
-Release:        alt2.%php_version
+Version:        3.2.16
+Release:        alt1.%php_version
 Summary:        Replacement for the standard PHP serializer
 Group:		System/Servers
 License:        BSD-3-Clause
@@ -72,6 +72,9 @@ make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Mon Feb 10 2025 Anton Farygin <rider@altlinux.ru> 3.2.16-alt1
+- 3.2.15 -> 3.2.16
 
 * Tue Dec 19 2023 Alexandr Antonov <aas@altlinux.org> 3.2.15-alt2.%php_version
 - renamed the ini file (ALT #48855)
