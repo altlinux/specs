@@ -8,7 +8,7 @@
 
 Name:    pi-hole
 Version: 5.18.4
-Release: alt4
+Release: alt5
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
 License: EUPL-1.2
@@ -82,7 +82,7 @@ sed -i 's!/usr/local/!/usr/!g' pihole gravity.sh advanced/Scripts/*.sh
   install -Dm755 %SOURCE8 "%buildroot%_sysconfdir/.pihole/automated install/basic-install.sh"
 
   install -Dm644 advanced/dnsmasq.conf.original %buildroot%_sysconfdir/dnsmasq.conf
-  sed -i 's!^#conf-dir=/etc/dnsmasq.d!conf-dir=/etc/dnsmasq.d!' %buildroot%_sysconfdir/dnsmasq.conf
+  sed -i 's!^#conf-dir=/etc/dnsmasq.d$!conf-dir=/etc/dnsmasq.d!' %buildroot%_sysconfdir/dnsmasq.conf
 
   install -Dm644 %SOURCE2 %buildroot%_sysconfdir/dnsmasq.d/01-pihole.conf
   install -Dm644 advanced/06-rfc6761.conf %buildroot%_sysconfdir/dnsmasq.d/06-rfc6761.conf
@@ -157,6 +157,9 @@ chmod 0755 %buildroot%_datadir/%_name/update.sh %buildroot%_datadir/%_name/unins
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt5
+- use only one config dir
+
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt4
 - use additional config dir by default
 
