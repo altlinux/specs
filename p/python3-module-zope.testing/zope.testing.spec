@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.1
-Release: alt2
+Version: 5.1
+Release: alt1
 Summary: Zope testing helpers
 License: ZPL-2.1
 Group: Development/Python3
@@ -54,7 +54,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
@@ -65,6 +65,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.txt
 
 %changelog
+* Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1
+- 5.0.1 -> 5.1.
+
 * Mon Jul 31 2023 Stanislav Levin <slev@altlinux.org> 5.0.1-alt2
 - Mapped PyPI name to distro's one.
 - Modernized packaging.

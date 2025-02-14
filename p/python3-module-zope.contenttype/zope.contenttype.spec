@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1
+Version: 5.2
 Release: alt1
 
 Summary: Zope contenttype
@@ -56,7 +56,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
@@ -64,6 +64,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.1 -> 5.2.
+
 * Fri Mar 15 2024 Stanislav Levin <slev@altlinux.org> 5.1-alt1
 - 5.0 -> 5.1.
 

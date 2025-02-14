@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-
 %define pypi_name zope.componentvocabulary
+%define ns_name zope
+%define mod_name componentvocabulary
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
-Release: alt2
+Version: 3.0
+Release: alt1
 
 Summary: Component vocabularies
 License: ZPL-2.1
@@ -35,15 +36,6 @@ BuildRequires: python3-module-zope.component-tests
 %description
 This package contains various vocabularies.
 
-%package tests
-Summary: Tests for zope.componentvocabulary
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires zope.component
-
-%description tests
-This package contains tests for zope.componentvocabulary.
-
 %prep
 %setup
 %pyproject_deps_resync_build
@@ -65,17 +57,16 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/zope/componentvocabulary/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/*/tests
-
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests
 
 %changelog
+* Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 3.0-alt1
+- 2.3.0 -> 3.0.
+
 * Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 2.3.0-alt2
 - Fixed FTBFS (missing build dependency on six).
 

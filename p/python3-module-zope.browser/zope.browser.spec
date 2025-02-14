@@ -1,47 +1,40 @@
 %define _unpackaged_files_terminate_build 1
-%define oname zope.browser
+%define pypi_name zope.browser
+%define ns_name zope
+%define mod_name browser
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.0
-Release: alt2
-
+Name: python3-module-%pypi_name
+Version: 3.1
+Release: alt1
 Summary: Shared Zope Toolkit browser components
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.browser/
 Vcs: https://github.com/zopefoundation/zope.browser.git
-
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %oname} = %EVR
-
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-
+Provides: python3-module-%{pep503_name %pypi_name} = %EVR
+# setuptools(pkg_resources) is used by namespace root that is packaged
+# separately at python3-module-zope
+%add_pyproject_deps_runtime_filter setuptools
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-zope.testrunner
+%pyproject_builddeps_metadata_extra test
 %endif
-
-%py3_requires zope
 
 %description
 This package provides shared browser components for the Zope Toolkit.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
-
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -59,18 +52,17 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vv
 
 %files
-%doc LICENSE.txt *.rst
-%python3_sitelibdir/zope/browser/
-%python3_sitelibdir/%oname-%version.dist-info/
+%doc README.*
+%python3_sitelibdir/%ns_name/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
-%exclude %python3_sitelibdir/zope/browser/tests.*
-%exclude %python3_sitelibdir/zope/browser/*/tests.*
-
-%files tests
-%python3_sitelibdir/zope/browser/tests.*
-%python3_sitelibdir/zope/browser/*/tests.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/tests.*
+%exclude %python3_sitelibdir/%ns_name/%mod_name/*/tests.*
 
 %changelog
+* Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 3.1-alt1
+- 3.0 -> 3.1.
+
 * Tue Aug 08 2023 Stanislav Levin <slev@altlinux.org> 3.0-alt2
 - Mapped PyPI name to distro's one.
 
