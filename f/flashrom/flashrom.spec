@@ -1,7 +1,8 @@
 %define soname 1
+
 Name: flashrom
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Universal flash programming utility
 License: GPLv2
@@ -10,8 +11,9 @@ Group: System/Kernel and hardware
 Url: http://flashrom.org/Flashrom
 # Homepage: http://www.flashrom.org
 # https://review.coreboot.org/flashrom.git
-Source: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source0: %name-%version.tar
+Source1: flashboot.sh
+Patch: %name-%version-%release.patch
 
 BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-devel
 BuildRequires: libjaylink-devel libcmocka-devel libpci-devel
@@ -95,7 +97,7 @@ Bash completion for %name.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
 
 %build
 echo "VERSION = %version" >versioninfo.inc
@@ -118,6 +120,11 @@ sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/flashrom_udev.ru
 %meson_install
 install -D -p -m 0644 util/flashrom_udev.rules %buildroot/%_udevrulesdir/60_flashrom.rules
 rm -f %buildroot%_libdir/libflashrom.a
+%ifarch %e2k
+install -pDm755 %SOURCE1 %buildroot%_sbindir/flashboot.sh
+mkdir -p %buildroot%_sysconfdir/modprobe.d
+echo "options spidev bufsiz=64" > %buildroot%_sysconfdir/modprobe.d/spidev.conf
+%endif
 
 %check
 %__meson_test
@@ -127,6 +134,9 @@ rm -f %buildroot%_libdir/libflashrom.a
 %_udevrulesdir/60_flashrom.rules
 %_sbindir/*
 %_man8dir/*
+%ifarch %e2k
+%config(noreplace) %_sysconfdir/modprobe.d/spidev.conf
+%endif
 
 %files -n libflashrom%soname
 %_libdir/libflashrom.so.%{soname}*
@@ -143,6 +153,9 @@ rm -f %buildroot%_libdir/libflashrom.a
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Fri Feb 14 2025 Michael Shigorin <mike@altlinux.org> 1.5.1-alt2
+- E2K: add flashboot.sh 0.9.2 by MCST
+
 * Thu Feb 06 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
 - 1.5.1.
 - Added patches from main:
