@@ -2,7 +2,7 @@
 
 Name: 0ad-data
 Version: 0.27.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Data for 0ad: libre realtime strategy game of ancient warfare
@@ -13,8 +13,6 @@ BuildArch: noarch
 
 # https://releases.wildfiregames.com/0ad-%version-unix-data.tar.gz
 Source: %name-%version.tar
-
-Requires: 0ad = %EVR
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -46,6 +44,12 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Fri Feb 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:0.27.0-alt1.1
+- removed Requires: 0ad
+  + avoids potential unmet dependencies
+  + allows to avoid rebuilding this huge package on every
+    minor change of this package.
+
 * Mon Feb 10 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.0-alt1
 - New version.
 

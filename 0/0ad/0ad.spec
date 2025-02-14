@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.27.0
-Release: alt1
+Release: alt1.1
 
 Summary: Libre realtime strategy game of ancient warfare
 License: GPL-2.0-or-later and MIT
@@ -9,7 +9,7 @@ Group: Games/Strategy
 Url: https://play0ad.com/
 VCS: https://gitea.wildfiregames.com/0ad/0ad.git
 
-Requires: %name-data = %EVR
+Requires: %name-data = %version
 Requires: fonts-ttf-dejavu
 
 Source: %name-%version.tar
@@ -17,6 +17,8 @@ Source1: cxxtest.tar
 # https://svn.wildfiregames.com/public/source-libs/trunk/fcollada/src/
 # libraries/source/fcollada/build.sh
 Source2: fcollada.tar
+
+Patch1: 0ad-0.27-alt-loongarch64-and-riscv64.patch
 
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-flyweight-devel
@@ -72,6 +74,7 @@ educational celebration of game development and ancient history.
 
 %prep
 %setup -a1 -a2
+%autopatch -p1
 
 # specify build version for GUI
 echo \
@@ -136,6 +139,12 @@ cp -a binaries/data/l10n %buildroot%_datadir/0ad/
 %_pixmapsdir/0ad.png
 
 %changelog
+* Fri Feb 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:0.27.0-alt1.1
+- NMU:
+  + build on loongarch64 and riscv64;
+  + relax 0ad-data dependency to %%version to avoid rebuilding
+    huge data package on every minor change of this package.
+
 * Tue Feb 11 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.0-alt1
 - Setup license to SPDX format.
 - Shorting summary tag.
