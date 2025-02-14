@@ -2,7 +2,7 @@
 
 Name:    vaultwarden
 Version: 1.33.2
-Release: alt1
+Release: alt2
 
 Summary: Unofficial Bitwarden compatible server
 License: AGPL-3.0
@@ -15,7 +15,7 @@ Source2: %name.cfg
 Source3: %name.service
 Source4: %name.sysusers
 
-Patch0: vaultwarden-1.32.0-alt-mysqlclient-crate-loongarch64.patch
+Patch0: vaultwarden-1.33.2-alt-mysqlclient-crate-loongarch64.patch
 
 # 32bit incompatible, unable to build vendored mysqlclient-sys on ppc
 ExcludeArch: %ix86 armh ppc64le
@@ -117,6 +117,9 @@ fi
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Fri Feb 14 2025 Ilya Sorochan <k0tran@altlinux.org> 1.33.2-alt2
+- Fix loongarch64 patch for mysqlclient-sys crate.
+
 * Tue Feb 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.33.2-alt1
 - New version.
 
