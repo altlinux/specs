@@ -1,5 +1,5 @@
 Name: flacon
-Version: 11.4.0
+Version: 12.0.0
 Release: alt1
 
 Summary: Audio File Encoder
@@ -14,10 +14,22 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 # https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: cmake
+BuildRequires: alacenc
+BuildRequires: ctest
+BuildRequires: faac
+BuildRequires: flac
+BuildRequires: lame
 BuildRequires: libtag-devel
 BuildRequires: libuchardet-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: libyaml-cpp-devel
+BuildRequires: mac
+BuildRequires: mediainfo
+BuildRequires: opus-tools
+BuildRequires: qt6-tools-devel
+BuildRequires: sox-base
+BuildRequires: ttaenc
+BuildRequires: vorbis-tools
+BuildRequires: wavpack
 
 Requires: alacenc
 Requires: faac
@@ -48,11 +60,14 @@ Extracts audio tracks from audio CD image to separate tracks.
 %setup
 
 %build
-%cmake
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTS=ON -Wno-dev
 %cmake_build
 
 %install
 %cmake_install
+
+%check
+LANG=C.UTF-8 %ctest || :
 
 %files
 %doc LICENSE README.md
@@ -71,6 +86,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Sat Feb 15 2025 Nazarov Denis <nenderus@altlinux.org> 12.0.0-alt1
+- New version 12.0.0.
+
 * Sun May 05 2024 Nazarov Denis <nenderus@altlinux.org> 11.4.0-alt1
 - New version 11.4.0.
 
