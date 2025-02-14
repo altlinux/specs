@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 24.7.6.1018
+Version: 24.12.4.1097
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -41,12 +41,12 @@ Requires(preun): %{_sbindir}/update-alternatives
 %Description
 The web browser from Yandex
 
-Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 126.0.6478.
+Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 130.0.6723.
 
 %Description -l ru_RU.UTF-8
 Веб-браузер от Яндекса
 
-Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 126.0.6478.
+Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 130.0.6723.
 
 #------------------------------------------------------------------------------
 #   Prep rule - Prepare sources before build
@@ -190,6 +190,7 @@ store_partner_data() {
     store_partner_file "" "partner_config"
     store_partner_file "" "distrib_info"
     store_partner_file "" "master_preferences"
+    store_partner_file "resources/configs" "all_zip"
     store_partner_file "Extensions" "*.*"
     store_partner_files "resources" "clids*.xml"
     store_partner_files "resources" "tablo*"
@@ -221,6 +222,56 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Feb 13 2025 yabro <yabro@altlinux.org> 24.12.4.1097-alt1
+- Browser updated to 24.12.4.1097
+ + Critical CVE-2024-10487: Out of bounds write in Dawn
+ + High CVE-2024-10488: Use after free in WebRTC
+ + High CVE-2024-12694: Use after free in Compositing
+ + High CVE-2025-0291: Type Confusion in V8
+ + High CVE-2024-10826: Use after free in Family Experiences
+ + High CVE-2024-10827: Use after free in Serial
+ + Medium CVE-2025-0762: Use after free in DevTools
+
+* Fri Dec 27 2024 yabro <yabro@altlinux.org> 24.10.4.845-alt1
+- Browser updated to 24.10.4.845
+- Fixed local ffmpeg bug
+
+* Tue Dec 17 2024 yabro <yabro@altlinux.org> 24.10.4.818-alt1
+- Browser updated to 24.10.4.818
+ + Critical CVE-2024-10487: Out of bounds write in Dawn
+ + High CVE-2024-10229: Inappropriate implementation in Extensions
+ + High CVE-2024-10488: Use after free in WebRTC
+ + High CVE-2024-8636: Heap buffer overflow in Skia
+ + High CVE-2024-8637: Use after free in Media Router
+ + High CVE-2024-8638: Type Confusion in V8
+ + High CVE-2024-8639: Use after free in Autofill
+ + High CVE-2024-8362: Use after free in WebAudio
+ + High CVE-2024-8193: Heap buffer overflow in Skia
+ + High CVE-2024-8194: Type Confusion in V8
+ + High CVE-2024-8198: Heap buffer overflow in Skia
+ + High CVE-2024-7969: Type Confusion in V8
+ + High CVE-2024-7964: Use after free in Passwords
+ + High CVE-2024-7965: Inappropriate implementation in V8
+ + High CVE-2024-7966: Out of bounds memory access in Skia
+ + High CVE-2024-7967: Heap buffer overflow in Fonts
+ + High CVE-2024-7968: Use after free in Autofill
+ + High CVE-2024-7971: Type confusion in V8
+ + High CVE-2024-7970: Out of bounds write in V8
+ + Medium CVE-2024-7972: Inappropriate implementation in V8
+ + Medium CVE-2024-7973: Heap buffer overflow in PDFium
+ + Medium CVE-2024-7974: Insufficient data validation in V8 API
+ + Medium CVE-2024-7975: Inappropriate implementation in Permissions
+ + Medium CVE-2024-7976: Inappropriate implementation in FedCM
+ + Medium CVE-2024-7977: Insufficient data validation in Installer
+ + Medium CVE-2024-7978: Insufficient policy enforcement in Data Transfer
+ + Medium CVE-2024-7979: Insufficient data validation in Installer
+ + Medium CVE-2024-7980: Insufficient data validation in Installer
+ + Low CVE-2024-7981: Inappropriate implementation in Views
+ + Low CVE-2024-8033: Inappropriate implementation in WebApp Installs
+ + Low CVE-2024-8034: Inappropriate implementation in Custom Tabs
+ + Low CVE-2024-8035: Inappropriate implementation in Extensions
+
 
 * Tue Oct 22 2024 yabro <yabro@altlinux.org> 24.7.6.1018-alt1
 - Fixed Animated Backgrounds bug (closes: 51152)
