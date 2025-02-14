@@ -7,7 +7,7 @@
 
 Name: lua%major_version
 Version: %major_version.7
-Release: alt1
+Release: alt2
 
 Summary: Powerful light-weight programming language
 License: MIT
@@ -220,6 +220,9 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
+* Wed Sep 11 2024 Ivan A. Melnikov <iv@altlinux.org> 5.4.7-alt2
+- Add loongarch64 support (thx asheplyakov@).
+
 * Sun Sep 08 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 5.4.7-alt1
 - 5.4.7.
 
