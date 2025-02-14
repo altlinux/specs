@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rizin
-Version: 0.7.2
+Version: 0.7.4
 Release: alt1
 
 Summary: UNIX-like reverse engineering framework and command-line tool-set
@@ -13,10 +13,10 @@ VCS: https://github.com/rizinorg/rizin
 # Source-url: https://github.com/rizinorg/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: %name-postsubmodules-%version.tar
-Patch0: fallback-srcs-xz-5.2.9.patch
+Patch1: alt-use-sys-blake3.patch
+Patch2: alt-fix-segm-fault.patch
 
 BuildRequires(pre): meson
-BuildRequires: pkgconfig(libmagic)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libzip)
 BuildRequires: pkgconfig(zlib)
@@ -26,22 +26,19 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(capstone)
 BuildRequires: pkgconfig(tree-sitter)
+BuildRequires: pkgconfig(libblake3)
 BuildRequires: libmspack-devel
 BuildRequires: libzstd-devel
-BuildRequires: libmagic-devel
 
 Requires: %name-common = %EVR
-
-Provides: bundled(blake3) = 1.4.0
 
 %description
 Rizin is a free and open-source Reverse Engineering framework,
 providing a complete binary analysis experience with features like
-Disassembler, Hexadecimal editor, Emulation, Binary inspection, Debugger,
-and more.
+Disassembler, Hexadecimal editor, Emulation, Binary inspection,
+Debugger, and more.
 
 Rizin is a fork of radare2 with a focus on usability, working features
-BuildRequires: tree-sitter-c
 and code cleanliness.
 
 %package devel
@@ -52,7 +49,8 @@ Requires: libssl-devel
 Requires: libmagic-devel
 
 %description devel
-Development files for the rizin package. See rizin package for more information.
+Development files for the rizin package. See rizin package for more
+information.
 
 %package common
 Summary: Arch-independent SDB files for the rizin package
@@ -61,17 +59,17 @@ BuildArch: noarch
 Requires: %name = %EVR
 
 %description common
-Arch-independent SDB files used by rizin package. See rizin package for more information
+Arch-independent SDB files used by rizin package. See rizin package for
+more information
 
 %prep
-%setup
-%patch0 -p1
-%setup -T -D -a1
+%setup -a1
 %__cp -rf dependencies/* subprojects
+%patch1 -p1
+%patch2 -p1
 
 %build
 %meson \
-    -Duse_sys_magic=enabled \
     -Duse_sys_capstone=enabled \
     -Duse_sys_libzip=enabled \
     -Duse_sys_zlib=enabled \
@@ -83,6 +81,7 @@ Arch-independent SDB files used by rizin package. See rizin package for more inf
     -Duse_sys_pcre2=enabled \
     -Duse_sys_tree_sitter=enabled \
     -Duse_sys_lzma=enabled \
+    -Duse_sys_blake3=enabled \
     -Denable_tests=false \
     -Denable_rz_test=false
 %meson_build
@@ -121,5 +120,11 @@ Arch-independent SDB files used by rizin package. See rizin package for more inf
 %dir %_datadir/%name
 
 %changelog
+* Fri Feb 14 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.7.4-alt1
+- 0.7.4-alt1
+- fixed the package description (closes: 52734)
+- fixed sigmentation fault (closes: 52725)
+- fixed warnings when using "rizin" with "-nqcpm" parameters (closes: 52733)
+
 * Mon Apr 01 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0.7.2-alt1
 - Initial build for ALT Linux
