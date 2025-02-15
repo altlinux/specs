@@ -1,6 +1,6 @@
 Name: gnome-extension-manager
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: A utility for browsing and installing GNOME Shell Extensions
 License: GPL-3.0
@@ -23,7 +23,6 @@ BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: typelib(Adw) 
 BuildRequires: pkgconfig(libsoup-3.0)
-BuildRequires: pkgconfig(text-engine-0.1)
 BuildRequires: pkgconfig(blueprint-compiler)
 BuildRequires: pkgconfig(libxml-2.0)
 
@@ -58,6 +57,9 @@ With Extension Manager you can:
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sat Feb 15 2025 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt2
+- Fix BR
+
 * Fri Jan 10 2025 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - New version 0.6.1.
 
