@@ -3,7 +3,7 @@
 %define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
@@ -75,8 +75,7 @@ easy visual comparison between benchmarks.
   -Duse_system_spdlog=enabled \
   -Dwith_wayland=enabled \
   -Dmangoapp=true \
-  -Dmangohudctl=true \
-  -Dmangoapp_layer=true
+  -Dmangohudctl=true
 
 %meson_build
 
@@ -98,13 +97,15 @@ easy visual comparison between benchmarks.
 
 %files -n mangoapp
 %_bindir/mangoapp
-%_libdir/%name/libMangoApp.so
 %_man1dir/mangoapp.1*
 
 %files -n mangoplot
 %_bindir/mangoplot
 
 %changelog
+* Sat Feb 15 2025 Nazarov Denis <nenderus@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Sun May 26 2024 Nazarov Denis <nenderus@altlinux.org> 0.7.2-alt1
 - 0.7.2
 
