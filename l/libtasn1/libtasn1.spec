@@ -1,6 +1,8 @@
 Name: libtasn1
-Version: 4.19.0
-Release: alt3
+Version: 4.20.0
+Release: alt1
+
+%define soname 6
 
 Summary: The ASN.1 library used in GNUTLS
 Group: System/Libraries
@@ -16,6 +18,7 @@ Patch4: Fix-build-with-gcc12.patch
 Patch5: Fix-build-tests-with-gcc12.patch
 Patch6: Fix-build-with-gcc13.patch
 Patch7: Fix-tests-build-with-glibc-2.38.patch
+Patch8: No-error-on-missing-variable-declarations.patch
 
 BuildRequires: gtk-doc texinfo help2man
 
@@ -59,7 +62,7 @@ This package contains simple tools that can decode and encode ASN.1 data.
 %package devel-doc
 Summary: libtasn1 development documentation
 Group: Development/Documentation
-License: LGPLv2.1+
+License: GFDL-1.3-or-later
 Conflicts: %name-devel < %version
 BuildArch: noarch
 
@@ -80,15 +83,17 @@ This package contains libtasn1 development documentation.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
-%def_enable Werror
 %autoreconf
 %configure \
 	--disable-static \
 	--disable-silent-rules
 touch doc/stamp_docs
-%make_build
+# Don't add -Werror to CFLAGS before configure: too many configure tests
+# fails and produces wrong results.
+%make_build CFLAGS="$CFLAGS -Werror"
 
 %install
 %makeinstall_std
@@ -107,7 +112,8 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %make_build -k check
 
 %files
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 %dir %docdir
 %docdir/[ACNRT]*
 
@@ -127,6 +133,13 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Fri Feb 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Don't add -Werror to CFLAGS before configure.
+- Don't treat missing-variable-declarations warning as error.
+- devel-doc: Fixed License tag.
+- Added soname check.
+- Updated to 4.20.0 (fixes: CVE-2024-12133).
+
 * Wed Aug 23 2023 Mikhail Efremov <sem@altlinux.org> 4.19.0-alt3
 - Dropped -Wno-error=format-truncation.
 - Fixed tests build with glibc 2.38.
