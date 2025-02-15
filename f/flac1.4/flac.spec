@@ -1,14 +1,13 @@
 %set_verify_elf_method strict
-%define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %define flacdocs %_docdir/%name
 
-%define soversion 14
-%define cppsoversion 11
+%define soversion 12
+%define cppsoversion 10
 
-Name: flac
-Version: 1.5.0
-Release: alt1
+Name: flac1.4
+Version: 1.4.3
+Release: alt3
 
 Summary: An encoder/decoder for the Free Lossless Audio Codec
 License: GPL-2.0-or-later and BSD-3-Clause and GFDL-1.1-or-later
@@ -37,14 +36,12 @@ editor for FLAC files and input plugins for various music players.
 
 This package contains the command-line tools and documentation.
 
-%package -n lib%name%soversion
+%package -n libflac%soversion
 Summary: FLAC shared library
 Group: System/Libraries
 License: BSD-3-Clause
-Provides: lib%name = %version
-Obsoletes: lib%name < %version
 
-%description -n lib%name%soversion
+%description -n libflac%soversion
 FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
 similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
 format, reference encoders and decoders in library form, flac, a command-line
@@ -53,48 +50,12 @@ editor for FLAC files and input plugins for various music players.
 
 This package contains the FLAC shared library.
 
-%package -n lib%name-devel
-Summary: Development files for FLAC
-Group: Development/C
-License: BSD-3-Clause and GFDL-1.1-or-later
-Requires: lib%name%soversion = %EVR
-Provides: liboggflac-devel = %version
-Obsoletes: liboggflac-devel < %version
-
-%description -n lib%name-devel
-FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
-similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
-format, reference encoders and decoders in library form, flac, a command-line
-program to encode and decode FLAC files, metaflac, a command-line metadata
-editor for FLAC files and input plugins for various music players.
-
-This package contains development files required for packaging
-FLAC-based software.
-
-%package -n lib%name-devel-static
-Summary: Static libraries for FLAC
-Group: Development/C
-License: BSD-3-Clause
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
-similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
-format, reference encoders and decoders in library form, flac, a command-line
-program to encode and decode FLAC files, metaflac, a command-line metadata
-editor for FLAC files and input plugins for various music players.
-
-This package contains development libraries required for packaging
-statically linked FLAC-based software.
-
-%package -n lib%name++%cppsoversion
+%package -n libflac++%cppsoversion
 Summary: Object shared library FLAC++
 Group: System/Libraries
 License: BSD-3-Clause
-Requires: lib%name%soversion = %EVR
-Provides: lib%name++ = %version
 
-%description -n lib%name++%cppsoversion
+%description -n libflac++%cppsoversion
 FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
 similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
 format, reference encoders and decoders in library form, flac, a command-line
@@ -103,40 +64,6 @@ editor for FLAC files and input plugins for various music players.
 
 This package contains an object wrapper library
 of functions for manipulating FLAC format audio files.
-
-%package -n lib%name++-devel
-Summary: Development files for FLAC++ library
-Group: Development/C++
-License: BSD-3-Clause
-Requires: lib%name++%cppsoversion = %EVR
-Provides: liboggflac++-devel = %version
-Obsoletes: liboggflac++-devel < %version
-
-%description -n lib%name++-devel
-FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
-similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
-format, reference encoders and decoders in library form, flac, a command-line
-program to encode and decode FLAC files, metaflac, a command-line metadata
-editor for FLAC files and input plugins for various music players.
-
-This package contains development files required for packaging
-FLAC++-based software.
-
-%package -n lib%name++-devel-static
-Summary: Static libraries for FLAC++ library
-Group: Development/C
-License: BSD-3-Clause
-Requires: lib%name++-devel = %EVR
-
-%description -n lib%name++-devel-static
-FLAC stands for Free Lossless Audio Codec.  Grossly oversimplified, FLAC is
-similar to Ogg Vorbis, but lossless.  The FLAC project consists of the stream
-format, reference encoders and decoders in library form, flac, a command-line
-program to encode and decode FLAC files, metaflac, a command-line metadata
-editor for FLAC files and input plugins for various music players.
-
-This package contains development libraries required for packaging
-statically linked FLAC++-based software.
 
 %prep
 %setup -n %name-%version-%release
@@ -160,50 +87,18 @@ done
 %install
 %makeinstall_std
 
-%check
-%make_build -Onone -k check
-
-%files
-%_bindir/*
-%ifnarch %e2k
-%_mandir/man?/*
-%endif
-%flacdocs/
-
-%files -n lib%name%soversion
+%files -n libflac%soversion
 %doc AUTHORS README.md COPYING.Xiph
 %_libdir/libFLAC.so.%soversion
 %_libdir/libFLAC.so.%soversion.*
 
-%files -n lib%name-devel
-%_aclocaldir/libFLAC.m4
-%_libdir/libFLAC.so
-%_includedir/FLAC/
-%_pkgconfigdir/flac.pc
-
-%if_enabled static
-%files -n lib%name-devel-static
-%_libdir/libFLAC.a
-%endif
-
-%files -n lib%name++%cppsoversion
+%files -n libflac++%cppsoversion
 %_libdir/libFLAC++.so.%cppsoversion
 %_libdir/libFLAC++.so.%cppsoversion.*
 
-%files -n lib%name++-devel
-%_datadir/aclocal/libFLAC++.m4
-%_libdir/libFLAC++.so
-%_includedir/FLAC++/
-%_pkgconfigdir/flac++.pc
-
-%if_enabled static
-%files -n lib%name++-devel-static
-%_libdir/libFLAC++.a
-%endif
-
 %changelog
-* Thu Feb 13 2025 Anton Farygin <rider@altlinux.ru> 1.5.0-alt1
-- 1.4.3 -> 1.5.0
+* Sat Feb 15 2025 Anton Farygin <rider@altlinux.ru> 1.4.3-alt3
+- Built version 1.4 as a compatibility library whithout devel subpackages.
 
 * Fri Mar 22 2024 Michael Shigorin <mike@altlinux.org> 1.4.3-alt2
 - E2K: disable manpages (no pandoc so far)
