@@ -1,5 +1,5 @@
 Name: kubo
-Version: 0.33.1
+Version: 0.33.2
 Release: alt1
 
 Summary: IPFS implementation in Go
@@ -87,6 +87,9 @@ EOF
 %doc docs/*
 
 %changelog
+* Sat Feb 15 2025 Vitaly Lipatov <lav@altlinux.ru> 0.33.2-alt1
+- new version 0.33.2 (with rpmrb script)
+
 * Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 0.33.1-alt1
 - new version 0.33.1 (with rpmrb script)
 - disable patch with loongarch64 support
