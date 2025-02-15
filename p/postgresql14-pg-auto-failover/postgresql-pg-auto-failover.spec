@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-pg-auto-failover
 Version: 2.1
-Release: alt1.1
+Release: alt2
 
 Summary: Postgres %pg_ver extension and service for automated failover and high-availability
 License: PostgreSQL
@@ -11,9 +11,10 @@ Group: Databases
 Url: https://github.com/hapostgres/pg_auto_failover
 
 Source: pg_auto_failover-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildRequires: gcc-c++
-BuildRequires: postgresql%pg_ver-server-devel
+BuildRequires: postgresql%pg_ver-devel
 BuildRequires: libncurses-devel
 BuildRequires: libselinux-devel
 BuildRequires: libzstd-devel
@@ -44,6 +45,7 @@ by the monitor.
 
 %prep
 %setup -n pg_auto_failover-%version
+%patch0 -p1
 
 %build
 %make_build
@@ -59,6 +61,9 @@ by the monitor.
 %_datadir/pgsql/extension
 
 %changelog
+* Sat Feb 15 2025 Alexei Takaseev <taf@altlinux.org> 2.1-alt2
+- Add support PostgreSQL 17
+
 * Sun Sep 29 2024 Alexei Takaseev <taf@altlinux.org> 2.1-alt1.1
 - Fix BuildReq
 
