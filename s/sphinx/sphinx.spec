@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 Name: sphinx
 Version: 2.3.2
-Release: alt4
+Release: alt5
 
 Summary: Free open-source SQL full-text search engine
 
@@ -15,7 +15,8 @@ Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.unit
 
-Patch: sphinx-crash.patch
+Patch0: sphinx-crash.patch
+Patch1: sphinx-2.3.2-alt-fix-gcc14-build.patch
 
 BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
 
@@ -72,7 +73,8 @@ Sphinx search engine, http://sphinxsearch.com
 
 %prep
 %setup
-%patch -p2
+%patch0 -p2
+%patch1
 
 # Fix wrong-file-end-of-line-encoding
 sed -i 's/\r//' api/ruby/spec/sphinx/sphinx_test.sql
@@ -87,9 +89,12 @@ sed -i 's/\r//' api/ruby/lib/sphinx/response.rb
 %make_build
 
 # Build libsphinxclient
-cd api/libsphinxclient/
+pushd api/libsphinxclient/
+export CCPP=/usr/bin/cpp
+export CXXCPP=/usr/bin/cpp
 %configure
 make
+popd
 
 %install
 make install DESTDIR=%buildroot INSTALL="%__install -p -c"
@@ -186,6 +191,11 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Fri Feb 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.2-alt5
+- NMU: fix FTBFS:
+  + fixed implicit declaration in test
+  + cpp defined as environment variable
+
 * Tue Oct 05 2021 Egor Ignatov <egori@altlinux.org> 2.3.2-alt4
 - fix build with LTO
 
