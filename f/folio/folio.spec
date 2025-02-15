@@ -3,8 +3,8 @@
 %define app_id com.toolstack.Folio
 
 Name: folio
-Version: 24.14
-Release: alt1.1
+Version: 25.01
+Release: alt1
 
 Summary: A beautiful markdown note-taking app for GNOME
 License: GPL-3.0
@@ -14,19 +14,22 @@ Url: https://github.com/toolstack/Folio
 Vcs: https://github.com/toolstack/Folio
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+%define gtksource_api_ver 5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: blueprint-compiler
-BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(gtksourceview-%gtksource_api_ver)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gee-0.8)
-BuildRequires: gir(GtkSource) = 5
+BuildRequires: gir(GtkSource) = %gtksource_api_ver
 %if_enabled check
 BuildRequires: desktop-file-utils
-BuildRequires: appstream
-BuildRequires: libgio
+BuildRequires: /usr/bin/appstreamcli
+BuildRequires: /usr/bin/glib-compile-schemas
 %endif
 
 %description
@@ -48,6 +51,7 @@ Some features include:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson
@@ -68,18 +72,21 @@ Some features include:
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %_datadir/metainfo/%app_id.appdata.xml
-%_datadir/gtksourceview-5/language-specs/markdownpp.lang
-%_datadir/gtksourceview-5/styles/%{name}_markdown*.xml
+%_datadir/gtksourceview-%gtksource_api_ver/language-specs/markdownpp.lang
+%_datadir/gtksourceview-%gtksource_api_ver/styles/%{name}_markdown*.xml
 %_datadir/dbus-1/services/%app_id.service
 %_datadir/dbus-1/services/%app_id.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%app_id.SearchProvider-search-provider.ini
 %doc README.md
 
 %changelog
+* Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 25.01-alt1
+- updated to 25.01-3-ge6720c8
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 24.14-alt1.1
 - explicitly BR "gir(GtkSource) = 5"
 
-* Tue Nov 24 2024 Semen Fomchenkov <armatik@altlinux.org> 24.14-alt1
+* Sun Nov 24 2024 Semen Fomchenkov <armatik@altlinux.org> 24.14-alt1
 - 24.14
 
 * Thu Nov 21 2024 Semen Fomchenkov <armatik@altlinux.org> 24.13-alt1
