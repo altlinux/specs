@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 99
+%define ver_major 100
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -18,12 +18,13 @@ Group: Graphical desktop/GNOME
 License: GPL-2.0
 Url: https://github.com/micheleg/dash-to-dock
 
+Vcs: https://github.com/micheleg/dash-to-dock.git
+
 BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/archive/extensions.gnome.org-v%version%beta/%_name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/micheleg/dash-to-dock.git
 Source: %_name-%version%beta.tar
 %endif
 
@@ -58,6 +59,9 @@ available.
 %doc README.md
 
 %changelog
+* Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 100-alt1
+- 100 (GNOME 48 supported)
+
 * Thu Oct 03 2024 Yuri N. Sedunov <aris@altlinux.org> 99-alt1
 - 99
 
