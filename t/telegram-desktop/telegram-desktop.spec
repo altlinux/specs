@@ -20,7 +20,7 @@
 %def_without ffmpeg_static
 
 Name: telegram-desktop
-Version: 5.10.7
+Version: 5.11.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -378,6 +378,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Feb 15 2025 Vitaly Lipatov <lav@altlinux.ru> 5.11.1-alt1
+- new version 5.11.1 (with rpmrb script)
+
 * Wed Jan 29 2025 Vitaly Lipatov <lav@altlinux.ru> 5.10.7-alt1
 - new version (5.10.7) with rpmgs script
 
