@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: oxipng
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: PNG compression optimizer
@@ -32,7 +32,7 @@ used via a command-line interface or as a library in other Rust programs.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -49,6 +49,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 9.1.4-alt1
+- 9.1.4
+
 * Sat Nov 30 2024 Yuri N. Sedunov <aris@altlinux.org> 9.1.3-alt1
 - 9.1.3
 
