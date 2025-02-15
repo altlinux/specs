@@ -1,6 +1,6 @@
 Name: simpleini
 Version: 4.22
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform C++ library to read and write INI-style configuration files
 License: MIT
@@ -13,6 +13,9 @@ BuildArch: noarch
 
 # https://github.com/brofield/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+# https://github.com/brofield/simpleini/pull/76
+Patch0: %name-4.22-change-defult-conversion.patch
 
 BuildRequires: ctest
 BuildRequires: gcc-c++
@@ -38,6 +41,7 @@ MIT licence.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake -DSIMPLEINI_USE_SYSTEM_GTEST:BOOL=TRUE
@@ -55,5 +59,8 @@ MIT licence.
 %_datadir/cmake/SimpleIni
 
 %changelog
+* Sat Feb 15 2025 Nazarov Denis <nenderus@altlinux.org> 4.22-alt2
+- Add patch to change default conversion method to SI_NO_CONVERSION (ALT #53077)
+
 * Wed Mar 06 2024 Nazarov Denis <nenderus@altlinux.org> 4.22-alt1
 - Initial build for ALT Linux
