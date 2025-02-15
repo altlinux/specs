@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.44
+%define ver_major 0.45
 %define beta %nil
 %define namespace Phosh
 %define api_ver %ver_major
@@ -24,7 +24,7 @@
 %def_disable check
 
 Name: phosh
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
@@ -67,12 +67,15 @@ Requires: /sbin/capsh
 Requires: gnome-menus-x-gnome
 # since 0.40.0
 Requires: sound-theme-phosh
+# since 0.45 to uninstall apps from app-grid
+Requires: gnome-software
 
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
 
 %define gmobile_ver 0.1.0
 %define feedback_ver 0.4.0
+%define appstream_ver 1.0.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
@@ -86,10 +89,10 @@ BuildRequires: pkgconfig(gcr-3) >= 3.7.5
 BuildRequires: pkgconfig(gio-2.0) >= 2.76.0
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.58
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= 43
-BuildRequires: pkgconfig(gsettings-desktop-schemas) >= 42
+BuildRequires: pkgconfig(gsettings-desktop-schemas) >= 47
 BuildRequires: pkgconfig(gobject-2.0) >= 2.50.0
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.22
-BuildRequires: pkgconfig(gtk+-wayland-3.0) >= 3.22
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.24
+BuildRequires: pkgconfig(gtk+-wayland-3.0) >= 3.24
 BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libhandy-1) >= 1.1.90
@@ -109,6 +112,7 @@ BuildRequires: pkgconfig(libecal-2.0)
 BuildRequires: pkgconfig(evince-document-3.0)
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(gnome-bluetooth-3.0)
+BuildRequires: pkgconfig(appstream) >= %appstream_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0
 BuildRequires: gir(GnomeDesktop) = 3.0} gir(GnomeBluetooth) = 3.0
@@ -191,6 +195,7 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 %meson_install
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
 install -Dpm 0644 data/phosh.service %buildroot%_unitdir/phosh.service
+mkdir -p %buildroot%_sysconfdir/systemd/system/%name.service.d
 
 install -d %buildroot%_datadir/applications
 desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
@@ -203,6 +208,7 @@ desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
 xvfb-run %__meson_test
 
 %files -f %name.lang
+%dir %_sysconfdir/systemd/system/%name.service.d
 %config(noreplace) %_sysconfdir/pam.d/%name
 %_bindir/%name-session
 %attr(2711, root, chkpwd) %_libexecdir/%name
@@ -238,6 +244,8 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/pomodoro-quick-setting.plugin
 %_libdir/%name/plugins/lib%name-plugin-wifi-hotspot-quick-setting.so
 %_libdir/%name/plugins/wifi-hotspot-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-scaling-quick-setting.so
+%_libdir/%name/plugins/scaling-quick-setting.plugin
 %doc NEWS README.md
 
 %files data
@@ -283,6 +291,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
+- updated to v0.45.0-2-g8fc14f4c
+
 * Sat Jan 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.44.1-alt1
 - 0.44.1
 

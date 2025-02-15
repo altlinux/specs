@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.44
+%define ver_major 0.45
 %define beta %nil
 %define rdn_name mobi.phosh.OskStub
 
@@ -106,6 +106,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
+- 0.45.0
+
 * Mon Dec 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
 - 0.44.0
 

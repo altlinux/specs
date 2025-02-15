@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.44
+%define ver_major 0.45
 %define beta %nil
 %define gmobile_ver v0.1.0
 %define rdn_name mobi.phosh.PhoshTour
@@ -26,7 +26,7 @@ Source: %name-%version%beta.tar
 %endif
 %{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
 BuildRequires: pkgconfig(gtk4) >= 4.12
 BuildRequires: pkgconfig(libadwaita-1) >= 1.4
@@ -63,16 +63,20 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 %__meson_test
 
 %files -f %name.lang
+%_xdgconfigdir/autostart/%rdn_name-first-login.desktop
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_userunitdir/%rdn_name-first-login.service
 %_datadir/icons/hicolor/scalable/apps/%rdn_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README* NEWS
 
-
 %changelog
+* Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
+- 0.45.0
+
 * Tue Dec 31 2024 Yuri N. Sedunov <aris@altlinux.org> 0.44.0-alt1
 - 0.44.0
 

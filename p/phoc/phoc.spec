@@ -1,17 +1,16 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.44
+%define ver_major 0.45
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
 %define xdg_name mobi.phosh.Phoc
 
 %define dev_uid 500
-%define wlroots_ver 0.17.4
+%define wlroots_ver 0.18.2
 %define gmobile_ver 0.1.0
 
-# since 0.30 system 0.16 may be used but patched version required
-# system 0.18.1-alt1 not working!
+# since 0.45 system 0.18.2 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_disable embed_gmobile
@@ -20,7 +19,7 @@
 %def_disable check
 
 Name: phoc
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
@@ -92,7 +91,9 @@ compositor.
 %{?_enable_embed_gmobile:mv gmobile-%gmobile_ver subprojects/gmobile}
 %{?_enable_embed_wlroots:mv wlroots-%wlroots_ver subprojects/wlroots
 pushd subprojects/wlroots
-patch -p1 < ../packagefiles/wlroots/0001-Revert-layer-shell-error-on-0-dimension-without-anch.patch
+for p in ../packagefiles/wlroots/*.patch; do
+    patch -p1 -i $p
+done
 popd}
 
 %build
@@ -109,9 +110,9 @@ popd}
 %meson_install
 
 %{?_enable_embed_wlroots:
-rm -r %buildroot%_includedir/wlr
-rm %buildroot%_libdir/libwlroots.a
-rm %buildroot%_pkgconfigdir/wlroots.pc}
+rm -r %buildroot%_includedir/wlroots*
+rm %buildroot%_libdir/libwlroots*.a
+rm %buildroot%_pkgconfigdir/wlroots*.pc}
 
 %{?_enable_embed_gmobile:
 rm %buildroot%_libdir/libgmobile.*
@@ -134,6 +135,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
+- 0.45.0
+
 * Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.44.1-alt1
 - 0.44.1
 
