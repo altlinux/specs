@@ -1,5 +1,5 @@
 Name: wavetable
-Version: 1.0.22
+Version: 1.0.23
 Release: alt1
 
 Summary: Wavetable synth
@@ -42,8 +42,7 @@ Wavetable synthesizer as LV2 plugin.
 Wavetable synthesizer as VST3 plugin.
 
 %prep
-%setup
-tar ixf %SOURCE1
+%setup -a1
 
 %build
 %cmake
@@ -61,6 +60,9 @@ cp -av %_cmake__builddir/*/VST3/*.vst3 %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Sat Feb 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.23-alt1
+- 1.0.23 released
+
 * Mon Oct 14 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.22-alt1
 - 1.0.22 released
 
