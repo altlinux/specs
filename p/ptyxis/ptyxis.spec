@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: ptyxis
-Version: 47.6
+Version: 47.10
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -44,6 +44,7 @@ BuildRequires: %_bindir/appstream-util
 
 Provides: Terminal = %version-%release
 Provides: x-terminal-emulator
+Provides: xvt
 
 %description
 %summary
@@ -62,6 +63,7 @@ Provides: x-terminal-emulator
 mkdir -p %buildroot%_altdir
 cat << __EOF__ > %buildroot%_altdir/%name
 %_bindir/x-terminal-emulator	%_bindir/%name	36
+%_bindir/xvt	%_bindir/%name	36
 __EOF__
 
 %check
@@ -84,10 +86,14 @@ desktop-file-validate %buildroot%_desktopdir/org.gnome.Ptyxis.desktop
 %_altdir/%name
 
 %changelog
+* Sun Feb 16 2025 Boris Yumankulov <boria138@altlinux.org> 47.10-alt1
+- new version 47.10
+- add forget xvt alternative
+
 * Wed Dec 25 2024 Boris Yumankulov <boria138@altlinux.org> 47.6-alt1
 - new version 47.6
 - add x-terminal-emulator alternative
-- replace ptyxis to %name macro
+- replace ptyxis to %%name macro
 - enable check
 - add /proc to BuildRequires
 
