@@ -5,8 +5,8 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libfishsound
-Version:        1.0.0
-Release:        alt4_14.1
+Version:        1.0.1
+Release:        alt1
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -111,6 +111,9 @@ mv src/examples .
 
 
 %changelog
+* Sun Feb 16 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Build new version.
+
 * Thu Jun 20 2019 Michael Shigorin <mike@altlinux.org> 1.0.0-alt4_14.1
 - E2K: avoid valgrind
 
