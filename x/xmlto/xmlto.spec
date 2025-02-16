@@ -1,8 +1,8 @@
 %def_with tex_subpkg
 
 Name: xmlto
-Version: 0.0.28
-Release: alt3
+Version: 0.0.29
+Release: alt1
 
 Summary: A tool for converting XML files to various formats.
 
@@ -13,14 +13,12 @@ Url: https://pagure.io/xmlto/
 # Source-url: https://releases.pagure.org/xmlto/xmlto-%version.tar.bz2
 Source: %name-%version.tar
 
-Patch0: xmlto-c99-1.patch
-Patch1: xmlto-c99-2.patch
-
 Requires: docbook-style-xsl >= 1.56
 %{!?_with_tex_subpkg:Requires: passivetex >= 20040310}
 Requires: docbook-dtds xml-utils xsltproc
 Requires: /usr/bin/paperconf
 
+BuildRequires: /bin/bash
 BuildRequires: docbook-dtds docbook-style-xsl flex xsltproc
 BuildRequires: /usr/bin/paperconf
 
@@ -43,14 +41,11 @@ PassiveTeX/TeX for functionality.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 
 %build
 %autoreconf
-%configure
+%configure XMLTO_BASH_PATH=/bin/bash
 %make_build
-bzip2 --keep --best --force ChangeLog
 
 %install
 %makeinstall_std
@@ -59,7 +54,7 @@ bzip2 --keep --best --force ChangeLog
 %make check
 
 %files
-%doc AUTHORS ChangeLog.* FAQ NEWS THANKS
+%doc AUTHORS.md ChangeLog FAQ.md NEWS.md THANKS.md
 %_bindir/xmlif
 %_bindir/xmlto
 %_man1dir/*
@@ -77,6 +72,9 @@ bzip2 --keep --best --force ChangeLog
 
 
 %changelog
+* Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 0.0.29-alt1
+- new version 0.0.29 (with rpmrb script)
+
 * Wed Jul 19 2023 Vitaly Lipatov <lav@altlinux.ru> 0.0.28-alt3
 - cleanup spec, update URL
 - replace libpaper requirement with /usr/bin/paperconf
