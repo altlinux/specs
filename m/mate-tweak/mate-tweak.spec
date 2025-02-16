@@ -1,16 +1,16 @@
 Name: mate-tweak
 Version: 22.10.0
-Release: alt2
+Release: alt3
 Epoch:   1
 
 Summary: Mate desktop configuration tool
 License: GPL-2.0
 Group: Graphical desktop/MATE
-URL: https://bitbucket.org/ubuntu-mate/mate-tweak
-
-Packager: Anton Midyukov <antohami@altlinux.org>
+URL: https://github.com/ubuntu-mate/mate-tweak
 
 Source: %name-%version.tar
+
+Patch: %name-alt.patch
 
 BuildArch: noarch
 
@@ -31,6 +31,7 @@ Settings that can be handled via MATE Tweak:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -50,6 +51,10 @@ Settings that can be handled via MATE Tweak:
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Sun Feb 16 2025 Nikolay Strelkov <snk@altlinux.org> 1:22.10.0-alt3
+- NMU: added patch to correct paths for brisk-menu, vala-panel-appmenu
+  and mate-volume-control (closes: #43443), support default themes.
+
 * Fri Nov 18 2022 Andrey Cherepanov <cas@altlinux.org> 1:22.10.0-alt2
 - Do not require nvidia-settings (ALT #44356).
 
