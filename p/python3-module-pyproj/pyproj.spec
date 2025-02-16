@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.7.0
+Version: 3.7.1
 Release: alt1
 Summary: Python interface to PROJ
 License: MIT
@@ -67,6 +67,9 @@ py.test-3 -m "not network"
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 3.7.1-alt1
+- New version 3.7.1.
+
 * Tue Oct 01 2024 Anton Vyatkin <toni@altlinux.org> 3.7.0-alt1
 - New version 3.7.0.
 
