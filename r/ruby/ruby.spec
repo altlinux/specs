@@ -2,12 +2,12 @@
 %define        ruby_version 3.3.0
 %define        lname lib%name
 %define        ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
-%define        _version 3.3.4
+%define        _version 3.3.7
 %define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
 
 Name:          ruby
 Version:       %_version
-Release:       alt2
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -52,11 +52,11 @@ Requires:      %name-stdlibs = %EVR
 Requires:      /bin/install
 Provides:      /usr/bin/ruby
 %define obsolete() \
-Provides:      %1 = %_version-%release \
+Provides:      %1 = %EVR \
 Obsoletes:     %1
 %define mobsolete() \
 %(for m in %*; do \
-echo "Provides: %name-module-$m = %_version-%release"; \
+echo "Provides: %name-module-$m = %EVR"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
 
@@ -89,7 +89,7 @@ This package contains Ruby shared libraries.
 %package       -n %lname-devel
 Summary:       Files for compiling extension modules for Ruby
 Group:         Development/C
-Requires:      %lname = %_version-%release
+Requires:      %lname = %EVR
 
 %description   -n %lname-devel
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -104,9 +104,9 @@ Summary:       Files for development and testing with Ruby
 Group:         Development/C
 BuildArch:     noarch
 
-Requires:      %name = %_version-%release
+Requires:      %name = %EVR
 Requires:      rvm-devel
-Requires:      libruby-devel = %_version-%release
+Requires:      libruby-devel = %EVR
 Requires:      gem(rake) >= 0
 Requires:      gem(benchmark_driver) >= 0
 Requires:      gem(test-unit) >= 3.3.5
@@ -125,16 +125,15 @@ purposes.
 Summary:       Standard Ruby libraries
 Group:         Development/Ruby
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
-Requires:      %lname = %_version-%release
-Requires:      ruby = %_version-%release
+Requires:      %lname = %EVR
+Requires:      ruby = %EVR
 Provides:      rubygems = 3.3.26
 Provides:      rdoc = 6.4.0
 Provides:      bundle = 2.3.26
-Provides:      %name-libs = %_version-%release
+Provides:      %name-libs = %EVR
 Provides:      gem(fcntl) = 1.1.0
 Provides:      gem(io-nonblock) = 0.3.0
 Provides:      gem(stringio) = 3.1.1
-Provides:      gem(english) = 0.8.0
 Provides:      gem(abbrev) = 0.1.2
 Provides:      gem(base64) = 0.2.0
 Provides:      gem(benchmark) = 0.3.0
@@ -146,55 +145,59 @@ Provides:      gem(getoptlong) = 0.2.1
 Provides:      gem(mutex_m) = 0.2.0
 Provides:      gem(observer) = 0.1.2
 Provides:      gem(open-uri) = 0.4.1
+Provides:      gem(ostruct) = 0.6.0
 Provides:      gem(pp) = 0.5.0
 Provides:      gem(prettyprint) = 0.2.0
 Provides:      gem(pstore) = 0.1.3
 Provides:      gem(readline) = 0.0.4
 Provides:      gem(resolv-replace) = 0.1.1
-Provides:      gem(resolv) = 0.3.0
-Provides:      gem(ruby2_keywords) = 0.0.5
-Provides:      gem(securerandom) = 0.3.1
-Provides:      gem(shellwords) = 0.2.0
-Provides:      gem(singleton) = 0.2.0
-Provides:      gem(tempfile) = 0.2.1
-Provides:      gem(time) = 0.3.0
-Provides:      gem(tmpdir) = 0.2.0
-Provides:      gem(tsort) = 0.2.0
-Provides:      gem(un) = 0.3.0
 Provides:      gem(weakref) = 0.1.3
-Provides:      gem(etc) = 1.4.3
-Provides:      gem(nkf) = 0.1.3
+Provides:      gem(un) = 0.3.0
+Provides:      gem(tsort) = 0.2.0
+Provides:      gem(tmpdir) = 0.2.0
+Provides:      gem(timeout) = 0.4.1
+Provides:      gem(time) = 0.3.0
+Provides:      gem(tempfile) = 0.2.1
+Provides:      gem(singleton) = 0.2.0
+Provides:      gem(shellwords) = 0.2.0
+Provides:      gem(securerandom) = 0.3.1
+Provides:      gem(ruby2_keywords) = 0.0.5
+Provides:      gem(resolv) = 0.3.0
+Provides:      gem(english) = 0.8.0
+Provides:      gem(drb) = 2.2.0
 Provides:      gem(cgi) = 0.4.1
 Provides:      gem(csv) = 3.2.8
-Provides:      gem(drb) = 2.2.0
+Provides:      gem(uri) = 0.13.0
+Provides:      gem(set) = 1.1.0
 Provides:      gem(irb) = 1.13.1
 Provides:      gem(net-protocol) = 0.2.2
-Provides:      gem(set) = 1.1.0
-Provides:      gem(uri) = 0.13.0
-Provides:      gem(date) = 3.3.4
-Provides:      gem(json) = 2.7.1
+Provides:      gem(nkf) = 0.1.3
+Provides:      gem(etc) = 1.4.3
 Provides:      gem(zlib) = 3.1.1
-Provides:      gem(rdoc) = 6.6.3.1
+Provides:      gem(json) = 2.7.1
 Provides:      gem(yaml) = 0.3.0
+Provides:      gem(rdoc) = 6.6.3.1
+Provides:      gem(date) = 3.3.4
+Provides:      gem(rinda) = 0.2.0
 Provides:      gem(psych) = 5.1.2
 Provides:      gem(open3) = 0.2.1
 Provides:      gem(prism) = 0.19.0
-Provides:      gem(rinda) = 0.2.0
-Provides:      gem(digest) = 3.1.1
-Provides:      gem(fiddle) = 1.1.2
-Provides:      gem(syslog) = 0.1.2
 Provides:      gem(logger) = 1.6.0
 Provides:      gem(reline) = 0.5.7
-Provides:      gem(io-wait) = 0.2.1
-Provides:      gem(openssl) = 3.0.9
+Provides:      gem(syslog) = 0.1.2
+Provides:      gem(fiddle) = 1.1.2
+Provides:      gem(digest) = 3.1.1
 Provides:      gem(bundler) = 2.5.11
-Provides:      gem(pathname) = 0.3.0
+Provides:      gem(strscan) = 3.0.9
+Provides:      gem(openssl) = 3.2.0
+Provides:      gem(io-wait) = 0.2.1
 Provides:      gem(win32ole) = 1.8.10
+Provides:      gem(pathname) = 0.3.0
 Provides:      gem(delegate) = 0.2.0
 Provides:      gem(net-http) = 0.4.1
 Provides:      gem(optparse) = 0.4.0
-Provides:      gem(bigdecimal) = 3.1.5
 Provides:      gem(io-console) = 0.7.1
+Provides:      gem(bigdecimal) = 3.1.5
 Provides:      gem(forwardable) = 1.3.3
 Provides:      gem(did_you_mean) = 1.6.3
 Provides:      gem(syntax_suggest) = 2.0.0
@@ -212,7 +215,7 @@ This package contains standard Ruby runtime libraries.
 %package       doc-html
 Summary:       Ruby manuals and documentation
 Group:         Development/Documentation
-Requires:      ruby = %_version-%release
+Requires:      ruby = %EVR
 
 %description   doc-html
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -226,7 +229,7 @@ Ruby manuals and documentation.
 %package       doc
 Summary:       Ruby executable document in ri format
 Group:         Development/Documentation
-Requires:      %name = %_version-%release
+Requires:      %name = %EVR
 BuildArch:     noarch
 
 %description   doc
@@ -383,6 +386,10 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Fri Jan 31 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1
+- ^ 3.3.4 -> 3.3.7
+- * using %%EVR construction to address packages by version
+
 * Tue Aug 20 2024 Pavel Skrylev <majioa@altlinux.org> 3.3.4-alt2
 - ! fixed %%ruby_gemdocdir for arched gem package
 

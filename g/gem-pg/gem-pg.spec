@@ -5,7 +5,7 @@
 %define        gemname pg
 
 Name:          gem-pg
-Version:       1.5.6
+Version:       1.5.9
 Release:       alt1
 Summary:       Ruby interface to PostgreSQL RDBMS
 License:       BSD-2-Clause
@@ -17,14 +17,15 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: postgresql-devel
-BuildRequires: uni2ascii
 %if_enabled check
 BuildRequires: gem(bundler) >= 1.16
+BuildRequires: gem(ostruct) >= 0.5
 BuildRequires: gem(rake-compiler) >= 1.0
 BuildRequires: gem(rake-compiler-dock) >= 1.0
 BuildRequires: gem(rdoc) >= 6.1.1
 BuildRequires: gem(rspec) >= 3.5
 BuildConflicts: gem(bundler) >= 3
+BuildConflicts: gem(ostruct) >= 1
 BuildConflicts: gem(rake-compiler) >= 2
 BuildConflicts: gem(rake-compiler-dock) >= 2
 BuildConflicts: gem(rdoc) >= 7
@@ -34,10 +35,10 @@ BuildConflicts: gem(rspec) >= 4
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+Requires:      ruby >= 2.5
 Obsoletes:     ruby-pg < %EVR
 Provides:      ruby-pg = %EVR
-Provides:      gem(pg) = 1.5.6
-
+Provides:      gem(pg) = 1.5.9
 
 %description
 This is the extension library to access a PostgreSQL database from Ruby. This
@@ -47,14 +48,14 @@ with slight modification, but not tested at all.
 
 %if_enabled    doc
 %package       -n gem-pg-doc
-Version:       1.5.6
+Version:       1.5.9
 Release:       alt1
 Summary:       Ruby interface to PostgreSQL RDBMS documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pg
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(pg) = 1.5.6
+Requires:      gem(pg) = 1.5.9
 
 %description   -n gem-pg-doc
 Ruby interface to PostgreSQL RDBMS documentation files.
@@ -70,21 +71,23 @@ with slight modification, but not tested at all.
 
 %if_enabled    devel
 %package       -n gem-pg-devel
-Version:       1.5.6
+Version:       1.5.9
 Release:       alt1
 Summary:       Ruby interface to PostgreSQL RDBMS development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pg
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(pg) = 1.5.6
+Requires:      postgresql-devel
+Requires:      gem(pg) = 1.5.9
 Requires:      gem(bundler) >= 1.16
+Requires:      gem(ostruct) >= 0.5
 Requires:      gem(rake-compiler) >= 1.0
 Requires:      gem(rake-compiler-dock) >= 1.0
 Requires:      gem(rdoc) >= 6.1.1
 Requires:      gem(rspec) >= 3.5
-Requires:      postgresql-devel
 Conflicts:     gem(bundler) >= 3
+Conflicts:     gem(ostruct) >= 1
 Conflicts:     gem(rake-compiler) >= 2
 Conflicts:     gem(rake-compiler-dock) >= 2
 Conflicts:     gem(rdoc) >= 7
@@ -115,25 +118,28 @@ with slight modification, but not tested at all.
 %ruby_test
 
 %files
-%doc README-OS_X.rdoc README-Windows.rdoc README.ja.md README.md misc/postgres/README.txt
+%doc Contributors.rdoc History.md LICENSE README-OS_X.rdoc README-Windows.rdoc README.ja.md README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-pg-doc
-%doc README-OS_X.rdoc README-Windows.rdoc README.ja.md README.md misc/postgres/README.txt
+%doc Contributors.rdoc History.md LICENSE README-OS_X.rdoc README-Windows.rdoc README.ja.md README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-pg-devel
-%doc README-OS_X.rdoc README-Windows.rdoc README.ja.md README.md misc/postgres/README.txt
+%doc Contributors.rdoc History.md LICENSE README-OS_X.rdoc README-Windows.rdoc README.ja.md README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Mon Feb 10 2025 Pavel Skrylev <majioa@altlinux.org> 1.5.9-alt1
+- ^ 1.5.6 -> 1.5.9
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 1.5.6-alt1
 - ^ 1.3.5 -> 1.5.6
 
