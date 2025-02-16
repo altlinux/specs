@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.13
+%define major 22.14
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -79,7 +79,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.1
+Version: %major.0
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -511,6 +511,9 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 22.14.0-alt1
+- 2025-02-11, Version 22.14.0 'Jod' (LTS), @aduh95
+
 * Wed Jan 22 2025 Vitaly Lipatov <lav@altlinux.ru> 22.13.1-alt1
 - new version 22.13.1 (with rpmrb script)
 - fixed CVEs:
