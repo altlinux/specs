@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Method and property caching decorators
@@ -65,7 +65,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%tox_check_pyproject
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
 %doc *.txt *.rst
@@ -81,6 +81,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Fri May 19 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

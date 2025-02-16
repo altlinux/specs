@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Object life-cycle events
@@ -72,6 +72,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Thu Jul 06 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

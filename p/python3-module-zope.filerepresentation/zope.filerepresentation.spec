@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0
-Release: alt2
+Version: 6.1
+Release: alt1
 
 Summary: File-system Representation Interfaces
 License: ZPL-2.1
@@ -58,6 +58,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %exclude %python3_sitelibdir/zope/filerepresentation/__pycache__/tests.*
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 6.1-alt1
+- New version 6.1.
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 6.0-alt2
 - Fixed FTBFS.
 

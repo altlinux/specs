@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0
+Version: 5.1
 Release: alt1
 
 Summary: Interfaces and simple adapter that give the size of an object
@@ -78,6 +78,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Fri Jun 30 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

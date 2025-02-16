@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0
+Version: 6.1
 Release: alt1
 
 Summary: Zope Template Application Language Expression Syntax (TALES)
@@ -66,6 +66,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 6.1-alt1
+- New version 6.1.
+
 * Wed Jul 12 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
 - New version 6.0.
 

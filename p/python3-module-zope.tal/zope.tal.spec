@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.1
-Release: alt2
+Version: 5.1
+Release: alt1
 
 Summary: Zope3 Template Attribute Languate
 License: ZPL-2.1
@@ -86,6 +86,9 @@ rm -rf src/zope/tal/tests/test_files.py
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
+- New version 5.1.
+
 * Sat Jan 20 2024 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt2
 - Fix FTBFS.
 

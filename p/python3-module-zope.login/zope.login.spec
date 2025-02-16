@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0
+Version: 3.1
 Release: alt1
 
 Summary: Login helpers for zope.publisher / authentication
@@ -77,6 +77,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 3.1-alt1
+- New version 3.1.
+
 * Wed Aug 23 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
 - New version 3.0.
 
