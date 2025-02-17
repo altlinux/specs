@@ -4,7 +4,7 @@
 
 Name: libaubio%sover
 Version: 0.4.9
-Release: alt8
+Release: alt9
 Summary: Aubio is a library for real time audio labelling
 Url: http://www.aubio.org/
 VCS: https://github.com/aubio/aubio
@@ -15,7 +15,7 @@ Source: %origname-%version.tar
 Patch0: %name-%version-alt.patch
 
 # Automatically added by buildreq on Thu Nov 06 2008
-BuildRequires: docbook-to-man jackit-devel libfftw3-devel libsamplerate-devel libsndfile-devel
+BuildRequires: jackit-devel libfftw3-devel libsamplerate-devel libsndfile-devel
 
 BuildPreReq: python3-base waf >= 1.9.12
 BuildPreReq: txt2man doxygen python3-dev libswresample-devel
@@ -146,6 +146,9 @@ rm -v %buildroot%_libdir/libaubio.a
 %_docdir/lib%origname-doc
 
 %changelog
+* Mon Feb 17 2025 Anton Farygin <rider@altlinux.ru> 0.4.9-alt9
+- fix FTBFS: removed docbook-to-man from BR
+
 * Sat Dec 07 2024 Anton Farygin <rider@altlinux.ru> 0.4.9-alt8
 - built without ffmpeg
 
