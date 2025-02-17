@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.20.1
-Release: alt1
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -48,6 +48,7 @@ for the Xfce desktop.
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
 %xfce4reconf
@@ -92,6 +93,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %exclude %_libdir/gtk-3.0/modules/*.la
 
 %changelog
+* Mon Feb 17 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt2
+- Fixed yandex-browser and chromium-gost helpers (closes: #53111).
+- Updated translations from upstream git.
+
 * Mon Feb 10 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
 - Dropped fake changelog entry.
 - Updated to 4.20.1.
