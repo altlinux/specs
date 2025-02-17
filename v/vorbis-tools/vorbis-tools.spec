@@ -1,6 +1,6 @@
 Name: vorbis-tools
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: The Vorbis General Audio Compression Codec tools
 License: GPLv2
@@ -8,6 +8,8 @@ Group: Sound
 URL: https://www.xiph.org/
 # https://downloads.xiph.org/releases/vorbis/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch0: vorbis-tools-1.4.2-CVE-2023-43361.patch
+Patch1: vorbis-tools-1.4.2-gcc14.patch
 
 # Automatically added by buildreq on Fri Oct 22 2010
 BuildRequires: libao-devel libcurl-devel libflac-devel libkate-devel libspeex-devel libvorbis-devel
@@ -22,6 +24,8 @@ an informator, and a comment editor.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 %configure
@@ -41,6 +45,11 @@ an informator, and a comment editor.
 %doc AUTHORS CHANGES README
 
 %changelog
+* Sun Feb 16 2025 Anton Farygin <rider@altlinux.ru> 1.4.2-alt2
+- Added patch from upstream gitlab with fix buffer Overflow vulnerability
+  in Vorbis-tools (Fixes: CVE-2023-43361).
+- Fixed build with gcc 14.
+
 * Thu Jan 21 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.2-alt1
 - 1.4.0 -> 1.4.2.
 
