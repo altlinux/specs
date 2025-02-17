@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -62,6 +62,10 @@ find ./components -name '*.component' -type f -exec alterator-entry validate {} 
 %_datadir/alterator/components/*
 
 %changelog
+* Mon Feb 17 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.6-alt1
+- Added categories for file system, disk utilities, archiving, and
+  libraries (thx Sergey Savelev)
+
 * Wed Feb 12 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.5-alt1
 - The category System/graphics subsystem/fonts with fonts
   has been added (thx Anna Fomina)
