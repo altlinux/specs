@@ -1,21 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.9.2
-Release: alt2
-Group: Education
-License: GPLv2
-Url: https://veyon.io/
-VCS: https://github.com/veyon/veyon/
+Version: 4.9.3
+Release: alt1
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
+License: GPLv2
+Group: Education
+Url: https://veyon.io/
+VCS: https://github.com/veyon/veyon/
 
-Requires: polkit qca-qt6-ossl qt6-translations
-
-Obsoletes: italc3
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: %name-%version-3rdparty-kldap.tar
 Source2: %name-%version-3rdparty-kldap-qt-compat.tar
 Source3: %name-%version-3rdparty-libfakekey.tar
@@ -24,15 +20,15 @@ Source5: %name-%version-3rdparty-libvncserver-webclients-novnc.tar
 Source6: %name-%version-3rdparty-qthttpserver.tar
 Source7: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
 Source8: %name-%version-3rdparty-x11vnc.tar
-
 Source100: veyon-config-dm-login.sh
-
 Patch0: %name-%version-alt.patch
 Patch1: alt-veyon-libdir.patch
-Patch4: alt-fix-dm-login.patch
+Patch2: alt-fix-dm-login.patch
+
+Requires: polkit qca-qt6-ossl qt6-translations
+Obsoletes: italc3
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kf6
 BuildRequires: gcc-c++ make cmake
 BuildRequires: qt6-base-devel
@@ -54,11 +50,7 @@ BuildRequires: libXtst-devel
 BuildRequires: libfakekey-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libXcursor-devel
-%if "%(rpmvercmp '%ubt_id' 'M110')" >= "0"
 BuildRequires: libproc2-devel
-%else
-BuildRequires: libprocps-devel
-%endif
 
 %description
 Veyon is a free and open source software
@@ -99,10 +91,7 @@ Veyon доступен на разных языках и предоставля�
 
 %prep
 %setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8
-
-%patch0 -p1
-%patch1 -p1
-%patch4 -p1
+%autopatch -p1
 
 # Fix: error: "_FORTIFY_SOURCE" redefined [-Werror]
 # _FORTIFY_SOURCE enabled by default
@@ -126,21 +115,24 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 
 %install
 %cmakeinstall_std
-%__install -D -m 0755 %SOURCE100 %buildroot%_datadir/%name/
+%__install -D -m 0755 %SOURCE100 %buildroot%_datadir/veyon/
 
 %files
 %doc COPYING README.md
-%_unitdir/veyon.service
-%_libdir/%name
 %_libdir/*.so
-%_bindir/*
-%_iconsdir/hicolor/*/apps/*
-%_desktopdir/*
-%_datadir/polkit-1/actions/*
-%_datadir/pixmaps/*
-%_datadir/%name
+%_libdir/veyon/
+%_bindir/veyon-*
+%_unitdir/veyon.service
+%_datadir/veyon/
+%_datadir/pixmaps/veyon-*.xpm
+%_datadir/polkit-1/actions/io.veyon.veyon-*.policy
+%_iconsdir/hicolor/*/apps/veyon-*
+%_desktopdir/veyon-*.desktop
 
 %changelog
+* Mon Feb 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.3-alt1
+- New version.
+
 * Sat Feb 01 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.2-alt2
 - Fix the Russian translation of the character '&&' (logical AND).
 
