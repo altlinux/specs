@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.7
-Release: alt2
+Version: 3.8
+Release: alt1
 
 Summary: Content Security Policy for Django.
 License: BSD-3-Clause
@@ -15,25 +15,24 @@ Url: https://github.com/mozilla/django-csp
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3-module-pytest-django
-BuildRequires: python3(django)
-BuildRequires: python3(jinja2)
 BuildRequires: python3-module-django-dbbackend-sqlite3
+%pyproject_builddeps_metadata_extra tests
 %endif
-
 
 %description
 Django-CSP adds Content-Security-Policy headers to Django.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -42,13 +41,7 @@ Django-CSP adds Content-Security-Policy headers to Django.
 %pyproject_install
 
 %check
-# override upstream setup.cfg (remove --pep8 and --flakes arguments)
-cat > setup.cfg <<'EOF'
-[tool:pytest]
-addopts = -vs --tb=short
-DJANGO_SETTINGS_MODULE = csp.tests.settings
-EOF
-%pyproject_run_pytest
+%pyproject_run_pytest -ra -o=addopts=-Wignore
 
 %files
 %doc *.rst *.md LICENSE
@@ -56,6 +49,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 17 2025 Dmitry Lyalyaev <fruktime@altlinux.org> 3.8-alt1
+- 3.7 -> 3.8
+
 * Fri Sep 01 2023 Dmitry Lyalyaev <fruktime@altlinux.org> 3.7-alt2
 - fix FTBFS
   + build from latest upstream commit (git 17d94154)
