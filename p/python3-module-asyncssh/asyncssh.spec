@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.19.0
-Release: alt1
+Release: alt1.1
 
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
 
@@ -33,7 +33,7 @@ BuildRequires: openssh-clients
 
 %py3_provides %oname
 %py3_requires asyncio
-%py3_use Crypto curve25519
+%py3_use Crypto
 %py3_use cryptography >= 2.7
 
 %description
@@ -61,6 +61,9 @@ rm -v %buildroot%python3_sitelibdir/%oname/*_win32*
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 2.19.0-alt1.1
+- NMU: dropped excessive dependency on unmaintained curve25519-donna.
+
 * Tue Dec 17 2024 Grigory Ustinov <grenka@altlinux.org> 2.19.0-alt1
 - Automatically updated to 2.19.0.
 
