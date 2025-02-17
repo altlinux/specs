@@ -1,8 +1,8 @@
 %define app_id com.vscodium.codium
 
 Name:    codium
-Version: 1.96.4.25026
-Release: alt2
+Version: 1.97.2.25045
+Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
 
@@ -19,6 +19,7 @@ Source1: %name-arm64-%version.tar
 Source2: codium.desktop
 Source3: codium.svg
 Source4: %app_id.metainfo.xml
+Source5: codium-url-handler.desktop
 
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
@@ -93,6 +94,7 @@ ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/codium
 ln -rs %buildroot%_libdir/%name/bin/codium %buildroot/%_bindir/vscodium
 
 install -m644 -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
+install -m644 -D %SOURCE5 %buildroot%_desktopdir/%name-url-handler.desktop
 install -m644 -D %SOURCE3 %buildroot%_iconsdir/hicolor/scalable/apps/codium.svg
 install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
 
@@ -102,10 +104,15 @@ install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
 %_bindir/vs%name
 %_libdir/%name/
 %_desktopdir/%name.desktop
+%_desktopdir/%name-url-handler.desktop
 %_iconsdir/hicolor/scalable/apps/codium.svg
 %_datadir/appdata/%app_id.metainfo.xml
 
 %changelog
+* Fri Feb 14 2025 Semen Fomchenkov <armatik@altlinux.org> 1.97.2.25045-alt1
+- 1.97.2.25045
+- add url-handler .desktop file
+
 * Sat Feb 01 2025 Semen Fomchenkov <armatik@altlinux.org> 1.96.4.25026-alt2
 - add Wayland support (Closes: 47792)
 - add appstream-data (Closes: 52900)
@@ -151,4 +158,3 @@ install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
   + sandbox mode is disabled to avoid a startup error
   + add icons and desktop files
   + packing README.md
-
