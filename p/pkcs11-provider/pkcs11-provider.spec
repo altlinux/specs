@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define modulesdir %(pkg-config --variable=modulesdir --silence-errors libcrypto 2>/dev/null || echo unknown)
 
 %def_with check
 
 Name: pkcs11-provider
-Version: 0.6
+Version: 1.0
 Release: alt1
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
@@ -52,9 +53,12 @@ compatible to previous versions as well.
 %files
 %doc HOWTO.md README.md
 %_man7dir/provider-pkcs11.*
-%_libdir/ossl-modules/pkcs11.so
+%modulesdir/pkcs11.so
 
 %changelog
+* Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 1.0-alt1
+- 0.6 -> 1.0.
+
 * Mon Nov 25 2024 Stanislav Levin <slev@altlinux.org> 0.6-alt1
 - 0.5 -> 0.6.
 
