@@ -2,7 +2,7 @@
 %define oname trytond_party
 
 Name: python3-module-%oname
-Version: 7.4.0
+Version: 7.4.1
 Release: alt1
 
 Summary: Tryton module with parties and addresses
@@ -49,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Mon Feb 17 2025 Anton Vyatkin <toni@altlinux.org> 7.4.1-alt1
+- version updated to 7.4.1
+
 * Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt1
 - version updated to 7.4.0
 
