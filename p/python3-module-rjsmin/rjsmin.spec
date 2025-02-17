@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: Javascript Minifier
 License: Apache-2.0
@@ -52,6 +52,9 @@ rJSmin is a javascript minifier written in python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 1.2.4-alt1
+- 1.2.3 -> 1.2.4.
+
 * Mon Oct 14 2024 Stanislav Levin <slev@altlinux.org> 1.2.3-alt1
 - 1.2.2 -> 1.2.3.
 
