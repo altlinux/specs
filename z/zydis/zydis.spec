@@ -1,7 +1,7 @@
 %define sover 4.1
 
 Name: zydis
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 
 Summary: Fast and lightweight x86/x86-64 disassembler and code generation library.
@@ -70,6 +70,9 @@ Development tools for %name
 %_bindir/Zydis*
 
 %changelog
+* Mon Feb 17 2025 Nazarov Denis <nenderus@altlinux.org> 4.1.1-alt1
+- New version 4.1.1.
+
 * Tue Feb 13 2024 Nazarov Denis <nenderus@altlinux.org> 4.1.0-alt1
 - New version 4.1.0.
 
