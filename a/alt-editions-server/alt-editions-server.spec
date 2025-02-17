@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-editions-server
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
@@ -53,6 +53,9 @@ find ./editions -name '*.edition' -type f -exec alterator-entry validate {} \+
 %_alterator_datadir/editions
 
 %changelog
+* Mon Feb 17 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.3-alt1
+- Added disks components and postgresql17 (thx Sergey Savelev)
+
 * Thu Feb 13 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.2-alt1
 - The initial basic set of components and components included in the domain
 - editionhas been formed (thx Sergey Savelev)
