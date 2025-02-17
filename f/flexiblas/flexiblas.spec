@@ -3,7 +3,7 @@
 
 %global major_version 3
 %global minor_version 4
-%global patch_version 4
+%global patch_version 5
 
 %ifarch %ix86
 %define check_relax ||:
@@ -13,7 +13,7 @@
 
 Name: flexiblas
 Version: %major_version.%minor_version.%patch_version
-Release: alt3
+Release: alt1
 Summary: A BLAS/LAPACK wrapper library with runtime exchangeable backends
 Group: Sciences/Mathematics
 # LGPL-3.0-or-later
@@ -239,6 +239,9 @@ make -C build64 test %check_relax
 %endif
 
 %changelog
+* Mon Feb 17 2025 Anton Farygin <rider@altlinux.ru> 3.4.5-alt1
+- 3.4.4 -> 3.4.5
+
 * Thu Aug 22 2024 Anton Farygin <rider@altlinux.ru> 3.4.4-alt3
 - added a fallback BLAS (netlib) dependence to a package
   with the library (closes: #51189)
