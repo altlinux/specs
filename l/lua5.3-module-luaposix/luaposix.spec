@@ -6,7 +6,7 @@
 %define oversion %version-%rockspecrev
 
 Name: lua%luaver-module-%oname
-Version: 36.2.1
+Version: 36.3
 Release: alt1.%rockspecrev
 
 Summary: Lua bindings for POSIX APIs
@@ -21,6 +21,8 @@ BuildRequires(pre): rpm-macros-lua
 BuildRequires: liblua%luaver-devel
 
 Provides: luarocks%luaver(%oname) = %EVR
+# clean lua(posix) requirement which is a self provide
+%filter_from_requires /lua%luaver(posix\.)/d
 
 %description
 This is a POSIX binding for LuaJIT, Lua 5.3; like most libraries it simply binds
@@ -47,6 +49,9 @@ separately.
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Mon Feb 17 2025 Alexandr Shashkin <dutyrok@altlinux.org> 36.3-alt1.1
+- Updated to 36.3.
+
 * Fri Aug 04 2023 Alexandr Shashkin <dutyrok@altlinux.org> 36.2.1-alt1.1
 - 36.1 -> 36.2.1
 
