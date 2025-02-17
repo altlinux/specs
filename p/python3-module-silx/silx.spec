@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Summary: Software library for X-Ray data analysis
 License: MIT
 Group: Development/Python3
@@ -34,6 +34,7 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-scipy
 # tests are subpackaged
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-matplotlib-qt5
 %endif
 
 %description
@@ -51,6 +52,8 @@ Requires: %name
 %add_pyproject_deps_runtime_filter 'pyopencl$'
 %add_pyproject_deps_runtime_filter 'bitshuffle$'
 %pyproject_runtimedeps_metadata_extra full
+# ./src/silx/gui/utils/matplotlib.py matplotlib.backends.backend_qt5agg
+Requires: python3-module-matplotlib-qt5
 
 %description -n %name+full
 Extra 'full' for %pypi_name.
@@ -146,6 +149,9 @@ cp -a examples %buildroot%python3_sitelibdir/silx/
 %python3_sitelibdir/silx/examples
 
 %changelog
+* Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 2.2.0-alt2
+- Fixed FTBFS (rearranged matplotlib).
+
 * Wed Jan 22 2025 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.2 -> 2.2.0.
 
