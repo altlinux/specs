@@ -1,8 +1,11 @@
 %define rel -beta
 %global _localstatedir %_var
+%def_with mysql
+%def_with pgsql
+
 Name: sphinx
 Version: 2.3.2
-Release: alt5
+Release: alt5.1
 
 Summary: Free open-source SQL full-text search engine
 
@@ -18,7 +21,15 @@ Source2: %name.unit
 Patch0: sphinx-crash.patch
 Patch1: sphinx-2.3.2-alt-fix-gcc14-build.patch
 
-BuildRequires: gcc-c++ libexpat-devel libmysqlclient-devel libssl-devel libunixODBC-devel postgresql-devel zlib-devel libstemmer-devel
+BuildRequires: gcc-c++ libexpat-devel
+BuildRequires: libssl-devel zlib-devel libstemmer-devel
+BuildRequires: libunixODBC-devel
+%if_with mysql
+BuildRequires: libmysqlclient-devel
+%endif
+%if_with pgsql
+BuildRequires: postgresql-devel
+%endif
 
 # due /usr/share/man/man1/indexer.1.xz and created by mnogosearch link /usr/bin/indexer
 Conflicts: mnogosearch
@@ -84,7 +95,7 @@ sed -i 's/\r//' api/ruby/lib/sphinx/response.rb
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%configure --sysconfdir=/etc/sphinx --with-mysql --with-pgsql --with-libstemmer
+%configure --sysconfdir=/etc/sphinx %{subst_with mysql} %{subst_with pgsql} --with-libstemmer
 
 %make_build
 
@@ -191,6 +202,10 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Mon Feb 17 2025 Ivan A. Melnikov <iv@altlinux.org> 2.3.2-alt5.1
+- NMU: support building without MySQL and/or postgres
+  (useful for port bootstrap) (by asheplyakov@).
+
 * Fri Feb 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.2-alt5
 - NMU: fix FTBFS:
   + fixed implicit declaration in test
