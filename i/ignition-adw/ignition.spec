@@ -4,7 +4,7 @@
 %define real_name ignition
 
 Name: ignition-adw
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Manage startup apps and scripts
@@ -68,5 +68,8 @@ Ignition can add apps, scripts, and arbitrary commands to run at login.
 %doc README.md
 
 %changelog
+* Fri Feb 14 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Sat Jan 25 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.0-alt1
 - Initial build.
