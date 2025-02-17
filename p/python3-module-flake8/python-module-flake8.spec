@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.1
+Version: 7.1.2
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -67,6 +67,9 @@ warning. - a Mercurial hook.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 7.1.2-alt1
+- 7.1.1 -> 7.1.2.
+
 * Thu Sep 12 2024 Stanislav Levin <slev@altlinux.org> 7.1.1-alt1
 - 7.1.0 -> 7.1.1.
 
