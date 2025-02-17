@@ -5,7 +5,7 @@
 %endif
 
 Name: pyotherside
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: A Qt plugin providing access to a Python 3 interpreter from QML
@@ -48,6 +48,9 @@ xvfb-run ./tests/tests
 %_qt5_qmldir/*
 
 %changelog
+* Mon Feb 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1.6.2-alt1
+- Updated to 1.6.2.
+
 * Mon May 20 2024 Anton Zhukharev <ancieg@altlinux.org> 1.6.1-alt1
 - Updated to 1.6.1.
 
