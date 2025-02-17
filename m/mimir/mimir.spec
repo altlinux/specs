@@ -3,7 +3,7 @@
 
 Name: mimir
 Version: 2.15.0
-Release: alt1
+Release: alt2
 
 Summary: Grafana Mimir is an open source software project that provides a scalable long-term storage for Prometheus
 License: AGPL-3.0-only
@@ -54,6 +54,8 @@ metaconvert.
 %prep
 %setup
 
+sed -i '/^ExecStart/ s|/usr/local/bin/|/usr/bin/|' packaging/nfpm/mimir/%name.service
+
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
@@ -73,9 +75,23 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
+install -Dm644 packaging/nfpm/%name/%name.service %buildroot%_unitdir/%name.service
+
+%pre
+groupadd -r -f %name > /dev/null 2>&1 ||:
+useradd -r -g %name -d %_localstatedir/%name -s /sbin/nologin -c "Mimir services" %name > /dev/null 2>&1 ||:
+usermod -a -G proc %name ||:
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %doc README.md SECURITY.md CONTRIBUTING.md
 %_bindir/mimir
+%_unitdir/%name.service
 
 %files query-tee
 %doc README.md SECURITY.md CONTRIBUTING.md
@@ -94,5 +110,8 @@ export IGNORE_SOURCES=1
 %_bindir/metaconvert
 
 %changelog
+* Fri Feb 14 2025 Anton Meleshnikov <alton@altlinux.org> 2.15.0-alt2
+- Added service and mimir group.
+
 * Mon Feb 10 2025 Anton Meleshnikov <alton@altlinux.org> 2.15.0-alt1
 - Initial build for Sisyphus (ALT #53014).
