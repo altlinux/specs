@@ -51,7 +51,7 @@
 
 Name:    golang
 Version: 1.24.0
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -251,6 +251,10 @@ rm -rfv -- %buildroot%go_root/doc/Makefile
 rm -rfv -- \
     %buildroot%go_root/lib/time
 
+# remove lib/wasm scripts
+rm -rfv -- \
+    %buildroot%go_root/lib/wasm
+
 %if_enabled shared
 mkdir -p %buildroot%golibdir
 for file in $(find %buildroot%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
@@ -372,6 +376,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Mon Feb 17 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.0-alt2
+- Drop wasm scripts, remove depend on node package (ALT#53092).
+
 * Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.0-alt1
 - New version (1.24.0).
 
