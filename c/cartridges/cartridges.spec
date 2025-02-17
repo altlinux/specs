@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cartridges
@@ -16,10 +16,11 @@ License: GPL-3.0-or-later
 Group: Games/Other
 Url: https://apps.gnome.org/Cartridges
 
+Vcs: https://github.com/kra-mo/cartridges.git
+
 %if_disabled snapshot
 Source: https://github.com/kra-mo/cartridges/archive/v%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/kra-mo/cartridges.git
 Source: %_name-%version.tar
 %endif
 
@@ -36,7 +37,8 @@ Requires: dconf
 %add_python3_req_skip AppKit Foundation
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: meson blueprint-compiler >= %bp_ver typelib(Adw)
+BuildRequires: meson blueprint-compiler >= %bp_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver typelib(Adw)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils /usr/bin/glib-compile-schemas}
 
 %description
@@ -49,7 +51,8 @@ SteamGridDB.
 %setup -n %_name-%version
 
 %build
-%meson
+%meson -Dprofile=release
+%nil
 %meson_build
 
 %install
@@ -74,6 +77,9 @@ SteamGridDB.
 
 
 %changelog
+* Mon Feb 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
+- 2.11.1
+
 * Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.11-alt1
 - 2.11
 
