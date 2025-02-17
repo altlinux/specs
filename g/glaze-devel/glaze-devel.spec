@@ -1,5 +1,5 @@
 Name: glaze-devel
-Version: 4.3.1
+Version: 4.4.2
 Release: alt1
 License: MIT
 
@@ -38,5 +38,8 @@ interfaces and offering incredible performance.
 %_datadir/glaze/*.cmake
 
 %changelog
+* Mon Feb 17 2025 Kirill Unitsaev <fiersik@altlinux.org> 4.4.2-alt1
+- new version 4.4.2 (with rpmrb script)
+
 * Thu Jan 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 4.3.1-alt1
 - Initial build
