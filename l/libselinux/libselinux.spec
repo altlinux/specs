@@ -7,7 +7,7 @@
 Name: libselinux
 Epoch: 1
 Version: 3.8
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -86,6 +86,9 @@ mv %buildroot%_sbindir/getconlist %buildroot%_sbindir/selinuxconlist
 mkdir -p %buildroot%_sysconfdir/selinux
 mkdir -p %buildroot%_prefix/libexec/selinux
 
+mkdir -p %buildroot%_tmpfilesdir
+echo 'd /run/setrans 0755 root root - -' > %buildroot%_tmpfilesdir/setrans.conf
+
 %check
 # Some vital PAM modules are linked with libselinux and therefore
 # we cannot allow libselinux to be linked with libpthread.
@@ -98,7 +101,8 @@ fi
 %_libdir/*.so.*
 %_man8dir/booleans.*
 %_man8dir/selinux.*
-%dir %_runtimedir/setrans
+%_tmpfilesdir/setrans.conf
+%dir %ghost %_runtimedir/setrans
 %dir %_sysconfdir/selinux
 %dir %_prefix/libexec/selinux
 
@@ -122,6 +126,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt2
+- (NMU) Shipped setrans.conf for systemd-tmpfiles (closes #43183).
+
 * Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt1
 - (NMU) Updated to 3.8.
 
