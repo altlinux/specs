@@ -1,4 +1,4 @@
-# 24.8.4.2
+# 25.2.0.3
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -21,8 +21,8 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 24.8
-%define urelease 4.2
+%define hversion 25.2
+%define urelease 0.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -365,9 +365,6 @@ for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin
 # Hack in MimeType=application/vnd.ms-visio.drawing.main+xml
 grep -Fq "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
 
-# hack hardcoded libodbc version
-sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctions.cxx
-
 # Hack in relative ln -s
 
 sed -i '/program.soffice/s/ln -sf \("*\$\)/ln --relative -sf $DESTDIR\1/' sysui/desktop/share/create_tree.sh
@@ -435,6 +432,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-external-thes-dir=%_datadir/mythes \
         --with-lang="%with_lang" \
         --with-external-tar=`pwd`/ext_sources \
+        --with-java-websocket-jar=`pwd`/ext_sources/Java-WebSocket-1.5.4.jar \
         --with-rhino-jar=%_datadir/java/rhino.jar \
         \
         --enable-ext-nlpsolver \
@@ -644,6 +642,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Feb 03 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 25.2.0.3-alt1
+- Update to 25.8.0.3.
+
 * Thu Dec 19 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 24.8.4.2-alt1
 - Update to 24.8.4.2.
 
