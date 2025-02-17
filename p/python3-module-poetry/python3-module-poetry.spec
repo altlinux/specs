@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.1.1
 Release: alt1
 
 Summary: Poetry -- Python build system
@@ -13,18 +13,19 @@ License: MIT
 Group: Development/Python3
 Url: https://python-poetry.org/
 
+Vcs: https://github.com/python-poetry/poetry.git
+
 %if_disabled snapshot
 Source: https://github.com/python-poetry/poetry/archive/%version/%pypi_name-%version.tar.gz
 %else
-Vcs: https://github.com/python-poetry/poetry.git
 Source: %pypi_name-%version.tar
 %endif
 
 BuildArch: noarch
 
-%define core_ver 2.0.1
+%define core_ver 2.1.1
 %define dulwich_ver 0.22.6
-%define pkginfo_ver 1.4.0
+%define pkginfo_ver 1.12.0
 
 Requires: python3-module-poetry-core >= %core_ver
 Requires: python3-module-dulwich >= %dulwich_ver
@@ -71,6 +72,9 @@ that: the new, standardized pyproject.toml.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Mon Feb 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
 * Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
