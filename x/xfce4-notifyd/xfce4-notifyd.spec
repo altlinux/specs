@@ -1,6 +1,6 @@
 Name:           xfce4-notifyd
-Version:        0.9.6
-Release:        alt2
+Version:        0.9.7
+Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
 
@@ -96,6 +96,7 @@ Notification plugin for the Xfce panel.
 %_datadir/themes/Bright/
 %_datadir/themes/Retro/
 %_datadir/themes/Smoke/
+%_datadir/themes/XP-Balloon/
 %_datadir/themes/ZOMG-PONIES!/
 %_man1dir/*
 
@@ -106,6 +107,9 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Mon Feb 17 2025 Mikhail Efremov <sem@altlinux.org> 0.9.7-alt1
+- Updated to 0.9.7.
+
 * Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 0.9.6-alt2
 - Enabled wayland support in the Sisyphus only.
 
