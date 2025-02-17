@@ -1,17 +1,30 @@
+%def_enable snapshot
 %define ver_major 0.11
 %def_enable dbusmenu
 %def_disable apport
 
+%ifarch x86_64
+%def_enable check
+%else
+%def_disable check
+%endif
+
 Name: plank
 Version: %ver_major.89
-Release: alt1
+Release: alt2
 
 Summary: Elegant, simple, clean dock
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://launchpad.net/plank
 
+Vcs: https://github.com/ricotz/plank.git
+
+%if_disabled snapshot
 Source: https://launchpad.net/%name/1.0/%version/+download/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Requires: bamfdaemon dconf
 
@@ -24,9 +37,10 @@ BuildRequires: vala-tools >= %vala_ver xmllint help2man
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libbamf3-devel >= %bamf_ver libgee0.8-devel
 BuildRequires: libwnck3-devel libXi-devel libXfixes-devel
-BuildRequires: libgnome-menus-devel 
-BuildRequires: xvfb-run dbus-tools-gui
+BuildRequires: libgnome-menus-devel
 %{?_enable_dbusmenu:BuildRequires: libdbusmenu-gtk3-devel}
+# for tests
+BuildRequires: dbus-tools-gui xvfb-run elementary-icon-theme librsvg
 
 %description
 Plank is a dock enabling you to start applications and manage your windows.
@@ -35,7 +49,7 @@ Plank is a dock enabling you to start applications and manage your windows.
 Summary: Library to build a elegant, simple, clean dock
 Group: System/Libraries
 
-Requires: lib%name-common = %version-%release
+Requires: lib%name-common = %EVR
 
 %description -n lib%name
 Plank is a dock enabling you to start applications and manage your windows.
@@ -73,7 +87,7 @@ This package contains the documentation.
 Summary: Vala language bindings for plank library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-vala
 This package provides Vala language bindings for plank library.
@@ -95,8 +109,7 @@ This package provides Vala language bindings for plank library.
 %find_lang %name
 
 %check
-#make check || exit 1
-
+xvfb-run %make -k check VERBOSE=1
 
 %files -f %name.lang
 %_bindir/%name
@@ -140,6 +153,10 @@ This package provides Vala language bindings for plank library.
 %_datadir/vala/vapi/plank.vapi
 
 %changelog
+* Mon Dec 09 2024 Yuri N. Sedunov <aris@altlinux.org> 0.11.89-alt2
+- updated to 0.11.89-20-g396b871
+- enabled %%check for x86_64
+
 * Fri Dec 13 2019 Yuri N. Sedunov <aris@altlinux.org> 0.11.89-alt1
 - 0.11.89
 
