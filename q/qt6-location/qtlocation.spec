@@ -3,8 +3,8 @@
 %global qt_module qtlocation
 
 Name: qt6-location
-Version: 6.7.2
-Release: alt1
+Version: 6.8.2
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtLocation component
@@ -34,7 +34,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt6-base-devel
 %description devel
 %summary.
@@ -42,7 +42,7 @@ Requires: qt6-base-devel
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -50,14 +50,14 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt6 %qt_module
 
 %package -n libqt6-location
 Summary: Qt6 library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-location
 %summary
@@ -66,15 +66,19 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
-%Q6build
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 %files common
@@ -104,5 +108,11 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
+- fix to build docs
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - initial build

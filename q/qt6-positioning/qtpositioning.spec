@@ -3,7 +3,7 @@
 %global qt_module qtpositioning
 
 Name: qt6-positioning
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -71,7 +71,6 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: libqt6-core = %_qt6_version
-#Requires: qt6-quickcontrols
 %description -n libqt6-positioning
 %summary
 
@@ -79,15 +78,19 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
-%Q6build
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 %files common
@@ -121,6 +124,9 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

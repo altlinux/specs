@@ -4,7 +4,7 @@
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -162,6 +162,7 @@ Requires: libqt6-core = %_qt6_version
 # are specified using '-isystem $path' arguments
 %add_optflags -DQDOC_PASS_ISYSTEM
 %Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     -DCMAKE_SKIP_RPATH:BOOL=ON \
     #
 %if %qdoc_found
@@ -318,6 +319,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

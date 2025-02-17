@@ -2,7 +2,7 @@
 %global qt_module qt3d
 
 Name: qt6-3d
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -151,6 +151,14 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-3dquickscene2d
 %summary
 
+%package -n libqt6-3dquickscene3d
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-3dquickscene3d
+%summary
+
 %prep
 %setup -n %qt_module-everywhere-src-%version
 
@@ -163,18 +171,21 @@ __EOF__
 %add_optflags -mno-sse
 %endif
 %Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     -DFEATURE_qt3d_rhi_renderer:BOOL=ON \
     -DQT_FEATURE_qt3d_assimp:BOOL=ON \
     -DQT_FEATURE_qt3d_system_assimp:BOOL=ON \
     #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 
@@ -186,6 +197,8 @@ __EOF__
 %dir %_qt6_plugindir/renderers/
 %dir %_qt6_qmldir/Qt3D/
 
+%files -n libqt6-3dquickscene3d
+%_qt6_libdir/libQt63DQuickScene3D.so.*
 %files -n libqt6-3dcore
 %_qt6_libdir/libQt?3DCore.so.*
 %files -n libqt6-3dinput
@@ -242,6 +255,9 @@ __EOF__
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 - build with sstem assimp (closes: 51214)

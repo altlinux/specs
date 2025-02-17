@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -75,7 +75,9 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
-%Q6build
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %Q6make --target docs
 %endif
@@ -83,7 +85,9 @@ Requires: libqt6-core = %_qt6_version
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+#Q6install_qt --target install_docs
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 # relax depends on plugins files
@@ -125,6 +129,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

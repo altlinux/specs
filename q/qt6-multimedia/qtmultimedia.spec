@@ -2,11 +2,10 @@
 %define optflags_lto -ffat-lto-objects
 
 %global qt_module qtmultimedia
-%def_disable bootstrap
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -16,8 +15,10 @@ License:  GPL-3.0-only or LGPL-3.0-only
 
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: qtmultimedia-fix-build-on-x86-arch.patch
 
 BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): qt6-tools
 BuildRequires: cmake glibc-devel
 BuildRequires: rpm-build-qml6
 BuildRequires: qt6-base-devel qt6-declarative qt6-declarative-devel qt6-shadertools-devel qt6-svg-devel
@@ -36,9 +37,6 @@ BuildRequires: pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
 %endif
 BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(xv)
-%if_disabled bootstrap
-BuildRequires(pre): qt6-tools
-%endif
 
 %description
 The Qt Multimedia module provides a rich feature set that enables you to
@@ -95,6 +93,7 @@ Obsoletes: %name < %EVR
 Provides: qml6(QtMultimedia)
 # gstreamer plugins may be required for proper audio and video playback
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
+#Requires: gst-plugins-good1.0-qt6
 %description -n libqt6-multimediaquick
 %summary
 
@@ -117,6 +116,7 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 
 # disable some examples
 for e in multimedia/video/qmlvideo multimedia/screencapture ; do
@@ -129,15 +129,19 @@ done
 %ifarch %e2k
 %add_optflags -mno-sse
 %endif
-%Q6build
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#Q6install_qt --target docs
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 # relax depends on plugins files
@@ -162,7 +166,7 @@ done
 %files devel
 %_qt6_headerdir/QtMultimedia*/
 %_qt6_headerdir/QtSpatialAudio/
-%_qt6_headerdir/QtQGstreamerMediaPlugin/
+%_qt6_headerdir/QtQGstreamerMediaPlugin*/
 %_qt6_libdir/lib*.so
 %_qt6_libdir/lib*.a
 %_qt6_libdatadir/lib*.so
@@ -176,14 +180,15 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
-%if_disabled bootstrap
 %if %qdoc_found
 %_qt6_docdir/*
-%endif
 %endif
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

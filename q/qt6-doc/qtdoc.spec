@@ -2,7 +2,7 @@
 %global qt_module qtdoc
 
 Name: qt6-doc
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: Development/KDE and QT
@@ -11,12 +11,14 @@ Url: http://qt.io/
 License: FDL
 
 #BuildArch: noarch
+AutoReqProv: yes, nopython
 
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-base-devel
-BuildRequires: qt6-svg-devel qt6-declarative-devel qt6-tools-devel
+BuildRequires: rpm-build-python3
+BuildRequires: qt6-svg-devel qt6-declarative-devel qt6-tools-devel qt6-multimedia-devel
 
 %description
 QtDoc contains the main Qt Reference Documentation, which includes
@@ -69,15 +71,19 @@ sed -i '/qt_internal_add_example(documentviewer)/d' examples/demos/CMakeLists.tx
 
 
 %build
-%Q6build
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 %files
@@ -88,6 +94,9 @@ sed -i '/qt_internal_add_example(documentviewer)/d' examples/demos/CMakeLists.tx
 %_qt6_archdatadir/mkspecs/*doc*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

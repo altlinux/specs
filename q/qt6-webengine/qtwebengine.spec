@@ -25,8 +25,8 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.7.2
-Release: alt3
+Version: 6.8.2
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -38,6 +38,10 @@ Source: %qt_module-everywhere-src-%version.tar
 Source100: jquery.min.js
 Source101: jquery.tablesorter.min.js
 Patch1: alt-ftbfs.patch
+# FC
+Patch10: qtwebengine-link-pipewire.patch
+Patch11: qtwebengine-aarch64-new-stat.patch
+Patch12: qtwebengine-fix-arm-build.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
@@ -190,6 +194,10 @@ Obsoletes: %name < %EVR
 #
 %patch1 -p1
 #
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+#
 #%patch200 -p1
 #%patch201 -p1
 %patch202 -p1
@@ -288,6 +296,7 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
 %endif
 %global _qt6_build_tool ninja
 %Q6cmake \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     --log-level=STATUS \
     -DCMAKE_TOOLCHAIN_FILE:STRING="%_libdir/cmake/Qt6/qt.toolchain.cmake" \
 %if_enabled system_ffmpeg
@@ -313,13 +322,15 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
     #
 %Q6make
 %if %qdoc_found
-cmake --build BUILD --target docs ||:
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-cmake --install BUILD --target docs ||:
+#cmake --install BUILD --target docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 %if_disabled system_icu
@@ -382,7 +393,7 @@ done
 
 %files doc
 %if %qdoc_found
-#%_qt6_docdir/*
+%_qt6_docdir/*
 %endif
 %_qt6_examplesdir/*
 
@@ -406,6 +417,12 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
+- fix compile on arm
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 27 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt3
 - build to repo
 

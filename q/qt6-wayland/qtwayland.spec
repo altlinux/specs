@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -17,6 +17,10 @@ Requires: libqt6-waylandeglcompositorhwintegration
 Requires: libqt6-wlshellintegration
 
 Source: %qt_module-everywhere-src-%version.tar
+# FC
+Patch1: qtwayland-adwaita-improve-border-painting.patch
+# upstream
+Patch10: qtwayland-update-wayland-xml-to-version-1.23.0.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake fontconfig-devel zlib-devel glib2-devel
@@ -112,27 +116,64 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-wlshellintegration
 %summary
 
+%package -n libqt6-waylandcompositoriviapplication
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-waylandcompositoriviapplication
+%summary
+
+%package -n libqt6-waylandcompositorpresentationtime
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-waylandcompositorpresentationtime
+%summary
+
+%package -n libqt6-waylandcompositorwlshell
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-waylandcompositorwlshell
+%summary
+
+%package -n libqt6-waylandCompositorxdgshell
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-waylandCompositorxdgshell
+%summary
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+%patch1 -p1
+#
+%patch10 -p1
+#
 #for d in gl nogl; do
 #mkdir $d
 #done
 
 %build
 %Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     -DFEATURE_wayland_client:BOOL=ON \
     -DFEATURE_wayland_server:BOOL=ON \
     #
-
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 # relax depends on plugins files
@@ -145,6 +186,14 @@ done
 
 %files
 
+%files -n libqt6-waylandcompositoriviapplication
+%_qt6_libdir/libQt6WaylandCompositorIviapplication.so.*
+%files -n libqt6-waylandcompositorpresentationtime
+%_qt6_libdir/libQt6WaylandCompositorPresentationTime.so.*
+%files -n libqt6-waylandcompositorwlshell
+%_qt6_libdir/libQt6WaylandCompositorWLShell.so.*
+%files -n libqt6-waylandCompositorxdgshell
+%_qt6_libdir/libQt6WaylandCompositorXdgShell.so.*
 %files -n libqt6-waylandcompositor
 %_qt6_libdir/libQt?WaylandCompositor.so.*
 %_qt6_qmldir/QtWayland/Compositor/
@@ -200,6 +249,9 @@ done
 %endif
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

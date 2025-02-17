@@ -1,12 +1,11 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 %global qt_module qtwebchannel
-%def_disable bootstrap
 
 %add_findreq_skiplist %_qt6_examplesdir/*
 
 Name: qt6-webchannel
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -19,9 +18,7 @@ Source: %qt_module-everywhere-src-%version.tar
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: cmake glibc-devel qt6-base-devel
 BuildRequires: qt6-websockets-devel qt6-declarative-devel
-%if_disabled bootstrap
 BuildRequires(pre): qt6-tools
-%endif
 
 %description
 The Qt WebChannel module provides a library for seamless integration of C++
@@ -81,20 +78,19 @@ Obsoletes: %name < %EVR
 %setup -n %qt_module-everywhere-src-%version
 
 %build
-%Q6build
-%if_disabled bootstrap
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
-export QT_HASH_SEED=0
-%make -C BUILD docs
-%endif
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
-%if_disabled bootstrap
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
-%endif
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 # relax depends on plugins files
@@ -124,14 +120,15 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %files doc
-%if_disabled bootstrap
 %if %qdoc_found
 %_qt6_docdir/*
-%endif
 %endif
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

@@ -33,8 +33,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.7.2
-Release: alt9
+Version: 6.8.2
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -54,9 +54,9 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-Patch4: qtbase-revert-consider-versioned-targets-when-checking-existens-in-qt-internal-walk-libs.patch
-Patch5: qtbase-qgtk3theme-add-support-for-xdp-to-get-color-scheme.patch
-Patch6: CVE-2024-39936.patch
+Patch4: qtbase-qlibraryinfo-speedup-checking-if-qt-conf-resource-exists.patch
+Patch5: qtbase-qsystemlocale-bail-out-if-accessed-post-destruction.patch
+Patch6: qtbase-qtlocale-try-to-survive-being-created-during-application-shut-down.patch 
 
 # Debian
 Patch100: remove_rpath_from_examples.patch
@@ -68,9 +68,8 @@ Patch1002: alt-ca-certificates-path.patch
 Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
-Patch1006: gcc14.patch
 #
-Patch2000: 9003-qt6-base-6.7.2-qmenu_fix_shortcuts.patch
+Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
 # macros
 %define _qt6 %gname
@@ -129,7 +128,7 @@ Summary: Development files for %name
 Requires: %name-common
 Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
-Requires: gcc-c++
+Requires: gcc-c++ cmake ninja-build
 %description devel
 %summary.
 
@@ -395,7 +394,6 @@ OpenGL widgets library for the Qt%major toolkit
 %ifarch %e2k
 %patch1005 -p1
 %endif
-%patch1006 -p1
 #
 %patch2000 -p1
 
@@ -457,6 +455,9 @@ cmake .. \
     -DQT_DISABLE_RPATH:BOOL=ON \
     -DQT_FEATURE_use_gold_linker:BOOL=OFF \
     -DQT_CREATE_VERSIONED_HARD_LINK:BOOL=OFF \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    -DQT_SBOM_GENERATE_JSON:BOOL=OFF \
+    -DQT_SBOM_VERIFY:BOOL=OFF \
 %ifnarch ppc64le
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
 %endif
@@ -709,6 +710,7 @@ done
 %_qt6_libexecdir/syncqt
 %_qt6_libexecdir/uic
 %_qt6_libexecdir/qlalr
+%_qt6_libexecdir/qt-android-runner.py
 %_qt6_libexecdir/qvkgen
 %_qt6_libexecdir/tracegen
 %_qt6_libexecdir/cmake_automoc_parser
@@ -835,6 +837,10 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+- use ninja-build by default
+
 * Wed Feb 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt9
 - force drop requires for platformthemes/libqgtk3.so because libgtk+3 overkill requires (closes: 52831)
 

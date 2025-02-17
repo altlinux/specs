@@ -2,8 +2,8 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt6-virtualkeyboard
-Version: 6.7.2
-Release: alt2
+Version: 6.8.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -88,6 +88,7 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 
 %build
 %Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     -DFEATURE_vkb_desktop:BOOL=ON \
     -DFEATURE_vkb_xcb:BOOL=ON \
     -DFEATURE_vkb_arrow_keynavigation:BOOL=OFF \
@@ -104,13 +105,15 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
     -DFEATURE_vkb_lang_ru_RU:BOOL=ON \
     #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 %files common
@@ -151,6 +154,9 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?VirtualKeyboardSettings.so.*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
 - fix requires (closes: 52887)
 

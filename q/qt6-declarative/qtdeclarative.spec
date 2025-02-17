@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -404,6 +404,38 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quickcontrols2universalstyleimpl
 %summary
 
+%package -n libqt6-assetsdownloader
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-assetsdownloader
+%summary
+
+%package -n libqt6-labsplatform
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-labsplatform
+%summary
+
+%package -n libqt6-qmlmeta
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-qmlmeta
+%summary
+
+%package -n libqt6-quickcontrols2fluentwinui3styleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quickcontrols2fluentwinui3styleimpl
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
@@ -417,6 +449,8 @@ done
 mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
+# don't make  module static
+sed -i '/STATIC/d' src/assets/downloader/CMakeLists.txt
 
 %build
 %if_enabled bootstrap
@@ -425,7 +459,9 @@ ln -s %__python3 bin_add/python
 %define qdoc_found 0
 %endif
 export PATH=$PWD/bin_add:$PATH
-%Q6build
+%Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %Q6make --target docs
 %endif
@@ -450,9 +486,8 @@ done
 
 #install rpm-build-qml
 pushd src/rpm-build-qml
-
 # FIXME rpmbqml-qmlinfo
-ln -s /bin/true %buildroot/%_bindir/rpmbqml6-qmlinfo
+ln -sr `which true` %buildroot/%_bindir/rpmbqml6-qmlinfo
 #install -pD -m755 rpmbqml-qmlinfo %buildroot/%_bindir/rpmbqml6-qmlinfo
 # end FIXME
 install -pD -m755 rpmbqml6-prov-enum.pl %buildroot/%_bindir/rpmbqml6-prov-enum.pl
@@ -485,13 +520,24 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 
 %files -n libqt6-qml
 %_qt6_libdir/libQt?Qml.so.*
+%_qt6_qmldir/QML/
 %_qt6_qmldir/QmlTime/
 %_qt6_qmldir/QtQuick/Window/
-%_qt6_qmldir/QtQml/Base/
-%_qt6_qmldir/QtQml/libqmlmetaplugin.so
 %_qt6_qmldir/QtQml/qmldir
+%_qt6_qmldir/QtQml/plugins.qmltypes
+%_qt6_qmldir/QtQml/libqmlplugin.so
 %_qt6_qmldir/builtins.qmltypes
 %_qt6_qmldir/jsroot.qmltypes
+%files -n libqt6-assetsdownloader
+%_qt6_libdir//libQt6QmlAssetDownloader.so.*
+%_qt6_qmldir/Assets/Downloader/
+%files -n libqt6-labsplatform
+%_qt6_libdir//libQt6LabsPlatform.so.*
+%files -n libqt6-qmlmeta
+%_qt6_libdir//libQt6QmlMeta.so.*
+%files -n libqt6-quickcontrols2fluentwinui3styleimpl
+%_qt6_libdir//libQt6QuickControls2FluentWinUI3StyleImpl.so.*
+%_qt6_qmldir/QtQuick/Controls/FluentWinUI3/
 %files -n libqt6-quick
 %_qt6_libdir/libQt?Quick.so.*
 %_qt6_qmldir/QtQuick/libqtquick2plugin.so
@@ -636,6 +682,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 

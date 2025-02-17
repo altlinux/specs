@@ -4,7 +4,7 @@
 %define optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3d
-Version: 6.7.2
+Version: 6.8.2
 Release: alt1
 
 Group: System/Libraries
@@ -149,6 +149,14 @@ Requires: libqt6-core = %_qt6_version
 %description -n libqt6-quick3dutils
 %summary
 
+%package -n libqt6-quick3dxr
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-quick3dxr
+%summary
+
 %prep
 %setup -n %qt_module-everywhere-src-%version
 
@@ -160,15 +168,18 @@ sed -i 's/enum Dirty :/public: &/' \
 
 %build
 %Q6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     #
 %if %qdoc_found
-%make -C BUILD docs
+%Q6make --target docs
 %endif
 
 %install
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot install_docs ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 
@@ -183,6 +194,8 @@ sed -i 's/enum Dirty :/public: &/' \
 %_qt6_plugindir/assetimporters/*.so
 %_qt6_plugindir/qmltooling/*.so
 
+%files -n libqt6-quick3dxr
+%_qt6_libdir/libQt6Quick3DXr.so.*
 %files -n libqt6-quick3dassetimport
 %_qt6_libdir/libQt?Quick3DAssetImport.so.*
 %files -n libqt6-quick3dassetutils
@@ -213,15 +226,15 @@ sed -i 's/enum Dirty :/public: &/' \
 %ifarch x86_64 aarch64
 # embree is build on x86_64 and aarch64 only
 # https://git.altlinux.org/gears/q/qt6-quick3d.git?a=blob;f=qtquick3d/src/3rdparty/CMakeLists.txt;h=cbb855f5deb64364c0c0cdbb804118fe3cb8717e#l6
-%_qt6_libdatadir/libQt*Embree.a
-%_qt6_libdir/libQt*Embree.a
+%_qt6_libdatadir/libQt*.a
+%_qt6_libdir/libQt*.a
 %endif
 %_qt6_libdatadir/libQt*.so
 %_qt6_libdatadir/libQt*.prl
 %_qt6_libdir/libQt*.so
 %_qt6_libdir/libQt*.prl
 %_qt6_libdir/cmake/Qt*/
-%_qt6_archdatadir/mkspecs/modules/qt_lib_*.pri
+%_qt6_archdatadir/mkspecs/modules/qt_*.pri
 %_qt6_archdatadir/metatypes/qt6*.json
 %_qt6_archdatadir/modules/*.json
 %_pkgconfigdir/Qt?*.pc
@@ -233,6 +246,9 @@ sed -i 's/enum Dirty :/public: &/' \
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
 
