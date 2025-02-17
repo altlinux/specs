@@ -2,7 +2,7 @@ Name: kernel-image-6.13
 Release: alt1
 %define kernel_src_version	6.13
 %define kernel_base_version	6.13
-%define kernel_sublevel	.2
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Feb 17 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.3-alt1
+- v6.13.3 (2025-02-17).
+- config: Enable CONFIG_DRM_PANIC=y.
+
 * Sat Feb 08 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.2-alt1
 - v6.13.2 (2025-02-08).
 - config: Enable CONFIG_TMPFS_INODE64=y.
