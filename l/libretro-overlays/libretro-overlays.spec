@@ -1,5 +1,5 @@
 Name:           libretro-overlays
-Version:        1.17.0
+Version:        1.20.0
 Release:        alt1
 Summary:        Collection of overlays for libretro
 License:        CC-BY-4.0
@@ -10,6 +10,7 @@ Source:         https://github.com/libretro/%{name}/archive/v%{version}.tar.gz#/
 
 BuildRequires:  make
 BuildArch:      noarch
+AutoReqProv: no
 
 %description
 %summary
@@ -32,5 +33,8 @@ done
 %{_datadir}/libretro/overlays/*
 
 %changelog
-* Thu Mar 21 2024 Artyom Bystrov  <arbars@altlinux.org> 1.17.0-alt1
+* Wed Feb  5 2025 Artyom Bystrov <arbars@altlinux.org> 1.20.0-alt1
+- Update to new version
+
+* Thu Mar 21 2024 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt1
 - Initial commit for Sisyphus

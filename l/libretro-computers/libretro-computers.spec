@@ -3,8 +3,8 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-computers
-Version:	20240628
-Release:	alt2
+Version:	20250130
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -54,7 +54,7 @@ writing input/video/audio drivers - all of that is supplied to him by
 RetroArch. All he has to do is to have the emulator port hook into the
 libretro API and that's it - we take care of the rest.
 
-%define computers 81 atari800 bk bluemsx dosbox dosbox_core dosbox_pure dosbox_svn fmsx fuse hatari minivmac nekop2 np2kai oberon puae puae2021 quasi88 theodore tic80 uzem vaporspec vemulator x1
+%define computers 81 atari800 bk bluemsx cap32 dosbox dosbox_core dosbox_pure dosbox_svn fmsx fuse hatari minivmac nekop2 np2kai oberon puae puae2021 quasi88 theodore tic80 uzem vaporspec vemulator x1
 %{expand:%(\
     for computer in %{computers}; do \
         echo -e "%%package ${computer}\n";\
@@ -91,7 +91,7 @@ export CXX=%__cxx
 %set_verify_elf_method textrel=relaxed
 %endif
 
-for core in 81 atari800 bk bluemsx fmsx fuse hatari minivmac nekop2 np2kai oberon puae puae2021 px68k quasi88 theodore tic80 uzem vaporspec vemulator x1; do
+for core in 81 atari800 bk bluemsx cap32 fmsx fuse hatari minivmac nekop2 np2kai oberon puae puae2021 px68k quasi88 theodore tic80 uzem vaporspec vemulator x1; do
 ./libretro-build.sh $core
 done
 
@@ -122,6 +122,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Jan 31 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
+- Update to new versions
+
 * Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2
 - Stay on GCC13
 

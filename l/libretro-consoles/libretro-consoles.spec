@@ -3,8 +3,8 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
-Version:	20240628
-Release:	alt2.1
+Version:	20250130
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -50,7 +50,7 @@ libretro API and that's it - we take care of the rest.
 
 This is set of cores of game consoles emulators.
 
-%define consoles a5200 cap32 chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar
+%define consoles a5200 chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar
 %{expand:%(\
     for console in %{consoles}; do \
         echo -e "%%package $console\n"; \
@@ -116,7 +116,7 @@ export CXX=%__cxx
 %set_verify_elf_method textrel=relaxed
 %endif
 
-for core in a5200 cap32 chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 pcsx_rearmed picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar yabasanshiro yabause; do
+for core in a5200 chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 pcsx_rearmed picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar yabasanshiro yabause; do
 ./libretro-build.sh $core
 done
 
@@ -146,6 +146,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Jan 31 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
+- Update to new versions
+
 * Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2.1
 - Stay on GCC13
 

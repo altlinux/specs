@@ -1,5 +1,5 @@
 Name:           retroarch-assets
-Version:        git20240808
+Version:        git20250130
 Release:        alt1
 Summary:        RetroArch Assets
 License:        CC-BY-4.0
@@ -30,6 +30,9 @@ Assets needed for RetroArch - e.g. menu drivers, etc. Also contains the official
 %{_datadir}/libretro/assets
 
 %changelog
+* Thu Feb  6 2025 Artyom Bystrov <arbars@altlinux.org> git20250130-alt1
+- Update assets
+
 * Thu Sep  5 2024 Artyom Bystrov <arbars@altlinux.org> git20240808-alt1
 - Update assets
 - Remove scripts (false-positive Inkscape dep)

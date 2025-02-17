@@ -1,5 +1,5 @@
 Name:           libretro-core-info
-Version:        1.17.0
+Version:        1.20.0
 Release:        alt1
 Summary:        Provide libretro's core info files
 License:        MIT
@@ -29,5 +29,7 @@ cp *.info %{buildroot}%{_datadir}/libretro/info
 %{_datadir}/libretro/info/*.info
 
 %changelog
-* Thu Mar 21 2024 Artyom Bystrov  <arbars@altlinux.org> 1.17.0-alt1
+* Thu Feb  6 2025 Artyom Bystrov <arbars@altlinux.org> 1.20.0-alt1
+
+* Thu Mar 21 2024 Artyom Bystrov <arbars@altlinux.org> 1.17.0-alt1
 - Initial commit for Sisyphus

@@ -1,6 +1,6 @@
 Name:           retroarch
-Version:        1.19.1
-Release:        alt2.3
+Version:        1.20.0
+Release:        alt1
 Summary:        Emulator frontend
 License:        GPL-3.0-only
 Group:          Emulators
@@ -156,9 +156,9 @@ fdupes -rdN %{buildroot}
 %config(noreplace) %{_sysconfdir}/%{name}.cfg
 %{_bindir}/%{name}
 %{_bindir}/%{name}-cg2glsl
-%{_datadir}/applications/org.libretro.RetroArch.desktop
+%{_desktopdir}/com.libretro.RetroArch.desktop
 %{_datadir}/metainfo/com.libretro.*.xml
-%{_datadir}/pixmaps/%{name}.svg
+%{_datadir}/pixmaps/com.libretro.RetroArch.svg
 %{_mandir}/man?/%{name}.?*
 %{_mandir}/man?/%{name}-cg2glsl.?*
 %{_datadir}/doc/%{name}
@@ -170,6 +170,9 @@ fdupes -rdN %{buildroot}
 
 
 %changelog
+* Fri Jan 24 2025 Artyom Bystrov <arbars@altlinux.org> 1.20.0-alt1
+- Update to new version
+
 * Tue Aug 06 2024 Artyom Bystrov <arbars@altlinux.org> 1.19.1-alt2.3
 - Fix build for E2K
 

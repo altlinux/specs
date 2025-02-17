@@ -2,7 +2,7 @@
 
 Summary:	set cores based on mednafen multi-emulator
 Name:		libretro-mednafen
-Version:	20240628
+Version:	20250130
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
@@ -105,5 +105,8 @@ install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 rm -f %{buildroot}%{_libexecdir}/%{name}/*.info
 
 %changelog
+* Mon Feb  3 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
+- Update to new versions
+
 * Tue Aug 13 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt1
 - Initial commit

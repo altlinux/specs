@@ -3,8 +3,8 @@
 
 Summary:	An interface for emulator and game ports
 Name:		libretro-arcades
-Version:	20240628
-Release:	alt2
+Version:	20250130
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -126,6 +126,9 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Jan 31 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
+- Update to new versions
+
 * Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 20240628-alt2
 - Stay on GCC13
 
