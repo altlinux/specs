@@ -2,7 +2,7 @@
 %define sover 23
 
 Name: openvas-scanner
-Version: 23.0.1
+Version: 23.15.3
 Release: alt1
 
 Summary: Open Vulnerability Assessment (OpenVAS) Scanner
@@ -26,6 +26,7 @@ BuildRequires: libjson-glib-devel >= 1.4.4
 BuildRequires: libksba-devel >= 1.0.7
 BuildRequires: libssh-devel >= 0.6.0
 BuildRequires: pkgconfig(libcurl) >= 7.74.0
+BuildRequires: libkrb5-devel
 %ifarch i586
 BuildRequires: libgpgme-devel >= 1.1.2
 %endif
@@ -103,5 +104,8 @@ Support library for %name.
 %_libdir/*misc.so
 
 %changelog
+* Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.15.3-alt1
+- new version
+
 * Wed Apr 03 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 23.0.1-alt1
 - Initial build for ALT Linux

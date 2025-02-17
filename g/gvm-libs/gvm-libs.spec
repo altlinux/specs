@@ -2,7 +2,7 @@
 %define sover 22
 
 Name: gvm-libs
-Version: 22.9.0
+Version: 22.18.0
 Release: alt1
 
 Summary: Support libraries for Greenbone Vulnerability Management Solution and OpenVAS
@@ -26,20 +26,24 @@ BuildRequires: pkgconfig(uuid) >= 2.25.0
 BuildRequires: pkgconfig(libssh) >= 0.6.0
 BuildRequires: pkgconfig(hiredis) >= 0.10.1
 BuildRequires: pkgconfig(libxml-2.0) >= 2.0
+BuildRequires: pkgconfig(libcjson) >= 1.7.14
+BuildRequires: pkgconfig(libcurl) >= 7.83.0
 BuildRequires: libnet2-devel
 BuildRequires: libpcap-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libpaho-mqtt-devel >= 1.3.0
 
 %description
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 %package -n libgvm_base%sover
 Summary: Support libraries for GVM
 Group: System/Libraries
 
 %description -n libgvm_base%sover
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 %package -n libgvm_base-devel
 Summary: Development files for the GVM base library
@@ -47,7 +51,8 @@ Group: Development/C
 Requires: libgvm_base%sover = %EVR
 
 %description -n libgvm_base-devel
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 This subpackage contains libraries and header files for developing
 applications that want to make use of libgvm_base.
@@ -57,7 +62,8 @@ Summary: Support libraries for GVM
 Group: System/Libraries
 
 %description -n libgvm_gmp%sover
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 %package -n libgvm_gmp-devel
 Summary: Development files for the GVM gmp library
@@ -65,7 +71,8 @@ Group: Development/C
 Requires: libgvm_gmp%sover = %EVR
 
 %description -n libgvm_gmp-devel
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 This subpackage contains libraries and header files for developing
 applications that want to make use of libgvm_gmp.
@@ -75,7 +82,8 @@ Summary: Support libraries for GVM
 Group: System/Libraries
 
 %description -n libgvm_osp%sover
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 %package -n libgvm_osp-devel
 Summary: Development files for the GVM osp library
@@ -83,7 +91,8 @@ Group: Development/C
 Requires: libgvm_osp%sover = %EVR
 
 %description -n libgvm_osp-devel
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 This subpackage contains libraries and header files for developing
 applications that want to make use of libgvm_osp.
@@ -93,7 +102,8 @@ Summary: Support libraries for GVM
 Group: System/Libraries
 
 %description -n libgvm_util%sover
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 %package -n libgvm_util-devel
 Summary: Development files for the GVM util library
@@ -102,7 +112,8 @@ Requires: libgvm_util%sover = %EVR
 Requires: libpaho-mqtt-devel
 
 %description -n libgvm_util-devel
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 This subpackage contains libraries and header files for developing
 applications that want to make use of libgvm_util.
@@ -112,7 +123,8 @@ Summary: Support libraries for the GVM boreas library
 Group: System/Libraries
 
 %description -n libgvm_boreas%sover
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 %package -n libgvm_boreas-devel
 Summary: Development files for the GVM boreas library
@@ -120,10 +132,26 @@ Group: Development/C
 Requires: libgvm_boreas%sover = %EVR
 
 %description -n libgvm_boreas-devel
-The support libraries for the Greenbone Vulnerability Management framework.
+The support libraries for the Greenbone Vulnerability Management
+framework.
 
 This subpackage contains libraries and header files for developing
 applications that want to make use of libgvm_boreas.
+
+%package -n libgvm_openvasd%sover
+Summary: Greenbone Vulnerability Management Library openvasd
+Group: System/Libraries
+
+%description -n libgvm_openvasd%sover
+%summary
+
+%package -n libgvm_openvasd-devel
+Summary: Development files for the GVM openvasd library
+Group: Development/C
+Requires: libgvm_openvasd%sover = %EVR
+
+%description -n libgvm_openvasd-devel
+%summary
 
 %prep
 %setup
@@ -144,7 +172,7 @@ applications that want to make use of libgvm_boreas.
 %cmake_install
 
 %files
-%doc CHANGELOG.md README.md
+%doc README.md
 
 %files -n libgvm_base%sover
 %_libdir/libgvm_base.so.%{sover}*
@@ -160,6 +188,9 @@ applications that want to make use of libgvm_boreas.
 
 %files -n libgvm_boreas%sover
 %_libdir/libgvm_boreas.so.%{sover}*
+
+%files -n libgvm_openvasd%sover
+%_libdir/libgvm_openvasd.so.%{sover}*
 
 %files -n libgvm_base-devel
 %dir %_includedir/gvm
@@ -191,6 +222,15 @@ applications that want to make use of libgvm_boreas.
 %_libdir/libgvm_boreas.so
 %_pkgconfigdir/libgvm_boreas.pc
 
+%files -n libgvm_openvasd-devel
+%dir %_includedir/gvm
+%_includedir/gvm/openvasd
+%_libdir/libgvm_openvasd.so
+%_pkgconfigdir/libgvm_openvasd.pc
+
 %changelog
+* Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 22.18.0-alt1
+- new version
+
 * Wed Apr 03 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 22.9.0-alt1
 - Initial build for ALT Linux
