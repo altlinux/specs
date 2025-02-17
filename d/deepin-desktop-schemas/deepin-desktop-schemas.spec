@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 6.0.6
+Version: 6.0.8
 Release: alt1
 
 Summary: GSettings deepin desktop-wide schemas
@@ -7,6 +7,7 @@ Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-schemas
+Vcs: https://github.com/linuxdeepin/deepin-desktop-schemas.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
@@ -67,6 +68,10 @@ dconf update
 %_datadir/%name/
 
 %changelog
+* Mon Feb 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.8-alt1
+- New version 6.0.8.
+- Added vcs tag.
+
 * Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.6-alt1
 - New version 6.0.6.
 
