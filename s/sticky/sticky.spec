@@ -4,7 +4,7 @@
 
 Name:    sticky
 Version: 0.2.6
-Release: alt2
+Release: alt3
 
 Summary: A simple sticky notes app for GNOME
 License: MIT
@@ -16,8 +16,9 @@ Vcs: https://github.com/vixalien/sticky
 Source0: %name-%version.tar
 Source1: gi-types.tar
 Source2: node_modules.tar
+Source3: .yarn-integrity
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-meson rpm-build-nodejs
 BuildRequires: libgjs-devel yarn meson
@@ -32,6 +33,11 @@ Sticky Notes is a simple note taking application for the GNOME desktop. It is wr
 
 tar -xf %SOURCE1 -C %_builddir/%name-%version/
 tar -xf %SOURCE2 -C %_builddir/%name-%version/
+
+%ifarch aarch64
+ rm node_modules/.yarn-integrity
+ cp %SOURCE3 node_modules/
+%endif
 
 %build
 %meson
@@ -55,6 +61,9 @@ tar -xf %SOURCE2 -C %_builddir/%name-%version/
 %doc *.md
 
 %changelog
+* Tue Feb 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.6-alt3
+- rebuilt for x86_64 and aarch64 architectures
+
 * Thu Dec 26 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2.6-alt2
 - Fixed rebuild error.
 
