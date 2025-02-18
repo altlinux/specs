@@ -1,15 +1,18 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: openxray
-Version: 1.6.02_2188
+Version: 1.6.02_2921
 Release: alt1
 
 Summary: X-Ray Engine Linux port by OpenXRay team
 License: BSD-3-Clause
 Group: Games/Other
-URL: https://github.com/OpenXRay/xray-16
+Url: https://github.com/OpenXRay/xray-16
+Vcs: https://github.com/OpenXRay/xray-16.git
 
-ExcludeArch: armh ppc64le
+ExcludeArch: ppc64le
 
-Source: %name-%version.tar.xz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -49,7 +52,7 @@ original game files.
 
 %install
 %cmakeinstall_std
-rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
+rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes %buildroot%_libdir/*.a
 
 %files
 %doc License.txt README.md
@@ -60,8 +63,8 @@ rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
 %_libdir/xrCore.so
 %_libdir/xrEngine.so
 %_libdir/xrGame.so
-%_libdir/xrLuabind.so
-%_libdir/xrLuajit.so
+%_libdir/xrLuaJIT.so
+%_libdir/xrMaterialSystem.so
 %_libdir/xrNetServer.so
 %_libdir/xrParticles.so
 %_libdir/xrRender_GL.so
@@ -77,6 +80,9 @@ rm -v %buildroot%_datadir/openxray/gamedata/*/.gitattributes
 %_datadir/bash-completion/completions/xr_3da
 
 %changelog
+* Tue Feb 18 2025 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_2921-alt1
+- New version 1.6.02_2921.
+
 * Tue Feb 06 2024 Anton Kurachenko <srebrov@altlinux.org> 1.6.02_2188-alt1
 - Updating to new version 1.6.02_2188.
 - Switching to use cmake-macros for build.
