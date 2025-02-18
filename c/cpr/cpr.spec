@@ -4,7 +4,7 @@
 %define sover 1
 
 Name: cpr
-Version: 1.10.5
+Version: 1.11.1
 Release: alt1
 
 Summary: C++ Requests: Curl for People, a spiritual port of Python Requests
@@ -15,11 +15,12 @@ VCS: https://github.com/libcpr/cpr
 
 # Source-url: https://github.com/%libname/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch1: alt-build-only-shared-lib.patch
 
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(libssl)
 
 %description
 C++ Requests is a simple wrapper around libcurl inspired by the
@@ -56,11 +57,11 @@ applications that use %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake \
-    -DCPR_USE_SYSTEM_CURL=ON \
-    -DCMAKE_POLICY_DEFAULT_CMP0135=NEW
+    -DCPR_USE_SYSTEM_CURL=ON
 %cmake_build
 
 %install
@@ -76,5 +77,8 @@ applications that use %name.
 %_libdir/cmake/%name/*.cmake
 
 %changelog
+* Tue Feb 18 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.11.1-alt1
+- new version
+
 * Mon May 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 1.10.5-alt1
 - Initial build for ALT Linux
