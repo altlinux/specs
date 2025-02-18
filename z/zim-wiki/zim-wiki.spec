@@ -1,14 +1,15 @@
 %def_enable snapshot
 
 %define real_name zim
+%define rdn_name org.zim_wiki.Zim
 
 Name: zim-wiki
-Version: 0.75.1
-Release: alt2
+Version: 0.76.1
+Release: alt1
 
 Summary: A desktop wiki and outliner
 Group: Editors
-License: GPLv2
+License: GPL-2.0
 Url: https://www.zim-wiki.org/
 
 %if_disabled snapshot
@@ -22,6 +23,8 @@ Patch1: AyatanaAppindicator.patch
 
 BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
+Requires: typelib(GtkSource) = 4
+Requires: python3-module-pygobject3
 # see README.md and PKG-INFO
 Requires: python3-module-pyxdg xdg-utils
 # Mac-specific
@@ -31,7 +34,7 @@ Requires: python3-module-pyxdg xdg-utils
 Conflicts: zim
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3(wheel) python3(setuptools)
 BuildRequires: python3-module-pygobject3 python3-modules-sqlite3
 BuildRequires: typelib(Gtk) = 3.0
 
@@ -60,8 +63,9 @@ control.
 %files -f %real_name.lang
 %_bindir/%real_name
 %_datadir/%real_name
-%_desktopdir/%real_name.desktop
-%python3_sitelibdir/*
+%_desktopdir/%rdn_name.desktop
+%python3_sitelibdir/%real_name
+%python3_sitelibdir/%{pyproject_distinfo %real_name}
 %_man1dir/%{real_name}*
 %_datadir/mime/*
 %_datadir/metainfo/*
@@ -71,6 +75,9 @@ control.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.76.1-alt1
+- 0.76.1
+
 * Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 0.75.1-alt2
 - NMU: switch to use AyatanaAppindicator
 
