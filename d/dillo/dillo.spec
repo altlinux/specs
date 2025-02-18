@@ -1,35 +1,34 @@
-# Spec file for Dillo
+
+%define _unpackaged_files_terminate_build 1
+%define _customdocdir %_docdir/%name
 
 Name: dillo
-Version: 3.0.5
-Release: alt5
+Version: 3.2.0
+Release: alt2
 
 Summary: a small FLTK-based web browser
+License: GPL-3.0-or-later
 Group: Networking/WWW
-License: %gpl2plus
-Url: http://www.dillo.org
+Url: https://dillo-browser.github.io
+VCS: https://github.com/dillo-browser/dillo.git
 
-Packager: Nikolay A. Fetisov <naf@altlinux.org>
-
-# Patch for i18n:  http://teki.jpn.ph/pc/software/index-e.shtml
 Source0: %name-%version.tar
 Source1: %name-16.png
 Source2: %name-32.png
-Source3: %name-48.png
-Source4: %name.desktop
+Patch: dillo-3.2.0-alt-russian-desktop.patch
 
-Patch1:  %name-3.0.5-debian-fix-OpenSSL-1.1-detection.patch
-Patch2:  %name-3.0.5-alt-ca_location_fix.patch
-Patch3:  %name-3.0.5-alt-fix_GCC.patch
-
-BuildRequires(pre): rpm-build-licenses
-
-
-# Automatically added by buildreq on Sun Aug 19 2018
-# optimized out: fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libX11-devel libcom_err-devel libkrb5-devel libstdc++-devel python-base python-modules python3 python3-base python3-dev ruby sh3 xorg-proto-devel zlib-devel
-BuildRequires: gcc-c++ libfltk-devel libjpeg-devel libpng-devel libssl-devel
-BuildRequires: libXrender-devel libXcursor-devel libXfixes-devel libXext-devel
-BuildRequires: perl-libnet libXinerama-devel libXft-devel fontconfig-devel
+BuildRequires: fontconfig-devel
+BuildRequires: gcc-c++
+BuildRequires: libfltk-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
+BuildRequires: libssl-devel
+BuildRequires: libwebp-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libXft-devel
+BuildRequires: libXinerama-devel
+BuildRequires: perl-libnet
 
 %description
 Dillo 3 is a graphical multi-platform web browser known for its
@@ -40,61 +39,61 @@ Dillo aims to be small in resources, stable, developer-friendly,
 usable, very fast, and extensible.
 
 %prep
-%setup -q
-
-%patch1 -p1
-%patch2
-%patch3
+%setup
+%patch -p1
 
 %build
 %autoreconf
-%configure  --enable-ipv6 \
-            --enable-ssl \
-            %nil
+%configure \
+  --enable-ipv6 \
+  --enable-tls \
+  --with-ca-certs-file=%_datadir/ca-certificates/ca-bundle.crt \
+  #
 
 %make_build
 
 %install
 %makeinstall
 
-mkdir -p -- %buildroot%_sysconfdir/%name
-mv -- %buildroot%_sysconfdir/*rc %buildroot/%_sysconfdir/%name/
+mkdir -p -- %buildroot%_sysconfdir/dillo
+mv -t  %buildroot/%_sysconfdir/dillo/ -- \
+  %buildroot%_sysconfdir/*rc             \
+  %buildroot%_sysconfdir/hsts_preload
 
-mkdir -p -- %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir
-install -m0644 -- %SOURCE1 %buildroot%_miconsdir/%name.png
-install -m0644 -- %SOURCE2 %buildroot%_niconsdir/%name.png
-install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%name.png
-
-mkdir -p -- %buildroot%_desktopdir
-install -m 0644 -- %SOURCE4 %buildroot%_desktopdir/%name.desktop
-
-rm -f -- doc/Makefile*
+install -Dm0644 -- %SOURCE1 %buildroot%_miconsdir/dillo.png
+install -Dm0644 -- %SOURCE2 %buildroot%_niconsdir/dillo.png
 
 %find_lang %name
 
 %files -f %name.lang
+%doc AUTHORS ChangeLog README
+%doc %_customdocdir/user_help.html
+
+%dir %_sysconfdir/dillo
+%config(noreplace) %_sysconfdir/dillo/domainrc
+%config(noreplace) %_sysconfdir/dillo/keysrc
+%config(noreplace) %_sysconfdir/dillo/dpidrc
+%config(noreplace) %_sysconfdir/dillo/dillorc
+%config(noreplace) %_sysconfdir/dillo/hsts_preload
+
 %_bindir/dillo
 %_bindir/dillo-install-hyphenation
 %_bindir/dpid
 %_bindir/dpidc
-%_libdir/dillo*
+%_libdir/dillo
 
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README doc/
-%doc %_defaultdocdir/%name/user_help.html
-
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/domainrc
-%config(noreplace) %_sysconfdir/%name/keysrc
-%config(noreplace) %_sysconfdir/%name/dpidrc
-%config(noreplace) %_sysconfdir/%name/dillorc
-
-%_miconsdir/%{name}*
-%_niconsdir/%{name}*
-%_liconsdir/%{name}*
-%_desktopdir/%name.desktop
+%_desktopdir/dillo.desktop
+%_iconsdir/hicolor/*/*/dillo.png
 %_man1dir/dillo.1*
 
 %changelog
+* Tue Feb 18 2025 Ivan A. Melnikov <iv@altlinux.org> 3.2.0-alt2
+- Package hsh-preload.
+- Minor cleanup in %%files section.
+
+* Sat Feb 08 2025 Constantin Sunzow <protvin@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Fri Feb 07 2025 Ivan A. Melnikov <iv@altlinux.org> 3.0.5-alt5
 - Update debian patch to fix building with gcc14.
 
