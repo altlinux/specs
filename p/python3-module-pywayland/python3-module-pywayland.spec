@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywayland
-Version: 0.4.17
+Version: 0.4.18
 Release: alt1
 
 Summary: Python bindings for the libwayland library
@@ -62,6 +62,9 @@ mkdir -p $XDG_RUNTIME_DIR
 %python3_sitelibdir/%{pyproject_distinfo pywayland}
 
 %changelog
+* Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 0.4.18-alt1
+- New version 0.4.18.
+
 * Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 0.4.17-alt1
 - new version 0.4.17
 
