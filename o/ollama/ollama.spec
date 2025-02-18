@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict,lint=relaxed
+%set_verify_elf_method strict,lint=relaxed,unresolved=relaxed,rpath=relaxed
 
 %ifarch x86_64_cuda_tested
 %def_with cuda
@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.5.7
+Version: 0.5.11
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -20,15 +20,19 @@ Vcs: https://github.com/ollama/ollama
 %if_with cuda
 Requires: libcuda
 %endif
+Requires: ollama-cpu = %EVR
 
 ExclusiveArch: aarch64 x86_64
 Source: %name-%version.tar
 Source3: ollama-user.conf
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: golang
+BuildRequires: look
+BuildRequires: patchelf
 %if_with cuda
 BuildRequires: gcc12-c++
 BuildRequires: nvidia-cuda-devel-static
@@ -39,26 +43,38 @@ BuildRequires: curl
 
 %description
 %summary.
-Using llama.cpp backend.
+Run DeepSeek-R1, Gemma 2, Llama 3.3, Mistral, Phi-4, Qwen 2.5, and other
+models, locally.
 
-Note: You should have at least 8 GB of RAM available to run the 7B models,
-16 GB to run the 13B models, and 32 GB to run the 33B models.
+This is a meta-package.
+
+%package cpu
+Summary: The main ollama package with CPU runner
+Group: Sciences/Computer science
+
+%description cpu
+%summary.
 
 %prep
 %setup
-sed -i '/_GOFLAGS/s/-s\|-trimpath//' make/*
+%ifarch aarch64
+sed -i /GGML_CPU_ALL_VARIANTS/d CMakeLists.txt
+%endif
 
 %build
-export NPROCS="%__nprocs"
-%if_with cuda
-# NVCC cannot compile using gcc-13: https://github.com/ggerganov/llama.cpp/issues/8000
-export OLLAMA_CUSTOM_CUDA_DEFS="-DCMAKE_CUDA_HOST_COMPILER=gcc-12"
-export CUDA_LIB_DIR=%_libdir
-%endif
-%make_build VERSION=%version
+%add_optflags -Wno-unused-function
+%cmake
+%cmake_build
+go build -v \
+	-buildmode=pie \
+	-ldflags="
+		-X=github.com/ollama/ollama/version.Version=%version
+		-X=github.com/ollama/ollama/server.mode=release
+	"
 find -type f -perm -1 -ls
 
 %install
+%cmake_install
 install -Dp ollama %buildroot%_bindir/ollama
 install -Dpm644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
 # HTTP server on 127.0.0.1:11434
@@ -66,6 +82,9 @@ install -Dpm644 .gear/%name.service -t %buildroot%_unitdir
 mkdir -p %buildroot%_localstatedir/%name
 install -Dpm644 models-list.txt tags-list.txt -t %buildroot%_datadir/ollama
 install -Dpm644 .gear/completions %buildroot%_datadir/bash-completion/completions/ollama
+# Add a RPATH to bypass lib.req false positive error.
+find %buildroot%_libexecdir/ollama -name libggml-cpu*.so |
+	xargs -trn1 patchelf --set-rpath %_libexecdir/ollama
 
 %check
 cat /proc/loadavg
@@ -79,16 +98,18 @@ curl -sSf http://127.0.0.1:11434/api/tags
 curl -sSf http://127.0.0.1:11434/api/ps
 kill %%?ollama
 
-%pre
+%pre cpu
 %sysusers_create_package %name %SOURCE3
 
-%post
+%post cpu
 %post_systemd %name.service
 
-%preun
+%preun cpu
 %preun_systemd %name.service
 
 %files
+
+%files cpu
 %define _customdocdir %_docdir/%name
 %doc LICENSE README.md docs SECURITY.md
 %_bindir/ollama
@@ -96,9 +117,16 @@ kill %%?ollama
 %_datadir/bash-completion/completions/ollama
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
+%dir %_libexecdir/ollama
+%_libexecdir/ollama/libggml-base.so
+%_libexecdir/ollama/libggml-cpu*.so
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %changelog
+* Sat Feb 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.11-alt1
+- Update to v0.5.11 (2025-02-13).
+- Split the package into meta-package (ollama) and runner (ollama-cpu).
+
 * Sat Jan 18 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.7-alt1
 - Update to v0.5.7 (2025-01-16).
 
