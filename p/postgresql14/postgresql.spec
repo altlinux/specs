@@ -19,8 +19,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     14
-%define postgresql_minor     15
-%define postgresql_altrel    4
+%define postgresql_minor     17
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1059,6 +1059,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 18 2025 Alexei Takaseev <taf@altlinux.org> 14.17-alt1
+- 14.17 (Fixes CVE-2025-1094)
+
 * Fri Feb 14 2025 Alexei Takaseev <taf@altlinux.org> 14.15-alt4
 - Create libpq5-XY only with devel option
 - Filtered libpq.so.5 provides and exclude pack libpq.so.5 file for all non-devel version.
