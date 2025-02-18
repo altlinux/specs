@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.6
+Version: 1.16.7
 Release: alt1
 
 Summary: Installer common parts
@@ -108,11 +108,24 @@ This package contains installer files for run on Desktop.
 %install
 %makeinstall
 
+# install systemd units
+pushd systemd
+mkdir -p %buildroot/%_unitdir/install2.target.wants
+install -m644 install2.target %buildroot/%_unitdir/install2.target
+install -m644 install2.service %buildroot/%_unitdir/install2.service
+ln -s %_unitdir/install2.service \
+	%buildroot/%_unitdir/install2.target.wants/install2.service
+popd
+
 %files common-stage2
 %_sbindir/*
 %exclude %_sbindir/install2
 %_datadir/install2
 %_prefix/libexec/install2
+%_prefix/lib/systemd/system/install2.service
+%_unitdir/install2.target
+%dir %_unitdir/install2.target.wants
+%_unitdir/install2.target.wants/install2.service
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 %exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
@@ -125,6 +138,10 @@ This package contains installer files for run on Desktop.
 %_desktopdir/install2.desktop
 
 %changelog
+* Tue Feb 18 2025 Anton Midyukov <antohami@altlinux.org> 1.16.7-alt1
+- Add systemd units for boot with systemd.unit=install2.target
+- initinstall.d/10-vt.sh: do not run script, when run X or Wayland only
+
 * Tue Feb 04 2025 Anton Midyukov <antohami@altlinux.org> 1.16.6-alt1
 - install2.desktop: change Icon=alterator
 
