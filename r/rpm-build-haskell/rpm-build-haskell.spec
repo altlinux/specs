@@ -3,14 +3,15 @@
 %define no_interpreter %nil
 
 %ifarch %ix86 x86_64
-%define native_code_gen --enable-split-objs
+%define native_code_gen_split_objs --enable-split-objs
+%define native_code_gen_split_sections --enable-split-sections
 %define dyn_libs --enable-shared
 %else
 %define no_interpreter --ghc-option=-DALT_NO_GHCI --flags=-templateHaskell
 %endif
 
 Name: rpm-build-haskell
-Version: 1.4.7
+Version: 1.5.0
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -21,6 +22,7 @@ Source: scripts-%version.tar
 Source1: macros
 Source2: buildreq-ignore
 Source3: haskell.env
+Source4: extra
 
 # Uses the modular reqprov subsystem
 Conflicts: rpm-build < 4.0.4-alt78
@@ -38,7 +40,8 @@ mkdir -p %buildroot%_rpmlibdir
 cp haskell.* -t %buildroot%_rpmlibdir/
 mkdir -p %buildroot%_rpmmacrosdir
 sed \
-	-e 's/@ENABLE_SPLIT_OBJS@/%{native_code_gen}/' \
+	-e 's/@ENABLE_SPLIT_OBJS@/%{native_code_gen_split_objs}/' \
+	-e 's/@ENABLE_SPLIT_SECTIONS@/%{native_code_gen_split_sections}/' \
 	-e 's/@ENABLE_SHARED@/%{dyn_libs}/' \
 	-e 's/@NO_INTERPRETER@/%{no_interpreter}/' \
 	%SOURCE1 > %buildroot%_rpmmacrosdir/haskell
@@ -47,14 +50,25 @@ install -D %SOURCE2 \
 install -D -m0755 %SOURCE3 \
 	%buildroot%_rpmmacrosdir/haskell.env
 install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
+install -D -m0755 ghc_gen_filelist.sh %buildroot%_libexecdir/%name/ghc_gen_filelist.sh
+install -D -m0755 %SOURCE4 \
+	%buildroot%_rpmmacrosdir/ghc-extra
 
 %files
 %_rpmlibdir/haskell.*
 %_rpmmacrosdir/haskell*
+%_rpmmacrosdir/ghc-extra
 %_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
 %_libexecdir/%name
 
 %changelog
+* Thu Feb 13 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.0-alt1
+- Replaced split sections with split objects on ghc >= 9.0.0 (thx ancieg@)
+- Updated hs_gen_filelist script to ghc_gen_filelist
+   + Now it separates devel, runtime and doc components in individual files
+- Added new macroses ghc_* for building packages in modern way
+- Added extra ghc macroses for automatic sublibs creation in ghc package
+
 * Tue Aug 22 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.7-alt1
 - Added setting ALTWRAP_LLVM_VERSION if available.
 
