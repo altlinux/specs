@@ -2,10 +2,10 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: GNOME 3 Desktop installers
-License: %gpl3plus
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
 BuildArch: noarch
@@ -89,6 +89,7 @@ Requires: gnome-control-center >= %ver_major
 Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
+Requires: gnome-shell-extensions-system-monitor
 Requires: gnome-browser-connector
 # user settings utility
 Requires: gnome-tweaks >= %tweaks_ver
@@ -479,6 +480,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1.3
+- minimal: added gnome-shell-extensions-system-monitor
+
 * Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1.2
 - minimal: added gnome-session-classic
 

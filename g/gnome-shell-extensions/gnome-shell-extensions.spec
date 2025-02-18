@@ -10,7 +10,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -26,9 +26,6 @@ Source: %name-%version%beta.tar
 %endif
 
 Requires: gnome-shell >= %version
-# for system-monitor
-Requires: typelib(GTop)
-Requires: gnome-system-monitor >= %ver_major
 
 # extensions/apps-menu/extension.js
 # const {
@@ -51,6 +48,16 @@ Requires: %name = %EVR
 
 %description -n gnome-session-classic
 This package provides files required for GNOME Classic mode.
+
+%package system-monitor
+Summary: System Monitor GNOME Shell extension
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+Requires: typelib(GTop)
+Requires: gnome-system-monitor >= %ver_major
+
+%description system-monitor
+This extension provides system monitor for GNOME Shell.
 
 %prep
 %setup -n %name-%version%beta
@@ -79,6 +86,14 @@ This package provides files required for GNOME Classic mode.
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
 %endif
+
+%files system-monitor
+%dir %_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.system-monitor.gschema.xml
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/extension.js
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/metadata.json
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/stylesheet.css
+%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/icons/
 
 %files -f %name.lang
 ## Extensions
@@ -169,13 +184,6 @@ This package provides files required for GNOME Classic mode.
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
-# system-monitor
-%dir %_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain
-%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.system-monitor.gschema.xml
-%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/extension.js
-%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/stylesheet.css
-%_datadir/gnome-shell/extensions/system-monitor@gnome-shell-extensions.%domain/icons/
 
 # status-icons
 %dir %_datadir/gnome-shell/extensions/status-icons@gnome-shell-extensions.gcampax.github.com
@@ -185,6 +193,9 @@ This package provides files required for GNOME Classic mode.
 %doc NEWS README.md
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt2
+- moved system-monitor to separate package
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt1
 - 47.4
 
