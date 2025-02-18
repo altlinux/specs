@@ -1,6 +1,6 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	6.0.0
+%define		real_version	6.0.1
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
@@ -87,6 +87,12 @@ ln -nsf -- /usr/src/php%_php_suffix-devel/ext/ .
 install -D -m 644 -- %SOURCE1 %buildroot/%php_extconf/%php_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
+%post
+%php_extension_postin
+
+%preun
+%php_extension_preun
+
 %files
 %doc README.md LICENSE
 
@@ -96,6 +102,10 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Tue Feb 18 2025 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
+- 6.0.0 -> 6.0.1
+- added Post and PreUn scripts (Closes: #53133)
 
 * Mon Feb 10 2025 Anton Farygin <rider@altlinux.ru> 6.0.0-alt1
 - 5.1.2 -> 6.0.0
