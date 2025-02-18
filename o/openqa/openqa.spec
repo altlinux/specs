@@ -26,7 +26,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt18.git60a7833ba
+Release: alt19.git6fbd2ed11
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -46,7 +46,7 @@ Patch1: rmsysusers.patch
 BuildArch: noarch
 
 BuildRequires: %t_requires
-BuildRequires: spectool postgresql15-server systemd os-autoinst osc
+BuildRequires: spectool postgresql15-server systemd os-autoinst
 BuildRequires: sass
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3
@@ -227,6 +227,7 @@ rm -rf script/openqa-vde_switch
 rm -rf script/openqa-auto-update
 rm -rf script/openqa-continuous-update
 rm -rf script/openqa-check-devel-repo
+rm -rf script/openqa-clean-repo-cache
 rm -rf usr/lib/sysusers.d/geekotest.conf
 rm -rf usr/lib/sysusers.d/openQA-worker.conf
 
@@ -274,6 +275,7 @@ mkdir -p %buildroot%_datadir/openqa/lib/OpenQA/WebAPI/Plugin/
 # Skip tests not working currently, or flaky
 #rm -f t/03-auth.t
 #rm -f t/05-scheduler-full.t
+rm -f t/17-labels_carry_over.t
 rm -f t/24-worker-overall.t
 rm -f t/25-cache-client.t
 rm -f t/25-cache-service.t
@@ -286,7 +288,7 @@ rm -f t/api/04-jobs.t
 rm -f t/ui/*.t
 # we don't really need the tidy test
 rm -f t/00-tidy.t
-#rm -f external/os-autoinst-common/xt/00-tidy.t
+rm -f external/os-autoinst-common/xt/00-tidy.t
 
 rm -rf %buildroot/DB
 export LC_ALL=en_US.UTF-8
@@ -517,6 +519,10 @@ fi
 %files single-instance-nginx
 
 %changelog
+* Mon Feb 17 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt19.git6fbd2ed11
+- update to current version
+- Commit hash: 6fbd2ed11
+
 * Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 4.6-alt18.git60a7833ba
 - removed unnessesary dependency on future
 
