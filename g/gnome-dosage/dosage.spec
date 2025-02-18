@@ -2,13 +2,13 @@
 
 %define _name dosage
 %define __name Dosage
-%define ver_major 1.8
+%define ver_major 1.9
 %define rdn_name io.github.diegopvlk.Dosage
 
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Dosage
@@ -74,6 +74,9 @@ sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 %doc README*
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Mon Feb 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 
