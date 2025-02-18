@@ -7,7 +7,7 @@
 %set_verify_elf_method relaxed
 
 Name: erlang-%realname
-Version: 1.1.54
+Version: 1.1.55
 Release: alt1
 Summary: Fast Expat based Erlang XML parsing library
 Group: Development/Erlang
@@ -58,6 +58,9 @@ after major optimisations to put emphasis on the fact it is damn fast.
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Feb 18 2025 Anton Farygin <rider@altlinux.ru> 1.1.55-alt1
+- 1.1.54 -> 1.1.55
+
 * Wed Jan 15 2025 Anton Farygin <rider@altlinux.ru> 1.1.54-alt1
 - 1.1.48 -> 1.1.54
 
