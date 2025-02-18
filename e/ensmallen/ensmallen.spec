@@ -4,7 +4,7 @@
 %def_without check
 %endif
 Name: ensmallen
-Version: 2.21.1
+Version: 2.22.1
 Release: alt1
 Summary: Header-only C++ library for efficient mathematical optimization
 Group: System/Libraries
@@ -75,6 +75,9 @@ popd;
 %_libdir/cmake/ensmallen/ensmallen-targets.cmake
 
 %changelog
+* Tue Feb 18 2025 Anton Farygin <rider@altlinux.ru> 2.22.1-alt1
+- 2.21.1 -> 2.22.1
+
 * Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 2.21.1-alt1
 - 2.19.0 -> 2.21.1
 
