@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-editions-server
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
@@ -17,6 +17,7 @@ BuildRequires: alterator-entry >= 0.2.0
 BuildRequires: cmark
 
 Requires: alt-os-editions
+BuildRequires: alt-components-base
 
 %description
 %summary.
@@ -46,19 +47,35 @@ for edition_dir in editions/*/; do
 done
 
 %check
-find ./editions -name '*.edition' -type f -exec alterator-entry validate {} \+
+checkval=
+for e in `find ./editions -name '*.edition' -type f`; do
+    alterator-entry validate "$e"
+    (alterator-entry get "$e" sections.base.components &&
+           alterator-entry get "$e" sections.main.components) 2>/dev/null |
+    while read c; do
+        if ! test -f "/usr/share/alterator/components/$c/$c.component"; then
+            echo "failed to locate component $c in edition $e"
+            checkval=1
+        fi
+    done
+done
+[ -z "$checkval" ] || exit "$checkval"
 
 %files
 %dir %_alterator_datadir
 %_alterator_datadir/editions
 
 %changelog
+* Tue Feb 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1.4-alt1
+- Fix: domain edition: component disks renamed to disks-utilities-other.
+- Update sections: rename Edition components to Main components.
+
 * Mon Feb 17 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.3-alt1
 - Added disks components and postgresql17 (thx Sergey Savelev)
 
 * Thu Feb 13 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.2-alt1
 - The initial basic set of components and components included in the domain
-- editionhas been formed (thx Sergey Savelev)
+  edition has been formed (thx Sergey Savelev)
 
 * Thu Feb 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt2
 - Remove alterator-interface-edition from requires.
