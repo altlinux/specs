@@ -1,5 +1,5 @@
 Name: icon-theme-altos
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Group: Graphics
@@ -113,6 +113,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_iconsdir/altos-dark/
 
 %changelog
+* Mon Feb 17 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
+- more cleanup
+
 * Mon Feb 10 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2.0-alt1
 - temporary cleanup due to icon mismatch
 
