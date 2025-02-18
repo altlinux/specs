@@ -1,6 +1,6 @@
 Name: unvanquished
 Version: 0.55.2
-Release: alt1
+Release: alt2
 
 Summary: An FPS/RTS hybrid game powered by the Daemon engine (a combination of ioq3 and XreaL)
 License: BSD-3-Clause and CC-BY-SA-4.0 and Zlib and MIT and GPL-2.0-or-later and GPL-3.0-or-later and FTL and CC-BY-SA-2.5
@@ -18,16 +18,21 @@ Source3: linux-amd64-default_10.tar
 Source4: linux-arm64-default_10.tar
 Source5: linux-i686-default_10.tar
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 i586 aarch64
 
-BuildRequires(Pre): rpm-macros-cmake rpm-build-cmake
+BuildRequires(Pre): rpm-build-cmake
 BuildRequires: cmake clang libstdc++-devel qt6-base-devel llvm-devel
 BuildRequires: zlib-devel libncursesw-devel libnettle-devel
 BuildRequires: libcurl-devel libSDL2-devel libogg-devel libvorbis-devel
 BuildRequires: libopusfile-devel libwebp-devel libjpeg-devel libpng-devel 
 BuildRequires: libGLEW-devel libopenal-devel liblua5.4-devel libfreetype-devel
 BuildRequires: libharfbuzz-devel libcairo-devel python3-module-jinja2
-BuildRequires: python3-module-yaml gzip
+BuildRequires: python3-module-yaml gzip 
+BuildRequires: libidn2-devel libbrotli-devel libzstd-devel
+BuildRequires: pkgconfig(mit-krb5-gssapi) pkgconfig(gnutls)
+BuildRequires: libtasn1-devel pkgconfig(p11-kit-1) libpsl-devel
+BuildRequires: libgsasl-devel libssh2-devel pkgconfig(libnghttp2)
+BuildRequires: libngtcp2-devel libnghttp3-devel
 
 %description
 Unvanquished is an arena game with RTS elements (you can build) in which two very different factions fight.
@@ -59,9 +64,8 @@ make -j%__nprocs
 %endif
 %ifarch aarch64
  gzip -c irt_core-armhf.nexe > irt_core-armhf.nexe.gz
-%endif
-%ifarch i586
- gzip -c irt_core-i686.nexe > irt_core-i686.nexe.gz
+ gzip -c nacl_loader > nacl_loader.gz
+ gzip -r lib-armhf
 %endif
 cd ..
 
@@ -70,24 +74,22 @@ cd ..
 install -D %_arch-alt-linux/daemon %buildroot%_libdir/%name/daemon
 install -D %_arch-alt-linux/daemonded %buildroot%_libdir/%name/daemonded
 install -D %_arch-alt-linux/daemon-tty %buildroot%_libdir/%name/daemon-tty
-install -D %_arch-alt-linux/nacl_helper_bootstrap %buildroot%_libdir/%name/nacl_helper_bootstrap
-install -D %_arch-alt-linux/nacl_loader %buildroot%_libdir/%name/nacl_loader
 
 %ifarch x86_64
  cp -r %_arch-alt-linux/irt_core-amd64.nexe %buildroot%_libdir/%name/irt_core-amd64.nexe
  cp -r %_arch-alt-linux/irt_core-amd64.nexe.gz %buildroot%_libdir/%name/irt_core-amd64.nexe.gz
+ install -D %_arch-alt-linux/nacl_helper_bootstrap %buildroot%_libdir/%name/nacl_helper_bootstrap
+ install -D %_arch-alt-linux/nacl_loader %buildroot%_libdir/%name/nacl_loader
 %endif
 %ifarch aarch64
  cp -r %_arch-alt-linux/irt_core-armhf.nexe %buildroot%_libdir/%name/irt_core-armhf.nexe
  cp -r %_arch-alt-linux/irt_core-armhf.nexe.gz %buildroot%_libdir/%name/irt_core-armhf.nexe.gz
- cp -r %_arch-alt-linux/nacl_helper_bootstrap-armhf %buildroot%_libdir/%name/nacl_helper_bootstrap-armhf
- #mkdir -p %buildroot%_libdir/%name/lib-armhf/
- #install -D %_arch-alt-linux/lib-armhf/* %buildroot%_libdir/%name/lib-armhf/
+ install -D %_arch-alt-linux/nacl_helper_bootstrap-armhf %buildroot%_libdir/%name/nacl_helper_bootstrap-armhf
+ cp -r %_arch-alt-linux/nacl_loader.gz %buildroot%_libdir/%name/nacl_loader.gz
+ mkdir -p %buildroot%_libdir/%name/lib-armhf/
+ cp -r %_arch-alt-linux/lib-armhf/* %buildroot%_libdir/%name/lib-armhf/
 %endif
-%ifarch i586
- cp -r %_arch-alt-linux/irt_core-i686.nexe %buildroot%_libdir/%name/irt_core-i686.nexe
- cp -r %_arch-alt-linux/irt_core-i686.nexe.gz %buildroot%_libdir/%name/irt_core-i686.nexe.gz
-%endif
+
 for r in 32 64 128 256 512
 do
  install -Dm 0644 dist/icons/${r}x${r}/%name.png %buildroot%_iconsdir/hicolor/${r}x${r}/apps/%name.png
@@ -124,15 +126,20 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
  gunzip -f %_libdir/%name/irt_core-amd64.nexe.gz
  gzip -c %_libdir/%name/irt_core-amd64.nexe > %_libdir/%name/irt_core-amd64.nexe.gz
 %endif
+# sea  https://github.com/Unvanquished/Unvanquished/issues/2739#issuecomment-1605254696
 %ifarch aarch64
  rm %_libdir/%name/irt_core-armhf.nexe
  gunzip -f %_libdir/%name/irt_core-armhf.nexe.gz
  gzip -c %_libdir/%name/irt_core-armhf.nexe > %_libdir/%name/irt_core-armhf.nexe.gz
+ gunzip -f %_libdir/%name/nacl_loader.gz
+ gzip -c %_libdir/%name/nacl_loader > %_libdir/%name/nacl_loader.gz
+ gzip -rd %_libdir/%name/lib-armhf
 %endif
-%ifarch i586
- rm %_libdir/%name/irt_core-i686.nexe
- gunzip -f %_libdir/%name/irt_core-i686.nexe.gz
- gzip -c %_libdir/%name/irt_core-i686.nexe > %_libdir/%name/irt_core-i686.nexe.gz
+
+%preun
+%ifarch aarch64
+ rm %_libdir/%name/nacl_loader
+ gzip -r %_libdir/%name/lib-armhf
 %endif
 
 %files
@@ -143,6 +150,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %doc *.md *.txt
 
 %changelog
+* Mon Feb 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.55.2-alt2
+- rebuilt for x86_64, i586, aarch64 architectures
+
 * Sun Feb 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.55.2-alt1
 - Initial build for ALT Linux.
 
