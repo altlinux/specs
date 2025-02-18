@@ -1,7 +1,7 @@
 %global pypi_name pulsectl
 
 Name: python3-module-%{pypi_name}
-Version: 24.4.0
+Version: 24.12.0
 Release: alt1
 Summary: Python 3 high-level interface and ctypes-based bindings for PulseAudio
 License: MIT
@@ -37,6 +37,9 @@ samples to play, player-like client).
 %python3_sitelibdir/%{pypi_name}-%version.dist-info/
 
 %changelog
+* Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 24.12.0-alt1
+- 24.12.0
+
 * Fri Apr 19 2024 Egor Ignatov <egori@altlinux.org> 24.4.0-alt1
 - 24.4.0
 
