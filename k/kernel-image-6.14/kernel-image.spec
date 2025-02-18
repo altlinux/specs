@@ -1,5 +1,5 @@
 Name: kernel-image-6.14
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	6.13
 %define kernel_base_version	6.14
 %define kernel_sublevel	.0
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Feb 18 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt0.rc3
+- Update to v6.14-rc3 (2025-02-16).
+- Disable BLK_DEV_FD.
+- config: Enable CONFIG_DRM_PANIC=y.
+
 * Mon Feb 10 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt0.rc2
 - Update to v6.14-rc2 (2025-02-09).
 - config: Enable CONFIG_TMPFS_INODE64=y.
