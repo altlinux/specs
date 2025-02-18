@@ -1,5 +1,5 @@
 Name: coq
-Version: 8.20.0
+Version: 8.20.1
 Release: alt1
 
 Summary: Proof management system
@@ -216,5 +216,8 @@ ln -s ../../coq/coq_style.xml %buildroot%_datadir/gtksourceview-3.0/styles
 %_desktopdir/fr.inria.coqide.desktop
 
 %changelog
+* Tue Feb 18 2025 Leonid Znamenok <respublica@altlinux.org> 8.20.1-alt1
+- New version 8.20.1.
+
 * Sat Jan 25 2025 Leonid Znamenok <respublica@altlinux.org> 8.20.0-alt1
 - Initial build for Sisyphus (Thanks to Fedora).
