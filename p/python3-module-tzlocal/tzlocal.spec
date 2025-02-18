@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tzlocal
+%define pypi_name tzlocal
 
-Name: python3-module-%oname
-Version: 5.0.1
+Name: python3-module-%pypi_name
+Version: 5.3
 Release: alt1
 
 Summary: A Python module that tries to figure out what your local timezone is
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytz-deprecation-shim
@@ -47,19 +48,24 @@ ln -sfv ../usr/share/zoneinfo/Africa/Harare \
    tests/test_data/symlink_localtime/etc/localtime
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 -m pytest tests -v -k 'not test_conflicting and not test_noconflict'
+%tox_create_default_config
+%tox_check_pyproject -- -vra -k 'not test_conflicting and not test_noconflict'
 
 %files
 %doc CHANGES.txt LICENSE.txt README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 5.3-alt1
+- new version 5.3
+
 * Wed May 24 2023 Egor Ignatov <egori@altlinux.org> 5.0.1-alt1
 - new version 5.0.1
 
