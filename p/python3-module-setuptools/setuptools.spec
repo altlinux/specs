@@ -9,7 +9,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 75.8.0
-Release: alt1
+Release: alt2
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
@@ -185,6 +185,9 @@ export PIP_IGNORE_INSTALLED=1
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue Feb 18 2025 Stanislav Levin <slev@altlinux.org> 1:75.8.0-alt2
+- Reverted CFLAGS overriding.
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 1:75.8.0-alt1
 - 75.6.0 -> 75.8.0.
 
