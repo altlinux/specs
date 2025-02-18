@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-xkbcommon
-Version: 0.8
+Version: 1.5.1
 Release: alt1
 
 Summary: Python bindings for libxkbcommon using cffi
@@ -52,6 +52,9 @@ mv %buildroot%python3_sitelibdir/xkbcommon/_ffi.abi3.so %buildroot%python3_sitel
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Sat Jan 14 2023 Egor Ignatov <egori@altlinux.org> 0.8-alt1
 - new version 0.8
 
