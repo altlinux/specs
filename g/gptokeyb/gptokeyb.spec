@@ -1,5 +1,5 @@
 Name:    gptokeyb
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1.git2c7a017
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
@@ -75,9 +75,13 @@ install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 %_presetdir/20-%name.preset
 
 %changelog
+* Tue Feb 18 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.6-alt1.git2c7a017
+- Add support of Powkiddy x55
+- Minor optimizations in main script
+
 * Sat Jan  4 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.5-alt1.git2c7a017
 - Change navigation system for ARC-S and ARC-D (D-Pad is arrows buttons now)
-- Add full set of symbols in text mode
+- Add support for full set of symbols in text mode
 
 * Sat Jan  4 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.4-alt1.git2c7a017
 - Replace udev rule from anbernic-virtual-controller
