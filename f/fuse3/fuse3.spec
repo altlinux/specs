@@ -1,6 +1,6 @@
 Name: fuse3
 Version: 3.16.2
-Release: alt1
+Release: alt2
 
 Summary: a tool for creating virtual filesystems
 License: GPL-2.0-or-later
@@ -10,11 +10,15 @@ Url: https://github.com/libfuse/
 
 Source: %name-%version.tar
 Source1: fuserumount3
+Source2: alternatives
 Patch: %name-%version-alt.patch
 
-Requires(pre): fuse-common >= 1.1.1
+BuildRequires(pre): rpm-macros-alternatives
+
+Requires(pre): fuse-common >= 1.1.3 alternatives
 
 BuildRequires: meson >= 0.51 ninja-build libudev-devel
+Conflicts: fuse < 2.9.9-alt5
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -59,14 +63,15 @@ This package contains development headers.
 rm -fr %buildroot%_sysconfdir/init.d
 
 install -pD %SOURCE1 %buildroot%_bindir/fuserumount3
+install -pD %SOURCE2 %buildroot%_altdir/fuse3
 
 %pre
-if [ $1 -ge 2 -o -e %_bindir/fusermount ]; then
+if [ $1 -ge 2 -o -e %_bindir/fusermount2 ]; then
     %_sbindir/control-dump fusermount
 fi
 
 %post
-if [ $1 -ge 2 -o -e %_bindir/fusermount ]; then
+if [ $1 -ge 2 -o -e %_bindir/fusermount2 ]; then
     %_sbindir/control-restore fusermount
 else
     %_sbindir/control fusermount fuseonly
@@ -79,6 +84,7 @@ fi
 %attr(0755,root,root) %_bindir/fuserumount3
 %_man1dir/*
 %_man8dir/*
+%_altdir/fuse3
 
 # fuse-common-1.1.1-alt1 contains /etc/fuse.conf
 %exclude %_sysconfdir/fuse.conf
@@ -94,6 +100,10 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 3.16.2-alt2
+- added the ability to select the fusermount3/fuserumount3 version using
+  alternatives by default (thx Korney Gedert) (fixes: 52316).
+
 * Fri Mar 29 2024 Alexey Shabalin <shaba@altlinux.org> 3.16.2-alt1
 - 3.16.2 (Fixed ALT#49805)
 - move library from /lib to /usr/lib, drop support non-usrmerge

@@ -1,5 +1,5 @@
 Name: fuse-common
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 BuildArch: noarch
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Conflicts: fuse < 2.9.9-alt1 fuse3 < 3.4.1-alt2
+Conflicts: fuse < 2.9.9-alt5 fuse3 < 3.4.1-alt2
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -47,6 +47,9 @@ fi
 %_udevrulesdir/*
 
 %changelog
+* Tue Feb 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.1.3-alt1
+- Rename fusermount to fusermount2 using in control (thx Korney Gedert).
+
 * Sun Jul 18 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.2-alt1
 - Fix fusermount control logic of calling udevadm trigger.
 - Update License tag.

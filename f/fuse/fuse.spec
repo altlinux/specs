@@ -3,7 +3,7 @@
 
 Name: fuse
 Version: 2.9.9
-Release: alt4
+Release: alt5
 
 Summary: a tool for creating virtual filesystems
 License: GPLv2
@@ -12,14 +12,18 @@ Group: System/Kernel and hardware
 Url: https://github.com/libfuse/
 
 Source: %name-%version.tar
-Source1: fuserumount
+Source1: fuserumount2
+Source2: alternatives
 
 Patch: %name-%version.patch
+
+BuildRequires(pre): rpm-macros-alternatives
 
 Requires: mount >= 2.11
 Provides: avfs-fuse = %version
 Obsoletes: avfs-fuse < %version
-Requires(pre): fuse-common >= 1.1.0
+Requires(pre): fuse-common >= 1.1.3
+Conflicts: fuse3 < 3.16.2-alt2
 
 %description
 FUSE (Filesystem in USErspace), an excellent tool
@@ -76,7 +80,9 @@ ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
 
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
 
-install -pD %SOURCE1 %buildroot%_bindir/fuserumount
+mv %buildroot%_bindir/fusermount %buildroot%_bindir/fusermount2
+install -pD %SOURCE1 %buildroot%_bindir/fuserumount2
+install -pD %SOURCE2 %buildroot%_altdir/fuse2
 rm -f %buildroot/etc/init.d/fuse
 
 %pre
@@ -94,11 +100,12 @@ fi
 %files
 %doc AUTHORS NEWS README.md README.NFS doc/how-fuse-works doc/kernel.txt
 /sbin/mount.fuse
-%attr(4710,root,fuse) %_bindir/fusermount
+%attr(4710,root,fuse) %_bindir/fusermount2
 %_bindir/ulockmgr_server
-%attr(0755,root,root) %_bindir/fuserumount
+%attr(0755,root,root) %_bindir/fuserumount2
 %_man1dir/*
 %_man8dir/*
+%_altdir/fuse2
 
 %files -n lib%name
 /%_lib/lib%name.so.*
@@ -110,6 +117,10 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.9-alt5
+- Added the ability to select the fusermount2/fuserumount2 version using
+  alternatives-manual (thx Korney Gedert).
+
 * Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 2.9.9-alt4
 - Added -ffat-lto-objects to %%optflags_lto.
 
