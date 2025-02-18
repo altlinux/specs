@@ -1,3 +1,6 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 # defined macro based on Sergey Bolshakov <sbolshakov@altlinux.org> libav spec
 
 # Macros
@@ -40,7 +43,11 @@
 %def_enable libcdio
 %def_enable libcodec2
 %def_enable libdav1d
+%if_ver_gteq %ubt_id M100
 %def_enable librav1e
+%else
+%def_disable librav1e
+%endif
 %ifarch %e2k
 %def_disable libdc1394
 %else
@@ -167,7 +174,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	130
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -186,6 +193,7 @@ Patch2000: ffmpeg-e2k-simd.patch
 
 %define __find_provides %SOURCE1
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 %ifarch %ix86 x86_64
@@ -642,7 +650,9 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 	--enable-avformat \
 	--enable-avutil \
 	--enable-libopus \
+%if_enabled librav1e
 	--enable-librav1e \
+%endif
 	--enable-decoder=aac,flac,h264,libopus,mp3,pcm_alaw,pcm_f32le,pcm_mulaw,pcm_s16be,pcm_s16le,pcm_s24be,pcm_s24le,pcm_s32le,pcm_u8,theora,vorbis,vp8,av1 \
 	--enable-demuxer=aac,flac,matroska,mov,mp3,ogg,wav \
 	--enable-parser=aac,flac,h264,mpegaudio,opus,vorbis,vp3,vp8,vp9 \
@@ -714,6 +724,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 130-alt2
+- fix to build on old branches
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 130-alt1
 - new version
 
