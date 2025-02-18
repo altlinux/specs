@@ -2,15 +2,15 @@
 %define oname pyalsa
 
 Name: python3-module-%oname
-Version: 1.2.7
+Version: 1.2.12
 Release: alt1
 
 Summary: Official ALSA Python Binding
 License: LGPLv2.1+
 Group: Development/Python3
 
-#https://github.com/alsa-project/alsa-python
 Url: http://www.alsa-project.org
+VCS: https://github.com/alsa-project/alsa-python
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -36,6 +36,9 @@ Python binding for the ALSA library.
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 1.2.12-alt1
+- New version 1.2.12.
+
 * Fri Jun 03 2022 Egor Ignatov <egori@altlinux.org> 1.2.7-alt1
 - new version 1.2.7
 
