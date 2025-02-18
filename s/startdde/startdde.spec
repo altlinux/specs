@@ -1,15 +1,16 @@
 %def_disable clang
-%def_without dlightdm
 
 Name: startdde
-Version: 6.0.14
+Version: 6.1.2
 Release: alt1
 Epoch: 1
+
 Summary: Starter of deepin desktop environment
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/startdde
-Packager: Leontiy Volodin <lvol@altlinux.org>
+Vcs: https://github.com/linuxdeepin/startdde.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
@@ -20,19 +21,23 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-golang /proc
-BuildRequires: jq glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixes-devel libXi-devel libgudev-devel libgnome-keyring-devel libpulseaudio-devel libalsa-devel libsecret-devel
-
-%if_with dlightdm
-Requires: deepin-session-shell
-%endif
+BuildRequires: glib2-devel libgio-devel libgtk+3-devel libXcursor-devel libXfixes-devel libXi-devel libgudev-devel libgnome-keyring-devel libpulseaudio-devel libalsa-devel libsecret-devel
 
 %description
 Startdde is used for launching DDE components and invoking user's custom applications which compliant with xdg autostart specification.
 
+%package -n lightdm-deepin-greeter-settings
+Summary: Config for own lightdm theme
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: deepin-session-shell
+
+%description -n lightdm-deepin-greeter-settings
+The package provides the configuration file
+for enabling the deepin theme for lightdm.
+
 %prep
-%setup
-# Unpacked vendor/ into the source (used .gear/tags).
-tar -xf %SOURCE1
+%setup -a1
 
 %build
 %if_enabled clang
@@ -41,16 +46,11 @@ export CXX="clang++"
 export AR="llvm-ar"
 %endif
 export GOPATH="$(pwd)/vendor:%go_path"
-# export GO_BUILD_FLAGS=-trimpath
 %make
 
 %install
 export GOPATH="%go_path"
 %makeinstall DESTDIR=%buildroot
-%if_without dlightdm
-# conflict with system lightdm
-rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
-%endif
 %find_lang %name
 
 %files -f %name.lang
@@ -64,11 +64,20 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_userunitdir/dde-display-task-refresh-brightness.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/dde-display-task-refresh-brightness.service
-%if_with dlightdm
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.startdde/
+%dir %_datadir/dsg/configs/org.deepin.startdde/org.deepin.XSettings.json
+
+%files -n lightdm-deepin-greeter-settings
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
-%endif
 
 %changelog
+* Tue Feb 18 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.2-alt1
+- New version 6.1.2.
+- Added vcs tag.
+- Packaged the lightdm config as subpackage.
+
 * Thu Apr 04 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.14-alt1
 - New version 6.0.14.
 
