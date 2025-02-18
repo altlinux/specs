@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-draw
-Version: 7.0.2
+Version: 7.0.5
 Release: alt1
 
 Summary: A lightweight drawing tool for Linux Deepin
@@ -13,6 +13,7 @@ License: GPL-3.0+ and (BSD-3-Clause and Apache-2.0)
 # src/qtsingleapplication/: BSD-3-Clause
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-draw
+Vcs: https://github.com/linuxdeepin/deepin-draw.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
@@ -101,6 +102,10 @@ mv -f %buildroot/usr/lib/libdrawboard* %buildroot%_libdir
 %_includedir/drawBoard/*.h
 
 %changelog
+* Tue Feb 18 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
+- New version 7.0.5.
+- Added vcs tag.
+
 * Tue Sep 10 2024 Leontiy Volodin <lvol@altlinux.org> 7.0.2-alt1
 - New version 7.0.2.
 
