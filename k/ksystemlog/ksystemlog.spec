@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 24.12.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -54,6 +54,9 @@ who want to quickly see problems occuring on their server.
 
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt2
+- fix apache logs path (closes: 53033)
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 
