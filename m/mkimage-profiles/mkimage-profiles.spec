@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,16 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue Feb 18 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt1
+- fix package lists for build regular-rescue, regular-gnustep,
+  regular-wmaker
+- drm: fix select nvidia for stage2
+- grub: add Tatar (tt_RU) and Mari (mhr_RU) languages
+- stage2: change INSTALL2_INIT as try (can be reassigned)
+- regular.mk: INSTALL2_INIT='systemd.unit=install2.target' for desktop
+  (sisyphus only)
+- e2k/generate.mk: use INSTALL2_INIT variable for livecd install
+
 * Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 1.7.2-alt1
 - initrd-{bootchain,propagator}: add bootchain or propagator to MAIN_PACKAGES
 - Revert "live: enable root login via ssh using password in Live Rescue"
