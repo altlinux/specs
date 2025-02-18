@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define soversion 2407.0.0
+%define soversion 2501.0.0
 
 # about -DCMAKE_CXX_STANDARD=17 see https://github.com/desktop-app/tg_owt/pull/55#discussion_r599718405
 # from tg_owt: HINT: System abseil should be built with -DCMAKE_CXX_STANDARD=20
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: libabseil-cpp
-Version: 20240722.0
+Version: 20250127.0
 Release: alt1
 
 Summary: C++ Common Libraries
@@ -20,8 +20,6 @@ License: Apache-2.0
 Group: Development/C++
 Url: https://abseil.io
 VCS: https://github.com/abseil/abseil-cpp
-
-# Source-url: https://github.com/abseil/abseil-cpp/archive/%version/abseil-cpp-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -130,6 +128,7 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %files -n libabseil-cpp%soversion
 %doc LICENSE
 %doc FAQ.md README.md UPGRADES.md
+
 %_libdir/libabsl_bad_any_cast_impl.so.%soversion
 %_libdir/libabsl_bad_optional_access.so.%soversion
 %_libdir/libabsl_bad_variant_access.so.%soversion
@@ -184,6 +183,7 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_log_internal_message.so.%soversion
 %_libdir/libabsl_log_internal_nullguard.so.%soversion
 %_libdir/libabsl_log_internal_proto.so.%soversion
+%_libdir/libabsl_log_internal_structured_proto.so.%soversion
 %_libdir/libabsl_log_severity.so.%soversion
 %_libdir/libabsl_log_sink.so.%soversion
 %_libdir/libabsl_low_level_hash.so.%soversion
@@ -219,6 +219,7 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_libdir/libabsl_throw_delegate.so.%soversion
 %_libdir/libabsl_time.so.%soversion
 %_libdir/libabsl_time_zone.so.%soversion
+%_libdir/libabsl_tracing_internal.so.%soversion
 %_libdir/libabsl_utf8_for_code_point.so.%soversion
 %_libdir/libabsl_vlog_config_internal.so.%soversion
 
@@ -257,6 +258,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 18 2025 Anton Farygin <rider@altlinux.ru> 20250127.0-alt1
+- 20240722.0 -> 20250127.0
+
 * Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 20240722.0-alt1
 - update to LTS 20240722.0
 - package with libraries renamed according shared libs policy
