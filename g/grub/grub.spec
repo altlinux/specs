@@ -28,7 +28,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt4
+Release: alt5
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -504,6 +504,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt5
+- Add Russian translation for 'Preview LiveCD' (closes: #52881)
+
 * Wed Jan 22 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt4
 - fix 'error: not a correct XFS inode.' flood on boot (closes: #51238)
 - build on loongarch64 (iv@, asheplyakov@)
