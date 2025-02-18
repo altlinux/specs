@@ -6,7 +6,7 @@
 
 Name: neomutt
 Version: 20250113
-Release: alt1
+Release: alt2
 Summary: A version of Mutt with added features
 License: GPL-2.0-or-later
 Group: Networking/Mail
@@ -22,7 +22,7 @@ Source2: neomutt.xpm
 
 BuildRequires: docbook-style-xsl
 BuildRequires: elinks
-BuildRequires: libdb4.8-devel
+BuildRequires: libdb5.3-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libidn2-devel
 BuildRequires: liblua5-devel
@@ -53,8 +53,8 @@ for color terminals, MIME, OpenPGP, and a threaded sorting mode.
     +.+        @+.....+.+
     +.+@       +@........++++
     +.@+      @+.........+;;>
-    +..+++++++%@$#.......+.--
-    @@.@+&%&+@%%@@.......+>->
+    +..+++++++%%@$#.......+.--
+    @@.@+&%%&+@%%@@.......+>->
      +..@+++@.@%%@$@......+++
      +.........@%%+@$$....+
     @@$.........@%%++@$..$+
@@ -131,6 +131,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Thu Feb 13 2025 Constantin Sunzow <protvin@altlinux.org> 20250113-alt2
+- Rebuild against libdb-5.3.
+
 * Mon Jan 13 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 20250113-alt1
 - Update to 20250113 (2025-01-13).
 

@@ -9,7 +9,7 @@
 Summary: The Berkeley DB database library for C
 Name: libdb%{__soversion}
 Version: 5.3.28
-Release: alt5.1
+Release: alt6
 Group: System/Libraries
 License: BSD and LGPLv2 and Sleepycat
 URL: http://www.oracle.com/database/berkeley-db/
@@ -67,6 +67,15 @@ Patch38: libdb-limit-cpu.patch
 # rhbz#1608749 Patch sent upstream
 # Expects libdb-5.3.21-mutex_leak.patch applied
 Patch39: libdb-5.3.21-trickle_cpu.patch
+# cve-2019-2708 fixed by mmuzila
+Patch40: db-5.3.28_cve-2019-2708.patch
+# Prevents high CPU usage
+Patch41: db-5.3.28-mmap-high-cpu-usage.patch
+
+Patch42: libdb-1.85-c99.patch
+Patch43: libdb-c99.patch
+Patch44: libdb-configure-c99.patch
+Patch45: libdb-sqlite-c99.patch
 
 BuildRequires: gcc gcc-c++
 BuildRequires: perl libtool
@@ -238,6 +247,12 @@ popd
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
 
 cd dist
 ./s_config
@@ -397,6 +412,11 @@ mv man/* %buildroot%_man1dir
 %_includedir/%name/dbsql.h
 
 %changelog
+* Mon Feb 10 2025 Constantin Sunzow <protvin@altlinux.org> 5.3.28-alt6
+- Fix FTBFS: Import patches from fedora.
+- Security fix: CVE-2019-2708: Vulnerability in the Data Store component of
+  Oracle Berkeley DB.
+
 * Fri Oct 06 2023 Ivan A. Melnikov <iv@altlinux.org> 5.3.28-alt5.1
 - NMU: properly regenerate configure scripts to fix build
   with recent autoconf and rpm-build.

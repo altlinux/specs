@@ -19,7 +19,7 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.8
+Release: alt0.9
 
 Summary: Console player
 Group: Sound
@@ -42,7 +42,7 @@ Requires: %name-player %name-plugin-flac %name-plugin-mp3 %name-plugin-sndfile %
 # Automatically added by buildreq on Wed Jun 07 2006
 BuildRequires: gcc-c++ jackit-devel libalsa-devel libcurl-devel 
 BuildRequires: libncursesw-devel libsamplerate-devel pkg-config libltdl7-devel
-BuildRequires: libdb4.8-devel
+BuildRequires: libdb5.3-devel
 BuildRequires: libmagic-devel
 BuildRequires: libpopt-devel
 
@@ -333,6 +333,9 @@ EOF
 %endif
 
 %changelog
+* Mon Feb 10 2025 Constantin Sunzow <protvin@altlinux.org> 2.6.0-alt0.9
+- Rebuild against libdb-5.3.
+
 * Thu Dec 19 2024 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt0.8
 - Fix FTBFS with ffmpeg7 (debian bug 1072436).
 - files: add https support (ALT #52414).
