@@ -2,30 +2,27 @@
 %define ver_major 0.4
 %def_enable gtk_doc
 
-%ifarch ppc64le
-%def_disable check
-%else
 %def_enable check
-%endif
 
 %ifarch %valgrind_arches
 %def_enable valgrind
 %endif
 
 Name: orc
-Version: %ver_major.40
+Version: %ver_major.41
 Release: alt1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
-License: BSD-3-Clause
-Url: http://code.entropywave.com/projects/orc
+License: BSD-2-Clause
+Url: http://gstreamer.freedesktop.org/modules/orc.html
+
+Vcs: https://gitlab.freedesktop.org/gstreamer/orc.git
 
 %if_disabled snapshot
 #Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
 Source: https://gstreamer.freedesktop.org/src/%name/%name-%version.tar.xz
 %else
-Vcs: https://anongit.freedesktop.org/gstreamer/orc.git
 Source: %name-%version.tar
 %endif
 
@@ -114,7 +111,7 @@ This package contains documentation for Orc.
 
 %build
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=enabled}
+    %{subst_enable_meson_feature gtk_doc gtk_doc}
 %nil
 %meson_build
 
@@ -128,6 +125,7 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %files
 %_bindir/%name-bugreport
 %_bindir/%{name}c
+%doc README RELEASE
 
 %files -n lib%name
 %_libdir/lib%name-%ver_major.so.*
@@ -150,6 +148,9 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.41-alt1
+- 0.4.41
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.40-alt1
 - 0.4.40
 
