@@ -1,25 +1,27 @@
 Name: ddcui
-Version: 0.5.4
-Release: alt1.1
+Version: 0.6.0
+Release: alt1
 
 Summary: Graphical utility to query and update monitor settings
 Group: System/Configuration/Hardware
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://github.com/rockowitz/%name
+
+Vcs: https://github.com/rockowitz/ddcui.git
 
 Source: %url/archive/v%version/%name-%version.tar.gz
 
-%define ddcutil_ver 2.1.3
-%define glib_ver 2.40
-%define qt_ver 5.5
+%define ddcutil_ver 2.2.0
+%define glib_ver 2.60
+%define qt_ver 6.1
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-systemd
 BuildRequires: cmake pkgconfig(glib-2.0) >= %glib_ver
 BuildRequires: libddcutil-devel >= %ddcutil_ver
-BuildRequires: pkgconfig(Qt5Widgets) >= %qt_ver
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Gui)
-BuildRequires: pkgconfig(Qt5Help)
+BuildRequires: pkgconfig(Qt6Widgets) >= %qt_ver
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Help)
 
 %description
 %name is a graphical user interface for ddcutil.
@@ -31,7 +33,9 @@ BuildRequires: pkgconfig(Qt5Help)
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake \
+    -DUSE_QT6=ON \
     -DCMAKE_INSTALL_DOCDIR:STRING="%_defaultdocdir/%name-%version"
+%nil
 %cmake_build
 
 %install
@@ -47,6 +51,9 @@ BuildRequires: pkgconfig(Qt5Help)
 %doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1.1
 - rebuilt with new systemd macros
 

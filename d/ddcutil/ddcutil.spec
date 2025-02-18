@@ -18,18 +18,19 @@
 %define soname 5
 
 Name: ddcutil
-Version: 2.1.4
+Version: 2.2.0
 Release: alt1
 
 Summary: Utility to query and update monitor settings
 Group: System/Configuration/Hardware
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://github.com/rockowitz/%name
+
+Vcs: http://github.com/rockowitz/ddcutil
 
 Source: %url/archive/v%version/%name-%version.tar.gz
 
 BuildRequires: libi2c-devel i2c-tools
-BuildRequires: python-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(jansson)
 BuildRequires: pkgconfig(libdrm)
@@ -94,7 +95,7 @@ installed_modulesdir=%_modulesloaddir
 %_bindir/%name
 %_modulesloaddir/%name.conf
 %_udevrulesdir/60-%name-i2c.rules
-%_udevrulesdir/60-%name-usb.rules
+#%_udevrulesdir/60-%name-usb.rules
 %dir %_datadir/%name
 %dir %_datadir/%name/data
 %_datadir/%name/data/*rules
@@ -119,6 +120,9 @@ installed_modulesdir=%_modulesloaddir
 # TODO: python subpackage?
 
 %changelog
+* Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Sat Feb 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
 - 2.1.4
 
