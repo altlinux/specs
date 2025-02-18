@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.0.8
-Release: alt2
+Version: 0.0.9
+Release: alt1
 
 Summary: CLI for alterator browser
 License: GPL-2.0+
@@ -35,6 +35,12 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Feb 17 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.9-alt1
+- Reworking the help calls
+- User-friendly interface of the diag module. Make default list tools and list tool tests commands
+- Display all information using the default description command in systeminfo module
+- Working with components names. Reworking components output
+
 * Fri Dec 13 2024 Aleksey Saprunov <sav@altlinux.org> 0.0.8-alt2
 - fix interface validation
 - refactor commands
