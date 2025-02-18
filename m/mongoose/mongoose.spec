@@ -9,8 +9,8 @@
 %def_disable static
 
 Name: mongoose
-Version: 7.14
-Release: alt2
+Version: 7.16
+Release: alt1
 
 Summary: An easy-to-use self-sufficient web server
 License: MIT
@@ -57,6 +57,7 @@ comprisable header file.
 %package -n %libname-static
 Summary: Development files for the %name
 Group: Development/C
+Requires: %libname-devel = %EVR
 
 %description -n %libname-static
 This package contains the shared library required by applications that
@@ -92,7 +93,7 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %add_debuginfo_skiplist %_libdir/%libname.so
 
 %files
-%doc README.md LICENSE
+%doc README.md
 
 %files -n %libname%sover
 %_libdir/%libname.so.%{sover}*
@@ -107,6 +108,9 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %endif
 
 %changelog
+* Tue Feb 18 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 7.16-alt1
+- new version
+
 * Tue May 28 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 7.14-alt2
 - don't create a libmongoose.so.debug
 
