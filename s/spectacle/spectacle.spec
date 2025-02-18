@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -68,6 +68,9 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

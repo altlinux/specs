@@ -1,7 +1,7 @@
 %define rname svgpart
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -39,6 +39,9 @@ KDE SVG Part.
 
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

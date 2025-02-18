@@ -6,7 +6,7 @@
 %def_disable libzip
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -18,7 +18,7 @@ License: GPL-2.0-or-later
 Provides: kde5-ark = %EVR
 Obsoletes: kde5-ark < %EVR
 
-Requires: unrar p7zip unzip zip
+Requires: unrar p7zip unzip
 
 Source: %rname-%version.tar
 
@@ -108,6 +108,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

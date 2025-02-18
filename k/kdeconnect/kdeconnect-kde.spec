@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -29,6 +29,7 @@ Source: %rname-%version.tar
 Patch: alt-plasmoid-placement.patch
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: libssl-devel
 BuildRequires: qt6-declarative-devel qt6-multimedia-devel qt6-connectivity-devel
 BuildRequires: qt6-declarative-devel qt6-wayland-devel
 BuildRequires: extra-cmake-modules
@@ -144,6 +145,9 @@ done
 %_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libaudiotubecore libaudiotubecore%sover
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -64,6 +64,9 @@ mkdir -p %buildroot/%_K6data/audiotube/
 
 
 %changelog
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 
