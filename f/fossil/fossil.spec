@@ -1,6 +1,6 @@
 %def_enable Werror
 Name: fossil
-Version: 2.18
+Version: 2.25
 Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
@@ -8,10 +8,8 @@ License: %bsdstyle
 Group: Development/Other
 
 Url: http://www.fossil-scm.org/
-# repacked https://www.fossil-scm.org/home/uv/fossil-src-%version.tar.gz
+# repacked https://www.fossil-scm.org/home/tarball/version-%%version/fossil-src-%%version.tar.gz
 Source: %name-%version.tar
-# git://git.altlinux.org/gears/f/fossil.git
-Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: zlib-devel libssl-devel libreadline-devel tcl
@@ -35,7 +33,6 @@ Documentation in HTML format for Fossil.
 
 %prep
 %setup
-%patch -p1
 cp -at autosetup -- /usr/share/gnu-config/config.{guess,sub}
 
 %build
@@ -63,6 +60,10 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Wed Feb 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.25-alt1
+- 2.25
+- change building scheme
+
 * Sun Mar 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.18-alt1
 - Updated to 2.18.
 
