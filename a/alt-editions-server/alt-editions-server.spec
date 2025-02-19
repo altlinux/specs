@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-editions-server
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
@@ -66,6 +66,10 @@ done
 %_alterator_datadir/editions
 
 %changelog
+* Wed Feb 19 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.5-alt1
+- The "network-manager-gtk" component has been removed from the server
+  edition (thx Sergey Savelev)
+
 * Tue Feb 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1.4-alt1
 - Fix: domain edition: component disks renamed to disks-utilities-other.
 - Update sections: rename Edition components to Main components.
