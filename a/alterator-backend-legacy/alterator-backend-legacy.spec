@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
@@ -62,6 +62,8 @@ install -v -p -m 755 -D alterator-generate-legacy-backends %buildroot%_libexecdi
 install -v -p -m 644 -D org.altlinux.alterator.legacy.xml %buildroot%_datadir/dbus-1/interfaces
 install -v -p -m 644 -D org.altlinux.alterator.legacy.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 755 -D alterator-application-legacy %buildroot%_libexecdir/alterator-application-legacy/alterator-application-legacy
+install -v -p -m 755 -D show-dialog %buildroot%_libexecdir/alterator-application-legacy/show-dialog
+install -v -p -m 755 -D locales %buildroot%_libexecdir/alterator-application-legacy/locales
 install -v -p -m 644 -D legacy_runner.application %buildroot%_alterator_datadir/applications
 install -v -b -m 644 -D legacy_runner.backend %buildroot%_alterator_datadir/backends
 
@@ -92,6 +94,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Wed Jan 15 2025 Alexey Saprunov <sav@altlinux.org> 0.1.3-alt1
+- Add translations (Andrey Alekseev <parovoz@altlinux.org>).
+- declare environment variables (Andrey Alekseev <parovoz@altlinux.org>).
+
 * Tue Dec 10 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.2-alt1
 - Move to toml.
 
