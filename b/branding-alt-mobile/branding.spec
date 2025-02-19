@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.7.alpha3
+Release: alt0.9.beta1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -36,8 +36,8 @@ License: GPL-3.0-or-later
 %define altbranch sisyphus
 %endif
 
-%define status "-альфа3"
-%define status_en "-alpha3"
+%define status "бета3"
+%define status_en "-beta3"
 
 %description
 Distro-specific packages with design and texts
@@ -179,7 +179,9 @@ mkdir -p %buildroot/%_iconsdir/hicolor/scalable/apps
 install -pD -m644 images/alt-mobile.svg %buildroot/%_iconsdir/hicolor/scalable/apps
 
 mkdir -p %buildroot/%_datadir/design/backgrounds/
-install -m644 images/background-*.png images/lockscreen-*.png \
+install -m644 images/background-4000x4000.png \
+	%buildroot/%_datadir/design/backgrounds/flower-black-ld.png
+install -m644 images/lockscreen-*.png \
 	%buildroot/%_datadir/design/backgrounds/
 
 install -d %buildroot/etc/alternatives/packages.d
@@ -200,7 +202,11 @@ pushd notes
 popd
 
 # phosh settings
-cp -ar phosh/* %buildroot/
+cp -r phosh-settings/etc %buildroot/
+install -Dm644 phosh-settings/50-background.gschema.override \
+	%buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override
+install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override \
+	%buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 
 #bootsplash
 %post bootsplash
@@ -230,10 +236,21 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/*
 
 %files phosh-settings
-%_sysconfdir/dconf/db/local.d/00_background
+%_datadir/glib-2.0/schemas/50-background.gschema.override
+%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.9.beta1
+- beta 1
+- phosh-settings: add 50-camera-privacy-disabled.gschema.override
+- set background over gsettings override config instead dconf
+- phosh-settings: remove phosh-applist-background section from gtk-3.0/gtk.css
+- use images with a resolution of 4000x4000 pixels
+
+* Mon Dec 16 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.8.alpha3
+- images: update background and lockscreen
+
 * Thu Dec 12 2024 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.7.alpha3
 - alpha 3
 - Update system-logo.png for plymouth
