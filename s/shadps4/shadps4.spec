@@ -13,7 +13,7 @@
 
 Name: shadps4
 Version: 0.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -54,7 +54,6 @@ Source12: ext-LibAtrac9-%libatrac9_commit.tar
 Patch0: %name-0.6.0-vulakn-headers.patch
 
 BuildRequires: boost-asio-devel
-BuildRequires: cmake
 BuildRequires: glslang-devel
 BuildRequires: libGLU-devel
 BuildRequires: libSDL3-devel
@@ -65,6 +64,7 @@ BuildRequires: libhalf-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libspirv-tools-devel
+BuildRequires: libssl-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libtoml11-devel
@@ -76,7 +76,6 @@ BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: rapidjson-devel
 BuildRequires: spirv-headers
-
 
 Provides: %name-qt = %EVR
 Obsoletes: %name-qt <= 0.2.0-alt1
@@ -130,6 +129,9 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %_libexecdir/%name
 
 %changelog
+* Wed Feb 19 2025 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1.1
+- Fix FTBFS
+
 * Tue Feb 04 2025 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
 - Version 0.6.0
 
