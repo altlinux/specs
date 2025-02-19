@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.4.2.0.21.git918a6cd
-Release: alt2
+Release: alt3
 
 Summary: EiskaltDC++ - Direct Connect client
 
@@ -20,6 +20,8 @@ BuildRequires: libssl-devel perl-JSON-RPC perl-Term-ShellUI libminiupnpc-devel
 
 # ALT39859
 %filter_from_requires /^.usr.bin.php$/d
+# ALT53119
+%add_findreq_skiplist %buildroot%_datadir/eiskaltdcpp/examples/*
 
 %description
 EiskaltDC++ is a cross-platform program that uses the Direct Connect and
@@ -179,6 +181,9 @@ otherflags="$(pkg-config libpcre --cflags) $(pkg-config harfbuzz --cflags)"
 %_datadir/%name/cli
 
 %changelog
+* Mon Feb 17 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.2.0.21.git918a6cd-alt3
+- Filtered extra dependencies (Closes: #53119).
+
 * Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.2.0.21.git918a6cd-alt2
 - Fixed FTBFS.
 
