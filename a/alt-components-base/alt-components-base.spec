@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -62,6 +62,10 @@ find ./components -name '*.component' -type f -exec alterator-entry validate {} 
 %_datadir/alterator/components/*
 
 %changelog
+* Wed Feb 19 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.7-alt1
+- The "downloading" category has been renamed to "boot", unnecessary
+  packages have been removed (thx Sergey Savelev)
+
 * Mon Feb 17 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.6-alt1
 - Added categories for file system, disk utilities, archiving, and
   libraries (thx Sergey Savelev)
