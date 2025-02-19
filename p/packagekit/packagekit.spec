@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt1
+Release:   alt1.ge1d11bb
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -312,6 +312,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Wed Feb 19 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt1.ge1d11bb
+- fix segmentation fault (closes: 53144)
+
 * Fri Feb 07 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt1
 - Updated to upstream version 1.3.0
 - Added package changelog output for the given package.
