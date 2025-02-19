@@ -4,7 +4,7 @@
 
 Name: amnezia-vpn
 Version: 4.8.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -28,9 +28,9 @@ Patch2: %name-update-resolv-conf-path.patch
 Patch3: %name-wireguard-exec-path.patch
 Patch4: %name-tun2socks-exec-path.patch
 
-BuildRequires: cmake
 BuildRequires: libsecret-devel
 BuildRequires: libssh-devel
+BuildRequires: libssl-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-remoteobjects-devel
@@ -124,6 +124,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Wed Feb 19 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.2.3-alt1.1
+- Fix FTBFS
+
 * Sat Nov 16 2024 Nazarov Denis <nenderus@altlinux.org> 4.8.2.3-alt1
 - Version 4.8.2.3
 
