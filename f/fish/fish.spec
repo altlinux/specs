@@ -7,7 +7,7 @@
 
 Name: fish
 Version: 3.7.1
-Release: alt1
+Release: alt2
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -19,10 +19,10 @@ URL: http://fishshell.com/
 Source: %name-%version.tar
 
 Requires: man
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-ninja-build
 BuildRequires: libncurses-devel gcc-c++
 BuildRequires: libpcre2-devel >= 10.22
-BuildRequires: cmake
+BuildRequires: cmake ninja-build rpm-build-ninja rpm-build-cmake
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 # for check
 BuildRequires: ctest
@@ -52,11 +52,13 @@ sed -i 's/(\*handle_flag_q)>/(handle_flag_q)*>/' src/builtins/path.cpp
 %endif
 
 %build
-%cmake -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
+%cmake \
+    -GNinja \
+    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 %find_lang %name
 
 rm -f %buildroot%_datadir/fish/completions/docker.fish
@@ -87,6 +89,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Wed Feb 19 2025 Alexey Shabalin <shaba@altlinux.org> 3.7.1-alt2
+- Fix FTBFS. Drop PCRE2_ERROR_BADREPESCAPE test for pcre2-10.45
+
 * Wed Apr 03 2024 Alexey Shabalin <shaba@altlinux.org> 3.7.1-alt1
 - 3.7.1
 
