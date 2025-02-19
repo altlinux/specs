@@ -2,11 +2,11 @@
 
 Name: magnus
 Version: 1.0.3
-Release: alt1
+Release: alt2
 
 Summary: Very simple screen magnifier
 License: MIT
-Group: Graphical desktop/Other
+Group: Accessibility
 URL: https://github.com/stuartlangridge/magnus
 
 BuildArch: noarch
@@ -23,9 +23,12 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %description
-Magnus is a simple screen magnifying glass. It nicely integrates with X11 desktops like MATE or Xfce (probably with others not named here, too).
+Magnus is a simple screen magnifying glass. It nicely integrates with X11
+desktops like MATE or Xfce (probably with others not named here, too).
 
-Visually impaired users may find this tool helpful for zooming into certain screen areas in order to improve readability/visibilty of fonts, icons and other data.
+Visually impaired users may find this tool helpful for zooming into
+certain screen areas in order to improve readability/visibilty of fonts,
+icons and other data.
 
 %prep
 %setup
@@ -48,5 +51,8 @@ rm -vrf %buildroot%python3_sitelibdir/__pycache__
 %_man1dir/%name.1*
 
 %changelog
+* Wed Feb 19 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.3-alt2
+- Moved to correct category - Accessibility (closes: #52616)
+
 * Sun Jan 19 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
