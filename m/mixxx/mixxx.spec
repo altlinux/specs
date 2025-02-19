@@ -8,7 +8,7 @@
 
 Name: mixxx
 Version: 2.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -27,7 +27,7 @@ Requires: libqt6-sql
 BuildPreReq: rpm-build-ninja
 # Automatically added by buildreq on Mon Feb 26 2024
 # optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libalsa-devel libavcodec-devel libavformat-devel libavutil-devel libcairo-gobject libdouble-conversion3 libfftw3-devel libflac-devel libfreetype-devel libgdk-pixbuf libgio-devel libglvnd-devel libgmock-devel libgpg-error liblame-devel libmp4v2-3 libogg-devel libopencore-amrnb0 libopencore-amrwb0 libopus-devel libp11-kit libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml librabbitmq-c4 libsamplerate-devel libsasl2-3 libserd-devel libsord-devel libsqlite3-devel libsratom-devel libssl-devel libstdc++-devel libvorbis-devel libx265-199 libxcb-devel libxcbutil-keysyms-devel libxkbcommon-devel libxkbfile-devel lv2-devel pipewire-jack-libs pipewire-libs pkg-config python3 python3-base python3-dev python3-module-setuptools qt5-base-devel sh5 xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
-BuildRequires: cmake git-core libGLU-devel libavdevice-devel libavfilter-devel libbenchmark-devel libchromaprint-devel libdjinterop-devel = 0.22.1 libebur128-devel libgtest-devel libhidapi-devel libid3tag-devel libkeyfinder-devel libmad-devel libmicrosoft-gsl-devel libmodplug-devel libmp4v2-devel libopusfile-devel libportaudio2-devel libportmidi-devel libprotobuf-devel libqtkeychain-qt6-devel librubberband-devel libshout-idjc-devel libsndfile-devel libsoundtouch-devel libswresample-devel libswscale-devel libtag-devel libupower-devel libusb-devel libwavpack-devel lilv-devel protobuf-compiler qt6-declarative-devel qt6-svg-devel libudev-devel qt6-shadertools-devel qt6-5compat-devel
+BuildRequires: cmake git-core libGLU-devel libavdevice-devel libavfilter-devel libbenchmark-devel libchromaprint-devel libdjinterop-devel = 0.22.1 libebur128-devel libgtest-devel libhidapi-devel libid3tag-devel libkeyfinder-devel libmad-devel libmicrosoft-gsl-devel libmodplug-devel libmp4v2-devel libopusfile-devel libportaudio2-devel libportmidi-devel libprotobuf-devel libqtkeychain-qt6-devel librubberband-devel libshout-idjc-devel libsndfile-devel libsoundtouch-devel libswresample-devel libswscale-devel libtag-devel libupower-devel libusb-devel libwavpack-devel lilv-devel protobuf-compiler qt6-declarative-devel qt6-svg-devel libudev-devel qt6-shadertools-devel qt6-5compat-devel libssl-devel
 %if_enabled clang
 BuildRequires: clang-devel llvm-devel-static
 %else
@@ -51,6 +51,7 @@ Mixxx - это бесплатная, с открытым исходным код
 %setup
 
 %build
+export LC_ALL=C.UTF-8
 %if_enabled clang
 export CC=clang
 export CXX=clang++
@@ -92,6 +93,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Wed Feb 19 2025 Leontiy Volodin <lvol@altlinux.org> 2.5.0-alt1.1
+- Updated BuildRequires.
+
 * Tue Dec 24 2024 Leontiy Volodin <lvol@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 - Added vcs tag.
