@@ -1,6 +1,6 @@
 Name: metalterator
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar.gz
 
@@ -12,8 +12,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Requires: alterator >= 4.8-alt1
 
-# Automatically added by buildreq on Wed Apr 08 2009
-BuildRequires: rpm-macros-alterator rpm-macros-fillup
+BuildRequires: rpm-macros-alterator
 
 %description
 Alterator meta-backend uses a place on the filesystem as a persistent
@@ -54,6 +53,9 @@ install -p -m0755 -D sbin/metalterator-cmdline %buildroot%_sbindir/metalterator-
 %_sbindir/metalterator-cmdline
 
 %changelog
+* Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 1.3-alt2
+- Fixed build (drop rpm-macros-fillup).
+
 * Thu Nov 29 2018 Paul Wolneykien <manowar@altlinux.org> 1.3-alt1
 - Fix: Untie from a particular guile version.
 
