@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
+Version: 2.5.1
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -21,9 +21,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
-# https://github.com/stanislavlevin/pyproject_installer/issues/81
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-mock
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -38,6 +36,9 @@ cat < vendor_cargoconf.toml >> .cargo/config.toml
 cd pyproject-fmt
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 cd pyproject-fmt
@@ -58,6 +59,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 19 2025 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
+- 2.5.0 -> 2.5.1.
+
 * Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
 - 2.4.3 -> 2.5.0.
 
