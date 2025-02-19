@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 4.4.28
+Version: 4.5.0
 Release: alt1
 
 Summary: A realistic password strength estimator
@@ -17,7 +17,7 @@ Source: https://pypi.io/packages/source/z/%pypi_name/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3(wheel) python3(setuptools)
 
 %description
 This is a Python implementation of the library created by the team at
@@ -43,6 +43,9 @@ time.
 %doc README*
 
 %changelog
+* Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
+- 4.5.0
+
 * Wed Jun 28 2023 Yuri N. Sedunov <aris@altlinux.org> 4.4.28-alt1
 - first build for Sisyphus
 
