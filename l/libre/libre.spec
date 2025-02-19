@@ -1,6 +1,6 @@
 %define oname re
 Name: libre
-Version: 3.17.0
+Version: 3.20.0
 Release: alt1
 
 Summary: Generic library for real-time communications with async IO support
@@ -42,7 +42,7 @@ rm -f %buildroot/%_libdir/%name.a
 
 %files
 %doc CHANGELOG.md LICENSE README.md
-%_libdir/%name.so.2*
+%_libdir/%name.so.30*
 
 %files devel
 %_includedir/%oname/
@@ -52,6 +52,9 @@ rm -f %buildroot/%_libdir/%name.a
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 18 2025 Ilya Demyanov <turbid@altlinux.org> 3.20.0-alt1
+- new version 3.20.0
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.17.0-alt1
 - new version 3.17.0 (with rpmrb script)
 

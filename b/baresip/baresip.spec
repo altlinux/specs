@@ -1,5 +1,5 @@
 Name: baresip
-Version: 3.15.0
+Version: 3.20.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -13,7 +13,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 3.15.0
+BuildRequires: libre-devel >= 3.20.0
+
+%add_verify_elf_skiplist %_libdir/%name/modules/*.so
 
 %description
 baresip is a bare-bones SIP user agent. It supports SIP, SDP, RTP/RTCP,
@@ -67,6 +69,45 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the AOMedia Video 1 (AV1) video codec.
+
+%package avcodec
+Summary: AVCodec video codec module for baresip
+Group: Communications
+BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel
+BuildRequires: libavutil-devel libswscale-devel
+Requires: %name = %version-%release
+
+%description avcodec
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module implements H.264 and H.265 video codecs using libavcodec from
+the FFmpeg project.
+
+%package avfilter
+Summary: AVFilter video filter for baresip
+Group: Communications
+BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel
+BuildRequires: libavutil-devel libswscale-devel libswresample-devel
+Requires: %name = %version-%release
+
+%description avfilter
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module allows to dynamically apply complex video filter graphs to
+the outcoming stream using libavfilter from the FFmpeg project.
+
+%package avformat
+Summary: AVFormat video source driver for baresip
+Group: Communications
+BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel
+BuildRequires: libavutil-devel libswscale-devel libswresample-devel
+Requires: %name = %version-%release
+
+%description avformat
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module provides a video source driver using libavformat from the
+FFmpeg project.
 
 %package codec2
 Summary: Codec2 speech codec module for baresip
@@ -180,12 +221,6 @@ Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the Opus speech and audio codec.
 
-%package plc
-Summary: Packet Loss Concealment module for baresip
-Group: Communications
-BuildRequires: libspandsp-devel
-Requires: %name = %version-%release
-
 %package pipewire
 Summary: Pipewire audio driver module for baresip
 Group: Communications
@@ -197,6 +232,17 @@ Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the Pipewire audio driver.
 
+%package plc
+Summary: Packet Loss Concealment module for baresip
+Group: Communications
+BuildRequires: libspandsp-devel
+Requires: %name = %version-%release
+
+%description plc
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module provides the Packet Loss Concealment (PLC) audio-filter using spandsp.
+
 %package portaudio
 Summary: PortAudio audio driver module for baresip
 Group: Communications
@@ -207,11 +253,6 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides the PortAudio audio driver.
-
-%description plc
-Baresip is a portable and modular SIP User-Agent with audio and video support
-
-This module provides the Packet Loss Concealment (PLC) audio-filter using spandsp.
 
 %package pulse
 Summary: PulseAudio audio driver module for baresip
@@ -256,6 +297,19 @@ Requires: %name = %version-%release
 Baresip is a portable and modular SIP User-Agent with audio and video support
 
 This module provides audio filter that writes audio samples to WAV-file.
+
+%package swscale
+Summary: SWScale video filter for baresip
+Group: Communications
+BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel
+BuildRequires: libavutil-devel libswscale-devel libswresample-devel
+Requires: %name = %version-%release
+
+%description swscale
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This module provides a video filter for scaling and pixel conversion
+using libswscale from the FFmpeg project.
 
 %package vp8
 Summary: VP8 video codec module for baresip
@@ -314,13 +368,14 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.17*
+%_libdir/lib%name.so.20*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
 %_libdir/%name/modules/aubridge.so
 %_libdir/%name/modules/auconv.so
 %_libdir/%name/modules/aufile.so
+%_libdir/%name/modules/augain.so
 %_libdir/%name/modules/auresamp.so
 %_libdir/%name/modules/ausine.so
 %_libdir/%name/modules/cons.so
@@ -336,6 +391,7 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/httpd.so
 %_libdir/%name/modules/httpreq.so
 %_libdir/%name/modules/ice.so
+%_libdir/%name/modules/in_band_dtmf.so
 %_libdir/%name/modules/l16.so
 %_libdir/%name/modules/menu.so
 %_libdir/%name/modules/mixausrc.so
@@ -372,6 +428,15 @@ This module provides the X11 video output driver.
 
 %files av1
 %_libdir/%name/modules/av1.so
+	
+%files avcodec
+%_libdir/%name/modules/avcodec.so
+
+%files avfilter
+%_libdir/%name/modules/avfilter.so
+
+%files avformat
+%_libdir/%name/modules/avformat.so
 
 %files codec2
 %_libdir/%name/modules/codec2.so
@@ -390,6 +455,7 @@ This module provides the X11 video output driver.
 
 %files gtk
 %_libdir/%name/modules/gtk.so
+%_desktopdir/com.github.baresip.desktop
 
 %files jack
 %_libdir/%name/modules/jack.so
@@ -425,6 +491,9 @@ This module provides the X11 video output driver.
 %files sndfile
 %_libdir/%name/modules/sndfile.so
 
+%files swscale
+%_libdir/%name/modules/swscale.so
+
 %files vp8
 %_libdir/%name/modules/vp8.so
 
@@ -438,6 +507,11 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Tue Feb 18 2025 Ilya Demyanov <turbid@altlinux.org> 3.20.0-alt1
+- new version 3.20.0
+- add the avcodec, avfilter, avformat and swscale subpackages
+- add desktop file
+
 * Tue Sep 10 2024 Ilya Demyanov <turbid@altlinux.org> 3.15.0-alt1
 - new version 3.15.0
 
