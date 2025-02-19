@@ -1,5 +1,5 @@
 Name: texworks
-Version: 0.6.9
+Version: 0.6.10
 Release: alt1
 
 Summary: A simple IDE for authoring TeX documents
@@ -20,7 +20,7 @@ Source0: %name-%version.tar
 Source1: texworks-alt-icons.tar
 Source2: TeXworks-manual-en.pdf
 
-Patch1: %name-0.6.7-desktop.patch
+Patch1: %name-0.6.10-desktop.patch
 
 %description
 TeXworks is an environment for authoring TeX (LaTeX, ConTeXt, etc)
@@ -69,7 +69,7 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 
 %files
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/org.tug.%name.desktop
 %_miconsdir/*
 %_niconsdir/*
 %_liconsdir/*
@@ -85,6 +85,9 @@ install -m 644 -D %SOURCE2 %buildroot/%_docdir/%name
 %_docdir/%name/TeXworks-manual-en.pdf
 
 %changelog
+* Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 0.6.10-alt1
+- Automatically updated to 0.6.10.
+
 * Tue Apr 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.6.9-alt1
 - Automatically updated to 0.6.9.
 
