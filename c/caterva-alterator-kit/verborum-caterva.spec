@@ -1,6 +1,6 @@
 Name: caterva-alterator-kit
 Version: 2.0
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar.gz
 
@@ -11,8 +11,7 @@ License: GPL
 Group: System/Base
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Apr 09 2009
-BuildRequires: rpm-macros-alterator rpm-macros-fillup
+BuildRequires: rpm-macros-alterator
 
 %description
 Verborum Caterva is a simple engine for arbitrary file structure
@@ -41,6 +40,9 @@ install -p -m0755 -D caterva-alterator.sh %buildroot%_bindir/caterva-alterator.s
 %_bindir/caterva-alterator.sh
 
 %changelog
+* Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.0-alt3
+- Fixed build (drop rpm-macros-fillup).
+
 * Fri Nov 30 2018 Paul Wolneykien <manowar@altlinux.org> 2.0-alt2
 - Fix: Remove the alterator v5.0 conflict.
 
