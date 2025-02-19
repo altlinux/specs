@@ -1,16 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: xmag
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 
 Summary: magnify parts of the screen
 License: MIT/X11
-Group: System/X11
+Group: Accessibility
 
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
-Packager: Fr. Br. George <george@altlinux.ru>
-# Automatically added by buildreq on Thu Apr 14 2011
-# optimized out: libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel pkg-config xorg-xproto-devel
+
 BuildRequires: libXaw-devel
 
 BuildRequires: libXaw-devel libX11-devel pkg-config xorg-proto-devel xorg-util-macros
@@ -47,6 +47,9 @@ sed -i 's/(XMAG_LIBS) -lm$/(XMAG_LIBS) -lm -lXmu/' Makefile.am
 %_sysconfdir/X11/app-defaults/*
 
 %changelog
+* Tue Jan 21 2025 Artem Semenov <savoptik@altlinux.org> 1.0.8-alt1
+- Update to new version 1.0.8 (Closes: #52613)
+
 * Sun Apr 19 2015 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
