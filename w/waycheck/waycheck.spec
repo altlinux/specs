@@ -1,5 +1,5 @@
-%define ver_major 1.5
-%define git_commit c41915bbbf9c5716c62f975ba379a968fa386ae2
+%define ver_major 1.6
+%define git_commit d9394aa4b332311c291e73eba5a6e26dc064b7a2
 %define _name waycheck
 %define __name Waycheck
 %define rdn_name dev.serebit.%__name
@@ -56,6 +56,9 @@ you still need to implement.
 %doc README.md
 
 %changelog
+* Wed Feb 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - first build for Sisyphus
 
