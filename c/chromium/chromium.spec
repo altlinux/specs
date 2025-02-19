@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        133.0.6943.98
+Version:        133.0.6943.126
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -100,6 +100,8 @@ Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
 
 Patch062: 0062-DEBIAN-cacheline.patch
 Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
+# trying to fix issues with YT playback:
+Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 
 ### End Patches
 
@@ -410,7 +412,6 @@ gn_arg+=( enable_vulkan=true )
 %endif
 gn_arg+=( use_system_jsoncpp=false )
 gn_arg+=( use_system_woff2=false )
-gn_arg+=( use_bundled_woff2=true )
 gn_arg+=( use_system_snappy=false )
 gn_arg+=( use_system_libtiff=false )
 gn_arg+=( safe_browsing_use_unrar=false )
@@ -564,6 +565,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Feb 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 133.0.6943.126-alt1
+- New version (133.0.6943.126).
+- Security fixes:
+  + CVE-2025-0999: Heap buffer overflow in V8
+  + CVE-2025-1426: Heap buffer overflow in GPU
+  + CVE-2025-1006: Use after free in Network
+
 * Thu Feb 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 133.0.6943.98-alt1
 - New version (133.0.6943.98).
 - Security fixes:
