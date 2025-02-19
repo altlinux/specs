@@ -5,16 +5,16 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: radvd
-Version: 2.19
-Release: alt2.gf2de476
+Version: 2.20
+Release: alt1
 
 Summary: A Router Advertisement daemon
 # The code includes the advertising clause, so it's GPL-incompatible
 License: ALT-RADVD
 Group: System/Servers
 
-Url: https://www.litech.org/radvd/
-Vcs: https://github.com/reubenhwk/radvd.git
+Url: https://radvd.litech.org/
+Vcs: https://github.com/radvd-project/radvd.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
@@ -91,6 +91,11 @@ install -m 644 %SOURCE4 %buildroot%_sysconfdir/radvd.conf
 %_sbindir/radvdump
 
 %changelog
+* Wed Feb 19 2025 Mikhail Efremov <sem@altlinux.org> 2.20-alt1
+- Updated Vcs tag.
+- Updated Url tag.
+- Updated to 2.20.
+
 * Wed Aug 28 2024 Mikhail Efremov <sem@altlinux.org> 2.19-alt2.gf2de476
 - Updated Url tag.
 - Updated Vcs tag.
