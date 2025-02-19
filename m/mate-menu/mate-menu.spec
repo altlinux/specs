@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 22.04.2
-Release: alt9
+Release: alt10
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -37,6 +37,7 @@ Patch6: fix-version.patch
 Patch7: alt-category-without-icon.patch
 Patch8: alt-set-menubutton-tooltip-as-label.patch
 Patch9: alt-fix-memory-leak-applications.patch
+Patch10: alt-fix-tooltips-and-make-them-optional.patch
 
 %description
 This is MATE Menu, a fork of MintMenu. An advanced menu for MATE.
@@ -66,6 +67,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Wed Feb 12 2025 Maria Alexeeva <alxvmr@altlinux.org> 22.04.2-alt10
+- Fix tooltips
+
 * Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt9
 - Added requirements of python3-module-pygobject3.
 
