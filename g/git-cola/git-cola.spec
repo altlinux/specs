@@ -1,13 +1,6 @@
-# wait for tox 4
-%if "%(rpmquery --qf '%%{VERSION}' python3-module-tox)" < "4"
-%def_disable check
-%else
-%def_enable check
-%endif
-
 Name: git-cola
 Version: 4.11.0
-Release: alt1
+Release: alt2
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -20,9 +13,6 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-%if_enabled check
-BuildRequires: python3-module-pytest python3-module-tox-pip-version python3-module-GitPython python3-module-polib
-%endif
 BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel python3-module-qtpy python3-module-PyQt5 rsync
 # hasher tests:
 Requires: python3-module-pyinotify python3-module-PyQt5 git-core
@@ -85,11 +75,6 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 
 %find_lang %name
 
-%if_enabled check
-%check
-%tox_check_pyproject
-%endif
-
 %files -f %name.lang
 %doc CHANGES.rst CONTRIBUTING.md LICENSE README.md
 %_bindir/*
@@ -107,6 +92,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Wed Feb 19 2025 Leontiy Volodin <lvol@altlinux.org> 4.11.0-alt2
+- Disabled check (need a network).
+
 * Tue Jan 28 2025 Anton Meleshnikov <alton@altlinux.org> 4.11.0-alt1
 - New version 4.11.0.
 
