@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-arcmenu
 Version: 64
-Release: alt3
+Release: alt4
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -42,6 +42,10 @@ shortcuts, and much more!
 %doc README.md
 
 %changelog
+* Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 64-alt4
+- iconGrid.js: Don't throw an error when the icon has already been added before
+  (Closes: 53135)
+
 * Fri Feb 14 2025 Anton Midyukov <antohami@altlinux.org> 64-alt3
 - add dependency on libgnome-menus-gir (Closes: 53075)
 
