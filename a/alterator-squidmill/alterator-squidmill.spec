@@ -2,7 +2,7 @@
 
 Name: alterator-squidmill
 Version: 2.4
-Release: alt1
+Release: alt2
 
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
@@ -18,8 +18,7 @@ Requires: alterator-fbi >= 5.11-alt2
 Requires: squidmill >= 2.4-alt1
 Requires: alterator-service-functions >= 2.0.2
 
-# Automatically added by buildreq on Wed Apr 08 2009
-BuildRequires: alterator rpm-macros-fillup
+BuildRequires: alterator
 
 %description
 Alterator module for browsing the Squid proxy server statistics
@@ -39,6 +38,9 @@ Alterator module for browsing the Squid proxy server statistics
 %_alterator_backend3dir/squidmill
 
 %changelog
+* Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.4-alt2
+- Fixed build (drop rpm-macros-fillup).
+
 * Wed Dec 25 2013 Paul Wolneykien <manowar@altlinux.org> 2.4-alt1
 - Display `squidmill` command error message (last line) if any.
 - Make the initial backend query async.
