@@ -8,7 +8,7 @@
 
 Name: dhcpcd
 Epoch: 1
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 
 Summary: DHCP Client
@@ -41,8 +41,6 @@ which it is running. It also tries to renew the lease time according to RFC2131.
 %patch0 -p1
 
 %build
-%add_optflags -fpie
-export LDFLAGS=-pie
 %configure \
         --sbindir=/sbin \
 		--runstatedir=/run \
@@ -104,6 +102,9 @@ fi
 %exclude %_datadir/%name/
 
 %changelog
+* Wed Feb 19 2025 Mikhail Efremov <sem@altlinux.org> 1:10.2.0-alt1
+- Updated to 10.2.0.
+
 * Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 1:10.1.0-alt1
 - Updated to 10.1.0.
 
