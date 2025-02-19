@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.2
+Version: 4.2.3
 Release: alt1
 
 Summary: Fixtures, reusable state for writing clean tests and more
@@ -20,7 +20,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %if_with check
 BuildRequires: python3-module-testtools
@@ -37,7 +38,7 @@ contract in unittest compatible test cases easy and straight forward.
 %setup
 
 %build
-export PBR_VERSION=%version
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -52,6 +53,9 @@ export PBR_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.3-alt1
+- Automatically updated to 4.2.3.
+
 * Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 4.2.2-alt1
 - Automatically updated to 4.2.2.
 
