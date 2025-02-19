@@ -9,7 +9,7 @@
 
 Name: NetworkManager-sstp
 Version: 1.3.2
-Release: alt1
+Release: alt2
 
 Summary:  NetworkManager VPN plugin for SSTP
 License: GPLv2+
@@ -71,6 +71,7 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %configure \
     --disable-static \
     --disable-silent-rules \
+    --with-system-ca-path="/etc/pki/tls/certs" \
     --libexecdir=%_libexecdir/NetworkManager \
     --localstatedir=%_var \
     --with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
@@ -111,6 +112,9 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %endif
 
 %changelog
+* Wed Feb 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt2
+- Update system CA path
+
 * Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 1.3.2-alt1
 - 1.3.2
 

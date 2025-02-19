@@ -2,7 +2,7 @@
 
 Name: sstp-client
 Version: 1.0.20
-Release: alt1
+Release: alt2
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
 License: GPL-2.0-or-later
@@ -51,8 +51,10 @@ This package is required to compile plugin's for sstp-client.
 %configure \
     --disable-static \
     --with-libevent=2 \
+    --enable-user=sstpc \
+    --enable-group=sstpc \
     --with-pppd-auth-notify-support \
-    --with-system-ca-path="/var/lib/ssl/certs" \
+    --with-system-ca-path="/etc/pki/tls/certs" \
     --with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
     --with-runtime-dir="/run/sstpc"
 %make_build
@@ -89,6 +91,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Feb 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.0.20-alt2
+- Fix path to system CA path.
+
 * Wed Sep 04 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.20-alt1
 - New version 1.0.20.
 
