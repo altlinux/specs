@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2025.1.10
+Version: 2025.2.18
 Release: alt1
 
 Summary: Read and write TIFF(r) files
@@ -82,6 +82,9 @@ export SKIP_HTTP=1
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 2025.2.18-alt1
+- Automatically updated to 2025.2.18.
+
 * Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2025.1.10-alt1
 - Automatically updated to 2025.1.10.
 
