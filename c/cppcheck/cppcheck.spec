@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.16.1
-Release: alt2
+Version: 2.16.2
+Release: alt1_1_1f61c2e8d
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -19,7 +19,7 @@ Source: %name-%version.tar
 Patch2: cppcheck-1.78-norebuild.patch
 Patch4: cppcheck-2.16-test_32.patch
 Patch8: cppcheck-2.2-translations.patch
-Patch10: cppcheck-2.8-kate.patch
+Patch10: cppcheck-2.16.2-kate.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
@@ -146,6 +146,10 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Feb 18 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2.16.2-alt1_1_1f61c2e8d
+- Version 2.16.2
+- Build from commit 1f61c2e8d
+
 * Sun Dec 08 2024 Hihin Ruslan <ruslandh@altlinux.ru> 2.16.1-alt2
 - Add help files
 
