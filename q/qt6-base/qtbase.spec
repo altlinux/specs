@@ -34,7 +34,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.8.2
-Release: alt2
+Release: alt3
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -69,6 +69,8 @@ Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
 Patch1006: alt-singleclick.patch
+# QTBUG
+Patch1100: cups-filters-landscape.patch
 #
 Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
@@ -130,6 +132,7 @@ Requires: %name-common
 Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
 Requires: gcc-c++ cmake ninja-build
+Requires: libssl-devel
 %description devel
 %summary.
 
@@ -396,6 +399,8 @@ OpenGL widgets library for the Qt%major toolkit
 %patch1005 -p1
 %endif
 %patch1006 -p1
+#
+%patch1100 -p1
 #
 %patch2000 -p1
 
@@ -839,6 +844,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt3
+- fix new cups-printers landscape printing
+
 * Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
 - set single-click by default for KDE
 
