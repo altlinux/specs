@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.7
+Version: 1.16.8
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,9 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 1.16.8-alt1
+- Add preinstall.d/05-set_active.sh (Closes: 53151)
+
 * Tue Feb 18 2025 Anton Midyukov <antohami@altlinux.org> 1.16.7-alt1
 - Add systemd units for boot with systemd.unit=install2.target
 - initinstall.d/10-vt.sh: do not run script, when run X or Wayland only
