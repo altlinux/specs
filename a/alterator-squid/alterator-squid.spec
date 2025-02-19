@@ -1,6 +1,6 @@
 Name: alterator-squid
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -23,8 +23,7 @@ Requires: alterator-service-functions >= 2.0.0-alt1
 
 BuildRequires(Pre): rpm-macros-alterator
 
-# Automatically added by buildreq on Wed Apr 08 2009
-BuildRequires: alterator rpm-macros-fillup
+BuildRequires: alterator
 
 %description
 Alterator module for Squid proxy server configuration
@@ -60,6 +59,9 @@ fi
 subst 's/squid_kerb_auth/negotiate_kerberos_auth/;s/pam_auth/basic_pam_auth/;s/squid_ldap_group/ext_ldap_group_acl/' /etc/squid/squid.conf
 
 %changelog
+* Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 1.4.5-alt2
+- Fixed build (drop rpm-macros-fillup).
+
 * Fri Jun 28 2013 Paul Wolneykien <manowar@altlinux.org> 1.4.5-alt1
 - Check both the 'enabled' and the 'active' status values of the
   service.
