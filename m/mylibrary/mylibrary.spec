@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    mylibrary
-Version: 3.1.1
+Version: 3.2
 Release: alt1
 
 Summary: Home librarian
@@ -53,8 +53,11 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %dir %{_datadir}/MyLibrary/
 %{_datadir}/MyLibrary/*
 %{_datadir}/applications/ru.mail.bobilev_yury.MyLibrary.desktop
-%{_datadir}/icons/hicolor/256x256/apps/mylibrary.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.*
 
 %changelog
+* Wed Feb 19 2025 Nikolay Strelkov <snk@altlinux.org> 3.2-alt1
+- New version 3.2.
+
 * Tue Feb 04 2025 Nikolay Strelkov <snk@altlinux.org> 3.1.1-alt1
 - Initial build for Sisyphus
