@@ -4,7 +4,7 @@
 
 Name: calligra
 Version: 4.0.1
-Release: alt1
+Release: alt2
 #Epoch: 0
 %K6init no_altplace
 %define libname lib%name
@@ -35,7 +35,7 @@ Patch103: alt-disable-products.patch
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: kf6-attica-devel boost-devel eigen3 glib2-devel rpm-build-python3
 BuildRequires: extra-cmake-modules
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libssl-devel libcups-devel
 BuildRequires: qt6-svg-devel qt6-declarative-devel
 %ifarch %qt6_qtwebengine_arches
 BuildRequires: qt6-webengine-devel
@@ -397,6 +397,9 @@ done
 %exclude %_K6lib/libkookularGenerator_odt.so*
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.1-alt2
+- update build requires
+
 * Tue Nov 26 2024 Sergey V Turchin <zerg@altlinux.org> 4.0.1-alt1
 - new version
 
