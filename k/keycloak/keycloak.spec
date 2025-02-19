@@ -1,6 +1,6 @@
 Name:    keycloak
 Version: 26.1.2
-Release: alt1
+Release: alt2
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -59,6 +59,7 @@ install -Dpm 0644 %SOURCE4 %buildroot%_unitdir/keycloak.service
 %preun_service keycloak
 
 %post
+test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf/keycloak.conf /etc/keycloak/keycloak.conf
 /usr/bin/kc.sh build &>/dev/null ||:
 %post_service keycloak
 
@@ -74,6 +75,10 @@ install -Dpm 0644 %SOURCE4 %buildroot%_unitdir/keycloak.service
 %_libexecdir/%name
 
 %changelog
+* Wed Feb 19 2025 Andrey Cherepanov <cas@altlinux.org> 26.1.2-alt2
+- (%%post) Copy configuration files from /usr/share/keycloak/conf.
+- Mention CVE-2024-7260, fixed in 24.0.7.
+
 * Tue Feb 11 2025 Andrey Cherepanov <cas@altlinux.org> 26.1.2-alt1
 - New version.
 - Security fixes:
