@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 91
-Release: alt2
+Version: 92
+Release: alt1
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -20,6 +20,7 @@ Requires: nautilus >= 3.38.0
 Requires: file-roller >= 3.38.0
 # https://bugzilla.altlinux.org/53044
 Requires: libpoppler-gir
+Requires: libgnome-autoar-gir
 BuildRequires: %_bindir/glib-compile-schemas
 BuildRequires: meson
 
@@ -66,9 +67,13 @@ rm -r %buildroot%_sysconfdir/apparmor.d
 %files -f gtk4-ding.lang
 %_datadir/gnome-shell/extensions/gtk4-ding@smedius.gitlab.com
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.gtk4-ding.gschema.xml
-%doc README.md
+%doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 92-alt1
+- New version 92
+- Add dependency on libgnome-autoar-gir
+
 * Wed Feb 12 2025 Anton Midyukov <antohami@altlinux.org> 91-alt2
 - Add dependency on libpoppler-gir (Closes: 53044)
 
