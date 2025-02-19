@@ -10,7 +10,7 @@
 
 Name: ppp
 Version: 2.5.2
-Release: alt1
+Release: alt2
 
 Summary: The PPP daemon and documentation
 License: BSD-3-Clause AND LGPL-2.1-or-later AND GPL-2.0-or-later
@@ -107,7 +107,7 @@ sed -i -e "s|/etc/radiusclient|/etc/ppp/radius|g" \
     --localstatedir=%_var \
     --with-runtime-dir=/run/%name \
     --with-logfile-dir=%_logdir/%name \
-    --with-system-ca-path=/var/lib/ssl/certs \
+    --with-system-ca-path="/etc/pki/tls/certs" \
     %{subst_with atm} \
     %{subst_with pam} \
     %{subst_with pcap} \
@@ -201,6 +201,9 @@ install -pDm644 %SOURCE5 %buildroot%_sysconfdir/logrotate.d/%name
 %config(noreplace) %_sysconfdir/%name/radius/
 
 %changelog
+* Wed Feb 19 2025 Alexey Shabalin <shaba@altlinux.org> 2.5.2-alt2
+- Fix system CA path.
+
 * Sun Jan 05 2025 Alexey Shabalin <shaba@altlinux.org> 2.5.2-alt1
 - 2.5.2.
 
