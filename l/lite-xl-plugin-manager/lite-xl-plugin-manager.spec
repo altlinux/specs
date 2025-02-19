@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lite-xl-plugin-manager
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: A lite-xl plugin manager
@@ -15,6 +15,11 @@ ExcludeArch: ppc64le
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+# Lua autoreq generates bad dependencies.
+# While it is broken, it should be disabled.
+AutoReq: nolua
+Requires: lite-xl
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -42,17 +47,22 @@ Conforms to SCPS3.
 %autopatch -p1
 
 %build
-%meson -Dstatic=true -Dversion="%version"
+%meson -Dstatic=true -Dversion="%version" -Dinstall_plugin=true
 %meson_build
 
 %install
-%__install -pD -m0755 %_target_platform/lpm %buildroot%_bindir/lpm
+%meson_install
 
 %files
 %doc CHANGELOG.md LICENSE README.md
 %_bindir/lpm
+%_datadir/lite-xl/plugins/welcome.lua
+%_datadir/lite-xl/plugins/plugin_manager/
 
 %changelog
+* Wed Feb 19 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Mon Dec 09 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1.
 
