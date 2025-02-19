@@ -1,73 +1,50 @@
 %define oname TurboGears2
 
 Name: python3-module-%oname
-Version: 2.4.3
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
-Summary: Back-to-front web development in Python
+Summary: Next generation TurboGears
 
 License: MIT
 Group: Development/Python
-Url: http://www.turbogears.org
+Url: https://pypi.org/project/TurboGears2
+Vcs: https://github.com/TurboGears/tg2
 
-#BuildPreReq: python-module-distribute
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools rpm-build-python3 time
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Source: %name-%version.tar
 
-# not need for python3
-%add_python3_req_skip tgming.auth
-
 %description
-TurboGears brings together four major pieces to create an
-easy to install, easy to use web megaframework. It covers
-everything from front end (MochiKit JavaScript for the browser,
-Kid for templates in Python) to the controllers (CherryPy) to
-the back end (SQLObject).
+TurboGears is a hybrid web framework able to act both as a Full Stack framework
+or as a Microframework. TurboGears helps you get going fast and gets out of your
+way when you want it!
 
-The TurboGears project is focused on providing documentation
-and integration with these tools without losing touch
-with the communities that already exist around those tools.
-
-TurboGears is easy to use for a wide range of web applications.
-
-%package -n python3-module-%oname-tests
-Summary: Tests for TurboGears (Python 3)
-Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
-
-%description -n python3-module-%oname-tests
-TurboGears brings together four major pieces to create an
-easy to install, easy to use web megaframework. It covers
-everything from front end (MochiKit JavaScript for the browser,
-Kid for templates in Python) to the controllers (CherryPy) to
-the back end (SQLObject).
-
-The TurboGears project is focused on providing documentation
-and integration with these tools without losing touch
-with the communities that already exist around those tools.
-
-TurboGears is easy to use for a wide range of web applications.
-
-This package contains tests for TurboGears.
+TurboGears can be used both as a full stack framework or as a microframework in
+single file mode.
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.txt *.rst
-%python3_sitelibdir/*
+%doc README.*
+%python3_sitelibdir/tg
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 19 2025 Anton Vyatkin <toni@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Tue Apr 11 2023 Anton Vyatkin <toni@altlinux.org> 2.4.3-alt2
 - Fix requirement
 
