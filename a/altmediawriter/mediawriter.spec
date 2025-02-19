@@ -2,8 +2,8 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.5
-Release:        alt2.1
+Version:        1.0.6
+Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
 Packager:       Maria Alexeeva <alxvmr@altlinux.org>
@@ -58,6 +58,10 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Tue Feb 11 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.6-alt1
+- Fix error message display (corrected encoding) in Windows
+- Closes: #52045
+
 * Fri Oct 25 2024 Ivan A. Melnikov <iv@altlinux.org> 1.0.5-alt2.1
 - NMU: Trimmed build dependencies (thx asheplyakov@).
 
