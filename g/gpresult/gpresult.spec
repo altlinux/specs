@@ -7,7 +7,7 @@
 %add_python3_req_skip gpresult.Preferences.Preferences.Shortcut
 
 Name: gpresult
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Display applied policies
@@ -46,6 +46,11 @@ install -Dm0644 completions/%name %buildroot/%_datadir/bash-completion/completio
 %exclude %python3_sitelibdir/%name/locales/ru_RU/LC_MESSAGES/*.po
 
 %changelog
+* Fri Jan 31 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.4-alt1
+- Added translations for argparse and fixed typos (Closes: #52282)
+- Removed repetitions when using the -l and -lr options (Closes: #52878)
+- Added --width key to bash completions
+
 * Tue Dec 10 2024 Maria Alexeeva <alxvmr@altlinux.org> 0.0.3-alt1
 - Added output about previous key values
 - Added --previous key
