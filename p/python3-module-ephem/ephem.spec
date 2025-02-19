@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.6
+Version: 4.2
 Release: alt1
 
 Summary: Compute positions of the planets and stars
@@ -53,6 +53,9 @@ sed -i '1{/env python/d}' ephem/tests/test_*.py
 %exclude %python3_sitelibdir/%pypi_name/tests
 
 %changelog
+* Wed Feb 19 2025 Grigory Ustinov <grenka@altlinux.org> 4.2-alt1
+- Automatically updated to 4.2.
+
 * Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.6-alt1
 - Build new version.
 
