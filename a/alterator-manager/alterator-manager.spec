@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.27
-Release: alt2
+Release: alt3
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -13,6 +13,7 @@ BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
 
 Requires: remote-polkit-agent >= 0.1.2-alt1
 Requires: libtomlc99 >= 1.0
+Requires: polkit
 
 Source: %name-%version.tar
 
@@ -85,6 +86,9 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 
 %changelog
+* Wed Feb 19 2025 Ivan Savin <svn17@altlinux.org> 0.1.27-alt3
+- Add polkit to requires.
+
 * Fri Feb 07 2025 Ivan Savin <svn17@altlinux.org> 0.1.27-alt2
 - Update docs/README-ru.md.
 
