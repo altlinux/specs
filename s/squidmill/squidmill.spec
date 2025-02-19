@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.6.1
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -14,7 +14,7 @@ BuildRequires: gambit-devel
 BuildRequires: gambit-sqlite3-devel >= 1.2-alt7
 BuildRequires: gambit-signal-devel >= 1.1-alt1
 BuildRequires: gambit-dsock-devel >= 1.1-alt1
-BuildRequires: rpm-macros-fillup sqlite3 %_bindir/dc gawk
+BuildRequires: sqlite3 %_bindir/dc gawk
 
 Requires: gambit-sqlite3 >= 1.2-alt7
 Requires: gambit-signal >= 1.1-alt1
@@ -54,6 +54,9 @@ echo "d /run/squidmill squid squid 775" >   %buildroot/%_tmpfilesdir/squidmill.c
 %attr(0775, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.1-alt3
+- Fixed build (drop rpm-macros-fillup).
+
 * Thu Jan 09 2025 Paul Wolneykien <manowar@altlinux.org> 2.6.1-alt2
 - Build with the standard %%optflags.
 - Honor CFLAGS for compilation.
