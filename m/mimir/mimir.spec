@@ -3,7 +3,7 @@
 
 Name: mimir
 Version: 2.15.0
-Release: alt2
+Release: alt3
 
 Summary: Grafana Mimir is an open source software project that provides a scalable long-term storage for Prometheus
 License: AGPL-3.0-only
@@ -12,6 +12,7 @@ Url: https://grafana.com/oss/mimir/
 Vcs: https://github.com/grafana/mimir.git
 
 Source: https://grafana.com/oss/mimir/archive/%name-%version/%name-%version.tar.gz
+Patch: mimir-2.15.0-alt-systemd.patch
 
 ExcludeArch: i586 armh
 BuildRequires(pre): rpm-macros-golang
@@ -53,6 +54,7 @@ metaconvert.
 
 %prep
 %setup
+%patch -p1
 
 sed -i '/^ExecStart/ s|/usr/local/bin/|/usr/bin/|' packaging/nfpm/mimir/%name.service
 
@@ -75,7 +77,16 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
+#install config files
+install -Dm644 packaging/nfpm/%name/runtime_config.yml %buildroot%_sysconfdir/%name/runtime_config.yml
+install -Dm644 packaging/nfpm/%name/config.yml %buildroot%_sysconfdir/%name/config.yml
+
+#install servise files
 install -Dm644 packaging/nfpm/%name/%name.service %buildroot%_unitdir/%name.service
+install -Dm644 packaging/nfpm/%name/%name.env %buildroot%_sysconfdir/sysconfig/%name
+
+install -dm770 %buildroot%_sharedstatedir/%name
+install -dm770 %buildroot%_sharedstatedir/%name/data
 
 %pre
 groupadd -r -f %name > /dev/null 2>&1 ||:
@@ -91,7 +102,11 @@ usermod -a -G proc %name ||:
 %files
 %doc README.md SECURITY.md CONTRIBUTING.md
 %_bindir/mimir
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/%name/*
 %_unitdir/%name.service
+%dir %attr(0770, %name, %name) %_sharedstatedir/%name
+%dir %attr(0770, %name, %name) %_sharedstatedir/%name/data
 
 %files query-tee
 %doc README.md SECURITY.md CONTRIBUTING.md
@@ -110,6 +125,9 @@ usermod -a -G proc %name ||:
 %_bindir/metaconvert
 
 %changelog
+* Wed Feb 19 2025 Anton Meleshnikov <alton@altlinux.org> 2.15.0-alt3
+- Added environment variables for systemd and config files (ALT #53125).
+
 * Fri Feb 14 2025 Anton Meleshnikov <alton@altlinux.org> 2.15.0-alt2
 - Added service and mimir group.
 
