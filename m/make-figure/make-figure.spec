@@ -1,6 +1,6 @@
 Name: make-figure
 Version: 1.1
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar.gz
 
@@ -10,9 +10,6 @@ Summary: Prepare a figure for document layout
 License: GPLv3
 Group: Publishing
 BuildArch: noarch
-
-# Automatically added by buildreq on Thu Apr 09 2009
-BuildRequires: rpm-macros-fillup
 
 Requires: ImageMagick
 Requires: inkscape >= 0.48
@@ -81,6 +78,9 @@ cp -Rpv doc/examples %buildroot%_docdir/%name-%version/
 %_docdir/%name-%version/examples/plot-test.tex
 
 %changelog
+* Wed Feb 19 2025 Paul Wolneykien <manowar@altlinux.org> 1.1-alt3
+- Fixed build (drop rpm-macros-fillup).
+
 * Fri Nov 18 2011 Paul Wolneykien <manowar@altlinux.ru> 1.1-alt2
 - Do not require octave-signal.
 
