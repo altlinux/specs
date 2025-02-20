@@ -2,7 +2,7 @@
 
 Name: zip
 Version: 3.0
-Release: alt3
+Release: alt4
 
 Epoch: 30000000
 
@@ -25,6 +25,17 @@ Patch6: zip-3.0-currdir.patch
 # Not upstreamed.
 Patch7: zip-3.0-time.patch
 
+Patch8: debian-fix-build-with-gcc-14.patch
+Patch9: debian-manpages-in-section-1-not-in-section-1l.patch
+Patch10: debian-typo-it-is-ambiguities-not-amgibuities.patch
+Patch11: debian-typo-it-is-preceding-not-preceeding.patch
+Patch12: debian-typo-it-is-transferring-not-transfering.patch
+Patch13: fedora-buffer_overflow.patch
+Patch14: fedora-man.patch
+Patch15: fedora-zip-3.0-format-security.patch
+Patch16: fedora-zip-3.0-man-strip-extra.patch
+Patch17: fedora-zip-gnu89-build.patch
+Patch18: fedora-zipnote.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -63,6 +74,17 @@ subst \
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 %ifarch %ix86
 sed -i 's/-o zip$E/-no-pie &/' unix/Makefile
@@ -87,6 +109,10 @@ make -f unix/Makefile prefix=$RPM_BUILD_ROOT%{_prefix} \
 %_man1dir/*
 
 %changelog
+* Thu Feb 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 30000000:3.0-alt4
+- fix FTBFS with gcc14
+- dozen patches from Debian and Fedora
+
 * Thu Apr 22 2021 Slava Aseev <ptrnine@altlinux.org> 30000000:3.0-alt3
 - Use -no-pie on ix86 only
 
