@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Installer configuration (Virtualization PVE)
 License: GPLv2
@@ -28,7 +28,7 @@ Requires: installer-stage2
 Requires: alterator-sysconfig
 Requires: alterator-datetime
 Requires: alterator-pkg
-Requires: alterator-vm
+Requires: alterator-blivet
 Requires: alterator-notes
 
 %description stage2
@@ -74,6 +74,11 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jan 29 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.2
+- Usage of 'tuned' daemon for better system settings fitting
+- New volume managment module
+- preinstall script for PVE cluster FS creation
+
 * Wed Nov 20 2024 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt0.1
 - Initial build, based on installer-distro-alt-server-v.
 
