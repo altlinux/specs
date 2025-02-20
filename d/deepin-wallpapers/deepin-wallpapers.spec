@@ -1,12 +1,13 @@
 Name: deepin-wallpapers
-Version: 1.7.16.0.1.354b
-Release: alt2
+Version: 1.7.18
+Release: alt1
 
 Summary: Deepin Wallpapers provides wallpapers of DDE
 
 License: CC-BY-4.0
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-wallpapers
+Vcs: https://github.com/linuxdeepin/deepin-wallpapers.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 BuildArch: noarch
@@ -45,7 +46,7 @@ if [ $1 -ge 1 ]; then
     mv /usr/share/wallpapers/deepin/Deepin-Technology-Brand-Logo.jpg /usr/share/wallpapers/deepin/desktop.jpg
     mkdir -p /usr/share/backgrounds/
     %_sbindir/update-alternatives --install /usr/share/backgrounds/deepin-default.jpg \
-    deepin-default-background /usr/share/wallpapers/deepin/desktop.jpg 50
+    deepin-default-background /usr/share/wallpapers/deepin/nirvana-wallpaper-light.jpg 51
 fi
 
 %postun
@@ -62,6 +63,10 @@ fi
 %_cachedir/image-blur/*.jpg
 
 %changelog
+* Thu Feb 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.7.18-alt1
+- New version 1.7.18.
+- Added vcs tag.
+
 * Fri Sep 06 2024 Leontiy Volodin <lvol@altlinux.org> 1.7.16.0.1.354b-alt2
 - Adapted for deepin-daemon 6.0.45.
 
