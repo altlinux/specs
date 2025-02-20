@@ -7,8 +7,8 @@
 %def_enable lua
 
 Name: haproxy
-Version: 3.0.7
-Release: alt2
+Version: 3.0.8
+Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -101,6 +101,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Thu Feb 20 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.8-alt1
+- 3.0.8
+
 * Mon Jan 27 2025 Alexey Shabalin <shaba@altlinux.org> 3.0.7-alt2
 - Fixed start systemd unit (ALT#52808).
 - Enable QUIC support.
