@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-kopidel
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: Creating a bootable iso that copies the file system
@@ -66,8 +66,12 @@ it on other machines, then you have found what you were looking for!
 %_sbindir/kopidel
 %_sysconfdir/bash_completion.d/alterator-kopidel
 %_libexecdir/alterator-kopidel/
+%_localstatedir/alterator-kopidel/
 
 %changelog
+* Wed Feb 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.0.4-alt1
+- Ignore all NFS when copying (thx protvin@).
+
 * Mon Jan 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.0.3-alt1
 - Add support for the new install2-init path.
 - Remove dependency on installer-feature-alterator-setup-stage2.
