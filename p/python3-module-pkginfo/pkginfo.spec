@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.12.0
-Release: alt2
+Version: 1.12.1.2
+Release: alt1
 Summary: Query metadatdata from sdists / bdists / installed packages
 License: MIT
 Group: Development/Python
@@ -14,8 +14,6 @@ Url: https://pypi.org/project/pkginfo/
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# https://bugs.launchpad.net/pkginfo/+bug/2098742
-Patch0: pkginfo-1.12.0-tests-sync-expected-metadata-version-for-setuptools.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -33,7 +31,6 @@ develop).
 
 %prep
 %setup
-%autopatch -p2
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -56,6 +53,9 @@ mv %buildroot%_bindir/pkginfo{,.py3}
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Feb 20 2025 Stanislav Levin <slev@altlinux.org> 1.12.1.2-alt1
+- 1.12.0 -> 1.12.1.2.
+
 * Tue Feb 18 2025 Stanislav Levin <slev@altlinux.org> 1.12.0-alt2
 - Fixed FTBFS (setuptools 75.8.0).
 
