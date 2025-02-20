@@ -3,13 +3,13 @@
 %set_verify_elf_method strict
 
 # LTO causes errors, disable it
-%global optflags_lto %nil
+#%%global optflags_lto %%nil
 
-%define soname 22
+%define soname 23
 
 Name: libtorrent
 Epoch: 3
-Version: 0.14.0
+Version: 0.15.1
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -121,6 +121,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Thu Feb 20 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.15.1-alt1
+- 0.15.1.
+
 * Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 3:0.14.0-alt1
 - 0.14.0.
 - Bump soname.
