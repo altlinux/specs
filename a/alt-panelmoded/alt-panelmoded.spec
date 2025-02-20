@@ -1,5 +1,5 @@
 Name: alt-panelmoded
-Version: 0.4.3
+Version: 0.5.1
 Release: alt1
 
 Summary: Used for panelmode on operating systems of the Alt family with GNOME desktop enviroment
@@ -54,6 +54,9 @@ enviroment.
 %_desktopdir/org.altlinux.panelmoded.desktop
 
 %changelog
+* Mon Feb 17 2025 Alexey Volkov <qualimock@altlinux.org> 0.5.1-alt1
+- new version 0.5.1
+
 * Wed Feb 12 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.3-alt1
 - new version 0.4.3
 
