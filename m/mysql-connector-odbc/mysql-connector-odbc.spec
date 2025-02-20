@@ -3,7 +3,7 @@
 
 Name: mysql-connector-odbc
 Version: 9.2.0
-Release: alt1
+Release: alt2
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
 
@@ -15,8 +15,6 @@ Url: https://github.com/mysql/mysql-connector-odbc
 
 # Source0-url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/%version.tar.gz
 Source0: %name-%version.tar
-
-#Patch0:  %name-%version-%release.patch
 
 Source1: odbc.ini
 Source2: odbcinst.ini
@@ -43,22 +41,31 @@ https://dev.mysql.com/doc/connector-odbc/en/
 %setup
 
 %build
-cmake -G "Unix Makefiles" \
+%cmake -G "Unix Makefiles" \
+    -DCMAKE_BUILD_TYPE=RelWithDebinfo \
     -DWITH_UNIXODBC=1 \
+    -DMYSQLCLIENT_STATIC_LINKING=false \
     -DBUNDLE_DEPENDENCIES=false \
     -DHAVE_STRUCT_TIMESPEC=1 \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DDISABLE_GUI=1 \
-    -DRPM_BUILD=1
+    -DRPM_BUILD=1 \
+    ..
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
-install -m 0644 %SOURCE1 odbc.ini
-install -m 0644 %SOURCE2 odbcinst.ini
-sed -e 's#@@lib@@#%{_libdir}#g' -i odbcinst.ini
+%ifarch %e2k
+# no LIB_SUFFIX reaction
+mkdir -p %buildroot%_libdir
+mv %buildroot{%_prefix/lib/*,%_libdir} ||:
+%endif
+
+install -pm 0644 %SOURCE1 odbc.ini
+install -pm 0644 %SOURCE2 odbcinst.ini
+sed -e 's|@@lib@@|%_libdir|g' -i odbcinst.ini
 
 rm -v %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
 rm -vr %buildroot%_prefix/test/
@@ -70,9 +77,88 @@ rm -vr %buildroot%_prefix/test/
 %_libdir/libmyodbc9w.so
 
 %changelog
+* Fri Feb 21 2025 Vitaly Lipatov <lav@altlinux.ru> 9.2.0-alt2
+- update spec with all previous spec changes
+
 * Wed Feb 19 2025 Vitaly Lipatov <lav@altlinux.ru> 9.2.0-alt1
 - new version 9.2.0
 - return to tarball build
+
+* Tue May 21 2024 Nikolai Kostrigin <nickel@altlinux.org> 8.0.37-alt1
+- New version
+
+* Thu Jan 18 2024 Nikolai Kostrigin <nickel@altlinux.org> 8.0.36-alt1
+- New version
+
+* Sat Nov 18 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 8.0.35-alt2
+- NMU: fixed FTBFS on LoongArch (and possibly riscv64)
+
+* Sat Nov 18 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.35-alt1
+- New version
+
+* Sat Nov 18 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.33-alt1
+- New version
+
+* Wed Jun 14 2023 Nikolai Kostrigin <nickel@altlinux.org> 8.0.32-alt1
+- New version (fixes: CVE-2022-24407)
+
+* Tue Nov 15 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.31-alt1
+- New version (fixes: CVE-2022-2097)
+
+* Wed Aug 24 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.30-alt1
+- New version
+
+* Thu May 12 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.29-alt1
+- New version (fixes: CVE-2022-0778)
+
+* Thu Jan 20 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.28-alt1
+- New version
+
+* Mon Nov 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.27-alt1
+- New version
+
+* Tue Aug 10 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.26-alt1
+- New version
+
+* Mon Aug 09 2021 Michael Shigorin <mike@altlinux.org> 8.0.25-alt2
+- libsuffix installation problem workaround on e2k
+
+* Tue May 25 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.25-alt1
+- New version
+
+* Wed May 19 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.24-alt1
+- New version
+
+* Tue Feb 09 2021 Nikolai Kostrigin <nickel@altlinux.org> 8.0.23-alt1
+- New version
+
+* Fri Nov 13 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.22-alt1
+- New version
+- Update alt-rpath patch
+
+* Sun May 17 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.20-alt1
+- New version
+
+* Thu Feb 20 2020 Nikolai Kostrigin <nickel@altlinux.org> 8.0.19-alt1
+- New version
+- Remove obsolete fedora-fix-build patch
+- Remove obsolete fedora-fix-inconsistency patch
+- Remove obsolete prevent-i586-libssl-bundling patch
+
+* Mon Dec 09 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.18-alt1
+- New version
+- Update prevent-i586-libssl-bundling patch
+- Add patches fixing build from Fedora
+
+* Wed Oct 02 2019 Nikolai Kostrigin <nickel@altlinux.org> 8.0.15-alt1
+- New version
+  + INFO_BIN & INFO_SRC introduced by upstream to provide build environment info
+
+* Fri Dec 28 2018 Nikolai Kostrigin <nickel@altlinux.org> 8.0.13-alt2
+- Prevent undesired libssl bundling for i586
+
+* Mon Dec 03 2018 Nikolai Kostrigin <nickel@altlinux.org> 8.0.13-alt1
+- New version
 
 * Wed Aug 15 2018 Nikolay A. Fetisov <naf@altlinux.org> 5.3.11-alt1
 - New version
