@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 1.0.0
-Release: alt1.1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -41,6 +41,9 @@ Patch1: %name-remove-3rdParty.patch
 Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
 Patch4: freecad-alt-python-modules-path.patch
+Patch5: freecad-1.0.0-alt-deprecated-getlinks.patch
+Patch6: freecad-1.0.0-alt-version-check.patch
+Patch7: freecad-1.0.0-upstream-smesh-Fix-build-failure-with-vtk-9.4.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -173,6 +176,9 @@ tar xf %SOURCE2
 %if_without bundled_pycxx
 rm -rf src/CXX
 %endif
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/CAM/App/CMakeLists.txt
@@ -308,6 +314,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Fri Feb 14 2025 Constantin Sunzow <protvin@altlinux.org> 1:1.0.0-alt2
+- Rebuild with vtk 9.4.
+
 * Sun Dec 01 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.0.0-alt1.1
 - Fixed build for Elbrus.
 

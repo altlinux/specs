@@ -2,11 +2,11 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define ver 9.3
+%define ver 9.4
 
 Name: vtk
-Version: %ver.0
-Release: alt1.2
+Version: %ver.1
+Release: alt1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -18,6 +18,10 @@ Source: %name-%version.tar
 # git submodules
 Source1: %name-%version-ThirdParty-vtkm-vtkvtkm-vtk-m.tar
 
+# Splitted libraries
+Source2: libs.spec.part
+Source3: files.spec.part
+
 # Remote modules
 Source100: %name-%version-MomentInvariants.tar
 Source101: %name-%version-vtkDICOM.tar
@@ -28,57 +32,83 @@ Patch1: %name-9.3.0-alt-python-install-path.patch
 Patch2: %name-9.1.0-alt-modules-autoinit.patch
 Patch3: %name-9.1.0-alt-dont-fetch-remote-modules.patch
 Patch4: %name-9.1.0-alt-compile-flags.patch
-Patch5: %name-9.3.0-alt-armh-compat.patch
-Patch6: %name-9.3.0-alt-fmt-11.patch
-
-Requires: lib%name%ver = %EVR
+Patch5: %name-9.4.1-arch-fmt-11.patch
+Patch6: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
-BuildRequires: gcc-c++ tk-devel cmake libGLU-devel libXt-devel
-BuildRequires: libmysqlclient-devel postgresql-devel
-BuildRequires: boost-devel boost-filesystem-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: /usr/bin/sqlite3
+BuildRequires: boost-devel
+BuildRequires: boost-filesystem-devel
 BuildRequires: boost-graph-parallel-devel
-BuildRequires: libfreetype-devel libjpeg-devel
-BuildRequires: libxml2-devel libexpat-devel libftgl220-devel libpng-devel
-BuildRequires: libtiff-devel zlib-devel libhdf5-devel libsqlite3-devel /usr/bin/sqlite3
-BuildRequires: doxygen graphviz libgsl-devel
-BuildRequires: libbfd-devel libopenmotif-devel
-BuildRequires: libgl2ps-devel
-BuildRequires: libXxf86misc-devel libimlxx-devel
-BuildRequires: libdc1394-devel libtheora-devel
-BuildRequires: libgsm-devel libvorbis-devel libtag-devel
+BuildRequires: bzlib-devel
+BuildRequires: cmake
+BuildRequires: doxygen
+BuildRequires: eigen3-devel
+BuildRequires: gcc-c++
 BuildRequires: gnuplot
-BuildRequires: libcgns-devel
-BuildRequires: inkscape texlive-latex-base
-BuildRequires: texlive-latex-extra texlive-science
-BuildRequires: libavformat-devel libpostproc-devel libswscale-devel
-BuildRequires: libavdevice-devel libavfilter-devel
-BuildRequires: liblz4-devel
-BuildRequires: libnetcdf-devel
+BuildRequires: graphviz
+BuildRequires: inkscape
 BuildRequires: jsoncpp-devel
-BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
+BuildRequires: libGLEW-devel
+BuildRequires: libGLU-devel
+BuildRequires: libXt-devel
+BuildRequires: libXxf86misc-devel
+BuildRequires: libarchive-devel
+BuildRequires: libavdevice-devel
+BuildRequires: libavfilter-devel
+BuildRequires: libavformat-devel
+BuildRequires: libbfd-devel
+BuildRequires: libbrotli-devel
+BuildRequires: libcgns-devel
+BuildRequires: libdc1394-devel
+BuildRequires: libdouble-conversion-devel
+BuildRequires: libexpat-devel
+BuildRequires: libfmt-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libftgl220-devel
+BuildRequires: libgdal-devel
+BuildRequires: libgl2ps-devel
+BuildRequires: libgsl-devel
+BuildRequires: libgsm-devel
+BuildRequires: libharu-devel
+BuildRequires: libhdf5-devel
+BuildRequires: libimlxx-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblz4-devel
+BuildRequires: liblzma-devel
+BuildRequires: libnetcdf-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libopenmotif-devel
+BuildRequires: libopenslide-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libpng-devel
+BuildRequires: libpostproc-devel
+BuildRequires: libproj-devel
+BuildRequires: libpugixml-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: libswscale-devel
+BuildRequires: libtag-devel
+BuildRequires: libtheora-devel
+BuildRequires: libtiff-devel
+BuildRequires: libvorbis-devel
+BuildRequires: libxml2-devel
+BuildRequires: nlohmann-json-devel
+BuildRequires: python3-devel
+BuildRequires: python3-module-PyQt5-devel
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-sip-devel
+BuildRequires: qt5-base-devel
 BuildRequires: qt5-base-devel-static
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-phonon-devel
-BuildRequires: libharu-devel
-BuildRequires: libgdal-devel
-BuildRequires: eigen3-devel
-BuildRequires: libdouble-conversion-devel
-BuildRequires: liblzma-devel
-BuildRequires: libGLEW-devel
-BuildRequires: libproj-devel
-BuildRequires: libpugixml-devel
-BuildRequires: python3-devel python3-module-matplotlib
-BuildRequires: python3-module-PyQt5-devel python3-module-sip-devel
-BuildRequires: libnumpy-py3-devel
-BuildRequires: libopenslide-devel
-BuildRequires: libarchive-devel
-BuildRequires: libfmt-devel
-BuildRequires: nlohmann-json-devel
-BuildRequires: bzlib-devel
-BuildRequires: libpcre2-devel
-BuildRequires: libbrotli-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: texlive-latex-base
+BuildRequires: texlive-latex-extra
+BuildRequires: texlive-science
+BuildRequires: tk-devel
+BuildRequires: zlib-devel
 
 %description
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -86,30 +116,32 @@ rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
 (e.g., hardware-accelerated volume rendering, LOD control).
 
-%package -n lib%name%ver
-Summary: Shared libraries of The Visualization Toolkit (VTK)
+# libs.spec.part
+%include %SOURCE2
+
+%package -n lib%{name}filters%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): filters
 Group: System/Libraries
 
-%description -n lib%name%ver
-VTK is an open-source software system for image processing, 3D graphics, volume
-rendering and visualization. VTK includes many advanced algorithms (e.g.,
-surface reconstruction, implicit modelling, decimation) and rendering techniques
-(e.g., hardware-accelerated volume rendering, LOD control).
+%description -n lib%{name}filters%ver
+This package contains shared libraries of VTK filters.
 
-This package contains shared libraries of VTK.
+%package -n lib%{name}rendering%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): rendering
+Group: System/Libraries
+
+%description -n lib%{name}rendering%ver
+This package contains shared libraries of VTK rendering.
 
 %package -n lib%name-devel
 Summary: Development files of The Visualization Toolkit (VTK)
 Group: Development/C++
 Requires: %name = %EVR
 Requires: %name-python3 = %EVR
-Requires: lib%name%ver = %EVR
 Requires: lib%name%ver-python3 = %EVR
 Requires: python3-module-%name = %EVR
 Requires: python3-module-%name-tests = %EVR
 Requires: nlohmann-json-devel
-Requires: %name-doc = %EVR
-Requires: %name-examples = %EVR
 %ifnarch %arm
 Requires: %name-qt5 = %EVR
 %endif
@@ -140,6 +172,7 @@ This package contains development files of VTK.
 %package doc
 Summary: Documentation for The Visualization Toolkit (VTK)
 Group: Development/Documentation
+BuildArch: noarch
 
 %description doc
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -153,7 +186,6 @@ This package contains documentation for VTK.
 Summary: The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python3
 Requires: %name = %EVR
-Requires: lib%name%ver = %EVR
 Requires: lib%name%ver-python3 = %EVR
 Requires: python3-module-%name = %EVR
 Conflicts: vtk6.1-python vtk6.2-python vtk8.1-python
@@ -170,7 +202,6 @@ This package provides Python bindings to VTK.
 %package -n lib%name%ver-python3
 Summary: The Visualization Toolkit (VTK) Python shared libraries
 Group: System/Libraries
-Requires: lib%name%ver = %EVR
 
 %description -n lib%name%ver-python3
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -221,6 +252,7 @@ This package contains tests for Python bindings to VTK.
 %package examples
 Summary: The Visualization Toolkit (VTK) examples
 Group: Development/Tools
+BuildArch: noarch
 Requires: %name = %EVR
 %add_python3_req_skip numeric
 
@@ -246,16 +278,20 @@ This package contains VTK QML plugin.
 
 %prep
 %setup -a1 -a100 -a101
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%autopatch -p1
+
+%ifarch ppc64le
+# fix error with always_inline
+grep -rl '__attribute__((always_inline))' |\
+  xargs sed -i 's/__attribute__((always_inline))//'
+%endif
+
 %ifarch %e2k
 sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
 %endif
 
+# apply build timestamp
+CMake/vtkVersion.bash -f
 
 # remove bundled libraries
 for x in constantly expat freetype gl2ps hdf5 hyperlink incremental jpeg jsoncpp libharu libxml2 lz4 netcdf oggtheora png tiff Twisted txaio zlib ZopeInterface ; do
@@ -274,6 +310,11 @@ export PYTHON=%__python3
 %add_optflags -D__USE_LARGEFILE64 -DH5_HAVE_SIGSETJMP -D__USE_POSIX
 %add_optflags -DH5_HAVE_SETJMP_H
 %add_optflags -D_FILE_OFFSET_BITS=64
+
+%ifarch %e2k
+# ld: failed to set dynamic section sizes: memory exhausted
+%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+%endif
 
 # remote module flags go last
 %cmake \
@@ -318,6 +359,7 @@ export PYTHON=%__python3
 	-DVTK_MODULE_USE_EXTERNAL_VTK_netcdf=ON \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_png=ON \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_tiff=ON \
+	-DVTK_MODULE_USE_EXTERNAL_VTK_token=OFF \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_zlib=ON \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_utf8=OFF \
 	-DVTK_MODULE_USE_EXTERNAL_VTK_pegtl=OFF \
@@ -343,10 +385,18 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %_bindir/vtkWrapHierarchy-%ver
 %_bindir/vtkWrapJava-%ver
 %_bindir/vtkProbeOpenGLVersion-%ver
+%_bindir/vtkWrapSerDes-%ver
 
-%files -n lib%name%ver
-%_libdir/*-%ver.so.*
-%exclude %_libdir/libvtk*Python*-%ver.so.*
+# files.spec.part
+%include %SOURCE3
+
+%files -n lib%{name}filters%ver
+%_libdir/libvtkFilters*-%ver.so.*
+%exclude %_libdir/libvtkFiltersPython*-%ver.so.*
+
+%files -n lib%{name}rendering%ver
+%exclude %_libdir/libvtkRenderingQt-%ver.so.*
+%_libdir/libvtkRendering*-%ver.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -378,9 +428,22 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %ifnarch %arm
 %files qt5
 %_qt5_qmldir/VTK.%ver
+%_libdir/libvtkGUISupportQtQuick-%ver.so.*
+%_libdir/libvtkGUISupportQtSQL-%ver.so.*
+%_libdir/libvtkGUISupportQt-%ver.so.*
+%_libdir/libvtkRenderingQt-%ver.so.*
+%_libdir/libvtkViewsQt-%ver.so.*
+
 %endif
 
 %changelog
+* Wed Feb 19 2025 Constantin Sunzow <protvin@altlinux.org> 9.4.1-alt1
+- Split libvtk to avoid debuginfo cpio size cap on e2k (thx cas@).
+- Repackage Qt library files (ALT #52634).
+- Remove unused BR (ALT #53114).
+- E2K: spare memory used by ld.
+- New version.
+
 * Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 9.3.0-alt1.2
 - Fix build with fmt 11
 

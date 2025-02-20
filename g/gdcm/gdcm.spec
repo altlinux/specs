@@ -4,7 +4,7 @@
 
 %define abiversion 3.0
 %define vtksoname 1
-%define vtkversion 9.3
+%define vtkversion 9.4
 %define socketxxsoname 1.2
 
 %define libgdcm_common libgdcmcommon%abiversion
@@ -22,7 +22,7 @@
 
 Name: gdcm
 Version: 3.0.24
-Release: alt3
+Release: alt4
 
 Summary: Cross-platform DICOM implementation
 License: BSD
@@ -396,6 +396,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Mon Feb 17 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt4
+- Rebuild against vtk 9.4.
+
 * Wed Jan 29 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt3
 - Stub package for old name.
 

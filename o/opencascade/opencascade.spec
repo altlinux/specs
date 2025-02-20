@@ -1,6 +1,6 @@
 Name: opencascade
 Version: 7.7.2
-Release: alt2.1
+Release: alt3
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -95,7 +95,7 @@ export DESTDIR="%buildroot"
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DUSE_TBB=False \
        -DUSE_VTK=True \
-       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.3 \
+       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.4 \
        -DINSTALL_DIR_LIB=%_lib \
        -DINSTALL_DIR_CMAKE=%_lib/cmake/%name
 %ninja_build
@@ -133,6 +133,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Fri Feb 14 2025 Constantin Sunzow <protvin@altlinux.org> 7.7.2-alt3
+- Rebuild with vtk 9.4.
+
 * Thu Jan 23 2025 Ivan A. Melnikov <iv@altlinux.org> 7.7.2-alt2.1
 - NMU: Backport upstream fix for FTBFS.
 

@@ -1,16 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%def_without system_vtk
 
-%define slicerver 5.6
+%define slicerver 5.8
 Name: slicer
-Version: %slicerver.2
-Release: alt2
-Summary: Multi-platform, free open source software for visualization and image computing
+Version: %slicerver.0
+Release: alt1
+Summary: Medical Visualization and Processing Environment for Research
 License: 3D-Slicer-1.0
 Group: Sciences/Medicine
 Url: https://www.slicer.org/
-VCS: https://github.com/Slicer/Slicer
+VCS: https://github.com/Slicer/Slicer.git
 
 # Exclusion source: pythonqt, CTK
 ExcludeArch: %arm
@@ -19,21 +18,21 @@ ExcludeArch: i586
 # https://github.com/Slicer/Slicer.git
 Source: %name-%version.tar
 
-# Downloaded from link specified in SuperBuild.cmake
-Source1: %name-%version-jqPlot.tar
-
 # Copied from CTK
 Source2: FindPythonQt.cmake
 
 Source3: slicer.desktop
 
-Patch1: %name-alt-build.patch
-Patch2: %name-alt-python3-compat.patch
-Patch3: %name-upstream-wc-last-change-date-fix.patch
-Patch4: %name-alt-itk-compat.patch
-Patch5: %name-alt-vtk-9.1-compat.patch
+Patch1: slicer-5.3.0-upstream-wc-last-change-date-fix.patch
+Patch2: slicer-5.6.1-alt-itk-compat.patch
+Patch3: slicer-5.8.0-alt-build.patch
+Patch4: slicer-5.8.0-alt-python3-compat.patch
+Patch5: slicer-5.8.0-alt-vtk-compat-findpoint.patch
+Patch6: slicer-5.8.0-alt-vtk-compat-unused-headers.patch
+Patch7: slicer-5.8.0-alt-vtk-compat-version-check.patch
 
 BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: python3-devel
@@ -68,8 +67,6 @@ BuildRequires: libcpp-base64-devel
 %add_python3_req_skip vtk.util vtk.util.numpy_support
 
 %description
-What is 3D Slicer ?
-
 Desktop software to solve advanced image computing challenges
 with a focus on clinical and biomedical applications.
 
@@ -80,14 +77,12 @@ Community of knowledgeable users and developers working together
 to improve medical computing.
 
 %package devel
-Summary: Multi-platform, free open source software for visualization and image computing
+Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
 Requires: %name-qt5-designer-plugin = %EVR
 
 %description devel
-What is 3D Slicer ?
-
 Desktop software to solve advanced image computing challenges
 with a focus on clinical and biomedical applications.
 
@@ -100,12 +95,10 @@ to improve medical computing.
 This package contains development files for Slicer.
 
 %package qt5-designer-plugin
-Summary: Multi-platform, free open source software for visualization and image computing
+Summary: Medical Visualization and Processing Environment for Research
 Group: Development/C++
 
 %description qt5-designer-plugin
-What is 3D Slicer ?
-
 Desktop software to solve advanced image computing challenges
 with a focus on clinical and biomedical applications.
 
@@ -118,12 +111,13 @@ to improve medical computing.
 This package contains Slicer plugins for qt5 designer.
 
 %prep
-%setup -a1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%setup
+%autopatch -p1
+
+# Compat with VTK 9.4
+# https://github.com/Slicer/Slicer/pull/8238
+grep -rl 'SetNthControlPointPositionMissing' |\
+  xargs sed -i 's/SetNthControlPointPositionMissing/SetControlPointPositionMissing/'
 
 install %SOURCE2 ./CMake/
 
@@ -136,8 +130,6 @@ find . -name '*.py' | xargs sed -i \
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-
-jqplotdir="$(pwd)/jqPlot"
 
 %cmake -Wno-dev \
 	-DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
@@ -152,7 +144,6 @@ jqplotdir="$(pwd)/jqPlot"
 	-DSlicer_WITH_LIBRARY_VERSION:BOOL=ON \
 	-DBUILD_TESTING:BOOL=OFF \
 	-DSlicer_USE_PYTHONQT:BOOL=ON \
-	-DjqPlot_DIR:PATH="${jqplotdir}" \
 	-DSlicer_USE_QtTesting:BOOL=OFF \
 	-DSlicer_USE_SYSTEM_DCMTK:BOOL=ON \
 	-DSlicer_USE_SYSTEM_CTK:BOOL=ON \
@@ -231,6 +222,10 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Wed Feb 19 2025 Constantin Sunzow <protvin@altlinux.org> 5.8.0-alt1
+- Update summaries.
+- New version.
+
 * Tue Jan 21 2025 Constantin Sunzow <protvin@altlinux.org> 5.6.2-alt2
 - FTBFS: new build require cpp-base64 inherited from itk.
 

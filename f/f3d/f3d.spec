@@ -2,7 +2,7 @@
 
 Name: f3d
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Fast and minimalist 3D viewer
 License: BSD-3-Clause 
@@ -10,6 +10,7 @@ Group: Graphics
 Url: https://github.com/f3d-app/f3d
 VCS: https://f3d.app/
 Source: %name-%version.tar
+Patch: f3d-3.0.0-alt-vtk-9.4.patch
 
 BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: rpm-build-python3
@@ -43,6 +44,7 @@ real time physically based rendering and raytracing.
 
 %prep
 %setup
+%patch -p1
 
 %build
 
@@ -69,6 +71,10 @@ real time physically based rendering and raytracing.
 
 rm -rfv %{buildroot}%{_docdir}/* # Remove duplicate docs
 
+install -Dm 644 \
+  %_cmake__builddir/%_lib/vtk/hierarchy/f3d_vtkext/vtkext-hierarchy.txt \
+  -t %buildroot/%_libdir/vtk/hierarchy/f3d_vtkext/
+
 %files
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
@@ -88,6 +94,9 @@ rm -rfv %{buildroot}%{_docdir}/* # Remove duplicate docs
 %doc README.md LICENSE.md
 
 %changelog
+* Mon Feb 17 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.0-alt2
+- Rebuild against vtk 9.4.
+
 * Fri Jan 24 2025 Anastasia Osmolovskaya <lola@altlinux.org> 3.0.0-alt1
 - Updated to version 3.0.0.
 
