@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ollama-python
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 Summary: Ollama Python library
 License: MIT
@@ -43,7 +43,7 @@ Group: Development/Other
 Requires(post): python3-module-ollama = %EVR
 Requires(post): python3
 %ifarch aarch64 x86_64
-Requires(post): ollama
+Requires(post): ollama-cpu
 %endif
 
 %description checkinstall
@@ -65,7 +65,7 @@ sed -Ei '/^version\s*=/s/"[0.]+"/"%version"/' pyproject.toml
 %post checkinstall
 set -xe
 %__python3 -c 'import ollama'
-%__python3 -c 'import ollama; ollama.list()' |& grep 'Connection refused'
+%__python3 -c 'import ollama; ollama.list()' |& grep 'ConnectionError'
 type ollama || exit 0
 ollama serve &
 sleep 1
@@ -82,6 +82,9 @@ rm -rf /root/.ollama
 %files checkinstall
 
 %changelog
+* Wed Feb 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.4.7-alt1
+- Update to v0.4.7 (2025-01-21).
+
 * Fri Jan 17 2025 Vitaly Chikunov <vt@altlinux.org> 0.4.6-alt1
 - Update to v0.4.6 (2025-01-13).
 - spec: Add checkinstall with basic smoke tests.
