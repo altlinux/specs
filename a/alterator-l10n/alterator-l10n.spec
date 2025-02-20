@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.150
+Version: 2.9.151
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -122,6 +122,10 @@ make check
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Feb 20 2025 Sergey Konev <darisishe@altlinux.org> 2.9.151-alt1
+- alterator-blivet: Initial translations and help
+- alterator-net-ifupdown2: Initial translations and help
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 2.9.150-alt1
 - Revert "alterator-users: clarify description and fix GECOS for localadmin"
 - Revert "alterator-users: add localadmin as the default login"
