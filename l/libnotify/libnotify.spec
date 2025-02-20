@@ -1,5 +1,6 @@
 %define ver_major 0.8
 %define api_ver 0.7
+%define namespace Notify
 %define sover 4
 
 %def_enable introspection
@@ -9,7 +10,7 @@
 %def_enable man
 
 Name: libnotify
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Desktop notification library
@@ -18,6 +19,7 @@ License: LGPL-2.1-or-later
 Url: http://www.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/libnotify.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -99,11 +101,11 @@ the command line.
 
 %build
 %meson \
-    %{?_disable_gtk_doc:-Dgtk_doc=false} \
-    %{?_disable_docbook_docs:-Ddocbook_docs=false} \
-    %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_disable_check:-Dtests=false} \
-    %{?_disable_man:-Dman=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_feature docbook_docs docbook_docs} \
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool check tests} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -134,15 +136,18 @@ the command line.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Notify-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Notify-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- 0.8.4
+
 * Tue Oct 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 
@@ -226,8 +231,5 @@ the command line.
 * Thu Feb 02 2006 Vital Khilko <vk@altlinux.ru> 0.3.2-alt1
 - 0.3.2
 
-* Sun Sep 17 2005 Vital Khilko <vk@altlinux.ru> 0.2.1-alt1
-- initial build for ALT Linux Sisyphus
-
-* Sun Sep 17 2005 Vital Khilko <vk@altlinux.ru> 0.2.1-alt1
+* Sat Sep 17 2005 Vital Khilko <vk@altlinux.ru> 0.2.1-alt1
 - initial build for ALT Linux Sisyphus
