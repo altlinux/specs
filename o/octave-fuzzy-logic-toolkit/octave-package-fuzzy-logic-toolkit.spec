@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %define octpkg fuzzy-logic-toolkit
 Epoch: 1
 Name: octave-%octpkg
-Version: 0.4.6
+Version: 0.6.1
 Release: alt1
 Summary: Octave Fuzzy Logic Toolkit
 
@@ -30,7 +30,7 @@ Requires: octave >= 3.2.4
 A mostly MATLAB-compatible fuzzy logic toolkit for Octave.
 
 %prep
-%setup -q -n %{octpkg}
+%setup -n %octpkg-%version
 
 %build
 %octave_build
@@ -46,6 +46,9 @@ A mostly MATLAB-compatible fuzzy logic toolkit for Octave.
 %endif
 
 %changelog
+* Wed Feb 19 2025 Andrey Cherepanov <cas@altlinux.org> 1:0.6.1-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:0.4.6-alt1
 - regenerated from template by package builder
 

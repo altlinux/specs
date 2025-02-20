@@ -3,7 +3,7 @@ BuildRequires: makeinfo texinfo
 # END SourceDeps(oneline)
 %define octpkg queueing
 Name: octave-%octpkg
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 Summary: Octave package for Queueing Networks and Markov chains analysis
 
@@ -45,6 +45,9 @@ The queueing package provides functions for queueing
 %endif
 
 %changelog
+* Wed Feb 19 2025 Andrey Cherepanov <cas@altlinux.org> 1.2.8-alt1
+- new version
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.7-alt1
 - regenerated from template by package builder
 
