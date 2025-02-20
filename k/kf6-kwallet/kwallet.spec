@@ -1,7 +1,7 @@
 %define rname kwallet
 
 Name: kf6-%rname
-Version: 6.10.0
+Version: 6.11.0
 Release: alt1
 %K6init
 
@@ -84,7 +84,9 @@ rm -f po/ru/kwalletd6.po.tmp
 %K6make
 
 %check
+%ifarch x86_64
 LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
+%endif
 
 %install
 %K6install
@@ -137,6 +139,9 @@ fi
 
 
 %changelog
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
+- new version
+
 * Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1
 - new version
 
