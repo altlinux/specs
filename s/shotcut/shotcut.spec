@@ -5,13 +5,13 @@
 
 Name: shotcut
 Version: 25.01.25
-Release: alt1
+Release: alt2
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
-License: GPL-3.0+
+License: GPL-3.0-or-later
 Group: Video
-Url: http://www.shotcut.org/
-Packager: Anton Midyukov <antohami@altlinux.org>
+Url: https://www.shotcut.org
+VCS: https://github.com/mltframework/shotcut.git
 
 ExcludeArch: armh
 
@@ -147,6 +147,13 @@ done
 %_man1dir/*
 
 %changelog
+* Thu Feb 20 2025 Anton Midyukov <antohami@altlinux.org> 25.01.25-alt2
+- NMU:
+  - Clean Packager tag
+  - Convert License tag to SPDX format
+  - Update Url
+  - Add VCS tag.
+
 * Sun Jan 26 2025 Andrey Cherepanov <cas@altlinux.org> 25.01.25-alt1
 - New version.
 
