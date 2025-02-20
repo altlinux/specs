@@ -1,5 +1,5 @@
 Name: goldendict-ng
-Version: 24.09.01
+Version: 25.04.0
 Release: alt1
 Summary: The Next Generation GoldenDict. A feature-rich open-source dictionary lookup program, supporting multiple dictionary formats and online dictionaries.
 License: GPL-3.0
@@ -8,13 +8,9 @@ Group: Text tools
 URL: https://github.com/xiaoyifang/goldendict-ng
 
 Source: %name-%version.tar
-Patch0: path_media_format_to_player.patch
-Patch1: add_method_to_player_interface.patch
-Patch2: rename_user_config_file.patch
-Patch3: epwing_include_path_cpp.patch
-Patch4: epwing_include_path_header.patch
-Patch5: add_play_implementation_to_player.patch
-Patch6: add_play_definition_to_player_header.patch
+Patch0: rename_user_config_file.patch
+Patch1: disable_default_online_resources.patch
+
 
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: cmake gcc-c++ qt6-webengine-devel qt6-webchannel-devel qt6-speech-devel qt6-speech-devel
@@ -43,12 +39,8 @@ The Next Generation GoldenDict. A feature-rich open-source dictionary lookup pro
 %prep
 %setup
 %patch0
-%patch1
-%patch2
-%patch3
-%patch4
-%patch5
-%patch6
+%patch1 -p1
+
 
 %build
 %cmake -DUSE_SYSTEM_FMT=ON -DUSE_SYSTEM_TOML=ON -DUSE_ALTERNATIVE_NAME=ON -DWITH_FFMPEG_PLAYER=OFF -DWITH_EPWING_SUPPORT=OFF
@@ -65,6 +57,9 @@ The Next Generation GoldenDict. A feature-rich open-source dictionary lookup pro
 %_datadir/pixmaps/goldendict-ng.png
 
 %changelog
+* Wed Feb 19 2025 Oleg Proskurin <proskur@altlinux.org> 25.04.0-alt1
+- New version
+
 * Fri Dec 13 2024 Oleg Proskurin <proskur@altlinux.org> 24.09.01-alt1
 - New version
 
