@@ -1,7 +1,7 @@
 %define so_version 1
 
 Name: gmp-ecm
-Version: 7.0.5
+Version: 7.0.6
 Release: alt1
 
 Summary: Elliptic Curve Method for Integer Factorization
@@ -9,8 +9,11 @@ Summary: Elliptic Curve Method for Integer Factorization
 License: GPL-3.0
 Group: Sciences/Mathematics
 Url: https://gitlab.inria.fr/zimmerma/ecm
+Vcs: https://gitlab.inria.fr/zimmerma/ecm.git
 
 Source: https://gitlab.inria.fr/zimmerma/ecm/-/archive/git-%version/ecm-git-%version.tar.gz
+
+Conflicts: ecm
 
 BuildRequires: libgmp-devel
 
@@ -78,6 +81,11 @@ make check
 %_libdir/libecm.so.%{so_version}*
 
 %changelog
+* Thu Feb 20 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.6-alt1
+- New version 7.0.6.
+- Added vcs tag.
+- Added conflicts with ecm package.
+
 * Tue Jun 07 2022 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
 - New version (7.0.5).
 - Updated url and source links.
