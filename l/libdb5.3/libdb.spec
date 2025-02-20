@@ -9,7 +9,7 @@
 Summary: The Berkeley DB database library for C
 Name: libdb%{__soversion}
 Version: 5.3.28
-Release: alt6
+Release: alt7
 Group: System/Libraries
 License: BSD and LGPLv2 and Sleepycat
 URL: http://www.oracle.com/database/berkeley-db/
@@ -96,6 +96,7 @@ be installed on all systems.
 %package -n db%{__soversion}-utils
 Summary: Command line tools for managing Berkeley DB databases
 Group: Databases
+Provides: db-utils = %EVR
 Requires: %name = %EVR
 Conflicts: db4.7-utils db4.8-utils db6.1-utils
 Conflicts: pks-db
@@ -412,6 +413,9 @@ mv man/* %buildroot%_man1dir
 %_includedir/%name/dbsql.h
 
 %changelog
+* Thu Feb 20 2025 Constantin Sunzow <protvin@altlinux.org> 5.3.28-alt7
+- Provide db-utils (ALT #53146).
+
 * Mon Feb 10 2025 Constantin Sunzow <protvin@altlinux.org> 5.3.28-alt6
 - Fix FTBFS: Import patches from fedora.
 - Security fix: CVE-2019-2708: Vulnerability in the Data Store component of
