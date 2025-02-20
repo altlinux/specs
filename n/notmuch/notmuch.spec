@@ -1,5 +1,5 @@
 Name: notmuch
-Version: 0.31.4
+Version: 0.38.3
 Release: alt1
 
 Summary: new email reading system called notmuch
@@ -69,7 +69,21 @@ based on lib%name
 %build
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
-./configure --prefix=%prefix --without-ruby
+./configure \
+    --prefix=%{_prefix} \
+    --exec-prefix=%{_exec_prefix} \
+    --bindir=%{_bindir} \
+    --sbindir=%{_sbindir} \
+    --sysconfdir=%{_sysconfdir} \
+    --datadir=%{_datadir} \
+    --includedir=%{_includedir} \
+    --libdir=%{_libdir} \
+    --libexecdir=%{_libexecdir} \
+    --localstatedir=%{_localstatedir} \
+    --sharedstatedir=%{_sharedstatedir} \
+    --mandir=%{_mandir} \
+    --infodir=%{_infodir} \
+    --without-ruby
 
 %make_build V=1
 
@@ -88,9 +102,16 @@ EOF
 
 install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 
+# cleanup
+rm -rvf %buildroot%_datadir/applications/mimeinfo.cache
+
 %files
 %_bindir/%name
+
 %_sysconfdir/bash_completion.d/%name
+%_datadir/zsh/site-functions/_notmuch
+%_datadir/zsh/site-functions/_email-notmuch
+
 %_desktopdir/%name-emacs-mua.desktop
 %_man1dir/%{name}*
 %_man5dir/%{name}*
@@ -101,6 +122,7 @@ install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_bindir/notmuch-emacs-mua
 %_emacs_sitestart_dir/%name.el
 %_emacslispdir/*.el*
+%_emacslispdir/notmuch-logo.svg
 
 %files -n lib%name
 %_libdir/lib%name.so.*
@@ -110,6 +132,9 @@ install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 %_libdir/lib%name.so
 
 %changelog
+* Thu Feb 20 2025 Ivan A. Melnikov <iv@altlinux.org> 0.38.3-alt1
+- 0.38.3
+
 * Fri Apr 16 2021 Vitaly Lipatov <lav@altlinux.ru> 0.31.4-alt1
 - new version 0.31.4 (with rpmrb script)
 - update BR
