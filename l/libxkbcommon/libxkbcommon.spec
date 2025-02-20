@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name xkbcommon
@@ -9,19 +9,20 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.7.0
-Release: alt1.1
+Version: 1.8.0
+Release: alt1
 
 Summary: X.Org X11 XKB parsing library
 Group: System/Libraries
 License: MIT
 Url: https://www.xkbcommon.org
 
+Vcs: https://github.com/xkbcommon/libxkbcommon.git
+
 %if_disabled snapshot
 Source: %url/download/%name-%version.tar.xz
 #Source: https://github.com/xkbcommon/libxkbcommon/archive/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/xkbcommon/libxkbcommon.git
 Source: %name-%version.tar
 %endif
 
@@ -92,10 +93,10 @@ sed -i 's/--undefined-version,//' meson.build
 
 %build
 %meson \
-	-Ddefault_library=shared \
-	%{?_disable_x11:-Denable-x11=false} \
-	%{?_disable_xkbregistry:-Denable-xkbregistry=false} \
-	%{subst_enable_meson_bool docs enable-docs}
+    -Ddefault_library=shared \
+    %{subst_enable_meson_bool x11 enable-x11} \
+    %{subst_enable_meson_bool xkbregistry enable-xkbregistry} \
+    %{subst_enable_meson_bool docs enable-docs}
 %nil
 %meson_build
 
@@ -145,6 +146,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Thu Feb 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- updated to xkbcommon-1.8.0-44-g350931ad
+
 * Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1.1
 - E2K: workaround for a lost symbols
 

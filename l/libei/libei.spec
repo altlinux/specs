@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.3
+%define ver_major 1.4
 %define api_ver 1.0
 
 %def_disable documentation
@@ -99,7 +99,7 @@ sed -i 's|pytest-3|py.test-3|' test/meson.build
 
 %build
 %meson %{?_disable_documentation:-Ddocumentation=""} \
-       %{?_disable_tests:-Dtests=false}
+       %{subst_enable_meson_feature tests tests}
 %nil
 %meson_build
 
@@ -108,7 +108,6 @@ sed -i 's|pytest-3|py.test-3|' test/meson.build
 rm -f %buildroot%_libdir/libmunit.so
 
 %check
-# python / protocol-test-valgrind failed in hasher
 %__meson_test --no-suite=python -t 4
 
 %files
@@ -130,6 +129,9 @@ rm -f %buildroot%_libdir/libmunit.so
 %_bindir/ei-debug-events
 
 %changelog
+* Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
