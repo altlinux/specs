@@ -1,7 +1,7 @@
 %define module_name	ch341
 %define git b3629c3
 %define module_version	1.0.0
-%define module_release	alt2.g%{git}
+%define module_release	alt3.g%{git}
 
 %define flavour		6.6
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -31,8 +31,6 @@ Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
 
 %requires_kimage
 
-Requires: %{module_name}-blacklist
-
 ExclusiveArch: %karch
 
 %description
@@ -56,6 +54,9 @@ install *.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Feb 20 2025 L.A. Kostis <lakostis@altlinux.org> 1.0.0-alt3.gb3629c3
+- Do not require -blacklist pkg (not needed since 5.17, closes #53159).
 
 * Fri Dec 20 2024 L.A. Kostis <lakostis@altlinux.org> 1.0.0-alt2.gb3629c3
 - Update kernel-source to GIT b3629c3.

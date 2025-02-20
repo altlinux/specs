@@ -6,7 +6,7 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt3.g%{git}
+Release: alt4.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: CH341 linux drivers for I2C / SPI and GPIO mode
 License: GPLv2
@@ -22,34 +22,20 @@ BuildArch: noarch
 %description
 WinChipHead CH341 linux driver for I2C, SPI and GPIO mode
 
-%package -n %{module_name}-blacklist
-Group: System/Kernel and hardware
-Summary: Blacklist modules for correctly working module %{module_name}
-BuildArch: noarch
-
-%description -n %{module_name}-blacklist
-Blacklist modules for correctly working module %{module_name}
-
 %prep
 %setup -c -q
 
 %install
-cat > blacklist-%{module_name}.conf << EOF
-blacklist %{module_name}
-EOF
-
-install -m644 -pD blacklist-%{module_name}.conf %buildroot%_sysconfdir/modprobe.d/blacklist-%{module_name}.conf
-
 mkdir -p %kernel_srcdir
 tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
-%files -n %{module_name}-blacklist
-%_sysconfdir/modprobe.d/blacklist-%{module_name}.conf
-
 %changelog
+* Thu Feb 20 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt4.gb3629c3
+- Remove -blacklist (not needed since 5.17, closes #53159).
+
 * Fri Dec 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt3.gb3629c3
 - GIT b3629c3 (with kernel 6.11+ fixes).
 
