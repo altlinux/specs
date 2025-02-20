@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
@@ -15,7 +15,7 @@
 
 Name: feedbackd
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Feedback library for GNOME
 Group: System/Servers
@@ -150,6 +150,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %endif
 
 %changelog
+* Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt2
+- updated to v0.7.0-2-gd36ac31 (fixed Librem5/feedbackd!153)
+
 * Fri Feb 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
