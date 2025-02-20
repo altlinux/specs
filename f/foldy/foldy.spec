@@ -4,10 +4,10 @@
 %define gir_name Foldy
 %define glib_min_version 2.76
 %define api_version 3
-%define minor_version 3
+%define minor_version 4
 
 Name: foldy
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: Folder manager aimed to mobile devices
@@ -22,7 +22,8 @@ Patch: %name-%version-alt.patch
 Requires: lib%name-%api_version = %EVR
 Requires: %name-service = %EVR
 
-BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gir rpm-build-xdg
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: rpm-build-vala rpm-build-gir rpm-build-xdg
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: pkgconfig(libadwaita-1) >= 1.6
@@ -32,7 +33,7 @@ BuildRequires: vapi(gee-0.8)
 BuildRequires: gir(Gee) = 0.8
 BuildRequires: blueprint-compiler
 BuildRequires: gobject-introspection-devel
-%{?_enable_check:BuildRequires: /usr/bin/appstreamcli /usr/bin/desktop-file-validate}
+%{?_enable_check:BuildRequires: appstream desktop-file-utils}
 
 %description
 %summary.
@@ -140,6 +141,9 @@ export AS_VALIDATE_NONET="true"
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Wed Feb 12 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.4-alt1
+- New version: 3.4
+
 * Tue Feb 11 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.3-alt1
 - New version: 3.3
 
