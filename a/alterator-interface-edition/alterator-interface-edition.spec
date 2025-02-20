@@ -2,7 +2,7 @@
 
 Name: alterator-interface-edition
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Alterator interface for edition
 License: GPLv2+
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-alterator
 %package -n alterator-backend-edition
 Summary: Alterator backend for edition
 Group: System/Configuration/Other
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 BuildRequires: python3-devel
@@ -92,6 +92,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Thu Feb 20 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt2
+- Fix extra edition_ in generated backend names.
+- Declare used LC_ALL environment variable in backend (thx Andrey Alekseev).
+
 * Tue Feb 04 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
 - Return optional from get_edition_file.
 - Refactor argparse to use functions.
