@@ -1,14 +1,14 @@
 %define pypi_name Cython
 # requires python3(gdb) < 0
 %def_disable debugger
-%ifarch armh
+%ifarch %ix86 armh
 %def_disable check
 %else
 %def_disable check
 %endif
 
 Name: python3-module-%pypi_name
-Version: 3.0.11
+Version: 3.0.12
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -133,6 +133,9 @@ done
 %endif
 
 %changelog
+* Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.12-alt1
+- 3.0.12
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.11-alt1
 - 3.0.11 (ALT #51638)
 - disabled %%check
