@@ -5,7 +5,7 @@
 
 Name:    python3-module-%oname
 Version: 0.10.7
-Release: alt1
+Release: alt1.1
 
 Summary: A next generation Python CMake adaptor and Python API for plugins
 
@@ -37,6 +37,7 @@ BuildRequires: python3-module-pytest-subprocess
 
 Source: %name-%version.tar
 Patch: scikit-build-core-offline-wheelhouse.patch
+Patch1: scikit-build-core-0.10.7-tests-fix-for-setuptools-75-8.patch
 
 BuildArch: noarch
 
@@ -46,6 +47,7 @@ BuildArch: noarch
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 if [ ! -d .git ]; then
     git init
     git config user.email author@example.com
@@ -70,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 20 2025 Stanislav Levin <slev@altlinux.org> 0.10.7-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.0).
+
 * Tue Sep 24 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.7-alt1
 - Automatically updated to 0.10.7 (Closes: #51537).
 
