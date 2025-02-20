@@ -9,7 +9,7 @@
 
 Name: ghc8.6.4
 Version: 8.6.4
-Release: alt11
+Release: alt12
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -102,10 +102,6 @@ Haskell home page at <http://www.haskell.org/>.
 BuildArch: noarch
 Summary: Selects the default version of Glasgow Haskell Compilation system
 Group: Development/Haskell
-
-Provides: ghc = %EVR
-Conflicts: ghc < %EVR
-Conflicts: ghc > %EVR
 
 Requires: %name = %EVR
 Requires: rpm-macros-%{name}-common = %EVR
@@ -278,6 +274,9 @@ sed -i 's/@GHC_LLVM_VERSION@/%_llvm_version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Wed Feb 19 2025 Leonid Znamenok <respublica@altlinux.org> 8.6.4-alt12
+- Removed 'ghc' provide from common package
+
 * Wed Feb 07 2024 Anton Zhukharev <ancieg@altlinux.org> 8.6.4-alt11
 - Fixed FTBFS (python 3.12).
 
