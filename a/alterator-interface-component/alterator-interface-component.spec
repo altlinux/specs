@@ -2,7 +2,7 @@
 
 Name: alterator-interface-component
 Version: 0.1.8
-Release: alt1
+Release: alt2
 
 Summary: Components interface for alterator browser
 License: GPLv2+
@@ -73,6 +73,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Tue Feb 18 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt2
+- Remove extra output in basic_check_component_installed
+
 * Tue Feb 04 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt1
 - basic_check_component_installed now works even without
   edition present
