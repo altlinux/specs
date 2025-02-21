@@ -1,5 +1,5 @@
 Name:    somefetch
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Simple fetch for unix-like
@@ -11,8 +11,6 @@ VCS:     https://github.com/UnixAwesomes/somefetch
 Source0: %name-%version.tar
 Source1: vendor.tar
  
-Patch: somefetch-0.2.0-alt-fixes.patch
-
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
@@ -32,8 +30,6 @@ EOF
 
 tar -xf %SOURCE1 -C %_builddir/%name-%version/
 
-%patch -p0
-
 %build
 %rust_build
 
@@ -48,5 +44,9 @@ tar -xf %SOURCE1 -C %_builddir/%name-%version/
 %_bindir/%name
 
 %changelog
+* Fri Feb 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.1-alt1
+- Update to version 0.2.1
+- patch removed
+
 * Sat Dec 14 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
