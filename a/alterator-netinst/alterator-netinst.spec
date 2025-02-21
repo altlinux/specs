@@ -1,5 +1,5 @@
 Name: alterator-netinst
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -41,6 +41,11 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Thu Feb 20 2025 Anton Midyukov <antohami@altlinux.org> 1.9.3-alt1
+- bin/alterator-netinst: mount iso with nofail option
+- bin/alterator-netinst: remove mountpoint from /etc/fstab in del_image()
+  (Closes: 52155)
+
 * Tue Jan 21 2025 Anton Midyukov <antohami@altlinux.org> 1.9.2-alt1
 - Add /etc/locale.conf and /etc/localtime support
 
