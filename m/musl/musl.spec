@@ -4,12 +4,12 @@
 
 Name: musl
 Version: 1.2.5
-Release: alt2
+Release: alt3
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
 Url: https://musl.libc.org/
-Vcs: https://git.musl-libc.org/git/musl
+Vcs: https://git.musl-libc.org/cgit/musl/
 
 Source: %name-%version.tar
 
@@ -162,6 +162,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Fri Feb 21 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt3
+- Security update (Fixes: CVE-2025-26519) (ALT#53160).
+
 * Tue Apr 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt2
 - Exchange ldso symlink and binary (ALT#49857).
 
