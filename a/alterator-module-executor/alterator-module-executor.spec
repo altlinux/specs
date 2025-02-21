@@ -1,6 +1,6 @@
 Name: alterator-module-executor
-Version: 0.1.16
-Release: alt2
+Version: 0.1.17
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -35,6 +35,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Feb 21 2025 Ivan Savin <svn17@altlinux.org> 0.1.17-alt1
+- Fix closing stdin. Now stdin is closed immediately after sending a special
+  parameter.
+
 * Mon Feb 10 2025 Ivan Savin <svn17@altlinux.org> 0.1.16-alt2
 - Fix missing file closing.
 
