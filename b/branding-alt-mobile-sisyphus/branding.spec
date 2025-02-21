@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2025.02
-Release: alt1
+Release: alt2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -201,6 +201,7 @@ cp -ar phosh/* %buildroot/
 
 install -Dm644 phosh-settings/50-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override;
 install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override;
+install -Dm644 phosh-settings/50-interface.gschema.override %buildroot/%_datadir/glib-2.0/schemas/
 
 #bootsplash
 %post bootsplash
@@ -232,8 +233,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 %_datadir/glib-2.0/schemas/50-background.gschema.override
 %_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
+%_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Fri Feb 21 2025 Oleg Shchavelev <oleg@altlinux.org> 2025.02-alt2
+- phosh-settings: set accent color to orange using gschema overrides
+
 * Wed Feb 12 2025 Oleg Shchavelev <oleg@altlinux.org> 2025.02-alt1
 - Bump version
 - images: added lockscreen image with a resolution of 4096x4096 pixels
