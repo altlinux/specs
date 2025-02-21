@@ -2,11 +2,10 @@
 %def_enable    check
 %def_enable    doc
 %def_enable    devel
-%def_disable   java
 %define        gemname psych
 
 Name:          gem-psych
-Version:       4.0.6
+Version:       5.2.3
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby
 License:       MIT
@@ -17,20 +16,21 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: libyaml-devel
 %if_enabled check
-%if_enabled java
-BuildRequires: gem(ruby-maven) >= 0
-%endif
+BuildRequires: gem(date) >= 0
 BuildRequires: gem(rake-compiler) >= 0.4.1
-BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(stringio) >= 0
+BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(test-unit-ruby-core) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      ruby >= 2.5.0
+Requires:      gem(date) >= 0
 Requires:      gem(stringio) >= 0
-Provides:      gem(psych) = 4.0.6
-
+Provides:      gem(psych) = 5.2.3
 
 %description
 Psych is a YAML parser and emitter. Psych leverages libyaml for its YAML parsing
@@ -40,14 +40,14 @@ to serialize and de-serialize most Ruby objects to and from the YAML format.
 
 %if_enabled    doc
 %package       -n gem-psych-doc
-Version:       4.0.6
+Version:       5.2.3
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета psych
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(psych) = 4.0.6
+Requires:      gem(psych) = 5.2.3
 
 %description   -n gem-psych-doc
 A libyaml wrapper for Ruby documentation files.
@@ -63,19 +63,17 @@ to serialize and de-serialize most Ruby objects to and from the YAML format.
 
 %if_enabled    devel
 %package       -n gem-psych-devel
-Version:       4.0.6
+Version:       5.2.3
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета psych
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(psych) = 4.0.6
+Requires:      gem(psych) = 5.2.3
 Requires:      gem(rake-compiler) >= 0.4.1
 Requires:      gem(test-unit) >= 0
-%if_enabled java
-Requires:      gem(ruby-maven) >= 0
-%endif
+Requires:      gem(test-unit-ruby-core) >= 0
 
 %description   -n gem-psych-devel
 A libyaml wrapper for Ruby development package.
@@ -102,25 +100,28 @@ to serialize and de-serialize most Ruby objects to and from the YAML format.
 %ruby_test
 
 %files
-%doc README.md
+%doc CONTRIBUTING.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-psych-doc
-%doc README.md
+%doc CONTRIBUTING.md LICENSE README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-psych-devel
-%doc README.md
+%doc CONTRIBUTING.md LICENSE README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Sun Feb 16 2025 Pavel Skrylev <majioa@altlinux.org> 5.2.3-alt1
+- ^ 4.0.6 -> 5.2.3
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 4.0.6-alt1
 - ^ 4.0.4 -> 4.0.6
 
