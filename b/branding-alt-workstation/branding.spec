@@ -3,8 +3,8 @@
 %define theme workstation
 %define Theme Workstation
 %define codename Prometheus
-%define status beta
-%define status_en beta
+%define status beta2
+%define status_en beta2
 %define flavour %brand-%theme
 
 %define design_graphics_abi_epoch 0
@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.22
+Release: alt0.23
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -319,6 +319,13 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Feb 21 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt0.23
+- browser-qt: fix checkbox style issue
+- os-release: add DOCUMENTATION_URL, SUPPORT_URL, ALT_BRANCH_ID
+- gnome-settings: remove favorite-apps from appearance setup, add
+  gnome-software and reorder position
+- gnome-settings: enable appindicator and clipboard in gnome-mode by default
+
 * Wed Feb 12 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt0.22
 - branding: Prepare for transition from MATE to GNOME (thx qualimock@alt)
 - indexhtml: New html page (thx oleg@alt)
