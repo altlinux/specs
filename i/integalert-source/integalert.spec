@@ -14,7 +14,7 @@
 Name:     %pname-source
 Epoch:    1
 Version:  0.5.1
-Release:  alt3
+Release:  alt4
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -24,7 +24,9 @@ Url:      http://git.altlinux.org/people/manowar/packages/integalert.git
 Packager: Paul Wolneykien <manowar@altlinux.org>
 Source:   %name-%version.tar
 
+%ifnarch %e2k
 BuildRequires: shellcheck
+%endif
 
 %description
 Osec-based integrity checking script and settings.
@@ -100,7 +102,9 @@ mkdir -p %buildroot%_sysconfdir/sysconfig
 touch %buildroot%_sysconfdir/sysconfig/integalert
 
 %check
+%ifnarch %e2k
 shellcheck %pname -e SC1090,SC1091 -e SC2155,SC2166,SC3043
+%endif
 
 %post -n %pname
 %post_service %pname
@@ -144,6 +148,9 @@ shellcheck %pname -e SC1090,SC1091 -e SC2155,SC2166,SC3043
 %endif
 
 %changelog
+* Sat Feb 22 2025 Michael Shigorin <mike@altlinux.org> 1:0.5.1-alt4
+- E2K: no shellcheck so far (ghc missing)
+
 * Wed Nov 20 2024 Paul Wolneykien <manowar@altlinux.org> 1:0.5.1-alt3
 - Provide next epoch of 'integ' package to make upgrade possible
   (+ conflict it).
