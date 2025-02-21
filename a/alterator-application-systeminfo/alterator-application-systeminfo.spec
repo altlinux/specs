@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-systeminfo
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Alterator application for getting information about system
@@ -18,8 +18,12 @@ BuildRequires: cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-devel
 BuildRequires: libqbase-devel
+BuildRequires: libtomlplusplus-devel
 
-Requires: alterator-backend-systeminfo libqbase
+Requires: alterator-backend-systeminfo >= 0.1.1
+Requires: alterator-backend-packages   >= 0.1.4
+Requires: alterator-backend-edition
+Requires: libqbase
 
 %description
 Alterator application for getting information about system.
@@ -39,9 +43,9 @@ mkdir -p %buildroot%_alterator_datadir/backends
 mkdir -p %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_datadir/dbus-1/interfaces
 
-install -v -p -m 644 -D setup/systeminfo-app.object %buildroot%_alterator_datadir/objects/systeminfo.object
-install -v -p -m 644 -D setup/systeminfo-app.backend %buildroot%_alterator_datadir/backends/systeminfo-app.backend
-install -v -p -m 644 -D setup/systeminfo.application %buildroot%_alterator_datadir/applications/systeminfo.application
+install -v -p -m 644 -D alterator/systeminfo-app.object %buildroot%_alterator_datadir/objects/systeminfo.object
+install -v -p -m 644 -D alterator/systeminfo-app.backend %buildroot%_alterator_datadir/backends/systeminfo-app.backend
+install -v -p -m 644 -D alterator/systeminfo.application %buildroot%_alterator_datadir/applications/systeminfo.application
 
 %files
 %_alterator_datadir/applications/*.application
@@ -50,5 +54,9 @@ install -v -p -m 644 -D setup/systeminfo.application %buildroot%_alterator_datad
 %_bindir/%name
 
 %changelog
+* Thu Feb 20 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.1-alt1
+- New version.
+
 * Thu Oct 18 2024 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.0-alt1
 - Initial build.
+
