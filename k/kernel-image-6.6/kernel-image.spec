@@ -3,7 +3,7 @@ Release: alt1
 epoch:1
 %define kernel_src_version      6.6
 %define kernel_base_version	6.6
-%define kernel_sublevel	.78
+%define kernel_sublevel	.79
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest        latest
@@ -596,6 +596,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Feb 21 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.79-alt1
+- v6.6.79 (2025-02-21).
+
 * Mon Feb 17 2025 Kernel Bot <kernelbot@altlinux.org> 1:6.6.78-alt1
 - v6.6.78 (2025-02-17).
 - Disable BLK_DEV_FD.
