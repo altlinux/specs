@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.12
+%define kernel_sublevel	.16
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,21 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Feb 21 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.16-alt1
+- v6.12.16 (2025-02-21).
+
+* Tue Feb 18 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.15-alt1
+- v6.12.15 (2025-02-18).
+
+* Mon Feb 17 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.14-alt1
+- v6.12.14 (2025-02-17).
+- Disable BLK_DEV_FD.
+- config: Enable CONFIG_DRM_PANIC=y.
+
+* Sat Feb 08 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.13-alt1
+- v6.12.13 (2025-02-08).
+- config: Enable CONFIG_TMPFS_INODE64=y.
+
 * Sun Feb 02 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.12-alt1
 - v6.12.12 (2025-02-01).
 - Add support for Baikal-M SoC family.
