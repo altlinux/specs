@@ -1,7 +1,7 @@
 %define rname mint-themes
 
 Name: gtk-themes-mint
-Version: 2.1.8
+Version: 2.2.3
 Release: alt1
 Summary: Mint themes
 License: GPLv3+
@@ -34,6 +34,9 @@ cp -a usr %buildroot/
 %_datadir/themes/*
 
 %changelog
+* Fri Feb 21 2025 Valery Inozemtsev <shrek@altlinux.ru> 2.2.3-alt1
+- 2.2.3
+
 * Thu Oct 10 2024 Valery Inozemtsev <shrek@altlinux.ru> 2.1.8-alt1
 - 2.1.8
 
