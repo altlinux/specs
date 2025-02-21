@@ -1,18 +1,20 @@
 Name: lha
 Version: 1.14i
-Release: alt3
-Serial: 2
+Release: alt4
+Epoch: 2
 
-%define addver -ac20050924p1
+%define addver -ac20211125p5
 %define fullname %name-%version%addver
 
 Summary: An archiving and compression utility for LHarc format archives
-License: freeware
+License: FTL
 Group: Archiving/Compression
 
-Url: http://www2m.biglobe.ne.jp/~dolphin/lha/lha-unix.htm
-Source: http://www2m.biglobe.ne.jp/~dolphin/lha/prog/%fullname.tar.gz
-Patch: %name-1.14i-fix-includes.patch.bz2
+Url: https://github.com/jca02266/lha/
+# https://github.com/jca02266/lha/archive/refs/tags/release-20211125.tar.gz
+Source: %fullname.tar.gz
+Patch: %name-1.14i-gcc14.patch
+
 Packager: Stanislav Ievlev <inger@altlinux.ru>
 
 %description
@@ -31,6 +33,7 @@ be read on the Amiga or DOS.
 %build
 %define _optlevel 3
 %add_optflags %optflags_notraceback
+%autoreconf
 %configure
 %make_build OPTIMIZE="%optflags"
 
@@ -41,6 +44,9 @@ install -pDm755 src/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Fri Feb 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 2:1.14i-alt4
+- update to 20211125
+
 * Mon Jun 03 2019 Michael Shigorin <mike@altlinux.org> 2:1.14i-alt3
 - E2K: fix build via lowering superfluous optimization level
 - minor spec cleanup
