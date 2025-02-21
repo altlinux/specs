@@ -1,5 +1,5 @@
 Name: entt-devel
-Version: 3.13.2
+Version: 3.14.0
 Release: alt1
 License: MIT
 
@@ -8,6 +8,7 @@ Summary: A header-only, tiny and easy to use entity-component system
 Group: Development/C++
 
 Url: https://github.com/skypjack/entt
+Vcs: https://github.com/skypjack/entt.git
 
 Source: %name-%version.tar
 
@@ -37,5 +38,9 @@ the ArcGIS Runtime SDKs by Esri and the amazing Ragdoll.
 %_pkgconfigdir/entt.pc
 
 %changelog
+* Fri Feb 21 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.14.0-alt1
+- new version (3.14.0) with rpmgs script
+- spec: add vcs
+
 * Sun Aug 05 2024 Kirill Unitsaev <fiersik@altlinux.org> 3.13.2-alt1
 - Initial build
