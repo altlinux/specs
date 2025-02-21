@@ -10,8 +10,8 @@
 %define libzstd_soname 1
 
 Name: gnutls%libgnutls_soname
-Version: 3.8.8
-Release: alt2
+Version: 3.8.9
+Release: alt1
 
 Summary: A TLS protocol implementation
 # The libgnutls library is LGPLv2.1+, utilities and remaining libraries are GPLv3+
@@ -25,8 +25,11 @@ Patch3: Fix-privkey-verify-broken-test.patch
 Patch8: fix-32bit-LTS.patch
 Patch10: tests-Don-t-use-lscpu.patch
 Patch11: tests-Fix-work-with-ALT-faketime.patch
+Patch12: Use-python3.patch
+Patch13: Pass-path-to-static-leancrypto-library-as-argument.patch
 
-%def_with liboqs
+%def_without liboqs
+%def_with leancrypto
 %def_enable certcompress
 
 %define libcxx libgnutlsxx%libgnutlsxx_soname
@@ -38,6 +41,7 @@ BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-deve
 BuildRequires: libidn2-devel libunistring-devel
 BuildRequires: libnettle-devel >= 3.6-alt1
 %{?_with_liboqs:BuildRequires: liboqs-devel}
+%{?_with_leancrypto:BuildRequires: libleancrypto-devel-static}
 %{?_enable_certcompress:BuildRequires: zlib-devel libbrotli-devel libzstd-devel}
 
 # For tests
@@ -196,6 +200,8 @@ This package contains the GnuTLS API Reference Manual.
 %patch8 -p1
 %patch10 -p1
 %patch11 -p2
+%patch12 -p1
+%patch13 -p2
 
 touch doc/*.texi
 rm doc/*.info*
@@ -234,6 +240,11 @@ check_lib_soname() {
 	--with-liboqs=dlopen \
 %else
 	--without-liboqs \
+%endif
+%if_with leancrypto
+	--with-leancrypto=%_libdir/libleancrypto.a \
+%else
+	--without-leancrypto \
 %endif
 %if_enabled certcompress
 	--with-zlib=dlopen \
@@ -332,6 +343,12 @@ make -k check
 %docdir/*.cfg
 
 %changelog
+* Fri Feb 21 2025 Mikhail Efremov <sem@altlinux.org> 3.8.9-alt1
+- Enabled leancrypto support.
+- Disabled liboqs support.
+- Used python3 for python scripts.
+- Updated to 3.8.9 (fixes: CVE-2024-12243).
+
 * Thu Dec 12 2024 Mikhail Efremov <sem@altlinux.org> 3.8.8-alt2
 - Rebuilt with liboqs-0.12.0.
 
