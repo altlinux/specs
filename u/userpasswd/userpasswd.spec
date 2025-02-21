@@ -1,6 +1,9 @@
+%define alt_name userpasswd
+%define binary_name userpasswd-legacy
+
 Name: userpasswd
 Version: 0.3.6
-Release: alt1
+Release: alt2
 
 Group: System/Configuration/Other
 Summary: The graphical tool for changing password
@@ -9,14 +12,24 @@ Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
+BuildRequires (pre): rpm-macros-alternatives
 Requires: pam0_tcb >= 1.1.0.1
 Conflicts: usermode
 BuildRequires: libgtk+2-devel
 
+Requires: %name-common
 
 %description
 Install this package if you would like to provide users with
 graphical tool for changing password.
+
+%package common
+Summary: Desktop file for userpasswd
+Group: System/Configuration/Other
+Conflicts: %name < 0.3.6-alt2
+
+%description common
+The package provides a .desktop file
 
 %prep
 %setup -q
@@ -27,15 +40,31 @@ graphical tool for changing password.
 %install
 %make_install install menudir=%_desktopdir
 
+# rename userpasswd -> userpasswd-legacy
+mv %buildroot/%_bindir/%alt_name %buildroot/%_bindir/%binary_name
+
+mkdir -p %buildroot%_altdir
+cat >%buildroot%_altdir/%binary_name <<EOF
+%_bindir/%alt_name    %_bindir/%binary_name    30
+EOF
+
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
 %_datadir/%name
-%_desktopdir/*
 %_datadir/pixmaps/*
+%_altdir/%binary_name
+
+%files common
+%_desktopdir/*
 
 %changelog
+* Thu Feb 20 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt2
+- Add alternatives
+- Add common subpackage
+- Add conflict with userpasswd < 0.3.6-alt2
+
 * Thu Jan 09 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt1
 - Fixed regression with hang on waitpid (Closes: #52549)
   Thanks to Ivan Volchenko for the fix
