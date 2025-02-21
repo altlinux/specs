@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool domain-controller
 Name: diag-%diagnostic_tool
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -37,6 +37,9 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Feb 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.2.1-alt1
+- Fixed typo in is_ntp_service_running test
+
 * Fri Jan 24 2025 Andrey Limachko <liannnix@altlinux.org> 0.2-alt1
 - Add -a|--alterator option to output test results in
   alteratorctl/Adt
