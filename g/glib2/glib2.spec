@@ -42,16 +42,17 @@
 %endif
 
 Name: glib2
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A library of handy utility functions
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://gitlab.gnome.org/GNOME/glib
 
-%if_enabled snapshot
 Vcs: https://gitlab.gnome.org/GNOME/glib.git
+
+%if_enabled snapshot
 Source: glib-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glib/%ver_major/glib-%version.tar.xz
@@ -98,7 +99,7 @@ Conflicts: gobject-introspection < 1.79
 
 BuildRequires: libpcre2-devel >= %pcre2_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson >= %meson_ver gcc-c++ indent
 BuildRequires: glibc-kernheaders libdbus-devel
 BuildRequires: libffi-devel >= %ffi_ver zlib-devel libelf-devel
@@ -500,6 +501,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.82.5-alt1
+- 2.82.5
+
 * Thu Dec 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.82.4-alt1
 - 2.82.4
 
