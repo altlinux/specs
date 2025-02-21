@@ -41,7 +41,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.50.2
+Version: 1.51.90
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -343,7 +343,7 @@ GObject introspection devel data for the NetworkManager (libnm).
 	-Dconcheck=true \
 	-Dpppd_plugin_dir=%_libdir/pppd/%ppp_version \
 	-Dppp=true \
-	-Dsystem_ca_path=/var/lib/ssl/certs \
+	-Dsystem_ca_path=/etc/pki/tls/cert.pem \
 	-Dtests=%tests \
 %if_enabled systemd
 	-Dsystemdsystemunitdir=%_unitdir \
@@ -640,6 +640,13 @@ fi
 %endif
 
 %changelog
+* Fri Feb 21 2025 Mikhail Efremov <sem@altlinux.org> 1.51.90-alt1
+- dnsmasq: Don't use openresolv-generated files.
+- Enabled dnsmasq plugin.
+- Fixed system_ca_path.
+- Dropped fake changelog entry.
+- Updated to 1.51.90 (1.52-rc1).
+
 * Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 1.50.2-alt1
 - Added fake changelog entry.
 - Updated to 1.50.2.
@@ -653,9 +660,6 @@ fi
 
 * Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 1.50.0-alt1
 - Updated to 1.50.0.
-
-* Thu Oct 10 2024 Mikhail Efremov <sem@altlinux.org> 1.48.12-alt1
-- Updated to 1.48.12.
 
 * Tue Sep 17 2024 Mikhail Efremov <sem@altlinux.org> 1.49.91-alt1
 - Updated to 1.49.91 (1.50-rc2).
