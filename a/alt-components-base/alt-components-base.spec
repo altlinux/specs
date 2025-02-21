@@ -2,7 +2,7 @@
 
 Name: alt-components-base
 Version: 0.2.7
-Release: alt1
+Release: alt2
 
 Summary: Base set of ALT Distributions components
 License: GPLv2+
@@ -55,13 +55,18 @@ for d in categories/* ; do
 done
 
 %check
-find ./categories -type f -exec alterator-entry validate {} \+
-find ./components -name '*.component' -type f -exec alterator-entry validate {} \+
+./scripts/validate_categories.py
 
 %files
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Feb 21 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.7-alt2
+- Add simple category validation script.
+- Fix errors detected by validate_categories.py.
+  + Rename edication.category into education.category.
+  + Remove nonexistent category downloading from initialization.category.
+
 * Wed Feb 19 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.2.7-alt1
 - The "downloading" category has been renamed to "boot", unnecessary
   packages have been removed (thx Sergey Savelev)
