@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.151
+Version: 2.9.152
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -121,7 +121,13 @@ make check
 
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/*.mo
 
+%lang(mhr_RU) %_datadir/locale/mhr_RU/LC_MESSAGES/*.mo
+%lang(mhr_RU) %_datadir/alterator/help/mhr_RU
+
 %changelog
+* Sun Feb 20 2025 Kirill Izmestev <felixz@altlinux.org> 2.9.152-alt1
+- Add translation into Mari language as Russian.
+
 * Thu Feb 20 2025 Sergey Konev <darisishe@altlinux.org> 2.9.151-alt1
 - alterator-blivet: Initial translations and help
 - alterator-net-ifupdown2: Initial translations and help
