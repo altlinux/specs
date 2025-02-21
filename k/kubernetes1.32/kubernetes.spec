@@ -6,8 +6,8 @@
 
 %define prog_name            kubernetes
 %define kubernetes_major     1
-%define kubernetes_minor     30
-%define kubernetes_patch     10
+%define kubernetes_minor     32
+%define kubernetes_patch     2
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -42,9 +42,7 @@ Source26: kubernetes.tmpfiles
 Source27: crio.conf
 Source28: 99-kubernetes-cri.conf
 
-Patch1: runc-alt-loongarch64-support.patch
-Patch2: kubernets-alt-loongarch64-support.patch
-Patch3: ebpf-alt-loongarch64-support.patch
+Patch1: kubernets-alt-loongarch64-support.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -394,14 +392,20 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
-* Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.10-alt1
-- 1.30.9 -> 1.30.10 (Fixes: CVE-2025-0426)
+* Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.2-alt1
+- 1.31.6 -> 1.32.2
 
-* Sun Jan 26 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.9-alt1
-- 1.30.6 -> 1.30.9 (Fixes: CVE-2024-9042)
+* Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.6-alt1
+- 1.31.5 -> 1.31.6 (Fixes: CVE-2025-0426)
 
-* Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.6-alt1
-- 1.30.5 -> 1.30.6
+* Sun Jan 26 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.5-alt1
+- 1.31.2 -> 1.31.5 (Fixes: CVE-2024-9042)
+
+* Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.2-alt1
+- 1.31.1 -> 1.31.2
+
+* Thu Sep 12 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.1-alt1
+- 1.30.5 -> 1.31.1
 
 * Thu Sep 12 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.5-alt1
 - 1.30.4 -> 1.30.5

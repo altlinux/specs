@@ -12,8 +12,8 @@
 
 %define prog_name            cri-o
 %define cri_o_major          1
-%define cri_o_minor          30
-%define cri_o_patch          10
+%define cri_o_minor          32
+%define cri_o_patch          1
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -26,14 +26,13 @@ VCS: https://github.com/cri-o/cri-o
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
-Patch1: .gear/cri-o-vendored-cilium-ebpf-loongarch64-support.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 
 Requires: containers-common
-Requires: runc
+Requires: crun
 Requires: cni-plugins >= 1.4.0
 Requires: conntrack-tools
 Requires: iproute2
@@ -42,7 +41,7 @@ Requires: socat
 Requires: conmon
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires(pre): golang >= 1.22
+BuildRequires(pre): golang >= 1.23
 BuildRequires: glib2-devel
 BuildRequires: glibc-devel-static
 BuildRequires: libbtrfs-devel
@@ -61,7 +60,6 @@ Provides: cri-runtime
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i 's/\/local//' contrib/systemd/crio.service
 sed -i 's/\/local//' contrib/systemd/crio-wipe.service
@@ -136,14 +134,20 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
-* Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.10-alt1
-- 1.30.9 -> 1.30.10
+* Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.1-alt1
+- 1.31.5 -> 1.32.1
 
-* Sun Jan 26 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.9-alt1
-- 1.30.6 -> 1.30.9
+* Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.5-alt1
+- 1.31.4 -> 1.31.5
 
-* Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.6-alt1
-- 1.30.5 -> 1.30.6
+* Sun Jan 26 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.4-alt1
+- 1.31.1 -> 1.31.4
+
+* Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.1-alt1
+- 1.31.0 -> 1.31.1
+
+* Wed Sep 11 2024 Alexander Stepchenko <geochip@altlinux.org> 1.31.0-alt1
+- 1.30.5 -> 1.31.0
 
 * Wed Sep 11 2024 Alexander Stepchenko <geochip@altlinux.org> 1.30.5-alt1
 - 1.30.4 -> 1.30.5
