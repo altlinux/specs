@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.9.beta1
+Release: alt1.0.beta1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -207,6 +207,8 @@ install -Dm644 phosh-settings/50-background.gschema.override \
 	%buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override
 install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override \
 	%buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
+install -Dm644 phosh-settings/50-interface.gschema.override \
+	%buildroot/%_datadir/glib-2.0/schemas/
 
 #bootsplash
 %post bootsplash
@@ -238,9 +240,13 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %files phosh-settings
 %_datadir/glib-2.0/schemas/50-background.gschema.override
 %_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
+%_datadir/glib-2.0/schemas/50-interface.gschema.override
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Fri Feb 21 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1.0.beta1
+- phosh-settings: set accent color to orange using gschema overrides
+
 * Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt0.9.beta1
 - beta 1
 - phosh-settings: add 50-camera-privacy-disabled.gschema.override
