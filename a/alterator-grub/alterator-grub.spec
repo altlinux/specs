@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.26
+Version: 0.27
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -55,6 +55,11 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Thu Feb 20 2025 Anton Midyukov <antohami@altlinux.org> 0.27-alt1
+- backend3/grub: remove EFI/BOOT before grub_efi --removable
+- Revert "create EFI/BOOT/grub_cfg, if not exist, on efiremovable"
+- backend3/grub: copy grub.cfg from EFI/altlinux to EFI/BOOT/
+
 * Wed Jun 19 2024 Anton Midyukov <antohami@altlinux.org> 0.26-alt1
 - backend3/grub: get variable from /etc/locale.conf, is available
 
