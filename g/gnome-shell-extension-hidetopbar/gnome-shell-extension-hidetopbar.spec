@@ -1,7 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name hidetopbar
-%define ver_major 113
+%define ver_major 118
+%define git_tag 5d0ff5585f5bf0caaac1777bb658aadc115cd4b3
 %define beta %nil
 %define uuid hidetopbar@mathieu.bidon.ca
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -15,20 +16,21 @@ Release: alt1
 
 Summary: Hide Top Bar extension for the GNOME Shell
 Group: Graphical desktop/GNOME
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/tuxor1337/hidetopbar
+
+Vcs: https://gitlab.gnome.org/tuxor1337/hidetopbar.git
 
 BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/-/archive/extensions.gnome.org-%version%beta/%_name-%version%beta.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/tuxor1337/hidetopbar.git
 Source: %_name-%version%beta.tar
 %endif
 
-Requires: gnome-shell >= 44
-Requires: typelib(Gtk) = 4.0
+Requires: gnome-shell >= 45
+Requires: typelib(Adw) = 1
 
 BuildRequires: zip /usr/bin/glib-compile-schemas
 
@@ -36,7 +38,7 @@ BuildRequires: zip /usr/bin/glib-compile-schemas
 GNOME extension to hide the top bar except in overview mode.
 
 %prep
-%setup -n %_name-%version%beta
+%setup -n %_name-%{?_disable_snapshot:extensions.gnome.org-}%version%beta%{?_disable_snapshot:-%git_tag}
 
 %build
 %make VERSION=%version
@@ -55,6 +57,9 @@ cp -ar locale %buildroot%_datadir/ && rm -f %buildroot/%_datadir/locale/{*.pot*,
 %doc README.md
 
 %changelog
+* Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 118-alt1
+- 118 (ALT #53198)
+
 * Mon Jun 26 2023 Yuri N. Sedunov <aris@altlinux.org> 113-alt1
 - first build for Sisyphus
 
