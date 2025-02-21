@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-chksum
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: ALT distro checksum downloader
@@ -34,6 +34,9 @@ install -D -m0755 %name %buildroot/%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Feb 21 2025 Paul Wolneykien <manowar@altlinux.org> 0.1.5-alt1
+- Fix: Don't pull extra branches when update.
+
 * Fri Nov 01 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.4-alt1
 - Change the default URL to https://checksum.altsp.su/alt-checksum/checksums.git.
 
