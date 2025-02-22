@@ -4,11 +4,11 @@
 
 Name: libgpod4
 Version: 0.8.3
-Release: alt7
+Release: alt8
 
 Summary: iPod access library
 Group: Sound
-License: %lgpl3plus
+License: LGPLv3+
 URL: http://www.gtkpod.org/libgpod
 
 Source: %name-%version.tar
@@ -21,7 +21,7 @@ Obsoletes: libgpod < 0.7
 
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: glib2-devel libgio-devel libsqlite3-devel
-BuildRequires: libimobiledevice-devel >= 1.3.0  libplist-devel >= 2.2.0
+BuildRequires: libimobiledevice-devel >= 1.3.0 libplist-devel >= 2.2.0
 BuildRequires: libxml2-devel libsgutils-devel libusb-devel zlib-devel
 BuildRequires: libtag-devel libgdk-pixbuf-devel
 %{?_enable_pygobject:BuildRequires: python-module-pygobject-devel python-module-mutagen swig}
@@ -96,6 +96,7 @@ chmod -x bindings/python/examples/*.py
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
+%add_optflags -Wno-error=incompatible-pointer-types -Wno-error=implicit-int -Wno-deprecated-declarations
 %autoreconf
 %configure \
 	--disable-static \
@@ -153,6 +154,9 @@ rm -f %buildroot%_pkgconfigdir/libgpod-sharp.pc
 %endif
 
 %changelog
+* Sat Feb 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.8.3-alt8
+- NMU: fix FTBFS with gcc14
+
 * Thu Jun 18 2020 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt7
 - rebuilt against libplist-2.0 (2.2.0)
 - disabled useless python2 module
