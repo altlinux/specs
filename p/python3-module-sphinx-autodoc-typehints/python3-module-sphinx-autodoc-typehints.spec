@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
@@ -19,8 +19,8 @@ BuildArch: noarch
 Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm python3-module-wheel python3(hatchling) python3(hatch-vcs)
-%{?_enable_check:BuildRequires: python3-module-tox >= 4.2
+BuildRequires: python3(wheel) python3(hatchling) python3(hatch-vcs)
+%{?_enable_check:BuildRequires: python3-module-tox >= 4.23.2
 BuildRequires: python3-module-sphinx-tests python3-module-snowballstemmer >= 2.0
 BuildRequires: python3-module-diff-cover
 BuildRequires: python3-module-pytest-cov python3-module-sphobjinv
@@ -51,6 +51,9 @@ functions.
 
 
 %changelog
+* Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Sat Jan 18 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
