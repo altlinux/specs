@@ -1,5 +1,5 @@
 Name: libintel-opencl-clang
-Version: 18.1.0
+Version: 19.1.0
 Release: alt1
 
 Summary: Library to compile OpenCL C kernels to SPIR-V modules
@@ -14,10 +14,11 @@ ExcludeArch: i586
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: llvm18.1-devel
-BuildRequires: clang18.1-devel
+BuildRequires: llvm19.1-devel
+BuildRequires: clang19.1-devel
 BuildRequires: zlib-devel
 BuildRequires: libLLVMSPIRVLib-devel
+BuildRequires: libstdc++-devel
 
 %description
 opencl-clang is a thin wrapper library around clang. The library has OpenCL-oriented API and
@@ -34,10 +35,11 @@ developing against %name
 
 %prep
 %setup
+%__subst 's/$<TARGET_FILE:clang>/$<TARGET_FILE:clang18.1>/' cl_headers/CMakeLists.txt
 
 %build
 %cmake \
-    -DLLVM_DIR=%_libexecdir/llvm-18.1/lib64/cmake/llvm/
+    -DLLVM_DIR=%_libexecdir/llvm-19.1/lib64/cmake/llvm/
 %cmake_build
 
 %install
@@ -52,6 +54,12 @@ developing against %name
 %_includedir/cclang/
 
 %changelog
+* Tue Dec 24 2024 Boris Yumankulov <boria138@altlinux.org> 19.1.0-alt1
+- new version 19.1.0 (ALT bug: 52502)
+
+* Sat Aug 03 2024 Boris Yumankulov <boria138@altlinux.org> 18.1.0-alt1.1
+- pack forget common_clang.h
+
 * Thu Aug 01 2024 Boris Yumankulov <boria138@altlinux.org> 18.1.0-alt1
 - initial build for ALT Sisyphus
 

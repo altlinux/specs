@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 18.1
+%global _llvm_version 19.1
 
 Name: llvm-common
-Version: 18.1.0
-Release: alt2
+Version: 19.1.0
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -519,6 +519,9 @@ for i in %_CI_tests_execdir/[0-9]*; do
 done
 
 %changelog
+* Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.0-alt1
+- Bump llvm_version to 19.1.
+
 * Fri Oct 04 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.0-alt2
 - Remove libomp-devel package (for now).
 - Remove clang-devel-static package.

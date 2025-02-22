@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define llvm_ver_major 18.1
+%define llvm_ver_major 19.1
 %define git %nil
 
 # FIXME!
 %define optflags_lto %nil
 
 Name:    LLVMSPIRVLib
-Version: 18.1.4
+Version: 19.1.0
 Release: alt1
 Summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR
 Group:   Development/C++
@@ -87,6 +87,10 @@ command line utility for translating between LLVM bitcode and SPIR-V binary.
 %_bindir/llvm-spirv
 
 %changelog
+* Mon Oct 07 2024 L.A. Kostis <lakostis@altlinux.ru> 19.1.0-alt1
+- Rebased to 19.1.0.
+- Use llvm19.1.
+
 * Wed Sep 04 2024 L.A. Kostis <lakostis@altlinux.ru> 18.1.4-alt1
 - Rebased to 18.1.4.
 
