@@ -3,7 +3,7 @@
 
 Name:    eg25-manager
 Version: 0.5.2
-Release: alt3
+Release: alt4
 
 Summary: Manager daemon for the Quectel EG25 mobile broadband modem
 License: GPL-3.0-or-later
@@ -74,7 +74,7 @@ install -Dp -m 755 %SOURCE3 %buildroot%_sysconfdir/firsttime.d/%name
 
 %triggerin -- %name < 0.5.2-alt3
 # Force autostart on supported devices to simplify system upgrade
-grep -qi pinephone /proc/device-tree/model 2>/dev/null && systemctl preset eg25-manager
+grep -qi pinephone /proc/device-tree/model 2>/dev/null && systemctl preset eg25-manager || :
 
 %files
 %doc *.md
@@ -87,6 +87,9 @@ grep -qi pinephone /proc/device-tree/model 2>/dev/null && systemctl preset eg25-
 %_datadir/%name
 
 %changelog
+* Sat Feb 22 2025 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt4
+- Fix trigger: return true even when hardware check is negative.
+
 * Thu Feb 20 2025 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt3
 - Autostart eg25-manager out of the box, but
   disable autostart on firstinstall on unsupported systems.
