@@ -3,7 +3,7 @@
 
 Name: snoop
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Snoop through your files
 License: GPL-3.0-or-later
@@ -46,6 +46,9 @@ BuildRequires: pkgconfig(gtksourceview-5)
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sat Feb 22 2025 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt2
+- NMU: Fix russian translation (literary translation of snoop)
+
 * Fri Jan 10 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.2-alt1
 - New version 0.4.2
 
