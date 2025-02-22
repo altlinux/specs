@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: mingle
-Version: 0.16.1
+Version: 0.20
 Release: alt1
 
 Summary: Combine emojis with Google's Emoji Kitchen
@@ -53,6 +53,9 @@ Combine emojis with Emoji Kitchen, and send them to friends.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 0.20-alt1
+- New version 0.20
+
 * Tue Dec 17 2024 Oleg Shchavelev <oleg@altlinux.org> 0.16.1-alt1
 - New version 0.16.1
 - Update build dependencies for check
