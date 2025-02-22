@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: addwater
-Version: 1.2.2
+Version: 1.2.5
 Release: alt1
 
 Summary: Keep Firefox in fashion
@@ -51,7 +51,7 @@ in the U.S. and other countries.
 %setup
 
 %build
-%meson -Dprofile=user
+%meson -Dprofile=default
 %meson_build
 
 %install
@@ -70,6 +70,10 @@ in the U.S. and other countries.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 1.2.5-alt1
+- New version 1.2.5
+- Changed the Meson profile from 'user' to 'default' in the build process
+
 * Mon Dec 16 2024 Oleg Shchavelev <oleg@altlinux.org> 1.2.2-alt1
 - New version 1.2.2
 - Update build dependencies for check
