@@ -19,7 +19,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.2.0
-Release: alt2
+Release: alt2.1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -93,6 +93,9 @@ interface to the JavaScript engine.
 %patch16 -p1
 #%%patch20 -p1 -b .0ad
 %patch30 -p1
+
+# fix linking against icu-76
+sed -i 's/icu-i18n/icu-uc &/' js/moz.configure
 
 %build
 [ ! -d _build ] && mkdir _build && \
@@ -180,6 +183,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 115.2.0-alt2.1
+- fixed build with icu-76
+
 * Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 115.2.0-alt2
 - fixed build with python-3.12
 

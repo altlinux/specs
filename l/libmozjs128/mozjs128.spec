@@ -19,7 +19,7 @@
 
 Name: libmozjs%ver_major
 Version: %ver_major.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: JavaScript interpreter and libraries
 Group: System/Libraries
@@ -88,6 +88,9 @@ interface to the JavaScript engine.
 %ifarch %ix86
 %patch10 -p1
 %endif
+
+# fix linking against icu-76
+sed -i 's/icu-i18n/icu-uc &/' js/moz.configure
 
 %build
 [ ! -d _build ] && mkdir _build && \
@@ -175,6 +178,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 128.1.0-alt1.1
+- fixed build with icu-76
+
 * Thu Aug 08 2024 Yuri N. Sedunov <aris@altlinux.org> 128.1.0-alt1
 - first build for Sisyphus
 
