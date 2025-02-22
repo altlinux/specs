@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: lock
-Version: 1.3.8
+Version: 1.4.1
 Release: alt1
 
 Summary: Process data with GnuPG
@@ -25,6 +25,7 @@ BuildRequires: pkgconfig(gpgme) >= 1.23
 %if_enabled check
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
+BuildRequires: libgio
 %endif
 
 %description
@@ -67,6 +68,9 @@ Manage your GnuPG keyring:
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 1.4.1-alt1
+- New version 1.4.1
+
 * Sat Jan 04 2025 Oleg Shchavelev <oleg@altlinux.org> 1.3.8-alt1
 - New version 1.3.8
 
