@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.5.1
+%define beta .alpha.6
 %define rdn_name com.system76.CosmicFiles
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-files
 Version: %ver_major.0
-Release: alt0.51%beta
+Release: alt0.60%beta
 
 Summary: COSMIC File Manager
 License: GPL-3.0
@@ -74,6 +74,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.60.alpha.6
+- 1.0.0-alpha.6
+
 * Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.51.alpha.5.1
 - 1.0.0-alpha.5.1
 

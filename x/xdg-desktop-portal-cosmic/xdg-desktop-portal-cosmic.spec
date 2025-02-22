@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 1.0
-%define beta .alpha.5.1
+%define beta .alpha.6
 %define rdn_name com.system76.CosmicPortal
 %define dbus_name org.freedesktop.impl.portal.desktop.cosmic
 
@@ -11,7 +11,7 @@
 
 Name: xdg-desktop-portal-cosmic
 Version: %ver_major.0
-Release: alt0.51%beta
+Release: alt0.60%beta
 
 Summary: COSMIC Desktop Portal
 License: GPL-3.0
@@ -78,6 +78,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 #%doc README*
 
 %changelog
+* Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.60.alpha.6
+- epoch-1.0.0-alpha.6-1-gdf831ce
+
 * Wed Jan 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.51.alpha.5.1
 - 1.0.0-alpha.5.1
 

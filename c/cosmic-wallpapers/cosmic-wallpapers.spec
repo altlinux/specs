@@ -3,11 +3,11 @@
 %def_enable snapshot
 %define _name cosmic-wallpapers
 %define ver_major 1.0
-%define beta .alpha.5.1
+%define beta .alpha.6
 
 Name: %_name
 Version: %ver_major.0
-Release: alt0.52%beta
+Release: alt0.60%beta
 
 Summary: COSMIC Wallpapers
 License: CC-BY-SA-4.0
@@ -39,6 +39,9 @@ Wallpapers for the COSMIC desktop environment.
 %doc README*
 
 %changelog
+* Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.60.alpha.6
+- 1.0.0-alpha.6
+
 * Thu Jan 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.52.alpha.5.1
 - use git-lfs to actually download the wallpapers
 
