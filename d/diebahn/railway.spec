@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: diebahn
-Version: 2.7.1
+Version: 2.7.3
 Release: alt1
 
 Summary: Find all your travel information
@@ -24,6 +24,7 @@ BuildRequires: pkgconfig(glib-2.0) >= 2.66
 BuildRequires: pkgconfig(gio-2.0) >= 2.66
 BuildRequires: pkgconfig(gtk4) >= 4.0.0
 BuildRequires: pkgconfig(libadwaita-1) >= 1.6.0
+BuildRequires: pkgconfig(openssl)
 %if_enabled check
 BuildRequires: %_bindir/desktop-file-validate
 BuildRequires: %_bindir/appstreamcli
@@ -65,5 +66,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 2.7.3-alt1
+- New version 2.7.3
+- Update build dependencies
+
 * Mon Nov 04 2024 Oleg Shchavelev <oleg@altlinux.org> 2.7.1-alt1
 - Initial build
