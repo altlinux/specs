@@ -1,7 +1,7 @@
 %define APP_ID org.gnome.Podcasts
 
 Name: gnome-podcasts
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Listen to your favorite shows
@@ -57,5 +57,8 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/metainfo/%APP_ID.appdata.xml
 
 %changelog
+* Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 0.7.2-alt1
+- New version 0.7.2
+
 * Mon Nov 04 2024 Oleg Shchavelev <oleg@altlinux.org> 0.7.1-alt1
 - Initial build
