@@ -13,7 +13,7 @@
 %endif
 
 Name: exiv2
-Version: 0.28.4
+Version: 0.28.5
 Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
@@ -88,7 +88,7 @@ exiv2 library.
 %files
 %_bindir/%name
 %_man1dir/*
-%doc README* doc/ChangeLog
+%doc README* SECURITY* doc/ChangeLog
 
 %files -n libexiv2 -f exiv2.lang
 %_libdir/lib%name.so.*
@@ -101,6 +101,9 @@ exiv2 library.
 
 
 %changelog
+* Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.28.5-alt1
+- 0.28.5 (fixed CVE-2025-26623)
+
 * Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
 - 0.28.4
 
