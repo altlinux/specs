@@ -3,13 +3,15 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
-Name: bin-marcosnils
-Version: 0.19.0
+Name: bin-github
+Version: 0.20.0
 Release: alt1
-Summary: Effortless binary manager
+Summary: Binaries manager for GitHub (and Docker) releases
 License: MIT
 Group: System/Configuration/Packaging
 Url: https://github.com/marcosnils/bin
+Obsoletes: bin-marcosnils < %EVR
+Provides: bin-marcosnils = %EVR
 
 Source: %name-%version.tar
 BuildRequires: golang
@@ -43,6 +45,10 @@ go test -v ./...
 %_bindir/bin
 
 %changelog
+* Sat Feb 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.20.0-alt1
+- Update to v0.20.0 (2025-01-29).
+- The package is renamed from bin-marcosnils to bin-github.
+
 * Sat Oct 26 2024 Vitaly Chikunov <vt@altlinux.org> 0.19.0-alt1
 - Update to v0.19.0 (2024-10-20).
 
