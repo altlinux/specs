@@ -8,7 +8,7 @@
 
 Name: libnbd
 Version: 1.21.6
-Release: alt1
+Release: alt2
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
 Group: Networking/File transfer
@@ -20,7 +20,9 @@ BuildRequires: gcc-c++
 BuildRequires: hardlink
 BuildRequires: libfuse3-devel
 BuildRequires: libgnutls-devel
+%ifnarch %e2k
 BuildRequires: libublksrv-devel
+%endif
 BuildRequires: liburing-devel
 BuildRequires: libxml2-devel
 BuildRequires: perl-podlators
@@ -137,6 +139,9 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %endif
 
 %changelog
+* Sun Feb 23 2025 Michael Shigorin <mike@altlinux.org> 1.21.6-alt2
+- E2K: no -fcoroutines thus no ubdsrv so far (mcst#9237)
+
 * Mon Nov 25 2024 Vitaly Chikunov <vt@altlinux.org> 1.21.6-alt1
 - Update to v1.21.6 (2024-10-14).
 
