@@ -2,7 +2,7 @@
 
 Name:    mylibrary
 Version: 3.2
-Release: alt1
+Release: alt1.1
 
 Summary: Home librarian
 License: GPL-3.0
@@ -56,6 +56,9 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
 
 %changelog
+* Sun Feb 23 2025 Nikolay Strelkov <snk@altlinux.org> 3.2-alt1.1
+- Fixed FTBFS.
+
 * Wed Feb 19 2025 Nikolay Strelkov <snk@altlinux.org> 3.2-alt1
 - New version 3.2.
 
