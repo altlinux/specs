@@ -7,8 +7,8 @@
 %def_enable ocaml
 
 Name: libnbd
-Version: 1.21.6
-Release: alt2
+Version: 1.22.0
+Release: alt1
 Summary: NBD client library in userspace
 License: LGPL-2.1-or-later
 Group: Networking/File transfer
@@ -139,6 +139,9 @@ rm %buildroot%_datadir/bash-completion/completions/nbdsh
 %endif
 
 %changelog
+* Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.22.0-alt1
+- Update to v1.22.0 (2025-02-11).
+
 * Sun Feb 23 2025 Michael Shigorin <mike@altlinux.org> 1.21.6-alt2
 - E2K: no -fcoroutines thus no ubdsrv so far (mcst#9237)
 
