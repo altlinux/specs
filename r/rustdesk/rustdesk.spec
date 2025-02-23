@@ -1,6 +1,6 @@
 Name: rustdesk
-Version: 1.3.7
-Release: alt3
+Version: 1.3.8
+Release: alt1
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
 License: AGPL-3.0
@@ -22,6 +22,7 @@ Patch2: %name-%version-alt-cargolock-fix.patch
 Patch3: %name-%version-alt-fix-main-page-ru.patch
 Patch4: %name-%version-alt-change-ffmpeg-opts.patch
 Patch5: %name-%version-alt-libsciter-path-fix.patch
+Patch6: %name-%version-alt-disable-update-notify.patch
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
@@ -36,6 +37,7 @@ BuildRequires: xdotool-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libdbus-devel
+BuildRequires: libfuse3-devel
 BuildRequires: libpam0-devel
 BuildRequires: libalsa-devel
 BuildRequires: libva-devel
@@ -82,7 +84,7 @@ export VCPKG_FORCE_SYSTEM_BINARIES=1
 vcpkg install --no-downloads --overlay-ports=res/vcpkg libvpx libyuv opus aom ffmpeg
 #build binary
 python3 res/inline-sciter.py
-cargo build %_smp_mflags --offline --release --bin %name --features inline,hwcodec
+cargo build %_smp_mflags --offline --release --bin %name --features inline,hwcodec,unix-file-copy-paste
 
 %install
 install -D %SOURCE4 %buildroot%_bindir/%name
@@ -112,6 +114,11 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Sun Feb 23 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.8-alt1
+- New version 1.3.8.
+- Disabled notification of the availability updates.
+- Enabled unix-file-copy-paste feature.
+
 * Tue Feb 11 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.7-alt3
 - Added info about the option to use epm play to install libsciter-gtk.
 
