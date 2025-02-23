@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define alt_name userpasswd
 %define binary_name userpasswd-legacy
 
 Name: userpasswd
 Version: 0.3.6
-Release: alt2
+Release: alt3
 
 Group: System/Configuration/Other
 Summary: The graphical tool for changing password
@@ -26,7 +27,7 @@ graphical tool for changing password.
 %package common
 Summary: Desktop file for userpasswd
 Group: System/Configuration/Other
-Conflicts: %name < 0.3.6-alt2
+Conflicts: %name < 0.3.6-alt3
 
 %description common
 The package provides a .desktop file
@@ -41,7 +42,7 @@ The package provides a .desktop file
 %make_install install menudir=%_desktopdir
 
 # rename userpasswd -> userpasswd-legacy
-mv %buildroot/%_bindir/%alt_name %buildroot/%_bindir/%binary_name
+mv %buildroot%_bindir/%alt_name %buildroot%_bindir/%binary_name
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%binary_name <<EOF
@@ -51,15 +52,21 @@ EOF
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
-%_datadir/%name
+%_bindir/%binary_name
+%_libexecdir/%name
 %_datadir/pixmaps/*
+%exclude %_datadir/pixmaps/userpasswd-keyring.png
 %_altdir/%binary_name
 
 %files common
-%_desktopdir/*
+%_desktopdir/%name.desktop
+%_datadir/pixmaps/userpasswd-keyring.png
 
 %changelog
+* Mon Feb 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.6-alt3
+- Replace /usr/share/userpasswd/loop to /usr/bin as default behaviour
+- Replace userpasswd-keyring icon to common subpackage
+
 * Thu Feb 20 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt2
 - Add alternatives
 - Add common subpackage
