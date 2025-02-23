@@ -3,6 +3,7 @@
 
 # TODO: quick3d
 %define oname PyQt6
+%define srcname pyqt6
 
 %def_with dbus
 %def_with webkit
@@ -11,15 +12,15 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt6-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 6.7.1
+Version: 6.8.1
 Release: alt1
 
 Summary: Python 3 bindings for Qt 6
-License: GPLv3
+License: GPL-3.0
 Group: Development/Python3
 
 Url: https://www.riverbankcomputing.co.uk/software/pyqt
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %srcname
 Source: %name-%version.tar
 Patch1: alt-decrease-abi-req.patch
 Patch2: alt-touint128.patch
@@ -146,6 +147,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Sun Feb 23 2025 Anton Midyukov <antohami@altlinux.org> 6.8.1-alt1
+- new version (6.8.1)
+
 * Fri Aug 23 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.1-alt1
 - new version (6.7.1)
 
