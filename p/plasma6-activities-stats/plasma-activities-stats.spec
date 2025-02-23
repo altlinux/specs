@@ -4,7 +4,7 @@
 %define libplasmaactivitiesstats libplasmaactivitiesstats%sover
 
 Name: plasma6-activities-stats
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -77,6 +77,12 @@ Requires: plasma6-activities
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

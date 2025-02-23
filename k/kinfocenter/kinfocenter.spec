@@ -4,7 +4,7 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -35,7 +35,7 @@ BuildRequires: libpci-devel libraw1394-devel libusb-devel
 BuildRequires: libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel
 BuildRequires: libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libdrm-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
@@ -149,12 +149,11 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 %files
 %_K6bin/*
+%_K6libexecdir/kinfocenter*
 %_K6plug/plasma/kcms/*.so
 %_K6plug/plasma/kcms/kinfocenter/*.so
 %_K6qml/org/kde/kinfocenter/
 %_K6xdgapp/*.desktop
-%_K6xdgdir/*.directory
-%_K6xdgmenu/*.menu
 %_K6data/kinfocenter/
 # kinfocenter/dmidecode-helper
 %_K6exec/kauth/*dmidecode*
@@ -170,6 +169,12 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

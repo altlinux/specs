@@ -4,15 +4,13 @@
 
 %define rname powerdevil
 
-%define powerdevilconfigcommonprivate_sover 6
-%define libpowerdevilconfigcommonprivate libpowerdevilconfigcommonprivate%powerdevilconfigcommonprivate_sover
 %define powerdevilui_sover 6
 %define libpowerdevilui libpowerdevilui%powerdevilui_sover
 %define powerdevilcore_sover 2
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -72,13 +70,6 @@ Summary: Development files for %name
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-
-%package -n %libpowerdevilconfigcommonprivate
-Group: System/Libraries
-Summary: KF6 library
-Requires: %name-common >= %EVR
-%description -n %libpowerdevilconfigcommonprivate
-KF6 library
 
 %package -n %libpowerdevilui
 Group: System/Libraries
@@ -142,9 +133,6 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 #%_K6link/lib*.so
 #%_K6dbus_iface/*powerdevil*
 
-%files -n %libpowerdevilconfigcommonprivate
-%_K6lib/libpowerdevilconfigcommonprivate.so.*
-%_K6lib/libpowerdevilconfigcommonprivate.so.%powerdevilconfigcommonprivate_sover
 %files -n %libpowerdevilcore
 %_K6lib/libpowerdevilcore.so.*
 %_K6lib/libpowerdevilcore.so.%powerdevilcore_sover
@@ -154,6 +142,12 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

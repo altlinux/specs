@@ -5,7 +5,7 @@
 %define rname ksystemstats
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -41,6 +41,7 @@ KSystemStats is a daemon that collects statistics about the running system.
 
 %files -f %name.lang
 %doc LICENSES/*
+%_datadir/qlogging-categories6/*.*categories
 %_K6bin/*stat*
 %_K6plug/ksystemstats/
 %_K6dbus_srv/*.service
@@ -48,6 +49,12 @@ KSystemStats is a daemon that collects statistics about the running system.
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

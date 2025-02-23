@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.2.5
-Release: alt2
+Version: 6.3.1
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -343,6 +343,12 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Feb 06 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.2.5-alt2
 - fix the size of markdown document
 

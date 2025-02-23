@@ -4,7 +4,7 @@
 %define libplasma5support libplasma5support%sover
 
 Name: plasma6-%rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -17,10 +17,10 @@ Source: %rname-%version.tar
 Patch1: alt-freespace-thread-timer.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libXfixes-devel
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
-BuildRequires: kf6-knotifications-devel kf6-solid-devel kf6-kio-devel
+BuildRequires: kf6-knotifications-devel kf6-solid-devel kf6-kio-devel kf6-kidletime-devel
 BuildRequires: plasma6-libksysguard-devel
 
 %description
@@ -31,7 +31,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
-#Conflicts: plasma5-workspace-common < 1:5
+Conflicts: plasma5-workspace-common < 1:6
+Conflicts: plasma-workspace-common < %version
 %description common
 %name common package
 
@@ -84,6 +85,12 @@ KF6 library
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

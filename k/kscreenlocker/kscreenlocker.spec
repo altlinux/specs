@@ -7,8 +7,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: %rname
-Version: 6.2.5
-Release: alt2
+Version: 6.3.1
+Release: alt1
 #Epoch: 2
 %K6init
 
@@ -159,8 +159,14 @@ install -m 0644 %SOURCE12 %buildroot/%_sysconfdir/pam.d/kde-smartcard
 
 
 %changelog
+* Thu Feb 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
 * Thu Feb 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt2
 - update pam_pkcs11 options
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
 
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version

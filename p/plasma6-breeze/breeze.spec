@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma6-%rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 #Epoch: 1
 %K6init
@@ -93,10 +93,10 @@ KDE 5 visual style.
 %files
 %_bindir/*6
 %_K6bin/*
-%_K6plug/org.kde.kdecoration2/*.so
+%_K6plug/org.kde.kdecoration?/*.so
 %_K6plug/styles/*.so
 %_K6plug/kstyle_config/*.so
-%_K6plug/org.kde.kdecoration2.kcm/*.so
+%_K6plug/org.kde.kdecoration?.kcm/*.so
 %_K6xdgapp/*breeze*.desktop
 %_K6data/QtCurve/
 %_K6data/kstyle/themes/*
@@ -112,6 +112,12 @@ KDE 5 visual style.
 %_libdir/cmake/Breeze/
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

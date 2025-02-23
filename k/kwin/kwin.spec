@@ -16,7 +16,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -160,12 +160,12 @@ done
 %_K6bin/kwin*
 %_K6libexecdir/*kwin*
 %_K6plug/kf6/packagestructure/kwin_*.so
-%_K6plug/org.kde.kdecoration2.kcm/
+%_K6plug/org.kde.kdecoration?.kcm/
 %_K6plug/plasma/kcms/systemsettings/*keyboard*.so
 %_K6plug/kwin/
 %_K6plug/plasma/kcms/systemsettings/*kwin*.so
 %_K6plug/plasma/kcms/systemsettings_qwidgets/*kwin*.so
-%_K6plug/org.kde.kdecoration2/
+%_K6plug/org.kde.kdecoration?/
 %_K6xdgapp/*kwin*.desktop
 %_K6xdgapp/*keyboard*.desktop
 %_K6cf_bin/kwin*
@@ -198,6 +198,12 @@ done
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

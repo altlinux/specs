@@ -10,8 +10,6 @@
 %define libkworkspace6 libkworkspace6_%kworkspace6_sover
 %define libbatterycontrol libbatterycontrol%kworkspace6_sover
 %define libkmpris libkmpris%kworkspace6_sover
-%define plasma_geolocation_interface_sover 6
-%define libplasma_geolocation_interface libplasma-geolocation-interface%plasma_geolocation_interface_sover
 %define taskmanager_sover 6
 %define libtaskmanager libtaskmanager%taskmanager_sover
 %define weather_ion_sover 7
@@ -34,8 +32,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.2.5
-Release: alt3
+Version: 6.3.1
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -79,8 +77,6 @@ Source42: obex.conf
 Source43: xdg-user-dirs.conf
 #
 Source51: nvidia_prime_available.cpp
-
-Patch1: kdebug-490582.patch
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
@@ -134,7 +130,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt6-base-devel qt6-phonon-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires: qt6-wayland-devel qt6-5compat-devel qt6-shadertools-devel qt6-positioning-devel
 BuildRequires: qcoro6-devel
-BuildRequires: libgps-devel libpam0-devel zlib-devel libpolkitqt6-qt6-devel
+BuildRequires: libudev-devel libpam0-devel zlib-devel libpolkitqt6-qt6-devel
 BuildRequires: python3-devel libsystemd-devel
 %if_enabled qalculate
 BuildRequires: libqalculate-devel
@@ -150,7 +146,7 @@ BuildRequires: wayland-protocols plasma-wayland-protocols
 BuildRequires: libdrm-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libxapian-devel libnm-devel libsysfs-devel fontconfig-devel libcanberra-devel
-BuildRequires: libxcbutil-image-devel libxcbutil-devel
+BuildRequires: libxcbutil-image-devel libxcbutil-devel libxcbutil-cursor-devel
 BuildRequires: libICE-devel libSM-devel libXcursor-devel libXfixes-devel libXft-devel libXrender-devel libXtst-devel
 BuildRequires: iceauth xmessage xprop xrdb xset xsetroot
 BuildRequires: libvulkan-devel
@@ -231,13 +227,6 @@ Requires: %name-common >= %EVR
 %description -n %libkworkspace6
 %name library
 
-%package -n %libplasma_geolocation_interface
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common >= %EVR
-%description -n %libplasma_geolocation_interface
-%name library
-
 %package -n %libtaskmanager
 Group: System/Libraries
 Summary: %name library
@@ -311,7 +300,6 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %patch100 -p1 -b .startkde
 %patch101 -p1
 #
@@ -565,9 +553,6 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 %files -n %libkworkspace6
 %_K6lib/libkworkspace6.so.*
 %_K6lib/libkworkspace6.so.%kworkspace6_sover
-%files -n %libplasma_geolocation_interface
-%_K6lib/libplasma-geolocation-interface.so.*
-%_K6lib/libplasma-geolocation-interface.so.%plasma_geolocation_interface_sover
 %files -n %libtaskmanager
 %_K6lib/libtaskmanager.so.*
 %_K6lib/libtaskmanager.so.%taskmanager_sover
@@ -601,6 +586,12 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.0-alt1
+- new version
+
 * Tue Feb 04 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.2.5-alt3
 - fix applications menu actions (closes: 52907)
 

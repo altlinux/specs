@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 #Epoch: 1
 %K6init
@@ -36,7 +36,6 @@ Patch11: alt-old-openconnectauth.patch
 Patch12: alt-def-allow-all.patch
 #
 Patch14: alt-revert.patch
-Patch15: alt-add-bond-xor-mode.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
@@ -217,7 +216,6 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %patch12 -p1
 #
 %patch14 -p1
-%patch15 -p1
 
 %build
 %K6build \
@@ -277,6 +275,12 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

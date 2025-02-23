@@ -5,7 +5,7 @@
 %define libplasmasystemmonitortable libplasmasystemmonitortable%sover
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -23,6 +23,7 @@ Patch1: alt-uid-1000.patch
 Patch2: alt-soname.patch
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires: rpm-build-python3
 BuildRequires: qt6-base-devel qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kirigami-addons-devel
@@ -95,6 +96,7 @@ Requires: %name-common >= %EVR
 %_K6data/knsrcfiles/*systemmonitor*
 %_K6data/plasma/kinfocenter/externalmodules/*systemmonitor*.desktop
 %_K6data/kglobalaccel/*systemmonitor*.desktop
+%_K6conf_up/plasma-systemmonitor*
 %_datadir/metainfo/*.xml
 
 %files -n %libplasmasystemmonitorpage
@@ -105,6 +107,12 @@ Requires: %name-common >= %EVR
 %_K6lib/libPlasmaSystemMonitorTable.so.*
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

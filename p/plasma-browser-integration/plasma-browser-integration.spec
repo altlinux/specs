@@ -1,7 +1,7 @@
 %define rname plasma-browser-integration
 
 Name: %rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -55,11 +55,17 @@ done
 %config %_sysconfdir/opt/edge/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_libdir/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json
 %_K6bin/plasma-browser-integration-host
-%_K6plug/kf6/kded/browserintegrationreminder.so
+%_K6plug/kf6/kded/browserintegration*.so
 %_K6data/krunner/dbusplugins/plasma-runner-*.desktop
 %_K6xdgapp/*browser_integration*.desktop
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 

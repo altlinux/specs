@@ -13,8 +13,8 @@
 %endif
 
 Name: %rname
-Version: 6.2.5
-Release: alt3
+Version: 6.3.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -73,7 +73,7 @@ BuildRequires: scim-devel
 %endif
 BuildRequires: libibus-devel libgio-devel glib2-devel
 BuildRequires: packagekit-qt6-devel
-BuildRequires: libudev-devel libSDL2-devel
+BuildRequires: libudev-devel libSDL2-devel libwacom-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel
 BuildRequires: libxkbcommon-devel libxkbfile-devel
 BuildRequires: libXi-devel libXcursor-devel libXrender-devel libXft-devel
@@ -260,6 +260,12 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Wed Feb 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt3
 - set keyboard layout switch to window class by default
 

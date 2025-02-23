@@ -1,11 +1,11 @@
 %define rname kdecoration
 %define sover 6
-%define sover_private 11
-%define libkdecorations libkdecorations2_%sover
-%define libkdecorationsprivate libkdecorations2private%sover_private
+%define sover_private 1
+%define libkdecorations libkdecorations3_%sover
+%define libkdecorationsprivate libkdecorations3private%sover_private
 
 Name: plasma6-%rname
-Version: 6.2.5
+Version: 6.3.1
 Release: alt1
 %K6init
 
@@ -73,21 +73,27 @@ KF6 library
 %doc LICENSES/* README.md
 
 %files devel
-%_K6inc/kdecoration2_version.h
-%_includedir/KDecoration2/
+%_K6inc/kdecoration?_version.h
+%_includedir/KDecoration?/
 %_K6link/lib*.so
-%_K6lib/cmake/KDecoration2
+%_K6lib/cmake/KDecoration?/
 
 %files -n %libkdecorations
-%_K6lib/libkdecorations2.so.%sover
-%_K6lib/libkdecorations2.so.*
+%_K6lib/libkdecorations3.so.%sover
+%_K6lib/libkdecorations3.so.*
 %files -n %libkdecorationsprivate
-%_K6lib/libkdecorations2private.so.%sover_private
-%_K6lib/libkdecorations2private.so.*
+%_K6lib/libkdecorations3private.so.%sover_private
+%_K6lib/libkdecorations3private.so.*
 
 
 
 %changelog
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
 * Thu Jan 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.2.5-alt1
 - new version
 
