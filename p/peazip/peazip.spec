@@ -3,7 +3,7 @@
 %define _peasrc peazip-sources
 
 Name: peazip
-Version: 10.2.0
+Version: 10.3.0
 Release: alt1
 
 Summary: File and archive manager
@@ -121,6 +121,9 @@ install %_peasrc/res/share/batch/freedesktop_integration/KDE-servicemenus/KDE6-d
 %_datadir/kio/servicemenus/*.desktop
 
 %changelog
+* Sun Feb 23 2025 Anton Kurachenko <srebrov@altlinux.org> 10.3.0-alt1
+- New version 10.3.0.
+
 * Sun Jan 19 2025 Anton Kurachenko <srebrov@altlinux.org> 10.2.0-alt1
 - New version 10.2.0.
 
