@@ -2,8 +2,8 @@
 %add_findreq_skiplist %_K6data/parley/plugins/*.py
 
 Name: %rname
-Version: 24.08.2
-Release: alt2
+Version: 24.12.2
+Release: alt1
 %K6init
 
 Group: Education
@@ -73,6 +73,9 @@ also known as flash cards.
 
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt2
 - build on all arches
 

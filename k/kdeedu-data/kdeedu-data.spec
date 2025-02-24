@@ -1,7 +1,7 @@
 %define rname kdeedu-data
 
 Name: %rname
-Version: 24.08.2
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -42,6 +42,9 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel kf6-ki18n-devel
 
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Thu Nov 07 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 

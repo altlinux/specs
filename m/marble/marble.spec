@@ -11,8 +11,8 @@
 %endif
 
 Name: %rname
-Version: 24.11.90
-Release: alt2
+Version: 24.12.2
+Release: alt1
 %K6init
 
 Group: Education
@@ -171,6 +171,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 24.11.90-alt2
 - hide services from main menu (closes: 52455)
 
