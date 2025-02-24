@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 Summary: Python subprocess replacement
 License: MIT
@@ -63,6 +63,9 @@ export SH_TESTS_RUNNING=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
+- 2.2.1 -> 2.2.2.
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
 - 2.1.0 -> 2.2.1.
 
