@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.01.0
+Version: 25.02.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -67,7 +67,7 @@ Requires: icon-theme-breeze
 Requires: kf6-kwallet kf6-kconfig kf6-kimageformats
 Requires: svgpart
 Requires: kf6-baloo
-Requires: polkit-kde-agent kio-extras powerdevil plasma-systemmonitor
+Requires: polkit-kde-agent kio-extras powerdevil plasma-systemmonitor xdg-desktop-portal-kde
 Requires: drkonqi milou systemsettings
 Requires: ark konsole gwenview okular kwrite kwalletmanager
 Requires: kcalc
@@ -278,6 +278,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.0-alt1
+- require xdg-desktop-portal-kde
+
 * Mon Jan 20 2025 Sergey V Turchin <zerg@altlinux.org> 25.01.0-alt1
 - kde-runtime require kf6-qqc2-desktop-style (closes: 52715)
 
