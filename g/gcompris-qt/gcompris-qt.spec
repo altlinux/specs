@@ -1,6 +1,6 @@
 Name:    gcompris-qt
 Version: 25.0.12
-Release: alt1
+Release: alt2
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -102,6 +102,9 @@ chrpath -d %buildroot%_libexecdir/qml/Box2D.2.0/libqmlbox2d.so
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Mon Feb 24 2025 Andrey Cherepanov <cas@altlinux.org> 25.0.12-alt2
+- Completed Russian translation (thanks Olesya Gerasimenko).
+
 * Mon Feb 17 2025 Andrey Cherepanov <cas@altlinux.org> 25.0.12-alt1
 - New version.
 
