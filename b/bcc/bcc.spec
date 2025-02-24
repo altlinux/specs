@@ -19,8 +19,8 @@
 %endif
 
 Name:		bcc
-Version: 0.31.0
-Release: alt3
+Version: 0.33.0
+Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -309,6 +309,9 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 0.33.0-alt1
+- Update to v0.33.0 (2025-01-18).
+
 * Tue Dec 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.31.0-alt3
 - spec: Fix FTBFS due to removal of un-def kernel flavour.
 - Removed build on ppc64le (due to run-time failures).
