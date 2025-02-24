@@ -1,6 +1,6 @@
 Name: libtasn1
 Version: 4.20.0
-Release: alt1
+Release: alt2
 
 %define soname 6
 
@@ -93,7 +93,12 @@ This package contains libtasn1 development documentation.
 touch doc/stamp_docs
 # Don't add -Werror to CFLAGS before configure: too many configure tests
 # fails and produces wrong results.
-%make_build CFLAGS="$CFLAGS -Werror"
+# Note: Don't add or enable -Werror for Elbrus.
+%make_build \
+%ifnarch %e2k
+	CFLAGS="$CFLAGS -Werror" \
+%endif
+	%nil
 
 %install
 %makeinstall_std
@@ -133,6 +138,9 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Sun Feb 23 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.20.0-alt2
+- Fixed build for Elbrus.
+
 * Fri Feb 14 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Don't add -Werror to CFLAGS before configure.
 - Don't treat missing-variable-declarations warning as error.
