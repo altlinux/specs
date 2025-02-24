@@ -6,7 +6,7 @@
 %define tuneddir %_tuneddir/profiles
 
 Name: tuned
-Version: 2.24.1
+Version: 2.25.1
 Release: alt1
 Summary: A dynamic adaptive system tuning daemon
 License: GPL-2.0-or-later
@@ -347,7 +347,7 @@ fi
 %files
 %exclude %_docdir/%name/README.*
 %doc %_docdir/%name
-/lib/kernel/install.d/92-tuned.install
+%_kernel_installdir/92-tuned.install
 %_datadir/bash-completion/completions/tuned-adm
 %exclude %python3_sitelibdir/tuned/gtk
 %python3_sitelibdir/tuned
@@ -383,6 +383,7 @@ fi
 %config(noreplace) %_sysconfdir/tuned/profile_mode
 %config(noreplace) %_sysconfdir/tuned/bootcmdline
 %config(noreplace) %_sysconfdir/tuned/post_loaded_profile
+%config(noreplace) %_sysconfdir/tuned/ppd_base_profile
 %_sysconfdir/modprobe.d/tuned.conf
 %_tmpfilesdir/tuned.conf
 %_unitdir/tuned.service
@@ -507,6 +508,9 @@ fi
 %files checkinstall
 
 %changelog
+* Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 2.25.1-alt1
+- Update to v2.25.1 (2025-02-03).
+
 * Thu Nov 28 2024 Vitaly Chikunov <vt@altlinux.org> 2.24.1-alt1
 - Update to v2.24.1 (2024-11-26). (Fixes: CVE-2024-52336, CVE-2024-52337).
 
