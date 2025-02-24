@@ -1,5 +1,5 @@
 Name: kernel-image-6.14
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	6.13
 %define kernel_base_version	6.14
 %define kernel_sublevel	.0
@@ -610,6 +610,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt0.rc4
+- Update to v6.14-rc4 (2025-02-23).
+- kiosk: MIN_UID 500 -> 1000.
+
 * Tue Feb 18 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt0.rc3
 - Update to v6.14-rc3 (2025-02-16).
 - Disable BLK_DEV_FD.
