@@ -1,5 +1,5 @@
 Name: emacs-libvterm
-Version: 0.0.20240821
+Version: 0.0.20250111
 Release: alt1
 
 Summary: Libvterm-based terminal emulator for Emacs
@@ -26,18 +26,25 @@ capable, fast, and it can seamlessly handle large outputs.
 %build
 %cmake
 %cmake_build
+emacs -Q --batch -f batch-byte-compile vterm.el
+gzip vterm.el
 
 %install
-install -pm0644 -D vterm-module.so %buildroot%modulepath/vterm/vterm-module.so
-install -pm0644 vterm.el %buildroot%modulepath/vterm
+install -pm0644 -D vterm-module.so %buildroot%modulepath/vterm-module.so
+install -pm0644 vterm.elc vterm.el.gz %buildroot%modulepath/
 
 %global _customdocdir %_defaultdocdir/%name
 
 %files
 %doc README* etc/*
-%modulepath/vterm
+%modulepath/vterm.elc
+%modulepath/vterm.el.gz
+%modulepath/vterm-module.so
 
 %changelog
+* Thu Feb 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20250111-alt1
+- updated from git rev.056ad74
+
 * Wed Sep 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20240821-alt1
 - updated from git rev.9882793
 

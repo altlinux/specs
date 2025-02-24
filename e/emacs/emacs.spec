@@ -1,5 +1,5 @@
 Name: emacs
-Version: 30.0.93
+Version: 30.1
 Release: alt1
 
 Summary: GNU Emacs text editor
@@ -9,10 +9,10 @@ Url: http://www.gnu.org/software/emacs/
 
 Source: %name-%version-%release.tar
 
-%ifnarch %e2k
-%def_enable natcomp
-%else
+%ifarch %e2k
 %def_disable natcomp
+%else
+%def_enable natcomp
 %endif
 
 BuildRequires: pkgconfig(alsa)
@@ -39,6 +39,7 @@ BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(tinfo)
 BuildRequires: pkgconfig(tree-sitter)
+BuildRequires: pkgconfig(xaw3d)
 BuildRequires: pkgconfig(xfixes)
 BuildRequires: pkgconfig(xft)
 BuildRequires: pkgconfig(xinerama)
@@ -49,7 +50,6 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: texinfo
 BuildRequires: libgif-devel
-BuildRequires: libXaw3d-devel libXaw-devel
 %{?_enable_natcomp:BuildRequires: libgccjit-devel}
 
 %package athena
@@ -184,7 +184,7 @@ This package contain full description of Emacs Lisp language
 #}}}
 
 %define _emacs_archlibdir %_libexecdir/emacs/%version/%_host_alias
-%define locallisppath %_libdir/emacs/%version/site-lisp:%_datadir/emacs/%version/site-lisp
+%define locallisppath %_datadir/emacs/site-lisp:%_datadir/emacs/%version/site-lisp:%_libdir/emacs/%version/site-lisp
 %ifarch %e2k
 # on default -O3 crashes with SIGILL in lucid_event_type_list_p
 %global _optlevel 2
@@ -261,9 +261,8 @@ rm -vf %buildroot%_bindir/emacs
 rm -vf %buildroot%_bindir/emacs-%version
 rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 
-# populate non-default part of locallisppath
-cp -av %buildroot%_datadir/emacs/%version/site-lisp \
-   %buildroot%_libdir/emacs/%version/site-lisp
+# arch-dependent part of locallisppath, mostly for modules
+mkdir %buildroot%_libdir/emacs/%version/site-lisp
 
 # cleanups
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
@@ -310,6 +309,8 @@ sed -ne '/\/leim\//p' < elc.ls >> leim.ls
 sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 
 %set_compress_method skip
+%add_debuginfo_skiplist %_libdir/emacs/%version/native-lisp
+%brp_strip_none %_libdir/emacs/%version/native-lisp
 
 #---------------------------------------------------------------
 %files athena -f athena.ls
@@ -372,6 +373,10 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Feb 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 30.1-alt1
+- 30.1 released (fixed: CVE-2024-53920, CVE-2025-1244)
+- readd non-versioned site-lisp directory (closes: 53035)
+
 * Thu Jan 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 30.0.93-alt1
 - 30.0.93 released
 
