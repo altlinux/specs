@@ -3,7 +3,7 @@
 
 Name:    eg25-manager
 Version: 0.5.2
-Release: alt4
+Release: alt5
 
 Summary: Manager daemon for the Quectel EG25 mobile broadband modem
 License: GPL-3.0-or-later
@@ -12,7 +12,6 @@ Url:     https://gitlab.com/mobian1/eg25-manager
 
 Source: %name-%version.tar
 Source1: mobile-tweaks.conf
-Source2: 80-%name.preset
 Source3: %name.firsttime
 Patch0: %name-dirs.patch
 
@@ -58,11 +57,6 @@ It implements the following features:
 # --test-quick-suspend-resume
 install -Dp -m 644 %SOURCE1 %buildroot%_unitdir/ModemManager.service.d/mobile-tweaks.conf
 
-# Start eg25-manager by default
-# udev-based rule is useless on pinephone pro, because usb device
-# will appear only after eg25-manager is started
-install -Dp -m 644 -t %buildroot%_presetdir %SOURCE2
-
 # Disable eg25-manager on unsupported devices during firstinstall
 install -Dp -m 755 %SOURCE3 %buildroot%_sysconfdir/firsttime.d/%name
 
@@ -72,21 +66,24 @@ install -Dp -m 755 %SOURCE3 %buildroot%_sysconfdir/firsttime.d/%name
 %post
 %post_service %name
 
-%triggerin -- %name < 0.5.2-alt3
+%triggerin -- %name < 0.5.2-alt4
+SYTSEMCTL=systemctl
 # Force autostart on supported devices to simplify system upgrade
-grep -qi pinephone /proc/device-tree/model 2>/dev/null && systemctl preset eg25-manager || :
+grep -qi pinephone /proc/device-tree/model 2>/dev/null && $SYSTEMCTL enable eg25-manager || :
 
 %files
 %doc *.md
 %_bindir/%name
 %_unitdir/%name.service
 %_unitdir/ModemManager.service.d/mobile-tweaks.conf
-%_presetdir/80-%name.preset
 %_sysconfdir/firsttime.d/%name
 %_udevrulesdir/*.rules
 %_datadir/%name
 
 %changelog
+* Mon Feb 24 2025 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt5
+- Do not use systemd preset, do not dependency on systemd
+
 * Sat Feb 22 2025 Andrew Savchenko <bircoph@altlinux.org> 0.5.2-alt4
 - Fix trigger: return true even when hardware check is negative.
 
