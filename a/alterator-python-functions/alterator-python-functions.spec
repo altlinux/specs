@@ -1,11 +1,12 @@
 Name: alterator-python-functions
 
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Conflicts: alterator < 3.4-alt1
 
@@ -38,6 +39,9 @@ Note that the module is `alterator_bindings.backend3`
 %doc README.md
 
 %changelog
+* Sat Feb 22 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt3
+- Explicit build dependency on python3-module-wheel
+
 * Mon Feb 17 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt2
 - Proper 'translate' function implementation
 
