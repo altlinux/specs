@@ -11,13 +11,13 @@
 # currently available
 %global llvm_version 13.0
 %else
-%global llvm_version 15.0
+%global llvm_version %nil
 %endif
 %endif
 %global clang_version %(echo %llvm_version | cut -d . -f 1)
 
 Name: python3-module-%mod_name
-Version: 6.7.2
+Version: 6.8.2.1
 Release: alt0.1
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
@@ -51,7 +51,7 @@ BuildRequires: libpolly%{llvm_version}-devel
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: clang%{llvm_version}-tools
 BuildRequires: clangd%{llvm_version}
-BuildRequires: clang%{llvm_version}-libs
+#BuildRequires: clang%{llvm_version}-libs
 BuildRequires: mlir%{llvm_version}-tools
 
 BuildRequires: libnumpy-py3-devel
@@ -145,9 +145,12 @@ sed -i 's/purelib/platlib/' sources/shiboken6/cmake/ShibokenHelpers.cmake
 
 %global optflags_lto %nil
 
-export CXX=/usr/bin/clang++-%{clang_version}
-
-export ALTWRAP_LLVM_VERSION=%{llvm_version}
+if [ -z "%{llvm_version}" ] ; then
+    export CXX=/usr/bin/clang++
+else
+    export CXX=/usr/bin/clang++-%{clang_version}
+    export ALTWRAP_LLVM_VERSION=%{llvm_version}
+fi
 
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 
@@ -176,7 +179,7 @@ export PATH="%_qt6_bindir:$PATH"
 %__python3 setup.py egg_info
 for name in PySide6 shiboken6 shiboken6_generator; do
   mkdir -p %buildroot%python3_sitelibdir/$name-%version-py%_python3_version.egg-info
-  cp -p $name.egg-info/{PKG-INFO,not-zip-safe,top_level.txt} \
+  cp -p $name.egg-info/{PKG-INFO,top_level.txt} \
         %buildroot%python3_sitelibdir/$name-%version-py%_python3_version.egg-info/
 done
 
@@ -256,6 +259,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2.1-alt0.1
+- NMU: new version
+
 * Tue Aug 27 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt0.1
 - NMU: clean build requires
 - NMU: new version
