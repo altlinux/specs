@@ -6,7 +6,7 @@
 %set_autoconf_version 2.71
 
 Name: lib%oname
-Version: 1.14.5
+Version: 1.14.6
 Release: alt1
 
 Summary: Hierarchical Data Format 5 library
@@ -144,6 +144,9 @@ EOF
 %_libdir/libhdf5.settings
 
 %changelog
+* Mon Feb 24 2025 Anton Farygin <rider@altlinux.ru> 1.14.6-alt1
+- 1.14.5 -> 1.14.6
+
 * Fri Oct 18 2024 Anton Farygin <rider@altlinux.ru> 1.14.5-alt1
 - 1.14.3 -> 1.14.5
 
