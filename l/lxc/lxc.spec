@@ -16,7 +16,7 @@
 
 Name: lxc
 Version: 6.0.3
-Release: alt1
+Release: alt2
 Summary: Linux Containers
 License: LGPL-2.1-or-later
 Group: System/Configuration/Other
@@ -186,24 +186,22 @@ find %buildroot -name '*.a' -delete
 
 %post core
 usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
-if [ $1 -eq 1 ]; then
+if [ $1 -eq 1 ] && ! sd_booted; then
 	chkconfig --add lxc ||:
 fi
+%post_service_posttrans_restart lxc-monitord
 
 %preun core
-if [ $1 -eq 0 ]; then
-	chkconfig --del lxc ||:
-fi
+%preun_service lxc
+%preun_service lxc-monitord
 
 %post net
-if [ $1 -eq 1 ]; then
+if [ $1 -eq 1 ] && ! sd_booted; then
 	chkconfig --add lxc-net ||:
 fi
 
 %preun net
-if [ $1 -eq 0 ]; then
-	chkconfig --del lxc-net ||:
-fi
+%preun_service lxc-net
 
 %pre runtime
 groupadd -r -f vmusers ||:
@@ -290,6 +288,9 @@ groupadd -r -f vmusers ||:
 %_man8dir/pam_cgfs.8*
 
 %changelog
+* Mon Feb 24 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.3-alt2
+- Update post and preun scripts.
+
 * Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.3-alt1
 - 6.0.3.
 
