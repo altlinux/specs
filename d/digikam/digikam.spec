@@ -5,7 +5,7 @@
 
 # Debian abandon libjasper
 %def_disable jasper
-%def_disable baloo
+%def_enable baloo
 %def_enable mysql
 %ifver_lt %opencv_ver 3
 %def_disable opencv3
@@ -17,10 +17,10 @@
 %define label digiKam
 Name: %rname
 %define ver_major 8
-%define ver_minor 3
+%define ver_minor 5
 %define ver_bugfix 0
-Version: 8.4.0
-Release: alt3
+Version: 8.5.0
+Release: alt1
 %K6init no_altplace
 
 %define sover %version
@@ -260,7 +260,6 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 #%doc AUTHORS ChangeLog HACKING NEWS README* TODO
 %_K6data/%rname/*
 %_K6data/showfoto/*
-%_K6icon/hicolor/*/apps/avplayer.*
 %_K6icon/hicolor/*/apps/%rname.*
 %_K6icon/hicolor/*/apps/dk-*.*
 %_K6icon/hicolor/*/apps/showfoto.*
@@ -289,6 +288,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 8.5.0-alt1
+- new version
+
 * Wed Dec 11 2024 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt3
 - fix requries
 
