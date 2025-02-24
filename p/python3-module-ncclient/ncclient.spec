@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.16
+Version: 0.6.17
 Release: alt1
 Summary: Python library for NETCONF clients
 License: Apache-2.0
@@ -16,8 +16,6 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# https://github.com/ncclient/ncclient/issues/598
-%add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -58,6 +56,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 0.6.17-alt1
+- 0.6.16 -> 0.6.17.
+
 * Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.6.16-alt1
 - 0.6.13 -> 0.6.16.
 
