@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.18
+Version: 0.5.19
 Release: alt1
 
 Summary: Manager for game installation and execution
@@ -13,6 +13,7 @@ License: GPL-3.0-or-later and LGPL-2.1-or-later and MIT
 # ./lutris/gui/widgets/gi_composites.py contains license LGPL-2.1-or-later
 Group: Games/Other
 Url: https://lutris.net
+Vcs: https://github.com/lutris/lutris.git
 
 Source: https://lutris.net/releases/lutris_%version.tar.xz
 Patch0: lutris-0.5.17-alt-GdkPixbuf.patch
@@ -72,14 +73,18 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%appid.desktop
-%_iconsdir/hicolor/scalable/apps/%name.svg
-%_iconsdir/hicolor/??x??/apps/%name.png
-%_iconsdir/hicolor/???x???/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%appid.svg
+%_iconsdir/hicolor/??x??/apps/%appid.png
+%_iconsdir/hicolor/???x???/apps/%appid.png
 %python3_sitelibdir/%{name}*
 %_datadir/metainfo/%appid.metainfo.xml
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.19-alt1
+- New version 0.5.19.
+- Added vcs tag.
+
 * Tue Dec 10 2024 Leontiy Volodin <lvol@altlinux.org> 0.5.18-alt1
 - New version 0.5.18.
 

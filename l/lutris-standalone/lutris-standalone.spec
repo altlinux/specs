@@ -5,7 +5,7 @@
 
 Name: lutris-standalone
 Version: 0.5.7.1
-Release: alt2
+Release: alt3
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
@@ -16,9 +16,6 @@ Patch: lutris-0.5.7-alt-python3-pixbuf-path.patch
 Patch1: lutris-standalone-0.5.7-alt-dxvk-url.patch
 
 AutoProv: no, nopython
-# %brp_strip_none %_alterator_libdir/*
-# %add_verify_elf_skiplist %_alterator_libdir/*
-# %add_findreq_skiplist %_alterator_libdir/*
 
 %if_enabled meson
 BuildPreReq: meson
@@ -62,6 +59,9 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %else
 %python3_install
 %endif
+# fix a conflict with the main version of the package for gnome-software
+rm -rf %buildroot%_datadir/metainfo/%appid.metainfo.xml
+# package the translations
 %find_lang %repo
 
 %files -f %repo.lang
@@ -74,10 +74,12 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 %_iconsdir/hicolor/??x??/apps/%repo.png
 %_iconsdir/hicolor/???x???/apps/%repo.png
 %python3_sitelibdir/%{repo}*
-%_datadir/metainfo/%appid.metainfo.xml
 %_man1dir/%repo.1.xz
 
 %changelog
+* Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.5.7.1-alt3
+- Fixed a conflict with the main version of the package.
+
 * Tue Mar 15 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.7.1-alt2
 - Fix dxvk url (ALT #42128).
 
