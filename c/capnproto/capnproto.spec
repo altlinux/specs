@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 1.0.2
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
 License: MIT
@@ -54,9 +54,9 @@ This package contains libraries and header files for developing applications
 that use Cap'n Proto.
 
 %prep
-%setup
+%setup -n %name-%version/c++
 %ifarch %e2k
-%patch2000 -p1
+%patch2000 -p2
 %endif
 
 %build
@@ -66,18 +66,17 @@ that use Cap'n Proto.
 # too many warnings of this type on tests
 %add_optflags -Wno-unused-variable
 %endif
-%add_optflags %(getconf LFS_CFLAGS)
-cd c++
+%add_optflags %(getconf LFS_CFLAGS) -Wno-tautological-compare
+# Upstream build flags.
+%add_optflags -Wno-strict-aliasing -Wno-sign-compare -Wno-unused-parameter
 %autoreconf
 %configure --disable-static
 %make_build
 
 %install
-cd c++
 %makeinstall_std
 
 %check
-cd c++
 # disable networking test
 subst '/TEST(AsyncIo, SimpleNetwork)/,/^}/s/^/\/\//' src/kj/async-io-test.c++
 # AsyncIo/AncillaryMessageHandler test will fail on older kernels (such as
@@ -90,11 +89,11 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_bindir/cap*
 
 %files -n libcapnp
-%doc LICENSE CONTRIBUTORS README.md
+%doc ../LICENSE ../CONTRIBUTORS ../README.md
 %_libdir/*-%version.so
 
 %files devel
-%doc c++/LICENSE.txt c++/README.txt doc/*md kjdoc/tour.md
+%doc LICENSE.txt README.txt ../doc/*md ../kjdoc/tour.md
 %_includedir/*
 %_libdir/pkgconfig/*.pc
 %_libdir/cmake/CapnProto
@@ -102,6 +101,9 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.1.0-alt1
+- Update to v1.1.0 (2024-12-21).
+
 * Sat Nov 16 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0.2-alt2
 - e2k patch update
 

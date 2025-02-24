@@ -5,7 +5,7 @@
 #  %%set_verify_elf_method strict
 
 Name:		rr
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
@@ -25,7 +25,10 @@ BuildRequires: capnproto-devel
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: gdb
+BuildRequires: libzstd-devel
+BuildRequires: lldb
 BuildRequires: patchelf
+BuildRequires: python3-module-lldb19.1
 BuildRequires: python3-module-pexpect
 BuildRequires: rpm-build-python
 BuildRequires: rpm-build-python3
@@ -45,8 +48,8 @@ rr currently requires either:
 - Certain AArch64 microarchitectures (e.g. ARM Neoverse N1 or the Apple
   Silicon M-series).
 
-# Version 5.8.0 is manually tested on i9-10900.
-# 98% tests passed, 24 tests failed out of 1515
+%dnl Version 5.9.0 is manually tested on i9-10900.
+%dnl 95% tests passed, 71 tests failed out of 1566
 %package testsuite
 Summary: Test suite for rr (debugger)
 Group: Development/Other
@@ -114,6 +117,7 @@ file %_libdir/rr/testsuite/obj/bin/alternate_thread_diversion | grep 'with debug
 %_bindir/rr-collect-symbols.py
 %_datadir/rr
 %_datadir/bash-completion/completions/rr
+%_datadir/zsh/site-functions/_rr
 %_libdir/rr
 %exclude %_libdir/rr/libtest_lib*.so
 %exclude %_libdir/rr/testsuite
@@ -125,6 +129,9 @@ file %_libdir/rr/testsuite/obj/bin/alternate_thread_diversion | grep 'with debug
 %files checkinstall
 
 %changelog
+* Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 5.9.0-alt1
+- Update to 5.9.0 (2025-02-13).
+
 * Tue May 21 2024 Vitaly Chikunov <vt@altlinux.org> 5.8.0-alt1
 - Update to 5.8.0 (2024-05-20).
 
