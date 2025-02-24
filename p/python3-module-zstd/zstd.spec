@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.6.1
+Version: 1.5.6.4
 Release: alt1
 
 Summary: Zstd Bindings for Python
@@ -15,7 +15,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/zstd/
 Vcs: https://github.com/sergey-dryabzhinsky/python-zstd
 Source: %name-%version.tar
-
+Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 # build backend and its deps
 BuildRequires: python3-module-setuptools
@@ -28,6 +28,7 @@ Simple Python bindings for the Zstd compression library.
 
 %prep
 %setup
+%autopatch -p1
 # Remove bundled zstd library
 rm -r zstd
 
@@ -39,6 +40,9 @@ export ZSTD_EXTERNAL=1
 %pyproject_install
 
 %check
+# there is no option to exclude tests via CLI
+# speed tests check nothing but measure and report speed
+rm tests/test_speed.py
 %pyproject_run_unittest -v
 
 %files
@@ -47,6 +51,9 @@ export ZSTD_EXTERNAL=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 1.5.6.4-alt1
+- 1.5.6.1 -> 1.5.6.4.
+
 * Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 1.5.6.1-alt1
 - 1.5.5.1 -> 1.5.6.1.
 
