@@ -1,67 +1,89 @@
+%define _unpackaged_files_terminate_build 1
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 %define _xorgmoduledir %_libdir/X11/modules
 
 Name: tigervnc
-Version: 1.13.1
-Release: alt2
-Summary: A TigerVNC remote display system
+Version: 1.15.0
+Release: alt1
 
+Summary: A TigerVNC remote display system
+License: GPL-2.0-or-later
 Group: Networking/Remote access
-License: GPLv2+
-URL: http://www.tigervnc.com
+Url: https://tigervnc.org
+VCS: https://github.com/TigerVNC/tigervnc.git
 
 BuildRequires(pre): rpm-macros-cmake
-Requires: xauth xkeyboard-config fonts-bitmap-misc xorg-dri-swrast
 Provides: tightvnc
+Requires: fonts-bitmap-misc
+Requires: xauth
+Requires: xkeyboard-config
+Requires: xorg-dri-swrast
 Obsoletes: tightvnc
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: vncserver.init
 Source2: vncserver.service
 Source3: vncserver.pl
 Source4: vncserver.man
 
 Source100: xorg-server-21.1.8.tar
-Source101: tightpasswd.tar.gz
 Source200: repatch_spec.sh
-Source201: tigervnc.unused
 
 ## FC patches
 Patch1: FC-vncsession-restore-script-systemd-service.patch
 Patch2: FC-xserver120.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-0000-find-fltk-libs.patch
-Patch102: Ubuntu-0001-x0vncserver-build-make-missing-libraries-fatal-errors.patch
 Patch103: Ubuntu-0002-fix-linking.patch
-Patch104: Ubuntu-0010-fix-xtigervnc-build.patch
-Patch105: Ubuntu-0020-buildtime-from-debian-changelog.patch
-Patch106: Ubuntu-0102-fix-spelling-error-in-manpages-to-shutup-lintian.patch
-Patch107: Ubuntu-0151-make-cmake-enable-options-mandatory-if-turned-on.patch
-Patch108: Ubuntu-0175-xtigervncviewer-WM_CLASS.patch
 Patch109: Ubuntu-0205-defined-CMAKE_INSTALL_FULL_BINDIR.patch
-Patch110: Ubuntu-0210-use-tigervncsession-name.patch
-Patch111: Ubuntu-0220-remove-systemd-service-obsolete-syslog-target.patch
-Patch112: Ubuntu-0300-xorg-0121.patch
-Patch113: Ubuntu-backport_0001-Fix-formatting-of-rfbport-in-man-pages.patch
-Patch114: Ubuntu-backport_0002-Fix-typo-in-mirror-monitor-detection.patch
-Patch115: Ubuntu-backport_0003-Fix-handling-of-VMware-cursors.patch
-Patch116: Ubuntu-backport_0004-Fix-session-resize-after-mirroring-on-Linux-vncviewe.patch
-Patch117: Ubuntu-backport_0005-Added-AppStream-meta-info-file-for-the-vncviewer.patch
-Patch118: Ubuntu-rh_0904-Added-RH-patch-tigervnc11-rh588342.patch-which-fixes.patch
-Patch119: Ubuntu-rh_tigervnc-manpages.patch
-Patch120: Ubuntu-rh_tigervnc-cursor.patch
-Patch121: Ubuntu-CVE-2014-8240-849479.patch
 
 ## ALT patches
 Patch501: tigervnc-stdinpasswd.patch
-Patch502: ALT-FC-xserver120.patch
-Patch601: U_0001-Properly-store-certificate-exceptions.patch
-Patch602: U_0002-Properly-store-certificate-exceptions-in-Java-viewer.patch
 
-# Automatically added by buildreq on Thu Oct 12 2023
-# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libavutil-devel libcairo-gobject libcap-ng libcrypt-devel libgdk-pixbuf libglvnd-devel libgmp-devel libgpg-error libgpg-error-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit libsasl2-3 libstdc++-devel libwayland-client-devel libx265-199 libxcb-devel paper perl pkg-config python3 python3-base sh5 shared-mime-info wayland-devel xml-utils xorg-proto-devel xsltproc
-BuildRequires: ImageMagick-tools cmake doxygen flex gcc-c++ libGL-devel libXaw-devel libXdamage-devel libXdmcp-devel libXfont2-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libaudit-devel libavcodec-devel libdrm-devel libfltk-devel libgbm-devel libgcrypt-devel libgnutls-devel libjpeg-devel libnettle-devel libpam-devel libpciaccess-devel libpixman-devel libselinux-devel libssl-devel libswscale-devel libtasn1-devel libudev-devel libxcb-render-util-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxkbfile-devel libxshmfence-devel perl-parent xmlto xorg-xtrans-devel zlib-devel
+BuildRequires: ImageMagick-tools
+BuildRequires: cmake
+BuildRequires: doxygen
+BuildRequires: flex
+BuildRequires: gcc-c++
+BuildRequires: libGL-devel
+BuildRequires: libXaw-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXfont2-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libXpm-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXres-devel
+BuildRequires: libXtst-devel
+BuildRequires: libXv-devel
+BuildRequires: libaudit-devel
+BuildRequires: libavcodec-devel
+BuildRequires: libdrm-devel
+BuildRequires: libfltk-devel
+BuildRequires: libgbm-devel
+BuildRequires: libgcrypt-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libnettle-devel
+BuildRequires: libpam-devel
+BuildRequires: libpciaccess-devel
+BuildRequires: libpixman-devel
+BuildRequires: libselinux-devel
+BuildRequires: libssl-devel
+BuildRequires: libswscale-devel
+BuildRequires: libtasn1-devel
+BuildRequires: libudev-devel
+BuildRequires: libxcb-render-util-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxcbutil-icccm-devel
+BuildRequires: libxcbutil-image-devel
+BuildRequires: libxcbutil-keysyms-devel
+BuildRequires: libxkbfile-devel
+BuildRequires: libxshmfence-devel
+BuildRequires: perl-parent
+BuildRequires: xmlto
+BuildRequires: xorg-xtrans-devel
+BuildRequires: zlib-devel
 
 BuildRequires: libfltk-devel >= 1.3.3
 
@@ -85,8 +107,9 @@ server.
 Summary: A TigerVNC server
 Group: Networking/Remote access
 Provides: tightvnc-server
+Requires: tigervnc-common = %EVR
+Requires: tigervnc-pam = %EVR
 Obsoletes: tightvnc-server
-Requires: %name-common = %version-%release, %name-pam = %version-%release
 
 %description server
 The VNC system allows you to access the same desktop from a wide
@@ -94,12 +117,12 @@ variety of platforms.  This package is a TigerVNC server, allowing
 others to access the desktop on your machine.
 
 %package common
-Summary: A TigerVNC and TightVNC compatible passwd utilities
+Summary: A TigerVNC password utility
 Group: Networking/Remote access
 Conflicts: turbovnc-server
 
 %description common
-A TigerVNC and TightVNC compatible passwd utilities
+A TigerVNC password utility
 
 %package -n xorg-extension-vnc
 Summary: VNC extension for Xorg
@@ -117,44 +140,18 @@ Group: Networking/Remote access
 PAM module for TigerVNC servers
 
 %prep
-%setup -a101 -a100
+%setup -a100
 cp %SOURCE3 %SOURCE4 .
 
 ## FC apply patches
 %patch1 -p1 -b .vncsession-restore-script-systemd-service
-#patch2 -p1 -b .xserver120-rebased
 
 ## Ubuntu apply patches
-%patch101 -p1
-%patch102 -p1
 %patch103 -p1
-%patch104 -p1
-#patch105 -p1
-%patch106 -p1
-##patch107 -p1
-%patch108 -p1
 %patch109 -p1
-#patch110 -p1
-##patch111 -p1
-#patch112 -p1
-#patch113 -p1
-#patch114 -p1
-#patch115 -p1
-#patch116 -p1
-##patch117 -p1
-%patch118 -p1
-%patch119 -p1
-%patch120 -p1
-%patch121 -p1
 
 ## ALT apply patches
 %patch501 -p1
-#patch502 -p1
-#patch601 -p1
-#patch602 -p1
-
-# Unpach Ubuntu's xtigervncviewer
-sed -i 's/xtigervncviewer/vncviewer/g' vncviewer/vncviewer.desktop.in.in
 
 %build
 
@@ -165,12 +162,9 @@ sed -i 's/xtigervncviewer/vncviewer/g' vncviewer/vncviewer.desktop.in.in
 cp -a unix/xserver  %_cmake__builddir/unix/
 cp -a xorg-server-*/* %_cmake__builddir/unix/xserver/
 
-patch -p1 -i `pwd`/unix/xserver21.1.1.patch -d %_cmake__builddir/unix/xserver
+patch -p1 -i `pwd`/unix/xserver21.patch -d %_cmake__builddir/unix/xserver
 
-## pushd %_cmake__builddir/unix/xserver
 %autoreconf %_cmake__builddir/unix/xserver
-#	--disable-composite \
-#
 ( cd %_cmake__builddir/unix/xserver
   %configure \
 	--disable-config-dbus \
@@ -203,19 +197,11 @@ patch -p1 -i `pwd`/unix/xserver21.1.1.patch -d %_cmake__builddir/unix/xserver
         || exit 1
 )
 
-%make_build -C %_cmake__builddir/unix/xserver LIBS="-ljpeg -lpam -lz -lgnutls -lm" CPPFLAGS="-I/usr/include/libdrm" TIGERVNC_SRCDIR=`pwd`
-## popd
-
-# Build icons
-##pushd media
-##cmake_insource -DDATA_DIR:PATH=%_datadir
-##%make
-##popd
-
-# Build tightvnc compatible vncpasswd
-pushd tightpasswd
-cc %optflags *.c -o tightpasswd
-popd
+%make_build -C %_cmake__builddir/unix/xserver \
+	    LIBS="-ljpeg -lpam -lz -lgnutls -lm" \
+	    CPPFLAGS="-I/usr/include/libdrm" \
+	    TIGERVNC_SRCDIR=`pwd` \
+	    #
 
 %install
 %cmakeinstall_std
@@ -242,11 +228,8 @@ cat << __EOF__ > %buildroot%_sysconfdir/sysconfig/vncservers
 # VNCSERVERARGS[1]="-geometry 800x600 -localhost"
 __EOF__
 
-install -D contrib/packages/rpm/el7/SOURCES/10-libvnc.conf %buildroot%_sysconfdir/X11/xorg.conf.d/vnc.conf
-
-# Build tightvnc compatible vncpasswd
-install tightpasswd/tightpasswd %buildroot%_bindir/tightpasswd
-install tightpasswd/vncpasswd.man %buildroot%_man1dir/tightpasswd.1
+install -D contrib/packages/rpm/el7/SOURCES/10-libvnc.conf \
+	%buildroot%_sysconfdir/X11/xorg.conf.d/vnc.conf
 
 install vncserver.pl %buildroot/%_bindir/vncserver
 install vncserver.man %buildroot/%_man1dir/vncserver.1
@@ -257,8 +240,10 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %doc LICENCE.TXT *.rst
 %_bindir/vncviewer
 %_desktopdir/*.desktop
+%_docdir/tigervnc/
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
+%_libdir/X11/modules/extensions/libvnc.la
 %_man1dir/vncviewer.1*
 %_datadir/metainfo/org.tigervnc.vncviewer.metainfo.xml
 
@@ -282,9 +267,7 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 
 %files common
 %_bindir/vncpasswd
-%_bindir/tightpasswd
 %_man1dir/vncpasswd.1*
-%_man1dir/tightpasswd.1*
 
 %files pam
 %_sysconfdir/pam.d/*
@@ -294,6 +277,13 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Mon Feb 24 2025 Constantin Sunzow <protvin@altlinux.org> 1.15.0-alt1
+- Removed obsoleted tightpasswd.
+- Change license to SPDX format.
+- Update Url tag.
+- Add VCS tag.
+- New version.
+
 * Tue Dec 19 2023 Fr. Br. George <george@altlinux.org> 1.13.1-alt2
 - Eliminate missing -rfbwait option
 

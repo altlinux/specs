@@ -2,7 +2,7 @@
 
 Name: goldendict
 Version: 1.5.0
-Release: alt3
+Release: alt4
 
 Summary: Feature-rich dictionary lookup program
 License: GPL-3.0
@@ -14,6 +14,7 @@ Source0: %name-%version.tar
 Patch0: goldendict-ru-desktop.patch
 Patch1: goldendict-remove-git-version.patch
 Patch2: goldendict-1.5.0-alt-link-config.patch
+Patch3: goldendict-1.5.0-upstream-ffmpeg7.patch
 
 BuildRequires(pre): qt5-base-devel
 BuildRequires: bzlib-devel
@@ -97,6 +98,9 @@ rm -rf %buildroot%_datadir/app-install
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Feb 24 2025 Constantin Sunzow <protvin@altlinux.org> 1.5.0-alt4
+- Fix FTBFS: rebuild with ffmpeg 7.
+
 * Thu Nov 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt3
 - Replaced untrusted web-site for MediaWiki search (thanks alton@).
 
