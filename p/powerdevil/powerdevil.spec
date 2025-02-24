@@ -4,14 +4,12 @@
 
 %define rname powerdevil
 
-%define powerdevilui_sover 6
-%define libpowerdevilui libpowerdevilui%powerdevilui_sover
 %define powerdevilcore_sover 2
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
 Version: 6.3.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -71,17 +69,11 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libpowerdevilui
-Group: System/Libraries
-Summary: KF6 library
-Requires: %name-common >= %EVR
-%description -n %libpowerdevilui
-KF6 library
-
 %package -n %libpowerdevilcore
 Group: System/Libraries
 Summary: KF6 library
 Requires: %name-common >= %EVR
+Obsoletes: libpowerdevilconfigcommonprivate6 < %EVR
 %description -n %libpowerdevilcore
 KF6 library
 
@@ -136,12 +128,12 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 %files -n %libpowerdevilcore
 %_K6lib/libpowerdevilcore.so.*
 %_K6lib/libpowerdevilcore.so.%powerdevilcore_sover
-#%files -n %libpowerdevilui
-#%_K6lib/libpowerdevilui.so.*
-#%_K6lib/libpowerdevilui.so.%powerdevilui_sover
 
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt2
+- obsolete libpowerdevilconfigcommonprivate6
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
 - new version
 
