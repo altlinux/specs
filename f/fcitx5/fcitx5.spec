@@ -17,7 +17,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.1.2
-Release:        alt1_1.1
+Release:        alt1_1.2
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -126,7 +126,7 @@ This package will setup autostart and environment needed for fcitx5 to work prop
 sed -i '1s,env bash,env bash4,' data/fcitx5-diagnose.sh
 
 %build
-%{fedora_v2_cmake} -GNinja
+%{fedora_v2_cmake} -G"Unix Makefiles"
 %fedora_v2_cmake_build 
 
 %install
@@ -200,6 +200,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt1_1.2
+- NMU: fix to build
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt1_1.1
 - NMU: clean requires (closes: 51127)
 
