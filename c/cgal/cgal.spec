@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cgal
-Version: 5.6.1
+Version: 6.0.1
 Release: alt1
 
 Summary: Easy access to efficient and reliable geometric algorithms
@@ -22,11 +22,14 @@ BuildRequires: gcc-c++
 BuildRequires: gcc-c++ >= 8.3
 %endif
 BuildRequires: cmake >= 3.14
-BuildRequires: gcc-fortran qt5-base-devel qt5-svg-devel
-BuildRequires: boost-devel libgmp-devel libgmpxx-devel eigen3
+BuildRequires: boost-devel eigen3
 BuildRequires: libGLU-devel libGL-devel libmpfr-devel libtbb-devel
 BuildRequires: zlib-devel libX11
 BuildRequires: liblapack-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
 
 ExcludeArch: armh
 
@@ -92,6 +95,9 @@ rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 %doc %_docdir/%{name}*
 
 %changelog
+* Sat Feb 22 2025 Anton Farygin <rider@altlinux.ru> 6.0.1-alt1
+- 5.6.1 -> 6.0.1
+
 * Wed May 22 2024 Anton Farygin <rider@altlinux.ru> 5.6.1-alt1
 - 5.3 -> 5.6.1
 - fixed License tag (closes: #43102)
