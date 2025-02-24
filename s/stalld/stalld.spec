@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: stalld
-Version: 1.19.7
+Version: 1.19.8
 Release: alt1
 Summary: Daemon that finds starving tasks and gives them a temporary boost
 
@@ -63,6 +63,9 @@ rm %buildroot/usr/share/licenses/stalld/gpl-2.0.txt
 %_man8dir/stalld.8*
 
 %changelog
+* Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 1.19.8-alt1
+- Update to v1.19.8 (2025-02-19).
+
 * Thu Sep 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.19.7-alt1
 - Update to v1.19.7 (2024-09-25).
 
