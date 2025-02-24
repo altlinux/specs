@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name Flask-Cors
+%define pypi_nname flask-cors
 %define mod_name flask_cors
 
 %def_with check
 
-Name: python3-module-flask-cors
-Version: 5.0.0
+Name: python3-module-%pypi_nname
+Version: 5.0.1
 Release: alt1
 
 Summary: Cross Origin Resource Sharing (CORS) support for Flask
@@ -26,7 +27,10 @@ Provides: python3-module-%pypi_name = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%add_pyproject_deps_check_filter deptry
+%add_pyproject_deps_check_filter tox-uv
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -36,8 +40,13 @@ cross-origin AJAX possible.
 %prep
 %setup
 %autopatch -p1
+echo '__version__ = "%version"' > flask_cors/version.py
+sed -i 's/^version =.*$/version = "%version"/' pyproject.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -51,9 +60,12 @@ cross-origin AJAX possible.
 %files
 %doc CHANGELOG.md LICENSE README.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/Flask_Cors-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 24 2025 Anton Zhukharev <ancieg@altlinux.org> 5.0.1-alt1
+- Updated to 5.0.1.
+
 * Thu Dec 12 2024 Anton Zhukharev <ancieg@altlinux.org> 5.0.0-alt1
 - Updated to 5.0.0 (closes CVE-2024-6221).
 - Built from upstream VCS.
