@@ -3,17 +3,17 @@
 %define _llvm_version 12.0
 %endif
 
-%def_with bootstrap
+%def_without bootstrap
 
 %define ghc_version 9.0.2
-%define ghc_release 9.0
+%define ghc_major 9.0
 %define _ghclibdir %_libdir/ghc-%version
 
 %def_with docs
 
-Name: ghc%ghc_release
+Name: ghc%ghc_major
 Version: %ghc_version
-Release: alt1
+Release: alt2
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -40,8 +40,6 @@ Requires: glibc-gconv-modules
 
 # The installed Haskell libs will be processed:
 Requires(pre,postun): haskell-filetrigger
-# <https://www.altlinux.org/RPM_Macros_Packaging_Policy>:
-Requires: rpm-build-haskell
 
 # For ghc-pkg with rpath running during install, see:
 # https://www.altlinux.org/Hasher/FAQ
@@ -51,16 +49,17 @@ BuildRequires: /proc
 
 # Bootstrap with the previous version
 %if_with bootstrap
-    %define build_ghc_release 8.10.7
+    %define build_ghc_major 8.10.7
 %else
-    %define build_ghc_release 9.0
+    %define build_ghc_major 9.0
 %endif
 
-BuildRequires: ghc%build_ghc_release
+BuildRequires: ghc%build_ghc_major-devel
+BuildRequires: ghc%build_ghc_major-common
 
 # Macroses needed for libs subpackages
 # (Pre) here to remove annoying warnings
-BuildRequires(Pre): rpm-build-haskell
+BuildRequires(Pre): rpm-build-haskell-extra
 
 BuildRequires: binutils-devel docbook-dtds docbook-style-xsl libelf-devel libffi-devel libgmp-devel libncurses-devel xsltproc
 
@@ -188,6 +187,7 @@ Version: %ghc_version
 Group: Development/Haskell
 
 Requires: %name = %EVR
+Requires: %name-common = %EVR
 Requires: %ghc_devel_subpackages_list
 
 %description devel
@@ -364,6 +364,11 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %files devel
 
 %changelog
+* Mon Feb 24 2025 Leonid Znamenok <respublica@altlinux.org> 9.0.2-alt2
+- Rebuilt with ghc9.0
+- Dropped requires on rpm-build-haskell from ghc package
+- Changed naming from ghc_release to ghc_major
+
 * Thu Feb 13 2025 Leonid Znamenok <respublica@altlinux.org> 9.0.2-alt1
 - Bootstrap to version 9.0.2
 - Changed naming style to ghc{RELEASE} from ghc{VERSION}

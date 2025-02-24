@@ -11,11 +11,11 @@
 %endif
 
 Name: rpm-build-haskell
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
-License: Public domain
+License: MIT
 Group: Development/Haskell
 
 Source: scripts-%version.tar
@@ -31,6 +31,15 @@ Conflicts: rpm-build < 4.0.4-alt78
 RPM macros and reqprov helpers to be used in Haskell packages.
 
 There is currently no support for compilers other than GHC.
+
+%package extra
+Summary: RPM helpers for ghc bulding
+Group: Development/Haskell
+
+Requires: %name = %EVR
+
+%description extra
+%summary
 
 %prep
 %setup -n scripts-%version
@@ -57,11 +66,20 @@ install -D -m0755 %SOURCE4 \
 %files
 %_rpmlibdir/haskell.*
 %_rpmmacrosdir/haskell*
-%_rpmmacrosdir/ghc-extra
 %_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
 %_libexecdir/%name
 
+%files extra
+%_rpmmacrosdir/ghc-extra
+
 %changelog
+* Wed Feb 19 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.1-alt1
+- Added extra macros for building of ghc metapackage
+- Added processing of multi-module packages
+- Changed naming from ghc_release to ghc_major in extra macroses
+- Separated extra macroses to subpackage
+- Changed License to MIT from Public Domain
+
 * Thu Feb 13 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.0-alt1
 - Replaced split sections with split objects on ghc >= 9.0.0 (thx ancieg@)
 - Updated hs_gen_filelist script to ghc_gen_filelist
