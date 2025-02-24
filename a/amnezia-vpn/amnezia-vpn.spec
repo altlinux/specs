@@ -3,8 +3,8 @@
 %define qsimplecrypto_commit c99b33f0e08b7206116ddff85c22d3b97ce1e79d
 
 Name: amnezia-vpn
-Version: 4.8.2.3
-Release: alt1.1
+Version: 4.8.3.1
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -124,6 +124,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Mon Feb 24 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.3.1-alt1
+- Version 4.8.3.1
+
 * Wed Feb 19 2025 Nazarov Denis <nenderus@altlinux.org> 4.8.2.3-alt1.1
 - Fix FTBFS
 
