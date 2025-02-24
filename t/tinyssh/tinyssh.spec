@@ -4,10 +4,10 @@
 %set_verify_elf_method strict
 
 Name: tinyssh
-Version: 20241111
+Version: 20250201
 Release: alt1
 Summary: A minimalistic SSH server which implements only a subset of SSHv2 features
-License: ALT-Public-Domain or CC0-1.0
+License: CC0-1.0 or 0BSD or MIT-0 or MIT
 Group: Security/Networking
 Url: https://tinyssh.org/
 Vcs: https://github.com/janmojzis/tinyssh
@@ -28,7 +28,7 @@ features.
 
 %build
 %add_optflags -fwrapv %(getconf LFS_CFLAGS)
-%make_build CFLAGS="%optflags"
+%make_build CFLAGS="%optflags -Icryptoint"
 
 %install
 %makeinstall_std PREFIX=%_prefix
@@ -44,7 +44,7 @@ grep -Pe 'tinysshd .* to .*/lib25519\.so' bindings.txt
 grep -Pe 'tinysshd .* to .*/libntruprime\.so' bindings.txt
 
 %files
-%doc LICENCE README.md
+%doc *.md
 %_sysconfdir/%name
 %_bindir/tinyssh-convert
 %_sbindir/tinysshd
@@ -54,6 +54,9 @@ grep -Pe 'tinysshd .* to .*/libntruprime\.so' bindings.txt
 %_man8dir/tiny*.8*
 
 %changelog
+* Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 20250201-alt1
+- Update to 20250201 (2025-02-01).
+
 * Thu Nov 14 2024 Vitaly Chikunov <vt@altlinux.org> 20241111-alt1
 - Update to 20241111 (2024-11-11).
 - libsodium is no longer used (abandoned by upstream) switching to djb's
