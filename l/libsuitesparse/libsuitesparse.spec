@@ -17,12 +17,12 @@
 %define libspqr_soname 4
 %define mongoose_soname 3
 %define libspex_soname 3
-%define libparu_soname 0
+%define libparu_soname 1
 %define libsuitesparseconfig_soname 7
 
 
 Name: libsuitesparse
-Version: 7.8.2
+Version: 7.9.0
 Release: alt1
 
 Summary: Shared libraries for sparse matrix calculations
@@ -378,6 +378,9 @@ sed -i '/cmake_minimum_required/a add_link_options(-fopenmp)' \
 %_bindir/suitesparse_mongoose
 
 %changelog
+* Mon Feb 24 2025 Anton Farygin <rider@altlinux.ru> 7.9.0-alt1
+- 7.8.2 -> 7.9.0
+
 * Sat Jan 18 2025 Anton Farygin <rider@altlinux.ru> 7.8.2-alt1
 - 7.7.0 -> 7.8.2
 
