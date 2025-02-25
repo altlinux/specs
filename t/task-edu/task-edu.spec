@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -53,9 +53,9 @@ Requires: bluefish
 Requires: codeblocks
 Requires: codeblocks-contrib
 Requires: dia
-Requires: fbreader
-%ifnarch %e2k
-Requires: goldendict
+%ifnarch %e2k %ix86 ppc64le armh
+Requires: calibre
+Requires: goldendict-ng
 %else
 Requires: stardict
 %endif
@@ -634,6 +634,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.3-alt1
+- Replace unsupported fbreader by calibre.
+- Replace unsupported goldendict by goldendict-ng.
+
 * Wed Feb 12 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.2-alt1
 - Remove gimp plugins.
 
