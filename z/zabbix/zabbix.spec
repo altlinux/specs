@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		05b8b05eefe
+%define svnrev		237358b56b2
 
 %def_with pgsql
 %def_enable java
@@ -17,8 +17,8 @@
 %endif
 
 Name: zabbix
-Version: 7.0.9
-Release: alt2
+Version: 7.0.10
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -188,6 +188,14 @@ Requires: php8.3-xmlreader php8.3-curl php8.3-ldap
 Requires: zabbix-phpfrontend-engine = %EVR
 BuildArch: noarch
 
+%package phpfrontend-php8.4
+Summary: zabbix web frontend, edition for php8.4
+Group: Monitoring
+Requires: php8.4-gd php8.4-libs php8.4-mbstring php8.4-mysqli php8.4-openssl php8.4-pgsql php8.4-sockets
+Requires: php8.4-xmlreader php8.4-curl php8.4-ldap
+Requires: zabbix-phpfrontend-engine = %EVR
+BuildArch: noarch
+
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
@@ -208,6 +216,14 @@ Group: Monitoring
 Requires: %name-phpfrontend-apache2
 Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php8.3
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php8.4
+Summary: Requirements for the use of apache2-mod_php8.4
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php8.4
 BuildArch: noarch
 
 %package phpfrontend-nginx
@@ -231,6 +247,13 @@ Group: Monitoring
 Requires: %name-phpfrontend-nginx
 Requires: %name-phpfrontend-php8.3
 Requires: php8.3-fpm-fcgi
+
+%package phpfrontend-nginx-php8.4-fpm-fcgi
+Summary: Requirements for the use of php8.4-fpm-fcgi
+Group: Monitoring
+Requires: %name-phpfrontend-nginx
+Requires: %name-phpfrontend-php8.4
+Requires: php8.4-fpm-fcgi
 
 BuildArch: noarch
 
@@ -353,6 +376,10 @@ in to zabbix phpfrontend
 Contains requirements for the use of apache2-mod_php8.3
 in to zabbix phpfrontend
 
+%description phpfrontend-apache2-mod_php8.4
+Contains requirements for the use of apache2-mod_php8.4
+in to zabbix phpfrontend
+
 %description phpfrontend-nginx
 zabbix's nginx config files
 
@@ -364,6 +391,10 @@ in to zabbix phpfrontend
 Contains requirements for the use of php8.3-fpm-fcgi
 in to zabbix phpfrontend
 
+%description phpfrontend-nginx-php8.4-fpm-fcgi
+Contains requirements for the use of php8.4-fpm-fcgi
+in to zabbix phpfrontend
+
 %description phpfrontend-engine
 a php frontend for zabbix - core
 
@@ -372,6 +403,9 @@ zabbix web frontend, edition for php8.2
 
 %description phpfrontend-php8.3
 zabbix web frontend, edition for php8.3
+
+%description phpfrontend-php8.4
+zabbix web frontend, edition for php8.4
 
 %description doc
 %name network monitor (README, ChangeLog)
@@ -404,8 +438,8 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/version.h src/zabbix_java/src/c
 	%{subst_with ssh2} \
 	%{subst_with unixodbc} \
 	--sysconfdir=/etc/zabbix
-%make dbschema
-%make
+%make_build dbschema
+%make_build
 
 mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 %make clean
@@ -423,8 +457,8 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 	%{subst_with ssh2} \
 	%{subst_with unixodbc} \
 	--sysconfdir=/etc/zabbix
-%make dbschema
-%make
+%make_build dbschema
+%make_build
 
 mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 %make clean
@@ -443,7 +477,7 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	%{subst_with ssh2} \
 	%{subst_with unixodbc} \
 	--sysconfdir=/etc/zabbix
-%make
+%make_build
 
 mv src/%{name}_proxy/%{name}_proxy src/%{name}_proxy/%{name}_proxy_pgsql
 %make clean
@@ -467,8 +501,8 @@ export GOFLAGS="-mod=vendor"
 	%{subst_with ssh2} \
 	%{subst_with unixodbc} \
 	--sysconfdir=/etc/zabbix
-%make dbschema
-%make
+%make_build dbschema
+%make_build
 
 # adjust in several files /home/zabbix
 find conf src/go/conf -type f -print0 | xargs -0 sed -i \
@@ -805,18 +839,21 @@ fi
 
 %files phpfrontend-php8.2
 %files phpfrontend-php8.3
+%files phpfrontend-php8.4
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %files phpfrontend-apache2-mod_php8.2
 %files phpfrontend-apache2-mod_php8.3
+%files phpfrontend-apache2-mod_php8.4
 
 %files phpfrontend-nginx
 %config(noreplace) %_sysconfdir/%name/%{name}_nginx.conf
 
 %files phpfrontend-nginx-php8.2-fpm-fcgi
 %files phpfrontend-nginx-php8.3-fpm-fcgi
+%files phpfrontend-nginx-php8.4-fpm-fcgi
 
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
@@ -828,6 +865,11 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.10-alt1
+- 7.0.10
+- Add support php 8.4
+- Use %%make_build for speedup compilation
+
 * Wed Feb 05 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.9-alt2
 - Remove php 8.1 support
 

@@ -1,7 +1,7 @@
 %define zabbix_group    zabbix
 
 Name:   zabbix-agent2-plugin-mongodb
-Version: 7.0.9
+Version: 7.0.10
 Release: alt1
 
 Summary: Provides native Zabbix solution for monitoring MongoDB
@@ -31,7 +31,7 @@ it or create your own template to cater specific needs.
 %patch0 -p1
 
 %build
-%make
+%make_build
 
 %install
 mkdir -p %{buildroot}%{_sbindir}/
@@ -45,6 +45,10 @@ mv mongodb.conf %{buildroot}%{_sysconfdir}/zabbix/zabbix_agent2.conf.d/plugins.d
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/zabbix/zabbix_agent2.conf.d/plugins.d/mongodb.conf
 
 %changelog
+* Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 7.0.10-alt1
+- 7.0.10
+- Use %%make_build for speedup compilation
+
 * Tue Jan 28 2025 Alexei Takaseev <taf@altlinux.org> 7.0.9-alt1
 - 7.0.9
 
