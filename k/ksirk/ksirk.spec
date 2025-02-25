@@ -4,14 +4,14 @@
 %define libiris_ksirk libiris_ksirk%iris_ksirk_sover
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.2
 Release: alt1
 %K6init
 
 Group: Games/Strategy
 Summary: World Domination Strategy Game
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 Provides:  kde5-ksirk = %EVR
 Obsoletes: kde5-ksirk < %EVR
@@ -23,7 +23,7 @@ Source: %rname-%version.tar
 Patch1: alt-libiris-so-version.patch
 Patch2: alt-config-help-btn.patch
 
-BuildRequires(pre): rpm-build-kf6 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel qt6-5compat-devel
 BuildRequires: libvulkan-devel
 BuildRequires: qt6-phonon-devel
@@ -63,6 +63,9 @@ with your armies.
 
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - initial build
 

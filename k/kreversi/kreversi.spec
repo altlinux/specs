@@ -1,8 +1,8 @@
 %define rname kreversi
 
 Name: %rname
-Version: 24.08.3
-Release: alt2
+Version: 24.12.2
+Release: alt1
 %K6init
 
 Group: Games/Boards
@@ -51,6 +51,9 @@ pieces of his own color on the board and there are no more possible moves.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Thu Nov 14 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
 - fix obsoletes
 

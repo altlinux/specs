@@ -1,7 +1,7 @@
 %define rname kolf
 
 Name: %rname
-Version: 24.08.3
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -49,5 +49,8 @@ Courses are dynamic, and up to 10 people can play at once in competition.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt1
 - initial build
