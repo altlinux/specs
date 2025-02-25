@@ -1,5 +1,5 @@
 %define GRADLE_TASKS installdist
-%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon -Pjava11=true --exclude-task generateJava
+%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon -Pjava11=false --exclude-task generateJava
 %define LS_PREFIX %_datadir/linstor-server
 %define FIREWALLD_SERVICES %_usr/lib/firewalld/services
 %define NAME_VERS %name-server-%version
@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.30.4
-Release: alt1
+Release: alt2
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -20,7 +20,7 @@ Source1: gradle-8.2.1-bin.zip
 BuildArch: noarch
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
-BuildRequires: java-11-openjdk-devel
+BuildRequires: jpackage-17-compat
 BuildRequires: python3
 BuildRequires: unzip
 #BuildRequires: gradle
@@ -54,7 +54,7 @@ cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-config %bui
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-database %buildroot/%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/controller.postinst.sh
 mkdir -p %buildroot%_unitdir
-sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-11-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
+sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-17-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
 cp -r %_builddir/%NAME_VERS/scripts/linstor-controller.service %buildroot%_unitdir
 cp -r %_builddir/%NAME_VERS/scripts/linstor-satellite.service %buildroot%_unitdir
 mkdir -p %buildroot%FIREWALLD_SERVICES
@@ -73,7 +73,7 @@ mkdir -p %buildroot/var/lib/linstor
 %package common
 Summary: Common files shared between controller and satellite
 Group: System/Servers
-Requires: java-11-openjdk-headless
+Requires: java-17-openjdk-headless
 
 %description common
 Linstor shared components between linstor-controller and linstor-satellite
@@ -151,6 +151,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.30.4-alt2
+- build with Java 17 (ALT #46009).
+
 * Tue Feb 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.30.4-alt1
 - 1.30.4
 
