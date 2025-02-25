@@ -2,7 +2,7 @@
 
 Name: alterator-interface-component
 Version: 0.1.8
-Release: alt2
+Release: alt3
 
 Summary: Components interface for alterator browser
 License: GPLv2+
@@ -73,6 +73,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Feb 24 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt3
+- Add LC_ALL as env variable for alterator-manager to fix Description
+  translations.
+
 * Tue Feb 18 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.8-alt2
 - Remove extra output in basic_check_component_installed
 

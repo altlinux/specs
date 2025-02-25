@@ -2,7 +2,7 @@
 
 Name: alterator-interface-edition
 Version: 0.1.1
-Release: alt2
+Release: alt3
 
 Summary: Alterator interface for edition
 License: GPLv2+
@@ -20,14 +20,13 @@ BuildRequires(pre): rpm-macros-alterator
 %package -n alterator-backend-edition
 Summary: Alterator backend for edition
 Group: System/Configuration/Other
-Version: 0.1.1
-Release: alt1
 
 BuildRequires: python3-devel
 
 Requires: alterator-interface-edition
 Requires: alterator-module-executor >= 0.1.13
 Requires: alterator-entry >= 0.2.0
+Requires: distro-licenses
 
 %description -n alterator-backend-edition
 %summary.
@@ -92,6 +91,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Tue Feb 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt3
+- Add missing distro-licenses dependency to backend.
+- Add env variables to backends for alterator-manager.
+
 * Thu Feb 20 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt2
 - Fix extra edition_ in generated backend names.
 - Declare used LC_ALL environment variable in backend (thx Andrey Alekseev).
