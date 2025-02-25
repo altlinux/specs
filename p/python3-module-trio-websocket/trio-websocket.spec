@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.1
+Version: 0.12.2
 Release: alt1
 Summary: WebSocket library for Trio
 License: MIT
@@ -56,6 +56,9 @@ handles I/O using the Trio framework.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 25 2025 Stanislav Levin <slev@altlinux.org> 0.12.2-alt1
+- 0.12.1 -> 0.12.2.
+
 * Tue Feb 18 2025 Stanislav Levin <slev@altlinux.org> 0.12.1-alt1
 - 0.12.0 -> 0.12.1.
 
