@@ -2,8 +2,8 @@
 %define libver 8.4
 
 Name:    grass
-Version: 8.4.0
-Release: alt2
+Version: 8.4.1
+Release: alt1
 
 %def_with mysql
 %def_with postgres
@@ -14,9 +14,9 @@ Release: alt2
 # Missing
 %def_without opendwg
 # Old version
-%def_without opencl
+%def_with opencl
 # pdal-config
-%def_without pdal
+%def_with pdal
 
 Summary: Geographic Resources Analysis Support System
 License: %gpl2plus
@@ -86,6 +86,12 @@ BuildRequires: libgomp-devel
 BuildRequires: liblz4-devel
 %if_with opendwg
 BuildRequires: opendwg-devel
+%endif
+%if_with pdal
+BuildRequires: libpdal-devel
+%endif
+%if_with opencl
+BuildRequires: ocl-icd-devel
 %endif
 %ifarch %e2k
 # has a preprocessor with -dD support
@@ -295,13 +301,11 @@ find %buildroot -type f | xargs -l1 subst 's,^#!/usr/bin/env python.*$,#!%__pyth
 rm -f %_libdir/%grassdir/locks
 
 %files -f %name.lang
-%doc AUTHORS CHANGES translators.csv contributors.csv contributors_extra.csv doc
+%doc AUTHORS translators.csv contributors.csv contributors_extra.csv doc
 %_bindir/*
 %dir %_libdir/%grassdir
 %dir %_libdir/grass
 %_libdir/%grassdir/*
-%exclude %_libdir/%grassdir/driver/db/*
-%_libdir/%grassdir/driver/db/*
 %if_with python3
 %python3_sitelibdir/%name
 %else
@@ -322,6 +326,11 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 8.4.1-alt1
+- New version.
+- Package database drivers (ALT #52888).
+- Add support of PDAL and OpenCL.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 8.4.0-alt2
 - Rebuild with gdal-3.10.0 and remove support for i586 and armh.
 
