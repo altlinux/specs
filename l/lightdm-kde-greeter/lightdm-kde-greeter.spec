@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 6.0.2
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -12,6 +12,7 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 Source: %name-%version.tar
 
 Patch1: add-russian-translations-to-desktop-files.patch
+Patch2: update-the-position-of-the-user-list-more-late.patch
 
 %K6init
 
@@ -45,6 +46,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build \
@@ -84,6 +86,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Feb 25 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt2
+- update the position of the user list more late
+
 * Wed Dec 04 2024 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt1
 - add VPN connections support (OpenVPN)
 
