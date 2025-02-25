@@ -9,7 +9,7 @@
 %endif
 
 Name: ispc
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -41,9 +41,7 @@ BuildRequires: tbb-devel
 BuildRequires: lld
 %endif
 
-# i586: Even though it builds it's not working until this fixed:
-#       https://github.com/ispc/ispc/issues/2105
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
 ispc is a compiler for a variant of the C programming language, with
@@ -150,22 +148,29 @@ cp -a LICENSE.txt README.md SECURITY.md contrib/ docs/*.rst examples/ \
 banner check
 PATH=%_cmake__builddir/bin:$PATH
 # Increase timeout from 10 to 100 or beekeeper will sometimes fail.
-sed -i /run_command/s/10/100/ run_tests.py
+sed -i /run_command/s/10/100/ scripts/run_tests.py
 # Tests are from .travis.yml
 check_isa
 ispc --support-matrix
 %ifarch x86_64
-  ./run_tests.py --jobs=$(nproc) --non-interactive
-  ./run_tests.py --jobs=$(nproc) --non-interactive --arch=x86_64
+  ./scripts/run_tests.py --jobs=$(nproc) --non-interactive
+  ./scripts/run_tests.py --jobs=$(nproc) --non-interactive --arch=x86_64
 %endif
 %ifarch %ix86
-  ./run_tests.py --jobs=$(nproc) --non-interactive --arch=x86
+  ./scripts/run_tests.py --jobs=$(nproc) --non-interactive --arch=x86
 %endif
 %ifarch aarch64
-  ./run_tests.py --jobs=$(nproc) --non-interactive --arch=aarch64 --target=neon-i32x4
+  ./scripts/run_tests.py --jobs=$(nproc) --non-interactive --arch=aarch64 --target=neon-i32x4
 %endif
 
 %changelog
+* Tue Feb 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.26.0-alt1
+- 1.26.0.
+
+* Tue Feb 25 2025 L.A. Kostis <lakostis@altlinux.ru> 1.25.3-alt1
+- 1.25.3.
+- try to enable x86 back.
+
 * Mon Jul 01 2024 L.A. Kostis <lakostis@altlinux.ru> 1.24.0-alt1
 - 1.24.0.
 - Remove merged patches.
