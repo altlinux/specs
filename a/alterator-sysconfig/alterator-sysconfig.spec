@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.21
+Version: 1.3.22
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Tue Feb 25 2025 Anton Midyukov <antohami@altlinux.org> 1.3.22-alt1
+- sysconfig-base: make keyboard layout sorting predictable (Closes: 53027)
+
 * Sun Feb 16 2025 Kirill Izmestev <felixz@altlinux.org> 1.3.21-alt1
 - Fix Tatar keyboard layout.
 
