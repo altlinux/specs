@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.20
+Release: alt0.22
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -498,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.22
+- add installer product logo
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.20
 - update installer background
 - update english slideshow
