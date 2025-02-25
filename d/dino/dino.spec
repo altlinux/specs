@@ -3,13 +3,15 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
 License: GPL-3.0
 Group: Networking/Instant messaging
 Url: https://dino.im
+
+Vcs: https://github.com/dino/dino.git
 
 %if_disabled snapshot
 Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
@@ -19,7 +21,8 @@ Source: %name-%version.tar
 
 %define soup3_ver 3.4
 %define gst_api_ver 1.0
-%define webrtc_ver 0.2
+%define webrtc_api_ver 2
+%define webrtc_ver 2.1
 %define qrencode_ver 4.0
 
 Requires: lib%name = %EVR
@@ -32,7 +35,7 @@ BuildRequires: libgtk4-devel pkgconfig(libadwaita-1)
 BuildRequires: libgee0.8-devel libsoup3.0-devel >= %soup3_ver libidn2-devel
 BuildRequires: libicu-devel pkgconfig(libqrencode) >= %qrencode_ver
 BuildRequires: gst-plugins%gst_api_ver-devel libnice-devel
-BuildRequires: pkgconfig(webrtc-audio-processing) >= %webrtc_ver
+BuildRequires: pkgconfig(webrtc-audio-processing-%webrtc_api_ver) >= %webrtc_ver
 BuildRequires: libgcrypt-devel libgpgme-devel libgnutls-devel
 BuildRequires: libsignal-protocol-c-devel libsqlite3-devel libsrtp2-devel
 BuildRequires: libenchant-devel
@@ -111,6 +114,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Tue Feb 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Mon Jul 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
