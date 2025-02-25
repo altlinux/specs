@@ -1,9 +1,9 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
-%K5init no_altplace
+%K6init altplace
 
 #Group: Graphics
 Group: Graphical desktop/Other
@@ -14,19 +14,22 @@ Source: %rname-%version.tar
 
 ExcludeArch: armh
 
-BuildRequires(pre): rpm-build-kf5
+Requires: qt6-translations convert
+Requires: %rname-backend
+Requires: libkf6authcore
+
+BuildRequires(pre): rpm-build-kf6
 
 BuildRequires: extra-cmake-modules 
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools
 BuildRequires: libImageMagick-devel
-BuildRequires: kf5-kcmutils-devel 
-BuildRequires: kf5-ki18n-devel
-BuildRequires: kf5-kio-devel
-BuildRequires: qt5-tools
-BuildRequires: kf5-kwindowsystem-devel
-Requires: qt5-translations convert
-Requires: %rname-backend
-Requires: libkf5auth
+BuildRequires: kf6-kcmutils-devel 
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-kio-devel
 
 %description
 The ALT tool to customize branding
@@ -42,18 +45,21 @@ The ALT tool backend for KDE to customize branding
 %setup -n %rname-%version
 
 %build
-%K5build
-lrelease-qt5 translations/alt-customize-branding_ru_RU.ts
+%K6build \
+    -DQT_MAJOR_VERSION=6 \
+    #
+lrelease-qt6 translations/alt-customize-branding_ru_RU.ts
 
 %install
-%K5install
+%K6install
 
 # translations
-mkdir -p %buildroot/%_qt5_translationdir/
-install -m 0644 translations/*.qm %buildroot/%_qt5_translationdir/
+mkdir -p %buildroot/%_qt6_translationdir/
+install -m 0644 translations/*.qm %buildroot/%_qt6_translationdir/
 
 # branding_helper script
-install -m 0755 altcusbranding_helper_script %buildroot/%_K5libexecdir/kauth/
+mkdir -p %buildroot/%_K6libexecdir/kauth/
+install -m 0755 altcusbranding_helper_script %buildroot/%_K6libexecdir/kauth/
 
 # alt-customize-branding-settings.ini
 mkdir -p %buildroot%_localstatedir/%rname
@@ -107,26 +113,29 @@ if [ $1 -eq 0 ] ; then
 fi
 
 %files -f %rname.lang
-%_K5bin/*
-%_K5xdgapp/%rname.desktop
-%_K5libexecdir/kauth/altcusbranding_helper
-%_K5dbus/system.d/org.kde.altcusbranding.conf
-%_K5dbus_sys_srv/org.kde.altcusbranding.service
+%_K6bin/*
+%_K6xdgapp/%rname.desktop
+%_K6exec/kauth/altcusbranding_helper
+%_K6dbus/system.d/org.kde.altcusbranding.conf
+%_K6dbus_sys_srv/org.kde.altcusbranding.service
 %_datadir/polkit-1/actions/org.kde.altcusbranding.policy
 %doc COPYING
 
 %files backend
-%_K5libexecdir/kauth/altcusbranding_helper_script
+%_K6libexecdir/kauth/altcusbranding_helper_script
 %_altdir/%rname
 %_localstatedir/%rname
 %_datadir/design/%rname
 %_datadir/plymouth/themes/%rname
 /boot/grub/themes/%rname
 
-#%%_qt5_translationdir/alt-customize-branding_ru_RU.qm
+#%%_qt6_translationdir/alt-customize-branding_ru_RU.qm
 #%%doc README
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg at altlinux dot org> 1.2.0-alt1
+- port to KF6
+
 * Fri Apr 21 2023 Dmitrii Fomchenkov <sirius@altlinux.org>  1.1.3-alt1
 - add a check to the script for the existence of the plymouthd.conf
  (/etc/plymouth/plymouthd.conf) file (Bugzilla: #45851)
