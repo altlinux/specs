@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define alt_name userpasswd
 
 Name:    userpasswd-gnome
 Version: 0.0.1
-Release: alt1
+Release: alt2
 
 Summary: Graphical utility for changing user password
 License: GPLv3
@@ -13,7 +14,11 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-alternatives
 BuildRequires: ccmake gcc-c++
 BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gio-2.0) pkgconfig(pam) pkgconfig(pam_misc) pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(gtk4) pkgconfig(libadwaita-1)
-Requires: userpasswd-common
+
+# Common files with userpasswd.desktop
+Requires: userpasswd-common >= 0.3.6-alt4
+# Due same as passwd PAM_SERVICE - /etc/pam.d/passwd
+Requires: passwd
 
 Source0: %name-%version.tar
 
@@ -31,23 +36,25 @@ A graphical utility to change your password in GNOME
 %cmake_install
 
 # rename userpasswd -> userpasswd-gnome
-mv %buildroot/%_bindir/%alt_name %buildroot/%_bindir/%name
+mv %buildroot%_bindir/%alt_name %buildroot/%_bindir/%name
+
+# Remove own desktop file due userpasswd-common requirement
+rm -f %buildroot%_desktopdir/%alt_name.desktop
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/%alt_name    %_bindir/%name    50
 EOF
 
-%post
-chown :shadow %_libexecdir/userpasswd/helper
-chmod g+s %_libexecdir/userpasswd/helper
-
 %files
 %_bindir/%name
 %_altdir/%name
-%_libexecdir/userpasswd/helper
+%attr(2711, root, shadow) %_libexecdir/userpasswd/helper
 %lang(ru) %_datadir/locale/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Sun Feb 23 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.1-alt2
+- Assignment of file attributes now occurs in %attr (Closes: #53207)
+
 * Fri Feb 21 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.1-alt1
 - Initial build for Sisyphus

@@ -4,7 +4,7 @@
 
 Name: userpasswd
 Version: 0.3.6
-Release: alt3
+Release: alt4
 
 Group: System/Configuration/Other
 Summary: The graphical tool for changing password
@@ -34,15 +34,14 @@ The package provides a .desktop file
 
 %prep
 %setup -q
+sed -i 's/^\(PACKAGE = \)userpasswd$/\1%binary_name/' src/Makefile
+sed -i 's/\(\s\+\/usr\/lib\/\)userpasswd/\1%binary_name/' src/loop.sh
 
 %build
 %make_build
 
 %install
 %make_install install menudir=%_desktopdir
-
-# rename userpasswd -> userpasswd-legacy
-mv %buildroot%_bindir/%alt_name %buildroot%_bindir/%binary_name
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%binary_name <<EOF
@@ -53,7 +52,7 @@ EOF
 
 %files -f %name.lang
 %_bindir/%binary_name
-%_libexecdir/%name
+%_libexecdir/%binary_name
 %_datadir/pixmaps/*
 %exclude %_datadir/pixmaps/userpasswd-keyring.png
 %_altdir/%binary_name
@@ -63,6 +62,10 @@ EOF
 %_datadir/pixmaps/userpasswd-keyring.png
 
 %changelog
+* Mon Feb 24 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt4
+- The userpasswd name in /usr/lib and in /usr/bin has been changed to
+  userpasswd-legacy
+
 * Mon Feb 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.6-alt3
 - Replace /usr/share/userpasswd/loop to /usr/bin as default behaviour
 - Replace userpasswd-keyring icon to common subpackage
