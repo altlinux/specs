@@ -3,7 +3,7 @@
 
 Name: lxqt-qtplugin-qt6
 Version: 2.1.0
-Release: alt2
+Release: alt3
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL-2.1
@@ -13,6 +13,7 @@ Url: https://github.com/lxqt/lxqt-qtplugin
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt6
 BuildRequires: gcc-c++ cmake
 BuildRequires: liblxqt-devel >= 2.1.0
 BuildRequires: qt6-base-devel qt6-tools-devel
@@ -20,6 +21,7 @@ BuildRequires: libqt6xdg-devel
 BuildRequires: libdbusmenu-lxqt-devel
 BuildRequires: libfm-qt6-devel
 
+Requires: libqt6-core = %_qt6_version
 Obsoletes: lxqt-qtplugin <= %EVR
 Provides: lxqt-qtplugin = %EVR
 
@@ -41,6 +43,9 @@ Provides: lxqt-qtplugin = %EVR
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Feb 25 2025 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt3
+- Add dependency on libqt6-core = %%_qt6_version
+
 * Wed Nov 13 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2
 - Rename lxqt-qtplugin -> lxqt-qtplugin-qt6
 
