@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt1.ge1d11bb
+Release:   alt2
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -312,6 +312,11 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Tue Feb 25 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt2
+- fixed the "pkmon: finalized without ever returning" bug (closes: 53178)
+- fixed the update error: "The following packages have unmet
+  dependencies:"
+
 * Wed Feb 19 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt1.ge1d11bb
 - fix segmentation fault (closes: 53144)
 
