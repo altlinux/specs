@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -65,9 +65,9 @@ install -m 0644 translations/*.qm %buildroot/%_qt6_translationdir/
 
 mkdir -p %buildroot/%_altdir
 cat >%buildroot/%_altdir/%name <<__EOF__
-%_bindir/alterator-browser-x11	%_bindir/%bin_name 1
-%_bindir/%raw_name	%_bindir/%bin_name 1
-%_bindir/qtbrowser	%_bindir/%bin_name 1
+%_bindir/alterator-browser-x11	%_bindir/%bin_name 11
+%_bindir/%raw_name	%_bindir/%bin_name 11
+%_bindir/qtbrowser	%_bindir/%bin_name 11
 __EOF__
 
 #mkdir -p %buildroot/%alterator_cfg
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.2-alt1
+- add logo_width on top of wizardface
+
 * Wed Feb 05 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.1-alt1
 - fix setup localized slideshow directory
 
