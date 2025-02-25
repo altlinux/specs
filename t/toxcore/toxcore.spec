@@ -1,119 +1,122 @@
-#============================================================================
-# Please do not edit!
-# Created by specgen utility from files in specs/ subdir
-#============================================================================
+%define _unpackaged_files_terminate_build 1
+
+%define abiversion 2
+
 Name: toxcore
-Summary: All-in-one secure communication platform
-Version: 0.1.11
-Release: alt3
-License: ISC license
+Version: 0.2.20
+Release: alt1
+
+Summary: Peer to peer (serverless) instant messenger
+License: GPL-3.0-or-later
 Group: System/Libraries
-BuildRequires: libopus-devel libsodium-devel libvpx-devel libcheck-devel
-BuildPreReq: libconfig-devel >= 1.4
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 Url: https://github.com/TokTok/c-toxcore
+VCS: https://github.com/TokTok/c-toxcore.git
 
-%package -n libtoxav1
-Summary: %summary
+Source: %name-%version.tar
+Source1: %name-%version-cmp.tar
+
+BuildRequires: libcheck-devel
+BuildRequires: libconfig-devel
+BuildRequires: libopus-devel
+BuildRequires: libsodium-devel
+BuildRequires: libvpx-devel
+
+%description
+Tox is a peer to peer (serverless) instant messenger aimed at making security
+and privacy easy to obtain for regular users. It uses libsodium (based on NaCl)
+for its encryption and authentication.
+
+%package -n libtoxav%abiversion
+Summary: Library for Tox protocol that provides audio/video functionality
 Group: System/Libraries
 
-%description -n libtoxav1
-%summary
+%description -n libtoxav%abiversion
+The `libtoxav1` library provides the necessary functionality for handling audio
+vand video calls in the Tox protocol. It relies on external libraries like
+`libopus` for audio encoding/decoding and `libvpx` for video processing. This
+library is essential for Tox clients that support multimedia communication.
 
-%package -n libtoxcore1
-Summary: %summary
+%package -n libtoxcore%abiversion
+Summary: Library for Tox protocol that provides the messenger functionality
 Group: System/Libraries
 
-%description -n libtoxcore1
-%summary
+%description -n libtoxcore%abiversion
+The `libtoxcore1` library is the core implementation of the Tox protocol. It
+provides functionalities such as messaging, file transfer, and connection
+management. This library is the foundation for all Tox clients and services.
 
-%package -n libtoxdns1
-Summary: %summary
+%package -n libtoxencryptsave%abiversion
+Summary: Library for Tox protocol that provides encryption of Tox profiles
 Group: System/Libraries
 
-%description -n libtoxdns1
-%summary
-
-%package -n libtoxencryptsave1
-Summary: %summary
-Group: System/Libraries
-
-%description -n libtoxencryptsave1
-%summary
+%description -n libtoxencryptsave%abiversion
+The `libtoxencryptsave1` library provides functionality for encrypting and
+saving Tox profile data, such as private keys and settings. It ensures that
+sensitive information is securely stored on disk.
 
 %package bootstrapd
-Summary: %summary
+Summary: Highly configurable DHT bootstrap node daemon based on Tox protocol
 Group: System/Libraries
 
 %description bootstrapd
-%summary
+The `toxcore-bootstrapd` package provides a daemon for running a Tox bootstrap
+node. Bootstrap nodes help new clients connect to the Tox network by providing
+initial peer information. This package is essential for maintaining the
+distributed nature of the Tox network.
 
 %package devel
-Summary: %summary
+Summary: Development files for %name
 Group: System/Libraries
 
 %description devel
-%summary
-
-%package devel-static
-Summary: %summary
-Group: System/Libraries
-Requires: toxcore-devel
-
-%description devel-static
-%summary
-
-%description
-With the rise of governmental monitoring programs,
-Tox, a FOSS initiative, aims to be an easy to use,
-all-in-one communication platform that ensures
-their users full privacy and secure message delivery.
-
+The `toxcore-devel` package provides header files and static libraries
+necessary for developing applications that use the Toxcore libraries. It is
+required for compiling and linking against `libtoxcore`, `libtoxav`, and
+`libtoxencryptsave`.
 
 %prep
-%setup
-%patch -p1
+%setup -a1
 
 %build
 %autoreconf
-%configure --enable-daemon
+%configure \
+  --enable-daemon \
+  --enable-static=no \
+  #
+
 %make_build
 
 %install
 %makeinstall
 rm -f %buildroot%_bindir/DHT_bootstrap
 install -d -m700 %buildroot/var/lib/tox-bootstrapd/
-install -D -m644 other/bootstrap_daemon/tox-bootstrapd.conf %buildroot/etc/tox-bootstrapd.conf
-install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitdir/tox-bootstrapd.service
-%__subst "s|/usr/local/bin|%_bindir|g" %buildroot%_unitdir/tox-bootstrapd.service
+install -D -m644 other/bootstrap_daemon/tox-bootstrapd.conf \
+  %buildroot/etc/tox-bootstrapd.conf
+install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service \
+  %buildroot%_unitdir/tox-bootstrapd.service
+sed -i "s|/usr/local/bin|%_bindir|g" %buildroot%_unitdir/tox-bootstrapd.service
 
 %pre bootstrapd
 /usr/sbin/groupadd -r -f tox-bootstrapd
-/usr/sbin/useradd -r -d /var/lib/tox-bootstrapd -s /dev/null -c 'TOX DHT bootstrap daemon' -g tox-bootstrapd tox-bootstrapd >/dev/null 2>&1 ||:
+/usr/sbin/useradd -r \
+  -d /var/lib/tox-bootstrapd -s /dev/null \
+  -c 'TOX DHT bootstrap daemon' \
+  -g tox-bootstrapd tox-bootstrapd >/dev/null 2>&1 ||:
 
-%files -n libtoxav1
-%_libdir/libtoxav.so.1
-%_libdir/libtoxav.so.1.*
+%files -n libtoxav%abiversion
+%_libdir/libtoxav.so.%{abiversion}*
 
-%files -n libtoxcore1
-%_libdir/libtoxcore.so.1
-%_libdir/libtoxcore.so.1.*
+%files -n libtoxcore%abiversion
+%_libdir/libtoxcore.so.%{abiversion}*
 
-%files -n libtoxdns1
-%_libdir/libtoxdns.so.1
-%_libdir/libtoxdns.so.1.*
-
-%files -n libtoxencryptsave1
-%_libdir/libtoxencryptsave.so.1
-%_libdir/libtoxencryptsave.so.1.*
+%files -n libtoxencryptsave%abiversion
+%_libdir/libtoxencryptsave.so.%{abiversion}*
 
 %files bootstrapd
 %doc other/bootstrap_daemon/README.md
-%_bindir/tox-bootstrapd
 %dir %attr(700,tox-bootstrapd,tox-bootstrapd) /var/lib/tox-bootstrapd
+%_bindir/tox-bootstrapd
+%_datadir/bash-completion/completions/tox-bootstrapd
 %_sysconfdir/tox-bootstrapd.conf
 %_unitdir/tox-bootstrapd.service
 
@@ -121,18 +124,15 @@ install -D -m644 other/bootstrap_daemon/tox-bootstrapd.service %buildroot%_unitd
 %_includedir/tox
 %_libdir/libtoxav.so
 %_libdir/libtoxcore.so
-%_libdir/libtoxdns.so
 %_libdir/libtoxencryptsave.so
 %_pkgconfigdir/libtoxav.pc
 %_pkgconfigdir/libtoxcore.pc
 
-%files devel-static
-%_libdir/libtoxav.a
-%_libdir/libtoxcore.a
-%_libdir/libtoxdns.a
-%_libdir/libtoxencryptsave.a
-
 %changelog
+* Tue Feb 25 2025 Constantin Sunzow <protvin@altlinux.org> 0.2.20-alt1
+- Disable build static package.
+- New version.
+
 * Mon Oct 18 2021 Anton Farygin <rider@altlinux.ru> 0.1.11-alt3
 - NMU: fixed build with LTO
 
