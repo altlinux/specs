@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define kflavours 6.12 6.13
+%define kflavours 6.12 6.13 6.14
 %define inst_dir %_sysconfdir/apt/sources.list.d
 
 Name: apt-repo-lakostis-kmodules
 Version: 0.0.1
-Release: alt3
+Release: alt4
 
 Summary: kernel modules from alt-lakostis repo
 
@@ -36,6 +36,9 @@ done
 %inst_dir/*.list
 
 %changelog
+* Tue Feb 25 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt4
+- add 6.14.
+
 * Tue Feb 25 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt3
 - remove 6.6.
 
