@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lazygit
-Version: 0.46.0
+Version: 0.47.1
 Release: alt1
 
 Summary: Simple terminal UI for git commands
@@ -49,7 +49,10 @@ ass, lazygit might be for you.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="${LDFLAGS:-} main.version=%version"
+export LDFLAGS="-X main.version=%version \
+	-X main.date=$(date -u +%%Y%%m%%d) \
+	-X main.commit=%version-%release \
+	-X main.buildSource=altlinux"
 
 %golang_prepare
 
@@ -67,6 +70,10 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Feb 25 2025 Ilya Demyanov <turbid@altlinux.org> 0.47.1-alt1
+- new version
+- fix LDFLAGS
+
 * Tue Feb 18 2025 Ilya Demyanov <turbid@altlinux.org> 0.46.0-alt1
 - new version
 
