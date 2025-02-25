@@ -7,15 +7,15 @@
 %define protocols all
 
 Name: bird%_suffix
-Version: 2.15.1
-Release: alt2
+Version: 3.0.1
+Release: alt1
 Summary: BIRD Internet Routing Daemon
 
 Group: Networking/Other
 License: GPLv2
-URL: http://bird.network.cz
+URL: https://bird.network.cz/
 
-VCS: https://gitlab.nic.cz/labs/bird
+VCS: https://gitlab.nic.cz/labs/bird.git/
 Source: %name-%version.tar
 Source1: bird.init
 Source2: bird.service
@@ -111,6 +111,12 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Tue Feb 25 2025 Anton Farygin <rider@altlinux.ru> 3.0.1-alt1
+- 2.16.1 -> 3.0.1
+
+* Tue Feb 25 2025 Anton Farygin <rider@altlinux.ru> 2.16.1-alt1
+- 2.15.1 -> 2.16.1
+
 * Tue May 14 2024 Sergey Y. Afonin <asy@altlinux.org> 2.15.1-alt2
 - removed expect-group option from init.d/bird (ALT #50356)
 
