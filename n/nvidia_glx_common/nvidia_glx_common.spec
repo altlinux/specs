@@ -23,7 +23,7 @@
 %define nv_version 550
 %define nv_release 144
 %define nv_minor 03
-%define pkg_rel alt284
+%define pkg_rel alt285
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -367,6 +367,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt285
+- don't enable NVreg_PreserveVideoMemoryAllocations because suspend problem
+
 * Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt284
 - set NVreg_PreserveVideoMemoryAllocations=1 for nvidia module
 
