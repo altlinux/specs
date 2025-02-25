@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.51.0
-Release: alt1
+Release: alt1.1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -67,6 +67,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch: 0001-guess-touchscreen-Fix-the-interpretation-of-the-valu.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -399,6 +400,11 @@ fi
 %endif
 
 %changelog
+* Sun Feb 23 2025 Anton Midyukov <antohami@altlinux.org> 2.51.0-alt1.1
+- add upstream patch:
+  "guess/touchscreen: Fix the interpretation of the value in properties"
+  (Closes: 53181)
+
 * Tue Jan 21 2025 Alexey Gladkov <legion@altlinux.ru> 2.51.0-alt1
 - Feature kickstart:
   + Allow to disable kickstart from cmdline.
