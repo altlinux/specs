@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gi.repository.Gio)/d
 
 Name: boxflat
-Version: 1.27.4
+Version: 1.28.2
 Release: alt1
 
 Summary: Boxflat for Moza Racing. Control your Moza gear settings!
@@ -26,7 +26,7 @@ BuildArch: noarch
 %summary
 
 %package -n python3-module-%name
-Summary: Python3 module for %name
+Summary: Python 3 module for boxflat
 Group: Development/Python3
 %description -n python3-module-%name
 %summary
@@ -56,5 +56,8 @@ mv -v %buildroot%_datadir/%name/%name %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Feb 25 2025 Mikhail Tergoev <fidel@altlinux.org> 1.28.2-alt1
+- 1.28.2
+
 * Sat Feb 15 2025 Mikhail Tergoev <fidel@altlinux.org> 1.27.4-alt1
 - initial build for ALT Sisyphus
