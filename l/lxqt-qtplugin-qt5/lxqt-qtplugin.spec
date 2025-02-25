@@ -3,7 +3,7 @@
 
 Name: lxqt-qtplugin-qt5
 Version: 1.4.1
-Release: alt2
+Release: alt3
 
 Summary: LxQt platform integration plugin for Qt5
 License: LGPL-2.1
@@ -13,6 +13,7 @@ Url: https://github.com/lxqt/lxqt-qtplugin
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt5
 BuildRequires: gcc-c++ cmake
 BuildRequires: lxqt-build-tools
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel libqtxdg-devel
@@ -21,6 +22,7 @@ BuildRequires: libfm-qt-devel
 
 Conflicts: lxqt-qtplugin <= 2.0.0
 Requires: lxqt-qtplugin-qt6
+Requires: libqt5-core = %_qt5_version
 
 %description
 %summary.
@@ -40,6 +42,9 @@ Requires: lxqt-qtplugin-qt6
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Feb 25 2025 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt3
+- Add dependency on libqt5-core = %%_qt5_version
+
 * Wed Nov 13 2024 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt2
 - rename lxqt-qtplugin -> lxqt-qtplugin-qt5
 
