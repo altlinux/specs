@@ -1,26 +1,26 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 24.02.2
-Release: alt3
+Version: 24.12.2
+Release: alt1
 
 Group:   Video
 Summary: Application for taking pictures and videos from a webcam
 URL:     https://userbase.kde.org/Kamoso
-
 License: GPL-2.0+
+%K5init no_altplace
+
+Requires: kde5-runtime
+Requires: libkf5quickaddons
+Requires: kf5-purpose
+Requires: kf5-kirigami
 
 # Download from http://download.kde.org/stable/release-service/$version/src/kamoso-$version.tar.xz
 Source0: %name-%version.tar
 Source1: %name.watch
-Source2: po.tar
-Source3: kamoso-ru.po
-Source4: kamoso-ru-doc.po
-Patch1:  kamoso-add-l10n.patch
-Patch2:  kamoso-alt-fix-l10n-ru.patch
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++
+BuildRequires: extra-cmake-modules
 BuildRequires: gettext-tools
 %if_with ru_doc
 BuildRequires: itstool
@@ -57,32 +57,14 @@ BuildRequires: gst-plugins1.0-devel
 BuildRequires: qt5-quickcontrols
 BuildRequires: qt5-quickcontrols2-devel
 
-Requires: kf5-ki18n-common
-Requires: kf5-kio
-Requires: kf5-purpose
-Requires: libkf5quickaddons
-Requires: qt5-quickcontrols
-
 %description
 Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
 %setup
-#patch1 -p1
-%patch2 -p1
-tar xf %SOURCE2
-# Merge Russian localization to current version
-msgmerge %SOURCE3 po/ru/kamoso.po -o $TMPDIR/kamoso.po
-cp $TMPDIR/kamoso.po po/ru/kamoso.po
-%if_with ru_doc
-# Apply Russian localization to documentation
-msgfmt %SOURCE4 -o $TMPDIR/kamoso.mo
-itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
-%endif
 
 %build
 %add_optflags -I%_libdir/gstreamer-1.0/include
-%K5init no_altplace
 %K5build
 
 %install
@@ -101,6 +83,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Tue Dec 10 2024 Sergey V Turchin <zerg@altlinux.org> 24.02.2-alt3
 - return kf5-purpose to requires
 
