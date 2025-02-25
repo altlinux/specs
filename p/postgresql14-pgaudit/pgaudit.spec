@@ -1,15 +1,14 @@
 %define pg_ver 14
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 1.7.0
-Release: alt2
+Version: 1.6.3
+Release: alt0.rc1
+Epoch:   1
 
 Summary: PostgreSQL Audit Extension
 License: PostgreSQL
 Group:   Other
 Url:     https://github.com/pgaudit/pgaudit
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -50,6 +49,9 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:1.6.3-alt0.rc1
+- Build pgaudit 1.6 for Postgresql 14
+
 * Fri Apr 07 2023 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt2
 - Required postgresql%%pg_ver-server.
 

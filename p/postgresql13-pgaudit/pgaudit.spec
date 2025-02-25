@@ -1,14 +1,14 @@
-%define pg_ver 15
+%define pg_ver 13
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 1.7.0
-Release: alt3
+Version: 1.5.2
+Release: alt1
+Epoch: 1
 
 Summary: PostgreSQL Audit Extension
 License: PostgreSQL
-Group:   Other
+Group:   Databases
 Url:     https://github.com/pgaudit/pgaudit
-
 Source: %name-%version.tar
 
 BuildRequires: libssl-devel libkrb5-devel
@@ -48,8 +48,16 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
-* Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt3
-- Build pgaudit 1.7 for Postgresql 15
+* Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:1.5.2-alt1
+- Build pgaudit 1.5 for Postgresql 13
+
+* Wed Jan 15 2025 Alexei Takaseev <taf@altlinux.org> 17.0-alt1
+- 17.0
+
+* Tue Aug 20 2024 Alexei Takaseev <taf@altlinux.org> 16.0-alt1
+- 16.0
+- Change Group to Databases
+- Build for PG 16
 
 * Fri Apr 07 2023 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt2
 - Required postgresql%%pg_ver-server.

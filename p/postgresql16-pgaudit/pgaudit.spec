@@ -1,8 +1,9 @@
 %define pg_ver 16
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 17.0
-Release: alt1
+Version: 16.1
+Release: alt0.rc1
+Epoch:   1
 
 Summary: PostgreSQL Audit Extension
 License: PostgreSQL
@@ -47,6 +48,9 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:16.1-alt0.rc1
+- Build pgaudit 16 for Postgresql 16
+
 * Wed Jan 15 2025 Alexei Takaseev <taf@altlinux.org> 17.0-alt1
 - 17.0
 
