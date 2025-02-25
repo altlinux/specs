@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 6.0.2
-Release: alt2
+Release: alt3
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -86,6 +86,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Feb 25 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt3
+- rename "Suspend" and "Hibernate" in Russian
+
 * Tue Feb 25 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt2
 - update the position of the user list more late
 
