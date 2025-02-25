@@ -7,12 +7,12 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      4c9b3b011ae4c30145a7b344c870bdda01b454e2
+%global commit      af898abe44662d9554fb15ee4d4a7307f1b8e315
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 27.5.1
-Release: alt1
+Version: 28.0.0
+Release: alt2
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -27,6 +27,8 @@ Source2: %servicename.init
 Source3: %servicename.sysconf
 Source4: %servicename-storage.sysconf
 Source5: daemon.json
+
+Patch1: docker-engine-28.0.0-alt-fix-compilation-on-i386.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
@@ -149,6 +151,12 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Mon Feb 24 2025 Vladimir Didenko <cow@altlinux.org> 28.0.0-alt2
+- fix build on i386
+
+* Mon Feb 24 2025 Vladimir Didenko <cow@altlinux.org> 28.0.0-alt1
+- 28.0.0
+
 * Thu Jan 23 2025 Vladimir Didenko <cow@altlinux.org> 27.5.1-alt1
 - 27.5.1
 

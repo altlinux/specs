@@ -6,11 +6,11 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      9f9e4058019a37304dc6572ffcbb409d529b59d8
+%global commit      f9ced58158d5e0b358052432244b483774a1983d
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    27.5.1
+Version:    28.0.0
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -68,8 +68,6 @@ install -d %{buildroot}%{_mandir}/man1
 install -p -m 644 man/man1/*.1 %{buildroot}%{_mandir}/man1
 install -d %{buildroot}%{_mandir}/man5
 install -p -m 644 man/man5/*.5 %{buildroot}%{_mandir}/man5
-install -d %{buildroot}%{_mandir}/man8
-install -p -m 644 man/man8/*.8 %{buildroot}%{_mandir}/man8
 
 # install bash completion
 install -Dp -m 644 contrib/completion/bash/docker %{buildroot}%{_datadir}/bash-completion/completions/docker
@@ -90,7 +88,6 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %doc CONTRIBUTING.md README.md
 %{_mandir}/man1/*
 %{_mandir}/man5/*
-%{_mandir}/man8/*
 %{_bindir}/docker
 %{_datadir}/bash-completion/completions/docker
 %{_datadir}/zsh/site-functions/_docker
@@ -98,6 +95,9 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Mon Feb 24 2025 Vladimir Didenko <cow@altlinux.org> 28.0.0-alt1
+- new release
+
 * Thu Jan 23 2025 Vladimir Didenko <cow@altlinux.org> 27.5.1-alt1
 - new release
 
