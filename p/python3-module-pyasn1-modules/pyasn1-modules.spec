@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Summary: A collection of ASN.1-based protocols modules
 License: BSD-2-Clause
@@ -14,7 +14,7 @@ Vcs: https://github.com/pyasn1/pyasn1-modules
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-
+Patch: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -29,6 +29,7 @@ expressed as Python classes based on pyasn1 data model.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -47,6 +48,9 @@ expressed as Python classes based on pyasn1 data model.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1.
+
 * Wed Mar 27 2024 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
 - 0.3.0 -> 0.4.0.
 
