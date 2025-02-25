@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.1.11
+Version: 0.2.0
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -11,13 +11,13 @@ URL: https://gitlab.basealt.space/alt/alterator-application-components
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-devel
+BuildRequires: qt6-base-common qt6-base-devel qt6-declarative-devel qt6-tools-devel
 BuildRequires: boost-devel-headers
-BuildRequires: libqbase-devel
+BuildRequires: libqbase-devel >= 0.1.0-alt3
 BuildRequires: libtomlplusplus-devel
 BuildRequires: alterator-entry >= 0.2.0
 
@@ -64,6 +64,15 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/%name
 
 %changelog
+* Mon Feb 24 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.0-alt1
+- Move to qt6.
+- Add sections. Use sections from edition if one is selected.
+- Show current edition in status bar if selected.
+
+* Mon Feb 17 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.12-alt1
+- Add UI warnings (thx Kozyrev Yuri)
+- Add debug menu (thx Kozyrev Yuri)
+
 * Wed Feb 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.11-alt1
 - Fix DBus timeout when applying changes.
 

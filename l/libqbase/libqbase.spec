@@ -3,7 +3,7 @@
 
 Name: libqbase
 Version: 0.1.0
-Release: alt2
+Release: alt3
 
 Summary: Common BaseALT Qt projects library
 License: GPLv2+
@@ -12,7 +12,7 @@ Vcs: https://github.com/mchernigin/libqbase
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake cmake-modules
-BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-devel
+BuildRequires: qt6-base-common qt6-base-devel qt6-declarative-devel qt6-tools-devel
 
 Source0: %name-%version.tar
 
@@ -47,6 +47,9 @@ for developing applications to use %name.
 %_libdir/cmake
 
 %changelog
+* Mon Feb 24 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt3
+- Move to qt6
+
 * Thu Jan 25 2024 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt2
 - Introduce devel package
 
