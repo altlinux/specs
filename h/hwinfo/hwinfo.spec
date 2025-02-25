@@ -1,13 +1,14 @@
 %def_without static
 
 Name: hwinfo
-%define lname lib%name
 Version: 23.3
-Release: alt1
+Release: alt2
+
 Summary: Hardware detection tool
 License: GPLv2
 Group: System/Kernel and hardware
-URL:            https://github.com/opensuse/hwinfo
+
+URL: https://github.com/opensuse/hwinfo
 #http://download.opensuse.org/source/factory/repo/oss/suse/src
 # http://download.opensuse.org/source/factory/repo/oss/suse/src/%name-%version-2.1.src.rpm
 Source: %name-%version.tar
@@ -19,6 +20,7 @@ Patch4: %name-alt-no-hal.patch
 Patch5: hwinfo-21.23-perl522.patch
 Patch3500: hwinfo-loongarch64.patch
 
+%define lname lib%name
 Requires: %lname = %version-%release
 
 # Automatically added by buildreq on Thu Sep 25 2008 (-bi)
@@ -102,6 +104,12 @@ on a system.
 
 
 %build
+%ifarch %e2k
+sed -i 's/arch_aarch64/&, arch_e2k/' src/hd/hd.h
+sed -i 's/aarch64/e2k/' src/hd/hd.c
+sed -i 's/ -MG / /' Makefile.common
+(cd src/hd; make version.h)
+%endif
 %make RPM_OPT_FLAGS="%optflags" 
 %make_build doc
 bzip2 --best --keep --force changelog
@@ -152,6 +160,10 @@ install -m 0644 doc/libhd/html/* %buildroot%_docdir/%lname-%version/html/
 
 
 %changelog
+* Tue Feb 25 2025 Michael Shigorin <mike@altlinux.org> 23.3-alt2
+- E2K: fix build (ilyakurdyukov@)
+- Minor spec cleanup
+
 * Wed Jan 15 2025 Ilya Mashkin <oddity@altlinux.ru> 23.3-alt1
 - 23.3 (Closes: #52649)
 - Update Url
