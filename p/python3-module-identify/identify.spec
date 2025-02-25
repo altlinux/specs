@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.6.7
+Version: 2.6.8
 Release: alt1
 
 Summary: File identification library for Python
@@ -53,6 +53,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.8-alt1
+- Automatically updated to 2.6.8.
+
 * Tue Feb 11 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.7-alt1
 - Automatically updated to 2.6.7.
 
