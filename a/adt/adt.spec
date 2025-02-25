@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -15,10 +15,10 @@ BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-base-common
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-base-common
 BuildRequires: boost-devel-headers
 BuildRequires: libtomlplusplus-devel
 BuildRequires: doxygen
@@ -63,6 +63,9 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Tue Feb 25 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.9-alt1
+- move to qt6
+
 * Wed Feb 19 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.8-alt1
 - fix gui and cli
 - model refactor
