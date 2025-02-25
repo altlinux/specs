@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: gsmartcontrol
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: GSmartControl - Hard disk drive and SSD health inspection tool
@@ -57,6 +57,9 @@ to determine its health, as well as run various tests on it.
 %exclude %_defaultdocdir/%name/LICENSE*
 
 %changelog
+* Tue Feb 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
+- 2.0.2
+
 * Tue Nov 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 

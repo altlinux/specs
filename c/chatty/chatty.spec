@@ -1,9 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
+%define _name Chatty
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.8
-%define rdn_name sm.puri.Chatty
-%define cmatrix_ver 0.0.2
+%define tag_ver a315b718b7a263362b8501c7e9c20371b75a0f29
+%define rdn_name sm.puri.%_name
+%define cmatrix_ver 0.0.3
 
 %def_enable purple
 %ifarch armh
@@ -15,23 +17,24 @@
 %endif
 
 Name: chatty
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
 Group: Networking/Instant messaging
 License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/World/Chatty
 
+Vcs: https://gitlab.gnome.org/World/Chatty.git
+
 %if_disabled snapshot
 Source: https://gitlab.gnome.org/World/Chatty/-/archive/v%version/%name-v%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/Chatty.git
 Source: %name-%version.tar
 %endif
 Source1: libcmatrix-%cmatrix_ver.tar
 
-%define glib_ver 2.66
+%define glib_ver 2.78
 %define gtk4_ver 4.12
 %define adw_ver 1.5
 %define desktop_ver 43
@@ -73,7 +76,7 @@ A simple to use messaging app for 1:1 communication and small groups
 supporting SMS, MMS, XMPP and matrix.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version -a1
+%setup -n %{?_enable_snapshot:%name-%version}%{?_disable_snapshot:%_name-v%version-%tag_ver} -a1
 mv libcmatrix-%cmatrix_ver subprojects/libcmatrix
 
 %build
@@ -94,11 +97,15 @@ xvfb-run %__meson_test
 %_desktopdir/%rdn_name.desktop
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/bash-completion/completions/%name
 
 
 %changelog
+* Tue Feb 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
+- 0.8.6
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1.1
 rebuilt against libspelling-0.4.0
 
