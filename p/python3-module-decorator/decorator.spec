@@ -1,7 +1,7 @@
 %define modname decorator
 
 Name: python3-module-%modname
-Version: 5.1.1
+Version: 5.2.1
 Release: alt1
 
 Summary: Better living through Python with decorators
@@ -52,6 +52,9 @@ since:
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 5.2.1-alt1
+- Automatically updated to 5.2.1.
+
 * Tue Jun 04 2024 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
 - Build new version.
 
