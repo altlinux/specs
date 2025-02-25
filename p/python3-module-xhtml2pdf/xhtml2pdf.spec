@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.16
+Version: 0.2.17
 Release: alt1
 
 Summary: HTML/CSS to PDF converter based on Python
@@ -83,6 +83,9 @@ py.test-3 -v -k 'not test_document_cannot_identify_image and not test_document_w
 %doc demo/*
 
 %changelog
+* Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.17-alt1
+- Automatically updated to 0.2.17.
+
 * Tue Jun 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.16-alt1
 - Automatically updated to 0.2.16.
 
