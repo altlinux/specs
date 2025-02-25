@@ -5,7 +5,7 @@
 
 Name:    crash
 Version: 8.0.6
-Release: alt1
+Release: alt2
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -24,7 +24,8 @@ Source0: %name-%version.tar
 Source1: gdb-10.2.tar.gz
 
 ExcludeArch: e2k
-BuildRequires(pre): kernel-latest
+BuildRequires(pre): kernel-%kernel_latest
+BuildRequires(pre): rpm-build-kernel
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: makeinfo
@@ -46,7 +47,7 @@ Summary: CI test for %name
 Group: Development/Other
 Requires(post): crash = %EVR
 Requires(post): rpm-build-vm
-Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo')
+Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo' | grep . || echo unknown)
 
 %description -n kernel-ci-crash-debuginfo
 %summary with a workaround for 'sisyphus_check: check-deps ERROR: package
@@ -95,6 +96,8 @@ EOF1
 grep 'KERNEL: /usr/lib/debug/.*lib/modules/.*/vmlinux' crash.log
 grep 'DUMPFILE: /proc/kcore' crash.log
 grep -F '[swapper/0]' crash.log
+rm crash.log
+rm -f /tmp/initramfs-*.img /tmp/vm.*
 %endif
 
 %files
@@ -107,6 +110,9 @@ grep -F '[swapper/0]' crash.log
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Tue Feb 25 2025 Vitaly Chikunov <vt@altlinux.org> 8.0.6-alt2
+- spec: Remove dependence on kernel-image-6.6.
+
 * Thu Nov 14 2024 Vitaly Chikunov <vt@altlinux.org> 8.0.6-alt1
 - Update to 8.0.6 (2024-11-12).
 
