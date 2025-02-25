@@ -1,7 +1,7 @@
 %define oname libacl
 
 Name: python3-module-%oname
-Version: 0.7.0
+Version: 0.7.2
 Release: alt1
 
 Summary: POSIX.1e ACLs for python
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: libacl-devel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-recommonmark
+BuildRequires: python3-module-myst-parser
 
 %description
 python-libacl is a C extension module for Python which implements
@@ -53,6 +54,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/pylibacl-%version.dist-info
 
 %changelog
+* Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
+- Automatically updated to 0.7.2.
+
 * Sat May 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
 - Automatically updated to 0.7.0.
 
