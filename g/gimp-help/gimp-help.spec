@@ -1,19 +1,19 @@
-%define gimphelpdir %_datadir/gimp/2.0/help
+%define gimphelpdir %_datadir/gimp/3.0/help
 
 Name: gimp-help
-Version: 2.10.34
-Release: alt2
+Version: 2.99.0
+Release: alt1
 Summary: Help files for the GIMP
-License: GFDL
+License: GFDL-1.2
 Group: Graphics
 
 Url: http://docs.gimp.org/
-Source0: https://download.gimp.org/mirror/pub/gimp/help/%name-%version.tar.bz2
+Source0: https://download.gimp.org/mirror/pub/gimp/help/%name-%version.tar.xz
 
-Requires: gimp >= 2.10
+Requires: gimp >= 3.0
 BuildArch: noarch
 
-BuildRequires: libgimp-devel xsltproc pngcrush python3-module-libxml2 docbook-style-xsl
+BuildRequires: intltool libgimp-devel xsltproc pngcrush python3-module-libxml2 docbook-style-xsl dblatex librsvg-utils gnome-doc-utils gettext
 
 %description
 GIMP-Help is a help system designed for use with the internal GIMP 2
@@ -62,6 +62,7 @@ export ALL_LINGUAS="de en fr ru"
 
 %install
 %make DESTDIR=%buildroot install
+rm -fr %buildroot%gimphelpdir/pdf
 
 %files en
 %dir %gimphelpdir
@@ -80,6 +81,9 @@ export ALL_LINGUAS="de en fr ru"
 %gimphelpdir/ru
 
 %changelog
+* Tue Feb 25 2025 Valery Inozemtsev <shrek@altlinux.ru> 2.99.0-alt1
+- 2.99.0
+
 * Tue Aug  1 2023 Artyom Bystrov <arbars@altlinux.org> 2.10.34-alt2
 - Fix FTBFS
 
