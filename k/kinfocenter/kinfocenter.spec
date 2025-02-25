@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.3.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -93,6 +93,8 @@ Requires: /usr/bin/ip
 Requires: /usr/bin/pactl
 # Block Devices
 Requires: lsblk
+# edid
+Requires: /usr/bin/di-edid-decode
 %description maxi
 %name maximum package.
 
@@ -169,6 +171,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt2
+- require di-edid-decode
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
 - new version
 
