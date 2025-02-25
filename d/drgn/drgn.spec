@@ -5,7 +5,7 @@
 
 Name:    drgn
 Version: 0.0.30
-Release: alt1
+Release: alt2
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
 Group:   Development/Debuggers
@@ -21,7 +21,8 @@ Provides: python3-module-drgn
 
 Source: %name-%version.tar
 
-BuildRequires(pre): kernel-latest
+BuildRequires(pre): kernel-%kernel_latest
+BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
 BuildRequires: flex
@@ -54,7 +55,7 @@ Summary: CI test for %name
 Group: Development/Other
 Requires(post): drgn = %EVR
 Requires(post): rpm-build-vm
-Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo')
+Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo' | grep . || echo unknown)
 
 %description -n kernel-ci-drgn-debuginfo
 %summary with a workaround for 'sisyphus_check: check-deps ERROR: package
@@ -103,7 +104,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 set -ex
 # ppc64le: Exception: virtual address translation is only supported for Radix MMU
 vm-run --heredoc <<-EOF
-	%_datadir/drgn/contrib/kernel_sys.py
+	%_datadir/drgn/contrib/lsmod.py
 %ifnarch ppc64le
 	drgn %_datadir/drgn/contrib/platform_drivers.py
 %endif
@@ -122,6 +123,9 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Tue Feb 25 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.30-alt2
+- spec: Remove dependence on kernel-image-6.6.
+
 * Thu Dec 19 2024 Vitaly Chikunov <vt@altlinux.org> 0.0.30-alt1
 - Update to v0.0.30 (2024-12-18).
 
