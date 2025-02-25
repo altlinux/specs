@@ -1,6 +1,6 @@
 Name:     kiwix-lib
 Version:  14.0.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Common code base for all Kiwix ports
 License:  GPL-3.0-or-later
@@ -45,6 +45,9 @@ Group: Development/C++
 sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %endif
 
+# compat with icu 76
+sed -i "/icu/ s/'icu/'icu-uc, icu/" meson.build
+
 %build
 %meson
 %meson_build
@@ -65,6 +68,9 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_man1dir/*.1*
 
 %changelog
+* Tue Feb 25 2025 Constantin Sunzow <protvin@altlinux.org> 14.0.0-alt2
+- Rebuild with icu 76.
+
 * Fri Dec 13 2024 Constantin Sunzow <protvin@altlinux.org> 14.0.0-alt1
 - Merge source code to main directory.
   New version.
