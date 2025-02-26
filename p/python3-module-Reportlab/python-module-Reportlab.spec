@@ -4,16 +4,15 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 
 Summary: The Reportlab Toolkit
 
 License: BSD license (see LICENSE.txt for details)
 Group: Development/Python3
-Url: http://www.reportlab.org
+Url: https://pypi.org/project/reportlab
 
-# Source-url: %__pypi_url %rname
 Source: reportlab-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx3
@@ -72,6 +71,9 @@ popd
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt1
+- Build new version.
+
 * Sun Feb 09 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Build new version.
 
