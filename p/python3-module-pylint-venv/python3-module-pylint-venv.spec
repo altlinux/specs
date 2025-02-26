@@ -5,25 +5,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
 
 Summary: Make pylint respect virtualenvs
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pylint-venv/
-Vcs: https://github.com/jgosmann/pylint-venv/
+Vcs: https://github.com/jgosmann/pylint-venv
 
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch0: python3-module-pylint-venv-3.0.3-alt-use-correct-python-version-dir.patch
+Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -41,7 +40,6 @@ installation with different virtual environments.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-
 %if_with check
 %pyproject_deps_resync_check_poetry dev
 %endif
@@ -53,10 +51,7 @@ installation with different virtual environments.
 %pyproject_install
 
 %check
-cd test
-%__sed -i 's/pylint/pylint.py3/' test.sh
-export PYTHONPATH="%buildroot%python3_sitelibdir"
-./test.sh
+%pyproject_run -- test/test.sh
 
 %files
 %doc LICENSE.txt CHANGES.md README.rst
@@ -65,6 +60,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 26 2025 Anton Zhukharev <ancieg@altlinux.org> 3.0.4-alt1
+- Updated to 3.0.4.
+
 * Wed Nov 08 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.3-alt1
 - Built for ALT Sisyphus.
 
