@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.6.2
+Version: 3.6.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.3-alt1
+- better arrange wizardface step title
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.2-alt1
 - add logo_width on top of wizardface
 
