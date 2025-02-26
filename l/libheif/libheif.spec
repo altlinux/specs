@@ -1,9 +1,11 @@
 Name: libheif
 Version: 1.19.5
-Release: alt1
+Release: alt2
+
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
 Group: System/Libraries
+
 Url: https://github.com/strukturag/libheif
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
@@ -11,10 +13,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires: cmake gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel libaom-devel
-#BuildRequires: libdav1d-devel
-#%ifnarch %e2k
-#BuildRequires: librav1e-devel
-#%endif
 
 %description
 HEIF is a new image file format employing HEVC (h.265) image coding for the
@@ -28,15 +26,14 @@ Summary:  Development libraries for %name
 Development libraries for %name
 
 %prep
-%setup -q
+%setup
 %patch -p1
 %ifarch %e2k
-sed -i 's/-Werror/-Wno-error/g' configure.ac CMakeLists.txt
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %endif
 
 %build
 %cmake
-
 %cmake_build
 
 %install
@@ -57,6 +54,10 @@ sed -i 's/-Werror/-Wno-error/g' configure.ac CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Feb 27 2025 Michael Shigorin <mike@altlinux.org> 1.19.5-alt2
+- E2K: fix workaround
+- minor spec cleanup
+
 * Wed Nov 20 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.19.5-alt1
 - 1.19.5
 
