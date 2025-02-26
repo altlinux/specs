@@ -1,6 +1,6 @@
 Name: pycam
 Version: 0.7.0
-Release: alt2.20200112
+Release: alt2.20200112.1
 Summary: Open Source CAM - Toolpath Generation for 3-Axis CNC machining
 Group: Engineering
 License: GPLv3+
@@ -18,7 +18,7 @@ BuildRequires: ccache
 BuildRequires: desktop-file-utils
 BuildRequires: help2man
 BuildRequires: pytest3
-BuildRequires: python3-module-svg python3-module-svg-path
+BuildRequires: python3-module-svg-path
 %add_python3_req_skip openvoronoi
 Requires: inkscape
 Requires: pstoedit
@@ -99,6 +99,9 @@ install -pD -m 0644 man/pycam.1 %buildroot%_man1dir/pycam.1
 %python3_sitelibdir/*
 
 %changelog
+* Wed Feb 26 2025 Stanislav Levin <slev@altlinux.org> 0.7.0-alt2.20200112.1
+- NMU: dropped dependency on removed svg.
+
 * Tue Jul 27 2021 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt2.20200112
 - Add missing requires to python3-module-OpenGL
 
