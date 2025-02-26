@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
 
 Summary: Provides library functionality for communicating with a FIDO device over USB as well as verifying attestation and assertion signatures
@@ -56,6 +56,9 @@ as well as verifying attestation and assertion signatures.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 26 2025 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Mon Apr 01 2024 Anton Zhukharev <ancieg@altlinux.org> 1.1.3-alt1
 - Updated to 1.1.3.
 
