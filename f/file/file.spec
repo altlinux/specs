@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.46
-Release: alt1
+Release: alt2
 Summary: File type guesser
 License: BSD-2-Clause
 Group: File tools
@@ -130,6 +130,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Wed Feb 26 2025 Vitaly Chikunov <vt@altlinux.org> 5.46-alt2
+- Update to FILE5_46 (2024-11-27, upstream pushed an updated tag on 2025-01-31).
+
 * Sun Dec 01 2024 Vitaly Chikunov <vt@altlinux.org> 5.46-alt1
 - Update to FILE5_46 (2024-11-26).
 
