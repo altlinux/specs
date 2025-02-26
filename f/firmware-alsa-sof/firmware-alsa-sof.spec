@@ -1,5 +1,5 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2024.09.2
+%define version_major 2025.01
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
@@ -37,7 +37,7 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
-for d in sof sof-ipc4 sof-ace-tplg sof-ipc4-tplg sof-tplg; do \
+for d in sof sof-ipc4 sof-ace-tplg sof-ipc4-tplg sof-ipc4-lib sof-tplg; do \
   cp -a "${d}" %buildroot%_firmwarepath/intel/; \
 done
 install %SOURCE3 %buildroot%_firmwarepath/intel/sof-tplg/
@@ -47,6 +47,8 @@ install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 FILEDIR=$(pwd)
 pushd %buildroot/%_firmwarepath
 find -P . -name "*.ri" | sed -e '/^.$/d' > $FILEDIR/alsa-sof-firmware.files
+find -P . -name "*.bin" | sed -e '/^.$/d' >> $FILEDIR/alsa-sof-firmware.files
+find -P . -name "*.llext" | sed -e '/^.$/d' >> $FILEDIR/alsa-sof-firmware.files
 find -P . -name "*.tplg" | sed -e '/^.$/d' >> $FILEDIR/alsa-sof-firmware.files
 find -P . -name "*.ldc" | sed -e '/^.$/d' > $FILEDIR/alsa-sof-firmware.debug-files
 find -P . -type d | sed -e '/^.$/d' > $FILEDIR/alsa-sof-firmware.dirs
@@ -67,14 +69,15 @@ end
 %files -f alsa-sof-firmware.files
 %doc LICENCE*  README*
 %dir %_firmwarepath
-%_firmwarepath/skl_hda_dsp_generic-tplg.bin
-%dir %_firmwarepath/intel
-%_firmwarepath/intel/sof-tplg
 %_firmwarepath/intel/sof-ace-tplg
+%_firmwarepath/skl_hda_dsp_generic-tplg.bin
 
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Wed Feb 26 2025 Anton Farygin <rider@altlinux.ru> 2025.01-alt1
+- 2024.09.2 -> 2025.01
+
 * Sun Dec 08 2024 Anton Farygin <rider@altlinux.ru> 2024.09.2-alt1
 - 2024.09.1 -> 2024.09.2
 - updated homepage and VCS
