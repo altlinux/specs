@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,rpath=relaxed,unresolved=relaxed
-%define ver_major 14.2
+%define ver_major 14.3
 
 Name: ogre
-Version: %ver_major.6
+Version: %ver_major.4
 Release: alt1
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
@@ -155,6 +155,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_libdir/OGRE/Samples
 
 %changelog
+* Wed Feb 26 2025 Anton Farygin <rider@altlinux.ru> 14.3.4-alt1
+- 14.2.6 -> 14.3.4
+
 * Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 14.2.6-alt1
 - 14.2.4 -> 14.2.6
 
