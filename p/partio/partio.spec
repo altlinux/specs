@@ -3,7 +3,7 @@
 %define soname 1
 
 Name: partio
-Version: 1.17.3
+Version: 1.19.0
 Release: alt1
 Summary: A library for particle IO and manipulation
 Group: Development/Other
@@ -58,6 +58,7 @@ This package contains development files for Partio.
 %package doc
 Summary: A library for particle IO and manipulation
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 C++ (with python bindings) library for easily reading/writing/manipulating
@@ -127,7 +128,7 @@ find . -name '*.py' | xargs sed -i \
 %_libdir/lib*.so
 
 %files doc
-%doc %_defaultdocdir/%name/html
+%_defaultdocdir/%name
 
 %files -n python3-module-%name
 %python3_sitelibdir/*.py
@@ -139,6 +140,9 @@ find . -name '*.py' | xargs sed -i \
 %_libdir/partio/test
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 1.19.0-alt1
+- Version 1.19.0.
+
 * Thu Mar 14 2024 L.A. Kostis <lakostis@altlinux.ru> 1.17.3-alt1
 - Version 1.17.3.
 
