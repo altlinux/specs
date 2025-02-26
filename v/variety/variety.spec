@@ -1,5 +1,5 @@
 Name:    variety
-Version: 0.8.12
+Version: 0.8.13
 Release: alt1
 
 Summary: Wallpaper downloader and manager for Linux systems
@@ -86,6 +86,9 @@ cp -av build/mo/* %buildroot%_datadir/locale
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Feb 26 2025 Andrey Cherepanov <cas@altlinux.org> 0.8.13-alt1
+- New version.
+
 * Sun Jan 21 2024 Andrey Cherepanov <cas@altlinux.org> 0.8.12-alt1
 - New version.
 
