@@ -5,7 +5,7 @@
 
 Name: libphonenumber
 Version: 8.13.55
-Release: alt1
+Release: alt2
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -53,12 +53,11 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %endif
 
 # gtest > 1.13 requires >= C++14
-sed -i 's|\(CMAKE_CXX_STANDARD \)11|\1%stdxx|' ../tools/cpp/CMakeLists.txt
+# libabseil compiled with -std=gnu++17
+sed -i '/cmake_minimum_required/a set(CMAKE_CXX_STANDARD %stdxx)' CMakeLists.txt
 
 %build
-# libabseil compiled with -std=gnu++17
 %cmake \
-    -DCMAKE_CXX_STANDARD=%stdxx \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
     -DBUILD_SHARED_LIBS=ON
 %nil
@@ -83,6 +82,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Feb 26 2025 Michael Shigorin <mike@altlinux.org> 8.13.55-alt2
+- fix c++ standard version specification (ilyakurdyukov@)
+
 * Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 8.13.55-alt1
 - 8.13.55
 
