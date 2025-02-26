@@ -5,7 +5,7 @@
 %set_verify_elf_method strict
 
 Name: ugrep
-Version: 7.1.3
+Version: 7.2.2
 Release: alt1
 Summary: Universal grep: a feature-rich grep implementation with focus on speed
 License: BSD-3-Clause
@@ -39,10 +39,11 @@ BuildRequires: valgrind
 }}
 
 %description
-A more powerful, ultra fast, user-friendly, compatible grep. Includes a
-TUI, Google-like Boolean search with AND/OR/NOT, fuzzy search, hexdumps,
-searches (nested) archives (zip, 7z, tar, pax, cpio), compressed files
-(gz, Z, bz2, lzma, xz, lz4, zstd, brotli), pdfs, docs, and more
+A more powerful, ultra fast, user-friendly, compatible grep
+replacement. Includes a TUI, Google-like Boolean search with AND/OR/NOT,
+fuzzy search, hexdumps, searches (nested) archives (zip, 7z, tar, pax,
+cpio), compressed files (gz, Z, bz2, lzma, xz, lz4, zstd, brotli), pdfs,
+docs, and more.
 
 %prep
 %setup
@@ -97,6 +98,9 @@ PATH=%buildroot%_bindir:$PATH
 %_datadir/zsh/site-functions/_ug*
 
 %changelog
+* Wed Feb 26 2025 Vitaly Chikunov <vt@altlinux.org> 7.2.2-alt1
+- Update to 7.2.2 (2025-02-26).
+
 * Sat Jan 11 2025 Vitaly Chikunov <vt@altlinux.org> 7.1.3-alt1
 - Update to 7.1.3 (2025-01-11).
 
