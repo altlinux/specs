@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.6.3
+Version: 3.6.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.4-alt1
+- fix initialise variable
+
 * Wed Feb 26 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.3-alt1
 - better arrange wizardface step title
 
