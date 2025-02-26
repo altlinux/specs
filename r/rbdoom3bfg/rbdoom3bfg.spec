@@ -1,6 +1,6 @@
 Name: rbdoom3bfg
 Version: 1.5.1
-Release: alt1
+Release: alt1.git15be4c6
 
 Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
 License: GPLv3
@@ -96,6 +96,9 @@ install -Dpm0644 %SOURCE2 %buildroot/%_iconsdir/%name.png
 %_iconsdir/%name.png
 
 %changelog
+* Wed Feb 26 2025 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt1.git15be4c6
+- Fix FTBFS
+
 * Sun Jan 12 2025 Artyom Bystrov <arbars@altlinux.org> 1.5.1-alt1
 - Update version to 1.5.1
 - Disable ix86 arch :(
