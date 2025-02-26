@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Feb 26 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt5
+- fix some typos (ALT 53118, 53127, 53187, 53142, 53214)
+- small improvements (ALT 53139, 53212, 53213)
+- PVE: update backup, add firewall, replication
+
 * Fri Feb 07 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt4
 - update install PVE
 - small improvements
