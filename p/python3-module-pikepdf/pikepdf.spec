@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %def_with check
 # No module autoapi
 %def_without docs
@@ -6,8 +5,8 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-pikepdf
-Version: 9.4.1
-Release: alt1.1
+Version: 9.5.2
+Release: alt1
 License: MPL-2.0
 Summary: A Python library for reading and writing PDF files
 Group: Development/Python
@@ -92,6 +91,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 9.5.2-alt1
+- Automatically updated to 9.5.2.
+
 * Fri Feb 07 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 9.4.1-alt1.1
 - NMU: Remove useless BR to python3(deprecated) (thx @grenka).
 
