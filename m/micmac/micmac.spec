@@ -1,14 +1,21 @@
 %define        _unpackaged_files_terminate_build 1
 
+%ifarch loongarch64 riscv64
+# workaround for:
+#  error: cpio archive too big - 6558M
+%define optflags_debug -g1
+%endif
+
 Name:          micmac
 Version:       1.1.1
-Release:       alt1
+Release:       alt1.1
 Summary:       MicMac is a free open-source photogrammetric suite
 License:       Cecill-B
 Group:         Graphics
 Url:           https://micmac.ensg.eu/
 Vcs:           https://github.com/micmacIGN/micmac.git
 Source:        %name-%version.tar
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 Patch:         %name-%version-%release.patch
 ExcludeArch:   %arm
 
@@ -171,5 +178,9 @@ libANN library to use with Micmac suite development files.
 
 
 %changelog
+* Wed Feb 26 2025 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1.1
+- NMU: fix build on loongarch64 and riscv64 by reducing
+  debug level (with -g2 debuginfo does not fit into 4Gb limit).
+
 * Sun Feb 11 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt1
 - initial build v1.1.1 for Sisyphus
