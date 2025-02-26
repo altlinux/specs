@@ -2,7 +2,7 @@
 
 Name:    qman
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: A more modern man page viewer for our terminals
 License: BSD-2-Clause
@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(ncursesw)
 BuildRequires: pkgconfig(inih)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(liblzma)
 
 %description
 Linux manual pages are lovely. They are concise, well-written, complete,
@@ -53,5 +54,8 @@ rm -vfr %{buildroot}%_datadir/doc/qman
 %_man1dir/*
 
 %changelog
+* Wed Feb 26 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt2
+- Added XZ-support from devel-branch (commit hash 2a23f6c)
+
 * Sun Feb 23 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
