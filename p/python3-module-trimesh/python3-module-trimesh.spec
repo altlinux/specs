@@ -6,7 +6,7 @@
 
 Name:    python3-module-%modulename
 Version: 4.5.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python library for loading and using triangular meshes
 License: MIT
@@ -28,7 +28,6 @@ BuildRequires: python3-module-lxml
 BuildRequires: python3-module-shapely
 BuildRequires: python3-module-networkx
 BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-svg
 BuildRequires: python3-module-svg-path
 BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-mapbox-earcut
@@ -143,6 +142,9 @@ pytest3 -v -k "not ( DAETest and test_material_round ) and \
 %doc *.md
 
 %changelog
+* Wed Feb 26 2025 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1.1
+- NMU: dropped dependency on removed svg.
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 4.5.3-alt1
 - new version (4.5.3) with rpmgs script
 - pack %%_bindir/trimesh
