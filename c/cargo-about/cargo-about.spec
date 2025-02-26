@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: cargo-about
-Version: 0.6.6
+Version: 0.7.0
 Release: alt1
 
 Summary: Cargo plugin to generate list of all licenses for a crate
@@ -17,7 +18,6 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
-BuildRequires: mold
 
 %description
 %summary.
@@ -28,9 +28,7 @@ BuildRequires: mold
 install -vD %SOURCE2 .cargo/config.toml
 
 %build
-export CARGO_BUILD_RUSTFLAGS="-Copt-level=3 -Cdebuginfo=1"
-export CARGO_PROFILE_RELEASE_STRIP="true"
-mold -run cargo build %_smp_mflags --release --offline
+cargo build --release %{?_smp_mflags} --offline
 
 %install
 install -Dvm0755 target/release/cargo-about %buildroot%_bindir/cargo-about
@@ -41,6 +39,9 @@ install -Dvm0755 target/release/cargo-about %buildroot%_bindir/cargo-about
 %_bindir/cargo-about
 
 %changelog
+* Wed Feb 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.7.0-alt1
+- Updated to 0.7.0.
+
 * Fri Nov 29 2024 Anton Zhukharev <ancieg@altlinux.org> 0.6.6-alt1
 - Updated to 0.6.6.
 
