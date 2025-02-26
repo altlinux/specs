@@ -5,6 +5,7 @@
 
 %ifarch x86_64
 %def_with cuda
+%def_with oneapi
 %filter_from_requires /libcudart\.so\.12/d
 %else
 %def_without cuda
@@ -16,7 +17,7 @@
 %define soname 2
 
 Name: openimagedenoise
-Version: 2.3.0
+Version: 2.3.2
 Release: alt1
 Summary: Intel Open Image Denoise library
 Group: Development/Other
@@ -39,6 +40,11 @@ BuildRequires: ispc
 BuildRequires: libopenimageio-devel chrpath
 %if_with hip
 BuildRequires: hip-devel hip-runtime-amd rocm-comgr-devel rocm-device-libs hsa-rocr-devel
+%endif
+%if_with oneapi
+# FIXME DPC++ compiler doesn't support LTO?
+%define optflags_lto %nil
+BuildRequires: llvm-dpcpp-devel clang-dpcpp-devel clang-dpcpp-tools intel-ocloc libze-devel libigc-devel
 %endif
 %if_with cuda
 BuildRequires: nvidia-cuda-devel nvidia-cuda-devel-static gcc12-c++
@@ -92,6 +98,14 @@ Requires: lib%{name}%{soname} = %EVR, libcudart
 %description cuda
 Intel Open Image Denoise library with CUDA support
 
+%package sycl
+Summary: Intel Open Image Denoise library with oneAPI/SYCL support
+Group: System/Libraries
+Requires: lib%{name}%{soname} = %EVR
+
+%description sycl
+Intel Open Image Denoise library with oneAPI/SYCL support
+
 %prep
 %setup -n %oname-%version
 %ifarch aarch64
@@ -122,6 +136,11 @@ export GCC_VERSION=12
 	%if_with cuda
 	-DOIDN_DEVICE_CUDA:BOOL=ON \
 	-DOIDN_DEVICE_CUDA_API=RuntimeShared \
+	%endif
+	%if_with oneapi
+	-DOIDN_DEVICE_SYCL:BOOL=ON \
+	-DCMAKE_C_COMPILER=%prefix/lib/llvm-dpcpp/bin/clang \
+	-DCMAKE_CXX_COMPILER=%prefix/lib/llvm-dpcpp/bin/clang++ \
 	%endif
 	-DCMAKE_BUILD_TYPE=%build_type \
 	-DCMAKE_STRIP:STRING=""
@@ -155,6 +174,9 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %if_with cuda
 %exclude %_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %endif
+%if_with oneapi
+%exclude %_libdir/libOpenImageDenoise_device_sycl.so.%{version}
+%endif
 
 %if_with hip
 %files hip
@@ -166,12 +188,21 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %endif
 
+%if_with oneapi
+%files sycl
+%_libdir/libOpenImageDenoise_device_sycl.so.%{version}
+%endif
+
 %files devel
 %_includedir/*
 %_libdir/lib*.so
 %_libdir/cmake/*
 
 %changelog
+* Tue Jan 28 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.2-alt1
+- Updated to upstream version 2.3.2.
+- x86_64: Enabled oneAPI/SYCL.
+
 * Mon Jul 29 2024 L.A. Kostis <lakostis@altlinux.ru> 2.3.0-alt1
 - Updated to upstream version 2.3.0.
 

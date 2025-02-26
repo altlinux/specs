@@ -10,12 +10,17 @@
 %def_without ispc
 %endif
 
+# oneapi needs sycl compiler
+%ifarch x86_64
+%def_with oneapi
+%endif
+
 %define libsuffix 4
 %define soname 4
 
 Name: embree
 Version: 4.3.3
-Release: alt1
+Release: alt2
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -24,6 +29,9 @@ VCS: https://github.com/RenderKit/embree
 Source: %name-%version.tar
 
 Source1: %name.watch
+
+# https://github.com/RenderKit/embree/commit/1ace3ba33d75603fc60d0ee3b21a249ef9dee673
+Patch: 1ace3ba33d75603fc60d0ee3b21a249ef9dee673.patch
 
 Patch2000: %name-e2k.patch
 
@@ -42,21 +50,27 @@ BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libtiff-4)
 BuildRequires: pkgconfig(OpenImageIO)
 BuildRequires: pkgconfig(tbb)
+%if_with oneapi
+BuildRequires: libze-devel libze-intel-gpu-devel llvm-dpcpp-devel clang-dpcpp-devel
+BuildRequires: clang-dpcpp-tools opencl-headers
+%endif
 
 # https://github.com/embree/embree/issues/186
 ExclusiveArch: aarch64 x86_64 %e2k
 
 %description
-A collection of high-performance ray tracing kernels intended to graphics 
-application engineers that want to improve the performance of their application.
+A collection of high-performance ray tracing kernels intended to graphics
+application engineers that want to improve the performance of their
+application.
 
 %package -n lib%{name}%{libsuffix}-%soname
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: System/Libraries
 
 %description -n lib%{name}%{libsuffix}-%soname
-A collection of high-performance ray tracing kernels intended to graphics 
-application engineers that want to improve the performance of their application.
+A collection of high-performance ray tracing kernels intended to graphics
+application engineers that want to improve the performance of their
+application.
 
 %package devel
 Summary: Development files for %name
@@ -69,6 +83,7 @@ applications that use %{name}.
 
 %prep
 %setup
+%patch -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -77,6 +92,10 @@ applications that use %{name}.
 
 %ifarch %e2k
 %add_optflags -Wno-reduced-alignment -Wno-sign-compare -mno-avx
+%endif
+
+%if_with oneapi
+%define optflags_lto %nil
 %endif
 
 %cmake \
@@ -88,6 +107,10 @@ applications that use %{name}.
 %if_without ispc
 	-DEMBREE_ISPC_SUPPORT=OFF \
 	-DEMBREE_MAX_ISA=DEFAULT \
+%endif
+%if_with oneapi
+	-DCMAKE_CXX_COMPILER=%prefix/lib/llvm-dpcpp/bin/clang++ \
+	-DEMBREE_SYCL_SUPPORT=ON \
 %endif
 	%nil
 
@@ -107,11 +130,18 @@ rm -f %buildroot%prefix/%{name}-vars.*
 
 %files devel
 %_libdir/lib%{name}%{libsuffix}.so
+%if_with oneapi
+%_libdir/lib%{name}%{libsuffix}_sycl.a
+%_bindir/*
+%endif
 %_includedir/%{name}%{libsuffix}/
 %_libdir/cmake/%name-%version/
 %_man3dir/*
 
 %changelog
+* Sun Jan 26 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.3-alt2
+- build with oneapi/SYCL.
+
 * Mon Sep 23 2024 Anton Farygin <rider@altlinux.ru> 4.3.3-alt1
 - 4.3.2 -> 4.3.3
 
