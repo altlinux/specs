@@ -8,14 +8,13 @@
 
 Name: libtorrent-rasterbar
 Epoch: 4
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
 Url: https://www.rasterbar.com/products/libtorrent/
-
-# https://github.com/arvidn/libtorrent.git
+VCS: https://github.com/arvidn/libtorrent.git
 Source: %name-%version.tar
 
 # git submodules
@@ -25,12 +24,13 @@ Source3: %name-%version-simulation-libsimulator.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: cmake ctest
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: boost-devel boost-asio-devel boost-filesystem
 BuildRequires: boost-filesystem-devel boost-program_options-devel
 BuildRequires: libGeoIP-devel
+BuildRequires: /proc
 %if_with python3
 BuildRequires: python3-devel boost-python3-devel
 BuildRequires: python3(setuptools)
@@ -122,6 +122,7 @@ export LIBS=-latomic
 	-DCMAKE_CXX_STANDARD=14 \
 	-Dbuild_examples=ON \
 	-Dbuild_tools=ON \
+	-Dbuild_tests=ON \
 %if_with python3
 	-Dpython-bindings=ON \
 	-Dpython-egg-info=ON \
@@ -134,6 +135,15 @@ export LIBS=-latomic
 
 %install
 %cmakeinstall_std
+
+%check
+pushd %_cmake__builddir/test
+# disable UPnP tests: it required a UPnP server
+echo "set (CTEST_CUSTOM_TESTS_IGNORE
+ "test_upnp"
+)" > CTestCustom.cmake
+ctest --parallel %_smp_build_ncpus ||:
+popd
 
 %files -n %name%soname
 %doc AUTHORS ChangeLog NEWS README.rst
@@ -155,6 +165,9 @@ export LIBS=-latomic
 %endif
 
 %changelog
+* Tue Feb 25 2025 Anton Farygin <rider@altlinux.ru> 4:2.0.11-alt1
+- 2.0.10 -> 2.0.11
+
 * Mon Apr 08 2024 Anton Farygin <rider@altlinux.ru> 4:2.0.10-alt1
 - 2.0.9 -> 2.0.10
 
