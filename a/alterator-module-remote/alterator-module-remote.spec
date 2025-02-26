@@ -1,6 +1,6 @@
 Name: alterator-module-remote
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
 License: %gpl2only
@@ -10,9 +10,9 @@ URL: https://gitlab.basealt.space/alt/alterator-module-remote
 BuildRequires: cmake gcc rpm-build-licenses
 BuildRequires: libgio-devel libpolkit-devel
 # libsystemd-devel
-BuildRequires: alterator-manager-devel >= 0.1.24
+BuildRequires: alterator-manager-devel >= 0.1.27
 
-Requires: alterator-manager >= 0.1.24-alt1
+Requires: alterator-manager >= 0.1.27-alt2
 
 Source: %name-%version.tar
 
@@ -34,6 +34,9 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Feb 26 2025 Ivan Savin <svn17@altlinux.org> 0.1.2-alt2
+- Requirements update.
+
 * Fri Nov 08 2024 Ivan Savin <svn17@altlinux.org> 0.1.2-alt1
 - Fix return value of Disconnect method. Now it returns true if the kill signal
   was successfully sent to the remote-polkit-agent.
