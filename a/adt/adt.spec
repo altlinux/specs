@@ -2,7 +2,7 @@
 
 Name: adt
 Version: 0.1.9
-Release: alt1
+Release: alt2
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
@@ -63,6 +63,11 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Feb 26 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.9-alt2
+- fix test's log widget content
+- fix tests status in testswidget
+- fix tests translations
+
 * Tue Feb 25 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.9-alt1
 - move to qt6
 
