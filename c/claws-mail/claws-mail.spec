@@ -31,7 +31,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	4.3.0
+Version:	4.3.1
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -47,7 +47,7 @@ Patch:	%name-%version-%release.patch
 Obsoletes:	%_oldname < %version
 Provides:	%_oldname
 
-BuildPreReq:	autoconf-common gettext-tools
+BuildRequires:	autoconf-common gettext-tools
 
 BuildRequires: flex libSM-devel libcompface-devel libdbus-glib-devel libenchant2-devel libgnutls-devel libgpgme-devel libldap-devel libstartup-notification-devel libgcrypt-devel zlib-devel
 # For SNI support
@@ -93,11 +93,11 @@ BuildRequires: perl-devel sed
 %{?_enable_python:BuildRequires: python3-devel python3-module-pygobject3-devel}
 
 # For plugin-notification
-%def_disable indicator
+%def_enable indicator
 %def_enable hotkeys
 BuildRequires: libnotify-devel
 BuildRequires: libcanberra-gtk3-devel
-%{?_enable_indicator:BuildRequires: libindicate-devel >=  0.3.0}
+%{?_enable_indicator:BuildRequires: libayatana-appindicator3-devel}
 %{?_enable_hotkeys:BuildRequires: libgio-devel >= 2.15.6}
 
 # For plugin-tnef
@@ -109,13 +109,13 @@ BuildRequires: libytnef-devel
 BuildRequires: libical-devel
 
 # For tools
-BuildPreReq:	perl-MIME-tools
-BuildPreReq:	perl-Text-Iconv
-BuildPreReq:	perl-XML-SimpleObject
-BuildPreReq:	perl-URI
-BuildPreReq: 	perl-libwww
-BuildPreReq: 	perl-Text-CSV_XS
-BuildPreReq: 	perl-File-Which
+BuildRequires:	perl-MIME-tools
+BuildRequires:	perl-Text-Iconv
+BuildRequires:	perl-XML-SimpleObject
+BuildRequires:	perl-URI
+BuildRequires: 	perl-libwww
+BuildRequires: 	perl-Text-CSV_XS
+BuildRequires: 	perl-File-Which
 
 %description
 Claws Mail is an email client (and news reader), based on GTK+,
@@ -618,8 +618,6 @@ echo 'echo "%version"' >./version
 %autoreconf
 
 %build
-%add_optflags -fpie
-export LDFLAGS=-pie
 %configure \
 		--disable-static \
 		--disable-rpath \
@@ -831,6 +829,10 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Wed Feb 26 2025 Mikhail Efremov <sem@altlinux.org> 4.3.1-alt1
+- Enabled Ayatana indicator support in the notification plugin.
+- Updated to 4.3.1.
+
 * Thu Jun 13 2024 Mikhail Efremov <sem@altlinux.org> 4.3.0-alt1
 - Dropped patches from upstream git.
 - tools: Added 7z archives content listing.
