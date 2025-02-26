@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 3.10.0
-Release: alt1
+Release: alt2
 
 Summary: Matlab(TM) style python plotting package
 
@@ -206,10 +206,6 @@ rm -rv %buildroot%python3_sitelibdir/%oname/testing
 rm -rv %buildroot%python3_sitelibdir/%oname/tests
 rm -rv %buildroot%python3_sitelibdir/mpl_toolkits/*/tests
 
-# Use tk by default
-sed -i 's/#backend: Agg/backend: tkAgg/' \
-    %buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
-
 mkdir -p %buildroot%_datadir/matplotlib
 mv %buildroot%python3_sitelibdir/matplotlib/mpl-data \
    %buildroot%_datadir/matplotlib
@@ -395,6 +391,9 @@ py.test-3 --pyargs matplotlib.tests \
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Wed Feb 26 2025 Anton Vyatkin <toni@altlinux.org> 3.10.0-alt2
+- NMU: do not set default backend.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
 - Automatically updated to 3.10.0.
 
