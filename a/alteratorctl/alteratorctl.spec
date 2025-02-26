@@ -2,14 +2,14 @@
 
 Name: alteratorctl
 Version: 0.0.9
-Release: alt1
+Release: alt2
 
 Summary: CLI for alterator browser
 License: GPL-2.0+
 Group: System/Configuration/Other
 
 BuildRequires: cmake gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel libffi-devel
-BuildRequires: zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel
+BuildRequires: zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
 
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
@@ -35,6 +35,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Tue Feb 25 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.9-alt2
+- Adding html parser library libgumbo-devel to build requires
+
 * Mon Feb 17 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.9-alt1
 - Reworking the help calls
 - User-friendly interface of the diag module. Make default list tools and list tool tests commands
