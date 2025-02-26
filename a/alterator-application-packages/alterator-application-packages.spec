@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-packages
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Alterator application for managing system packages and package repositories
@@ -12,13 +12,12 @@ URL: https://gitlab.basealt.space/alt/alterator-application-packages
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
-BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-devel
-BuildRequires: libqbase-devel
+BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: xorg-xvfb xvfb-run
 
@@ -61,6 +60,9 @@ install -v -p -m 644 -D alterator/amp-repo.application %buildroot%_alterator_dat
 %_alterator_datadir/applications/*.application
 
 %changelog
+* Tue Feb 25 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt1
+- New version.
+
 * Mon Dec 09 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.4-alt1
 - Fix broken updating of packages list.
 - Add waiting dialog.

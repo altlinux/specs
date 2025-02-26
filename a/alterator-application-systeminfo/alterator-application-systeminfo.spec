@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-systeminfo
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Alterator application for getting information about system
@@ -16,14 +16,12 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-common qt5-base-devel qt5-declarative-devel qt5-tools-devel
-BuildRequires: libqbase-devel
+BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: libtomlplusplus-devel
 
 Requires: alterator-backend-systeminfo >= 0.1.1
 Requires: alterator-backend-packages   >= 0.1.4
 Requires: alterator-backend-edition
-Requires: libqbase
 
 %description
 Alterator application for getting information about system.
@@ -54,6 +52,9 @@ install -v -p -m 644 -D alterator/systeminfo.application %buildroot%_alterator_d
 %_bindir/%name
 
 %changelog
+* Tue Feb 25 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.2-alt1
+- New version.
+
 * Thu Feb 20 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.1-alt1
 - New version.
 
