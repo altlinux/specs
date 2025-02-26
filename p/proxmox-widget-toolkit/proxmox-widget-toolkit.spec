@@ -2,7 +2,7 @@
 
 Name: proxmox-widget-toolkit
 Summary: ExtJS Helper Classes for Proxmox
-Version: 4.3.3
+Version: 4.3.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Other
@@ -51,6 +51,10 @@ install -pD -m644 src/api-viewer/APIViewer.js %buildroot%_datadir/javascript/%na
 %_datadir/javascript/%name-dev
 
 %changelog
+* Sun Feb 23 2025 Sergey Konev <darisishe@altlinux.org> 4.3.4-alt1
+- 4.3.4
+- Better Alt-specific apt-repos processing
+
 * Mon Dec 16 2024 Sergey Konev <darisishe@altlinux.org> 4.3.3-alt1
 - 4.3.3
 - Supported RU packages description.

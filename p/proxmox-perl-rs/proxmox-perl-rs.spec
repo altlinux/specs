@@ -3,7 +3,7 @@
 
 Name: proxmox-perl-rs
 Version: 0.3.4
-Release: alt3
+Release: alt4
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -131,6 +131,9 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Sun Feb 23 2025 Sergey Konev <darisishe@altlinux.org> 0.3.4-alt4
+- Better ALT repos support for APT module 
+
 * Tue Dec 03 2024 Alexey Shabalin <shaba@altlinux.org> 0.3.4-alt3
 - Update libpve-rs-perl 0.9.1.
 
