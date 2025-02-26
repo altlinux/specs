@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-mysql
 Name: perl-%dist
-Version: 5.010
+Version: 5.011
 Release: alt1
 
 Summary: MySQL driver for DBI interface in Perl
@@ -44,6 +44,9 @@ rm %buildroot%perl_vendor_archlib/DBD/mysql/INSTALL.pod
 %perl_vendor_autolib/DBD
 
 %changelog
+* Wed Feb 26 2025 Anton Farygin <rider@altlinux.ru> 5.011-alt1
+- 5.010 -> 5.011
+
 * Mon Dec 02 2024 Anton Farygin <rider@altlinux.ru> 5.010-alt1
 - 5.009 -> 5.010
 
