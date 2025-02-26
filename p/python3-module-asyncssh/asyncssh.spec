@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.19.0
-Release: alt1.1
+Version: 2.20.0
+Release: alt1
 
 Summary: AsyncSSH: Asynchronous SSHv2 client and server library
 
@@ -61,6 +61,9 @@ rm -v %buildroot%python3_sitelibdir/%oname/*_win32*
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 2.20.0-alt1
+- Automatically updated to 2.20.0.
+
 * Mon Feb 17 2025 Stanislav Levin <slev@altlinux.org> 2.19.0-alt1.1
 - NMU: dropped excessive dependency on unmaintained curve25519-donna.
 
