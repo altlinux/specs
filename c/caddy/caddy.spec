@@ -7,7 +7,7 @@
 
 Name: caddy
 Version: 2.9.1
-Release: alt1
+Release: alt2
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
 Url: https://caddyserver.com
@@ -100,6 +100,7 @@ cd $BUILDDIR/src/%import_path
 
 %pre
 groupadd -r -f %caddy_group 2>/dev/null ||:
+groupadd -r -f %webserver_group 2>/dev/null ||:
 useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
         -s /sbin/nologin -M -d %_sharedstatedir/%name %caddy_user 2>/dev/null ||:
 
@@ -124,6 +125,9 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Feb 26 2025 Alexey Shabalin <shaba@altlinux.org> 2.9.1-alt2
+- Create _webserver before user add.
+
 * Mon Jan 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.9.1-alt1
 - New version 2.9.1.
 
