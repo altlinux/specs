@@ -4,16 +4,18 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.8.0
+Version: 1.16.2
 Release: alt1
 
 Summary: A Python handler for mkdocstrings
 License: ISC
 Group:   Development/Python3
-URL:     https://github.com/mkdocstrings/python
+URL:    https://pypi.org/project/mkdocstrings-python
+VCS:     https://github.com/mkdocstrings/python
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm python3-module-wheel
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pdm-backend
 
 %if_with check
@@ -24,6 +26,8 @@ BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-griffe
 BuildRequires: python3-module-mkdocstrings
 BuildRequires: python3-module-mkdocs-material
+BuildRequires: python3-module-beautifulsoup4
+BuildRequires: python3-module-inline-snapshot
 %endif
 
 BuildArch: noarch
@@ -59,7 +63,9 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+# "None" meaning particular formatter not installed according Gentoo
+%pyproject_run_pytest --deselect "tests/test_rendering.py::test_format_code[None-print('Hello')]"\
+    --deselect "tests/test_rendering.py::test_format_code[None-aaaaa(bbbbb, ccccc=1) + ddddd.eeeee[ffff] or {ggggg: hhhhh, iiiii: jjjjj}]"
 
 %files
 %doc *.md
@@ -67,6 +73,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.16.2-alt1
+- Automatically updated to 1.16.2.
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 1.8.0-alt1
 - New 1.8.0 version.
 

@@ -1,9 +1,9 @@
 %define pypi_name mkdocstrings
 
-%def_with check
+%def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.27.0
+Version: 0.28.2
 Release: alt1
 
 Summary: Automatic documentation from sources, for MkDocs
@@ -71,6 +71,10 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 0.28.2-alt1
+- Automatically updated to 0.28.2.
+- Bootstrap without check.
+
 * Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 0.27.0-alt1
 - Update version to 0.27.0.
 

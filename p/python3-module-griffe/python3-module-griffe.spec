@@ -3,22 +3,25 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.38.1
+Version: 1.5.7
 Release: alt1
 
 Summary: Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API
 License: ISC
 Group:   Development/Python3
-URL:     https://github.com/mkdocstrings/griffe
+URL:     https://pypi.org/project/griffe
+VCS:     https://github.com/mkdocstrings/griffe
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm python3-module-wheel
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pdm-backend
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-colorama
 BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-mkdocstrings
 %endif
 
 BuildArch: noarch
@@ -55,9 +58,13 @@ fi
 %doc *.md
 %_bindir/%pypi_name
 %python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/_%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 1.5.7-alt1
+- Automatically updated to 1.5.7.
+
 * Tue Dec 19 2023 Alexander Burmatov <thatman@altlinux.org> 0.38.1-alt1
 - Update version to 0.38.1.
 

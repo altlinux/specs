@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Automatically link across pages in MkDocs
@@ -23,6 +23,9 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-mkdocs
 BuildRequires: python3-module-pymdown-extensions
+BuildRequires: python3-module-griffe
+BuildRequires: python3-module-mkdocstrings
+BuildRequires: python3-module-mkdocs-material
 %endif
 
 BuildArch: noarch
@@ -61,6 +64,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Wed Feb 12 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 
