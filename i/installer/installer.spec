@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.8
+Version: 1.16.9
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,10 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Wed Feb 26 2025 Anton Midyukov <antohami@altlinux.org> 1.16.9-alt1
+- install2: stop_splash before all cases of interactivity (Closes: 53223)
+- install2: open tty2, tty3 after stop_splash
+
 * Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 1.16.8-alt1
 - Add preinstall.d/05-set_active.sh (Closes: 53151)
 
