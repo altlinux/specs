@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Feb 26 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt4
+- fix some typos (closes: #53085)
+
 * Thu Feb 13 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt3
 - update mediawiki, moodle (closes: #53008, #53009)
 - small improvements
