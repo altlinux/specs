@@ -1,6 +1,6 @@
 %global import_path github.com/prometheus-community/prometheus-postgres_exporter
 Name:    prometheus-postgres_exporter
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 
 Summary: A PostgreSQL metric exporter for Prometheus
@@ -35,6 +35,9 @@ install -Dpm 0755 postgres_exporter %buildroot%_bindir/postgres_exporter
 %_bindir/postgres_exporter
 
 %changelog
+* Thu Feb 27 2025 Andrey Cherepanov <cas@altlinux.org> 0.17.1-alt1
+- New version.
+
 * Sun Feb 23 2025 Andrey Cherepanov <cas@altlinux.org> 0.17.0-alt1
 - New version.
 
