@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.12
+Version: %ver_major.26
 Release: alt1
 
 Summary: A Flash Player emulator written in Rust
@@ -25,6 +25,10 @@ Source: https://github.com/ruffle-rs/ruffle/archive/%git_ver/%_name-%version.tar
 Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
+
+#WARN ruffle_desktop::dbus: Failed to unregister a game with gamemode:
+#Portal request failed: org.freedesktop.zbus.Error: Could not get pidns: Could not fstatat ns/pid: Это не каталог
+#Requires: gamemode-daemon
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: gcc-c++
@@ -99,6 +103,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Thu Feb 27 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.02.26-alt1
+- 2025.02.26
+
 * Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.02.12-alt1
 - 2025.02.12
 

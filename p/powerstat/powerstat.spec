@@ -1,5 +1,5 @@
 Name: powerstat
-Version: 0.04.03
+Version: 0.04.04
 Release: alt1
 
 Summary: A tool to measure power consumption
@@ -41,6 +41,9 @@ echo "CFLAGS += %(getconf LFS_CFLAGS)" >> Makefile
 %doc README.md
 
 %changelog
+* Thu Feb 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.04.04-alt1
+- 0.04.04
+
 * Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.04.03-alt1
 - first build for Sisyphus
 

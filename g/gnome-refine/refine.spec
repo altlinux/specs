@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-%__name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Tweak various aspects of GNOME
@@ -74,6 +74,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Thu Feb 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Thu Feb 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
