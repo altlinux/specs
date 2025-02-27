@@ -12,7 +12,7 @@
 
 Name: fluent-bit
 Version: 3.2.7
-Release: alt1.2
+Release: alt1.3
 
 Summary: Fast data collector for Linux
 
@@ -20,6 +20,8 @@ License: Apache-2.0
 Group: Monitoring
 Url: https://github.com/fluent/fluent-bit
 Vcs: git://github.com/fluent/fluent-bit.git
+
+Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %name-%version.tar
 # Fix up some install paths in CMake. Not upstream
@@ -107,6 +109,9 @@ sed -i 's|c-ares|cares|' \
 %if_with ebpf
     -DFLB_IN_EBPF=On \
 %endif
+%ifarch loongarch64
+    -DFLB_WASM=Off \
+%endif
 #
 
 %cmake_build
@@ -135,6 +140,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Thu Feb 27 2025 Ivan A. Melnikov <iv@altlinux.org> 3.2.7-alt1.3
+- NMU: build w/o WASM on loongarch64 (fixes FTBFS).
+
 * Thu Feb 27 2025 Leontiy Volodin <lvol@altlinux.org> 3.2.7-alt1.2
 - Simplified backport to older branches.
 
