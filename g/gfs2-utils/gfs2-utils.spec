@@ -1,12 +1,13 @@
 Name: gfs2-utils
-Version: 3.5.1
+Version: 3.6.0
 Release: alt1
 License: GPL-2.0+ and LGPL-2.0+
 Group: System/Kernel and hardware
 Summary: Utilities for managing the global file system (GFS2)
 URL: https://pagure.io/gfs2-utils
 
-Source0: https://releases.pagure.org/gfs2-utils/gfs2-utils-%{version}.tar.gz
+Source0: https://releases.pagure.org/gfs2-utils/gfs2-utils-%version.tar.xz
+Source1: %name.watch
 Patch0: gfs2-utils-alt-dmsetup.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -48,6 +49,9 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 %_man5dir/*.5*
 
 %changelog
+* Thu Feb 27 2025 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
+- New version.
+
 * Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
 - New version.
 
