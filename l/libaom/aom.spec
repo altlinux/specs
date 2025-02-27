@@ -16,7 +16,7 @@
 
 Name: lib%oname
 Version: 3.12.0
-Release: alt1
+Release: alt1.1
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -101,6 +101,9 @@ echo -n %version > version
 %ifarch armh ppc64le loongarch64
 	-DAOM_TARGET_CPU:STRING=generic \
 %endif
+%ifarch riscv64
+	-DENABLE_RVV:BOOL=OFF \
+%endif
 %if_enabled doc
 	-DENABLE_DOCS:BOOL=ON \
 %else
@@ -152,6 +155,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Thu Feb 27 2025 Ivan A. Melnikov <iv@altlinux.org> 3.12.0-alt1.1
+- NMU: build v/o RVV on riscv64 (fixes FTBFS)
+
 * Thu Feb 27 2025 Anton Farygin <rider@altlinux.ru> 3.12.0-alt1
 - 3.9.1 -> 3.12.0
 
