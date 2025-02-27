@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.02.0
+Version: 25.02.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -100,7 +100,8 @@ Requires: khelpcenter
 %endif
 Requires: kolourpaint kio-audiocd kgpg
 Requires: kmenuedit kgamma plasma-thunderbolt
-Requires: kfind filelight kcharselect kteatime spectacle
+Requires: kfind filelight kcharselect spectacle
+Requires: ktimer
 Requires: kamera kdenetwork-filesharing
 Requires: kio-zeroconf sweeper
 %description -n kde
@@ -145,7 +146,7 @@ Requires: kde-scanning
 #
 Requires: plasma-discover-maxi
 Requires: keditbookmarks
-Requires: ktimer
+Requires: kteatime
 Requires: dragon
 Requires: kmousetool kmag
 Requires: juk kmouth
@@ -278,6 +279,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Thu Feb 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.1-alt1
+- using ktimer instead of kteatime
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.0-alt1
 - require xdg-desktop-portal-kde
 
