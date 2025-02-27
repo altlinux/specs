@@ -29,12 +29,12 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt10
+Release: alt11
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc
 BuildRequires: distro-licenses >= 1.3.1
@@ -377,6 +377,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Feb 26 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt11
+- Add Qt6 support
+- Change slides for slideshow in installer
+
 * Tue Feb 11 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt10
 - Add new Alt Server logo for index.html
 - Update links to some pages in English
