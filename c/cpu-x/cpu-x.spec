@@ -4,7 +4,7 @@
 %def_enable opencl
 
 Name: cpu-x
-Version: 5.1.1
+Version: 5.1.2
 Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
@@ -76,6 +76,9 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Thu Feb 27 2025 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt1
+- New version 5.1.2.
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 5.1.1-alt1
 - New version 5.1.1.
 
