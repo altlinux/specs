@@ -2,36 +2,34 @@
 
 Name: fuseiso
 Version: 20070708
-Release: alt3
+Release: alt4
+
 Summary: Mount ISO filesystem images as a non-root user
+License: GPL-2.0-or-later
 Group: File tools
 URL: http://sourceforge.net/projects/fuseiso/
-License: GPL-2.0+
 
 Source0: %name-%version.tar
+Patch1: 0001-ALT-add-multithreading-and-libraries-flags-for-ld.patch
+Patch2: 0002-REDHAT-handle-larger-than-4GB-isos.patch
+Patch3: 0003-Fix-typo.patch
+Patch4: 0004-DEBIAN-CVE-2015-8837.patch
+Patch5: 0005-DEBIAN-prevent-integer-overflow-in-ZISO-code.patch
+Patch6: 0006-ALT-add-ISO9660-level-3-images-support.patch
 
-Patch0: fuseiso-20070708-alt-build.patch
-# Patches from Gentoo
-Patch1: fuseiso-20070708-largeiso.patch
-Patch2: fuseiso-20070708-fix-typo.patch
-Patch3: fuseiso-20070708-CVE-2015-8837.patch
-Patch4: fuseiso-20070708-integer-overflow.patch
-
-# Automatically added by buildreq on Sun Nov 16 2008
-BuildRequires: gcc-c++ glib2-devel libfuse-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: glib2-devel
+BuildRequires: libfuse-devel
+BuildRequires: zlib-devel
 
 %description
 Mount ISO filesystem images as a non-root user. Currently supports
-plain ISO9660 Level 1 and 2, Rock Ridge, Joliet, zisofs..
+plain ISO9660 Level 1, 2 and 3, Rock Ridge, Joliet, zisofs.
 Supported image types: ISO, BIN (single track only), NRG, MDF, IMG (CCD).
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p2
 
 %build
 %autoreconf
@@ -39,13 +37,17 @@ Supported image types: ISO, BIN (single track only), NRG, MDF, IMG (CCD).
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
 %doc AUTHORS ChangeLog NEWS README
-%_bindir/%name
+%_bindir/fuseiso
 
 %changelog
+* Thu Feb 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 20070708-alt4
+- Add ISO9660 level 3 images support (thanks proskur@).
+- Fix License tag according to SPDX.
+
 * Thu Oct 29 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 20070708-alt3
 - Applied patches from Gentoo (Fixes: CVE-2015-8836, CVE-2015-8837).
 
@@ -57,4 +59,3 @@ Supported image types: ISO, BIN (single track only), NRG, MDF, IMG (CCD).
 
 * Sun Jun 29 2008 Igor Zubkov <icesik@altlinux.org> 20070708-alt1
 - build for Sisyphus
-
