@@ -1,15 +1,13 @@
 Name: nbtscan
-Version: 1.5.1
-Release: alt4
+Version: 1.7.2
+Release: alt1
 
 Summary: NetBIOS Name Network Scanner
 License: GPLv2
 Group: Networking/Other
-Url: http://www.inetcat.org/software/nbtscan.html
+Url: https://github.com/resurrecting-open-source-projects/nbtscan
 
-Source0: %name-%version.tar.gz
-
-Patch0: nbtscan-1.5.1a-alt-warning.patch
+Source: %name-%version.tar
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -22,22 +20,25 @@ NetBIOS computer name, logged-in user name and MAC address
 (such as Ethernet).
 
 %prep
-%setup -q -n %name-%{version}a
-%patch0 -p1
+%setup
 
 %build
+./autogen.sh
 %configure
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir/
-install -m0755 nbtscan %buildroot%_bindir/
+make DESTDIR=%buildroot PREFIX=%prefix install
 
 %files
-%doc ChangeLog README
-%_bindir/nbtscan
+%doc AUTHORS ChangeLog COPYING *.md
+%_bindir/%name
+%_man1dir/%name.1.*
 
 %changelog
+* Thu Feb 27 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.7.2-alt1
+- NMU: New version 1.7.2.
+
 * Mon Jun 24 2013 Igor Zubkov <icesik@altlinux.org> 1.5.1-alt4
 - Fix package summary
 
