@@ -1,5 +1,5 @@
 Name: tlp
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Optimize laptop battery life
@@ -8,13 +8,12 @@ License: GPLv2+
 Group: System/Configuration/Hardware
 Url: https://linrunner.de/tlp
 
-# Source-url: https://github.com/linrunner/TLP/archive/%version.tar.gz#/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: rpm-build-perl
 BuildRequires: libsystemd-devel libudev-devel
 BuildRequires: systemd systemd-analyze systemd-homed systemd-networkd
-#BuildRequires: udev-rules-portable udev-rules-sysvinit
+
 BuildRequires: libappstream-glib libappstream-glib-gir
 
 #The following requires are not detected:
@@ -23,7 +22,6 @@ Requires: hdparm
 Requires: iw
 Requires: rfkill
 Requires: systemd systemd-analyze systemd-homed systemd-networkd
-#Requires: udev-rules-portable udev-rules-sysvinit
 Requires: udev
 Requires: usbutils
 Requires: pciutils
@@ -31,6 +29,8 @@ Requires: cpupower linux-tools
 
 #Note: Conflicts with laptop-mode-tools
 #Makes sure laptop_mode isn't being used:
+Conflicts: laptop-mode-tools
+
 BuildArch: noarch
 
 %description
@@ -125,6 +125,9 @@ fi
 %preun
 %preun_service tlp
 %changelog
+* Thu Feb 27 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.7.0-alt1
 - NMU: New version 1.7.0.
 

@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    tlpui
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 
 Summary: A GTK user interface for TLP written in Python
@@ -63,6 +63,9 @@ install -m0644 tlpui.desktop %buildroot%_desktopdir/tlpui.desktop
 
 
 %changelog
+* Thu Feb 27 2025 Leonid Znamenok <respublica@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Tue Jan 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 - Added watch file.
