@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fprintd
-Version: 1.94.4
-Release: alt3
+Version: 1.94.5
+Release: alt1
 
 Summary: D-Bus service for Fingerprint reader access
 License: GPLv2+
@@ -119,6 +119,9 @@ meson test -C %{__builddir} --num-processes 1 --no-rebuild --print-errorlogs
 %_bindir/%name-*
 
 %changelog
+* Wed Feb 26 2025 Egor Ignatov <egori@altlinux.org> 1.94.5-alt1
+- 1.94.5
+
 * Wed Dec 04 2024 Egor Ignatov <egori@altlinux.org> 1.94.4-alt3
 - fix test launch on p10
 

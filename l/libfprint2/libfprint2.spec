@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.94.8
-Release: alt3
+Version: 1.94.9
+Release: alt1
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
@@ -21,7 +21,7 @@ BuildRequires: libXv-devel
 BuildRequires: libcairo-devel
 BuildRequires: libgio-devel
 BuildRequires: libgusb-devel
-BuildRequires: libnss-devel
+BuildRequires: libssl-devel
 BuildRequires: libpixman-devel
 BuildRequires: libudev-devel
 BuildRequires: libumockdev
@@ -95,6 +95,7 @@ Installed tests for %name.
 %doc COPYING INSTALL NEWS THANKS AUTHORS README.md
 %_libdir/*.so.*
 %_udevrulesdir/70-libfprint-2.rules
+%_datadir/metainfo/org.freedesktop.libfprint.metainfo.xml
 
 %files devel
 %doc HACKING.md
@@ -113,6 +114,9 @@ Installed tests for %name.
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Feb 26 2025 Egor Ignatov <egori@altlinux.org> 1.94.9-alt1
+- new version 1.94.9
+
 * Wed Dec 04 2024 Egor Ignatov <egori@altlinux.org> 1.94.8-alt3
 - add support for ID 04f3:0c98 Elan Microelectronics Corp. ELAN:ARM-M4
 
