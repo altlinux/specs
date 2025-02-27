@@ -15,14 +15,13 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.9.1
-Release: alt2
+Version: 3.12.0
+Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
 Url: https://aomedia.org/
-
-# https://aomedia.googlesource.com/aom/
+VCS: https://aomedia.googlesource.com/aom
 Source: %name-%version.tar
 # ffmpeg -i testdata/rush_hour_444.y4m -vframes 10 -pix_fmt yuv420p rush_hour_420.yuv
 Source1: rush_hour_420.yuv
@@ -153,6 +152,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Thu Feb 27 2025 Anton Farygin <rider@altlinux.ru> 3.12.0-alt1
+- 3.9.1 -> 3.12.0
+
 * Mon Aug 05 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.9.1-alt2
 - e2k: simd patch update
 
