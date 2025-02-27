@@ -1,7 +1,7 @@
 %define rname oxygen-sounds
 
 Name: oxygen-sounds
-Version: 6.3.1
+Version: 6.3.2
 Release: alt1
 #Epoch: 1
 %K6init
@@ -44,6 +44,9 @@ BuildRequires: qt5-base-devel
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
+- new version
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
 - new version
 

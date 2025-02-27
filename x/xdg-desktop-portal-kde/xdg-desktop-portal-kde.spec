@@ -4,7 +4,7 @@
 
 %define rname xdg-desktop-portal-kde
 Name: %rname
-Version: 6.3.1
+Version: 6.3.2
 Release: alt1
 %K6init
 
@@ -69,6 +69,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
+- new version
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
 - new version
 

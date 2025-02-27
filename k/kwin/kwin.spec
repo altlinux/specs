@@ -16,7 +16,7 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.3.1
+Version: 6.3.2
 Release: alt1
 %K6init
 
@@ -49,13 +49,14 @@ BuildRequires: libqaccessibilityclient-qt6-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libcap-utils libcap-devel zlib-devel
 BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-cursor-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel libgbm-devel libdrm-devel libEGL-devel libxcvt-devel
+BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel libgbm-devel libdrm-devel libEGL-devel libxcvt-devel libXi-devel
 BuildRequires: fontconfig-devel libfreetype-devel liblcms2-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: hwdata-devel
 BuildRequires: pkgconfig(libdisplay-info) pkgconfig(libeis-1.0)
 BuildRequires: libvulkan-devel
+BuildRequires: libsystemd-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols wayland-protocols
 BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-tools-devel-static  qt6-sensors-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel
@@ -198,6 +199,9 @@ done
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
+- new version
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
 - new version
 

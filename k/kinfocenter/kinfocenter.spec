@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: %rname
-Version: 6.3.1
-Release: alt2
+Version: 6.3.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -171,6 +171,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt2
 - require di-edid-decode
 

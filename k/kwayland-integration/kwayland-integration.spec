@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: %rname
-Version: 6.3.1
+Version: 6.3.2
 Release: alt1
 %K5init
 
@@ -45,6 +45,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
+- new version
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt1
 - new version
 

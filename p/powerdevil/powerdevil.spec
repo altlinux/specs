@@ -8,8 +8,8 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
-Version: 6.3.1
-Release: alt2
+Version: 6.3.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -131,6 +131,9 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
+- new version
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.1-alt2
 - obsolete libpowerdevilconfigcommonprivate6
 
