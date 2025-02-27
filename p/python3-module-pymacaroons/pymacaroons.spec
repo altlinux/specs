@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.13.0
-Release: alt1
+Release: alt2
 Summary: Macaroon library for Python
 License: MIT
 Group: Development/Python3
@@ -16,6 +16,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# renamed from pymacaroons-pynacl
+Provides: python3-module-pymacaroons-pynacl = %EVR
+Obsoletes: python3-module-pymacaroons-pynacl <= 0.13.0-alt2
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -55,5 +58,8 @@ cookies!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Feb 27 2025 Stanislav Levin <slev@altlinux.org> 0.13.0-alt2
+- Obsoleted pymacaroons-pynacl (closes: #53228).
+
 * Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
 - Initial build for Sisyphus.
