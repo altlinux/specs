@@ -1,6 +1,6 @@
 Name: git-cola
-Version: 4.11.0
-Release: alt2
+Version: 4.12.0
+Release: alt1
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -92,6 +92,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Thu Feb 27 2025 Leontiy Volodin <lvol@altlinux.org> 4.12.0-alt1
+- New version 4.12.0.
+
 * Wed Feb 19 2025 Leontiy Volodin <lvol@altlinux.org> 4.11.0-alt2
 - Disabled check (need a network).
 
