@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
@@ -30,7 +30,6 @@ BuildRequires: /usr/bin/git
 %add_pyproject_deps_check_filter pipreqs
 %add_pyproject_deps_check_filter portray
 %add_pyproject_deps_check_filter requirementslib
-%add_pyproject_deps_check_filter safety
 %add_pyproject_deps_check_filter hatch
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -78,6 +77,9 @@ mv %buildroot%_bindir/isort{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 27 2025 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 6.0.0 -> 6.0.1.
+
 * Tue Jan 28 2025 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
 - 5.13.2 -> 6.0.0.
 
