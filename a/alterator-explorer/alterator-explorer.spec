@@ -3,8 +3,8 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.7
-Release: alt2
+Version: 0.1.10
+Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
 License: GPLv2+
@@ -17,9 +17,9 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-base-common
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-base-common
 BuildRequires: boost-devel-headers
 BuildRequires: libtomlplusplus-devel
 
@@ -105,6 +105,20 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Tue Feb 25 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.10-alt1
+- move to qt6 by <alekseevam@altlinux.org>
+
+* Fri Feb 21 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.9-alt1
+- infinite connection to DBus while alterator interface is not present, or not responding by <alekseevam@altlinux.org>
+- category order by <alekseevam@altlinux.org>
+- module order by <alekseevam@altlinux.org>
+- object parsing by <alekseevam@altlinux.org>
+- removed empty space in the bottom of scroll area by <alekseevam@altlinux.org>
+- icons and styles to display correctly on different desktop environments by <alekseevam@altlinux.org>
+
+* Thu Jan 09 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.8-alt1
+- implement overriding legacy modules
+
 * Fri Dec 13 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.7-alt2
 - fix adt category
 
