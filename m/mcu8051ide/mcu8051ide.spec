@@ -1,6 +1,6 @@
 Name:    mcu8051ide
 Version: 1.4.9
-Release: alt1
+Release: alt2
 
 Summary: IDE for MCS-51 based MCUs
 License: GPLv2
@@ -8,7 +8,9 @@ Group:   Development/Tools
 Url:     https://sourceforge.net/projects/mcu8051ide/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch0: 0001-corrected-to-the-current-project-link.patch
+Patch1: 0002-fixed-obsolete-CMakeList.txt.patch
+Patch2: 0003-removed-m5-lib-from-mcu8051ide.patch
 
 BuildRequires(pre): cmake rpm-build-xdg
 
@@ -25,7 +27,9 @@ language it uses the SDCC compiler.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
 %cmake
@@ -46,5 +50,8 @@ language it uses the SDCC compiler.
 %_datadir/%name/*
 
 %changelog
+* Wed Feb 26 2025 Ulysses Apokin <ulysses@altlinux.org> 1.4.9-alt2
+- Fix segmentation fault (ALT #52967).
+
 * Thu Dec 05 2024 Ulysses Apokin <ulysses@altlinux.org> 1.4.9-alt1
 - Initial build for Sisyphus.
