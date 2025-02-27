@@ -12,7 +12,7 @@
 
 Name: fluent-bit
 Version: 3.2.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast data collector for Linux
 
@@ -32,7 +32,8 @@ ExcludeArch: armh ppc64le
 BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Mon Nov 18 2024
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libssl-devel pkg-config python3-base sh5
-BuildRequires: gcc-c++ cmake flex libbacktrace-devel libcares-devel libedit-devel libluajit-devel libnghttp2-devel libpq5-devel librdkafka-devel libsystemd-devel libyaml-devel libssl-devel
+BuildRequires: gcc-c++ cmake flex libbacktrace-devel libcares-devel libedit-devel libluajit-devel libnghttp2-devel libpq-devel librdkafka-devel libsystemd-devel libyaml-devel
+BuildRequires: libssl-devel libsasl2-devel
 # libudev-devel BR is needed for systemd input plugin
 BuildRequires: libudev-devel
 %if_with jemalloc
@@ -134,6 +135,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Thu Feb 27 2025 Leontiy Volodin <lvol@altlinux.org> 3.2.7-alt1.2
+- Simplified backport to older branches.
+
 * Thu Feb 27 2025 Leontiy Volodin <lvol@altlinux.org> 3.2.7-alt1.1
 - Added BuildRequires.
 
