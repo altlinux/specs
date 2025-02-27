@@ -1,14 +1,13 @@
 Name: libglfw3
 Version: 3.4
-Release: alt1
+Release: alt2
 
 Summary: A cross-platform multimedia library
 License: Zlib
 Group: System/Libraries
+
 Url: http://www.glfw.org/index.html
-
 Vcs: https://github.com/glfw/glfw.git
-
 Source: https://github.com/glfw/glfw/archive/%version/%version.tar.gz
 
 Obsoletes: libglfw = 3.0.2
@@ -45,6 +44,11 @@ applications.
 %setup -n glfw-%version
 find . -type f | xargs sed -i 's/\r//'
 
+%ifarch %e2k
+# somehow breaks cmake
+sed -i 's/C_STANDARD 99//;1i set(CMAKE_C_STANDARD 99)' {tests,examples}/CMakeLists.txt
+%endif
+
 %build
 %cmake -DBUILD_SHARED_LIBS:BOOL=ON
 %cmake_build --target all
@@ -63,6 +67,9 @@ find . -type f | xargs sed -i 's/\r//'
 %_libdir/cmake/glfw3/*.cmake
 
 %changelog
+* Thu Feb 27 2025 Michael Shigorin <mike@altlinux.org> 3.4-alt2
+- E2K: ftbfs workaround (ilyakurdyukov@)
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
 - 3.4
 
