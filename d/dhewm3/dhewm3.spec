@@ -2,7 +2,7 @@
 
 Name: dhewm3
 Version: 1.5.4
-Release: alt1
+Release: alt2
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
 License: GPL-3.0-only
@@ -11,8 +11,6 @@ Url: https://github.com/dhewm/dhewm3
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-
-ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-cmake ImageMagick-tools
 
@@ -98,6 +96,9 @@ install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_i
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Feb 27 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.4-alt2
+- Apply patch from upstream to unlock 32bit in bundled zlib.
+
 * Mon Sep  2 2024 Artyom Bystrov <arbars@altlinux.org> 1.5.4-alt1
  - Update to new version
 
