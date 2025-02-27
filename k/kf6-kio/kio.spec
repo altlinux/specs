@@ -6,7 +6,7 @@
 
 Name: kf6-%rname
 Version: 6.11.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -174,6 +174,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Thu Feb 27 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt2
+- fix russian translation
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 
