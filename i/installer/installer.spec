@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.9
+Version: 1.16.10
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,9 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Thu Feb 27 2025 Anton Midyukov <antohami@altlinux.org> 1.16.10-alt1
+- preinstall.d/05-initrd-fsck.sh: Bypass for multipath (thanks jqt4@)
+
 * Wed Feb 26 2025 Anton Midyukov <antohami@altlinux.org> 1.16.9-alt1
 - install2: stop_splash before all cases of interactivity (Closes: 53223)
 - install2: open tty2, tty3 after stop_splash
