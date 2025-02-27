@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.30.4
-Release: alt2
+Release: alt3
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -17,19 +17,23 @@ Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
 Source1: gradle-8.2.1-bin.zip
 # Source1: gradle-6.7-bin.zip
-BuildArch: noarch
+
+%define java_arches x86_64 aarch64 loongarch64
+ExclusiveArch: %{java_arches}
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
-BuildRequires: jpackage-17-compat
+BuildRequires: java-21-devel
 BuildRequires: python3
 BuildRequires: unzip
 #BuildRequires: gradle
 
 %description
-LINSTOR developed by LINBIT, is a software that manages replicated volumes across a group of machines.
-With native integration to Kubernetes, LINSTOR makes building, running, and controlling block storage simple.
-LINSTOR is open-source software designed to manage block storage devices for large Linux server clusters.
-It's used to provide persistent Linux block storage for cloudnative and hypervisor environments.
+LINSTOR developed by LINBIT, is a software that manages replicated volumes
+across a group of machines.  With native integration to Kubernetes, LINSTOR
+makes building, running, and controlling block storage simple.
+LINSTOR is open-source software designed to manage block storage devices for
+large Linux server clusters.  It's used to provide persistent Linux block
+storage for cloudnative and hypervisor environments.
 
 %prep
 %setup -n %NAME_VERS -a1
@@ -54,7 +58,7 @@ cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-config %bui
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-database %buildroot/%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/controller.postinst.sh
 mkdir -p %buildroot%_unitdir
-sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-17-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
+sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-21-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
 cp -r %_builddir/%NAME_VERS/scripts/linstor-controller.service %buildroot%_unitdir
 cp -r %_builddir/%NAME_VERS/scripts/linstor-satellite.service %buildroot%_unitdir
 mkdir -p %buildroot%FIREWALLD_SERVICES
@@ -73,7 +77,7 @@ mkdir -p %buildroot/var/lib/linstor
 %package common
 Summary: Common files shared between controller and satellite
 Group: System/Servers
-Requires: java-17-openjdk-headless
+Requires: java-21-openjdk-headless
 
 %description common
 Linstor shared components between linstor-controller and linstor-satellite
@@ -151,6 +155,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.30.4-alt3
+- build with Java 21
+
 * Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.30.4-alt2
 - build with Java 17 (ALT #46009).
 
