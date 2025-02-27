@@ -2,8 +2,8 @@
 %global import_path github.com/hertg/egpu-switcher
 
 Name: egpu-switcher
-Version: 0.19.0
-Release: alt2
+Version: 0.20.1
+Release: alt1
 
 Summary: Setup script for eGPUs in Linux
 License: GPL-3.0
@@ -61,6 +61,9 @@ touch %buildroot%_unitdir/egpu.service
 %ghost %attr(644,root,root) %verify(not md5 mtime size) %_unitdir/egpu.service
 
 %changelog
+* Wed Feb 26 2025 L.A. Kostis <lakostis@altlinux.ru> 0.20.1-alt1
+- 0.20.1.
+
 * Fri Aug 23 2024 L.A. Kostis <lakostis@altlinux.ru> 0.19.0-alt2
 - Added ghost systemd service unit.
 - Added bolt dependency.
