@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 grisbi
-Version: 1.2.2
+Version: 3.0.4
 Release: alt1
 Summary: Personal finance application
 Summary(ru_RU.UTF-8): Программа персонального учёта финансов
 License: GPLv2+
 Group:   Office
-URL:     https://www.grisbi.org
+URL: https://www.grisbi.org
 
-# https://github.com/grisbi/grisbi
+VCS: https://github.com/grisbi/grisbi
 Source: %name-%version.tar
 
-BuildRequires: glib2-devel libatk-devel libgtk+3-devel libpango-devel libxml2-devel pkgconfig zlib-devel intltool
+BuildRequires: glib2-devel libgtk+3-devel libxml2-devel pkgconfig zlib-devel intltool
 BuildRequires: libgsf-devel
 
 %description
@@ -43,14 +43,18 @@ Grisbi - это программа персонального учёта фин�
 %_datadir/mime-info/%name.keys
 %_datadir/mime-info/%name.mime
 %_datadir/mime/packages/%{name}.xml
-%_datadir/glib-2.0/schemas/*.xml
-%_desktopdir/%name.desktop
+%_datadir/metainfo/*.xml
+%_desktopdir/org.grisbi.Grisbi.desktop
 %_pixmapsdir/%{name}*
 %_iconsdir/hicolor/scalable/apps/grisbi.svg
+%_iconsdir/hicolor/scalable/mimetypes/application-x-grisbi.svg
 %doc %_docdir/%name/*
 %_man1dir/%name.1*
 
 %changelog
+* Thu Feb 27 2025 Anton Farygin <rider@altlinux.ru> 3.0.4-alt1
+- 1.2.2 -> 3.0.4
+
 * Wed Apr 15 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
 - Updated to upstream version 1.2.2.
 
