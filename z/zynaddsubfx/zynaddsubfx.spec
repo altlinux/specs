@@ -1,14 +1,14 @@
 Name: zynaddsubfx
 Version: 3.0.6
-Release: alt5
+Release: alt6
 
 Summary: %name is a open source software synthesizer
 License: GPLv2+
 Group: Sound
 Url: http://zynaddsubfx.sourceforge.net/
 
-Source0: %name-%version-%release.tar
-Source1: deps.tar
+Source0: %name-%version.tar
+Source1: deps-%version.tar
 
 BuildRequires: cmake gcc-c++
 BuildRequires: pkgconfig(alsa)
@@ -32,15 +32,11 @@ number of instruments, from some common heard from expensive hardware to
 interesting sounds that you'll boost to an amazing universe of sounds.
 
 %prep
-%setup
-tar ixf %SOURCE1
-sed -i '/^#include <string>/ a#include <cstdint>' \
-    src/Misc/Bank.h src/Nio/Engine.h
-sed -i 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' \
-    src/Plugin/ZynAddSubFX/ZynAddSubFX-UI-Zest.cpp
+%setup -a1
 
 %build
-%cmake -DGuiModule=zest -DDefaultOutput=jack -DPluginLibDir=%_lib
+%cmake	-DGuiModule=zest -DDefaultOutput=jack \
+	-DPluginLibDir=%_lib -DZynFusionDir=%_libdir/zyn-fusion
 %cmake_build
 
 %install
@@ -59,6 +55,9 @@ sed -i 's,/opt/zyn-fusion,%_libdir/zyn-fusion,' \
 %_pixmapsdir/zynaddsubfx.*
 
 %changelog
+* Thu Feb 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.6-alt6
+- 3.0.6-140-g61365844
+
 * Fri Sep 20 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.6-alt5
 - 3.0.6-122-g07308dd8
 
