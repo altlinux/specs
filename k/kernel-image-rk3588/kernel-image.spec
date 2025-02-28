@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.16
+%define kernel_sublevel	.17
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -42,42 +42,8 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
 # Armbian patches
-Patch0001: 0000-Import-DTS-from-Armbian.patch
-Patch0002: 0001-general-add-overlay-support.patch
-Patch0003: 0002-tools-disable-sched_ext_clean.patch
-Patch0010: 0010-fix-clk-divisions.patch
-Patch0011: 0011-irqchip-fix-its-timeout-issue.patch
-Patch0024: 0024-RK3588-Add-Crypto-Support.patch
-Patch0027: 0027-RK3588-Add-rkvdec2-Support-v3.patch
-Patch0028: 0028-media-v4l2-core-Initialize-h264-frame_mbs_only_flag-.patch
-Patch0113: 0113-add-synopsys-designware-hdmi-rx-controller.patch
-Patch0132: 0132-phy-phy-rockchip-samsung-hdptx-Add-FRL-EARC-support.patch
-Patch0133: 0133-drm-rockchip-vop2-Improve-display-modes-handling.patch
-Patch0135: 0135-arm64-dts-rockchip-Add-HDMI0-bridge-CLK-to-rk3588.patch
-Patch0140: 0140-drm-bridge-synopsys-Add-DW-HDMI-QP-TX-Controller-support-library.patch
-Patch0141: 0141-dt-bindings-display-rockchip-Add-schema-for-RK3588-HDMI-TX-Controller.patch
-Patch0142: 0142-drm-rockchip-Add-basic-RK3588-HDMI-output-support.patch
-Patch0170: 0170-drm-rockchip-vop2-add-clocks-reset-support.patch
-Patch0801: 0801-wireless-add-bcm43752.patch
-Patch0802: 0802-wireless-add-clk-property.patch
-Patch1010: 1010-arm64-dts-rock-5b-Slow-down-emmc-to-hs200-and-add-ts.patch
-Patch1012: 1012-arm64-dts-rockchip-Enable-HDMI0-on-rock-5b.patch
-Patch1014: 1014-arm64-dts-rockchip-Make-use-of-HDMI0-PHY-PLL-on-rock5b.patch
-Patch1020: 1020-Add-HDMI-and-VOP2-to-Rock-5A.patch
-Patch1021: 1021-arch-arm64-dts-enable-gpu-node-for-rock-5a.patch
-Patch1031: 1031-arm64-dts-rockchip-Add-HDMI-support-to-ArmSoM-Sige7.patch
-Patch1032: 1032-arm64-dts-rockchip-Add-ap6275p-wireless-support-to-A.patch
-Patch1040: 1040-board-khadas-edge2-add-nodes.patch
-Patch1041: 1041-board-khadas-edge2-mcu.patch
-Patch1051: 1051-board-nanopc-t6-Add-USB3-psu-and-fan-support.patch
-Patch1052: 1052-board-nanopc-t6-Add-HDMI-support.patch
-Patch1059: 1060-arm64-dts-rockchip-Split-pcie30x1m1-pinctrl.patch
-Patch1060: 1060-board-cm3588-nas-Add-HDMI-support.patch
-Patch1061: 1061-arm64-dts-rockchip-Add-PCIe-3.0-pinctrl-to-Turing-RK.patch
-Patch1062: 1062-arm64-dts-rockchip-Enable-GPU-node-on-Turing-RK1.patch
-Patch1063: 1063-arm64-dts-rockchip-Enable-automatic-fan-control-on-t.patch
-Patch1064: 1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
-Patch1071: 1071-arm64-dts-Add-missing-nodes-to-Orange-Pi-5-Plus.patch
+Patch0001: 0001-Import-DTS-from-Armbian.patch
+Patch0002: 0002-Armbian_rockchip64-6.12.patch
 # ALT Patches
 Patch2000: 2000-OrangePI5-Enable-UART0-and-pps_gpio.patch
 
@@ -400,6 +366,15 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Feb 28 2025 Alexei Takaseev <taf@altlinux.org> 6.12.17-alt1
+- v6.12.17 (2025-02-27).
+- kiosk: MIN_UID 500 -> 1000.
+
+* Thu Feb 27 2025 Alexei Takaseev <taf@altlinux.org> 6.12.16-alt2
+- Sync patches with Amrbian rockchip64
+- Merge all Armbian patches to one
+- Sync kernel config woth Armbian rockchip64
+
 * Sat Feb 22 2025 Alexei Takaseev <taf@altlinux.org> 6.12.16-alt1
 - v6.12.16 (2025-02-21).
 
