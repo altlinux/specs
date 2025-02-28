@@ -13,12 +13,14 @@
 
 Name: geary
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Email client
 License: LGPL-2.1-or-later
 Group: Networking/Mail
 Url: https://wiki.gnome.org/Apps/Geary
+
+Vcs: https://gitlab.gnome.org/GNOME/geary.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -76,8 +78,8 @@ Geary's development.
 %build
 %add_optflags -I%_includedir/libytnef
 %meson  -Dprofile=%profile \
-    %{?_enable_contractor:-Dcontractor=true} \
-    %{?_disable_libunwind:-Dlibunwind_optional=true}
+    %{subst_enable_meson_feature contractor contractor} \
+    %{subst_enable_meson_feature libunwind libunwind}
 %nil
 %meson_build
 
@@ -101,6 +103,10 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Fri Feb 28 2025 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1.1
+- spec: fixed build options substitution
+- added Vcs tag
+
 * Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 
