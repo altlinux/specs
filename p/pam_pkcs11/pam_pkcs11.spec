@@ -2,9 +2,14 @@
 
 %define _unpackaged_files_terminate_build 1
 
+# Fix build on older branches:
+%if "%_pam_modules_dir" == "/%_lib/security"
+    %global _libdir /%_lib
+%endif
+
 Name: pam_pkcs11
 Version: 0.6.13
-Release: alt1
+Release: alt2
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -161,6 +166,9 @@ rm %buildroot%_libdir/*/*.la
 %_libdir/%name/ldap_mapper.so
 
 %changelog
+* Fri Feb 28 2025 Paul Wolneykien <manowar@altlinux.org> 0.6.13-alt2
+- Fix build on older branches.
+
 * Wed Feb 05 2025 Paul Wolneykien <manowar@altlinux.org> 0.6.13-alt1
 - Version 0.6.13
 - Added pkcs11-eventmgr systemd service unit.
