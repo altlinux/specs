@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable snapshot
 %define modname gidocgen
-%define ver_major 2024
+%define ver_major 2025
 
 %def_enable check
 
 Name: gi-docgen
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Documentation tool for GObject-based libraries
@@ -14,11 +14,12 @@ Group: Development/Other
 License: Apache-2.0 or GPL-3.0-or-later
 Url: https://pypi.org/project/gi-docgen/
 
+Vcs: https://gitlab.gnome.org/GNOME/gi-docgen.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 #Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gi-docgen.git
 Source: %name-%version.tar
 %endif
 
@@ -71,8 +72,7 @@ mv %buildroot%python3_sitelibdir_noarch/%modname/templates %buildroot%_datadir/%
 ln -sf ../../../../share/%modname/templates %buildroot%python3_sitelibdir_noarch/%modname/templates
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-%meson_test
+%__meson_test
 
 %files
 %_bindir/%name
@@ -85,6 +85,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Fri Feb 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3-alt1
+- 2025.3
+
 * Mon May 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.1-alt1
 - 2024.1
 
