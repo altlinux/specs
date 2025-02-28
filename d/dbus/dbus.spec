@@ -10,8 +10,8 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.16.0
-Release: alt2
+Version: 1.16.2
+Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -209,6 +209,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Fri Feb 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.16.2-alt1
+- 1.16.2
+
 * Sun Jan 12 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.16.0-alt2
 - created /run/dbus/users (closes: #52662)
 
