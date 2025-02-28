@@ -10,13 +10,15 @@
 %def_enable check
 
 Name: libgit2-glib
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Git library for GLib
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://live.gnome.org/Libgit2-glib
+
+Vcs: https://gitlab.gnome.org/GNOME/libgit2-glib.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -87,16 +89,18 @@ This package contains documentation needed for developing Libgit2-glib applicati
 
 %prep
 %setup
+
 # fix python install dir
 sed -i 's/purelib/platlib/' %name/meson.build
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_disable_introspection:-Dintrospection=false} \
-	%{?_disable_vala:-Dvapi=false} \
-	%{?_disable_python:-Dpython=false} \
-	%{?_disable_ssh:-Dssh=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool python python} \
+    %{subst_enable_meson_bool ssh ssh}
+%nil
 %meson_build
 
 %install
@@ -135,6 +139,9 @@ sed -i 's/purelib/platlib/' %name/meson.build
 %endif
 
 %changelog
+* Fri Feb 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Sun Sep 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
