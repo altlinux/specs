@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.2
+Version: 2.7.3
 Release: alt1
 Summary: Junos 'EZ' automation for non-programmers
 License: Apache-2.0
@@ -68,6 +68,9 @@ echo 'def get_version(): return "%version"' >> versioneer.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 28 2025 Stanislav Levin <slev@altlinux.org> 2.7.3-alt1
+- 2.7.2 -> 2.7.3.
+
 * Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 2.7.2-alt1
 - 2.6.7 -> 2.7.2.
 
