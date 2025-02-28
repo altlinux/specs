@@ -1,13 +1,13 @@
 %define repo dlib
-%define soname 19
 
 Name: dlib
-Version: 19.24.6
+Version: 19.24.7
 Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
 Url: http://dlib.net
+Vcs: https://github.com/davisking/dlib.git
 
 Source: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.gz
 # Built from VCS.
@@ -23,11 +23,11 @@ BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-d
 Dlib is a general purpose cross-platform C++ library
 designed using contract programming and modern C++ techniques.
 
-%package -n lib%name%soname
+%package -n lib%name%version
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n lib%name%soname
+%description -n lib%name%version
 This package provides library for %name.
 
 %package devel
@@ -54,6 +54,11 @@ sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_pac
 # don't apply cmake options for cmake into python's setup.py
 sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | OFF |;' \
   dlib/cmake_utils/set_compiler_specific_options.cmake
+# fix version for 19.24.7
+%if "%version" == "19.24.7"
+sed -i '/CPACK_PACKAGE_VERSION_PATCH/s|99|7|' \
+  dlib/CMakeLists.txt
+%endif
 
 %build
 %cmake \
@@ -76,9 +81,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %pyproject_install
 %endif
 
-%files -n lib%name%soname
+%files -n lib%name%version
 %doc LICENSE.txt README.md
-%_libdir/lib%name.so.%{soname}*
+%_libdir/lib%name.so.%version
 
 %files devel
 %_includedir/%name/
@@ -92,6 +97,10 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Fri Feb 28 2025 Leontiy Volodin <lvol@altlinux.org> 19.24.7-alt1
+- New version 19.24.7.
+- Added vcs tag.
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 19.24.6-alt1
 - New version 19.24.6.
 
