@@ -37,7 +37,7 @@
 
 Name: LibreOffice-still
 %define hversion 24.8
-%define urelease 4.2
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -75,7 +75,7 @@ Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
 #Source4: LibreOffice-still-%version-l10n-ru.zip
 
-Source10: libreoffice-ext_sources.%version.tar
+Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
 Source300: libreoffice.unused
 
@@ -847,6 +847,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Feb 28 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.5.2-alt1
+- New version.
+
 * Fri Jan 31 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.4.2-alt1
 - New version.
 - Security fixes:
