@@ -1,6 +1,6 @@
 Name: valgrind
 Version: 3.24.0
-Release: alt1
+Release: alt2
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -15,6 +15,25 @@ Patch4: valgrind-rh-cachegrind-improvements.patch
 Patch5: valgrind-rh-ldso-supp.patch
 Patch6: valgrind-rh-alt-some-stack-protector.patch
 Patch7: valgrind-rh-some-Wl-z-now.patch
+
+
+# patches from VALGRIND_3_24_BRANCH
+Patch101: valgrind-upstream-0001-Prepare-NEWS-for-branch-3.24-fixes.patch
+Patch102: valgrind-upstream-0002-vgdb.c-fork_and_exec_valgrind-Fix-off-by-one-error-w.patch
+Patch103: valgrind-upstream-0003-vgdb.c-fork_and_exec_valgrind-Fix-another-off-by-one.patch
+Patch104: valgrind-upstream-0004-regtest-add-a-fdleak-filter-for-write-on-write-on-li.patch
+Patch105: valgrind-upstream-0005-Add-exp-and-supp-patterns-for-missing-main-frame-for.patch
+Patch106: valgrind-upstream-0006-Add-additional-exp-ppc64le-files-to-EXTRA_DIST.patch
+Patch107: valgrind-upstream-0007-Add-support-for-landlock_create_ruleset-444-landlock.patch
+Patch108: valgrind-upstream-0008-helgrind-tests-tc17_sembar.c-Remove-bool-typedef.patch
+Patch109: valgrind-upstream-0009-drd-tests-swapcontext.c-Rename-typedef-struct-thread.patch
+Patch110: valgrind-upstream-0010-none-tests-bug234814.c-sa_handler-take-an-int-as-arg.patch
+Patch111: valgrind-upstream-0011-Add-open_tree-move_mount-fsopen-fsconfig-fsmount-fsp.patch
+Patch112: valgrind-upstream-0012-Recognize-new-DWARF5-DW_LANG-constants.patch
+Patch113: valgrind-upstream-0013-Bug-498317-FdBadUse-is-not-a-valid-CoreError-type-in.patch
+Patch114: valgrind-upstream-0014-linux-support-EVIOCGRAB-ioctl.patch
+Patch115: valgrind-upstream-0015-ppc-test_dfp2-build-fix-for-GCC-15.patch
+
 
 # Apparently, nobody cares whether valgrind works on arm or not.
 # And of powerpc, nobody cares at all.
@@ -156,6 +175,9 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Thu Feb 27 2025 Ivan A. Melnikov <iv@altlinux.org> 3.24.0-alt2
+- Synced with upstream VALGRIND_3_24_BRANCH.
+
 * Wed Nov 13 2024 Ivan A. Melnikov <iv@altlinux.org> 3.24.0-alt1
 - 3.17.0 -> 3.24.0 (ALT#51941).
 - Synced RH patches with valgrind-3.24.0-1 from Fedora.
