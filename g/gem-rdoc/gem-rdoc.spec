@@ -5,8 +5,8 @@
 %define        gemname rdoc
 
 Name:          gem-rdoc
-Version:       6.6.3.1
-Release:       alt1.1
+Version:       6.12.0
+Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects
 License:       Ruby
 Group:         Development/Ruby
@@ -16,26 +16,28 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         use_system_dirs.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(kpeg) >= 1.3.3
 %if_enabled check
+BuildRequires: gem(gettext) >= 0
+BuildRequires: gem(prism) >= 0.30.0
+BuildRequires: gem(psych) >= 4.0.0
+BuildRequires: gem(racc) >= 1.4.10
 BuildRequires: gem(rake) >= 0
-BuildRequires: gem(racc) > 1.4.10
+BuildRequires: gem(rubocop) >= 1.15.0
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(test-unit-ruby-core) >= 0
-BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(gettext) >= 0
-BuildRequires: gem(psych) >= 4.0.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+Requires:      ruby >= 2.6.0
+Requires:      rubygems >= 2.2
 Requires:      gem(psych) >= 4.0.0
 Obsoletes:     ruby-rdoc < %EVR
 Provides:      ruby-rdoc = %EVR
-Provides:      gem(rdoc) = 6.6.3.1
+Provides:      gem(rdoc) = 6.12.0
 
 %ruby_on_build_rake_tasks generate
 
@@ -45,18 +47,17 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %package       -n rdoc
-Version:       6.6.3.1
-Release:       alt1.1
+Version:       6.12.0
+Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
-Requires:      gem(rdoc) = 6.6.3.1
+Requires:      gem(rdoc) = 6.12.0
 Obsoletes:     ruby-tool-rdoc
 Obsoletes:     ruby-tools
-Conflicts:     rdoc <= 1.9.3-alt10
 
 %description   -n rdoc
 RDoc produces HTML and online documentation for Ruby projects
@@ -70,15 +71,15 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %package       -n ri
-Version:       6.6.3.1
-Release:       alt1.1
+Version:       6.12.0
+Release:       alt0.c9f2.1
 Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
-Requires:      gem(rdoc) = 6.6.3.1
+Requires:      gem(rdoc) = 6.12.0
 
 %description   -n ri
 RDoc produces HTML and online documentation for Ruby projects
@@ -86,20 +87,21 @@ executable(s).
 
 RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
 rdoc and ri tools for generating and displaying online documentation.
+
 %description   -n ri -l ru_RU.UTF-8
 Исполнямка для самоцвета rdoc.
 
 
 %if_enabled    doc
 %package       -n gem-rdoc-doc
-Version:       6.6.3.1
-Release:       alt1.1
+Version:       6.12.0
+Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdoc
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rdoc) = 6.6.3.1
+Requires:      gem(rdoc) = 6.12.0
 
 %description   -n gem-rdoc-doc
 RDoc produces HTML and online documentation for Ruby projects documentation
@@ -107,6 +109,7 @@ files.
 
 RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
 rdoc and ri tools for generating and displaying online documentation.
+
 %description   -n gem-rdoc-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета rdoc.
 %endif
@@ -114,21 +117,22 @@ rdoc and ri tools for generating and displaying online documentation.
 
 %if_enabled    devel
 %package       -n gem-rdoc-devel
-Version:       6.6.3.1
-Release:       alt1.1
+Version:       6.12.0
+Release:       alt1
 Summary:       RDoc produces HTML and online documentation for Ruby projects development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rdoc
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rdoc) = 6.6.3.1
-Requires:      gem(rake) >= 0
-Requires:      gem(racc) > 1.4.10
+Requires:      gem(rdoc) = 6.12.0
+Requires:      gem(gettext) >= 0
 Requires:      gem(kpeg) >= 1.3.3
+Requires:      gem(prism) >= 0.30.0
+Requires:      gem(racc) >= 1.4.10
+Requires:      gem(rake) >= 0
+Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(test-unit) >= 0
 Requires:      gem(test-unit-ruby-core) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(gettext) >= 0
 
 %description   -n gem-rdoc-devel
 RDoc produces HTML and online documentation for Ruby projects development
@@ -136,6 +140,7 @@ package.
 
 RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
 rdoc and ri tools for generating and displaying online documentation.
+
 %description   -n gem-rdoc-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета rdoc.
 %endif
@@ -164,32 +169,36 @@ EOF
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc CONTRIBUTING.rdoc History.rdoc LICENSE.rdoc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
+%ruby_gemplugin
 
 %files         -n rdoc
-%doc README.rdoc
+%doc CONTRIBUTING.rdoc History.rdoc LICENSE.rdoc README.rdoc
 %_altdir/rdoc
 
 %files         -n ri
-%doc README.rdoc
+%doc CONTRIBUTING.rdoc History.rdoc LICENSE.rdoc README.rdoc
 %_altdir/ri
-%_mandir/ri*
+%ruby_mandir/ri*
 
 %if_enabled    doc
 %files         -n gem-rdoc-doc
-%doc README.rdoc
+%doc CONTRIBUTING.rdoc History.rdoc LICENSE.rdoc README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-rdoc-devel
-%doc README.rdoc
+%doc CONTRIBUTING.rdoc History.rdoc LICENSE.rdoc README.rdoc
 %endif
 
 
 %changelog
+* Mon Feb 17 2025 Pavel Skrylev <majioa@altlinux.org> 6.12.0-alt1
+- ^ 6.6.3.1 -> 6.12.0
+
 * Sun Apr 21 2024 Pavel Skrylev <majioa@altlinux.org> 6.6.3.1-alt1.1
 - + added executables alternatives for ri, rdoc
 
