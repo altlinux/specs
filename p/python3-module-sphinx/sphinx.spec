@@ -25,12 +25,13 @@ python3(imagesize) \\\
 python3(requests) \\\
 python3(packaging) \\\
 python3(defusedxml) \\\
+python3(roman_numerals) \\\
 %nil
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 7.4.7
-Release: alt3
+Version: 8.2.1
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -280,6 +281,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Feb 27 2025 Fr. Br. George <george@altlinux.org> 1:8.2.1-alt1
+- Autobuild version bump to 8.2.1
+
 * Wed Jul 31 2024 Fr. Br. George <george@altlinux.org> 1:7.4.7-alt3
 - obsoletion does not work, provide a real package
 
