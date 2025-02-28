@@ -2,7 +2,7 @@
 %define import_path github.com/charmbracelet/glow/v1.5.1
 
 Name: glow
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Render markdown on the CLI, with pizzazz!
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Feb 27 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.1.0-alt1
+- New version.
+
 * Sat Aug 24 2024 Ajrat Makhmutov <rauty@altlinux.org> 2.0.0-alt1
 - New version.
 - Fix the unknown version output with the --version flag.
