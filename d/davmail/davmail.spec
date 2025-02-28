@@ -3,8 +3,8 @@
 %define java_version java
 
 Name:     davmail
-Version:  6.2.2
-Release:  alt1.1
+Version:  6.3.0
+Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
 Group:    Networking/Other
@@ -14,7 +14,7 @@ License:  GPL-2.0+
 Source0:  %name-%version.tar
 Source1:  %name.desktop
 
-Patch1: davmail-alt-disable-jrefx.patch
+Patch1: davmail-alt-disable-download-jre.patch
 BuildArch: noarch
 
 Requires: %java_version
@@ -71,6 +71,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Feb 28 2025 Andrey Cherepanov <cas@altlinux.org> 6.3.0-alt1
+- New version.
+
 * Mon Apr 29 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 6.2.2-alt1.1
 - NMU: convert to noarch package, build on all architectures.
 
