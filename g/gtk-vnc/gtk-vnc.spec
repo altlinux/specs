@@ -8,7 +8,7 @@
 
 Name: gtk-vnc
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -18,7 +18,6 @@ Url: https://wiki.gnome.org/Projects/gtk-vnc
 Vcs: https://gitlab.gnome.org/GNOME/gtk-vnc.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: gtk-vnc-1.2.0-alt-e2k-makecontext.patch
 
 Requires: libgtk3vnc = %EVR
 
@@ -156,12 +155,12 @@ library.
 
 %prep
 %setup
-%ifarch %e2k
-%patch -p1
-%endif
 
 %build
 %meson \
+%ifarch %e2k
+    -Dwith-coroutine=gthread \
+%endif
     %{subst_enable_meson_feature vala with-vala} \
     %{subst_enable_meson_feature docs gi-docs}
 %nil
@@ -229,6 +228,9 @@ library.
 %endif
 
 %changelog
+* Fri Feb 28 2025 Michael Shigorin <mike@altlinux.org> 1.5.0-alt2
+- E2K: use gthread instead of homegrown setjmp hacks (ilyakurdyukov@)
+
 * Sat Feb 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
