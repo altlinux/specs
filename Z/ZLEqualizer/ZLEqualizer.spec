@@ -7,7 +7,7 @@
 
 Name:    ZLEqualizer
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Dynamic Equalizer Plugin from ZL Audio
 License: AGPL-3.0
@@ -87,6 +87,7 @@ sh -eux "%SOURCE2"
 %cmake \
   -DFOOBAR_VERSION:string=%version \
   -DGIT_EXECUTABLE:string='' \
+  -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
   %nil
 
 %cmake_build
@@ -109,5 +110,9 @@ cp -a "VST3/ZL Equalizer.vst3" %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Fri Feb 28 2025 Ivan A. Melnikov <iv@altlinux.org> 0.5.0-alt2
+- Explicitly specify target architecture (fixes FTBFS
+  on loongarch64).
+
 * Wed Feb 26 2025 Ivan A. Melnikov <iv@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus
