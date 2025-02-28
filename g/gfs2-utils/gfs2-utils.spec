@@ -1,5 +1,5 @@
 Name: gfs2-utils
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 License: GPL-2.0+ and LGPL-2.0+
 Group: System/Kernel and hardware
@@ -49,6 +49,9 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 %_man5dir/*.5*
 
 %changelog
+* Fri Feb 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.6.1-alt1
+- New version.
+
 * Thu Feb 27 2025 Andrey Cherepanov <cas@altlinux.org> 3.6.0-alt1
 - New version.
 
