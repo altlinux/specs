@@ -5,31 +5,16 @@
 %def_with python
 
 Name: tbb
-Version: 2021.13.0
-Release: alt1.1
+Version: 2022.0.0
+Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
 Url: https://github.com/oneapi-src/oneTBB
-
-# https://github.com/oneapi-src/oneTBB.git
+VCS: https://github.com/oneapi-src/oneTBB.git
 Source: %name-%version.tar
-
-# Fedora patches
-
-# Fix compilation on aarch64 and s390x.  See
-# https://github.com/oneapi-src/oneTBB/issues/186
-Patch4: tbb-2019-fetchadd4.patch
-
-# ALT patches
-# https://github.com/oneapi-src/oneTBB/pull/609
-Patch1000: tbb-2021.5-upstream-i586-fix.patch
-
 # Elbrus support
 Patch2000: tbb-e2k.patch
-
-#Fix for building on GCC13
-Patch5: 0001-Fix-build-on-GCC13.patch
 
 Requires: lib%name = %EVR
 
@@ -116,9 +101,6 @@ This package contains python3 module for Threading Building Blocks.
 
 %prep
 %setup
-%patch4 -p1
-%patch5 -p1
-#%%patch1000 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -188,6 +170,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %endif
 
 %changelog
+* Fri Feb 28 2025 Anton Farygin <rider@altlinux.ru> 2022.0.0-alt1
+- 2021.13.0 -> 2022.0.0
+
 * Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 2021.13.0-alt1.1
 - NMU: Disabled tests on armh (failed test_malloc_pools).
 
