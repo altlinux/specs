@@ -7,12 +7,12 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      af898abe44662d9554fb15ee4d4a7307f1b8e315
+%global commit      bbd0a17ccc67e48d4a69393287b7fcc4f0578683
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 28.0.0
-Release: alt2
+Version: 28.0.1
+Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -27,8 +27,6 @@ Source2: %servicename.init
 Source3: %servicename.sysconf
 Source4: %servicename-storage.sysconf
 Source5: daemon.json
-
-Patch1: docker-engine-28.0.0-alt-fix-compilation-on-i386.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc gcc golang >= 1.3 systemd-devel libdevmapper-devel libbtrfs-devel libseccomp-devel
@@ -73,7 +71,7 @@ This package provides docker-proxy util.
 
 %prep
 %setup
-%autopatch -p1
+#%autopatch -p1
 
 %build
 # Temporary workaround to build with golang 1.16. Waiting for upstream to
@@ -151,6 +149,9 @@ exit 0
 %_udevrulesdir/80-docker.rules
 
 %changelog
+* Fri Feb 28 2025 Vladimir Didenko <cow@altlinux.org> 28.0.1-alt1
+- 28.0.1
+
 * Mon Feb 24 2025 Vladimir Didenko <cow@altlinux.org> 28.0.0-alt2
 - fix build on i386
 
