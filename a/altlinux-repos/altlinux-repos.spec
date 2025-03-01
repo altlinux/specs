@@ -1,6 +1,6 @@
 Name: altlinux-repos
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: A set of ALT repos desktop files
 License: GPL
@@ -27,6 +27,10 @@ cp -a mirrors repositories %buildroot%_sysconfdir/apt/
 %_sysconfdir/apt/repositories
 
 %changelog
+* Wed Feb 26 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt3
+- Added c10f2 repository.
+- Add X-Has-Arches for cert10 (ALT #51989).
+
 * Mon Aug 26 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
 - Added c10 branch.
 

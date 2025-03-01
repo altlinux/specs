@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mirror
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Source: %name-%version.tar
@@ -38,6 +38,14 @@ Requires: %name = %EVR
 %description allowed
 %summary.
 
+%package additional-repo
+Summary: Additional local repository
+Group: System/Configuration/Other
+Requires: %name = %EVR
+
+%description additional-repo
+%summary.
+
 %prep
 %setup -q
 
@@ -49,6 +57,7 @@ Requires: %name = %EVR
 install -d %buildroot%_logdir/%name
 install -Dpm640 %name.logrotate %buildroot%_sysconfdir/logrotate.d/%name
 install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
+install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/additional.desktop
 
 %files
 %config(noreplace) %_sysconfdir/logrotate.d/*
@@ -66,7 +75,14 @@ install -Dpm640 allowed %buildroot%_sysconfdir/alterator/mirror/allowed
 %files allowed
 %config(noreplace) %_sysconfdir/alterator/mirror/allowed
 
+%files additional-repo
+%config(noreplace) %_sysconfdir/apt/repositories/additional.desktop
+
 %changelog
+* Sat Mar 01 2025 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
+- Supported own repositories with manual package upload.
+- Used X-Order field (from 00 to 99) to custom sort repositories.
+
 * Tue Aug 27 2024 Andrey Cherepanov <cas@altlinux.org> 0.5.1-alt1
 - Added allowed repository cert10.
 
