@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define APP_ID dev.qwery.AddWater
 %def_enable check
 
 Name: addwater
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: Keep Firefox in fashion
@@ -70,6 +71,10 @@ in the U.S. and other countries.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sat Mar 01 2025 Oleg Shchavelev <oleg@altlinux.org> 1.2.6-alt1
+- New version 1.2.6
+- Enable strict mode for unpackaged files
+
 * Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 1.2.5-alt1
 - New version 1.2.5
 - Changed the Meson profile from 'user' to 'default' in the build process
