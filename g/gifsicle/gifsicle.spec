@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gifsicle
-Version: 1.95
-Release: alt2
+Version: 1.96
+Release: alt1
 Summary: command-line program for manipulating GIF images
 Group: Graphics
 License: GPL-2.0
@@ -47,6 +47,9 @@ make check
 %_man1dir/gifview.1*
 
 %changelog
+* Sat Mar 01 2025 Anton Farygin <rider@altlinux.ru> 1.96-alt1
+- 1.95 -> 1.96
+
 * Mon Apr 22 2024 Anton Farygin <rider@altlinux.ru> 1.95-alt2
 - to simplify the build for stable branches - requirements autoconf version
   was reduced to 2.69
