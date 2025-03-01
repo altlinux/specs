@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: pulp
-Version: 0.1.15
+Version: 0.1.18
 Release: alt1
 
 Summary: Skim excessive feeds
@@ -72,5 +72,8 @@ Contributing to quickly parsing excessive articles:
 %_datadir/%name
 
 %changelog
+* Fri Feb 28 2025 Oleg Shchavelev <oleg@altlinux.org> 0.1.18-alt1
+- New version 0.1.18
+
 * Sat Feb 22 2025 Oleg Shchavelev <oleg@altlinux.org> 0.1.15-alt1
 - Initial build
