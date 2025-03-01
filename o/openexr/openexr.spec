@@ -1,11 +1,17 @@
+%ifarch %ix86
+%define relax ||:
+%else
+%define relax %nil
+%endif
+
 %define rname OpenEXR
-%define libsover 30
+%define libsover 32
 Name: openexr
-Version: 3.1.5
-Release: alt2.2
+Version: 3.3.1
+Release: alt1
 
 %define _cmake__builddir BUILD
-%define common %name%libsover-common
+%define common openexr%libsover-common
 %define libopenexr libopenexr%libsover
 %define libiex libiex%libsover
 %define libilmthread libilmthread%libsover
@@ -15,7 +21,8 @@ Release: alt2.2
 Summary: A high-dynamic-range image file library
 License: BSD-3-Clause
 Group: System/Libraries
-URL: http://www.openexr.org/
+URL: https://openexr.com/
+VCS: https://github.com/AcademySoftwareFoundation/openexr
 
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
@@ -23,11 +30,14 @@ Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
 
 Source: %name-%version.tar
+# https://github.com/AcademySoftwareFoundation/openexr-images
+Source1: openexr-test-images.tar
 
 BuildRequires: gcc-c++ glibc-devel zlib-devel
 BuildRequires: imath-devel
 BuildRequires: python3-module-imath
-BuildRequires: cmake
+BuildRequires: cmake ctest
+BuildRequires: libdeflate-devel
 
 %define descr The OpenEXR project provides the specification and reference \
 implementation of the EXR file format, the professional-grade \
@@ -65,6 +75,7 @@ Group: Development/Other
 Provides: ilmbase-devel = %version
 Obsoletes: ilmbase-devel < %version
 Requires: imath-devel
+Requires: libdeflate-devel
 %description devel
 %descr
 
@@ -100,7 +111,7 @@ Group: System/Libraries
 %descr
 
 %prep
-%setup -n %name-%version
+%setup -a1
 
 %build
 %ifarch %e2k
@@ -111,6 +122,10 @@ Group: System/Libraries
 
 %install
 make -C BUILD install DESTDIR=%buildroot CMAKE_MODULE_PATH=%_includedir/Imath
+
+%check
+cp -ar openexr-test-images/* BUILD/src/test/bin/
+%ctest %relax
 
 %files -n %common
 %doc *.md
@@ -146,6 +161,10 @@ make -C BUILD install DESTDIR=%buildroot CMAKE_MODULE_PATH=%_includedir/Imath
 %_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
+* Fri Feb 28 2025 Anton Farygin <rider@altlinux.ru> 3.3.1-alt1
+- 3.1.5 -> 3.3.1
+- enabled tests
+
 * Mon Jul  3 2023 Artyom Bystrov <arbars@altlinux.org> 3.1.5-alt2.2
 - Fix build on GCC13
 
