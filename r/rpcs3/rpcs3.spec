@@ -1,21 +1,22 @@
 %define optflags_lto %nil
 
-%define git_ver 17082
-%define git_commit 17e78a9e6f2bae69e61a16a10609a1e64e5c06f9
+%define git_ver 17533
+%define git_commit b266e3d4bf0e7b067efab0db6cba2ef31bd37974
 
 %define glslang_version 13.1.1
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
-%define hidapi_commit 8b43a97a9330f8b0035439ce9e255e4be202deca
+%define hidapi_commit 6bfdcf7368169efe1b745cd4468d45cda05ef8de
 %define yaml_cpp_commit 456c68f452da09d8ca84b375faa2b1397713eaba
 %define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
 %define soundtouch_commit 394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07
 %define miniupnp_version miniupnpd_2_3_6
 %define rtmidi_version 6.0.0
-%define zstd_commit 97291fc5020a8994019ab76cf0cda83a9824374c
-%define openal_version 1.23.1
+%define zstd_version 1.5.7
+%define openal_version 1.24.1
+%define fusion_version 1.2.8
 
 Name: rpcs3
-Version: 0.0.34
+Version: 0.0.35
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -45,14 +46,15 @@ Source6: soundtouch-%soundtouch_commit.tar
 Source7: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
 Source8: rtmidi-%rtmidi_version.tar
-# https://github.com/facebook/zstd/archive/%zstd_commit/zstd-%zstd_commit.tar.gz
-Source9: zstd-%zstd_commit.tar
+# https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
+Source9: zstd-%zstd_version.tar
 # https://github.com/kcat/openal-soft/archive/%openal_version/openal-soft-%openal_version.tar.gz
 Source10: openal-soft-%openal_version.tar
+# https://github.com/xioTechnologies/Fusion/archive/v%fusion_version/Fusion-%fusion_version.tar.gz
+Source11: Fusion-%fusion_version.tar
 
 BuildRequires: /proc
 BuildRequires: clang
-BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: glslang
 BuildRequires: glslc
@@ -68,12 +70,12 @@ BuildRequires: libfaudio-devel
 BuildRequires: libffi-devel
 BuildRequires: libflatbuffers-devel
 BuildRequires: libopenal-devel
+BuildRequires: libopencv-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libstb-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
-BuildRequires: libtinfo-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: libvulkan-devel
@@ -82,11 +84,9 @@ BuildRequires: libwayland-egl-devel
 BuildRequires: libwayland-server-devel
 BuildRequires: libwolfssl-devel
 BuildRequires: libxml2-devel
-BuildRequires: libxxhash-devel
 BuildRequires: lld
 BuildRequires: llvm
 BuildRequires: llvm-devel
-BuildRequires: ninja-build
 BuildRequires: pipewire-jack-libs-devel
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-svg-devel
@@ -95,7 +95,7 @@ BuildRequires: qt6-svg-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -105,8 +105,9 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 %__mv -Tf ../miniupnp-%miniupnp_version 3rdparty/miniupnp/miniupnp
 %__mv -Tf ../rtmidi-%rtmidi_version 3rdparty/rtmidi/rtmidi
-%__mv -Tf ../zstd-%zstd_commit 3rdparty/zstd/zstd
+%__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../openal-soft-%openal_version 3rdparty/OpenAL/openal-soft
+%__mv -Tf ../Fusion-%fusion_version 3rdparty/fusion/fusion
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -139,7 +140,6 @@ echo "// This is a generated file.
 	-DUSE_SYSTEM_LIBUSB:BOOL=TRUE \
 	-DUSE_SYSTEM_FLATBUFFERS:BOOL=TRUE \
 	-DUSE_SYSTEM_PUGIXML:BOOL=TRUE \
-	-DUSE_SYSTEM_XXHASH:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
 	-DLLVM_DIR:PATH=$(llvm-config --cmakedir) \
@@ -163,6 +163,9 @@ echo "// This is a generated file.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Mar 01 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.35-alt1
+- Version 0.0.35
+
 * Sat Nov 02 2024 Nazarov Denis <nenderus@altlinux.org> 0.0.34-alt1
 - Version 0.0.34
 
