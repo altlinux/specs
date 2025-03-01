@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.152
+Version: 2.9.153
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Sat Mar 01 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.153-alt1
+- alterator-mirror: update translation.
+
 * Sun Feb 20 2025 Kirill Izmestev <felixz@altlinux.org> 2.9.152-alt1
 - Add translation into Mari language as Russian.
 
