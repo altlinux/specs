@@ -1,6 +1,6 @@
 %define oname soupsieve
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.6
 Release: alt1
 
 Summary: A modern CSS selector implementation for BeautifulSoup
@@ -15,8 +15,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-hatchling
+
 %py3_use BeautifulSoup4
-#%py3_use pytest
 
 %description
 Soup Sieve is a CSS selector library designed to be used with Beautiful Soup 4.
@@ -35,18 +36,23 @@ though there are a number that don't make sense in a non-browser environment.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 #%check
 #%python3_test
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 2.6-alt1
+- new version 2.6
+- switch to pyproject build
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - new version 2.3.1 (with rpmrb script)
 
