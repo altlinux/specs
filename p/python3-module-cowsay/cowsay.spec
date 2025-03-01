@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 6.1
-Release: alt1
+Release: alt1.1
 
 Summary: The famous cowsay for GNU/Linux is now available for python
 
@@ -18,10 +18,6 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
 
 BuildArch: noarch
 
@@ -49,5 +45,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 25 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 6.1-alt1.1
+- NMU: remove useless manual BR to pytest.
+
 * Tue Feb 11 2025 Grigory Ustinov <grenka@altlinux.org> 6.1-alt1
 - Initial build for Sisyphus.
