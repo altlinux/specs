@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 10.3
+%define ver_major 10.4
 %define namespace HarfBuzz
 %define api_ver 0.0
 
@@ -211,6 +211,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Sat Mar 01 2025 Yuri N. Sedunov <aris@altlinux.org> 10.4.0-alt1
+- 10.4.0
+
 * Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 10.3.0-alt1
 - 10.3.0
 
