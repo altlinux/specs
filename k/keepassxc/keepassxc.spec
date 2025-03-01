@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.7.9
-Release:  alt2
+Release:  alt3
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -109,6 +109,10 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %changelog
+* Sat Mar 01 2025 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.9-alt3
+- update Russian translation to its current state (as of 24.02.2025)
+  closes: #52823
+
 * Sat Nov 23 2024 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.9-alt2
 - add Chromium-Gost support for browser integration (closes: #52159)
 
