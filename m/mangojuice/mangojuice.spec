@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define APP_ID io.github.radiolamp.mangojuice
 
 Name: mangojuice
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: A graphical user interface for MangoHud configuration
@@ -42,8 +43,14 @@ temperature, CPU and GPU statistics, and more.
 %_bindir/%name
 %_desktopdir/%APP_ID.desktop
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
+%_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sat Mar 01 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.2-alt1
+- New version 0.8.2
+- Enable strict mode for unpackaged files
+- Add scalable icons to package files list
+
 * Sat Feb 01 2025 Oleg Shchavelev <oleg@altlinux.org> 0.8.1-alt1
 - New version 0.8.1
 - Changed macro variable for searching language files
