@@ -6,7 +6,7 @@
 %def_with doc
 
 Name: gnustep-base
-Version: 1.31.0
+Version: 1.31.1
 Release: alt1
 Epoch: 1
 
@@ -178,6 +178,9 @@ fi
 %endif
  
 %changelog
+* Sat Mar 01 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.31.1-alt1
+- New version.
+
 * Tue Feb 11 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.31.0-alt1
 - New version.
 
