@@ -4,7 +4,7 @@
 
 Name:  python3-module-%{pypi_name}
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: A pure Python network address representation and manipulation library
 
 Group:  Development/Python3
@@ -71,9 +71,13 @@ popd
 %doc *.rst
 %_bindir/netaddr
 %python3_sitelibdir/%pypi_name
+%exclude %python3_sitelibdir/%pypi_name/tests
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt2
+- NMU: don't pack tests (skip pytest require)
+
 * Fri Jul 26 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Build new version.
 
