@@ -1,10 +1,10 @@
 # requires pandoc
 %def_enable docs
-%global llvm_version 18.1
+%global llvm_version 19.1
 
 Name: android-tools
 Version: 34.0.5
-Release: alt1.1
+Release: alt2
 
 Summary: Android Debug CLI tools
 License: APL
@@ -360,6 +360,9 @@ done
 %aprefix
 
 %changelog
+* Sat Mar 01 2025 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt2
+- Build with Clang 19.1, this also fixes boringssl build failure
+
 * Wed Nov 13 2024 Ivan A. Melnikov <iv@altlinux.org> 34.0.5-alt1.1
 - NMU: add basic riscv64 support
 
