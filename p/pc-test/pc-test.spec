@@ -7,7 +7,7 @@
 
 Name: pc-test
 Version: 2.1.4
-Release: alt1
+Release: alt2
 
 Summary: PC Test Suite
 Group: System/Configuration/Hardware
@@ -138,6 +138,13 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Sat Mar 01 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.4-alt2
+- Added:
+  + 36 new video samples and switch to VK video
+- Fixed:
+  + now the .config/autostart directory will be
+    created automatically if it does not exist
+
 * Mon Feb 10 2025 Leonid Krivoshein <klark@altlinux.org> 2.1.4-alt1
 - Added:
   + support for ALT Workstaion 11 (alpha)
