@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: icon-theme-alt-workstation
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: ALT Workstation icon theme
@@ -38,6 +38,9 @@ find %buildroot/%_iconsdir/AltWorkstation/ -name meson.build -exec rm -v {} \;
 %_iconsdir/AltWorkstation/
 
 %changelog
+* Sat Mar 01 2025 Semen Fomchenkov <armatik@altlinux.org> 0.3-alt1
+- Removed images for basealt and altlinux icon (Closes: 53154)
+
 * Mon Feb 10 2025 Semen Fomchenkov <armatik@altlinux.org> 0.2-alt1
 - Fix overlap of a package with a different name (Closes: 52846)
 - Complies with icon theme standards
