@@ -1,5 +1,5 @@
 Name: yazi
-Version: 25.2.11
+Version: 25.2.26
 Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
@@ -82,7 +82,7 @@ install -D yazi-cli/completions/ya.fish -t %buildroot%_datadir/fish/vendor_compl
 install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 
 %check
-#has no tests
+# Has no tests
 
 %files
 %doc LICENSE README.md
@@ -99,6 +99,9 @@ install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh
 
 %changelog
+* Sat Mar 01 2025 Anton Kurachenko <srebrov@altlinux.org> 25.2.26-alt1
+- New version 25.2.26.
+
 * Tue Feb 11 2025 Anton Kurachenko <srebrov@altlinux.org> 25.2.11-alt1
 - New version 25.2.11.
 
