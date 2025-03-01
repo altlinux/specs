@@ -1,6 +1,6 @@
 Name: matrix-synapse
-Version: 1.104.0
-Release: alt1.1
+Version: 1.125.0
+Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache-2.0
@@ -23,7 +23,7 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3 >= 3.8
 
-%py3_buildrequires setuptools_rust
+%py3_buildrequires setuptools_rust >= 1.3
 %py3_buildrequires poetry
 
 %py3_use matrix-angular-sdk >= 0.6.8
@@ -38,7 +38,7 @@ BuildRequires: python3 >= 3.8
 %py3_use twisted-core >= 18.9.0
 %py3_use treq >= 15.1
 %py3_use OpenSSL >= 16.0.0
-%py3_use yaml >= 3.13
+%py3_use yaml >= 5.3
 %py3_use pyasn1 >= 0.1.9
 %py3_use pyasn1-modules >= 0.0.7
 %py3_use bcrypt >= 3.1.7
@@ -47,28 +47,31 @@ BuildRequires: python3 >= 3.8
 %py3_use pymacaroons >= 0.13.0
 %py3_use msgpack >= 0.5.2
 %py3_use phonenumbers >= 8.2.0
-%py3_use prometheus_client >= 0.4.0
+%py3_use prometheus-client >= 0.4.0
 %py3_use attrs >= 19.2.0
 %py3_use attrs >= 21.1.0
 %py3_use netaddr >= 0.7.18
 %py3_use jinja2 >= 3.0
 %py3_use bleach >= 1.4.3
-%py3_use typing-extensions >= 3.10.0.1
+%py3_use typing-extensions >= 4.1
 %py3_use cryptography >= 3.4.7
 %py3_use ijson >= 3.1.4
 %py3_use matrix-common >= 1.3.0
 %py3_use packaging >= 20.0
 %py3_use pydantic < 3
 %py3_use pydantic >= 1.7.4
-#py3_use setuptools-rust >= 1.3
+# python-multipart, not just multipart
+%py3_use python-multipart >= 0.0.9
+
+# optional
 #py3_use matrix-synapse-ldap3 >= 0.1
 %py3_use psycopg2 >= 2.8
-#py3_use psycopg2cffi >= 2.8
+%py3_use psycopg2cffi >= 2.8
 #py3_use psycopg2cffi-compat >= 1.1
 %py3_use pysaml2 >= 4.5.0
 %py3_use authlib >= 0.15.1
 %py3_use systemd >= 231
-%py3_use lxml >= 4.2.0
+%py3_use lxml >= 4.5.2
 
 # optional
 #py3_use sentry-sdk >= 0.7.2
@@ -102,8 +105,8 @@ Requires: python3-module-twisted-mail >= 17.5.0
 
 # optional
 %add_python3_req_skip opentracing
-# internal
-%add_python3_req_skip synapse.synapse_rust.push synapse.synapse_rust.acl synapse.synapse_rust.events
+# internal (not provides from rust module)
+%add_python3_req_skip synapse.synapse_rust.push synapse.synapse_rust.acl synapse.synapse_rust.events synapse.synapse_rust.rendezvous
 
 %description
 Matrix is an ambitious new ecosystem for open federated Instant Messaging and VoIP.
@@ -178,6 +181,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Feb 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.125.0-alt1
+- new version 1.125.0 (with rpmrb script)
+
 * Wed Jun 19 2024 Stanislav Levin <slev@altlinux.org> 1.104.0-alt1.1
 - NMU: require pymacaroons.
 
