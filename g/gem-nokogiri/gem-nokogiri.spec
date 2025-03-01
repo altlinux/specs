@@ -6,7 +6,7 @@
 
 Name:          gem-nokogiri
 Version:       1.16.7.371
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
 Group:         Development/Ruby
@@ -75,7 +75,7 @@ BuildConflicts: gem(racc) >= 2
 %ruby_use_gem_dependency rubyzip >= 2.3.2,rubyzip < 3
 %ruby_use_gem_dependency rexical >= 1.0.8,rexical < 2
 %ruby_use_gem_dependency standard >= 1.41.1,standard < 2
-Requires:      /usr/bin/rex
+Requires:      rexical
 Requires:      gem(mini_portile2) >= 2.8.2
 Requires:      gem(racc) >= 1.4
 Conflicts:     gem(mini_portile2) >= 2.9
@@ -94,7 +94,7 @@ contanis Ruby libraries for Nokogiri.
 
 %package       -n nokogiri
 Version:       1.16.7.371
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
@@ -117,7 +117,7 @@ contanis Ruby libraries for Nokogiri.
 %if_enabled    doc
 %package       -n gem-nokogiri-doc
 Version:       1.16.7.371
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
@@ -141,7 +141,7 @@ contanis Ruby libraries for Nokogiri.
 %if_enabled    devel
 %package       -n gem-nokogiri-devel
 Version:       1.16.7.371
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
@@ -232,6 +232,9 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Sat Mar 01 2025 Pavel Skrylev <majioa@altlinux.org> 1.16.7.371-alt0.2
+- ! adding direct dep to rexical insead of %%_bindir/rex
+
 * Thu Oct 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.16.7.371-alt0.1
 - ^ 1.16.7 -> 1.16.7p371
 
