@@ -3,19 +3,23 @@
 %define _name libmediaart
 %define ver_major 1.9
 %define api_ver 2.0
+%define namespace MediaArt
+
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: Library for handling media art (2.0 API)
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Tracker
+
+Vcs: https://gitlab.gnome.org/GNOME/libmediaart.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -24,7 +28,7 @@ Source: %_name-%version.tar
 %endif
 
 Obsoletes: %_name < %version
-Provides: %_name = %version-%release
+Provides: %_name = %EVR
 
 %define meson_ver 0.56.2
 %define glib_ver 2.38
@@ -43,9 +47,9 @@ media art caches.
 %package devel
 Summary: Development files for LibMediaArt
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: %_name-devel < %version
-Provides: %_name-devel = %version-%release
+Provides: %_name-devel = %EVR
 
 %description devel
 This package contains libraries and header files needed for
@@ -54,9 +58,9 @@ development using LibMediaArt library.
 %package gir
 Summary: GObject introspection data for the LibMediaArt library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Obsoletes: %_name-gir < %version
-Provides: %_name-gir = %version-%release
+Provides: %_name-gir = %EVR
 
 %description gir
 GObject introspection data for the LibMediaArt library
@@ -65,10 +69,10 @@ GObject introspection data for the LibMediaArt library
 Summary: GObject introspection devel data for the LibMediaArt library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 Obsoletes: %_name-gir-devel < %version
-Provides: %_name-gir-devel = %version-%release
+Provides: %_name-gir-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the LibMediaArt library
@@ -79,7 +83,7 @@ Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version-%release
 Obsoletes: %_name-devel-doc < %version
-Provides: %_name-devel-doc = %version-%release
+Provides: %_name-devel-doc = %EVR
 
 %description devel-doc
 This package contains development documentation for LibMediaArt library.
@@ -90,10 +94,10 @@ This package contains development documentation for LibMediaArt library.
 
 %build
 %meson \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	-Dimage_library=gdk-pixbuf \
-	%{?_disable_introspection:-Dintrospection=false} \
-	%{?_disable_vala:-Dvala=false}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    -Dimage_library=gdk-pixbuf \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi}
 %nil
 %meson_build
 
@@ -113,14 +117,14 @@ This package contains development documentation for LibMediaArt library.
 %_pkgconfigdir/%_name-%api_ver.pc
 %{?_enable_vala:
 %_vapidir/%_name-%api_ver.vapi
-%_vapidir/%%_name-%api_ver.deps}
+%_vapidir/%_name-%api_ver.deps}
 
 %if_enabled introspection
 %files gir
-%_typelibdir/MediaArt-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/MediaArt-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -129,6 +133,9 @@ This package contains development documentation for LibMediaArt library.
 %endif
 
 %changelog
+* Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.7-alt1
+- 1.9.7
+
 * Wed Jun 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.6-alt1
 - 1.9.6
 

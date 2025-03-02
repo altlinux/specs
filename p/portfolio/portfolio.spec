@@ -11,7 +11,7 @@
 %endif
 
 Name: portfolio
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: File manager for Linux mobile devices
@@ -19,10 +19,11 @@ License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/tchx84/Portfolio
 
+Vcs: https://github.com/tchx84/Portfolio.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/tchx84/Portfolio.git
 Source: %name-%version.tar
 %endif
 
@@ -73,6 +74,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Wed Feb 14 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
