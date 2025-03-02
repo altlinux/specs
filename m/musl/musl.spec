@@ -4,7 +4,7 @@
 
 Name: musl
 Version: 1.2.5
-Release: alt3
+Release: alt4
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -38,6 +38,8 @@ language standard, POSIX, and widely agreed-upon extensions. musl is
 lightweight, fast, simple, free, and strives to be correct in the sense
 of standards-conformance and safety.
 
+Note that only GCC is supported; Clang support is best effort.
+
 %package devel-static
 Summary: Static libraries for musl
 Group: Development/C
@@ -68,6 +70,9 @@ Requires(post): toilet
 
 %prep
 %setup
+%ifnarch %ix86
+sed -i '/link_ssp:/{N;N;d}' tools/musl-gcc.specs.sh
+%endif
 
 # Use musl-fts from Debian.
 mkdir -p src/fts
@@ -99,13 +104,22 @@ cp debian/musl-fts/fts.h include/
 # We set this via CC (and not CFLAGS) so it also pass into musl-gcc by default.
 export CC='gcc -mlong-double-64'
 %endif
+# Hide boring warnings, upstream seems don't care so we should not.
+%add_optflags -Wno-parentheses -Wno-unused-but-set-variable -Wno-unused-value -Wno-unknown-pragmas
 %configure \
 	--enable-debug \
 	--enable-wrapper=all
 %make_build
+%ifarch %ix86
+gcc %optflags -c .gear/__stack_chk_fail_local.c
+ar rc libssp_nonshared.a __stack_chk_fail_local.o
+%endif
 
 %install
 %make_install DESTDIR=%buildroot install
+%ifarch %ix86
+install -Dpm644 libssp_nonshared.a -t %buildroot%_libdir
+%endif
 
 # https://wiki.musl-libc.org/guidelines-for-distributions
 #   "Most importantly [...] distributions should not change the dynamic
@@ -148,12 +162,23 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %files devel
 %doc README WHATSNEW
 %_bindir/*
-%_musldir/*
-%exclude %_musldir/lib/*.a
-%exclude %_musldir/lib/%soname
+%_includedir
+%_libdir/*.o
+%_libdir/musl-gcc.specs
+%ifarch %ix86
+%_libdir/libssp_nonshared.a
+%endif
 
 %files devel-static
-%_musldir/lib/*.a
+%_libdir/libc.a
+%_libdir/libcrypt.a
+%_libdir/libdl.a
+%_libdir/libm.a
+%_libdir/libpthread.a
+%_libdir/libresolv.a
+%_libdir/librt.a
+%_libdir/libutil.a
+%_libdir/libxnet.a
 
 %files -n rpm-macros-musl
 %_rpmmacrosdir/musl
@@ -162,6 +187,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Sun Mar 02 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt4
+- Fix stat(2) call for old glibc (for backport to p10).
+
 * Fri Feb 21 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt3
 - Security update (Fixes: CVE-2025-26519) (ALT#53160).
 

@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: busybox
-Version: 1.36.1
+Version: 1.37.0
 Release: alt1
 Summary: Statically linked binary providing simplified versions of system commands
 License: GPL-2.0-only
@@ -49,12 +49,10 @@ install -Dp busybox_unstripped -T %buildroot/bin/busybox
 install -Dpm644 docs/busybox.1 -t %buildroot%_man1dir
 
 %check
-banner check
+timeout 1 ./busybox
 set -o pipefail
 export SKIP_KNOWN_BUGS=1
 export SKIP_INTERNET_TESTS=1
-# Known failures:
-rm testsuite/mdev.tests # Operation not permitted
 # Note: Base build options should not change or it will rebuild.
 if %make_build test V=1 CC=musl-gcc EXTRA_CFLAGS="%optflags" &> test.log
 then
@@ -64,7 +62,7 @@ else
 	awk "/FAIL:/" RS======================= ORS='\n' test.log
 	exit 1
 fi
-./busybox |& sed 's/^/ :: /'
+# date tests fail but they do not return exit failure.
 ! ldd busybox_unstripped || exit 1
 # Verify standalone mode.
 ./busybox sh <<-EOF |& grep -Fw 'BusyBox v%version'
@@ -80,5 +78,8 @@ size busybox
 %_man1dir/busybox.1*
 
 %changelog
+* Sat Mar 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.37.0-alt1
+- Update to 1_37_0 (2024-09-26). (Fixes: CVE-2023-42363, CVE-2023-42366).
+
 * Sun Oct 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.36.1-alt1
 - First import 1_36_1 (2023-05-19).
