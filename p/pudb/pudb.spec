@@ -1,5 +1,5 @@
 Name: pudb
-Version: 2024.1
+Version: 2024.1.3
 Release: alt1
 
 Summary: A full-screen, console-based Python debugger
@@ -14,9 +14,10 @@ BuildRequires(pre): rpm-build-python3
 Requires: python3(pygments) python3(%name) python3(jedi)
 Provides: %{name}3 = %version.%release
 
-# Automatically added by buildreq on Thu Jun 20 2024
-# optimized out: bash5 libgpg-error python3 python3-base python3-dev python3-module-automat python3-module-cffi python3-module-pkg_resources python3-module-py3dephell python3-module-pytest python3-module-setuptools sh5
-BuildRequires: python3-module-Cython python3-module-pyproject-installer python3-module-pytest-mock python3-module-trio python3-module-wheel python3-module-urwid
+# Automatically added by buildreq on Sun Mar 02 2025
+# optimized out: bash5 libgpg-error openssl-config python3 python3-base python3-dev python3-module-packaging python3-module-pathspec python3-module-pluggy python3-module-trove-classifiers sh5
+BuildRequires: python3-module-hatchling python3-module-pyproject-installer python3-module-setuptools
+BuildRequires: python3(urwid) python3-module-pytest-mock
 
 %description
 PuDB is a full-screen, console-based visual debugger for Python.
@@ -51,7 +52,7 @@ IPython plugin for %name
 %pyproject_build
 
 %check
-python3 -m pytest
+%pyproject_run_pytest
 
 %install
 %pyproject_install
@@ -61,7 +62,7 @@ python3 -m pytest
 %_bindir/*
 
 %files -n python3-module-%name
-%doc examples manual-tests
+%doc examples README*
 %python3_sitelibdir_noarch/*
 %exclude %python3_sitelibdir_noarch/%name/ipython*
 
@@ -69,6 +70,9 @@ python3 -m pytest
 %python3_sitelibdir_noarch/%name/ipython*
 
 %changelog
+* Sun Mar 02 2025 Fr. Br. George <george@altlinux.org> 2024.1.3-alt1
+- Autobuild version bump to 2024.1.3
+
 * Thu Jun 20 2024 Fr. Br. George <george@altlinux.org> 2024.1-alt1
 - Autobuild version bump to 2024.1
 
