@@ -41,7 +41,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.51.90
+Version: 1.52.0
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -640,6 +640,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 02 2025 Mikhail Efremov <sem@altlinux.org> 1.52.0-alt1
+- Updated to 1.52.0.
+
 * Fri Feb 21 2025 Mikhail Efremov <sem@altlinux.org> 1.51.90-alt1
 - dnsmasq: Don't use openresolv-generated files.
 - Enabled dnsmasq plugin.
