@@ -17,7 +17,7 @@
 
 Name: branding-%flavour
 Version: 11
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Url: http://en.altlinux.org/starterkits
@@ -122,6 +122,7 @@ BuildArch: noarch
 Requires: alt-os-release
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme branding-alt-%theme-release
 Obsoletes: %obsolete_list
+Conflicts: altlinux-release-%altbranch
 Conflicts: %conflicts_list
 %branding_add_conflicts %flavour release
 
@@ -238,6 +239,8 @@ install slideshow/* %buildroot/usr/share/install2/slideshow/
 %ifarch %grub_arches
 #bootloader
 %post bootloader
+[ "$1" -eq 1 ] || exit 0
+[ -f /etc/sysconfig/grub2 ] || exit 0
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
@@ -249,6 +252,7 @@ shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
 
 #bootsplash
 %post bootsplash
+[ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %files alterator
@@ -292,6 +296,10 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Sun Mar 02 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt3
+- bootloader, bootsplash: update /etc/sysconfig/grub2 only on first install
+- release: Add conflict with altlinux-release-%%altbranch
+
 * Thu May 23 2024 Anton Midyukov <antohami@altlinux.org> 1:11-alt2
 - assign code name Salvia
 
