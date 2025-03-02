@@ -4,8 +4,8 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.10.0
-Release: alt3
+Version: 5.11.0
+Release: alt2
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -19,7 +19,7 @@ URL: https://www.minetest.net
 # wget https://raw.github.com/RussianFedora/minetest/fedora/minetest.rsyslog
 # wget https://raw.github.com/RussianFedora/minetest/fedora/minetest.logrotate
 # wget https://raw.github.com/RussianFedora/minetest/fedora/minetest.README
-Source0: %name-%version.tar.gz
+Source0: luanti-%version.tar.gz
 Source2: %{name}.service
 Source3: %{name}.rsyslog
 Source4: %{name}.logrotate
@@ -85,7 +85,7 @@ System.
 
 %prep
 #%setup -q -n %gitname-%name
-%setup -q
+%setup -q -n luanti-%{version}
 # -a 1 -a 2
 %patch0 -p1
 %patch1 -p1
@@ -221,6 +221,12 @@ fi
 %_man6dir/luantiserver.6*
 
 %changelog
+* Mon Mar 03 2025 Ilya Mashkin <oddity@altlinux.ru> 5.11.0-alt2
+- Fix build path
+
+* Mon Mar 03 2025 Ilya Mashkin <oddity@altlinux.ru> 5.11.0-alt1
+- 5.11.0
+
 * Tue Nov 19 2024 Ilya Mashkin <oddity@altlinux.ru> 5.10.0-alt3
 - Fixed Minetest_game
 
