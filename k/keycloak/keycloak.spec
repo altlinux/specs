@@ -1,6 +1,6 @@
 Name:    keycloak
-Version: 26.1.2
-Release: alt2
+Version: 26.1.3
+Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -75,6 +75,12 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Sun Mar 02 2025 Andrey Cherepanov <cas@altlinux.org> 26.1.3-alt1
+- New version.
+- Security fixes:
+  + CVE-2025-0736 Error during JGroups channel creation may reveal secure information
+  + CVE-2024-47072 XStream is vulnerable to a Denial of Service attack due to stack overflow from a manipulated binary input stream
+
 * Wed Feb 19 2025 Andrey Cherepanov <cas@altlinux.org> 26.1.2-alt2
 - (%%post) Copy configuration files from /usr/share/keycloak/conf.
 - Mention CVE-2024-7260, fixed in 24.0.7.
