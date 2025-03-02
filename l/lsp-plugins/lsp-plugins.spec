@@ -8,7 +8,7 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.20
+Version: 1.2.21
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -17,6 +17,7 @@ License: LGPL-3.0
 Url: https://lsp-plug.in/
 
 Vcs: https://github.com/sadko4u/lsp-plugins
+
 Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
 
 BuildRequires(pre): rpm-build-xdg
@@ -132,6 +133,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.21-alt1
+- 1.2.21
+
 * Sat Dec 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.20-alt1
 - 1.2.20
 
