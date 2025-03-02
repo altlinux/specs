@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt11
+Release: alt12
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -163,6 +163,7 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Requires: alt-os-release
+Requires: alt-editions-server
 
 %description release
 %distro_name release file.
@@ -286,6 +287,10 @@ install mate-settings/applications.list-themed %buildroot/%_datadir/mate-menu/ap
 mkdir -p %buildroot/%_datadir/glib-2.0/schemas
 install gnome-settings/50_gnome-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
 
+#edition
+mkdir -p  %buildroot/%_sysconfdir/dconf/db/default.d/
+install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
+
 #graphics
 mkdir -p %buildroot/%_datadir/design/%theme
 cp -a images/product-logo.png %buildroot/%_datadir/design/%theme/icons/system-logo.png
@@ -347,6 +352,7 @@ fi
 %_sysconfdir/*-release
 %_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
+%_sysconfdir/dconf/db/default.d/*
 
 %files notes
 %dir %data_cur_dir
@@ -377,6 +383,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Mar 2 2025 Michael Chernigin <chernigin@altlinux.org> 11.0-alt12
+- Add default edition to os-release and dconf
+
 * Wed Feb 26 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt11
 - Add Qt6 support
 - Change slides for slideshow in installer
