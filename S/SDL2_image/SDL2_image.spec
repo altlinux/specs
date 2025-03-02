@@ -1,5 +1,5 @@
 Name: SDL2_image
-Version: 2.8.5
+Version: 2.8.6
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
@@ -74,6 +74,9 @@ to develop SDL applications.
 %_libdir/cmake/%name
 
 %changelog
+* Sun Mar 02 2025 Nazarov Denis <nenderus@altlinux.org> 2.8.6-alt1
+- New version 2.8.6.
+
 * Sat Feb 08 2025 Nazarov Denis <nenderus@altlinux.org> 2.8.5-alt1
 - New version 2.8.5.
 
