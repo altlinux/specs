@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,13 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Sun Mar 02 2025 Anton Midyukov <antohami@altlinux.org> 1.7.4-alt1
+- live: do'nt add fonts in use/live/x11 (Closes: 33530)
+- live: do'nt enable EFI support in use/live/x11
+- grub: remove distro name from VNC Install items
+- regular.mk: INSTALL2_INIT='systemd.unit=install2.target' for desktop (p11)
+- other small improvents and fixes
+
 * Tue Feb 18 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt1
 - fix package lists for build regular-rescue, regular-gnustep,
   regular-wmaker
