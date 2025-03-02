@@ -12,13 +12,15 @@
 %def_enable check
 
 Name: gcr%gcr_api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/GnomeKeyring
+
+Vcs: https://gitlab.gnome.org/GNOME/gcr.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -122,9 +124,9 @@ This package contains development documentation for GCR libraries.
 
 %build
 %meson \
-    %{?_disable_ssh_agent:-Dssh_agent=false} \
-    %{?_disable_introspection:-Dintrospection=false} \
-    %{?_disable_gtk_doc:-Dgtk_doc=false}
+    %{subst_enable_meson_bool ssh_agent ssh_agent} \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc}
 %nil
 %meson_build
 
@@ -178,6 +180,9 @@ xvfb-run %__meson_test -t 8
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.1-alt1
+- 4.3.1
+
 * Tue Jan 21 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
 - 4.3.0
 

@@ -1,13 +1,15 @@
 Name: acpi
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Command-line ACPI Client
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Monitoring
+Url: https://sourceforge.net/projects/acpiclient/
 
-URL: http://sourceforge.net/projects/acpiclient/
-Source: http://download.sourceforge.net/acpiclient/acpi-%version.tar.gz
+Vcs: https://git.code.sf.net/p/acpiclient/code
+
+Source: https://download.sourceforge.net/acpiclient/acpi-%version.tar.gz
 
 %description
 Attempts to replicate the functionality of the 'old' apm command on ACPI
@@ -27,8 +29,12 @@ suspending, only displays information about ACPI devices.
 %files
 %_bindir/*
 %_man1dir/*
+%doc AUTHORS README
 
 %changelog
+* Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
+- 1.8
+
 * Wed Dec 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7
 
