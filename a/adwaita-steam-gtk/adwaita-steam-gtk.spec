@@ -1,7 +1,7 @@
 %define xdg_name io.github.Foldex.AdwSteamGtk
 
 Name: adwaita-steam-gtk
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 License: GPL-3.0
 
@@ -10,6 +10,7 @@ Summary: A simple Gtk wrapper for Adwaita-for-Steam
 Group: Games/Other
 
 Url: https://github.com/Foldex/AdwSteamGtk
+Vcs: https://github.com/Foldex/AdwSteamGtk.git
 
 Source: %name-%version.tar
 
@@ -50,6 +51,10 @@ rm -rf %buildroot%_datadir/locale/zh_Hans
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sun Mar 02 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.8.0-alt1
+- new version 0.8.0 (with rpmrb script)
+- spec: add vcs
+
 * Sun Nov 24 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.7.2-alt1
 - new version 0.7.2 (with rpmrb script)
 
