@@ -4,7 +4,7 @@
 
 Name: musl
 Version: 1.2.5
-Release: alt4
+Release: alt5
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -187,6 +187,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Sun Mar 02 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt5
+- Improve Clang linking by redirecting C runtimes to musl ones.
+
 * Sun Mar 02 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt4
 - Fix stat(2) call for old glibc (for backport to p10).
 
