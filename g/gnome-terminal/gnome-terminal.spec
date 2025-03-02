@@ -8,13 +8,13 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: GNOME Terminal
 License: GPL-3.0-or-later
 Group: Terminals
-Url: http://www.gnome.org
+Url: https://www.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/gnome-terminal.git
 
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %define glib_ver 2.52
 %define gtk_ver 3.24
 %define handy_ver 1.6
-%define vte_ver 0.78.2
+%define vte_ver 0.78.4
 
 Provides: xvt
 Provides: x-terminal-emulator
@@ -113,6 +113,9 @@ EOF
 %endif
 
 %changelog
+* Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.4-alt1
+- 3.54.4
+
 * Sun Jan 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.3-alt1
 - 3.54.3
 

@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.57
+Version: %ver_major.59
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -21,12 +21,16 @@ License: GPL-2.0 or GPL-3.0
 Group: Office
 Url: http://www.gnumeric.org/
 
+Vcs: https://gitlab.gnome.org/GNOME/gnumeric.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 Patch: gnumeric-1.12.56-alt-desktop.patch
+
+Patch10: gnumeric-1.12.59-up-HEAD.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %EVR
@@ -124,6 +128,8 @@ GObject introspection devel data for the Gnumeric.
 %prep
 %setup
 %patch -p1
+%patch10 -p1
+
 # prevent linking against libpython3.x.a
 sed -i s'@\-L\$PY_LIB_DIR@@' configure.ac
 
@@ -137,13 +143,14 @@ NOCONFIGURE=1 ./autogen.sh
 %autoreconf
 %endif
 %configure \
-	--disable-schemas-compile \
-	%{subst_with gnome} \
-	%{subst_with gda} \
-	%{subst_with python} \
-	%{subst_with perl} \
-	%{?_enable_introspection:--enable-introspection=yes} \
-	%{?_with_python:PYTHON=%__python3}
+    --disable-schemas-compile \
+    %{subst_with gnome} \
+    %{subst_with gda} \
+    %{subst_with python} \
+    %{subst_with perl} \
+    %{?_enable_introspection:--enable-introspection=yes} \
+    %{?_with_python:PYTHON=%__python3}
+%nil
 %make_build
 
 %install
@@ -193,6 +200,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_pkgconfigdir/*
 
 %changelog
+* Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.59-alt1
+- updated to GNUMERIC_1_12_59-5-gd1531d1d5
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 1.12.57-alt1
 - 1.12.57
 

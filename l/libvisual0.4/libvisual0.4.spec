@@ -1,19 +1,31 @@
+%def_enable snapshot
 %define srcname libvisual
+%define api_ver 0.4
 
-Name: %{srcname}0.4
-Version: 0.4.0
-Release: alt3
+%def_disable static
+%def_disable lv_tool
+%def_disable examples
+
+Name: %{srcname}%api_ver
+Version: 0.4.2
+Release: alt1
 
 Summary: Libvisual is an abstraction library that comes between applications and audio visualisation plugins
-License: LGPL
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://%srcname.sourceforge.net/
-Source: %srcname-%version.tar.bz2
 
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Vcs: https://github.com/Libvisual/libvisual.git
 
-# Automatically added by buildreq on Sun May 28 2006
-BuildRequires: gcc-c++ pkg-config
+%if_disabled snapshot
+#Source: https://download.sourceforge.net/%srcname/%srcname-%version.tar.bz2
+Source: https://github.com/Libvisual/libvisual/archive/%version/%srcname-%version.tar.bz2
+%else
+Source: %srcname-%version.tar
+%endif
+
+BuildRequires: autoconf-archive gcc-c++
+%{?_enable_lv_tool:BuildRequires: pkgconfig(sdl) >= 1.2.0}
 
 %description
 Libvisual is an abstraction library that comes between applications and
@@ -34,7 +46,7 @@ at once; all kinds of neat tricks are possible using this method.
 %package devel
 Summary: Development environment for %srcname
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development files required for building
@@ -43,7 +55,7 @@ This package contains development files required for building
 %package devel-static
 Summary: Static %srcname library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains development files required for building
@@ -52,26 +64,31 @@ statically linked %srcname-based software.
 %def_disable static
 
 %prep
-%setup -n %srcname-%version
+%setup -n %srcname-%version/%srcname
 
 %build
+%autoreconf
 %configure \
-    %{subst_enable static}
-
+    %{subst_enable static} \
+    %{subst_enable examples} \
+    %{?_disable_lv_tool:--disable-lv-tool}
+%nil
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+mkdir -p %buildroot%_libdir/%srcname-%api_ver/{actor,input,morph}
+%find_lang %srcname-%api_ver
 
-mkdir -p %buildroot%_libdir/%srcname-0.4/{actor,input,morph}
-
-%files
-%doc AUTHORS ChangeLog NEWS README TODO
+%files -f %srcname-%api_ver.lang
+%{?_enable_lv_tool:%_bindir/lv-tool}
 %_libdir/*.so.*
-%dir %_libdir/%srcname-0.4
-%dir %_libdir/%srcname-0.4/actor
-%dir %_libdir/%srcname-0.4/input
-%dir %_libdir/%srcname-0.4/morph
+%dir %_libdir/%srcname-%api_ver
+%dir %_libdir/%srcname-%api_ver/actor
+%dir %_libdir/%srcname-%api_ver/input
+%dir %_libdir/%srcname-%api_ver/morph
+%{?_disable_lv_tool:%exclude %_man1dir/lv-tool-%{api_ver}.1*}
+%doc AUTHORS ChangeLog NEWS  README TODO
 
 %files devel
 %_includedir/*
@@ -84,6 +101,9 @@ mkdir -p %buildroot%_libdir/%srcname-0.4/{actor,input,morph}
 %endif
 
 %changelog
+* Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Mon Mar 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt3
 - Rebuilt for debuginfo
 

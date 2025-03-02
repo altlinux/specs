@@ -1,8 +1,9 @@
 %def_disable snapshot
 
+%define _name goffice
 %define ver_major 0.10
 %define api_ver 0.10
-%define _name goffice
+%define namespace GOffice
 
 %def_with lasem
 %def_enable introspection
@@ -13,13 +14,15 @@
 %def_enable gtk_doc
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.57
+Version: %ver_major.59
 Release: alt1
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
 License: GPL-2.0 or GPL-3.0
 Url: http://www.gnumeric.org/
+
+Vcs: https://gitlab.gnome.org/GNOME/goffice.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
@@ -93,10 +96,10 @@ GObject introspection devel data for the Goffice library.
 %build
 %autoreconf
 %configure \
-	--with-config-backend=gsettings \
-	%{subst_with lasem} \
-	%{?_enable_introspection:--enable-introspection=yes} \
-	%{?_enable_gtk_doc:--enable-gtk-doc}
+    --with-config-backend=gsettings \
+    %{subst_with lasem} \
+    %{?_enable_introspection:--enable-introspection=yes} \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
 %nil
 %make_build
 
@@ -110,28 +113,28 @@ GObject introspection devel data for the Goffice library.
 
 %files -f %_name.lang
 %_libdir/*.so.*
-%dir %_libdir/goffice
-%dir %_libdir/goffice/%version
-%dir %_libdir/goffice/%version/plugins
-%_libdir/goffice/%version/plugins/plot_barcol/
-%_libdir/goffice/%version/plugins/plot_distrib/
-%_libdir/goffice/%version/plugins/plot_pie/
-%_libdir/goffice/%version/plugins/plot_radar/
-%_libdir/goffice/%version/plugins/plot_surface/
-%_libdir/goffice/%version/plugins/plot_xy/
-%_libdir/goffice/%version/plugins/reg_linear/
-%_libdir/goffice/%version/plugins/reg_logfit/
-%_libdir/goffice/%version/plugins/smoothing/
-%_libdir/goffice/%version/plugins/lasem/
-%dir %_datadir/goffice
-%dir %_datadir/goffice/%version
-%_datadir/goffice/%version/mmlitex/
+%dir %_libdir/%_name
+%dir %_libdir/%_name/%version
+%dir %_libdir/%_name/%version/plugins
+%_libdir/%_name/%version/plugins/plot_barcol/
+%_libdir/%_name/%version/plugins/plot_distrib/
+%_libdir/%_name/%version/plugins/plot_pie/
+%_libdir/%_name/%version/plugins/plot_radar/
+%_libdir/%_name/%version/plugins/plot_surface/
+%_libdir/%_name/%version/plugins/plot_xy/
+%_libdir/%_name/%version/plugins/reg_linear/
+%_libdir/%_name/%version/plugins/reg_logfit/
+%_libdir/%_name/%version/plugins/smoothing/
+%_libdir/%_name/%version/plugins/lasem/
+%dir %_datadir/%_name
+%dir %_datadir/%_name/%version
+%_datadir/%_name/%version/mmlitex/
 %doc AUTHORS NEWS README
 
 %exclude %_libdir/%_name/%version/plugins/*/*.la
 
 %files devel
-%_includedir/libgoffice-%api_ver/
+%_includedir/lib%_name-%api_ver/
 %_libdir/*.so
 %_pkgconfigdir/*
 
@@ -142,14 +145,17 @@ GObject introspection devel data for the Goffice library.
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GOffice-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GOffice-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 
 %changelog
+* Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.59-alt1
+- 0.10.59
+
 * Mon Feb 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.57-alt1
 - 0.10.57
 

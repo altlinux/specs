@@ -8,7 +8,7 @@
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 %def_disable static
@@ -29,6 +29,8 @@ Summary: Terminal emulator widget for use with GTK+
 License: LGPL-3.0-or-later
 Group: Terminals
 Url: http://www.gnome.org/
+
+Vcs: https://gitlab.gnome.org/GNOME/vte.git
 
 Requires: lib%name = %EVR
 
@@ -216,6 +218,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.78.4-alt1
+- 0.78.4
+
 * Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.78.3-alt1
 - 0.78.3
 
