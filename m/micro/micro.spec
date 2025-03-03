@@ -1,15 +1,17 @@
 Name: micro
-Version: 2.0.10
-Release: alt2
+Version: 2.0.14
+Release: alt1
 Summary: A modern and intuitive terminal-based text editor
 License: MIT/BSD/Apache-2.0/MPL-2.0
 Group: Editors
 Url: https://micro-editor.github.io/
-Packager: Ivan Razzhivin <underwit@altlinux.org>
-Source0: %name-%version.tar
-Patch3500: 0001-github.com-zyedidia-pty-fixed-LoongArch-specific-typ.patch
-BuildRequires: desktop-file-utils rpm-build-golang rpm-macros-golang
-BuildRequires: golang >= 1.5
+
+# Source-url: https://github.com/zyedidia/micro/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
+Source1: %name-development-%version.tar
+
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: desktop-file-utils rpm-build-golang
 
 %description
 Micro is a terminal-based text editor that aims to be easy to use and
@@ -22,8 +24,8 @@ to use full time, whether you work in the terminal because you prefer it (like
 me), or because you need to (over ssh).
 
 %prep
-%setup -q
-%patch3500 -p1
+%setup -a1
+subst "s|0.0.0-unknown|%version-%release|" internal/util/util.go
 
 %build
 %gobuild -mod=vendor ./cmd/micro
@@ -42,6 +44,11 @@ desktop-file-install --dir=%buildroot%_desktopdir ./assets/packaging/micro.deskt
 %_desktopdir/micro.desktop
 
 %changelog
+* Mon Mar 03 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.0.14-alt1
+- new version (ALT bug 46744, 53034)
+- fix the version definition (ALT bug 51115)
+- drop old patch
+
 * Tue Mar 12 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.0.10-alt2
 - NMU: fixed FTBFS on LoongArch (updated vendored golang.org/x/sys,
   patched vendored github.com/zyedidia/pty)
