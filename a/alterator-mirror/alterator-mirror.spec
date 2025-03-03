@@ -2,7 +2,7 @@
 
 Name: alterator-mirror
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 
@@ -42,6 +42,7 @@ Requires: %name = %EVR
 Summary: Additional local repository
 Group: System/Configuration/Other
 Requires: %name = %EVR
+Requires: apt-repo-tools
 
 %description additional-repo
 %summary.
@@ -79,6 +80,9 @@ install -Dpm640 additional.desktop %buildroot%_sysconfdir/apt/repositories/addit
 %config(noreplace) %_sysconfdir/apt/repositories/additional.desktop
 
 %changelog
+* Mon Mar 03 2025 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt2
+- alterator-mirror-additional-repo required apt-repo-tools
+
 * Sat Mar 01 2025 Andrey Cherepanov <cas@altlinux.org> 0.6.0-alt1
 - Supported own repositories with manual package upload.
 - Used X-Order field (from 00 to 99) to custom sort repositories.
