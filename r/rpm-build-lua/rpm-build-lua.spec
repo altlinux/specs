@@ -2,7 +2,7 @@
 
 Name: rpm-build-lua
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: RPM helpers to build lua packages
 
@@ -33,6 +33,10 @@ install -p -m0755 -D lua.req.files %buildroot%_rpmlibdir/lua.req.files
 %_rpmlibdir/lua.*
 
 %changelog
+* Tue Feb 04 2025 Ildar Mulyukov <ildar@altlinux.ru> 0.5-alt2
+- lua.prov: add versioning to provided entries
+- lua.req: handle `$APPDIR/lua/*.lua` files properly
+
 * Tue Aug 22 2023 Ildar Mulyukov <ildar@altlinux.ru> 0.5-alt1
 - enhance the "require modules" search
 - make dependencies work for all Lua versions
