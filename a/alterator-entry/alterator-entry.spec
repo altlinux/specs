@@ -2,8 +2,8 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.2.1
-Release: alt2
+Version: 0.2.3
+Release: alt1
 
 Summary: Common files for Alterator Entry specification
 License: GPLv3+
@@ -16,6 +16,7 @@ Source1: %pyproject_deps_config_name
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires: python3-module-alterator-entry
 
 %description
 Common files for Alterator Entry specification:
@@ -48,6 +49,10 @@ install -D -m 755 alterator_entry/cli %buildroot%_bindir/%name
 mkdir -p %buildroot%_alterator_datadir
 cp -r ./schemas %buildroot%_alterator_datadir/schemas 
 
+%check
+export ALTERATOR_SCHEMAS_DIR=./schemas
+find examples -type f | xargs ./alterator_entry/cli validate
+
 %files
 %doc COPYING
 %doc %_alterator_datadir/schemas/
@@ -58,6 +63,15 @@ cp -r ./schemas %buildroot%_alterator_datadir/schemas
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Mar 03 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.3-alt1
+- Update enum with needed desktops in schemas
+- Fix properties definition in object schema
+
+* Mon Feb 17 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.2-alt1
+- Update deps to use tomlkit
+- Add overrides key to object (thx Алексеев Андрей Михайлович)
+- Add %check section validating examples
+
 * Mon Feb 03 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.1-alt2
 - Remove feature filtering for toml and tompllib as it is no longer needed.
 
