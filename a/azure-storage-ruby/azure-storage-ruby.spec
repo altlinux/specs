@@ -4,7 +4,7 @@
 
 Name:          azure-storage-ruby
 Version:       0.20240423
-Release:       alt1
+Release:       alt1.1
 Summary:       Microsoft Azure Storage Library for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -38,7 +38,7 @@ BuildConflicts: gem(adal) >= 2
 BuildConflicts: gem(dotenv) >= 3
 BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-reporters) >= 2
-BuildConflicts: gem(mocha) >= 2
+BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(timecop) >= 1
 BuildConflicts: gem(bundler) >= 3
@@ -50,6 +50,7 @@ BuildConflicts: gem(bundler) >= 3
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 %ruby_use_gem_dependency yard >= 0.9.34,yard < 1
 %ruby_use_gem_dependency faraday_middleware >= 1.2.0,faraday_middleware < 2
+%ruby_use_gem_dependency mocha >= 2.7.1,mocha < 3
 Requires:      gem(faraday) >= 1.0
 Requires:      gem(faraday_middleware) >= 1.0.0
 Requires:      gem(net-http-persistent) >= 4.0
@@ -71,7 +72,7 @@ Conflicts:     gem(adal) >= 2
 Conflicts:     gem(dotenv) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 Provides:      ruby-azure-storage-ruby
@@ -85,7 +86,7 @@ Microsoft Azure Storage Services.
 
 %package       -n gem-azure-storage-blob
 Version:       2.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Blob service
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -103,7 +104,7 @@ Microsoft Azure Storage Blob Client Library for Ruby
 %if_enabled    doc
 %package       -n azure-storage-blob-doc
 Version:       2.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Blob service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-storage-blob
 Group:         Development/Documentation
@@ -125,7 +126,7 @@ Microsoft Azure Storage Blob Client Library for Ruby
 %if_enabled    devel
 %package       -n azure-storage-blob-devel
 Version:       2.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Blob service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage-blob
 Group:         Development/Ruby
@@ -143,7 +144,7 @@ Requires:      gem(coveralls) >= 0
 Conflicts:     gem(dotenv) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 
@@ -160,7 +161,7 @@ Microsoft Azure Storage Blob Client Library for Ruby
 
 %package       -n gem-azure-storage-file
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage File service
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -178,7 +179,7 @@ Microsoft Azure Storage File Client Library for Ruby
 %if_enabled    doc
 %package       -n azure-storage-file-doc
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage File service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-storage-file
 Group:         Development/Documentation
@@ -200,7 +201,7 @@ Microsoft Azure Storage File Client Library for Ruby
 %if_enabled    devel
 %package       -n azure-storage-file-devel
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage File service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage-file
 Group:         Development/Ruby
@@ -218,7 +219,7 @@ Requires:      gem(coveralls) >= 0
 Conflicts:     gem(dotenv) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 
@@ -235,7 +236,7 @@ Microsoft Azure Storage File Client Library for Ruby
 
 %package       -n gem-azure-storage-queue
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Queue service
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -253,7 +254,7 @@ Microsoft Azure Storage Queue Client Library for Ruby
 %if_enabled    doc
 %package       -n azure-storage-queue-doc
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Queue service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-storage-queue
 Group:         Development/Documentation
@@ -275,7 +276,7 @@ Microsoft Azure Storage Queue Client Library for Ruby
 %if_enabled    devel
 %package       -n azure-storage-queue-devel
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Queue service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage-queue
 Group:         Development/Ruby
@@ -292,7 +293,7 @@ Requires:      gem(yard) >= 0.9
 Conflicts:     gem(dotenv) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 
@@ -309,7 +310,7 @@ Microsoft Azure Storage Queue Client Library for Ruby
 
 %package       -n gem-azure-storage-table
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Table service
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -327,7 +328,7 @@ Microsoft Azure Storage Table Client Library for Ruby
 %if_enabled    doc
 %package       -n azure-storage-table-doc
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Table service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-storage-table
 Group:         Development/Documentation
@@ -349,7 +350,7 @@ Microsoft Azure Storage Table Client Library for Ruby
 %if_enabled    devel
 %package       -n azure-storage-table-devel
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Table service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage-table
 Group:         Development/Ruby
@@ -367,7 +368,7 @@ Requires:      gem(coveralls) >= 0
 Conflicts:     gem(dotenv) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 
@@ -384,7 +385,7 @@ Microsoft Azure Storage Table Client Library for Ruby
 
 %package       -n gem-azure-storage-common
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Common service
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -406,7 +407,7 @@ Microsoft Azure Storage Common Client Library for Ruby
 %if_enabled    doc
 %package       -n azure-storage-common-doc
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Common service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-storage-common
 Group:         Development/Documentation
@@ -428,7 +429,7 @@ Microsoft Azure Storage Common Client Library for Ruby
 %if_enabled    devel
 %package       -n azure-storage-common-devel
 Version:       2.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Official Ruby client library to consume Azure Storage Common service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage-common
 Group:         Development/Ruby
@@ -447,7 +448,7 @@ Requires:      gem(coveralls) >= 0
 Conflicts:     gem(dotenv) >= 3
 Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(timecop) >= 1
 Conflicts:     gem(bundler) >= 3
@@ -466,7 +467,7 @@ Microsoft Azure Storage Common Client Library for Ruby
 %if_enabled    devel
 %package       -n azure-storage-ruby-devel
 Version:       0.20240423
-Release:       alt1
+Release:       alt1.1
 Summary:       Microsoft Azure Storage Library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage-ruby
 Group:         Development/Ruby
@@ -571,5 +572,8 @@ Microsoft Azure Storage Library for Ruby development package.
 
 
 %changelog
+* Tue Mar 04 2025 Pavel Skrylev <majioa@altlinux.org> 0.20240423-alt1.1
+- ! dep to mocha gem
+
 * Tue Apr 23 2024 Pavel Skrylev <majioa@altlinux.org> 0.20240423-alt1
 - + packaged gem with Ruby Policy 2.0
