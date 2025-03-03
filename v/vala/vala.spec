@@ -8,13 +8,15 @@
 %define api_ver 0.56
 
 Name: vala
-Version: %ver_major.17
+Version: %ver_major.18
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
 Group: Development/C
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Vala
+
+Vcs: https://gitlab.gnome.org/GNOME/vala.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -26,12 +28,12 @@ Patch: %name-%version-%release-pregenerated.patch
 %endif
 Patch1: %name-0.39.7-alt-fixes.patch
 
-Requires(pre): rpm-build-vala vapi-common = %version-%release
+Requires(pre): rpm-build-vala vapi-common = %EVR
 
 # to avoid duplicate provides
 %filter_from_provides /libsoup-2.4\|libsoup-3.0\|libgeoclue-2.0/d
 
-BuildRequires(pre): rpm-build-licenses rpm-build-vala
+BuildRequires(pre): rpm-build-vala
 BuildRequires: /proc flex libgio-devel >= 2.48.0 xsltproc help2man dbus-tools-gui gobject-introspection-devel
 # since 0.37
 BuildRequires: libgraphviz-devel
@@ -63,7 +65,7 @@ Common empty package with dir for vapi files.
 %package -n lib%name-devel
 Summary: Development files for embedding Vala translator
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n lib%name-devel
 Vala is a programming language that aims to bring modern programming language
@@ -88,7 +90,7 @@ This package contains Vala documentation for GNOME DevHelp.
 %package tools
 Summary: Tools for creating Vala API specifications and new projects
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 Vala is a programming language that aims to bring modern programming language
@@ -111,7 +113,7 @@ documentation like GTK-Doc or GIR documentation.
 %package -n valadoc-devel
 Summary: Vala documentation generator (devel package)
 Group: Development/Other
-Requires: valadoc = %version-%release
+Requires: valadoc = %EVR
 
 %description -n valadoc-devel
 Development files for Valadoc.
@@ -271,6 +273,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.56.18-alt1
+- 0.56.18
+
 * Fri Apr 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.56.17-alt1
 - 0.56.17
 
