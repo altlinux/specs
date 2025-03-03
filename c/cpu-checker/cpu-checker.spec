@@ -1,11 +1,11 @@
 Name: cpu-checker
 Version: 0.7
-Release: alt1
+Release: alt2
 
 Summary: Tools to help evaluate certain CPU (or BIOS) features
 License: GPLv3
 Group: System/Kernel and hardware
-URL: https://launchpad.net/cpu-checker
+Url: https://launchpad.net/cpu-checker
 
 Source: %name-%version.tar
 Patch0: %name-%version-launchpad-add-support-cortex-A15.patch
@@ -13,6 +13,7 @@ Patch1: %name-%version-launchpad-add-arm64-ppc64el-checks.patch
 Patch2: %name-%version-launchpad-ppc64le-test-as-ppc64.patch
 Patch3: %name-%version-launchpad-add-s390x-support.patch
 Patch4: %name-%version-launchpad-add-riscv64-support.patch
+Patch5: %name-%version-launchpad-add-loongarch64-support.patch
 
 %description
 Userspace tools for helping to evaluate the CPU (or BIOS) support for
@@ -20,11 +21,7 @@ various features.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p1
 
 %build
 
@@ -38,6 +35,10 @@ various features.
 %_man1dir/kvm-ok.1.*
 
 %changelog
+* Mon Mar 03 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7-alt2
+- Added loongarch64 support.
+- Totally replaced egrep by grep -E (#43193).
+
 * Thu Feb 15 2024 Anton Kurachenko <srebrov@altlinux.org> 0.7-alt1
 - New version 0.7.
 
