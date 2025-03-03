@@ -4,7 +4,7 @@
 
 Name: musl
 Version: 1.2.5
-Release: alt5
+Release: alt6
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -107,6 +107,7 @@ export CC='gcc -mlong-double-64'
 # Hide boring warnings, upstream seems don't care so we should not.
 %add_optflags -Wno-parentheses -Wno-unused-but-set-variable -Wno-unused-value -Wno-unknown-pragmas
 %configure \
+	--prefix=%_musldir \
 	--enable-debug \
 	--enable-wrapper=all
 %make_build
@@ -187,6 +188,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Mon Mar 03 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt6
+- Another improvement to Clang picking up C runtimes.
+
 * Sun Mar 02 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt5
 - Improve Clang linking by redirecting C runtimes to musl ones.
 
