@@ -22,13 +22,12 @@
 
 Name: OpenUSD
 Version: 25.02
-Release: alt0.1
+Release: alt0.2
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
 Url: https://openusd.org
-
-# https://github.com/PixarAnimationStudios/OpenUSD.git
+VCS: https://github.com/PixarAnimationStudios/OpenUSD.git
 Source0: %name-%version.tar
 Source1: org.openusd.usdview.desktop
 # Latest stb_image.patch that applies cleanly against 2.27:
@@ -49,6 +48,7 @@ Patch3: remove-distutils.patch
 # Fix blender GL errors when using Hydra
 # https://github.com/PixarAnimationStudios/OpenUSD/pull/2550
 Patch4: 2550.patch
+Patch5: OpenUSD-25.02-tbb-2022.0-upstream-fix.patch
 
 BuildRequires(pre): cmake rpm-build-python3 ninja-build
 BuildRequires: gcc-c++
@@ -393,6 +393,10 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Mon Mar 03 2025 Anton Farygin <rider@altlinux.ru> 25.02-alt0.2
+- NMU: fixed build with TBB 2022.0.0.
+- Added VCS tag.
+
 * Wed Jan 22 2025 L.A. Kostis <lakostis@altlinux.ru> 25.02-alt0.1
 - 25.02.
 - embree4: rebase patch.
