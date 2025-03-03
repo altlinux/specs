@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Pipewire Volume Control
@@ -87,6 +87,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.8-alt1
+- updated to 0.4.8-1-g5a630d1
+
 * Mon Nov 04 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.7-alt1
 - 0.4.7
 
