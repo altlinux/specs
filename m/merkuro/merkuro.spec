@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 24.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ ExcludeArch: %not_qt6_qtwebengine_arches
 Provides: kde5-merkuro = %EVR
 Obsoletes: kde5-merkuro < %EVR
 
-Requires: qml(QtLocation)
+Requires: qml6(QtLocation)
 Requires: akonadi
 Requires: akonadi-calendar
 Requires: kmail-account-wizard
@@ -105,6 +105,9 @@ Obsoletes: libmerkuro_contact5 < %EVR
 
 
 %changelog
+* Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt2
+- fix requires (closes: 53257)
+
 * Wed Feb 12 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
