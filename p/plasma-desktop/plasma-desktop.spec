@@ -14,7 +14,7 @@
 
 Name: %rname
 Version: 6.3.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -53,7 +53,7 @@ Patch12: alt-def-layout-indicator.patch
 Patch13: alt-def-taskman.patch
 Patch14: alt-def-desktop-icons.patch
 Patch15: alt-menu-add-tooltip.patch
-Patch16: alt-kicker-custom-btn-img-size.patch
+Patch16: alt-kicker-menu-btn-size.patch
 #
 Patch18: alt-keyboard-indicator-uppercase.patch
 Patch19: alt-def-screenreader.patch
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt2
+- decrease apps menu maximum button size
+
 * Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
 - new version
 
