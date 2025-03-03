@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_corerelease 8.0.11
+%define _dotnet_corerelease 8.0.13
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.111
+%define _dotnet_sdkrelease 8.0.113
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease
 %define _dotnet_templatesrelease %_dotnet_corerelease
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -18,7 +18,7 @@
 %define mdsourceurl https://github.com/dotnet/core/blob/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 8.0.11
+Version: 8.0.13
 Release: alt1
 
 Summary: .NET 8 SDK binaries
@@ -131,6 +131,16 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.13-alt1
+- The .NET 8.0.13 and .NET SDK 8.0.113 release
+
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 8.0.12-alt1
+- The .NET 8.0.12 and .NET SDK 8.0.112 release
+- fixed CVEs:
+ + CVE-2025-21172: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2025-21173: .NET Elevation of Privilege Vulnerability
+ + CVE-2025-21176: .NET and Visual Studio Remote Code Execution Vulnerability
+
 * Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 8.0.11-alt1
 - The .NET 8.0.11 and .NET SDK 8.0.111 release
 - fixed CVEs:
