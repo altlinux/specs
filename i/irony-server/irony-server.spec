@@ -1,5 +1,5 @@
 Name: irony-server
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Clang-based irony-mode companion server
@@ -35,6 +35,9 @@ export CXX=clang++
 %_bindir/irony-server
 
 %changelog
+* Mon Mar 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.1-alt1
+- 1.6.1 released
+
 * Fri Sep 29 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.0-alt1
 - 1.6.0 released
 
