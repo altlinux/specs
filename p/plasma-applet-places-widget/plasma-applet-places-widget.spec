@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 1.4
-Release: alt10
+Release: alt11
 %K6init
 
 Group: Graphical desktop/KDE
@@ -11,7 +11,7 @@ Url: https://github.com/dfaust/plasma-applet-places-widget
 License: GPL-2.0
 BuildArch: noarch
 
-Requires: kf6-filesystem
+Requires: kf6-filesystem libkf6itemmodels kf6-kirigami libplasmaquick6 plasma6-plasma5support
 Provides: kde5-plasma-applet-places-widget = %EVR
 Obsoletes: kde5-plasma-applet-places-widget < %EVR
 
@@ -20,6 +20,7 @@ Source1: ru.po
 Patch1: alt-metadata.patch
 Patch2: alt-auto-width.patch
 Patch3: alt-defaults.patch
+Patch4: alt-size.patch
 
 BuildRequires(pre): rpm-build-kf6 qt6-declarative-devel
 BuildRequires: extra-cmake-modules kf6-ki18n-devel kf6-kpackage-devel kf6-kservice-devel kf6-kwindowsystem-devel
@@ -33,6 +34,7 @@ Plasma widget that gives access to user places.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 mkdir -p po/ru
 install -m 0644 %SOURCE1 po/ru/plasma_applet_org.kde.placesWidget.po
@@ -55,5 +57,8 @@ __EOF__
 %_datadir/metainfo/*placesWidget*.xml
 
 %changelog
+* Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 1.4-alt11
+- decrease icon size
+
 * Wed Jul 17 2024 Sergey V Turchin <zerg@altlinux.org> 1.4-alt10
 - initial build for KDE 6
