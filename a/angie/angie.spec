@@ -7,7 +7,7 @@
 %define modpath %_libdir/angie/modules
 
 Name: angie
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Efficient, powerful and scalable reverse proxy and web server
@@ -164,5 +164,8 @@ mv %buildroot/html/{50x.html,index.html} \
 %_unitdir/angie.service
 
 %changelog
+* Mon Mar 03 2025 Constantin Sunzow <protvin@altlinux.org> 1.8.2-alt1
+- New version.
+
 * Fri Jan 10 2025 Constantin Sunzow <protvin@altlinux.org> 1.8.1-alt1
 - Initial build.
