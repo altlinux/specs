@@ -1,5 +1,5 @@
 Name:    kafka
-Version: 3.8.1
+Version: 3.9.0
 Release: alt1
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
@@ -40,6 +40,7 @@ low-latency platform for handling real-time data feeds.
 %setup
 %patch0 -p1
 unzip %SOURCE1
+test -d ~/.gradle && rm -rf ~/.gradle
 tar xf %SOURCE2 -C ~
 rm -rf bin/windows
 
@@ -92,6 +93,9 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Sun Mar 02 2025 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version.
+
 * Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 3.8.1-alt1
 - New version.
 - Security fix: CVE-2024-56128.
