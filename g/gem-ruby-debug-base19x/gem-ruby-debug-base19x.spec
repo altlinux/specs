@@ -5,8 +5,8 @@
 %define        gemname ruby-debug-base19x
 
 Name:          gem-ruby-debug-base19x
-Version:       0.11.32.3
-Release:       alt1
+Version:       0.11.32.4
+Release:       alt0.1
 Summary:       Fast Ruby debugger - core component
 License:       Unlicense
 Group:         Development/Ruby
@@ -26,9 +26,9 @@ BuildRequires: gem(rake) >= 0.8.1
 Requires:      gem(test-unit) >= 0
 Requires:      gem(debugger-ruby_core_source) > 0
 Requires:      gem(rake) >= 0.8.1
-Provides:      gem(ruby-debug-base19x) = 0.11.32.3
+Provides:      gem(ruby-debug-base19x) = 0.11.32.4
 
-%ruby_use_gem_version ruby-debug-base19x:0.11.32.3
+%ruby_use_gem_version ruby-debug-base19x:0.11.32.4
 
 %description
 ruby-debug is a fast implementation of the standard Ruby debugger debug.rb. It
@@ -39,14 +39,14 @@ for stack frames among other things.
 
 %if_enabled    doc
 %package       -n gem-ruby-debug-base19x-doc
-Version:       0.11.32.3
-Release:       alt1
+Version:       0.11.32.4
+Release:       alt0.1
 Summary:       Fast Ruby debugger - core component documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-debug-base19x
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ruby-debug-base19x) = 0.11.32.3
+Requires:      gem(ruby-debug-base19x) = 0.11.32.4
 
 %description   -n gem-ruby-debug-base19x-doc
 Fast Ruby debugger - core component documentation files.
@@ -63,14 +63,14 @@ for stack frames among other things.
 
 %if_enabled    devel
 %package       -n gem-ruby-debug-base19x-devel
-Version:       0.11.32.3
-Release:       alt1
+Version:       0.11.32.4
+Release:       alt0.1
 Summary:       Fast Ruby debugger - core component development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-debug-base19x
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ruby-debug-base19x) = 0.11.32.3
+Requires:      gem(ruby-debug-base19x) = 0.11.32.4
 
 %description   -n gem-ruby-debug-base19x-devel
 Fast Ruby debugger - core component development package.
@@ -118,6 +118,10 @@ for stack frames among other things.
 
 
 %changelog
+* Tue Mar 04 2025 Pavel Skrylev <majioa@altlinux.org> 0.11.32.4-alt0.1
+- ^ 0.11.32p3 -> 0.11.32p4
+- ! drop ext build for rubies above 2.1.2
+
 * Mon Aug 12 2024 Pavel Skrylev <majioa@altlinux.org> 0.11.32.3-alt1
 - ^ 0.11.32 -> 0.11.32.3
 
