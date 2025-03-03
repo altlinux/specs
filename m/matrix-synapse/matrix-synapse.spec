@@ -1,6 +1,6 @@
 Name: matrix-synapse
 Version: 1.125.0
-Release: alt1
+Release: alt2
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache-2.0
@@ -68,10 +68,13 @@ BuildRequires: python3 >= 3.8
 %py3_use psycopg2 >= 2.8
 %py3_use psycopg2cffi >= 2.8
 #py3_use psycopg2cffi-compat >= 1.1
-%py3_use pysaml2 >= 4.5.0
-%py3_use authlib >= 0.15.1
+
 %py3_use systemd >= 231
 %py3_use lxml >= 4.5.2
+
+# optional auth
+%py3_use pysaml2 >= 4.5.0
+%py3_use authlib >= 0.15.1
 
 # optional
 #py3_use sentry-sdk >= 0.7.2
@@ -81,12 +84,12 @@ BuildRequires: python3 >= 3.8
 %py3_use txredisapi >= 1.4.7
 #py3_use hiredis-py  
 %py3_use pympler
-%py3_use parameterized >= 0.7.4
 %py3_use idna >= 2.5
 
 %py3_use icu >= 2.10.2
 
 # "test"
+#py3_use parameterized >= 0.7.4
 #py3_use mock >= 2.0
 
 BuildRequires: rust-cargo
@@ -181,6 +184,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1.125.0-alt2
+- don't require parameterized (for tests only)
+
 * Tue Feb 25 2025 Vitaly Lipatov <lav@altlinux.ru> 1.125.0-alt1
 - new version 1.125.0 (with rpmrb script)
 
