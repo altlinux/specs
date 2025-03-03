@@ -3,11 +3,11 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.0%preview
-%define _dotnet_sdkversion 9.0.101%preview
-%define _dotnet_corerelease 9.0.0
+%define _dotnet_coreversion 9.0.2%preview
+%define _dotnet_sdkversion 9.0.103%preview
+%define _dotnet_corerelease 9.0.2
 # used for build
-%define _dotnet_sdkrelease 9.0.101
+%define _dotnet_sdkrelease 9.0.103
 
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
@@ -27,7 +27,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: %_dotnet_coreversion.rel
+Version: %_dotnet_coreversion
 Release: alt1
 
 Summary: Microsoft .NET 9 Runtime and Microsoft.NETCore.App
@@ -397,6 +397,14 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.2-alt1
+- .NET 9.0.2
+- fixed CVEs:
+ + CVE-2025-21171: .NET Remote Code Execution Vulnerability
+ + CVE-2025-21172: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2025-21173: .NET Elevation of Privilege Vulnerability
+ + CVE-2025-21176: .NET and Visual Studio Remote Code Execution Vulnerability
+
 * Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.rel-alt1
 - .NET 9.0.0
 - CVE-2024-43498: .NET Remote Code Execution Vulnerability

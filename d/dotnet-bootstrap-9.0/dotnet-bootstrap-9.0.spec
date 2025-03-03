@@ -2,19 +2,24 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.0%preview
-%define _dotnet_sdkversion 9.0.101%preview
-%define _dotnet_corerelease 9.0.0
-%define _dotnet_corerelease1 9.0.0
+%define _dotnet_coreversion 9.0.2%preview
+%define _dotnet_sdkversion 9.0.103%preview
+
+%define _dotnet_corerelease 9.0.2
+%define _dotnet_corerelease1 %nil
+
 %define _dotnet_sdkmanifestsrelease0 8.0.100
-%define _dotnet_sdkmanifestsrelease1 9.0.100-rc.2
+#define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 9.0.100
-%define _dotnet_sdkrelease 9.0.101
-%define _dotnet_coreapprefrelease %_dotnet_corerelease
-%define _dotnet_aspnetcorerelease %_dotnet_corerelease1
+%define _dotnet_sdkrelease 9.0.103
+
 %define _dotnet_templatesrelease %_dotnet_corerelease1
-%define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
+%define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
+
+%define _dotnet_aspnetcorerelease %_dotnet_corerelease1
+%define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
+
 
 %define _dotnetdir %_libdir/%name
 #define mdsourceurl https://raw.githubusercontent.com/dotnet/core/refs/heads/main/release-notes/%_dotnet_major/%{_dotnet_corerelease}/%{_dotnet_sdkrelease}.md
@@ -139,6 +144,14 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.103-alt1
+- The .NET 9.0.2 and .NET SDK 9.0.103 release
+- fixed CVEs:
+ + CVE-2025-21171: .NET Remote Code Execution Vulnerability
+ + CVE-2025-21172: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2025-21173: .NET Elevation of Privilege Vulnerability
+ + CVE-2025-21176: .NET and Visual Studio Remote Code Execution Vulnerability
+
 * Sat Dec 07 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.101-alt1
 - The .NET 9.0.0 and .NET SDK 9.0.101 release
 - use SDK version as package version

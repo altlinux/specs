@@ -2,9 +2,9 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.0%preview
-%define _dotnet_corerelease 9.0.0
-%define _dotnet_corerelease1 9.0.0
+%define _dotnet_coreversion 9.0.2%preview
+%define _dotnet_corerelease 9.0.2
+%define _dotnet_corerelease1 9.0.2
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
 
@@ -12,7 +12,7 @@
 %def_with bootstrap
 
 Name: dotnet-aspnetcore-%_dotnet_major
-Version: %_dotnet_coreversion.rel
+Version: %_dotnet_coreversion
 Release: alt1
 
 Summary: ASP.NET is a cross-platform .NET framework for building modern cloud-based web application
@@ -60,7 +60,7 @@ applications and micro-services.
 Just copied managed binaries now.
 
 %package -n dotnet-aspnetcore-runtime-%_dotnet_major
-Summary: ASP.NET 8 runtime
+Summary: ASP.NET 9 runtime
 Group: Development/Other
 #AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoReq: no
@@ -81,7 +81,7 @@ applications and micro-services.
 
 
 %package -n dotnet-aspnetcore-targeting-pack-%_dotnet_major
-Summary: ASP.NET 8 targeting pack
+Summary: ASP.NET 9 targeting pack
 Group: Development/Other
 #AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoReq: no
@@ -131,6 +131,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.2-alt1
+- ASP.NET 9.0.2 release
+
 * Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.0.rel-alt1
 - ASP.NET 9.0.0 release
 

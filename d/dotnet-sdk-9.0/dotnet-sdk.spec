@@ -5,16 +5,16 @@
 
 %define _dotnet_major 9.0
 %define preview %nil
-%define _dotnet_coreversion 9.0.0.rel
-%define _dotnet_sdkversion 9.0.101%preview
+%define _dotnet_coreversion 9.0.2
+%define _dotnet_sdkversion 9.0.103%preview
 
-%define _dotnet_corerelease 9.0.0
-%define _dotnet_corerelease1 9.0.0
+%define _dotnet_corerelease 9.0.2
+%define _dotnet_corerelease1 9.0.2
 
 %define _dotnet_sdkmanifestsrelease0 8.0.100
-%define _dotnet_sdkmanifestsrelease1 9.0.100-rc.2
+#define _dotnet_sdkmanifestsrelease1 9.0.103
 %define _dotnet_sdkmanifestsrelease 9.0.100
-%define _dotnet_sdkrelease 9.0.101
+%define _dotnet_sdkrelease 9.0.103
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -176,6 +176,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 9.0.103-alt1
+- .NET SDK 9.0.103 release
+
 * Sun Dec 08 2024 Vitaly Lipatov <lav@altlinux.ru> 9.0.101-alt1
 - .NET SDK 9.0.101 release
 
