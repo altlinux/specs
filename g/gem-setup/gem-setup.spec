@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt16
+Release:       alt17
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Mon Mar 03 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt17
+- ! excpetion in dsl when bunlder fails to load gemspec/femfile
+
 * Thu Jan 09 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt16
 - ! crop invalids shbangs from dep array
 
