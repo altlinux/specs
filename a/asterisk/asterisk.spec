@@ -1,5 +1,10 @@
 # -*- mode: rpm-spec; mode: folding -*-
 
+# XXX: undefined symbols _ZdlPvm, _ZdaPv, _Znwm _Znam for libstdc++
+%add_verify_elf_skiplist %_libdir/libasteriskpj.so.2
+# XXX: undefined symbols in modules
+%add_verify_elf_skiplist %_libdir/asterisk/modules/*.so
+
 %ifarch %e2k
 # doesn't compile with EDG frontend
 %def_with clang
@@ -10,7 +15,7 @@
 %endif
 
 Name: asterisk
-Version: 20.9.3
+Version: 20.12.0
 Release: alt1
 
 Summary: Open source PBX
@@ -319,6 +324,9 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Tue Mar 04 2025 Ilya Demyanov <turbid@altlinux.org> 20.12.0-alt1
+- 20.12.0
+
 * Tue Sep 10 2024 Ilya Demyanov <turbid@altlinux.org> 20.9.3-alt1
 - 20.9.3
 
