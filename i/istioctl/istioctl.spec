@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.24.3
+Version: 1.25.0
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.25.0-alt1
+- New version 1.25.0.
+
 * Fri Feb 28 2025 Leontiy Volodin <lvol@altlinux.org> 1.24.3-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 
