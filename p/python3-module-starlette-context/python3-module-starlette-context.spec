@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.6
-Release: alt1.25.gf46610a
+Version: 0.4.0
+Release: alt1
 
 Summary: Middleware for Starlette that allows you to store and access the context data of a request
 License: MIT
@@ -52,11 +52,14 @@ such as x-request-id or x-correlation-id.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst
+%doc AUTHORS LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Wed Jul 24 2024 Anton Zhukharev <ancieg@altlinux.org> 0.3.6-alt1.25.gf46610a
 - Built for ALT Sisyphus.
 
