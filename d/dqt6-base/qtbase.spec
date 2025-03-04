@@ -9,6 +9,8 @@
 %define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
+%add_findreq_skiplist %_dqt6_plugindir/platformthemes/libqgtk?.so
+
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -31,9 +33,9 @@
 %define gname  dqt6
 Name: dqt6-base
 %define major  6
-Version: 6.7.2
-Release: alt4.dde.2
-%if "%%version" == "%%{get_version qt6-tools-common}"
+Version: 6.8.2
+Release: alt2.dde.1
+%if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
 %def_enable bootstrap
@@ -52,9 +54,9 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-Patch4: qtbase-revert-consider-versioned-targets-when-checking-existens-in-qt-internal-walk-libs.patch
-Patch5: qtbase-qgtk3theme-add-support-for-xdp-to-get-color-scheme.patch
-Patch6: CVE-2024-39936.patch
+Patch4: qtbase-qlibraryinfo-speedup-checking-if-qt-conf-resource-exists.patch
+Patch5: qtbase-qsystemlocale-bail-out-if-accessed-post-destruction.patch
+Patch6: qtbase-qtlocale-try-to-survive-being-created-during-application-shut-down.patch 
 
 # Debian
 Patch100: remove_rpath_from_examples.patch
@@ -66,9 +68,11 @@ Patch1002: alt-ca-certificates-path.patch
 Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
-Patch1006: gcc14.patch
+Patch1006: alt-singleclick.patch
+# QTBUG
+Patch1100: cups-filters-landscape.patch
 #
-Patch2000: 9003-qt6-base-6.7.2-qmenu_fix_shortcuts.patch
+Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
 # macros
 %define _dqt6 %gname
@@ -130,8 +134,8 @@ Summary: Development files for %name
 Requires: %name-common
 Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
-Requires: gcc-c++
-Requires: rpm-build-ninja
+Requires: gcc-c++ cmake ninja-build
+Requires: libssl-devel
 %description devel
 %summary.
 
@@ -399,6 +403,8 @@ OpenGL widgets library for the Qt%major toolkit
 %endif
 %patch1006 -p1
 #
+%patch1100 -p1
+#
 %patch2000 -p1
 
 # install optflags
@@ -427,6 +433,7 @@ export QT_DIR="$PWD"
 export PATH=$QT_DIR/bin:$PATH
 export LD_LIBRARY_PATH=$QT_DIR/lib:$LD_LIBRARY_PATH
 export QT_PLUGIN_PATH=$QT_DIR/plugins
+export LC_ALL=C.UTF-8
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
 
@@ -469,6 +476,9 @@ cmake .. \
     -DCMAKE_INSTALL_RPATH:STRING=%_dqt6_libdir \
     -DQT_FEATURE_use_gold_linker:BOOL=OFF \
     -DQT_CREATE_VERSIONED_HARD_LINK:BOOL=OFF \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    -DQT_SBOM_GENERATE_JSON:BOOL=OFF \
+    -DQT_SBOM_VERIFY:BOOL=OFF \
 %ifnarch ppc64le
     -DCMAKE_INTERPROCEDURAL_OPTIMIZATION:BOOL=ON \
 %endif
@@ -479,7 +489,6 @@ cmake .. \
     -DQT_BUILD_STANDALONE_TESTS:BOOL=OFF \
     -DQT_FEATURE_journald:BOOL=OFF \
     -DQT_FEATURE_openssl_linked:BOOL=ON \
-    -DQT_FEATURE_openssl_hash:BOOL=ON \
     -DQT_FEATURE_accessibility:BOOL=ON \
     -DQT_FEATURE_fontconfig:BOOL=ON \
     -DQT_FEATURE_glib:BOOL=ON \
@@ -722,6 +731,7 @@ done
 %_dqt6_libexecdir/syncqt
 %_dqt6_libexecdir/uic
 %_dqt6_libexecdir/qlalr
+%_dqt6_libexecdir/qt-android-runner.py
 %_dqt6_libexecdir/qvkgen
 %_dqt6_libexecdir/tracegen
 %_dqt6_libexecdir/cmake_automoc_parser
@@ -848,12 +858,44 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt2.dde.1
+- merge with new version
+- prevent locale warnings
+
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt3
+- fix new cups-printers landscape printing
+
+* Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
+- set single-click by default for KDE
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+- use ninja-build by default
+
+* Wed Feb 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt9
+- force drop requires for platformthemes/libqgtk3.so because libgtk+3 overkill requires (closes: 52831)
+
+* Wed Jan 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt8
+- fix qmenu_fix_shortcuts.patch (thanks Corwin) (closes: 52611)
+
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt7
+- temporaty disable qmenu_fix_shortcuts.patch (see bug#52611)
+
+* Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt6
+- switch to legacy implementation of QCryptographicHash while openssl3 not ready (closes: 48923)
+
 * Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.2
 - update cmake macros
 
-* Tue Oct 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.1
+* Tue Oct 31 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.1
 - don't disable lto
 - fix compile with gcc-14
+
+* Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt5
+- fix compile with gcc-14
+
+* Thu Oct 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt3
+- don't disable lto
 
 * Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt1.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)

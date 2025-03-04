@@ -2,8 +2,8 @@
 %global qt_module dqtsvg
 
 Name: dqt6-svg
-Version: 6.7.2
-Release: alt0.dde.2
+Version: 6.8.2
+Release: alt0.dde.1
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -15,7 +15,7 @@ Source: %qt_module-everywhere-src-%version.tar
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
 
-BuildRequires(pre): rpm-macros-dqt6 dqt6-tools rpm-build-ninja
+BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires: dqt6-base-devel
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: cmake libxkbcommon-devel zlib-devel
@@ -78,7 +78,9 @@ Requires: libdqt6-core = %_dqt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
-%DQ6build -DCMAKE_MAKE_PROGRAM=ninja
+%DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -86,8 +88,9 @@ Requires: libdqt6-core = %_dqt6_version
 %install
 %DQ6install_qt
 %if %qdoc_found
-mkdir -p %buildroot%_dqt6_docdir
-cp -a BUILD/share/doc/dqt6/* %buildroot%_dqt6_docdir ||:
+#DQ6install_qt --target install_docs
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 # relax depends on plugins files
@@ -129,6 +132,12 @@ done
 #%_dqt6_examplesdir/*
 
 %changelog
+* Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Fri Oct 04 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
 - fix requires
 

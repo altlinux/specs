@@ -2,8 +2,8 @@
 %global qt_module dqtwayland
 
 Name: dqt6-wayland
-Version: 6.7.2
-Release: alt0.dde.2
+Version: 6.8.2
+Release: alt0.dde.1
 
 Group: System/Libraries
 Summary: Qt6 - Wayland platform support and QtCompositor module
@@ -11,9 +11,10 @@ Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
 
 Source: %qt_module-everywhere-src-%version.tar
-
-# find librares
-%add_findprov_lib_path %_dqt6_libdir
+# FC
+Patch1: qtwayland-adwaita-improve-border-painting.patch
+# upstream
+Patch10: qtwayland-update-wayland-xml-to-version-1.23.0.patch
 
 Requires: libdqt6-waylandcompositor
 Requires: libdqt6-waylandclient
@@ -21,7 +22,10 @@ Requires: libdqt6-waylandeglclienthwintegration
 Requires: libdqt6-waylandeglcompositorhwintegration
 Requires: libdqt6-wlshellintegration
 
-BuildRequires(pre): rpm-macros-dqt6 dqt6-tools rpm-build-ninja
+# find librares
+%add_findprov_lib_path %_dqt6_libdir
+
+BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires: cmake fontconfig-devel zlib-devel glib2-devel
 BuildRequires: libEGL-devel libGLES-devel libvulkan-devel
 BuildRequires: libdrm-devel
@@ -78,7 +82,6 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-waylandcompositor
 Summary: Qt6 library
 Group: System/Libraries
-AutoProv: yes,noqml6
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-waylandcompositor
@@ -87,7 +90,6 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-waylandclient
 Summary: Qt6 library
 Group: System/Libraries
-AutoProv: yes,noqml6
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-waylandclient
@@ -117,15 +119,51 @@ Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-wlshellintegration
 %summary
 
+%package -n libdqt6-waylandcompositoriviapplication
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-waylandcompositoriviapplication
+%summary
+
+%package -n libdqt6-waylandcompositorpresentationtime
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-waylandcompositorpresentationtime
+%summary
+
+%package -n libdqt6-waylandcompositorwlshell
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-waylandcompositorwlshell
+%summary
+
+%package -n libdqt6-waylandCompositorxdgshell
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-waylandCompositorxdgshell
+%summary
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+%patch1 -p1
+#
+%patch10 -p1
+#
 #for d in gl nogl; do
 #mkdir $d
 #done
 
 %build
 %DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     -DFEATURE_wayland_client:BOOL=ON \
     -DFEATURE_wayland_server:BOOL=ON \
     #
@@ -137,8 +175,9 @@ Requires: libdqt6-core = %_dqt6_version
 %install
 %DQ6install_qt
 %if %qdoc_found
-mkdir -p %buildroot%_dqt6_docdir
-cp -a BUILD/share/doc/dqt6/* %buildroot%_dqt6_docdir ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 # relax depends on plugins files
@@ -151,6 +190,14 @@ done
 
 %files
 
+%files -n libdqt6-waylandcompositoriviapplication
+%_dqt6_libdir/libQt6WaylandCompositorIviapplication.so.*
+%files -n libdqt6-waylandcompositorpresentationtime
+%_dqt6_libdir/libQt6WaylandCompositorPresentationTime.so.*
+%files -n libdqt6-waylandcompositorwlshell
+%_dqt6_libdir/libQt6WaylandCompositorWLShell.so.*
+%files -n libdqt6-waylandCompositorxdgshell
+%_dqt6_libdir/libQt6WaylandCompositorXdgShell.so.*
 %files -n libdqt6-waylandcompositor
 %_dqt6_libdir/libQt?WaylandCompositor.so.*
 %_dqt6_qmldir/QtWayland/Compositor/
@@ -206,6 +253,12 @@ done
 %endif
 
 %changelog
+* Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Dec 17 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
 - provide dqml6 instead qml6
 

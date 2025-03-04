@@ -3,7 +3,7 @@
 %global qt_module dqt5compat
 
 Name: dqt6-5compat
-Version: 6.7.2
+Version: 6.8.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -60,7 +60,6 @@ Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
 Requires: libdqt6-core = %_dqt6_version
-AutoProv: no,lib
 Provides: %name = %EVR
 Obsoletes: %name < %EVR
 %description -n libdqt6-core5compat
@@ -70,7 +69,9 @@ Obsoletes: %name < %EVR
 %setup -n %qt_module-everywhere-src-%version
 
 %build
-%DQ6build
+%DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -78,8 +79,9 @@ Obsoletes: %name < %EVR
 %install
 %DQ6install_qt
 %if %qdoc_found
-mkdir -p %buildroot%_dqt6_docdir
-cp -a BUILD/share/doc/dqt6/* %buildroot%_dqt6_docdir ||:
+#%make -C BUILD DESTDIR=%buildroot install_docs ||:
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 # relax depends on plugins files
@@ -113,6 +115,12 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Mon Oct 21 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 

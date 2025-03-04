@@ -2,11 +2,10 @@
 %define optflags_lto -ffat-lto-objects
 
 %global qt_module dqtmultimedia
-%def_disable bootstrap
 %def_enable pulse
 
 Name: dqt6-multimedia
-Version: 6.7.2
+Version: 6.8.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -16,8 +15,10 @@ License:  GPL-3.0-only or LGPL-3.0-only
 
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: qtmultimedia-fix-build-on-x86-arch.patch
 
 BuildRequires(pre): rpm-macros-dqt6
+BuildRequires(pre): dqt6-tools
 BuildRequires: cmake glibc-devel
 BuildRequires: rpm-build-dqml6
 BuildRequires: dqt6-base-devel dqt6-declarative dqt6-declarative-devel dqt6-shadertools-devel dqt6-svg-devel
@@ -36,9 +37,6 @@ BuildRequires: pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib)
 %endif
 BuildRequires: pkgconfig(openal)
 BuildRequires: pkgconfig(xv)
-%if_disabled bootstrap
-BuildRequires(pre): dqt6-tools
-%endif
 
 # find libraries
 %add_findprov_lib_path %_dqt6_libdir
@@ -96,9 +94,9 @@ Requires: libdqt6-core = %_dqt6_version
 Provides: %name = %EVR
 Obsoletes: %name < %EVR
 Provides: dqml6(QtMultimedia)
-AutoProv: yes,noqml6
 # gstreamer plugins may be required for proper audio and video playback
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
+#Requires: gst-plugins-good1.0-dqt6
 %description -n libdqt6-multimediaquick
 %summary
 
@@ -121,6 +119,7 @@ Requires: libdqt6-core = %_dqt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 
 # disable some examples
 for e in multimedia/video/qmlvideo multimedia/screencapture ; do
@@ -133,7 +132,9 @@ done
 %ifarch %e2k
 %add_optflags -mno-sse
 %endif
-%DQ6build
+%DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -141,8 +142,9 @@ done
 %install
 %DQ6install_qt
 %if %qdoc_found
-mkdir -p %buildroot%_dqt6_docdir
-cp -a BUILD/share/doc/dqt6/* %buildroot%_dqt6_docdir ||:
+#DQ6install_qt --target docs
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 # relax depends on plugins files
@@ -170,7 +172,7 @@ done
 %files devel
 %_dqt6_headerdir/QtMultimedia*/
 %_dqt6_headerdir/QtSpatialAudio/
-%_dqt6_headerdir/QtQGstreamerMediaPlugin/
+%_dqt6_headerdir/QtQGstreamerMediaPlugin*/
 %_dqt6_libdir/lib*.so
 %_dqt6_libdir/lib*.a
 %_dqt6_libdatadir/lib*.so
@@ -184,14 +186,18 @@ done
 %_dqt6_libdir/pkgconfig/Qt?*.pc
 
 %files doc
-%if_disabled bootstrap
 %if %qdoc_found
 %_dqt6_docdir/*
-%endif
 %endif
 %_dqt6_examplesdir/*
 
 %changelog
+* Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Fri Dec 13 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
 - fork Qt6 for separate deepin buildings (ALT #48138)
 

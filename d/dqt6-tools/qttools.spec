@@ -4,16 +4,16 @@
 %define dkf6_bindir %prefix/lib/dkf6/bin
 
 Name: dqt6-tools
-Version: 6.7.2
-Release: alt0.dde.2
+Version: 6.8.2
+Release: alt0.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
-# %%if "%%version" == "%%{get_version dqt6-tools-common}"
-# %%def_disable bootstrap
-# %%else
+%if "%version" == "%{get_version dqt6-tools-common}"
+%def_disable bootstrap
+%else
 %def_enable bootstrap
-# %%endif
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - QtTool components
@@ -33,8 +33,7 @@ Source23: qdbusviewer.desktop
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
 
-BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
-# BuildRequires(pre): dqt6-tools-common
+BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 #ifnarch %e2k
 BuildRequires: llvm-devel-static
 BuildRequires: clang-devel llvm-devel
@@ -64,6 +63,7 @@ Common package for %name
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %EVR
+AutoReq: no
 Requires: dqt6-base-devel
 Requires: %name
 Provides: %name-devel-static = %EVR
@@ -166,8 +166,8 @@ Requires: libdqt6-core = %_dqt6_version
 # are specified using '-isystem $path' arguments
 %add_optflags -DQDOC_PASS_ISYSTEM
 %DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
     -DCMAKE_SKIP_RPATH:BOOL=OFF \
-    -DCMAKE_MAKE_PROGRAM=ninja \
     #
 %if %qdoc_found
 %DQ6make --target docs
@@ -262,8 +262,8 @@ done
 %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
 %if %qdoc_found
-%_dqt6_docdir/qtassistant/
-%_dqt6_docdir/qtassistant.qch
+#%_datadir/dqt6/doc/qtassistant/
+#%_datadir/dqt6/doc/qtassistant.qch
 %endif
 
 %files -n dqt6-dbus
@@ -307,9 +307,9 @@ done
 
 %files doc
 %if %qdoc_found
-%_dqt6_docdir/*
-%exclude %_dqt6_docdir/qtassistant/
-%exclude %_dqt6_docdir/qtassistant.qch
+#%_datadir/dqt6/doc/*
+#%exclude %_datadir/dqt6/doc/qtassistant/
+#%exclude %_datadir/dqt6/doc/qtassistant.qch
 %endif
 %_dqt6_examplesdir/*
 
@@ -323,6 +323,13 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Mon Mar 03 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+- prevent bytes written limit by hasher-privd
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Tue Nov 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
 - cleanup BRs
 

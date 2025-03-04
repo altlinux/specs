@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: dqt6-declarative
-Version: 6.7.2
-Release: alt0.dde.2
+Version: 6.8.2
+Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -53,14 +53,14 @@ Source4: find-requires.sh
 
 %include %SOURCE1
 %dqml6_req_skipall 1
-#dqml6_add_req_nover Qt.test.qtestroot
+%dqml6_add_req_nover Qt.test.qtestroot
 %define __find_provides %SOURCE3
 %define __find_requires %SOURCE4
 
 # Automatically added by buildreq on Wed Dec 01 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libdouble-conversion3 libglvnd-devel libgpg-error libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-opengl libqt6-openglwidgets libqt6-shadertools libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste qt6-base-common qt6-base-devel rpm-build-file rpm-build-gir rpm-build-python3 rpm-macros-python sh4 tzdata
 #BuildRequires: ccmake glslang libGLU-devel libxkbcommon-devel python-modules-compiler python3-dev qt6-shadertools-devel rpm-build-qml tbb-devel
-BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja dqt6-tools-common
+BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel dqt6-base-devel dqt6-shadertools-devel
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
@@ -137,7 +137,7 @@ Requires: libdqt6-core = %_dqt6_version
 %package -n libdqt6-quicktest
 Group: System/Libraries
 Summary: Qt6 - library
-# Provides: qml(Qt.test.qtestroot)
+Provides: dqml(Qt.test.qtestroot)
 Requires: %name-common
 Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-quicktest
@@ -407,6 +407,38 @@ Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-quickcontrols2universalstyleimpl
 %summary
 
+%package -n libdqt6-assetsdownloader
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-assetsdownloader
+%summary
+
+%package -n libdqt6-labsplatform
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-labsplatform
+%summary
+
+%package -n libdqt6-qmlmeta
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-qmlmeta
+%summary
+
+%package -n libdqt6-quickcontrols2fluentwinui3styleimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-quickcontrols2fluentwinui3styleimpl
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
@@ -420,6 +452,8 @@ done
 mv rpm-build-dqml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
+# don't make  module static
+sed -i '/STATIC/d' src/assets/downloader/CMakeLists.txt
 
 %build
 %if_enabled bootstrap
@@ -428,7 +462,9 @@ ln -s %__python3 bin_add/python
 %define qdoc_found 0
 %endif
 export PATH=$PWD/bin_add:$PATH
-%DQ6build
+%DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -453,9 +489,8 @@ done
 
 #install rpm-build-dqml
 pushd src/rpm-build-dqml
-
 # FIXME rpmbdqml-qmlinfo
-ln -s /bin/true %buildroot/%_bindir/rpmbdqml6-qmlinfo
+ln -sr `which true` %buildroot/%_bindir/rpmbdqml6-qmlinfo
 #install -pD -m755 rpmbqml6-qmlinfo %buildroot/%_bindir/rpmbdqml6-qmlinfo
 # end FIXME
 install -pD -m755 rpmbdqml6-prov-enum.pl %buildroot/%_bindir/rpmbdqml6-prov-enum.pl
@@ -488,13 +523,24 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 
 %files -n libdqt6-qml
 %_dqt6_libdir/libQt?Qml.so.*
+%_dqt6_qmldir/QML/
 %_dqt6_qmldir/QmlTime/
 %_dqt6_qmldir/QtQuick/Window/
-%_dqt6_qmldir/QtQml/Base/
-%_dqt6_qmldir/QtQml/libqmlmetaplugin.so
 %_dqt6_qmldir/QtQml/qmldir
+%_dqt6_qmldir/QtQml/plugins.qmltypes
+%_dqt6_qmldir/QtQml/libqmlplugin.so
 %_dqt6_qmldir/builtins.qmltypes
 %_dqt6_qmldir/jsroot.qmltypes
+%files -n libdqt6-assetsdownloader
+%_dqt6_libdir//libQt6QmlAssetDownloader.so.*
+%_dqt6_qmldir/Assets/Downloader/
+%files -n libdqt6-labsplatform
+%_dqt6_libdir//libQt6LabsPlatform.so.*
+%files -n libdqt6-qmlmeta
+%_dqt6_libdir//libQt6QmlMeta.so.*
+%files -n libdqt6-quickcontrols2fluentwinui3styleimpl
+%_dqt6_libdir//libQt6QuickControls2FluentWinUI3StyleImpl.so.*
+%_dqt6_qmldir/QtQuick/Controls/FluentWinUI3/
 %files -n libdqt6-quick
 %_dqt6_libdir/libQt?Quick.so.*
 %_dqt6_qmldir/QtQuick/libqtquick2plugin.so
@@ -639,6 +685,12 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
 - fix broken requires
 

@@ -1,35 +1,27 @@
+%global qt_module dqtwebsockets
 %define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
-%global qt_module dqtimageformats
 
-%def_enable fmt_mng
-# Debian abandon libjasper
-%def_disable fmt_jp2
-
-Name: dqt6-imageformats
+Name: dqt6-websockets
 Version: 6.8.2
 Release: alt0.dde.1
 
 Group: System/Libraries
-Summary: Qt6 - QtImageFormats component
+Summary: Qt6 - QtWebSockets component
 Url: http://qt.io/
 License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 
-Requires: %name-common = %EVR
-Requires: dqt6-svg
-
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
-BuildRequires: cmake glibc-devel libtiff-devel libwebp-devel dqt6-base-devel
-%{?_enable_fmt_jp2:BuildRequires: libjasper-devel}
-%{?_enable_fmt_mng:BuildRequires: libmng-devel}
+# find librares
+%add_findprov_lib_path %_dqt6_libdir
+
+BuildRequires(pre): rpm-macros-dqt6
+BuildRequires(pre): dqt6-tools
+BuildRequires: cmake glibc-devel dqt6-declarative-devel
+BuildRequires: libxkbcommon-devel
 
 %description
-The core Qt Gui library by default supports reading and writing image
-files of the most common file formats: PNG, JPEG, BMP, GIF and a few more,
-ref. Reading and Writing Image Files. The Qt Image Formats add-on module
-provides optional support for other image file formats, including:
-MNG, TGA, TIFF, WBMP.
+QtWebSockets is a pure Qt implementation of WebSockets - both client and server.
 
 %package common
 Summary: Common package for %name
@@ -47,22 +39,32 @@ Requires: dqt6-base-devel
 %description devel
 %summary.
 
+%package devel-static
+Group: Development/KDE and QT
+Summary: Development files for %name
+Requires: %name-common = %EVR
+Requires: %name-devel
+%description devel-static
+%summary.
+
 %package doc
-BuildArch: noarch
 Summary: Document for developing apps which will use Qt6 %qt_module
 Group: Development/KDE and QT
 Requires: %name-common = %EVR
 %description doc
 This package contains documentation for Qt6 %qt_module
 
+%package -n libdqt6-websockets
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common = %EVR
+Requires: dqt6-declarative-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-websockets
+%summary
+
 %prep
 %setup -qn %qt_module-everywhere-src-%version
-%if_disabled fmt_jp2
-rm -rf config.tests/jasper
-%endif
-%if_disabled fmt_mng
-rm -rf  config.tests/libmng
-%endif
 
 %build
 %DQ6build \
@@ -80,35 +82,37 @@ mkdir -p %buildroot/%_docdir/dqt6/
 cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
-# relax depends on plugins files
-for f in %buildroot/%_dqt6_libdir/cmake/Qt?*/Qt*Targets.cmake ; do
-    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
-done
-
 %files common
 %doc LICENSES/*
 
-%files
-%_dqt6_plugindir/imageformats/*.so
+%files -n libdqt6-websockets
+%_dqt6_libdir/libQt?WebSockets.so.*
+%_dqt6_qmldir/QtWebSockets/
 
 %files devel
-%_dqt6_libdir/cmake/Qt?Gui/Qt?Q*Plugin*.cmake
-%_dqt6_libdir/cmake/Qt6/Find*.cmake
+%_dqt6_headerdir/Qt*/
+%_dqt6_libdir/libQt*.so
+%_dqt6_libdatadir/libQt*.so
+%_dqt6_libdir/libQt*.prl
+%_dqt6_libdatadir/libQt*.prl
+%_dqt6_libdir/cmake/Qt*/
+%_dqt6_archdatadir/mkspecs/modules/*.pri
+%_dqt6_archdatadir/metatypes/qt6*.json
+%_dqt6_archdatadir/modules/*.json
+%_dqt6_libdir/pkgconfig/Qt?*.pc
 
 %files doc
 %if %qdoc_found
 %_dqt6_docdir/*
 %endif
+%_dqt6_examplesdir/*
 
 %changelog
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
-- merge with new version
+- fork qt6 for separate deepin packaging (ALT #48138)
 
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
-
-* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.1
-- fork qt6 for separate deepin packaging (ALT #48138)
 
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt1
 - new version
@@ -125,5 +129,5 @@ done
 * Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 6.4.2-alt1
 - new version
 
-* Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+* Tue May 31 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build

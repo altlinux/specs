@@ -1,13 +1,13 @@
 %global qt_module dqtshadertools
 
 Name: dqt6-shadertools
-Version: 6.7.2
-Release: alt0.dde.2
-# %%if "%%version" == "%%{get_version dqt6-tools-common}"
+Version: 6.8.2
+Release: alt0.dde.1
+%if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
-# %%else
-# %%def_enable bootstrap
-# %%endif
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - QtShaderTools component
@@ -19,11 +19,10 @@ Source: %qt_module-everywhere-src-%version.tar
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
 
-BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
-# BuildRequires(pre): dqt6-tools-common
-# %%if_disabled bootstrap
-# BuildRequires: qt6-tools
-# %%endif
+BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
+%if_disabled bootstrap
+BuildRequires: dqt6-tools
+%endif
 BuildRequires: cmake gcc-c++ glibc-devel dqt6-base-devel
 BuildRequires: glslang libGLU-devel libxkbcommon-devel
 
@@ -79,8 +78,9 @@ Requires: libdqt6-core = %_dqt6_version
 %else
 %define qdoc_found 0
 %endif
-
-%DQ6build
+%DQ6build \
+    -DQT_GENERATE_SBOM:BOOL=OFF \
+    #
 %if %qdoc_found
 %DQ6make --target docs
 %endif
@@ -118,6 +118,12 @@ Requires: libdqt6-core = %_dqt6_version
 #%_dqt6_examplesdir/*
 
 %changelog
+* Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
+- merge with new version
+
+* Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
+- new version
+
 * Mon Oct 21 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt0.dde.2
 - fix library detection
 
