@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3_image
-Version: 3.2.2
+Version: 3.2.4
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
@@ -74,6 +74,9 @@ to develop SDL applications.
 %_libdir/cmake/%name
 
 %changelog
+* Tue Mar 04 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.4-alt1
+- New version 3.2.4.
+
 * Sun Mar 02 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.2-alt1
 - New version 3.2.2.
 
