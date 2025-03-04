@@ -1,6 +1,6 @@
 Name:          maim
 Version:       5.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       maim (make image) takes screenshots of your desktop.
 License:       GPLv3
 Group:         Graphics
@@ -8,13 +8,23 @@ Url:           https://github.com/naelstrof/maim
 Vcs:           https://github.com/naelstrof/maim.git
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-macros-cmake rpm-build-ruby
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: cmake
+BuildRequires: gcc-c++
 BuildRequires: libslop-devel >= 7.5
 BuildRequires: zlib-devel
-BuildRequires: libpng-devel libjpeg-devel
-BuildRequires: libXrandr-devel libXfixes-devel libXcomposite-devel libglvnd-devel
-BuildRequires: libicu-devel libXext-devel libglm-devel libGL-devel libwebp-devel
+BuildRequires: libpng-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libglvnd-devel
+BuildRequires: libicu69-devel
+BuildRequires: libXext-devel
+BuildRequires: libglm-devel
+BuildRequires: libGL-devel
+BuildRequires: libwebp-devel
 
 %description
 maim (make image) takes screenshots of your desktop. It has options to take only
@@ -36,11 +46,11 @@ Features:
 %setup
 
 %build
-%cmake_insource
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %files
 %_bindir/*
@@ -48,6 +58,9 @@ Features:
 %doc COPYING README.md
 
 %changelog
+* Tue Mar 04 2025 Pavel Skrylev <majioa@altlinux.org> 5.8.0-alt1.1
+- ! NMU: dep to old icu avoiding failure for gcc build
+
 * Mon May 20 2024 Pavel Skrylev <majioa@altlinux.org> 5.8.0-alt1
 - ^ 5.7.4 -> 5.8.0
 
