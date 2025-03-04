@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.27.0
-Release: alt1.1
+Version: 0.27.1
+Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
 License: GPL-2.0
@@ -77,6 +77,9 @@ It supports both normal and Unicode strings.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.27.1-alt1
+- Updated to 0.27.1.
+
 * Fri Feb 14 2025 Ivan A. Melnikov <iv@altlinux.org> 0.27.0-alt1.1
 - NMU: skip pep517 dependency on ninja (fixes build on
   riscv64 and loongarch64).
