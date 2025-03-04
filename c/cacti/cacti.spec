@@ -1,6 +1,6 @@
-%define phpversion php8.2
+%define phpversion php%php_defver
 Name: cacti
-Version: 1.2.28
+Version: 1.2.29
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -38,7 +38,7 @@ Conflicts: cacti-plugin-ssl < %version-%release
 Requires: webserver webserver-common rrd-utils net-snmp net-snmp-utils
 Requires: %phpversion %phpversion-snmp %phpversion-sockets %phpversion-pdo %phpversion-pdo_mysql %phpversion-mbstring %phpversion-openssl %phpversion-gd2 %phpversion-gmp
 
-BuildRequires(pre): rpm-macros-webserver-common
+BuildRequires(pre): rpm-macros-webserver-common rpm-build-php
 BuildArch: noarch
 # build docs
 BuildRequires: lynx docbook-utils
@@ -164,6 +164,11 @@ fi
 %cactidir/install
 
 %changelog
+* Tue Mar 04 2025 Anton Farygin <rider@altlinux.ru> 1.2.29-alt1
+- 1.2.29
+- used %%php_defver to determine the default of the PHP version
+  for the target repository
+
 * Fri Oct 18 2024 Anton Farygin <rider@altlinux.ru> 1.2.28-alt1
 - 1.2.28
 
