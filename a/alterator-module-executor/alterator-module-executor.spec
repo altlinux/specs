@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.17
+Version: 0.1.18
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -35,6 +35,10 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Mar 04 2025 Ivan Savin <svn17@altlinux.org> 0.1.18-alt1
+- Add the ability to return stdout as an array of byte arrays.
+- Fix error handling on stdout strings.
+
 * Fri Feb 21 2025 Ivan Savin <svn17@altlinux.org> 0.1.17-alt1
 - Fix closing stdin. Now stdin is closed immediately after sending a special
   parameter.
