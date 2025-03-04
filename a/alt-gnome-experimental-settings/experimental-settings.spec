@@ -4,7 +4,7 @@
 %define bin_name experimental-settings
 
 Name: alt-gnome-experimental-settings
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Experimental Alt settings for GNOME desktop environment
@@ -58,5 +58,8 @@ export AS_VALIDATE_NONET="true"
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Mar 03 2025 Semen Fomchenkov <armatik@altlinux.org> 0.1.4-alt1
+- new version: v0.1.4
+
 * Fri Dec 13 2024 Semen Fomchenkov <armatik@altlinux.org> 0.1.3-alt1
 - Initial build for Sisyphus.
