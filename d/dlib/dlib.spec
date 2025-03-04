@@ -1,7 +1,7 @@
 %define repo dlib
 
 Name: dlib
-Version: 19.24.7
+Version: 19.24.8
 Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
@@ -97,6 +97,9 @@ sed -i '/CPACK_PACKAGE_VERSION_PATCH/s|99|7|' \
 %endif
 
 %changelog
+* Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 19.24.8-alt1
+- New version 19.24.8.
+
 * Fri Feb 28 2025 Leontiy Volodin <lvol@altlinux.org> 19.24.7-alt1
 - New version 19.24.7.
 - Added vcs tag.
