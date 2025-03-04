@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -72,6 +72,9 @@ export CARGO_PROFILE_RELEASE_LTO=thin
 %_bindir/uvx
 
 %changelog
+* Tue Mar 04 2025 Stanislav Levin <slev@altlinux.org> 0.6.4-alt1
+- 0.6.3 -> 0.6.4.
+
 * Tue Feb 25 2025 Stanislav Levin <slev@altlinux.org> 0.6.3-alt1
 - 0.6.2 -> 0.6.3.
 
