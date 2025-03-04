@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1.0.beta1
+Release: alt1.1.beta1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -36,8 +36,8 @@ License: GPL-3.0-or-later
 %define altbranch sisyphus
 %endif
 
-%define status "бета3"
-%define status_en "-beta3"
+%define status "бета1"
+%define status_en "-beta1"
 
 %description
 Distro-specific packages with design and texts
@@ -244,6 +244,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Tue Mar 04 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1.1.beta1
+- Fix status (beta3 -> beta1)
+
 * Fri Feb 21 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1.0.beta1
 - phosh-settings: set accent color to orange using gschema overrides
 
