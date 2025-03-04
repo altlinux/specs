@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.02.1
+Version: 25.02.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -279,6 +279,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Tue Mar 04 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.2-alt1
+- don't require kgamma (closes: 53297)
+
 * Thu Feb 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.1-alt1
 - using ktimer instead of kteatime
 
