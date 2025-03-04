@@ -28,7 +28,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt5
+Release: alt6
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -60,6 +60,8 @@ Source13: grub-entries.8
 Source14: grub-efi.filetrigger
 
 Source16: grub-dumpsbat.c
+
+Source17: alt-ru.po
 
 Patch0: %name-%version-alt.patch
 
@@ -216,6 +218,9 @@ echo "grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,https://git
 
 # Check gnulib version
 grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
+
+# Append ALT-specific translations to ru.po
+cat %SOURCE17 >> po/ru.po
 
 %build
 ./bootstrap --no-git --gnulib-srcdir=../gnulib-%version
@@ -504,6 +509,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Mar 03 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt6
+- update Russian translations
+
 * Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt5
 - Add Russian translation for 'Preview LiveCD' (closes: #52881)
 
