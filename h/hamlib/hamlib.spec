@@ -2,8 +2,8 @@
 %def_without winradio
 
 Name:           hamlib
-Version:        4.6.1
-Release:        alt2
+Version:        4.6.2
+Release:        alt1
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -25,6 +25,7 @@ BuildRequires:  libreadline-devel
 # explicitly added makeinfo for info files
 BuildRequires: makeinfo
 BuildRequires: source-highlight
+BuildRequires: graphviz
 
 %description
 Hamlib provides a standardized programming interface that applications
@@ -209,6 +210,9 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Tue Mar 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.2-alt1
+- New version 4.6.2.
+
 * Wed Feb 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.1-alt2
 - Build with Python3 support.
 
