@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gi.repository.Gio)/d
 
 Name: boxflat
-Version: 1.28.2
+Version: 1.28.3
 Release: alt1
 
 Summary: Boxflat for Moza Racing. Control your Moza gear settings!
@@ -56,6 +56,9 @@ mv -v %buildroot%_datadir/%name/%name %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%name/
 
 %changelog
+* Tue Mar 04 2025 Mikhail Tergoev <fidel@altlinux.org> 1.28.3-alt1
+- 1.28.3
+
 * Tue Feb 25 2025 Mikhail Tergoev <fidel@altlinux.org> 1.28.2-alt1
 - 1.28.2
 
