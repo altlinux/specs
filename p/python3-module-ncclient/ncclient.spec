@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.17
+Version: 0.6.19
 Release: alt1
 Summary: Python library for NETCONF clients
 License: Apache-2.0
@@ -56,6 +56,9 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 04 2025 Stanislav Levin <slev@altlinux.org> 0.6.19-alt1
+- 0.6.17 -> 0.6.19.
+
 * Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 0.6.17-alt1
 - 0.6.16 -> 0.6.17.
 
