@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.33.0
+Version: 0.34.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,10 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Tue Jan 21 2025 Alexey Appolonov <alexey@altlinux.org> 0.34.0-alt1
+- Ability to explicitly stop instant feedback provided through an object of the
+  "TPrinter" class.
+
 * Tue Jun 18 2024 Alexey Appolonov <alexey@altlinux.org> 0.33.0-alt1
 - New function "GetCurrentDateTime", which generates a string containing the
   current date and time;
