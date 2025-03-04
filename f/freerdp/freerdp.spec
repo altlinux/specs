@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.11.7
-Release: alt3
+Release: alt4
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -23,14 +23,16 @@ Source3: freerdp-logout.sh
 Source4: freerdp.sysconfig
 Source5: freerdp-server.pam
 
-Patch0: %name-alt-pam-check.patch
-Patch1: %name-alt-connection-scripts.patch
-Patch2: %name-alt-use-pam-module-freerdp-server.patch
-Patch2000: %name-e2k.patch
+Patch0: freerdp-alt-pam-check.patch
+Patch1: freerdp-alt-connection-scripts.patch
+Patch2: freerdp-alt-use-pam-module-freerdp-server.patch
+Patch3: freerdp-upstream-ffmpeg7-compat-1ef7b9e3.patch
+Patch4: freerdp-upstream-ffmpeg7-compat-d0c5b1ae.patch
+Patch2000: freerdp-e2k.patch
 
 Requires: xfreerdp = %EVR
 Requires: wlfreerdp = %EVR
-Requires: %name-plugins-standard = %EVR
+Requires: freerdp-plugins-standard = %EVR
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -100,7 +102,7 @@ This is metapackage.
 %package -n xfreerdp
 Summary: Remote Desktop Protocol client
 Group: Networking/Remote access
-Requires: lib%name = %EVR
+Requires: libfreerdp = %EVR
 
 %description -n xfreerdp
 xfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
@@ -112,7 +114,7 @@ This package contains X11 UI.
 Summary: Remote Desktop Protocol client
 Group: Networking/Remote access
 Provides: dfbfreerdp
-Requires: lib%name = %EVR
+Requires: libfreerdp = %EVR
 
 %description -n dfreerdp
 dfbfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
@@ -123,7 +125,7 @@ This package contains DirectFB UI.
 %package -n wlfreerdp
 Summary: Remote Desktop Protocol client
 Group: Networking/Remote access
-Requires: lib%name = %EVR
+Requires: libfreerdp = %EVR
 
 %description -n wlfreerdp
 wlfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
@@ -131,18 +133,18 @@ Microsoft products.
 
 This package contains Wayland UI.
 
-%package -n lib%name
+%package -n libfreerdp
 Summary: Core libraries implementing the RDP protocol
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libfreerdp
 libfreerdp can be embedded in applications.
 
-%package -n lib%name-server
+%package -n libfreerdp-server
 Summary: Remote Desktop Viewer server library
 Group: System/Libraries
 
-%description -n lib%name-server
+%description -n libfreerdp-server
 FreeRDP is a client-side implementation of the Remote Desktop Protocol (RDP)
 following the Microsoft Open Specifications. This package provides the shared
 libraries used by the server.
@@ -184,31 +186,31 @@ developing applications that use libuwac.
 %package plugins-standard
 Summary: Plugins for handling the standard RDP channels
 Group: Networking/Remote access
-Requires: lib%name = %EVR
+Requires: libfreerdp = %EVR
 
 %description plugins-standard
 A set of plugins to the channel manager implementing the standard virtual
 channels extending RDP core functionality.  For example, sounds, clipboard
 sync, disk/printer redirection, etc.
 
-%package -n lib%name-devel
+%package -n libfreerdp-devel
 Summary: Libraries and header files for embedding and extending freerdp
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: libfreerdp = %EVR
 Provides: freerdp-devel
 Obsoletes: freerdp-devel
 
-%description -n lib%name-devel
+%description -n libfreerdp-devel
 Header files and unversioned libraries for libfreerdp.
 
 %package server
-Summary: Server support for %{name}
+Summary: Server support for freerdp
 Group: Networking/Remote access
-Requires: lib%name = %EVR
-Requires: lib%name-server = %EVR
+Requires: libfreerdp = %EVR
+Requires: libfreerdp-server = %EVR
 
 %description server
-The %{name}-server package contains servers which can export a desktop via
+The freerdp-server package contains servers which can export a desktop via
 the RDP protocol.
 
 %prep
@@ -216,6 +218,8 @@ the RDP protocol.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 %ifarch %e2k
 %patch2000 -p1
 sed -i '/set(CMAKE_INSTALL_RPATH /d' CMakeLists.txt
@@ -223,6 +227,10 @@ sed -i '/set(CMAKE_INSTALL_RPATH /d' CMakeLists.txt
 
 %build
 %cmake \
+    -DCMAKE_C_FLAGS="\
+      -Wno-int-conversion \
+      -Wno-incompatible-pointer-types \
+      "\
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_SKIP_RPATH=FALSE \
@@ -365,17 +373,17 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %attr(2711, root, chkpwd) %_bindir/freerdp-shadow-cli
 %_man1dir/freerdp-shadow-cli.*
 
-%files -n lib%name
+%files -n libfreerdp
 %doc LICENSE README.md ChangeLog
-%_libdir/lib%{name}2.so.*
-%_libdir/lib%{name}-client2.so.*
+%_libdir/libfreerdp2.so.*
+%_libdir/libfreerdp-client2.so.*
 %dir %_libdir/freerdp*
 %_man7dir/wlog*
 
-%files -n lib%name-server
-%_libdir/lib%{name}-server2.so.*
-%_libdir/lib%{name}-shadow-subsystem2.so.*
-%_libdir/lib%{name}-shadow2.so.*
+%files -n libfreerdp-server
+%_libdir/libfreerdp-server2.so.*
+%_libdir/libfreerdp-shadow-subsystem2.so.*
+%_libdir/libfreerdp-shadow2.so.*
 
 %files plugins-standard
 %_libdir/freerdp*/*.so
@@ -400,13 +408,16 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_libdir/libuwac0.so
 %_pkgconfigdir/uwac*.pc
 
-%files -n lib%name-devel
+%files -n libfreerdp-devel
 %_libdir/cmake/FreeRDP*
-%_includedir/%{name}*
-%_libdir/lib%{name}*.so
+%_includedir/freerdp*
+%_libdir/libfreerdp*.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Feb 28 2025 Constantin Sunzow <protvin@altlinux.org> 2.11.7-alt4
+- Fix FTBFS: rebuild with ffmpeg 7.
+
 * Fri Jul 19 2024 Andrey Cherepanov <cas@altlinux.org> 2.11.7-alt3
 - freerdp-shadow-cli: use preferred PAM module freerdp-server.
 

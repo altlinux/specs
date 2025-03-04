@@ -9,7 +9,7 @@
 %define subst_o_post() %{expand:%%{?_enable_%{1}:%{1}%{2},}}
 
 %define prerel %nil
-%define svnrev 38416
+%define gitrev g567631e
 %define lname mplayer
 %define gname g%lname
 %define Name MPlayer
@@ -147,8 +147,6 @@
 %def_disable mga
 %def_disable xmga
 %def_enable xv
-%def_disable xvmc
-%define xvmclib XvMCW
 %def_enable vm
 %def_enable xinerama
 %def_enable x11
@@ -190,8 +188,6 @@
 
 # Miscellaneous options:
 %def_enable cpu_detection
-%def_enable yasm
-#define asm as
 %define charset UTF-8
 %define language all
 
@@ -275,7 +271,6 @@
 %{?_disable_freetype:%set_disable fontconfig}
 
 %ifnarch %ix86 x86_64
-%set_disable yasm
 %set_disable vidix
 %set_disable cpu_detection
 %endif
@@ -298,7 +293,6 @@
 
 %if_disabled x11
 %set_disable xv
-%set_disable xvmc
 %set_disable xinerama
 %set_disable xf86keysym
 %set_disable vm
@@ -315,18 +309,17 @@
 
 Name: %lname
 Version: 1.5
-Release: alt1.%svnrev.4
-%ifdef svnrev
-%define pkgver svn-r%svnrev
-%else
-%define pkgver %version%prerel
-%endif
+# upstream not provide git tags
+Release: alt2.%gitrev
+
 Summary: Media player
 Summary(uk_UA.UTF-8): Медіаплейер
 Summary(ru_RU.UTF-8): Медиаплейер
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Video
-URL: http://www.mplayerhq.hu
+Url: https://mplayerhq.hu
+VCS: https://git.ffmpeg.org/mplayer.git
+
 %if %name != %Name
 Provides: %Name = %version-%release
 Obsoletes: %Name
@@ -339,8 +332,8 @@ Obsoletes: %Name-fonts
 %else
 Requires: %name-fonts
 %endif
-# repacked http://www.mplayerhq.hu/MPlayer/releases/MPlayer-%pkgver.tar.gz
-Source0: %Name-%pkgver.tar
+
+Source0: %name-%version.tar
 # register console mplayer as mime handler
 Source2: %lname.desktop
 # repacked http://mplayerhq.hu/MPlayer/skins/Blue-1.13.tar.bz2
@@ -349,17 +342,10 @@ Source5: %lname.conf.in
 Patch1: 0001-fix-configure-script.patch
 Patch2: 0002-fix-Makefile.patch
 Patch3: 0003-fix-aalib-dev-vcsa-detection.patch
-Patch4: 0004-help_mp-uk.h-fixed-typo.patch
 Patch5: 0005-fix-vbe.h-path.patch
 Patch6: 0006-fixed-subreader.patch
 Patch7: 0007-fix-stream_dvd.patch
 Patch8: 0008-fix-desktop-file.patch
-Patch9: 0009-help-update-ru-translation.patch
-Patch10: 0010-update-ru-translation.patch
-Patch11: 0011-update-uk-translation.patch
-Patch12: 0012-fix-messages.patch
-Patch13: 0013-fix-ru-translation.patch
-Patch14: 0014-update-uk-translation.patch
 Patch15: 0015-fix-add-missing-ld-flag.patch
 Patch16: 0016-fix-aarch64-compile.patch
 Patch17: 0017-compilation-fix-with-glibc-2.27.patch
@@ -367,9 +353,9 @@ Patch18: 0018-stream-stream_smb.c-include-time.h.patch
 Patch19: 0019-ppc-disable-vsx-on-little-endian-systems.patch
 Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
 Patch21: 0021-fix-usage-mp_msg.patch
-Patch22: 0022-Secure-IPC-perms.patch
 Patch23: 0023-loongarch64-riscv64-support.patch
 Patch24: 0024-mp_image.c-add-the-header-missing-now.patch
+Patch25: 0025-fifo.patch
 # avoid autopatch
 Source2000: mplayer-e2k.patch
 
@@ -385,9 +371,10 @@ Obsoletes: %Name-gui
 %endif
 
 BuildRequires: %awk libncurses-devel libslang-devel zlib-devel
+BuildRequires: libbs2b-devel
 BuildRequires: cpp >= 3.3 gcc >= 3.3 gcc-c++ >= 3.3
 BuildRequires: rpm-build-python
-%{?svnrev:%{?_with_htmldocs:BuildRequires: docbook-style-xsl xsltproc sgml-common docbook-dtds}}
+%{?gitrev:%{?_with_htmldocs:BuildRequires: docbook-style-xsl xsltproc sgml-common docbook-dtds}}
 
 %{?_enable_mencoder:%{?_enable_lame:BuildRequires: liblame-devel}}
 %{?_enable_termcap:BuildRequires: libtinfo-devel}
@@ -456,7 +443,6 @@ BuildRequires: rpm-build-python
 %{?_enable_postproc:BuildRequires: libpostproc-devel}
 %{?_enable_libxml2:BuildRequires: libxml2-devel}
 
-%{?_enable_xvmc:BuildRequires: libXvMC-devel}
 %if_enabled mplayer
 %{?_enable_xss:BuildRequires: libXScrnSaver-devel}
 %{?_enable_xshape:BuildRequires: libXext-devel}
@@ -491,8 +477,6 @@ BuildRequires: rpm-build-python
 %{?_enable_nls:BuildRequires: gettext-tools}
 
 %{?_with_tools:BuildRequires: perl-libwww perl-Math-BigInt libSDL_image-devel normalize termutils vcdimager}
-
-%{?_enable_yasm:BuildRequires: yasm}
 
 %description
 %Name is a movie and animation player that supports a wide range of file
@@ -668,19 +652,19 @@ Ukrainian language support for %Name.
 
 
 %prep
-%setup -n %Name-%pkgver
-%autopatch -p2
+%setup
+%autopatch -p1
 %ifarch %e2k
 patch -p2 < %SOURCE2000
 %endif
 
-%{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
+%{?gitrev:subst 's/UNKNOWN/%gitrev/' version.sh}
 
 subst 's|\\/\\/|//|g' help/help_mp-zh_??.h
 ls DOCS/man/*/%lname.1 | grep -v '^DOCS/man/en/' | xargs sed -i '1i.\\" -*- mode: troff; coding: utf-8 -*-'
 echo "NotShowIn=KDE;" >> etc/%lname.desktop
 
-%ifndef svnrev
+%ifndef gitrev
 # remove bundled ffmpeg
 rm -r ffmpeg
 %endif
@@ -694,8 +678,19 @@ rm -r ffmpeg
 %ifarch armh
 %add_optflags -Wa,-mimplicit-it=thumb
 %endif
-export CFLAGS="%optflags"
+
+export CFLAGS="\
+  %optflags \
+  -Wno-incompatible-pointer-types \
+  -Wno-unused-function \
+  -Wno-unused-result \
+  -Wno-unused-variable \
+  %ifarch %ix86
+  -Wno-int-conversion \
+  %endif
+  "
 ./configure \
+	--yasm='' \
 	--target=%_target \
 	--prefix=%_prefix \
 	--bindir=%_bindir \
@@ -839,8 +834,6 @@ export CFLAGS="%optflags"
 	%{subst_enable mga} \
 	%{subst_enable xmga} \
 	%{subst_enable xv} \
-	%{subst_enable xvmc} \
-	%{?_enable_xvmc:%{?xvmclib:--with-xvmclib=%xvmclib}} \
 	%{subst_enable vm} \
 	%{subst_enable xinerama} \
 	%{subst_enable x11} \
@@ -922,7 +915,7 @@ echo "fontconfig = %{?_enable_fontconfig:yes}%{?_disable_fontconfig:no}" >> etc/
 %{?_with_tools:%make_build tools}
 
 # build HTML documentation from XML files
-%{?_with_htmldocs:%{?svnrev:%make_build -C DOCS/xml html-chunked}}
+%{?_with_htmldocs:%{?gitrev:%make_build -C DOCS/xml html-chunked}}
 
 %if_enabled gui
 for s in 128 96 72 64 48 36 32 24 22 16; do
@@ -1161,6 +1154,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Tue Mar 04 2025 Constantin Sunzow <protvin@altlinux.org> 1.5-alt2.g567631e
+- Fix FTBFS: rebuild from upstream commit.
+
 * Thu Mar 07 2024 Michael Shigorin <mike@altlinux.org> 1.5-alt1.38416.4
 - Fix build regarding BR: and headers (ilyakurdyukov@).
 - Minor spec cleanup.
