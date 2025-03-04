@@ -1,23 +1,29 @@
 %define oname geventhttpclient
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.3.3
 Release: alt1
 
 Summary: http client library for gevent
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/geventhttpclient/
+Url: https://pypi.org/project/geventhttpclient
 
 Source: %name-%version.tar
+# Upstream didn't packaged them into source tarball on pypi
+# So it can be nessesary to update them from github
+# https://github.com/geventhttpclient/geventhttpclient
+# While building from github repo is hard because of submodule
+Source1: tests.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with check
-BuildRequires: python3-module-pytest
 BuildRequires: python3-module-gevent
-BuildRequires: python3-module-six
 BuildRequires: python3-module-brotlipy
 BuildRequires: python3-module-dpkt
 BuildRequires: python3-module-urllib3
@@ -40,23 +46,28 @@ Safe SSL support is provided by default.
 
 %prep
 %setup
+tar -xvf %SOURCE1 tests
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -m 'not online' -k 'not test_brotli_response'
+%pyproject_run_pytest -m 'not network'
 
 %files
 %doc PKG-INFO
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Mar 04 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.3-alt1
+- Build new version.
+- Build with check.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
 - Build new version.
 
