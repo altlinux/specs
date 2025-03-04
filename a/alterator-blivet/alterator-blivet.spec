@@ -3,7 +3,7 @@
 
 Name: alterator-blivet
 Version: 1.0.0
-Release: alt0.1
+Release: alt0.3
 
 Summary: Alterator module for volume management based on blivet
 License: GPLv3
@@ -41,6 +41,14 @@ install -Dpm644 blivetstorage/*.py -t %buildroot%python3_sitelibdir/blivetstorag
 %python3_sitelibdir/blivetstorage/*
 
 %changelog
+* Tue Mar 04 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt0.3
+- More user-friendly storage layout and UI approach
+  for virtualization module
+
+* Fri Feb 28 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt0.2
+- Default chroot path to '/mnt/destination'
+  if environment variable is not set
+
 * Tue Feb 04 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt0.1
 - Initial package
 

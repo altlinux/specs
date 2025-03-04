@@ -3,7 +3,7 @@
 
 Name: alterator-net-ifupdown2
 Version: 1.0.2
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -42,6 +42,10 @@ Alterator module for PVE network setup
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Mar 04 2025 Sergey Konev <darisishe@altlinux.org> 1.0.2-alt3
+- More intuitive UI
+- Better FQDN correctness checks
+
 * Wed Feb 19 2025 Sergey Konev <darisishe@altlinux.org> 1.0.2-alt2
 - Added localization and 'help' page (see alterator-l10n)
 - Minor Makefile refactoring
