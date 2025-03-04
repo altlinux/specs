@@ -4,7 +4,7 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 550.107.02
+Version: 570.124.04
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -36,6 +36,7 @@ BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau
 BuildRequires: libwayland-client-devel
 BuildRequires: libdbus-devel
 BuildRequires: libgtk+3-devel
+BuildRequires: libvulkan-devel
 
 %description
 The `nvidia-settings` utility is a tool for configuring the NVIDIA
@@ -150,6 +151,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt1
+- new version
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 550.107.02-alt1
 - new version
 

@@ -18,9 +18,9 @@
 %define subd ./
 %endif
 
-%define nv_version 550
-%define nv_release 144
-%define nv_minor   03
+%define nv_version 570
+%define nv_release 124
+%define nv_minor   04
 %define pkg_rel alt1
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -141,6 +141,18 @@ Summary: nvidia library
 %description -n libnvidia-api
 nvidia library
 
+%package -n libnvidia-opticalflow
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-opticalflow
+nvidia library
+
+%package -n libnvidia-vksc-core
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-vksc-core
+nvidia library
+
 %package -n nvidia-smi
 Group: System/Libraries
 Summary: NVIDIA System Management Interface program
@@ -182,6 +194,11 @@ install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-fbc.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-opticalflow.so.%version %buildroot/%_libdir/
+%ifarch x86_64
+#install -m 0644 %subd/libnvidia-vksc-core.so.%version %buildroot/%_libdir/
+%endif
+# all 64-bit
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
@@ -243,6 +260,14 @@ done
 %files -n libnvidia-fbc
 %_libdir/libnvidia-fbc.so.%nvidia_sover
 %_libdir/libnvidia-fbc.so.%version
+%files -n libnvidia-opticalflow
+%_libdir/libnvidia-opticalflow.so.%nvidia_sover
+%_libdir/libnvidia-opticalflow.so.%version
+%ifarch x86_64
+#%files -n libnvidia-vksc-core
+#%_libdir/libnvidia-vksc-core.so.%nvidia_sover
+#%_libdir/libnvidia-vksc-core.so.%version
+%endif
 %if "%_lib" != "lib"
 %files -n nvidia-smi
 %_bindir/nvidia-smi
@@ -268,6 +293,9 @@ done
 %endif
 
 %changelog
+* Tue Mar 04 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt1
+- new version
+
 * Tue Jan 28 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt1
 - new version
 

@@ -20,10 +20,10 @@
 
 # version-release
 
-%define nv_version 550
-%define nv_release 144
-%define nv_minor 03
-%define pkg_rel alt285
+%define nv_version 570
+%define nv_release 124
+%define nv_minor 04
+%define pkg_rel alt286
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -283,6 +283,7 @@ cat >%buildroot/%_presetdir/22-nvidia-sleep.preset <<__EOF__
 enable nvidia-hibernate.service
 enable nvidia-suspend.service
 enable nvidia-resume.service
+enable nvidia-suspend-then-hibernate.service
 __EOF__
 mkdir -p %buildroot/lib/systemd/system-sleep/
 install -Dpm 0755 nvidia-sleep/nvidia %buildroot/lib/systemd/system-sleep/
@@ -367,6 +368,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt286
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 550.144.03-alt285
 - don't enable NVreg_PreserveVideoMemoryAllocations because suspend problem
 
