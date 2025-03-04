@@ -22,7 +22,7 @@
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 Epoch: 1
 
@@ -30,6 +30,8 @@ Summary: Clutter based compositing Window Manager
 Group: Graphical desktop/GNOME
 License: GPL-2.0-or-later
 Url: http://ftp.gnome.org/pub/gnome/sources/%name
+
+Vcs: https://gitlab.gnome.org/GNOME/mutter.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -290,6 +292,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Tue Mar 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1:47.6-alt1
+- 47.6
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1:47.5-alt1
 - 47.5
 
