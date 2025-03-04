@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.11
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -56,7 +56,6 @@ Patch112: Ubuntu-9100-ppd-cache-add-auto-presets.patch
 ## ALT patches
 Patch501: ALT-build_po.patch
 Patch502: ALT-remove_BSD.patch
-Patch503: ALT-enable-631.patch
 Patch504: ALT-1.6.2-lpd-utf8.patch
 Patch506: ALT-2.4.8-lspp-SE.patch
 Patch507: ALT-1.7.0-docroot-i18n.patch
@@ -174,7 +173,6 @@ services using the main CUPS library "libcups".
 ## ALT apply patches
 %patch501 -p1
 %patch502 -p1
-%patch503 -p2
 %patch504 -p1
 %patch506 -p1
 %patch507 -p1
@@ -211,6 +209,7 @@ autoconf -I config-scripts
 
 export LIBS="-laudit -lselinux"
 %configure \
+   --localedir=%_datadir/cups/locale \
    --with-system-groups='sys wheel root' \
    --with-icondir=%_iconsdir \
    --with-menudir=%_desktopdir \
@@ -366,7 +365,6 @@ fi
 %_man7dir/*
 
 %_datadir/%name
-%_datadir/locale/*/*.po
 %_sbindir/*
 %_bindir/*
 %_altdir/%name
@@ -405,6 +403,11 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Tue Mar 04 2025 Anton Farygin <rider@altlinux.ru> 2.4.11-alt2
+- removed TCP listening from socket service (Closes: #51610)
+- relocate CUPS .po files from /usr/share/locale to /usr/share/cups/locale
+  for direct .po-based localization (closes: #33305)
+
 * Sun Oct 06 2024 Anton Farygin <rider@altlinux.ru> 2.4.11-alt1
 - 2.4.10 -> 2.4.11 (Fixes: CVE-2024-47175)
 
