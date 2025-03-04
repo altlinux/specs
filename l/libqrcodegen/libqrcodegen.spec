@@ -1,28 +1,34 @@
 %global richname QR-Code-generator
-
-%global commit0 67c62461d380352500fc39557fd9f046b7fe1d18
-%global shortcommit0 %(c=%commit0; echo ${c:0:7})
+%global cmakename qrcodegen-cmake
+%global cmakesuffix cmake2
 
 Name: libqrcodegen
-Version: 1.5.0
-Release: alt1.git%shortcommit0
+Version: 1.8.0
+Release: alt1
 
 Summary: High-quality QR Code generator library
 
 License: MIT
 Group: System/Libraries
 Url: https://github.com/nayuki/QR-Code-generator
+VCS: https://github.com/nayuki/QR-Code-generator.git
 
-# Source0-url: %url/archive/%commit0/%name-%shortcommit0.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: %url/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+# Source1-url: https://github.com/EasyCoding/%cmakename/archive/v%version-%cmakesuffix/%cmakename-%version-%cmakesuffix.tar.gz
+Source1: %cmakename-%version-%cmakesuffix.tar
 
-# https://github.com/nayuki/QR-Code-generator/pull/72
-Patch1: qr-code-generator-build-fixes.patch
-
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: python3-devel
 BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: ninja-build
+BuildRequires: ctest
+BuildRequires: python3-module-setuptools
+# for setuptools < 70.1.0
+BuildRequires: python3-module-wheel
 
 %description
 This project aims to be the best, clearest QR Code generator library in
@@ -77,39 +83,37 @@ comments.
 
 %prep
 %setup
-%patch1 -p1
+# Unpacking CMake build script and assets...
+tar -xf %SOURCE1 %cmakename-%version-%cmakesuffix/cmake \
+	%cmakename-%version-%cmakesuffix/CMakeLists.txt --strip=1
+ 
+%autopatch1 -p1
 
 %build
-# Building plain C version...
-pushd c
-%make_build
-popd
+# Building C and C++ versions...
+%cmake -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_TESTS=ON \
+    -DBUILD_SHARED_LIBS=true
 
-# Building C++ version...
-pushd cpp
-%make_build
-popd
+%cmake_build
 
 # Building Python version...
 pushd python
-%python3_build
+%pyproject_build
 popd
 
 %install
-# Installing plain C version...
-pushd c
-%make_install install LIBDIR=%buildroot%_libdir INCLUDEDIR=%buildroot%_includedir/qrcodegen
-popd
-
-# Installing C++ version...
-pushd cpp
-%make_install install LIBDIR=%buildroot%_libdir INCLUDEDIR=%buildroot%_includedir/qrcodegencpp
-popd
+# Installing C and C++ versions...
+%cmake_install
 
 # Installing Python version...
 pushd python
-%python3_install
+%pyproject_install
 popd
+	
+# Installing a legacy symlink for compatibility...
+ln -s qrcodegen.hpp %buildroot%_includedir/qrcodegencpp/QrCode.hpp
 
 %files
 %doc Readme.markdown
@@ -117,7 +121,9 @@ popd
 
 %files devel
 %_includedir/qrcodegen/
+%_libdir/cmake/qrcodegen/
 %_libdir/libqrcodegen.so
+%_libdir/pkgconfig/qrcodegen.pc
 
 %files -n libqrcodegen-cpp
 %doc Readme.markdown
@@ -125,15 +131,21 @@ popd
 
 %files -n libqrcodegen-cpp-devel
 %_includedir/qrcodegencpp/
+%_libdir/cmake/qrcodegencpp/
 %_libdir/libqrcodegencpp.so
+%_libdir/pkgconfig/qrcodegencpp.pc
 
 %files -n python3-module-qrcodegen
 %doc Readme.markdown
 %python3_sitelibdir_noarch/qrcodegen.py
 %python3_sitelibdir_noarch/__pycache__/*
-%python3_sitelibdir_noarch/qrcodegen-*.egg-info/
+%python3_sitelibdir_noarch/qrcodegen-%version.dist-info/
 
 %changelog
+* Mon Mar 3 2025 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
+- new version (1.8.0) with rpmgs script
+- build with cmake
+
 * Sun Jan 26 2020 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1.git67c6246
 - initial build for ALT Sisyphus
 

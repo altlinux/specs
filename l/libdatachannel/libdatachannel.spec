@@ -1,13 +1,14 @@
 %define soversion() %(echo "%1" | awk -F. '{print $1"."$2}')
 
 Name: libdatachannel
-Version: 0.20.2
+Version: 0.22.3
 Release: alt1
 Summary: WebRTC network library featuring Data Channels, Media Transport, and WebSockets
 
 License: MPL-2.0
 Group: Networking/Other
 Url: https://libdatachannel.org/
+Vcs: https://github.com/paullouisageneau/libdatachannel
 # Source-url: https://github.com/paullouisageneau/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
@@ -60,6 +61,9 @@ developing applications that use %name.
 %_libdir/%name.so
 
 %changelog
+* Sun Dec 08 2024 Anton Midyukov <antohami@altlinux.org> 0.22.3-alt1
+- new version (0.22.3) with rpmgs script
+
 * Wed Mar 13 2024 Anton Midyukov <antohami@altlinux.org> 0.20.2-alt1
 - new version (0.20.2) with rpmgs script
 

@@ -4,17 +4,21 @@
 %add_python3_path %_libdir/obs-scripting/
 %add_python3_path %_datadir/obs/obs-plugins/frontend-tools/scripts/
 
+%define websocket_version 5.5.4
+
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 30.2.3
-Release: alt2
+Version: 31.0.1
+Release: alt1
 License: GPL-2.0-or-later
 Group: Video
-Url: https://github.com/jp9000/obs-studio
+Url: https://github.com/obsproject/obs-studio
+Vcs: https://github.com/obsproject/obs-studio.git
 Source: %name-%version.tar
-Patch1: obs-studio-27.2.4-alt-cert-bundle.patch
-Patch2: obs-studio-fix-incompatible-pointer-type.patch
+Source1: obs-websocket-%websocket_version.tar
+
+Patch: %name-%version-%release.patch
 
 # https://bugzilla.altlinux.org/47318
 Requires: qt6-svg
@@ -23,6 +27,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-luajit
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
+BuildRequires: ninja-build
 BuildRequires: libjansson-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: libGL-devel libGLU-devel
@@ -47,6 +52,7 @@ BuildRequires: systemd-devel libudev-devel
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: swig
 BuildRequires: libspeexdsp-devel
+BuildRequires: websocketpp-devel
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wayland-client)
@@ -54,6 +60,7 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libpci)
+BuildRequires: pkgconfig(rnnoise)
 BuildRequires: pipewire-libs-devel
 BuildRequires: libdrm-devel
 BuildRequires: libmbedtls-compat-devel
@@ -63,6 +70,11 @@ BuildRequires: libdatachannel-devel
 BuildRequires: libuthash-devel
 BuildRequires: nv-codec-headers
 BuildRequires: nlohmann-json-devel
+%ifarch x86_64 aarch64
+BuildRequires: libvpl-devel
+%endif
+BuildRequires: libqrcodegen-cpp-devel libqrcodegen-devel
+BuildRequires: asio-devel
 %ifarch %luajit_arches
 BuildRequires: pkgconfig(luajit)
 %endif
@@ -112,9 +124,11 @@ Requires: libobs = %EVR
 Development files for %name.
 
 %prep
-%setup
-%patch1 -p0
-%patch2 -p1
+%setup -a1
+%patch -p1
+rmdir plugins/obs-websocket
+mv obs-websocket-%websocket_version plugins/obs-websocket
+
 %ifarch %e2k
 # someone added this poorly written code to upstream
 sed -i '/MATCHES "e2k"/c if(false)' cmake/Modules/CompilerConfig.cmake
@@ -124,23 +138,33 @@ touch plugins/obs-{browser,websocket}/CMakeLists.txt
 
 # rpmlint reports E: hardcoded-library-path
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
-sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
+#sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 
 # remove -Werror flag to mitigate FTBFS with ffmpeg 5.1
-sed -e 's|-Werror-implicit-function-declaration||g' -i cmake/Modules/CompilerConfig.cmake
-sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
+#sed -e 's|-Werror-implicit-function-declaration||g' -i cmake/Modules/CompilerConfig.cmake
+#sed -e '/-Werror/d' -i cmake/Modules/CompilerConfig.cmake
+
+# Removing unused third-party deps
+rm -rv deps/w32-pthreads
+
+# Remove unneeded EGL/KHR files
+rm -rv deps/glad/include/{EGL,KHR}
+sed -e 's|include/EGL/eglplatform.h||g' -i deps/glad/CMakeLists.txt
 
 # disable unusable qsv plugin
 mv plugins/obs-qsv11/CMakeLists.txt plugins/obs-qsv11/CMakeLists.txt.disabled
 touch plugins/obs-qsv11/CMakeLists.txt
 
 %build
+%add_optflags -I%_sourcedir/%name-%version/libobs
 %cmake \
 	-DOBS_VERSION_OVERRIDE=%version \
-	-DUNIX_STRUCTURE=1 \
+	-DCMAKE_COMPILE_WARNING_AS_ERROR=OFF \
+	-DUNIX_STRUCTURE=1 -GNinja \
 	-DCMAKE_SKIP_RPATH=1 \
 	-DWITH_RTMPS=ON \
-	-DBUILD_BROWSER=OFF \
+	-DENABLE_BROWSER=OFF \
+	-DENABLE_WEBRTC=OFF \
 	-DBUILD_VST=OFF \
 	-DENABLE_NEW_MPEGTS_OUTPUT=OFF \
 	-DENABLE_AJA=OFF \
@@ -181,9 +205,14 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %exclude %_libdir/libobs-scripting.so
 %_libdir/cmake/libobs/
 %_libdir/cmake/obs-frontend-api/
+%_libdir/cmake/obs-websocket-api/
 %_libdir/pkgconfig/libobs.pc
+%_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Mon Mar 3 2025 Anton Midyukov <antohami@altlinux.org> 31.0.1-alt1
+- New version 31.0.1.
+
 * Sun Nov 03 2024 Anton Midyukov <antohami@altlinux.org> 30.2.3-alt2
 - add patch for build with gcc14 on 32 bit arches
 
