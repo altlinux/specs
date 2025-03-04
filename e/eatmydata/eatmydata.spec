@@ -1,9 +1,8 @@
 %define oname libeatmydata
-%set_automake_version 1.11
 
 Name: eatmydata
 Version: 131
-Release: alt1
+Release: alt2
 
 Summary: A small wrapper to disable fsync and related functions
 
@@ -17,10 +16,6 @@ Source: %name-%version.tar
 Source3: eatmydata.1
 
 Patch0: libeatmydata-82-alt-fix-packaging.patch
-
-# Automatically added by buildreq on Fri May 25 2012
-# optimized out: python-base python-modules
-BuildRequires: python-modules-compiler python-modules-email
 
 # buildreq works only on %%build stage
 BuildRequires: strace
@@ -65,6 +60,9 @@ make check
 %_libdir/*.so*
 
 %changelog
+* Tue Mar 04 2025 Vitaly Lipatov <lav@altlinux.ru> 131-alt2
+- cleanup spec
+
 * Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 131-alt1
 - new version (131) with rpmgs script
 
