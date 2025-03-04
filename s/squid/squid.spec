@@ -3,7 +3,7 @@
 %def_disable poll
 %def_enable epoll
 %def_enable ecap
-%def_enable esi
+%def_disable esi
 %def_with nettle
 
 # epoll is enabled by default, so disable it if plain poll is enabled
@@ -18,7 +18,7 @@
 %define langpack_ver 20230225
 
 Name: squid
-Version: 6.12
+Version: 7.0.1
 Release: alt1
 
 Summary: The Squid proxy caching server
@@ -245,7 +245,9 @@ install -p -m 0644 COPYING README ChangeLog QUICKSTART SPONSORS doc/debug-sectio
 install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
 
 %check
-%make_build check
+# 7.0.1: workaround test build errors
+%make_build check \
+            CXXCOMPILE="g++ -I$PWD -I$PWD/lib -I$PWD/include -I$PWD/src"
 
 %post
 %post_service %name
@@ -292,7 +294,6 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %_datadir/snmp
 %_sbindir/*
 %_man8dir/squid.*
-%_man1dir/*
 %_libexecdir/%name/log_file_daemon
 %attr(4710,root,%name) %_libexecdir/%name/pinger
 %_libexecdir/%name/unlinkd
@@ -322,11 +323,15 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_libexecdir/%name/pinger
 %exclude %_libexecdir/%name/unlinkd
 %exclude %_libexecdir/%name/diskd
-%exclude %_libexecdir/%name/cachemgr.cgi
 %exclude %_man8dir/squid.*
-%exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Tue Feb 25 2025 Egor Ignatov <egori@altlinux.org> 7.0.1-alt1
+- 7.0.1
+
+* Tue Nov 05 2024 Egor Ignatov <egori@altlinux.org> 6.12-alt2
+- Disable ESI to workaround security issue (fixes: CVE-2024-45802).
+
 * Mon Oct 21 2024 Andrey Kovalev <ded@altlinux.org> 6.12-alt1
 - 6.12
 
