@@ -1,8 +1,11 @@
+%define _name alt-panelmode
+%define xdg_name org.altlinux.%_name
+
 Name: alt-panelmoded
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 
-Summary: Used for panelmode on operating systems of the Alt family with GNOME desktop enviroment
+Summary: Used for panelmode on Alt operating systems with GNOME
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
@@ -11,7 +14,6 @@ Vcs: https://gitlab.gnome.org/Armatik/alt-panelmoded
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires(pre): rpm-macros-systemd
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: pkgconfig(gio-2.0)
@@ -26,8 +28,8 @@ Requires: gnome-shell-extension-appindicator
 Requires: gnome-shell-extension-clipboard-indicator
 
 %description
-Used for panelmode on operating systems of the Alt family with GNOME desktop
-enviroment.
+Used for panelmode on operating systems of the Alt family
+with GNOME desktop enviroment.
 
 %prep
 %setup
@@ -38,22 +40,17 @@ enviroment.
 
 %install
 %meson_install
-%find_lang --with-gnome %name
+%find_lang --with-gnome %_name
 
-%post
-%systemd_user_post %name.service
-
-%preun
-%systemd_user_preun %name.service
-
-%files -f %name.lang
-%_bindir/%name
-%_user_unitdir/%name.service
-%_datadir/glib-2.0/schemas/org.altlinux.%name.gschema.xml
-%_user_presetdir/20-%name.preset
-%_desktopdir/org.altlinux.panelmoded.desktop
+%files -f %_name.lang
+%_bindir/%_name
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 
 %changelog
+* Mon Mar 4 2025 Alexey Volkov <qualimock@altlinux.org> 0.6.1-alt1
+- new version 0.6.1
+
 * Sun Feb 23 2025 Alexey Volkov <qualimock@altlinux.org> 0.5.2-alt1
 - new version 0.5.2
 
