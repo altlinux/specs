@@ -7,7 +7,7 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.30.0.1
+Version: 4.31.0.1
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -69,15 +69,20 @@ sed -i "s|^#!/usr/bin/python$|#!/usr/bin/python3|" common/autocomplete/mft_help_
 %makeinstall_std
 rm -rf %buildroot%_includedir
 rm -f  %buildroot%_libdir/*.a
+rm -f  %buildroot%_libdir/%name/*.a
 
 %files
 %_bindir/*
 %_datadir/%name
 %dir %_libdir/%name
 %_libdir/%name/python_tools
+%_libdir/%name/sdk
 %_man1dir/*
 
 %changelog
+* Tue Mar 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.31.0.1-alt1
+- v4.31.0-1
+
 * Wed Nov 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.30.0.1-alt1
 - v4.30.0-1
 
