@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,11 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Tue Mar 04 2025 Anton Midyukov <antohami@altlinux.org> 0.6.7-alt1
+- Fix condition in set_active function
+- Check for the presence of a directory /sys/block/"$BOOTDEV"/slaves/
+- Cut 'md/' from RAID device name
+
 * Mon Jan 13 2025 Anton Midyukov <antohami@altlinux.org> 0.6.6-alt1
 - Fix umount_chroot
 
