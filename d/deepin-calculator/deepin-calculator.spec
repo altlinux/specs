@@ -1,18 +1,17 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 6.5.4
+Version: 6.5.8
 Release: alt1
-Summary: An easy to use calculator for ordinary users
-License: GPL-2.0+ and GPL-3.0+
 
+Summary: An easy to use calculator for ordinary users
+
+License: GPL-2.0+ and GPL-3.0+
 # 3rdparty: GPL-2.0+
 # src: GPL-3.0+
-
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-calculator
 Vcs: git://github.com/linuxdeepin/deepin-calculator.git
-Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
@@ -22,7 +21,7 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja desktop-file-utils
-BuildRequires: cmake dqt5-linguist dqt5-base-devel dqt5-svg-devel libdtkwidget-devel dtk6-common-devel libgtest-devel libgmock-devel
+BuildRequires: cmake dqt6-base-devel dqt6-tools dqt6-svg-devel libdtk6widget-devel dtk6-common-devel libgtest-devel libgmock-devel
 Requires: icon-theme-hicolor
 
 %description
@@ -39,38 +38,40 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DVERSION=%version \
-    %nil
-cmake --build "%_cmake__builddir" -j%__nprocs
+#
 
 %install
-%cmake_install
+%DQ6install
+%find_lang --with-qt %name
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 
-%files
+%files -f %name.lang
 %doc README.md
 %doc LICENSE
 %_bindir/%name
-%_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
+# package outside find_lang
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/%name.qm
+# ---
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
 %_datadir/deepin-manual/manual-assets/application/%name/
 
 %changelog
+* Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.8-alt1
+- New version 6.5.8.
+- Switched to dqt6.
+- Applied FindLang policy.
+
 * Fri Jan 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.4-alt1
 - New version 6.5.4.
 
