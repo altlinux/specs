@@ -3,7 +3,7 @@
 
 Name: dqt6-wayland
 Version: 6.8.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: System/Libraries
 Summary: Qt6 - Wayland platform support and QtCompositor module
@@ -49,6 +49,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
 Requires: %name-common
 Requires: libwayland-client-devel libwayland-cursor-devel
 Requires: dqt6-base-devel
@@ -253,6 +254,9 @@ done
 %endif
 
 %changelog
+* Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
+- prevent bytes written limit by hasher-privd
+
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - merge with new version
 
