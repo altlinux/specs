@@ -1,7 +1,7 @@
 %def_without doc
 
 Name: keepass
-Version: 2.57
+Version: 2.58
 Release: alt1
 
 Summary: Password manager
@@ -70,11 +70,11 @@ find -name \*.png -print0 | xargs -0 mogrify -define png:format=png32
 ( cd Build && sh PrepMonoDev.sh )
 find . -name "*.sln" -print -exec sed -i 's/Format Version 10.00/Format Version 11.00/g' {} \;
 find . -name "*.csproj" -print -exec sed -i 's#ToolsVersion="3.5"#ToolsVersion="5.0"#g; s#<TargetFrameworkVersion>.*</TargetFrameworkVersion>##g; s#<PropertyGroup>#<PropertyGroup><TargetFrameworkVersion>v4.5</TargetFrameworkVersion>#g' {} \;
-xbuild /target:KeePass /property:Configuration=Release
+xbuild KeePass.sln /target:KeePass /property:Configuration=Release
 for subdir in Images_App_HighRes Images_Client_16 Images_Client_HighRes; do
     xvfb-run -a mono Build/KeePass/Release/KeePass.exe -d:`pwd`/Ext/$subdir --makexspfile `pwd`/KeePass/Resources/Data/$subdir.bin
 done
-xbuild /target:KeePass /property:Configuration=Release
+xbuild KeePass.sln /target:KeePass /property:Configuration=Release
 %if_with doc
 %__python -c 'import archmod.CHM; archmod.CHM.CHMDir("Docs").process_templates("Docs/Chm")'
 %endif
@@ -140,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Wed Mar 05 2025 Oleg Solovyov <mcpain@altlinux.org> 2.58-alt1
+- new version: 2.58
+
 * Wed Jun 19 2024 Oleg Solovyov <mcpain@altlinux.org> 2.57-alt1
 - new version: 2.57
 
