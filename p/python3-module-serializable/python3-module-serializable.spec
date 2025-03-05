@@ -4,12 +4,13 @@
 %def_with check
 
 Name: python3-module-serializable
-Version: 1.1.2
+Version: 2.0.0
 Release: alt1
 Summary: Pythonic library to aid with serialisation and deserialisation to/from JSON and XML.
 License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/madpah/serializable
+VCS: https://github.com/madpah/serializable.git
 
 BuildArch: noarch
 
@@ -49,6 +50,10 @@ classes to and from JSON and XML.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Feb 24 2025 Andrey Kovalev <ded@altlinux.org> 2.0.0-alt1
+- Updated to upstream version 2.0.0.
+- Added VCS tag.
+
 * Mon Nov 11 2024 Andrey Kovalev <ded@altlinux.org> 1.1.2-alt1
 - Updated to upstream version 1.1.2.
 - Terminate build if unpackaged files were found.
