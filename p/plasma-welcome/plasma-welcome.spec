@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 6.3.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -60,6 +60,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages-pre/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt2
+- fix russian translation (closes: 47320)
+
 * Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
 - new version
 
