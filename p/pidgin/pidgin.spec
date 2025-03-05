@@ -32,8 +32,8 @@
 %def_enable vv
 
 Name: pidgin
-Version: 2.14.12
-Release: alt2
+Version: 2.14.14
+Release: alt1
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPLv2
@@ -453,6 +453,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.14.14-alt1
+- 2.14.14
+
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.14.12-alt2
 - NMU: fix FTBFS with gcc14
 
