@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.3.2
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -345,6 +345,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Mar 05 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.3.2-alt3
+- remove all empty lines in the changelog
+
 * Thu Feb 27 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.3.2-alt2
 - improved readability of the package changelog
 
