@@ -4,7 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-application-manager
-Version: 1.2.20.0.1.bd25
+Version: 1.2.25
 Release: alt1
 
 Summary: App manager for Deepin
@@ -30,6 +30,7 @@ BuildRequires: gcc-c++
 %package devel
 Summary: Development package for %repo
 Group: Development/C++
+Requires: %name = %EVR
 
 %description devel
 The package provides development files for %repo.
@@ -91,6 +92,9 @@ rm -rf %buildroot%_sysconfdir/dpkg/dpkg.cfg.d/am-update-hook
 %_libdir/cmake/DDEApplicationManager/DDEApplicationManagerConfig.cmake
 
 %changelog
+* Wed Mar 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.25-alt1
+- New version 1.2.25.
+
 * Mon Dec 23 2024 Leontiy Volodin <lvol@altlinux.org> 1.2.20.0.1.bd25-alt1
 - New version 1.2.20-1-gbd25c2c.
 - Added vcs tag.
