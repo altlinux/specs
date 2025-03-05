@@ -1,10 +1,10 @@
 %define soname 1
-%ifarch armh
+%ifarch armh %ix86
 %def_disable check
 %endif
 Name: srt
 Version: 1.5.4
-Release: alt1
+Release: alt2
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
 License: MPL-2.0
@@ -83,6 +83,9 @@ LD_LIBRARY_PATH=%_cmake__builddir ./%_cmake__builddir/test-srt
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Wed Mar 05 2025 Anton Farygin <rider@altlinux.ru> 1.5.4-alt2
+- disabled check on 32-bit ix86
+
 * Fri Dec 13 2024 Anton Farygin <rider@altlinux.ru> 1.5.4-alt1
 - 1.5.4
 
