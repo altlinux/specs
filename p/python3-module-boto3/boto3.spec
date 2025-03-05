@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.36.0
+Version: 1.37.6
 Release: alt1
 Summary: The AWS SDK for Python
 License: Apache-2.0
@@ -60,6 +60,9 @@ pull requests on this repository. Thanks!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 05 2025 Stanislav Levin <slev@altlinux.org> 1.37.6-alt1
+- 1.36.0 -> 1.37.6.
+
 * Thu Jan 16 2025 Stanislav Levin <slev@altlinux.org> 1.36.0-alt1
 - 1.35.37 -> 1.36.0.
 
