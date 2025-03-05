@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.3.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -66,6 +66,13 @@ Requires: %name-common >= %EVR
 
 %install
 %K6install
+#%buildroot/%_userunitdir/app-org.kde.krdpserver.service
+mkdir -p %buildroot/%_userunitdir/plasma-workspace@.target.d/
+ALIAS=`grep '^Alias=' %buildroot/%_userunitdir/app-org.kde.krdpserver.service | tail -n 1 | sed 's|Alias=||'`
+[ -n "$ALIAS" ] || exit 1
+ln -sr %buildroot/%_userunitdir/app-org.kde.krdpserver.service "%buildroot/%_userunitdir/plasma-workspace@.target.d/$ALIAS"
+ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
+
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -76,6 +83,7 @@ Requires: %name-common >= %EVR
 %_K6plug/plasma/kcms/systemsettings/*krdp*.so
 %_K6xdgapp/*krdp*.desktop
 %_userunitdir/*krdp*.service
+%_userunitdir/*/*krdp*.service
 %_datadir/qlogging-categories6/*.*categories
 #%_datadir/metainfo/*.xml
 
@@ -88,6 +96,9 @@ Requires: %name-common >= %EVR
 %_K6link/lib*.so
 
 %changelog
+* Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt2
+- package systemd service alias (altbug#53246)
+
 * Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt1
 - new version
 
