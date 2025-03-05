@@ -7,7 +7,7 @@ Name: readline%sover
 %define rl_patch .3
 %define srcname readline-%rl_version
 Version: %rl_version%rl_patch
-Release: alt5
+Release: alt6
 
 Summary: A library for editing typed in command lines
 License: GPL-3.0-or-later
@@ -145,6 +145,9 @@ popd
 %endif
 
 %changelog
+* Tue Mar 04 2025 Ulysses Apokin <ulysses@altlinux.org> 7.0.3-alt6
+- Fixed FTBFS.
+
 * Wed Sep 06 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.3-alt5
 - Packaged libreadline7 as a legacy library.
 - Fixed the License: tag (GPLv2+ -> GPL-3.0-or-later).
