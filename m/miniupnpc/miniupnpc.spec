@@ -1,7 +1,7 @@
-%define soversion 19
+%define soversion 20
 
 Name: miniupnpc
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 Epoch: 1
 
@@ -76,6 +76,9 @@ Development tools for %name
 %_bindir/upnpc-shared
 
 %changelog
+* Wed Mar 05 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.3.2-alt1
+- New version 2.3.2.
+
 * Mon Feb 24 2025 Nazarov Denis <nenderus@altlinux.org> 1:2.3.1-alt1
 - New version 2.3.1.
 
