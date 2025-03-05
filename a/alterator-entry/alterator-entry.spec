@@ -3,7 +3,7 @@
 
 Name: alterator-entry
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: Common files for Alterator Entry specification
 License: GPLv3+
@@ -16,7 +16,6 @@ Source1: %pyproject_deps_config_name
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-alterator
-BuildRequires: python3-module-alterator-entry
 
 %description
 Common files for Alterator Entry specification:
@@ -32,6 +31,8 @@ Group: Development/Python3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
+BuildRequires: python3-module-tomlkit
+BuildRequires: python3-module-jsonschema
 
 %description -n python3-module-alterator-entry 
 %summary.
@@ -52,10 +53,9 @@ install -D -m 755 scripts/editions2packages %buildroot%_bindir/editions2packages
 mkdir -p %buildroot%_alterator_datadir
 cp -r ./schemas %buildroot%_alterator_datadir/schemas 
 
-install -D -m 755 scripts/* %buildroot%_bindir/
-
 %check
 export ALTERATOR_SCHEMAS_DIR=./schemas
+export PYTHONPATH=./alterator_entry:$PYTHONPATH
 find examples -type f | xargs ./scripts/alterator-entry validate
 
 %files
@@ -69,6 +69,11 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Mar 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.4-alt2
+- Fix build dependency of python3-module-alterator-entry on itself.
+- Remove duplicate scripts install.
+- Add wheel to deps json to build for p11.
+
 * Mon Mar 04 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.4-alt1
 - Add editions2packages script to extract packages from editions
 
