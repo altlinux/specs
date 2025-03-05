@@ -3,7 +3,7 @@
 
 Name: %rname
 Version: 24.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -72,6 +72,9 @@ rm -f po/ru/kfileshare.po.old
 
 
 %changelog
+* Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt2
+- fix minimum UID
+
 * Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
