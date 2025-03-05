@@ -3,7 +3,7 @@
 
 Name: os-prober
 Version: 1.83
-Release: alt1
+Release: alt2
 
 Summary: Operating systems detector
 License: GPLv2+
@@ -18,6 +18,7 @@ Patch1: %name-1.77-alt-grub2-detect-auto-reference.patch
 Patch2: %name-1.77-alt-grub2-skip-30_os-prober-parsing.patch
 Patch3: %name-1.77-alt-check-identical-uuid-of-root.patch
 Patch4: %name-1.77-alt-dmdevfs-use-for-raid.patch
+Patch5: os-prober-1.83-fedora-grub-mount-workaround.patch
 
 %description
 This is a small package that may be depended on by any bootloader
@@ -31,6 +32,7 @@ them, and work out how to boot other linux installs.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %make_build
@@ -69,6 +71,9 @@ mkdir -p %buildroot%_localstatedir/os-prober
 %_localstatedir/os-prober
 
 %changelog
+* Wed Mar 05 2025 Egor Ignatov <egori@altlinux.org> 1.83-alt2
+- Add fedora patch to workaround grub-mount being slow with large directories.
+
 * Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 1.83-alt1
 - 1.83
 
