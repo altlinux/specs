@@ -7,7 +7,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1
+Release:       alt1.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -311,7 +311,7 @@ DESTDIR=%buildroot INSTALL=/bin/install rvm reinstall . \
 
 mkdir -p \
    %buildroot%_libexecdir \
-   %buildroot%_cachedir/%name/gemie \
+   %buildroot%_cachedir/%name/gemie/bin \
    %buildroot%_bindir/ \
    %buildroot%_sysconfdir/bashrc.d/ \
    %buildroot%_libdir \
@@ -347,6 +347,7 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %attr(0755,root,ruby) %_sysconfdir/bashrc.d/%name.sh
 %dir %attr(775,root,ruby) %_cachedir/%name/
 %dir %attr(775,root,ruby) %_cachedir/%name/gemie
+%dir %attr(775,root,ruby) %_cachedir/%name/gemie/bin
 
 %files         -n %lname
 %_libdir/*.so.*
@@ -386,6 +387,9 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Wed Mar 05 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1.1
+- + added absent ruby cache bin folder on disk (closes #49375)
+
 * Fri Jan 31 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1
 - ^ 3.3.4 -> 3.3.7
 - * using %%EVR construction to address packages by version
