@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 6.3.2
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ Source: %rname-%version.tar
 Patch2: alt-check-auth.patch
 Patch3: alt-prepend-distro-pages.patch
 Patch4: alt-discover-apps.patch
+Patch5: alt-icons.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -40,6 +41,7 @@ A Friendly onboarding wizard for Plasma.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %K6build
@@ -60,6 +62,9 @@ mkdir -p %buildroot/%_datadir/plasma-welcome-extra-pages-pre/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt3
+- fix panel mock main menu icon
+
 * Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt2
 - fix russian translation (closes: 47320)
 
