@@ -4,7 +4,7 @@
 
 Name: dqt6-declarative
 Version: 6.8.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -82,6 +82,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+AutoReq: no
 Requires: %name-common
 Requires: dqt6-base-devel rpm-build-dqml6
 %description devel
@@ -685,6 +686,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
+- prevent bytes written limit by hasher-privd
+
 * Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - merge with new version
 
