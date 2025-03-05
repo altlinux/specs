@@ -1,6 +1,6 @@
 Name: gtklock
-Version: 3.0.0
-Release: alt2.git.21.geff6868
+Version: 4.0.0
+Release: alt1.git.15.g17b004d
 Summary: GTK-based lockscreen for Wayland
 License: GPLv3
 Group: Graphical desktop/Other
@@ -40,6 +40,9 @@ cp -f %SOURCE1 pam/%name
 %attr(102711,root,chkpwd) %_bindir/%name
 
 %changelog
+* Tue Mar 04 2025 Ildar Mulyukov <ildar@altlinux.ru> 4.0.0-alt1.git.15.g17b004d
+- new version: git head (ALT #52825)
+
 * Fri Sep 27 2024 Ildar Mulyukov <ildar@altlinux.ru> 3.0.0-alt2.git.21.geff6868
 - new version (git head)
 - fixes https://github.com/jovanlanik/gtklock/issues/104
