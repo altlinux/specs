@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 24.12.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -22,6 +22,7 @@ Source: %rname-%version.tar
 
 Patch1: khelpcenter-alt-hide-links-on-contents-screen.patch
 Patch2: alt-paths.patch
+Patch3: alt-run-from-root.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-webengine-devel
@@ -40,6 +41,7 @@ KDE help center.
 %setup -n %rname-%version
 #%patch1 -p2
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K6build
@@ -72,6 +74,9 @@ fi
 
 
 %changelog
+* Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt2
+- allow to run from root
+
 * Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
