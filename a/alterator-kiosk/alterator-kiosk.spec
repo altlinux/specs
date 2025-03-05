@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Source: %name-%version.tar
@@ -55,6 +55,9 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 %_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Wed Mar 05 2025 Oleg Solovyov <mcpain@altlinux.org> 1.13-alt1
+- update profiles
+
 * Mon Apr 22 2024 Oleg Solovyov <mcpain@altlinux.org> 1.12-alt1
 - profiles: require alterator-kiosk
 
