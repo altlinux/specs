@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: CSS selectors for Python ElementTree
@@ -45,6 +45,9 @@ BuildRequires: python3-module-tinycss2
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Mar 05 2025 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Thu May 02 2024 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
