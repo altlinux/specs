@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname jupyter_console
 
-%def_with docs
 %def_with check
 
 Name: python3-module-%oname
 Version: 6.6.3
-Release: alt2
+Release: alt3
 
 Summary: Jupyter Terminal Console
 License: BSD-3-Clause
@@ -33,12 +32,6 @@ BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-pexpect
 BuildRequires: python3-module-prompt_toolkit
 BuildRequires: python3-module-Pygments
-%endif
-
-%if_with docs
-BuildRequires: python3-module-sphinx_rtd_theme
-BuildRequires: python3-module-sphinxcontrib_github_alt
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %endif
 
 %py3_provides %oname
@@ -70,19 +63,11 @@ sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
 %install
 %pyproject_install
 
-%if_with docs
-export PYTHONPATH=$PWD
-%make -C docs html
-%endif
-
 %check
 %pyproject_run_pytest -v
 
 %files
 %doc *.md
-%if_with docs
-%doc docs/_build/html
-%endif
 %_bindir/*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
@@ -92,6 +77,9 @@ export PYTHONPATH=$PWD
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Mar 05 2025 Anton Vyatkin <toni@altlinux.org> 6.6.3-alt3
+- Fixed FTBFS (not build docs).
+
 * Thu Jun 22 2023 Michael Shigorin <mike@altlinux.org> 6.6.3-alt2
 - fix build --without check
 
