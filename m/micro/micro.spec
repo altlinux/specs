@@ -1,6 +1,6 @@
 Name: micro
 Version: 2.0.14
-Release: alt1
+Release: alt2
 Summary: A modern and intuitive terminal-based text editor
 License: MIT/BSD/Apache-2.0/MPL-2.0
 Group: Editors
@@ -28,6 +28,7 @@ me), or because you need to (over ssh).
 subst "s|0.0.0-unknown|%version-%release|" internal/util/util.go
 
 %build
+go generate ./runtime
 %gobuild -mod=vendor ./cmd/micro
 
 %install
@@ -44,6 +45,9 @@ desktop-file-install --dir=%buildroot%_desktopdir ./assets/packaging/micro.deskt
 %_desktopdir/micro.desktop
 
 %changelog
+* Wed Mar 05 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.0.14-alt2
+- generate runtime files
+
 * Mon Mar 03 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.0.14-alt1
 - new version (ALT bug 46744, 53034)
 - fix the version definition (ALT bug 51115)
