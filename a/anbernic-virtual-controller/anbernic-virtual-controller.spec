@@ -1,5 +1,5 @@
 Name: anbernic-virtual-controller
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Set of tools to combine several input devices into one virtual controller on Anbernic handhelds
@@ -49,6 +49,9 @@ install -m 0644 gamecontrollerdb.anbernic.txt %buildroot%_datadir/gamecontroller
 %_datadir/gamecontrollerdb.anbernic.txt
 
 %changelog
+* Wed Mar  5 2025 Artyom Bystrov <arbars@altlinux.org> 0.5-alt1
+- Add new device: Powkiddy RGB10Max3
+
 * Tue Feb 18 2025 Artyom Bystrov <arbars@altlinux.org> 0.4-alt1
 - Add new device: Powkiddy x55
 - Fix order of face buttons
