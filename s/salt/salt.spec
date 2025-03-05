@@ -3,11 +3,11 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3007.1
-Release: alt1
-Url: http://saltstack.org
-#VCS: https://github.com/saltstack/salt
+Release: alt2
 License: Apache-2.0
 Group: System/Configuration/Other
+URL: http://saltstack.org
+VCS: https://github.com/saltstack/salt
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -23,6 +23,7 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-alt-uname-path.patch
+Patch3: salt-alt-minion-KillMode.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -109,6 +110,7 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Current Salt version from sources
 echo -n '%version' > salt/_version.txt
 # Remove local copy documentation mention
@@ -265,6 +267,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Wed Mar 05 2025 Andrey Cherepanov <cas@altlinux.org> 3007.1-alt2
+- Set KillMode=control-group in salt-minion.service.
+
 * Wed Jun 26 2024 Nikolay Burykin <bne@altlinux.org> 3007.1-alt1
 - New version.
 
