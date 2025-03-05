@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.3.2
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -408,6 +408,11 @@ done
 # fix dbus service
 sed -i 's|^Exec=.*|Exec=%_K6bin/krunner|' %buildroot/%_K6dbus_srv/org.kde.krunner.service
 
+# add service alias
+ALIAS=`grep '^Alias=' %buildroot/%_userunitdir/plasma-kcminit.service | tail -n 1 | sed 's|Alias=||'`
+[ -n "$ALIAS" ] || exit 1
+ln -s plasma-kcminit.service "%buildroot/%_userunitdir/$ALIAS"
+
 mkdir -p %buildroot/%_K6xdgconf/plasma-workspace/env/
 mkdir -p %buildroot/%_K6data/kio_desktop/DesktopLinks/
 
@@ -586,6 +591,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.2-alt2
+- package systemd service alias (altbug#53246)
+
 * Wed Feb 26 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.2-alt1
 - new version
 
