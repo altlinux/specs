@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.3.4
-Release: alt2
+Version: 8.3.5
+Release: alt1
 Summary: Python test framework
 License: MIT
 Group: Development/Python3
@@ -65,7 +65,8 @@ ln -s pytest3 %buildroot%_bindir/pytest-3
 %check
 # add workaround for https://github.com/pytest-dev/pytest/issues/6297
 export TERM=xterm
-%pyproject_run_pytest -vra
+# don't use %%pyproject_run_pytest to avoid circular dependency
+%pyproject_run -- python3 -m pytest -vra
 
 %files
 %doc CHANGELOG.rst README.rst
@@ -82,6 +83,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Tue Mar 04 2025 Stanislav Levin <slev@altlinux.org> 8.3.5-alt1
+- 8.3.4 -> 8.3.5.
+
 * Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 8.3.4-alt2
 - Fixed FTBFS (Pygments >= 2.19.0).
 
