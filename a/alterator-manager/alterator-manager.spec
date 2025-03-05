@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.27
-Release: alt3
+Release: alt4
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -86,6 +86,9 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 
 
 %changelog
+* Wed Mar 05 2025 Ivan Savin <svn17@altlinux.org> 0.1.27-alt4
+- Update docs/README-ru.md.
+
 * Wed Feb 19 2025 Ivan Savin <svn17@altlinux.org> 0.1.27-alt3
 - Add polkit to requires.
 
