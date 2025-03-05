@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.2.6
+Version: 3.2.8
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -95,6 +95,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Wed Mar 05 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.8-alt1
+- New version 3.2.8.
+
 * Sun Mar 02 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.6-alt1
 - New version 3.2.6.
 
