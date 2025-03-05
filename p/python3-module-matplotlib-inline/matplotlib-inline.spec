@@ -1,6 +1,6 @@
 Name: python3-module-matplotlib-inline
 Version: 0.1.7
-Release: alt1
+Release: alt2
 Summary: Inline Matplotlib backend for IPython and Jupyter
 License: BSD-3-Clause
 Group: Development/Python3
@@ -11,9 +11,13 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
+Requires: python3-module-matplotlib
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+%add_findreq_skiplist %python3_sitelibdir/matplotlib_inline/backend_inline.py
 
 %description
 Inline Matplotlib backend for IPython and Jupyter
@@ -32,6 +36,9 @@ Inline Matplotlib backend for IPython and Jupyter
 %python3_sitelibdir/matplotlib_inline-%version.dist-info
 
 %changelog
+* Mon Feb 10 2025 Anton Vyatkin <toni@altlinux.org> 0.1.7-alt2
+- Reduce dependencies.
+
 * Sun May 19 2024 Grigory Ustinov <grenka@altlinux.org> 0.1.7-alt1
 - Automatically updated to 0.1.7.
 
