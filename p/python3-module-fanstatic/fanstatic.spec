@@ -1,10 +1,11 @@
 %define oname fanstatic
 
+%def_with docs
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.4
-Release: alt2
+Version: 1.5
+Release: alt1
 Summary: Flexible static resources for web applications
 License: BSD-3-Clause
 Group: Development/Python3
@@ -15,14 +16,16 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+%if_with docs
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
+%endif
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-webob
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-cssmin
+BuildRequires: python3-module-webob
 %endif
 
 %description
@@ -67,8 +70,10 @@ This package contains tests for fanstatic.
 %prep
 %setup
 
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
+%endif
 
 %build
 %pyproject_build
@@ -76,11 +81,13 @@ ln -s ../objects.inv docs/
 %install
 %pyproject_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD=sphinx-build-3 -C docs html
 %make SPHINXBUILD=sphinx-build-3 -C docs pickle
 
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
+%endif
 
 %check
 %pyproject_run_pytest -v
@@ -90,8 +97,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
 %_bindir/fanstatic-compile
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
-%exclude %python3_sitelibdir/%oname/pickle
 %exclude %python3_sitelibdir/%oname/tests
+%if_with docs
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc docs/_build/html/*
@@ -99,11 +107,15 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
 %files pickles
 %dir %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname/pickle
+%endif
 
 %files tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Mar 05 2025 Anton Vyatkin <toni@altlinux.org> 1.5-alt1
+- New version 1.5.
+
 * Wed Sep 20 2023 Anton Vyatkin <toni@altlinux.org> 1.4-alt2
 - Fix build without check.
 
