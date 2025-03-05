@@ -3,11 +3,11 @@
 %define pypi_nname openai
 %define mod_name openai
 
-# too many unpackaged and dubious dependencies
+# check requires the Internet connection
 %def_without check
 
 Name: python3-module-%pypi_nname
-Version: 1.65.2
+Version: 1.65.3
 Release: alt1
 
 Summary: The official Python library for the OpenAI API
@@ -26,6 +26,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter pandas-stubs
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -61,6 +62,9 @@ offers both synchronous and asynchronous clients powered by httpx.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 05 2025 Anton Zhukharev <ancieg@altlinux.org> 1.65.3-alt1
+- Updated to 1.65.3.
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 1.65.2-alt1
 - Built for ALT Sisyphus.
 
