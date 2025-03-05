@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -23,6 +23,7 @@ Common files for Alterator Entry specification:
 - specification documents
 - TOML schemas for Alterator Entry types
 - alterator-entry script to validate Alterator Entry files and extract data
+- editions2packages script to extract packages from editions
 
 %package -n python3-module-alterator-entry
 Summary: Python3 module to validate and extract fields from Alterator Entry
@@ -45,24 +46,32 @@ BuildRequires(pre): rpm-build-pyproject
 
 %install
 %pyproject_install
-install -D -m 755 alterator_entry/cli %buildroot%_bindir/%name
+install -D -m 755 scripts/alterator-entry %buildroot%_bindir/alterator-entry
+install -D -m 755 scripts/editions2packages %buildroot%_bindir/editions2packages
+
 mkdir -p %buildroot%_alterator_datadir
 cp -r ./schemas %buildroot%_alterator_datadir/schemas 
 
+install -D -m 755 scripts/* %buildroot%_bindir/
+
 %check
 export ALTERATOR_SCHEMAS_DIR=./schemas
-find examples -type f | xargs ./alterator_entry/cli validate
+find examples -type f | xargs ./scripts/alterator-entry validate
 
 %files
 %doc COPYING
 %doc %_alterator_datadir/schemas/
 %_bindir/alterator-entry
+%_bindir/editions2packages
 
 %files -n python3-module-alterator-entry
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Mar 04 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.4-alt1
+- Add editions2packages script to extract packages from editions
+
 * Mon Mar 03 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.3-alt1
 - Update enum with needed desktops in schemas
 - Fix properties definition in object schema
