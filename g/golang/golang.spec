@@ -50,8 +50,8 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.24.0
-Release: alt2
+Version: 1.24.1
+Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -376,6 +376,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Wed Mar 05 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.1-alt1
+- New version (1.24.1) (Fixes: CVE-2025-22870).
+
 * Mon Feb 17 2025 Alexey Shabalin <shaba@altlinux.org> 1.24.0-alt2
 - Drop wasm scripts, remove depend on node package (ALT#53092).
 
