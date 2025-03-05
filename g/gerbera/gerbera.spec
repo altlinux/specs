@@ -7,7 +7,7 @@
 %endif
 
 Name: gerbera
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 
 Summary: UPnP Media Server
@@ -138,6 +138,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/%name
 
 %changelog
+* Wed Mar 05 2025 Constantin Sunzow <protvin@altlinux.org> 2.4.1-alt1
+- New version 2.4.1.
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
