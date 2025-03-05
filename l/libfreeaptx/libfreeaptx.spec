@@ -2,18 +2,19 @@
 
 %define _name freeaptx
 Name: lib%_name
-Version: 0.1.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Open Source implementation of aptX codec
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://github.com/iamthehorker/libfreeaptx
+
+Vcs: https://github.com/iamthehorker/libfreeaptx.git
 
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/iamthehorker/libfreeaptx.git
 Source: %name-%version.tar
 %endif
 
@@ -70,6 +71,9 @@ sed -i '/^LDFLAGS = -s/d' Makefile
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Mar 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
+- 0.2.2
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - first build for Sisyphus
 

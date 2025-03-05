@@ -1,20 +1,24 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define xdg_name org.gnome.Usage
 %define ver_major 46
 
+%def_enable check
+
 Name: gnome-usage
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: The GNOME system information viewer
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Usage
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-usage.git
+
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -26,7 +30,7 @@ Source: %name-%version.tar
 
 Requires: accountsservice >= %accountsservice_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
@@ -51,15 +55,21 @@ disk space.
 
 %find_lang --with-gnome %name
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* NEWS
 
 %changelog
+* Wed Mar 05 2025 Yuri N. Sedunov <aris@altlinux.org> 46.1-alt1
+- 46.1
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
 - updated to 46.0-41-g83f58b0
 
