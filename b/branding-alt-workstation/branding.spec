@@ -3,9 +3,14 @@
 %define theme workstation
 %define Theme Workstation
 %define codename Prometheus
-%define status beta2
-%define status_en beta2
+%define status %nil
+%define status_en %nil
 %define flavour %brand-%theme
+
+%define icon_theme AltWorkstation
+
+# for MATE only
+%define gtk_theme BlueMenta
 
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
@@ -20,12 +25,12 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.23
+Release: alt1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 # for licenses
 BuildRequires: distro-licenses
@@ -45,6 +50,12 @@ License: GPLv2+
 
 %define distro_name %distro_base_name %distro_version%status_en
 %define distro_name_ru %distro_base_name_ru %distro_version%status
+
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -149,6 +160,7 @@ License:  GPLv2+
 Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme
 Obsoletes: %obsolete_list
+Conflicts: altlinux-release-%altbranch
 %branding_add_conflicts %flavour release
 Requires: pam-limits-desktop
 Requires: alt-os-release
@@ -183,7 +195,7 @@ Summary: GNOME settings for %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
-Requires: alt-gnome-desktop-wallpapers
+Requires: alt-gnome-desktop-wallpapers >= 1.0.1-alt1
 #
 %branding_add_conflicts %flavour gnome-settings
 %branding_add_conflicts %flavour graphics
@@ -197,6 +209,35 @@ Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
 
 %description gnome-settings
 GNOME settings for %distro_name
+
+%package mate-settings
+BuildArch: noarch
+Summary: MATE settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/GNOME
+Requires: dconf
+# Specified themes
+Requires: icon-theme-ePapirus
+Requires: icon-theme-Papirus
+Requires: icon-theme-Papirus-Dark
+Requires: icon-theme-Papirus-Light
+Requires: mate-themes
+Requires: theme-mate-windows
+Requires: x-cursor-theme-jimmac
+#
+%branding_add_conflicts %flavour mate-settings
+%branding_add_conflicts %flavour graphics
+Requires(post): lightdm-gtk-greeter
+Requires(post): libgio
+# To avoid install check conflicts
+Requires: %name-graphics = %EVR
+Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
+# Due to /usr/share/install3/lightdm-gtk-greeter.conf
+Conflicts: branding-simply-linux-system-settings
+Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
+
+%description mate-settings
+MATE settings for %distro_name
 
 %package slideshow
 Summary: Slideshow for %distro_name installer
@@ -247,7 +288,7 @@ cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -305,6 +346,11 @@ fi
 %_datadir/glib-2.0/schemas/50_gnome-dash-app-list-favorites.gschema.override
 %_datadir/glib-2.0/schemas/50_alt-gnome-appearance.gschema.override
 
+%files mate-settings
+%_datadir/glib-2.0/schemas/zzz_mate-background.gschema.override
+%_datadir/glib-2.0/schemas/zzz_mate-theme.gschema.override
+%_datadir/install3/*
+
 %files slideshow
 /etc/alterator/slideshow.conf
 /usr/share/install2/slideshow
@@ -319,6 +365,18 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Mar 07 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt1
+- Use substitution @BRANCH@ (thx antohami@alt)
+- Revert mate-settings subpackage (thx antohami@alt)
+- gnome-settings, mate-settings: use jpeg image
+  for background (thx antohami@alt)
+- add Qt6 support
+- browser-qt: add width distr logo
+- browser-qt: fix the movement of checkboxes when pointing
+- indexhtml: move technical support link to Basealt column and add
+  technical support url to en page
+- indexhtml: fix title in EN page
+
 * Fri Feb 21 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt0.23
 - browser-qt: fix checkbox style issue
 - os-release: add DOCUMENTATION_URL, SUPPORT_URL, ALT_BRANCH_ID
