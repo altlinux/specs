@@ -1,8 +1,8 @@
 %define rname kquickimageeditor
 
 Name: kde6-%rname
-Version: 0.4.0
-Release: alt3
+Version: 0.5.1
+Release: alt1
 %K6init altplace
 
 Group: System/Libraries
@@ -57,6 +57,9 @@ This package contains the development files for %name.
 
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
+- new version
+
 * Wed Nov 27 2024 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt3
 - obsolete kde5-kquickimageeditor-common
 
