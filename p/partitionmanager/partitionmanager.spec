@@ -2,7 +2,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -10,11 +10,12 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/KDE
 Url: https://apps.kde.org/%name
 
+Vcs: https://github.com/KDE/partitionmanager.git
+
 %if_disabled snapshot
 #Source: https://github.com/KDE/%name/archive/v%version/%name-%version.tar.gz
 Source: https://download.kde.org/stable/release-service/%version/src/%name-%version.tar.xz
 %else
-Vcs: https://github.com/KDE/partitionmanager.git
 Source: %name-%version.tar
 %endif
 
@@ -68,6 +69,9 @@ file systems.
 %doc README*
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 24.12.3-alt1
+- 24.12.3
+
 * Thu Feb 06 2025 Yuri N. Sedunov <aris@altlinux.org> 24.12.2-alt1
 - 24.12.2
 

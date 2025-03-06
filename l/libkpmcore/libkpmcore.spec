@@ -3,13 +3,15 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 
 Summary: KDE Partition Manager core library
 Group: System/Libraries
 License: GPL-3.0-or-later
 Url: https://github.com/KDE/%_name
+
+Vcs: https://github.com/KDE/kpmcore.git
 
 Source: https://download.kde.org/stable/release-service/%version/src/%_name-%version.tar.xz
 #Source: %url/archive/v%version/%_name-%version.tar.gz
@@ -84,6 +86,9 @@ using %_name.
 
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 24.12.3-alt1
+- 24.12.3
+
 * Thu Feb 06 2025 Yuri N. Sedunov <aris@altlinux.org> 24.12.2-alt1
 - 24.12.2
 
