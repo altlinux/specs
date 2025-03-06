@@ -3,7 +3,7 @@
 
 Name: sysdig
 Version: 0.39.0
-Release: alt2
+Release: alt3
 
 Summary: A system exploration and troubleshooting tool
 
@@ -69,6 +69,8 @@ subst 's|URL ".*/|URL "file://%_sourcedir/|' `find . -name CMakeLists.txt`
 
 %build
 %define optflags_lto %nil
+# It seems, Clang doesn't provide --as-needed by default:
+%add_optflags -Wl,--as-needed
 %cmake \
        -DMODERN_CLANG_EXE="/usr/bin/clang-%clang_ver" \
        -DCMAKE_CXX_COMPILER="clang++-%clang_ver" \
@@ -132,6 +134,9 @@ rm -f %buildroot%_bindir/scap-driver-loader
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Feb 27 2025 Paul Wolneykien <manowar@altlinux.org> 0.39.0-alt3
+- NMU: Turn on --as-needed linking.
+
 * Fri Feb 07 2025 Andrey Cherepanov <cas@altlinux.org> 0.39.0-alt2
 - Disabled lto support.
 - Remove scap-driver-loader because there is kernel module as RPM package.

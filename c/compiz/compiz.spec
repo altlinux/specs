@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.2
-Release: alt3
+Release: alt3.1
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -49,6 +49,9 @@ Development files for %name
 %patch -p1
 
 %build
+# For new Protobuf and Abseil:
+%add_optflags -std=c++17
+
 %define lib_suffix %nil
 %if "%_lib" == "lib64"
 %define lib_suffix 64
@@ -125,6 +128,9 @@ rm -f %buildroot%_bindir/compiz-decorator
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 0.9.14.2-alt3.1
+- NMU: Switch to C++17 for new Protobuf and Abseil.
+
 * Thu Feb 29 2024 Valery Inozemtsev <shrek@altlinux.ru> 0.9.14.2-alt3
 - updated build dependencies
 

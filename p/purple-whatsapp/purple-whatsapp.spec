@@ -1,6 +1,6 @@
 Name: purple-whatsapp
 Version: 0.9.0
-Release: alt1.4
+Release: alt1.5
 
 Summary: WhatsApp protocol implementation for libpurple (Pidgin)
 License: GPLv2+
@@ -31,6 +31,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %endif
 
 %build
+# For new Protobuf and Abseil:
+find -name 'Makefile' -exec sed -i -e 's/-std=c++11/-std=c++17/g' '{}' \;
+
 make -j1
 
 %install
@@ -42,6 +45,9 @@ make -j1
 %_pixmapsdir/pidgin/protocols/*/whatsapp.png
 
 %changelog
+* Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 0.9.0-alt1.5
+- NMU: Switch to C++17 for new Protobuf and Abseil.
+
 * Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 0.9.0-alt1.4
 - Fix build on GCC14
 

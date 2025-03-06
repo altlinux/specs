@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.5
-Release: alt2
+Release: alt3
 
 Summary: Android Debug CLI tools
 License: APL
@@ -55,6 +55,7 @@ Patch103: Revert-Remove-support-for-ppc64le.patch
 
 # ALT fixes
 Patch200: alt-libziparchive-compile-fix.patch
+Patch201: alt-absl-workaround.patch
 
 # LoongArch
 Patch3500: boringssl-loongarch64.patch
@@ -155,6 +156,7 @@ pushd external/boringssl
 %patch103 -p1
 popd
 %patch200 -p1
+%patch201 -p1
 %patch3500 -p1
 %patch3501 -p1
 
@@ -360,6 +362,9 @@ done
 %aprefix
 
 %changelog
+* Mon Mar 03 2025 Paul Wolneykien <manowar@altlinux.org> 34.0.5-alt3
+- NMU: Fixed build with libprotobuf25.
+
 * Sat Mar 01 2025 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt2
 - Build with Clang 19.1, this also fixes boringssl build failure
 

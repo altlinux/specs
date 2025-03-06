@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl-devel swig unzip
 BuildRequires: protobuf-compiler
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 20
+%define autorelease 1
 
 %global __provides_exclude_from ^%{_libdir}/fcitx5/.*\\.so$
 
@@ -32,12 +32,12 @@ Name:           fcitx5-mozc
 %global commit ed9c27947fd3ce3aa2326e40acce785fd85eb7a2
 #global shortcommit %nil
 #global branch %nil
-%global version 2.17.2102.102.1
+%global version 2.31.5712
 #global date %nil
 %global distprefix .gited9c279
 # FedoraForgeMeta2ALT: end generated meta
 
-Version:        2.17.2102.102.1
+Version:        2.31.5712
 # upstream don't tag release, build git snapshot here
 # git snaoshot should have s snapshot date will be taken care
 # of by forgemeta after importing to dist-git
@@ -81,20 +81,19 @@ Source2:        http://www.post.japanpost.jp/zipcode/dl/jigyosyo/zip/jigyosyo.zi
 
 # add -v to ninja command, to make verbose output during building
 Patch0:         mozc-build-verbosely.patch
-Patch1:		0001-Fix-build-on-GCC13.patch
+Patch1:         link_absl.patch
 
 BuildRequires:  python3-devel
 BuildRequires:  gettext gettext-tools 
 BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:  qt5-base-devel
-BuildRequires:  zinnia-devel
 BuildRequires:  gcc-c++
 BuildRequires:  ninja-build python3-module-ninja_syntax
 BuildRequires:  gyp >= 0.1
 BuildRequires:  fcitx5-devel
 BuildRequires:  libappstream-glib libappstream-glib-gir
 BuildRequires:  python3-module-six
-BuildRequires:  libprotobuf-devel 
+BuildRequires:  libprotobuf-devel libabseil-cpp-devel
 BuildRequires:  protobuf-c-compiler
 BuildRequires:  libabseil-cpp-devel
 BuildRequires:  libgtest-devel
@@ -117,7 +116,8 @@ A wrapper of mozc for fcitx5.
 %prep
 %setup -q -n mozc -a 1 -a 2
 %patch0 -p1
-%patch1 -p1
+%patch1 -p2
+sed -n -e 's/^.*@pkg-config:\([^@]\+\)@.*$/\1/p' src/base/absl.gyp | while read pkg; do sed -i -e "s/@pkg-config:$pkg@/$(pkg-config --libs "$pkg")/g" src/base/absl.gyp; done
 (cd src/data/dictionary_oss;
 PYTHONPATH="${PYTHONPATH}:../../" python3 ../../dictionary/gen_zip_code_seed.py --zip_code=../../../KEN_ALL.CSV --jigyosyo=../../../JIGYOSYO.CSV >> dictionary09.txt;
 )
@@ -136,7 +136,7 @@ pushd src
 # specify an another path for those mozc server files
 # to enable this to co-exist with ibus-mozc
 QTDIR=%{_prefix} \
-GYP_DEFINES="document_dir=%{_datadir}/licenses/%{name} use_libzinnia=1 use_libprotobuf=1 zinnia_model_file=%{_datadir}/zinnia/model/tomoe/handwriting-ja.model" \
+GYP_DEFINES="document_dir=%{_datadir}/licenses/%{name} use_libzinnia=0 use_libprotobuf=1" \
 python3 build_mozc.py gyp --gypdir=%{_bindir} --server_dir=%{server_dir} --target_platform=Linux
 python3 build_mozc.py build -c Release server/server.gyp:mozc_server gui/gui.gyp:mozc_tool unix/fcitx5/fcitx5.gyp:fcitx5-mozc
 popd
@@ -170,6 +170,15 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_metainfodir}/org.fcitx.Fcitx5.Addon.Mozc.metainfo.xml
 
 %changelog
+* Thu Feb 20 2025 Paul Wolneykien <manowar@altlinux.org> 2.31.5712-alt2_1
+- NMU: Build with external libabseil-cpp.
+
+* Thu Feb 20 2025 Paul Wolneykien <manowar@altlinux.org> 2.31.5712-alt1_1
+- NMU: Updated to version 2.31.5712.
+
+* Fri Feb 14 2025 Paul Wolneykien <manowar@altlinux.org> 2.17.2102.102.1-alt2_20.1
+- NMU: Fixed FTBFS (drop zinnia as zinnia-devel was deleted from Sisyphus).
+
 * Tue Jul 11 2023 Artyom Bystrov <arbars@altlinux.org> 2.17.2102.102.1-alt2_20
 - Fix build on GCC13
 

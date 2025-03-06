@@ -1,5 +1,5 @@
 %define oname protobuf
-%define soversion 32
+%define soversion 25
 
 # set 'enable' to build legacy package
 %def_disable legacy
@@ -34,8 +34,8 @@ Name: %oname
 %else
 Name: %oname%soversion
 %endif
-Version: 3.21.12
-Release: alt5
+Version: 3.25.5
+Release: alt6
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -52,7 +52,10 @@ Patch: %oname-%version.patch
 
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
-BuildRequires: gcc-c++ zlib-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake rpm-build-cmake ctest
+
+BuildRequires: gcc-c++ zlib-devel libgtest-devel libabseil-cpp-devel
 
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -119,6 +122,10 @@ lacks descriptors, reflection, and some other features.
 Summary: Development files for %oname
 Group: Development/C
 Requires: lib%oname%soversion = %EVR
+# Protoc.%soversion and libprotobuf-lite.so.%soversion are required
+# in protobuf-targets-noconfig.cmake.
+Requires: lib%oname-lite-devel = %EVR
+Requires: %name-compiler = %EVR
 
 %description -n lib%oname-devel
 This package contains development files required for packaging
@@ -332,22 +339,33 @@ rm -f src/solaris/libstdc++.la
 %add_optflags -fno-error-always-inline -std=gnu++11
 %endif
 
+# Add LTO flags for libutf8_validity.a (static) that is needed
+# for utf8_range.pc, that is, in turn, needed for protobuf.pc:
+%add_optflags -ffat-lto-objects
+
 iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
 mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
 
 rm -f m4/{lt*,libtool*}.m4
-export PTHREAD_LIBS="-lpthread"
-%autoreconf
-%configure \
-	--disable-static \
-	--localstatedir=%_var \
 
-%make_build
-%make_build CXXFLAGS="-Wno-error=type-limits"
+export PTHREAD_LIBS="-lpthread"
+
+%ifarch %ix86
+  %add_optflags -D_M_IX86
+%endif
+
+%cmake -DCMAKE_CXX_STANDARD=17 \
+       -Dprotobuf_USE_EXTERNAL_GTEST=ON \
+       -Dprotobuf_BUILD_SHARED_LIBS=ON \
+       -Dprotobuf_ABSL_PROVIDER=package \
+       -Dutf8_range_ENABLE_INSTALL=OFF
+%cmake_build
+
+export PROTOC="$(realpath %_cmake__builddir/protoc)"
 
 %if_with python3
 pushd python
-%python3_build --cpp_implementation
+%python3_build --cpp_implementation -L../%_cmake__builddir
 popd
 %endif
 
@@ -357,17 +375,23 @@ export MAVEN_OPTS=-Xmx1024m
 %endif
 %pom_disable_module kotlin java/pom.xml
 %pom_disable_module kotlin-lite java/pom.xml
-%mvn_build -s %{?_without_java_tests:--skip-tests} -- -f java/pom.xml
+%mvn_build -s %{?_without_java_tests:--skip-tests} -- -f java/pom.xml -Dprotobuf.builddir="$(realpath %_cmake__builddir)"
 %endif
 
 %if_with ruby
+pushd ruby
+rm -fv SetupConfig
 %ruby_build
+popd
 %endif
 
 %install
-%makeinstall_std
+%cmakeinstall_std
+
 %if_with ruby
+pushd ruby
 %ruby_install
+popd
 %endif
 
 %if_with python3
@@ -380,9 +404,13 @@ popd
 %mvn_install
 %endif
 
+%check
+%ctest
+
 %if_disabled legacy
 %files compiler
 %_bindir/protoc
+%_bindir/protoc-%soversion.*
 %endif
 
 %files -n lib%oname%soversion
@@ -394,7 +422,9 @@ popd
 %files -n lib%oname-devel
 %dir %_includedir/google/
 %_includedir/google/protobuf/
-%_pkgconfigdir/protobuf.pc
+%_pkgconfigdir/%name.pc
+%dir %_cmakedir/protobuf
+%_cmakedir/protobuf/*.cmake
 %_libdir/*.so
 %exclude %_libdir/libprotobuf-lite.so
 %endif
@@ -405,7 +435,7 @@ popd
 %if_disabled legacy
 %files -n lib%oname-lite-devel
 %_libdir/libprotobuf-lite.so
-%_pkgconfigdir/protobuf-lite.pc
+%_pkgconfigdir/%name-lite.pc
 
 %if_with python3
 %files -n python3-module-%oname
@@ -417,6 +447,7 @@ popd
 %doc examples/AddPerson.java examples/ListPeople.java
 %doc java/README.md
 %doc LICENSE
+%_includedir/java/core/src/main/java/com/google/protobuf/*.proto
 
 %files java-util -f .mfiles-protobuf-java-util
 
@@ -449,6 +480,28 @@ popd
 
 
 %changelog
+* Wed Feb 26 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt6
+- Compile and provide utf8_range as a part of libprotobuf.so and
+  libprotobuf-lite.so.
+
+* Tue Feb 25 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt5
+- Fix: Make libprotobuf-devel libprotobuf-lite-devel.
+
+* Thu Feb 13 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt4
+- Make libprotobuf-devel require lib%oname%soversion-lite and the
+  protoc compiler (due to references in protobuf-targets-noconfig.cmake).
+
+* Tue Feb 11 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt3
+- Make libprotobuf.so and libprotobuf-lite.so be an LD script
+  (thx Gleb F.-M. for the idea).
+
+* Thu Jan 30 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt2
+- Fixed building on i586.
+
+* Wed Jan 22 2025 Paul Wolneykien <manowar@altlinux.org> 3.25.5-alt1
+- New version 3.25.5 (Fixes: CVE-2024-7254).
+- SO-version is now 25.5.0 (was 32.0.12).
+
 * Fri Aug 02 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.21.12-alt5
 - e2k: remove constinit to avoid compiler errors
 

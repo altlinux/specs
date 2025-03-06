@@ -2,7 +2,7 @@
 
 Name: osgearth
 Version: 3.7
-Release: alt1
+Release: alt1.1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL-3.0 with exceptions
@@ -133,10 +133,13 @@ sed -i 's|add_subdirectory(fastdxt)|# add_subdirectory(fastdxt)|' src/osgEarthDr
 
 %build
 %ifarch %e2k
-%add_optflags -std=c++14
 # OpenSceneGraph debuginfo too large now => unmets
 %global __find_debuginfo_files %nil
 %endif
+
+# For new Protobuf and Abseil:
+sed -i -e 's/set(CMAKE_CXX_STANDARD 14)/set(CMAKE_CXX_STANDARD 17)/g' CMakeLists.txt
+
 %cmake \
        -Wno-dev \
        -DCMAKE_BUILD_TYPE="Release"
@@ -165,6 +168,9 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %_datadir/osgEarth
 
 %changelog
+* Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 3.7-alt1.1
+- Switch to C++17 for new Protobuf and Abseil.
+
 * Sat Oct 05 2024 Andrey Cherepanov <cas@altlinux.org> 3.7-alt1
 - New version.
 

@@ -2,7 +2,7 @@
 
 Name: mosh
 Version: 1.4.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Mobile shell that supports roaming and intelligent local echo
 License: GPLv3+
@@ -33,12 +33,11 @@ line editing of user keystrokes.
 %prep
 %setup
 %patch -p1
-%ifarch %e2k
-# -std=c++03 by default as of lcc 1.23.20
-%add_optflags -std=c++11
-%endif
 
 %build
+# For new Protobuf and Abseil:
+%add_optflags -std=c++17
+
 %autoreconf
 %configure
 %make_build
@@ -56,6 +55,9 @@ line editing of user keystrokes.
 %_mandir/man1/mosh-server.1.*
 
 %changelog
+* Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 1.4.0-alt1.2
+- NMU: Switch to C++17 for new Protobuf and Abseil.
+
 * Sun Jul 21 2024 Ivan A. Melnikov <iv@altlinux.org> 1.4.0-alt1.1
 - Add BR: perl-diagnostics (fixes FTBFS).
 

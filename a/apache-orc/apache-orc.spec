@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%define sover 2
 
 Summary: Library for producing small, fast columnar storage for Hadoop workloads
 Name: apache-orc
-Version: 1.9.1
-Release: alt1
+Version: 2.1.0
+Release: alt2
 License: Apache-2.0
 Url: http://orc.apache.org/
 Group: System/Libraries
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: orc-format-1.0.0.tar.gz
 Patch1: %name-%version-%release.patch
 
 # Apache ORC has numerous compile errors and apparently assumes a 64-bit
@@ -36,12 +39,12 @@ query and the row indexes can narrow the search to a particular set
 of 10,000 rows. ORC supports the complete set of types in Hive,
 including the complex types: structs, lists, maps, and unions.
 
-%package -n liborc1
+%package -n liborc%sover
 Summary: Library for producing small, fast columnar storage for Hadoop workloads
 Provides: %name = %EVR
 Group: System/Libraries
 
-%description -n liborc1
+%description -n liborc%sover
 ORC is a self-describing type-aware columnar file format designed
 for Hadoop workloads. It is optimized for large streaming reads,
 but with integrated support for finding required rows quickly.
@@ -58,7 +61,7 @@ including the complex types: structs, lists, maps, and unions.
 %package devel
 Summary: Header files, libraries and development documentation for %name
 Group: Development/C++
-Requires: liborc1 = %EVR
+Requires: liborc%sover = %EVR
 
 %description devel
 ORC is a self-describing type-aware columnar file format designed
@@ -84,6 +87,17 @@ library.
 %build
 #export CXXFLAGS="$RPM_OPT_FLAGS -Wno-error=dangling-reference"
 
+# To compile protobuf-generated files:
+%add_optflags -Wno-error=stringop-overflow
+
+# To compile on ppc64le
+# (TODO: Fix the unused-parameter warnings):
+%ifarch ppc64le
+%add_optflags -Wno-error=unused-parameter
+%endif
+
+export ORC_FORMAT_URL=file://%SOURCE1
+
 %cmake \
     -DOVERRIDE_INSTALL_PREFIX=/usr \
     -DCMAKE_COLOR_MAKEFILE:BOOL=OFF \
@@ -108,9 +122,11 @@ library.
 %install
 %cmake_install
 
-%files -n liborc1
+%files -n liborc%sover
 %doc README.md
 %_libdir/liborc.so.*
+%_datadir/doc/orc/LICENSE
+%_datadir/doc/orc/NOTICE
 
 %files devel
 %_includedir/orc
@@ -118,6 +134,12 @@ library.
 %_libdir/cmake/orc
 
 %changelog
+* Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 2.1.0-alt2
+- Fix building of ppc64le.
+
+* Fri Feb 28 2025 Paul Wolneykien <manowar@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Thu Oct 19 2023 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
 - New version 1.9.1.
 

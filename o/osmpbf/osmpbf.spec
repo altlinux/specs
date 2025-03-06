@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           osmpbf
 Version:        1.5.0
-Release:        alt1_11jpp11
+Release:        alt1_12jpp11
 Summary:        C library to read and write OpenStreetMap PBF files
 
 License:        LGPLv3
@@ -49,6 +49,9 @@ developing applications that use %{name}.
 
 
 %build
+# For new Protobuf and Abseil:
+find ~/RPM/BUILD/OSM-binary-1.5.0 -name 'CMakeLists.txt' -exec sed -i -e 's/set(CMAKE_CXX_STANDARD 11)/set(CMAKE_CXX_STANDARD 17)/g' '{}' \;
+
 %{fedora_v2_cmake}
 %fedora_v2_cmake_build
 
@@ -76,6 +79,9 @@ rm %{buildroot}/%{_libdir}/libosmpbf.a
 
 
 %changelog
+* Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 1.5.0-alt1_12jpp11
+- NMU: Switch to C++17 for new Protobuf and Abseil.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_11jpp11
 - update
 

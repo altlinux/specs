@@ -2,7 +2,7 @@
 %def_without python3_bindings
 
 Name: grpc
-Version: 1.53.0
+Version: 1.70.1
 Release: alt1
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
@@ -30,6 +30,7 @@ BuildRequires: libabseil-cpp-devel
 BuildRequires: libre2-devel
 BuildRequires: libxxhash-devel
 BuildRequires: chrpath
+BuildRequires: libopentelemetry-devel
 #BuildRequires: gflags-devel
 #BuildRequires: gtest-devel
 #BuildRequires: gperftools-devel
@@ -49,6 +50,7 @@ BuildRequires: gem(signet) >= 0.7 gem(signet) < 1
 BuildRequires: gem(googleauth)
 %endif
 
+Patch0: %name-%version-alt.patch
 Patch1: grpc-0001-enforce-system-crypto-policies.patch
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -281,9 +283,13 @@ rm -vf examples/node/package-lock.json
 %build
 rm -f Makefile
 rm -f BUILD
+
+# Prevent -Werror=return-type in switch/case blocks:
+%add_optflags -Wno-error=return-type
+
 %cmake \
     -DBUILD_SHARED_LIBS:BOOL=ON \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
     -DgRPC_INSTALL_LIBDIR="$(relative %_libdir/ %prefix/)" \
     -DgRPC_INSTALL_PKGCONFIGDIR="$(relative %_pkgconfigdir/ %prefix/)" \
     -DgRPC_ZLIB_PROVIDER="package" \
@@ -329,14 +335,14 @@ rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemsl
 
 %files -n lib%name
 %doc README.md LICENSE
-%_libdir/libaddress_sorting.so.*
 %_libdir/libgpr.so.*
 %_libdir/libgrpc.so.*
 %_libdir/libgrpc_authorization_provider.so.*
 %_libdir/libgrpc_plugin_support.so.*
 %_libdir/libgrpc_unsecure.so.*
-%_libdir/libupb.so.*
 %_datadir/grpc
+%dir %_libdir/grpc
+%_libdir/grpc/*.so.*
 
 %files -n lib%name++
 %doc README.md LICENSE
@@ -355,18 +361,17 @@ rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemsl
 %_bindir/grpc_*_plugin
 
 %files -n lib%name-devel
-%_libdir/libaddress_sorting.so
 %_libdir/libgpr.so
 %_libdir/libgrpc.so
 %_libdir/libgrpc_plugin_support.so
 %_libdir/libgrpc_unsecure.so
 %_libdir/libgrpc_authorization_provider.so
-%_libdir/libupb.so
 %_pkgconfigdir/gpr.pc
 %_pkgconfigdir/grpc.pc
 %_pkgconfigdir/grpc_unsecure.pc
 %_includedir/grpc
 %prefix/lib/cmake/grpc
+%_libdir/grpc/*.so
 
 %files -n lib%name++-devel
 %_libdir/libgrpc++.so
@@ -377,6 +382,7 @@ rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemsl
 %_libdir/libgrpcpp_channelz.so
 %_pkgconfigdir/grpc++.pc
 %_pkgconfigdir/grpc++_unsecure.pc
+%_pkgconfigdir/grpcpp_otel_plugin.pc
 %_includedir/grpc++
 %_includedir/grpcpp
 
@@ -411,6 +417,10 @@ rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemsl
 %_bindir/grpc_tools_ruby_protoc
 
 %changelog
+* Fri Feb 21 2025 Paul Wolneykien <manowar@altlinux.org> 1.70.1-alt1
+- NMU: Update to v1.70.1.
+- NMU: Install third-party libraries to %_libdir/grpc.
+
 * Mon Apr 10 2023 Alexey Shabalin <shaba@altlinux.org> 1.53.0-alt1
 - 1.53.0
 
