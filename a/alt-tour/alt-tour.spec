@@ -2,7 +2,7 @@
 %define app_id org.altlinux.Tour
 
 Name: alt-tour
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: ALT Tour and Greeter
@@ -22,6 +22,7 @@ BuildRequires: meson
 BuildRequires: vala
 BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(json-glib-1.0)
 
 %description
 A guided tour and greeter for Alt with GNOME DE.
@@ -45,5 +46,9 @@ A guided tour and greeter for Alt with GNOME DE.
 %doc README.md
 
 %changelog
+* Thu Mar 06 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1-alt1
+- Added settings page with color scheme selector and topbar buttons.
+- Added tour pages for each system style.
+
 * Tue Mar 04 2025 Alexander Davydzik <paladindev@altlinux.org> 1.0-alt1
 - initial build
