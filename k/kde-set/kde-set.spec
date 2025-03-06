@@ -6,7 +6,7 @@
 
 Name: kde-set
 Version: 25.02.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE applications
@@ -99,7 +99,7 @@ Requires: plasma-disks
 Requires: khelpcenter
 %endif
 Requires: kolourpaint kio-audiocd kgpg
-Requires: kmenuedit kgamma plasma-thunderbolt
+Requires: kmenuedit plasma-thunderbolt
 Requires: kfind filelight kcharselect spectacle
 Requires: ktimer
 Requires: kamera kdenetwork-filesharing
@@ -279,6 +279,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.2-alt2
+- fix requires
+
 * Tue Mar 04 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.2-alt1
 - don't require kgamma (closes: 53297)
 
