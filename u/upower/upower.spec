@@ -7,14 +7,16 @@
 %endif
 
 Name: upower
-Version: 0.99.20
-Release: alt1.1
+Version: 1.90.7
+Release: alt1
 
 Summary: Power Management Service
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
-URL: http://cgit.freedesktop.org/upower/
+Url: http://cgit.freedesktop.org/upower/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Vcs: https://gitlab.freedesktop.org/upower/upower.git
 
 Provides: DeviceKit-power = 016
 Obsoletes: DeviceKit-power < 016
@@ -23,18 +25,15 @@ Requires: lib%name = %version-%release
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-%define glib_ver 2.34
-%define dbus_ver 1.9.18
-%define gudev_ver 235
+%define glib_ver 2.66
+%define gudev_ver 238
 %define imobiledevice_ver 1.3
 %define plist_ver 2.2.0
 %define dbusmock_ver 0.23.1
 
-Requires: dbus >= %dbus_ver
-
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 BuildRequires: meson libgio-devel >= %glib_ver
-BuildRequires: gtk-doc libusb-devel libgudev-devel >= %gudev_ver libdbus-devel >= %dbus_ver
+BuildRequires: gtk-doc libgudev-devel >= %gudev_ver
 BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
 BuildRequires: libimobiledevice-devel > %imobiledevice_ver pkgconfig(libplist-2.0) pkgconfig(systemd)
 %{?_enable_check:BuildRequires: /proc /dev/pts python3 python3-module-dbusmock >= %dbusmock_ver
@@ -102,18 +101,23 @@ GObject introspection devel data for the UPower library
 %__meson_test
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 %dir %_sysconfdir/UPower
 %_sysconfdir/UPower/*.conf
 %_unitdir/*
+%_udev_hwdbdir/60-%name-battery.hwdb
 %_udevhwdbdir/95-upower-hid.hwdb
 %_udevrulesdir/*.rules
 %_bindir/*
 %_libexecdir/*
 %_datadir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/system-services/*.service
+%_datadir/polkit-1/actions/org.freedesktop.upower.policy
 %_mandir/man?/*
+%_datadir/zsh/site-functions/_upower
 %dir %_var/lib/%name
+
+%exclude %_datadir/installed-tests/%name/%name-integration.test
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -132,6 +136,9 @@ GObject introspection devel data for the UPower library
 %_girdir/*.gir
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.90.7-alt1
+- updated to v1.90.7-17-g71e4739
+
 * Fri Nov 29 2024 Yuri N. Sedunov <aris@altlinux.org> 0.99.20-alt1.1
 - spec: fixed build after meson macros update
 
