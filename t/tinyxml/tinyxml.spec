@@ -3,18 +3,20 @@
 
 Name: tinyxml
 Version: 2.6.2
-Release: alt1.2
+Release: alt2
 Summary: A simple, small, C++ XML parser
 Group: System/Libraries
 License: zlib
-Url: http://www.grinninglizard.com/tinyxml/
+Url: https://sourceforge.net/projects/tinyxml/
 BuildRequires: gcc-c++
-Source: http://downloads.sourceforge.net/%name/%{name}_%underscore_version.tar.gz
+Source: https://downloads.sourceforge.net/%name/%{name}_%underscore_version.tar.gz
 Source1:        tinyxml.pc.in
 Patch0: tinyxml-2.5.3-stl.patch
-# http://sourceforge.net/p/tinyxml/patches/51/
+# https://sourceforge.net/p/tinyxml/patches/51/
 Patch1: tinyxml-2.6.2-entity.patch
 Patch2: tinyxml-2.6.2-alt-fix-tests.patch
+Patch3: tinyxml-2.6.2-CVE-2021-42260.patch
+Patch4: tinyxml-2.6.2-CVE-2023-34194.patch
 
 %description
 TinyXML is a simple, small, C++ XML parser that can be easily integrating
@@ -84,6 +86,11 @@ LD_LIBRARY_PATH=$PWD${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH} ./xmltest
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 2.6.2-alt2
+- Security fixes:
+  + CVE-2021-42260: Fixed infinite loop in TiXmlParsingData::Stamp via crafted XML message (DoS)
+  + CVE-2023-34194: Fixed reachable assertion (application exit) in TiXmlDeclaration::Parse via crafted XML document
+
 * Sun Jun 12 2016 Igor Vlasenko <viy@altlinux.ru> 2.6.2-alt1.2
 - NMU: added pc file
 
