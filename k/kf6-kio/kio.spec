@@ -1,12 +1,12 @@
 %define rname kio
 
-%def_disable streebog
+%def_enable streebog
 %define sover 0
 %define libkuriikwsfiltereng_private libkuriikwsfiltereng_private%sover
 
 Name: kf6-%rname
 Version: 6.11.0
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Libraries
@@ -174,6 +174,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Thu Mar 06 2025 Daniil-Viktor Ratkin <krf10@altlinux.org> 6.11.0-alt3
+- fix streebog patch
+
 * Thu Feb 27 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt2
 - fix russian translation
 
