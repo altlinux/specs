@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name Rtree
+%define pypi_name rtree
+%define pypi_nname rtree
 %define mod_name rtree
 
 %def_with check
 
-Name: python3-module-%mod_name
-Version: 1.3.0
+Name: python3-module-%pypi_nname
+Version: 1.4.0
 Release: alt1
 
 Summary: R-Tree spatial index for Python GIS
@@ -21,8 +22,6 @@ Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
-# PyPI well known name
-Provides: python3-module-%pypi_name = %EVR
 Requires: spatialindex
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -72,9 +71,12 @@ rm setup.py
 %files
 %doc CHANGES.rst CREDITS.txt LICENSE.txt README.md
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 06 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Wed Jul 10 2024 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
