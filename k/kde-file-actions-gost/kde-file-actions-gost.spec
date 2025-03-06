@@ -1,8 +1,8 @@
 %define rname kde-file-actions-gost
 
 Name: %rname
-Version: 0.8.3
-Release: alt2
+Version: 0.8.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -55,6 +55,9 @@ sed -i "s|@LOCALEDATADIR@|%_K6i18n|"  %buildroot/%_K6bin/kde-*crypt-*-gost
 %_datadir/kio/servicemenus/*crypt-*-gost.desktop
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg at altlinux dot org> 0.8.4-alt1
+- fix translations
+
 * Fri Dec 27 2024 Sergey V Turchin <zerg at altlinux dot org> 0.8.3-alt2
 - fix requires
 
