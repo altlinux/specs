@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 24.12.4.1097
+Version: 25.2.1.931
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -41,12 +41,12 @@ Requires(preun): %{_sbindir}/update-alternatives
 %Description
 The web browser from Yandex
 
-Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 130.0.6723.
+Yandex Browser is a browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier. Based on Chromium 132.0.6834.
 
 %Description -l ru_RU.UTF-8
 Веб-браузер от Яндекса
 
-Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 130.0.6723.
+Яндекс Браузер - безопасный, простой в настройке и управлении браузер на базе Chromium 132.0.6834.
 
 #------------------------------------------------------------------------------
 #   Prep rule - Prepare sources before build
@@ -222,6 +222,30 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Mar 6 2025 yabro <yabro@altlinux.org> 25.2.1.931-alt1
+- Fixed Tab crushes bug (closes: 53162)
+- Browser updated to 25.2.1.931
+ + High CVE-2025-0998: Out of bounds memory access in V8
+ + High CVE-2025-0997: Use after free in Navigation
+ + High CVE-2025-0996: Inappropriate implementation in Browser UI
+ + High CVE-2025-0995: Use after free in V8
+ + High CVE-2025-0434: Out of bounds memory access in V8
+ + High CVE-2025-0435: Inappropriate implementation in Navigation
+ + High CVE-2025-0436: Integer overflow in Skia
+ + High CVE-2025-0437: Out of bounds read in Metrics
+ + High CVE-2025-0438: Stack buffer overflow in Tracing
+ + High CVE-2025-0611: Object corruption in V8
+ + High CVE-2025-0612: Out of bounds memory access in V8
+ + Medium CVE-2025-0439: Race in Frames
+ + Medium CVE-2025-0440: Inappropriate implementation in Fullscreen
+ + Medium CVE-2025-0441: Inappropriate implementation in Fenced Frames
+ + Medium CVE-2025-0442: Inappropriate implementation in Payments
+ + Medium CVE-2025-0443: Insufficient data validation in Extensions
+ + Medium CVE-2025-0762: Use after free in DevTools
+ + Low CVE-2025-0446: Inappropriate implementation in Extensions
+ + Low CVE-2025-0447: Inappropriate implementation in Navigation
+ + Low CVE-2025-0448: Inappropriate implementation in Compositing
 
 * Tue Feb 13 2025 yabro <yabro@altlinux.org> 24.12.4.1097-alt1
 - Browser updated to 24.12.4.1097
