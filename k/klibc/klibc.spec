@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: klibc
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 Summary: A minimal libc subset for use with initramfs
 License: BSD-3-Clause and BSD-4-Clause-UC and GPL-2.0-only and MIT-0
@@ -187,6 +187,9 @@ rm a.out
 %files checkinstall
 
 %changelog
+* Thu Mar 06 2025 Vitaly Chikunov <vt@altlinux.org> 2.0.14-alt1
+- Update to klibc-2.0.14 (2025-03-04).
+
 * Fri Aug 04 2023 Vitaly Chikunov <vt@altlinux.org> 2.0.13-alt1
 - Update to klibc-2.0.13 (2023-07-27) syncing code with upstream.
 - %%changelog cleanup to remove non-ALT (non-packaging related) entries.
