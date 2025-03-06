@@ -24,23 +24,25 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.48
+Version: %ver_major.49
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
-License: %lgpl2plus
+License: LGPL-2.1-or-later
 Url: http://www.gtk.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gtk.git
 
 %if_enabled snapshot
 Source: %_name-%version.tar
 %else
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Source5: gtk-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define meson_ver 0.64.0
+%define meson_ver 0.64
 %define glib_ver 2.58
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
@@ -71,7 +73,7 @@ Requires: at-spi2-core
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libcairo-gobject-devel >= %cairo_ver
@@ -427,10 +429,10 @@ xvfb-run %__meson_test -v --print-errorlogs
 
 %if_enabled introspection
 %files gir
-%_typelibdir/*
+%_typelibdir/*.typelib
 
 %files gir-devel
-%_girdir/*
+%_girdir/*.gir
 %endif
 
 %if_enabled installed_tests
@@ -443,6 +445,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.49-alt1
+- 3.24.49
+
 * Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.48-alt1
 - 3.24.48
 
