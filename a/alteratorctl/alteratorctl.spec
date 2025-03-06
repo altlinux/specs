@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.0.9
-Release: alt2
+Version: 0.0.10
+Release: alt1
 
 Summary: CLI for alterator browser
 License: GPL-2.0+
@@ -13,6 +13,9 @@ BuildRequires: zlib-devel libmount-devel libblkid-devel libselinux-devel libtoml
 
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-backend-packages alterator-interface-component alterator-backend-component_categories 
+Requires: alterator-backend-batch-components alterator-backend-batch-component_categories alterator-interface-edition 
+Requires: alt-editions-server alterator-interface-diag alterator-backend-systeminfo
 Requires: libtomlc99
 
 Source0: %name-%version.tar
@@ -35,6 +38,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Thu Mar 06 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.10-alt1
+- Adding dependencies on backends of alteratorctl modules 
+
 * Tue Feb 25 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.9-alt2
 - Adding html parser library libgumbo-devel to build requires
 
