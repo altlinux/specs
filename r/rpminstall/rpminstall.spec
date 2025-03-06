@@ -1,8 +1,8 @@
 BuildRequires: desktop-file-utils
 
 Name:		rpminstall
-Version:	1.1.4
-Release:	alt2
+Version:	1.1.5
+Release:	alt1
 Summary:	Graphical application for install RPM packages using apt-get
 
 License:	GPL
@@ -13,7 +13,7 @@ Packager:   	Andrey Cherepanov <cas@altlinux.org>
 
 Source0:	%name-%version.tar.gz
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools
+BuildRequires: qt6-base-devel qt6-tools
 Requires: packageinstall
 
 %description
@@ -22,14 +22,14 @@ Graphical application for install RPM packages using apt-get.
 %prep
 %setup -q
 export PREFIX=%_prefix
-%qmake_qt5 %name.pro
+%qmake_qt6 %name.pro
 
 %build
 %make_build
-lrelease-qt5 %name.pro
+lrelease-qt6 %name.pro
 
 %install
-%installqt5
+%install_qt6
 install -Dm644 apturl.js %buildroot%_libdir/firefox/defaults/preferences/apturl.js
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
@@ -49,6 +49,9 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %_libdir/firefox/defaults/preferences/apturl.js
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg at altlinux dot org> 1.1.5-alt1
+- port to Qt6
+
 * Sun Dec 29 2024 Anton Kurachenko <srebrov@altlinux.org> 1.1.4-alt2
 - Increased application icon size.
 
