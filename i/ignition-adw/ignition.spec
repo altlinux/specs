@@ -4,7 +4,7 @@
 %define real_name ignition
 
 Name: ignition-adw
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Manage startup apps and scripts
@@ -31,6 +31,8 @@ BuildRequires: meson
 BuildRequires: blueprint-compiler
 BuildRequires: libgjs-devel
 BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: gtk4-update-icon-cache
 %if_enabled check
 BuildRequires: desktop-file-utils
 BuildRequires: appstream
@@ -52,12 +54,14 @@ Ignition can add apps, scripts, and arbitrary commands to run at login.
 
 %install
 %meson_install
-%find_lang --with-gnome %name
+# drop unknown languages, find known
+rm -r %buildroot%_datadir/locale/zh_Hans
+%find_lang --with-gnome %real_name
 
 %check
 %meson_test
 
-%files -f %name.lang
+%files -f %real_name.lang
 %_bindir/%app_id
 %_desktopdir/%app_id.desktop
 %_iconsdir/hicolor/*/apps/%{app_id}*.*
@@ -68,6 +72,9 @@ Ignition can add apps, scripts, and arbitrary commands to run at login.
 %doc README.md
 
 %changelog
+* Tue Mar 04 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Fri Feb 14 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
