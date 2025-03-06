@@ -28,7 +28,7 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2412.0
+Version: 8.2502.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -57,7 +57,7 @@ BuildRequires: libuuid-devel
 %{?_enable_liblogging_stdlog:BuildRequires: liblogging-devel >= 1.0.3}
 %{?_enable_rfc3195:BuildRequires: liblogging-devel >= 1.0.1}
 %{?_enable_ksi_ls12:BuildRequires: libksi-devel >= 3.19.0}
-%{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.9}
+%{?_enable_omamqp1:BuildRequires: libqpid-proton-devel >= 0.13}
 BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_ommongodb:BuildRequires: libmongoc-devel}
 %{?_enable_elasticsearch:BuildRequires: libcurl-devel}
@@ -687,6 +687,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Thu Mar 06 2025 Alexey Shabalin <shaba@altlinux.org> 8.2502.0-alt1
+- New version 8.2502.0.
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 8.2412.0-alt1
 - New version 8.2412.0.
 
