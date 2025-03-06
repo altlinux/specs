@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,23 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Mar 4 2025 Semyon Knyazev <samael@altlinux.org> 0.19.0-alt1
+- Add action "Show descriptor in SDDL" in the "More" button menu in the
+  security tab. Allows to display a security descriptor in SDDL format.
+- Add a rollback of the previously applied security descriptor. The action
+  "Rollback to the previous descriptor" is available in the menu of the "More"
+  button in the security tab.
+- Freezing was minimized when interacting with objects of group policy in a tree.
+- Fixed changelog errors. (closes: 45839)
+- Add middle name to the editable properties and dialogues of user creation.
+  The middle name field can be displayed when creating with action "Settings"->
+  "Show the middle name when creating."
+- Add the copy action for the attribute's display values.
+- Fixed optional attributes disappearance after "Reset" action in the attributes
+  tab.
+- Fixed the display of optional attributes msDS-User-Account-Control-Computed and
+  msDS-User-Password-Expire-Time-Computed.
+
 * Wed Dec 5 2024 Semyon Knyazev <samael@altlinux.org> 0.18.0-alt1
 - Add custom permissions to security tab: create/delete child objects
   and read/write properties.
