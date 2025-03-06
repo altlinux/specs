@@ -6,7 +6,7 @@
 %endif
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.2
+%define ver_major 1.4
 %define ms_ver 0.4.2
 %define api_ver 0.3
 %define spa_api_ver 0.2
@@ -48,7 +48,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Media Sharing Server
@@ -109,7 +109,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_libffado:BuildRequires: pkgconfig(libffado)}
 %{?_enable_libcamera:BuildRequires: libcamera-devel >= %libcamera_ver libdrm-devel}
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
-%{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing-1)}
+%{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing-2)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
@@ -269,16 +269,12 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_datadir/%name/%name.conf
 %_datadir/%name/%name-aes67.conf
 %_datadir/%name/client.conf
-%_datadir/%name/client-rt.conf
 
 %_datadir/%name/minimal.conf
 %_datadir/%name/%name-avb.conf
 %_datadir/%name/%name-pulse.conf
 %{?_enable_vulkan:%_datadir/%name/%name-vulkan.conf}
 %_datadir/%name/filter-chain.conf
-
-%dir %_datadir/%name/client-rt.conf.avail
-%_datadir/%name/client-rt.conf.avail/20-upmix.conf
 
 %dir %_datadir/%name/client.conf.avail
 %_datadir/%name/client.conf.avail/20-upmix.conf
@@ -304,6 +300,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_datadir/%name/filter-chain/sink-make-LFE.conf
 %_datadir/%name/filter-chain/sink-matrix-spatialiser.conf
 %_datadir/%name/filter-chain/sink-mix-FL-FR.conf
+%_datadir/%name/filter-chain/sink-upmix-5.1-filter.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-5.1-kemar.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-7.1-hesuvi.conf
 %_datadir/%name/filter-chain/source-rnnoise.conf
@@ -325,7 +322,11 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_userunitdir/filter-chain.service
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
-%_unitdir/%name.socket}
+%_unitdir/%name.socket
+%_unitdir/%name-pulse.service
+%_unitdir/%name-pulse.socket
+%_unitdir/%name-manager.socket
+}
 %endif
 
 %_datadir/alsa/alsa.conf.d/50-pipewire.conf
@@ -427,9 +428,12 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_includedir/jack/
 %_libdir/%name-%api_ver/jack/*.so
 %_pkgconfigdir/jack.pc
-
+%_pkgconfigdir/jackserver.pc
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0 + media-session-0.4.2-4-ge6243381c
+
 * Tue Nov 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.2.7-alt1
 - 1.2.7
 
