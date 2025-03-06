@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-argcomplete
-Version: 3.5.3
+Version: 3.6.0
 Release: alt1
 
 Summary: Bash tab completion for argparse
@@ -11,9 +11,10 @@ Summary: Bash tab completion for argparse
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/argcomplete/
+Vcs: https://github.com/kislyuk/argcomplete
 
 Source: %name-%version.tar
-Patch: argcomplete-3.5.0-skip-test.patch
+Patch: argcomplete-3.6.0-skip-test.patch
 
 BuildArch: noarch
 
@@ -66,6 +67,9 @@ export PATH=$PATH:%buildroot%_bindir
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Mar 06 2025 Anton Vyatkin <toni@altlinux.org> 3.6.0-alt1
+- New version 3.6.0.
+
 * Fri Jan 03 2025 Anton Vyatkin <toni@altlinux.org> 3.5.3-alt1
 - New version 3.5.3.
 
