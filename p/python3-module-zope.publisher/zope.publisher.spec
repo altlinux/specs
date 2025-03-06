@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2
+Version: 7.3
 Release: alt1
 Epoch: 1
 Summary: The Zope publisher publishes Python objects on the web
@@ -17,9 +17,9 @@ Vcs: https://github.com/zopefoundation/zope.publisher
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# this projects depends on pkg_resources that is subpackaged in ALTLinux
+# this project depends on pkg_resources for legacy namespaces,
+# the root of which is shipped in its own package
 %add_pyproject_deps_runtime_filter setuptools
-Requires: python3-module-pkg_resources
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
@@ -74,7 +74,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
@@ -88,6 +88,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Thu Mar 06 2025 Stanislav Levin <slev@altlinux.org> 1:7.3-alt1
+- 7.2 -> 7.3.
+
 * Fri Dec 20 2024 Stanislav Levin <slev@altlinux.org> 1:7.2-alt1
 - 7.1 -> 7.2.
 
