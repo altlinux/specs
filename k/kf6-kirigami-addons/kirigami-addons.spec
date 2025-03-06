@@ -4,7 +4,7 @@
 %define libkirigamiaddonsstatefulapp libkirigamiaddonsstatefulapp%sover
 
 Name: kf6-%rname
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 %K6init
 
@@ -87,6 +87,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiAddonsStatefulApp.so.*
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt1
+- new version
+
 * Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
 - new version
 
