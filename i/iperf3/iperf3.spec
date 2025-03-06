@@ -5,7 +5,7 @@
 
 Name: iperf3
 Version: 3.18.1
-Release: alt1
+Release: alt2
 
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
 License: BSD-3-Clause and MIT
@@ -112,6 +112,9 @@ chrpath -d %buildroot/%_bindir/iperf3
 %_libdir/lib%native.so
 
 %changelog
+* Thu Mar 06 2025 Sergey Y. Afonin <asy@altlinux.org> 3.18.1-alt2
+- built with 3.18 source (ALT #53164)
+
 * Sat Jan 25 2025 Sergey Y. Afonin <asy@altlinux.org> 3.18.1-alt1
 - New version
 
