@@ -6,7 +6,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libnghttp2
-Version: 1.64.0
+Version: 1.65.0
 Release: alt1
 
 Summary: HTTP/2.0 C Library
@@ -17,6 +17,11 @@ Url: https://github.com/nghttp2/nghttp2
 Source: %name-%version.tar
 
 Source100: %name-%version-tests-munit.tar
+Source101: %name-%version-third-party-mruby.tar
+Source102: %name-%version-third-party-neverbleed.tar
+Source103: %name-%version-third-party-urlparse.tar
+Source104: %name-%version-third-party-urlparse-http-parser.tar
+Source105: %name-%version-third-party-urlparse-munit.tar
 
 BuildRequires: zlib-devel libev-devel libevent-devel libxml2-devel libjansson-devel libssl-devel gcc-c++ CUnit-devel libjemalloc-devel libcares-devel
 BuildRequires: libsystemd-devel libicu-devel
@@ -39,7 +44,8 @@ Requires: %name = %EVR
 %summary
 
 %prep
-%setup -a 100
+%setup -a100 -a101 -a102 -a103 -a104 -a105
+
 
 %build
 %autoreconf
@@ -79,6 +85,9 @@ Requires: %name = %EVR
 %exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 1.65.0-alt1
+- 1.64.0 -> 1.65.0
+
 * Sun Dec 01 2024 Anton Farygin <rider@altlinux.ru> 1.64.0-alt1
 - 1.63.0 -> 1.64.0
 
