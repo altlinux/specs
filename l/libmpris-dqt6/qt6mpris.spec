@@ -4,7 +4,7 @@
 
 Name: libmpris-dqt6
 Version: 1.0.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Qt6 and QML6 MPRIS interface and adaptor
 
@@ -16,6 +16,7 @@ Vcs: git://github.com/deepin-community/qt6mpris.git
 Source: %url/archive/%version/qt6mpris-%version-1deepin1.tar.gz
 
 BuildRequires: gcc-c++ dqt6-base-devel dqt6-declarative-devel
+BuildRequires: libdqt6-qml
 
 # find libraries
 %add_findprov_lib_path %_dqt6_libdir
@@ -62,5 +63,8 @@ Header files and libraries for %name.
 %_dqt6_mkspecsdir/features/mpris-qt6.prf
 
 %changelog
+* Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0.1-alt1.1
+- Fixed BuildRequires.
+
 * Fri Dec 13 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.0.1-alt1
 - Initial build for ALT Sisyphus (for deepin-music).

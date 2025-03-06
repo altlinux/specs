@@ -4,7 +4,7 @@
 
 Name: dtk6declarative
 Version: 6.0.30
-Release: alt1
+Release: alt1.1
 
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -32,6 +32,7 @@ BuildRequires: gcc-c++
 %endif
 #BuildRequires: doxygen graphviz dqt6-base-doc
 BuildRequires: cmake libdtk6gui-devel dqt6-tools-devel dqt6-declarative-devel dqt6-shadertools-devel
+BuildRequires: libdqt6-quickcontrols2 libdqt6-qmlcompiler
 
 Requires: libdqt6-core = %_dqt6_version libdqt6-qmlmodels = %_dqt6_version libdqt6-quickcontrols2 = %_dqt6_version
 
@@ -166,6 +167,9 @@ export LC_ALL=C.UTF-8
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1.1
+- Fixed BuildRequires.
+
 * Fri Feb 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1
 - New version 6.0.30.
 - Enabled dqml6 provides.

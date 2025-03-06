@@ -7,7 +7,7 @@
 
 Name: dqt5-tools
 Version: 5.15.13
-Release: alt0.dde.2
+Release: alt0.dde.3
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -288,14 +288,14 @@ fi
 %files -n dqt5-qtconfig
 %_bindir/qtconfig-dqt5
 %_dqt5_bindir/qtconfig
-%_desktopdir/*qtconfig.desktop
+%exclude %_desktopdir/*qtconfig.desktop
 %_iconsdir/hicolor/*/apps/qtconfig*.*
 %endif
 
 %files -n dqt5-assistant
 %_bindir/assistant-dqt5
 %_dqt5_bindir/assistant
-%_desktopdir/*assistant.desktop
+%exclude %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
 %if %qdoc_found
 %_dqt5_docdir/qtassistant/
@@ -310,7 +310,7 @@ fi
 %exclude %_altdir/qdbusviewer-%_dqt5
 %_bindir/qdbusviewer*
 %_dqt5_bindir/qdbusviewer*
-%_desktopdir/*qdbusviewer.desktop
+%exclude %_desktopdir/*qdbusviewer.desktop
 %_iconsdir/hicolor/*/apps/qdbusviewer*.*
 
 %files -n dqt5-designer
@@ -319,8 +319,8 @@ fi
 %_dqt5_bindir/linguist*
 %_dqt5_bindir/designer*
 %_dqt5_plugindir/designer/lib*.so
-%_desktopdir/*designer.desktop
-%_desktopdir/*linguist.desktop
+%exclude %_desktopdir/*designer.desktop
+%exclude %_desktopdir/*linguist.desktop
 %_iconsdir/hicolor/*/apps/designer*.*
 %_iconsdir/hicolor/*/apps/linguist*.*
 
@@ -369,6 +369,9 @@ fi
 %_dqt5_libdir/libQt5Help.so.*
 
 %changelog
+* Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.3
+- hide from app stores and menus (ALT #53326)
+
 * Wed Oct 09 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.13-alt0.dde.2
 - fix requires
 

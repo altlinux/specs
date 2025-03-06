@@ -5,7 +5,7 @@
 
 Name: dqt6-tools
 Version: 6.8.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -44,6 +44,7 @@ BuildRequires: dqt6-base-devel dqt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: rpm-macros-alternatives
+BuildRequires: libdqt6-quickwidgets
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
 %endif
@@ -259,7 +260,7 @@ done
 %files -n dqt6-assistant
 %_bindir/assistant-dqt6
 %_dqt6_bindir/assistant
-%_desktopdir/*assistant.desktop
+%exclude %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
 %if %qdoc_found
 #%_datadir/dqt6/doc/qtassistant/
@@ -274,7 +275,7 @@ done
 %exclude %_altdir/qdbusviewer-%_dqt6
 %_bindir/qdbusviewer*
 %_dqt6_bindir/qdbusviewer*
-%_desktopdir/*qdbusviewer.desktop
+%exclude %_desktopdir/*qdbusviewer.desktop
 %_iconsdir/hicolor/*/apps/qdbusviewer*.*
 
 %files -n dqt6-designer
@@ -282,8 +283,8 @@ done
 %_bindir/linguist*
 %_dqt6_bindir/linguist*
 %_dqt6_bindir/designer*
-%_desktopdir/*designer.desktop
-%_desktopdir/*linguist.desktop
+%exclude %_desktopdir/*designer.desktop
+%exclude %_desktopdir/*linguist.desktop
 %_iconsdir/hicolor/*/apps/designer*.*
 %_iconsdir/hicolor/*/apps/linguist*.*
 
@@ -323,6 +324,10 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
+- fix build requires
+- hide from app stores and menus (ALT #53326)
+
 * Mon Mar 03 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - merge with new version
 - prevent bytes written limit by hasher-privd

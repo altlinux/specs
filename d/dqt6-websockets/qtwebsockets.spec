@@ -3,7 +3,7 @@
 
 Name: dqt6-websockets
 Version: 6.8.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebSockets component
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-macros-dqt6
 BuildRequires(pre): dqt6-tools
 BuildRequires: cmake glibc-devel dqt6-declarative-devel
 BuildRequires: libxkbcommon-devel
+BuildRequires: libdqt6-quicktest libdqt6-qmlcompiler
 
 %description
 QtWebSockets is a pure Qt implementation of WebSockets - both client and server.
@@ -108,6 +109,9 @@ cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %_dqt6_examplesdir/*
 
 %changelog
+* Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
+- fix build requires
+
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - fork qt6 for separate deepin packaging (ALT #48138)
 
