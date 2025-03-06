@@ -1,5 +1,5 @@
 Name: arm-none-eabi-gdb
-Version: 15.2
+Version: 16.2
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_libexecdir/%target/share/gdb/auto-load
 %_libexecdir/%target/share/gdb/auto-load
 
 %changelog
+* Thu Mar 06 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 16.2-alt1
+- 16.2 released
+
 * Tue Oct 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 15.2-alt1
 - 15.2 released
 
