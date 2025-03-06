@@ -3,8 +3,8 @@
 
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
-Version: 2.9.3
-Release: alt3.20240830
+Version: 2.9.4
+Release: alt1.20250304.1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программное обеспечение для управления станками c ЧПУ
@@ -70,6 +70,9 @@ Requires: libX11-devel
 Requires: tclx tcl-blt
 %py3_requires Xlib
 %py3_requires PyQt5.Qsci
+
+# https://bugzilla.altlinux.org/52950
+Requires: python3-module-pygobject3
 
 # Fix me!!!
 %add_python3_req_skip __main__ gi.repository.GdkPixbuf gst gtk glib gtk.glade Cairo
@@ -172,7 +175,7 @@ popd
 
 %install
 pushd src
-%makeinstall_std
+%makeinstall_std SITEPY=%python3_sitelibdir
 popd
 
 # install rules
@@ -246,6 +249,9 @@ rm %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Thu Mar 06 2025 Anton Midyukov <antohami@altlinux.org> 2.9.4-alt1.20250304.1
+- new version (2.9.4) with rpmgs script
+
 * Sat Aug 31 2024 Anton Midyukov <antohami@altlinux.org> 2.9.3-alt3.20240830
 - new snapshot
 
