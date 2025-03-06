@@ -173,8 +173,8 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	130
-Release:	alt2
+Version:	132
+Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -187,8 +187,7 @@ Source:		%name-%version.tar
 Source1: find-provides.sh
 Patch1: chromium.patch
 Patch2: ffmpeg-chromium-120.patch
-Patch3: alt-vulkan-decode-defines.patch
-Patch4: armv6-ffmpeg-no-thumb.patch
+Patch3: armv6-ffmpeg-no-thumb.patch
 Patch2000: ffmpeg-e2k-simd.patch
 
 %define __find_provides %SOURCE1
@@ -197,7 +196,7 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 %ifarch %ix86 x86_64
-BuildRequires:	yasm
+BuildRequires:	nasm
 %endif
 
 %{?_enable_doc:BuildRequires: perl-podlators texi2html}
@@ -594,7 +593,6 @@ This package contains static development files for libswscale.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -724,6 +722,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 132-alt1
+- new version
+
 * Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 130-alt2
 - fix to build on old branches
 
