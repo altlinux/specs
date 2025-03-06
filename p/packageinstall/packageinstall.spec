@@ -1,5 +1,5 @@
 Name:	 packageinstall
-Version: 1.4
+Version: 1.4.1
 Release: alt1
 Summary: GUI frontend for install packages using apt-get
 
@@ -14,8 +14,7 @@ Requires: apt consolehelper
 Source0: %name-%version.tar
 
 BuildRequires(pre): libpam-devel
-BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel qt5-tools
+BuildRequires: qt6-base-devel qt6-tools
 
 %description
 This application is GUI frontend for install package(s) using apt-get.
@@ -24,12 +23,12 @@ This application is GUI frontend for install package(s) using apt-get.
 %setup -q
 
 %build
-%qmake_qt5 PREFIX=%_prefix %name.pro
+%qmake_qt6 PREFIX=%_prefix %name.pro
 %make_build
-lrelease-qt5 %name.pro
+lrelease-qt6 %name.pro
 
 %install
-%installqt5
+%install_qt6
 mkdir -p %buildroot%_sbindir/
 mv %buildroot%_bindir/%name %buildroot%_sbindir
 ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/%name
@@ -47,6 +46,9 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg at altlinux dot org> 1.4.1-alt1
+- port to Qt6
+
 * Fri Jul 30 2021 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
 - Fix progress calculation by hash count (ALT #40479).
 - README: fix URL and copyright notes (ALT #40511).
