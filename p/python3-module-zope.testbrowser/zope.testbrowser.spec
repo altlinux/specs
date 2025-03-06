@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0
+Version: 7.0.1
 Release: alt1
 
 Summary: Programmable browser for functional black-box tests
@@ -73,6 +73,9 @@ rm -r %buildroot%python3_sitelibdir/zope/testbrowser/tests/
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Thu Mar 06 2025 Anton Vyatkin <toni@altlinux.org> 7.0.1-alt1
+- New version 7.0.1.
+
 * Sat Jun 01 2024 Anton Vyatkin <toni@altlinux.org> 7.0-alt1
 - New version 7.0.
 
