@@ -92,8 +92,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 24.3
-%define ver_minor 4
+%define ver_major 25.0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -418,7 +418,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n libGLX-mesa
 %doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
-%_libdir/libglapi.so.*
 %_libdir/libgallium-%version.so
 %dir %_libdir/gbm
 %_libdir/gbm/dri_gbm.so
@@ -426,7 +425,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n libGL-devel
 %_includedir/GL/internal
 %_libdir/libGLX_mesa.so
-%_libdir/libglapi.so
 %_pkgconfigdir/dri.pc
 
 %if_enabled egl
@@ -583,6 +581,12 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Mar 06 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.0.1-alt1
+- 25.0.1
+
+* Thu Feb 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.0.0-alt1
+- 25.0.0
+
 * Thu Jan 23 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:24.3.4-alt1
 - 24.3.4
 
