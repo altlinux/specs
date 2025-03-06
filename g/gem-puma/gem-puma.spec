@@ -1,70 +1,76 @@
 %define        _unpackaged_files_terminate_build 1
-%def_disable   check
+%def_enable    check
 %def_enable    doc
 %def_enable    devel
 %define        gemname puma
 
 Name:          gem-puma
-Version:       6.4.3
+Version:       6.6.0
 Release:       alt1
-Summary:       A Ruby/Rack web server built for concurrency
+Summary:       A Ruby/Rack web server built for parallelism
 License:       BSD-3-Clause
 Group:         Networking/WWW
-Url:           https://github.com/puma/puma
+Url:           https://puma.io
 Vcs:           https://github.com/puma/puma.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_enabled check
-BuildRequires: gem(rake-compiler) >= 1.1.2
-BuildRequires: gem(json) >= 2.3
-BuildRequires: gem(nio4r) >= 2.3
+BuildRequires: gem(concurrent-ruby) >= 1.3
+BuildRequires: gem(localhost) >= 0
+BuildRequires: gem(m) >= 0
 BuildRequires: gem(minitest) >= 5.11
-BuildRequires: gem(minitest-retry) >= 0
 BuildRequires: gem(minitest-proveit) >= 0
+BuildRequires: gem(minitest-retry) >= 0
 BuildRequires: gem(minitest-stub-const) >= 0
+BuildRequires: gem(puma_worker_killer) >= 0
 BuildRequires: gem(rack) >= 2.2
-BuildRequires: gem(rackup) >= 0
+BuildRequires: gem(rackup) >= 2.0
+BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(rubocop) >= 0
 BuildRequires: gem(rubocop-performance) >= 0
-BuildRequires: gem(m) >= 0
-BuildRequires: gem(localhost) >= 0
-BuildConflicts: gem(rake-compiler) >= 2
+BuildRequires: gem(sinatra) >= 0
+BuildRequires: gem(nio4r) >= 2
+BuildConflicts: gem(concurrent-ruby) >= 2
 BuildConflicts: gem(json) >= 3
-BuildConflicts: gem(nio4r) > 2.0
 BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(nio4r) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,(?-mix:mongrel_),fastthread,(?-mix:project)
-Requires:      gem(nio4r) >= 2.3
+Requires:      ruby >= 2.4
+Requires:      gem(nio4r) >= 2.0
 Conflicts:     gem(nio4r) >= 3
-Provides:      gem(puma) = 6.4.3
-
+Provides:      gem(puma) = 6.6.0
 
 %description
-Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
-Ruby/Rack applications in development and production.
+Puma is a simple, fast, multi-threaded, and highly parallel HTTP 1.1 server for
+Ruby/Rack applications. Puma is intended for use in both development and
+production environments. It's great for highly parallel Ruby implementations
+such as JRuby and TruffleRuby as well as as providing process worker support to
+support CRuby well.
 
 
 %package       -n puma
-Version:       6.4.3
+Version:       6.6.0
 Release:       alt1
-Summary:       A Ruby/Rack web server built for concurrency executable(s)
+Summary:       A Ruby/Rack web server built for parallelism executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
-Group:         Development/Ruby
+Group:         Networking/WWW
 BuildArch:     noarch
 
-Requires:      gem(puma) = 6.4.3
+Requires:      gem(puma) = 6.6.0
 
 %description   -n puma
-A Ruby/Rack web server built for concurrency executable(s).
+A Ruby/Rack web server built for parallelism executable(s).
 
-Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
-Ruby/Rack applications in development and production.
+Puma is a simple, fast, multi-threaded, and highly parallel HTTP 1.1 server for
+Ruby/Rack applications. Puma is intended for use in both development and
+production environments. It's great for highly parallel Ruby implementations
+such as JRuby and TruffleRuby as well as as providing process worker support to
+support CRuby well.
 
 %description   -n puma -l ru_RU.UTF-8
 Исполнямка для самоцвета puma.
@@ -72,22 +78,23 @@ Ruby/Rack applications in development and production.
 
 %if_enabled    doc
 %package       -n gem-puma-doc
-Version:       6.4.3
+Version:       6.6.0
 Release:       alt1
-Summary:       A Ruby/Rack web server built for concurrency documentation files
+Summary:       A Ruby/Rack web server built for parallelism documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puma) = 6.4.3
-Obsoletes:     puma-doc
-Provides:      puma-doc
+Requires:      gem(puma) = 6.6.0
 
 %description   -n gem-puma-doc
-A Ruby/Rack web server built for concurrency documentation files.
+A Ruby/Rack web server built for parallelism documentation files.
 
-Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
-Ruby/Rack applications in development and production.
+Puma is a simple, fast, multi-threaded, and highly parallel HTTP 1.1 server for
+Ruby/Rack applications. Puma is intended for use in both development and
+production environments. It's great for highly parallel Ruby implementations
+such as JRuby and TruffleRuby as well as as providing process worker support to
+support CRuby well.
 
 %description   -n gem-puma-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета puma.
@@ -96,38 +103,39 @@ Ruby/Rack applications in development and production.
 
 %if_enabled    devel
 %package       -n gem-puma-devel
-Version:       6.4.3
+Version:       6.6.0
 Release:       alt1
-Summary:       A Ruby/Rack web server built for concurrency development package
+Summary:       A Ruby/Rack web server built for parallelism development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 6.4.3
-Requires:      gem(rake-compiler) >= 1.1.2
+Requires:      gem(puma) = 6.6.0
+Requires:      gem(concurrent-ruby) >= 1.3
 Requires:      gem(json) >= 2.3
+Requires:      gem(localhost) >= 0
+Requires:      gem(m) >= 0
 Requires:      gem(minitest) >= 5.11
-Requires:      gem(minitest-retry) >= 0
 Requires:      gem(minitest-proveit) >= 0
+Requires:      gem(minitest-retry) >= 0
 Requires:      gem(minitest-stub-const) >= 0
 Requires:      gem(rack) >= 2.2
-Requires:      gem(rackup) >= 0
+Requires:      gem(rackup) >= 2.0
+Requires:      gem(rake-compiler) >= 0
 Requires:      gem(rubocop) >= 0
 Requires:      gem(rubocop-performance) >= 0
-Requires:      gem(m) >= 0
-Requires:      gem(localhost) >= 0
-Requires:      libssl-devel
-Conflicts:     gem(rake-compiler) >= 2
+Conflicts:     gem(concurrent-ruby) >= 2
 Conflicts:     gem(json) >= 3
 Conflicts:     gem(minitest) >= 6
-Obsoletes:     puma-devel < %EVR
-Provides:      puma-devel = %EVR
 
 %description   -n gem-puma-devel
-A Ruby/Rack web server built for concurrency development package.
+A Ruby/Rack web server built for parallelism development package.
 
-Puma is a simple, fast, threaded, and highly concurrent HTTP 1.1 server for
-Ruby/Rack applications in development and production.
+Puma is a simple, fast, multi-threaded, and highly parallel HTTP 1.1 server for
+Ruby/Rack applications. Puma is intended for use in both development and
+production environments. It's great for highly parallel Ruby implementations
+such as JRuby and TruffleRuby as well as as providing process worker support to
+support CRuby well.
 
 %description   -n gem-puma-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета puma.
@@ -147,13 +155,13 @@ Ruby/Rack applications in development and production.
 %ruby_test
 
 %files
-%doc README.md
+%doc History.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %files         -n puma
-%doc README.md
+%doc History.md LICENSE README.md CODE_OF_CONDUCT.md CONTRIBUTING.md
 %_bindir/puma
 %_bindir/pumactl
 
@@ -171,6 +179,10 @@ Ruby/Rack applications in development and production.
 
 
 %changelog
+* Thu Mar 06 2025 Pavel Skrylev <majioa@altlinux.org> 6.6.0-alt1
+- ^ 6.4.3 -> 6.6.0
+- * define explicit dependencies
+
 * Tue Oct 08 2024 Pavel Skrylev <majioa@altlinux.org> 6.4.3-alt1
 - ^ 5.6.8 -> 6.4.3
 
