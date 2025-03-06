@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: guestfs-tools
-Version: 1.52.0
+Version: 1.53.7
 Release: alt1
 
 Summary: Tools to access and modify virtual machine disk images
@@ -43,6 +43,7 @@ BuildRequires: xorriso
 BuildRequires: xml-utils
 BuildRequires: sqlite3
 BuildRequires: xz
+BuildRequires: libjson-c-devel
 BuildRequires: perl-Sys-Guestfs
 BuildRequires: bash-completion
 BuildRequires: /proc
@@ -162,6 +163,9 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-win-reg.1*
 
 %changelog
+* Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 1.53.7-alt1
+- 1.52.0 -> 1.53.7
+
 * Fri Jan 12 2024 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt1
 - 1.50.0 -> 1.52.0
 
