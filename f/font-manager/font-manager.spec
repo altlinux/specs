@@ -8,7 +8,7 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -24,7 +24,7 @@ Source: https://github.com/FontManager/%name/archive/%version/%name-%version.tar
 Source: %name-%version.tar
 %endif
 
-Requires: file-roller yelp
+Requires: yelp
 
 %define vala_ver 0.42
 %define pango_ver 1.4
@@ -34,6 +34,7 @@ BuildRequires(pre): meson rpm-build-gir
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(libarchive)
 BuildRequires: libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
@@ -89,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
+- 0.9.3
+
 * Sun Jan 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - 0.9.2
 
