@@ -1,7 +1,7 @@
 %define rname kapptemplate
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -52,6 +52,9 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

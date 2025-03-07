@@ -1,7 +1,7 @@
 %define rname kmag
 
 Name: %rname
-Version: 24.12.1
+Version: 24.12.2
 Release: alt1
 %K6init
 
@@ -44,6 +44,9 @@ those working in the fields of image analysis, web development etc.
 %_datadir/metainfo/*kmag*.xml
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Wed Jan 29 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
 - new version
 

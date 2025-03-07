@@ -1,8 +1,8 @@
 %define rname colord-kde
 
 Name: %rname
-Version: 24.12.1
-Release: alt2
+Version: 24.12.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -58,6 +58,9 @@ cp -ar po/ru/colord-kde.po po/ru/kcm_colord.po
 
 
 %changelog
+* Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
 * Tue Feb 04 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt2
 - fix russian translation
 
