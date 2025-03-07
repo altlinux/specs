@@ -2,8 +2,8 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.2.4
-Release: alt2
+Version: 0.3
+Release: alt1
 
 Summary: Common files for Alterator Entry specification
 License: GPLv3+
@@ -69,6 +69,10 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Sat Mar 08 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
+- Add filter by section
+- Strip component name in component path
+
 * Wed Mar 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.4-alt2
 - Fix build dependency of python3-module-alterator-entry on itself.
 - Remove duplicate scripts install.
