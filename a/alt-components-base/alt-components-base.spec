@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.3.0
+Version: 0.3.2
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -61,6 +61,12 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.2-alt1
+- Fixed errors in some components (thx Sergey Savelev).
+
+* Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.1-alt1
+- Replace all -infra categories into common infra category.
+
 * Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.0-alt1
 - Complete refactoring: all in one for all products.
 

@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%define alt_components_base_version 0.3.0
+
 Name: alt-editions-server
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Editions of BaseALT distribution ALT Server.
 License: GPLv2+
@@ -17,7 +19,8 @@ BuildRequires: alterator-entry >= 0.2.4
 BuildRequires: cmark
 
 Requires: alt-os-editions
-BuildRequires: alt-components-base >= 0.3.0
+BuildRequires: alt-components-base >= %alt_components_base_version
+Requires: alt-components-base >= %alt_components_base_version
 
 %description
 %summary.
@@ -66,6 +69,9 @@ done
 %_alterator_datadir/editions
 
 %changelog
+* Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.0-alt2
+- Build with special alt-components-base version.
+
 * Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.0-alt1
 - Complete refactoring: update tree to refactored alt-components-base-0.3.0.
 
