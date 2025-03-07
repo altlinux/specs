@@ -2,7 +2,7 @@ Name: kernel-image-6.13
 Release: alt1
 %define kernel_src_version	6.13
 %define kernel_base_version	6.13
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Mar 08 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.6-alt1
+- v6.13.6 (2025-03-07).
+
 * Thu Feb 27 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.5-alt1
 - v6.13.5 (2025-02-27).
 - kiosk: MIN_UID 500 -> 1000.
