@@ -3,14 +3,14 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed,unresolved=relaxed,rpath=relaxed
 
-%ifarch x86_64_cuda_tested
+%ifarch x86_64
 %def_with cuda
 %else
 %def_without cuda
 %endif
 
 Name: ollama
-Version: 0.5.11
+Version: 0.5.13
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -18,11 +18,14 @@ Group: Sciences/Computer science
 Url: https://ollama.com
 Vcs: https://github.com/ollama/ollama
 %if_with cuda
-Requires: libcuda
+# https://bugzilla.altlinux.org/52911
+%filter_from_requires /(libcudart\.so\.12)/d
+%filter_from_requires /debug64(libcuda\.so\.1)/d
+Requires: ollama-cuda = %EVR
 %endif
 Requires: ollama-cpu = %EVR
 
-ExclusiveArch: aarch64 x86_64
+ExcludeArch: %ix86
 Source: %name-%version.tar
 Source3: ollama-user.conf
 
@@ -55,15 +58,25 @@ Group: Sciences/Computer science
 %description cpu
 %summary.
 
+%package cuda
+Summary: Ollama runner for NVIDIA GPU
+Group: Sciences/Computer science
+Requires: libnvidia-ptxjitcompiler
+Requires: ollama-cpu = %EVR
+
+%description cuda
+%summary.
+
 %prep
 %setup
-%ifarch aarch64
+%ifnarch x86_64
 sed -i /GGML_CPU_ALL_VARIANTS/d CMakeLists.txt
 %endif
 
 %build
 %add_optflags -Wno-unused-function
-%cmake
+export NVCC_PREPEND_FLAGS=-ccbin=g++-12
+%cmake -DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual'
 %cmake_build
 go build -v \
 	-buildmode=pie \
@@ -75,6 +88,10 @@ find -type f -perm -1 -ls
 
 %install
 %cmake_install
+%if_with cuda
+# Remove bundled shared libs.
+rm %buildroot%_libexecdir/ollama/cuda_v12/libcu{blas{,Lt},dart}.so*
+%endif
 install -Dp ollama %buildroot%_bindir/ollama
 install -Dpm644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
 # HTTP server on 127.0.0.1:11434
@@ -83,10 +100,13 @@ mkdir -p %buildroot%_localstatedir/%name
 install -Dpm644 models-list.txt tags-list.txt -t %buildroot%_datadir/ollama
 install -Dpm644 .gear/completions %buildroot%_datadir/bash-completion/completions/ollama
 # Add a RPATH to bypass lib.req false positive error.
-find %buildroot%_libexecdir/ollama -name libggml-cpu*.so |
+find %buildroot%_libexecdir/ollama -name libggml-c*.so |
 	xargs -trn1 patchelf --set-rpath %_libexecdir/ollama
 
 %check
+{ cuobjdump --list-elf %buildroot%_libexecdir/ollama/cuda_v12/libggml-cuda.so
+  cuobjdump --list-ptx %buildroot%_libexecdir/ollama/cuda_v12/libggml-cuda.so
+} |& head
 cat /proc/loadavg
 go test -v ./...
 %buildroot%_bindir/ollama --version | grep -Fx 'Warning: client version is %version'
@@ -122,7 +142,16 @@ kill %%?ollama
 %_libexecdir/ollama/libggml-cpu*.so
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
+%if_with cuda
+%files cuda
+%_libexecdir/ollama/cuda_v12
+%endif
+
 %changelog
+* Fri Mar 07 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.13-alt1
+- Update to v0.5.13 (2025-03-03).
+- Enable NVIDIA GPU runner (ollama-cuda).
+
 * Sat Feb 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.11-alt1
 - Update to v0.5.11 (2025-02-13).
 - Split the package into meta-package (ollama) and runner (ollama-cpu).
