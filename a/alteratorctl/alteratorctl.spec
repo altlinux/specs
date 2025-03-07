@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.0.10
+Version: 0.0.11
 Release: alt1
 
 Summary: CLI for alterator browser
@@ -38,6 +38,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Fri Mar 07 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.11-alt1
+- New version
+
 * Thu Mar 06 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.10-alt1
 - Adding dependencies on backends of alteratorctl modules 
 
