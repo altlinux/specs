@@ -1,12 +1,10 @@
-%set_automake_version 1.11
-
 %def_with demos
 %def_disable static
 %define soname 4
 
 Name: openmotif
 Version: 2.3.8
-Release: alt1
+Release: alt2
 
 Summary: The Open Motif
 License: Open Group Public License
@@ -22,11 +20,14 @@ Patch7: openMotif-2.2.3-rh-popup_timeout.patch
 Patch8: openMotif-2.2.3-rh-uil_lib.patch
 # ALT
 Patch44: openmotif-2.2.3-alt-VERSION.patch
+Patch45: openmotif-2.3.8-alt-lexx-errors.patch
 # PLD
 Patch52: openmotif-mwmrc.patch
 Patch53: openmotif-bison.patch
 Patch54: openmotif-freetype.patch
 Patch57: openmotif-2.3.3-alt-DSO.patch
+# DEB
+Patch60: implicit-function-declarations.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -116,11 +117,14 @@ This package contains the Motif demo applications.
 %patch8 -p1
 # ALT
 %patch44 -p1
+%patch45
 # PLD
 %patch52 -p1
 %patch53 -p1
 %patch54 -p1
 %patch57 -p2
+# DEB
+%patch60 -p1
 
 find -type f -name \*.orig -delete -print
 
@@ -212,6 +216,9 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 # - actually test mwm?
 
 %changelog
+* Mon Mar 03 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.8-alt2
+- NMU: Fixed FTBFS.
+
 * Fri Dec 28 2018 Grigory Ustinov <grenka@altlinux.org> 2.3.8-alt1
 - Build new version.
 
