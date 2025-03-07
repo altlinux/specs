@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-editions-server
-Version: 0.1.5
+Version: 0.2.0
 Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
@@ -13,11 +13,11 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
-BuildRequires: alterator-entry >= 0.2.0
+BuildRequires: alterator-entry >= 0.2.4
 BuildRequires: cmark
 
 Requires: alt-os-editions
-BuildRequires: alt-components-base
+BuildRequires: alt-components-base >= 0.3.0
 
 %description
 %summary.
@@ -66,6 +66,9 @@ done
 %_alterator_datadir/editions
 
 %changelog
+* Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.0-alt1
+- Complete refactoring: update tree to refactored alt-components-base-0.3.0.
+
 * Wed Feb 19 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1.5-alt1
 - The "network-manager-gtk" component has been removed from the server
   edition (thx Sergey Savelev)

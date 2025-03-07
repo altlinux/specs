@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.2.7
-Release: alt2
+Version: 0.3.0
+Release: alt1
 
 Summary: Base set of ALT Distributions components
 License: GPLv2+
@@ -61,6 +61,9 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.0-alt1
+- Complete refactoring: all in one for all products.
+
 * Fri Feb 21 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.7-alt2
 - Add simple category validation script.
 - Fix errors detected by validate_categories.py.
