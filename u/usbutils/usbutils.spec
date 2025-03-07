@@ -2,7 +2,7 @@
 
 Name: usbutils
 Version: 018
-Release: alt1
+Release: alt2
 
 Summary: Linux USB utilities
 License: GPL-2.0-or-later
@@ -42,6 +42,9 @@ rm -f %buildroot%_pkgconfigdir/*.pc
 %doc NEWS README.md
 
 %changelog
+* Fri Mar 07 2025 Anton Midyukov <antohami@altlinux.org> 018-alt2
+- NMU: enable usbreset
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 018-alt1
 - New version 018.
 
