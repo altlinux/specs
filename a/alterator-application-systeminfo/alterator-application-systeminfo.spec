@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-systeminfo
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 
 Summary: Alterator application for getting information about system
@@ -50,6 +50,9 @@ install -v -p -m 644 -D alterator/systeminfo.application %buildroot%_alterator_d
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Tue Mar 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
+- New version.
+
 * Tue Mar 04 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.3-alt1
 - New version.
 
