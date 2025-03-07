@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -61,6 +61,11 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Sat Mar 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.3-alt1
+- fix: rename obsolete systeminfo-license-viewer to
+  alterator-application-license
+- feat: add componentctl helper script for check, copy and move
+
 * Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.2-alt1
 - Fixed errors in some components (thx Sergey Savelev).
 
