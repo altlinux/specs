@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-edition
-Version: 0.1.1
-Release: alt3
+Version: 0.1.2
+Release: alt1
 
 Summary: Alterator interface for edition
 License: GPLv2+
@@ -91,6 +91,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Sat Mar 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt1
+- feat: add fallback to legacy license directory for current edition.
+
 * Tue Feb 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt3
 - Add missing distro-licenses dependency to backend.
 - Add env variables to backends for alterator-manager.
