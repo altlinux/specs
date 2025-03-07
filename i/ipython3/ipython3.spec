@@ -8,8 +8,8 @@
 %def_with check
 
 Name: ipython3
-Version: 8.32.0
-Release: alt2
+Version: 9.0.1
+Release: alt1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -19,8 +19,6 @@ Vcs: https://github.com/ipython/ipython.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-%add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(prompt_toolkit)
@@ -64,6 +62,8 @@ BuildRequires: /proc
 # Some trouble with graphviz generating 'Inheritance diagram'
 #BuildRequires: graphviz
 %endif
+
+%add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
 %add_python3_req_skip __main__
 %add_python3_req_skip Gnuplot Numeric bzrlib foolscap nose setuptools twisted
@@ -131,16 +131,6 @@ extra functionality.
 
 This package contains modules for Python-3.
 
-%package -n python3-module-%oname-tests
-Summary: An enhanced interactive Python 3 shell
-Group: Development/Python3
-
-%description -n python3-module-%oname-tests
-IPython provides a replacement for the interactive Python interpreter with
-extra functionality.
-
-This package contains tests for Python-3.
-
 %prep
 %setup
 
@@ -165,17 +155,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-# Ensure that the user's .pythonrc.py is not invoked during any tests.
-export PYTHONSTARTUP=""
 # Scale timeouts 4 times
 export IPYTHON_TESTING_TIMEOUT_SCALE=4
-# To prevent _pytest.pathlib.ImportPathMismatchError, we are
-# testing directly in buildroot
-pushd %buildroot%python3_sitelibdir/IPython
-py.test-3 -v
-rm -rf .pytest_cache __pycache__/tmp*.pyc
-popd
+%pyproject_run_pytest -v tests/
 
 %files
 %doc COPYING.rst LICENSE
@@ -190,37 +172,6 @@ popd
 %files -n python3-module-%oname
 %python3_sitelibdir/IPython
 %python3_sitelibdir/%oname-%version.dist-info
-# everything except for skipdoctest.py from IPython/testing is packaged into tests package
-%exclude %python3_sitelibdir/IPython/testing/plugin
-%exclude %python3_sitelibdir/IPython/testing/__init__.py
-%exclude %python3_sitelibdir/IPython/testing/decorators.py
-%exclude %python3_sitelibdir/IPython/testing/globalipapp.py
-%exclude %python3_sitelibdir/IPython/testing/ipunittest.py
-%exclude %python3_sitelibdir/IPython/testing/tools.py
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/__init__.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/decorators.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/globalipapp.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/ipunittest.*
-%exclude %python3_sitelibdir/IPython/testing/__pycache__/tools.*
-%exclude %python3_sitelibdir/IPython/*/tests
-%exclude %python3_sitelibdir/IPython/conftest.py
-%exclude %python3_sitelibdir/IPython/__pycache__/conftest.*
-
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/IPython/testing/plugin
-%python3_sitelibdir/IPython/testing/__init__.py
-%python3_sitelibdir/IPython/testing/decorators.py
-%python3_sitelibdir/IPython/testing/globalipapp.py
-%python3_sitelibdir/IPython/testing/ipunittest.py
-%python3_sitelibdir/IPython/testing/tools.py
-%python3_sitelibdir/IPython/testing/__pycache__/__init__.*
-%python3_sitelibdir/IPython/testing/__pycache__/decorators.*
-%python3_sitelibdir/IPython/testing/__pycache__/globalipapp.*
-%python3_sitelibdir/IPython/testing/__pycache__/ipunittest.*
-%python3_sitelibdir/IPython/testing/__pycache__/tools.*
-%python3_sitelibdir/IPython/*/tests
-%python3_sitelibdir/IPython/conftest.py
-%python3_sitelibdir/IPython/__pycache__/conftest.*
 
 %if_with doc
 %files doc
@@ -234,6 +185,9 @@ popd
 %endif
 
 %changelog
+* Fri Mar 07 2025 Anton Vyatkin <toni@altlinux.org> 9.0.1-alt1
+- New version 9.0.1.
+
 * Mon Feb 10 2025 Anton Vyatkin <toni@altlinux.org> 8.32.0-alt2
 - Reduce dependencies.
 
