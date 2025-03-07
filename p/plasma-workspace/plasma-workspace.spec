@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.3.2
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -80,7 +80,7 @@ Source51: nvidia_prime_available.cpp
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
-#
+Patch102: alt-bookmarks-browsers.patch
 Patch103: alt-wait-drkonqi.patch
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-menu-no-comment.patch
@@ -302,7 +302,7 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch100 -p1 -b .startkde
 %patch101 -p1
-#
+%patch102 -p1
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
@@ -591,6 +591,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.2-alt3
+- add yandex-browser and chromium-gost for bookmarks runner (closes: 53348)
+
 * Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.2-alt2
 - package systemd service alias (altbug#53246)
 
