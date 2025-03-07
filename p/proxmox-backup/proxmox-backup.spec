@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 3.3.3.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -222,6 +222,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Fri Mar 07 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt2
+- Proper ntfs-3g support
+
 * Thu Mar 06 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt1
 - 3.3.3-1
 
