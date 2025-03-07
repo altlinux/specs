@@ -15,11 +15,11 @@
 # https://github.com/GreycLab/gmic-qt
 %define gmic_qt_ver v.3.5.0
 # https://github.com/GreycLab/gmic-community.git
-%define gmic_comm_ver gmic-3.4.3-77-gf6fb9ace
+%define gmic_comm_ver gmic-3.4.3-117-g82bf0d44
 
 Name: gmic
-Version: 3.5.2
-Release: alt1.1
+Version: 3.5.3
+Release: alt1
 
 Summary: GREYC's Magic Image Converter
 License: CECILL-2.0 and GPL-3.0
@@ -214,6 +214,9 @@ popd
 %gimpplugindir/plug-ins/*}
 
 %changelog
+* Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.3-alt1
+- 3.5.3
+
 * Tue Feb 11 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5.2-alt1.1
 - disabled GIMP plugin
 
