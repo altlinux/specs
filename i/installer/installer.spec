@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.10
+Version: 1.16.11
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,11 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Fri Mar 07 2025 Anton Midyukov <antohami@altlinux.org> 1.16.11-alt1
+- install2-init-functions: run systemd-vconsole-setup after plymouth quit
+- systemd/install2.service: StandardError=tty
+- install2: Fix out to stderr in instdebug (case INSTALL2_INIT is not set)
+
 * Thu Feb 27 2025 Anton Midyukov <antohami@altlinux.org> 1.16.10-alt1
 - preinstall.d/05-initrd-fsck.sh: Bypass for multipath (thanks jqt4@)
 
