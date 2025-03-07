@@ -4,7 +4,7 @@
 
 Name: hstr
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Suggest box like shell history completion
 License: Apache-2.0
@@ -44,5 +44,8 @@ from the history. It aims to make completion easier and faster than Ctrl-r.
 %bash_completionsdir/%name
 
 %changelog
+* Fri Mar 07 2025 Denis Sergeev <zeff@altlinux.org> 3.1-alt2
+- Bumped release to override autoimport package.
+
 * Wed Mar 05 2025 Denis Sergeev <zeff@altlinux.org> 3.1-alt1
 - Initial build for Sisyphus.
