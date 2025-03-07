@@ -6,7 +6,7 @@
 
 Name: dqt6-multimedia
 Version: 6.8.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: System/Libraries
 Summary: Qt6 - Multimedia support
@@ -22,6 +22,7 @@ BuildRequires(pre): dqt6-tools
 BuildRequires: cmake glibc-devel
 BuildRequires: rpm-build-dqml6
 BuildRequires: dqt6-base-devel dqt6-declarative dqt6-declarative-devel dqt6-shadertools-devel dqt6-svg-devel
+BuildRequires: libdqt6-quicktest libdqt6-qmlcompiler
 BuildRequires: libxkbcommon-x11-devel libXrandr-devel
 BuildRequires: libavformat-devel libavcodec-devel libswresample-devel libswscale-devel libavutil-devel
 BuildRequires: pkgconfig(alsa)
@@ -192,6 +193,9 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Fri Mar 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.2
+- fix build requires
+
 * Tue Feb 25 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt0.dde.1
 - merge with new version
 
