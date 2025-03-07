@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.12
+Version: 1.3.13
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,10 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.13-alt1
+- Add static license ALT_Server_License/11.0 synced with latest
+  branding-alt-server-notes-11.0-alt12
+
 * Fri Feb 07 2025 Anton Midyukov <antohami@altlinux.org> 1.3.12-alt1
 - ALT_Server_License: remove 5 point (author: black@)
 
