@@ -1,4 +1,8 @@
 
+# We get our target architecture from specsubst
+%define target_arch x86_64
+
+# ... or, you can uncomment one of the following lines and run gear --disable-specsubst
 # %%define target_arch aarch64
 # %%define target_arch arm
 # %%define target_arch mipsel
@@ -8,12 +12,26 @@
 # %%define target_arch mipsisa64r6el
 # %%define target_arch i586
 # %%define target_arch x86_64
-%define target_arch x86_64
+
+# helper
+%define part0() %(v="%2"; v="${v%%%%%{1}*}"; echo "$v")
+
+# Versions:
+%define binutils_vr       2.43-alt0.port.1
+%define binutils_version  %{part0 - %binutils_vr}
+
+%define gcc_vr            14.2.1-alt0.port
+%define gcc_version       %{part0 - %gcc_vr}
+%define gcc_branch        %{part0 . %gcc_version}
+
+%define glibc_vr          2.40.0.69.8566822197-alt0.port
+%define glibc_version     %{expand:%part0 - %glibc_vr}
+
+%define kernel_version    6.12
 
 
 %if "%target_arch" == "aarch64"
 %define target_kernel arm64
-%define target_qemu_arch aarch64
 %define target_ld_linux /lib64/ld-linux-aarch64.so.1
 %define target_libdir lib64
 %define target_has_itm 1
@@ -23,7 +41,6 @@
 
 %if "%target_arch" == "arm"
 %define target_kernel arm
-%define target_qemu_arch arm
 %define target_ld_linux /lib/ld-linux-armhf.so.3
 %define target_libdir lib
 %define target_has_itm 1
@@ -38,7 +55,6 @@
 
 %if "%target_arch" == "mipsel"
 %define target_kernel mips
-%define target_qemu_arch mipsel
 %define target_ld_linux /lib/ld.so.1
 %define target_libdir lib
 %define target_has_gold 1
@@ -47,7 +63,6 @@
 
 %if "%target_arch" == "mips64el"
 %define target_kernel mips
-%define target_qemu_arch mips64el
 %define target_ld_linux /lib64/ld.so.1
 %define target_libdir lib64
 %define target_has_gold 1
@@ -63,7 +78,6 @@
 
 %if "%target_arch" == "riscv64"
 %define target_kernel riscv
-%define target_qemu_arch riscv64
 %define target_ld_linux /lib64/ld-linux-riscv64-lp64d.so.1
 %define target_libdir lib64
 %define target_has_itm 1
@@ -71,7 +85,6 @@
 
 %if "%target_arch" == "loongarch64"
 %define target_kernel loongarch
-%define target_qemu_arch loongarch64
 %define target_ld_linux /lib64/ld-linux-loongarch-lp64d.so.1
 %define target_libdir lib64
 %define target_has_itm 1
@@ -79,7 +92,6 @@
 
 %if "%target_arch" == "x86_64"
 %define target_kernel x86
-%define target_qemu_arch x86_64
 %define target_ld_linux /lib64/ld-linux-x86-64.so.2
 %define target_libdir lib64
 %define target_has_itm 1
@@ -101,31 +113,35 @@
 %define target_userspace gnu
 %endif
 
+%if "%{?target_qemu_arch}" == ""
+%define target_qemu_arch %target_arch
+%endif
+
 %define target %target_arch-linux-%target_userspace
 %define sysroot %prefix/lib/%target/sys-root
+%define test_data %prefix/lib/%target/test-data
+%define cross_gcc_tooldir %prefix/libexec/gcc/%target
 
 # don't strip debuginfo from binaries for other platform, it does not work
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20240208
+Version: 20250101
+
+# The release of this package MUST not go down, unless you simultaniously
+# update binutils, glibc and gcc to new version, in which case you can
+# restart with alt1 if you want.
 Release: alt1
+
+
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
 
-%if "%target_arch" == "x86_64" || "%target_arch" == "i586"
-ExcludeArch: %ix86 x86_64
+%if "%target_arch" == "i586"
+ExcludeArch: x86_64 %ix86 ppc64le
 %else
-%if "%target_arch" == "aarch64" || "%target_arch" == "arm"
-ExclusiveArch: loongarch64 x86_64
-%else
-%if "%target_arch" == "loongarch64"
-ExclusiveArch: x86_64
-%else
-ExclusiveArch: loongarch64 x86_64
-%endif
-%endif
+ExcludeArch: %target_arch %ix86 ppc64le
 %endif
 
 %ifarch loongarch64
@@ -146,25 +162,21 @@ ExclusiveArch: loongarch64 x86_64
 %def_disable host_shared
 %endif
 
-
-%define gcc_version %{get_version gcc-source}
-%define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version %{get_version binutils-source}
-%define glibc_version %{get_version glibc-source}
-%define kernel_version 6.1
-
-BuildRequires(pre): gcc-source
-BuildRequires(pre): binutils-source
-BuildRequires(pre): glibc-source
 BuildRequires: gcc-c++
 BuildRequires: kernel-source-%kernel_version
 BuildRequires: coreutils flex bison makeinfo perl-Pod-Parser findutils
 BuildRequires: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
 # Linux' headers_install uses rsync
 BuildRequires: rsync
-BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 BuildRequires: gnu-config
+
+Source0: gcc-%gcc_vr.tar
+Source1: binutils-%binutils_vr.tar
+Source2: glibc-%glibc_vr.tar
+
+Source10: tests.tar
+
 
 %description
 GCC cross-toolchain for %target
@@ -228,14 +240,29 @@ BuildArch: noarch
 %description -n cross-glibc-static-%target_arch
 static glibc for %target_arch. Should be used for cross-compilation only
 
+
+%package checkinstall
+Summary: Run simple checks for %target-gcc immediately when this package is installed
+Group: Other
+Requires: gcc-%target cross-glibc-%target_arch
+Requires: /usr/bin/qemu-%target_qemu_arch-static
+
+%description checkinstall
+%summary
+
+
 %prep
 %setup -cT
-mkdir -p -m755 linux binutils gcc glibc
 
-find /usr/src/gcc-source -type f -name 'gcc-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C gcc
-find /usr/src/binutils-source -type f -name 'binutils-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C binutils
+# the test data
+tar -xf "%SOURCE10"
+mkdir -p -m755 linux gcc glibc binutils
+
+tar -x --strip-components=1 -f "%SOURCE0" -C gcc
+tar -x --strip-components=1 -f "%SOURCE1" -C binutils
+tar -x --strip-components=1 -f "%SOURCE2" -C glibc
+
 find /usr/src/kernel/sources -type f -name 'kernel-source-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C linux
-find /usr/src/glibc-source -type f -name 'glibc-*.tar' | xargs -I {} -n1 tar -x --strip-components=1 -f {} -C glibc
 
 cp -at gcc /usr/share/gnu-config/config.{guess,sub}
 cp -at glibc/scripts /usr/share/gnu-config/config.{guess,sub}
@@ -264,8 +291,13 @@ stage1dir=`pwd`/stage1
 	headers_install
 
 # XXX: avoid %%configure for it puts $target libraries into /usr/lib64
-cd obj_binutils
+pushd obj_binutils
+env \
+	CC=gcc \
+	CXX=g++ \
 ../binutils/configure \
+	--disable-dependency-tracking \
+	--disable-silent-rules \
 	--target=%target \
 	--host=%{_configure_platform} \
 	--build=%{_configure_platform} \
@@ -281,6 +313,10 @@ cd obj_binutils
 	--disable-werror \
 	--disable-shared \
 	--disable-nls \
+	--disable-gdb \
+	--disable-gprofng \
+	--disable-sim \
+	--without-sim \
 	--with-sysroot=%sysroot \
 	--with-build-sysroot=${stagedir}%sysroot \
 	--with-system-zlib \
@@ -293,17 +329,25 @@ cd obj_binutils
 	--enable-64-bit-bfd \
 %endif
 	--enable-relro \
-	--enable-textrel-check=warning
+	--enable-textrel-check=warning \
+	--with-pkgversion='%binutils_version-%release' \
+	--with-bugurl='https://bugzilla.altlinux.org/'
 
-%make_build
+%make_build tooldir=%cross_gcc_tooldir
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
 # for bootstrap toolchain (to compile target glibc)
 %make_install install DESTDIR=${stage1dir}
+popd
 
 # bootstrap gcc (for compiling target glibc)
-cd ../obj_gcc_bootstrap
+pushd obj_gcc_bootstrap
+env \
+	CC=gcc \
+	CXX=g++ \
 ../gcc/configure \
+	--disable-dependency-tracking \
+	--disable-silent-rules \
 	--target=%target \
 	--host=%{_configure_platform} \
 	--build=%{_configure_platform} \
@@ -362,17 +406,23 @@ cd ../obj_gcc_bootstrap
 %endif
 	--enable-gnu-unique-object \
 	--enable-linker-build-id \
-	%nil
+	--with-pkgversion='%gcc_version-%release' \
+	--with-bugurl='https://bugzilla.altlinux.org/'
 
 %make_build all-gcc all-target-libgcc
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install-gcc install-target-libgcc DESTDIR=${stage1dir}
+popd
 
 # glibc
-cd ../obj_glibc
+pushd obj_glibc
 # XXX: avoid %%configure since it puts target libraries/binaries into /usr/lib64
 # Note: glibc's is a library, so $host must be the same as $target
+env \
+	CXX=/bin/false \
 ../glibc/configure \
+	--disable-dependency-tracking \
+	--disable-silent-rules \
 	--host=%target \
 	--target=%target \
 	--build=%{_configure_platform} \
@@ -404,14 +454,19 @@ mkdir -p -m755 ${stagedir}%sysroot/usr/lib
 
 # Don't use bootstrap toolchain any more
 export PATH="${stagedir}%prefix/bin:${save_PATH}"
+popd
 
 # gcc
-cd ../obj_gcc
+pushd obj_gcc
 # XXX: avoid %%configure puts $target libraries in /usr/lib64
 env \
 	ac_cv_file__proc_self_exe=yes \
 	gcc_cv_libc_provides_ssp=yes \
+	CC=gcc \
+	CXX=g++ \
 ../gcc/configure \
+	--disable-dependency-tracking \
+	--disable-silent-rules \
 	--target=%target \
 	--host=%{_configure_platform} \
 	--build=%{_configure_platform} \
@@ -465,7 +520,8 @@ env \
 	--enable-host-pie \
 	--enable-host-shared \
 %endif
-	%nil
+	--with-pkgversion='%gcc_version-%release' \
+	--with-bugurl='https://bugzilla.altlinux.org/'
 
 env \
 	ac_cv_file__proc_self_exe=yes \
@@ -473,6 +529,7 @@ env \
 %make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
+popd
 
 %install
 
@@ -485,14 +542,9 @@ export PATH=`pwd`/stage%prefix/bin:$PATH
 	INSTALL_HDR_PATH=%buildroot%sysroot/usr \
 	headers_install
 
-cd obj_binutils
-%make_install install DESTDIR=%buildroot tooldir=%prefix/libexec/gcc/%target
-
-cd ../obj_glibc
-%make_install install DESTDIR=%buildroot%sysroot
-
-cd ../obj_gcc
-%make_install install DESTDIR=%buildroot
+%make_install install -C obj_binutils DESTDIR=%buildroot tooldir=%cross_gcc_tooldir
+%make_install install -C obj_glibc DESTDIR=%buildroot%sysroot
+%make_install install -C obj_gcc DESTDIR=%buildroot
 
 # relocate target libgcc_s
 if [ -d "%buildroot%prefix/lib/gcc/%target/lib64" ] ; then
@@ -500,33 +552,14 @@ if [ -d "%buildroot%prefix/lib/gcc/%target/lib64" ] ; then
     rmdir %buildroot%prefix/lib/gcc/%target/lib64
 fi
 
-%buildroot%prefix/bin/%target-gcc -dumpspecs > specs
-
-%if "%target_arch" == "aarch64"
-# XXX: native compiler sets /lib64/ld-linux-aarch64.so.1 as an ELF interpreter.
-# Make sure cross-toolchain we build does the same thing.
-sed -e "s;/lib/ld-linux-aarch64;/lib64/ld-linux-aarch64;g" -i specs
-%endif
-
-# Assembler: %%target-as.
-# Path is relative to %%prefix/lib/gcc/%%target/%%gcc_branch
-sed -e '/^[*]invoke_as:/,/^[*]cpp:/ s; as ; ../../../../bin/%target-as ;' -i specs
-# objcopy: %%target-objcopy
-sed -e 's; objcopy ; ../../../../bin/%target-objcopy ;' -i specs
-install -m 644 specs %buildroot%prefix/lib/gcc/%target/%gcc_branch/specs
-# Note: collect2 (GCCs linker wrapper) searches for %%target-ld on its own.
-# Alas it does not use relative paths and is not adjustable via the specs file
-
-# XXX: apparently invoke_as: spec directive applies only to running assembler
-# on compiler (cc1) output. The spec which describes compiling of `assembler`
-# and `assembler-with-cpp` pseudo-languages seems to be hard-coded into GCC.
-# As a result GCC still runs /usr/bin/as (instead of target assembler) when
-# compiling .S files. Therefore install `as` symlinks in GCC libsubdir
-# (%%prefix/lib/gcc/%%target/%%gcc_branch).
-# Just in a case make symlinks to other tools.
-for tool in ar as ld ld.bfd ld.gold nm objcopy objdump ranlib readelf strip; do
-    tool_path="%buildroot%_bindir/%target-$tool"
-    [ -f "$tool_path" ] || continue
+# The spec which describes compiling of `assembler` and
+# `assembler-with-cpp` pseudo-languages seems to be hard-coded into
+# GCC. As a result GCC always runs `as` (instead of %%target-as) when
+# compiling .S files. One possible workaround is to provide `as`
+# symlink in GCC's libsubdir (%%prefix/lib/gcc/%%target/%%gcc_branch).
+# Just in a case we make symlinks for other tools.
+for tool_path in %buildroot%cross_gcc_tooldir/bin/*; do
+    tool="$(basename "$tool_path")"
     ln -sr "$tool_path" %buildroot%prefix/lib/gcc/%target/%gcc_branch/$tool
     # just in a case add a symlink into libexec too
     ln -sr "$tool_path" %buildroot%prefix/libexec/gcc/%target/%gcc_branch/$tool
@@ -540,44 +573,49 @@ install -d -m 755 %buildroot%sysroot/lib
 ln -s ../lib64/`basename %target_ld_linux` %buildroot%sysroot/lib/`basename %target_ld_linux`
 %endif
 
+# install the test data
+
+mkdir -p %buildroot%test_data
+install -m755 -t %buildroot%test_data/ tests/check-cross-gcc.sh
+install -m644 -t %buildroot%test_data/ tests/hello.c tests/hello.cpp
+if [ -f  "tests/bye-%target_arch.S" ]; then
+    install -m644  "$(realpath "tests/bye-%target_arch.S")" %buildroot%test_data/bye.S
+fi
+
 # remove runtime bits, not necessary for a cross-toolchain
-rm -rf %buildroot%sysroot/etc
-rm -rf %buildroot%sysroot/var
-rm -rf %buildroot%sysroot/sbin
-rm -rf %buildroot%sysroot/usr/share
-rm -rf %buildroot%sysroot/usr/bin
-rm -rf %buildroot%sysroot/usr/sbin
-rm -rf %buildroot%sysroot/usr/libexec
-rm -rf %buildroot%sysroot/usr/lib64/audit
-rm -rf %buildroot%sysroot/usr/lib64/gconv
-rm -rf %buildroot%prefix/share/info
-rm -rf %buildroot%prefix/share/man/man7
+rm -rvf %buildroot%sysroot/etc
+rm -rvf %buildroot%sysroot/var
+rm -rvf %buildroot%sysroot/sbin
+rm -rvf %buildroot%sysroot/usr/share
+rm -rvf %buildroot%sysroot/usr/bin
+rm -rvf %buildroot%sysroot/usr/sbin
+rm -rvf %buildroot%sysroot/usr/libexec
+rm -rvf %buildroot%sysroot/usr/lib64/audit
+rm -rvf %buildroot%sysroot/usr/lib64/gconv
+rm -rvf %buildroot%prefix/share/info
+rm -rvf %buildroot%prefix/share/man/man7
 # python pretty-printers conflict with native compiler
-rm -rf %buildroot%prefix/share/gcc-%gcc_branch/python
+rm -rvf %buildroot%prefix/share/gcc-%gcc_branch/python
 # conflicts with the native compiler and is not particularly useful
-rm -f %buildroot%prefix/%_lib/libcc1.so*
+rm -vf  %buildroot%prefix/%_lib/libcc1.so*
 # conflicts with the native bfd and is not particularly useful
-rm -rf %buildroot%prefix/lib/bfd-plugins
+rm -rvf %buildroot%prefix/lib/bfd-plugins
 # Useless for Linux targets
-rm -f %buildroot%_man1dir/%target-windmc*
-rm -f %buildroot%_man1dir/%target-windres*
+rm -vf  %buildroot%_man1dir/%target-windmc*
+rm -vf  %buildroot%_man1dir/%target-windres*
 # libtool junk
-find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name '*.la' -delete
-find %buildroot%prefix/libexec/gcc -type f -name '*.la' -delete
+find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name '*.la' -print -delete
+find %buildroot%cross_gcc_tooldir -type f -name '*.la' -print -delete
 # Target C++ runtime is used for linking only
-find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name 'lib*-gdb.py' -delete
+find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name 'lib*-gdb.py' -print -delete
 
 
 # XXX: gcc needs this to locate crt1.o
 install -d -m 755 %buildroot%sysroot/usr/lib
 
-# remove bootstrap toolchain
-rm -rf %buildroot/stage1
-
-
-rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.a
-rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
-rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
+rm -vf  %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.a
+rm -vf  %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
+rm -vf  %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 
 # Leave alone $target libraries
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -585,213 +623,13 @@ rm -f %buildroot%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
 %add_findprov_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
 %add_debuginfo_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
 
-%check
-
-cat > hello.c <<EOF
-#include <stdio.h>
-int main(int argc, char** argv) {
-	printf("Hello, %%s!\n", argc > 1 ? argv[1] : "world");
-	return 0;
-}
-EOF
-
-cat > hello.cpp <<EOF
-#include <iostream>
-int main(int argc, char** argv) {
-	std::cout << "Hello, " << (argc > 1 ? argv[1] : "world") << "!" << std::endl;
-	return 0;
-}
-EOF
-
-gcc_runtime_libdir=`dirname $(%buildroot%prefix/bin/%target-gcc --print-libgcc-file-name)`
-
-# XXX: PATH= is necessary for collect2 to find %%target-ld
-env PATH=%buildroot%prefix/bin:$PATH \
-%buildroot%prefix/bin/%target-gcc -o hello_c hello.c || exit 2
-env PATH=%buildroot%prefix/bin:$PATH \
-%buildroot%prefix/bin/%target-g++ -o hello_cpp hello.cpp || exit 3
-
-%ifnarch armh
-# XXX: qemu-user is badly broken on armh
-
-# Note: LD_LIBRARY_PATH is for **target** ld.so.
-# Use qemu-user-static so qemu-user is not affected by LD_LIBRARY_PATH
-env LD_LIBRARY_PATH=%buildroot%sysroot/lib64:${gcc_runtime_libdir} \
-	qemu-%target_qemu_arch-static -L %buildroot%sysroot ./hello_c || exit 5
-
-env LD_LIBRARY_PATH=%buildroot%sysroot/lib64:${gcc_runtime_libdir} \
-	qemu-%target_qemu_arch-static -L %buildroot%sysroot ./hello_cpp || exit 7
-
-%endif
-
-%if "%target_arch" == "aarch64"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-
-	.arch armv8-a
-	.data
-message: .asciz "bye-bye ...\n"
-
-	.text
-	.align 2
-	.global _start
-_start:
-	mov x8, __NR_write
-	mov x0, 1
-	adr x1, message
-	mov x2, 12
-	svc #0
-
-	mov x8, __NR_exit
-	mov x0, 0
-	svc #0
-	.section	.note.GNU-stack,"",@progbits
-EOF
-%endif
-
-%if "%target_arch" == "arm"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-	.arch armv7-a
-	.data
-message: .asciz "bye-bye ...\n"
-
-	.text
-	.align 2
-	.global _start
-_start:
-	mov r7, #__NR_write
-	mov r0, #1
-	ldr r1, address_of_message
-	mov r2, #12
-	swi #0
-
-	mov r0, #0
-	mov r7, #__NR_exit
-	swi #0
-
-.align 4
-address_of_message: .word message
-	.section	.note.GNU-stack,"",%progbits
-EOF
-%endif
-
-%if "%target_arch" == "mipsel" || "%target_arch" == "mips64el" || "%target_arch" == "mipsisa64r6el"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-.text
-        .global __start
-__start:
-        li \$a0, 0
-        li \$v0, __NR_exit
-        syscall
-EOF
-%endif
-
-%if "%target_arch" == "riscv64"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-
-.text
-.global _start
-_start:
-        addi a0, x0, 0
-        addi a7, x0, __NR_exit
-        ecall
-EOF
-%endif
-
-%if "%target_arch" == "loongarch64"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-
-.data
-message: .asciz "bye-bye ...\n"
-
-.text
-.global _start
-_start:
-	li.w \$a7, __NR_write
-	li.w \$a0, 1 # stdout file descriptor
-	la \$a1, message
-	li.w \$a2, 12 # message length
-	syscall 0x0
-
-	li.w \$a7, __NR_exit
-	li.w \$a0, 0
-	syscall 0x0
-
-.section	.note.GNU-stack,"",@progbits
-EOF
-%endif
-
+%post checkinstall
 %if "%target_arch" == "i586"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-
-.section .rodata
-message: .asciz "bye-bye ...\n"
-msg_len = (. - message)
-
-.text
-.global _start
-_start:
-	movl \$__NR_write, %%eax
-	# stdout
-	movl \$1, %%ebx
-	leal message(%%ebp), %%ecx
-	movl \$msg_len, %%edx
-	int \$0x80
-
-	movl \$__NR_exit, %%eax
-	movl \$0, %%ebx
-	int \$0x80
-
-.section .note.GNU-stack,"",@progbits
-EOF
-%endif
-
-%if "%target_arch" == "x86_64"
-cat > bye.S <<EOF
-#include <sys/syscall.h>
-
-.data
-message: .asciz "bye-bye ...\n"
-msg_len = (. - message)
-
-.text
-.global _start
-_start:
-	movl \$__NR_write, %%eax
-	# stdout
-	movl \$1, %%edi
-	leaq message(%%rip), %%rsi
-	movl \$msg_len, %%edx
-	syscall
-
-	movl \$__NR_exit, %%eax
-	movl \$0, %%edi
-	syscall
-
-.section .note.GNU-stack,"",@progbits
-EOF
-%endif
-
 # XXX: x86 targeted binutils align sections at 4 KB (target page size).
 # On host architectures with page size > 4KB qemu refuse to load such a binary.
-%if "%target_arch" == "i586"
-%global asm_extra_flags -Wl,-Ttext-segment=0x90000000
-%else
-%global asm_extra_flags %nil
+export ASM_EXTRA_FLAGS="-Wl,-Ttext-segment=0x90000000"
 %endif
-
-env PATH=%buildroot%prefix/bin:$PATH \
-%buildroot%prefix/bin/%target-gcc -nostdlib -static -no-pie %asm_extra_flags -o bye_asm bye.S || exit 11
-
-%ifnarch armh
-# XXX: qemu-user is badly broken on armh
-qemu-%target_qemu_arch-static ./bye_asm || exit 13
-%endif
+%test_data/check-cross-gcc.sh "%target" "qemu-%target_qemu_arch-static" "%test_data"
 
 %files -n gcc-%target
 %_bindir/%target-gcc*
@@ -801,7 +639,6 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %_bindir/%target-gcov*
 %_bindir/%target-lto*
 %prefix/lib/gcc/%target/%gcc_branch/*
-%prefix/libexec/gcc/%target/*
 # avoid 'static library packaging violation' "error"
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libatomic.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc.a
@@ -828,8 +665,8 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %endif
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 # binunitls
-%exclude %prefix/libexec/gcc/%target/bin/*
-%exclude %prefix/libexec/gcc/%target/lib/*
+%dir %cross_gcc_tooldir
+%cross_gcc_tooldir/%gcc_branch
 %_man1dir/%target-cpp*
 %_man1dir/%target-g++*
 %_man1dir/%target-gcc*
@@ -930,9 +767,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %_bindir/%target-size
 %_bindir/%target-strings
 %_bindir/%target-strip
-# gcc_tooldir
-%prefix/libexec/gcc/%target/bin/*
-%prefix/libexec/gcc/%target/lib/*
+%dir %cross_gcc_tooldir
+%cross_gcc_tooldir/bin
+%cross_gcc_tooldir/lib
 %_man1dir/%target-addr2line*
 %_man1dir/%target-ar*
 %_man1dir/%target-as*
@@ -950,11 +787,19 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %_man1dir/%target-strings*
 %_man1dir/%target-strip*
 
+%files checkinstall
+%test_data
 
 %changelog
-* Thu Feb 08 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240208-alt1
-- Build x86-targeted cross-compilers on all non-x86 architectures.
-- Don't run test binaries on armh (qemu-user is badly broken there).
+* Thu Mar 06 2025 Ivan A. Melnikov <iv@altlinux.org> 20250101-alt1
+- Unify build for all supported targets.
+- Update components to sync with Sisyphus:
+  + binutils 2.43;
+  + gcc 14.2.1;
+  + glibc 2.40.0.69.8566822197.
+- Apply patches from sisyphus_loongarch64.
+- Move tests from from spec to a checkinstall package.
+- Various spec improvements.
 
 * Tue Feb 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 20240206-alt1
 - Added x86-targeted cross-compilers (for now only on aarch64 and LoongArch).
