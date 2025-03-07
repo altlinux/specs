@@ -1,6 +1,6 @@
 Name: xfce4-screensaver
 Version: 4.18.4
-Release: alt1
+Release: alt2
 
 Summary: Screen saver and locker for Xfce
 License: GPLv2+ and LGPLv2+
@@ -75,6 +75,9 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Fri Mar 07 2025 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt2
+- Use ALT default background.
+
 * Sun Dec 22 2024 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
 - 4.18.3 -> 4.18.4.
 
