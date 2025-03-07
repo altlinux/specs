@@ -1,6 +1,6 @@
 Name: xfdesktop
 Version: 4.20.1
-Release: alt1
+Release: alt2
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -31,6 +31,8 @@ Conflicts: libxfce4windowing < 4.19.6
 
 %define _unpackaged_files_terminate_build 1
 
+%define default_background %_datadir/backgrounds/xfce/default-background
+
 %description
 %name contains a desktop manager for the Xfce Desktop Environment.
 
@@ -51,6 +53,7 @@ Conflicts: libxfce4windowing < 4.19.6
 	--enable-thunarx \
 	--enable-desktop-icons \
 	--enable-file-icons \
+	--with-default-backdrop-filename=%default_background \
 	--enable-debug=minimum
 
 %make_build
@@ -58,6 +61,14 @@ Conflicts: libxfce4windowing < 4.19.6
 %install
 %makeinstall_std
 %find_lang %name
+
+touch %buildroot%default_background
+
+%post
+# Set default Xfce background
+if ! [ -L %default_background ]; then
+	ln -s xfce-x.svg %default_background ||:
+fi
 
 %files -f %name.lang
 %doc README.md NEWS AUTHORS doc/README.*
@@ -67,8 +78,12 @@ Conflicts: libxfce4windowing < 4.19.6
 %_pixmapsdir/*
 %_mandir/man?/*
 %_datadir/backgrounds/xfce
+%ghost %default_background
 
 %changelog
+* Fri Mar 07 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt2
+- Set default background as symlink.
+
 * Mon Feb 17 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
 - Updated to 4.20.1.
 
