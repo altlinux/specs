@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        133.0.6943.141
+Version:        134.0.6998.35
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -86,7 +86,7 @@ Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 #XXX Patch027: 0027-Use-system-sysroot-for-rust.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
-Patch032: 0032-FEDORA-libavif-deps.patch
+# Patch032: 0032-FEDORA-libavif-deps.patch
 # Patch033: 0033-ALT-rename-std::powf.patch
 # Patch034: 0034-DEBIAN-span-optional.patch
 # Patch035: 0035-DEBIAN-mojo.patch
@@ -102,6 +102,13 @@ Patch062: 0062-DEBIAN-cacheline.patch
 Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
+Patch065: 0065-DEBIAN-stdatomic.patch
+Patch066: 0066-DEBIAN-clang19.patch
+Patch067: 0067-DEBIAN-gn-allowlist.patch
+Patch068: 0068-DEBIAN-adler1.patch
+Patch069: 0069-DEBIAN-swiftshader-llvm.patch
+Patch070: 0070-FEDORA-type-mismatch-error.patch
+Patch071: 0071-FEDORA-pipewire-cast.patch
 
 ### End Patches
 
@@ -341,7 +348,8 @@ gn_arg+=( system_libdir=\"%_lib\" )
 gn_arg+=( enable_nocompile_tests=false )
 
 # toolkit
-gn_arg+=( use_qt=false )
+gn_arg+=( use_qt5=false )
+gn_arg+=( use_qt6=false )
 gn_arg+=( use_gtk=true )
 gn_arg+=( gtk_version=4 )
 
@@ -405,14 +413,11 @@ gn_arg+=( icu_use_data_file=false )
 gn_arg+=( icu_use_data_file=true )
 %endif
 
-%ifnarch x86_64 aarch64
-gn_arg+=( enable_vulkan=false )
-%else
+%ifarch x86_64 aarch64
 gn_arg+=( enable_vulkan=true )
+%else
+gn_arg+=( enable_vulkan=false )
 %endif
-gn_arg+=( use_system_jsoncpp=false )
-gn_arg+=( use_system_woff2=false )
-gn_arg+=( use_system_snappy=false )
 gn_arg+=( use_system_libtiff=false )
 gn_arg+=( safe_browsing_use_unrar=false )
 gn_arg+=( build_dawn_tests=false )
@@ -565,6 +570,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.35-alt1
+- New version (134.0.6998.35).
+- Security fixes:
+  + CVE-2025-1914: Out of bounds read in V8
+  + CVE-2025-1915: Improper Limitation of a Pathname to a Restricted Directory in DevTools
+  + CVE-2025-1916: Use after free in Profiles
+  + CVE-2025-1917: Inappropriate Implementation in Browser UI
+  + CVE-2025-1918: Out of bounds read in PDFium
+  + CVE-2025-1919: Out of bounds read in Media
+  + CVE-2025-1921: Inappropriate Implementation in Media Stream
+  + CVE-2025-1922: Inappropriate Implementation in Selection
+  + CVE-2025-1923: Inappropriate Implementation in Permission Prompts
+
 * Sat Mar 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 133.0.6943.141-alt1
 - New version (133.0.6943.141).
 
