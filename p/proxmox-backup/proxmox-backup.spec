@@ -12,8 +12,8 @@
 %endif
 
 Name: proxmox-backup
-Version: 3.2.8.1
-Release: alt3
+Version: 3.3.3.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -222,6 +222,12 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Thu Mar 06 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt1
+- 3.3.3-1
+
+* Fri Feb 14 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.2.8.1-alt4
+- Add ntfs-3g support.
+
 * Mon Dec 16 2024 Andrew A. Vasilyev <andy@altlinux.org> 1:3.2.8.1-alt3
 - turn "could not set MAM Attribute" warning into simple log (ALT #52379)
 
