@@ -3,7 +3,7 @@
 
 %define _name Pins
 %define binary_name pinapp
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name io.github.fabrialberio.%binary_name
 
 %def_enable check
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - first build for Sisyphus (v2.0.0-1-gaebb981)
 
