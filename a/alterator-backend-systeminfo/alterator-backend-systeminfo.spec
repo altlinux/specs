@@ -2,7 +2,7 @@
 
 Name: alterator-backend-systeminfo
 Version: 0.1.2
-Release: alt1
+Release: alt2
 
 Summary: Alterator backends for getting system information
 License: GPLv3
@@ -31,6 +31,7 @@ mkdir -p %buildroot%_datadir/polkit-1/actions
 
 install -v -p -m 755 -D systeminfo %buildroot%_libexecdir/%name
 install -v -p -m 644 -D systeminfo.backend %buildroot%_alterator_datadir/backends
+install -v -p -m 644 -D systeminfo.object %buildroot%_alterator_datadir/objects
 install -v -p -m 644 -D org.altlinux.alterator.systeminfo1.xml %buildroot%_datadir/dbus-1/interfaces
 install -v -p -m 644 -D org.altlinux.alterator.systeminfo1.policy %buildroot%_datadir/polkit-1/actions
 
@@ -44,10 +45,14 @@ install -v -p -m 644 -D org.altlinux.alterator.systeminfo1.policy %buildroot%_da
 %dir %_datadir/polkit-1/actions
 %_libexecdir/*
 %_alterator_datadir/backends/*
+%_alterator_datadir/objects/*
 %_datadir/dbus-1/interfaces/*
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Fri Mar 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.2-alt2
+- Put object file for Alterator Explorer.
+
 * Tue Mar 04 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.2-alt1
 - New version.
 
