@@ -4,7 +4,7 @@
 Summary: Library for producing small, fast columnar storage for Hadoop workloads
 Name: apache-orc
 Version: 2.1.0
-Release: alt2
+Release: alt2.1
 License: Apache-2.0
 Url: http://orc.apache.org/
 Group: System/Libraries
@@ -92,7 +92,7 @@ library.
 
 # To compile on ppc64le
 # (TODO: Fix the unused-parameter warnings):
-%ifarch ppc64le
+%ifarch ppc64le loongarch64 riscv64
 %add_optflags -Wno-error=unused-parameter
 %endif
 
@@ -134,6 +134,9 @@ export ORC_FORMAT_URL=file://%SOURCE1
 %_libdir/cmake/orc
 
 %changelog
+* Sat Mar 08 2025 Ivan A. Melnikov <iv@altlinux.org> 2.1.0-alt2.1
+- Use the same build fix for loongarch64 and riscv64.
+
 * Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 2.1.0-alt2
 - Fix building of ppc64le.
 
