@@ -2,11 +2,11 @@
 
 Name: powerprofilesctl-tray
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Tray icon Ayatana indicator for powerprofilesctl for laptop
 License: GPL-2.0
-Group: Development/Python3
+Group: System/Configuration/Hardware
 URL: https://github.com/N0rbert/powerprofilesctl-tray
 
 BuildArch: noarch
@@ -46,5 +46,8 @@ install -m 0755 usr/bin/powerprofilesctl-tray.py %buildroot%_bindir
 %_sysconfdir/xdg/autostart/*
 
 %changelog
+* Sat Mar 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.1-alt2
+- Moved to the better category - System/Configuration/Hardware
+
 * Fri Mar 07 2025 Nikolay Strelkov <snk@altlinux.org> 0.1-alt1
 - Initial build for Sisyphus
