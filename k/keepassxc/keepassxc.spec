@@ -1,6 +1,6 @@
 Name: keepassxc
-Version:  2.7.9
-Release:  alt3
+Version:  2.7.10
+Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -28,7 +28,7 @@ BuildRequires: cmake ctest gcc-c++
 BuildRequires: liblsan-devel-static
 %endif
 BuildRequires: qt5-base-devel >= 5.12.0 qt5-tools-devel >= 5.12.0 qt5-svg-devel
-BuildRequires: libbotan-devel >= 2.12
+BuildRequires: libbotan-devel >= 2.19
 BuildRequires: libargon2-devel
 BuildRequires: libsodium-devel
 BuildRequires: zlib-devel >= 1.2.0
@@ -68,14 +68,14 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %cmake \
   -DWITH_TESTS=ON \
   -DWITH_XC_BROWSER=ON \
-  -DWITH_XC_BROWSER_PASSKEYS=OFF \
+  -DWITH_XC_BROWSER_PASSKEYS=ON \
+  -DWITH_XC_PASSKEYS=ON \
   -DWITH_XC_NETWORKING=ON \
   -DWITH_XC_AUTOTYPE=ON \
   -DWITH_XC_SSHAGENT=ON \
   -DWITH_XC_KEESHARE=ON \
   -DWITH_XC_UPDATECHECK=OFF \
   -DWITH_XC_FDOSECRETS=ON \
-  -DWITH_XC_BROWSER_PASSKEYS=OFF \
 %if_with asan
   -DWITH_ASAN=ON \
 %endif
@@ -91,7 +91,8 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %cmake_build
 
 %check
-%ctest --exclude-regex testcli
+export LANG=en_US.UTF-8; \
+  %ctest --exclude-regex "testcli|testpasskeys"
 
 %install
 %cmake_install
@@ -109,6 +110,11 @@ cp -v %SOURCE1 share/translations/keepassx_ru.ts
 %endif
 
 %changelog
+* Sat Mar 08 2025 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.10-alt1
+- updated to v2.7.9
+- update Russian translation to its current state (as of 02.03.2025)
+- enable passkeys without tests (may need botan3)
+
 * Sat Mar 01 2025 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.9-alt3
 - update Russian translation to its current state (as of 24.02.2025)
   closes: #52823
