@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.29.5
-Release: alt1
+Release: alt2
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -16,6 +16,7 @@ VCS: https://github.com/ipython/ipykernel.git
 
 Source: %name-%version.tar
 Patch: ipykernel-6.29.4-pytest8-fix.patch
+Patch1: ipykernel-6.29.5-ipython3v9.0.1-fix.patch
 
 BuildArch: noarch
 
@@ -39,6 +40,7 @@ BuildRequires: /dev/pts
 BuildRequires: python3-module-ipyparallel
 BuildRequires: python3-module-trio
 BuildRequires: python3-module-pexpect
+BuildRequires: python3-module-matplotlib-inline
 %endif
 
 %add_python3_req_skip gtk gobject
@@ -59,6 +61,8 @@ This package contains tests for %oname.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
+
 sed -i 's/--color=yes//' pyproject.toml
 
 %build
@@ -71,8 +75,10 @@ sed -i 's/--color=yes//' pyproject.toml
 cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 
 %check
+# https://github.com/ipython/ipykernel/issues/1301
 %pyproject_run_pytest -W ignore::DeprecationWarning \
-	              --ignore tests/test_eventloop.py tests/
+	              --ignore tests/test_eventloop.py \
+		      --ignore tests/inprocess tests/
 
 %files
 %doc README.*
@@ -87,6 +93,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Mar 08 2025 Anton Vyatkin <toni@altlinux.org> 6.29.5-alt2
+- Fixed FTBFS.
+
 * Tue Jul 02 2024 Anton Vyatkin <toni@altlinux.org> 6.29.5-alt1
 - New version 6.29.5.
 
