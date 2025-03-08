@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -24,6 +24,8 @@ BuildRequires: alterator-entry >= 0.2.0
 Requires: alterator-backend-packages
 Requires: alterator-backend-component
 Requires: alterator-backend-component_categories
+Requires: alterator-backend-batch-component_categories
+Requires: alterator-backend-batch-components
 Requires: libqbase
 Requires: alt-components-base
 
@@ -64,6 +66,11 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/%name
 
 %changelog
+* Thu Mar 08 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.1-alt1
+- Switch to sync batch dbus calls which reduces model build time.
+- Enable window decorations for WaitDialog.
+- Fix translation warnings when using english.
+
 * Mon Feb 24 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.0-alt1
 - Move to qt6.
 - Add sections. Use sections from edition if one is selected.
