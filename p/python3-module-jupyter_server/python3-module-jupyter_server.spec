@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.15.0
-Release: alt1
+Release: alt2
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
 License: BSD-3-Clause
@@ -43,6 +43,7 @@ BuildRequires: python3-module-argon2-cffi
 BuildRequires: /proc
 BuildRequires: /dev/pts
 BuildRequires: python3-module-jupyter-server-terminals
+BuildRequires: python3-module-requests
 %endif
 
 %description
@@ -79,6 +80,9 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Mar 08 2025 Anton Vyatkin <toni@altlinux.org> 2.15.0-alt2
+- Fixed FTBFS.
+
 * Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 2.15.0-alt1
 - New version 2.15.0.
 
