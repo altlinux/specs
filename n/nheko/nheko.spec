@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nheko
-Version: 0.11.3
-Release: alt1.1
+Version: 0.12.0
+Release: alt2
 
 Summary: Desktop client (QT) for the Matrix protocol
 
@@ -11,13 +11,12 @@ License: GPLv3
 Url: https://nheko.im/nheko-reborn/nheko
 
 Source: %name-%version.tar
-Patch0: %name-fmt10-fix.patch
 Patch1: %name-fmt11-fix.patch
 
 BuildRequires: cmake gcc-c++
-BuildRequires: qt5-tools-devel qt5-multimedia-devel qt5-svg-devel
-BuildRequires: qt5-declarative-devel qt5-quickcontrols2-devel
-BuildRequires: libqtkeychain-qt5-devel
+BuildRequires: qt6-tools-devel qt6-multimedia-devel qt6-svg-devel
+BuildRequires: qt6-declarative-devel libkdsingleapplication-qt6-devel
+BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: boost-asio-devel boost-devel-headers boost-signals-devel
 BuildRequires: libssl-devel zlib-devel libtweeny-devel liblmdbxx-devel
 BuildRequires: libmtxclient-devel liblmdb-devel cmark-devel
@@ -34,7 +33,7 @@ BuildRequires: asciidoc-a2x
 BuildRequires: libre2-devel
 
 # Additional (runtime) dependencies
-Requires: qt5-graphicaleffects qt5-quickcontrols2 qt5-multimedia
+Requires: qt6-multimedia
 
 %description
 The motivation behind the project is to provide a native desktop app
@@ -78,6 +77,13 @@ and less like an IRC client.
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Sat Mar 08 2025 Paul Wolneykien <manowar@altlinux.org> 0.12.0-alt2
+- Drop explicit qt6-graphicaleffects and qt6-quickcontrols2
+  dependencies.
+
+* Sat Mar 08 2025 Paul Wolneykien <manowar@altlinux.org> 0.12.0-alt1
+- New version 0.12.0.
+
 * Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 0.11.3-alt1.1
 - NMU: Fix build with fmt 11
 

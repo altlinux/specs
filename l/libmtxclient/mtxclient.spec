@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libmtxclient
-Version: 0.9.2
-Release: alt4
+Version: 0.10.0
+Release: alt1
 
 Summary: Client API library for the Matrix protocol, built on top of Boost.Asio
 
@@ -11,7 +11,6 @@ License: MIT
 Url: https://nheko.im/nheko-reborn/mtxclient.git
 
 Source: %name-%version.tar
-Patch0: 0001-Fix-build-on-GCC13.patch
 Patch1: 0002-Fix-build-with-fmt-11.patch
 
 BuildRequires: cmake gcc-c++ libstdc++-devel-static
@@ -38,7 +37,6 @@ library.
 %prep
 %setup
 
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -78,6 +76,9 @@ library.
 %_libdir/*.so
 
 %changelog
+* Sat Mar 08 2025 Paul Wolneykien <manowar@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Sun Oct 20 2024 Nazarov Denis <nenderus@altlinux.org> 0.9.2-alt4
 - Fix build with fmt 11
 
