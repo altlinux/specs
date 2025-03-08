@@ -14,7 +14,7 @@
 
 Name: wireplumber-0.4
 Version: 0.4.17
-Release: alt3
+Release: alt4
 
 Summary: a modular session/policy manager for PipeWire (0.4 compat library)
 
@@ -47,6 +47,7 @@ BuildRequires: pkgconfig(systemd)
 %endif
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %package doc
 Summary: docs for the client library for WirePlumber
@@ -128,6 +129,7 @@ This package contains GObject introspection development data for lib%libname.
 
 %prep
 %setup
+%patch -p1
 # Make the relevant subdir() statements no-ops.
 if [ -f src/meson.build ]; then : > src/meson.build; fi
 if [ -f po/meson.build ]; then : > po/meson.build; fi
@@ -208,6 +210,10 @@ mv -v %buildroot%_datadir/doc/wireplumber %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Sat Mar 08 2025 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt4
+- Fixed compatibility with new, more type-strict PipeWire headers; no change
+  from -alt2 as far as machine code is concerned.
+
 * Wed Sep 18 2024 Arseny Maslennikov <arseny@altlinux.org> 0.4.17-alt3
 - Fixed FTBFS in p11; no change from -alt2.
 
