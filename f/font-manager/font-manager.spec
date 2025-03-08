@@ -8,7 +8,7 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: A font management application for the GNOME desktop
@@ -90,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Sat Mar 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
+- 0.9.4
+
 * Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.3-alt1
 - 0.9.3
 
