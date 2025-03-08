@@ -5,7 +5,7 @@
 
 Name: backrest
 Version: 1.7.2
-Release: alt1
+Release: alt2
 Summary: Web UI and orchestrator for restic backup
 License: GPL-3.0
 Group: Archiving/Backup
@@ -77,5 +77,8 @@ touch %buildroot%_sysconfdir/backrest/config.json
 %doc LICENSE
 
 %changelog
+* Sat Mar 08 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.2-alt2
+- Fixed cache directory path.
+
 * Sat Feb 22 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.7.2-alt1
 - Initial build for ALT.
