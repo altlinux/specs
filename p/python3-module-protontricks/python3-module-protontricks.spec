@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Python package for %pypi_name
@@ -72,6 +72,9 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %_desktopdir/%{pypi_name}*
 
 %changelog
+* Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1.12.1-alt1
+- Updated to 1.12.1.
+
 * Wed Sep 25 2024 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
 - Updated to 1.12.0.
 
