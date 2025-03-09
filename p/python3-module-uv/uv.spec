@@ -2,11 +2,17 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
+%define uv_version 0.6.5
+
+%define pypi_name_uv_build uv-build
+%define mod_name_uv_build uv_build
+%define uv_build_version 0.6.3
+%define uv_build_backend_dir crates/uv-build
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.4
+Version: %uv_version
 Release: alt1
 Summary: An extremely fast Python package installer and resolver
 License: MIT
@@ -40,6 +46,23 @@ Conflicts: python3-module-%pypi_name <= 0.5.26-alt1
 %description -n %pypi_name
 %summary.
 
+%package -n %pypi_name_uv_build
+Version: %uv_build_version
+Summary: Executable for uv build backend
+Group: Development/Python3
+
+%description -n %pypi_name_uv_build
+%summary.
+
+%package build
+Version: %uv_build_version
+Summary: uv build backend
+Group: Development/Python3
+Requires: %pypi_name_uv_build
+
+%description build
+%summary.
+
 %prep
 %setup -a1
 %autopatch -p1
@@ -55,23 +78,56 @@ export CARGO_PROFILE_RELEASE_LTO=thin
 %endif
 %pyproject_build
 
+# build uv build backend
+pushd %uv_build_backend_dir
+%pyproject_build
+popd
+
 %install
 %pyproject_install
 
+# install uv build backend
+pushd %uv_build_backend_dir
+%pyproject_install
+popd
+
 %check
-# smoke test
-%pyproject_run -- uv --help
+# smoke tests: .github/workflows/build-binaries.yml
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+uv --help
+python -m uv --help
+uvx --help
+ENDTESTS
+
+pushd %uv_build_backend_dir
+%pyproject_run -- bash -s <<-'ENDTESTS'
+set -eux
+uv-build --help
+python -m uv_build --help
+ENDTESTS
+popd
 
 %files
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/%{pep427_name %pypi_name}-%uv_version.dist-info/
+
+%files build
+%python3_sitelibdir/%mod_name_uv_build/
+%python3_sitelibdir/%{pep427_name %pypi_name_uv_build}-%uv_build_version.dist-info/
 
 %files -n %pypi_name
 %doc README.*
 %_bindir/uv
 %_bindir/uvx
 
+%files -n %pypi_name_uv_build
+%_bindir/uv-build
+
 %changelog
+* Fri Mar 07 2025 Stanislav Levin <slev@altlinux.org> 0.6.5-alt1
+- 0.6.4 -> 0.6.5.
+
 * Tue Mar 04 2025 Stanislav Levin <slev@altlinux.org> 0.6.4-alt1
 - 0.6.3 -> 0.6.4.
 
