@@ -9,7 +9,7 @@
 %global magpie_abi_version magpie-0
 
 Name: magpie
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Window manager for Budgie Desktop
@@ -92,7 +92,7 @@ BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(dbus-1)
 
 #Requires: control-center-filesystem
-#Requires: mutter-common
+Requires: mutter-gnome
 
 Requires: gsettings-desktop-schemas >= %gsettings_desktop_schemas_version
 Requires: gnome-settings-daemon
@@ -126,8 +126,8 @@ Header files and libraries for developing against Magpie.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+#patch0 -p1
+#patch1 -p1
 
 %build
 %meson -Degl_device=true
@@ -161,6 +161,9 @@ Header files and libraries for developing against Magpie.
 %_pkgconfigdir/%name-cogl-pango-0.pc
 
 %changelog
+* Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.4-alt1
+- new version 0.9.4 (with rpmrb script)
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
 - initial build for ALT Sisyphus
 
