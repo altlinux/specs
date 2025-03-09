@@ -11,8 +11,8 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.12.0
-Release: alt2
+Version: 3.13.0
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -542,6 +542,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sat Mar 08 2025 Andrey Cherepanov <cas@altlinux.org> 3.13.0-alt1
+- New version.
+
 * Fri Mar 07 2025 Andrey Cherepanov <cas@altlinux.org> 3.12.0-alt2
 - Fix login scripts (thanks Technogid) and use they in service by default.
 - Use build configuration from Technogid.
