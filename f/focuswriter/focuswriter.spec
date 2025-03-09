@@ -1,5 +1,5 @@
 Name:		focuswriter
-Version:	1.8.10
+Version:	1.8.11
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
@@ -47,6 +47,9 @@ rm -f %buildroot%_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Mar 09 2025 Ilya Mashkin <oddity@altlinux.ru> 1.8.11-alt1
+- 1.8.11
+
 * Mon Feb 17 2025 Ilya Mashkin <oddity@altlinux.ru> 1.8.10-alt1
 - 1.8.10
 
