@@ -18,8 +18,8 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:    gambas
-Version: 3.20.1
-Release: alt2
+Version: 3.20.2
+Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
 License: GPL-2.0+
@@ -2032,6 +2032,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Sat Mar 08 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.2-alt1
+- New version.
+
 * Wed Jan 29 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.1-alt2
 - Added gambas-gb-qt5-wayland (ALT #52836).
 
