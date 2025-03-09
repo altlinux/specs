@@ -3,14 +3,14 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: Json Formatter for the standard python logger
 License: BSD-2-Clause
 Group: Development/Python3
 URL: https://pypi.org/project/python-json-logger/
-VCS: https://github.com/madzak/python-json-logger
+VCS: https://github.com/nhairs/python-json-logger
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -47,6 +47,9 @@ we can stop writing custom parsers for syslog type records.
 %python3_sitelibdir/%{pyproject_distinfo python_json_logger}
 
 %changelog
+* Sun Mar 09 2025 Anton Vyatkin <toni@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Tue Dec 17 2024 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt1
 - New version 3.2.1.
 
