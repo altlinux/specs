@@ -3,7 +3,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libpari23
 Version:	2.3.5
-Release:	alt1_18
+Release:	alt1_19
 Summary:	Number Theory-oriented Computer Algebra Library
 # No version is specified
 License:	GPL+
@@ -63,6 +63,8 @@ sed -i -e 's|@OPTFLAGS@|%{optflags} -fPIC|' config/get_cc
 
 # Fix build for Perls without '.' in @INC
 %patch4
+
+sed -i "s|^main()|int main()|" config/*.c
 
 # Avoid unwanted rpaths
 sed -i "s|runpathprefix='.*'|runpathprefix=''|" config/get_ld
@@ -136,6 +138,9 @@ rm -rf %{buildroot}%{_datadir}/emacs/site-lisp/pari/
 # Placate rpmlint regarding binary and library permissions
 # %{_fixperms} %{buildroot}{%{_bindir},%{_libdir}}
 
+rm -v %buildroot%{_mandir}/man1/gp.1*
+rm -v %buildroot%{_mandir}/man1/pari.1*
+
 %check
 make dobench
 make dotest-compat
@@ -164,9 +169,9 @@ make dotest-round4
 %exclude %{_datadir}/pari/misc/
 %exclude %{_datadir}/pari/pari.desc
 %exclude %{_mandir}/man1/gp-2.3.1*
-%exclude %{_mandir}/man1/gp.1*
+#exclude %{_mandir}/man1/gp.1*
 %exclude %{_mandir}/man1/gphelp.1*
-%exclude %{_mandir}/man1/pari.1*
+#exclude %{_mandir}/man1/pari.1*
 %exclude %{_mandir}/man1/tex2mail.1*
 
 %files devel
@@ -176,6 +181,9 @@ make dotest-round4
 %{_datadir}/%{name}/
 
 %changelog
+* Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 2.3.5-alt1_19
+- fix build
+
 * Sat Mar 28 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt1_18
 - update
 
