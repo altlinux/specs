@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: phpldapadmin
-Version: 1.2.6.7
+Version: 2.0.1
 Release: alt1
 
 Summary: Handle the adminstration of LDAP server over the web
 Summary(ru_RU.UTF8): Управление LDAP сервером через web
-License: GPL-2
+License: GPL-2.0
 Group: Networking/WWW
 
 Url: http://phpldapadmin.sourceforge.net
@@ -20,6 +20,9 @@ BuildArch: noarch
 BuildPreReq:rpm-build-apache2
 
 %define pla_home %_datadir/%name
+
+%filter_from_requires /init-container/d
+%filter_from_requires /docker-php-entrypoint/d
 
 %description
 %name -  is a web-based LDAP client. It provides easy, anywhere-accessible,
@@ -36,13 +39,11 @@ Its user base consists mostly of LDAP administration professionals.
 дерево просмотра и функциональные возможности ускоренного поиска делают его
 интуитивно понятным, чтобы просматривать и управлять вашим каталогом LDAP.
 %name - совершенный браузер LDAP для профессионала LDAP и новичков.
-Его пользователи состоят главным образом из профессионалов в администрировании LDAP.
-
-После установки откорректируйте config.php согласно вашим настройкам.
+Его пользователи состоят главным образом из профессионалов в администрировании
+LDAP.
 
 %prep
-%setup -q -n %name-%version
-cp config/config.php.example config/config.php
+%setup
 
 %build
 
@@ -50,11 +51,8 @@ cp config/config.php.example config/config.php
 install -d -m755 %buildroot%pla_home
 cp -a * %buildroot%pla_home
 
-
 pushd %buildroot%pla_home
 find . -type f -executable | xargs chmod -x
-rm -r doc/ config/config.php.example
-rm -r tools/
 popd
 
 install -d -m755 %buildroot%_sysconfdir/%name
@@ -80,13 +78,19 @@ install -d %buildroot%apache2_sites_available
 install -m644  %name.conf %buildroot%apache2_sites_available
 
 %files
+%doc README.md
 %config %dir %_sysconfdir/%name
-%attr(640,root,%apache2_user) %config(noreplace) %_sysconfdir/%name/config.php
+%attr(640,root,%apache2_user) %config(noreplace) %_sysconfdir/%name/*
 %config(noreplace) %apache2_sites_available/%name.conf
 %pla_home
-%doc INSTALL.md README.md LICENSE
 
 %changelog
+* Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt1
+- New version.
+
+* Sun Mar 02 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Thu Jan 11 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.6.7-alt1
 - New version.
 
