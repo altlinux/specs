@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 6.0.2
-Release: alt3
+Release: alt4
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Patch1: add-russian-translations-to-desktop-files.patch
 Patch2: update-the-position-of-the-user-list-more-late.patch
+Patch3: don-t-zero-messages-list-s-width.patch
 
 %K6init
 
@@ -47,6 +48,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %K6build \
@@ -86,6 +88,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Wed Mar 05 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt4
+- don't zero messages list's width
+
 * Tue Feb 25 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt3
 - rename "Suspend" and "Hibernate" in Russian
 
