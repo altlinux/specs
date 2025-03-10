@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.8
+Version: 3.3.9
 Release: alt1
 Summary: An abstract syntax tree for Python with inference support
 License: LGPLv2.1+
@@ -26,6 +26,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_check
 # tests/test_manager.py::IsolatedAstroidManagerTest::test_no_user_warning
 BuildRequires: python3-module-pip
+# tests/test_raw_building.py, filtered by default
+BuildRequires: python3-module-mypy
 %endif
 
 %description
@@ -65,6 +67,9 @@ rm %buildroot%python3_sitelibdir/%mod_name/test_utils.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 10 2025 Stanislav Levin <slev@altlinux.org> 3.3.9-alt1
+- 3.3.8 -> 3.3.9.
+
 * Tue Dec 24 2024 Stanislav Levin <slev@altlinux.org> 3.3.8-alt1
 - 3.3.7 -> 3.3.8.
 
