@@ -1,15 +1,15 @@
 %define soversion 2
 
 Name: faad
-Version: 2.11.1
+Version: 2.11.2
 Release: alt1
 
 Summary: FAAD is a Freeware Advanced Audio Decoder
 License: GPL-2.0-or-later
 Group: Sound
 
-Url: http://www.audiocoding.com
-# https://github.com/knik0/faad2/releases
+Url: https://www.audiocoding.com/
+VCS: https://github.com/knik0/faad2
 Source: faad2-%version.tar
 
 %define libsndfile_ver 1.1.0
@@ -70,6 +70,9 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/faad2.pc
 
 %changelog
+* Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 2.11.2-alt1
+- 2.11.1 -> 2.11.2
+
 * Tue Jan 16 2024 Anton Farygin <rider@altlinux.ru> 2.11.1-alt1
 - 2.10.1 -> 2.11.1
 
