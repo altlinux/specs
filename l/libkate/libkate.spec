@@ -1,10 +1,10 @@
-%set_automake_version 1.11
+%set_automake_version 1.10
 
 %def_without gui
 
 Name: libkate
 Version: 0.4.1
-Release: alt1.6
+Release: alt1.7
 Summary: kate is a karaoke and text codec for embedding in ogg
 License: BSD-3-Clause
 Group: Video
@@ -94,6 +94,9 @@ rm -rf %buildroot%_datadir/doc/libkate
 %endif
 
 %changelog
+* Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.7
+- Use autmake 1.10.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1.6
 - NMU: build without KateDJ (gui subpackage)
 
