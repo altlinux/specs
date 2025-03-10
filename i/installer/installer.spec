@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.11
+Version: 1.16.12
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,10 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 1.16.12-alt1
+- install2-init-functions: fix stop_splash for run systemd-vconsole-setup
+- install2-init-functions: run setsyfont as fallback in stop_splash
+
 * Fri Mar 07 2025 Anton Midyukov <antohami@altlinux.org> 1.16.11-alt1
 - install2-init-functions: run systemd-vconsole-setup after plymouth quit
 - systemd/install2.service: StandardError=tty
