@@ -1,6 +1,6 @@
 Name: startup-rescue
 Version: 0.50
-Release: alt1
+Release: alt2
 
 Summary: The system startup scripts for rescue disk
 License: GPL-2.0-or-later
@@ -20,6 +20,8 @@ Requires: dmidecode ddcprobe
 %endif
 Requires: altquire
 Requires: agetty
+# for unicode console
+Requires: console-scripts
 
 Conflicts: startup-school-rescue startup-nanolive
 
@@ -69,6 +71,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_bindir/*
 
 %changelog
+* Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 0.50-alt2
+- spec: add dependency on console-scripts
+
 * Mon Jun 03 2024 Anton Midyukov <antohami@altlinux.org> 0.50-alt1
 - rescue-remote.init: do not require ip=dhcp for run livecd-net-eth
   (Closes: 50526)
