@@ -1,6 +1,6 @@
 Name: icon-theme-morewaita
-Version: 47.3
-Release: alt3
+Version: 47.4
+Release: alt1
 
 Summary: An expanded Adwaita-styled companion icon theme with extra icons
 License: GPL-3.0-or-later
@@ -42,6 +42,9 @@ rm %buildroot%_iconsdir/MoreWaita/scalable/apps/synaptic.svg
 %doc AUTHORS LICENSE README.md
 
 %changelog
+* Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 47.4-alt1
+- New version 47.4.
+
 * Sat Feb 22 2025 Anton Midyukov <antohami@altlinux.org> 47.3-alt3
 - remove incorrect icon for synaptic
 
