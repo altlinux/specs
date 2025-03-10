@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-app-starter
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 %K6init
 
@@ -49,6 +49,9 @@ This tool was designed to work with KDE.
 %_K6data/kio/servicemenus/*starter*.desktop
 
 %changelog
+* Mon Mar 10 2025 Sergey V Turchin <zerg at altlinux dot org> 1.5.1-alt1
+- increase mimimal UID
+
 * Thu Nov 28 2024 Sergey V Turchin <zerg at altlinux dot org> 1.5.0-alt1
 - allow to run programs from KDE filemanagers
 
