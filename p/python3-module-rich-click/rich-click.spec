@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.6
+Version: 1.8.8
 Release: alt1
 Summary: Format click help output nicely with rich
 License: MIT
@@ -54,6 +54,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 10 2025 Stanislav Levin <slev@altlinux.org> 1.8.8-alt1
+- 1.8.6 -> 1.8.8.
+
 * Thu Feb 20 2025 Stanislav Levin <slev@altlinux.org> 1.8.6-alt1
 - 1.8.5 -> 1.8.6.
 
