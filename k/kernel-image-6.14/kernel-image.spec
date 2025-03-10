@@ -1,5 +1,5 @@
 Name: kernel-image-6.14
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.13
 %define kernel_base_version	6.14
 %define kernel_sublevel	.0
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Mar 10 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt0.rc6
+- Update to v6.14-rc6 (2025-03-09).
+
 * Thu Mar 06 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt0.rc5
 - Update to v6.14-rc5 (2025-03-02).
 
