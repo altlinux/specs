@@ -1,6 +1,6 @@
 Name: kernel-source-vhba
 Version: 20240917
-Release: alt1
+Release: alt2
 
 Summary: Source for VHBA module
 License: GPLv2
@@ -12,6 +12,9 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 # http://downloads.sourceforge.net/cdemu/vhba-module-%version.tar.bz2
 Source0: http://downloads.sourceforge.net/cdemu/vhba-module-%version.tar
 Source1: 60-vhba.rules
+
+# https://github.com/cdemu/cdemu/commit/ee6bba585d53891577089e9dd856eb733d8231f8
+Patch0: kernel-6.14.patch
 
 BuildArch: noarch
 
@@ -31,7 +34,9 @@ Udev rules for VHBA kernel module
 
 %prep
 %setup -c
-mv vhba-module-%version %name-%version
+%__mv vhba-module-%version vhba-module
+%patch0 -p1
+%__mv vhba-module %name-%version
 
 %install
 %__mkdir_p %kernel_srcdir
@@ -47,6 +52,9 @@ install -Dp -m0644 %SOURCE1 %buildroot%_udevrulesdir/60-vhba.rules
 %config %_udevrulesdir/60-vhba.rules
 
 %changelog
+* Mon Mar 10 2025 Nazarov Denis <nenderus@altlinux.org> 20240917-alt2
+- Add patch to compatible with kernel 6.14
+
 * Wed Sep 25 2024 Nazarov Denis <nenderus@altlinux.org> 20240917-alt1
 - New version 20240917.
 
