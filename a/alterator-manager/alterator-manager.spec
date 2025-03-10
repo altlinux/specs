@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.27
-Release: alt4
+Release: alt5
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -84,8 +84,13 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %files tools
 %_bindir/am-dev-tool
 
+%preun
+%preun_service alterator-manager
 
 %changelog
+* Mon Mar 10 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.27-alt5
+- Add preun script to stop alterator-manager service.
+
 * Wed Mar 05 2025 Ivan Savin <svn17@altlinux.org> 0.1.27-alt4
 - Update docs/README-ru.md.
 
