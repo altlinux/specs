@@ -1,4 +1,4 @@
-%set_automake_version 1.11
+%set_automake_version 1.10
 
 %define ver_major 2.20
 %define _name gtk-engines
@@ -16,7 +16,7 @@
 
 Name: %{engine_prefix}s-default
 Version: %ver_major.2
-Release: alt3.2
+Release: alt4
 Epoch: 1
 
 Summary: Default GTK+2 theme engines
@@ -24,7 +24,7 @@ License: LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: http://gtk.themes.org/
 
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.bz2
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.bz2
 Patch: %_name-2.20.2-alt-glib_fixes.patch
 Patch1: gtk-engines-2.20-lua-alt-lua5.3.patch
 
@@ -322,6 +322,9 @@ ln -s gtk-2.0/%gtk_binary_ver/engines/libclearlooks.so %buildroot%_libdir/libcle
 %exclude %engines_dir/*.la
 
 %changelog
+* Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.20.2-alt4
+- used automake_1.10
+
 * Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.20.2-alt3.2
 - fixed FTBFS
 
