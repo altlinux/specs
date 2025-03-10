@@ -3,8 +3,8 @@
 %define theme education
 %define Theme Education
 %define codename FalcoVespertinus
-%define status ALPHA
-%define status_en ALPHA
+%define status BETA
+%define status_en BETA
 %define flavour %brand-%theme
 
 %define gtk_theme Breeze
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.3.alpha
+Release: alt0.4.beta
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -35,7 +35,7 @@ BuildRequires: qt5-base-devel
 # for licenses
 BuildRequires: distro-licenses >= 1.3-alt1
 
-BuildRequires: ImageMagick fontconfig bc libGConf-devel fribidi
+BuildRequires: ImageMagick-tools fontconfig bc libGConf-devel fribidi fonts-ttf-dejavu
 
 Source: branding.tar
 
@@ -451,6 +451,12 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.4.beta
+- 11.0 beta
+- Added new slides for slideshow (slitted by languages).
+- indexhtml: used current copyright year (ALT #47218)
+- Used wallpapers for 11.0.
+
 * Thu Dec 12 2024 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.3.alpha
 - Used gtk-theme-breeze and plasma6-breeze
 - kde-settings: used konsole-colorscheme-SolarizedPastel
