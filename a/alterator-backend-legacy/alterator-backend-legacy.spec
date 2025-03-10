@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.3
+Version: 0.1.5
 Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
@@ -9,19 +9,21 @@ License: GPLv2+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alterator-backend-legacy
 
-BuildArch: noarch
-
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: python3-devel
+BuildRequires: cmake
+BuildRequires: cmake-modules
+BuildRequires: gcc-c++
+BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-interface-legacy alterator-application-legacy
 Requires: alterator-standalone
 Requires: python3
-Requires: zenity
 Requires: bash
 
 %package -n alterator-interface-legacy
@@ -33,7 +35,7 @@ Release: alt1
 %package -n alterator-application-legacy
 Summary: Runner for old alterator modules
 Group: System/Configuration/Other
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 %description
@@ -48,7 +50,13 @@ Runner for old alterator modules.
 %prep
 %setup
 
+%build
+%cmake
+%cmake_build
+
 %install
+%cmakeinstall_std
+
 mkdir -p %buildroot%_libexecdir/%name
 mkdir -p %buildroot%_rpmlibdir/
 mkdir -p %buildroot%_sysconfdir/alterator/backends
@@ -62,8 +70,7 @@ install -v -p -m 755 -D alterator-generate-legacy-backends %buildroot%_libexecdi
 install -v -p -m 644 -D org.altlinux.alterator.legacy.xml %buildroot%_datadir/dbus-1/interfaces
 install -v -p -m 644 -D org.altlinux.alterator.legacy.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 755 -D alterator-application-legacy %buildroot%_libexecdir/alterator-application-legacy/alterator-application-legacy
-install -v -p -m 755 -D show-dialog %buildroot%_libexecdir/alterator-application-legacy/show-dialog
-install -v -p -m 755 -D locales %buildroot%_libexecdir/alterator-application-legacy/locales
+install -v -p -m 755 -D %buildroot%_bindir/alterator-application-legacy_dialog %buildroot%_libexecdir/alterator-application-legacy
 install -v -p -m 644 -D legacy_runner.application %buildroot%_alterator_datadir/applications
 install -v -b -m 644 -D legacy_runner.backend %buildroot%_alterator_datadir/backends
 
@@ -78,6 +85,7 @@ install -v -b -m 644 -D legacy_runner.backend %buildroot%_alterator_datadir/back
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.legacy.xml
 
 %files -n alterator-application-legacy
+%exclude %_bindir/*
 %dir %_alterator_datadir/applications
 %dir %_libexecdir/alterator-application-legacy
 %_libexecdir/alterator-application-legacy/*
@@ -94,6 +102,12 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Mar 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt1
+- Replace yad dialog to Qt dialog.
+
+* Sun Mar 02 2025 Kozyrev Yuri <kozyrevid@basealt.ru> 0.1.4-alt1
+- refactor: replaced zenity with yad
+
 * Wed Jan 15 2025 Alexey Saprunov <sav@altlinux.org> 0.1.3-alt1
 - Add translations (Andrey Alekseev <parovoz@altlinux.org>).
 - declare environment variables (Andrey Alekseev <parovoz@altlinux.org>).
