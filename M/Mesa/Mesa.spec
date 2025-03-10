@@ -97,7 +97,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -581,6 +581,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Mar 10 2025 Ivan A. Melnikov <iv@altlinux.org> 4:25.0.1-alt2
+- gallium/radeon: Make sure radeonsi PCI IDs are also included
+  (upstream PR 33940) (ALTBUG#53351).
+
 * Thu Mar 06 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.0.1-alt1
 - 25.0.1
 
