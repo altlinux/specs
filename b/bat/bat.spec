@@ -1,6 +1,6 @@
 Name: bat
 Version: 0.25.0
-Release: alt1
+Release: alt2
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
@@ -15,6 +15,7 @@ BuildRequires: rust-cargo
 Conflicts: bacula9-bat
 Conflicts: bacula11-bat
 Conflicts: bacula13-bat
+Conflicts: bacula15-bat
 
 %ifarch i586 armh
 %filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
@@ -63,6 +64,9 @@ cargo test -- --skip no_args_doesnt_break
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Mon Mar 10 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.25.0-alt2
+- Added conflict with bacula15-bat package (closes: #53376).
+
 * Thu Jan 09 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.25.0-alt1
 - Updated to version 0.25.0.
 
