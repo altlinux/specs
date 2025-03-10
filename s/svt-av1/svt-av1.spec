@@ -1,5 +1,6 @@
+%define sover 2
 Name: svt-av1
-Version: 1.8.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Scalable Video Technology for AV1 Encoder
@@ -23,11 +24,16 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake rpm-macros-meson
 BuildRequires: gcc-c++
 BuildRequires: cmake
-BuildRequires: meson
 BuildRequires: yasm
 BuildRequires: help2man
-BuildRequires: gstreamer1.0-devel
-BuildRequires: gst-plugins1.0-devel
+
+BuildRequires:  meson
+BuildRequires:  pkgconfig(gstreamer-1.0)
+BuildRequires:  pkgconfig(gstreamer-base-1.0)
+BuildRequires:  pkgconfig(gstreamer-video-1.0)
+
+
+BuildRequires:  pkgconfig(libcpuinfo)
 
 Requires: lib%name = %EVR
 
@@ -86,13 +92,22 @@ This package provides %name-based GStreamer plug-in.
 
 %prep
 %setup
+rm -rfv third_party/cpuinfo
+rm -rfv third_party/aom*
+rm -rfv third_party/googletest
+
 # Patch build gstreamer plugin
 sed -e "s|install: true,|install: true, include_directories : [ include_directories('../Source/API') ], link_args : '-lSvtAv1Enc',|" \
 -e "/svtav1enc_dep =/d" -e 's|, svtav1enc_dep||' -e "s|svtav1enc_dep.found()|true|" -i gstreamer-plugin/meson.build
 
 %build
 %cmake \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DUSE_EXTERNAL_CPUINFO=ON \
+    -DSVT_AV1_LTO=ON \
+    -DSVT_AV1_PGO=ON \
+    %nil
+
 %cmake_build
 
 export LIBRARY_PATH="$LIBRARY_PATH:$(pwd)/Bin/RelWithDebInfo"
@@ -106,7 +121,7 @@ popd
 
 install -d -m0755 %buildroot/%_man1dir
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:%buildroot%_libdir
-help2man -N --help-option=-help --version-string=%version %buildroot%_bindir/SvtAv1DecApp > %buildroot%_man1dir/SvtAv1DecApp.1
+#help2man -N --help-option=-help --version-string=%version %buildroot%_bindir/SvtAv1DecApp > %buildroot%_man1dir/SvtAv1DecApp.1
 help2man -N --help-option=-help --no-discard-stderr --version-string=%version %buildroot%_bindir/SvtAv1EncApp > %buildroot%_man1dir/SvtAv1EncApp.1
 
 pushd gstreamer-plugin
@@ -114,22 +129,22 @@ pushd gstreamer-plugin
 popd
 
 %files
-%_bindir/SvtAv1DecApp
+#%_bindir/SvtAv1DecApp
 %_bindir/SvtAv1EncApp
-%_man1dir/SvtAv1DecApp.1*
+#%_man1dir/SvtAv1DecApp.1*
 %_man1dir/SvtAv1EncApp.1*
 
 %files -n lib%name
 %doc LICENSE.md PATENTS.md
 %doc CHANGELOG.md CONTRIBUTING.md README.md
-%_libdir/libSvtAv1Dec.so.0*
-%_libdir/libSvtAv1Enc.so.1*
+#%_libdir/libSvtAv1Dec.so.0*
+%_libdir/libSvtAv1Enc.so.%{sover}*
 
 %files -n lib%name-devel
 %_includedir/%name/
-%_libdir/libSvtAv1Dec.so
+#%_libdir/libSvtAv1Dec.so
 %_libdir/libSvtAv1Enc.so
-%_pkgconfigdir/SvtAv1Dec.pc
+#%_pkgconfigdir/SvtAv1Dec.pc
 %_pkgconfigdir/SvtAv1Enc.pc
 
 %files -n lib%name-devel-docs
@@ -140,6 +155,9 @@ popd
 %_libdir/gstreamer-1.0/libgstsvtav1enc.so
 
 %changelog
+* Mon Mar 10 2025 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- new version (2.3.0) with rpmgs script
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 
