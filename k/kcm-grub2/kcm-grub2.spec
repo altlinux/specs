@@ -7,8 +7,11 @@
 
 Name: %rname
 Version: 0.6.4
-Release: alt20
+Release: alt21
 %K6init
+
+Provides: kde5-kcm-grub2 = %EVR
+Obsoletes: kde5-kcm-grub2 < %EVR
 
 Group: Graphical desktop/KDE
 Summary:  Configuring the GRUB2
@@ -66,6 +69,9 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 
 
 %changelog
+* Mon Mar 10 2025 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt21
+- obsolete kde5-kcm-grub2
+
 * Mon Mar 10 2025 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt20
 - update from work/nico/qt6
 - build with KF6
