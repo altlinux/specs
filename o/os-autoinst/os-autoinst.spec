@@ -2,13 +2,19 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt18.gitbc541952
+Release: alt19.gitbc541952
 
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
 Url: https://github.com/os-autoinst/os-autoinst/
 Source: %name-%version.tar
+# revert commits form https://github.com/os-autoinst/os-autoinst/pull/2359
+# Disable ssh read error messages
+# which are not processed yet and just clogging up the logs
+Patch0: os-autoinst-4.6-alt-disable-ssh-err-msg.patch
+#Support for Russian characters
+Patch1: addrulang.patch
 
 BuildRequires: perlcritic
 BuildRequires: autoconf
@@ -98,6 +104,8 @@ This package contains Open vSwitch support for os-autoinst.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 sed  -i 's/ my $thisversion = qx{git -C $dirname rev-parse HEAD};/ my $thisversion = "%version";/' isotovideo
 sed  -i 's/ chomp(my $git_hash = qx{git rev-parse HEAD});/ chomp(my $git_hash = "%version");/' OpenQA/Isotovideo/Utils.pm
 # don't require qemu within OBS
@@ -146,6 +154,9 @@ export TESSDATA_PREFIX="%_datadir/tessdata/"
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Mon Mar 10 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt19.gitbc541952
+- Added patches 
+
 * Mon Feb 17 2025 Alexandr Antonov <aas@altlinux.org> 4.6-alt18.gitbc541952
 - update to current version
 - Commit hash: bc541952
