@@ -1,5 +1,5 @@
 Name: shadow
-Version: 4.17.2
+Version: 4.17.3
 Release: alt1
 Epoch: 1
 
@@ -12,7 +12,7 @@ Source0: %url/%name-%version.tar
 Source1: login.defs
 Source2: useradd.default
 Source3: user-group-mod.pamd
-Source4: chage-chfn-chsh.pamd
+Source4: chfn-chsh.pamd
 Source5: chpasswd-newusers.pamd
 Source6: chage.control
 Source7: chfn.control
@@ -262,10 +262,9 @@ ln -s user-group-mod groupmod
 ln -s user-group-mod useradd
 ln -s user-group-mod userdel
 ln -s user-group-mod usermod
-install -pm640 %_sourcedir/chage-chfn-chsh.pamd chage-chfn-chsh
-ln -s chage-chfn-chsh chage
-ln -s chage-chfn-chsh chfn
-ln -s chage-chfn-chsh chsh
+install -pm640 %_sourcedir/chfn-chsh.pamd chfn-chsh
+ln -s chfn-chsh chfn
+ln -s chfn-chsh chsh
 install -pm600 %_sourcedir/chpasswd-newusers.pamd chpasswd-newusers
 ln -s chpasswd-newusers chpasswd
 ln -s chpasswd-newusers newusers
@@ -395,8 +394,7 @@ rm -f %save_login_defs_file
 %config %_controldir/chfn
 %config %_controldir/chsh
 %if_with pam
-%attr(640,root,shadow) %config(noreplace) %_sysconfdir/pam.d/chage-chfn-chsh
-%_sysconfdir/pam.d/chage
+%attr(640,root,shadow) %config(noreplace) %_sysconfdir/pam.d/chfn-chsh
 %_sysconfdir/pam.d/chfn
 %_sysconfdir/pam.d/chsh
 %endif
@@ -475,7 +473,6 @@ rm -f %save_login_defs_file
 %exclude %_man3dir/shadow.3.*
 %exclude %_man5dir/gshadow.5.*
 %exclude %_man5dir/passwd.5.*
-%exclude %_man5dir/suauth.5.*
 %exclude %_man8dir/chgpasswd.8.*
 %exclude %_man8dir/logoutd.8.*
 %exclude %_man8dir/nologin.8.*
@@ -486,6 +483,12 @@ rm -f %save_login_defs_file
 %endif
 
 %changelog
+* Mon Mar 10 2025 Mikhail Efremov <sem@altlinux.org> 1:4.17.3-alt1
+- Dropped PAM config for chage.
+- chpasswd,newusers: Fixed printf() format.
+- lib: Fixed variable type in strrspn() and strrcspn().
+- Updated to 4.17.3.
+
 * Thu Feb 06 2025 Mikhail Efremov <sem@altlinux.org> 1:4.17.2-alt1
 - Returned Basename() function.
 - Dropped unused variables.
