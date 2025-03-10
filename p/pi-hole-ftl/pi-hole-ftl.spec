@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    pi-hole-ftl
-Version: 5.25.2
+Version: 6.0.4
 Release: alt1
 
 Summary: The Pi-hole FTL engine
@@ -20,10 +20,13 @@ Source4: %name.service
 
 BuildRequires(pre): cmake rpm-macros-cmake rpm-macros-systemd
 BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(libidn2)
 BuildRequires: libgmp-devel
 BuildRequires: libidn-devel
+BuildRequires: libmbedtls-devel
 BuildRequires: libnettle-devel
 BuildRequires: libreadline-devel libreadline-devel-static
+BuildRequires: libunistring-devel
 BuildRequires: xxd
 
 Conflicts: dnsmasq < %EVR
@@ -41,14 +44,14 @@ FTLDNS (pihole-FTL) provides an interactive API and also generates statistics fo
 
 %build
 export GIT_BRANCH="master"
-export GIT_HASH="8943e26041c8730a5a9060eb64f76c6c2dd4e458"
+export GIT_HASH="b7eb53bf32ab76546db87c6db6d7085526788d67"
 export GIT_VERSION="%version"
 export GIT_DATE=""
-export GIT_TAG="v5.25.2"
+export GIT_TAG="v6.0.4"
 
 sed -i "s/-Werror/-Wno-error/" src/CMakeLists.txt
-sed -i 's/-DHAVE_READLINE /-DHAVE_READLINE=0 /' src/CMakeLists.txt
-sed -i 's/-Wp,-D_FORTIFY_SOURCE=2/-Wp,-U_FORTIFY_SOURCE &/' src/CMakeLists.txt
+# No libtermcap in ALT:
+sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %cmake
 %cmake_build
 
@@ -87,6 +90,12 @@ sed -i 's/-Wp,-D_FORTIFY_SOURCE=2/-Wp,-U_FORTIFY_SOURCE &/' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Mon Mar 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.4-alt1
+- v6.0.4
+
+* Wed Feb 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0-alt1
+- v6.0
+
 * Fri Nov 08 2024 Andrew A. Vasilyev <andy@altlinux.org> 5.25.2-alt1
 - Initial build for ALT.
 

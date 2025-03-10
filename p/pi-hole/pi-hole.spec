@@ -7,8 +7,8 @@
 %define _servicename pi-hole
 
 Name:    pi-hole
-Version: 5.18.4
-Release: alt5
+Version: 6.0.5
+Release: alt1
 
 Summary: The Pi-hole is an advertising-aware DNS/Web server
 License: EUPL-1.2
@@ -59,13 +59,10 @@ sed -i 's!/usr/local/!/usr/!g' pihole gravity.sh advanced/Scripts/*.sh
   install -Dm755 advanced/Scripts/version.sh %buildroot%_datadir/%_name/version.sh
   install -Dm755 advanced/Scripts/updatecheck.sh %buildroot%_datadir/%_name/updatecheck.sh
   install -Dm755 advanced/Scripts/piholeLogFlush.sh %buildroot%_datadir/%_name/piholeLogFlush.sh
-  install -Dm755 advanced/Scripts/chronometer.sh %buildroot%_datadir/%_name/chronometer.sh
   install -Dm755 advanced/Scripts/list.sh %buildroot%_datadir/%_name/list.sh
   install -Dm755 advanced/Scripts/utils.sh %buildroot%_datadir/%_name/utils.sh
-  install -Dm755 advanced/Scripts/webpage.sh %buildroot%_datadir/%_name/webpage.sh
 # install -Dm755 advanced/Scripts/wildcard_regex_converter.sh %buildroot%_datadir/%_name/wildcard_regex_converter.sh
   install -Dm755 advanced/Scripts/query.sh %buildroot%_datadir/%_name/query.sh
-  install -Dm755 advanced/Scripts/%_name-reenable.sh %buildroot%_datadir/%_name/%_name-reenable.sh
   install -Dm755 advanced/Scripts/piholeARPTable.sh %buildroot%_datadir/%_name/piholeARPTable.sh
 
   install -Dm755 advanced/Scripts/piholeDebug.sh %buildroot%_datadir/%_name/piholeDebug.sh
@@ -81,11 +78,10 @@ sed -i 's!/usr/local/!/usr/!g' pihole gravity.sh advanced/Scripts/*.sh
   install -Dm755 %SOURCE7 "%buildroot%_sysconfdir/.pihole/automated install/mimic_setupVars.conf.sh"
   install -Dm755 %SOURCE8 "%buildroot%_sysconfdir/.pihole/automated install/basic-install.sh"
 
-  install -Dm644 advanced/dnsmasq.conf.original %buildroot%_sysconfdir/dnsmasq.conf
-  sed -i 's!^#conf-dir=/etc/dnsmasq.d$!conf-dir=/etc/dnsmasq.d!' %buildroot%_sysconfdir/dnsmasq.conf
+  # install -Dm644 advanced/dnsmasq.conf.original %buildroot%_sysconfdir/dnsmasq.conf
+  # sed -i 's!^#conf-dir=/etc/dnsmasq.d$!conf-dir=/etc/dnsmasq.d!' %buildroot%_sysconfdir/dnsmasq.conf
 
   install -Dm644 %SOURCE2 %buildroot%_sysconfdir/dnsmasq.d/01-pihole.conf
-  install -Dm644 advanced/06-rfc6761.conf %buildroot%_sysconfdir/dnsmasq.d/06-rfc6761.conf
 
   install -Dm644 %SOURCE1 %buildroot%_tmpfilesdir/%name.conf
 
@@ -115,15 +111,15 @@ EOF
 
 cat >%buildroot%_sysconfdir/%_name/versions <<EOF
 CORE_BRANCH=master
-CORE_HASH=891da4da
+CORE_HASH=9fe687bd62
 CORE_VERSION=v%version
 GITHUB_CORE_VERSION=v%version
-GITHUB_CORE_HASH=2cf046d5
-FTL_VERSION=v5.25.2
+GITHUB_CORE_HASH=9fe687bd62
+FTL_VERSION=v6.0.4
 FTL_BRANCH=master
-FTL_HASH=8943e260
-GITHUB_FTL_VERSION=v5.25.2
-GITHUB_FTL_HASH=8943e260
+FTL_HASH=b7eb53bf32
+GITHUB_FTL_VERSION=v6.0.4
+GITHUB_FTL_HASH=b7eb53bf32
 EOF
 
 cat >%buildroot%_datadir/%_name/update.sh <<EOF
@@ -150,13 +146,19 @@ chmod 0755 %buildroot%_datadir/%_name/update.sh %buildroot%_datadir/%_name/unins
 %_sysconfdir/.pihole
 %_datadir/%_name
 %_tmpfilesdir/%name.conf
-%_sysconfdir/dnsmasq.conf
+#%%_sysconfdir/dnsmasq.conf
 %_sysconfdir/dnsmasq.d
 %_unitdir/*.service
 %_unitdir/*.timer
 %_unitdir/multi-user.target.wants/*.timer
 
 %changelog
+* Mon Mar 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.5-alt1
+- v6.0.5
+
+* Wed Feb 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0-alt1
+- v6.0
+
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 5.18.4-alt5
 - use only one config dir
 
