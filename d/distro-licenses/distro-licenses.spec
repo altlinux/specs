@@ -2,7 +2,7 @@
 
 Name: distro-licenses
 Version: 1.3.13
-Release: alt1
+Release: alt2
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Mon Mar 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 1.3.13-alt2
+- ALT_Server_License: add ALT_Server_License/11.0 to Makefile for installing
+
 * Fri Mar 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.13-alt1
 - Add static license ALT_Server_License/11.0 synced with latest
   branding-alt-server-notes-11.0-alt12
