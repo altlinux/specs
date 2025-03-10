@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.83
+Version: 0.3.7
 Release: alt1
 
 Summary: Python bindings for the llama.cpp library
@@ -26,6 +26,7 @@ Requires: libllama-devel
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter huggingface-hub
 %pyproject_builddeps_metadata_extra test
 %pyproject_builddeps_metadata_extra server
 BuildRequires: libllama-devel
@@ -67,7 +68,12 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
 %check
-%pyproject_run_pytest -vra
+# disable this tests, becasue they require huggingface-hub
+# and real big models
+sed -i '/^from huggingface_hub import hf_hub_download$/d' tests/test_llama.py
+%pyproject_run_pytest -vra \
+    --deselect=tests/test_llama.py::test_real_model \
+    --deselect=tests/test_llama.py::test_real_llama
 
 %files
 %doc CHANGELOG.md LICENSE.md README.md
@@ -75,6 +81,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.7-alt1
+- Updated to 0.3.7.
+
 * Wed Jul 24 2024 Anton Zhukharev <ancieg@altlinux.org> 0.2.83-alt1
 - Built for ALT Sisyphus.
 
