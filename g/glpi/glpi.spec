@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.17
+Version: 10.0.18
 Release: alt1
 
 Summary: IT and asset management software
@@ -179,6 +179,20 @@ fi
 %files php8.3
 
 %changelog
+* Wed Feb 12 2025 Pavel Zilke <zidex@altlinux.org> 10.0.18-alt1
+- New version 10.0.18
+- This release fixes a security issue that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2025-24799 : Unauthenticated SQL injection through the inventory endpoint
+ + CVE-2025-24801 : Authenticated Remote code execution
+ + CVE-2025-21619 : SQL injection through the rules configuration
+ + CVE-2024-11955 : Open Redirection
+ + CVE-2025-21627 : Reflected XSS in search page
+ + CVE-2025-21626 : Exposure of sensitive information in the status.php endpoint
+ + CVE-2025-23024 : Plugins disabled by unauthenticated user
+ + CVE-2025-23046 : Unauthorized authentication by email using the OAuthIMAP plugin
+ + CVE-2025-25192 : Unauthorized access to debug mode
+
 * Fri Nov 08 2024 Pavel Zilke <zidex@altlinux.org> 10.0.17-alt1
 - New version 10.0.17
 - Added glpi-php8.3
