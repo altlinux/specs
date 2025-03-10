@@ -3,18 +3,20 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: Offline IP address to Autonomous System Number lookup module
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyasn/
+Url: https://pypi.org/project/pyasn
 Vcs: https://github.com/hadiasghari/pyasn.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -35,23 +37,26 @@ makes pyasn much faster than online dig/whois/json lookups.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test-3
 
 %files
-%doc *.md *.txt LICENSE
+%doc README.*
 %_bindir/*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 
 %changelog
+* Mon Mar 10 2025 Anton Vyatkin <toni@altlinux.org> 1.6.2-alt1
+- New version 1.6.2.
+
 * Mon Mar 27 2023 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt1
 - new version 1.6.1
 
