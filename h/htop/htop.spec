@@ -4,7 +4,7 @@
 %def_enable sensors
 
 Name: htop
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
@@ -102,6 +102,9 @@ rm -r %buildroot%_pixmapsdir/
 
 
 %changelog
+* Mon Mar 10 2025 Ilya Mashkin <oddity@altlinux.ru> 3.4.0-alt1
+- 3.4.0
+
 * Sat Feb 24 2024 Ilya Mashkin <oddity@altlinux.ru> 3.3.0-alt1
 - 3.3.0
 
