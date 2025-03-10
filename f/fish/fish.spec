@@ -6,21 +6,24 @@
 %endif
 
 Name: fish
-Version: 3.7.1
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
 Group: Shells
 
-URL: http://fishshell.com/
+Url: http://fishshell.com/
 
 # https://github.com/fish-shell/fish-shell.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+Patch1: fish-4.0.0-alt_apt_adapter.patch
 
 Requires: man
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-ninja-build
-BuildRequires: libncurses-devel gcc-c++
+BuildRequires: rust-cargo cargo-license gcc
+BuildRequires: terminfo
 BuildRequires: libpcre2-devel >= 10.22
 BuildRequires: cmake ninja-build rpm-build-ninja rpm-build-cmake
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
@@ -29,6 +32,7 @@ BuildRequires: ctest
 BuildRequires: /proc /dev/pts
 BuildRequires: procps
 BuildRequires: python3-module-pexpect
+BuildRequires: tmux
 BuildRequires: git-core
 
 %description
@@ -38,35 +42,37 @@ is simple but incompatible with other shell languages.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 echo "%version" > version
-
-rm -vrf pcre2
 
 # Change the bundled scripts to invoke the python binary directly.
 for f in $(find share/tools -type f -name '*.py'); do
-    sed -i -e '1{s@^#!.*@#!%{__python3}@}' "$f"
+    sed -i -e '1{s@^#!.*@#!%__python3@}' "$f"
 done
 
-%ifarch %e2k
-sed -i 's/(\*handle_flag_q)>/(handle_flag_q)*>/' src/builtins/path.cpp
-%endif
-
 %build
+export CARGO_NET_OFFLINE=true
 %cmake \
     -GNinja \
-    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir
-%cmake_build
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+    -DCMAKE_INSTALL_DOCDIR=%_docdir/%name
+%cmake_build -t all doc
+cargo license > LICENSE.dependencies
 
 %install
 %cmake_install
 %find_lang %name
 
 rm -f %buildroot%_datadir/fish/completions/docker.fish
+rm -f %buildroot%_desktopdir/fish.desktop
+rm -f %buildroot%_pixmapsdir/fish.png
 rm -rf %buildroot%_datadir/pkgconfig
 
 %check
 export SHOW_INTERACTIVE_LOG=1
-%cmake_build --target test
+%cmake_build --target fish_run_tests
 
 %post
 grep -q %_bindir/fish %_sysconfdir/shells ||
@@ -84,11 +90,13 @@ fi
 %config %_sysconfdir/fish/config.fish
 %_datadir/fish
 %doc %_docdir/%name
+%doc LICENSE.dependencies
 %_man1dir/*
-%_desktopdir/fish.desktop
-%_pixmapsdir/fish.png
 
 %changelog
+* Wed Mar 05 2025 Artyom Sinyugin <writers@altlinux.org> 4.0.0-alt1
+- 4.0.0 (ALT#53265)
+
 * Wed Feb 19 2025 Alexey Shabalin <shaba@altlinux.org> 3.7.1-alt2
 - Fix FTBFS. Drop PCRE2_ERROR_BADREPESCAPE test for pcre2-10.45
 
