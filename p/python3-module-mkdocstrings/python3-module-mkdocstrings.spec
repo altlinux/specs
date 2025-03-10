@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.28.2
-Release: alt2
+Version: 0.28.3
+Release: alt1
 
 Summary: Automatic documentation from sources, for MkDocs
 License: ISC
@@ -33,6 +33,7 @@ BuildRequires: python3-module-markdown-exec
 BuildRequires: python3-module-mkdocs-gen-files
 BuildRequires: python3-module-mkdocs-literate-nav
 BuildRequires: python3-module-mkdocs-git-revision-date-localized-plugin
+BuildRequires: python3-module-dirty-equals
 %endif
 
 BuildArch: noarch
@@ -71,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 10 2025 Grigory Ustinov <grenka@altlinux.org> 0.28.3-alt1
+- Automatically updated to 0.28.3.
+
 * Wed Feb 26 2025 Grigory Ustinov <grenka@altlinux.org> 0.28.2-alt2
 - Build with check again.
 
