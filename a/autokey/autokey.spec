@@ -2,7 +2,7 @@
 
 Name: autokey
 Version: 0.96.0
-Release: alt1
+Release: alt2
 
 Summary: AutoKey, a desktop automation utility for Linux and X11
 License: GPL-3.0
@@ -136,5 +136,8 @@ This package contains the Qt frontend.
 %python3_sitelibdir/%name/qtui/*
 
 %changelog
+* Mon Mar 10 2025 Nikolay Strelkov <snk@altlinux.org> 0.96.0-alt2
+- bump release to override autoimports package
+
 * Sun Mar 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.96.0-alt1
 - Initial build for Sisyphus
