@@ -1,5 +1,5 @@
 Name:    wlmaker
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
@@ -51,9 +51,9 @@ Key features:
 
 # Install default config files
 install -d %buildroot%_sysconfdir
-install -m644 -v ./etc/{style-default.plist,wlmaker.plist,wlmaker-state.plist} \
+install -m644 -v \
+./etc/{style.plist,wlmaker.plist,wlmaker-state.plist,wlmaker-home.plist} \
 %buildroot%_sysconfdir
-install -m644 -v ./etc/wlmaker-home.plist %buildroot%_sysconfdir
 
 %check
 %ctest
@@ -62,14 +62,16 @@ install -m644 -v ./etc/wlmaker-home.plist %buildroot%_sysconfdir
 %doc *.md LICENSE
 %_bindir/%name
 %_bindir/wlmclock
-%_bindir/example_toplevel
-%_bindir/wrap-%name.sh
 %_datadir/%name.desktop
 %_datadir/wlmclock.desktop
+%_datadir/%name
 %_iconsdir/%name
 %config(noreplace)%_sysconfdir/*.plist
 
 %changelog
+* Mon Mar 10 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.5-alt1
+- 0.4 -> 0.5
+
 * Tue Oct 22 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.4-alt1
 - 0.3 -> 0.4
 
