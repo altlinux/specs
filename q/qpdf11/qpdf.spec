@@ -1,16 +1,14 @@
 %def_with check
 
-%define soname 30
+%define soname 29
 Summary: Command-line tools and library for transforming PDF files
-Name: qpdf
-Version: 12.0.0
-Release: alt1
+Name: qpdf11
+Version: 11.10.1
+Release: alt2
 License: Apache-2.0
 Group: System/Base
-Url: https://github.com/qpdf/qpdf
-VCS: https://github.com/qpdf/qpdf
+Url: http://qpdf.sourceforge.net/
 Source0: %name-%version.tar
-Source1: qpdf.watch
 Patch0: %name-%version-%release.patch
 
 BuildRequires: zlib-devel xml-utils xsltproc docbook-style-xsl
@@ -29,16 +27,11 @@ BuildRequires: /usr/bin/gs
 BuildRequires: /usr/bin/tiffcmp
 %endif
 
-Requires: libqpdf%soname = %EVR
+Requires: lib%name%soname = %EVR
 
 %package -n libqpdf%soname
 Summary: QPDF library for transforming PDF files
 Group: System/Libraries
-
-%package -n libqpdf-devel
-Summary: Development files for QPDF library
-Group: Development/C
-Requires: libqpdf%soname = %EVR
 
 %description
 QPDF is a command-line program that does structural, content-preserving
@@ -51,10 +44,6 @@ or a program capable of converting PDF into other formats.
 QPDF is a C++ library that inspect and manipulate the structure of PDF files.
 It can encrypt and linearize files, expose the internals of a PDF file,
 and do many other operations useful to PDF developers.
-
-%description -n libqpdf-devel
-Header files and libraries necessary
-for developing programs using the QPDF library.
 
 %prep
 %setup
@@ -77,25 +66,13 @@ rm -rf %buildroot%_docdir/qpdf
 make test -C %_target_platform
 
 
-%files
-%_bindir/fix-qdf
-%_bindir/qpdf
-%_bindir/zlib-flate
-%_mandir/man1/*
-
 %files -n libqpdf%soname
 %doc README.md
 %_libdir/libqpdf*.so.%{soname}*
 
-%files -n libqpdf-devel
-%doc examples/*.cc examples/*.c TODO.md ChangeLog
-%_includedir/*
-%_libdir/libqpdf*.so
-%_libdir/pkgconfig/libqpdf.pc
-
 %changelog
-* Mon Mar 10 2025 Anton Farygin <rider@altlinux.ru> 12.0.0-alt1
-- 11.10.1 -> 12.0.0
+* Mon Mar 10 2025 Anton Farygin <rider@altlinux.ru> 11.10.1-alt2
+- built as a compatibility library without a development package
 
 * Mon Feb 24 2025 Anton Farygin <rider@altlinux.ru> 11.10.1-alt1
 - 11.9.1 -> 11.10.1
