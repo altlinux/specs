@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.8.2
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -173,7 +173,10 @@ Requires: libqt6-core = %_qt6_version
 >main.filelist
 %Q6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+#Q6install_qt --target install_docs
+#make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+mkdir -p %buildroot/%_docdir/qt6/
+cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %endif
 
 # Add desktop files
@@ -319,6 +322,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Mon Mar 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
+- fix build docs
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 
