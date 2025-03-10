@@ -2,7 +2,7 @@
 
 Name:    pdal
 Version: 2.8.1
-Release: alt1
+Release: alt2
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
@@ -17,7 +17,6 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: bash-completion
-BuildRequires: hdf-devel
 BuildRequires: libcryptopp-devel
 BuildRequires: libcurl-devel
 BuildRequires: libgdal-devel
@@ -32,6 +31,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libzstd-devel
 BuildRequires: python3-devel
 BuildRequires: libsqlite3-devel
+BuildRequires: zlib-devel
 
 %description
 %summary
@@ -86,6 +86,9 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt2
+- FTBFS: remove support for missing HDF.
+
 * Sat Oct 26 2024 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt1
 - New version.
 
