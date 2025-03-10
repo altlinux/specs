@@ -4,9 +4,9 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name:     rclone
-Version: 1.65.2
-Release: alt1.1
-Summary:  rsync for cloud storage
+Version: 1.69.1
+Release: alt1
+Summary:  "rsync" for cloud storage
 License:  MIT
 Group:    Networking/File transfer
 Vcs:      https://github.com/rclone/rclone
@@ -21,8 +21,8 @@ BuildRequires: golang
 Rclone ("rsync for cloud storage") is a command-line program to sync
 files and directories to and from different cloud storage providers:
 
-  Google Drive, S3, Dropbox, Backblaze B2, One Drive, OpenStack Swift,
-  Ceph, WebDAV, Google Cloud Storage, Mail.ru Cloud, Mega, Yandex Disk,
+  Google Drive, S3, Dropbox, Backblaze B2, One Drive, Swift, Hubic,
+  Wasabi, Google Cloud Storage, Azure Blob, Azure Files, Yandex Files,
   and many others.
 
 %prep
@@ -84,6 +84,9 @@ diff COPYING /tmp/COPYING
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Mar 10 2025 Vitaly Chikunov <vt@altlinux.org> 1.69.1-alt1
+- Update to v1.69.1 (2025-02-14). (Fixes: CVE-2024-52522). (ALT#53383).
+
 * Wed Feb 28 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.65.2-alt1.1
 - NMU: fixed FTBFS on LoongArch (use go implementation of math_big).
 
