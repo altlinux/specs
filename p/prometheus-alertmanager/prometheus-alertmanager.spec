@@ -4,7 +4,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.27.0
+Version: 0.28.0
 Release: alt1
 Summary: Prometheus Alertmanager
 
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
+Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -32,6 +33,7 @@ OpsGenie. It also takes care of silencing and inhibition of alerts.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -79,6 +81,9 @@ install -m0644 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/te
 %dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Fri Feb 14 2025 Artyom Sinyugin <writers@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 0.27.0-alt1
 - 0.27.0
 

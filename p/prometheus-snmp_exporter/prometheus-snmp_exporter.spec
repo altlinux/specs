@@ -5,18 +5,20 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.26.0
+Version: 0.28.0
 Release: alt1
 Summary: Prometheus snmp exporter
 
 Group: Development/Other
 License: Apache-2.0
 Url: https://%import_path
+Vcs: https://%{import_path}.git
 Source: %name-%version.tar
 
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
+Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -33,12 +35,12 @@ from SNMP for use by the Prometheus monitoring system.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOFLAGS="-mod=vendor"
 %golang_prepare
 #promu build
 export BUILDTAGS="netgo"
@@ -87,6 +89,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/snmp.yml
 
 %changelog
+* Fri Feb 14 2025 Artyom Sinyugin <writers@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 0.26.0-alt1
 - 0.26.0
 

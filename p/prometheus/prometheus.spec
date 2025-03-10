@@ -3,13 +3,14 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 2.54.0
+Version: 3.1.0
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
 Group: Development/Other
 License: Apache-2.0
 Url: https://%import_path
+Vcs: https://{%import_path}.git
 Source: %name-%version.tar
 
 Source2: %name.sysconfig
@@ -17,6 +18,7 @@ Source3: %name.init
 Source4: %name.service
 Source5: %name.tmpfiles
 Source6: %name.yml
+Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
@@ -60,6 +62,7 @@ This package contains the common files and settings for Prometheus.
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 %setup -q
+%patch0 -p1 
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -102,7 +105,6 @@ rm -rf -- %buildroot%go_root
 
 #install -m0755 prometheus %buildroot%_bindir/%name
 #install -m0755 promtool %buildroot%_bindir/promtool
-cp -frv console_libraries consoles %buildroot%_datadir/%name/
 install -m0644 %SOURCE6 %buildroot%_sysconfdir/%name/%name.yml
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
@@ -138,8 +140,6 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/%name/*
-%dir %_datadir/%name
-%_datadir/%name/*
 %_man1dir/*
 
 %files common
@@ -148,6 +148,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Fri Feb 14 2025 Artyom Sinyugin <writers@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 2.54.0-alt1
 - 2.54.0
 
@@ -199,4 +202,3 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 
 * Tue May 08 2018 Alexey Shabalin <shaba@altlinux.ru> 2.2.1-alt1
 - Initial build for ALT.
-
