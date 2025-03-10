@@ -1,45 +1,22 @@
 %def_without check
 
-%def_with gitcommit
-
-%if_with gitcommit
-# PyTorch 2.4+ has this error
-# .../pytorch/aten/src/ATen/cpu/Utils.cpp:38:34: error: ‘cpuinfo_has_x86_amx_tile’ was not declared in this scope; did you mean ‘cpuinfo_has_x86_mmx_plus’?
-#   38 |   return cpuinfo_initialize() && cpuinfo_has_x86_amx_tile();
-#      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~
-#      |                                  cpuinfo_has_x86_mmx_plus
-#
-# Pick a more recent cpuinfo
-%global commit0 1e83a2fdd3102f65c6f1fb602c1b320486218a99
-Version: 24.09.26
-%define patch_level 0
-
-%else
-
-# For PyTorch 2.5
-%global commit0 1e83a2fdd3102f65c6f1fb602c1b320486218a99
-Version: 24.09.26
-%define patch_level 1
-
-%endif
-
+%global commit0 b73ae6ce38d5dd0b7fe46dbe0a4b5f4bab91c7ea
 %global shortcommit0 %(c=%commit0; echo ${c:0:7})
 
 Name: cpuinfo
+Version: 25.02.19
 Release: alt1
 
 Summary: A library to detect information about host CPU
 
 License: BSD-2-Clause
 Group: Development/C
-Url: https://github.com/pytorch/%name
+Url: https://github.com/pytorch/cpuinfo
 
 # Source0-url: %url/archive/%commit0/%name-%shortcommit0.tar.gz
 Source0: %name-%version.tar
 # so version YY.M.D
 Patch0: 0001-cpuinfo-fedora-cmake-changes.patch
-
-ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -187,5 +164,9 @@ rm -rv %buildroot/%_pkgconfigdir/gtest*
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Mon Mar 10 2025 Vitaly Lipatov <lav@altlinux.ru> 25.02.19-alt1
+- new version (25.02.19) with rpmgs script
+- build for all arches
+
 * Mon Mar 10 2025 Vitaly Lipatov <lav@altlinux.ru> 24.09.26-alt1
 - initial build for ALT Sisyphus
