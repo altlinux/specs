@@ -1,7 +1,7 @@
-%def_without ru_doc
+%define rname kamoso
 
-Name:    kamoso
-Version: 24.12.2
+Name:    %rname
+Version: 24.12.3
 Release: alt1
 
 Group:   Video
@@ -16,15 +16,12 @@ Requires: kf5-purpose
 Requires: kf5-kirigami
 
 # Download from http://download.kde.org/stable/release-service/$version/src/kamoso-$version.tar.xz
-Source0: %name-%version.tar
-Source1: %name.watch
+Source0: %rname-%version.tar
+Source1: %rname.watch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
 BuildRequires: gettext-tools
-%if_with ru_doc
-BuildRequires: itstool
-%endif
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-graphicaleffects
 BuildRequires: kf5-kauth-devel
@@ -61,7 +58,7 @@ BuildRequires: qt5-quickcontrols2-devel
 Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
 %add_optflags -I%_libdir/gstreamer-1.0/include
@@ -83,6 +80,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_K5notif/%name.notifyrc
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

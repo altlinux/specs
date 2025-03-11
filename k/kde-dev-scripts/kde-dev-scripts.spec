@@ -6,7 +6,7 @@
 %filter_from_requires /^cvs$/d
 
 Name: %rname
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -70,6 +70,9 @@ done
 
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
