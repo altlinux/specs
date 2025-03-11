@@ -5,12 +5,14 @@
 %define api_ver 2
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Shared library for GNOME games
 Group: System/Libraries
-License: LGPL-3.0
+License: LGPL-3.0-or-later
+
+Vcs: https://gitlab.gnome.org/GNOME/libgnome-games-support.git
 
 Url: https://wiki.gnome.org/Apps/Games
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
@@ -60,6 +62,9 @@ developing applications that use %name.
 %_vapidir/%_name-%api_ver.vapi
 
 %changelog
+* Tue Mar 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0 (2 API)
 

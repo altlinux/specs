@@ -9,6 +9,7 @@
 %def_enable vala
 %define __isa_bits %(s="%_lib"; s=${s#lib}; echo "${s:-32}")
 %if "%__isa_bits" == "64"
+# should be fixed in 3.0.20 but this is not important
 %def_enable check
 %else
 %def_disable check
@@ -33,13 +34,15 @@
 %endif
 
 Name: libical
-Version: 3.0.19
+Version: 3.0.20
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
 Group: System/Libraries
 License: LGPL-2.1-only or MPL-2.0
 Url: https://github.com/%name
+
+Vcs: https://github.com/libical/libical.git
 
 %if_disabled snapshot
 Source: %url/%name/releases/download/v%version/%name-%version.tar.gz
@@ -224,6 +227,9 @@ library.
 
 
 %changelog
+* Tue Mar 11 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.20-alt1
+- 3.0.20
+
 * Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.19-alt1
 - 3.0.19
 
