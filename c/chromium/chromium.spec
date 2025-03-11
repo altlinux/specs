@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        134.0.6998.35
+Version:        134.0.6998.88
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -65,15 +65,10 @@ Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
-# Patch010: 0010-ALT-use-system-libdrm-library.patch
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
-# Patch012: 0012-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
-# Patch016: 0016-DEBIAN-use-system-libevent-library.patch
-# Drop 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch when switching to libc++:
-# Patch017: 0017-DEBIAN-work-around-a-clang-bug-with-libstdc.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
@@ -83,20 +78,13 @@ Patch023: 0023-Add-missing-headers.patch
 Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
-#XXX Patch027: 0027-Use-system-sysroot-for-rust.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
-# Patch032: 0032-FEDORA-libavif-deps.patch
-# Patch033: 0033-ALT-rename-std::powf.patch
-# Patch034: 0034-DEBIAN-span-optional.patch
-# Patch035: 0035-DEBIAN-mojo.patch
-# Patch036: 0036-DEBIAN-ruy-include.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
-# Patch045: 0045-DEBIAN-mojo-null.patch
 
 Patch062: 0062-DEBIAN-cacheline.patch
 Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
@@ -570,6 +558,15 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Mar 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.88-alt1
+- New version (134.0.6998.88).
+- Security fixes:
+  + CVE-2025-1920: Type Confusion in V8
+  + CVE-2025-2135: Type Confusion in V8
+  + CVE-TBD: Out of bounds write in GPU
+  + CVE-2025-2136: Use after free in Inspector
+  + CVE-2025-2137: Out of bounds read in V8
+
 * Wed Mar 05 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.35-alt1
 - New version (134.0.6998.35).
 - Security fixes:
