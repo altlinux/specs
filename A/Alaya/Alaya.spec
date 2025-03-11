@@ -5,8 +5,8 @@
 %define oname alaya
 
 Name:    Alaya
-Version: 4.5.0.1.gitc003169
-Release: alt2
+Version: 4.6
+Release: alt1
 
 Summary: Webdav enabled webserver mostly focused on file storage
 
@@ -15,7 +15,7 @@ Group:   System/Servers
 Url:     https://github.com/ColumPaget/Alaya
 
 Source: %name-%version.tar
-Patch0: Alaya-4.5.0.1-alt-fix-build-gcc14.patch
+Patch: Alaya-4.6-alt-fix-inc-ptr-type.patch
 
 BuildRequires: LibreSSL-devel libcrypto3
 BuildRequires: libcap-devel
@@ -46,10 +46,9 @@ needed functionality like resizeable strings, linked lists and maps.
 
 %prep
 %setup
-%patch0
+%patch
 
 %build
-%autoreconf
 %configure \
 %ifarch x86_64
   --enable-simd \
@@ -89,6 +88,9 @@ cp --preserve=all %lib_name/*.md %buildroot%_defaultdocdir/%lib_name-%version
 %endif
 
 %changelog
+* Tue Mar 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.6-alt1
+- New version.
+
 * Tue Jan 21 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.5.0.1.gitc003169-alt2
 - FTBFS fixed:
   + Patch to fix build with gcc14 added.

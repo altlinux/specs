@@ -6,7 +6,7 @@
 %endif
 
 Name:    typst
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 
 Summary: New markup-based typesetting system that is powerful and easy to learn
@@ -52,9 +52,9 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/typst/typst-dev-assets?tag=v0.13.0"]
+[source."git+https://github.com/typst/typst-dev-assets?tag=v0.13.1"]
 git = "https://github.com/typst/typst-dev-assets"
-tag = "v0.13.0"
+tag = "v0.13.1"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -87,9 +87,9 @@ cargo build --release $NJOBS --offline
 
 %install
 %rust_install
-%__mkdir_p %buildroot{%_man1dir,%_datadir/bash-completion/completions}
-cp -av ./crates/%name-cli/artifacts/%{name}*.1 %buildroot%_man1dir
-cp -av ./crates/%name-cli/artifacts/%name.bash \
+install -dv %buildroot{%_man1dir,%_datadir/bash-completion/completions}
+install -m644 -v ./crates/%name-cli/artifacts/%{name}*.1 %buildroot%_man1dir
+install -m644 -v ./crates/%name-cli/artifacts/%name.bash \
 %buildroot%_datadir/bash-completion/completions
 
 %check
@@ -104,6 +104,9 @@ cp -av ./crates/%name-cli/artifacts/%name.bash \
 %_datadir/bash-completion/completions/%name.bash
 
 %changelog
+* Tue Mar 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.13.1-alt1
+- New version.
+
 * Mon Feb 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.13.0-alt1
 - New version.
 
