@@ -1,7 +1,7 @@
 %define pypi_name pyradio
 
 Name:    python3-module-%pypi_name
-Version: 0.9.3.11.5
+Version: 0.9.3.11.6
 Release: alt1
 
 Summary: Curses based internet radio player
@@ -61,6 +61,9 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/%pypi_name.desktop
 %_desktopdir/%pypi_name.desktop
 
 %changelog
+* Tue Mar 11 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.6-alt1
+- Update to version 0.9.3.11.6
+
 * Fri Feb 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.5-alt1
 - Update to version 0.9.3.11.5
 
