@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %define sover 2
-%set_verify_elf_method strict
+%define modsover 0
+%add_verify_elf_skiplist %_libdir/libspeechd_module.*
 
 %define libexec %_libdir
 
 Name: speech-dispatcher
-Version: 0.11.5
-Release: alt3
+Version: 0.12.0
+Release: alt1
 
 Summary: A speech output processing service
 License: GPL-2.0-or-later
@@ -143,18 +144,22 @@ find %buildroot%_libdir -name '*.la' -delete
 %_libdir/%name-modules/sd_espeak*
 %_libdir/%name-modules/sd_generic
 %_libdir/%name-modules/sd_cicero
+%_libdir/%name-modules/sd_openjtalk
+%_libdir/libspeechd_module.so.%modsover
+%_libdir/libspeechd_module.so.%modsover.*
 %_datadir/sounds/%name
 %_datadir/%name
 %_infodir/*
 %_rpmlibdir/speech-dispatcher.filetrigger
 
 %files -n libspeechd%sover
-%_libdir/libspeechd*.so.%sover
-%_libdir/libspeechd*.so.%sover.*
+%_libdir/libspeechd.so.%sover
+%_libdir/libspeechd.so.%sover.*
 
 %files -n libspeechd-devel
 %_includedir/*
 %_libdir/libspeechd.so
+%_libdir/libspeechd_module.so
 %_pkgconfigdir/*
 
 %files utils
@@ -175,6 +180,9 @@ find %buildroot%_libdir -name '*.la' -delete
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Mar 04 2025 Artem Semenov <savoptik@altlinux.org> 0.12.0-alt1
+- New version 0.12.0.
+
 * Fri Dec 20 2024 Artem Semenov <savoptik@altlinux.org> 0.11.5-alt3
 - Fixed default priority module order
 - remove autoreq filter fore fix spd-conf

@@ -2,9 +2,9 @@
 %define _localstatedir %_var
 %filter_from_requires /^sudo$/d
 
-%define pkg_version 6.6
+%define pkg_version 6.7
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.8.5
+%define api_ver 0.8.6
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -22,7 +22,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt3.1
+Release: alt1
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -32,15 +32,9 @@ Url: http://mielke.cc/brltty/
 Vcs: https://github.com/brltty/brltty.git
 # Source-url: http://mielke.cc/brltty/archive/%name-%version.tar.xz
 Source: %name-%version.tar
-# from fc
-Source1: %name.service
 Source2: ru_brltty.tar
-Source44: import.info
-Patch1: brltty-4.5-alt-fix-python-syntax.patch
+
 Patch2: fix-speechd-includes.patch
-Patch4: brltty-5.6-fix_brltty-systemd-wrapper_path.patch
-# from https://src.fedoraproject.org/rpms/brltty/c/ee571d6d4793c76970cd5930c3769c0f029dd38f?branch=rawhide
-Patch5: brltty-6.6-cython3.patch
 
 %define cython_ver 0.18
 
@@ -198,14 +192,12 @@ This package provides the OCaml binding for BrlAPI.
 %patch2 -p2
 %endif
 
-%patch5 -p1
 sed -i 's;\/usr\(/bin/true\);\1;' Autostart/Systemd/brltty-device@.service
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 
-# Patch6 changes aclocal.m4:
-autoconf
+./autogen
 
 # Add the openjdk include directories to CPPFLAGS
 for i in -I/usr/lib/jvm/java/include{,/linux}; do
@@ -403,6 +395,10 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Tue Mar 11 2025 Artem Semenov <savoptik@altlinux.org> 6.7-alt1
+- Updated to version 6.7.
+- Cleanup spec: remove unused patches and sources.
+
 * Thu Dec 26 2024 Artem Semenov <savoptik@altlinux.org> 6.6-alt3.1
 - NMU: Fixed build with speech-dispatcher
 
