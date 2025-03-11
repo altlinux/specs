@@ -5,7 +5,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.3.rc2
+Release: alt0.4.rc3
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -772,6 +772,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Tue Mar 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.4.rc3
+- 1.3.9rc3.
+
 * Tue Aug 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.3.rc2
 - Fix runstatedir (closes #51209).
 
