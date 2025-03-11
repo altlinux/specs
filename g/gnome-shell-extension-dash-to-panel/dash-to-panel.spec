@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-dash-to-panel
-Version: 65
-Release: alt1
+Version: 67
+Release: alt2
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -57,6 +57,15 @@ rm -vr %buildroot%_datadir/gnome-shell/extensions/%eid/schemas
 %doc README.md
 
 %changelog
+* Tue Mar 11 2025 Anton Midyukov <antohami@altlinux.org> 67-alt2
+- src/taskbar.js: do not call setDonateApp
+- src/prefs.js: remove donate page
+- src/extension.js: do not show udate version notification
+- Update RU translation
+
+* Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 67-alt1
+- New version 67.
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 65-alt1
 - New version 65.
 - Remove Packager
