@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 24.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphics
@@ -19,6 +19,7 @@ Obsoletes: kde5-kolourpaint < %EVR
 Requires: kde-runtime
 
 Source: %rname-%version.tar
+Source1: colors.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -55,7 +56,7 @@ KF6 library
 
 
 %prep
-%setup -n %rname-%version
+%setup -n %rname-%version -a1
 
 %build
 %K6build
@@ -63,12 +64,19 @@ KF6 library
 %install
 %K6install
 %K6install_move data kolourpaint
+mkdir -p %buildroot/%_K6xdgconf/colors/
+for f in colors/*.colors ; do
+    fname=`basename "$f" | sed 's|.colors$||'`
+    install -m 0644 "$f" %buildroot/%_K6xdgconf/colors/"$fname"-%{name}.colors
+done
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc COPYING*
 
 %files
+%_K6xdgconf/colors/*.colors
+%_K6bin/kolourpaint
 %_K6bin/kolourpaint
 %_K6data/kolourpaint/
 %_K6xdgapp/org.kde.kolourpaint.desktop
@@ -85,8 +93,10 @@ KF6 library
 %_K6lib/libkolourpaint_lgpl.so.%sover
 %_K6lib/libkolourpaint_lgpl.so.*
 
-
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
+- package color palettes (closes: 53282)
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
