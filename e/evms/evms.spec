@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt86
+Release: alt87
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,10 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Mar 11 2025 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt87
+- adjust parameters for XFS (Closes: #49868)
+- fix RAID10
+
 * Wed Feb 05 2025 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt86
 - LUKS: move to LUKS2
 - DOS: fix crash if placed on multipath disk
