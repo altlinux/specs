@@ -28,7 +28,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt7
+Release: alt8
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -221,6 +221,10 @@ grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
 
 # Append ALT-specific translations to ru.po
 cat %SOURCE17 >> po/ru.po
+
+# Touch grub.pot to disable po file rebuild
+# NOTE(egori): pot file should be older than po files
+touch -d "$(date --date='@0')" po/grub.pot
 
 %build
 ./bootstrap --no-git --gnulib-srcdir=./gnulib-%version
@@ -509,6 +513,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Mar 11 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt8
+- efi: fix grub-install generated corrupt cfg file on systems using luks
+- fix Russian translations by disabling po file rebuild
+
 * Tue Mar 04 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt7
 - use uuid for luks2 devices (closes: #53322)
 - fix regression in gnulib localization
