@@ -2,7 +2,7 @@
 
 Name: alteratorctl
 Version: 0.0.11
-Release: alt1
+Release: alt2
 
 Summary: CLI for alterator browser
 License: GPL-2.0+
@@ -16,7 +16,7 @@ Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-backend-packages alterator-interface-component alterator-backend-component_categories 
 Requires: alterator-backend-batch-components alterator-backend-batch-component_categories alterator-interface-edition 
 Requires: alt-editions-server alterator-interface-diag alterator-backend-systeminfo
-Requires: libtomlc99
+Requires: libtomlc99 polkit
 
 Source0: %name-%version.tar
 
@@ -38,6 +38,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Mar 10 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.11-alt2
+- Adding polkit to dependencies
+
 * Fri Mar 07 2025 Pavel Khromov <hromovpi@altlinux.org> 0.0.11-alt1
 - New version
 
