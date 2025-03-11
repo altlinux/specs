@@ -6,17 +6,15 @@
 %def_without tests
 
 Name: geos
-Version: 3.13.0
+Version: 3.13.1
 Release: alt1
 
 Summary: Geometry Engine - Open Source
 License: LGPL-2.1
 Group: Sciences/Geosciences
-Url: http://trac.osgeo.org/geos/
+URL: http://trac.osgeo.org/geos/
+VCS: https://github.com/libgeos/geos
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
-# VCS: https://git.osgeo.org/gogs/geos/geos.git
 Source: %name-%version.tar
 Patch1: %name-alt-fix-link-benchmarks.patch
 
@@ -204,6 +202,9 @@ rm -f %buildroot%python3_sitelibdir/geos/*.la
 %endif
 
 %changelog
+* Tue Mar 11 2025 Andrey Cherepanov <cas@altlinux.org> 3.13.1-alt1
+- New version.
+
 * Sat Sep 07 2024 Andrey Cherepanov <cas@altlinux.org> 3.13.0-alt1
 - New version.
 
