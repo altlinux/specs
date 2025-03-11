@@ -1,12 +1,8 @@
-%ifarch loongarch64
-%def_without clang
-%else
 %def_with clang
-%endif
 
 Name: deepin-movie
 Version: 6.5.6
-Release: alt1
+Release: alt1.1
 
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 
@@ -14,6 +10,8 @@ License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-movie-reborn
 Vcs: git://github.com/linuxdeepin/deepin-movie-reborn.git
+
+Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-reborn-%version.tar
 Patch0: %name-6.5.6-alt-cxx-flags.patch
@@ -111,6 +109,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Tue Mar 11 2025 Ivan A. Melnikov <iv@altlinux.org> 6.5.6-alt1.1
+- NMU: Build with clang on loongarch64, too.
+
 * Mon Mar 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.6-alt1
 - New version 6.5.6.
 - Switched to dqt6.
