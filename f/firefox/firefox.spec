@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 135.0.1
+Version: 136.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -30,12 +30,11 @@ Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
 Patch003: 0003-bmo-847568-Support-system-harfbuzz.patch
 Patch004: 0004-bmo-847568-Support-system-graphite2.patch
-Patch005: 0005-bmo-1559213-Support-system-av1.patch
-Patch006: 0006-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch007: 0007-ALT-fix-double_t-redefinition.patch
-Patch008: 0008-build-Disable-Werror.patch
-Patch009: 0009-Add-dbus-cflags.patch
-Patch010: 0010-FEDORA-enable-vaapi.patch
+Patch005: 0005-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch006: 0006-ALT-fix-double_t-redefinition.patch
+Patch007: 0007-build-Disable-Werror.patch
+Patch008: 0008-Add-dbus-cflags.patch
+Patch009: 0009-UPSTREAM-Add-missing-flags-when-using-system-libav1.patch
 ### End Patches
 
 Provides: webclient
@@ -383,6 +382,25 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Mar 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 136.0-alt1
+- New version (136.0).
+- Security fixes:
+  + CVE-2025-1930: AudioIPC StreamData could trigger a use-after-free in the Browser process
+  + CVE-2025-1939: Tapjacking in Android Custom Tabs using transition animations
+  + CVE-2025-1931: Use-after-free in WebTransportChild
+  + CVE-2025-1932: Inconsistent comparator in XSLT sorting led to out-of-bounds access
+  + CVE-2025-1933: JIT corruption of WASM i32 return values on 64-bit CPUs
+  + CVE-2025-1940: Android Intent confirmation prompt tapjacking using Select options
+  + CVE-2024-9956: Passkey phishing within Bluetooth range
+  + CVE-2025-1934: Unexpected GC during RegExp bailout processing
+  + CVE-2025-1941: Lock screen setting bypass in Firefox Focus for Android
+  + CVE-2025-1942: Disclosure of uninitialized memory when .toUpperCase() causes string to get longer
+  + CVE-2025-1935: Clickjacking the registerProtocolHandler info-bar
+  + CVE-2025-1936: Adding %%00 and a fake extension to a jar: URL changed the interpretation of the contents
+  + CVE-2025-1937: Memory safety bugs fixed in Firefox 136, Thunderbird 136, Firefox ESR 115.21, Firefox ESR 128.8, and Thunderbird 128.8
+  + CVE-2025-1938: Memory safety bugs fixed in Firefox 136, Thunderbird 136, Firefox ESR 128.8, and Thunderbird 128.8
+  + CVE-2025-1943: Memory safety bugs fixed in Firefox 136 and Thunderbird 136
+
 * Wed Feb 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 135.0.1-alt1
 - New version (135.0.1).
 - Security fixes:
