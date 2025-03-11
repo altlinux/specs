@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%def_with check
+%def_with webserver
 
 Name: glances
-Version: 3.4.0.5
-Release: alt2
+Version: 4.3.0.8
+Release: alt1
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -11,7 +13,11 @@ Url: https://github.com/nicolargo/glances
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: .gear/glances-webserver.service
+Source2: .gear/glances.env
 Patch0: %name-%version-alt.patch
+# see https://github.com/nicolargo/glances/pull/3106
+Patch1: glances-4.3.0.8-alt-fix-config-path.patch
 
 Requires: python3-module-%name = %EVR
 
@@ -27,6 +33,16 @@ BuildRequires: python3-module-ujson
 BuildRequires: python3-module-psutil
 BuildRequires: /proc
 
+%if_with webserver
+BuildRequires: python3-module-fastapi
+BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-jinja2
+%endif
+
+%if_with check
+BuildRequires: python3-module-selenium
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 Glances is a CLI curses based monitoring tool for both GNU/Linux and BSD.
@@ -43,32 +59,81 @@ Glances is a CLI curses based monitoring tool for both GNU/Linux and BSD.
 
 Glances uses the PsUtil library to get information from your system.
 
+%package webserver
+Summary: CLI curses based monitoring tool web server
+Group: Monitoring
+Requires: python3-module-fastapi
+Requires: python3-module-uvicorn
+Requires: python3-module-jinja2
+Requires: %name = %EVR
+
+%description webserver
+%summary.
+
 %prep
 %setup
 
 %patch0 -p1
+%patch1 -p1
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+install -D -p -m 644 conf/glances.conf %buildroot%_sysconfdir/%name/glances.conf
+%if_with webserver
+# Create and install empty password file so glances-webserver.service won't ask
+# for CLI input when run with --password flag
+touch glances.pwd
+install -D -p -m 660 glances.pwd %buildroot%_sharedstatedir/%name/.config/glances/glances.pwd
+install -D -p -m 644 %SOURCE1 %buildroot%_unitdir/glances-webserver.service
+install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
+%endif
 
 %check
 # see .github/workflows/test.yml
-python3 ./unitest.py
+%pyproject_run_pytest ./tests/test_core.py
+
+%pre webserver
+%_sbindir/groupadd -r -f %name 2>/dev/null ||:
+%_sbindir/useradd -r -g %name -d %_sharedstatedir/%name \
+  -s /dev/null %name >/dev/null 2>&1 ||:
+
+%post webserver
+%post_service glances-webserver
+
+%preun webserver
+%preun_service glances-webserver
 
 %files
 %doc AUTHORS COPYING README.rst NEWS.rst
 %_bindir/glances
 %_man1dir/glances.1*
 %_docdir/glances/
+%dir %_sysconfdir/glances
+%config(noreplace) %_sysconfdir/glances/glances.conf
 
 %files -n python3-module-%name
 %python3_sitelibdir/glances
 %python3_sitelibdir/Glances-%version.dist-info
 
+%if_with webserver
+%files webserver
+%_unitdir/glances-webserver.service
+%config(noreplace) %_sysconfdir/%name/glances.env
+%dir %attr(770,root,%name) %_sharedstatedir/%name
+%dir %attr(770,root,%name) %_sharedstatedir/%name/.config
+%dir %attr(770,root,%name) %_sharedstatedir/%name/.config/glances
+%config(noreplace) %attr(660,root,%name) %_sharedstatedir/%name/.config/glances/glances.pwd
+%endif
+
 %changelog
+* Tue Jan 21 2025 Alexander Kuznetsov <kuznetsovam@altlinux.org> 4.3.0.8-alt1
+- New version 4.3.0.8 (closes: #53271).
+- Add subpackage with webserver requirements and systemd unit.
+- Add patch to fix default config dir path.
+
 * Tue Oct 08 2024 Stanislav Levin <slev@altlinux.org> 3.4.0.5-alt2
 - Migrated from removed setuptools' test command.
 
