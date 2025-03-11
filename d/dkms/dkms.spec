@@ -5,7 +5,7 @@
 
 Summary: Dynamic Kernel Module Support Framework
 Name: dkms
-Version: 3.1.5
+Version: 3.1.6
 Release: alt1
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -138,6 +138,9 @@ rm -rf /usr/src/dkms_test-1.0
 %files checkinstall
 
 %changelog
+* Tue Mar 11 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.6-alt1
+- New version.
+
 * Fri Jan 31 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.5-alt1
 - New version.
 
