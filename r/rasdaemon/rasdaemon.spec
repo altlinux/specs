@@ -5,7 +5,7 @@
 %set_verify_elf_method strict
 
 Name: rasdaemon
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 Summary: Utility to receive RAS error tracings
 Group: System/Kernel and hardware
@@ -108,6 +108,9 @@ fi
 %_man8dir/ras-mc-ctl.8*
 
 %changelog
+* Tue Mar 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.8.3-alt1
+- Update to 0.8.3 (2025-03-10).
+
 * Thu Nov 21 2024 Vitaly Chikunov <vt@altlinux.org> 0.8.2-alt1
 - Update to 0.8.2 (2024-11-21).
 
