@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -61,6 +61,10 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Tue Mar 11 2025 Andrey Limachko <liannnix@altlinux.org> 0.3.4-alt1
+- fix: add aarch64 excludes for packages that are not in the
+  aarch64 repository
+
 * Sat Mar 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.3-alt1
 - fix: rename obsolete systeminfo-license-viewer to
   alterator-application-license
