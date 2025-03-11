@@ -1,14 +1,29 @@
-%def_with bootstrap
+%def_without bootstrap
 
 %define ghc_version 9.2.8
 %define ghc_major 9.2
 %define _ghclibdir %_libdir/ghc-%version
 
+# Bootstrap with the previous version
+%if_with bootstrap
+    %define build_ghc_major 9.0
+    %define ghc_build_version 9.0.2
+%else
+    %define build_ghc_major 9.2
+    %define ghc_build_version 9.2.8
+%endif
+
+%global elf_methods unresolved=relaxed
+%ifarch i586
+    %global elf_methods %{?elf_methods} textrel=relaxed
+%endif
+%set_verify_elf_method %elf_methods
+
 %def_with docs
 
 Name: ghc%ghc_major
 Version: %ghc_version
-Release: alt1
+Release: alt2
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -16,7 +31,8 @@ Group: Development/Haskell
 Url: http://haskell.org/ghc/
 
 Source: %name-%version.tar
-Source1: ghc.macros
+Source1: bootstrap-sources-%ghc_build_version.tar.gz
+Source2: ghc.macros
 Source10: get_libs_versions.sh
 
 # Patches from 10 to 20 is for doc generation
@@ -25,6 +41,8 @@ Patch10: ghc9.0-backport-sphinx_changes.patch
 Patch11: ghc9.0-backport-extlinks_modern_syntax.patch
 Patch12: ghc9.0-backport-distutils_replace.patch
 Patch13: ghc9.0-suse-sphinx7.patch
+
+Patch15: ghc9.2-alt-docs_disable_failing_on_undefined_reference.patch
 
 Patch20: ghc9.0-debian-no_missing_haddock_file_warning.patch
 
@@ -42,13 +60,6 @@ Requires(pre,postun): haskell-filetrigger
 # Not needed after rebuild with separate single directory for shared libraries
 BuildRequires: /proc
 
-# Bootstrap with the previous version
-%if_with bootstrap
-    %define build_ghc_major 9.0
-%else
-    %define build_ghc_major 9.2
-%endif
-
 BuildRequires: ghc%build_ghc_major-devel
 
 # Macroses needed for libs subpackages
@@ -59,6 +70,12 @@ BuildRequires: binutils-devel docbook-dtds docbook-style-xsl libelf-devel libffi
 
 # Needs for build man
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+
+BuildRequires: alex
+BuildRequires: happy
+
+# Needs for setting correct RPATH
+BuildRequires: patchelf
 
 Provides: haskell(abi) = %version
 
@@ -80,7 +97,6 @@ contact information, links to research groups) are available from the
 Haskell home page at <http://www.haskell.org/>.
 
 %package common
-BuildArch: noarch
 Summary: Selects the default version of Glasgow Haskell Compilation system
 Group: Development/Haskell
 
@@ -184,13 +200,12 @@ This is a meta-package for all the development library packages in GHC
 %prep
 %setup
 
-# Configuring build
-echo "BuildFlavour = perf" >> mk/build.mk
-
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+
+%patch15 -p1
 
 %patch20 -p1
 
@@ -201,83 +216,69 @@ echo "BuildFlavour = perf" >> mk/build.mk
 # Fixed internal error in haddock (see git log d5b703f for details)
 export LANG=en_US.UTF-8
 
+# Building hadrian
+python3 hadrian/bootstrap/bootstrap.py -s %SOURCE1
+
 # Specify LD directrly
 # Mainly needed for aarch64 build
 # See git log 9349778 for details
 export LD=ld.gold
 
+# Building using hadrian
+# bindist is almost not documented option
+# So you'll have to trust that I'm doing it right
 ./boot
 %configure --with-system-libffi --disable-unregisterised --disable-ld-override
-%make_build V=1
+_build/bin/hadrian %_smp_mflags -V --docs=no-sphinx-pdfs --flavour=perf+debug_info binary-dist-dir
 
 %install
+# Installing using hadrian
+# bindist dir looks like _build/bindist/ghc-%%ghc_version-{Target_Triplet}
+pushd _build/bindist/ghc-%ghc_version-*
+%configure
+%makeinstall_std
+popd
+
 %define docdir %_docdir/ghc-%version
-%makeinstall_std docdir=%docdir
-mv %buildroot%docdir/html/* %buildroot%docdir/
-rmdir %buildroot%docdir/html
+GHC_PKGDIR=$(find %buildroot%_ghclibdir/lib/ -maxdepth 1 -name "*ghc-%ghc_version" -printf "%%f")
 
 # generate fake .pkg configs for core packages.
 # haskell.prov will convert them to package provides.
-for lib in %buildroot%_libdir/ghc-%version/*-[0-9]*; do
-       namever="$(basename "$lib")"
-       name="${namever%%-*}"
-       echo -e "name: $name\nversion: ${namever##*-}" >"$lib/$name.pkg"
-done
+ghc_create_lib_pkgfile() {
+        lib="$0"
+        pkgid="$(basename "$lib")"
+        name="$(echo $pkgid | sed 's|-[0-9.]*$||')"
+        version="$(echo $pkgid | awk -F - '{print $NF}')"
+        echo -e "name: $name\nversion: $version" > "$lib/$name.pkg"
+}
+export -f ghc_create_lib_pkgfile
+find "%buildroot%_ghclibdir/lib/$GHC_PKGDIR" -mindepth 1 -maxdepth 1 -type d \
+                                  | xargs -n 1 sh -c ghc_create_lib_pkgfile
+
 cp -a LICENSE README.md %buildroot%docdir/
 
-# generate the file list for lib/ _excluding_ all files needed for profiling
-# only
-#
-# * generating file lists in a BUILD_ROOT spec is a bit tricky: the file list
-#   has to contain complete paths, _but_ without the BUILD_ROOT, we also do
-#   _not_ want to have directory names in the list; furthermore, we have to make
-#   sure that any leading / is removed from %%_libdir, as find has to
-#   interpret the argument as a relative path; however, we have to include the
-#   leading / again in the final file list (otherwise, rpm complains)
-# * isn't there an easier way to do all this?
-{
-pushd %buildroot >/dev/null
-find .%_libdir ! -type d ! -name 'package.conf*' \
-     -print | sed 's|^\.||'
-find .%_libdir -type d -print | sed 's|^\.|%%dir |'
-popd >/dev/null
-} > rpm-files
-
 # touch our "ghost". ghc-pkg may create him later.
-touch %buildroot%_libdir/ghc-%version/package.conf.old
-# package-provided *.confs go in this directory:
-mkdir -p %buildroot%_libdir/ghc-%version/package.conf.d
+touch %buildroot%_ghclibdir/lib/package.conf.old
 
-# generate separate single directory for core dynamic libraries
-mkdir -p %buildroot%_libdir/ghc-%version/lib
-for so in %buildroot%_libdir/ghc-%version/*/*-ghc%version.so; do
-       relpath="$(relative "$so" "%buildroot%_libdir/ghc-%version/lib/")"
-       ln -s "$relpath" %buildroot%_libdir/ghc-%version/lib/
-done
-
+# Adding directory with dynamic libraries for ld
 mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
-echo "%_libdir/ghc-%version/lib" >%buildroot%_sysconfdir/ld.so.conf.d/ghc-%version.conf
+echo "%_ghclibdir/lib/$GHC_PKGDIR" > %buildroot%_sysconfdir/ld.so.conf.d/ghc-%version.conf
 
-# need for multiple ghc versions installed
-for s in hp2ps hpc hsc2hs; do
-    mv %buildroot%_bindir/"$s" %buildroot%_bindir/"$s"-%version
-    ln -s "$s"-%version %buildroot%_bindir/"$s"
-done
+# Moving man to man_dir from bindist
+mkdir -p %buildroot%_man1dir
+mv %buildroot%docdir/users_guide/build-man/ghc.1 %buildroot%_man1dir/ghc-%ghc_version.1
+rm -rf --dir %buildroot%docdir/users_guide
 
-# Check the correctness of our packaging:
-# all unversioned executables must be symlinks:
-for s in %buildroot%_bindir/*; do
-    case "$s" in
-    *-%{version}) :
-    ;;
-    *) test -L "$s"
-    ;;
-    esac
-done
+# Moving html doc in old ALT style
+mv -t %buildroot%docdir %buildroot%docdir/html/*
+rmdir %buildroot%docdir/html
 
-mv %buildroot%_man1dir/ghc.1 %buildroot%_man1dir/%name.1
+# Cleaning package.conf.d from .conf.copy files
+# They coincide with non-copy entirely
+find %buildroot%_ghclibdir -name "*.conf.copy" -delete
 
-sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
+# Setting in conf.d correct path to html documentation
+find %buildroot%_ghclibdir -name "*.conf" | xargs sed -i 's!/html/!/!'
 
 # Generate file lists for all subpackages
 # expands to %%ghc_gen_filelist {NAME} {VERSION} for each package
@@ -286,49 +287,65 @@ sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
 %ghc_gen_filelist ghc %version
 
 # Adding rts lib to base package
-echo "%_ghclibdir/include" >> base-%basepkg_version-files.devel
-echo "%_ghclibdir/package.conf.d/rts.conf" >> base-%basepkg_version-files.devel
-
-find "%buildroot%_ghclibdir" \( -name "*rts*.so" -a -not -name "*debug*" \) \
+find "%buildroot%_ghclibdir" -name "*rts*.so" \
                 | sed "s|%buildroot||g" >> base-%basepkg_version-files.runtime
-find "%buildroot%_ghclibdir" \( -name "*rts*.so" -a -name "*debug*" \) \
+
+echo "%_includedir/rts" >> base-%basepkg_version-files.devel
+find "%buildroot%_ghclibdir" -name "rts*.conf" \
                 | sed "s|%buildroot||g" >> base-%basepkg_version-files.devel
 
-find "%buildroot%_ghclibdir" \( -name "*rts*.a" \) \
+find "%buildroot%_ghclibdir" -name "rts-*" -type d \
                 | sed "s|%buildroot||g" >> base-%basepkg_version-files.devel
-
-echo "%%dir %_ghclibdir/rts" >> base-%basepkg_version-files.runtime
 
 # install and fix up the macros file
 mkdir -p %buildroot%_rpmmacrosdir
-install %SOURCE1 %buildroot%_rpmmacrosdir/ghc
+install %SOURCE2 %buildroot%_rpmmacrosdir/ghc
 sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 
+# For the correct way of ELF verification:
+# ld by default doesn't recognize GHC libraries,
+# because of incorrect RPATH in binaries.
+# so we get errors and warnings.
+# Manually setting rpath in binaries is the solution
+find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGIN/../lib'"/$GHC_PKGDIR"
+
 %files
-%_ghclibdir/bin/
+%_ghclibdir/bin/*-9.2.8
+%_ghclibdir/lib/bin/*
 %_bindir/*-%version
 %dir %_libdir/ghc-%version
 %dir %docdir/
-%_bindir/*-%version
-%_man1dir/%name.1*
-%ghost %_ghclibdir/package.conf.old
-%dir %_ghclibdir/package.conf.d
+%dir %_ghclibdir/bin/
+%_man1dir/ghc-%ghc_version.1*
+%ghost %_ghclibdir/lib/package.conf.old
+%dir %_ghclibdir/lib/package.conf.d
 %dir %_ghclibdir/lib
-%_ghclibdir/package.conf.d/package.cache*
-%_ghclibdir/settings
-%_ghclibdir/template-hsc.h
-%_ghclibdir/ghc-usage.txt
-%_ghclibdir/ghci-usage.txt
-%_ghclibdir/llvm-passes
-%_ghclibdir/llvm-targets
-%_ghclibdir/html
-%_ghclibdir/latex
+%dir %_ghclibdir/lib/bin
+%dir %_ghclibdir/lib/*-ghc-%ghc_version
+%_ghclibdir/lib/package.conf.d/package.cache*
+%_ghclibdir/lib/package.conf.d/.stamp
+%_ghclibdir/lib/settings
+%_ghclibdir/lib/template-hsc.h
+%_ghclibdir/lib/ghcversion.h
+%_ghclibdir/lib/ghcplatform.h
+%_ghclibdir/lib/DerivedConstants.h
+%_ghclibdir/lib/ghcautoconf.h
+%_ghclibdir/lib/ghc-usage.txt
+%_ghclibdir/lib/ghci-usage.txt
+%_ghclibdir/lib/llvm-passes
+%_ghclibdir/lib/llvm-targets
+%_ghclibdir/lib/html
+%_ghclibdir/lib/latex
 %_sysconfdir/ld.so.conf.d/ghc-%version.conf
 %docdir/LICENSE
 %docdir/README.md
+%_includedir/*
+%exclude %_includedir/rts
 
 %files common
 %_bindir/*
+%_ghclibdir/bin/*
+%exclude %_ghclibdir/bin/*-%version
 %exclude %_bindir/*-%version
 
 %files -n rpm-macros-%{name}-common
@@ -339,19 +356,22 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %docdir/libraries/*.html
 %docdir/libraries/*.js
 %docdir/libraries/*.css
-%docdir/libraries/*.txt
 %docdir/libraries/*.png
-%docdir/libraries/gen_contents_index
 
 %files doc
 %dir %docdir
 %docdir/users_guide
-%docdir/haddock
+%docdir/Haddock
+%docdir/archives
 %docdir/index.html
 
 %files devel
 
 %changelog
+* Fri Mar 7 2025 Leonid Znamenok <respublica@altlinux.org> 9.2.8-alt2
+- Rebuild with ghc 9.2
+- Changed build system to hadrian
+
 * Mon Feb 24 2025 Leonid Znamenok <respublica@altlinux.org> 9.2.8-alt1
 - Bootstrap to ghc major 9.2
 - Switched to native codegen on aarch64

@@ -4,14 +4,15 @@
 
 %ifarch %ix86 x86_64
 %define native_code_gen_split_objs --enable-split-objs
-%define native_code_gen_split_sections --enable-split-sections
 %define dyn_libs --enable-shared
 %else
 %define no_interpreter --ghc-option=-DALT_NO_GHCI --flags=-templateHaskell
 %endif
 
+%define native_code_gen_split_sections --enable-split-sections
+
 Name: rpm-build-haskell
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -23,6 +24,7 @@ Source1: macros
 Source2: buildreq-ignore
 Source3: haskell.env
 Source4: extra
+Source10: LICENSE
 
 # Uses the modular reqprov subsystem
 Conflicts: rpm-build < 4.0.4-alt78
@@ -43,6 +45,7 @@ Requires: %name = %EVR
 
 %prep
 %setup -n scripts-%version
+cp %SOURCE10 .
 
 %install
 mkdir -p %buildroot%_rpmlibdir
@@ -64,6 +67,7 @@ install -D -m0755 %SOURCE4 \
 	%buildroot%_rpmmacrosdir/ghc-extra
 
 %files
+%doc LICENSE
 %_rpmlibdir/haskell.*
 %_rpmmacrosdir/haskell*
 %_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
@@ -73,6 +77,12 @@ install -D -m0755 %SOURCE4 \
 %_rpmmacrosdir/ghc-extra
 
 %changelog
+* Wed Mar 05 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.2-alt1
+- Changed ghc_gen_filelist.sh logic for GHC 9.2 built with Hadrian
+- Rewrote all ghc_* and cabal* macros in multiline style (thx vt@)
+- Changed file placements in accordance with GHC built with Hadrian
+- Enabled shared split sections on all architectures
+
 * Wed Feb 19 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.1-alt1
 - Added extra macros for building of ghc metapackage
 - Added processing of multi-module packages
