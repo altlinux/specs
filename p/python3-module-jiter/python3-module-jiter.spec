@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 Summary: Fast iterable JSON parser
@@ -63,6 +63,9 @@ cd crates/jiter-python
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 11 2025 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
+- Updated to 0.9.0.
+
 * Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.8.2-alt1
 - Built for ALT Sisyphus.
 
