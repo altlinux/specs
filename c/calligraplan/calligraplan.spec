@@ -18,7 +18,7 @@
 
 Name: calligraplan
 Version: 3.3.0
-Release: alt1
+Release: alt2
 Epoch: 0
 %K5init
 
@@ -42,7 +42,7 @@ BuildRequires: kf5-kdbusaddons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-ki
 BuildRequires: kf5-kinit-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kcmutils-devel
 BuildRequires: kf5-kio-devel kf5-knotifications-devel kf5-kparts-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
-BuildRequires: kf5-kactivities-devel kde5-kholidays-devel kf5-kdiagram-devel kf5-khtml-devel
+BuildRequires: kf5-kactivities-devel kde5-kholidays-devel kf5-kdiagram-devel
 BuildRequires: kf5-kjs-devel kf5-kitemmodels-devel kf5-kcalcore-devel kf5-kdoctools-devel
 BuildRequires: zlib-devel
 
@@ -247,6 +247,9 @@ rm -frv %buildroot/%_datadir/locale/x-test/
 %_K5lib/libplanworkfactory.so.*
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 0:3.3.0-alt2
+- fix build requries
+
 * Thu Jan 30 2025 Sergey V Turchin <zerg@altlinux.org> 0:3.3.0-alt1
 - new version
 
