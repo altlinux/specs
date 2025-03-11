@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.22
+Version: 0.0.24
 Release: alt1
 
 Summary: SQL databases in Python, designed for simplicity, compatibility, and robustness
@@ -75,6 +75,9 @@ export PYTHONPATH="$PYTHONPATH:$(realpath ./)"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.24-alt1
+- Updated to 0.0.24.
+
 * Tue Oct 15 2024 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.22-alt1
 - Initial build for ALT Sisyphus.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.46.0
+Version: 0.46.1
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -51,6 +51,7 @@ It is production-ready, and gives you the following:
 %autopatch -p1
 sed -n '/^# Testing$/,/^[[:space:]]*$/p' requirements.txt | \
     tee test-requirements.txt
+cat alt-test-requirements.txt | tee -a test-requirements.txt
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -72,6 +73,9 @@ sed -n '/^# Testing$/,/^[[:space:]]*$/p' requirements.txt | \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.46.1-alt1
+- Updated to 0.46.1.
+
 * Mon Feb 24 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.46.0-alt1
 - Updated to 0.46.0.
 
