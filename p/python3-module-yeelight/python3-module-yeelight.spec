@@ -2,16 +2,13 @@
 %def_with check
 
 Name: python3-module-yeelight
-Version: 0.7.14
-Release: alt2
+Version: 0.7.16
+Release: alt1
 Summary: A Python library for controlling YeeLight WiFi RGB bulbs.
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://gitlab.com/stavros/python-yeelight
 Source: %name-%version.tar
-
-# Remove dependency on future module
-Patch: 654f4f34e0246e65d8db02a107e2ab706de4806d.patch
 
 BuildArch: noarch
 
@@ -28,7 +25,6 @@ bulbs through your LAN.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -44,6 +40,9 @@ bulbs through your LAN.
 %python3_sitelibdir/%{pyproject_distinfo yeelight}
 
 %changelog
+* Tue Mar 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.7.16-alt1
+- Automatically updated to 0.7.16.
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.14-alt2
 - Removed build dependency on future module.
 
