@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 47.3
+Version: 47.4
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -48,6 +48,7 @@ page document formats like PDF and Postscript.
 %package doc
 Summary: Documentation files for Papers
 Group: Documentation
+BuildArch: noarch
 Requires: %name = %EVR
 
 %description doc
@@ -72,6 +73,7 @@ Requires: %name = %EVR
 %package gir-devel
 Summary: GObject introspection devel data for Papers
 Group: System/Libraries
+BuildArch: noarch
 Requires: %name-gir = %EVR
 
 %description gir-devel
@@ -121,6 +123,9 @@ Requires: %name-gir = %EVR
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Mar 11 2025 Anton Zhukharev <ancieg@altlinux.org> 47.4-alt1
+- Updated to 47.4.
+
 * Mon Feb 03 2025 Anton Zhukharev <ancieg@altlinux.org> 47.3-alt1
 - Updated to 47.3.
 
