@@ -28,7 +28,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt6
+Release: alt7
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -205,7 +205,7 @@ when one can't disable it easily, doesn't want to, or needs not to.
 This package enables EFI signature verification.
 
 %prep
-%setup -b 2
+%setup -a 2
 
 %patch0 -p1
 
@@ -223,7 +223,7 @@ grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
 cat %SOURCE17 >> po/ru.po
 
 %build
-./bootstrap --no-git --gnulib-srcdir=../gnulib-%version
+./bootstrap --no-git --gnulib-srcdir=./gnulib-%version
 ./autogen.sh
 build_grub() {
 	local dir="$1"; shift
@@ -509,6 +509,11 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Mar 04 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt7
+- use uuid for luks2 devices (closes: #53322)
+- fix regression in gnulib localization
+- add fedora patch to rework CVE-2023-4001 fix
+
 * Mon Mar 03 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt6
 - update Russian translations
 
