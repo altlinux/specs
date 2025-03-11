@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 
 Summary: Beautiful, idiomatic protocol buffers in Python
@@ -42,6 +42,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 11 2025 Andrey Cherepanov <cas@altlinux.org> 1.26.1-alt1
+- New version.
+
 * Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 1.26.0-alt1
 - New version.
 
