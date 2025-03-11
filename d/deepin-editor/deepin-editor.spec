@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.5.11
+Version: 6.5.16
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -14,10 +14,8 @@ Vcs: git://github.com/linuxdeepin/deepin-editor.git
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-6.0.16-armh-ppc64le.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Mon Jan 29 2024
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev dqt5-base-devel sh5
-BuildRequires: cmake deepin-qt-dbus-factory-devel kf5-kcodecs-devel kf5-syntax-highlighting-devel libchardet-devel libdtkwidget-devel libuchardet-devel dqt5-svg-devel dqt5-tools libicu-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake dqt6-svg-devel dqt6-tools dqt6-5compat-devel libcups-devel libicu-devel libchardet-devel libuchardet-devel dtk6-common-devel libdtk6widget-devel deepin-qt-dbus-factory-devel kf6-kcodecs-devel kf6-syntax-highlighting-devel
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -27,7 +25,6 @@ BuildRequires: gcc-c++
 %endif
 
 # Requires: deepin-session-shell deepin-dqt5integration
-Requires: libdqt5-gui = %_dqt5_version
 
 %description
 %summary.
@@ -35,28 +32,22 @@ Requires: libdqt5-gui = %_dqt5_version
 %prep
 %setup
 %autopatch -p1
+sed -i 's|/lib/qt${QT_VERSION_MAJOR}/bin/lrelease|%_dqt6_bindir/lrelease|' \
+  cmake/translation-generate.cmake
 
 %build
-export PATH=%_dqt5_bindir:$PATH
 %if_enabled clang
 %define optflags_lto -flto=thin
 export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %name
 
 %files -f %name.lang
@@ -85,6 +76,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Tue Mar 11 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.16-alt1
+- New version 6.5.16.
+- Switched to dqt6.
+
 * Wed Jan 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.11-alt1
 - New version 6.5.11.
 - Added vcs tag.
