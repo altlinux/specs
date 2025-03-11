@@ -5,7 +5,7 @@
 %define sover 0.10
 
 Name: mgba
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: Game Boy Advance emulator
@@ -110,6 +110,9 @@ sed -i -e 's/${GIT_REV}/%git_rev/' src/core/version.c.in
 %_libdir/lib%name.so
 
 %changelog
+* Tue Mar 11 2025 Nazarov Denis <nenderus@altlinux.org> 0.10.5-alt1
+- New version 0.10.5.
+
 * Mon Dec 09 2024 Nazarov Denis <nenderus@altlinux.org> 0.10.4-alt1
 - New version 0.10.4.
 
