@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name blur-my-shell
-%define ver_major 67
+%define ver_major 68
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -18,12 +18,13 @@ Group: Graphical desktop/GNOME
 License: GPL-3.0
 Url: https://github.com/aunetx/blur-my-shell
 
+Vcs: https://github.com/aunetx/blur-my-shell.git
+
 BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/aunetx/blur-my-shell.git
 Source: %_name-%version%beta.tar
 %endif
 
@@ -72,6 +73,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Mar 11 2025 Yuri N. Sedunov <aris@altlinux.org> 68-alt1
+- 68 (GNOME48 supported)
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 67-alt1
 - 67
 
