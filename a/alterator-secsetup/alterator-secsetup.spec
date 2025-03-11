@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 2.1
+Version: 2.2
 Release: alt1
 
 Source: %name-%version.tar
@@ -42,6 +42,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %_datadir/alterator-secsetup/*
 
 %changelog
+* Tue Mar 11 2025 Oleg Solovyov <mcpain@altlinux.org> 2.2-alt1
+- bump MIN_UID (Closes: #53373)
+
 * Tue Sep 28 2021 Ivan Razzhivin <underwit@altlinux.org> 2.1-alt1
 - add web interface to secsetup (Closes: #37902)
 - add web interface to blockterm
