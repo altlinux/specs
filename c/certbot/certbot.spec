@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -270,6 +270,9 @@ site.addsitedir("%certbotdir")|' %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Tue Mar 11 2025 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0 (with rpmrb script)
+
 * Tue Feb 11 2025 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version 3.1.0 (with rpmrb script)
 
