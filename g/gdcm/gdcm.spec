@@ -3,8 +3,6 @@
 %set_verify_elf_method strict
 
 %define abiversion 3.0
-%define vtksoname 1
-%define vtkversion 9.4
 %define socketxxsoname 1.2
 
 %define libgdcm_common libgdcmcommon%abiversion
@@ -18,11 +16,11 @@
 %define libgdcm_mexd libgdcmmexd%abiversion
 %define libgdcm_msff libgdcmmsff%abiversion
 %define libgdcm_socketxx libgdcmsocketxx%socketxxsoname
-%define libgdcm_vtk libgdcmvtk%{vtkversion}_%vtksoname
+%define libgdcm_vtk libgdcmvtk%{vtk_version}_%vtk_soname
 
 Name: gdcm
-Version: 3.0.24
-Release: alt4
+Version: 3.0.25
+Release: alt1
 
 Summary: Cross-platform DICOM implementation
 License: BSD
@@ -33,13 +31,12 @@ VCS: https://git.code.sf.net/p/gdcm/gdcm.git
 Source0: %name-%version.tar
 Source1: gdcmData.tar
 Patch0: gdcm-3.0.1-unknown-use-copyright.patch
-Patch1: gdcm-3.0.24-upstream-gnu-install-dirs.patch
-Patch2: gdcm-3.0.24-upstream-vtk-9.3-support.patch
 Patch3: gdcm-3.0.24-alt-export-variables.patch
 
 BuildRequires(pre): rpm-build-java
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-vtk
 BuildRequires: cmake
 BuildRequires: ctest
 BuildRequires: docbook5-style-xsl
@@ -367,7 +364,7 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %_libdir/libsocketxx.so.%{socketxxsoname}*
 
 %files -n %libgdcm_vtk
-%_libdir/libvtkgdcm-%vtkversion.so.*
+%_libdir/libvtkgdcm-%vtk_version.so.*
 
 %files doc
 %_docdir/gdcm/html
@@ -383,7 +380,7 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %_includedir/vtkgdcmpython.h
 %_libdir/cmake/gdcm/
 %_libdir/lib*.so
-%_libdir/vtk-%vtkversion/hierarchy/vtkgdcm/vtkgdcm-hierarchy.txt
+%_libdir/vtk-%vtk_version/hierarchy/vtkgdcm/vtkgdcm-hierarchy.txt
 
 %files examples
 %_datadir/gdcm/Examples
@@ -396,6 +393,10 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Fri Mar 07 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.25-alt1
+- Rebuild with vtk macros.
+- New version.
+
 * Mon Feb 17 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.24-alt4
 - Rebuild against vtk 9.4.
 

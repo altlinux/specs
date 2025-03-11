@@ -3,10 +3,11 @@
 %set_verify_elf_method strict
 
 %define ver 9.4
+%define soname 1
 
 Name: vtk
 Version: %ver.1
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -18,22 +19,20 @@ Source: %name-%version.tar
 # git submodules
 Source1: %name-%version-ThirdParty-vtkm-vtkvtkm-vtk-m.tar
 
-# Splitted libraries
-Source2: libs.spec.part
-Source3: files.spec.part
-
 # Remote modules
 Source100: %name-%version-MomentInvariants.tar
 Source101: %name-%version-vtkDICOM.tar
 
-Patch1: %name-9.3.0-alt-python-install-path.patch
+Patch1: vtk-9.3.0-alt-python-install-path.patch
 # Fix/hack for https://gitlab.kitware.com/vtk/vtk/-/issues/18220
 # Needed for itk-snap
-Patch2: %name-9.1.0-alt-modules-autoinit.patch
-Patch3: %name-9.1.0-alt-dont-fetch-remote-modules.patch
-Patch4: %name-9.1.0-alt-compile-flags.patch
-Patch5: %name-9.4.1-arch-fmt-11.patch
-Patch6: %name-%version-alt.patch
+Patch2: vtk-9.1.0-alt-modules-autoinit.patch
+Patch3: vtk-9.1.0-alt-dont-fetch-remote-modules.patch
+Patch4: vtk-9.1.0-alt-compile-flags.patch
+Patch5: vtk-9.4.1-arch-fmt-11.patch
+Patch6: vtk-%version-alt.patch
+Patch7: vtk-9.4.1-fix-vtkparseproperties-getnth-setnth-detection.patch
+Patch8: vtk-9.4.1-fix-restore-visibility-of-findpoint-method.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -116,34 +115,710 @@ rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
 (e.g., hardware-accelerated volume rendering, LOD control).
 
-# libs.spec.part
-%include %SOURCE2
+%package -n libMomentInvariants%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): MomentInvariant
+Group: System/Libraries
 
-%package -n lib%{name}filters%ver
+%description -n libMomentInvariants%ver
+This package contains shared library of VTK: MomentInvariant.
+
+%package -n libvtkChartsCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ChartsCore
+Group: System/Libraries
+
+%description -n libvtkChartsCore%ver
+This package contains shared library of VTK: ChartsCore.
+
+%package -n libvtkCommonArchive%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonArchive
+Group: System/Libraries
+
+%description -n libvtkCommonArchive%ver
+This package contains shared library of VTK: CommonArchive.
+
+%package -n libvtkCommonColor%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonColor
+Group: System/Libraries
+
+%description -n libvtkCommonColor%ver
+This package contains shared library of VTK: CommonColor.
+
+%package -n libvtkCommonComputationalGeometry%ver
+Summary: Shared library CommonComputationalGeometry from Visualization Toolkit
+Group: System/Libraries
+
+%description -n libvtkCommonComputationalGeometry%ver
+This package contains shared library of VTK: CommonComputationalGeometry.
+
+%package -n libvtkCommonCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonCore
+Group: System/Libraries
+
+%description -n libvtkCommonCore%ver
+This package contains shared library of VTK: CommonCore.
+
+%package -n libvtkCommonDataModel%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonDataModel
+Group: System/Libraries
+
+%description -n libvtkCommonDataModel%ver
+This package contains shared library of VTK: CommonDataModel.
+
+%package -n libvtkCommonExecutionModel%ver
+Summary: Shared library CommonExecutionModel from Visualization Toolkit (VTK)
+Group: System/Libraries
+
+%description -n libvtkCommonExecutionModel%ver
+This package contains shared library of VTK: CommonExecutionModel.
+
+%package -n libvtkCommonMath%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonMath
+Group: System/Libraries
+
+%description -n libvtkCommonMath%ver
+This package contains shared library of VTK: CommonMath.
+
+%package -n libvtkCommonMisc%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonMisc
+Group: System/Libraries
+
+%description -n libvtkCommonMisc%ver
+This package contains shared library of VTK: CommonMisc.
+
+%package -n libvtkCommonSystem%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonSystem
+Group: System/Libraries
+
+%description -n libvtkCommonSystem%ver
+This package contains shared library of VTK: CommonSystem.
+
+%package -n libvtkCommonTransforms%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): CommonTransforms
+Group: System/Libraries
+
+%description -n libvtkCommonTransforms%ver
+This package contains shared library of VTK: CommonTransforms.
+
+%package -n libvtkDICOM%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): DICOM
+Group: System/Libraries
+
+%description -n libvtkDICOM%ver
+This package contains shared library of VTK: DICOM.
+
+%package -n libvtkDICOMParser%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): DICOMParser
+Group: System/Libraries
+
+%description -n libvtkDICOMParser%ver
+This package contains shared library of VTK: DICOMParser.
+
+%package -n libvtkDomainsChemistry%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): DomainsChemistry
+Group: System/Libraries
+
+%description -n libvtkDomainsChemistry%ver
+This package contains shared library of VTK: DomainsChemistry.
+
+%package -n libvtkDomainsChemistryOpenGL2_%ver
+Summary: Shared library DomainsChemistryOpenGL2 from Visualization Toolkit
+Group: System/Libraries
+
+%description -n libvtkDomainsChemistryOpenGL2_%ver
+This package contains shared library of VTK: DomainsChemistryOpenGL2.
+
+%package -n libvtkDomainsMicroscopy%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): DomainsMicroscopy
+Group: System/Libraries
+
+%description -n libvtkDomainsMicroscopy%ver
+This package contains shared library of VTK: DomainsMicroscopy.
+
+%package -n libvtkGeovisCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): GeovisCore
+Group: System/Libraries
+
+%description -n libvtkGeovisCore%ver
+This package contains shared library of VTK: GeovisCore.
+
+%package -n libvtkGeovisGDAL%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): GeovisGDAL
+Group: System/Libraries
+
+%description -n libvtkGeovisGDAL%ver
+This package contains shared library of VTK: GeovisGDAL.
+
+%package -n libvtkIOAMR%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOAMR
+Group: System/Libraries
+
+%description -n libvtkIOAMR%ver
+This package contains shared library of VTK: IOAMR.
+
+%package -n libvtkIOAsynchronous%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOAsynchronous
+Group: System/Libraries
+
+%description -n libvtkIOAsynchronous%ver
+This package contains shared library of VTK: IOAsynchronous.
+
+%package -n libvtkIOCGNSReader%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOCGNSReader
+Group: System/Libraries
+
+%description -n libvtkIOCGNSReader%ver
+This package contains shared library of VTK: IOCGNSReader.
+
+%package -n libvtkIOCONVERGECFD%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOCONVERGECFD
+Group: System/Libraries
+
+%description -n libvtkIOCONVERGECFD%ver
+This package contains shared library of VTK: IOCONVERGECFD.
+
+%package -n libvtkIOCellGrid%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOCellGrid
+Group: System/Libraries
+
+%description -n libvtkIOCellGrid%ver
+This package contains shared library of VTK: IOCellGrid.
+
+%package -n libvtkIOCesium3DTiles%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOCesium3DTiles
+Group: System/Libraries
+
+%description -n libvtkIOCesium3DTiles%ver
+This package contains shared library of VTK: IOCesium3DTiles.
+
+%package -n libvtkIOChemistry%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOChemistry
+Group: System/Libraries
+
+%description -n libvtkIOChemistry%ver
+This package contains shared library of VTK: IOChemistry.
+
+%package -n libvtkIOCityGML%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOCityGML
+Group: System/Libraries
+
+%description -n libvtkIOCityGML%ver
+This package contains shared library of VTK: IOCityGML.
+
+%package -n libvtkIOCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOCore
+Group: System/Libraries
+
+%description -n libvtkIOCore%ver
+This package contains shared library of VTK: IOCore.
+
+%package -n libvtkIOERF%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOERF
+Group: System/Libraries
+
+%description -n libvtkIOERF%ver
+This package contains shared library of VTK: IOERF.
+
+%package -n libvtkIOEnSight%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOEnSight
+Group: System/Libraries
+
+%description -n libvtkIOEnSight%ver
+This package contains shared library of VTK: IOEnSight.
+
+%package -n libvtkIOEngys%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOEngys
+Group: System/Libraries
+
+%description -n libvtkIOEngys%ver
+This package contains shared library of VTK: IOEngys.
+
+%package -n libvtkIOExodus%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOExodus
+Group: System/Libraries
+
+%description -n libvtkIOExodus%ver
+This package contains shared library of VTK: IOExodus.
+
+%package -n libvtkIOExport%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOExport
+Group: System/Libraries
+
+%description -n libvtkIOExport%ver
+This package contains shared library of VTK: IOExport.
+
+%package -n libvtkIOExportGL2PS%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOExportGL2PS
+Group: System/Libraries
+
+%description -n libvtkIOExportGL2PS%ver
+This package contains shared library of VTK: IOExportGL2PS.
+
+%package -n libvtkIOExportPDF%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOExportPDF
+Group: System/Libraries
+
+%description -n libvtkIOExportPDF%ver
+This package contains shared library of VTK: IOExportPDF.
+
+%package -n libvtkIOFDS%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOFDS
+Group: System/Libraries
+
+%description -n libvtkIOFDS%ver
+This package contains shared library of VTK: IOFDS.
+
+%package -n libvtkIOFLUENTCFF%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOFLUENTCFF
+Group: System/Libraries
+
+%description -n libvtkIOFLUENTCFF%ver
+This package contains shared library of VTK: IOFLUENTCFF.
+
+%package -n libvtkIOGDAL%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOGDAL
+Group: System/Libraries
+
+%description -n libvtkIOGDAL%ver
+This package contains shared library of VTK: IOGDAL.
+
+%package -n libvtkIOGeometry%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOGeometry
+Group: System/Libraries
+
+%description -n libvtkIOGeometry%ver
+This package contains shared library of VTK: IOGeometry.
+
+%package -n libvtkIOHDF%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOHDF
+Group: System/Libraries
+
+%description -n libvtkIOHDF%ver
+This package contains shared library of VTK: IOHDF.
+
+%package -n libvtkIOIOSS%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOIOSS
+Group: System/Libraries
+
+%description -n libvtkIOIOSS%ver
+This package contains shared library of VTK: IOIOSS.
+
+%package -n libvtkIOImage%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOImage
+Group: System/Libraries
+
+%description -n libvtkIOImage%ver
+This package contains shared library of VTK: IOImage.
+
+%package -n libvtkIOImport%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOImport
+Group: System/Libraries
+
+%description -n libvtkIOImport%ver
+This package contains shared library of VTK: IOImport.
+
+%package -n libvtkIOInfovis%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOInfovis
+Group: System/Libraries
+
+%description -n libvtkIOInfovis%ver
+This package contains shared library of VTK: IOInfovis.
+
+%package -n libvtkIOLSDyna%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOLSDyna
+Group: System/Libraries
+
+%description -n libvtkIOLSDyna%ver
+This package contains shared library of VTK: IOLSDyna.
+
+%package -n libvtkIOLegacy%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOLegacy
+Group: System/Libraries
+
+%description -n libvtkIOLegacy%ver
+This package contains shared library of VTK: IOLegacy.
+
+%package -n libvtkIOMINC%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOMINC
+Group: System/Libraries
+
+%description -n libvtkIOMINC%ver
+This package contains shared library of VTK: IOMINC.
+
+%package -n libvtkIOMotionFX%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOMotionFX
+Group: System/Libraries
+
+%description -n libvtkIOMotionFX%ver
+This package contains shared library of VTK: IOMotionFX.
+
+%package -n libvtkIOMovie%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOMovie
+Group: System/Libraries
+
+%description -n libvtkIOMovie%ver
+This package contains shared library of VTK: IOMovie.
+
+%package -n libvtkIONetCDF%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IONetCDF
+Group: System/Libraries
+
+%description -n libvtkIONetCDF%ver
+This package contains shared library of VTK: IONetCDF.
+
+%package -n libvtkIOOggTheora%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOOggTheora
+Group: System/Libraries
+
+%description -n libvtkIOOggTheora%ver
+This package contains shared library of VTK: IOOggTheora.
+
+%package -n libvtkIOPLY%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOPLY
+Group: System/Libraries
+
+%description -n libvtkIOPLY%ver
+This package contains shared library of VTK: IOPLY.
+
+%package -n libvtkIOParallel%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOParallel
+Group: System/Libraries
+
+%description -n libvtkIOParallel%ver
+This package contains shared library of VTK: IOParallel.
+
+%package -n libvtkIOParallelXML%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOParallelXML
+Group: System/Libraries
+
+%description -n libvtkIOParallelXML%ver
+This package contains shared library of VTK: IOParallelXML.
+
+%package -n libvtkIOSQL%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOSQL
+Group: System/Libraries
+
+%description -n libvtkIOSQL%ver
+This package contains shared library of VTK: IOSQL.
+
+%package -n libvtkIOSegY%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOSegY
+Group: System/Libraries
+
+%description -n libvtkIOSegY%ver
+This package contains shared library of VTK: IOSegY.
+
+%package -n libvtkIOTecplotTable%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOTecplotTable
+Group: System/Libraries
+
+%description -n libvtkIOTecplotTable%ver
+This package contains shared library of VTK: IOTecplotTable.
+
+%package -n libvtkIOVeraOut%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOVeraOut
+Group: System/Libraries
+
+%description -n libvtkIOVeraOut%ver
+This package contains shared library of VTK: IOVeraOut.
+
+%package -n libvtkIOVideo%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOVideo
+Group: System/Libraries
+
+%description -n libvtkIOVideo%ver
+This package contains shared library of VTK: IOVideo.
+
+%package -n libvtkIOXML%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOXML
+Group: System/Libraries
+
+%description -n libvtkIOXML%ver
+This package contains shared library of VTK: IOXML.
+
+%package -n libvtkIOXMLParser%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): IOXMLParser
+Group: System/Libraries
+
+%description -n libvtkIOXMLParser%ver
+This package contains shared library of VTK: IOXMLParser.
+
+%package -n libvtkImagingColor%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingColor
+Group: System/Libraries
+
+%description -n libvtkImagingColor%ver
+This package contains shared library of VTK: ImagingColor.
+
+%package -n libvtkImagingCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingCore
+Group: System/Libraries
+
+%description -n libvtkImagingCore%ver
+This package contains shared library of VTK: ImagingCore.
+
+%package -n libvtkImagingFourier%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingFourier
+Group: System/Libraries
+
+%description -n libvtkImagingFourier%ver
+This package contains shared library of VTK: ImagingFourier.
+
+%package -n libvtkImagingGeneral%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingGeneral
+Group: System/Libraries
+
+%description -n libvtkImagingGeneral%ver
+This package contains shared library of VTK: ImagingGeneral.
+
+%package -n libvtkImagingHybrid%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingHybrid
+Group: System/Libraries
+
+%description -n libvtkImagingHybrid%ver
+This package contains shared library of VTK: ImagingHybrid.
+
+%package -n libvtkImagingMath%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingMath
+Group: System/Libraries
+
+%description -n libvtkImagingMath%ver
+This package contains shared library of VTK: ImagingMath.
+
+%package -n libvtkImagingMorphological%ver
+Summary: Shared library ImagingMorphological from Visualization Toolkit (VTK)
+Group: System/Libraries
+
+%description -n libvtkImagingMorphological%ver
+This package contains shared library of VTK: ImagingMorphological.
+
+%package -n libvtkImagingOpenGL2_%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingOpenGL2
+Group: System/Libraries
+
+%description -n libvtkImagingOpenGL2_%ver
+This package contains shared library of VTK: ImagingOpenGL2.
+
+%package -n libvtkImagingSources%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingSources
+Group: System/Libraries
+
+%description -n libvtkImagingSources%ver
+This package contains shared library of VTK: ImagingSources.
+
+%package -n libvtkImagingStatistics%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingStatistics
+Group: System/Libraries
+
+%description -n libvtkImagingStatistics%ver
+This package contains shared library of VTK: ImagingStatistics.
+
+%package -n libvtkImagingStencil%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ImagingStencil
+Group: System/Libraries
+
+%description -n libvtkImagingStencil%ver
+This package contains shared library of VTK: ImagingStencil.
+
+%package -n libvtkInfovisBoostGraphAlgorithms%ver
+Summary: Shared library InfovisBoostGraphAlgorithms from Visualization Toolkit
+Group: System/Libraries
+
+%description -n libvtkInfovisBoostGraphAlgorithms%ver
+This package contains shared library of VTK: InfovisBoostGraphAlgorithms.
+
+%package -n libvtkInfovisCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): InfovisCore
+Group: System/Libraries
+
+%description -n libvtkInfovisCore%ver
+This package contains shared library of VTK: InfovisCore.
+
+%package -n libvtkInfovisLayout%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): InfovisLayout
+Group: System/Libraries
+
+%description -n libvtkInfovisLayout%ver
+This package contains shared library of VTK: InfovisLayout.
+
+%package -n libvtkInteractionImage%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): InteractionImage
+Group: System/Libraries
+
+%description -n libvtkInteractionImage%ver
+This package contains shared library of VTK: InteractionImage.
+
+%package -n libvtkInteractionStyle%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): InteractionStyle
+Group: System/Libraries
+
+%description -n libvtkInteractionStyle%ver
+This package contains shared library of VTK: InteractionStyle.
+
+%package -n libvtkInteractionWidgets%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): InteractionWidgets
+Group: System/Libraries
+
+%description -n libvtkInteractionWidgets%ver
+This package contains shared library of VTK: InteractionWidgets.
+
+%package -n libvtkParallelCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ParallelCore
+Group: System/Libraries
+
+%description -n libvtkParallelCore%ver
+This package contains shared library of VTK: ParallelCore.
+
+%package -n libvtkParallelDIY%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ParallelDIY
+Group: System/Libraries
+
+%description -n libvtkParallelDIY%ver
+This package contains shared library of VTK: ParallelDIY.
+
+%package -n libvtkTestingCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): TestingCore
+Group: System/Libraries
+
+%description -n libvtkTestingCore%ver
+This package contains shared library of VTK: TestingCore.
+
+%package -n libvtkTestingRendering%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): TestingRendering
+Group: System/Libraries
+
+%description -n libvtkTestingRendering%ver
+This package contains shared library of VTK: TestingRendering.
+
+%package -n libvtkViewsContext2D%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ViewsContext2D
+Group: System/Libraries
+
+%description -n libvtkViewsContext2D%ver
+This package contains shared library of VTK: ViewsContext2D.
+
+%package -n libvtkViewsCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ViewsCore
+Group: System/Libraries
+
+%description -n libvtkViewsCore%ver
+This package contains shared library of VTK: ViewsCore.
+
+%package -n libvtkViewsInfovis%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ViewsInfovis
+Group: System/Libraries
+
+%description -n libvtkViewsInfovis%ver
+This package contains shared library of VTK: ViewsInfovis.
+
+%package -n libvtkWebCore%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): WebCore
+Group: System/Libraries
+
+%description -n libvtkWebCore%ver
+This package contains shared library of VTK: WebCore.
+
+%package -n libvtkWebGLExporter%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): WebGLExporter
+Group: System/Libraries
+
+%description -n libvtkWebGLExporter%ver
+This package contains shared library of VTK: WebGLExporter.
+
+%package -n libvtkWrappingTools%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): WrappingTools
+Group: System/Libraries
+
+%description -n libvtkWrappingTools%ver
+This package contains shared library of VTK: WrappingTools.
+
+%package -n libvtkexodusII%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): exodusII
+Group: System/Libraries
+
+%description -n libvtkexodusII%ver
+This package contains shared library of VTK: exodusII.
+
+%package -n libvtkglad%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): glad
+Group: System/Libraries
+
+%description -n libvtkglad%ver
+This package contains shared library of VTK: glad.
+
+%package -n libvtkioss%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): ioss
+Group: System/Libraries
+
+%description -n libvtkioss%ver
+This package contains shared library of VTK: ioss.
+
+%package -n libvtkkissfft%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): kissfft
+Group: System/Libraries
+
+%description -n libvtkkissfft%ver
+This package contains shared library of VTK: kissfft.
+
+%package -n libvtkloguru%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): loguru
+Group: System/Libraries
+
+%description -n libvtkloguru%ver
+This package contains shared library of VTK: loguru.
+
+%package -n libvtkmetaio%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): metaio
+Group: System/Libraries
+
+%description -n libvtkmetaio%ver
+This package contains shared library of VTK: metaio.
+
+%package -n libvtksys%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): sys
+Group: System/Libraries
+
+%description -n libvtksys%ver
+This package contains shared library of VTK: sys.
+
+%package -n libvtktoken%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): token
+Group: System/Libraries
+
+%description -n libvtktoken%ver
+This package contains shared library of VTK: token.
+
+%package -n libvtkverdict%ver
+Summary: Shared libraries of The Visualization Toolkit (VTK): verdict
+Group: System/Libraries
+
+%description -n libvtkverdict%ver
+This package contains shared library of VTK: verdict.
+
+%package -n libvtkfilters%ver
 Summary: Shared libraries of The Visualization Toolkit (VTK): filters
 Group: System/Libraries
 
-%description -n lib%{name}filters%ver
+%description -n libvtkfilters%ver
 This package contains shared libraries of VTK filters.
 
-%package -n lib%{name}rendering%ver
+%package -n libvtkrendering%ver
 Summary: Shared libraries of The Visualization Toolkit (VTK): rendering
 Group: System/Libraries
 
-%description -n lib%{name}rendering%ver
+%description -n libvtkrendering%ver
 This package contains shared libraries of VTK rendering.
 
-%package -n lib%name-devel
+%package -n libvtk-devel
 Summary: Development files of The Visualization Toolkit (VTK)
 Group: Development/C++
-Requires: %name = %EVR
-Requires: %name-python3 = %EVR
-Requires: lib%name%ver-python3 = %EVR
-Requires: python3-module-%name = %EVR
-Requires: python3-module-%name-tests = %EVR
+Requires: vtk = %EVR
+Requires: vtk-python3 = %EVR
+Requires: libvtk%ver-python3 = %EVR
+Requires: python3-module-vtk = %EVR
+Requires: python3-module-vtk-tests = %EVR
 Requires: nlohmann-json-devel
 %ifnarch %arm
-Requires: %name-qt5 = %EVR
+Requires: vtk-qt5 = %EVR
 %endif
 # Following dependencies are duplicates from build dependencies
 Requires: qt5-base-devel
@@ -158,16 +833,29 @@ Requires: libGLEW-devel
 Requires: libarchive-devel
 Requires: libcgns-devel
 Requires: libfmt-devel
-Conflicts: libvtk6.1-devel libvtk6.2-devel libvtk8.1-devel
+Conflicts: libvtk6.1-devel
+Conflicts: libvtk6.2-devel
+Conflicts: libvtk8.1-devel
 Conflicts: libvtk8.2-devel
 
-%description -n lib%name-devel
+%description -n libvtk-devel
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
 (e.g., hardware-accelerated volume rendering, LOD control).
 
 This package contains development files of VTK.
+
+# Used by:
+# - gdcm
+# - opencascade
+%package -n rpm-macros-vtk
+Summary: Macros for packages depended by Visualization Toolkit (VTK)
+Group: Development/C++
+BuildArch: noarch
+
+%description -n rpm-macros-vtk
+This package contain file with macros for building packages depended by VTK.
 
 %package doc
 Summary: Documentation for The Visualization Toolkit (VTK)
@@ -185,11 +873,14 @@ This package contains documentation for VTK.
 %package python3
 Summary: The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python3
-Requires: %name = %EVR
-Requires: lib%name%ver-python3 = %EVR
-Requires: python3-module-%name = %EVR
-Conflicts: vtk6.1-python vtk6.2-python vtk8.1-python
-Conflicts: vtk8.2-python vtk8.2-python3
+Requires: vtk = %EVR
+Requires: libvtk%ver-python3 = %EVR
+Requires: python3-module-vtk = %EVR
+Conflicts: vtk6.1-python
+Conflicts: vtk6.2-python
+Conflicts: vtk8.1-python
+Conflicts: vtk8.2-python
+Conflicts: vtk8.2-python3
 
 %description python3
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -199,11 +890,11 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package provides Python bindings to VTK.
 
-%package -n lib%name%ver-python3
+%package -n libvtk%ver-python3
 Summary: The Visualization Toolkit (VTK) Python shared libraries
 Group: System/Libraries
 
-%description -n lib%name%ver-python3
+%description -n libvtk%ver-python3
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -211,12 +902,23 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package contains Python shared libraries of VTK.
 
-%package -n python3-module-%name
+%package -n python3-module-vtk
 Summary: The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python3
-Requires: lib%name%ver-python3 = %EVR
-%add_python3_req_skip GDK gtk gtkgl gtk.gtkgl pygtk vtkParallelPython
-%add_python3_req_skip vtk.vtkCommonCore vtk.vtkFiltersGeometry vtk.vtkRenderingCore vtk.vtkWebCore vtk.web vtk.web.camera vtk.web.query_data_model
+Requires: libvtk%ver-python3 = %EVR
+%add_python3_req_skip GDK
+%add_python3_req_skip gtk
+%add_python3_req_skip gtk.gtkgl
+%add_python3_req_skip gtkgl
+%add_python3_req_skip pygtk
+%add_python3_req_skip vtk.vtkCommonCore
+%add_python3_req_skip vtk.vtkFiltersGeometry
+%add_python3_req_skip vtk.vtkRenderingCore
+%add_python3_req_skip vtk.vtkWebCore
+%add_python3_req_skip vtk.web
+%add_python3_req_skip vtk.web.camera
+%add_python3_req_skip vtk.web.query_data_model
+%add_python3_req_skip vtkParallelPython
 %add_python3_req_skip wslink.websocket
 %py3_requires PyQt5
 Provides: python3-module-vtk8.2 = %EVR
@@ -225,7 +927,7 @@ Conflicts: python3-module-vtk8.2 < %EVR
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/vtkmodules/web/wslink.py
 
-%description -n python3-module-%name
+%description -n python3-module-vtk
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -233,15 +935,15 @@ surface reconstruction, implicit modelling, decimation) and rendering techniques
 
 This package provides Python bindings to VTK.
 
-%package -n python3-module-%name-tests
+%package -n python3-module-vtk-tests
 Summary: Tests for The Visualization Toolkit (VTK) Python bindings
 Group: Development/Python3
-Requires: python3-module-%name = %EVR
+Requires: python3-module-vtk = %EVR
 Provides: python3-module-vtk8.2-tests = %EVR
 Obsoletes: python3-module-vtk8.2-tests < %EVR
 Conflicts: python3-module-vtk8.2-tests < %EVR
 
-%description -n python3-module-%name-tests
+%description -n python3-module-vtk-tests
 VTK is an open-source software system for image processing, 3D graphics, volume
 rendering and visualization. VTK includes many advanced algorithms (e.g.,
 surface reconstruction, implicit modelling, decimation) and rendering techniques
@@ -253,7 +955,7 @@ This package contains tests for Python bindings to VTK.
 Summary: The Visualization Toolkit (VTK) examples
 Group: Development/Tools
 BuildArch: noarch
-Requires: %name = %EVR
+Requires: vtk = %EVR
 %add_python3_req_skip numeric
 
 %description examples
@@ -280,12 +982,6 @@ This package contains VTK QML plugin.
 %setup -a1 -a100 -a101
 %autopatch -p1
 
-%ifarch ppc64le
-# fix error with always_inline
-grep -rl '__attribute__((always_inline))' |\
-  xargs sed -i 's/__attribute__((always_inline))//'
-%endif
-
 %ifarch %e2k
 sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
 %endif
@@ -294,12 +990,29 @@ sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
 CMake/vtkVersion.bash -f
 
 # remove bundled libraries
-for x in constantly expat freetype gl2ps hdf5 hyperlink incremental jpeg jsoncpp libharu libxml2 lz4 netcdf oggtheora png tiff Twisted txaio zlib ZopeInterface ; do
-	rm -rf ThirdParty/${x}/vtk${x}
-done
-
 rm -rf \
-	ThirdParty/AutobahnPython/vtkAutobahn
+   ThirdParty/AutobahnPython/vtkAutobahn \
+   ThirdParty/Twisted/vtkTwisted \
+   ThirdParty/ZopeInterface/vtkZopeInterface \
+   ThirdParty/constantly/vtkconstantly \
+   ThirdParty/expat/vtkexpat \
+   ThirdParty/freetype/vtkfreetype \
+   ThirdParty/gl2ps/vtkgl2ps \
+   ThirdParty/hdf5/vtkhdf5 \
+   ThirdParty/hyperlink/vtkhyperlink \
+   ThirdParty/incremental/vtkincremental \
+   ThirdParty/jpeg/vtkjpeg \
+   ThirdParty/jsoncpp/vtkjsoncpp \
+   ThirdParty/libharu/vtklibharu \
+   ThirdParty/libxml2/vtklibxml2 \
+   ThirdParty/lz4/vtklz4 \
+   ThirdParty/netcdf/vtknetcdf \
+   ThirdParty/oggtheora/vtkoggtheora \
+   ThirdParty/png/vtkpng \
+   ThirdParty/tiff/vtktiff \
+   ThirdParty/txaio/vtktxaio \
+   ThirdParty/zlib/vtkzlib \
+   #
 
 %build
 PATH=$PATH:%_qt5_bindir
@@ -329,7 +1042,7 @@ export PYTHON=%__python3
 	-DVTK_GROUP_ENABLE_StandAlone:STRING=YES \
 	-DVTK_GROUP_ENABLE_Views:STRING=YES \
 	-DVTK_GROUP_ENABLE_Web:STRING=YES \
-	-DCMAKE_INSTALL_LICENSEDIR:PATH=share/doc/%name-%ver/licenses \
+	-DCMAKE_INSTALL_LICENSEDIR:PATH=share/doc/vtk-%ver/licenses \
 	-DVTK_MODULE_ENABLE_VTK_CommonArchive:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_DomainsMicroscopy:STRING=YES \
 	-DVTK_MODULE_ENABLE_VTK_GeovisGDAL:STRING=YES \
@@ -379,6 +1092,12 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %install
 %cmakeinstall_std
 
+mkdir -p %buildroot%_rpmmacrosdir
+cat << EOF > %buildroot%_rpmmacrosdir/vtk
+%%vtk_soname %soname
+%%vtk_version %ver
+EOF
+
 %files
 %doc Copyright.txt README.md
 %_bindir/vtkParseJava-%ver
@@ -387,25 +1106,417 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %_bindir/vtkProbeOpenGLVersion-%ver
 %_bindir/vtkWrapSerDes-%ver
 
-# files.spec.part
-%include %SOURCE3
+%files -n rpm-macros-vtk
+%_rpmmacrosdir/vtk
 
-%files -n lib%{name}filters%ver
-%_libdir/libvtkFilters*-%ver.so.*
-%exclude %_libdir/libvtkFiltersPython*-%ver.so.*
+%files -n libMomentInvariants%ver
+%_libdir/libMomentInvariants-%ver.so.%soname
+%_libdir/libMomentInvariants-%ver.so.%ver
 
-%files -n lib%{name}rendering%ver
-%exclude %_libdir/libvtkRenderingQt-%ver.so.*
-%_libdir/libvtkRendering*-%ver.so.*
+%files -n libvtkChartsCore%ver
+%_libdir/libvtkChartsCore-%ver.so.%soname
+%_libdir/libvtkChartsCore-%ver.so.%ver
 
-%files -n lib%name-devel
+%files -n libvtkCommonArchive%ver
+%_libdir/libvtkCommonArchive-%ver.so.%soname
+%_libdir/libvtkCommonArchive-%ver.so.%ver
+
+%files -n libvtkCommonColor%ver
+%_libdir/libvtkCommonColor-%ver.so.%soname
+%_libdir/libvtkCommonColor-%ver.so.%ver
+
+%files -n libvtkCommonComputationalGeometry%ver
+%_libdir/libvtkCommonComputationalGeometry-%ver.so.%soname
+%_libdir/libvtkCommonComputationalGeometry-%ver.so.%ver
+
+%files -n libvtkCommonCore%ver
+%_libdir/libvtkCommonCore-%ver.so.%soname
+%_libdir/libvtkCommonCore-%ver.so.%ver
+
+%files -n libvtkCommonDataModel%ver
+%_libdir/libvtkCommonDataModel-%ver.so.%soname
+%_libdir/libvtkCommonDataModel-%ver.so.%ver
+
+%files -n libvtkCommonExecutionModel%ver
+%_libdir/libvtkCommonExecutionModel-%ver.so.%soname
+%_libdir/libvtkCommonExecutionModel-%ver.so.%ver
+
+%files -n libvtkCommonMath%ver
+%_libdir/libvtkCommonMath-%ver.so.%soname
+%_libdir/libvtkCommonMath-%ver.so.%ver
+
+%files -n libvtkCommonMisc%ver
+%_libdir/libvtkCommonMisc-%ver.so.%soname
+%_libdir/libvtkCommonMisc-%ver.so.%ver
+
+%files -n libvtkCommonSystem%ver
+%_libdir/libvtkCommonSystem-%ver.so.%soname
+%_libdir/libvtkCommonSystem-%ver.so.%ver
+
+%files -n libvtkCommonTransforms%ver
+%_libdir/libvtkCommonTransforms-%ver.so.%soname
+%_libdir/libvtkCommonTransforms-%ver.so.%ver
+
+%files -n libvtkDICOM%ver
+%_libdir/libvtkDICOM-%ver.so.%soname
+%_libdir/libvtkDICOM-%ver.so.%ver
+
+%files -n libvtkDICOMParser%ver
+%_libdir/libvtkDICOMParser-%ver.so.%soname
+%_libdir/libvtkDICOMParser-%ver.so.%ver
+
+%files -n libvtkDomainsChemistry%ver
+%_libdir/libvtkDomainsChemistry-%ver.so.%soname
+%_libdir/libvtkDomainsChemistry-%ver.so.%ver
+
+%files -n libvtkDomainsChemistryOpenGL2_%ver
+%_libdir/libvtkDomainsChemistryOpenGL2-%ver.so.%soname
+%_libdir/libvtkDomainsChemistryOpenGL2-%ver.so.%ver
+
+%files -n libvtkDomainsMicroscopy%ver
+%_libdir/libvtkDomainsMicroscopy-%ver.so.%soname
+%_libdir/libvtkDomainsMicroscopy-%ver.so.%ver
+
+%files -n libvtkGeovisCore%ver
+%_libdir/libvtkGeovisCore-%ver.so.%soname
+%_libdir/libvtkGeovisCore-%ver.so.%ver
+
+%files -n libvtkGeovisGDAL%ver
+%_libdir/libvtkGeovisGDAL-%ver.so.%soname
+%_libdir/libvtkGeovisGDAL-%ver.so.%ver
+
+%files -n libvtkIOAMR%ver
+%_libdir/libvtkIOAMR-%ver.so.%soname
+%_libdir/libvtkIOAMR-%ver.so.%ver
+
+%files -n libvtkIOAsynchronous%ver
+%_libdir/libvtkIOAsynchronous-%ver.so.%soname
+%_libdir/libvtkIOAsynchronous-%ver.so.%ver
+
+%files -n libvtkIOCGNSReader%ver
+%_libdir/libvtkIOCGNSReader-%ver.so.%soname
+%_libdir/libvtkIOCGNSReader-%ver.so.%ver
+
+%files -n libvtkIOCONVERGECFD%ver
+%_libdir/libvtkIOCONVERGECFD-%ver.so.%soname
+%_libdir/libvtkIOCONVERGECFD-%ver.so.%ver
+
+%files -n libvtkIOCellGrid%ver
+%_libdir/libvtkIOCellGrid-%ver.so.%soname
+%_libdir/libvtkIOCellGrid-%ver.so.%ver
+
+%files -n libvtkIOCesium3DTiles%ver
+%_libdir/libvtkIOCesium3DTiles-%ver.so.%soname
+%_libdir/libvtkIOCesium3DTiles-%ver.so.%ver
+
+%files -n libvtkIOChemistry%ver
+%_libdir/libvtkIOChemistry-%ver.so.%soname
+%_libdir/libvtkIOChemistry-%ver.so.%ver
+
+%files -n libvtkIOCityGML%ver
+%_libdir/libvtkIOCityGML-%ver.so.%soname
+%_libdir/libvtkIOCityGML-%ver.so.%ver
+
+%files -n libvtkIOCore%ver
+%_libdir/libvtkIOCore-%ver.so.%soname
+%_libdir/libvtkIOCore-%ver.so.%ver
+
+%files -n libvtkIOERF%ver
+%_libdir/libvtkIOERF-%ver.so.%soname
+%_libdir/libvtkIOERF-%ver.so.%ver
+
+%files -n libvtkIOEnSight%ver
+%_libdir/libvtkIOEnSight-%ver.so.%soname
+%_libdir/libvtkIOEnSight-%ver.so.%ver
+
+%files -n libvtkIOEngys%ver
+%_libdir/libvtkIOEngys-%ver.so.%soname
+%_libdir/libvtkIOEngys-%ver.so.%ver
+
+%files -n libvtkIOExodus%ver
+%_libdir/libvtkIOExodus-%ver.so.%soname
+%_libdir/libvtkIOExodus-%ver.so.%ver
+
+%files -n libvtkIOExport%ver
+%_libdir/libvtkIOExport-%ver.so.%soname
+%_libdir/libvtkIOExport-%ver.so.%ver
+
+%files -n libvtkIOExportGL2PS%ver
+%_libdir/libvtkIOExportGL2PS-%ver.so.%soname
+%_libdir/libvtkIOExportGL2PS-%ver.so.%ver
+
+%files -n libvtkIOExportPDF%ver
+%_libdir/libvtkIOExportPDF-%ver.so.%soname
+%_libdir/libvtkIOExportPDF-%ver.so.%ver
+
+%files -n libvtkIOFDS%ver
+%_libdir/libvtkIOFDS-%ver.so.%soname
+%_libdir/libvtkIOFDS-%ver.so.%ver
+
+%files -n libvtkIOFLUENTCFF%ver
+%_libdir/libvtkIOFLUENTCFF-%ver.so.%soname
+%_libdir/libvtkIOFLUENTCFF-%ver.so.%ver
+
+%files -n libvtkIOGDAL%ver
+%_libdir/libvtkIOGDAL-%ver.so.%soname
+%_libdir/libvtkIOGDAL-%ver.so.%ver
+
+%files -n libvtkIOGeometry%ver
+%_libdir/libvtkIOGeometry-%ver.so.%soname
+%_libdir/libvtkIOGeometry-%ver.so.%ver
+
+%files -n libvtkIOHDF%ver
+%_libdir/libvtkIOHDF-%ver.so.%soname
+%_libdir/libvtkIOHDF-%ver.so.%ver
+
+%files -n libvtkIOIOSS%ver
+%_libdir/libvtkIOIOSS-%ver.so.%soname
+%_libdir/libvtkIOIOSS-%ver.so.%ver
+
+%files -n libvtkIOImage%ver
+%_libdir/libvtkIOImage-%ver.so.%soname
+%_libdir/libvtkIOImage-%ver.so.%ver
+
+%files -n libvtkIOImport%ver
+%_libdir/libvtkIOImport-%ver.so.%soname
+%_libdir/libvtkIOImport-%ver.so.%ver
+
+%files -n libvtkIOInfovis%ver
+%_libdir/libvtkIOInfovis-%ver.so.%soname
+%_libdir/libvtkIOInfovis-%ver.so.%ver
+
+%files -n libvtkIOLSDyna%ver
+%_libdir/libvtkIOLSDyna-%ver.so.%soname
+%_libdir/libvtkIOLSDyna-%ver.so.%ver
+
+%files -n libvtkIOLegacy%ver
+%_libdir/libvtkIOLegacy-%ver.so.%soname
+%_libdir/libvtkIOLegacy-%ver.so.%ver
+
+%files -n libvtkIOMINC%ver
+%_libdir/libvtkIOMINC-%ver.so.%soname
+%_libdir/libvtkIOMINC-%ver.so.%ver
+
+%files -n libvtkIOMotionFX%ver
+%_libdir/libvtkIOMotionFX-%ver.so.%soname
+%_libdir/libvtkIOMotionFX-%ver.so.%ver
+
+%files -n libvtkIOMovie%ver
+%_libdir/libvtkIOMovie-%ver.so.%soname
+%_libdir/libvtkIOMovie-%ver.so.%ver
+
+%files -n libvtkIONetCDF%ver
+%_libdir/libvtkIONetCDF-%ver.so.%soname
+%_libdir/libvtkIONetCDF-%ver.so.%ver
+
+%files -n libvtkIOOggTheora%ver
+%_libdir/libvtkIOOggTheora-%ver.so.%soname
+%_libdir/libvtkIOOggTheora-%ver.so.%ver
+
+%files -n libvtkIOPLY%ver
+%_libdir/libvtkIOPLY-%ver.so.%soname
+%_libdir/libvtkIOPLY-%ver.so.%ver
+
+%files -n libvtkIOParallel%ver
+%_libdir/libvtkIOParallel-%ver.so.%soname
+%_libdir/libvtkIOParallel-%ver.so.%ver
+
+%files -n libvtkIOParallelXML%ver
+%_libdir/libvtkIOParallelXML-%ver.so.%soname
+%_libdir/libvtkIOParallelXML-%ver.so.%ver
+
+%files -n libvtkIOSQL%ver
+%_libdir/libvtkIOSQL-%ver.so.%soname
+%_libdir/libvtkIOSQL-%ver.so.%ver
+
+%files -n libvtkIOSegY%ver
+%_libdir/libvtkIOSegY-%ver.so.%soname
+%_libdir/libvtkIOSegY-%ver.so.%ver
+
+%files -n libvtkIOTecplotTable%ver
+%_libdir/libvtkIOTecplotTable-%ver.so.%soname
+%_libdir/libvtkIOTecplotTable-%ver.so.%ver
+
+%files -n libvtkIOVeraOut%ver
+%_libdir/libvtkIOVeraOut-%ver.so.%soname
+%_libdir/libvtkIOVeraOut-%ver.so.%ver
+
+%files -n libvtkIOVideo%ver
+%_libdir/libvtkIOVideo-%ver.so.%soname
+%_libdir/libvtkIOVideo-%ver.so.%ver
+
+%files -n libvtkIOXML%ver
+%_libdir/libvtkIOXML-%ver.so.%soname
+%_libdir/libvtkIOXML-%ver.so.%ver
+
+%files -n libvtkIOXMLParser%ver
+%_libdir/libvtkIOXMLParser-%ver.so.%soname
+%_libdir/libvtkIOXMLParser-%ver.so.%ver
+
+%files -n libvtkImagingColor%ver
+%_libdir/libvtkImagingColor-%ver.so.%soname
+%_libdir/libvtkImagingColor-%ver.so.%ver
+
+%files -n libvtkImagingCore%ver
+%_libdir/libvtkImagingCore-%ver.so.%soname
+%_libdir/libvtkImagingCore-%ver.so.%ver
+
+%files -n libvtkImagingFourier%ver
+%_libdir/libvtkImagingFourier-%ver.so.%soname
+%_libdir/libvtkImagingFourier-%ver.so.%ver
+
+%files -n libvtkImagingGeneral%ver
+%_libdir/libvtkImagingGeneral-%ver.so.%soname
+%_libdir/libvtkImagingGeneral-%ver.so.%ver
+
+%files -n libvtkImagingHybrid%ver
+%_libdir/libvtkImagingHybrid-%ver.so.%soname
+%_libdir/libvtkImagingHybrid-%ver.so.%ver
+
+%files -n libvtkImagingMath%ver
+%_libdir/libvtkImagingMath-%ver.so.%soname
+%_libdir/libvtkImagingMath-%ver.so.%ver
+
+%files -n libvtkImagingMorphological%ver
+%_libdir/libvtkImagingMorphological-%ver.so.%soname
+%_libdir/libvtkImagingMorphological-%ver.so.%ver
+
+%files -n libvtkImagingOpenGL2_%ver
+%_libdir/libvtkImagingOpenGL2-%ver.so.%soname
+%_libdir/libvtkImagingOpenGL2-%ver.so.%ver
+
+%files -n libvtkImagingSources%ver
+%_libdir/libvtkImagingSources-%ver.so.%soname
+%_libdir/libvtkImagingSources-%ver.so.%ver
+
+%files -n libvtkImagingStatistics%ver
+%_libdir/libvtkImagingStatistics-%ver.so.%soname
+%_libdir/libvtkImagingStatistics-%ver.so.%ver
+
+%files -n libvtkImagingStencil%ver
+%_libdir/libvtkImagingStencil-%ver.so.%soname
+%_libdir/libvtkImagingStencil-%ver.so.%ver
+
+%files -n libvtkInfovisBoostGraphAlgorithms%ver
+%_libdir/libvtkInfovisBoostGraphAlgorithms-%ver.so.%soname
+%_libdir/libvtkInfovisBoostGraphAlgorithms-%ver.so.%ver
+
+%files -n libvtkInfovisCore%ver
+%_libdir/libvtkInfovisCore-%ver.so.%soname
+%_libdir/libvtkInfovisCore-%ver.so.%ver
+
+%files -n libvtkInfovisLayout%ver
+%_libdir/libvtkInfovisLayout-%ver.so.%soname
+%_libdir/libvtkInfovisLayout-%ver.so.%ver
+
+%files -n libvtkInteractionImage%ver
+%_libdir/libvtkInteractionImage-%ver.so.%soname
+%_libdir/libvtkInteractionImage-%ver.so.%ver
+
+%files -n libvtkInteractionStyle%ver
+%_libdir/libvtkInteractionStyle-%ver.so.%soname
+%_libdir/libvtkInteractionStyle-%ver.so.%ver
+
+%files -n libvtkInteractionWidgets%ver
+%_libdir/libvtkInteractionWidgets-%ver.so.%soname
+%_libdir/libvtkInteractionWidgets-%ver.so.%ver
+
+%files -n libvtkParallelCore%ver
+%_libdir/libvtkParallelCore-%ver.so.%soname
+%_libdir/libvtkParallelCore-%ver.so.%ver
+
+%files -n libvtkParallelDIY%ver
+%_libdir/libvtkParallelDIY-%ver.so.%soname
+%_libdir/libvtkParallelDIY-%ver.so.%ver
+
+%files -n libvtkTestingCore%ver
+%_libdir/libvtkTestingCore-%ver.so.%soname
+%_libdir/libvtkTestingCore-%ver.so.%ver
+
+%files -n libvtkTestingRendering%ver
+%_libdir/libvtkTestingRendering-%ver.so.%soname
+%_libdir/libvtkTestingRendering-%ver.so.%ver
+
+%files -n libvtkViewsContext2D%ver
+%_libdir/libvtkViewsContext2D-%ver.so.%soname
+%_libdir/libvtkViewsContext2D-%ver.so.%ver
+
+%files -n libvtkViewsCore%ver
+%_libdir/libvtkViewsCore-%ver.so.%soname
+%_libdir/libvtkViewsCore-%ver.so.%ver
+
+%files -n libvtkViewsInfovis%ver
+%_libdir/libvtkViewsInfovis-%ver.so.%soname
+%_libdir/libvtkViewsInfovis-%ver.so.%ver
+
+%files -n libvtkWebCore%ver
+%_libdir/libvtkWebCore-%ver.so.%soname
+%_libdir/libvtkWebCore-%ver.so.%ver
+
+%files -n libvtkWebGLExporter%ver
+%_libdir/libvtkWebGLExporter-%ver.so.%soname
+%_libdir/libvtkWebGLExporter-%ver.so.%ver
+
+%files -n libvtkWrappingTools%ver
+%_libdir/libvtkWrappingTools-%ver.so.%soname
+%_libdir/libvtkWrappingTools-%ver.so.%ver
+
+%files -n libvtkexodusII%ver
+%_libdir/libvtkexodusII-%ver.so.%soname
+%_libdir/libvtkexodusII-%ver.so.%ver
+
+%files -n libvtkglad%ver
+%_libdir/libvtkglad-%ver.so.%soname
+%_libdir/libvtkglad-%ver.so.%ver
+
+%files -n libvtkioss%ver
+%_libdir/libvtkioss-%ver.so.%soname
+%_libdir/libvtkioss-%ver.so.%ver
+
+%files -n libvtkkissfft%ver
+%_libdir/libvtkkissfft-%ver.so.%soname
+%_libdir/libvtkkissfft-%ver.so.%ver
+
+%files -n libvtkloguru%ver
+%_libdir/libvtkloguru-%ver.so.%soname
+%_libdir/libvtkloguru-%ver.so.%ver
+
+%files -n libvtkmetaio%ver
+%_libdir/libvtkmetaio-%ver.so.%soname
+%_libdir/libvtkmetaio-%ver.so.%ver
+
+%files -n libvtksys%ver
+%_libdir/libvtksys-%ver.so.%soname
+%_libdir/libvtksys-%ver.so.%ver
+
+%files -n libvtktoken%ver
+%_libdir/libvtktoken-%ver.so.%soname
+%_libdir/libvtktoken-%ver.so.%ver
+
+%files -n libvtkverdict%ver
+%_libdir/libvtkverdict-%ver.so.%soname
+%_libdir/libvtkverdict-%ver.so.%ver
+
+%files -n libvtkfilters%ver
+%_libdir/libvtkFilters*-%ver.so.%soname
+%_libdir/libvtkFilters*-%ver.so.%ver
+%exclude %_libdir/libvtkFiltersPython*-%ver.so.%soname
+%exclude %_libdir/libvtkFiltersPython*-%ver.so.%ver
+
+%files -n libvtkrendering%ver
+%exclude %_libdir/libvtkRenderingQt-%ver.so.%soname
+%exclude %_libdir/libvtkRenderingQt-%ver.so.%ver
+%_libdir/libvtkRendering*-%ver.so.%soname
+%_libdir/libvtkRendering*-%ver.so.%ver
+
+%files -n libvtk-devel
 %_libdir/*.so
-%_includedir/%name-%ver
-%_libdir/cmake/%name-%ver
-%_libdir/%name-%ver
+%_includedir/vtk-%ver
+%_libdir/cmake/vtk-%ver
+%_libdir/vtk-%ver
 
 %files doc
-%_docdir/%name-%ver
+%_docdir/vtk-%ver
 
 %files examples
 %doc Examples
@@ -414,29 +1525,39 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %_bindir/*python*
 %_bindir/*Python*
 
-%files -n lib%name%ver-python3
-%_libdir/libvtk*Python*-%ver.so.*
+%files -n libvtk%ver-python3
+%_libdir/libvtk*Python*-%ver.so.%soname
+%_libdir/libvtk*Python*-%ver.so.%ver
 
-%files -n python3-module-%name
+%files -n python3-module-vtk
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/__pycache__
 %exclude %python3_sitelibdir/vtkmodules/test
 
-%files -n python3-module-%name-tests
+%files -n python3-module-vtk-tests
 %python3_sitelibdir/vtkmodules/test
 
 %ifnarch %arm
 %files qt5
 %_qt5_qmldir/VTK.%ver
-%_libdir/libvtkGUISupportQtQuick-%ver.so.*
-%_libdir/libvtkGUISupportQtSQL-%ver.so.*
-%_libdir/libvtkGUISupportQt-%ver.so.*
-%_libdir/libvtkRenderingQt-%ver.so.*
-%_libdir/libvtkViewsQt-%ver.so.*
+%_libdir/libvtkGUISupportQtQuick-%ver.so.%soname
+%_libdir/libvtkGUISupportQtQuick-%ver.so.%ver
+%_libdir/libvtkGUISupportQtSQL-%ver.so.%soname
+%_libdir/libvtkGUISupportQtSQL-%ver.so.%ver
+%_libdir/libvtkGUISupportQt-%ver.so.%soname
+%_libdir/libvtkGUISupportQt-%ver.so.%ver
+%_libdir/libvtkRenderingQt-%ver.so.%soname
+%_libdir/libvtkRenderingQt-%ver.so.%ver
+%_libdir/libvtkViewsQt-%ver.so.%soname
+%_libdir/libvtkViewsQt-%ver.so.%ver
 
 %endif
 
 %changelog
+* Fri Mar 07 2025 Constantin Sunzow <protvin@altlinux.org> 9.4.1-alt2
+- Add macros subpackage.
+- Update summaries.
+
 * Wed Feb 19 2025 Constantin Sunzow <protvin@altlinux.org> 9.4.1-alt1
 - Split libvtk to avoid debuginfo cpio size cap on e2k (thx cas@).
 - Repackage Qt library files (ALT #52634).
