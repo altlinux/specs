@@ -1,17 +1,19 @@
 Name: libmad
-Version: 0.15.1b
-Release: alt9
+Version: 0.16.4
+Release: alt1
 
 Summary: High quality MPEG audio decoder library
-License: GPL
+License: GPLv2
 Group: Sound
-Url: http://mad.sourceforge.net/
+Url: https://codeberg.org/tenacityteam/libmad
 
-Source: libmad-%version.tar.gz
-Patch1: libmad-0.15.1b-speedup.patch
-Patch2: libmad-0.15.0b-alt-pkgconfig.patch
-Patch3: libmad-0.15.1b-no-force-mem-gcc43.patch
-Patch4: libmad-0.15.1b-alt-MIPS.patch
+Source: libmad-%version.tar
+
+BuildRequires: cmake gcc-c++
+
+%package devel
+Summary: Development files for MAD
+Group: Development/C
 
 %description
 MAD is a high-quality MPEG audio decoder. It currently supports MPEG-1
@@ -19,52 +21,34 @@ and the MPEG-2 extension to Lower Sampling Frequencies, as well as the
 so-called MPEG 2.5 format. All three audio layers (Layer I, Layer II,
 and Layer III a.k.a. MP3) are fully implemented.
 
-%package devel
-Summary: Development files for MAD
-Group: Development/C
-Requires: %name = %version-%release
-
 %description devel
 This package contains development files required for packaging
 MAD-based software.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p2
-%patch4 -p1
-%ifarch %e2k
-# as of lcc 1.21.24/1.23.12
-sed -i 's,-fcse-follow-jumps,,;s,-fcse-skip-blocks,,;s,-fregmove,,' configure.ac
-%endif
 
 %build
-touch AUTHORS NEWS ChangeLog
-%autoreconf
-%remove_optflags -mthumb
-%configure \
-	--enable-accuracy \
-	--disable-static
-
-# SMP-incompatiple build 
-%make_build || %make
+%cmake
+%cmake_build
 
 %install
-%makeinstall
-# audacity can't find it otherwise
-ln -s libmad.pc %buildroot%_pkgconfigdir/mad.pc
+%cmakeinstall_std
 
 %files
-%doc CHANGES README CREDITS COPYRIGHT
+%doc CHANGES CREDITS COPYRIGHT README*
 %_libdir/libmad.so.*
 
 %files devel
 %_libdir/libmad.so
+%_libdir/cmake/mad
 %_pkgconfigdir/*
 %_includedir/mad.h
 
 %changelog
+* Tue Mar 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.4-alt1
+- 0.16.4 released
+
 * Wed Dec 26 2018 Michael Shigorin <mike@altlinux.org> 0.15.1b-alt9
 - adapt for e2kv4, reduce option omissions
 
