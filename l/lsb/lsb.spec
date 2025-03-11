@@ -1,4 +1,6 @@
 # All LSB releases starting with version 3.0 are compatible with previous releases
+%filter_from_requires \|^%_libdir/ld-linux-*|d
+
 %define compat_version 3.0
 
 %ifarch %ix86
@@ -36,7 +38,7 @@
 
 Name: lsb
 Version: 5.0
-Release: alt4
+Release: alt5
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -371,15 +373,6 @@ Requires: libpangocairo-1.0.so.0%lib_suffix
 Requires: libpangoft2-1.0.so.0%lib_suffix
 Requires: libpangoxft-1.0.so.0%lib_suffix
 
-# Qt
-Requires: libQtCore.so.4%lib_suffix
-Requires: libQtGui.so.4%lib_suffix
-Requires: libQtNetwork.so.4%lib_suffix
-Requires: libQtOpenGL.so.4%lib_suffix
-Requires: libQtSql.so.4%lib_suffix
-Requires: libQtSvg.so.4%lib_suffix
-Requires: libQtXml.so.4%lib_suffix
-
 # ALSA
 Requires: libasound.so.2%lib_suffix
 
@@ -681,6 +674,10 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Mon Mar 10 2025 Constantin Sunzow <protvin@altlinux.org> 5.0-alt5
+- Exclude usr path for ld-linux from requires.
+- Removed obsolescent dependencies on Qt 4.
+
 * Mon Mar 18 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 5.0-alt4
 - Support LoongArch architecture (lp64d ABI).
 

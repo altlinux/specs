@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -92,7 +92,6 @@ Requires: imagination
 %endif
 Requires: connector
 Requires: fonts-otf-mozilla-fira
-Requires: itest
 Requires: kumir2
 # Big educational software
 %if_with fortran
@@ -494,7 +493,6 @@ Group: Education
 %ifnarch armh
 Requires: veyon
 %endif
-Requires: itest-server
 Requires: ansible
 %ifnarch %e2k armh
 Requires: semaphore
@@ -634,6 +632,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Mon Mar 10 2025 Constantin Sunzow <protvin@altlinux.org> 1.7.4-alt1
+- Remove unsupported itest.
+
 * Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.3-alt1
 - Replace unsupported fbreader by calibre.
 - Replace unsupported goldendict by goldendict-ng.
