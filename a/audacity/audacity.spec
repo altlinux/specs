@@ -16,8 +16,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.1
-Release: alt2.1
+Version: 3.7.2
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -267,6 +267,9 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Mon Mar 10 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.2-alt1
+- 3.7.2
+
 * Tue Jan 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.7.1-alt2.1
 - Fixed build for Elbrus
 
