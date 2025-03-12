@@ -5,7 +5,7 @@
 
 %define pre %nil
 Name: libsail
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Squirrel Abstract Image Library
@@ -67,6 +67,9 @@ mv %buildroot/usr/lib/cmake %buildroot%_libdir/
 %_includedir/sail/
 
 %changelog
+* Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9.8-alt1
+- new version 0.9.8 (with rpmrb script)
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
 - new version 0.9.7 (with rpmrb script)
 
