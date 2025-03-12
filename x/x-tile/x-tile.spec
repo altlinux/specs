@@ -2,7 +2,7 @@
 
 Name: x-tile
 Version: 3.3
-Release: alt1
+Release: alt2
 
 Summary: Tile selected windows in different ways
 License: GPL-2.0
@@ -61,5 +61,8 @@ install -Dpm 0755 %name  %buildroot/%_bindir/%name
 %_datadir/icons/hicolor/*/apps/%{name}.*
 
 %changelog
+* Wed Mar 12 2025 Nikolay Strelkov <snk@altlinux.org> 3.3-alt2
+- Added support of Ayatana Indicators
+
 * Wed Mar 12 2025 Nikolay Strelkov <snk@altlinux.org> 3.3-alt1
 - Initial build for Sisyphus
