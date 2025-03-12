@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20250211
+Version: 20250311
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -78,7 +78,7 @@ awk /mellanox/ RS=^-{74} WHENCE > LICENSE.Mellanox
 %install
 DESTDIR=%buildroot FIRMWAREDIR=lib/firmware %make_build install-xz
 du -shc %buildroot/lib/firmware
-hardlink -cv %buildroot/lib/firmware
+hardlink -y memcmp -cv %buildroot/lib/firmware
 
 ## *TODO* check these too
 rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
@@ -118,6 +118,9 @@ grep -c Mellanox LICENSE.Mellanox
 /lib/firmware/mellanox
 
 %changelog
+* Wed Mar 12 2025 Vitaly Chikunov <vt@altlinux.org> 20250311-alt1
+- Update to 20250311 (2025-03-11).
+
 * Thu Feb 13 2025 Vitaly Chikunov <vt@altlinux.org> 20250211-alt1
 - Update to 20250211 (2025-02-10).
 
