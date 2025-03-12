@@ -1,8 +1,8 @@
 %define        gemname twitter-text
 
 Name:          gem-twitter-text
-Version:       3.1.0.1
-Release:       alt1.1
+Version:       3.1.0.7
+Release:       alt1
 Summary:       Twitter Text Libraries
 License:       Apache 2.0
 Group:         Development/Ruby
@@ -38,9 +38,9 @@ Requires:      gem(idn-ruby) >= 0
 Conflicts:     gem(unf) >= 1
 Obsoletes:     twitter-text < %EVR
 Provides:      twitter-text = %EVR
-Provides:      gem(twitter-text) = 3.1.0.1
+Provides:      gem(twitter-text) = 3.1.0.7
 
-%ruby_use_gem_version twitter-text:3.1.0.1
+%ruby_on_build_rake_tasks prebuild
 
 %description
 This repo is a collection of libraries and conformance tests to standardize
@@ -51,14 +51,14 @@ and identifying and linking any url, @username, #hashtag, or $cashtag.
 
 
 %package       -n gem-twitter-text-doc
-Version:       3.1.0.1
+Version:       3.1.0.7
 Release:       alt1.1
 Summary:       Twitter Text Libraries documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета twitter-text
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(twitter-text) = 3.1.0.1
+Requires:      gem(twitter-text) = 3.1.0.7
 
 %description   -n gem-twitter-text-doc
 Twitter Text Libraries documentation files.
@@ -74,14 +74,14 @@ and identifying and linking any url, @username, #hashtag, or $cashtag.
 
 
 %package       -n gem-twitter-text-devel
-Version:       3.1.0.1
+Version:       3.1.0.7
 Release:       alt1.1
 Summary:       Twitter Text Libraries development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета twitter-text
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(twitter-text) = 3.1.0.1
+Requires:      gem(twitter-text) = 3.1.0.7
 Requires:      gem(test-unit) >= 0
 Requires:      gem(multi_json) >= 1.3
 Requires:      gem(nokogiri) >= 1.10.9
@@ -132,6 +132,9 @@ and identifying and linking any url, @username, #hashtag, or $cashtag.
 
 
 %changelog
+* Wed Mar 12 2025 Pavel Skrylev <majioa@altlinux.org> 3.1.0.7-alt1
+- ^ 3.1.0[1] -> 3.1.0.7
+
 * Thu Dec 07 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.0.1-alt1.1
 - ! fixed spec format
 
