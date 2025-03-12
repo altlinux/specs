@@ -6,7 +6,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 33.6.1
 
-Release: alt0_1_RC3
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -508,6 +508,9 @@ install -D -m 644 %SOURCE10 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Tue Mar 11 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.6.1-alt1
+- Version 33.6.1 (CVE-2025-1934)
+
 * Mon Mar 10 2025 Hihin Ruslan <ruslandh@altlinux.ru> 2:33.6.1-alt0_1_RC3
 - Version 33.6.1-RC3
 
