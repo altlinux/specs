@@ -28,7 +28,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt8
+Release: alt9
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -513,6 +513,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Mar 12 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt9
+- acutally apply efi fix from the previous release
+
 * Tue Mar 11 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt8
 - efi: fix grub-install generated corrupt cfg file on systems using luks
 - fix Russian translations by disabling po file rebuild
