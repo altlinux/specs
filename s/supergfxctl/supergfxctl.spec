@@ -1,5 +1,5 @@
 Name: supergfxctl
-Version: 5.2.4
+Version: 5.2.7
 Release: alt1
 
 Summary: Super graphics mode controller
@@ -58,6 +58,9 @@ install -D -m 0644 README.md %buildroot%_docdir/%name/README.md
 %_docdir/%name/*
 
 %changelog
+* Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 5.2.7-alt1
+- new version 5.2.7 (with rpmrb script)
+
 * Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 5.2.4-alt1
 - new version 5.2.4 (with rpmrb script)
 
