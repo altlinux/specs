@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.5.13
+Version: 0.6.0
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -46,7 +46,7 @@ BuildRequires: curl
 
 %description
 %summary.
-Run DeepSeek-R1, Gemma 2, Llama 3.3, Mistral, Phi-4, Qwen 2.5, and other
+Run DeepSeek-R1, Gemma 3, Llama 3.3, Mistral, Phi-4, Qwen 2.5, and other
 models, locally.
 
 This is a meta-package.
@@ -148,6 +148,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Wed Mar 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt1
+- Update to v0.6.0 (2025-03-11).
+
 * Fri Mar 07 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.13-alt1
 - Update to v0.5.13 (2025-03-03).
 - Enable NVIDIA GPU runner (ollama-cuda).
