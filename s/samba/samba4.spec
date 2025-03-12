@@ -122,7 +122,7 @@
 
 Name:    samba
 Version: 4.20.7
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1271,6 +1271,25 @@ done
 touch %buildroot%python3_sitelibdir/samba/gp/__init__.py
 touch %buildroot%python3_sitelibdir/samba/gp/util/__init__.py
 
+# Generate .mo files for localization
+pushd %_builddir/%rname-%version/source3/locale/
+
+for domain in */; do
+    pushd "$domain"
+
+    for i in *.po; do
+       lang="$(echo "$i" | cut -d '.' -f 1)"
+       domain_name="$(echo "$domain" | cut -d '/' -f 1)"
+
+       mkdir -p "%buildroot%_datadir/locale/${lang}/LC_MESSAGES/"
+       msgfmt --output-file="%buildroot%_datadir/locale/${lang}/LC_MESSAGES/${domain_name}.mo" "%_builddir/%rname-%version/source3/locale/${domain}${i}"
+    done
+
+    popd
+done
+
+popd
+
 %find_lang pam_winbind
 %find_lang net
 
@@ -2079,7 +2098,7 @@ control role-sambashare enabled
 %_man8dir/idmap_*.8*
 %endif
 
-%files winbind -f pam_winbind.lang
+%files winbind
 %_unitdir/winbind.service
 %attr(755,root,root) %_initrddir/winbind
 %_sysconfdir/NetworkManager/dispatcher.d/30-winbind
@@ -2102,7 +2121,7 @@ control role-sambashare enabled
 %_man1dir/wbinfo.1*
 %endif
 
-%files winbind-clients
+%files winbind-clients -f pam_winbind.lang
 %_samba_libdir/libnss_winbind.so*
 %_samba_libdir/libnss_wins.so*
 /%_lib/security/pam_winbind.so
@@ -2232,6 +2251,14 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed Mar 12 2025 Andrey Limachko <liannnix@altlinux.org> 4.20.7-alt2
+- s3:locale:pam_winbind: Update Russian translation (thx Alevtina Karashokova).
+- s3-waf: Enable build of MO files for localization (thx Ivan Korytov).
+- s3:utils: Remove 'sss' idmap backend warning from testparm.
+- Fix missing icuuc in icu-libs env.
+- Combine ICU libraries icu-i18n and icu-uc into a single dependency (thx Earl Chew).
+- s4:kdc: Allow referral policy for cross-realm krb-tgt tickets (thx Ivan Volchenko).
+
 * Mon Jan 27 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.7-alt1
 - Update to maintenance release of Samba 4.20
 - Major fixes from upstream (Samba#15780, Samba#15771, Samba#15765, Samba#15778):
