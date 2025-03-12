@@ -7,8 +7,8 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 24.12.2
-Release: alt2
+Version: 24.12.3
+Release: alt1
 %K6init
 
 Group: Communications
@@ -147,6 +147,9 @@ done
 %_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt2
 - fix requries
 

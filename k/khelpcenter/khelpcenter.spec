@@ -1,8 +1,8 @@
 %define rname khelpcenter
 
 Name: %rname
-Version: 24.12.2
-Release: alt2
+Version: 24.12.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -74,6 +74,9 @@ fi
 
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt2
 - allow to run from root
 

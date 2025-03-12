@@ -4,7 +4,7 @@
 %define libaudiotubecore libaudiotubecore%sover
 
 Name: %rname
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -14,6 +14,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: qt6-multimedia qt6-imageformats
+# TESTED_YTMUSICAPI_VERSION
 Requires: python3(ytmusicapi) python3(yt_dlp)
 Requires: kf6-kirigami-addons
 Provides: kde5-audiotube = %EVR
@@ -64,6 +65,9 @@ mkdir -p %buildroot/%_K6data/audiotube/
 
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

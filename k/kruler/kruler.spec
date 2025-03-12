@@ -1,7 +1,7 @@
 %define rname kruler
 
 Name: %rname
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -47,6 +47,9 @@ BuildRequires: kf6-kcrash-devel
 
 
 %changelog
+* Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Tue Feb 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
