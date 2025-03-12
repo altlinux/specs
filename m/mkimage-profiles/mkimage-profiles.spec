@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,11 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Wed Mar 12 2025 Anton Midyukov <antohami@altlinux.org> 1.7.5-alt1
+- Refactoring for fix enable unicode support in console of installer
+- Remove +systemd-optimal everything
+- other improvements
+
 * Sun Mar 02 2025 Anton Midyukov <antohami@altlinux.org> 1.7.4-alt1
 - live: do'nt add fonts in use/live/x11 (Closes: 33530)
 - live: do'nt enable EFI support in use/live/x11
