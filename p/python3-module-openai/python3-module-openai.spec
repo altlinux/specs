@@ -7,7 +7,7 @@
 %def_without check
 
 Name: python3-module-%pypi_nname
-Version: 1.65.5
+Version: 1.66.2
 Release: alt1
 
 Summary: The official Python library for the OpenAI API
@@ -62,6 +62,9 @@ offers both synchronous and asynchronous clients powered by httpx.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 12 2025 Anton Zhukharev <ancieg@altlinux.org> 1.66.2-alt1
+- Updated to 1.66.2.
+
 * Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1.65.5-alt1
 - Updated to 1.65.5.
 
