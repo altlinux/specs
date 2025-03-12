@@ -3,11 +3,12 @@
 
 Name: adguardhome
 Version: 0.108.0
-Release: alt1.beta60
+Release: alt1.beta64
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
-Url: https://github.com/AdguardTeam/AdGuardHome
+Url: https://adguard.com/ru/adguard-home/overview.html
+VCS: https://github.com/AdguardTeam/AdGuardHome
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -47,10 +48,10 @@ npm --prefix client run build-prod
 # build bin
 %golang_prepare
 cd .gopath/src/%import_path
-go build --ldflags "-w \
+go build --ldflags "\
          -X %import_path/internal/version.version=%version \
          -X %import_path/internal/version.channel=release" \
-         --race=0 --tags= --trimpath -o=%name -v=0 -x=0
+         --race=0 --tags= -o=%name -v=0 -x=0
 
 %install
 mkdir -p %buildroot%_bindir \
@@ -74,6 +75,9 @@ touch %buildroot%_sysconfdir/%name.yaml
 %ghost %config(noreplace) %_sysconfdir/%name.yaml
 
 %changelog
+* Tue Mar 11 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta64
+- Updated to version 0.108.0-b.64.
+
 * Mon Nov 18 2024 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0-alt1.beta60
 - Updated to beta version 0.108.0-b.60 (Fixes: CVE-2022-32175).
 
