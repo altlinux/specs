@@ -14,7 +14,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.8.0.1
-Release: alt3
+Release: alt4
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -113,7 +113,7 @@ BuildConflicts: gem(highline) >= 4
 BuildConflicts: gem(augeas) >= 1
 BuildConflicts: gem(git) >= 3
 BuildConflicts: gem(faraday_middleware) >= 1.3
-BuildConflicts: gem(activesupport) >= 7
+BuildConflicts: gem(activesupport) >= 8
 BuildConflicts: gem(i18n) >= 2
 BuildConflicts: gem(ipaddress) >= 0.9
 BuildConflicts: gem(vsphere-automation-cis) >= 0.5
@@ -136,7 +136,7 @@ BuildConflicts: gem(sinatra) >= 2
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
+%ruby_use_gem_dependency activesupport >= 7.1.5.1,activesupport < 8
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %_libexecdir/one/sunstone/public/bower_components/**/*
@@ -243,7 +243,7 @@ Conflicts: gem(highline) >= 4
 Conflicts: gem(augeas) >= 1
 Conflicts: gem(git) >= 3
 Conflicts: gem(faraday_middleware) >= 1.3
-Conflicts: gem(activesupport) >= 7
+Conflicts: gem(activesupport) >= 8
 Conflicts: gem(i18n) >= 2
 Conflicts: gem(ipaddress) >= 0.9
 Conflicts: gem(vsphere-automation-cis) >= 0.5
@@ -1144,6 +1144,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Thu Mar 13 2025 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt4
+- use activesupport 7.x
+
 * Mon Nov 25 2024 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt3
 - fix requires (ALT #51726)
 
