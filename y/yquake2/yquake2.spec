@@ -1,9 +1,9 @@
 %define quake2_ver 8.41
-%define ref_vk_ver 1.0.8
+%define ref_vk_ver 1.0.9
 
 Name: yquake2
 Version: %quake2_ver
-Release: alt1
+Release: alt2
 License: GPLv2 AND Info-ZIP AND MIT
 Group: Games/Other
 Summary: Yamagi Quake II is an alternative client for id Softwares Quake II
@@ -56,6 +56,9 @@ ln -sf %_libdir/%name/quake2 %buildroot%_gamesbindir/quake2
 %_gamesbindir/q2ded
 
 %changelog
+* Tue Mar 11 2025 L.A. Kostis <lakostis@altlinux.ru> 8.41-alt2
+- ref_vk: update to 1.0.9.
+
 * Mon Feb 10 2025 L.A. Kostis <lakostis@altlinux.ru> 8.41-alt1
 - Initial build for ALTLinux.
 
