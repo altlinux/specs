@@ -4,17 +4,17 @@
 %define _runtimedir /run
 %def_enable prebuilded_frontend
 
-Name:		grafana
-Version:	11.2.2
-Release:	alt2
-Summary:	Metrics dashboard and graph editor
+Name: grafana
+Version: 11.5.2
+Release: alt1
+Summary: Metrics dashboard and graph editor
 
-Group:		Development/Other
-License:	AGPL-3.0-only AND Apache-2.0
-URL:		https://grafana.com
+Group: Development/Other
+License: AGPL-3.0-only AND Apache-2.0
+Url: https://grafana.com
 
 Source: %name-%version.tar
-Patch: %name-%version.patch
+# Patch: %name-%version.patch
 
 Source11: %name-cli
 Source12: %name-server
@@ -56,11 +56,10 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 # $ git add -f vendor
 # $ git commit -n --no-post-rewrite -m "update go modules by go mod vendor"
 
-%setup -q
-%patch -p1
+%setup
+# %patch -p1
 
 %build
-
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -172,7 +171,7 @@ install -p -D -m 644 %SOURCE17 %buildroot%_tmpfilesdir/%name.conf
 if [ "$1" = 1 ] && [ ! -f %_sharedstatedir/%name/grafana.db ]; then
     touch %_sharedstatedir/%name/grafana.db
 fi
- 
+
 # apply secure permissions to grafana.db if it exists
 # (may not exist on upgrades, because users can choose between sqlite/mysql/postgres)
 if [ -f %_sharedstatedir/%name/grafana.db ]; then
@@ -182,7 +181,6 @@ fi
 
 %preun
 %preun_service %name-server
-
 %files
 %doc CHANGELOG.md LICENSE README.md
 %_bindir/%name
@@ -209,6 +207,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Mon Mar 10 2025 Artyom Sinyugin <writers@altlinux.org> 11.5.2-alt1
+- 11.5.2
+
 * Tue Oct 22 2024 Alexey Shabalin <shaba@altlinux.org> 11.2.2-alt2
 - v11.2.2+security-01
 - Fix panic with golang 1.23.
