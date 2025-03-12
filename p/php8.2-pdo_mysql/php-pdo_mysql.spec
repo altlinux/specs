@@ -17,7 +17,9 @@ Source2:	php-%php_extension-params.sh
 
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires: gcc-c++
+BuildRequires: re2c
 BuildRequires: php-devel = %php_version
+BuildRequires: php%_php_suffix-pdo-devel = %php_version
 Requires: php%_php_suffix-mysqlnd
 Conflicts: php%_php_suffix-mysqlnd-%php_extension
 
@@ -53,7 +55,7 @@ subst 's@php/ext@php/%_php_version/ext@g' configure
 	--with-pdo-mysql=mysqlnd \
 	#
 
-%php_make
+%php_make RE2C=/usr/bin/re2c
 
 %install
 %php_make_install

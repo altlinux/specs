@@ -13,6 +13,7 @@ VCS: 		https://github.com/Imagick/imagick
 Source0:	php-%php_extension-%version.tar
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
+Patch1:         php-imagick-3.7.0-fix-php-8.4-compat-github-pr699.patch
 
 BuildRequires(pre): rpm-build-php8.2-version
 BuildRequires: php-devel = %php_version
@@ -24,6 +25,7 @@ using the ImageMagick API.
 
 %prep
 %setup -n php-%php_extension-%version
+%patch1 -p1
 
 %build
 phpize
