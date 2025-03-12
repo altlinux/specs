@@ -13,6 +13,8 @@
     %define ghc_build_version 9.2.8
 %endif
 
+%global build_flavour perf+debug_info
+
 %global elf_methods unresolved=relaxed
 %ifarch i586
     %global elf_methods %{?elf_methods} textrel=relaxed
@@ -23,7 +25,7 @@
 
 Name: ghc%ghc_major
 Version: %ghc_version
-Release: alt2
+Release: alt3
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -229,7 +231,10 @@ export LD=ld.gold
 # So you'll have to trust that I'm doing it right
 ./boot
 %configure --with-system-libffi --disable-unregisterised --disable-ld-override
-_build/bin/hadrian %_smp_mflags -V --docs=no-sphinx-pdfs --flavour=perf+debug_info binary-dist-dir
+# Workaround for the error 'Platform constants not available'
+_build/bin/hadrian %_smp_mflags -V --docs=no-sphinx-pdfs --flavour=%build_flavour _build/stage1/lib/DerivedConstants.h
+
+_build/bin/hadrian %_smp_mflags -V --docs=no-sphinx-pdfs --flavour=%build_flavour binary-dist-dir
 
 %install
 # Installing using hadrian
@@ -368,6 +373,9 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %files devel
 
 %changelog
+* Wed Mar 12 2025 Leonid Znamenok <respublica@altlinux.org> 9.2.8-alt3
+- Workaround for the error 'Platform constants not available'
+
 * Fri Mar 7 2025 Leonid Znamenok <respublica@altlinux.org> 9.2.8-alt2
 - Rebuild with ghc 9.2
 - Changed build system to hadrian
