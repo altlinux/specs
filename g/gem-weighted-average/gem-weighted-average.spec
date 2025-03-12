@@ -5,7 +5,7 @@
 %define        gemname weighted_average
 
 Name:          gem-weighted-average
-Version:       2.0.2.3
+Version:       2.0.2.4
 Release:       alt1
 Summary:       Perform weighted averages. Rails 3 only
 License:       MIT
@@ -34,7 +34,7 @@ BuildConflicts: gem(activerecord) >= 9.0
 Requires:      gem(activerecord) >= 6.0
 Conflicts:     gem(activerecord) >= 9.0
 Provides:      weighted_average = %EVR
-Provides:      gem(weighted_average) = 2.0.2.3
+Provides:      gem(weighted_average) = 2.0.2.4
 
 %description
 Perform weighted averages, even across associations. Rails 3 only because it
@@ -43,14 +43,14 @@ uses ARel.
 
 %if_enabled    doc
 %package       -n gem-weighted-average-doc
-Version:       2.0.2.3
+Version:       2.0.2.4
 Release:       alt1
 Summary:       Perform weighted averages. Rails 3 only documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета weighted_average
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(weighted_average) = 2.0.2.3
+Requires:      gem(weighted_average) = 2.0.2.4
 
 %description   -n gem-weighted-average-doc
 Perform weighted averages. Rails 3 only documentation files.
@@ -65,14 +65,14 @@ uses ARel.
 
 %if_enabled    devel
 %package       -n gem-weighted-average-devel
-Version:       2.0.2.3
+Version:       2.0.2.4
 Release:       alt1
 Summary:       Perform weighted averages. Rails 3 only development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета weighted_average
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(weighted_average) = 2.0.2.3
+Requires:      gem(weighted_average) = 2.0.2.4
 Requires:      gem(cohort_analysis) >= 0.2.1
 Requires:      gem(minitest) >= 0
 Requires:      gem(mysql2) >= 0
@@ -121,6 +121,10 @@ uses ARel.
 
 
 %changelog
+* Wed Mar 12 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.2.4-alt1
+- + explicit require for active_support for suppress undefined methods
+  (ALT #53415)
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.2.3-alt1
 - ^ 2.0.2 -> 2.0.2p3
 
