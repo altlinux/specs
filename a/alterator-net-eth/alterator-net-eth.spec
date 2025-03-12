@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.9
+Version: 5.2.10
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,10 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 5.2.10-alt1
+- don't use combobox in advanced dialog
+- rearrange advanced dialog widgets
+
 * Wed May 15 2024 Anton Midyukov <antohami@altlinux.org> 5.2.9-alt1
 - backend: Fix read computer name, when alterator-net-domain is installed
   (Closes: 42690)
