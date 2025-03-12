@@ -5,8 +5,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.47b0
-Release: alt1.1
+Version: 0.51b0
+Release: alt1
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -16,7 +16,6 @@ URL:     https://github.com/open-telemetry/opentelemetry-python-contrib
 Packager: Alexander Burmatov <thatman@altlinux.org>
 
 Source: %pypi_name-%version.tar
-Patch: opentelemetry-contrib-alt-fix-mock-teardown.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -80,7 +79,6 @@ Starlette, FastAPI, etc.) to track requests timing through OpenTelemetry.
 
 %prep
 %setup -n %pypi_name-%version
-%autopatch -p1
 
 %build
 pushd ./%mod_name-instrumentation
@@ -180,7 +178,7 @@ done
 %files -n python3-module-%mod_name-propagator-aws-xray
 %doc propagator/%mod_name-propagator-aws-xray/{LICENSE,README.rst}
 %python3_sitelibdir/%mod_name/propagators/aws
-%python3_sitelibdir/%{mod_name}_propagator_aws_xray-1.0.1.dist-info/
+%python3_sitelibdir/%{mod_name}_propagator_aws_xray-1.1.0.dev0.dist-info/
 
 %files -n python3-module-%mod_name-propagator-ot-trace
 %doc propagator/%mod_name-propagator-ot-trace/README.rst LICENSE
@@ -193,6 +191,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-util-http}
 
 %changelog
+* Fri Mar 07 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.51b0-alt1
+- NMU: New version.
+
 * Fri Jan 24 2025 Ivan A. Melnikov <iv@altlinux.org> 0.47b0-alt1.1
 - NMU: fix FTBFS.
 
