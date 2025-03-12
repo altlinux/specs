@@ -2,7 +2,7 @@
 
 Name: SDL3
 Version: 3.2.8
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -61,6 +61,7 @@ multiple platforms.
 Summary: Libraries, includes and more to develop SDL applications.
 Group: Development/C
 Conflicts: rpm-build < 4.0.4-alt100.96
+Conflicts: libSDL-devel
 
 %description -n lib%name-devel
 This is the Simple DirectMedia Layer, a generic API that provides low
@@ -95,6 +96,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Wed Mar 12 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.8-alt1.1
+- Add conflicts on devel package (ALT #53411)
+
 * Wed Mar 05 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.8-alt1
 - New version 3.2.8.
 
