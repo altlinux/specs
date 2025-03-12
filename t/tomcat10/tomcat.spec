@@ -75,7 +75,7 @@ BuildRequires: jpackage-17-compat
 Name: tomcat10
 Epoch: 1
 Version: %major_version.%minor_version.%micro_version
-Release: alt2_jvm17
+Release: alt3_jvm17
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 
 License: Apache-2.0
@@ -131,6 +131,9 @@ Patch33: tomcat-8.0.46-alt-tomcat-jasper.pom.patch
 Source45: tomcat.init
 Source46: tomcat-sysv.wrapper
 
+# Filter symlink to init-functions from lsb-init
+%filter_from_requires s;/usr/lib/lsb/init-functions;/lib/lsb/init-functions;
+
 %description
 Tomcat is the servlet container that is used in the official Reference
 Implementation for the Java Servlet and JavaServer Pages technologies.
@@ -166,7 +169,7 @@ Provides: jsp_%name = %jspspec
 Obsoletes: %name-jsp-2.2-api
 Requires: %name-servlet-%servletspec-api = %epoch:%version-%release
 Requires: %name-el-%elspec-api = %epoch:%version-%release
-Conflicts: %tomcatname-jsp-%jspspec-ap
+Conflicts: %tomcatname-jsp-2.3-api
 
 %description jsp-%jspspec-api
 Apache Tomcat JSP API Implementation Classes.
@@ -191,7 +194,7 @@ Provides: servlet_%name = %servletspec
 Provides: servlet6_%name
 Provides: servlet3_%name
 Obsoletes: %name-servlet-3.1-api
-Conflicts: %tomcatname-servlet-%servletspec-api
+Conflicts: %tomcatname-servlet-4.0-api
 
 %description servlet-%servletspec-api
 Apache Tomcat Servlet API Implementation Classes.
@@ -201,7 +204,7 @@ Group: Development/Other
 Summary: Apache Tomcat Expression Language v%elspec API Implementation Classes
 Provides: el_api_%name = %elspec
 Obsoletes: %name-el-2.2-api
-Conflicts: %tomcatname-el-%elspec-api
+Conflicts: %tomcatname-el-3.0-api
 
 %description el-%elspec-api
 Apache Tomcat EL API Implementation Classes.
@@ -513,6 +516,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Wed Mar 12 2025 Stanislav Levin <slev@altlinux.org> 1:10.1.20-alt3_jvm17
+- actualized conflicts with tomcat 9 (closes: #53331, #53333).
+
 * Fri Mar 29 2024 Ilfat Aminov <aminov@altlinux.org> 1:10.1.20-alt2_jvm17
 - fix tomcat-10.1-JDTCompiler.patch for java 17 build
 
