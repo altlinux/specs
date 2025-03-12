@@ -1,10 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%define soname 7.9
+
 Name: opencascade
-Version: 7.7.2
-Release: alt3
-Summary: SDK intended for development of applications dealing with 3D CAD data
+Version: 7.9.0
+Release: alt1
+
+Summary: SDK for development applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
 Url: http://www.opencascade.org
+VCS: https://git.dev.opencascade.org/repos/occt.git
 
 # Upstream requires a login to download sources. 
 # https://dev.opencascade.org/release
@@ -12,20 +17,36 @@ Url: http://www.opencascade.org
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
-Patch3: opencascade-ustream-use-unsigned-point-and-countur-indexing.patch
 Patch2000: opencascade-e2k-disable-fenv.patch
 
-Requires: lib%name = %version-%release
-Requires: %name-data = %version-%release
+Requires: libopencascade%soname = %EVR
+Requires: opencascade-data = %EVR
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ libX11-devel libGL-devel libGLU-devel
-BuildRequires: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
-BuildRequires: java-devel-default libcoin3d-devel libfreetype-devel
-BuildRequires: libftgl-devel fontconfig-devel libXi-devel
-BuildRequires: libgl2ps-devel zlib-devel libfreeimage-devel
-BuildRequires: libXext-devel libvtk-devel doxygen graphviz
+BuildRequires(pre): rpm-macros-vtk
+BuildRequires: doxygen
+BuildRequires: fontconfig-devel
+BuildRequires: gcc-c++
+BuildRequires: graphviz
+BuildRequires: java-devel-default
+BuildRequires: libGL-devel
+BuildRequires: libGLU-devel
+BuildRequires: libX11-devel
+BuildRequires: libXext-devel
+BuildRequires: libXi-devel
+BuildRequires: libXmu-devel
+BuildRequires: libcoin3d-devel
+BuildRequires: libfltk-devel
+BuildRequires: libfreeimage-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libftgl-devel
+BuildRequires: libgl2ps-devel
+BuildRequires: libvtk-devel
+BuildRequires: tcl-devel
+BuildRequires: tcl-tix
+BuildRequires: tk-devel
+BuildRequires: zlib-devel
 
 %description
 Open CASCADE Technology (OCCT) is a suite for 3D surface and solid
@@ -33,18 +54,18 @@ modeling, visualization, data exchange and rapid application development. It
 is an excellent platform for development of numerical simulation software
 including CAD/CAM/CAE, AEC and GIS, as well as PDM applications.
 
-%package -n lib%name
+%package -n libopencascade%soname
 Summary: Shared libraries of Open CASCADE
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libopencascade%soname
 Shared libraries of Open CASCADE, development platform for 3D modeling and
 numerical simulation applications.
 
 %package devel
 Summary: Development files for Open CASCADE Technology
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: libopencascade%soname = %EVR
 Provides: OCE-devel = %EVR
 Obsoletes: OCE-devel < %EVR
 
@@ -82,7 +103,6 @@ This package contains documentation for Open CASCADE.
 %ifarch %arm
 %patch2 -p2
 %endif
-%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -95,44 +115,49 @@ export DESTDIR="%buildroot"
        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
        -DUSE_TBB=False \
        -DUSE_VTK=True \
-       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-9.4 \
+       -DINSTALL_DIR_DOC=%_datadir/doc/opencascade \
+       -D3RDPARTY_VTK_INCLUDE_DIR=%_includedir/vtk-%vtk_version \
        -DINSTALL_DIR_LIB=%_lib \
-       -DINSTALL_DIR_CMAKE=%_lib/cmake/%name
+       -DINSTALL_DIR_CMAKE=%_lib/cmake/opencascade
 %ninja_build
 
 %install
 %ninja_install
 mv %buildroot%_bindir/DRAWEXE-* %buildroot%_bindir/DRAWEXE
 
-# Install precompiled documentation
-cp -a doc/* %buildroot%_datadir/doc/%name/
 # Remove installed files with licenses
 rm -f /usr/share/doc/opencascade/*
 
 %files
-%doc LICENSE_LGPL_21.txt OCCT_LGPL_EXCEPTION.txt README.txt
 %_bindir/DRAWEXE
+%_bindir/ExpToCasExe
+%_bindir/ExpToCasExe-%version
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n libopencascade%soname
+%_libdir/*.so.%soname
+%_libdir/*.so.%version
 
 %files devel
 %_bindir/*.sh
 %_libdir/*.so
 %_includedir/*
-%_libdir/cmake/%name
+%_libdir/cmake/opencascade
 
 %files data
-%_datadir/%name
-%exclude %_datadir/%name/samples
+%_datadir/opencascade
+%exclude %_datadir/opencascade/samples
 
 %files samples
-%_datadir/%name/samples
+%_datadir/opencascade/samples
 
 %files doc
-%_datadir/doc/%name
+%_datadir/doc/opencascade
 
 %changelog
+* Wed Mar 12 2025 Constantin Sunzow <protvin@altlinux.org> 7.9.0-alt1
+- Update summary.
+- New version.
+
 * Fri Feb 14 2025 Constantin Sunzow <protvin@altlinux.org> 7.7.2-alt3
 - Rebuild with vtk 9.4.
 

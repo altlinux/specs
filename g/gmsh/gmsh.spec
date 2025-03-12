@@ -1,28 +1,52 @@
-Name: gmsh
-Summary: Automatic 3D finite element grid generator
-Version: 4.11.1
-Release: alt1
-Group: Sciences/Mathematics
-License: GPLv2
-URL: https://gmsh.info/
+%define _unpackaged_files_terminate_build 1
+%define soname 4.13
 
+Name: gmsh
+Version: 4.13.1
+Release: alt1
+
+Summary: 3D finite element mesh generator
+License: GPL-2.0-or-later
+Group: Sciences/Mathematics
+# upstream website looks like dead
+Url: https://dev.opencascade.org/project/gmsh
+
+# https://deb.debian.org/debian/pool/main/g/gmsh/gmsh_4.13.1+ds1.orig.tar.xz
 Source: %name-%version.tar
 Source1: %name.watch
 Patch1: 0001-include-missing-cstdint.patch
-Patch2: eigen_mma.patch
+Patch3: gmsh-debian-ix86-gcc14-compat.patch
+Patch4: 30_delete_gl2ps_from_source.patch
 
-Requires: lib%name = %EVR
+Requires: libgmsh%soname = %EVR
 
-BuildPreReq: rpm-macros-cmake rpm-build-python
-BuildRequires: cmake gcc-c++ gcc-fortran
-BuildRequires: libglvnd-devel libfltk-devel libGLU-devel
-BuildRequires: libX11-devel libXft-devel
-BuildRequires: libXcursor-devel libXinerama-devel
-BuildRequires: libXext-devel libXfixes-devel libXrender-devel
-BuildRequires: fontconfig-devel libfreetype-devel
-BuildRequires: libjpeg-devel zlib-devel libpng-devel
-BuildRequires: libopenblas-devel liblapack-devel opencascade-devel
-BuildRequires: libann-devel getfemxx
+BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: fontconfig-devel
+BuildRequires: gcc-c++
+BuildRequires: gcc-fortran
+BuildRequires: getfemxx
+BuildRequires: libGLU-devel
+BuildRequires: libX11-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXext-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libXft-devel
+BuildRequires: libXinerama-devel
+BuildRequires: libXrender-devel
+BuildRequires: libann-devel
+BuildRequires: libfltk-devel
+BuildRequires: libfreeglut-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libgl2ps-devel
+BuildRequires: libglvnd-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblapack-devel
+BuildRequires: libopenblas-devel
+BuildRequires: libpng-devel
+BuildRequires: opencascade-devel
+BuildRequires: zlib-devel
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -35,26 +59,26 @@ using the graphical user interface or in ASCII text files using Gmsh's own
 scripting language.
 
 
-%package -n lib%name
+%package -n libgmsh%soname
 Summary: Shared library for Gmsh
 Group: Sciences/Mathematics
-%description -n lib%name
-This package contains lib%name shared library.
+%description -n libgmsh%soname
+This package contains libgmsh shared library.
 
 
-%package -n lib%name-devel
+%package -n libgmsh-devel
 Summary: Shared library for Gmsh
 Group: Sciences/Mathematics
-%description -n lib%name-devel
-This package contains development files for lib%name.
+%description -n libgmsh-devel
+This package contains development files for libgmsh.
 
 
-%package -n python-module-%name
-Summary: Python interface for lib%name
+%package -n python-module-gmsh
+Summary: Python interface for libgmsh
 Group: Sciences/Mathematics
 BuildArch: noarch
-%description -n python-module-%name
-This package contains python interface for lib%name.
+%description -n python-module-gmsh
+This package contains python interface for libgmsh.
 
 
 %package demos
@@ -62,19 +86,18 @@ Summary: Tutorial and example files for Gmsh
 Group: Sciences/Mathematics
 BuildArch: noarch
 %description demos
-This package contains tutorial and example files for %name.
+This package contains tutorial and example files for gmsh.
 
 %prep
 %setup
 %patch1 -p2
-%ifarch ppc64le
-%patch2 -p2
-%endif
 %ifarch %e2k
 # need to disable workarounds for GCC
 sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
   contrib/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h
 %endif
+%patch3 -p1
+%patch4 -p1
 
 %build
 # 1. Dynamic library and private API is needed for compiling getdb
@@ -94,31 +117,36 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 mkdir -p %buildroot%python_sitelibdir_noarch
 mv %buildroot%_libdir/*.py %buildroot%python_sitelibdir_noarch
 mv %buildroot%_bindir/*.py %buildroot%python_sitelibdir_noarch
+mv %buildroot%_libdir/gmsh-%version.dev1.dist-info \
+   %buildroot%python_sitelibdir_noarch/gmsh-%version.dist-info
 
 rm -f %buildroot%_libdir/*.jl
 
 %files
-%_bindir/%name
-%_man1dir/%name.*
-%dir %_docdir/%name
-%doc %_docdir/%name/*.txt
+%_bindir/gmsh
+%_man1dir/gmsh.*
+%dir %_docdir/gmsh
+%doc %_docdir/gmsh/*.txt
 
-%files -n lib%name
-%_libdir/lib%name.so.*
+%files -n libgmsh%soname
+%_libdir/libgmsh.so.*
 
-%files -n lib%name-devel
+%files -n libgmsh-devel
 %_includedir/*
-%_libdir/lib%name.so
+%_libdir/libgmsh.so
 
-%files -n python-module-%name
+%files -n python-module-gmsh
 %python_sitelibdir_noarch/*
 
 %files demos
-%_docdir/%name/examples
-%_docdir/%name/tutorials
+%_docdir/gmsh/examples
+%_docdir/gmsh/tutorials
 
 
 %changelog
+* Wed Mar 12 2025 Constantin Sunzow <protvin@altlinux.org> 4.13.1-alt1
+- New version.
+
 * Sat Jul 15 2023 Vladislav Zavjalov <slazav@altlinux.org> 4.11.1-alt1
 - New version
 - patch: include missing cstdint (fix for gcc13)
