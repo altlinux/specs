@@ -6,8 +6,8 @@
 
 
 Name: %rname
-Version: 24.12.2
-Release: alt2
+Version: 24.12.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -90,7 +90,7 @@ Obsoletes: libmerkuro_contact5 < %EVR
 %_K6bin/merkuro-*
 %_K6qml/org/kde/merkuro/
 %_K6qml/org/kde/akonadi/
-%_K6data/plasma/plasmoids/org.kde.merkuro.contact/
+%_K6data/plasma/plasmoids/org.kde.merkuro.contact.applet/
 %_K6xdgapp/org.kde.merkuro*.desktop
 %_K6icon/*/*/apps/*merkuro*.*
 %_K6notif/*merkuro*
@@ -105,6 +105,9 @@ Obsoletes: libmerkuro_contact5 < %EVR
 
 
 %changelog
+* Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt2
 - fix requires (closes: 53257)
 

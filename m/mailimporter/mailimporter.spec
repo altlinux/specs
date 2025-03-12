@@ -5,7 +5,7 @@
 %define libkpim6mailimporterakonadi libkpim6mailimporterakonadi%sover
 
 Name: %rname
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -93,6 +93,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Wed Feb 12 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
