@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veracrypt
-Version: 1.26.18
+Version: 1.26.20
 Release: alt1
 
 Summary: Disk encryption software
@@ -62,6 +62,9 @@ rm -rv %buildroot%_bindir/%name-uninstall.sh
 
 
 %changelog
+* Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 1.26.20-alt1
+- new version 1.26.20 (with rpmrb script)
+
 * Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 1.26.18-alt1
 - new version 1.26.18 (with rpmrb script)
 
