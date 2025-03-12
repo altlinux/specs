@@ -1,6 +1,6 @@
 Name: nix
 Version: 2.24.10
-Release: alt2
+Release: alt3
 
 Summary: Nix software deployment system
 License: LGPLv2+
@@ -44,6 +44,13 @@ BuildRequires: libgit2-devel
 BuildRequires: libgc-devel
 BuildRequires: libtoml11-devel
 
+Requires: %name-doc = %EVR
+
+# Need for doc
+BuildRequires: /proc
+BuildRequires: lowdown
+BuildRequires: mdbook-linkcheck
+
 ExclusiveArch: x86_64
 
 %description
@@ -70,13 +77,13 @@ Group: System/Libraries
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package data
-Summary: Arch independent files for nix
-Group: System/Configuration/Packaging
+%package doc
+Summary: Documentation files for %name
+Group: Documentation
 BuildArch: noarch
 
-%description data
-This package provides noarch data needed for nix to work.
+%description doc
+The %name-doc package contains documentation files for %name.
 
 %prep
 %setup
@@ -86,8 +93,7 @@ This package provides noarch data needed for nix to work.
 
 # Test disabled because rapidcheck is not builded
 # pkgconfig.prov: ERROR: %_usrsrc/tmp/librapidcheck-devel-buildroot/usr/lib64/pkgconfig/rapidcheck.pc: invalid pkg-config output: rapidcheck =
-# doc gen disabled because build with doc failed
-%configure --localstatedir=/nix/var --disable-tests --disable-unit-tests --disable-doc-gen --enable-gc
+%configure --localstatedir=/nix/var --docdir=%_docdir/%name-doc-%version --disable-tests --disable-unit-tests --enable-gc
 %make_build
 
 %install
@@ -135,7 +141,15 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 %files -n lib%name
 %_libdir/*.so
 
+%files doc
+%docdir %_docdir/%name-doc-%version
+%_docdir/%name-doc-%version
+
 %changelog
+* Wed Mar 12 2025 Boris Yumankulov <boria138@altlinux.org> 2.24.10-alt3
+- clean spec
+- build nix-doc package
+
 * Wed Dec 25 2024 Boris Yumankulov <boria138@altlinux.org> 2.24.10-alt2
 - apply shared libs policy
 
