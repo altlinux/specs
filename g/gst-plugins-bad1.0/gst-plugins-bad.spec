@@ -16,11 +16,16 @@
 %def_enable fdkaac
 %def_enable lc3
 %def_enable srtp
+%def_enable srt
 %def_disable rtmp
 %def_enable openh264
 %def_enable chromaprint
 %def_enable v4l2codecs
 %def_enable gpl
+
+%ifnarch aarch64
+%def_enable svtjpegxs
+%endif
 
 %ifnarch %e2k
 %def_enable liblilv
@@ -34,14 +39,14 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.24
+%define ver_major 1.26
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -92,6 +97,7 @@ BuildRequires: libbs2b-devel
 BuildRequires: libopenal-devel
 BuildRequires: flite-devel
 %{?_enable_srtp:BuildRequires: libsrtp2-devel >= 2.1.0}
+%{?_enable_srt:BuildRequires: libsrt-devel >= 1.3.0}
 #BuildRequires: pkgconfig(wpe-webkit-1.0) pkgconfig(wpebackend-fdo-1.0)
 BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_faad:BuildRequires: libfaad-devel}
@@ -101,16 +107,17 @@ BuildRequires: liborc-test-devel gstreamer1.0-utils
 %{?_enable_opencv:BuildRequires: libopencv-devel}
 %{?_enable_aom:BuildRequires: libaom-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
-%{?_enable_vulkan:BuildRequires: vulkan-devel glslc}
+%{?_enable_vulkan:BuildRequires: vulkan-devel glslc glslang}
 %{?_enable_rtmp:BuildRequires: librtmp-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
 %{?_enable_fdkaac:BuildRequires: pkgconfig(fdk-aac)}
 %{?_enable_v4l2codecs:BuildRequires: glibc-kernheaders pkgconfig(gudev-1.0)}
 # webrtc-audio-processing for webrtcdsp
-BuildRequires: libwebrtc-devel >= 0.3 pkgconfig(webrtc-audio-processing-1) >= 1.0
+BuildRequires: libwebrtc-devel >= 0.3 pkgconfig(webrtc-audio-processing-1) pkgconfig(webrtc-audio-processing-2) >= 1.0
 # since 1.13.x
 BuildRequires: libnice-devel libva-devel liblcms2-devel
 %{?_enable_liblilv:BuildRequires: liblilv-devel}
+%{?_enable_svtjpegxs:BuildRequires: pkgconfig(SvtJpegxs)}
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check: BuildRequires: /proc %_bindir/gst-tester-%api_ver}
 #BuildRequires: pkgconfig(svtav1enc) 1.8 too old
@@ -229,6 +236,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.12-alt1
 - 1.24.12
 

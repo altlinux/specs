@@ -1,13 +1,13 @@
 %define _name ges
 %define new_name gst-editing-services
-%define ver_major 1.24
+%define ver_major 1.26
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable doc
 
 Name: gstreamer-editing-services
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer Editing Services (GES)
@@ -138,6 +138,9 @@ sed -i 's|Gst\(FrameCompositionApi\)|GES\1|' ges/ges-frame-composition-meta.c
 %endif
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.12-alt1
 - 1.24.12
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gst-python
-%define ver_major 1.24
+%define ver_major 1.26
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-gst%gst_api_ver
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject3
@@ -31,6 +31,9 @@ Source: %_name-%version.tar
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3 rpm-macros-valgrind
 BuildRequires: meson orc liborc-test-devel  gcc-c++ gst-plugins%gst_api_ver-devel >= %version
 BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pytest
+BuildRequires: pkgconfig(gstreamer-analytics-%gst_api_ver)
+BuildRequires: pkgconfig(gstreamer-rtsp-server-%gst_api_ver)
+
 %if_enabled valgrind
 BuildRequires: valgrind-tool-devel
 %endif
@@ -61,6 +64,9 @@ This package provides GStreamer overrides for PyGobject3.
 %doc RELEASE NEWS
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.12-alt1
 - 1.24.12
 

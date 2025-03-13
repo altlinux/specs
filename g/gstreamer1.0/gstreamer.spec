@@ -1,5 +1,5 @@
 %define _name gstreamer
-%define ver_major 1.24
+%define ver_major 1.26
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define api_ver 1.0
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.12
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer streaming media framework runtime
@@ -32,19 +32,20 @@ Requires(pre): libcap-utils
 Requires: lib%name = %EVR
 
 %define glib_ver 2.64.0
-%define meson_ver 1.1
+%define meson_ver 1.4
+%define rust_ver 1.54
 
 BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-python3
 BuildRequires: meson flex gcc-c++
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: ghostscript-utils libcheck-devel libxml2-devel
-BuildRequires: python-modules sgml-common transfig xml-utils gobject-introspection-devel
+BuildRequires: sgml-common transfig xml-utils gobject-introspection-devel
 BuildRequires: libgsl-devel libgmp-devel
 BuildRequires: libcap-devel libcap-utils
 BuildRequires: bash-completion
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_libdw:BuildRequires: libdw-devel}
-%{?_enable_ptp_helper:BuildRequires: rust-cargo}
+%{?_enable_ptp_helper:BuildRequires: rust-cargo >= %rust_ver}
 %{?_enable_doc:BuildRequires: hotdoc}
 
 %description
@@ -120,14 +121,14 @@ Gstreamer plugins.
 export LIBS=-lcxa
 %endif
 %meson \
-	-Dpackage-name="GStreamer" \
-	-Dpackage-origin=%name \
-	-Dexamples=disabled \
-	%{?_enable_check:-Dtests=enabled} \
-	%{?_disable_doc:-Ddoc=disabled} \
-	%{?_enable_debug:-Dgst_debug=true} \
-	%{subst_enable_meson_feature ptp_helper ptp-helper} \
-	%{?_enable_ptp_helper:-Dptp-helper-permissions="capabilities"}
+    -Dpackage-name="GStreamer" \
+    -Dpackage-origin=%name \
+    -Dexamples=disabled \
+    %{?_enable_check:-Dtests=enabled} \
+    %{?_disable_doc:-Ddoc=disabled} \
+    %{?_enable_debug:-Dgst_debug=true} \
+    %{subst_enable_meson_feature ptp_helper ptp-helper} \
+    %{?_enable_ptp_helper:-Dptp-helper-permissions="capabilities"}
 %nil
 %meson_build
 
@@ -165,6 +166,7 @@ setcap cap_sys_nice,cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%a
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*
+%_datadir/cmake/FindGStreamer.cmake
 %if_enabled debug
 %_datadir/gdb/auto-load/%_libdir/lib%name-%api_ver.so.*-gdb.py
 %_datadir/glib-2.0/gdb/glib_gobject_helper.py
@@ -199,6 +201,9 @@ setcap cap_sys_nice,cap_net_bind_service,cap_net_admin+ep %_libexecdir/%_name-%a
 %_libexecdir/%_name-%api_ver/gst-plugins-doc-cache-generator
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
+- 1.26.0
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.24.12-alt1
 - 1.24.12
 
