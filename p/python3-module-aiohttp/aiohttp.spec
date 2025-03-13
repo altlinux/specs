@@ -1,5 +1,5 @@
 Name: python3-module-aiohttp
-Version: 3.11.12
+Version: 3.11.13
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -87,6 +87,9 @@ export AIOHTTP_NO_EXTENSIONS=1
 %python3_sitelibdir/aiohttp/*/*test*
 
 %changelog
+* Thu Mar 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.13-alt1
+- 3.11.13 released
+
 * Tue Feb 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.12-alt1
 - 3.11.12 released
 
