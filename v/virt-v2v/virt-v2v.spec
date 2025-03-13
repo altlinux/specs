@@ -3,7 +3,7 @@
 
 Name: virt-v2v
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
 License: GPLv2+
@@ -21,7 +21,7 @@ BuildRequires: ocaml-gettext-devel
 BuildRequires: ocaml-fileutils-devel
 BuildRequires: ocaml-ounit-devel
 BuildRequires: libguestfs-devel
-BuildRequires: libnbd-devel >= 1.10 /usr/bin/nbdinfo /usr/bin/nbdcopy
+BuildRequires: libnbd-devel >= 1.10 /usr/bin/nbdinfo /usr/bin/nbdcopy /usr/bin/nbdkit
 BuildRequires: /usr/bin/sqlite3
 BuildRequires: libaugeas-devel
 BuildRequires: bash-completion
@@ -46,6 +46,7 @@ Requires: unzip
 Requires: curl
 Requires: /usr/bin/virsh
 Requires: qemu-kvm-core >= 5.2.0
+Requires: /usr/bin/nbdinfo /usr/bin/nbdcopy /usr/bin/nbdkit
 
 %description
 Virt-v2v converts a single guest from a foreign hypervisor to run on
@@ -84,6 +85,9 @@ find %buildroot -name '*.la' -delete
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Thu Mar 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt2
+- Add nbdkit requires (ALT#53423)
+
 * Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
 - new version 2.6.0
 
