@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.2
+Version: 6.5.8
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -15,15 +15,14 @@ Url: https://github.com/linuxdeepin/deepin-system-monitor
 Vcs: git://github.com/linuxdeepin/deepin-system-monitor.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch0: deepin-system-monitor-6.5.2-alt-fix-GNUInstallDirs.patch
+Patch0: deepin-system-monitor-6.5.8-alt-fix-GNUInstallDirs.patch
 Patch1: deepin-system-monitor-6.0.12-alt-fix-build-gcc13.patch
 Patch2: deepin-system-monitor-6.0.12-alt-fix-build-ppc64le.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-build-xdg desktop-file-utils rpm-macros-dqt5
-# Automatically added by buildreq on Tue Oct 31 2023
-# optimized out: cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libXext-devel libdouble-conversion3 libdtk5-widget libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libudev-devel libwayland-client libwayland-server libxcb-devel libxcbutil-icccm perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-tools sh5 wayland-devel
-BuildRequires: cmake deepin-dock-devel deepin-gettext-tools deepin-qt-dbus-factory-devel dtk5-widget-devel dwayland-devel gsettings-qt-devel libnl-devel libpcap-devel libwayland-client-devel libxcbutil-icccm-devel dqt5-svg-devel dqt5-tools-devel dqt5-x11extras-devel dtk6-common-devel libpolkitqt5-qt5-devel
-BuildRequires: kf5-kwayland-devel
+BuildRequires(pre): rpm-build-ninja rpm-build-xdg desktop-file-utils rpm-macros-dqt6
+# Automatically added by buildreq on Thu Mar 13 2025
+# optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libicu-devel libp11-kit libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxcbutil-icccm libxkbcommon-devel ninja-build perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base sh5 vulkan-headers
+BuildRequires: dde-dock-devel deepin-gettext-tools dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libcups-devel libdtk6widget-devel libnl-devel libpcap-devel libpolkitqt6-qt6-devel libudev-devel libxcbutil-icccm-devel
 
 %if_enabled clang
 BuildRequires: clang-devel
@@ -49,23 +48,16 @@ export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+export CPLUS_INCLUDE_PATH=%_includedir/qt6:$CPLUS_INCLUDE_PATH
+%DQ6build \
+    -DLIB_DESTINATION=%_lib \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DUSE_DEEPIN_WAYLAND=ON \
     -DVERSION=%version
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt --output=%name.lang %name %{name}-plugin %{name}-plugin-popup
 
 %check
@@ -86,7 +78,7 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %dir %_datadir/dde-dock/
 %dir %_datadir/dde-dock/icons/
 %dir %_datadir/dde-dock/icons/dcc-setting/
-%_datadir/dde-dock/icons/dcc-setting/deepin-system-monitor.svg
+%_datadir/dde-dock/icons/dcc-setting/dcc-system-monitor.dci
 %dir %_libdir/deepin-service-manager/
 %_libdir/deepin-service-manager/libdeepin-system-monitor-daemon.so
 %_datadir/dbus-1/services/com.deepin.SystemMonitorPluginPopup.service
@@ -130,6 +122,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Thu Mar 13 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.8-alt1
+- New version 6.5.8.
+- Switched to dqt6.
+
 * Thu Oct 31 2024 Leontiy Volodin <lvol@altlinux.org> 6.5.2-alt1
 - New version 6.5.2.
 - Added vcs tag.
