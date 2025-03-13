@@ -1,5 +1,5 @@
 Name: icon-theme-altos
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Group: Graphics
@@ -113,6 +113,9 @@ hardlink -c -v %buildroot/%_iconsdir/
 %_iconsdir/altos-dark/
 
 %changelog
+* Thu Mar 13 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2.3-alt1
+- add trash icon
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg at altlinux dot org> 0.2.2-alt1
 - return hwinfo icon
 
