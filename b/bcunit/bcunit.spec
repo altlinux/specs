@@ -1,5 +1,5 @@
 Name: bcunit
-Version: 5.3.69
+Version: 5.4.0
 Release: alt1
 Summary: CUnit is a Unit testing framework for C.
 Group: System/Libraries
@@ -48,6 +48,9 @@ rm -f %buildroot%_libdir/*.a
 %_datadir/BCUnit
 
 %changelog
+* Thu Mar 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.69-alt1
 - 5.3.69
 

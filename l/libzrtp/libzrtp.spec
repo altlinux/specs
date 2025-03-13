@@ -1,5 +1,5 @@
 Name: libzrtp
-Version: 5.3.71
+Version: 5.4.0
 Release: alt1
 
 Group: System/Libraries
@@ -53,6 +53,9 @@ develop programs using the oRTP library.
 %_datadir/BZRTP
 
 %changelog
+* Thu Mar 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
+- new version.
+
 * Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.71-alt1
 - new version.
 

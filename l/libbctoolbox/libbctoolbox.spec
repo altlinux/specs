@@ -1,5 +1,5 @@
 Name: libbctoolbox
-Version: 5.3.74
+Version: 5.4.0
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 Group: System/Libraries
@@ -12,7 +12,7 @@ BuildRequires(pre): cmake
 
 # Automatically added by buildreq on Thu Mar 02 2017
 # optimized out: bcunit gnu-config libstdc++-devel perl pkg-config python-base
-BuildRequires: bcunit-devel gcc-c++ libmbedtls-compat-devel
+BuildRequires: bcunit-devel gcc-c++ libmbedtls-devel >= 3.0
 
 %description
 Utilities library used by Belledonne Communications
@@ -31,6 +31,7 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %patch0 -p1
 
 %build
+# /usr/src/RPM/BUILD/libbctoolbox-5.4.0/src/crypto/mbedtls.cc:61:24: error: 'MBEDTLS_ERR_THREADING_BAD_INPUT_DATA' was not declared in this scope; did you mean 'MBEDTLS_ERR_SHA1_BAD_INPUT_DATA'?
 %cmake -DBUILD_SHARED_LIBS=TRUE
 %cmake_build
 
@@ -51,6 +52,9 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_datadir/BCToolbox
 
 %changelog
+* Thu Mar 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Fri Aug 02 2024 Andrey Cherepanov <cas@altlinux.org> 5.3.74-alt1
 - 5.3.74
 
