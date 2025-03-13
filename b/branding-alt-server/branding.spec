@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt13
+Release: alt14
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -383,6 +383,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 11.0-alt14
+- Move dconf edition key to /org/altlinux/product/edition/current
+
 * Thu Mar 13 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt13
 - Add settings for Console
 

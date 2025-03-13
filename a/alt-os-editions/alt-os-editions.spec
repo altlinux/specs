@@ -1,5 +1,5 @@
 Name: alt-os-editions
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: RPM filetrigger to update edition in dconf 
@@ -25,5 +25,8 @@ install -pDm755 x-alt-os-editions.filetrigger %buildroot%_rpmlibdir
 %_rpmlibdir/x-alt-os-editions.filetrigger
 
 %changelog
+* Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.1-alt1
+- Move dconf edition key to /org/altlinux/product/edition/current.
+
 * Tue Jan 28 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.0-alt1
 - Initial build.

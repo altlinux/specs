@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-edition
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Alterator interface for edition
@@ -91,6 +91,10 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
+- Move dconf edition key to /org/altlinux/product/edition/current.
+- Use dconf compile instead of dconf update.
+
 * Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
 - In filetrigger remove backends for removed .edition files
 
