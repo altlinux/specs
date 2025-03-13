@@ -1,6 +1,6 @@
 Name: tcpflow
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: Network traffic recorder
 License: GPLv3
@@ -51,7 +51,7 @@ install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
 sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 
 %pre
-i/usr/sbin/groupadd -r -f netadmin ||:
+/usr/sbin/groupadd -r -f netadmin ||:
 %pre_control %name
 
 %post
@@ -66,6 +66,9 @@ i/usr/sbin/groupadd -r -f netadmin ||:
 %config %_controldir/%name
 
 %changelog
+* Thu Mar 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.1-alt3
+- typo in %%pre scriptlet fixed (closes: 53433)
+
 * Fri Jun 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt2
 - rebuilt with gcc13
 
