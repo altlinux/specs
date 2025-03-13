@@ -1,14 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 0.12
 
 Name: gupnp-tools
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GUPnP Tools
 Group: Development/Other
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: http://www.gupnp.org/
+
+Vcs: https://gitlab.gnome.org/GNOME/gupnp-tools.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -19,7 +21,7 @@ Source: %name-%version.tar
 %define glib_ver 2.68
 %define gssdp_api_ver 1.6
 %define gupnp_api_ver 1.6
-%define gssdp_ver 1.6
+%define gssdp_ver 1.6.2
 %define gupnp_ver 1.6
 %define gtk_ver 3.10
 %define soup_api_ver 3.0
@@ -74,6 +76,9 @@ test and debug one's UPnP devices and control points.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.2-alt1
+- 0.12.2
+
 * Sat Dec 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt2
 - updated to 0.12.1-9-g88a441f (fixed build with libxml2-2.12.x)
 
