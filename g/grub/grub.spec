@@ -28,7 +28,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt9
+Release: alt10
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -222,13 +222,12 @@ grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
 # Append ALT-specific translations to ru.po
 cat %SOURCE17 >> po/ru.po
 
-# Touch grub.pot to disable po file rebuild
-# NOTE(egori): pot file should be older than po files
-touch -d "$(date --date='@0')" po/grub.pot
+# autogen.sh script searches for *.in files under ./util to create
+# po/POTFILES-shell.in which is used to update po files
+sed -n -e 's/\$/\\\$/' -e 's/^msgid /gettext_printf /p' %SOURCE17 > util/alt-l18n-strings.in
 
 %build
-./bootstrap --no-git --gnulib-srcdir=./gnulib-%version
-./autogen.sh
+./bootstrap --no-git --gnulib-srcdir=./gnulib
 build_grub() {
 	local dir="$1"; shift
 	mkdir -p "$dir"
@@ -513,6 +512,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Wed Mar 12 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt10
+- enable ru.po file rebuild with translations for gnulib
+
 * Wed Mar 12 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt9
 - acutally apply efi fix from the previous release
 
