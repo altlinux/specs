@@ -1,20 +1,17 @@
-%set_automake_version 1.10
-
 %def_without gui
 
 Name: libkate
-Version: 0.4.1
-Release: alt1.7
+Version: 0.4.3
+Release: alt1
 Summary: kate is a karaoke and text codec for embedding in ogg
 License: BSD-3-Clause
 Group: Video
-URL: http://code.google.com/p/libkate/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+URL: https://gitlab.xiph.org/xiph/kate
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-python
+BuildRequires(pre): rpm-build-python3
 BuildRequires: flex libogg-devel liboggz libpng-devel
 
 %description
@@ -58,18 +55,18 @@ new Kate streams to an Ogg file.
 %prep
 %setup -q
 %patch -p1
-subst 's|#!.*python$|#!%__python|' tools/KateDJ/KateDJ
+subst 's|#!.*python$|#!%__python3|' tools/KateDJ/KateDJ
 
 %build
-export PYTHON=%__python
+export PYTHON=%__python3
 %autoreconf
 %configure \
 	--disable-static
 %make
 
 %install
-export PYTHON=%__python
-%make DESTDIR=%buildroot pythondir=%python_sitelibdir_noarch install
+export PYTHON=%__python3
+%make DESTDIR=%buildroot pythondir=%python3_sitelibdir_noarch install
 rm -rf %buildroot%_datadir/doc/libkate
 
 %files
@@ -94,6 +91,9 @@ rm -rf %buildroot%_datadir/doc/libkate
 %endif
 
 %changelog
+* Thu Mar 13 2025 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt1
+- New version.
+
 * Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1.7
 - Use autmake 1.10.
 
