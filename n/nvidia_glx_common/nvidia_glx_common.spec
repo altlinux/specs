@@ -23,7 +23,7 @@
 %define nv_version 570
 %define nv_release 124
 %define nv_minor 04
-%define pkg_rel alt286
+%define pkg_rel alt287
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -368,6 +368,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu Mar 13 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt287
+- don't force to enable nvidia-drm.modeset
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt286
 - new version
 
