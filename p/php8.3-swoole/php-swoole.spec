@@ -24,8 +24,8 @@ BuildRequires: php-devel = %php_version
 BuildRequires: boost-devel-headers gcc-c++ libbrotli-devel libcurl-devel libpcre-devel libssl-devel zlib-devel
 BuildRequires: libnghttp2-devel libssl-devel libzstd-devel
 
-# Using symbols from php-sockets and php-curl:
-Requires: php%_php_suffix-sockets php%_php_suffix-curl
+# Using symbols from php-sockets and php-curl and php-mysqlnd:
+Requires: php%_php_suffix-sockets php%_php_suffix-curl php%_php_suffix-mysqlnd
 
 %description
 php-swoole extension provides an event-driven asynchronous and
