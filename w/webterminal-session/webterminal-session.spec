@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 %K6init no_altplace
 
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Thu Mar 13 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.1-alt1
+- don't source /usr/bin/kde5
+
 * Tue Dec 03 2024 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt1
 - update requires
 
