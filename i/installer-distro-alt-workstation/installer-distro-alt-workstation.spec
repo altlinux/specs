@@ -1,6 +1,6 @@
 Name: installer-distro-alt-workstation
 Version: 11.0.0
-Release: alt1
+Release: alt2
 
 Summary: Installer configuration (ALT Workstation)
 License: GPL-2.0+
@@ -73,11 +73,20 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_sysconfdir/alterator/pkg-groups.conf
 %install2dir/alterator-menu
 %install2dir/installer-steps
+%ghost %install2dir/services-off
+%ghost %install2dir/services-on
+%ghost %install2dir/systemd-disabled
+%install2dir/systemd-enabled
+%ghost %install2dir/systemd-mask
+%ghost %install2dir/systemd-unmask
 %install2dir/*.d/*
 
 %files stage3
 
 %changelog
+* Wed Mar 12 2025 Anton Midyukov <antohami@altlinux.org> 11.0.0-alt2
+- Enable sshd.service, touch enable/disable services configs
+
 * Tue Aug 27 2024 Mikhail Efremov <sem@altlinux.org> 11.0.0-alt1
 - stage2: Split installer step pkg -> pkg-groups/pkg-install.
 
