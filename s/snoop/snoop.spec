@@ -3,7 +3,7 @@
 
 Name: snoop
 Version: 0.4.2
-Release: alt2
+Release: alt3
 
 Summary: Snoop through your files
 License: GPL-3.0-or-later
@@ -22,6 +22,8 @@ BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(gtksourceview-5)
 
+Requires: nautilus-python
+
 %description
 %summary.
 
@@ -39,13 +41,17 @@ BuildRequires: pkgconfig(gtksourceview-5)
 
 %files -f %name.lang
 %_bindir/snoop
-%_datadir/nautilus-python/extensions/snoop.py
+%_datadir/nautilus-python/extensions/snoop*
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/appdata/%xdg_name.appdata.xml
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Mar 13 2025 Alexey Volkov <qualimock@altlinux.org> 0.4.2-alt3
+- add Nautilus extension translation (closes: #53089)
+- add nautilus-python to Requires
+
 * Sat Feb 22 2025 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt2
 - NMU: Fix russian translation (literary translation of snoop)
 
