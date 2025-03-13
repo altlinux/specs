@@ -9,7 +9,7 @@
 Name: python3-module-%pypi_name
 Epoch: 1
 Version: 75.8.0
-Release: alt2
+Release: alt3
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
@@ -34,12 +34,14 @@ Provides: python3-module-distribute = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
+# required internally by setuptools, distutils or pkg_resources
+%pyproject_builddeps_metadata_extra core
+
 %if_with check
 BuildRequires: /dev/shm
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
 %add_pyproject_deps_check_filter pytest-perf
-%pyproject_builddeps_metadata_extra core
 %pyproject_builddeps_metadata_extra test
 %endif
 
@@ -185,6 +187,9 @@ export PIP_IGNORE_INSTALLED=1
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Thu Mar 13 2025 Stanislav Levin <slev@altlinux.org> 1:75.8.0-alt3
+- Fixed build without check.
+
 * Tue Feb 18 2025 Stanislav Levin <slev@altlinux.org> 1:75.8.0-alt2
 - Reverted CFLAGS overriding.
 
