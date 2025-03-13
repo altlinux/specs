@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.12.0
-Release: alt1
+Release: alt2
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPL-2.0-or-later and GPL-3.0-or-later
@@ -12,6 +12,7 @@ Source0: %name-%version.tar
 
 Patch0001: 0001-Change-owner-of-man-cache.patch
 Patch0003: 0003-catman-Use-PATH-env.patch
+Patch0004: 0004-Implemented-in-process-lzma-decompression.patch
 
 Obsoletes: man < 2.0
 Obsoletes: man-whatis < 2.0
@@ -32,6 +33,7 @@ BuildRequires: gnulib
 BuildRequires: groff-base groff-ps
 BuildRequires: less
 BuildRequires: perl
+BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libpipeline)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: xz
@@ -155,6 +157,10 @@ rm -rf -- %cache/*
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Tue Jul 30 2024 Ivan A. Melnikov <iv@altlinux.org> 2.12.0-alt2
+- Implemented in-process lzma decompression (thx asheplyakov@)
+  (ALT#48430).
+
 * Tue Nov 14 2023 Alexey Gladkov <legion@altlinux.ru> 2.12.0-alt1
 - New version (2.12.0).
 
