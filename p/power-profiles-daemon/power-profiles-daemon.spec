@@ -1,5 +1,5 @@
 Name:           power-profiles-daemon
-Version:        0.23
+Version:        0.30
 Release:        alt1
 
 Summary:        Makes power profiles handling available over D-Bus
@@ -73,6 +73,9 @@ mkdir -p %buildroot/%_localstatedir/power-profiles-daemon
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 14 2025 Roman Alifanov <ximper@altlinux.org> 0.30-alt1
+- new version 0.30 (with rpmrb script)
+
 * Sat Sep 14 2024 Roman Alifanov <ximper@altlinux.org> 0.23-alt1
 - new version 0.23 (with rpmrb script)
 
