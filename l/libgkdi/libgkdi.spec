@@ -2,8 +2,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: libgkdi
-Version: 0.0.1
-Release: alt2
+Version: 0.0.2
+Release: alt1
 
 Summary: Client library for MS-GKDI
 License: GPLv2+
@@ -58,6 +58,10 @@ develop programs which make use of %name
 %_libdir/gkdi/GkdiConfig.cmake
 
 %changelog
+* Wed Feb 5 2025 Vladimir Rubanov <august@altlinux.org> 0.0.2-alt1
+- 0.0.2-alt1
+- Add ECDH support
+
 * Tue May 7 2024 Vladimir Rubanov <august@altlinux.org> 0.0.1-alt2
 - 0.0.1-alt2
 - Fixes:
