@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt12
+Release: alt13
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -285,7 +285,7 @@ mkdir -p %buildroot/%_datadir/mate-menu
 install mate-settings/applications.list-themed %buildroot/%_datadir/mate-menu/applications.list-themed
 
 mkdir -p %buildroot/%_datadir/glib-2.0/schemas
-install gnome-settings/50_gnome-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
+install gnome-settings/*.gschema.override %buildroot/%_datadir/glib-2.0/schemas/
 
 #edition
 mkdir -p  %buildroot/%_sysconfdir/dconf/db/default.d/
@@ -366,7 +366,7 @@ fi
 %_datadir/mate-menu/applications.list-themed
 
 %files gnome-settings
-%_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
+%_datadir/glib-2.0/schemas/*.gschema.override
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -383,6 +383,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Mar 13 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt13
+- Add settings for Console
+
 * Tue Mar 2 2025 Michael Chernigin <chernigin@altlinux.org> 11.0-alt12
 - Add default edition to os-release and dconf
 
