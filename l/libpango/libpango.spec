@@ -24,7 +24,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -35,7 +35,7 @@ Url: https://www.pango.org/
 Vcs: https://gitlab.gnome.org/GNOME/pango.git
 
 %if_disabled snapshot
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -65,7 +65,7 @@ Obsoletes: gscript
 %define thai_ver 0.1.9
 %define fribidi_ver 1.0.6
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver gcc-c++ /proc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libharfbuzz-devel >= %hb_ver
@@ -226,6 +226,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.56.2-alt1
+- 1.56.2
+
 * Mon Jan 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.56.1-alt1
 - 1.56.1
 

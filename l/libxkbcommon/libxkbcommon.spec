@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -146,6 +146,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
+- 1.8.1
+
 * Thu Feb 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - updated to xkbcommon-1.8.0-44-g350931ad
 
