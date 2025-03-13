@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 10.4
-Release: alt4
+Version: 11.0
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Mar 13 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt1
+- update to ALT Kworkstation 11.0RC
+- add alterator-kopidel, surguch
+- delete synaptic
+
 * Wed Oct 30 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt4
 - typo fixes, small improvements (closes #51825, #51823, #51826)
 - desktop-software: add kwalletmanager
