@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-edition
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Alterator interface for edition
@@ -91,6 +91,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.3-alt1
+- In filetrigger remove backends for removed .edition files
+
 * Sat Mar 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1.2-alt1
 - feat: add fallback to legacy license directory for current edition.
 
