@@ -2,7 +2,7 @@
 %define pkgdocdir %_docdir/%name-%version
 
 Name: opensaml
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Security Assertion Markup Language library
@@ -10,6 +10,7 @@ Summary: Security Assertion Markup Language library
 License: Apache-2.0
 Group: System/Libraries
 Url: https://wiki.shibboleth.net/confluence/display/OpenSAML/
+Vcs: https://git.shibboleth.net/git/cpp-opensaml.git
 
 Source: https://shibboleth.net/downloads/c++-opensaml/%version/%name-%version.tar.gz
 
@@ -100,6 +101,10 @@ rm -f %buildroot/%_libdir/libsaml.la
 %_pkgconfigdir/opensaml.pc
 
 %changelog
+* Fri Mar 14 2025 Leontiy Volodin <lvol@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+- Added vcs tag.
+
 * Thu Oct 17 2024 Leontiy Volodin <lvol@altlinux.org> 3.3.0-alt1
 - New version 3.3.0.
 
