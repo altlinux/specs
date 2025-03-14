@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: Python bindings for the llama.cpp library
@@ -81,6 +81,9 @@ sed -i '/^from huggingface_hub import hf_hub_download$/d' tests/test_llama.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.8-alt1
+- Updated to 0.3.8.
+
 * Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.7-alt1
 - Updated to 0.3.7.
 
