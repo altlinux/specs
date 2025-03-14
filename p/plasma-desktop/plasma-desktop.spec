@@ -14,7 +14,7 @@
 
 Name: %rname
 Version: 6.3.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -160,7 +160,7 @@ SDDM breeze theme
 %patch6 -p1
 %patch7 -p1
 #
-%patch9 -p1
+#%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Fri Mar 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt2
+- don't force disable audio indicators control on taskbar
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 
