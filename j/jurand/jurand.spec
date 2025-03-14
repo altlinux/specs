@@ -1,6 +1,6 @@
 Name: jurand
 Version: 1.3.5
-Release: alt1
+Release: alt2
 
 Summary: A tool for manipulating symbols present in Java source files
 License: Apache-2.0
@@ -21,6 +21,7 @@ rather than applying simple regular expressions on the source code.
 %package -n rpm-macros-%name
 Group: Development/Java
 Summary: Macros for jurand
+Requires: %name
 
 %description -n rpm-macros-%name
 Macros for jurand.
@@ -55,5 +56,8 @@ sed -i -e 's,\.gz$,*,' target/installed_files
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Mar 13 2025 Anton Meleshnikov <alton@altlinux.org> 1.3.5-alt2
+- Add requires
+
 * Mon Mar 03 2025 Anton Meleshnikov <alton@altlinux.org> 1.3.5-alt1
 - Initial build for Sisyphus (thanks OpenMandriva for this spec)
