@@ -4,7 +4,7 @@
 %define rdn_name org.zim_wiki.Zim
 
 Name: zim-wiki
-Version: 0.76.1
+Version: 0.76.2
 Release: alt1
 
 Summary: A desktop wiki and outliner
@@ -75,6 +75,9 @@ control.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.76.2-alt1
+- 0.76.2
+
 * Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.76.1-alt1
 - 0.76.1
 
