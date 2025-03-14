@@ -1,6 +1,6 @@
 Name: event-driven-servers
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: This is a collection of high-performance and scalable event-driven servers
 License: BSD-3-Clause
@@ -178,6 +178,9 @@ sed -i 's!/usr/bin/env -S !!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buildroot%
 %python3_sitelibdir_noarch/mavis
 
 %changelog
+* Fri Mar 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt3
+- update to upstream/master
+
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt2
 - get rid of /usr/bin/env in config (no -S option in old version)
 
