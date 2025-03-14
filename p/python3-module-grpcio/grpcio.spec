@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 1.64.0
-Release: alt2
+Release: alt3
 Summary: HTTP/2-based RPC framework
 License: Apache-2.0
 Group: Development/Python3
@@ -29,6 +29,7 @@ HTTP/2-based RPC framework.
 %ifarch %e2k
 # EDG frontend fails at this
 sed -i "/static_assert(value.empty()/{N;d}" third_party/abseil-cpp/absl/strings/internal/string_constant.h
+sed -i "s/defined(__has_builtin)/0/" src/core/lib/gprpp/debug_location.h
 %endif
 
 # remove some bundled libraries. TODO: try unbundling all libraries.
@@ -67,6 +68,9 @@ export GRPC_PYTHON_BUILD_SYSTEM_RE2=1
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.64.0-alt3
+- Fixed build for Elbrus.
+
 * Tue Oct 22 2024 Stanislav Levin <slev@altlinux.org> 1.64.0-alt2
 - Disabled check (see #50996).
 
