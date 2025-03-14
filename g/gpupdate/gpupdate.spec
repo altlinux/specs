@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.12.2
+Version: 0.13.0
 Release: alt1
 
 Summary: GPT applier
@@ -52,12 +52,16 @@ BuildRequires: gettext-tools
 Requires: python3-module-rpm
 Requires: python3-module-dbus
 Requires: python3-module-configobj
+Requires: python3-module-gssapi
+Requires: python3-module-krb5
 Requires: oddjob-%name >= 0.2.3
 Requires: libnss-role >= 0.5.0
 Requires: local-policy >= 0.4.9
 Requires: pam-config >= 1.9.0
 Requires: autofs
 Requires: dconf-profile
+Requires: packagekit
+Requires: dconf
 Requires: libgvdb-gir
 # This is needed by shortcuts_applier
 Requires: desktop-file-utils
@@ -195,6 +199,16 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Mar 06 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.0-alt1
+- Implemented Local Administrator Password Solution (LAPS) functionality,
+  including support for Group Policy Object (GPO) keys to
+  configure LAPS settings
+- Added support for disabling cifsacl in autofs mounts (closes:52333)
+- Implemented the ability to merge computer and user GPO shortcuts
+- Added access restrictions to network directories of other users
+- Added cleaning functionality for the autofs configuration catalog
+- Added ability to configure KDE 6 files
+
 * Tue Jan 14 2025 Valery Sinelnikov <greh@altlinux.org> 0.12.2-alt1
 - Fixed interpretation of boolean values (closes:52683)
 
