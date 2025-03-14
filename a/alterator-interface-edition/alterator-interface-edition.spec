@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-edition
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Alterator interface for edition
@@ -91,6 +91,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Mar 14 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
+- Fix painfully slow filetrigger.
+
 * Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
 - Move dconf edition key to /org/altlinux/product/edition/current.
 - Use dconf compile instead of dconf update.
