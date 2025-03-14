@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,11 @@ done
 %_destdir
 
 %changelog
+* Thu Mar 06 2025 Valentin Sokolov <sova@altlinux.org> 0.4.0-alt1
+- Initial group policies for LAPS
+- Added enable LAPS applier policy
+- Added chortcuts merge policy
+
 * Fri Feb 28 2025 Valentin Sokolov <sova@altlinux.org> 0.3.1-alt1
 - Fix typos in Russian and English translations
 
