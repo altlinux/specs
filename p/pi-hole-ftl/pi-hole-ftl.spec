@@ -5,7 +5,7 @@
 
 Name:    pi-hole-ftl
 Version: 6.0.4
-Release: alt1
+Release: alt2
 
 Summary: The Pi-hole FTL engine
 License: EUPL-1.2
@@ -29,8 +29,7 @@ BuildRequires: libreadline-devel libreadline-devel-static
 BuildRequires: libunistring-devel
 BuildRequires: xxd
 
-Conflicts: dnsmasq < %EVR
-Provides: dnsmasq = %EVR
+Conflicts: dnsmasq
 
 %define _name FTL
 %define _servicename pihole-FTL
@@ -90,6 +89,9 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Fri Mar 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.4-alt2
+- fix wrong Provides (ALT #53462)
+
 * Mon Mar 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.4-alt1
 - v6.0.4
 
