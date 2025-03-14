@@ -1,5 +1,7 @@
+%def_without qt5
+
 Name: mpz
-Version: 1.0.26
+Version: 1.1.1
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -13,7 +15,21 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/olegantonyan/mpz/archive/%version.tar.gz
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+%if_with qt5
 BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-x11extras-devel
+%else
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Multimedia)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6DBus)
+%endif
+
+BuildRequires: pkgconfig(yaml-cpp)
+BuildRequires: pkgconfig(taglib)
 
 %description
 Music player for big local collections. Treats your folders with music as a library.
@@ -22,16 +38,18 @@ Similar to "album list" in Foobar2000.
 
 %prep
 %setup
+rm -rv 3rdparty/{yaml-cpp,taglib,utfcpp}-*
 
 %build
-mkdir build
-cd build
-qmake-qt5 CONFIG+=release CONFIG+=force_debug_info ..
-%make_build
+%cmake \
+    -DUSE_SYSTEM_YAMLCPP=TRUE \
+    -DUSE_SYSTEM_TAGLIB=TRUE \
+    %nil
+%cmake_build
 
 %install
-cd build
-%make_install install INSTALL_ROOT=%buildroot
+%cmake_install
+rm -v %buildroot/usr/share/licenses/mpz/license.txt
 
 %files
 %doc license.txt
@@ -40,6 +58,12 @@ cd build
 %_iconsdir/hicolor/*x*/apps/%name.png
 
 %changelog
+* Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1
+- switched to cmake
+- switched to Qt6
+- use system yaml-cpp, taglib
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.26-alt1
 - new version 1.0.26 (with rpmrb script)
 
