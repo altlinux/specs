@@ -1,6 +1,6 @@
 Name:    glpi-agent
-Version: 1.12
-Release: alt2
+Version: 1.13
+Release: alt1
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -140,6 +140,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Mar 14 2025 Andrey Cherepanov <cas@altlinux.org> 1.13-alt1
+- New version.
+
 * Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 1.12-alt2
 - Comment unused parameters.
 
