@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.5.1
+Version: 5.6.0
 Release: alt1
 
-Summary: Tool for managing your YubiKey configuration
+Summary: Library and CLI for managing your YubiKey configuration
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/yubikey-manager/
@@ -35,7 +35,8 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-Python 3.7 (or later) library for configuring a YubiKey.
+Python library and command line tool for configuring any YubiKey over
+all USB interfaces.
 
 %prep
 %setup
@@ -59,13 +60,16 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 
 %files
 %doc COPYING NEWS
-%_bindir/%mod_name
+%_bindir/ykman
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/yubikit/
 %python3_sitelibdir/%{pep427_name %pypi_name}-%version.dist-info/
 %_man1dir/%mod_name.1.*
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 5.6.0-alt1
+- Updated to 5.6.0.
+
 * Fri Jul 05 2024 Anton Zhukharev <ancieg@altlinux.org> 5.5.1-alt1
 - Updated to 5.5.1.
 
