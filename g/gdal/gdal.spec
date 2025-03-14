@@ -8,18 +8,18 @@
 
 %define sover 36
 
-Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 3.10.2
-Release: alt1
+Release: alt2
+
+Summary: The Geospatial Data Abstraction Library (GDAL)
+License: MIT
 Group: Sciences/Geosciences
 
-License: MIT
 URL: http://www.gdal.org
 Packager: ALT QA Team <qa@packages.altlinux.org>
 # ftp://ftp.remotesensing.org/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
-
 Patch: %name-2.2.3-alt-mysql8-transition.patch
 
 %define libname lib%name
@@ -129,6 +129,13 @@ Python module for %name.
 %prep
 %setup
 %patch -p0
+%ifarch %e2k
+# mcst#9339 as of 3.10.x vs lcc 1.29.06
+sed -i '/large_power_of_5\[\] =/s/\[\]/[5]/' third_party/fast_float/bigint.h
+sed -i -E 's/^(.*<Image>\(rc, )isBigTIFF/bool fix=isBigTIFF;\1fix/' third_party/libertiff/libertiff.hpp
+sed -i -E 's/(m_o(Map.*|Conf))\{\};/\1={};/' frmts/zarr/zarr.h ogr/ogrsf_frmts/gmlas/ogr_gmlas.h
+sed -i -E 's/(m_anArrow.*)\{\};/\1={};/' ogr/ogrsf_frmts/generic/ograrrowarrayhelper.h
+%endif
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -241,6 +248,10 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 04 2025 Michael Shigorin <mike@altlinux.org> 3.10.2-alt2
+- E2K: lcc 1.29 ftbfs workaround (mcst#9339).
+- Minor spec cleanup (use recommended tag order).
+
 * Sun Feb 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.10.2-alt1
 - New version.
 
