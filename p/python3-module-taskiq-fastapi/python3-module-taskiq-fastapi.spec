@@ -3,7 +3,7 @@
 %define mod_name taskiq_fastapi
 
 Name: python3-module-%pypi_name
-Version: 0.3.2
+Version: 0.3.4
 Release: alt1
 
 Summary: FastAPI integration for taskiq
@@ -47,6 +47,9 @@ sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 0.3.4-alt1
+- Updated to 0.3.4.
+
 * Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 0.3.2-alt1
 - Updated to 0.3.2.
 

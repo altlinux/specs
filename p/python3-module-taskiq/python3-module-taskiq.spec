@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name taskiq
+%define mod_name taskiq
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.9
+Version: 0.11.13
 Release: alt1
 
 Summary: Distributed task queue with full async support
@@ -58,15 +59,18 @@ sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
 %doc LICENSE README.md
-%_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%_bindir/taskiq
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 0.11.13-alt1
+- Updated to 0.11.13.
+
 * Fri Nov 29 2024 Anton Zhukharev <ancieg@altlinux.org> 0.11.9-alt1
 - Updated to 0.11.9.
 

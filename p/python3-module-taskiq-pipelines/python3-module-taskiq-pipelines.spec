@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.2
+Version: 0.1.4
 Release: alt1
 
 Summary: Task pipelining for taskiq
@@ -54,7 +54,7 @@ sed -i '/^version =/s/".*"/"%version"/' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
 %doc LICENSE README.md
@@ -62,6 +62,9 @@ sed -i '/^version =/s/".*"/"%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 0.1.4-alt1
+- Updated to 0.1.4.
+
 * Mon Aug 05 2024 Anton Zhukharev <ancieg@altlinux.org> 0.1.2-alt1
 - Updated to 0.1.2.
 

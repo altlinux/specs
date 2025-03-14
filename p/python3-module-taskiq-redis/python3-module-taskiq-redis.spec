@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Broker and result backend for taskiq
@@ -25,8 +25,6 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter wemake-python-styleguide
-%add_pyproject_deps_check_filter yesqa
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -55,7 +53,7 @@ sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
 %doc LICENSE README.md
@@ -63,6 +61,9 @@ sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 1.0.3-alt1
+- Updated to 1.0.3.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.2-alt1
 - Updated to 1.0.2.
 

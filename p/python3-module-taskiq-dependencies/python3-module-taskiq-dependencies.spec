@@ -5,11 +5,11 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.4
+Version: 1.5.7
 Release: alt1
 
 Summary: FastAPI-like dependency injection implementation
-License: Unlicense
+License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/taskiq-dependencies/
 Vcs: https://github.com/taskiq-python/taskiq-dependencies
@@ -56,14 +56,17 @@ sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 1.5.7-alt1
+- Updated to 1.5.7.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 1.5.4-alt1
 - Updated to 1.5.4.
 
