@@ -4,7 +4,7 @@
 
 Name: dropbear
 Summary: A smallish SSH server and client
-Version: 2024.86
+Version: 2025.87
 Release: alt1
 License: MIT
 # "Dropbear is open source software, distributed under a MIT-style license."
@@ -106,6 +106,9 @@ EOF
 %_bindir/scp
 
 %changelog
+* Fri Mar 14 2025 Vitaly Chikunov <vt@altlinux.org> 2025.87-alt1
+- Update to DROPBEAR_2025.87 (2025-03-05). Now with post-quantum key exchange.
+
 * Fri Nov 01 2024 Vitaly Chikunov <vt@altlinux.org> 2024.86-alt1
 - Update to DROPBEAR_2024.86 (2024-10-22).
 
