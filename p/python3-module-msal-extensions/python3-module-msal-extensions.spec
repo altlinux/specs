@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: Microsoft Authentication Library extensions (MSAL EX)
 License: MIT
@@ -61,6 +61,9 @@ The supported platforms are Windows, Mac and Linux.
 
 %install
 %pyproject_install
+# don't ship tests
+# https://github.com/AzureAD/microsoft-authentication-extensions-for-python/issues/140
+rm -r %buildroot%python3_sitelibdir/tests/
 
 %check
 # .github/workflows/python-package.yml
@@ -74,6 +77,9 @@ chmod +x linux_test.sh
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.0 -> 1.3.0.
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.0.0 -> 1.2.0 (closes: #52422).
 
