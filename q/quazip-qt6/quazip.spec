@@ -1,10 +1,10 @@
-%define sover 1.4.0
+%define sover %version.0
 %define libquazip libquazip1-qt6
 
 %define rname quazip
 
 Name: quazip-qt6
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Qt/C++ wrapper for the minizip library
@@ -91,5 +91,8 @@ export QT_ENABLE_REGEXP_JIT=0
 %_pkgconfigdir/quazip1-qt6.pc
 
 %changelog
+* Fri Mar 14 2025 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
+- new version (1.5) with rpmgs script
+
 * Sun Aug 13 2023 Vitaly Lipatov <lav@altlinux.ru> 1.4-alt1
 - initial build Qt6 support (based on quazip-qt5 package)
