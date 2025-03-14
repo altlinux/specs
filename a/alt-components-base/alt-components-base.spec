@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.3.4
+Version: 0.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -61,6 +61,22 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Fri Mar 14 2025 Andrey Limachko <liannnix@altlinux.org> 0.4-alt1
+- feat: the pacemaker component has been added to the cluster
+  category (thx Sergey Savelev)
+- feat: new subdirectories with organizations have been added to the
+  Vendors directory:
+  + IT BASTION.
+  + Gazinformservice.
+  + Doctor Web.
+  + ABP2B.
+  Components by product names have been added to the listed
+  organizations as well as to the 1C subdirectory (thx Anna Ivanova)
+- feat: in the Vendors directory, subdirectories have been
+  created for each vendor, with the name of the organization (without
+  its legal form). For each product, components with a description
+  are added to the subdirectories (thx Anna Ivanova)
+
 * Tue Mar 11 2025 Andrey Limachko <liannnix@altlinux.org> 0.3.4-alt1
 - fix: add aarch64 excludes for packages that are not in the
   aarch64 repository
