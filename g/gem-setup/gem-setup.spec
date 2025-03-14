@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt18
+Release:       alt19
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Fri Mar 14 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt19
+- * used search of task name over all the rakefiles for the source
+
 * Wed Mar 12 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt18
 - ! caller to rake task if no rakefiles found
 
