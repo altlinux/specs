@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
@@ -23,11 +23,10 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %add_pyproject_deps_check_filter fixit
 %add_pyproject_deps_check_filter hypothesmith
-%add_pyproject_deps_check_filter jupyter
 %add_pyproject_deps_check_filter prompt-toolkit
 %add_pyproject_deps_check_filter pyre-check
 %add_pyproject_deps_check_filter slotscheck
-%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_metadata_extra dev-without-jupyter
 %pyproject_builddeps_check
 %endif
 # rust stuff
@@ -85,6 +84,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 14 2025 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.6.0 -> 1.7.0.
+
 * Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.5.1 -> 1.6.0.
 
