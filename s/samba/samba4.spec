@@ -122,7 +122,7 @@
 
 Name:    samba
 Version: 4.20.7
-Release: alt2
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2251,6 +2251,9 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Fri Mar 14 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.7-alt3
+- mdb_util: enable compact while copying due it deadlock in offline backup.
+
 * Wed Mar 12 2025 Andrey Limachko <liannnix@altlinux.org> 4.20.7-alt2
 - s3:locale:pam_winbind: Update Russian translation (thx Alevtina Karashokova).
 - s3-waf: Enable build of MO files for localization (thx Ivan Korytov).
