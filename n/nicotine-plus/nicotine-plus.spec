@@ -2,7 +2,7 @@
 %define oname nicotine+
 
 Name: nicotine-plus
-Version: 3.3.7
+Version: 3.3.10
 Release: alt1
 
 Summary: The client program for the SoulSeek filesharing system
@@ -30,16 +30,13 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
 
 %py3_use pygobject3 >= 3.18
-BuildRequires: python3-devel
+
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 BuildRequires: desktop-file-utils
 
-Requires: libgtk+3-gir
-#add_python_req_skip pywintypes win32con win32gui
-#Requires: python-module-sexy python-module-pygtk-libglade
-
-# Mozilla does not embedding anymore
-#add_python_req_skip gtkmozembed
+# typelib(Gtk) = 4.0
+Requires: libgtk4-gir
 
 %description
 Nicotine is a feature-complete client for the SoulSeek filesharing network that
@@ -80,10 +77,14 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 %setup -n %oname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+find %buildroot%python3_sitelibdir/pynicotine/locale -name "*.py" -print -delete
+mkdir -p %buildroot/%_datadir/
+mv %buildroot%python3_sitelibdir/pynicotine/locale %buildroot%_datadir/locale
+ln -s %_datadir/locale %buildroot%python3_sitelibdir/pynicotine/locale
 
 %find_lang nicotine
 
@@ -91,13 +92,18 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 %_bindir/nicotine
 #doc %_docdir/nicotine/
 %python3_sitelibdir/pynicotine/
-%python3_sitelibdir/nicotine*egg-info
+%python3_sitelibdir/nicotine*.dist-info
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*.svg
+%_iconsdir/hicolor/*x*/apps/*.png
 %_man1dir/*
 %_datadir/metainfo/
 
 %changelog
+* Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 3.3.10-alt1
+- new version 3.3.10
+- switch to pyproject, improve spec
+
 * Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 3.3.7-alt1
 - new version 3.3.7 (with rpmrb script)
 
