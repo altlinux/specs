@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.12
+Version: 1.16.13
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,9 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Fri Mar 14 2025 Anton Midyukov <antohami@altlinux.org> 1.16.13-alt1
+- Run service x11presetdrv, if it is present (Closes: 53448)
+
 * Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 1.16.12-alt1
 - install2-init-functions: fix stop_splash for run systemd-vconsole-setup
 - install2-init-functions: run setsyfont as fallback in stop_splash
