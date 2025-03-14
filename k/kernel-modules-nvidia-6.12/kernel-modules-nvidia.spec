@@ -6,13 +6,14 @@
 %define module_name		nvidia
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
+%define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
 %define package_version	570.124.04
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		6.12
 %define karch x86_64 aarch64 %ix86
 
@@ -195,17 +196,6 @@ do
 	TEMP_DIR=$PWD/ \
 	ARCH=%base_arch \
 	SYSSRC=%_usrsrc/linux-%kversion-%flavour
-	if [ -d uvm ] ; then
-	    pushd uvm
-	    cp -a ../Module.symvers .
-	    %make_build modules \
-		$INTO_KERNEL_SRCDIR \
-		M=$PWD \
-		TEMP_DIR=$PWD/ \
-		ARCH=%base_arch \
-		SYSSRC=%_usrsrc/linux-%kversion-%flavour
-	    popd
-	fi
     popd
 done
 
@@ -228,18 +218,23 @@ do
 	install -p -m644 uvm/%uvmmodule_name%module_ext %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
     [ -e %uvmmodule_name%module_ext ] &&
 	install -p -m644 %uvmmodule_name%module_ext    %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
+    [ -e %peermemmodule_name%module_ext ] &&
+	install -p -m644 %peermemmodule_name%module_ext    %buildroot/%module_local_dir/peermem-%kversion-%flavour-%krelease-$ver
     popd
 done
-# workaround agains absent uvm module
-if ! [ -e %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version ] ; then
-    LAST_UVM_MOD_PATH=`ls -1d %buildroot/%module_local_dir/uvm-* 2>/dev/null | sort -r | head -n1`
-    if [ -n "$LAST_UVM_MOD_PATH" ] ; then
-	LAST_UVM_MOD_FILE=`basename $LAST_UVM_MOD_PATH`
-	ln -s `relative %module_local_dir/$LAST_UVM_MOD_FILE %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version
-    else
-	ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version` %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version
+
+# workaround agains absent modules
+for submod in peermem uvm ; do
+    if ! [ -e %buildroot/%module_local_dir/${submod}-%kversion-%flavour-%krelease-%module_version ] ; then
+	LAST_MOD_PATH=`ls -1d %buildroot/%module_local_dir/${submod}-* 2>/dev/null | sort -r | head -n1`
+	if [ -n "$LAST_MOD_PATH" ] ; then
+	    LAST_MOD_FILE=`basename $LAST_MOD_PATH`
+	    ln -s `relative %module_local_dir/$LAST_MOD_FILE %module_local_dir/${submod}-%kversion-%flavour-%krelease-%module_version` %buildroot/%module_local_dir/${submod}-%kversion-%flavour-%krelease-%module_version
+	else
+	    ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version %module_local_dir/${submod}-%kversion-%flavour-%krelease-%module_version` %buildroot/%module_local_dir/${submod}-%kversion-%flavour-%krelease-%module_version
+	fi
     fi
-fi
+done
 
 echo -n "%module_version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
 # absolute symlink because old branches compatibility
@@ -247,10 +242,12 @@ ln -s %nvidia_workdir/%kversion-%flavour-%krelease %buildroot/%module_version_di
 ln -s nvidia %buildroot/%module_version_dir/%modesetmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%drmmodule_name
 ln -s nvidia %buildroot/%module_version_dir/%uvmmodule_name
+ln -s nvidia %buildroot/%module_version_dir/%peermemmodule_name
 ln -s `relative %module_local_dir/%kversion-%flavour-%krelease-%module_version         %module_dir/%module_name%module_ext`    %buildroot/%module_dir/%module_name%module_ext
 ln -s `relative %module_local_dir/modeset-%kversion-%flavour-%krelease-%module_version %module_dir/%modesetmodule_name%module_ext` %buildroot/%module_dir/%modesetmodule_name%module_ext
 ln -s `relative %module_local_dir/drm-%kversion-%flavour-%krelease-%module_version %module_dir/%drmmodule_name%module_ext` %buildroot/%module_dir/%drmmodule_name%module_ext
 ln -s `relative %module_local_dir/uvm-%kversion-%flavour-%krelease-%module_version     %module_dir/%uvmmodule_name%module_ext` %buildroot/%module_dir/%uvmmodule_name%module_ext
+ln -s `relative %module_local_dir/peermem-%kversion-%flavour-%krelease-%module_version     %module_dir/%peermemmodule_name%module_ext` %buildroot/%module_dir/%peermemmodule_name%module_ext
 
 
 %post
@@ -285,15 +282,20 @@ fi
 %module_version_dir/%modesetmodule_name
 %module_version_dir/%drmmodule_name
 %module_version_dir/%uvmmodule_name
+%module_version_dir/%peermemmodule_name
 %module_local_dir/%kversion-%flavour-%krelease-*
 %module_local_dir/modeset-%kversion-%flavour-%krelease-*
 %module_local_dir/drm-%kversion-%flavour-%krelease-*
 %module_local_dir/uvm-%kversion-%flavour-%krelease-*
+%module_local_dir/peermem-%kversion-%flavour-%krelease-*
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Mar 14 2025 Sergey V Turchin <zerg at altlinux dot org> 570.124.04-alt2
+- build peermem module
 
 * Tue Mar 04 2025 Sergey V Turchin <zerg at altlinux dot org> 570.124.04-alt1
 - new release (570.124.04)
