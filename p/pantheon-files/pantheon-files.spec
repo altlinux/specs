@@ -9,7 +9,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -17,10 +17,11 @@ License: GPL-3.0
 Group: File tools
 Url: https://github.com/elementary/%_name
 
+Vcs: https://github.com/elementary/files.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%_name-%version.tar.gz
 %else
-Vcs: https://github.com/elementary/files.git
 Source: %_name-%version.tar
 %endif
 
@@ -116,6 +117,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 7.1.1-alt1
+- 7.1.1
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
 - 7.1.0
 

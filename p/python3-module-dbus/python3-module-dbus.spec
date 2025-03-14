@@ -7,15 +7,15 @@
 #%%add_findreq_skiplist %_libexecdir/installed-tests/%modname/test/*.py
 
 Name: python3-module-dbus
-Version: 1.3.2
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 
 Summary: Python bindings for D-BUS library
 License: MIT
 Group: Development/Python3
 Url: https://www.freedesktop.org/wiki/Software/DBusBindings
 
-Source: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
+Source: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.xz
 
 %define dbus_ver 1.8
 %define glib_ver 2.40
@@ -73,8 +73,8 @@ the functionality of the installed python-dbus package.
 
 %build
 %meson \
-    %{?_enable_installed_tests:-Dinstalled-tests=true} \
-    %{?_enable_doc:-Ddoc=true}
+    %{subst_enable_meson_bool installed_tests installed_tests} \
+    %{subst_enable_meson_feature doc doc}
 %nil
 %meson_build
 
@@ -113,6 +113,9 @@ the functionality of the installed python-dbus package.
 %endif
 
 %changelog
+* Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1.1
 - increased tests timeout for some slower machines, e.g. most modern
   riscv64 boards (voropaevdmtr@)
