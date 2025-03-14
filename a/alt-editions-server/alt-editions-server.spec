@@ -3,7 +3,7 @@
 %define alt_components_base_version 0.3.0
 
 Name: alt-editions-server
-Version: 0.2.1
+Version: 0.3
 Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
@@ -69,6 +69,13 @@ done
 %_alterator_datadir/editions
 
 %changelog
+* Sat Mar 15 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
+- feat: add components from infrastructure solutions to main
+  section (thx Sergey Savelev):
+  + jitsi-meet
+  + nextcloud
+  + pacemaker
+
 * Sat Mar 08 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.1-alt1
 - fix: clean unused or absent gnome components
 - fix: update typos in component names
