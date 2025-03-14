@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 
 Summary: A python package for music and audio analysis
@@ -12,6 +12,7 @@ License: ISC
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/librosa/librosa.git
+
 Source: https://pypi.io/packages/source/l/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
@@ -51,6 +52,9 @@ py.test-3 tests
 
 
 %changelog
+* Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Fri May 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
 - 0.10.2
 
