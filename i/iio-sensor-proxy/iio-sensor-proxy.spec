@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: IIO sensors to input device proxy
@@ -99,6 +99,9 @@ dbus-run-session %__meson_test -t 4
 
 
 %changelog
+* Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.7-alt1
+- 3.7
+
 * Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
 - 3.6
 
