@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 
 Summary: GPT applier
@@ -199,6 +199,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Mar 14 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.1-alt1
+- Refined registry key handling: LAPS enablement and user presence check
+
 * Thu Mar 06 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.0-alt1
 - Implemented Local Administrator Password Solution (LAPS) functionality,
   including support for Group Policy Object (GPO) keys to
