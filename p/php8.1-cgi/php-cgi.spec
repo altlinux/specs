@@ -10,7 +10,11 @@ License: PHP-3.01
 Source1: php-cgi-alt.ini
 Source2: php-cgi-browscap.ini
 
+%if "%_php_suffix" != "8.4"
 Patch0: php8.2-sapi-cgi-alt-build-fastcgi.patch
+%else
+Patch0: php8.4-sapi-cgi-alt-build-fastcgi.patch
+%endif
 
 Requires: php8.1 = %php_version
 Provides: php-engine = %php_version-%php_release
@@ -40,7 +44,9 @@ against placing any interpreters into cgi-bin.
 %prep
 %setup -T -c
 %php_sapi_prepare cgi
+
 %patch0 -p1
+
 
 %build
 

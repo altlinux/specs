@@ -73,6 +73,7 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 mkdir -p ext/opcache
 ln -s ../../tests ext/opcache/tests
 # remove broken tests 
+[ -f tests/ct_eval_frameless_001.phpt ] && rm -f tests/ct_eval_frameless_001.phpt
 rm -f tests/preload_user_005.phpt
 rm -f tests/preload_user_004.phpt
 

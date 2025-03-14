@@ -12,7 +12,7 @@ URL:		http://www.php.net/manual/en/book.pdo.php
 #Source0:	standart PHP module
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
-Patch1: 	php7-pdo-7.4-re2c-require.patch
+Patch1: 	php-pdo-8.4-re2c-require.patch
 
 
 BuildRequires(pre): rpm-build-php8.1-version
@@ -29,6 +29,14 @@ PHP PDO extension provides a uniform data access interface, supporting advanced
 features such as prepared statements and bound parameters. 
 PDO drivers are dynamically loadable and may be developed independently from the 
 core, but still accessed using the same API.
+
+%package devel
+Group: Development/C
+Summary: Development package for %name
+Requires: php-devel = %php_version
+
+%description devel
+Headers for developing with %name.
 
 
 %prep
@@ -61,7 +69,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %php_extconf/%php_extension
 %php_extdir/*
 %doc CREDITS
-%exclude %php_includedir/*
+
+%files devel
+%php_includedir/*
 
 %post
 %php_extension_postin

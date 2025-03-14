@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 31
+%define _php_release_version 32
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -20,7 +20,7 @@
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt2
+Release: alt1
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -436,13 +436,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %preun
 %php_sapi_preun
 
-%define		php_extension	mysqlnd
-
 %post mysqlnd
-%php_extension_postin
+rm -f /etc/php/%_php_suffix/*/php.d/01_mysqlnd.ini ||:
 
-%preun mysqlnd
-%php_extension_preun
+%post openssl
+rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
+
 
 %files
 %_altdir/php%_php_suffix
@@ -498,6 +497,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Wed Mar 12 2025 Anton Farygin <rider@altlinux.ru> 8.1.32-alt1
+- 8.1.32 (Fixes: CVE-2025-1219, CVE-2025-1736, CVE-2025-1861, CVE-2025-1734, CVE-2025-1217)
+- cleanup old files in updated mysqlnd and openssl triggers
+
 * Wed Feb 05 2025 Anton Farygin <rider@altlinux.ru> 8.1.31-alt2
 - applied fixes from upstream 8.3 branch:
    * 5ad4d4be9f8 fix tests for glibc 2.39

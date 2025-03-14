@@ -18,6 +18,8 @@ Source2:	php-%php_extension-params.sh
 BuildRequires(pre): rpm-build-php8.1-version
 BuildRequires: gcc-c++ postgresql-devel
 BuildRequires: php-devel = %php_version
+BuildRequires: php%_php_suffix-pdo-devel = %php_version
+BuildRequires: re2c
 
 PreReq: php%_php_suffix-pdo = %php_version
 Provides: php%_php_suffix-pdo-driver
@@ -49,7 +51,7 @@ subst 's@php/ext@php/%_php_version/ext@g' configure
 	--with-libdir=%_lib \
 	#
 
-%php_make
+%php_make RE2C=/usr/bin/re2c
 
 %install
 %php_make_install
