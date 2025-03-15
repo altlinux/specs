@@ -12,7 +12,7 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -37,6 +37,8 @@ There is currently no support for compilers other than GHC.
 %package extra
 Summary: RPM helpers for ghc bulding
 Group: Development/Haskell
+
+BuildArch: noarch
 
 Requires: %name = %EVR
 
@@ -77,6 +79,10 @@ install -D -m0755 %SOURCE4 \
 %_rpmmacrosdir/ghc-extra
 
 %changelog
+* Fri Mar 14 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.3-alt1
+- Docs placement has been adapted both for GHC 9.2 and 9.6 majors
+- Made rpm-build-haskell-extra a noarch package
+
 * Wed Mar 05 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.2-alt1
 - Changed ghc_gen_filelist.sh logic for GHC 9.2 built with Hadrian
 - Rewrote all ghc_* and cabal* macros in multiline style (thx vt@)
