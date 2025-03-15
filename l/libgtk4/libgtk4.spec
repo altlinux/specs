@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.16
+%define ver_major 4.18
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -38,7 +38,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.12
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -51,7 +51,7 @@ Vcs: https://gitlab.gnome.org/GNOME/gtk.git
 %if_enabled snapshot
 Source: %_name-%version.tar
 %else
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
@@ -59,9 +59,9 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 
 %define meson_ver 0.63
-%define glib_ver 2.76
+%define glib_ver 2.80
 %define gi_ver 1.76
-%define cairo_ver 1.14.0
+%define cairo_ver 1.18.2
 %define pango_ver 1.50.0
 %define atk_ver 2.15.1
 %define pixbuf_ver 2.30.0
@@ -69,14 +69,16 @@ Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 %define gtk_doc_ver 1.32.1
 %define colord_ver 0.1.9
 %define cups_ver 1.6
-%define wayland_ver 1.21
-%define wayland_protocols_ver 1.36
+%define wayland_ver 1.23
+%define wayland_protocols_ver 1.41
 %define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
 %define graphene_ver 1.10
 %define cloudproviders_ver 0.2.5
 %define rsvg_ver 2.52.0
 %define vulkan_ver 1.3
+%define harfbuzz_ver 8.4.0
+%define gst_ver 1.24
 
 Requires: gtk4-update-icon-cache = %EVR
 Requires: at-spi2-core
@@ -86,7 +88,7 @@ Requires: librsvg >= %rsvg_ver
 
 %{?_enable_colord:Requires: colord}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson >= %meson_ver gcc-c++ sassc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
@@ -117,12 +119,12 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_tracker:BuildRequires: tracker3-devel}
 %{?_enable_vulkan:BuildRequires: /usr/bin/glslc vulkan-devel >= %vulkan_ver}
 # for examples
-BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel python3-module-pygobject3
+BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel >= %harfbuzz_ver python3-module-pygobject3
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_tests:BuildRequires: librsvg-devel >= %rsvg_ver}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui icon-theme-hicolor gnome-icon-theme-symbolic}
 # since 3.94.0 for media backends
-%{?_enable_gstreamer:BuildRequires: pkgconfig(gstreamer-player-1.0)}
+%{?_enable_gstreamer:BuildRequires: pkgconfig(gstreamer-player-1.0) >= %gst_ver}
 %{?_enable_ffmpeg:
 BuildRequires: libavfilter-devel libavformat-devel libavdevice-devel
 BuildRequires: libavcodec-devel libavutil-devel libswscale-devel libswresample-devel}
@@ -348,29 +350,29 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %files -n gtk4-demo
 %_desktopdir/org.gtk.Demo4.desktop
-%_desktopdir/org.gtk.IconBrowser4.desktop
+#%_desktopdir/org.gtk.IconBrowser4.desktop
 %_desktopdir/org.gtk.gtk4.NodeEditor.desktop
 %_desktopdir/org.gtk.WidgetFactory4.desktop
 %_desktopdir/org.gtk.PrintEditor4.desktop
 %_bindir/gtk4-demo
 %_bindir/gtk4-demo-application
 %_bindir/gtk4-widget-factory
-%_bindir/gtk4-icon-browser
+#%_bindir/gtk4-icon-browser
 %_bindir/gtk4-node-editor
 %_bindir/gtk4-print-editor
 %_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
 %_iconsdir/hicolor/scalable/apps/org.gtk.Demo4.svg
-%_iconsdir/hicolor/scalable/apps/org.gtk.IconBrowser4.svg
+#%_iconsdir/hicolor/scalable/apps/org.gtk.IconBrowser4.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.PrintEditor4*.svg
 %_iconsdir/hicolor/scalable/apps/org.gtk.WidgetFactory4.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.Demo4-symbolic.svg
-%_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
+#%_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
 %_iconsdir/hicolor/*/*/org.gtk.gtk4.NodeEditor*.svg
 
 %_datadir/metainfo/org.gtk.Demo4.appdata.xml
-%_datadir/metainfo/org.gtk.IconBrowser4.appdata.xml
+#%_datadir/metainfo/org.gtk.IconBrowser4.appdata.xml
 %_datadir/metainfo/org.gtk.PrintEditor4.appdata.xml
 %_datadir/metainfo/org.gtk.WidgetFactory4.appdata.xml
 %_datadir/metainfo/org.gtk.gtk4.NodeEditor.appdata.xml
@@ -378,7 +380,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %if_enabled man
 %_man1dir/gtk4-demo.1.*
 %_man1dir/gtk4-demo-application.1.*
-%_man1dir/gtk4-icon-browser.1.*
+#%_man1dir/gtk4-icon-browser.1.*
 %_man1dir/gtk4-widget-factory.1.*
 %_man1dir/gtk4-node-editor.1*
 %endif
@@ -418,6 +420,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.1-alt1
+- 4.18.1
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 4.16.12-alt1
 - 4.16.12
 

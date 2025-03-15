@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Loupe
 
@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: loupe
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Image Viewer
@@ -19,23 +19,24 @@ License: GPL-3.0-or-later
 Group: Graphics
 Url: https://apps.gnome.org/Loupe
 
+Vcs: https://gitlab.gnome.org/GNOME/loupe.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/loupe.git
 Source: %name-%version%beta.tar
 %endif
-%{?_enable_snapshot:Source1: %name-%version-cargo.tar}
+Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
-%define gtk_ver 4.15.3
-%define adwaita_ver 1.6
+%define gtk_ver 4.16
+%define adwaita_ver 1.7
 %define gweather_ver 4.0.0
 %define lcms2_ver 2.12.0
 %define seccomp_ver 2.5.0
 
 Provides: gnome-image-viewer = %EVR
-Requires: glycin-loaders >= 1.1.0
+Requires: glycin-loaders >= 1.2.0
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
@@ -54,9 +55,9 @@ BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
 %summary
 
 %prep
-%setup -n %name-%version%beta %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
+%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-mkdir .cargo
+[ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
@@ -82,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt1
 - 47.4
 

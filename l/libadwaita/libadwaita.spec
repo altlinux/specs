@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.6
+%define ver_major 1.7
 %define beta %nil
 %define namespace Adw
 %define api_ver 1
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -30,8 +30,8 @@ Source: %name-%version%beta.tar
 %endif
 
 %define meson_ver 0.59
-%define glib_ver 2.76.0
-%define gtk_ver 4.16.1
+%define glib_ver 2.80.0
+%define gtk_ver 4.17.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver sassc
@@ -108,6 +108,7 @@ demonstrates %name variety of all its widgets.
 
 %install
 %meson_install
+rm -f %buildroot%_libdir/%name-%api_ver-internal.a
 %find_lang %name
 
 %check
@@ -115,13 +116,13 @@ xvfb-run -s -noreset %__meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
-%_libdir/%name-%api_ver-internal.so.*
+#%_libdir/%name-%api_ver-internal.so.*
 %doc README.md NEWS
 
 %files devel
 %_includedir/%name-%api_ver/
 %_libdir/%name-%api_ver.so
-%_libdir/%name-%api_ver-internal.so
+#%_libdir/%name-%api_ver-internal.so
 %_pkgconfigdir/%name-%api_ver.pc
 %{?_enable_vala:%_vapidir/%name-%api_ver.*}
 
@@ -147,6 +148,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.0-alt1
+- 1.7.0
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.6.5-alt1
 - 1.6.5
 

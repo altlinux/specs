@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.50
+%define ver_major 3.52
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 %def_enable pycairo
@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.0
-Release: alt2.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
@@ -21,7 +21,7 @@ Url: https://wiki.gnome.org/Projects/PyGObject
 Vcs: https://gitlab.gnome.org/GNOME/pygobject.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -37,10 +37,12 @@ Patch: pygobject-3.38.0-alt-meson-0.55_build.patch
 %filter_from_requires /typelib(GdkX11)/d
 
 %define meson_ver 0.64
-%define glib_ver 2.64.0
-%define gi_ver 1.64.0
+%define glib_ver 2.80.0
+%define gi_ver 1.80.0
 %define pycairo_ver 1.16
 %define ffi_ver 3.0
+
+Provides: python3-module-%_name = %EVR
 
 Requires: %name-nox = %EVR
 # required by /gi/overrides/Gdk.py
@@ -75,6 +77,7 @@ Group: Development/Python3
 %description nox
 This package provides a part of PyGObject without Cairo dependencies.
 
+# will be removed during the 3.53 development cycle
 %package pygtkcompat
 Summary: PyGTK compatibility layer for PyGObject
 Group: Development/Python3
@@ -152,6 +155,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Mon Mar 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.52.1-alt1
+- 3.52.1
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.50.0-alt2.1
 - made nox subpackage independent of main package (ALT #51976)
 

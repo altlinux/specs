@@ -3,8 +3,8 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.54
-%define ver_base 3.54
+%define ver_major 3.56
+%define ver_base 3.56
 %define ver_lib 1.2
 %define ver_libecal 2.0
 %define sover_libecal 3
@@ -33,11 +33,11 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
-License: %lgpl2plus
+License: LGPL-2.1
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Evolution
 
@@ -46,7 +46,7 @@ Vcs: https://gitlab.gnome.org/GNOME/evolution-data-server.git
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 Patch1: %name-1.4.2.1-debug-lock.patch
 
@@ -56,8 +56,6 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define gtk3_ver 3.20.0
 %define gtk4_ver 4.6.6
 %define soup3_ver 3.1.1
-%define gcr_api_ver 4
-%define gcr_ver 3.90.0
 %define secret_ver 0.5
 %define sqlite_ver 3.7.17
 %define gweather4_ver 4.1.0
@@ -69,7 +67,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 Requires: dconf
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-gnome rpm-build-licenses rpm-build-xdg rpm-build-gir
+BuildRequires(pre): rpm-macros-cmake rpm-build-xdg rpm-build-gir
 BuildRequires: cmake gcc-c++ ninja-build
 
 BuildRequires: gnome-common
@@ -296,6 +294,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.3-alt1
 - 3.54.3
 

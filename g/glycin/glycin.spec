@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define namespace Gly
 %define api_ver_major 1
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: glycin
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -170,8 +170,8 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_includedir/%name-%api_ver_major/%name.h
 %_libdir/lib%name-%api_ver_major.so
 %_pkgconfigdir/%name-%api_ver_major.pc
-%_vapidir/lib%name-%api_ver_major.deps
-%_vapidir/lib%name-%api_ver_major.vapi
+%_vapidir/%name-%api_ver_major.deps
+%_vapidir/%name-%api_ver_major.vapi
 
 %files -n lib%name-gir
 %_typelibdir/%namespace-%api_ver_major.typelib
@@ -186,8 +186,8 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_includedir/%name-gtk4-%api_ver_major/%name-gtk4.h
 %_libdir/lib%name-gtk4-%api_ver_major.so
 %_pkgconfigdir/%name-gtk4-%api_ver_major.pc
-%_vapidir/lib%name-gtk4-%api_ver_major.deps
-%_vapidir/lib%name-gtk4-%api_ver_major.vapi
+%_vapidir/%name-gtk4-%api_ver_major.deps
+%_vapidir/%name-gtk4-%api_ver_major.vapi
 
 %files -n lib%name-gtk4-gir
 %_typelibdir/%{namespace}Gtk4-%api_ver_major.typelib
@@ -196,6 +196,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Fri Feb 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
 - 1.1.6
 

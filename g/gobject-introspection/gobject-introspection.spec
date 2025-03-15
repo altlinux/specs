@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.82
+%define ver_major 1.84
 %define api_ver 1.0
 %define gir_api_ver 1.0
 %def_enable doctool
@@ -110,9 +110,9 @@ gobject-introspection.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %meson \
-	%{subst_enable_meson_feature doctool doctool} \
-	%{subst_enable_meson_bool gtk_doc gtk_doc} \
-	-Dpython=%__python3
+    %{subst_enable_meson_feature doctool doctool} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    -Dpython=%__python3
 %meson_build
 
 %install
@@ -169,6 +169,9 @@ gobject-introspection.
 %endif
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.0-alt1
+- 1.84.0
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 1.82.0-alt1
 - 1.82.0
 

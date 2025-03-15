@@ -3,10 +3,10 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.82
+%define ver_major 2.84
 %define api_ver 2.0
 %define gir_api_ver 3.0
-%define meson_ver 1.2.0
+%define meson_ver 1.4.0
 %define gi_api_ver 3.0
 %define gi_ver 1.78.0
 %define gir_ver 1.0
@@ -42,7 +42,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -99,7 +99,7 @@ Conflicts: gobject-introspection < 1.79
 
 BuildRequires: libpcre2-devel >= %pcre2_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson >= %meson_ver gcc-c++ indent
 BuildRequires: glibc-kernheaders libdbus-devel
 BuildRequires: libffi-devel >= %ffi_ver zlib-devel libelf-devel
@@ -249,13 +249,13 @@ the functionality of the installed glib2/libgio packages.
 %patch2 -p1 -b .xvt
 %patch3 -p1
 
+%python3_fix_shebang tests/lib/taptestrunner.py
+
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
 sed -i 's|-Werror|-Wno-error|' gobject/tests/meson.build
 %patch2000 -p1
 %endif
-
-sed -i 's|\(#\!/usr/bin/env python\)$|\13|' {gobject,gio}/tests/taptestrunner.py
 
 install -p -m644 %_sourcedir/glib-compat.map glib/compat.map
 install -p -m644 %_sourcedir/glib-compat.lds glib/compat.lds
@@ -275,7 +275,7 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
     %{subst_enable_meson_feature libmount libmount} \
     %{subst_enable_meson_bool doc documentation} \
     %{subst_enable_meson_feature man man-pages} \
-    %{subst_enable_meson_bool systemtap systemtap} \
+    %{subst_enable_meson_feature systemtap systemtap} \
     %{subst_enable_meson_feature sysprof sysprof} \
     %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
@@ -501,6 +501,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Mar 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.84.0-alt1
+- 2.84.0
+
 * Fri Feb 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.82.5-alt1
 - 2.82.5
 
