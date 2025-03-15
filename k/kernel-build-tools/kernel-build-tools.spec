@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.126
+Version: 0.127
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -47,6 +47,7 @@ Provides: kernel-headers-modules-std-pae
 %endif
 %ifnarch aarch64
 Provides: kernel-headers-modules-mp
+Provides: kernel-headers-modules-rk
 %endif
 %ifnarch %e2k
 Provides: kernel-headers-modules-elbrus-def
@@ -96,6 +97,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Sun Mar 16 2025 Vitaly Chikunov <vt@altlinux.org> 0.127-alt1
+- Added fake P:kernel-headers-modules-rk (ALT#53472).
+
 * Tue Feb 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.126-alt1
 - Update %%kernel_latest for kernel versions above 6.10.
 
