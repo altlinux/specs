@@ -1,71 +1,73 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/fox-config gcc-c++
-# END SourceDeps(oneline)
+%define _name hidapi
+
+Name: libhidapi
+Version: 0.14.0
+Release: alt1
+
+Summary: Library for communicating with USB and Bluetooth HID devices
+License: GPLv3 or BSD
 Group: Development/Other
-%add_optflags %optflags_shared
-%define oldname hidapi
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           libhidapi
-Version:        0.12.0
-Release:        alt1_1
-Summary:        Library for communicating with USB and Bluetooth HID devices
+Url: https://github.com/libusb/hidapi
+Packager: Yuri N. Sedunov <aris@altlinux.org>
 
-License:        GPLv3 or BSD
-URL:            https://github.com/libusb/hidapi
+Vcs: https://github.com/libusb/hidapi.git
 
-Source0:        https://github.com/libusb/hidapi/archive/%{oldname}-%{version}.tar.gz
+Source: https://github.com/libusb/hidapi/archive/%_name-%version.tar.gz
 
-BuildRequires: ctest cmake
-BuildRequires: gcc
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ ctest
+BuildRequires: /usr/bin/fox-config
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
-Source44: import.info
-Provides: hidapi = %{version}-%{release}
+
+Provides: hidapi = %EVR
 
 %description
 HIDAPI is a multi-platform library which allows an application to interface
 with USB and Bluetooth HID-class devices on Windows, Linux, FreeBSD and Mac OS
-X.  On Linux, either the hidraw or the libusb back-end can be used. There are
+X. On Linux, either the hidraw or the libusb back-end can be used. There are
 trade-offs and the functionality supported is slightly different.
 
 %package devel
 Group: Development/C
 Summary: Development files for hidapi
-Requires: %{name} = %{version}-%{release}
-Provides: hidapi-devel = %{version}-%{release}
+Requires: %name = %EVR
+Provides: %_name-devel = %EVR
 
 %description devel
 This package contains development files for hidapi which provides access to
 USB and Bluetooth HID-class devices.
 
 %prep
-%setup -q -n %{oldname}-%{oldname}-%{version}
-
+%setup -n %_name-%_name-%version
 
 %build
-%{fedora_v2_cmake}
-%fedora_v2_cmake_build
+%cmake
+%cmake_build
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
 
-
+%check
+%ctest
 
 %files
+%_libdir/lib%_name-*.so.*
 %doc AUTHORS.txt README.md LICENSE*.txt
-%{_libdir}/libhidapi-*.so.*
 
 %files devel
-%{_includedir}/hidapi
-%{_libdir}/cmake/hidapi
-%{_libdir}/libhidapi-hidraw.so
-%{_libdir}/libhidapi-libusb.so
-%{_libdir}/pkgconfig/hidapi-hidraw.pc
-%{_libdir}/pkgconfig/hidapi-libusb.pc
+%_includedir/%_name/
+%_libdir/cmake/%_name
+%_libdir/lib%_name-hidraw.so
+%_libdir/lib%_name-libusb.so
+%_pkgconfigdir/%_name-hidraw.pc
+%_pkgconfigdir/%_name-libusb.pc
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+- spec adapted for ALT
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_1
 - update to new release by fcimport
 

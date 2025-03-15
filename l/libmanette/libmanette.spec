@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define _name manette
 %define ver_major 0.2
 %define api_ver 0.2
@@ -9,24 +11,31 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.11
 Release: alt1
 
 Summary: A simple GObject game controller library
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://gnome.pages.gitlab.gnome.org/libmanette
 
 Vcs: https://gitlab.gnome.org/GNOME/libmanette.git
+
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 %define meson_ver 0.53
 %define glib_ver 2.50
 %define evdev_ver 1.4.5
+%define hidapi_ver 0.14
 
 BuildRequires(pre): meson >= %meson_ver rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver libevdev-devel >= %evdev_ver
 BuildRequires: libgudev-devel
+BuildRequires: pkgconfig(hidapi-hidraw) >= %hidapi_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
@@ -107,6 +116,9 @@ This package contains commandline tools from %name package.
 %_bindir/%_name-test
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.11-alt1
+- 0.2.11-2-g5fc5fd2
+
 * Fri Sep 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.9-alt1
 - 0.2.9
 
