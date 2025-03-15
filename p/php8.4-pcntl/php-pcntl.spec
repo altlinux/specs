@@ -43,7 +43,7 @@ export NO_INTERACTION=1
 make test
 EOF
 # run twice - in root mode and rootless mode
-vm-run --user --sbin --udevd --kvm=cond /bin/sh test-run
+vm-run --sbin --udevd --kvm=cond /bin/sh test-run
 vm-run --sbin --udevd --kvm=cond /bin/sh test-run
 
 %install

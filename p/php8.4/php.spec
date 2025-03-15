@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  4
-%define _php_release_version 4
+%define _php_release_version 5
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -24,7 +24,7 @@ Release: alt1
 
 License: PHP-3.01
 Group:	 Development/Other
-Url: http://www.php.net/
+Url: https://www.php.net/
 VCS: https://github.com/php/php-src
 
 Source0: php-source.tar
@@ -429,13 +429,12 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %preun
 %php_sapi_preun
 
-%define		php_extension	mysqlnd
-
 %post mysqlnd
-%php_extension_postin
+rm -f /etc/php/%_php_suffix/*/php.d/01_mysqlnd.ini ||:
 
-%preun mysqlnd
-%php_extension_preun
+%post openssl
+rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
+
 
 %files
 %_altdir/php%_php_suffix
@@ -491,6 +490,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Fri Mar 14 2025 Anton Farygin <rider@altlinux.ru> 8.4.5-alt1
+- 8.4.4 -> 8.4.5 (Fixes: CVE-2024-11235, CVE-2025-1219, CVE-2025-1736, CVE-2025-1861,
+                         CVE-2025-1734, CVE-2025-1217)
+
 * Wed Feb 12 2025 Anton Farygin <rider@altlinux.ru> 8.4.4-alt1
 - 8.4.3 -> 8.4.4
 
