@@ -2,7 +2,7 @@
 
 Name: alterator-interface-edition
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: Alterator interface for edition
 License: GPLv2+
@@ -27,6 +27,7 @@ Requires: alterator-interface-edition
 Requires: alterator-module-executor >= 0.1.13
 Requires: alterator-entry >= 0.2.0
 Requires: distro-licenses
+Requires: dconf
 
 %description -n alterator-backend-edition
 %summary.
@@ -91,6 +92,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Mar 14 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt2
+- Add dconf to requires.
+
 * Fri Mar 14 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
 - Fix painfully slow filetrigger.
 
