@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Showtime
-%define ver_major 47
+%define ver_major 48
+%define beta %nil
 %define rdn_name org.gnome.%_name
 
 %def_enable check
 
 Name: showtime
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Movie player for GNOME
 License: GPL-3.0-or-later
@@ -18,7 +19,7 @@ Url: https://apps.gnome.org/Showtime
 Vcs: https://gitlab.gnome.org/GNOME/Incubator/showtime.git
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -32,6 +33,7 @@ BuildArch: noarch
 %define gst_ver 1.24
 %define adw_ver 1.6
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: gst-plugin-gtk4 >= 0.13
 Requires: gstreamer%gst_api_ver >= %gst_ver
@@ -79,6 +81,9 @@ straightforward viewing experience.
 %doc README*
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - updated to 47.0-1-gdb8510a
 
