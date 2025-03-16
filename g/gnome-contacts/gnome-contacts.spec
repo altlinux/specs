@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-contacts
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Contacts manager for GNOME
@@ -77,10 +77,13 @@ BuildRequires: pkgconfig(gstreamer-1.0)
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README*
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Dec 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1.1-alt1
 - 47.1.1
 

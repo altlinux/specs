@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.SystemMonitor
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %def_enable systemd
 %def_disable check
@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Simple process monitor
@@ -21,7 +21,7 @@ Url: https://apps.gnome.org/SystemMonitor
 Vcs: https://gitlab.gnome.org/GNOME/gnome-system-monitor.git
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -49,6 +49,7 @@ BuildRequires: libxml2-devel >= %libxml_ver
 BuildRequires: librsvg-devel >= %rsvg_ver
 BuildRequires: libpolkit-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(catch2-with-main)
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils uncrustify}
 
@@ -84,10 +85,13 @@ Gnome-system-monitor is a simple process and system monitor.
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.%name.enums.xml
 %_iconsdir/hicolor/*/apps/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Feb 02 2025 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 
