@@ -2,15 +2,15 @@
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.2
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: General GNOME User Documentation
-License: %fdl
+License: CC-BY-SA-3.0
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
 AutoReqProv: no
@@ -44,6 +44,9 @@ directly associated with any particular GNOME application or package.
 %doc README* NEWS
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 47.5-alt1
+- 47.5
+
 * Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
