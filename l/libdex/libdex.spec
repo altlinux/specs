@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.8
+%define ver_major 0.10
 %define beta %nil
 %define api_ver 1
 %define namespace Dex
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: libdex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Dex provides Future-based programming for GLib-based applications
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 %endif
 Patch2000: %name-e2k.patch
 
-%define meson_ver 0.62
+%define meson_ver 1.0.0
 %define glib_ver 2.68
 %define uring_ver 0.7
 
@@ -143,6 +143,9 @@ This package contains Dex example programs.
 %endif
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1
 

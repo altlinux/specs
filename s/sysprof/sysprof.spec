@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define api_ver 6
 %define service_ver 3
@@ -17,13 +17,15 @@
 %endif
 
 Name: sysprof
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Sysprof kernel based performance profiler for Linux
 Group: Development/Tools
 License: GPL-3.0-or-later
 Url: http://sysprof.com
+
+Vcs: https://gitlab.gnome.org/GNOME/sysprof.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -34,20 +36,24 @@ Source: %name-%version%beta.tar
 %define glib_ver 2.76
 %define gtk_ver 4.15.2
 %define adw_ver 1.6
-%define dex_ver 0.6
-%define panel_ver 1.7
+%define dex_ver 0.9
+%define panel_ver 1.4
 %define systemd_ver 222
 %define polkit_ver 0.105
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ /usr/bin/appstream-util yelp-tools
+BuildRequires: meson gcc-c++ yelp-tools
+BuildRequires: desktop-file-utils  /usr/bin/appstreamcli
 BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
 BuildRequires: libdex-devel >= %dex_ver
+BuildRequires: libdw-devel
+BuildRequires: libdebuginfod-devel
 BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: gobject-introspection-devel
 %{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %adw_ver}
 %{?_enable_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
+
 
 %description
 The Sysprof profiler is a statistical profiler based on hardware
@@ -81,7 +87,9 @@ developing applications that use GtkGHex library.
 %_bindir/%name-cli
 %_bindir/%name
 %_bindir/%name-agent
-%_datadir/applications/%xdg_name.desktop
+%_bindir/%name-cat
+%_libexecdir/%name-live-unwinder
+%_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
 %_libdir/lib%name-%api_ver.so.*
 %_libdir/lib%name-memory-%api_ver.so
@@ -112,6 +120,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Thu Nov 28 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
