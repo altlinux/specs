@@ -1,13 +1,14 @@
 %def_with check
 
 Name: polychromatic
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: RGB lighting interface utilites
 License: GPL-3.0
 Group: System/Kernel and hardware
-URL: https://github.com/polychromatic/polychromatic
+Url: https://polychromatic.app
+Vcs: https://github.com/polychromatic/polychromatic.git
 
 ExclusiveArch: %qt6_qtwebengine_arches
 
@@ -35,7 +36,7 @@ graphical, command line or tray applet interface.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %meson
@@ -59,11 +60,15 @@ eval $(dbus-launch --sh-syntax)
 %_bindir/%name-helper
 %_bindir/%name-tray-applet
 %_datadir/applications/%name.desktop
+%_datadir/metainfo/*.xml
 %_datadir/%name/
 %python3_sitelibdir_noarch/%name/
 %_man1dir/%name-*
 
 %changelog
+* Sun Mar 16 2025 Anton Kurachenko <srebrov@altlinux.org> 0.9.4-alt1
+- New version 0.9.4.
+
 * Sun Nov 03 2024 Anton Kurachenko <srebrov@altlinux.org> 0.9.3-alt1
 - New version 0.9.3.
 
