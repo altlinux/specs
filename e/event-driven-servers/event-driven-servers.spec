@@ -1,6 +1,6 @@
 Name: event-driven-servers
 Version: 1.0
-Release: alt3
+Release: alt4
 
 Summary: This is a collection of high-performance and scalable event-driven servers
 License: BSD-3-Clause
@@ -178,6 +178,9 @@ sed -i 's!/usr/bin/env -S !!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buildroot%
 %python3_sitelibdir_noarch/mavis
 
 %changelog
+* Sun Mar 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt4
+- add debug and O2 flags and lost dependencies
+
 * Fri Mar 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt3
 - update to upstream/master
 
