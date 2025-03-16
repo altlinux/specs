@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qucs-s
-Version: 25.1.0
+Version: 25.1.1
 Release: alt1
 
 Summary: Circuit simulator
@@ -48,7 +48,7 @@ window.
 %patch -p1
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release -DUPDATE_TRANSLATIONS=On -DWITH_QT6=on
+%cmake -DCMAKE_BUILD_TYPE=Release -DUPDATE_TRANSLATIONS=On
 %cmake_build
 
 %install
@@ -69,6 +69,9 @@ done > %name.lang
 %_man1dir/*
 
 %changelog
+* Sun Mar 16 2025 Anton Midyukov <antohami@altlinux.org> 25.1.1-alt1
+- New version 25.1.1.
+
 * Thu Feb 20 2025 Anton Midyukov <antohami@altlinux.org> 25.1.0-alt1
 - New version 25.1.0.
 
