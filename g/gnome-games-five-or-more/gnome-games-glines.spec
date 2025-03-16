@@ -4,14 +4,14 @@
 
 %define _name five-or-more
 %define ver_major 48
-%define beta .alpha
+%define beta %nil
 %define xdg_name org.gnome.%_name
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: A GNOME version of the color lines program
 Group: Games/Boards
@@ -71,6 +71,9 @@ possible, and be #1 in the High Scores.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha
 - 48.alpha
 
