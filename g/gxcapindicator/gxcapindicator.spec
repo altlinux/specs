@@ -2,12 +2,13 @@
 
 Name: gxcapindicator
 Version: 1.2
-Release: alt1
+Release: alt2
 
 Summary: Simple and universal Cap/Num lock key indicator in the tray
-License: GPL-2.0
+License: GPL-3.0
 Group: Graphical desktop/Other
-Url: https://github.com/ItsZariep/GXCapIndicator
+Url: https://codeberg.org/ItsZariep/GXCapIndicator
+VCS: https://github.com/ItsZariep/GXCapIndicator
 
 Source: %name-%version.tar
 
@@ -45,5 +46,8 @@ Features
 %_iconsdir/hicolor/*/devices/*
 
 %changelog
+* Sun Mar 16 2025 Nikolay Strelkov <snk@altlinux.org> 1.2-alt2
+- Added upstream mirror URL, corrected license.
+
 * Sat Mar 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.2-alt1
 - Initial build for Sisyphus
