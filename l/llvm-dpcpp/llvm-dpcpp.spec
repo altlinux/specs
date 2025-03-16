@@ -49,7 +49,7 @@
 
 Name: %llvm_name
 Version: 2024.10.24
-Release: alt0.3
+Release: alt0.4
 Summary: oneAPI DPC++ compiler Infrastructure
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
@@ -77,6 +77,7 @@ Patch100: dpc-opencl-alt-use-system-cl-libs.patch
 Patch101: unified-runtime-alt-use-local-umf.patch
 Patch102: sycl-alt-do-not-hardcode-cl-lib.patch
 Patch103: sycl-alt-remove-cl-headers.patch
+Patch104: llvm-dpcpp-alt-enable-zstd.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -93,7 +94,7 @@ BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
-BuildRequires: zip zlib-devel binutils-devel ninja-build
+BuildRequires: zip zlib-devel binutils-devel ninja-build libzstd-devel-static
 
 # DPCPP specific requires
 BuildRequires: gdb libhwloc-devel libbacktrace-devel
@@ -477,6 +478,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -1012,6 +1014,9 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %endif
 
 %changelog
+* Sat Mar 15 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt0.4
+- Enable zstd support (for --offload-compress).
+
 * Wed Feb 26 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt0.3
 - Disable HIP/CUDA for now (due debuginfo constrains).
 
