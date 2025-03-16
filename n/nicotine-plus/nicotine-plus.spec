@@ -3,7 +3,7 @@
 
 Name: nicotine-plus
 Version: 3.3.10
-Release: alt1
+Release: alt2
 
 Summary: The client program for the SoulSeek filesharing system
 Summary(ru_RU.UTF-8): Клиент для файлообменной сети SoulSeek
@@ -75,6 +75,7 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 
 %prep
 %setup -n %oname-%version
+subst 's|CURRENT_PATH, "locale"|"/usr/share", "locale"|' pynicotine/i18n.py
 
 %build
 %pyproject_build
@@ -84,7 +85,6 @@ Nicotine поддерживает оптимизатор кода psyco, вы м
 find %buildroot%python3_sitelibdir/pynicotine/locale -name "*.py" -print -delete
 mkdir -p %buildroot/%_datadir/
 mv %buildroot%python3_sitelibdir/pynicotine/locale %buildroot%_datadir/locale
-ln -s %_datadir/locale %buildroot%python3_sitelibdir/pynicotine/locale
 
 %find_lang nicotine
 
@@ -100,6 +100,9 @@ ln -s %_datadir/locale %buildroot%python3_sitelibdir/pynicotine/locale
 %_datadir/metainfo/
 
 %changelog
+* Sun Mar 16 2025 Vitaly Lipatov <lav@altlinux.ru> 3.3.10-alt2
+- use locale dir without links
+
 * Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 3.3.10-alt1
 - new version 3.3.10
 - switch to pyproject, improve spec
