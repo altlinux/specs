@@ -1,5 +1,5 @@
 %define _name at-spi2
-%define ver_major 2.54
+%define ver_major 2.56
 %define api_ver_major 2
 %define api_ver 2.0
 %define namespace Atspi
@@ -14,13 +14,15 @@
 %def_disable check
 
 Name: %_name-core
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Accessibility
+
+Vcs: https://gitlab.gnome.org/GNOME/at-spi2-core.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -254,6 +256,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.56.0-alt1
+- 2.56.0
+
 * Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
 - 2.54.1
 
