@@ -2,13 +2,14 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.78
+%define xdg_name org.gnome.Vte
+%define ver_major 0.80
 %define api_ver 2.91
 # bindigs version for -gtk4 library
 %define bind_ver 3.91
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 %def_disable static
@@ -60,6 +61,7 @@ BuildRequires: libfribidi-devel
 BuildRequires: libpcre2-devel >= %pcre_ver
 BuildRequires: vala-tools libvala-devel
 BuildRequires: pkgconfig(liblz4)
+BuildRequires: libfast_float-devel
 BuildRequires: pkgconfig(systemd)
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver %{?_enable_gtk3:libgtk+3-gir-devel}
@@ -115,7 +117,7 @@ Requires: lib%name-devel = %EVR
 VTE is a terminal emulator widget for use with GTK+3. This package
 contains the libraries needed for building applications statically
 linked with VTE.
-%endif	# enabled static
+%endif  # enabled static
 
 %package -n lib%name-gir
 Summary: GObject introspection data for the %name library
@@ -170,7 +172,12 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %__meson_test
 
 %files
-%_bindir/*
+%_bindir/%_name-%api_ver
+%_bindir/%_name-%api_ver-gtk4
+%_desktopdir/%xdg_name.App.Gtk3.desktop
+%_desktopdir/%xdg_name.App.Gtk4.desktop
+%_datadir/xdg-terminals/%xdg_name.App.Gtk3.desktop
+%_datadir/xdg-terminals/%xdg_name.App.Gtk4.desktop
 
 %files -n lib%name -f %name.lang
 %dir %pkgdocdir
@@ -218,6 +225,9 @@ install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 %endif
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.80.0-alt1
+- 0.80.0
+
 * Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.78.4-alt1
 - 0.78.4
 

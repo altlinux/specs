@@ -2,15 +2,16 @@
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
-%define ver_major 47
+%define _name console
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
 
 %def_without nautilus
 
-Name: gnome-console
-Version: %ver_major.1
+Name: gnome-%_name
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: GNOME Console
@@ -18,14 +19,15 @@ License: GPL-3.0-or-later
 Group: Terminals
 Url: https://apps.gnome.org/Console
 
+Vcs: https://gitlab.gnome.org/GNOME/console.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/console.git
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.76
+%define glib_ver 2.80
 %define pango_ver 1.52
 %define gtk4_ver 4.14
 %define adwaita_ver 1.6
@@ -100,6 +102,9 @@ EOF
 %endif
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0.1-alt1
+- 48.0.1
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 

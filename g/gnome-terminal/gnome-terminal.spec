@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.54
+%define ver_major 3.56
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-4
@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -24,7 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.52
+%define glib_ver 2.68
 %define gtk_ver 3.24
 %define handy_ver 1.6
 %define vte_ver 0.78.4
@@ -113,6 +113,9 @@ EOF
 %endif
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.4-alt1
 - 3.54.4
 
