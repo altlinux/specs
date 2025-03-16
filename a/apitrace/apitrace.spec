@@ -1,6 +1,6 @@
 Name: apitrace
-Version: 11.1
-Release: alt2
+Version: 12.0
+Release: alt1
 
 Summary: Tools for tracing OpenGL
 
@@ -62,7 +62,7 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 %setup
 # fix WRAPPER_DIR
 %__subst "s|dpkg-architecture|no-dpkg-architecture|" CMakeLists.txt
-%patch1 -p1
+%patch1 -p2
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1507659
 # Remove bundled libraries, except khronos headers, md5, crc32c and CMakeLists.txt file
@@ -112,6 +112,9 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Fri Mar 14 2025 Vitaly Lipatov <lav@altlinux.ru> 12.0-alt1
+- new version (12.0) with rpmgs script
+
 * Sun Oct 15 2023 Vitaly Lipatov <lav@altlinux.ru> 11.1-alt2
 - rebuild with libproc2-devel
 
