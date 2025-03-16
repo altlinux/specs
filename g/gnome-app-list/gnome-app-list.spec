@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.0
+%define ver_major 3.0
 %define rdn_name org.gnome.App-list
 
 %def_enable check
@@ -51,6 +51,9 @@ by the Software (https://gitlab.gnome.org/GNOME/gnome-software) app.
 %doc README* NEWS
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
+- 3.0
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - 2.0
 

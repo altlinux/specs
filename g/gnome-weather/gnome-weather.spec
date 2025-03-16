@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -19,7 +19,7 @@ Url: https://apps.gnome.org/Weather
 Vcs: https://gitlab.gnome.org/GNOME/gnome-weather.git
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 Obsoletes: %name-data
-Provides:  %name-data = %version-%release
+Provides:  %name-data = %EVR
 
 %define gtk4_ver 4.5
 %define gi_ver 1.36.0
@@ -92,6 +92,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS README*
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

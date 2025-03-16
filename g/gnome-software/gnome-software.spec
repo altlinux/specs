@@ -1,12 +1,11 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
-%define plugins_ver 21
+%define plugins_ver 22
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
-%def_disable soup2
 %def_enable gudev
 %def_enable polkit
 %ifarch armh mipsel %e2k
@@ -40,11 +39,11 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Software
 
@@ -71,7 +70,7 @@ Source: %name-%version%beta.tar
 %define ostree_ver 2019.3
 %define xmlb_ver 0.3.4
 %define malcontent_ver 0.11
-%define applist_ver 1.0
+%define applist_ver 3.0
 
 Requires: gnome-app-list >= %applist_ver
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
@@ -83,11 +82,7 @@ BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
-%if_enabled soup2
-BuildRequires: libsoup-devel >= %soup_ver
-%else
 BuildRequires: libsoup3.0-devel >= %soup3_ver
-%endif
 BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
 BuildRequires: libsqlite3-devel libsecret-devel liboauth-devel
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
@@ -135,7 +130,6 @@ GNOME Software.
 
 %build
 %meson \
-    %{subst_enable_meson_bool soup2 soup2} \
     %{subst_enable_meson_bool gudev gudev} \
     %{subst_enable_meson_bool polkit polkit} \
     %{subst_enable_meson_bool fwupd fwupd} \
@@ -208,6 +202,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 47.5-alt1
 - 47.5
 

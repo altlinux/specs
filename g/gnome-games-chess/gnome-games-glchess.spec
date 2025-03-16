@@ -3,7 +3,7 @@
 %define _name chess
 %define xdg_name org.gnome.Chess
 %define __name gnome-%_name
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -17,6 +17,8 @@ Summary: A chess game for GNOME
 Group: Games/Boards
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Chess
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-chess.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
 
@@ -68,6 +70,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

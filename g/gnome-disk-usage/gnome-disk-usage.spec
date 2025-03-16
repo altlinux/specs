@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
@@ -17,7 +17,7 @@ Url: https://wiki.gnome.org/Apps/DiskUsageAnalyzer
 
 Vcs: https://gitlab.gnome.org/GNOME/baobab.git
 
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
 Provides: gnome-disk-usage-analyser = %EVR
 Provides: baobab = %EVR
@@ -26,12 +26,13 @@ Provides: baobab = %EVR
 %define vala_ver 0.23.3
 %define adwaita_ver 1.6
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson vala-tools >= %vala_ver
-BuildRequires: yelp-tools xmllint /usr/bin/appstreamcli
+BuildRequires: yelp-tools xmllint
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 
 %description
 Baobab is a graphical tool to analyse disk usage in local and remote
@@ -61,10 +62,13 @@ popd
 %_man1dir/%_name.1.*
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
@@ -28,7 +28,7 @@ Source: %name-%version.tar
 
 %define gjs_ver 1.50.0
 %define unistring_ver 0.9.5
-%define adwaita_ver 1.5
+%define adwaita_ver 1.6
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -86,6 +86,9 @@ xvfb-run %__meson_test
 %doc NEWS COPYING README*
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

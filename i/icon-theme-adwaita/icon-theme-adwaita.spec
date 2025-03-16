@@ -1,5 +1,5 @@
 %define _name adwaita-icon-theme
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 
 Name: icon-theme-adwaita
@@ -11,9 +11,11 @@ License: CC-BY-SA-3.0 and LGPL-3.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
-BuildArch: noarch
+Vcs: https://gitlab.gnome.org/GNOME/adwaita-icon-theme.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+
+BuildArch: noarch
 
 Provides: %_name = %version-%release
 Conflicts: gnome-theme-standard < 3.13.0
@@ -45,6 +47,9 @@ Adwaita icon theme for GTK.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

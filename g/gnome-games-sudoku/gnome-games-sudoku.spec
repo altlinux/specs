@@ -3,32 +3,34 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Sudoku game
 Group: Games/Boards
-License: GPLv3+
+License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Sudoku
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-sudoku.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version.tar.xz
 
 Provides:  %__name = %EVR
 
-%define glib_ver 2.40.0
-%define gtk_ver 4.10.0
-%define adw_ver 1.5
+%define glib_ver 2.72.0
+%define gtk_ver 4.16
+%define adw_ver 1.6
 %define qqwing_ver 1.3.4
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools gcc-c++
+BuildRequires: meson vala-tools gcc-c++ blueprint-compiler
 BuildRequires: yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver
@@ -66,6 +68,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Oct 20 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1.1-alt1
 - 47.1.1
 

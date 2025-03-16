@@ -5,7 +5,7 @@
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
-%define ver_major 4.1
+%define ver_major 4.2
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -18,6 +18,8 @@ Group: Games/Boards
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Nibbles
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-nibbles.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
 %else
@@ -29,7 +31,7 @@ Obsoletes: gnome-games-gnibbles
 Provides:  gnome-games-gnibbles = %EVR
 
 %define glib_ver 2.78.0
-%define gtk_ver 4.14
+%define gtk_ver 4.15
 %define adw_ver 1.5
 %define vala_ver 0.56
 
@@ -39,7 +41,6 @@ BuildRequires: yelp-tools gsettings-desktop-schemas-devel
 BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: libgsound-devel
 BuildRequires: pkgconfig(libgnome-games-support-2)
 
 %description
@@ -77,6 +78,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Thu Sep 12 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
