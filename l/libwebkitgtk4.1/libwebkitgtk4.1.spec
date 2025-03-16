@@ -15,7 +15,7 @@
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.46
+%define ver_major 2.48
 
 %define oname webkit
 %define _name webkitgtk
@@ -47,7 +47,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -64,7 +64,7 @@ Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 %define soup_api_ver 3.0
 %define soup3_ver 2.99.9
 %define gtk_ver 3.24
-%define gst_ver 1.20
+%define gst_ver 1.24.9
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
 BuildRequires: /proc gcc-c++ cmake unifdef
@@ -392,6 +392,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt1
+- 2.48.0
+
 * Fri Feb 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.46.6-alt1
 - 2.46.6
 
