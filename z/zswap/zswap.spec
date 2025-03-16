@@ -3,7 +3,7 @@ Summary: Init and set up zswap
 Summary(ru_RU.UTF-8): Служба для инициализации настройки zswap
 Url: https://github.com/Smoque/zswap
 
-Version: 0.52
+Version: 0.53
 Release: alt1
 License: GPLv2
 Group: System/Configuration/Hardware
@@ -17,13 +17,14 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source: %name-%version.tar
 
 %description
-zswap init and set up.
+zswap init, set up & stats.
 
 %description -l ru_RU.UTF8
-Включение/выключение/статистика zswap.
+Настройка, запуск и вывод статистики zswap.
 
 %prep
 %setup
+
 %patch -p1
 %__subst s\\'$version'\\"%version"\\ %name.service
 
@@ -37,21 +38,30 @@ install -pDm 644 -t            %buildroot%_docdir/%name-%version/ README.*
 
 %files
 %config(noreplace) %_sysconfdir/sysconfig/%name
-%doc README.ru_RU.UTF-8 README.md
+%doc README.ru_RU.UTF-8 README.md zswap.spec
 %_datadir/%name/ru_RU.UTF-8
 %_unitdir/%name.service
 %_initdir/%name
 %_sbindir/%name
 
 %changelog
+* Fri Mar 14 2025 Hihin Ruslan <ruslandh@altlinux.ru> 0.53-alt1
+- minor bugfixes (Close #53293)
+
 * Thu Aug 24 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.52-alt1
 - Version 0.52
+- script rewrite
 
 * Tue Aug 15 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.51-alt1
 - Version 0.51
+- fixed status output to the journald
 
 * Fri Aug 11 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.50-alt1
-- Version 0.5
+- Version 0.50
+- fixed status output to the journald
+
+* Wed Aug 02 2023 Vadim A. Illarionov <gbIMoBou@ya.ru> 0.30-alt1
+- russian localization
 
 * Wed Jul 26 2023 Hihin Ruslan <ruslandh@altlinux.ru> 0.20-alt1
 - Added Russian localization
