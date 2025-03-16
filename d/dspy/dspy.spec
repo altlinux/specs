@@ -1,4 +1,4 @@
-%define ver_major 47
+%define ver_major 48
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
@@ -18,12 +18,11 @@ Url: https://wiki.gnome.org/Apps/Builder
 Vcs: https://gitlab.gnome.org/GNOME/d-spy.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-Requires: lib%name = %EVR
 Requires: dbus-tools-gui
 
 %define glib_ver 2.76
 %define gtk4_ver 4.12
-%define libadwaita_ver 1.4
+%define libadwaita_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver
@@ -35,30 +34,6 @@ BuildRequires: pkgconfig(libadwaita-1) >= %libadwaita_ver
 D-Spy is a tool to explore and test end-points and interfaces on the
 System or Session D-Bus. You can also connect to D-Bus peers by address.
 D-Spy was originally part of GNOME Builder.
-
-%package -n lib%name
-Summary: Library for the %name project
-License: LGPL-3.0
-Group: System/Libraries
-
-%description -n lib%name
-D-Spy is a tool to explore and test end-points and interfaces on the
-System or Session D-Bus.
-
-This package provides shared library for D-Spy.
-
-%package -n lib%name-devel
-Summary: Development files for D-Spy
-License: LGPL-3.0
-Group: Development/C
-Requires: lib%name = %EVR
-
-%description -n lib%name-devel
-D-Spy is a tool to explore and test end-points and interfaces on the
-System or Session D-Bus.
-
-This package provides development files for D-Spy library.
-
 
 %prep
 %setup -n %_name-%version
@@ -81,15 +56,10 @@ This package provides development files for D-Spy library.
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 
-%files -n lib%name
-%_libdir/lib%name-%api_ver.so.*
-
-%files -n lib%name-devel
-%_includedir/%name-%api_ver/
-%_libdir/lib%name-%api_ver.so
-%_pkgconfigdir/%name-%api_ver.pc
-
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
