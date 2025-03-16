@@ -1,7 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 46
+%define ver_major 48
+%define beta %nil
 %define xdg_name org.gnome.Decibels
 %define gst_api_ver 1.0
 
@@ -9,24 +10,25 @@
 
 Name: decibels
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: Sound Player for GNOME
 Group: Sound
 License: GPL-3.0-or-later
 Url: https://apps.gnome.org/Decibels
 
-%if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-%else
 Vcs: https://gitlab.gnome.org/vixalien/decibels.git
-Source: %name-%version.tar
+
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
 %endif
 
 BuildArch: noarch
 
 %define gjs_ver 1.54
-%define adw_ver 1.5
+%define adw_ver 1.6
 
 Requires: libgjs >= %gjs_ver
 Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver
@@ -51,7 +53,7 @@ BuildRequires: pkgconfig(libadwaita-1)
 The GNOME application for play sound files.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -69,13 +71,16 @@ The GNOME application for play sound files.
 %_datadir/%xdg_name
 %_desktopdir/%xdg_name.desktop
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+#%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Fri Mar 29 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
 - 46.0
 

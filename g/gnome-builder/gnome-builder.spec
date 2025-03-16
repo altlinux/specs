@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -17,7 +17,7 @@
 %def_enable vala
 
 Name: gnome-builder
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -42,7 +42,7 @@ Source1: %name-ru.po
 %define adwaita_ver 1.6
 %define panel_ver 1.7
 %define gtksourceview_api_ver 5
-%define gtksourceview_ver 5.8
+%define gtksourceview_ver 5.15
 %define git2_ver 1.1.0
 %define devhelp_ver 3.30.0
 %define xml_ver 2.9.0
@@ -195,6 +195,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Oct 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 

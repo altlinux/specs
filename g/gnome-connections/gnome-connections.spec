@@ -2,13 +2,13 @@
 
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Connections
@@ -21,7 +21,7 @@ Vcs: https://gitlab.gnome.org/GNOME/connections.git
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.58
@@ -67,7 +67,7 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/mime/packages/%xdg_name.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS*
 
 # gtk-frdp usless stuff
@@ -77,6 +77,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2.1-alt1
 - 47.2.1 (build against freerdp3 libraries)
 
