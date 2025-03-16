@@ -15,7 +15,7 @@
 %def_disable demo
 
 Name: %_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -188,6 +188,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
+- 2.0.7
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt1
 - 2.0.5
 

@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: errands
-Version: %ver_major.2.7
+Version: %ver_major.2.8
 Release: alt1
 
 Summary: Todo application for GNOME
@@ -15,14 +15,15 @@ License: MIT
 Group: Office
 Url: https://github.com/mrvladus/Errands
 
+Vcs: https://github.com/mrvladus/Errands.git
+
 %if_disabled snapshot
 Source: %url/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/mrvladus/Errands.git
 Source: %name-%version.tar
 %endif
 
-%define adwaita_ver 1.4
+%define adwaita_ver 1.5
 
 Requires: typelib(Adw) = 1 typelib(GtkSource) = 5
 Requires: yelp
@@ -31,6 +32,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%name
 
+Requires: python3-module-pygobject3
 Requires: python3-module-icalendar >= 5.0.11
 Requires: dconf gnome-keyring gnome-online-accounts
 
@@ -72,6 +74,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 46.2.8-alt1
+- 46.2.8
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2.7-alt1
 - 46.2.7
 

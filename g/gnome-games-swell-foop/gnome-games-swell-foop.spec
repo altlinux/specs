@@ -4,14 +4,14 @@
 
 %define _name swell-foop
 %define ver_major 48
-%define beta .alpha
+%define beta %nil
 %define xdg_name org.gnome.SwellFoop
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: The "Same Game" puzzle
 Group: Games/Boards
@@ -30,11 +30,12 @@ Provides:  %_name = %EVR
 
 %define glib_ver 2.78.0
 %define gtk_ver 4.10
+%define adw_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: pkgconfig(libgnome-games-support-2)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
@@ -67,6 +68,9 @@ area in as few moves as possible.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha
 - 48.alpha (ported to Libadwaita)
 

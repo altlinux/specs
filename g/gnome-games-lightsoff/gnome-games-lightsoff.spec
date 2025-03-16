@@ -3,14 +3,14 @@
 %define _name lightsoff
 %define xdg_name org.gnome.LightsOff
 %define ver_major 48
-%define beta .alpha
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Lights Off is a puzzle game
 Group: Games/Boards
@@ -25,10 +25,12 @@ Provides:  %_name = %EVR
 
 %define glib_ver 2.40.0
 %define gtk_ver 4.14
+%define adw_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools yelp-tools
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: librsvg-devel
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -54,7 +56,6 @@ and its non-diagonal neighbors.
 %files -f %_name.lang
 %_bindir/%_name
 %_desktopdir/%xdg_name.desktop
-%_datadir/%_name/
 %_iconsdir/hicolor/*/*/%{xdg_name}*.*
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
@@ -62,6 +63,9 @@ and its non-diagonal neighbors.
 %_man6dir/%_name.6*
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha
 - 48.alpha (ported to GTK4)
 
