@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define optflags_lto %nil
 
-%define ver_major 4.5
+%define ver_major 4.6
 %define rdn_name com.belmoussaoui.Authenticator
 
 %def_enable check
@@ -16,17 +16,18 @@ License: GPL-3.0-or-later
 Group: Networking/Other
 Url: https://apps.gnome.org/Authenticator
 
+Vcs: https://gitlab.gnome.org/World/Authenticator.git
+
 %if_disabled snapshot
 Source: https://gitlab.gnome.org/World/Authenticator/-/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.gnome.org/World/Authenticator.git
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
 %define gtk_ver 4.10
-%define adwaita_ver 1.6
+%define adwaita_ver 1.5
 %define gst_ver 1.20
 
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -66,11 +67,6 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-# remove broken build.rs from zbar-rust (the same in decoder)
-rm -f vendor/zbar-rust/build.rs
-sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf1342672c2",||' \
-vendor/zbar-rust/.cargo-checksum.json
-
 %build
 %meson
 %meson_build
@@ -95,6 +91,9 @@ vendor/zbar-rust/.cargo-checksum.json
 
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Sat Sep 7 2024 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
 - 4.5.0-4-g404131d
 

@@ -1,12 +1,14 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
 
+%def_disable bootstrap
+
 Name: gnome-user-share
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Gnome user file sharing
@@ -21,16 +23,18 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.74
+%define selinux_ver 2.8
 
-Requires: apache2 >= 2.4
+Requires: apache2 >= 2.4.0
 Requires: apache2-mod_dnssd >= 0.6
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
+BuildRequires: meson rust-cargo clang-devel
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libselinux-devel
+BuildRequires: libselinux-devel >= %selinux_ver
 BuildRequires: apache2 apache2-mod_dnssd pkgconfig(systemd)
 
 %description
@@ -49,7 +53,11 @@ Howl is used for mDNS support, so you need to have that installed and
 mDNSResolver running.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+[ ! -d .cargo ] && mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %meson -Dhttpd=%httpd \
@@ -71,6 +79,9 @@ mDNSResolver running.
 %doc README* NEWS
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0 (ported to Rust)
+
 * Sat Nov 23 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
