@@ -1,4 +1,4 @@
-%def_with bootstrap
+%def_without bootstrap
 
 %define ghc_version 9.6.6
 %define ghc_major 9.6
@@ -25,7 +25,7 @@
 
 Name: ghc%ghc_major
 Version: %ghc_version
-Release: alt1
+Release: alt2
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -363,6 +363,9 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %files devel
 
 %changelog
+* Sun Mar 16 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt2
+- Rebuild with ghc9.6
+
 * Fri Mar 14 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt1
 - Bootstrap to ghc major 9.6
 
