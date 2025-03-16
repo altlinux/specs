@@ -1,5 +1,5 @@
 Name: ashell
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 License: MIT
 
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(libudev)
 
 %description
 %summary.
@@ -29,6 +30,7 @@ BuildRequires: pkgconfig(dbus-1)
 %prep
 %setup -a1
 install -vD %SOURCE2 .cargo/config.toml
+subst 's|"rfkill"|"%_sbindir/rfkill"|' src/services/bluetooth/mod.rs
 
 %build
 %rust_build
@@ -40,6 +42,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Sun Mar 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.1-alt1
+- new version (0.4.1) with rpmgs script
+
 * Wed Jan 22 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.0-alt1
 - new version (0.4.0) with rpmgs script
 - re-drop Requires: fonts-ttf-symbols-nerd
