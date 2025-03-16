@@ -20,7 +20,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -346,6 +346,9 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Sun Mar 16 2025 Ilya Mashkin <oddity@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Fri Dec 13 2024 Ilya Mashkin <oddity@altlinux.ru> 6.0.0-alt1
 - 6.0.0
 
