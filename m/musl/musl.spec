@@ -4,7 +4,7 @@
 
 Name: musl
 Version: 1.2.5
-Release: alt6
+Release: alt7
 Group: System/Libraries
 Summary: Implementation of the C standard library
 License: MIT
@@ -47,6 +47,14 @@ Requires: musl-devel = %EVR
 
 %description devel-static
 %summary.
+
+%package devel-static-import
+Summary: Import system static libraries into musl
+Group: Development/C
+Requires: musl-devel-static = %EVR
+
+%description devel-static-import
+%summary. EXPERIMENTAL.
 
 %package -n rpm-macros-musl
 Summary: RPM macros to find musl libraries
@@ -146,6 +154,8 @@ EOF
 # Cannot be in %%pre.
 install -Dp .gear/checkinstall %buildroot%_datadir/%name-checkinstall/_post
 
+install -Dp .gear/filetrigger.sh %buildroot%_rpmlibdir/musl.filetrigger
+
 %check
 grep 'ldso=' %buildroot%_bindir/ld.musl-clang
 grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
@@ -181,6 +191,9 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_libdir/libutil.a
 %_libdir/libxnet.a
 
+%files devel-static-import
+%_rpmlibdir/musl.filetrigger
+
 %files -n rpm-macros-musl
 %_rpmmacrosdir/musl
 
@@ -188,6 +201,11 @@ grep -Ex 'ldso="/lib/%ldname"' %buildroot%_bindir/ld.musl-clang
 %_datadir/%name-checkinstall
 
 %changelog
+* Sun Mar 16 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt7
+- Fix -static-pie linking with gcc (enabling static ASLR builds).
+- Add a highly experimental musl-devel-static-import package to import system
+  -devel-static libraries (.a) into the musl tree.
+
 * Mon Mar 03 2025 Vitaly Chikunov <vt@altlinux.org> 1.2.5-alt6
 - Another improvement to Clang picking up C runtimes.
 
