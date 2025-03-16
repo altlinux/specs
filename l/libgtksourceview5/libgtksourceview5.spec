@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.14
+%define ver_major 5.16
 %define namespace GtkSource
 %define api_ver 5
 
@@ -21,27 +21,29 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/GtkSourceView
 
+Vcs: https://gitlab.gnome.org/GNOME/gtksourceview.git
+
 %if_disabled snapshot
-Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
 
 %define glib_ver 2.72
-%define gtk_ver 4.6
+%define gtk_ver 4.17
 %define pcre2_ver 10.21
 %define libxml2_ver 2.6.0
 %define fribidi_ver 0.19.7
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir rpm-macros-valgrind
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-macros-valgrind
 BuildRequires: meson gcc-c++ itstool
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk_ver
@@ -171,6 +173,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 5.16.0-alt1
+- 5.16.0
+
 * Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 5.14.2-alt1
 - 5.14.2
 

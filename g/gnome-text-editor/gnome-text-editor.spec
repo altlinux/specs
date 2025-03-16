@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
 %def_enable check
 
 Name: gnome-text-editor
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -59,14 +59,16 @@ general purpose default editor.
 %files -f %name.lang
 %_bindir/*
 %_desktopdir/%xdg_name.desktop
-%_datadir/%name/
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Wed Jan 29 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
 - 47.3
 
