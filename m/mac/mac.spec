@@ -1,30 +1,27 @@
-# [for (x)emacs] -*-  mode: RPM-SPEC; coding: utf-8 -*-
+%define soname 12
 Name: mac
-Version: 7.09
+Version: 10.96
 Release: alt1
 
 Summary: Monkey's Audio Codec
-License: Distributable (see license.html)
+License: BSD-3-Clause
 Group: Sound
 
-Url: http://www.monkeysaudio.com
-Source0: %name-%version.zip
-Source1: MAC-ALTLinux-permission.html
-Source2: license.html
+Url: https://monkeysaudio.com
+Source0: %name-%version.tar
 
-# Automatically added by buildreq on Sun Oct 03 2021
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libstdc++-devel python3-base sh4
-BuildRequires: gcc-c++ unzip
+BuildRequires: gcc-c++
+BuildRequires: cmake
 
 %description
 Monkey's Audio Codec is a lossless audio codec w/ good
 correspondence of compression (and decompresssion) ratio
 and time.
 
-%package -n libmac
+%package -n libmac%soname
 Summary: Monkey's Audio Codec shared libraries
 Group: System/Libraries
-%description -n libmac
+%description -n libmac%soname
 Monkey's Audio Codec is a lossless audio codec w/ good
 correspondence of compression (and decompresssion) ratio
 and time.
@@ -36,7 +33,7 @@ Monkey's Audio Codec SDK
 Summary: Headers from Monkey's Audio Codec SDK
 Summary(ru_RU.UTF-8): Заголовочные файлы SDK кодека Monkey's Audio
 Group: Development/C++
-Requires: libmac = %version-%release
+Requires: libmac%soname = %EVR
 
 %description -n libmac-devel
 Monkey's Audio Codec is a lossless audio codec w/ good
@@ -47,32 +44,34 @@ This package contains header files from
 Monkey's Audio Codec SDK
 
 %prep
-%setup -c
-cp %SOURCE1 %SOURCE2 .
-sed -i 's@(includedir)/MAC@(includedir)/mac@;s@libMAC@libmac@g' Source/Projects/NonWindows/Makefile
-sed -i '1i#define PLATFORM_LINUX' Shared/All.h
-sed -i '/\\\r*$/{N; s/\\\r*\n//}' Shared/All.h
+%setup
+rm -r '3rd Party' Shared/{32,64} Source/'DirectShow Filter'
+sed -i 's/\r$//' Readme.txt
 
 %build
-%make -f Source/Projects/NonWindows/Makefile libdir=%_libdir
+%cmake
+%cmake_build
 
 %install
-%makeinstall -f Source/Projects/NonWindows/Makefile libdir=%buildroot%_libdir
+%cmake_install
 
 %files
-%doc *html *txt
 %_bindir/mac
 
-%files -n libmac
-%doc *html *txt
-%_libdir/libmac.so.*
+%files -n libmac%soname
+%doc Readme.txt License.txt
+%_libdir/libMAC.so.%soname
 
 %files -n libmac-devel
-%doc *html *txt
-%_libdir/libmac.so
+%_libdir/libMAC.so
 %_includedir/*
 
 %changelog
+* Sun Mar 16 2025 Anton Farygin <rider@altlinux.ru> 10.96-alt1
+- 7.09 -> 10.96
+- renamed the library package in accordance with the SharedLibsPolicy
+- updated the license in accordance with the SPDX policy
+
 * Sun Oct 03 2021 Fr. Br. George <george@altlinux.ru> 7.09-alt1
 - Major version update
 - License updated (it's permissive now)
