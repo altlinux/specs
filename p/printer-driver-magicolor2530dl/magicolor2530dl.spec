@@ -3,7 +3,7 @@
 Summary: Cups Driver for KONICA MINOLTA magicolor 2530 DL
 Name: printer-driver-%rname
 Version: 2.1.1
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Configuration/Printing
 Url: http://printer.konicaminolta.net/
@@ -11,8 +11,14 @@ Url: http://printer.konicaminolta.net/
 Source: %rname-%version.tar
 Patch1: magicolor2430DL-shared_system_libs.patch
 Patch2: magicolor2530DL-2.1.1-cups-2.2.patch
+# https://raw.githubusercontent.com/OpenMandrivaAssociation/cups-drivers-magicolor2530dl/master/magicolor2530DL-lcms2.patch
+Patch3: magicolor2530DL-lcms2.patch
 
-BuildRequires: automake libcups-devel libjbig-devel liblcms-devel
+BuildRequires: automake
+BuildRequires: libcups-devel
+BuildRequires: libjbig-devel
+BuildRequires: liblcms2-devel
+
 Requires: cups
 
 %description
@@ -28,6 +34,7 @@ This package contains CUPS drivers (PPD) for the following printers:
 %setup -n %rname-%version
 %patch1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
@@ -44,6 +51,9 @@ This package contains CUPS drivers (PPD) for the following printers:
 %_datadir/cups/model/KONICA_MINOLTA/km2530dl.ppd*
 
 %changelog
+* Mon Mar 17 2025 Constantin Sunzow <protvin@altlinux.org> 2.1.1-alt3
+- Rebuild with liblcms2.
+
 * Wed Jul 26 2023 Oleg Solovyov <mcpain@altlinux.org> 2.1.1-alt2
 - use autoreconf
 

@@ -1,6 +1,6 @@
 Name: gqview
 Version: 2.1.5
-Release: alt10
+Release: alt11
 
 Summary: Image viewer and browser utility
 License: GPLv2+
@@ -21,7 +21,8 @@ Patch8: gqview-2.1.5-gcc-10.patch
 Patch9: gqview-2.1.5-alt-gcc-14.patch
 
 # Automatically added by buildreq on Mon Feb 25 2008
-BuildRequires: libgtk+2-devel liblcms-devel
+BuildRequires: libgtk+2-devel
+BuildRequires: liblcms2-devel
 
 Requires: /usr/bin/jpegtran /usr/bin/mogrify
 
@@ -64,6 +65,9 @@ install -pDm644 gqview.png %buildroot%_liconsdir/gqview.png
 %_man1dir/*
 
 %changelog
+* Mon Mar 17 2025 Constantin Sunzow <protvin@altlinux.org> 2.1.5-alt11
+- Rebuild with lcms2.
+
 * Mon Dec 23 2024 Dmitriy Khanzhin <jinn@altlinux.org> 2.1.5-alt10
 - fixed FTBFS with gcc14
 
