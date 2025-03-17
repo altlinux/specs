@@ -5,14 +5,12 @@
 Summary: Community driven full-feature Linstor storage driver for OpenNebula
 Name: opennebula-addon-linstor_un
 Version: 1.8.2
-Release: alt3
+Release: alt4
 License: Apache-2.0
 Group: System/Servers
 Url: https://github.com/OpenNebula/addon-linstor_un
 # git-vcs: https://github.com/OpenNebula/addon-linstor_un.git
 Source: %name-%version.tar
-Patch: %name-%version.patch
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 %define java_arches x86_64 aarch64 loongarch64
 ExclusiveArch: %{java_arches}
@@ -25,7 +23,6 @@ Community driven full-feature Linstor storage driver for OpenNebula.
 
 %prep
 %setup
-%patch -p1
 
 %install
 install -d -m755 %buildroot%_destination/vmm/kvm
@@ -73,6 +70,9 @@ fi
 %config(noreplace) %_destination/etc/datastore/linstor_un/linstor_un.conf
 
 %changelog
+* Mon Mar 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.8.2-alt4
+- support OpenNebula v6.10
+
 * Wed Feb 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.8.2-alt3
 - build with java-21-openjdk
 
