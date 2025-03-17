@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-notes
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Provides: alterator-license = %version
@@ -40,6 +40,9 @@ alterator module for view license and release notes
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Mar 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3-alt1
+- Add support of license calculation from edition entry
+
 * Fri Dec 13 2024 Evgeny Sinelnikov <sin@altlinux.org> 1.2-alt1
 - add support license search in distro-licenses by /etc/os-release
 
