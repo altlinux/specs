@@ -9,7 +9,7 @@
 
 Name: linstor
 Version: 1.30.4
-Release: alt3
+Release: alt4
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
@@ -77,7 +77,7 @@ mkdir -p %buildroot/var/lib/linstor
 %package common
 Summary: Common files shared between controller and satellite
 Group: System/Servers
-Requires: java-21-openjdk-headless
+Requires: java-21-openjdk
 
 %description common
 Linstor shared components between linstor-controller and linstor-satellite
@@ -97,6 +97,7 @@ Linstor shared components between linstor-controller and linstor-satellite
 Summary: Linstor controller specific files
 Group: System/Servers
 Requires: linstor-common = %EVR
+Requires(post): java-21-openjdk
 
 %description controller
 Linstor controller manages linstor satellites and persistant data storage.
@@ -155,6 +156,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Mon Mar 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.30.4-alt4
+- use java-21-openjdk for linstore-controller (ALT #53487).
+
 * Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.30.4-alt3
 - build with Java 21
 
