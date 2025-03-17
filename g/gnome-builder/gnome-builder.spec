@@ -18,7 +18,7 @@
 
 Name: gnome-builder
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Builder - Develop software for GNOME
 License: GPL-3.0-or-later
@@ -94,7 +94,7 @@ BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir
 BuildRequires: libjson-glib-gir-devel libsoup3.0-gir-devel >= %soup3_ver libwebkitgtk%webkit_api_ver-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: pkgconfig(libspelling-1) libenchant2-devel
-BuildRequires: libtemplate-glib-devel >= %template_glib_ver libdspy-devel libeditorconfig-devel
+BuildRequires: libtemplate-glib-devel >= %template_glib_ver libeditorconfig-devel
 BuildRequires: libjsonrpc-glib-devel >= %jsonrpc_ver
 BuildRequires: libtemplate-glib-gir-devel libjsonrpc-glib-gir-devel
 BuildRequires: libdex-gir-devel
@@ -195,6 +195,9 @@ This package provides files for Gnome Builder to work with Clang/LLVW.
 %{?_enable_help:%_datadir/doc/%name/}
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
+- fixed BR
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
