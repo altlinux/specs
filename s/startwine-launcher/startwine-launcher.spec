@@ -1,16 +1,16 @@
 AutoProv: no
 
 %define nameUP StartWine
-%define nameVR _v408
+%define nameVR _v409
 %define nameDN startwine
 
 Name: startwine-launcher
-Version: 4.0.8
-Release: alt2
+Version: 4.0.9
+Release: alt1
 
 Summary: Installer StartWine-Launcher for Windows games
 
-License: GPL-3.0-or-later
+License: GPL-3.0
 Group: Games/Other
 Url: https://github.com/RusNor/StartWine-Launcher
 Vcs: https://github.com/RusNor/StartWine-Launcher
@@ -56,6 +56,9 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Mon Mar 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.0.9-alt1
+- 4.0.9
+
 * Tue Dec 03 2024 Aleksandr Shamaraev <shad@altlinux.org> 4.0.8-alt2
 - Added provides: startwine.
 
