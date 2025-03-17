@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.20.0
+Version: 1.20.5
 Release: alt1
 Summary: Fast and readable async non-blocking network apps
 License: Apache-2.0
@@ -56,6 +56,9 @@ ln -sf /etc/pki/tls/certs/ca-bundle.crt \
 %exclude %python3_sitelibdir/*/examples
 
 %changelog
+* Mon Mar 17 2025 Stanislav Levin <slev@altlinux.org> 1.20.5-alt1
+- 1.20.0 -> 1.20.5.
+
 * Thu Oct 24 2024 Stanislav Levin <slev@altlinux.org> 1.20.0-alt1
 - 1.17.52 -> 1.20.0.
 
