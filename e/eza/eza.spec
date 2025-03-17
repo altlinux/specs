@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: eza
-Version: 0.20.23
+Version: 0.20.24
 Release: alt1
 
 Summary: A modern alternative to ls
@@ -80,6 +80,9 @@ cargo test --release --offline
 %_datadir/fish/vendor_completions.d/eza.fish
 
 %changelog
+* Mon Mar 17 2025 Egor Ignatov <egori@altlinux.org> 0.20.24-alt1
+- New version 0.20.24.
+
 * Wed Mar 12 2025 Egor Ignatov <egori@altlinux.org> 0.20.23-alt1
 - New version 0.20.23.
 
