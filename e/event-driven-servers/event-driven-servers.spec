@@ -1,6 +1,6 @@
 Name: event-driven-servers
 Version: 1.0
-Release: alt4
+Release: alt5
 
 Summary: This is a collection of high-performance and scalable event-driven servers
 License: BSD-3-Clause
@@ -80,7 +80,7 @@ Python module for mavis library.
     --libdir=%_libdir --libarchdir=%_libdir --libexecdir=%_prefix/libexec \
     --without-ssl --without-ares --without-sctp --without-zlib --without-crypto tac_plus-ng
 
-export NPROCS=8
+export NPROCS=4
 %make_build
 
 %install
@@ -178,6 +178,9 @@ sed -i 's!/usr/bin/env -S !!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buildroot%
 %python3_sitelibdir_noarch/mavis
 
 %changelog
+* Mon Mar 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt5
+- update to upstream/master and reduce NPROCS
+
 * Sun Mar 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt4
 - add debug and O2 flags and lost dependencies
 
