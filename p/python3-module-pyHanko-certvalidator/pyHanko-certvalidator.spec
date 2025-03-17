@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.26.7
+Version: 0.26.8
 Release: alt1
 
 Summary: Python library for validating X.509 certificates and paths
@@ -67,6 +67,9 @@ not test_basic_certificate_validator_tls_aia"
 %python3_sitelibdir/%mname-%version.dist-info
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.26.8-alt1
+- Automatically updated to 0.26.8.
+
 * Fri Mar 14 2025 Grigory Ustinov <grenka@altlinux.org> 0.26.7-alt1
 - Automatically updated to 0.26.7.
 
