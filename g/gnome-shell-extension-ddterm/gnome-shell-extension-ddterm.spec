@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 58
+%define ver_major 59
 %define beta %nil
 %define uuid %_name@amezin.github.com
 %define xdg_name com.github.amezin.%_name
@@ -77,6 +77,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 59-alt1
+- 59 (GNOME 48 supported)
+
 * Sun Jan 19 2025 Yuri N. Sedunov <aris@altlinux.org> 58-alt1
 - 58
 
