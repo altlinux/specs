@@ -1,7 +1,7 @@
 %def_with check
 
 Name: CalcMySky
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Simulator of light scattering by planetary atmospheres
@@ -73,5 +73,8 @@ These are the development files.
 %_includedir/ShowMySky/
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.3.4-alt1
+- Automatically updated to 0.3.4.
+
 * Sun Oct 13 2024 Grigory Ustinov <grenka@altlinux.org> 0.3.3-alt1
 - Initial build for Sisyphus.
