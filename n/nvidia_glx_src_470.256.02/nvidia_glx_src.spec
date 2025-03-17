@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt255
+%define pkg_rel alt256
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -102,6 +102,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch3: alt-enable-modeset.patch
 #
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
@@ -185,6 +186,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 #
 %ifarch aarch64
 %patch4 -p1
@@ -419,6 +421,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt256
+- enable nvidia-drm.modeset by default
+
 * Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt255
 - add fix against kernel 6.12
 
