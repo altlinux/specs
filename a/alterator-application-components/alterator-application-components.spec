@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -19,7 +19,7 @@ BuildRequires: qt6-base-common qt6-base-devel qt6-declarative-devel qt6-tools-de
 BuildRequires: boost-devel-headers
 BuildRequires: libqbase-devel >= 0.1.0-alt3
 BuildRequires: libtomlplusplus-devel
-BuildRequires: alterator-entry >= 0.2.0
+BuildRequires: alterator-entry >= 0.3.1
 
 Requires: alterator-backend-packages
 Requires: alterator-backend-component
@@ -63,9 +63,15 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_datadir/alterator/objects/*.object
 %_datadir/polkit-1/actions/org.altlinux.alterator.components1.policy
 %_datadir/dbus-1/interfaces/org.altlinux.alterator.components1.xml
-%_bindir/%name
+%_bindir/alt-components
 
 %changelog
+* Mon Mar 17 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.2-alt1
+- Hide checkboxes of components with no packages.
+- Rename binary to alt-components.
+- Make links in descriptions clickable.
+- Add support for draft components and categories.
+
 * Thu Mar 08 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.1-alt1
 - Switch to sync batch dbus calls which reduces model build time.
 - Enable window decorations for WaitDialog.

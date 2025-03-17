@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -69,6 +69,9 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Mar 17 2025 Michael Chernigin <chernigin@altlinux.org> 0.3.1-alt1
+- Introduce draft flag
+
 * Sat Mar 08 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
 - Add filter by section
 - Strip component name in component path
