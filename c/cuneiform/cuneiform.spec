@@ -2,7 +2,7 @@
 
 Name: cuneiform
 Version: 1.1.0
-Release: alt6
+Release: alt6.1
 
 Summary: Cuneiform is an OCR system originally developed and open sourced by Cognitive technologies.
 Summary(ru_RU.UTF-8): Программа распознавания символов (OCR) Cuneiform, Linux-версия
@@ -75,6 +75,7 @@ Language support and other data files required for Cuneiform OCR
 %build
 %add_optflags -std=c++11
 %add_optflags -fcommon
+%add_optflags -Wno-implicit-int -Wno-implicit-function-declaration -Wno-int-conversion -Wno-incompatible-pointer-types
 %cmake
 %cmake_build
 
@@ -94,6 +95,9 @@ install -D -p -m644 %SOURCE1 %buildroot%_man1dir/cuneiform.1
 %_datadir/%name/*
 
 %changelog
+* Mon Mar 17 2025 Artem Semenov <savoptik@altlinux.org> 1.1.0-alt6.1
+- NMU: fix build with gcc-14
+
 * Wed Jan 12 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt6
 - FTBFS: fix build with gcc11 (thanks Gentoo for patch)
 - Convert localized summary and description from koi8-r to utf-8.
