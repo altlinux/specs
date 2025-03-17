@@ -5,14 +5,14 @@
 %define _name mahjongg
 %define xdg_name org.gnome.Mahjongg
 %define __name gnome-%_name
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Classic Chinese Tile Game
@@ -73,6 +73,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_man6dir/%__name.*
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
