@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 45
 %define beta %nil
@@ -11,12 +11,14 @@
 
 Name: gpaste
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
 License: BSD-2-Clause
 Url: https://github.com/Keruspe/GPaste
+
+Vcs: https://github.com/Keruspe/GPaste.git
 
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%_name-%version%beta.tar.gz
@@ -117,6 +119,9 @@ in notification area.
 %endif
 
 %build
+%ifarch %ix86
+%add_optflags -Wno-incompatible-pointer-types
+%endif
 %meson \
   -Dvapi=true
 %nil
@@ -189,6 +194,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt2
+- updated to v45.2-14-g0f111a7b (GNOME 48 supported)
+
 * Sat Sep 21 2024 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 
