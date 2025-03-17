@@ -5,7 +5,7 @@
 
 Name:    pi-hole-ftl
 Version: 6.0.4
-Release: alt2
+Release: alt3
 
 Summary: The Pi-hole FTL engine
 License: EUPL-1.2
@@ -69,11 +69,6 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
   install -dm755 %buildroot%_unitdir/multi-user.target.wants
   ln -s ../%_servicename.service %buildroot%_unitdir/multi-user.target.wants/%_servicename.service
 
-  # ver. 5.0 dnamasq dropin support
-  pushd %buildroot%_bindir
-  ln -s pihole-FTL dnsmasq
-  popd
-
 %pre
 /usr/sbin/groupadd -r -f pihole ||:
 /usr/sbin/useradd -g pihole -c 'FTL pseudouser' \
@@ -89,6 +84,9 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Mon Mar 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.4-alt3
+- drop dnsmasq dropin support (ALT #53462)
+
 * Fri Mar 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.4-alt2
 - fix wrong Provides (ALT #53462)
 
