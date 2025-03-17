@@ -1,12 +1,13 @@
-%define soname 0
+%define soname 2
 
 Name: planarity
 Summary: Implementations of several planarity-related graph algorithms
-Version: 3.0.2.0
+Version: 4.0.0.0
 Release: alt1
-License: BSD
+License: BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/graph-algorithms/edge-addition-planarity-suite
+Vcs: https://github.com/graph-algorithms/edge-addition-planarity-suite.git
 
 Source: %url/archive/Version_%version/%name-%version.tar.gz
 
@@ -30,7 +31,7 @@ isolator, and a number of subgraph homeomorphism search algorithms.
 
 %package -n lib%name%soname
 Summary: %summary
-Group: Sciences/Mathematics
+Group: System/Libraries
 
 %description -n lib%name%soname
 This code project provides a library for implementing graph algorithms
@@ -50,7 +51,7 @@ isolator, and a number of subgraph homeomorphism search algorithms.
 
 %package -n lib%name-devel
 Summary: Development files for %name
-Group: Sciences/Mathematics
+Group: Development/C
 
 %description -n lib%name-devel
 This package contains the header files and development documentation
@@ -60,7 +61,8 @@ for %name.
 %setup -n edge-addition-%name-suite-Version_%version
 
 # Use unix line endings in installed headers and debugsource files
-for header in c/*.{c,h}; do
+f=$(find ./c -name '*.c' -o -name '*.h')
+for header in $f; do
     sed -i.orig 's|\r$||g' $header
     # Preserve timestamps
     touch -r $header.orig $header
@@ -76,7 +78,6 @@ done
 # after the libraries to be linked
 sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -e 's|-nostdlib|-Wl,--as-needed &|' \
     -i libtool
 
 %make_build
@@ -84,25 +85,27 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 %install
 %makeinstall_std
 
-# Fix a library symlink
-rm %buildroot%_libdir/libplanarity.so
-ln -s libplanarity.so.%soname %buildroot%_libdir/libplanarity.so
-
 # We don't want the samples
 rm -rf %buildroot%_docdir
 
-%files -n lib%name%soname
-%doc LICENSE.TXT
-%doc README.md
-%_man1dir/%name.1*
+%files
+%doc LICENSE.TXT README.md
 %_bindir/%name
+%_man1dir/%name.1*
+
+%files -n lib%name%soname
 %_libdir/lib%name.so.%{soname}*
 
 %files -n lib%name-devel
 %_includedir/%name/
 %_libdir/lib%name.so
+%_pkgconfigdir/libplanarity.pc
 
 %changelog
+* Mon Mar 17 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.0.0-alt1
+- New version 4.0.0.0.
+- Added vcs tag.
+
 * Thu Mar 17 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.2.0-alt1
 - New version (3.0.2.0).
 
