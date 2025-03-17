@@ -2,7 +2,7 @@
 %define pypi_name nvchecker
 
 Name:    python3-module-%pypi_name
-Version: 2.16
+Version: 2.17
 Release: alt1
 
 Summary: New version checker for software releases
@@ -11,15 +11,14 @@ Group:   Development/Python3
 Url:     https://github.com/lilydjwg/nvchecker
 Vcs:     https://github.com/lilydjwg/nvchecker.git
 
+Provides: %pypi_name
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel 
 BuildRequires: python3-module-setuptools 
 BuildRequires: python3-module-wheel
 
-Requires: python3-module-pycurl
-Requires: python3-module-structlog
-Requires: python3-module-tornado
-Requires: python3-modules-curses
+%py3_requires pycurl tornado curses
 
 BuildArch: noarch
 
@@ -50,5 +49,8 @@ nvchecker (short for new version checker) is for checking if a new version of so
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Mar 16 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.17-alt1
+- 2.17
+
 * Sat Feb 22 2025 Maxim Slipenko <maks1ms@altlinux.org> 2.16-alt1
 - Initial build
