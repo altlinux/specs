@@ -25,7 +25,7 @@
 %define nv_version 570
 %define nv_release 124
 %define nv_minor   04
-%define pkg_rel alt273
+%define pkg_rel alt274
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -103,7 +103,7 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
-#
+Patch3: alt-enable-modeset.patch
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 
@@ -181,6 +181,7 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 #
 %ifarch aarch64
 %patch4 -p1
@@ -422,6 +423,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt274
+- enable nvidia-drm.modeset by default
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt273
 - new version
 
