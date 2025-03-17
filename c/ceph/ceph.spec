@@ -1,4 +1,4 @@
-%define git_version e7ad5345525c7aa95470c26863873b581076945d
+%define git_version 58a7fab8be0a062d730ad7da874972fd3fba59fb
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -57,8 +57,8 @@
 %endif
 
 Name: ceph
-Version: 18.2.4
-Release: alt4.1
+Version: 19.2.1
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -89,7 +89,7 @@ Source28: c-ares.tar
 Source29: dmclock.tar
 Source30: seastar.tar
 Source31: fmt.tar
-Source32: spawn.tar
+Source32: cpp_redis.tar
 Source33: rook-client-python.tar
 Source34: s3select.tar
 Source35: libkmip.tar
@@ -98,6 +98,8 @@ Source37: utf8proc.tar
 Source38: rapidjson.tar
 Source39: csvparser.tar
 Source40: opentelemetry-cpp.tar
+Source41: qatlib.tar
+Source42: qatzip.tar
 
 Patch: %name-%version.patch
 
@@ -155,6 +157,7 @@ BuildRequires: liblua5-devel >= 5.3 liblua5-devel-static >= 5.3
 %{?_with_grafana:BuildRequires: jsonnet}
 %{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc++-devel}
 %{?_with_system_utf8proc:BuildRequires: libutf8proc-devel >= 2.2.0}
+BuildRequires: liblmdb-devel
 
 %ifnarch %arm
 BuildRequires: rdma-core-devel
@@ -191,6 +194,7 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
 BuildRequires: libxmlsec1-devel
 BuildRequires: python3-module-natsort python3-module-asyncssh
 %{?_enable_check:BuildRequires: python3-module-cherrypy python3-module-jwt python3-module-werkzeug python3-module-pecan python3-module-tox}
+BuildRequires: python3-module-markupsafe
 %endif
 
 
@@ -838,7 +842,7 @@ tar -xf %SOURCE30 -C src/seastar
 %if_without system_fmt
 tar -xf %SOURCE31 -C src/fmt
 %endif
-tar -xf %SOURCE32 -C src/spawn
+tar -xf %SOURCE32 -C src/cpp_redis
 tar -xf %SOURCE33 -C src/pybind/mgr/rook/rook-client-python
 tar -xf %SOURCE34 -C src/s3select
 tar -xf %SOURCE38 -C src/s3select/rapidjson
@@ -853,6 +857,8 @@ tar -xf %SOURCE37 -C src/utf8proc
 %if_with jaeger
 tar -xf %SOURCE40 -C src/jaegertracing/opentelemetry-cpp
 %endif
+tar -xf %SOURCE41 -C src/qatlib
+tar -xf %SOURCE42 -C src/qatzip
 
 %patch -p1
 %ifarch %e2k
@@ -1020,7 +1026,8 @@ export CPPFLAGS="$java_inc"
     -DWITH_SEASTAR:BOOL=ON \
     -DWITH_JAEGER:BOOL=OFF \
 %endif
-    -DWITH_MANPAGE:BOOL=ON
+    -DWITH_MANPAGE:BOOL=ON \
+    -DCEPHADM_BUNDLED_DEPENDENCIES=none
 
 export VERBOSE=1
 export V=1
@@ -1411,6 +1418,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %if_with lttng
 %_libdir/libos_tp.so*
 %_libdir/libosd_tp.so*
+%_libdir/libmgr_op_tp.so*
 %endif
 %config(noreplace) %_logrotatedir/ceph
 %config(noreplace) %_sysconfdir/sysconfig/ceph
@@ -1479,6 +1487,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_mandir/man8/rbd-replay-many.8*
 %_mandir/man8/rbd-replay-prep.8*
 %_mandir/man8/rgw-orphan-list.8*
+%_mandir/man8/rgw-restore-bucket-index.8*
 %dir %_datadir/ceph
 %_datadir/ceph/known_hosts_drop.ceph.com
 %_datadir/ceph/id_rsa_drop.ceph.com
@@ -1869,6 +1878,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Thu Mar 13 2025 Maxim Slipenko <maks1ms@altlinux.org> 19.2.1-alt1
+- 19.2.1
+
 * Sat Oct 05 2024 Ivan A. Melnikov <iv@altlinux.org> 18.2.4-alt4.1
 - NMU: Fix build with boost 1.86.0
 
