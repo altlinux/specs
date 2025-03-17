@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: An exceptional library
@@ -56,6 +56,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 17 2025 Anton Zhukharev <ancieg@altlinux.org> 0.7.0-alt1
+- Updated to 0.7.0.
+
 * Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
 - Built for ALT Sisyphus.
 
