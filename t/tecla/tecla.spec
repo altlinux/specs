@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Tecla
 
 Name: tecla
-Version: %ver_major.0
+Version: %ver_major.0.2
 Release: alt1%beta
 
 Summary: Tecla is a keyboard layout viewer
@@ -28,7 +28,6 @@ Source: %name-%version%beta.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
@@ -68,6 +67,9 @@ This package contains development files for %name
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0.2-alt1
+- 48.0.2
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

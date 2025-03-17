@@ -14,7 +14,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt0.5%beta
+Release: alt0.6%beta
 
 %define gettext_domain %name
 
@@ -23,12 +23,13 @@ Group: Graphical desktop/GNOME
 License: GPL-3.0
 Url: https://github.com/tuberry/extension-list
 
+Vcs: https://github.com/tuberry/extension-list.git
+
 BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/archive/%version%beta/%name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/tuberry/extension-list.git
 Source: %_name-%version%beta.tar
 %endif
 
@@ -43,6 +44,7 @@ Simple GNOME Shell extension manager in the top panel.
 
 %prep
 %setup -n %_name-%version%beta
+subst 's/@shell@/47", "48/' res/metadata.json.in
 
 %build
 %meson \
@@ -64,6 +66,10 @@ Simple GNOME Shell extension manager in the top panel.
 %doc README.md
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 47-alt0.6.beta
+- updated to 47.beta-7-g4f33257
+- added 48 to shell-version
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 47-alt0.5.beta
 - 47.beta-2-g33ae1bd
 
