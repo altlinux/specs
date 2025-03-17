@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires: cmark
-BuildRequires: alterator-entry >= 0.2.0
+BuildRequires: alterator-entry >= 0.3.1
 
 Provides: alterator-components-base = 0.1.5
 Obsoletes: alterator-components-base < 0.2.0
@@ -61,6 +61,15 @@ done
 %_datadir/alterator/components/*
 
 %changelog
+* Tue Mar 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.1-alt1
+- Replace altmediawriter and isomaster to separate category
+  bootable-media-tools
+- Set vendors categories and components as drafts
+- Add openssh-askpass-common to ssh-client component
+- Replace ssh-server component to internal services category
+- Replace outdated firmware to separate component firmware-legacy
+- Add iscan-firmware component for Epson flatbed scanners
+
 * Fri Mar 14 2025 Andrey Limachko <liannnix@altlinux.org> 0.4-alt1
 - feat: the pacemaker component has been added to the cluster
   category (thx Sergey Savelev)
