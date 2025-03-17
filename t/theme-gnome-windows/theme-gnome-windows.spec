@@ -2,12 +2,13 @@
 
 Name:     theme-gnome-windows
 Version:  1.0
-Release:  alt3
+Release:  alt4
 
 Summary:  GNOME theme for Windows-like layout
 License:  GPL-3.0-or-later
 Group:    Graphical desktop/GNOME
-Url:      https://altlinux.org
+Url:      https://altlinux.space/antohami/theme-gnome-windows
+VCS:	  https://altlinux.space/antohami/theme-gnome-windows.git
 
 Source:   %name-%version.tar
 
@@ -41,6 +42,11 @@ install -pm644 *.gschema.override \
 %_datadir/glib-2.0/schemas/*.gschema.override
 
 %changelog
+* Mon Mar 17 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt4
+- 60-windows-like.gschema.override: revert 'primary-monitor=0'
+- update URL tag
+- add VCS tag
+
 * Fri Mar 14 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt3
 - add maximize, minimize window buttons
 - add conflict with alt-panelmoded
