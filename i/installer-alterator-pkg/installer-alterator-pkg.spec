@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.12
+Version: 3.1.13
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Mar 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 3.1.13-alt1
+- fixed duplication of packages in the selected group
+
 * Fri Feb 07 2025 Anton Midyukov <antohami@altlinux.org> 3.1.12-alt1
 - Replace common functions and variables to alterator-pkg-functions
 - Add initinstall.d/91-pkg-size.sh
