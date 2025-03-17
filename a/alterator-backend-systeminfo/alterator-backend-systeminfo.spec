@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-systeminfo
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Alterator backends for getting system information
@@ -40,6 +40,9 @@ Alterator backends for getting system information.
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Mon Mar 17 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.2-alt1
+- New version.
+
 * Fri Mar 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.1-alt1
 - New version.
 
