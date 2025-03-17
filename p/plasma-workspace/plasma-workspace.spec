@@ -32,8 +32,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.3.2
-Release: alt3
+Version: 6.3.3
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -591,6 +591,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.3-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.2-alt3
 - add yandex-browser and chromium-gost for bookmarks runner (closes: 53348)
 

@@ -13,8 +13,8 @@
 %endif
 
 Name: %rname
-Version: 6.3.2
-Release: alt2
+Version: 6.3.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
+- new version
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt2
 - decrease apps menu maximum button size
 

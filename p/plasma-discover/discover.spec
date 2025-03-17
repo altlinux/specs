@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.3.2
-Release: alt3
+Version: 6.3.3
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -219,7 +219,7 @@ KF6 library
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
+#%patch17 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -345,6 +345,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
+- new version
+
 * Wed Mar 05 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.3.2-alt3
 - remove all empty lines in the changelog
 

@@ -8,8 +8,8 @@
 %define libkrdp libkrdp%sover
 
 Name: %rname
-Version: 6.3.2
-Release: alt2
+Version: 6.3.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -96,6 +96,9 @@ ln -s app-org.kde.krdpserver.service "%buildroot/%_userunitdir/$ALIAS"
 %_K6link/lib*.so
 
 %changelog
+* Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
+- new version
+
 * Wed Mar 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.2-alt2
 - package systemd service alias (altbug#53246)
 
