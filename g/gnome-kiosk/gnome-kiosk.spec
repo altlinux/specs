@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Kiosk
 
@@ -21,10 +21,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
+Vcs: https://gitlab.gnome.org/halfline/gnome-kiosk.git
+
 %define glib_ver 2.68.0
 %define gtk4_ver 4.0
-%define mutter_api_ver 15
-%define mutter_ver 47
+%define mutter_api_ver 16
+%define mutter_ver 48
 %define ibus_ver 1.5.24
 
 Requires: dconf gnome-settings-daemon
@@ -107,8 +109,14 @@ sed -i 's|/usr/\(bin/sh\)|\1|' kiosk-script/%name-script
 %_datadir/gnome-session/sessions/%xdg_name.SearchApp.session
 %_datadir/xsessions/%xdg_name.SearchApp.Session.desktop
 %_datadir/wayland-sessions/%xdg_name.SearchApp.Session.desktop
+%_userunitdir/%xdg_name.SearchApp.service
+%_userunitdir/gnome-session@%xdg_name.SearchApp.target.d/session.conf
+
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 

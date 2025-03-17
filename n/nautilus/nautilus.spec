@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define api_ver 4.0
 %define ext_api_ver 4
@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -26,7 +26,7 @@ Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Nautilus
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -35,7 +35,7 @@ Source: %name-%version%beta.tar
 %define glib_ver 2.79.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
-%define gtk4_ver 4.15.2
+%define gtk4_ver 4.16
 %define adwaita_ver 1.6
 %define libxml2_ver 2.7.8
 %define gexiv2_ver 0.14.2
@@ -43,7 +43,6 @@ Source: %name-%version%beta.tar
 %define tracker_ver 3.8
 %define autoar_ver 0.4.4
 %define portal_ver 0.5
-%define handy_ver 1.5.0
 %define selinux_ver 2.0
 
 Requires(post): libcap-utils
@@ -56,7 +55,7 @@ Requires: totem-video-thumbnailer
 Requires: gnome-disk-utility
 %{?_enable_tracker:Requires: tinysparql localsearch}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson desktop-file-utils >= %desktop_file_utils_ver
 BuildRequires: /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver
@@ -161,8 +160,8 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_desktopdir/*.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
-%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Extract.service
-%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Files.service
+#%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Extract.service
+#%_datadir/dbus-1/services/%xdg_name.Tracker3.Miner.Files.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
@@ -172,7 +171,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %dir %_datadir/%name/ontology
 %_datadir/%name/ontology/%name.description
 %_datadir/%name/ontology/%name.ontology
-%_datadir/localsearch3/domain-ontologies/%xdg_name.domain.rule
+#%_datadir/localsearch3/domain-ontologies/%xdg_name.domain.rule
 # docs
 %doc --no-dereference COPYING
 %doc NEWS.bz2 README*
@@ -206,6 +205,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Feb 04 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 

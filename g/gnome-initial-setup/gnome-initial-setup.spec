@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -9,7 +9,7 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Initial Setup
@@ -29,7 +29,7 @@ Source: %name-%version%beta.tar
 %define nm_ver 1.2
 %define nma_ver 1.0
 %define glib_ver 2.64.0
-%define gtk4_ver 4.12
+%define gtk4_ver 4.17
 %define adwaita_ver 1.4
 %define secret_ver 0.18.8
 %define geoclue_ver 2.4.3
@@ -116,6 +116,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 47.5-alt1
 - 47.5
 

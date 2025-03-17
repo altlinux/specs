@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -9,13 +9,15 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.4
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/GnomeShell
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-shell-extensions.git
 
 BuildArch: noarch
 
@@ -158,6 +160,7 @@ This extension provides system monitor for GNOME Shell.
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/stylesheet-dark.css
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/stylesheet-light.css
 %_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.%domain/workspaceIndicator.js
+%_datadir/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.gcampax.github.com/workspacePrefs.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.workspace-indicator.gschema.xml
 
 # launch-new-instance
@@ -170,6 +173,7 @@ This extension provides system monitor for GNOME Shell.
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/prefs.js
+%_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/workspacePrefs.js
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-dark.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-light.css
 %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain/stylesheet-workspace-switcher-dark.css
@@ -184,7 +188,6 @@ This extension provides system monitor for GNOME Shell.
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.%domain/stylesheet.css
 
-
 # status-icons
 %dir %_datadir/gnome-shell/extensions/status-icons@gnome-shell-extensions.gcampax.github.com
 %_datadir/gnome-shell/extensions/status-icons@gnome-shell-extensions.%domain/extension.js
@@ -193,6 +196,9 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt2
 - moved system-monitor to separate package
 

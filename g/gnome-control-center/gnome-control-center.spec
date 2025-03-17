@@ -3,10 +3,12 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
+
+%define gxdp_ver e68375c
 
 %def_disable debug
 %def_enable bluetooth
@@ -16,7 +18,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -24,24 +26,27 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
+Vcs: https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
+
 %if_enabled snapshot
 Source: %name-%version%beta.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
+#Source10: libgxdp-%gxdp_ver.tar
 
-%define glib_ver 2.75.0
-%define gtk4_ver 4.15.2
-%define adwaita_ver 1.6
+%define glib_ver 2.76.6
+%define gtk4_ver 4.17.5
+%define adwaita_ver 1.7
 %define desktop_ver 43
 %define fontconfig_ver 1.0.0
-%define gsds_ver 47
+%define gsds_ver 48
 # nm_client_get_permissions_state()
 %define nm_ver 1.46
-%define goa_ver 3.49.1
-%define acc_ver 0.6.39
-%define sett_daemon_ver 42
+%define goa_ver 3.51.0
+%define acc_ver 23.11.69
+%define sett_daemon_ver 48
 %define bt_api_ver 3.0
 %define bt_ver 42
 %define systemd_ver 40
@@ -49,7 +54,7 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %define ibus_ver 1.5.2
 %define colord_ver 1.0
 %define pwq_ver 1.2.2
-%define upower_ver 0.99.8
+%define upower_ver 1.90.6
 %define grilo_ver 0.3.0
 %define polkit_ver 0.114
 %define snapd_ver 1.62
@@ -88,7 +93,7 @@ Requires: gnome-remote-desktop
 # for power management
 Requires: power-profiles-daemon
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
 BuildRequires: fontconfig-devel >= %fontconfig_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
@@ -155,7 +160,10 @@ you'll want to install this package.
 %name-devel helps you create the panels for the control center.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta 
+#-a10
+#mv libgxdp-%gxdp_ver subprojects/libgxdp
+
 # define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
 #sed -i 's|zone\.tab|zone1970.tab|' panels/system/datetime/tz.h
 sed -i 's|\(\/usr\/share\/\)zoneinfo\/\(zone.tab\)|\1%name/\2|' panels/system/datetime/tz.h
@@ -180,6 +188,7 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 %_bindir/%name
 %_libexecdir/%name-search-provider
 %_libexecdir/%name-print-renderer
+%_libexecdir/%name-global-shortcuts-provider
 
 %files data -f %name.lang
 %dir %_datadir/%name
@@ -199,6 +208,8 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 %_datadir/polkit-1/actions/org.gnome.controlcenter.remote-session-helper.policy
 %_datadir/dbus-1/services/%xdg_name.SearchProvider.service
 %_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/interfaces/org.gnome.GlobalShortcutsRebind.xml
+%_datadir/dbus-1/services/org.gnome.Settings.GlobalShortcutsProvider.service
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %{?_enable_doc:%_man1dir/%name.1.*}
 %_datadir/bash-completion/completions/gnome-control-center
@@ -214,6 +225,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Feb 04 2025 Yuri N. Sedunov <aris@altlinux.org> 47.4-alt1
 - 47.4
 

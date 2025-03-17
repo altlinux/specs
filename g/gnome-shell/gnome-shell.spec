@@ -2,9 +2,9 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
-%define api_ver 15
+%define api_ver 16
 %define gst_api_ver 1.0
 %define gvc_ver 5f9768a
 
@@ -18,7 +18,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -88,6 +88,7 @@ Requires: unzip
 Requires: malcontent >= %malcontent_ver
 Requires: pipewire
 Requires: xdg-desktop-portal-gnome
+Requires: fonts-ttf-adwaita
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 # js/misc/dependencies.js
@@ -114,6 +115,7 @@ Requires: typelib(GWeather) = %gweather_api_ver
 Requires: typelib(IBus)
 Requires: typelib(Malcontent)
 Requires: typelib(Meta)
+Requires: typelib(MetaTest)
 Requires: typelib(NM)
 Requires: typelib(NMA4) = 1.0
 Requires: typelib(Pango)
@@ -271,6 +273,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_datadir/dbus-1/interfaces/%xdg_name.Screenshot.xml
 %_datadir/dbus-1/interfaces/%{xdg_name}SearchProvider2.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Screencast.xml
+%_datadir/dbus-1/interfaces/%xdg_name.ScreenTime.xml
 %_datadir/dbus-1/interfaces/%xdg_name.Extensions.xml
 %_datadir/dbus-1/services/%xdg_name.Extensions.service
 %_datadir/dbus-1/services/%xdg_name.Notifications.service
@@ -290,6 +293,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %_man1dir/*
 %_iconsdir/hicolor/*/*/%xdg_name.Extensions*.svg
 %_iconsdir/hicolor/*/*/%xdg_name.CaptivePortal*.svg
+
+%_datadir/desktop-directories/X-GNOME-Shell-System.directory
+%_datadir/desktop-directories/X-GNOME-Shell-Utilities.directory
 %doc README* NEWS
 
 %if_enabled gtk_doc
@@ -309,6 +315,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Mar 04 2025 Yuri N. Sedunov <aris@altlinux.org> 47.5-alt1
 - 47.5
 

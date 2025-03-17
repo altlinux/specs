@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define api_ver 1.0
 
@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -261,6 +261,7 @@ dbus-run-session %__meson_test
 %config %_sysconfdir/pam.d/gdm-fingerprint
 %_udevrulesdir/61-%name.rules
 %config %_sysconfdir/dbus-1/system.d/%name.conf
+%config %_datadir/polkit-1/rules.d/20-%name.rules
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %dir %gdm_confdir
 %config(noreplace) %gdm_confdir/custom.conf
@@ -309,6 +310,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Dec 28 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt2
 - updated to 47.0-29-gbe3a3de71
 
@@ -1205,3 +1209,4 @@ dbus-run-session %__meson_test
 
 * Sun Sep 26 1999 Elliot Lee <sopwith@redhat.com>
 - Fixed pipewrite bug (found by mkj & ewt).
+

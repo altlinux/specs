@@ -7,9 +7,9 @@
 %def_disable installed_tests
 
 %define _name msgraph
-%define ver_major 0.2
-%define api_ver_major 0
-%define api_ver 0.1
+%define ver_major 0.3
+%define api_ver_major 1
+%define api_ver 1
 
 Name: lib%_name
 Version: %ver_major.3
@@ -21,6 +21,7 @@ License: LGPL-3.0-or-later
 Url: https://gitlab.com/tabos/msgraph
 
 Vcs: https://gitlab.com/tabos/msgraph.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
@@ -131,6 +132,9 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Wed Jun 19 2024 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
 - 0.2.3
 

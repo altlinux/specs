@@ -1,6 +1,6 @@
 %define _name localsearch
 %define old_name tracker-miners
-%define ver_major 3.8
+%define ver_major 3.9
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -22,7 +22,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %add_python3_path %_libdir/%_name-%api_ver/
 
 %def_enable xml
-%def_enable rss
 %def_enable poppler
 %def_enable libgxps
 %def_enable libexif
@@ -61,7 +60,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %define libgsf_ver 1.14.24
 %define exempi_ver 2.1.0
 %define gee_ver 0.3
-%define libgrss_ver 0.7
 %define rest_ver 0.7
 %define libosinfo_ver 0.2.9
 %define libpng_ver 0.89
@@ -74,10 +72,8 @@ Obsoletes: %old_name%api_ver_major < %ver_major
 Provides: tracker%api_ver_major-miners = %EVR
 Provides: %old_name%api_ver_major = %EVR
 
-# mediaextractor (gstreamer|libav|mplayer|external)
-%define generic_media_extractor gstreamer
-BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver
-BuildRequires: gst-plugins-bad1.0-devel >= %gst_ver
+BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver pkgconfig(gstreamer-audio-1.0) >= %gst_ver
+BuildRequires: pkgconfig(gstreamer-tag-1.0) >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-build-systemd rpm-build-gir rpm-build-python3
 BuildRequires: meson
@@ -92,7 +88,6 @@ BuildRequires: gobject-introspection-devel
 # discoverer
 BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_xml:BuildRequires: libxml2-devel >= %libxml2_ver}
-%{?_enable_rss:BuildRequires: libgrss-devel >= %libgrss_ver}
 %{?_enable_libpng:BuildRequires: libpng-devel >= %libpng_ver}
 %{?_enable_raw:BuildRequires: libgexiv2-devel}
 %{?_enable_poppler:BuildRequires: libpoppler-glib-devel >= %poppler_ver}
@@ -126,31 +121,29 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' --
 
 %build
 %meson \
-	-Dgeneric_media_extractor='%generic_media_extractor' \
-	%{?_enable_xml:-Dxml=enabled} \
-	%{?_enable_rss:-Dminer_rss=true} \
-	%{?_enable_poppler:-Dpdf=enabled} \
-	%{?_enable_libgxps:-Dxps=enabled} \
-	%{?_enable_libexif:-Dexif=enabled} \
-	%{?_enable_libiptcdata:-Diptc=enabled} \
-	%{?_enable_libgsf:-Dgsf=enabled} \
-	%{?_enable_libjpeg:-Djpeg=enabled} \
-	%{?_enable_libtiff:-Dtiff=enabled} \
-	%{?_enable_libgif:-Dgif=enabled} \
-	%{?_enable_libpng:-Dpng=enabled} \
-	%{?_enable_raw:-Draw=enabled} \
-	%{?_enable_exempi:-Dxmp=enabled} \
-	%{?_enable_libcue:-Dcue=enabled} \
-	%{?_enable_abiword:-Dabiword=true} \
-	%{?_enable_mp3:-Dmp3=true} \
-	%{?_enable_ps:-Dps=true} \
-	%{?_enable_text:-Dtext=true} \
-	%{?_enable_icon:-Dicon=true} \
-	%{?_enable_libosinfo:-Diso=enabled} \
-	%{?_enable_playlist:-Dplaylist=enabled} \
-	%{subst_enable_meson_feature landlock landlock} \
-	%{?_disable_man:-Dman=false} \
-	-Dsystemd_user_services_dir='%_userunitdir'
+    %{subst_enable_meson_feature xml xml} \
+    %{subst_enable_meson_feature poppler pdf} \
+    %{subst_enable_meson_feature libgxps xps} \
+    %{subst_enable_meson_feature libexif exif} \
+    %{subst_enable_meson_feature libiptcdata iptc} \
+    %{subst_enable_meson_feature libgsf gsf} \
+    %{subst_enable_meson_feature libjpeg jpeg} \
+    %{subst_enable_meson_feature libtiff tiff} \
+    %{subst_enable_meson_feature libgif gif} \
+    %{subst_enable_meson_feature libpng png} \
+    %{subst_enable_meson_feature raw raw} \
+    %{subst_enable_meson_feature exempi xmp} \
+    %{subst_enable_meson_feature libcue cue} \
+    %{subst_enable_meson_bool abiword abiword} \
+    %{subst_enable_meson_bool mp3 mp3} \
+    %{subst_enable_meson_bool ps ps} \
+    %{subst_enable_meson_bool text text} \
+    %{subst_enable_meson_bool icon icon} \
+    %{subst_enable_meson_feature libosinfo iso} \
+    %{subst_enable_meson_feature playlist playlist} \
+    %{subst_enable_meson_feature landlock landlock} \
+    %{subst_enable_meson_bool man man} \
+    -Dsystemd_user_services_dir='%_userunitdir'
 %nil
 %meson_build
 
@@ -163,7 +156,6 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 
 %files -f %name%api_ver_major.lang
 %_xdgconfigdir/autostart/%name-%api_ver_major.desktop
-%_xdgconfigdir/autostart/tracker-miner-rss-%api_ver_major.desktop
 %_bindir/%name
 %_libdir/%_name-%api_ver/
 # symlink
@@ -172,12 +164,10 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %_libexecdir/%name-control-%api_ver_major
 %_libexecdir/%name-extractor-%api_ver_major
 %_libexecdir/%name-writeback-%api_ver_major
-%{?_enable_rss:%_libexecdir/tracker-miner-rss-%api_ver_major}
 %_datadir/%name%api_ver_major/
 %_userunitdir/%name-%api_ver_major.service
 %_userunitdir/%name-control-%api_ver_major.service
 %_userunitdir/%name-writeback*.service
-%_userunitdir/tracker-miner-rss*.service
 %{?_enable_man:
 %_man1dir/%name-%{api_ver_major}.1*
 %_man1dir/%name-daemon.1*
@@ -189,10 +179,8 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %_man1dir/%name-status.1*
 %_man1dir/%name-tag.1*
 %_man1dir/%name-writeback-%{api_ver_major}.1*
-%_man1dir/tracker-miner-rss-*.*
 }
 %_datadir/dbus-1/services/%xdg_name.Miner.Files.service
-%_datadir/dbus-1/services/%xdg_name.Miner.RSS.service
 %_datadir/dbus-1/services/%xdg_name.Writeback.service
 %_datadir/dbus-1/services/%xdg_name.Miner.Files.Control.service
 %_datadir/dbus-1/services/%rdn_name.service
@@ -209,6 +197,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.9.0-alt1
+- 3.9.0
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

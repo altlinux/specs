@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -13,7 +13,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -21,8 +21,10 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-settings-daemon.git
+
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources//%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -56,7 +58,7 @@ Requires: udev-rules-rfkill-uaccess
 Requires: polkit >= %polkit_ver
 Requires: upower >= %upower_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-systemd rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson gcc-c++ glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
@@ -185,6 +187,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Fri Nov 22 2024 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 

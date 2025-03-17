@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 15
+%define api_ver 16
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -17,12 +17,11 @@
 %def_enable installed_tests
 %def_enable egl_device
 %def_enable wayland_eglstream
-%def_enable libdisplay_info
 
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -62,7 +61,7 @@ Source: %name-%version%beta.tar
 %define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
 %define wayland_ver 1.23
-%define wayland_protocols_ver 1.36
+%define wayland_protocols_ver 1.41
 # xwayland with ei support
 %define xwayland_ver 2:23.2.2-alt2
 %define upower_ver 0.99.0
@@ -77,7 +76,8 @@ Source: %name-%version%beta.tar
 %define wacom_ver 0.13
 %define lcms_ver 2.6
 %define colord_ver 1.4.5
-%define eis_ver 1.0.0
+%define eis_ver 1.4.0
+%define display_info_ver 0.2
 
 Requires: lib%name = %EVR
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
@@ -115,9 +115,11 @@ BuildRequires: pkgconfig(libei-1.0) pkgconfig(libeis-1.0) >= %eis_ver
 BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel libgudev-devel >= %gudev_ver
 BuildRequires: libGL-devel libGLES-devel xorg-xwayland-devel >= %xwayland_ver %_bindir/cvt
 BuildRequires: libdbus-devel
+BuildRequires: pkgconfig(libdisplay-info) >= %display_info_ver
+BuildRequires: pkgconfig(bash-completion)
+BuildRequires: python3(argcomplete) zenity /usr/bin/rst2man
 %{?_enable_egl_device:BuildRequires: libEGL-devel}
 %{?_enable_wayland_eglstream:BuildRequires: pkgconfig(wayland-egl) pkgconfig(wayland-eglstream-protocols)}
-%{?_enable_libdisplay_info:BuildRequires: pkgconfig(libdisplay-info)}
 %{?_enable_x11:BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcomposite)
@@ -190,6 +192,7 @@ environment.
 Summary: Tests for the Mutter WM
 Group: Development/Other
 Requires: %name = %EVR
+Requires: lib%name = %EVR
 Requires: xvfb-run
 
 %description tests
@@ -215,7 +218,6 @@ sed -i 's/\.beta//' meson.build
     %{subst_enable_meson_bool remote_desktop remote_desktop} \
     %{subst_enable_meson_bool egl_device egl_device} \
     %{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
-    %{subst_enable_meson_feature libdisplay_info libdisplay_info} \
     %{subst_enable_meson_bool installed_tests installed_tests}
 %nil
 %meson_build
@@ -232,6 +234,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/gdctl
 %_udevrulesdir/61-%name.rules
 %_libexecdir/%name-restart-helper
 %_libexecdir/%name-x11-frames
@@ -240,6 +243,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %dir %pkgdatadir
 %pkgdatadir/tests/
 %_man1dir/*
+%_datadir/bash-completion/completions/gdctl
 %doc NEWS README.md
 
 %if_enabled privatelib
@@ -247,7 +251,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %_libdir/lib%name-%api_ver.so.*
 %dir %pkglibdir
 %pkglibdir/lib%name-clutter-%api_ver.so.*
-%pkglibdir/lib%name-cogl-pango-%api_ver.so.*
+#%pkglibdir/lib%name-cogl-pango-%api_ver.so.*
 %pkglibdir/lib%name-cogl-%api_ver.so.*
 %pkglibdir/lib%name-mtk-%api_ver.so.*
 %_libdir/lib%name-test-%api_ver.so
@@ -265,7 +269,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files -n lib%name-gir
 %pkglibdir/Clutter-%api_ver.typelib
 %pkglibdir/Cogl-%api_ver.typelib
-%pkglibdir/CoglPango-%api_ver.typelib
+#%pkglibdir/CoglPango-%api_ver.typelib
 %pkglibdir/Meta-%api_ver.typelib
 %pkglibdir/Mtk-%api_ver.typelib
 %pkglibdir/MetaTest-%api_ver.typelib
@@ -273,7 +277,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files -n lib%name-gir-devel
 %pkglibdir/Clutter-%api_ver.gir
 %pkglibdir/Cogl-%api_ver.gir
-%pkglibdir/CoglPango-%api_ver.gir
+#%pkglibdir/CoglPango-%api_ver.gir
 %pkglibdir/Meta-%api_ver.gir
 %pkglibdir/Mtk-%api_ver.gir
 %pkglibdir/MetaTest-%api_ver.gir
@@ -292,6 +296,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1:48.0-alt1
+- 48.0
+
 * Tue Mar 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1:47.6-alt1
 - 47.6
 

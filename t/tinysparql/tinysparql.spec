@@ -2,7 +2,7 @@
 
 %define _name tinysparql
 %define old_name tracker
-%define ver_major 3.8
+%define ver_major 3.9
 %define beta %nil
 %define namespace Tsparql
 %define old_namespace Tracker
@@ -24,7 +24,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Low-footprint RDF triple store with SPARQL 1.1 interface
@@ -180,14 +180,13 @@ GObject introspection devel data for the Tracker library.
 
 %prep
 %setup -n %_name-%version%beta
-sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sparql/*.py
 
 %build
 %meson \
-	-Dunicode_support=%unicode_support \
-	%{subst_enable_meson_feature stemmer stemmer} \
-	%{subst_enable_meson_bool docs docs} \
-	%{subst_enable_meson_bool man man}
+    -Dunicode_support=%unicode_support \
+    %{subst_enable_meson_feature stemmer stemmer} \
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool man man}
 %nil
 %meson_build
 
@@ -260,6 +259,9 @@ sed -i 's|#!.*/bin/env python3|#!/usr/bin/python3|' docs/reference/libtracker-sp
 %endif
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
+- 3.9.1
+
 * Sat Dec 14 2024 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
 - 3.8.2
 

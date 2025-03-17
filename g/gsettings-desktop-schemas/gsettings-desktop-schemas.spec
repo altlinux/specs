@@ -1,28 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define namespace GDesktopEnums
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A collection of GSettings schemas
-License: %lgpl21plus
+License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org/
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas.git
+
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: %name-data = %EVR
 
 %define gio_ver 2.31.0
 Requires(pre): libgio >= %gio_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %gio_ver
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel}
@@ -73,6 +75,7 @@ GObject introspection devel data for %name.
 %build
 %meson \
     %{subst_enable_meson_bool introspection introspection}
+%nil
 %meson_build
 
 %install
@@ -102,6 +105,7 @@ GObject introspection devel data for %name.
 %_datadir/glib-2.0/schemas/org.gnome.desktop.media-handling.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.peripherals.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.screensaver.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.screen-time-limits.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.session.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.sound.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.thumbnail-cache.gschema.xml
@@ -131,6 +135,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 

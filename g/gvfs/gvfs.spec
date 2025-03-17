@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.56
+%define ver_major 1.57
 
 # obexftp support removed since 3.15.91
 %def_disable obexftp
@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -41,8 +41,10 @@ License: LGPL-2.0-or-later
 Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/gvfs
 
+Vcs: https://gitlab.gnome.org/GNOME/gvfs.git
+
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -55,7 +57,7 @@ Patch1: gvfs-1.19.90-alt-1-logind-state.patch
 Obsoletes: %name-utils < 1.31
 Obsoletes: bash-completion-gvfs < 1.31
 
-%define glib_ver 2.70.0
+%define glib_ver 2.83.0
 %define gudev_ver 207
 %define libsoup3_ver 3.0.0
 %define avahi_ver 0.6
@@ -72,6 +74,7 @@ Obsoletes: bash-completion-gvfs < 1.31
 %define libusb_ver 1.0.21
 %define gphoto_ver 2.4.0
 %define gsds_ver 3.33.0
+%define msgraph_ver 0.3.3
 
 Requires: dconf
 Requires: gsettings-desktop-schemas >= %gsds_ver
@@ -108,7 +111,7 @@ BuildRequires: pkgconfig(libgcrypt) pkgconfig(gcr-4)
 %{?_enable_google:BuildRequires: libgdata-devel >= %gdata_ver}
 %{?_enable_admin:BuildRequires: libpolkit-devel libcap-devel}
 %{?_enable_libusb:BuildRequires: libusb-devel >= %libusb_ver}
-%{?_enable_onedrive:BuildRequires: libmsgraph-devel}
+%{?_enable_onedrive:BuildRequires: libmsgraph-devel >= %msgraph_ver}
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
 
 BuildRequires: desktop-file-utils
@@ -202,6 +205,7 @@ Requires: %name = %EVR
 Summary: WSDD backend for gvfs
 Group: System/Libraries
 Requires: %name = %EVR
+Requires: wsdd
 
 %package backends
 Summary: All backends for gvfs
@@ -558,6 +562,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.57.2-alt1
+- 1.57.2
+
 * Fri Oct 18 2024 Yuri N. Sedunov <aris@altlinux.org> 1.56.1-alt1
 - 1.56.1
 

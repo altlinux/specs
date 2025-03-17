@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.52
+%define ver_major 3.54
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.OnlineAccounts
 %define namespace Goa
@@ -18,13 +18,15 @@
 %def_enable man
 
 Name: gnome-online-accounts
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 
 Summary: Provide online accounts information
 Group: Graphical desktop/GNOME
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/GnomeOnlineAccounts
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-online-accounts.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -181,6 +183,9 @@ sed -i s'|gtk+-3.0|libadwaita-1|' src/goabackend/meson.build
 %endif
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.1-alt1
+- 3.54.1
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.52.5-alt1
 - 3.52.5
 
