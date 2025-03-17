@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: CLI for alterator browser
 License: GPL-2.0+
 Group: System/Configuration/Other
+URL: https://gitlab.basealt.space/alt/alteratorctl
 
 BuildRequires: cmake gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel libffi-devel
 BuildRequires: zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
@@ -38,6 +39,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Mar 17 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.1-alt1
+- New version
+
 * Thu Mar 13 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.0-alt1
 - Removing unnecessary dependencies
 
