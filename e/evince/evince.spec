@@ -2,24 +2,23 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 46
+%define ver_major 48
 %define beta %nil
-%define api_ver_major 3
-%define api_ver %api_ver_major.0
+%define api_ver_major 4
+%define lib_api_ver 3
+%define api_ver %lib_api_ver.0
 %define so_ver 4
 
 %def_enable xps
 %def_enable ps
-%def_enable t1lib
 %def_enable dbus
 %def_enable introspection
-%def_enable multimedia
 %def_disable nautilus
 %def_enable gtk_doc
 %def_disable debug
 
 Name: evince
-Version: %ver_major.3.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A document viewer
@@ -38,9 +37,10 @@ Requires: %name-data = %EVR
 Requires: gnome-icon-theme gnome-icon-theme-symbolic icon-theme-adwaita
 Requires: gvfs-backend-recent-files
 Requires: dconf
-%{?_enable_multimedia:Requires: gst-plugins-base1.0 gst-libav}
+# for feature GTK4 GtkVideo widget
+Requires: gst-plugins-base1.0 gst-libav
 
-%define poppler_ver 22.02.0
+%define poppler_ver 22.05.0
 %define libarchive_ver 3.6.0
 %define gtk_ver 3.22
 %define handy_ver 1.5.0
@@ -61,7 +61,6 @@ BuildRequires: libsynctex-devel
 BuildRequires: libgnome-desktop3-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_xps:BuildRequires: libgxps-devel}
-%{?_enable_t1lib:BuildRequires: t1lib-devel}
 %{?_enable_dbus:BuildRequires: libdbus-devel}
 %{?_enable_multimedia:BuildRequires: gst-plugins1.0-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
@@ -145,15 +144,14 @@ using Evince library.
     -Dtiff=enabled \
     -Ddjvu=enabled \
     -Ddvi=enabled \
-    %{?_disable_t1lib:-Dt1lib=disabled} \
     -Dcomics=enabled \
-    %{?_disable_gtk_doc:-Dgtk_doc=false} \
-    %{?_disable_dbus:-Ddbus=false} \
-    %{?_disable_xps:-Dxps=disabled} \
-    %{?_enable_ps:-Dps=enabled} \
-    %{?_disable_introspection:-Dintrospection=false} \
-    %{?_enable_multimedia:-Dmultimedia=enabled} \
-    %{?_enbable_nautilus:-Dnautilus=true}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool dbus dbus} \
+    %{subst_enable_meson_feature xps xps} \
+    %{subst_enable_meson_feature ps ps} \
+    %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool nautilus nautilus} \
+#    %{?_enable_multimedia:-Dmultimedia=enabled} \
 %nil
 %meson_build
 
@@ -170,6 +168,7 @@ using Evince library.
 %doc AUTHORS NEWS* README.md
 
 %files data -f %name.lang
+#%{?_enable_dbus:%_datadir/dbus-1/services/%xdg_name.Daemon.service}
 %{?_enable_dbus:%_datadir/dbus-1/services/org.gnome.evince.Daemon.service}
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
@@ -187,30 +186,30 @@ using Evince library.
 %_man1dir/*.1*
 
 %files -n lib%name
-%_libdir/libevdocument%{api_ver_major}.so.%{so_ver}*
-%_libdir/libevview%{api_ver_major}.so.*
+%_libdir/libevdocument%{lib_api_ver}.so.%{so_ver}*
+%_libdir/libevview%{lib_api_ver}.so.*
 # backends
 %dir %_libdir/evince
-%dir %_libdir/evince/%so_ver
-%dir %_libdir/evince/%so_ver/backends
-%_libdir/evince/%so_ver/backends/libcomicsdocument.so
-%_libdir/evince/%so_ver/backends/libdjvudocument.so
-%_libdir/evince/%so_ver/backends/libpdfdocument.so
-%{?_enable_ps:%_libdir/evince/%so_ver/backends/libpsdocument.so}
-%_libdir/evince/%so_ver/backends/libtiffdocument.so
-%{?_enable_xps:%_libdir/evince/%so_ver/backends/libxpsdocument.so}
-%_libdir/evince/%so_ver/backends/*.evince-backend
-%exclude %_libdir/evince/%so_ver/backends/dvidocument.evince-backend
+%dir %_libdir/evince/%api_ver_major
+%dir %_libdir/evince/%api_ver_major/backends
+%_libdir/evince/%api_ver_major/backends/libcomicsdocument.so
+%_libdir/evince/%api_ver_major/backends/libdjvudocument.so
+%_libdir/evince/%api_ver_major/backends/libpdfdocument.so
+%{?_enable_ps:%_libdir/evince/%api_ver_major/backends/libpsdocument.so}
+%_libdir/evince/%api_ver_major/backends/libtiffdocument.so
+%{?_enable_xps:%_libdir/evince/%api_ver_major/backends/libxpsdocument.so}
+%_libdir/evince/%api_ver_major/backends/*.evince-backend
+%exclude %_libdir/evince/%api_ver_major/backends/dvidocument.evince-backend
 
 %files dvi
-%_libdir/evince/%so_ver/backends/dvidocument.evince-backend
-%_libdir/evince/%so_ver/backends/libdvidocument.so
+%_libdir/evince/%api_ver_major/backends/dvidocument.evince-backend
+%_libdir/evince/%api_ver_major/backends/libdvidocument.so
 %_datadir/metainfo/%name-dvidocument.metainfo.xml
 
 %files -n lib%name-devel
 %_includedir/evince
-%_libdir/libevdocument%{api_ver_major}.so
-%_libdir/libevview%{api_ver_major}.so
+%_libdir/libevdocument%{lib_api_ver}.so
+%_libdir/libevview%{lib_api_ver}.so
 %_pkgconfigdir/*.pc
 
 %if_enabled gtk_doc
@@ -221,16 +220,19 @@ using Evince library.
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_libdir/girepository-1.0/EvinceDocument-%api_ver.typelib
-%_libdir/girepository-1.0/EvinceView-%api_ver.typelib
+%_typelibdir/EvinceDocument-%api_ver.typelib
+%_typelibdir/EvinceView-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/EvinceDocument-%api_ver.gir
-%_datadir/gir-1.0/EvinceView-%api_ver.gir
+%_girdir/EvinceDocument-%api_ver.gir
+%_girdir/EvinceView-%api_ver.gir
 %endif
 
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Jul 23 2024 Yuri N. Sedunov <aris@altlinux.org> 46.3.1-alt1
 - 46.3.1
 
