@@ -1,5 +1,5 @@
 Name: rack
-Version: 2.6.0
+Version: 2.6.2
 Release: alt1
 
 Summary: VCV virtual Eurorack host
@@ -16,19 +16,26 @@ BuildRequires: cmake gcc-c++ jq
 BuildRequires: /usr/bin/convert
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(glew)
-BuildRequires: pkgconfig(glfw3)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(jansson)
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libssl)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(speexdsp)
 BuildRequires: pkgconfig(rtmidi)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
+
+BuildRequires: pkgconfig(wayland-protocols)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(xkbcommon)
 
 %package devel
 Summary: VCV virtual Eurorack host SDK
@@ -36,12 +43,10 @@ Group: Development/C++
 Requires: gcc-c++ jq
 Requires: pkgconfig(alsa)
 Requires: pkgconfig(glew)
-Requires: pkgconfig(glfw3)
 Requires: pkgconfig(jack)
 Requires: pkgconfig(jansson)
 Requires: pkgconfig(libarchive)
 Requires: pkgconfig(libcurl)
-Requires: pkgconfig(libpulse)
 Requires: pkgconfig(libssl)
 Requires: pkgconfig(libzstd)
 Requires: pkgconfig(samplerate)
@@ -62,7 +67,7 @@ This package contains Rack plugin SDK.
 
 %build
 %make_build -C dep
-%make_build
+%make_build VERSION=%version
 
 %install
 install -pm0755 -D rack %buildroot%_bindir/rack
@@ -74,7 +79,7 @@ ln -s librack.so.0 %buildroot%_libdir/librack.so
 
 install -pm0644 -D Core.json %buildroot%_datadir/rack/Core.json
 install -pm0644 template.vcv %buildroot%_datadir/rack
-cp -a res %buildroot%_datadir/rack
+cp -a res translations %buildroot%_datadir/rack
 
 mkdir -p %buildroot%_datadir/rack/sdk/dep
 cp -prv include %buildroot%_datadir/rack/sdk
@@ -113,6 +118,9 @@ install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
 %_datadir/rack/sdk
 
 %changelog
+* Mon Mar 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.2-alt1
+- 2.6.2 released
+
 * Thu Nov 21 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.0-alt1
 - 2.6.0 released
 
