@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.13
-Release: alt2
+Version: 1.3.14
+Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Mon Mar 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.14-alt1
+- Add static license ALT_Domain_License/11.0
+
 * Mon Mar 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 1.3.13-alt2
 - ALT_Server_License: add ALT_Server_License/11.0 to Makefile for installing
 
