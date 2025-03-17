@@ -10,7 +10,7 @@
 
 Name: ZLUDA
 Version: 4
-Release: alt2
+Release: alt3
 
 Summary: CUDA on non-NVIDIA GPUs
 License: Apache-2.0 or MIT
@@ -37,7 +37,7 @@ BuildRequires: hip-runtime-amd
 BuildRequires: rocm-comgr-devel
 
 %description
-LUDA is a drop-in replacement for CUDA on non-NVIDIA GPU. ZLUDA allows
+ZLUDA is a drop-in replacement for CUDA on non-NVIDIA GPU. ZLUDA allows
 to run unmodified CUDA applications using non-NVIDIA GPUs with
 near-native performance.
 
@@ -77,6 +77,9 @@ chmod -v ugo+x %buildroot%_bindir/zluda_with
 %_bindir/zluda_with
 
 %changelog
+* Mon Mar 17 2025 Anton Zhukharev <ancieg@altlinux.org> 4-alt3
+- Fixed project name in description.
+
 * Mon Mar 17 2025 Anton Zhukharev <ancieg@altlinux.org> 4-alt2
 - Built using LLVM 19.1.
 
