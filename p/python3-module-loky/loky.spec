@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.1
-Release: alt2
+Version: 3.5.0
+Release: alt1
 Summary: A robust implementation of concurrent.futures.ProcessPoolExecutor
 License: BSD
 Group: Development/Python3
@@ -51,6 +51,9 @@ ProcessPoolExecutor class of concurrent.futures
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Mar 17 2025 Stanislav Levin <slev@altlinux.org> 3.5.0-alt1
+- 3.4.1 -> 3.5.0.
+
 * Thu Mar 21 2024 Stanislav Levin <slev@altlinux.org> 3.4.1-alt2
 - Fixed FTBFS (Python 3.12).
 
