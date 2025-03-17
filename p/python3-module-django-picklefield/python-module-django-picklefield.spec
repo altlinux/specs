@@ -1,7 +1,7 @@
 %define module_name django-picklefield
 
 Name: python3-module-%module_name
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: django-picklefield provides an implementation of a pickled object field
@@ -37,6 +37,9 @@ Such fields can contain any picklable objects.
 %python3_sitelibdir/picklefield*
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Fri Apr 05 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
