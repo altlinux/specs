@@ -10,7 +10,7 @@
 
 Name: lib%{_name}3
 Version: %ver_major.11
-Release: alt1
+Release: alt2
 
 Summary: GtkSourceView text widget library
 License: LGPLv2+
@@ -18,6 +18,8 @@ Group: System/Libraries
 Url: https://wiki.gnome.org/Projects/GtkSourceView
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
+
+Patch0: libgtksourceview3-debian-fix_build_with_gcc14.patch
 
 # From configure.ac
 %define gtk_ver 3.20.0
@@ -86,6 +88,8 @@ GObject introspection devel data for the GtkSourceView library
 %prep
 %setup -n %_name-%version
 
+%patch0 -p1
+
 %build
 %configure \
 	%{subst_enable static} \
@@ -129,6 +133,9 @@ GObject introspection devel data for the GtkSourceView library
 %endif
 
 %changelog
+* Mon Mar 17 2025 Leonid Znamenok <respublica@altlinux.org> 3.24.11-alt2
+- NMU: fixed FTBFS with gcc14
+
 * Mon May 06 2019 Yuri N. Sedunov <aris@altlinux.org> 3.24.11-alt1
 - 3.24.11
 
