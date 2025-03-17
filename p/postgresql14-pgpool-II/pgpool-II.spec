@@ -1,17 +1,12 @@
 %define pg_ver 14
 %define prog_name pgpool-II
 %define sname pgpool
-%ifarch loongarch64
-%def_without jit
-%else
-%def_with jit
-%endif
 
 %set_gcc_version      13
 
 Name: postgresql%pg_ver-%prog_name
 Version: 4.6.0
-Release: alt1
+Release: alt2
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -23,14 +18,20 @@ Source2: pgpool.tmpfiles
 Source3: pgpool.init
 Source4: pgpool.sysconfig
 Patch0: 0001-Update-path-for-socket-and-log.patch
+Patch1: 0002-pgpool-II-4.6.0-fix-build-doc.patch
 
-BuildRequires: libfreetds-devel
+BuildRequires: OpenSP
+BuildRequires: docbook-style-dsssl
+BuildRequires: docbook-style-dsssl-utils
+BuildRequires: docbook-style-xsl
+BuildRequires: perl-parent
+BuildRequires: xsltproc
+#BuildRequires: libfreetds-devel
 BuildRequires: flex
 BuildRequires: postgresql%pg_ver-server-devel
-BuildRequires: pam-devel
+BuildRequires: libpam-devel
 BuildRequires: libmemcached-devel
 BuildRequires: libssl-devel
-BuildRequires: setproctitle-devel
 
 Provides: pgpool2 = %EVR
 Conflicts: pgpool2 < %EVR
@@ -53,6 +54,7 @@ Postgresql extensions libraries and sql files for pgpool-II.
 %prep
 %setup -n %prog_name-%version
 %patch0 -p1
+%patch1 -p1
 
 %build
 export CC=%__cc
@@ -70,6 +72,7 @@ export CXX=%__cxx
 %make_build -j1
 %make_build -C src/sql/pgpool-recovery
 %make_build -C src/sql/pgpool-regclass
+%make_build -C doc all
 
 %install
 %make DESTDIR=%buildroot install
@@ -91,10 +94,8 @@ mv %buildroot%_sysconfdir/%sname/follow_primary.sh.sample %buildroot%_sysconfdir
 mv %buildroot%_sysconfdir/%sname/pgpool_remote_start.sample %buildroot%_sysconfdir/%sname/pgpool_remote_start
 mv %buildroot%_sysconfdir/%sname/recovery_1st_stage.sample %buildroot%_sysconfdir/%sname/recovery_1st_stage
 
-# TODO after fix doc build
-# Copy man pages
-#cp doc/src/sgml/man1/* %buildroot%_man1dir/
-#cp doc/src/sgml/man8/* %buildroot%_man8dir/
+cp doc/src/sgml/man1/* %buildroot%_man1dir/
+cp doc/src/sgml/man8/* %buildroot%_man8dir/
 
 rm -f %buildroot%_libdir/*.{a,la}
 
@@ -113,7 +114,7 @@ fi
 %preun_service %sname
 
 %files
-%doc NEWS COPYING src/sample
+%doc NEWS COPYING src/sample doc/src/sgml/html
 %dir %attr(750,root,postgres) %_sysconfdir/%sname
 %config(noreplace) %attr(640,root,postgres) %_sysconfdir/%sname/*
 %config(noreplace) %_sysconfdir/sysconfig/%sname
@@ -126,11 +127,16 @@ fi
 %_datadir/pgsql/extension/*
 %_unitdir/*
 %_tmpfilesdir/*
-#%%_man1dir/*
-#%%_man8dir/*
-%attr(1775,root,%sname) %dir %_logdir/%sname
+%_man1dir/*
+%_man8dir/*
+%attr(1775,root,postgres) %dir %_logdir/%sname
 
 %changelog
+* Mon Mar 17 2025 Alexei Takaseev <taf@altlinux.org> 4.6.0-alt2
+- Fix build documentation with DocBook 4.5
+- Fix permissions for /var/log/pgpool (ALT #53450)
+- Enable JIT for loongarch64
+
 * Tue Mar 04 2025 Alexei Takaseev <taf@altlinux.org> 4.6.0-alt1
 - 4.6.0
 
