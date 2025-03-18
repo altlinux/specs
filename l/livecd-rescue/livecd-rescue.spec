@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: livecd-rescue
-Version: 0.3
+Version: 0.3.1
 Release: alt1
 
 Summary: The systemd target and services for Live Rescue
@@ -41,6 +41,9 @@ ln -s ../live-rescue-launcher.service %buildroot%systemd_unitdir/live-rescue.tar
 %systemd_unitdir/live-rescue.target.wants/live-rescue-launcher.service
 
 %changelog
+* Tue Mar 18 2025 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
+- live-rescue-launcher.service: run after systemd-vconsole-setup.service
+
 * Sun Mar 09 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - live-rescue-launcher.service: remove ConditionKernelCommandLine=autorun
 
