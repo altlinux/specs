@@ -1,8 +1,8 @@
 %define modulename eliot
 
 Name: python3-module-eliot
-Version: 1.14.0
-Release: alt2
+Version: 1.17.5
+Release: alt1
 
 Summary: Logging library that tells you why it happened
 
@@ -66,6 +66,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.17.5-alt1
+- new version 1.17.5 (with rpmrb script)
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.14.0-alt2
 - Fixed FTBFS.
 
