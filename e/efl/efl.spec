@@ -47,13 +47,15 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
 License: BSD-2-Clause and LGPL-2.0 and Zlib and CC-BY-SA-3.0
 Url: http://www.enlightenment.org/
+
+Vcs: https://git.enlightenment.org/enlightenment/efl.git
 
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/libs/%name/%name-%version%beta.tar.xz
@@ -460,6 +462,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
+- 1.28.1
+
 * Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 

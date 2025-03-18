@@ -21,14 +21,16 @@
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
-License: BSD
+License: BSD-2-Clause and GPL-2.0 and OFL-1.1
 Group: Graphical desktop/Enlightenment
 Url: http://www.enlightenment.org/
+
+Vcs: https://git.enlightenment.org/enlightenment/enlightenment.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -237,6 +239,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.27.1-alt1
+- 0.27.1
+
 * Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.27.0-alt1
 - 0.27.0
 
