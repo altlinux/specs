@@ -4,7 +4,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-pynput
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Monitor and control user input devices
@@ -45,6 +45,9 @@ rm -v lib/pynput/*/*darwin* lib/pynput/*/*win32*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 18 2025 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1
+- 1.8.0 -> 1.8.1.
+
 * Tue Mar 04 2025 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
 - 1.7.7 -> 1.8.0.
 
