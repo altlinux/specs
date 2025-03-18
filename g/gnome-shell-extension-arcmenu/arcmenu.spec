@@ -2,14 +2,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-arcmenu
-Version: 64
-Release: alt4
+Version: 65
+Release: alt2
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
 Url: https://gitlab.com/arcmenu/ArcMenu
 Vcs: https://gitlab.com/arcmenu/ArcMenu
 Source: %name-%version.tar
+Source1: 00_arcmenu-disable-notification.gschema.override
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
@@ -36,12 +37,23 @@ shortcuts, and much more!
 %makeinstall_std
 %find_lang arcmenu
 
+install -Dm644 %SOURCE1 \
+	%buildroot%_datadir/glib-2.0/schemas/00_arcmenu-disable-notification.gschema.override
+
 %files -f arcmenu.lang
 %_datadir/gnome-shell/extensions/arcmenu@arcmenu.com
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.arcmenu.gschema.xml
+%_datadir/glib-2.0/schemas/00_arcmenu-disable-notification.gschema.override
 %doc README.md
 
 %changelog
+* Sun Mar 16 2025 Anton Midyukov <antohami@altlinux.org> 65-alt2
+- prefs.js: Remove donate page
+- add gsettings override for disable update notification
+
+* Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 65-alt1
+- New version 65.
+
 * Wed Feb 19 2025 Anton Midyukov <antohami@altlinux.org> 64-alt4
 - iconGrid.js: Don't throw an error when the icon has already been added before
   (Closes: 53135)
