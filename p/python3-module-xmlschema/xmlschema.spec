@@ -9,7 +9,7 @@
 %def_without memory_profiler
 
 Name: python3-module-%oname
-Version: 3.4.3
+Version: 3.4.4
 Release: alt1
 
 Summary: XML Schema validator and data conversion library
@@ -66,6 +66,9 @@ sed -i 's/unittest/unittest -v/' tox.ini
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Mar 18 2025 Grigory Ustinov <grenka@altlinux.org> 3.4.4-alt1
+- Automatically updated to 3.4.4.
+
 * Thu Oct 31 2024 Grigory Ustinov <grenka@altlinux.org> 3.4.3-alt1
 - Automatically updated to 3.4.3.
 
