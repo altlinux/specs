@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p11
-Release: alt2
+Release: alt3
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -123,7 +123,7 @@ Group: Engineering
 # new version 1.3.0 camotics required nodejs-v8 for build
 #Requires: camotics
 #endif
-Requires: pycam
+#Requires: pycam
 #Requires: flatcam
 %ifnarch %ix86 %arm
 Requires: pcb2gcodeGUI
@@ -210,6 +210,9 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Tue Mar 18 2025 Anton Midyukov <antohami@altlinux.org> p11-alt3
+- CAM: remove pycam
+
 * Wed Feb 12 2025 Anton Midyukov <antohami@altlinux.org> p11-alt2
 - CAM: remove gimp-plugin-laser (Closes: 53036)
 
