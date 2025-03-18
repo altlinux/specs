@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.14
+Version: 1.3.15
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Mar 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.15-alt1
+- distro-license-check: add p11 to valid distbranches (closes: #53509)
+
 * Mon Mar 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.14-alt1
 - Add static license ALT_Domain_License/11.0
 
