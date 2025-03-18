@@ -2,7 +2,7 @@
 %define libname libsndio%sover
 
 Name: sndio
-Version: 1.8.1
+Version: 1.10.0
 Release: alt1
 
 Summary: A sound library
@@ -81,6 +81,9 @@ install -Dm 644 contrib/default.sndiod %buildroot%_sysconfdir/default/sndiod
 %_libdir/libsndio.so
 %_pkgconfigdir/sndio.pc
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.10.0-alt1
+- new version 1.10.0 (with rpmrb script)
+
 * Mon Mar 17 2025 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
 - initial build for ALT Sisyphus
 
