@@ -2,7 +2,7 @@
 %def_without check
 
 Name:           python3-module-pymongo
-Version:        4.11.2
+Version:        4.11.3
 Release:        alt1
 
 Summary:        Python driver for MongoDB
@@ -70,6 +70,9 @@ contains the python3 version of this module.
 %python3_sitelibdir/bson
 
 %changelog
+* Tue Mar 18 2025 Grigory Ustinov <grenka@altlinux.org> 4.11.3-alt1
+- Automatically updated to 4.11.3.
+
 * Tue Mar 04 2025 Grigory Ustinov <grenka@altlinux.org> 4.11.2-alt1
 - Automatically updated to 4.11.2.
 
