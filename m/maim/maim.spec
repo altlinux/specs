@@ -1,11 +1,13 @@
 Name:          maim
 Version:       5.8.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       maim (make image) takes screenshots of your desktop.
 License:       GPLv3
 Group:         Graphics
 Url:           https://github.com/naelstrof/maim
 Vcs:           https://github.com/naelstrof/maim.git
+
+Packager:      Vitaly Lipatov <lav@altlinux.ru>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
@@ -20,7 +22,7 @@ BuildRequires: libXrandr-devel
 BuildRequires: libXfixes-devel
 BuildRequires: libXcomposite-devel
 BuildRequires: libglvnd-devel
-BuildRequires: libicu69-devel
+BuildRequires: libicu-devel
 BuildRequires: libXext-devel
 BuildRequires: libglm-devel
 BuildRequires: libGL-devel
@@ -45,6 +47,9 @@ Features:
 %prep
 %setup
 
+# bump C++ standard to c++17, to fix building with recent libicu:
+sed -i 's,CXX_STANDARD\s\+11,CXX_STANDARD 17,' CMakeLists.txt
+
 %build
 %cmake
 %cmake_build
@@ -58,6 +63,9 @@ Features:
 %doc COPYING README.md
 
 %changelog
+* Tue Mar 18 2025 Ivan A. Melnikov <iv@altlinux.org> 5.8.0-alt1.2
+- NMU: build with recent libicu (fixes FTBFS on loongarch64)
+
 * Tue Mar 04 2025 Pavel Skrylev <majioa@altlinux.org> 5.8.0-alt1.1
 - ! NMU: dep to old icu avoiding failure for gcc build
 
