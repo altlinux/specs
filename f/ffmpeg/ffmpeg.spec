@@ -160,8 +160,8 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	7.1
-Release:	alt2
+Version:	7.1.1
+Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -868,6 +868,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 2:7.1.1-alt1
+- 7.1 -> 7.1.1
+
 * Fri Dec 27 2024 Anton Farygin <rider@altlinux.ru> 2:7.1-alt2
 - applied (again) v4l2request patches from https://github.com/jernejsk/FFmpeg
 
