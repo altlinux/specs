@@ -5,8 +5,8 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.73
-Release: alt2
+Version: 5.74
+Release: alt1
 License: GPLv2+
 Group: Networking/Other
 
@@ -167,6 +167,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Mar 18 2025 L.A. Kostis <lakostis@altlinux.ru> 5.74-alt1
+- New version (5.74).
+
 * Mon Nov 18 2024 L.A. Kostis <lakostis@altlinux.ru> 5.73-alt2
 - inetd: set rlimit_as to 64Mb (closes #30368).
 
