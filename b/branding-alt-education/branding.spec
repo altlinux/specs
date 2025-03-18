@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.4.beta
+Release: alt0.5.beta
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -175,6 +175,7 @@ Summary: KDE settings for %distro_name (for KDE4 and KF5)
 License: Distributable
 Group:   Graphical desktop/KDE
 Requires(pre): %name-graphics
+Requires: %name-system-settings
 Requires: %name-graphics = %EVR
 Requires: konsole-colorscheme-SolarizedPastel
 Requires: papirus-icon-theme
@@ -183,6 +184,7 @@ Requires: plasma6-breeze
 Requires: fonts-ttf-liberation
 Requires: fonts-ttf-google-droid-sans-mono
 Requires: document-templates
+Requires: lightdm-kde-greeter
 Provides: branding-%flavour-kde4-settings = %version-%release
 Obsoletes: branding-%flavour-kde4-settings < %version-%release
 %branding_add_conflicts %flavour kde-settings
@@ -195,6 +197,7 @@ KDE settings for %distro_name (for KDE4 and KF5)
 Summary: Default settings for XFCE for %distro_name
 License: Distributable
 Group: Graphical desktop/XFce
+Requires: %name-system-settings
 Requires: etcskel
 Requires: fonts-ttf-liberation
 Requires: fonts-ttf-google-droid-sans-mono
@@ -210,6 +213,7 @@ Requires: xfce4-whiskermenu-plugin
 Requires: xfce4-pulseaudio-plugin
 Requires: branding-%brand-%theme-graphics
 Requires(pre): libgtk+2
+Requires: lightdm-gtk-greeter
 %branding_add_conflicts %flavour xfce-settings
 
 %description xfce-settings
@@ -231,6 +235,7 @@ BuildArch: noarch
 Summary: MATE settings for %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
+Requires: %name-system-settings
 Requires: beesu
 Requires: dconf
 # Specified themes
@@ -296,8 +301,7 @@ BuildArch: noarch
 Summary: Some system settings for %distro_name
 License: GPL-2.0
 Group: System/Base
-# Really we need lightdm only, but it can pull another greeter.
-Requires: lightdm-gtk-greeter
+Requires(post): lightdm
 %branding_add_conflicts %flavour system-settings
 
 %description system-settings
@@ -345,7 +349,6 @@ shell_config_del /etc/sysconfig/grub2 GRUB_BACKGROUND
 %_sbindir/indexhtml-update
 
 %post system-settings
-#chown _ldm:_ldm %_localstatedir/ldm/.pam_environment
 sed -i '/pam_env\.so/ {
 		/user_readenv/ b
 		s/pam_env\.so/pam_env.so user_readenv=1/ }
@@ -401,10 +404,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 %_datadir/alt-notes/*
 
 %files kde-settings
-%_datadir/kf5/konsole/%Theme.profile
+%_datadir/konsole/%Theme.profile
 /etc/skel/.config/autostart/nm-applet.desktop
-/etc/skel/.config/kdeglobals
-/etc/skel/.config/konsolerc
+/etc/skel/.config/k*
+/etc/skel/.config/plasma*
 
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
@@ -416,16 +419,14 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 %_sysconfdir/X11/profile.d/zdg-move-templates.sh
 /etc/skel/XDG-Templates.skel/
 /etc/skel/.wm-select
-/etc/skel/.config
-%exclude /etc/skel/.config/autostart/nm-applet.desktop
-%exclude /etc/skel/.config/konsolerc
-%exclude /etc/skel/.config/kdeglobals
+/etc/skel/.config/Terminal
+/etc/skel/.config/Thunar/
+/etc/skel/.config/audacious/
+/etc/skel/.config/xfce4
 /etc/skel/.face
 /etc/skel/.gconf
 /etc/skel/.gtkrc-2.0
 /etc/skel/.local
-/etc/skel/.vimrc
-/etc/skel/.recoll
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -437,7 +438,7 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 %ghost %_defaultdocdir/indexhtml/index.html
 %_defaultdocdir/indexhtml/*
 %_desktopdir/*
-%_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
+%_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 %attr(0755,root,root) %_datadir/Desktop/indexhtml.desktop
 %_iconsdir/hicolor/*/apps/alt-%theme-desktop.svg
 
@@ -448,9 +449,20 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 
 %files system-settings
 %config %_sysconfdir/polkit-1/rules.d/*.rules
-#config %_localstatedir/ldm/.pam_environment
+/etc/skel/.config/meditrc
+/etc/skel/.config/user-dirs.locale
+/etc/skel/.config/fontconfig/
+/etc/skel/.config/gtk-3.0
+/etc/skel/.config/Trolltech.conf
+/etc/skel/.vimrc
+/etc/skel/.recoll
 
 %changelog
+* Mon Mar 17 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.5.beta
+- kde-settings: returned chromium icon to panel.
+- kde-settings: adapted Plasma settings for KDE6.
+- Set lightdm-kde-greeter for KDE, lightdm-gtk-greeter for XFCE.
+
 * Tue Feb 25 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.4.beta
 - 11.0 beta
 - Added new slides for slideshow (slitted by languages).
