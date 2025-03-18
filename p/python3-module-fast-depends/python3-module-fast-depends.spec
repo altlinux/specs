@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.12
-Release: alt1
+Release: alt2
 
 Summary: Extracted FastAPI Dependency Injection System
 License: MIT
@@ -22,6 +22,7 @@ BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-anyio
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pydantic
 BuildRequires: python3-module-dirty-equals
 %endif
@@ -57,5 +58,8 @@ Async and sync modes are both supported.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Tue Mar 18 2025 Egor Ignatov <egori@altlinux.org> 2.4.12-alt2
+- Fix FTBFS: Add python3-module-pytest BR.
+
 * Thu Nov 28 2024 Egor Ignatov <egori@altlinux.org> 2.4.12-alt1
 - First build for ALT.
