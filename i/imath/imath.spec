@@ -2,8 +2,8 @@
 %define libsover 29
 %define libimath lib%lname%libsover
 Name: %lname
-Version: 3.1.6
-Release: alt4
+Version: 3.1.12
+Release: alt1
 
 Summary: Imath is library of 2D and 3D vector, matrix, and math operations for graphics
 License: BSD-3-Clause
@@ -19,10 +19,7 @@ BuildRequires: gcc-c++
 BuildRequires: python3-module-setuptools
 BuildRequires: boost-python3-devel
 BuildRequires: python3-module-numpy
-BuildRequires: doxygen
-BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-breathe
-BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
 Imath is a basic, light-weight, and efficient C++ representation of
@@ -47,24 +44,6 @@ including the "half" 16-bit floating-point type.
 
 Imath also includes optional python bindings for all types and functions,
 including optimized implementations of vector and matrix arrays.
-
-%package doc
-Summary: Documentation for Imath
-Group: Documentation
-BuildArch: noarch
-Provides: libimath29-doc = %EVR
-Obsoletes: libimath29-doc < %EVR
-
-%description doc
-Imath is a basic, light-weight, and efficient C++ representation of
-2D and 3D vectors and matrices and other simple but useful mathematical
-objects, functions, and data types common in computer graphics applications,
-including the "half" 16-bit floating-point type.
-
-Imath also includes optional python bindings for all types and functions,
-including optimized implementations of vector and matrix arrays.
-
-This package contains documentation for Imath.
 
 %package -n python3-module-%lname
 Summary: Imath python3 module
@@ -118,9 +97,6 @@ done
 %_libdir/cmake/Imath/*.cmake
 %_libdir/libImath*.so
 
-%files doc
-%doc %_defaultdocdir/Imath
-
 %files -n python3-module-%lname
 %python3_sitelibdir/*.so
 %_libdir/libPy*.so.*
@@ -131,6 +107,10 @@ done
 %_includedir/Imath/Py*.h
 
 %changelog
+* Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 3.1.12-alt1
+- 3.1.6 -> 3.1.12
+- removed doc subpackage
+
 * Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.6-alt4
 - fix package library
 
