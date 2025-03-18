@@ -1,7 +1,7 @@
 %define oname billiard
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: billiard is a fork of the Python 2.7 multiprocessing package
@@ -49,6 +49,9 @@ mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %python3_sitelibdir/*
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1
+- new version 4.2.1 (with rpmrb script)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
 - new version 4.2.0 (with rpmrb script)
 
