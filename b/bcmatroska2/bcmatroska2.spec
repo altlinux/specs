@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: bcmatroska2
-Version: 5.3.101
+Version: 5.4.0
 Release: alt1
 
 Summary: C Library to Deal with Matroska Files
@@ -69,6 +69,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/BCMatroska2/*.cmake
 
 %changelog
+* Tue Mar 18 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
+- New version 5.4.0.
+
 * Tue Feb 11 2025 Leontiy Volodin <lvol@altlinux.org> 5.3.101-alt1
 - New version 5.3.101.
 
