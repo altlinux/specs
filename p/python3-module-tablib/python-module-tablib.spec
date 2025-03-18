@@ -1,7 +1,4 @@
 %define modname tablib
-%define release_version 3.5.0
-%define commit_num .9
-%define commit_id .g0f0ddf6
 %def_enable check
 %if_enabled check
 %def_enable extra_check
@@ -11,7 +8,7 @@
 %def_enable docs
 
 Name:		python3-module-%modname
-Version:	%release_version.0%commit_num%commit_id
+Version:	3.8.0
 Release:	alt1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
@@ -47,7 +44,7 @@ Output formats supported:
 %setup
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%release_version
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %if_enabled docs
@@ -73,6 +70,9 @@ rm -rf html/.{buildinfo,doctrees}
 
 
 %changelog
+* Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 3.8.0-alt1
+- updated version to 3.8.0
+
 * Wed Oct 04 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 3.5.0.0.9.g0f0ddf6-alt1
 - Changed the upstream URL
 - Updated to upstream 3.5.0-9-g0f0ddf6

@@ -1,25 +1,24 @@
-%define pypi_name django-rich
-%define mod_name django_rich
+%define pypi_name django-tree-queries
+%define mod_name tree_queries
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.14.0
+Version: 0.19
 Release: alt1
 
-Summary: Extensions for using Rich with Django
-License: MIT
+Summary: Adjacency-list trees for Django using recursive common table expressions
+License: BSD-3-Clause
 Group:   Development/Python3
-URL:     https://github.com/adamchainz/django-rich
+URL:     https://github.com/feincms/django-tree-queries
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 %if_with check
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-django
-BuildRequires: python3-module-coverage
 BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-django
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -28,7 +27,7 @@ BuildArch: noarch
 Source: %pypi_name-%version.tar
 
 %description
-%summary.
+%summary. Supports PostgreSQL, sqlite, MySQL and MariaDB.
 
 %prep
 %setup -n %pypi_name-%version
@@ -40,16 +39,15 @@ Source: %pypi_name-%version.tar
 %pyproject_install
 
 %check
+export PYTHONPATH=$PWD/tests
+export DJANGO_SETTINGS_MODULE=tests.testapp.settings
 %pyproject_run_pytest
 
 %files
 %doc *.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/django_tree_queries-%version.0.dist-info/
 
 %changelog
-* Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 1.14.0-alt1
-- New version 1.14.0.
-
-* Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 1.13.0-alt1
+* Tue Mar 18 2025 Alexander Burmatov <thatman@altlinux.org> 0.19-alt1
 - Initial build for Sisyphus.

@@ -1,10 +1,9 @@
 %define pypi_name django-cors-headers
 
-# need tox >= 4.2
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 
 Summary: Django app for handling the server headers required for Cross-Origin Resource Sharing (CORS)
@@ -14,10 +13,11 @@ URL:     https://github.com/adamchainz/django-cors-headers
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
-BuildRequires: python3(django)
 
 %if_with check
-BuildRequires: python3(pytest)
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
 BuildArch: noarch
@@ -42,10 +42,12 @@ This allows in-browser requests to your Django application from other origins.
 %python3_sitelibdir_noarch/*.dist-info/
 
 %check
-#%%tox_create_default_config
-%tox_check_pyproject -- -m "not internet"
+%pyproject_run_pytest
 
 %changelog
+* Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 4.7.0-alt1
+- Update version to 4.7.0.
+
 * Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 4.6.0-alt1
 - Update version to 4.6.0.
 

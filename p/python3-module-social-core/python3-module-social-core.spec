@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.5.1
+Version: 4.5.6
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -26,8 +26,12 @@ BuildRequires: python3-module-jwt
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-saml
 BuildRequires: python3-module-xmlsec
+BuildRequires: python3-module-google-auth-library-python
 BuildRequires: libxmlsec1-openssl-devel
 %endif
+
+# optional dependency
+%add_python3_req_skip shopify
 
 BuildArch: noarch
 
@@ -61,6 +65,7 @@ sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
 
 %files
 %doc *.md
+%python3_sitelibdir/social_core/py.typed
 %python3_sitelibdir/social_core/*.py
 %python3_sitelibdir/social_core/__pycache__/
 %python3_sitelibdir/social_core/backends/
@@ -71,6 +76,9 @@ sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
 %python3_sitelibdir/social_core/tests/
 
 %changelog
+* Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 4.5.6-alt1
+- Update to version 4.5.6.
+
 * Tue Dec 12 2023 Alexander Burmatov <thatman@altlinux.org> 4.5.1-alt1
 - Update to version 4.5.1.
 
