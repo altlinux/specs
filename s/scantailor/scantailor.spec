@@ -1,9 +1,9 @@
 Name: scantailor
-Version: 1.0.18
+Version: 1.0.19
 Release: alt1
 
 Summary: Scan processing software
-License: GPL
+License: GPLv3
 Group: Graphics
 Url: https://github.com/vigri/scantailor-advanced
 
@@ -59,6 +59,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.0.19-alt1
+- new version 1.0.19 (with rpmrb script)
+
 * Thu Jul 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.18-alt1
 - switch to https://github.com/vigri/scantailor-advanced upstream
 - use Qt5 now
