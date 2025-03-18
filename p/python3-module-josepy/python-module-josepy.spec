@@ -1,8 +1,8 @@
 %define oname josepy
 
 Name: python3-module-%oname
-Version: 1.14.0
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Summary: JOSE protocol implementation in Python using cryptography
 
@@ -52,6 +52,9 @@ rm -rf %buildroot%_bindir/
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0 (with rpmrb script)
+
 * Wed Jul 24 2024 Stanislav Levin <slev@altlinux.org> 1.14.0-alt2
 - fixed incorrect include declarations with Poetry.
 
