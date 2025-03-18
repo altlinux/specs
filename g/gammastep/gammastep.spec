@@ -1,5 +1,8 @@
+# missed typelib(AppIndicator3) in the repo
+%def_without appindicator
+
 Name: gammastep
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: Adjusts the color temperature of your screen according to time of day
@@ -86,8 +89,7 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_userunitdir/%name.service
 
-# due typelib(AppIndicator3)
-%if 0
+%if_with appindicator
 %files indicator
 %_bindir/%name-indicator
 %_desktopdir/%name-indicator.desktop
@@ -98,6 +100,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %endif
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
+- new version 2.0.10 (with rpmrb script)
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 2.0.9-alt1
 - initial build for ALT Sisyphus
 
