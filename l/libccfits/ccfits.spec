@@ -1,7 +1,7 @@
 %define _name CCfits
 
 Name: libccfits
-Version: 2.6
+Version: 2.7
 Release: alt1
 
 Summary: A C++ interface for cfitsio
@@ -9,7 +9,7 @@ Group: System/Libraries
 License: BSD
 Url: https://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits
 
-Source: https://heasarc.gsfc.nasa.gov/docs/software/fitsio/ccfits/%_name-%version.tar.gz
+Source: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/ccfits/%_name-%version.tar.gz
 
 Patch: CCfits-2.6-alt-removerpath.patch
 
@@ -25,7 +25,7 @@ with namespaces, exception handling, and member template functions.
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 These are the header files and libraries needed to develop a %name
@@ -47,7 +47,7 @@ rm -rf html/*.pl
 
 %build
 %configure --disable-static \
-	--with-cfitsio-include=%_includedir/cfitsio
+    --with-cfitsio-include=%_includedir/cfitsio
 %make_build
 
 %install
@@ -70,6 +70,9 @@ rm -f %buildroot%_bindir/cookbook
 %_datadir/doc/%name/
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7-alt1
+- 2.7
+
 * Fri Jul 23 2021 Yuri N. Sedunov <aris@altlinux.org> 2.6-alt1
 - 2.6
 
