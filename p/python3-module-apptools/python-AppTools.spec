@@ -7,7 +7,7 @@
 %define oname apptools
 
 Name:           python3-module-%oname
-Version:        5.2.1
+Version:        5.3.0
 Release:        alt1
 
 Summary:        Enthough Tool Suite Application Tools
@@ -151,6 +151,9 @@ xvfb-run py.test3
 
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt1
+- new version 5.3.0 (with rpmrb script)
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
 - new version 5.2.1 (with rpmrb script)
 
