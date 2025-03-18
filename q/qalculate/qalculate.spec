@@ -8,14 +8,14 @@
 %define libname libqalculate%sover
 
 Name: qalculate
-Version: 5.3.0
+Version: 5.5.2
 Release: alt1
 Summary: A very versatile desktop calculator
 Group: Office
 License: GPL-2.0+
 Url: https://qalculate.github.io/
 
-# https://github.com/Qalculate/libqalculate.git
+VCS: https://github.com/Qalculate/libqalculate.git
 Source: lib%name-%version.tar
 
 BuildRequires: libcln-devel gcc-c++ glib2-devel libgmp-devel libstdc++-devel perl-XML-Parser pkgconfig zlib-devel intltool libtool libxml2-devel
@@ -112,6 +112,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 5.5.2-alt1
+- 5.3.0 -> 5.5.2
+
 * Fri Oct 25 2024 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
 - new version
 
