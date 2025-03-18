@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.40.0
-Release: alt2
+Version: 0.40.1
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -228,6 +228,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Tue Mar 18 2025 Egor Ignatov <egori@altlinux.org> 0.40.1-alt1
+- new version 0.40.1
+
 * Wed Mar 12 2025 Egor Ignatov <egori@altlinux.org> 0.40.0-alt2
 - backport upstream fix for build on i586
 
