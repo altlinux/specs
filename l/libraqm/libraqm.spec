@@ -1,5 +1,5 @@
 Name: libraqm
-Version: 0.7.1
+Version: 0.10.2
 Release: alt1
 
 Summary: Complex Textlayout Library
@@ -10,9 +10,12 @@ Url: https://github.com/HOST-Oman/libraqm
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/HOST-Oman/libraqm/releases/download/v%version/raqm-%version.tar.gz
+# Source-url: https://github.com/HOST-Oman/libraqm/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-meson
+
+BuildRequires: meson
 BuildRequires: libfreetype-devel
 BuildRequires: libharfbuzz-devel
 BuildRequires: fribidi-devel
@@ -32,7 +35,7 @@ This package contains documentation files for raqm.
 
 %package devel
 Summary: Complex Textlayout Library
-Requires: libraqm = %version-%release
+Requires: libraqm = %EVR
 Group: Development/Other
 
 %description devel
@@ -43,19 +46,16 @@ This package contains documentation files for raqm.
 
 %prep
 %setup
-%configure --enable-gtk-doc
 
 %build
-%make_build
-
-%check
-export LC_ALL=en_US.UTF-8
-# TODO: check test
-make check || true
+%meson -Ddocs=true
+%meson_build
 
 %install
-%makeinstall_std
-rm -f %buildroot%_libdir/*.{la,a}
+%meson_install
+
+%check
+%meson_test
 
 %files
 %doc COPYING
@@ -70,10 +70,14 @@ rm -f %buildroot%_libdir/*.{la,a}
 
 %files docs
 %doc COPYING
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %_datadir/gtk-doc/html/raqm
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 0.10.2-alt1
+- new version 0.10.2
+- switched to meson build
+
 * Tue Apr 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
 - new version 0.7.1 (with rpmrb script)
 
