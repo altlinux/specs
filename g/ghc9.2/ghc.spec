@@ -25,7 +25,7 @@
 
 Name: ghc%ghc_major
 Version: %ghc_version
-Release: alt3
+Release: alt4
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -291,11 +291,14 @@ find %buildroot%_ghclibdir -name "*.conf" | xargs sed -i 's!/html/!/!'
 %SOURCE10 %ghc_version | xargs -n 2 %ghc_gen_filelist
 %ghc_gen_filelist ghc %version
 
+# Moving include dir to proper place
+mv -t %buildroot%_ghclibdir %buildroot%_includedir
+
 # Adding rts lib to base package
 find "%buildroot%_ghclibdir" -name "*rts*.so" \
                 | sed "s|%buildroot||g" >> base-%basepkg_version-files.runtime
 
-echo "%_includedir/rts" >> base-%basepkg_version-files.devel
+echo "%_ghclibdir/include/rts" >> base-%basepkg_version-files.devel
 find "%buildroot%_ghclibdir" -name "rts*.conf" \
                 | sed "s|%buildroot||g" >> base-%basepkg_version-files.devel
 
@@ -344,8 +347,8 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %_sysconfdir/ld.so.conf.d/ghc-%version.conf
 %docdir/LICENSE
 %docdir/README.md
-%_includedir/*
-%exclude %_includedir/rts
+%_ghclibdir/include/
+%exclude %_ghclibdir/include/rts
 
 %files common
 %_bindir/*
@@ -373,6 +376,9 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %files devel
 
 %changelog
+* Tue Mar 18 2025 Leonid Znamenok <respublica@altlinux.org> 9.2.8-alt4
+- Moved include dir to proper place
+
 * Wed Mar 12 2025 Leonid Znamenok <respublica@altlinux.org> 9.2.8-alt3
 - Workaround for the error 'Platform constants not available'
 
