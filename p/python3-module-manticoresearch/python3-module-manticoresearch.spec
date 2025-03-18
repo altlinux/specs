@@ -1,7 +1,7 @@
 %define oname manticoresearch
 
 Name: python3-module-manticoresearch
-Version: 4.0.0
+Version: 7.0.0
 Release: alt1
 
 Summary: Official Python client for Manticore Search
@@ -41,6 +41,9 @@ Experimental low-level client for Manticore Search.
 
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0.0-alt1
+- new version 7.0.0 (with rpmrb script)
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version 4.0.0 (with rpmrb script)
 
