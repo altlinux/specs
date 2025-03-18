@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.3
-Release: alt3
+Release: alt4
 Summary: The next great DBus library for Python with asyncio support
 License: MIT
 Group: Development/Python3
@@ -48,8 +48,11 @@ The next great DBus library for Python.
 %check
 # flaky and order-dependent test
 # https://github.com/altdesktop/python-dbus-next/issues/161
+# and bad unmaintained test
+# https://github.com/altdesktop/python-dbus-next/issues/135
 %pyproject_run -- /bin/dbus-run-session \
-    python -m pytest --ignore=test/test_disconnect.py
+    python -m pytest --ignore=test/test_disconnect.py \
+    --deselect test/test_tcp_address.py::test_tcp_connection_with_forwarding
 
 %pyproject_run -- /bin/dbus-run-session \
     python -m pytest test/test_disconnect.py
@@ -60,6 +63,9 @@ The next great DBus library for Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.2.3-alt4
+- Fixed FTBFS (dbus 1.14.4).
+
 * Mon May 20 2024 Stanislav Levin <slev@altlinux.org> 0.2.3-alt3
 - Fixed FTBFS (Pytest 8.2.0).
 
