@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-systeminfo
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
-Summary: Alterator application for getting information about system
+Summary: ALT About - Alterator application that shows information about system
 License: GPLv2+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alterator-application-systeminfo
@@ -12,6 +12,9 @@ URL: https://gitlab.basealt.space/alt/alterator-application-systeminfo
 Source: %name-%version.tar
 
 Requires: alterator-backend-systeminfo >= 0.2.2
+
+# Recommends: alterator-backend-edition >= 0.1.5
+# Recommends: alterator-backend-packages >= 0.1.4
 
 BuildRequires(pre): rpm-macros-alterator
 BuildRequires(pre): rpm-macros-cmake
@@ -22,7 +25,7 @@ BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: libtomlplusplus-devel
 
 %description
-Alterator application for getting information about system.
+ALT About - Alterator application that shows information about system.
 
 %prep
 %setup
@@ -40,10 +43,14 @@ Alterator application for getting information about system.
 %dir %_alterator_datadir/backends
 %_alterator_datadir/applications/*
 %_alterator_datadir/backends/*
-%_bindir/%name
+%_desktopdir/*
+%_bindir/*
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Tue Mar 18 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
+- New version.
+
 * Mon Mar 17 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.0-alt1
 - New version.
 
