@@ -42,7 +42,7 @@ BuildRequires: jpackage-default
 
 Name:           javapackages-tools
 Version:        6.0.0
-Release:        alt2_7jpp11
+Release:        alt3
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
@@ -120,6 +120,7 @@ Requires: 	rpm-macros-java = %{EVR}
 # moved from main package; not for runtime
 Requires:       python3-module-javapackages = %{EVR}
 Requires:       python3
+Requires:       rpm-macros-jurand
 
 %description -n rpm-build-java
 RPM build helpers for Java packages.
@@ -352,6 +353,9 @@ rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Oct 11 2024 Andrey Cherepanov <cas@altlinux.org> 1:6.0.0-alt3
+- Added rpm-macros-jurand for %%java_remove_annotations
+
 * Mon Apr 17 2023 Anton Vyatkin <toni@altlinux.org> 1:6.0.0-alt2_7jpp11
 - Fix BuildRequires
 
