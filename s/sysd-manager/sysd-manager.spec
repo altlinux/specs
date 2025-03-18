@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 1.17
+%define ver_major 1.18
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
@@ -71,6 +71,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc CHANGELOG*  README*
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.0-alt1
+- 1.18.0
+
 * Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
 - 1.17.0
 

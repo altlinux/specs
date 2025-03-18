@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 
 %def_enable braille
@@ -8,7 +8,7 @@
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -27,6 +27,7 @@ Source2: %name.watch
 Source3: orca-autostart.desktop
 
 Requires: typelib(Gtk) = 3.0 typelib(Gtk) = 4.0 typelib(Atspi) = 2.0
+%add_python3_req_skip gi.repository.Gio
 %{?_disable_spiel:%add_typelib_req_skiplist typelib(Spiel)}
 
 Requires: yelp
@@ -89,6 +90,9 @@ Jaws For Windows компании Freedom Scientific.
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Jan 05 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
 - 47.3
 
