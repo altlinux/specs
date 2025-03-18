@@ -2,14 +2,14 @@
 
 %define _name jogger
 %define __name Jogger
-%define ver_major 1.2
+%define ver_major 1.3
 %define rdn_name xyz.slothlife.%__name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: An app for Gnome Mobile to Track running and other workouts
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sat Jan 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
 - first build for Sisyphus (1.2.8-2-ga4cad10)
 

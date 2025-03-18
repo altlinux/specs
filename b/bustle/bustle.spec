@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.10
+%define ver_major 0.11
 %define rdn_name org.freedesktop.Bustle
 
 %def_disable check
@@ -30,7 +30,7 @@ Source1: %name-%version-cargo.tar
 Requires: dbus-tools
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo
+BuildRequires: meson rust-cargo >= 1.80
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_check:BuildRequires: dbus-tools /usr/bin/appstreamcli desktop-file-utils clippy}
 
@@ -71,6 +71,9 @@ dbus-run-session %__meson_test
 %doc README*
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Fri Sep 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
 - 0.10.0 (new homepage, ported to Rust/Libadwaita/Meson)
 
