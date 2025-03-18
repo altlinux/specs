@@ -1,11 +1,13 @@
 Name:          slop
 Version:       7.6.15
-Release:       alt0.1
+Release:       alt0.2
 Summary:       slop (Select Operation) is an application that queries for a selection from the user and prints the region to stdout
 License:       GPLv3
 Group:         Graphics
 Url:           https://github.com/naelstrof/slop
 Vcs:           https://github.com/naelstrof/slop.git
+
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
@@ -17,7 +19,7 @@ BuildRequires: libGLEW-devel
 BuildRequires: libXrender-devel
 BuildRequires: libXext-devel
 BuildRequires: libEGL-devel
-BuildRequires: libicu69-devel
+BuildRequires: libicu-devel
 
 %description
 slop (Select Operation) is an application that queries for a selection from
@@ -112,6 +114,9 @@ Features:
 %_libdir/*.so.%version
 
 %changelog
+* Tue Mar 18 2025 Ivan A. Melnikov <iv@altlinux.org> 7.6.15-alt0.2
+- NMU: build with recent libicu (fixes FTBFS on loongarch64)
+
 * Tue Mar 04 2025 Pavel Skrylev <majioa@altlinux.org> 7.6.15-alt0.1
 - ^ 7.6 -> 7.6p15
 
