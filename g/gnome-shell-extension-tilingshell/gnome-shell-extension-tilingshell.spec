@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name tilingshell
-%define git_ver 16.1
+%define git_ver 16.2.0
 %define ego_ver 99
 %define beta %nil
 %define uuid tilingshell@ferrarodomenico.com
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ego_ver
-Release: alt2%beta
+Release: alt3%beta
 
 %define gettext_domain %_name
 
@@ -23,6 +23,7 @@ Url: https://github.com/domferr/tilingshell
 Vcs: https://github.com/domferr/tilingshell.git
 
 ExclusiveArch: %ix86 x86_64 aarch64
+BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/archive/%git_ver%beta/%_name-%git_ver%beta.tar.gz
@@ -47,7 +48,7 @@ Can be installed on Gnome Shells on X11 and Wayland.
 %prep
 %setup -n %_name-%git_ver%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-npm install && npm audit fix &&
+npm install && npm audit fix --force &&
 npm install --cpu ia32 esbuild &&
 #npm install --cpu aarch64 esbuild &&
 npm install --cpu arm64 esbuild &&
@@ -76,6 +77,9 @@ popd
 %doc README.md
 
 %changelog
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 99-alt3
+- updated to 16.2.0 (GNOME 48 supported)
+
 * Sat Jan 18 2025 Yuri N. Sedunov <aris@altlinux.org> 99-alt2
 - updated to 16.1
 
