@@ -9,8 +9,8 @@
 
 
 Name: python3-module-%pypi_name
-Version: 6.1.0
-Release: alt2
+Version: 6.2.0
+Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
 
@@ -55,6 +55,9 @@ rm -v %buildroot%python3_sitelibdir/%mod_name/_vendor/vendor_install.sh
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt1
+- new version 6.2.0 (with rpmrb script)
+
 * Fri Jun 28 2024 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt2
 - bypass unnecessary dependencies
 
