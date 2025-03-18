@@ -1,6 +1,6 @@
 Name: bcachefs-tools
 Version: 1.4.1
-Release: alt2
+Release: alt3
 
 Summary: Userspace tools and docs for bcachefs
 License: GPLv2
@@ -57,6 +57,9 @@ install -pm0755 mount.bcachefs.sh %buildroot%_sbindir/mount.bcachefs
 %_man8dir/bcachefs.8*
 
 %changelog
+* Tue Mar 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt3
+- fixed FTBFS found after libuserspace-rcu update to 0.15
+
 * Fri May 24 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt2
 - rebuilt with usrmerged paths
 
