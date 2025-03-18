@@ -1,7 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 42
-%def_disable static
+%define ver_major 48
+%define beta %nil
+
 %def_disable gtk_doc
 %def_disable debug
 %def_disable valgrind
@@ -9,28 +10,27 @@
 %def_enable selinux
 %def_enable systemd
 %def_enable ssh
+%def_enable man
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: %name is a password keeper for GNOME
 License: GPL-2.0 and LGPL-2.1
 Group: Graphical desktop/GNOME
-Url: http://www.gnome.org
+Url: https://wiki.gnome.org/Projects/GnomeKeyring
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-keyring.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
-Patch: gnome-keyring-3.14.0-alt-lfs.patch
-# https://bugzilla.gnome.org/show_bug.cgi?id=794848
-# https://bug794848.bugzilla-attachments.gnome.org/attachment.cgi?id=370357
-Patch1: gnome-keyring-3.28.2-bgo-ssh-agent_timeout.patch
 
-%define glib_ver 2.44.0
+%define glib_ver 2.80.0
 %define dbus_ver 1.0
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
@@ -40,14 +40,13 @@ Patch1: gnome-keyring-3.28.2-bgo-ssh-agent_timeout.patch
 Requires(post): libcap-utils
 Requires: p11-kit >= %p11kit_ver
 
-# From configure.ac
-%{?_enable_systemd:BuildRequires(pre): rpm-build-systemd}
-BuildRequires: gnome-common libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-macros-pam %{?_enable_systemd:rpm-build-systemd}
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: gtk-doc xsltproc
 BuildRequires: libdbus-devel >= %dbus_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver
 BuildRequires: libtasn1-devel >= %tasn1_ver  libp11-kit-devel >= %p11kit_ver
-BuildRequires: gcr-libs-devel >= %gcr_ver
+BuildRequires: pkgconfig(gcr-base-3) >= %gcr_ver
 BuildRequires: libtasn1-utils
 BuildRequires: libcap-ng-devel
 %{?_enable_pam:BuildRequires: libpam-devel}
@@ -64,7 +63,7 @@ other applications can locate it by an environment variable.
 %package -n pam_%name
 Summary: A pam module for unlocking keyrings at login time
 Group: System/Base
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n pam_%name
 The pam_gnome-keyring package contains a pam module that can
@@ -74,7 +73,7 @@ and start the keyring daemon.
 %package ssh
 Summary: SSH Key Agent for GNOME Keyring
 Group: Networking/Remote access
-Requires: %name = %version-%release
+Requires: %name = %EVR
 # since 3.27.x gnome-keyring wraps the ssh-agent as a subprocess
 Requires: gcr >= %gcr_ver openssh-clients
 
@@ -85,32 +84,29 @@ GNOME Keyring ssh agent is a wrapper for stock ssh-agent from OpenSSH.
 %define _libexecdir %_prefix/libexec/%name
 
 %prep
-%setup
-%patch -p1 -b .lfs
-%{?_enable_ssh:%patch1 -p1 -b .ssh-agent}
+%setup -n %name-%version%beta
 
 %build
-%autoreconf
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable static} \
-	%{subst_enable debug} \
-	%{subst_enable valgrind} \
-	%{subst_enable selinux} \
-	%{?_disable_systemd:--without-systemd} \
-	%{?_disable_ssh:--disable-ssh-agent} \
-	--enable-doc \
-	--with-pam-dir=/%_lib/security
+%meson \
+    %{subst_enable_meson_bool debug debug-mode} \
+    %{subst_enable_meson_feature systemd systemd} \
+    %{subst_enable_meson_feature selinux selinux} \
+    %{subst_enable_meson_bool pam pam} \
+    %{subst_enable_meson_bool ssh ssh-agent} \
+    %{subst_enable_meson_bool man manpage}
+%nil
 
-%make_build
+#    --with-pam-dir=/%_lib/security
+
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
 %check
-%make check
+%__meson_test
 
 %post
 setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
@@ -129,17 +125,13 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_libdir/gnome-keyring/
 %{?_enable_ssh:%exclude %_libdir/gnome-keyring/*/gkm-ssh-store-standalone.so}
 %_libdir/pkcs11
-%_man1dir/*
+%{?_enable_man:%_man1dir/*}
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.Secret.service
 %_datadir/xdg-desktop-portal/portals/gnome-keyring.portal
 %{?_enable_systemd:
 %_userunitdir/%name-daemon.service
 %_userunitdir/%name-daemon.socket}
-%doc README AUTHORS NEWS
-
-%exclude %_libdir/pkcs11/*.la
-%exclude %_libdir/gnome-keyring/*/*.la
-%exclude /%_lib/security/*.la
+%doc README NEWS
 
 %if_enabled ssh
 %files ssh
@@ -147,15 +139,19 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_sysconfdir/xdg/autostart/gnome-keyring-ssh.desktop
 %endif
 
-
 %if_enabled pam
 %files -n pam_%name
-/%_lib/security/pam_gnome_keyring.so
-%exclude /%_lib/security/pam_gnome_keyring.la
+%_pam_modules_dir/pam_gnome_keyring.so
 %endif
 
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0 (ported to Meson build system)
+
+* Fri Jul 12 2024 Yuri N. Sedunov <aris@altlinux.org> 46.2-alt1
+- 46.2
+
 * Wed May 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 

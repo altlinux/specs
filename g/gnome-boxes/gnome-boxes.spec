@@ -3,7 +3,7 @@
 
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Boxes
 %def_enable check
@@ -132,6 +132,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
