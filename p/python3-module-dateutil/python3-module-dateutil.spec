@@ -6,8 +6,8 @@
 %define pypi_name python-dateutil
 
 Name: python3-module-%oname
-Version: 2.8.3
-Release: alt0.git0586f4a
+Version: 2.9.0.post0
+Release: alt1
 
 Summary: Extensions to the standard datetime module
 
@@ -78,6 +78,9 @@ py.test3
 %python3_sitelibdir/dateutil
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 2.9.0.post0-alt1
+- new version 2.9.0.post0 (with rpmrb script)
+
 * Wed Jan 31 2024 Pavel Skrylev <majioa@altlinux.org> 2.8.3-alt0.git0586f4a
 - ^ get git version to fix zero date bug.
 
