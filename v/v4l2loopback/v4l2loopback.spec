@@ -1,6 +1,6 @@
 %define git %nil
 %define module_name	v4l2loopback
-%define module_version	0.13.2
+%define module_version	0.14.0
 %define module_release	alt1
 %define module_source_dir %nil
 
@@ -77,6 +77,9 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 %attr(644,root,root) %_usrsrc/kernel/sources/kernel-source-%module_name-%version.tar.bz2
 
 %changelog
+* Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 0.14.0-alt1
+- 0.14.0
+
 * Wed Jun 05 2024 L.A. Kostis <lakostis@altlinux.ru> 0.13.2-alt1
 - 0.13.2.
 
