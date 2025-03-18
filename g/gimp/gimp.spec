@@ -12,7 +12,7 @@
 
 Name: gimp
 Version: %ver_major.0
-Release: alt0.3
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -91,8 +91,6 @@ sed 's|lib/gir|lib64/gir|' -i data/environ/python.env app/main.c
 %install
 %meson_install
 
-install -m644 gimp-splash.png %buildroot%_datadir/%name/%oldver/images/
-
 rm -fr %buildroot%_libdir/%name/%oldver/extensions/org.gimp.extension.goat-exercises
 find %buildroot%_libdir/%name -name \*.la -delete
 
@@ -129,6 +127,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt1
+- 3.0.0 release
+
 * Tue Feb 11 2025 Valery Inozemtsev <shrek@altlinux.ru> 3.0.0-alt0.3
 - 3.0.0 rc3
 
