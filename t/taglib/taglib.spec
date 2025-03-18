@@ -1,8 +1,12 @@
 %define rname taglib
 %define _K6link %_K6lib
 
-Name: libtag
-Version: 1.13.1
+%define sover 2
+%define libtag libtag%sover
+%define libtag_c libtag_c%sover
+
+Name: taglib
+Version: 2.0.2
 Release: alt2
 
 Group: System/Libraries
@@ -13,15 +17,12 @@ Url: http://taglib.github.io/
 Provides: %rname = %version-%release
 
 Source0: %rname-%version.tar
-Source2: version-script.libtag
 
 # SuSE
 Patch2: taglib-1.8-ds-rusxmms-r2.patch
-# ALT
-Patch10: taglib-1.8-alt-versioning.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: gcc-c++ zlib-devel
+BuildRequires: gcc-c++ zlib-devel libutfcpp-devel
 #BuildRequires: librcc-devel
 BuildRequires: doxygen graphviz cmake
 
@@ -45,20 +46,33 @@ it a semi-sane STL implementation.
 %package devel
 Group: Development/C
 Summary: Headers and static lib for taglib development
-Requires: %name = %version-%release
-Provides: %rname-devel = %version-%release
-
+#Provides: libtag-devel = %version-%release
+Conflicts: libtag-devel
 %description devel
 Install this package if you want do compile applications using the libtag
 library.
 
+%package -n %libtag
+Summary: Library for reading and editing audio meta data
+Group: System/Libraries
+%description -n %libtag
+TagLib is a library for reading and editing the meta-data of several
+popular audio formats. Currently it supports both ID3v1 and ID3v2 for MP3
+files, Ogg Vorbis comments and ID3 tags and Vorbis comments in FLAC, MPC,
+Speex, WavPack, TrueAudio files, as well as APE Tags
+
+%package -n %libtag_c
+Summary: Library for reading and editing audio meta data
+Group: System/Libraries
+%description -n %libtag_c
+TagLib is a library for reading and editing the meta-data of several
+popular audio formats. Currently it supports both ID3v1 and ID3v2 for MP3
+files, Ogg Vorbis comments and ID3 tags and Vorbis comments in FLAC, MPC,
+Speex, WavPack, TrueAudio files, as well as APE Tags
 
 %prep
-%setup -q -n %rname-%version
-install -m0644 %SOURCE2 ./
+%setup -n %rname-%version
 #%patch2 -p1
-%patch10 -p1
-
 
 %build
 %K6cmake \
@@ -76,24 +90,27 @@ install -m0644 %SOURCE2 ./
 %K6install
 
 #install alternative
-sed -i -E 's|^Requires:[[:space:]]+%rname$|Requires: %rname-0|' %buildroot/%_libdir/pkgconfig/%{rname}_c.pc
-mv %buildroot/%_libdir/pkgconfig/%rname{,-0}.pc
-mv %buildroot/%_libdir/pkgconfig/%{rname}_c{,-0}.pc
+sed -i -E 's|^Requires:[[:space:]]+%rname$|Requires: %rname-2|' %buildroot/%_libdir/pkgconfig/%{rname}_c.pc
+mv %buildroot/%_libdir/pkgconfig/%rname{,-2}.pc
+mv %buildroot/%_libdir/pkgconfig/%{rname}_c{,-2}.pc
 install -d %buildroot/%_sysconfdir/alternatives/packages.d/
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name-devel <<__EOF__
-%_libdir/pkgconfig/%rname.pc %_libdir/pkgconfig/%rname-0.pc %version
-%_libdir/pkgconfig/%rname.pc %_libdir/pkgconfig/%{rname}_c-0.pc %version
+%_libdir/pkgconfig/%rname.pc %_libdir/pkgconfig/%rname-2.pc %version
+%_libdir/pkgconfig/%rname.pc %_libdir/pkgconfig/%{rname}_c-2.pc %version
 __EOF__
 
-%files
-%doc AUTHORS NEWS
-%_libdir/libtag.so.1
-%_libdir/libtag.so.1.*
-%_libdir/libtag_c.so.0
-%_libdir/libtag_c.so.0.*
+%files -n %libtag
+%doc AUTHORS CHANGELOG.md
+%_libdir/libtag.so.%sover
+%_libdir/libtag.so.*
+
+%files -n %libtag_c
+%doc AUTHORS CHANGELOG.md
+%_libdir/libtag_c.so.%sover
+%_libdir/libtag_c.so.*
 
 %files devel
-%doc BUILD*/doc/html AUTHORS NEWS
+%doc BUILD*/doc/html AUTHORS CHANGELOG.md README.md
 %config %_sysconfdir/alternatives/packages.d/%name-devel
 %_bindir/taglib-config
 %_libdir/libtag.so
@@ -102,10 +119,14 @@ __EOF__
 %dir %_includedir/taglib/
 %_includedir/taglib/*.h
 %_includedir/taglib/*.tcc
+%_libdir/cmake/taglib/
 
 %changelog
-* Tue Mar 18 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt2
+* Tue Mar 18 2025 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt2
 - switch pc-files via alternatives
+
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
+- new version (closes: 53481)
 
 * Fri Jan 31 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt1
 - new version
