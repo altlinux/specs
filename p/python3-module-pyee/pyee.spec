@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 12.1.1
+Version: 13.0.0
 Release: alt1
 
 Summary: A port of node.js's EventEmitter to python
@@ -52,6 +52,9 @@ EventEmitter that comes with node.js.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Mar 18 2025 Grigory Ustinov <grenka@altlinux.org> 13.0.0-alt1
+- Automatically updated to 13.0.0.
+
 * Mon Nov 18 2024 Anton Vyatkin <toni@altlinux.org> 12.1.1-alt1
 - New version 12.1.1.
 
