@@ -3,7 +3,7 @@
 %define alt_components_base_version 0.4.1
 
 Name: alt-editions-server
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Editions of BaseALT distribution ALT Server.
@@ -69,6 +69,9 @@ done
 %_alterator_datadir/editions
 
 %changelog
+* Tue Mar 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.1-alt1
+- feat: set ALT_Domain_License/11.0 for edition domain
+
 * Tue Mar 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4-alt1
 - Update to alt-components-base-0.4.1
 - feat: add openssl-engines components to main section
