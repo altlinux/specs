@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.3.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -58,6 +58,7 @@ Patch14: alt-ui-remove-disttag.patch
 Patch15: alt-highlight-removed.patch
 Patch16: alt-fix-size-markdown-text.patch
 Patch17: alt-beautify-changelog.patch
+Patch18: alt-notify-small-amount-free-space.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -219,7 +220,8 @@ KF6 library
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-#%patch17 -p1
+%patch17 -p1
+%patch18 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -345,6 +347,12 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Fri Mar 14 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.3.3-alt2
+- Update the patch for correcting the markdown syntax of the changelog
+  before converting it to HTML.
+- Added a notification about a small amount of free disk space before
+  updating the system.
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 
