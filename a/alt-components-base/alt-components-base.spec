@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.4.1
+Version: 0.5
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,11 +15,21 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: alterator-entry >= 0.3.1
+BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
 Obsoletes: alterator-components-base < 0.2.0
 
 %description
+%summary.
+
+%package -n alt-editions-server
+Summary: Editions of BaseALT distribution ALT Server
+Group: System/Configuration/Other
+
+Requires: alt-components-base = %version-%release
+
+%description -n alt-editions-server
 %summary.
 
 %prep
@@ -33,34 +43,82 @@ for d in components/*/ ; do
 done
 
 %install
-mkdir -p "%buildroot%_datadir/alterator/components/categories"
+# install Components
+mkdir -p "%buildroot%_alterator_datadir/components/categories"
 
 for d in components/*/ ; do
     d="$(basename "$d")"
-    mkdir -p "%buildroot%_datadir/alterator/components/$d"
-    install -v -p -m 644 -D "components/$d/$d.component" "%buildroot%_datadir/alterator/components/$d"
-    
+    mkdir -p "%buildroot%_alterator_datadir/components/$d"
+    install -v -p -m 644 -D "components/$d/$d.component" "%buildroot%_alterator_datadir/components/$d"
+
     find "components/$d" -name '*.png' -type f | while read -r file; do
-    	install -v -p -m 664 -D "$file" "%buildroot%_datadir/alterator/components/$d"
+        install -v -p -m 664 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
-    
+
     find "components/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
-        install -v -p -m 644 -D "$file" "%buildroot%_datadir/alterator/components/$d"
+        install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
 done
 
 for d in categories/* ; do
     d="$(basename "$d")"
-    install -v -p -m 644 -D "categories/$d" "%buildroot%_datadir/alterator/components/categories"
+    install -v -p -m 644 -D "categories/$d" "%buildroot%_alterator_datadir/components/categories"
+done
+
+# install Editions
+mkdir -p "%buildroot%_alterator_datadir/editions"
+
+for d in editions/*/ ; do
+    find "$d" -type f -name "description*.md" -print0 | while IFS= read -r -d '' file; do
+        cmark "$file" > "${file/%%md/html}"
+    done
+done
+
+for edition_dir in editions/*/; do
+    edition="$(basename "$edition_dir")"
+
+    mkdir -p "%buildroot%_alterator_datadir/editions/$edition"
+
+    install -v -p -m 644 -D "$edition_dir/$edition.edition" "%buildroot%_alterator_datadir/editions/$edition"
+
+    find "$edition_dir" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
+        install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/editions/$edition"
+    done
 done
 
 %check
+# check Components
 ./scripts/validate_categories.py
 
+# check Editions
+for e in `find ./editions -name '*.edition' -type f`; do
+    alterator-entry validate "$e"
+    (alterator-entry get "$e" sections.base.components &&
+           alterator-entry get "$e" sections.main.components) 2>/dev/null |
+    while read c; do
+        if ! test -f "components/$c/$c.component"; then
+            echo "failed to locate component $c in edition $e"
+            exit 1
+        fi
+    done
+done
+
 %files
-%_datadir/alterator/components/*
+%_alterator_datadir/components/*
+
+%files -n alt-editions-server
+%dir %_alterator_datadir/editions
+%_alterator_datadir/editions/edition_server
+%_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed Mar 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5-alt1
+- Merge alt-editions-server-0.4.1-alt1 package as subpackage
+- Adjust display names, descriptions, etc for various components
+- Move alterator-legacy-* components to alterator-legacy category
+- Add brasero component and cd-dvd-apps category
+- Add genisoimage, gnome-boxes, lshw and inxi components
+
 * Tue Mar 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.1-alt1
 - Replace altmediawriter and isomaster to separate category
   bootable-media-tools
