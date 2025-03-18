@@ -1,7 +1,7 @@
 %define nameU org.kde.klevernotes
 
 Name: klevernotes
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: KleverNotes is a note taking and management application
@@ -17,7 +17,8 @@ ExclusiveArch: x86_64 aarch64
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake qt6-base-devel extra-cmake-modules qt6-base-devel qt6-declarative-devel libqt6-quickcontrols2 qt6-webengine-devel 
-BuildRequires: qt6-svg-devel kf6-kirigami-devel kf6-kirigami-addons-devel kf6-kcoreaddons-devel kf6-kconfig-devel kf6-ki18n-devel kf6-kconfigwidgets-devel kf6-kio-devel libgomp13-devel
+BuildRequires: qt6-svg-devel kf6-kirigami-devel kf6-kirigami-addons-devel kf6-kcoreaddons-devel kf6-kconfig-devel kf6-ki18n-devel 
+BuildRequires: kf6-kconfigwidgets-devel kf6-kio-devel libgomp13-devel kf6-kiconthemes-devel
 
 %description
 KleverNotes is a note taking and management application for your mobile and desktop devices. It uses markdown and allow you to preview your content.
@@ -41,5 +42,8 @@ KleverNotes is a note taking and management application for your mobile and desk
 %doc *.md 
 
 %changelog
+* Tue Mar 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Sun Nov 24 2024 Aleksandr Shamaraev <shad@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.

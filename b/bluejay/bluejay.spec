@@ -1,7 +1,7 @@
 %define nameL io.github.ebonjaeger.bluejay
 
 Name: bluejay
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Bluetooth manager written in Qt
@@ -60,5 +60,8 @@ cmake  \
 %doc *.md LICENSE
 
 %changelog
+* Tue Mar 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Mar 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.1-alt1
 - Initial build for ALT Linux.
