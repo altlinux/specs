@@ -1,6 +1,6 @@
 %global import_path github.com/grafana/alloy
 Name:    alloy
-Version: 1.7.0
+Version: 1.7.4
 Release: alt1
 
 Summary: OpenTelemetry Collector distribution with programmable pipelines
@@ -88,6 +88,9 @@ useradd -r -g %name -c 'alloy user' \
 %dir %attr(0770, %name, %name) %_sharedstatedir/%name/data
 
 %changelog
+* Fri Mar 14 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.7.4-alt1
+- Update version to v1.7.4
+
 * Thu Feb 27 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.7.0-alt1
 - Update version to v1.7.0
 
