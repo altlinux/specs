@@ -2,7 +2,7 @@
 %def_without pam
 
 Name: moodle
-Version: 4.5.1
+Version: 4.5.3
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -253,6 +253,12 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/%php_version/apache2-mod_php/ph
 %endif
 
 %changelog
+* Wed Mar 19 2025 Andrey Cherepanov <cas@altlinux.org> 4.5.3-alt1
+- New version.
+- Security fixes: CVE-2025-26533, CVE-2025-26532, CVE-2025-26531,
+  CVE-2024-38999, CVE-2025-26530, CVE-2025-26529, CVE-2025-26528,
+  CVE-2025-26527, CVE-2025-26526, CVE-2025-26525
+
 * Wed Dec 18 2024 Andrey Cherepanov <cas@altlinux.org> 4.5.1-alt1
 - New version.
 - Security fixes: CVE-2024-55648, CVE-2024-55647, CVE-2024-55646,
