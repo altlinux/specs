@@ -9,7 +9,7 @@
 %endif
 
 Name: lib%_name
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 
 Summary: Generic Programming for Computer Vision
@@ -117,6 +117,9 @@ sed -i 's|\(#!\/usr\/bin\/\)env \(python\)|\1\23|' config/vigra-config.in
 
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
+- 1.12.2
+
 * Tue Sep 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 
