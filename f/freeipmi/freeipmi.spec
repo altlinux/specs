@@ -10,7 +10,7 @@
 
 Name: freeipmi
 Version: 1.6.15.1
-Release: alt1
+Release: alt2
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -92,6 +92,7 @@ GNU FreeIPMI documentation.
 
 %configure \
 	--localstatedir=%_var \
+	--with-systemdsystemunitdir=%_unitdir \
 	--disable-static
 %make_build
 
@@ -168,20 +169,20 @@ touch %_localstatedir/%name/ipckey
 
 %files bmc-watchdog
 %config(noreplace) %_sysconfdir/sysconfig/bmc-watchdog
-%config %_initdir/bmc-watchdog
+%_unitdir/bmc-watchdog.service
 %_sbindir/bmc-watchdog
 %_man8dir/bmc-watchdog.8*
 
 %files ipmidetectd
 %_sbindir/ipmidetectd
-%config %_initdir/ipmidetectd
+%_unitdir/ipmidetectd.service
 %_man5dir/*detectd*.5*
 %_man8dir/*detectd*.8*
 %config %_sysconfdir/%name/ipmidetectd.conf
 
 %files ipmiseld
 %_sbindir/ipmiseld
-%config %_initdir/ipmiseld
+%_unitdir/ipmiseld.service
 %_man5dir/*ipmiseld*.5*
 %_man8dir/ipmiseld*.8*
 %config %_sysconfdir/%name/ipmiseld.conf
@@ -191,6 +192,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Wed Mar 19 2025 Anton Farygin <rider@altlinux.ru> 1.6.15.1-alt2
+- built with systemd configuration (closes: #28047)
+
 * Mon Jan 20 2025 Anton Farygin <rider@altlinux.ru> 1.6.15.1-alt1
 - 1.6.14 -> 1.6.15.1
 
