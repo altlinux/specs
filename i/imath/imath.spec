@@ -1,9 +1,12 @@
 %define lname imath
 %define libsover 29
 %define libimath lib%lname%libsover
+
+%def_with python
+
 Name: %lname
 Version: 3.1.12
-Release: alt1
+Release: alt1.1
 
 Summary: Imath is library of 2D and 3D vector, matrix, and math operations for graphics
 License: BSD-3-Clause
@@ -17,9 +20,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: python3-module-setuptools
+%if_with python
 BuildRequires: boost-python3-devel
 BuildRequires: python3-module-numpy
-BuildRequires: python3-module-breathe
+%endif
 
 %description
 Imath is a basic, light-weight, and efficient C++ representation of
@@ -73,7 +77,7 @@ Group: System/Libraries
 
 %build
 %cmake \
-    -DPYTHON:BOOL=ON \
+    -DPYTHON:BOOL=%{?_with_python:ON}%{?!_with_python:OFF} \
     -DDOCS=ON
 
 %cmake_build
@@ -97,6 +101,7 @@ done
 %_libdir/cmake/Imath/*.cmake
 %_libdir/libImath*.so
 
+%if_with python
 %files -n python3-module-%lname
 %python3_sitelibdir/*.so
 %_libdir/libPy*.so.*
@@ -105,8 +110,16 @@ done
 %_libdir/libPy*.so
 %_pkgconfigdir/PyImath.pc
 %_includedir/Imath/Py*.h
+%endif
 
 %changelog
+* Wed Mar 19 2025 Ivan A. Melnikov <iv@altlinux.org> 3.1.12-alt1.1
+- NMU:
+  + added --without=python knob to avoid dependency on
+    boost-python e.g. during bootstrap (asheplyakov@);
+  + drop python3-module-breathe build dependency that is
+    relevant only for building docs.
+
 * Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 3.1.12-alt1
 - 3.1.6 -> 3.1.12
 - removed doc subpackage
