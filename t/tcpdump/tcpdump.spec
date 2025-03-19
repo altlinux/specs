@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: tcpdump
-Version: 4.99.4
+Version: 4.99.5
 Release: alt1
 Epoch: 1
 
@@ -62,6 +63,9 @@ install -pm755 *.awk %buildroot%_datadir/%name/
 %doc CHANGES CREDITS LICENSE README.md
 
 %changelog
+* Fri Nov 29 2024 Arseny Maslennikov <arseny@altlinux.org> 1:4.99.5-alt1
+- 4.99.4 -> 4.99.5.
+
 * Wed Jun 07 2023 Arseny Maslennikov <arseny@altlinux.org> 1:4.99.4-alt1
 - 4.9.3 -> 4.99.4.
 
