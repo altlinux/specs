@@ -2,7 +2,7 @@
 
 Name: mate-sensors-applet
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE panel applet for hardware sensors
 License: GPLv2+
@@ -75,6 +75,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libmate-sensors-applet-plugin.so
 
 %changelog
+* Wed Mar 19 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt2
+- fixed an invalid pointer crash with glib 2.83.2
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
