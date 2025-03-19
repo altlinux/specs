@@ -1,9 +1,12 @@
+%def_enable snapshot
+
+%define ver_major 2.4
 %define xdg_name org.gnome.EasyTAG
 %def_disable nautilus
 
 Name: easytag
-Version: 2.4.3
-Release: alt4
+Version: %ver_major.3
+Release: alt5
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -11,24 +14,29 @@ Group: Sound
 License: GPL-2.0-or-later %{?_enable_nautilus:and GPL-3.0}
 Url: https://wiki.gnome.org/Apps/EasyTAG
 
+Vcs: https://gitlab.gnome.org/GNOME/easytag.git
+
+%if_enabled snapshot
 Source: %name-%version.tar
+%else
+Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
+%endif
 #Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-gnome intltool gcc-c++
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: desktop-file-utils
-BuildRequires: yelp-tools
-BuildRequires: libappstream-glib-devel
-
-BuildRequires: pkgconfig(gtk+-3.0) >= 3.2.1
+BuildRequires: yelp-tools libappstream-glib-devel /usr/bin/appstreamcli
+BuildRequires: pkgconfig(gtk+-3.0) >= 3.14
 BuildRequires: pkgconfig(ogg) >= 1.0 pkgconfig(vorbis) >= 1.0.1 pkgconfig(vorbisfile)
 BuildRequires: pkgconfig(opus) >= 1.0 pkgconfig(opusfile)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(flac) >= 1.1.4
 BuildRequires: pkgconfig(id3tag) id3lib-devel
-BuildRequires: pkgconfig(taglib) >= 1.9.1
+BuildRequires: pkgconfig(taglib-0) >= 1.9.1
 BuildRequires: pkgconfig(wavpack) >= 4.40
 BuildRequires: pkgconfig(gio-2.0) >= 2.32.0
+BuildRequires: pkgconfig(libsoup-2.4)
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 
 %description
@@ -46,13 +54,14 @@ Monkey's звуковых файлов.
 %prep
 %setup
 #%patch -p1
+sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-	--disable-appdata-validate \
-	%{?_enable_nautilus:--enable-nautilus-actions}
+    --disable-appdata-validate \
+    %{?_enable_nautilus:--enable-nautilus-actions}
 %nil
 %make_build
 
@@ -61,16 +70,16 @@ Monkey's звуковых файлов.
 %find_lang --with-gnome %name
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_iconsdir/hicolor/*/apps/%name.*
-%_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
-%_datadir/metainfo/%name.appdata.xml
+%_iconsdir/hicolor/*/apps/%xdg_name.*
+%_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %if_enabled nautilus
 %nautilus_extdir/*.so
@@ -82,6 +91,10 @@ Monkey's звуковых файлов.
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt5
+- updated to easytag-2.4.3-161-gac46f71 (2.5.1)
+- fixed build with taglib-0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt4
 - disabled Nautilus support
 
