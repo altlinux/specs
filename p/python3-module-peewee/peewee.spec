@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 3.17.1
+Version: 3.17.9
 Release: alt1
 
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
@@ -91,6 +91,9 @@ python3 runtests.py
 %doc docs/_build/html/*
 
 %changelog
+* Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 3.17.9-alt1
+- new version 3.17.9 (with rpmrb script)
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 3.17.1-alt1
 - new version 3.17.1
 - switch to pyproject_build, build as noarch
