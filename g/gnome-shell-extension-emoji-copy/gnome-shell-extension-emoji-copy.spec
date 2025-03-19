@@ -16,7 +16,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ego_ver
-Release: alt1
+Release: alt2
 
 Summary: Emoji Selector for GNOME Shell
 Group: Graphical desktop/GNOME
@@ -81,6 +81,9 @@ popd
 %doc README.md
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 26-alt2
+- updated to v26-1-gf750768 (GNOME 48 supported)
+
 * Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 26-alt1
 - 26 (v26)
 
