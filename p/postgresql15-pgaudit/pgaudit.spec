@@ -1,8 +1,8 @@
 %define pg_ver 15
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 1.7.0
-Release: alt3
+Version: 1.7.1
+Release: alt1
 
 Summary: PostgreSQL Audit Extension
 License: PostgreSQL
@@ -48,6 +48,9 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Mar 19 2025 Alexei Takaseev <taf@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt3
 - Build pgaudit 1.7 for Postgresql 15
 

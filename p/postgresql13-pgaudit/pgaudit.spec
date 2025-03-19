@@ -1,7 +1,7 @@
 %define pg_ver 13
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Epoch: 1
 
@@ -48,6 +48,9 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Mar 19 2025 Alexei Takaseev <taf@altlinux.org> 1:1.5.3-alt1
+- 1.5.3
+
 * Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:1.5.2-alt1
 - Build pgaudit 1.5 for Postgresql 13
 
