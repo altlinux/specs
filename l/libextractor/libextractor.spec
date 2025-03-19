@@ -6,13 +6,15 @@
 
 Name: libextractor
 Version: 1.13
-Release: alt1
+Release: alt1.1
 
 Summary: libextractor is a simple library for keyword extraction
 
 Group: System/Libraries
-License: GPLv2+
+License: GPL-3.0-or-later
 Url: http://www.gnu.org/software/%name/
+
+Vcs: https://git.gnunet.org/libextractor.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
@@ -24,7 +26,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel >= %flac_ver
 BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
-BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel libqt4-devel librpm-devel
+BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel librpm-devel
 BuildRequires: libopus-devel libvorbis-devel libflac-devel
 BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 BuildRequires: libjpeg-devel gst-plugins1.0-devel
@@ -66,7 +68,7 @@ This package contains the files needed to build packages that depend on %name.
 %build
 %autoreconf
 %configure --disable-static \
-	%{subst_enable ffmpeg}
+    %{subst_enable ffmpeg}
 %nil
 %make_build
 
@@ -102,6 +104,10 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt1.1
+- updated to v1.13-7-g4bf5f20a
+- fixed BR, added Vcs tag, fixed License tag
+
 * Sun Mar 03 2024 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt1
 - updated to v1.13-2-ga75f40b6
 
