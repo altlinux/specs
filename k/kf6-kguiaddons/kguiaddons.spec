@@ -6,7 +6,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.11.0
+Version: 6.12.0
 Release: alt1
 %K6init no_altplace
 
@@ -20,7 +20,7 @@ Provides: kf5-kguiaddons = %EVR
 Obsoletes: kf5-kguiaddons < %EVR
 
 Source: %rname-%version.tar
-Patch1: fix-modifierless-grabs.patch
+#Patch1: fix-modifierless-grabs.patch
 
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libqt6-core libqt6-gui libqt6-test libqt6-widgets libqt6-x11extras libstdc++-devel libxcb-devel pkg-config python-base qt6-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -102,7 +102,7 @@ Sip files for python3-module-%rname
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %K6build
@@ -145,6 +145,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 

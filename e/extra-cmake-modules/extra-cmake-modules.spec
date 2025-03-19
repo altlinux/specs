@@ -21,7 +21,7 @@ AutoProv: yes, nopython nopython3
 %add_python3_path %_datadir/ECM/find-modules
 
 Name: extra-cmake-modules
-Version: 6.11.0
+Version: 6.12.0
 Release: alt1
 
 Group: Development/Other
@@ -82,6 +82,9 @@ fi
 
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 

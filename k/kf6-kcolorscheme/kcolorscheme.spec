@@ -1,7 +1,7 @@
 %define rname kcolorscheme
 
 Name: kf6-%rname
-Version: 6.11.0
+Version: 6.12.0
 Release: alt1
 %K6init no_altplace
 
@@ -71,6 +71,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_K6lib/libKF6ColorScheme.so.*
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 

@@ -3,9 +3,9 @@
 %def_enable exiv2
 
 Name: kf6-%rname
-Version: 6.11.0
+Version: 6.12.0
 Release: alt1
-%K6init altplace
+%K6init no_altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 6 extracting text and metadata from different files
@@ -79,6 +79,9 @@ KF6 library
 
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 

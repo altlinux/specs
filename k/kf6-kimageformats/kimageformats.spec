@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf6-%rname
-Version: 6.11.0
+Version: 6.12.0
 Release: alt1
 %K6init altplace
 
@@ -61,6 +61,9 @@ Requires: kde-common
 #%_K6srv/qimageioplugins/
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %def_enable packagekit
 
 Name: kf6-%rname
-Version: 6.11.0
+Version: 6.12.0
 Release: alt1
 %K6init altplace
 
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_K6exec/kpackagehandlers/
 
 
 %changelog
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
 - new version
 
