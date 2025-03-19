@@ -26,7 +26,7 @@
 
 Name: qt6-webengine
 Version: 6.8.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -71,6 +71,7 @@ BuildRequires: libopus-devel libpulseaudio-devel pipewire-libs-devel
 BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libre2-devel libsnappy-devel libsrtp2-devel
 BuildRequires: libpng-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libxslt-devel libva-devel libvdpau-devel
+BuildRequires: libhunspell-devel
 BuildRequires: ninja-build gn
 BuildRequires: libopenjpeg2.0-devel
 BuildRequires: node-yargs node-terser
@@ -317,7 +318,7 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
     -DFEATURE_webengine_extensions:BOOL=ON \
     -DFEATURE_webengine_webrtc:BOOL=ON \
     -DFEATURE_webengine_webrtc_pipewire:BOOL=ON \
-    -DFEATURE_webengine_spellchecker:BOOL=OFF \
+    -DFEATURE_webengine_spellchecker:BOOL=ON \
     -DFEATURE_webengine_native_spellchecker:BOOL=OFF \
     #
 %Q6make
@@ -417,6 +418,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt3
+- enable spellchecker
+
 * Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
 - fix compile on arm
 
