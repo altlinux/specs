@@ -1,6 +1,6 @@
 Name: procps
 Version: 4.0.5
-Release: alt1
+Release: alt2
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -127,6 +127,11 @@ make check
 %_includedir/*
 %_pkgconfigdir/*.pc
 %changelog
+* Wed Mar 19 2025 Mikhail Efremov <sem@altlinux.org> 4.0.5-alt2
+- Patches from upstream:
+  + sysctl: return error on permission denied.
+  + fix breakage in unhex.
+
 * Mon Jan 27 2025 Mikhail Efremov <sem@altlinux.org> 4.0.5-alt1
 - tests: Workaround for VmRSS: 0k on ppc64le.
 - Renamed libproc2 subpackage to libproc2_%%soname.
