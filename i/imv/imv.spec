@@ -1,6 +1,6 @@
 Name: imv
 Version: 4.5.0
-Release: alt1
+Release: alt2
 License: MIT
 
 Summary: Image viewer for X11 and Wayland
@@ -10,6 +10,7 @@ Group: Graphics
 Url: https://sr.ht/~exec64/imv/
 
 Source: %name-%version.tar
+Patch: imv-4.5.0-fedora-Link-to-the-common-ICU-library.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -54,6 +55,7 @@ Highly scriptable with IPC via imv-msg.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -74,5 +76,8 @@ Highly scriptable with IPC via imv-msg.
 %_man5dir/*.5.*
 
 %changelog
+* Mon Mar 10 2025 Constantin Sunzow <protvin@altlinux.org> 4.5.0-alt2
+- Fix FTBFS: build with icu 76.
+
 * Fri Aug 16 2024 Kirill Unitsaev <fiersik@altlinux.org> 4.5.0-alt1
 - Initial build
