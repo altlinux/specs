@@ -1,17 +1,21 @@
+%define sover 1
+
 Name: imlib2
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
 Group: System/Libraries
 Url: https://git.enlightenment.org/old/legacy-imlib2
+Vcs: https://git.enlightenment.org/old/legacy-imlib2.git
 # Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
 %def_disable static
 %def_enable mmx
 
+BuildRequires(pre): patchelf
 # Automatically added by buildreq on Sun Sep 16 2012
 # optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: gcc-c++ libgomp-devel
@@ -87,11 +91,15 @@ export LIBS+=" -lwebp -L/%_lib -lm"
 # remove non-packaged files
 find %buildroot%_libdir/ -name '*.la' -delete
 
+# fix undefined symbols
+patchelf %buildroot%_libdir/%name/filters/*.so --add-needed libImlib2.so.%sover
+patchelf %buildroot%_libdir/%name/loaders/*.so --add-needed libImlib2.so.%sover
+
 %check
 make check
 
 %files
-%_libdir/*.so.*
+%_libdir/*.so.%{sover}*
 %dir %_libdir/%name/
 %dir %_libdir/%name/filters/
 %dir %_libdir/%name/loaders/
@@ -115,6 +123,10 @@ make check
 %endif
 
 %changelog
+* Tue Mar 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.12.4-alt1
+- New version 1.12.4.
+- Added vcs tag.
+
 * Mon Jul 15 2024 Leontiy Volodin <lvol@altlinux.org> 1.12.3-alt1
 - New version 1.12.3.
 
