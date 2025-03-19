@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pax-utils
-Version: 1.3.7
-Release: alt3
+Version: 1.3.8
+Release: alt1
 
 Summary: ELF utils that can check files for security relevant properties
 License: GPL-2.0
@@ -61,6 +61,9 @@ sed -i -e 's|/usr/bin/env python|/usr/bin/python3|' lddtree.py
 %_man1dir/*
 
 %changelog
+* Wed Mar 19 2025 Egor Ignatov <egori@altlinux.org> 1.3.8-alt1
+- new version 1.3.8
+
 * Thu Jul 06 2023 Egor Ignatov <egori@altlinux.org> 1.3.7-alt3
 - seccomp: also allow sendto(), recvmsg() and poll() syscalls (closes: #46775)
 
