@@ -3,7 +3,7 @@
 %define libkokocommon libkokocommon%sover
 
 Name: %rname
-Version: 24.08.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -12,7 +12,8 @@ Summary: Image Viewer
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: qt6-svg kde6-kquickimageeditor
+Requires: %name-common >= %EVR
+Requires: qt6-svg kf6-purpose kf6-kirigami-addons kde6-kquickimageeditor
 Provides:  kde5-koko = %EVR
 Obsoletes: kde5-koko < %EVR
 
@@ -30,6 +31,8 @@ BuildRequires: qt6-declarative-devel qt6-positioning-devel qt6-svg-devel
 BuildRequires: zip
 BuildRequires: kde6-kquickimageeditor-devel kf6-kdeclarative-devel kf6-kfilemetadata-devel kf6-ki18n-devel
 BuildRequires: kf6-kirigami-devel kf6-knotifications-devel kf6-kpackage-devel
+BuildRequires: kf6-kirigami-addons kf6-kirigami-addons-devel
+BuildRequires: kf6-purpose-devel
 BuildRequires: libexiv2-devel
 BuildRequires: libxcbutil-devel
 
@@ -76,18 +79,27 @@ rm -f cities1000.txt
 %files
 %_K6bin/koko
 %_K6data/koko/
-%_K6qml/org/kde/koko/
+#%_K6qml/org/kde/koko/
 %_K6xdgapp/*koko*.desktop
 %_K6icon/*/*/apps/*koko*.*
 %_K6notif/*koko*.notifyrc
 %_datadir/metainfo/*koko*.xml
 
-%files -n %libkokocommon
-%_K6lib/libkokocommon.so.*
-%_K6lib/libkokocommon.so.%sover
+#%files -n %libkokocommon
+#%_K6lib/libkokocommon.so.*
+#%_K6lib/libkokocommon.so.%sover
 
 
 %changelog
+* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
+* Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 

@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: %rname
-Version: 24.08.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -24,6 +24,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel
 BuildRequires: kf6-kdbusaddons-devel kf6-ki18n-devel kf6-kirigami-devel kf6-knotifications-devel
 BuildRequires: kf6-kpackage-devel kf6-kservice-devel kf6-kstatusnotifieritem-devel kf6-kwindowsystem-devel
+BuildRequires: kf6-kcrash-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma6-lib-devel
 
@@ -82,6 +83,15 @@ developing applications that use %name.
 
 
 %changelog
+* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
+* Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 

@@ -1,7 +1,7 @@
 %define rname alligator
 
 Name: %rname
-Version: 24.08.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-ki18n-devel kf6-syndication-devel
+BuildRequires: kf6-kcolorscheme-devel kf6-kirigami-devel
 BuildRequires: kf6-kirigami-addons-devel
 
 %description
@@ -43,6 +44,15 @@ Alligator is a convergent RSS/Atom feed reader.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
+* Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 

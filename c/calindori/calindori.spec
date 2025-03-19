@@ -4,7 +4,7 @@
 %define libcalindori libcalindori%sover
 
 Name: %rname
-Version: 24.08.2
+Version: 24.12.3
 Release: alt1
 %K6init
 
@@ -54,6 +54,15 @@ Calindori is a touch friendly calendar application. It has been designed for mob
 
 
 %changelog
+* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
+* Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
+- new version
+
+* Mon Feb 03 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.1-alt1
+- new version
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.2-alt1
 - initial build
 
