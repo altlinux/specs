@@ -3,24 +3,25 @@
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%def_disable compat
+%def_enable compat
 %def_enable jpeg2000
-%def_disable cryptopro
 
 %if_disabled compat
 %def_enable cpp
 %def_enable glib
 %def_enable qt6
 %def_enable qt5
+%def_disable qt4
 %def_enable devel
 %def_enable utils
 %def_enable xpdfheaders
 %def_enable gir
 %else
-%def_disable cpp
+%def_enable cpp
 %def_disable glib
 %def_disable qt6
 %def_disable qt5
+%def_disable qt4
 %def_disable devel
 %def_disable utils
 %def_disable xpdfheaders
@@ -28,14 +29,15 @@
 %endif
 
 %define rname poppler
-%define somajor 146
-%define somajor_cpp 2
+%define somajor 140
+%define somajor_cpp 1
 %define somajor_qt 3
+%define somajor_qt4 4
 %define somajor_qt5 1
 %define somajor_qt6 3
 %define somajor_glib 8
-%define major 25
-%define minor 02
+%define major 24
+%define minor 08
 %define bugfix 0
 
 %if_disabled compat
@@ -52,6 +54,7 @@ Release: alt2
 %define poppler_cpp_devel lib%rname-cpp-devel
 %define poppler_glib_devel lib%rname-glib-devel
 %define poppler_qt_devel lib%rname-qt-devel
+%define poppler_qt4_devel lib%rname-qt4-devel
 %define poppler_qt5_devel lib%rname-qt5-devel
 %define poppler_qt6_devel lib%rname-qt6-devel
 %else
@@ -59,10 +62,12 @@ Release: alt2
 %define poppler_cpp_devel lib%rname%somajor-cpp-devel
 %define poppler_glib_devel lib%rname%somajor-glib-devel
 %define poppler_qt_devel lib%rname%somajor-qt-devel
+%define poppler_qt4_devel lib%rname%somajor-qt4-devel
 %define poppler_qt5_devel lib%rname%somajor-qt5-devel
 %define poppler_qt6_devel lib%rname%somajor-qt6-devel
 %endif
 %define libpoppler libpoppler%somajor
+%define libpoppler_qt4 lib%rname%somajor_qt4-qt4
 %define libpoppler_qt5 lib%rname%somajor_qt5-qt5
 %define libpoppler_qt6 lib%rname%somajor_qt6-qt6
 %define libpoppler_glib lib%rname%somajor_glib-glib
@@ -79,7 +84,6 @@ Source: %rname-%version.tar
 # ALT
 Patch10: alt-e2k.patch
 Patch11: alt-openjpeg-version.patch
-Patch12: alt-add-cryptopro-sign-validation.patch
 
 # Automatically added by buildreq on Fri Apr 01 2011 (-bi)
 #BuildRequires: gcc-c++ glib-networking glibc-devel-static gtk-doc gvfs imake libXt-devel libcurl-devel libgtk+2-devel libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel libqt3-devel libqt4-devel libqt4-gui libqt4-xml libxml2-devel python-modules-compiler python-modules-encodings time xorg-cf-files
@@ -91,6 +95,9 @@ BuildRequires: qt6-base-devel
 %endif
 %if_enabled qt5
 BuildRequires: qt5-base-devel
+%endif
+%if_enabled qt4
+BuildRequires: libqt4-devel
 %endif
 %if_enabled glib
 BuildRequires: glib2-devel
@@ -104,10 +111,6 @@ BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel poppler-data
 BuildRequires: boost-devel libgpgme-devel
-%if_enabled cryptopro
-BuildRequires: libcspforpoppl-devel
-BuildRequires: libgtest-devel
-%endif
 
 %description
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -180,6 +183,21 @@ Group: System/Libraries
 Requires: %libpoppler
 %description -n %libpoppler_qt6
 Qt6 frontend library for %rname
+
+%package -n %libpoppler_qt4
+Summary: Qt4 frontend library for %rname
+Group: System/Libraries
+Requires: %libpoppler
+%popIF_ver_gteq "%major.%minor" "0.10"
+Provides: libpoppler08-qt4 = %version-%release
+Obsoletes: libpoppler08-qt4 < %version-%release
+%if "%somajor_qt4" != "4"
+Provides: libpoppler4-qt4 = %version-%release
+Obsoletes: libpoppler4-qt4 < %version-%release
+%endif
+%endif
+%description -n %libpoppler_qt4
+Qt4 frontend library for %rname
 
 %package -n %libpoppler_glib
 Summary: Glib frontend library for %rname
@@ -263,6 +281,20 @@ Conflicts: lib%rname-qt5-devel
 Libraries, include files, etc you can use to develop
 poppler applications with Qt5
 
+%package -n %poppler_qt4_devel
+Summary: Development files for %rname-qt4
+Group: Development/KDE and QT
+Requires: %libpoppler_qt4
+%if_enabled xpdfheaders
+Requires: %poppler_devel
+%endif
+%if_enabled compat
+Conflicts: lib%rname-qt4-devel
+%endif
+%description -n %poppler_qt4_devel
+Libraries, include files, etc you can use to develop
+poppler applications with Qt4
+
 %package -n lib%rname-gir
 Summary: GObject introspection data for the Poppler library
 Group: System/Libraries
@@ -283,16 +315,15 @@ GObject introspection devel data for the Poppler library
 %setup -n %rname-%version
 %patch10 -p1
 %patch11 -p1
-%if_enabled cryptopro
-%patch12 -p1
-%endif
 
 %build
+%if_enabled qt4
+export QT4DIR=%_qt4dir
+%endif
 %cmake \
     -DSHARE_INSTALL_DIR=%_datadir \
     -DBUILD_SHARED_LIBS=ON \
     -DENABLE_GPGME=ON \
-    -DDEFAULT_SIGNATURE_BACKEND=%{?_enable_cryptopro:"CRYPTOPRO"}%{!?_enable_cryptopro:""} \
     -DENABLE_LIBCURL=ON \
     -DENABLE_ZLIB=OFF \
     -DENABLE_CMS=lcms2 \
@@ -307,10 +338,12 @@ GObject introspection devel data for the Poppler library
     -DENABLE_UTILS=%{?_enable_utils:ON}%{!?_enable_utils:OFF} \
     -DENABLE_CPP=%{?_enable_cpp:ON}%{!?_enable_cpp:OFF} \
     -DENABLE_GLIB=%{?_enable_glib:ON}%{!?_enable_glib:OFF} \
+    -DENABLE_QT4=%{?_enable_qt4:ON}%{!?_enable_qt4:OFF} \
     -DENABLE_QT5=%{?_enable_qt5:ON}%{!?_enable_qt5:OFF} \
     -DENABLE_QT6=%{?_enable_qt6:ON}%{!?_enable_qt6:OFF} \
     #
 #    -DBUILD_GTK_TESTS=OFF \
+#    -DBUILD_QT4_TESTS=OFF \
 #    -DBUILD_QT5_TESTS=OFF \
 #    -DBUILD_QT6_TESTS=OFF \
 #    -DBUILD_CPP_TESTS=OFF \
@@ -352,6 +385,18 @@ make install DESTDIR=%buildroot -C BUILD
 %_libdir/libpoppler-glib.so
 #%_pkgconfigdir/poppler-cairo.pc
 %_pkgconfigdir/poppler-glib.pc
+%endif
+%endif
+
+%if_enabled qt4
+%files -n %libpoppler_qt4
+%_libdir/libpoppler-qt4.so.%somajor_qt4
+%_libdir/libpoppler-qt4.so.%somajor_qt4.*
+%if_enabled devel
+%files -n %poppler_qt4_devel
+%_includedir/poppler/qt4/
+%_libdir/libpoppler-qt4.so
+%_pkgconfigdir/poppler-qt4.pc
 %endif
 %endif
 
@@ -407,17 +452,8 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
-* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.0-alt2
-- temporary disable cryptopro
-
-* Tue Mar 18 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.0-alt1
-- new version
-
-* Thu Dec 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 24.08.0-alt2
-- add backend validation of signature signed with CryptoPro
-- set the CryptoPro backend by default
-- add tests for interfaction between the CryptoPro backend and Poppler
-- add tests for the signature verification class
+* Tue Mar 18 2025 Sergey V Turchin <zerg@altlinux.org> 24.08.0-alt2
+- build only compat library
 
 * Thu Dec 19 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.0-alt1
 - new version
