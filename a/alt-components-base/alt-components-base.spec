@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -112,6 +112,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed Mar 19 2025 Andrey Limachko <liannnix@altlinux.org> 0.5.1-alt1
+- Add glibc package to glibc component
+- Add inxi component to base section in server edition
+
 * Wed Mar 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5-alt1
 - Merge alt-editions-server-0.4.1-alt1 package as subpackage
 - Adjust display names, descriptions, etc for various components
