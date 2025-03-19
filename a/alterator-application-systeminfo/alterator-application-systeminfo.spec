@@ -2,9 +2,9 @@
 
 Name: alterator-application-systeminfo
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
-Summary: ALT About - Alterator application that shows information about system
+Summary: ALT Systeminfo - Alterator application that shows information about system
 License: GPLv2+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alterator-application-systeminfo
@@ -25,7 +25,7 @@ BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: libtomlplusplus-devel
 
 %description
-ALT About - Alterator application that shows information about system.
+ALT Systeminfo - Alterator application that shows information about system.
 
 %prep
 %setup
@@ -48,6 +48,9 @@ ALT About - Alterator application that shows information about system.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Wed Mar 19 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt2
+- Change summary and description.
+
 * Tue Mar 18 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt1
 - New version.
 
