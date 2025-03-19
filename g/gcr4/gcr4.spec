@@ -2,7 +2,7 @@
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
-%define ver_major 4.3
+%define ver_major 4.4
 %define gcr_api_ver 4
 %define gck_api_ver 2
 
@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: gcr%gcr_api_ver
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -34,8 +34,7 @@ Requires: libtasn1-utils
 %{?_disable_ssh_agent:Conflicts: gcr < 3.41.1-alt2}
 
 %define meson_ver 0.59
-%define glib_ver 2.44.0
-%define gtk_ver 3.22
+%define glib_ver 2.74.0
 %define p11kit_ver 0.19.0
 %define vala_ver 0.18.1
 %define gnutls_ver 3.8.5
@@ -180,6 +179,9 @@ xvfb-run %__meson_test -t 8
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.0.1-alt1
+- 4.4.0.1
+
 * Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.1-alt1
 - 4.3.1
 
