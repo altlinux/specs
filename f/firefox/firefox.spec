@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 136.0.1
+Version: 136.0.2
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -255,6 +255,10 @@ export srcdir="$PWD"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
+# Closes: https://bugzilla.altlinux.org/53117
+# Closes: https://bugzilla.altlinux.org/52594
+export MOZ_APP_REMOTINGNAME="firefox"
+
 python3 ./mach build
 
 while read -r loc; do
@@ -382,6 +386,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Mar 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 136.0.2-alt1
+- New version (136.0.2).
+- Set the MOZ_APP_REMOTINGNAME variable (closes: 52594, 53117).
+- Update desktop file.
+
 * Wed Mar 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 136.0.1-alt1
 - New version (136.0.1).
 
