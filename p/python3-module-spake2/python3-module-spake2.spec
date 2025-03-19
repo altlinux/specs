@@ -1,8 +1,8 @@
 %define modulename spake2
 
 Name: python3-module-spake2
-Version: 0.8
-Release: alt2
+Version: 0.9
+Release: alt1
 
 Summary: SPAKE2 password-authenticated key exchange (pure python)
 
@@ -62,6 +62,9 @@ sed -i 's/readfp/read_file/' versioneer.py
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Wed Mar 19 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- new version 0.9 (with rpmrb script)
+
 * Thu Jan 25 2024 Grigory Ustinov <grenka@altlinux.org> 0.8-alt2
 - Fixed FTBFS.
 
