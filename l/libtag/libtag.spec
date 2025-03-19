@@ -3,7 +3,7 @@
 
 Name: libtag
 Version: 1.13.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: TagLib, is well, a library for reading and editing audio meta data
@@ -45,9 +45,8 @@ it a semi-sane STL implementation.
 %package devel
 Group: Development/C
 Summary: Headers and static lib for taglib development
-Requires: %name = %version-%release
 Provides: %rname-devel = %version-%release
-
+Provides: pkgconfig(taglib)
 %description devel
 Install this package if you want do compile applications using the libtag
 library.
@@ -104,6 +103,9 @@ __EOF__
 %_includedir/taglib/*.tcc
 
 %changelog
+* Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt3
+- provides pkgconfig(taglib)
+
 * Tue Mar 18 2025 Sergey V Turchin <zerg@altlinux.org> 1.13.1-alt2
 - switch pc-files via alternatives
 
