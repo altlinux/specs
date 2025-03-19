@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 %define bname librsvg
-%define ver_major 2.59
+%define ver_major 2.60
 %define namespace Rsvg
 %define api_ver 2.0
 %define gtk_api_ver 2.0
@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Epoch: 1
 
@@ -28,6 +28,8 @@ Summary: SVG rendering library
 License: LGPL-2.1
 Group: System/Libraries
 Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
+
+Vcs: https://gitlab.gnome.org/GNOME/librsvg.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 # since 2.55 no longer contains vendored Rust dependencies
@@ -205,6 +207,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.60.0-alt1
+- 2.60.0
+
 * Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.59.2-alt1
 - 2.59.2
 
