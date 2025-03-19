@@ -5,7 +5,7 @@
 
 Name:    python3-module-%srcname
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Pytest plugin to manage external processes across test runs
 License: MIT
@@ -32,6 +32,9 @@ BuildArch: noarch
 # Source-url: %__pypi_url %srcname
 Source: %srcname-%version.tar
 
+# https://github.com/pytest-dev/pytest-xprocess/issues/154
+Patch: pytest-xprocess-race-exception-handling.patch
+
 %description
 Experimental py.test <>_ plugin for managing processes across test runs.Usage
 install via:: pip install pytest-xprocessThis will provide a xprocess fixture
@@ -42,6 +45,7 @@ line...
 
 %prep
 %setup -n %srcname-%version
+%patch -p2
 
 # Remove bundled egg-info
 rm -r *.egg-info
@@ -61,6 +65,9 @@ rm -r *.egg-info
 %doc *.rst
 
 %changelog
+* Wed Mar 19 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.2-alt1.1
+- NMU: Fix tests for slower machines (fixes FTBFS on riscv64).
+
 * Mon May 20 2024 Anton Zhukharev <ancieg@altlinux.org> 1.0.2-alt1
 - Updated to 1.0.2.
 
