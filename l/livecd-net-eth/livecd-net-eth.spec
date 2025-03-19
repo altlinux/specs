@@ -1,14 +1,13 @@
 Name: livecd-net-eth
-Version: 0.4.4
+Version: 0.5.0
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Networking
 
 Url: http://www.altlinux.org/etcnet
 Source0: %name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
 
@@ -30,6 +29,12 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Wed Mar 19 2025 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- livecd-net-eth.init: refactoring for compatibility witn alterator-net-eth
+- livecd-net-eth.init: create configs of interface for en* only
+- convert License tag to SPDX-format
+- drop Packager tag
+
 * Sat Sep 04 2021 Anton Midyukov <antohami@altlinux.org> 0.4.4-alt1
 - livecd-net-eth.init: shift startup of the service from 05 to 07
 - livecd-net-eth.service: fix dependencies
