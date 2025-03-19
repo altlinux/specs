@@ -5,9 +5,13 @@
 
 %global _unpackaged_files_terminate_build 1
 
-Name:    etcd
-Version: 3.5.16
-Release: alt1
+%define prog_name    etcd
+%define prog_version 3.5.16
+%define git_commit   f20bbad
+
+Name:    %prog_name%prog_version
+Version: %prog_version
+Release: alt2
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
 Group:   System/Servers
@@ -16,6 +20,11 @@ URL:     https://etcd.io
 VCS:     https://github.com/etcd-io/etcd
 
 Source0: %name-%version.tar
+
+Provides: %prog_name = %EVR
+Conflicts: %prog_name < %EVR
+Conflicts: %prog_name > %EVR
+Obsoletes: etcd < 3.5.16-alt2
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
@@ -40,7 +49,7 @@ mv client/v3/README.md README-clientv3.md
 export CGO_ENABLED=0
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
-export LDFLAGS="-X go.etcd.io/etcd/api/v3/version.GitSHA=%release"
+export LDFLAGS="-X go.etcd.io/etcd/api/v3/version.GitSHA=%git_commit"
 
 %golang_prepare
 
@@ -63,20 +72,20 @@ export BUILDDIR="$PWD/.build"
 mkdir -p -- \
     %buildroot%_sbindir \
     %buildroot%_unitdir \
-    %buildroot%_sysconfdir/%name \
-    %buildroot%_sharedstatedir/%name \
+    %buildroot%_sysconfdir/%prog_name \
+    %buildroot%_sharedstatedir/%prog_name \
 #
 
-mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/%name
+mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/%prog_name
 
 sed \
     -e 's,@USER@,%etcd_user,g' \
-    -e 's,@STATEDIR@,%_sharedstatedir/%name,g' \
-    -e 's,@SYSCONFDIR@,%_sysconfdir/%name,g' \
+    -e 's,@STATEDIR@,%_sharedstatedir/%prog_name,g' \
+    -e 's,@SYSCONFDIR@,%_sysconfdir/%prog_name,g' \
     -e 's,@BINDIR@,%_sbindir,g' \
-    < rpm/etcd.service > %buildroot%_unitdir/%name.service
+    < rpm/etcd.service > %buildroot%_unitdir/%prog_name.service
 
-install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%name/%name.conf
+install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%prog_name/%prog_name.conf
 
 # remove unused files
 rm -rf -- %buildroot/%go_root
@@ -86,22 +95,25 @@ groupadd -r -f %etcd_group
 useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&1 ||:
 
 %post
-%post_service %name
+%post_service %prog_name
 
 %preun
-%preun_service %name
+%preun_service %prog_name
 
 %files
 %doc README.md etcd.conf.yml.sample
 %doc README-*.md READMEv2-etcdctl.md
-%dir %attr(770,%etcd_user,%etcd_group) %_sharedstatedir/%name
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/%name.conf
+%dir %attr(770,%etcd_user,%etcd_group) %_sharedstatedir/%prog_name
+%dir %_sysconfdir/%prog_name
+%config(noreplace) %_sysconfdir/%prog_name/%prog_name.conf
 %_bindir/*
 %_sbindir/*
-%_unitdir/%name.service
+%_unitdir/%prog_name.service
 
 %changelog
+* Wed Mar 19 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt2
+- Rename package to include version in the name
+
 * Wed Oct 30 2024 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt1
 - 3.5.15 -> 3.5.16
 
