@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20241112
+%define orig_timestamp 20250211
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 29
+Version: 30
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,74 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Wed Mar 19 2025 L.A. Kostis <lakostis@altlinux.ru> 2:30-alt1.20250211
+- Synced with debian/3.20250211.1:
+  + New upstream microcode datafile 20250211:
+    - Mitigations for INTEL-SA-01166 (CVE-2024-31068)
+      Improper Finite State Machines (FSMs) in Hardware Logic for some Intel
+      Processors may allow privileged user to potentially enable denial of
+      service via local access.
+    - Mitigations for INTEL-SA-01213 (CVE-2024-36293)
+      Improper access control in the EDECCSSA user leaf function for some
+      Intel Processors with Intel SGX may allow an authenticated user to
+      potentially enable denial of service via local access.  Intel disclosed
+      that some 9th Generation Intel Core processor models were already fixed
+      by a previous microcode update.
+    - Mitigations for INTEL-SA-01139 (CVE-2023-43758, CVE-2023-34440,
+      CVE-2024-24582, CVE-2024-29214, CVE-2024-28127, CVE-2024-39279,
+      CVE-2024-31157, CVE-2024-28047)
+      Improper input validation, insufficient granularity of access control,
+      and improper initialization issues in UEFI firmware for some Intel
+      processors may allow escalation of privilege, denial of service, or
+      information disclosure.  An UEFI firmware update is needed for complete
+      mitigation.
+    - Mitigations for INTEL-SA-01228 (CVE-2024-39355)
+      Improper handling of physical or environmental conditions in some 13th
+      and 14th Generation Intel Core Processors may allow an authenticated
+      user to enable denial of service via local access.  An UEFI firmware
+      update may be required for complete mitigation.
+    - Mitigations for INTEL-SA-01194 (CVE-2024-37020)
+      Sequence of processor instructions leads to unexpected behavior in the
+      Intel DSA V1.0 for some Intel Xeon Processors may allow an authenticated
+      user to potentially enable denial of service via local access.
+    - Fixes for unspecified functional issues on several processor models
+  + New microcodes or new extended signatures:
+    sig 0x000a06f3, pf_mask 0x01, 2024-11-22, rev 0x3000330, size 1533952
+    sig 0x000b06f6, pf_mask 0x07, 2024-08-01, rev 0x0038, size 225280
+    sig 0x000b06f7, pf_mask 0x07, 2024-08-01, rev 0x0038, size 225280
+    sig 0x000b0674, pf_mask 0x32, 2024-09-25, rev 0x012c, size 211968
+  + Updated microcodes:
+    sig 0x000606a6, pf_mask 0x87, 2024-08-02, rev 0xd0003f5, size 308224
+    sig 0x000606c1, pf_mask 0x10, 2024-08-08, rev 0x10002c0, size 300032
+    sig 0x000806f8, pf_mask 0x87, 2024-07-30, rev 0x2b000620, size 589824
+    sig 0x000806f7, pf_mask 0x87, 2024-07-30, rev 0x2b000620
+    sig 0x000806f6, pf_mask 0x87, 2024-07-30, rev 0x2b000620
+    sig 0x000806f5, pf_mask 0x87, 2024-07-30, rev 0x2b000620
+    sig 0x000806f4, pf_mask 0x87, 2024-07-30, rev 0x2b000620
+    sig 0x000806f8, pf_mask 0x10, 2024-07-30, rev 0x2c0003e0, size 622592
+    sig 0x000806f6, pf_mask 0x10, 2024-07-30, rev 0x2c0003e0
+    sig 0x000806f5, pf_mask 0x10, 2024-07-30, rev 0x2c0003e0
+    sig 0x000806f4, pf_mask 0x10, 2024-07-30, rev 0x2c0003e0
+    sig 0x00090672, pf_mask 0x07, 2024-08-01, rev 0x0038, size 225280
+    sig 0x00090675, pf_mask 0x07, 2024-08-01, rev 0x0038
+    sig 0x000b06f2, pf_mask 0x07, 2024-08-01, rev 0x0038
+    sig 0x000b06f5, pf_mask 0x07, 2024-08-01, rev 0x0038
+    sig 0x000906a3, pf_mask 0x80, 2024-08-01, rev 0x0436, size 223232
+    sig 0x000906a4, pf_mask 0x80, 2024-08-01, rev 0x0436
+    sig 0x000906a4, pf_mask 0x40, 2024-07-29, rev 0x0009, size 119808
+    sig 0x000906ea, pf_mask 0x22, 2024-07-28, rev 0x00fa, size 105472
+    sig 0x000906ed, pf_mask 0x22, 2024-07-31, rev 0x0102, size 106496
+    sig 0x000a0671, pf_mask 0x02, 2024-08-01, rev 0x0063, size 108544
+    sig 0x000b0671, pf_mask 0x32, 2024-09-25, rev 0x012c, size 211968
+    sig 0x000b06a2, pf_mask 0xe0, 2024-07-31, rev 0x4124, size 220160
+    sig 0x000b06a3, pf_mask 0xe0, 2024-07-31, rev 0x4124
+    sig 0x000b06a8, pf_mask 0xe0, 2024-07-31, rev 0x4124
+    sig 0x000b06e0, pf_mask 0x19, 2024-09-06, rev 0x001c, size 138240
+    sig 0x000c06f2, pf_mask 0x87, 2024-07-30, rev 0x21000291, size 560128
+    sig 0x000c06f1, pf_mask 0x87, 2024-07-30, rev 0x21000291
+  + source: update symlinks to reflect id of the latest release, 20250211
+  + Update changelog for 3.20240813.1 with new information
+
 * Thu Dec 05 2024 L.A. Kostis <lakostis@altlinux.ru> 2:29-alt1.20241112
 - Synced with debian/3.20241112.1 (original changelog below):
   + New upstream microcode datafile 20241112
