@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/navidrome/navidrome
 # git rev-parse --short v%version
-%global commit_hash 287079a9e
+%global commit_hash beb768cd9
 
 Name: navidrome
-Version: 0.54.5
+Version: 0.55.1
 Release: alt1
 Summary: Modern Music Server and Streamer compatible with Subsonic/Airsonic
 License: GPL-3.0
@@ -24,7 +24,7 @@ BuildRequires: esbuild
 BuildRequires: gcc-c++
 BuildRequires: golang
 BuildRequires: npm
-BuildRequires: libtag-devel
+BuildRequires: taglib-devel
 
 Requires: ffmpeg
 
@@ -59,7 +59,7 @@ or mobile device. It's like your personal Spotify!
 mkdir -p node_modules/{esbuild/bin,@esbuild/linux-%arch_dir/bin}
 ln -sv %_bindir/esbuild node_modules/esbuild/bin/esbuild
 ln -sv %_bindir/esbuild node_modules/@esbuild/linux-%arch_dir/bin/esbuild
-sed -i "s/0.21.5/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
+sed -i "s/0.25.0/$(rpm -q --qf '%{VERSION}' esbuild)/g" node_modules/esbuild/lib/main.js
 
 %build
 export BUILDDIR=$PWD/.gopath
@@ -102,6 +102,9 @@ install -m 0644 %SOURCE5 %buildroot%_unitdir/navidrome.service
 %dir %attr(750, navidrome, navidrome) %_sharedstatedir/navidrome
 
 %changelog
+* Wed Mar 19 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.55.1-alt1
+- Updated to version 0.55.1.
+
 * Mon Feb 24 2025 Alexander Makeenkov <amakeenk@altlinux.org> 0.54.5-alt1
 - Updated to version 0.54.5 (fix CVE-2025-27112).
 
