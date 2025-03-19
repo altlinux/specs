@@ -7,7 +7,7 @@
 
 Name: mdadm
 Version: 4.4
-Release: alt1
+Release: alt2
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -116,6 +116,10 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %doc alt/README*
 
 %changelog
+* Wed Mar 19 2025 Alexey Shabalin <shaba@altlinux.org> 4.4-alt2
+- fix crash (ALT#53454)
+- backport fixes from upstream master
+
 * Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 4.4-alt1
 - 4.4
 
