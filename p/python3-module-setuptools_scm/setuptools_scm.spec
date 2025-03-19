@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 8.2.0
+Version: 8.2.1
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -61,6 +61,9 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 19 2025 Stanislav Levin <slev@altlinux.org> 8.2.1-alt1
+- 8.2.0 -> 8.2.1.
+
 * Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1
 - 8.1.0 -> 8.2.0.
 
