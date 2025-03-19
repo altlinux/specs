@@ -2,7 +2,7 @@
 
 Name: gnome-shell-extension-gnome-runcat
 Version: 28
-Release: alt1
+Release: alt2
 
 Summary: RunCat for GNOME Shell
 Summary(ru_RU.UTF-8): Бегущий кот для GNOME Shell 
@@ -26,6 +26,8 @@ Animation speed changes depending on CPU usage.
 %prep
 %setup
 
+subst 's|"47"|"47", "48"|' src/metadata.json
+
 %build
 %make_build
 
@@ -39,5 +41,8 @@ glib-compile-schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas/
 %doc *.md LICENSE 
 
 %changelog
+* Wed Mar 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 28-alt2
+- fixed for GNOME 48
+
 * Sun Nov 24 2024 Aleksandr Shamaraev <shad@altlinux.org> 28-alt1
 - Initial build for Sisyphus.

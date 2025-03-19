@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-netspeedsimplified
 Version: 43
-Release: alt1
+Release: alt2
 
 Summary: Net speed Simplified
 
@@ -24,6 +24,8 @@ A Net Speed monitor With Loads of Customization.
 %prep
 %setup -n %nameU-%version
 
+subst 's|"47"|"47", "48"|' metadata.json
+
 %build
 %install
 mkdir -p %buildroot%_datadir/gnome-shell/extensions/%exID/
@@ -38,5 +40,8 @@ cp stylesheet.css %buildroot%_datadir/gnome-shell/extensions/%exID/stylesheet.cs
 %doc *.md LICENSE 
 
 %changelog
+* Wed Mar 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 43-alt2
+- fixed for GNOME 48
+
 * Sun Dec 01 2024 Aleksandr Shamaraev <shad@altlinux.org> 43-alt1
 - Initial build for Sisyphus.
