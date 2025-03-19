@@ -2,7 +2,7 @@
 %define uuid %_name@fthx
 
 Name: gnome-shell-extension-%_name-at-startup
-Version: 47
+Version: 48
 Release: alt1
 
 Summary: No overview at start-up. For GNOME Shell 40+
@@ -15,11 +15,11 @@ BuildArch: noarch
 # Source-url: https://github.com/fthx/no-overview/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-Requires: gnome-shell >= 47
+Requires: gnome-shell >= 48
 Requires: typelib(Adw) = 1
 
 %description
-No overview at start-up. For GNOME Shell 45+.
+No overview at start-up. For GNOME Shell.
 
 %prep
 %setup
@@ -34,6 +34,9 @@ cp -ar *.js* %buildroot%_datadir/gnome-shell/extensions/%uuid/
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Sun Mar 16 2025 Roman Alifanov <ximper@altlinux.org> 48-alt1
+- new version 48 (with rpmrb script)
+
 * Sat Sep 21 2024 Roman Alifanov <ximper@altlinux.org> 47-alt1
 - new version 47 (with rpmrb script)
 
