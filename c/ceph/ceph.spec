@@ -58,7 +58,7 @@
 
 Name: ceph
 Version: 19.2.1
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1878,6 +1878,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Mar 19 2025 Maxim Slipenko <maks1ms@altlinux.org> 19.2.1-alt2
+- fix build (global_legacy_options.h: No such file)
+
 * Thu Mar 13 2025 Maxim Slipenko <maks1ms@altlinux.org> 19.2.1-alt1
 - 19.2.1
 
