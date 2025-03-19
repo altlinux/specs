@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.10
+Version:  0.1.11
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -59,6 +59,18 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Wed Mar 19 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.11-alt1
+- Work more robust with procfs
+- Fail on starting unexisting vm
+- Use system_powerdown monitor command to stop vm gracefully
+- Add efi codes
+- Show progress bar while pulling images
+- Improve help
+- Add efi support for x86_64
+- Add alt-dev and gentoo images
+- Update ubuntu, fedora and centos images
+- (Closes: 53468)
+
 * Fri Aug 09 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.10-alt1
 - Return proper error code when ssh command fails
 - Use log to print messages
