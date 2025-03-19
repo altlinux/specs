@@ -3,7 +3,7 @@
 %undefine _strict_symbol_defs_build
 
 Name: qmplay2
-Version: 24.06.16
+Version: 25.01.19
 Release: alt1
 Group: Video
 Summary: A Qt based media player, streamer and downloader
@@ -51,7 +51,7 @@ BuildRequires: pkgconfig(libva)
 BuildRequires: pkgconfig(libva-drm)
 BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: pkgconfig(rubberband)
-BuildRequires: pkgconfig(taglib)
+BuildRequires: taglib-devel
 BuildRequires: pkgconfig(vulkan)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xv)
@@ -83,12 +83,17 @@ It's a development package for %name.
 %prep
 %setup -n %pname-src-%version
 
-%patch1 -p1
-%patch2 -p1
+# patch1 -p1
+# patch2 -p1
 
 # unbundle vulkan headers
 find src/qmplay2/vulkan/headers -delete
 # subproject and bundled license files
+# fix for vulkan-headers >= 1.3.301
+# https://github.com/KhronosGroup/Vulkan-Headers/pull/512
+sed -i -r 's/vk::(DispatchLoaderDynamic|DynamicLoader)/vk::detail::\1/g' \
+    src/qmvk/*.[ch]pp src/qmplay2/vulkan/VulkanInstance.cpp
+
 cp src/qmvk/LICENSE LICENSE.qmvk
 cp src/modules/Modplug/libmodplug/COPYING COPYING.libmodplug
 
@@ -133,6 +138,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/%pname.appdata.xml
 %_includedir/%pname/
 
 %changelog
+* Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 25.01.19-alt1
+- Update to new version
+
 * Fri Oct 18 2024 Artyom Bystrov <arbars@altlinux.org> 24.06.16-alt1
 - Initial commit
 
