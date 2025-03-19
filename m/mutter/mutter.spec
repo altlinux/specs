@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 48
 %define beta %nil
@@ -22,7 +22,7 @@
 
 Name: mutter
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -296,6 +296,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1:48.0-alt2
+- updated to 48.0-5-g9a1fa7e13
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1:48.0-alt1
 - 48.0
 
