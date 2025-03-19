@@ -1,6 +1,6 @@
 Name: haskell-filetrigger
 Summary: auto recache ghc package list
-Version: 0.0.6
+Version: 0.1.0
 Release: alt1
 License: GPLv3+
 Group: Development/Haskell
@@ -22,6 +22,9 @@ install -m755 -D haskell.filetrigger %buildroot/usr/lib/rpm/haskell.filetrigger
 /usr/lib/rpm/haskell.filetrigger
 
 %changelog
+* Wed Mar 19 2025 Leonid Znamenok <respublica@altlinux.org> 0.1.0-alt1
+- Replaced hardcoded paths with searching of ghc-pkg and package.conf.d
+
 * Fri Mar 14 2025 Leonid Znamenok <respublica@altlinux.org> 0.0.6-alt1
 - Adapted for GHC build with Hadrian
 - Specified license as GPLv3+
