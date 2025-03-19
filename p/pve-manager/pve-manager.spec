@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -142,6 +142,9 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Tue Mar 18 2025 Sergey Konev <darisishe@altlinux.org> 8.3.3-alt4
+- fix UTF8 username in user.cfg (thx kustovdv@)
+
 * Mon Feb 10 2025 Sergey Konev <darisishe@altlinux.org> 8.3.3-alt3
 - Proper Requires for font-awesome
 - Added font-logos requires

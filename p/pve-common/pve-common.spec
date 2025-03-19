@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 8.2.9
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -71,6 +71,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Tue Mar 18 2025 Sergey Konev <darisishe@altlinux.org> 8.2.9-alt2
+- fix UTF8 username in user.cfg (thx kustovdv@)
+
 * Thu Nov 21 2024 Alexey Shabalin <shaba@altlinux.org> 8.2.9-alt1
 - 8.2.9
 - Revert etcnet support
