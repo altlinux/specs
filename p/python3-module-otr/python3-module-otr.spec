@@ -1,7 +1,7 @@
 %define  modulename otr
 
 Name:    python3-module-%modulename
-Version: 2.0.2
+Version: 2.1.0
 Release: alt1
 
 Summary: Off-The-Record Messaging protocol implementation for Python
@@ -46,6 +46,9 @@ SHA-1/SHA-256 hash functions.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version.
+
 * Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt1
 - New version.
 
