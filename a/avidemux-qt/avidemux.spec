@@ -1,17 +1,26 @@
 
 %define rname avidemux
-%def_disable ownffmpeg
+%def_disable own_ffmpeg
 %def_disable xvba
+%ifarch %ix86 x86_64 aarch64
+%def_disable nvenc
+%def_enable own_nvenc
+%else
+%def_disable nvenc
+%def_disable own_nvenc
+%endif
+
 %add_python_req_skip ADM_resize ADM_image
 
 Name: avidemux-qt
 Version: 2.8.1
-Release: alt3
+Release: alt4
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
 Summary(ru_RU.UTF-8): Avidemux -- это редактор AVI-файлов с графическим интерфейсом
 Url: http://avidemux.org/
+Vcs: https://github.com/mean00/avidemux2
 License: GPL-2.0-only
 
 ExcludeArch: armh %ix86
@@ -25,7 +34,8 @@ Provides: avidemux = %version-%release
 Conflicts: avidemux
 
 Source: avidemux-%version.tar
-%if_enabled ownffmpeg
+Source1: nv-codec-headers.tar
+%if_enabled own_ffmpeg
 Source1: ffmpeg.tar.bz2
 %endif
 Source2: avidemux.desktop
@@ -34,7 +44,7 @@ Source4: avidemux_ru.ts
 # Debian
 Source20: ffmpeg-remove-x86-optimization.patch
 
-%if_enabled ownffmpeg
+%if_enabled own_ffmpeg
 Patch1: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
 %endif
 Patch2: alt-i18n-qm-path.patch
@@ -57,8 +67,8 @@ BuildRequires: libdca-devel libfaad-devel libjack-devel liblame-devel libtwolame
 BuildRequires: liblzma-devel liblzo2-devel libsqlite3-devel libfreetype-devel fontconfig-devel libfribidi-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libvdpau-devel libva-devel libXv-devel libXvMC-devel
-%ifarch %ix86 x86_64 aarch64
-#BuildRequires: nv-codec-headers
+%if_enabled nvenc
+BuildRequires: nv-codec-headers
 %endif
 %if_enabled xvba
 BuildRequires: libxvba-devel
@@ -114,8 +124,8 @@ Conflicts: %name <= 2.4.4-alt1
 Common files for %name
 
 %prep
-%setup -qn %rname-%version
-%if_enabled ownffmpeg
+%setup -n %rname-%version -a1
+%if_enabled own_ffmpeg
 %patch1 -p1
 %endif
 %patch2 -p1
@@ -131,14 +141,22 @@ install -m 0644 %SOURCE20 avidemux_core/ffmpeg_package/patches/
 
 #cp -f %SOURCE4 po/
 
-%if_enabled ownffmpeg
+%if_enabled own_ffmpeg
 install -m 0644 %SOURCE1 avidemux_core/ffmpeg_package
+%endif
+
+%if_enabled own_nvenc
+sed -i "s|/usr/local/include/ffnvcodec|$PWD/nv-codec-headers/ffnvcodec|" cmake/admCheckNvEnc.cmake 
+sed -i "s|^includedir=.*|includedir=$PWD/nv-codec-headers|" nv-codec-headers/ffnvcodec.pc
 %endif
 
 grep -rlw 'amd/amdxvba\.h' | xargs sed -i 's|amd/\(amdxvba\.h\)|\1|g'
 
 
 %build
+%if_enabled own_nvenc
+export PKG_CONFIG_PATH="$PWD/nv-codec-headers:`pkg-config --variable pc_path pkg-config`"
+%endif
 %add_optflags -Wno-error=return-type
 export QTDIR=%_qt5_prefix
 BUILDDIR=$PWD
@@ -212,6 +230,9 @@ ln -s avidemux3_qt5 %buildroot/%_bindir/%rname
 %exclude %_includedir/avidemux
 
 %changelog
+* Thu Mar 20 2025 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt4
+- build with bandled nv-codec-headers
+
 * Tue Dec 19 2023 Sergey V Turchin <zerg@altlinux.org> 2.8.1-alt3
 - temporary build without nvenc (closes: 48851)
 
