@@ -5,7 +5,6 @@
 
 %def_disable compat
 %def_enable jpeg2000
-%def_disable cryptopro
 
 %if_disabled compat
 %def_enable cpp
@@ -16,6 +15,7 @@
 %def_enable utils
 %def_enable xpdfheaders
 %def_enable gir
+%def_enable cryptopro
 %else
 %def_disable cpp
 %def_disable glib
@@ -45,7 +45,7 @@
 %endif
 Name: %pkgname
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %if_disabled compat
 %define poppler_devel lib%rname-devel
@@ -407,6 +407,11 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Thu Mar 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.02.0-alt3
+- updated the CryptoPro backend
+- display a text about a failed attempt to verify the signature for the
+  CryptoPro backend
+
 * Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.0-alt2
 - temporary disable cryptopro
 
