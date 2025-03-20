@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: cargo-about
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Cargo plugin to generate list of all licenses for a crate
@@ -39,6 +39,9 @@ install -Dvm0755 target/release/cargo-about %buildroot%_bindir/cargo-about
 %_bindir/cargo-about
 
 %changelog
+* Thu Mar 20 2025 Anton Zhukharev <ancieg@altlinux.org> 0.7.1-alt1
+- Updated to 0.7.1.
+
 * Wed Feb 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.7.0-alt1
 - Updated to 0.7.0.
 
