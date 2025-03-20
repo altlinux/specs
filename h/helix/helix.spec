@@ -3,7 +3,7 @@
 
 Name: helix
 Version: 25.01.1
-Release: alt2
+Release: alt3
 
 Summary: A post-modern modal text editor written in Rust
 License: MPL-2.0
@@ -15,7 +15,6 @@ VCS: https://github.com/helix-editor/helix.git
 Source: %name-%version.tar 
 Source1: vendor-%version.tar
 Source2: grammars-%version.tar
-Source3: excluded_tree_sitter_langs
 Patch1: alt-use-local-grammar-sources.patch
 
 BuildRequires(pre): rpm-build-rust
@@ -30,12 +29,6 @@ has treesitter support for syntax highlighting and improved navigation.
 Summary: Grammars supported by %name
 Group: Development/Other
 Requires: %name >= %EVR
-Requires: tree-sitter-bash
-Requires: tree-sitter-c
-Requires: tree-sitter-cmake
-Requires: tree-sitter-cpp
-Requires: tree-sitter-lua
-Requires: tree-sitter-rust
 
 %description grammars
 %summary
@@ -54,14 +47,6 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF
 
-# Delete grammars that are in the ALT
-excluded_langs=$(cat %SOURCE3 | xargs -I{} printf '"%s"' {} | sed 's;"";"\|";g')
-awk -v x="$excluded_langs" -v RS= -v ORS='\n\n' \
-    '!/\[\[grammar\]\]/ || !($0 ~ x) { print }' \
-    languages.toml > tmp_languages.toml
-%__mv -f {tmp_,}languages.toml
-unset excluded_langs
-
 %build
 export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
 %rust_build \
@@ -77,11 +62,6 @@ export HELIX_DEFAULT_RUNTIME=%_datadir/helix/runtime
 
 %install
 %__rm -rf ./runtime/grammars/sources
-
-# Use tree-sitter from the ALT
-while IFS= read -r lang; do
-    ln -s %_libdir/libtree-sitter-$lang.so runtime/grammars/$lang.so
-done < %SOURCE3
 
 %__mkdir -p %buildroot%_libdir/%name
 %__mv runtime/grammars %buildroot%_libdir/%name/
@@ -118,6 +98,10 @@ ln -s %_libdir/%name/grammars runtime/grammars
 %_libdir/%name/grammars/*.so
 
 %changelog
+* Thu Mar 20 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.01.1-alt3
+- Used only third-party tree-sitter's. Fixes the package build for
+  branches other than sisyphus.
+
 * Wed Mar 19 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 25.01.1-alt2
 - added bash completion and appdata
 - added helix grammars
