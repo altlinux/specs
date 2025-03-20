@@ -12,8 +12,15 @@
 %define theme server
 %define Theme Server
 %define codename Mendelevium
+
+%if "%altbranch" == "sisyphus"
+%define status sisyphus_alpha
+%define status_en sisyphus_alpha
+%else
 %define status %nil
 %define status_en %nil
+%endif
+
 %define flavour %brand-%theme
 
 %def_enable flickfree
@@ -29,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt14
+Release: alt15
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -383,6 +390,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Mar 20 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt15
+- Set list of favorite applications
+- Set status sisyphus_alpha for Sisyphus
+
 * Thu Mar 13 2025 Michael Chernigin <chernigin@altlinux.org> 11.0-alt14
 - Move dconf edition key to /org/altlinux/product/edition/current
 
