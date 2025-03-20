@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hydrogen
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Hydrogen Drum Machine
-License: GPL
+License: GPLv2
 Group: Sound
 URL: http://www.hydrogen-music.org
 
@@ -14,10 +14,11 @@ URL: http://www.hydrogen-music.org
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel libarchive-devel libjack-devel liblo-devel liblrdf-devel
-BuildRequires: libportaudio2-devel libportmidi-devel librubberband-devel libsndfile-devel libtar-devel libpulseaudio-devel cppunit-devel
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel qt5-xmlpatterns-devel zlib-devel
-
+BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel
+BuildRequires: libarchive-devel libjack-devel liblo-devel liblrdf-devel
+BuildRequires: librubberband-devel libsndfile-devel libtar-devel cppunit-devel
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel qt5-xmlpatterns-devel
+BuildRequires: zlib-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -46,8 +47,9 @@ pattern-based drum programming. Its features include:
 
 %build
 %cmake '-DVERSION_SUFFIX:STRING=%release' \
+    -DWANT_LRDF=ON \
     -DWANT_RUBBERBAND=ON \
-    -DWANT_PORTAUDIO=ON -DWANT_PORTMIDI=ON
+    -DWANT_PULSEAUDIO=OFF
 %cmake_build
 
 %install
@@ -71,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Thu Mar 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Fri Jan 12 2024 Ivan A. Melnikov <iv@altlinux.org> 1.2.3-alt1
 - 1.2.3
 
