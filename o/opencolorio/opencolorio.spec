@@ -13,7 +13,7 @@
 %define soname 2.4
 
 Name: opencolorio
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: Enables color transforms and image display across graphics apps
@@ -183,6 +183,7 @@ popd
 %_bindir/ociocheck
 %_bindir/ociochecklut
 %_bindir/ocioconvert
+%_bindir/ociocpuinfo
 %_bindir/ociodisplay
 %_bindir/ociolutimage
 %_bindir/ociomakeclf
@@ -200,6 +201,9 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
+- Automatically updated to 2.4.2.
+
 * Sun Feb 02 2025 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
 - Automatically updated to 2.4.1.
 
