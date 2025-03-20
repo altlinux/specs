@@ -1,7 +1,7 @@
 %define nameU org.kde.klevernotes
 
 Name: klevernotes
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: KleverNotes is a note taking and management application
@@ -42,6 +42,9 @@ KleverNotes is a note taking and management application for your mobile and desk
 %doc *.md 
 
 %changelog
+* Thu Mar 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt1
+- 1.2.0 -> 1.2.1
+
 * Tue Mar 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
