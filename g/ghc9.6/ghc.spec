@@ -25,7 +25,7 @@
 
 Name: ghc%ghc_major
 Version: %ghc_version
-Release: alt2
+Release: alt3
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -35,6 +35,7 @@ Url: http://haskell.org/ghc/
 Source: %name-%version.tar
 Source1: bootstrap-sources-%ghc_build_version.tar.gz
 Source2: ghc.macros
+Source3: ghc.env
 Source10: get_libs_versions.sh
 
 # Patches from 10 to 20 is for doc generation
@@ -113,8 +114,6 @@ building other Haskell packages
 %package -n rpm-macros-%{name}-common
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/Other
-
-BuildArch: noarch
 
 Provides: rpm-macros-ghc-common = %EVR
 Conflicts: rpm-macros-ghc-common < %EVR
@@ -298,10 +297,21 @@ find "%buildroot%_ghclibdir" -name "rts-*" -type d \
 find "%buildroot%_ghclibdir" -name "*system-cxx-std-lib*.conf" \
                 | sed "s|%buildroot||g" >> base-%basepkg_version-files.devel
 
+# Searching for RTS .so File
+# There are many different RTS environments
+# (Cartesian product of debug/non-debug and threaded/non-threaded)
+# We search for a non-debug and non-threaded environment for preload
+# See the git log 97b13aa2 for details
+RTS_SO=$(find "%buildroot%_ghclibdir" -name "libHSrts-*[0-9]-ghc%ghc_version.so" \
+                 | sed "s|%buildroot||g" | head -n 1)
+
 # install and fix up the macros file
 mkdir -p %buildroot%_rpmmacrosdir
 install %SOURCE2 %buildroot%_rpmmacrosdir/ghc
-sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
+install %SOURCE3 %buildroot%_rpmmacrosdir/ghc.env
+
+sed -i 's|@GHC_VERSION@|%version|' %buildroot%_rpmmacrosdir/ghc
+sed -i "s|@GHC_RUNTIME@|$RTS_SO|"  %buildroot%_rpmmacrosdir/ghc
 
 # For the correct way of ELF verification:
 # ld by default doesn't recognize GHC libraries,
@@ -363,6 +373,9 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %files devel
 
 %changelog
+* Wed Mar 19 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt3
+- Added LD_PRELOAD environment for the RTS subsystem
+
 * Sun Mar 16 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt2
 - Rebuild with ghc9.6
 
