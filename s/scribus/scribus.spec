@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.7.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -14,6 +14,7 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 # Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
+Patch2: scribus-1.7.0-poppler-25.02-compat.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -133,6 +134,7 @@ BuildArch: noarch
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 # hack to ignore new broken checking
 subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
@@ -203,6 +205,9 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Thu Mar 20 2025 Constantin Sunzow <protvin@altlinux.org> 1:1.7.0-alt2
+- Fix FTBFS: rebuild with poppler-25.02.
+
 * Sat Feb 01 2025 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.0-alt1
 - new version 1.7.0 (with rpmrb script)
 - change BR to Qt6: the project have switched to Qt6
