@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 26.2.1
+Version: 26.3.0
 Release: alt1
 
 Summary: Software library for fast, message-based applications
@@ -115,7 +115,6 @@ find . -name "*.c" | xargs rm -v
 # Maybe it somehow tied with paths
 export PYTHONPATH=%buildroot%python3_sitelibdir
 rm -v zmq/__init__.py
-echo asyncio_default_fixture_loop_scope="function" >> pytest.ini
 %pyproject_run_pytest -k "not test_cython"
 
 %files
@@ -132,6 +131,9 @@ echo asyncio_default_fixture_loop_scope="function" >> pytest.ini
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 26.3.0-alt1
+- Automatically updated to 26.3.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 26.2.1-alt1
 - Automatically updated to 26.2.1.
 
