@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.RemoteDesktop
 
@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -17,10 +17,11 @@ License: GPL-2.0-or-later
 Group: Networking/Remote access
 Url: https://gitlab.gnome.org/GNOME/gnome-remote-desktop
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-remote-desktop.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gnome-remote-desktop.git
 Source: %name-%version.tar
 %endif
 
@@ -50,6 +51,8 @@ BuildRequires: libxkbcommon-devel >= %xkbc_ver
 BuildRequires: libsecret-devel libnotify-devel libcairo-devel
 BuildRequires: libepoxy-devel libdrm-devel libgbm-devel
 BuildRequires: pkgconfig(ffnvcodec) >= %nvenc_ver
+BuildRequires: pkgconfig(libva-drm)
+BuildRequires: pkgconfig(vulkan) /usr/bin/glslc /usr/bin/spirv-opt
 BuildRequires: libei-devel >= %ei_ver
 BuildRequires: libdbus-devel libpolkit-devel >= %polkit_ver
 BuildRequires: /bin/dbus-run-session /usr/bin/openssl
@@ -97,6 +100,8 @@ Remote desktop daemon for GNOME using pipewire.
 %_datadir/%name/grd-cuda-damage-utils_30.ptx
 %_datadir/%name/grd-cuda-avc-utils_30.ptx
 %_datadir/%name/grd.conf
+%dir %_datadir/%name/shaders
+%_datadir/%name/shaders/grd-avc-stereo-view_opt.spv
 %_datadir/dbus-1/system-services/%xdg_name.Configuration.service
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.configure-system-daemon.policy
@@ -105,6 +110,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sun Jan 12 2025 Yuri N. Sedunov <aris@altlinux.org> 47.3-alt1
 - 47.3
 
