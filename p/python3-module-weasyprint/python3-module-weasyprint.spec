@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 64.1
+Version: 65.0
 Release: alt1
 
 Summary: WeasyPrint converts web documents to PDF
@@ -55,6 +55,9 @@ Source:  %name-%version.tar
 %doc README.rst LICENSE
 
 %changelog
+* Mon Mar 17 2025 Anton Vyatkin <toni@altlinux.org> 65.0-alt1
+- New version 65.0.
+
 * Fri Feb 21 2025 Anton Vyatkin <toni@altlinux.org> 64.1-alt1
 - New version 64.1.
 
