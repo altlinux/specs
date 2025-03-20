@@ -1,8 +1,8 @@
-%define        gimpscriptsdir %(gimptool-2.0 --gimpdatadir)/scripts/
+%define        gimpscriptsdir %(gimptool-3.0 --gimpdatadir)/scripts/
 
 Name:          gimp-plugin-watermark
 Version:       20230103
-Release:       alt1
+Release:       alt2
 Summary:       Watermark GIMP scripts
 License:       Unlicense
 Group:         Graphics
@@ -30,5 +30,8 @@ install -D -t %buildroot/%gimpscriptsdir -m644 *.scm
 
 
 %changelog
+* Thu Mar 20 2025 Constantin Sunzow <protvin@altlinux.org> 20230103-alt2
+- Fix FTBFS: use gimptool-3.0 instead gimptool-2.0.
+
 * Tue Jan 03 2023 Pavel Skrylev <majioa@altlinux.org> 20230103-alt1
 - initial build for Sisyphus
