@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 47.4
+Version: 48.0
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -12,34 +13,31 @@ Url: https://welcome.gnome.org/app/Papers/
 VCS: https://gitlab.gnome.org/GNOME/Incubator/papers
 
 Source0: %name-%version.tar
-Source1: %name-%version-shell-rs-vendor.tar
+Source1: %name-%version-vendor.tar
+Source2: config.toml
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: rust-cargo
-BuildRequires: rustfmt
-BuildRequires: clippy
 BuildRequires: gi-docgen
 BuildRequires: itstool
 BuildRequires: appstream
-BuildRequires: libgtk4-devel
-BuildRequires: libadwaita-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: libgtk4-gir-devel
-BuildRequires: libadwaita-gir-devel
-BuildRequires: libgdk-pixbuf-devel
-BuildRequires: sysprof-devel
-BuildRequires: libexempi-devel
-BuildRequires: libdbus-devel
-BuildRequires: libnautilus-devel
-BuildRequires: libpoppler-glib-devel
-BuildRequires: libdjvu-devel
-BuildRequires: libtiff-devel
-BuildRequires: libgxps-devel
-BuildRequires: libspectre-devel
-BuildRequires: libarchive-devel
+BuildRequires: pkgconfig(ddjvuapi)
+BuildRequires: pkgconfig(exempi-2.0)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libarchive)
+BuildRequires: pkgconfig(libnautilus-extension-4)
+BuildRequires: pkgconfig(libspelling-1)
+BuildRequires: pkgconfig(libtiff-4)
+BuildRequires: pkgconfig(poppler-glib)
+BuildRequires: pkgconfig(sysprof-capture-4)
 
 %description
 Papers is a document viewer capable of displaying multiple and single
@@ -82,9 +80,25 @@ Requires: %name-gir = %EVR
 %prep
 %setup -a1
 %autopatch -p1
+install -vD %SOURCE2 .cargo/config.toml
 
 %build
-%meson
+%meson -Dviewer=true \
+       -Dpreviewer=true \
+       -Dthumbnailer=true \
+       -Dnautilus=true \
+       -Dcomics=enabled \
+       -Ddjvu=enabled \
+       -Dpdf=enabled \
+       -Dtiff=enabled \
+       -Dtests=false \
+       -Ddocumentation=true \
+       -Duser_doc=true \
+       -Dintrospection=enabled \
+       -Dsysprof=enabled \
+       -Dkeyring=enabled \
+       -Dgtk_unix_print=enabled \
+       -Dspell_check=enabled
 %meson_build -v
 
 %install
@@ -123,6 +137,9 @@ Requires: %name-gir = %EVR
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Mar 20 2025 Anton Zhukharev <ancieg@altlinux.org> 48.0-alt1
+- Updated to 48.0.
+
 * Tue Mar 11 2025 Anton Zhukharev <ancieg@altlinux.org> 47.4-alt1
 - Updated to 47.4.
 
