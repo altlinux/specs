@@ -1,6 +1,6 @@
 Name: fastfetch
-Version: 2.34.0
-Release: alt2
+Version: 2.39.0
+Release: alt1
 Summary: Like neofetch, but much faster because written in c
 
 License: MIT
@@ -14,6 +14,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++ ctest
 BuildRequires: libpci-devel
 BuildRequires: wayland-devel
+BuildRequires: libwayland-client-devel
 BuildRequires: libxcb-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libdconf-devel
@@ -32,6 +33,9 @@ BuildRequires: libXau-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libzstd-devel
 BuildRequires: libffi-devel
+BuildRequires: libdrm-devel
+BuildRequires: librpm-devel
+BuildRequires: libelf-devel
 
 BuildRequires: chafa-devel
 
@@ -55,7 +59,12 @@ BuildArch: noarch
 %setup
 
 %build
-%cmake -D BUILD_TESTS=ON
+%cmake -D \
+    BUILD_TESTS=ON \
+    ENABLE_WAYLAND=ON \
+    ENABLE_DRM=ON \
+    ENABLE_DRM_AMDGPU=ON \
+    ENABLE_RPM=ON
 %cmake_build
 
 %check
@@ -81,6 +90,13 @@ popd
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 2.39.0-alt1
+- Fix version of package
+- Add some modules
+
+* Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 2.38.0-alt1
+- Update to new version
+
 * Mon Jan 13 2025 Artyom Bystrov <arbars@altlinux.org> 2.34.0-alt2
 - Fix source updating
 
