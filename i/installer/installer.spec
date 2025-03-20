@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.13
+Version: 1.16.14
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,9 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Thu Mar 20 2025 Anton Midyukov <antohami@altlinux.org> 1.16.14-alt1
+- install2.service: add altlinux-resolv.path to Wants
+
 * Fri Mar 14 2025 Anton Midyukov <antohami@altlinux.org> 1.16.13-alt1
 - Run service x11presetdrv, if it is present (Closes: 53448)
 
