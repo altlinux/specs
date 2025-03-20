@@ -1,6 +1,6 @@
 Name: upmpdcli
-Version: 1.8.17
-Release: alt3
+Version: 1.9.3
+Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
 License: LGPLv2.1
@@ -89,10 +89,9 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip fapws
 %add_python3_req_skip fapws._evwsgi
 %add_python3_req_skip google.appengine.ext.webapp
+%add_python3_req_skip meinheld
 %add_python3_req_skip rocket
 %add_python3_req_skip uvloop
-# meinheld looks unmaintained https://github.com/mopemope/meinheld/issues
-%add_python3_req_skip meinheld
 # python 3.13 remove cgi module
 %add_python3_req_skip cgi
 
@@ -122,6 +121,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Thu Mar 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.3-alt1
+- 1.9.3 released
+
 * Thu Dec 12 2024 Anton Vyatkin <toni@altlinux.org> 1.8.17-alt3
 - relaxed runtime dependency on cgi module.
 
