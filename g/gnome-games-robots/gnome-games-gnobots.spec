@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Gnome version of robots game for BSD games collection
@@ -29,9 +29,10 @@ Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnobots
 Provides:  gnome-games-gnobots = %EVR
 
-%define glib_ver 2.36.0
-%define gtk_ver 4.10
-%define adw_ver 1.2
+%define glib_ver 2.82
+%define gtk_ver 4.16
+%define adw_ver 1.6
+%define rsvg_ver 2.60
 
 # for glycin
 Requires: bubblewrap glycin-loaders
@@ -40,8 +41,9 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo yelp-tools
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver pkgconfig(librsvg-2.0)
-%{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver pkgconfig(libxml-2.0)
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
 GNOME Robots is a development of the original Gnome Robots game which
@@ -80,6 +82,9 @@ tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
+- 41.2
+
 * Thu Dec 26 2024 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
 - 41.1 (rewrite in Rust)
 
