@@ -1,7 +1,7 @@
 %define oname pecan
 
 Name: python3-module-%oname
-Version: 1.5.1
+Version: 1.6.1
 Release: alt1
 
 Summary: A lean WSGI object-dispatching web framework
@@ -39,6 +39,8 @@ This package contains tests for %oname.
 %prep
 %setup
 
+sed -i 's/1.6.0/%version/' setup.py
+
 %build
 %python3_build
 
@@ -62,6 +64,9 @@ rm -rf %buildroot%python3_sitelibdir/%oname/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt1
+- Automatically updated to 1.6.1.
+
 * Mon Jul 17 2023 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1
 - Automatically updated to 1.5.1.
 
