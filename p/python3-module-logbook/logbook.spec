@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: A logging replacement for Python
@@ -78,6 +78,9 @@ py.test3
 %doc docs/_build/html/*
 
 %changelog
+* Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
+- Automatically updated to 1.8.1.
+
 * Sun Oct 27 2024 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
 - Automatically updated to 1.8.0.
 
