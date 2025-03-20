@@ -1,14 +1,8 @@
 %define pg_ver 17
-%ifarch loongarch64
-# XXX: PostgreSQL jit relies on LLVM versions <= 15 (due to typed pointers).
-# LoongArch targets are supported by LLVM versions >= 16.
-%def_without jit
-%else
 %def_with jit
-%endif
 
 Name:    postgresql%pg_ver-orafce
-Version: 4.14.2
+Version: 4.14.3
 Release: alt1
 
 Summary: The "orafce" project implements in Postgres some of the functions from the Oracle database that are missing
@@ -58,6 +52,10 @@ All functions are fully compatibles with Oracle and respect all known format str
 
 
 %changelog
+* Thu Mar 20 2025 Alexei Takaseev <taf@altlinux.org> 4.14.3-alt1
+- 4.14.3
+- Enable LLVM for loongarch64
+
 * Fri Feb 21 2025 Alexei Takaseev <taf@altlinux.org> 4.14.2-alt1
 - 4.14.2
 
