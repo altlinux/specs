@@ -6,7 +6,7 @@
 %endif
 
 Name: fish
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -94,6 +94,9 @@ fi
 %_man1dir/*
 
 %changelog
+* Thu Mar 20 2025 Artyom Sinyugin <writers@altlinux.org> 4.0.1-alt1
+- New version 4.0.1.
+
 * Wed Mar 05 2025 Artyom Sinyugin <writers@altlinux.org> 4.0.0-alt1
 - 4.0.0 (ALT#53265)
 
