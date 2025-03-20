@@ -7,7 +7,7 @@
 
 Name: mdadm
 Version: 4.4
-Release: alt2
+Release: alt3
 
 Summary: A tool for managing Soft RAID under Linux
 License: GPLv2+
@@ -116,6 +116,9 @@ rm -f %buildroot%_unitdir/{mdmonitor-oneshot,mdcheck_continue,mdcheck_start}.{se
 %doc alt/README*
 
 %changelog
+* Thu Mar 20 2025 Alexey Shabalin <shaba@altlinux.org> 4.4-alt3
+- Revert "Fix memory leak in file mdadm" (ALT#53454)
+
 * Wed Mar 19 2025 Alexey Shabalin <shaba@altlinux.org> 4.4-alt2
 - fix crash (ALT#53454)
 - backport fixes from upstream master
