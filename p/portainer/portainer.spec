@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.27.1
+Version: 2.28.1
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -25,7 +25,7 @@ ExclusiveArch: x86_64 aarch64
 BuildRequires(pre): golang
 BuildRequires: rpm-build-golang /proc
 
-Requires: docker-cli docker-compose-v2
+Requires: docker-compose-v2
 
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
@@ -59,7 +59,7 @@ go build \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=b46bdac85bef6f8e4d622d754c6adadb69ff96e1' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=c4ca049ab8f11b4966dbb077bc1875971a16cadf' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %endif
@@ -106,6 +106,15 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Mar 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.28.1-alt1
+- New version 2.28.1.
+- Prevented install conflict between docker-cli and podman-docker.
+- Fixes:
+  + CVE-2024-45338.
+  + CVE-2025-21613.
+  + CVE-2024-50338.
+  + CVE-2025-22869.
+
 * Wed Mar 19 2025 Leontiy Volodin <lvol@altlinux.org> 2.27.1-alt1
 - Initial build for ALT Sisyphus.
 
