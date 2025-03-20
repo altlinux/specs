@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        134.0.6998.88
+Version:        134.0.6998.117
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -85,6 +85,11 @@ Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
+
+Patch050: 0050-OPENMANDRIVA-ozone-dont-use-x11-on-wayland.patch
+Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
+Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
+Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 
 Patch062: 0062-DEBIAN-cacheline.patch
 Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
@@ -558,6 +563,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Mar 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.117-alt1
+- New version (134.0.6998.117).
+- Enable HW video encode, drop workarounds for ancient mesa bugs (thnx OpenMandriva).
+- Security fixes:
+  + Critical CVE-2025-2476: Use after free in Lens
+
 * Tue Mar 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.88-alt1
 - New version (134.0.6998.88).
 - Security fixes:
