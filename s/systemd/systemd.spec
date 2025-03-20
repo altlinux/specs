@@ -100,7 +100,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.16
+Version: %ver_major.18
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2502,6 +2502,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Wed Mar 19 2025 Alexey Shabalin <shaba@altlinux.org> 1:255.18-alt1
+- 255.18
+- drop "-p" flag from agetty's login options (ALT#53483)
+
 * Sun Jan 05 2025 Alexey Shabalin <shaba@altlinux.org> 1:255.16-alt1
 - 255.16
 
