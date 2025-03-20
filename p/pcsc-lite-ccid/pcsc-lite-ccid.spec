@@ -1,5 +1,5 @@
 Name: pcsc-lite-ccid
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: USB CCID IFD Handler
@@ -10,9 +10,9 @@ URL: https://ccid.apdu.fr
 Requires: pcsc-lite
 
 Source: %name-%version.tar
-Source1: submodules.tar
 Patch1: ccid-disable-examples-build.patch
 
+BuildRequires(pre): meson
 BuildRequires: flex libpcsclite-devel libusb-devel
 BuildRequires: autoconf-archive
 BuildRequires: zlib-devel
@@ -31,9 +31,6 @@ Devices) driver for PC/SC Lite.
 %setup
 # Do not build examples requires contrib from external repository
 %patch1 -p1
-cp README.md README
-# Extract submodules
-tar xf %SOURCE1
 
 %build
 %autoreconf
@@ -54,6 +51,10 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
+- New version.
+- Remove deprecated submodules.
+
 * Sat Jul 06 2024 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
 - New version.
 
