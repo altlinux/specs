@@ -2,7 +2,7 @@
 
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.2.5
+Version: 3.2.7
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -437,6 +437,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/pap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/passwd
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/preprocess
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/proxy_rate_limit
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/radutmp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/realm
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/redis
@@ -496,6 +497,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/pap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/passwd
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/preprocess
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/proxy_rate_limit
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/radutmp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/realm
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/replicate
@@ -563,6 +565,7 @@ fi
 %_libdir/freeradius/rlm_pap.so
 %_libdir/freeradius/rlm_passwd.so
 %_libdir/freeradius/rlm_preprocess.so
+%_libdir/freeradius/rlm_proxy_rate_limit.so
 %_libdir/freeradius/rlm_radutmp.so
 %_libdir/freeradius/rlm_realm.so
 %_libdir/freeradius/rlm_replicate.so
@@ -706,6 +709,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Thu Mar 20 2025 Alexey Shabalin <shaba@altlinux.org> 3.2.7-alt1
+- 3.2.7
+
 * Tue Jul 09 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.5-alt1
 - 3.2.5
 - Not set default user and group in radiusd.conf,
