@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.12.0
-Release: alt2
+Version: 2.13.0
+Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPL-2.0-or-later and GPL-3.0-or-later
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 Patch0001: 0001-Change-owner-of-man-cache.patch
 Patch0003: 0003-catman-Use-PATH-env.patch
 Patch0004: 0004-Implemented-in-process-lzma-decompression.patch
+Patch0006: 0005-Update-Russian-manual-page-translation.patch
 
 Obsoletes: man < 2.0
 Obsoletes: man-whatis < 2.0
@@ -36,6 +37,7 @@ BuildRequires: perl
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libpipeline)
 BuildRequires: pkgconfig(zlib)
+BuildRequires: po4a
 BuildRequires: xz
 
 %description
@@ -74,6 +76,7 @@ sed -E -i "s|(MANDATORY_MANPATH\t*)/usr/local/share/man|&\n\\1/opt/mcst/man|" sr
 	--no-git \
 	--skip-po
 
+%autoreconf
 %configure \
     --with-systemdtmpfilesdir=%_tmpfilesdir \
     --with-systemdsystemunitdir=no \
@@ -142,6 +145,7 @@ rm -rf -- %cache/*
 %doc README.md NEWS.md
 %config(noreplace) %_sysconfdir/man_db.conf
 %config(noreplace) %_tmpfilesdir/man-db.conf
+%config(noreplace) %_sysconfdir/sysconfig/man-db
 %_sbindir/*
 %_bindir/*
 %_libdir/man-db
@@ -154,9 +158,16 @@ rm -rf -- %cache/*
 
 %files cron
 %config(noreplace) %_sysconfdir/cron.daily/man-db.cron
-%config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Wed Mar 19 2025 Ivan A. Melnikov <iv@altlinux.org> 2.13.0-alt1
+- New version (2.13.0).
+- Make it possible to switch the filetrigger off (ALT#49709), by lav@:
+  + move sysconfig/man-db to the main package;
+  + skip man-db update when SERVICE != yes.
+- Use OPTS from sysconfig/man-db in the filetrigger.
+- Build and package translated man pages.
+
 * Tue Jul 30 2024 Ivan A. Melnikov <iv@altlinux.org> 2.12.0-alt2
 - Implemented in-process lzma decompression (thx asheplyakov@)
   (ALT#48430).
