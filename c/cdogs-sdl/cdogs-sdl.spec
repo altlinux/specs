@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 
 Name:           cdogs-sdl
 Version:        2.0.0
-Release:        alt1
+Release:        alt2
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
 # The game art is CC
@@ -22,7 +22,7 @@ Patch2:			fix-build.patch
 BuildRequires:  gcc
 BuildRequires:  ctest cmake libSDL2_mixer-devel libSDL2_image-devel libGL-devel
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libphysfs-devel libenet-devel
-BuildRequires:  desktop-file-utils libappstream-glib
+BuildRequires:  desktop-file-utils libappstream-glib libwebp-devel libtiff-devel libtiffxx-devel libjpeg-devel libpng-devel
 Requires:       icon-theme-hicolor
 Obsoletes:      cdogs-data < 0.5
 Provides:       cdogs-data = %{version}-%{release}
@@ -88,6 +88,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 2.0.0-alt2
+- Add few deps in BR
+
 * Sat Mar  9 2024 Artyom Bystrov <arbars@altlinux.org> 2.0.0-alt1
 - update to new version
 - fix path of appdata file
