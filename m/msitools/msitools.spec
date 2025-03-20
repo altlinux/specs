@@ -1,5 +1,6 @@
-%define ver_major 0.103
+%define ver_major 0.106
 %define libname libmsi
+%define namespace Libmsi
 %define api_ver 1.0
 
 %def_enable check
@@ -10,8 +11,10 @@ Release: alt1
 
 Summary: Windows Installer tools
 Group: File tools
-License: GPLv2+
+License: LGPL-2.1-or-later
 Url: https://ftp.gnome.org/
+
+Vcs: https://gitlab.gnome.org/GNOME/msitools.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -19,7 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define vala_ver 0.16
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
+BuildRequires: meson bison
 BuildRequires: libgcab-devel >= %gcab_ver
 BuildRequires: libgio-devel libgsf-devel
 BuildRequires: gobject-introspection-devel
@@ -34,7 +37,7 @@ implementation of the Windows Installer.
 %package -n %libname
 Summary: A library to manipulate Windows .MSI files
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 
 %description -n %libname
 %libname is a GObject library to manipulate with Windows Installer files.
@@ -43,8 +46,8 @@ It is a port from the MSI library of the Wine project.
 %package -n %libname-devel
 Summary: A library to manipulate Windows .MSI files (development package)
 Group: Development/C
-License: LGPLv2+
-Requires: %libname = %version-%release
+License: LGPL-2.1-or-later
+Requires: %libname = %EVR
 
 %description -n %libname-devel
 This package provides the headers and library to develop applications
@@ -53,8 +56,8 @@ using %libname.
 %package -n %libname-gir
 Summary: GObject introspection data for the %libname
 Group: System/Libraries
-License: LGPLv2+
-Requires: %libname = %version-%release
+License: LGPL-2.1-or-later
+Requires: %libname = %EVR
 
 %description -n %libname-gir
 %libname is a GObject library to manipulate with Windows Installer files.
@@ -63,10 +66,10 @@ This package provides GObject introspection data for the %libname.
 %package -n %libname-gir-devel
 Summary: GObject introspection devel data for the %name
 Group: Development/Other
-License: LGPLv2+
+License: LGPL-2.1-or-later
 BuildArch: noarch
-Requires: %libname-devel = %version-%release
-Requires: %libname-gir = %version-%release
+Requires: %libname-devel = %EVR
+Requires: %libname-gir = %EVR
 
 %description -n %libname-gir-devel
 %libname is a GObject library to manipulate with Windows Installer files.
@@ -109,12 +112,15 @@ This package provides GObject introspection devel data for the %libname.
 %_vapidir/%libname-%api_ver.deps
 
 %files -n %libname-gir
-%_typelibdir/Libmsi-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n %libname-gir-devel
-%_girdir/Libmsi-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %changelog
+* Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.106-alt1
+- 0.106
+
 * Tue Sep 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.103-alt1
 - 0.103
 
