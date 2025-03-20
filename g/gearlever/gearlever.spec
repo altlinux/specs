@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define APP_ID it.mijorus.gearlever
 %def_enable check
 
 Name: gearlever
-Version: 2.3.2
+Version: 3.0.2
 Release: alt1
 
 Summary: Manage AppImages
@@ -16,6 +17,8 @@ Source: %name-%version.tar
 %add_python3_path %_datadir/%name
 
 AutoProv: nopython3
+
+Requires: p7zip
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-python3
@@ -61,6 +64,11 @@ rm %buildroot%_datadir/gearlever/gearlever/assets/demo.AppImage
 %_iconsdir/hicolor/*/apps/%{APP_ID}*.svg
 
 %changelog
+* Thu Mar 20 2025 Oleg Shchavelev <oleg@altlinux.org> 3.0.2-alt1
+- New version 3.0.2
+- Enable strict mode for unpackaged files
+- Added p7zip dependency (ALT #53225)
+
 * Fri Dec 06 2024 Oleg Shchavelev <oleg@altlinux.org> 2.3.2-alt1
 - New version 2.3.2
 
