@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
 %define ver_major 48
@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: gnome-calendar
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Calendar application for GNOME
@@ -64,8 +64,8 @@ This package provides Calendar reference manual.
 %setup -n %name-%version%beta
 
 %build
-%meson \
-      %{?_enable_gtk_doc:-Dgtk_doc=true}
+%meson -Dprofile=default
+%nil
 %meson_build
 
 %install
@@ -92,6 +92,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
