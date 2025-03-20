@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 24.12.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel qt6-svg-devel
 BuildRequires: qt6-speech-devel
 BuildRequires: zlib-devel libdiscount-devel
+BuildRequires: libfreetype-devel libcups-devel
 BuildRequires: ebook-tools-devel libdjvu-devel libjpeg-devel libpoppler-qt6-devel libqca-qt6-devel libspectre-devel libtiff-devel
 BuildRequires: libzip-devel
 %if_enabled msits
@@ -190,6 +191,9 @@ fi
 
 
 %changelog
+* Thu Mar 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
+- fix build requires
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
