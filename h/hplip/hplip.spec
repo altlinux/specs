@@ -29,8 +29,8 @@
 %def_with new_systemd
 
 Name:    hplip
-Version: 3.24.4
-Release: alt2
+Version: 3.25.2
+Release: alt1
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -1133,6 +1133,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Fri Mar 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.25.2-alt1
+- New version.
+
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:3.24.4-alt2
 - NMU: fix FTBFS with gcc14
 
