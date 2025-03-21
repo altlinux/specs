@@ -9,7 +9,7 @@
 %endif
 
 Name: suricata
-Version: 7.0.8
+Version: 7.0.9
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -144,6 +144,10 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 7.0.9-alt1
+- 7.0.9 (Fixes: CVE-2025-29915, CVE-2025-29917, CVE-2025-29918, 
+  CVE-2025-29916)
+
 * Thu Jan 16 2025 Andrey Cherepanov <cas@altlinux.org> 7.0.8-alt1
 - 7.0.8 (Fixes: CVE-2024-55627, CVE-2024-55605, CVE-2024-55629,
          CVE-2024-55628, CVE-2024-55626, CVE-2024-45797, CVE-2024-47187,
