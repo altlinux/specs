@@ -35,12 +35,12 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.10
-%define sover2 410
+%define sover 4.11
+%define sover2 411
 Name: lib%bname
 Epoch: 1
-Version: 4.10.0
-Release: alt2
+Version: 4.11.0
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -74,6 +74,10 @@ BuildRequires: libpcre2-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libffi-devel
 BuildRequires: libmount-devel
+BuildRequires: libexpat-devel
+BuildRequires: libavif-devel
+BuildRequires: libblkid-devel
+BuildRequires: libhdf5-devel
 
 %ifarch %{ix86} x86_64 armh
 BuildRequires: libglog-devel
@@ -382,6 +386,10 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Tue Feb 25 2025 Anton Farygin <rider@altlinux.ru> 1:4.11.0-alt1
+- 4.10.0 -> 4.11.0
+- enabled HDF5 module
+
 * Fri Aug 16 2024 Anton Farygin <rider@altlinux.ru> 1:4.10.0-alt2
 - fixed build against glog 0.7.0
 - add missing BuildRequires
