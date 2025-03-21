@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Mar 20 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
+- typo fixes, small improvements (closes #53557, #53571, #53572, #53574)
+
 * Thu Mar 13 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt1
 - update to ALT Kworkstation 11.0RC
 - add alterator-kopidel, surguch
