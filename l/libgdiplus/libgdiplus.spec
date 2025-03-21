@@ -5,26 +5,34 @@
 %define cairo system
 
 Name: libgdiplus
-Version: 5.6.1
+Version: 6.2
 Release: alt1
 
-Summary: An Open Source implementation of the GDI+ API.
-License: MPL
+Summary: An Open Source implementation of the GDI+ API
+License: MIT
 Group: System/Libraries
-Url: https://www.mono-project.com
+Url: https://gitlab.winehq.org/mono/libgdiplus.git
+VCS: https://gitlab.winehq.org/mono/libgdiplus.git
 
-# https://github.com/mono/libgdiplus.git
 Source: %name-%version.tar
 
-BuildRequires: glib2-devel >= 2.2.3
-BuildRequires: libcairo-devel >= 1.4.0
-%{?_with_pango:BuildRequires: libpango-devel >= 1.10.0}
-BuildRequires: fontconfig-devel libfreetype-devel libXrender-devel libX11-devel
-BuildRequires: libexif-devel libjpeg-devel libtiff-devel libungif-devel libpng-devel zlib-devel
+BuildRequires: fontconfig-devel
 BuildRequires: gcc-c++
+BuildRequires: glib2-devel
+BuildRequires: libX11-devel
+BuildRequires: libXrender-devel
+BuildRequires: libcairo-devel
+BuildRequires: libexif-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
+BuildRequires: libtiff-devel
+BuildRequires: libungif-devel
+BuildRequires: zlib-devel
+%{?_with_pango:BuildRequires: libpango-devel}
 
 %description
-An Open Source implementation of the GDI+ API
+An Open Source implementation of the GDI+ API.
 
 %package devel
 Summary: Development libraries and headers for %name
@@ -36,6 +44,8 @@ Libraries and header files for developing against libgdiplus.
 
 %prep
 %setup
+# disable downloading submodule
+echo '' > update_submodules.sh
 
 %build
 NOCONFIGURE=1 ./autogen.sh --skip-cairo
@@ -52,7 +62,6 @@ NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %makeinstall_std
 
 %files
-%doc LICENSE NEWS README TODO MPL-1.1.html AUTHORS ChangeLog
 %_libdir/*.so.*
 
 %files devel
@@ -60,6 +69,9 @@ NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %_libdir/*.so
 
 %changelog
+* Fri Mar 21 2025 Constantin Sunzow <protvin@altlinux.org> 6.2-alt1
+- New version.
+
 * Mon Apr 15 2019 Aleksei Nikiforov <darktemplar@altlinux.org> 5.6.1-alt1
 - Updated to upstream version 5.6.1.
 
