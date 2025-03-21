@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 0.4
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: oo7
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Secret Service provider
@@ -80,6 +80,9 @@ done
 %doc README*
 
 %changelog
+* Fri Mar 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
+- 0.4.2
+
 * Sun Feb 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
