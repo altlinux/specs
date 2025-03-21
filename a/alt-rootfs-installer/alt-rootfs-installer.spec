@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -38,6 +38,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Fri Mar 21 2025 Anton Midyukov <antohami@altlinux.org> 0.6.2-alt1
+- Add board repka_pi4 (Closes: 51646)
+
 * Mon Mar 03 2025 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
 - Add --bootpart and --luks options (thanks Egor Shestakov ved@)
 - Drop Nvidia Jetson Nano support
