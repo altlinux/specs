@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+# If libhtp's SONAME changes, create a libhtp<new_soname> subpackage (e.g., libhtp3) with updated libraries.
+%define soname 2
 
 Name: libhtp
 Epoch: 1
-Version: 0.5.49
+Version: 0.5.50
 Release: alt1
 Summary: LibHTP is a security-aware parser for the HTTP protocol and the related bits and pieces
 License: BSD-3-Clause
@@ -62,7 +64,8 @@ Development headers and libraries for %name.
 %makeinstall_std
 
 %files
-%_libdir/%{name}*.so.*
+%_libdir/%{name}*.so.%soname
+%_libdir/%{name}*.so.%soname.*
 
 %files devel
 %_libdir/%name.so
@@ -70,6 +73,9 @@ Development headers and libraries for %name.
 %_pkgconfigdir/htp.pc
 
 %changelog
+* Fri Mar 21 2025 Anton Farygin <rider@altlinux.com> 1:0.5.50-alt1
+- New version 0.5.50.
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 1:0.5.49-alt1
 - New version 0.5.49.
 
