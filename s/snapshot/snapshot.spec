@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Snapshot
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: snapshot
-Version: %ver_major.1
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: GNOME Camera
@@ -15,17 +15,19 @@ License: GPL-3.0-or-later
 Group: Video
 Url: https:/apps.gnome.org/Snapshot
 
+Vcs: https://gitlab.gnome.org/GNOME/snapshot.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/snapshot.git
 Source: %name-%version%beta.tar
 %endif
+Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
 %define pango_ver 1.51
-%define gtk_ver 4.15
-%define adwaita_ver 1.6
+%define gtk_ver 4.16
+%define adwaita_ver 1.7
 %define gst_ver 1.20
 %define seccomp_ver 2.5.0
 
@@ -48,17 +50,15 @@ BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0) >= %gst_ver
 BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver pkgconfig(lcms2)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
-
 %description
 A simple application to take pictures and videos from camera on your
 computer, tablet, or phone.
 
 %prep
-%setup -n %name-%version%beta
-# %{?_disable_bootstrap:-a1}
+%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+[ ! -d .cargo ] && mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -83,6 +83,12 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Mar 21 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0.1-alt1
+- 48.0.1
+
+* Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Oct 12 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 
