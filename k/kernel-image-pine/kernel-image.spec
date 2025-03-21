@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt3
 epoch:1
 %define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Mar 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.19-alt3
+- arm64: dts: sun50i-a64-pinephone: add modem RI pin
+
+* Thu Mar 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.19-alt2
+- config-aarch64: CONFIG_ARCH_SUNXI=y
+
 * Fri Mar 14 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.19-alt1
 - 6.12.19
 
