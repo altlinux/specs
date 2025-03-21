@@ -2,23 +2,28 @@
 
 Name: klevernotes
 Version: 1.2.1
-Release: alt1
+Release: alt1.1
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
 Group: Graphical desktop/KDE
+
+Packager: Aleksandr Shamaraev <shad@altlinux.org>
 
 URL: https://invent.kde.org/office/klevernotes
 Vcs: https://invent.kde.org/office/klevernotes
 
 Source: %name-%version.tar
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: cmake qt6-base-devel extra-cmake-modules qt6-base-devel qt6-declarative-devel libqt6-quickcontrols2 qt6-webengine-devel 
 BuildRequires: qt6-svg-devel kf6-kirigami-devel kf6-kirigami-addons-devel kf6-kcoreaddons-devel kf6-kconfig-devel kf6-ki18n-devel 
 BuildRequires: kf6-kconfigwidgets-devel kf6-kio-devel libgomp13-devel kf6-kiconthemes-devel
+
+# These deps are required, but are not autodetected:
+Requires: kf6-kirigami kf6-kirigami-addons
 
 %description
 KleverNotes is a note taking and management application for your mobile and desktop devices. It uses markdown and allow you to preview your content.
@@ -42,6 +47,11 @@ KleverNotes is a note taking and management application for your mobile and desk
 %doc *.md 
 
 %changelog
+* Fri Mar 21 2025 Ivan A. Melnikov <iv@altlinux.org> 1.2.1-alt1.1
+- NMU:
+  + and missing kf6-kirigami dependencies
+  + build on loongarch64
+
 * Thu Mar 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt1
 - 1.2.0 -> 1.2.1
 
