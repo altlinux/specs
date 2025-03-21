@@ -7,7 +7,7 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 10.4
+Version: 11.0
 Release: alt1
 
 Summary: %Variant documentation
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Mar 21 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt1
+- update to ALT Workstation 11.0RC
+- add alterator-kopidel, surguch
+- delete synaptic
+
 * Mon Oct 21 2024 Elena Mishina <lepata@altlinux.org> 10.4-alt1
 - add alterator-usbguard, alterator-usbmount
 - update to ALT Workstation 10.4
