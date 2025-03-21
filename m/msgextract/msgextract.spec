@@ -1,5 +1,5 @@
 Name: msgextract
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Easily extract the contents of MSG email files
@@ -29,5 +29,8 @@ install -Dm755 %name.sh %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Mar 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3-alt1
+- 0.2 -> 0.3
+
 * Mon Dec 09 2024 Aleksandr Shamaraev <shad@altlinux.org> 0.2-alt1
 - Initial build for Sisyphus.
