@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
 Version: 3.1.13
-Release: alt1
+Release: alt1.1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Mar 21 2025 Ivan A. Melnikov <iv@altlinux.org> 3.1.13-alt1.1
+- NMU: drop missing function call from backned3/pkg-size
+
 * Mon Mar 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 3.1.13-alt1
 - fixed duplication of packages in the selected group
 
