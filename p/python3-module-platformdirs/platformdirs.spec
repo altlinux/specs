@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.3.6
+Version: 4.3.7
 Release: alt1
 Summary: Determining appropriate platform-specific dirs
 License: MIT
@@ -53,6 +53,9 @@ location.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Mar 20 2025 Stanislav Levin <slev@altlinux.org> 4.3.7-alt1
+- 4.3.6 -> 4.3.7.
+
 * Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 4.3.6-alt1
 - 4.3.3 -> 4.3.6.
 
