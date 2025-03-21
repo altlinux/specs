@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.6
 %define rdn_name app.drey.EarTag
@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: eartag
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Small and simple audio file tag editor
@@ -22,8 +22,8 @@ Source: %url/-/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-%define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define gtk_ver 4.18
+%define adwaita_ver 1.7
 
 Requires: typelib(Adw) = 1
 
@@ -70,6 +70,9 @@ BuildRequires: python3(acoustid)}
 %doc README*
 
 %changelog
+* Fri Mar 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
+- 0.6.5
+
 * Wed Jan 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
 - 0.6.4
 
