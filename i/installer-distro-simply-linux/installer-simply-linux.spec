@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 11.1.0
+Version: 11.2.0
 Release: alt1
 
 Summary: Installer common files
@@ -74,7 +74,6 @@ Requires: alterator-luks
 #features
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-lightdm-stage3
-Requires: installer-feature-repo-add
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -110,6 +109,11 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Fri Mar 21 2025 Mikhail Efremov <sem@altlinux.org> 11.2.0-alt1
+- setup-backgrounds: Use default-background symlink.
+- setup-backgrounds: Ensure that background prefix is 'slinux_'.
+- Drop installer-feature-repo-add.
+
 * Wed Jan 22 2025 Mikhail Efremov <sem@altlinux.org> 11.1.0-alt1
 - stage2: Replace vm step with vm-ortodox.
 

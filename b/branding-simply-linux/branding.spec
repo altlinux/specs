@@ -66,16 +66,19 @@
 %define alterator_browser_weight 52
 %define artworks_weight 12
 
+# Default Xfce-4.20 background
+%define xfce_default_background xfce-x.svg
+
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.900
+Version: 10.910
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 # for licenses
 BuildRequires: distro-licenses >= 1.3-alt1
@@ -252,25 +255,20 @@ Conflicts: xfce-settings-simply-linux
 %description xfce-settings
 This package contains default settings for Xfce for Simply linux distribution.
 
-%package backgrounds10
+%package backgrounds11
 Group: Graphics
 Summary: Backgrounds for SL-10
 License: CC-BY-NC-SA-3.0+
 BuildArch: noarch
-Requires: branding-simply-linux-backgrounds10-vladstudio = %EVR
-%branding_add_conflicts simply-linux backgrounds10
+# There is no SL-11 backgrounds yet, require old SL-10 backgrounds for now.
+Requires: branding-simply-linux-backgrounds10
+Requires: branding-simply-linux-backgrounds10-vladstudio
+%branding_add_conflicts simply-linux backgrounds11
 
-%description backgrounds10
-This package contains backgrounds for Simply Linux 10.
+%description backgrounds11
+This package contains backgrounds for Simply Linux 11.
 
-%package backgrounds10-vladstudio
-Group: Graphics
-Summary: Backgrounds from Vladstudio
-License: CC-BY-NC-SA-3.0+
-BuildArch: noarch
-
-%description backgrounds10-vladstudio
-This package contains backgrounds for Simply Linux 10 from https://vlad.studio.
+There is no SL-11 backgrounds yet, it is empty package for now.
 
 %package slideshow
 Summary: Slideshow for Simply Linux %version installer.
@@ -388,11 +386,6 @@ ln -s license.ru.html %buildroot%_datadir/alt-notes/license.uk.htm
 mkdir -p %buildroot/usr/share/install2/slideshow
 mkdir -p %buildroot/etc/alterator
 pushd slideshow
-%ifarch %e2k
-for i in en ru; do mv Slides-$i/Slide10_SL10_${i}{_e2k,}.png; done
-%else
-rm -f Slides-*/Slide10_SL10_*_e2k.png
-%endif
 cp -a Slides*/  %buildroot/usr/share/install2/slideshow/
 popd
 # Set English slideshow as default
@@ -407,20 +400,8 @@ cp menu/50-xfce-applications.menu %buildroot/etc/xdg/menus/xfce-applications-mer
 mkdir -p %buildroot/usr/share/desktop-directories
 cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
 
-#backgrounds
-mkdir -p %buildroot/%_datadir/backgrounds/xfce/
-touch %buildroot/%_datadir/backgrounds/xfce/default_SL10
-
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
-%ifarch %ix86 x86_64
-ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
@@ -444,10 +425,19 @@ fi
 [ -e %_datadir/design/slinux/backgrounds/xdm.png ] || \
 	ln -s xdm-16x9.png %_datadir/design/slinux/backgrounds/xdm.png
 
-#backgrounds10
-%post backgrounds10
-[ -e %_datadir/backgrounds/xfce/default_SL10 ] || \
-	ln -s %def_desktop_wallpaper %_datadir/backgrounds/xfce/default_SL10
+%post xfce-settings
+# Set default SL background
+if [ "$(readlink %_datadir/backgrounds/xfce/default-background)" != "%def_desktop_wallpaper" ]; then
+	ln -sf "%def_desktop_wallpaper" %_datadir/backgrounds/xfce/default-background ||:
+fi
+
+%postun xfce-settings
+# Restore default Xfce-4.20 background
+if [ "$1" -eq 0 ] && \
+		[ "$(readlink %_datadir/backgrounds/xfce/default-background)" = "%def_desktop_wallpaper" ] \
+		[ -e %_datadir/backgrounds/xfce/%xfce_default_background ]; then
+	ln -sf %xfce_default_background %_datadir/backgrounds/xfce/default-background ||:
+fi
 
 %files alterator
 %config %_altdir/*.rcc
@@ -486,13 +476,7 @@ fi
 /etc/skel/.vimrc
 /etc/skel/.gtkrc-2.0
 
-%files backgrounds10
-%_datadir/backgrounds/xfce/slinux_*.png
-%ghost %_datadir/backgrounds/xfce/default_SL10
-
-%files backgrounds10-vladstudio
-%_datadir/backgrounds/xfce/vladstudio10/
-%_datadir/backgrounds/xfce/vladstudio_*.jpg
+%files backgrounds11
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -515,6 +499,30 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Fri Mar 21 2025 Mikhail Efremov <sem@altlinux.org> 10.910-alt1
+- alterator: Add logo_width.png.
+- alterator: Add logo_48.png.
+- components.mk: Don't resize installer background.
+- components.mk: Don't try to install non-existent backgrounds.
+- backgrounds: Drop SL-10 backgrounds.
+- graphics: Drop desktop_*.png symlinks.
+- bootloader: White grub help string.
+- alterator: Fix images file mode.
+- alterator: Migrate to Qt6.
+- slideshow: No e2k slide for SL-11.
+- slideshow: Update for SL-11.
+- images/: Drop background*.png.
+- alterator: Update installer background.
+- xfce-settings: Explicitly set default SL background.
+- graphics: Update lightdm wallpaper.
+- bootloader: Update grub background for SL-11.
+- xfce-settings: Update xfconf configs for Xfce-4.20.
+- xfce-settings: Set SL background for Xfce-4.20.
+- indexhtml: Update "Software Repository" link.
+- indexhtml: Use English page for "Software Repository" link.
+- indexhtml: Fix links.
+- bootloader: Drop gfxboot leftovers (closes: #51344).
+
 * Tue Aug 20 2024 Mikhail Efremov <sem@altlinux.org> 10.900-alt1
 - menu: Drop org.gnome.Shotwell.desktop.
 - menu: Update desktop files.
