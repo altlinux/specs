@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,10 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Fri Mar 21 2025 Vitaly Lipatov <lav@altlinux.ru> 1.1.4-alt1
+- erc: add missing quotes for $tdir
+- unpack tar.bz2 archives using tar (eterbug #17830)
+
 * Thu Aug 15 2024 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt1
 - erc: add some comments
 - replace 7z to tar in unpack (eterbug #17370)
