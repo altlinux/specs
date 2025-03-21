@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    epsonscan2
-Version: 6.7.66.0
-Release: alt2
+Version: 6.7.70.0
+Release: alt1
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -67,6 +67,9 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Fri Mar 21 2025 Andrey Cherepanov <cas@altlinux.org> 6.7.70.0-alt1
+- New version.
+
 * Sat Dec 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 6.7.66.0-alt2
 - NMU: fix FTBFS: include unistd.h
 
