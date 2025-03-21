@@ -7,10 +7,10 @@
 Name: qca-qt6
 %define major 2
 %define minor 3
-%define bugfix 9
+%define bugfix 10
 Version: %major.%minor.%bugfix
 Release: alt1
-%K5init no_altplace man
+%K6init no_altplace man
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 # ALT
 Patch10: qca-2.0.3-alt-paths.patch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake gcc-c++ glibc-devel ca-certificates
 BuildRequires: qt6-base-devel qt6-5compat-devel
 BuildRequires: zlib-devel bzlib-devel libgmp-devel
@@ -214,8 +214,8 @@ This plugin provides features based on Botan. It implements:
 export QTDIR=%_qt6_prefix
 export QC_CERTSTORE_PATH="%_datadir/ca-certificates/ca-bundle.crt"
 export LC_ALL=C.UTF-8
-%define _K5link %_libdir
-%K5build \
+%define _K6link %_libdir
+%K6build \
     -DDEVELOPER_MODE:BOOL=OFF \
     -DBUILD_TESTS:BOOL=OFF \
     -DQCA_INSTALL_IN_QT_PREFIX:BOOL=ON \
@@ -226,7 +226,7 @@ export LC_ALL=C.UTF-8
     #
 
 %install
-%K5install
+%K6install
 
 mkdir -p %buildroot/%_bindir
 ls -1d %buildroot/%_qt6_bindir/* 2>/dev/null | while read f ; do
@@ -272,6 +272,9 @@ done
 %_qt6_headerdir/Qca-qt6/
 
 %changelog
+* Fri Mar 21 2025 Sergey V Turchin <zerg@altlinux.org> 2.3.10-alt1
+- new version
+
 * Wed Dec 04 2024 Sergey V Turchin <zerg@altlinux.org> 2.3.9-alt1
 - new version
 
