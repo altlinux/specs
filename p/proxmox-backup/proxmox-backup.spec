@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 3.3.3.1
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -74,7 +74,8 @@ simple command line tool to create and restore backups.
 %package file-restore
 Summary: Proxmox Backup single file restore tools for pxar and block device backups
 Group: Archiving/Backup
-Requires: pve-backup-restore-image pve-qemu >= 5.0.0
+Requires: proxmox-backup-restore-image = %version
+Requires: pve-qemu >= 5.0.0
 Provides: pve-backup-file-restore = %EVR
 Obsoletes: pve-backup-file-restore < %EVR
 
@@ -82,6 +83,17 @@ Obsoletes: pve-backup-file-restore < %EVR
 This package contains the Proxmox Backup single file restore client for
 restoring individual files and folders from both host/container and VM/block
 device backups. It includes a block device restore driver using QEMU.
+
+%package restore-daemon
+Summary: Proxmox Backup daemon for file restore
+Group: Archiving/Backup
+
+%description restore-daemon
+This package contains the Proxmox Backup restore daemon for restoring
+individual files and folders from both host/container and VM/block device backups.
+
+This binary is used inside mini-VM, that runs over mounted block device.
+You don't need to install it manually.
 
 %package docs
 Summary: Proxmox Backup Documentation
@@ -211,17 +223,28 @@ usermod -a -G tape %proxy_user ||:
 
 %files file-restore
 %_bindir/proxmox-file-restore
-%_libexecdir/proxmox-backup/file-restore
 %_datadir/zsh/vendor-completions/_proxmox-file-restore
 %_datadir/bash-completion/completions/proxmox-backup-file-restore
 %dir %attr(2775,root,%proxy_user) %_localstatedir/backups
 
 %_man1dir/proxmox-file-restore.1*
 
+%files restore-daemon
+%_libexecdir/proxmox-backup/file-restore
+
 %files docs
 %_datadir/doc/%name
 
 %changelog
+* Wed Mar 19 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt3
+- Building restore-image on building server,
+  not on user's host
+- Revert ntfs-3g support
+  (restore-image contains ntfs3/ntfs anyway)
+- Provided logs from kernel of restore-image,
+  started by QEMU
+  (logs are located at /var/log/proxmox-backup/)
+
 * Fri Mar 07 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt2
 - Proper ntfs-3g support
 

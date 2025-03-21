@@ -1,6 +1,6 @@
 %define module_name zfs
 %define module_version 2.3.1
-%define module_release alt1
+%define module_release alt2
 
 %define flavour 6.12
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -15,12 +15,6 @@ BuildRequires(pre): kernel-headers-modules-6.12
 # ERROR: modpost: GPL-incompatible module zfs.ko uses GPL-only symbol 'mmu_feature_keys'
 %if "%(rpmvercmp '%kversion' '5.10')" >= "0"
 ExcludeArch: ppc64le %ix86
-%endif
-
-# The kernel is more than 6.2 not compatible in GPL symbols with ZFS
-# https://github.com/openzfs/zfs/issues/14555
-%if "%(rpmvercmp '%kversion' '6.2')" >= "0"
-ExcludeArch: aarch64
 %endif
 
 Summary: ZFS Linux modules
@@ -47,6 +41,7 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
 Provides: kernel-modules-spl-%flavour = %version-%release
 Provides: kernel-modules-spl-%kversion-%flavour-%krelease = %version-%release
+Provides: zfs-kernel-module = %EVR
 
 ExclusiveArch: %karch
 
@@ -80,6 +75,10 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Mar 20 2025 Anton Farygin <rider@altlinux.ru> 2.3.1-alt2
+- Added  virtual Provides zfs-kernel-module to allow module installation
+  by name during other packages' build process.
 
 * Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 2.3.1-alt1
 - 2.2.7 -> 2.3.1

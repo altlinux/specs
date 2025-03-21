@@ -2,7 +2,7 @@
 %define child pbs
 
 Name: %parent-%child
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: This feature is needed to create a file recovery image used by Proxmox backup client
@@ -12,8 +12,8 @@ ExclusiveArch: x86_64 aarch64
 
 Source: %name-%version.tar
 
-BuildRequires: proxmox-backup-file-restore
-Requires: zfs-utils lvm2
+Requires: proxmox-backup-restore-daemon
+Requires: zfs-utils lvm2 btrfs-progs
 Requires: make-initrd >= 2.2.6
 Requires: make-initrd-lvm make-initrd-mdadm make-initrd-luks
 Requires: make-initrd-iscsi make-initrd-multipath make-initrd-devmapper
@@ -32,6 +32,11 @@ cp -r pbs %buildroot%_datadir/%parent/features
 %_datadir/%parent/features/pbs
 
 %changelog
+* Fri Mar 14 2025 Sergey Konev <darisishe@altlinux.org> 1.0.6-alt1
+- switch MODULES_TRY_ADD to MODULES_LOAD
+- Use only ntfs3 module
+  (initrd is built on building server anyway)
+
 * Tue Nov 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.5-alt1
 - add lvchange and zfs to PBS_PROGS
 - use MODULES_TRY_ADD instead of MODULES_PRELOAD
