@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 80
+Version: 81
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -127,10 +127,10 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 
 %build
 %meson \
-	-Dversion-tag='%version' \
-	%{?_disable_keyutils:-Dkeyutils=false} \
-	-Dbashcompletiondir=%_datadir/bash-completion/completions \
-	%{?_enable_check:-Dtest=enabled}
+    -Dversion-tag='%version' \
+    -Dbashcompletiondir=%_datadir/bash-completion/completions \
+    %{subst_enable_meson_bool keyutils keyutils} \
+    %{subst_enable_meson_feature check test}
 %nil
 %meson_build
 
@@ -199,6 +199,9 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %_man3dir/*cxl*
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 81-alt1
+- 81
+
 * Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 80-alt1
 - 80
 

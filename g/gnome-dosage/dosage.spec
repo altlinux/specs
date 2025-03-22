@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GNOME Dosage
@@ -27,8 +27,10 @@ Source: %_name-%version.tar
 BuildArch: noarch
 
 %define bp_ver 0.14
+%define adw_ver 1.7
 
 Requires: /usr/bin/gjs dconf
+Requires: libadwaita >= %adw_ver
 Requires: typelib(Adw) = 1
 Requires: typelib(Xdp) = 1.0
 
@@ -74,6 +76,9 @@ sed -i "s|no-net --explain|no-net', '--explain|" data/meson.build
 %doc README*
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.5-alt1
+- 1.9.5
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt1
 - 1.9.4
 

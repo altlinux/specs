@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
 %define xdg_name org.sigxcpu.Feedback
-%define ver_major 0.7
+%define ver_major 0.8
 %define namespace Lfb
 %define api_ver 0.0
 
@@ -15,7 +15,7 @@
 
 Name: feedbackd
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Feedback library for GNOME
 Group: System/Servers
@@ -150,6 +150,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %endif
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt2
 - updated to v0.7.0-2-gd36ac31 (fixed Librem5/feedbackd!153)
 

@@ -5,13 +5,15 @@
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Maps/
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-maps.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
@@ -97,6 +99,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
