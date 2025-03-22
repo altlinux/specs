@@ -1,5 +1,5 @@
 Name: iwyu
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: C/C++ source files #include analyzer based on clang
@@ -9,7 +9,7 @@ Url: https://github.com/include-what-you-use/include-what-you-use
 
 Packager: %packager
 
-BuildRequires: clang18.1-devel llvm18.1-devel cmake gcc-c++ ninja-build rpm-build-python3
+BuildRequires: clang19.1-devel llvm19.1-devel cmake gcc-c++ ninja-build rpm-build-python3
 
 Source0: %name-%version-%release.tar
 
@@ -52,6 +52,9 @@ sed -e s@lib/@lib\${LLVM_LIBDIR_SUFFIX}/@g -i CMakeLists.txt
 %docdir *
 
 %changelog
+* Sat Mar 22 2025 Andrey Bergman <vkni@altlinux.org> 0.23-alt1
+- Update to version 0.23 (Clang 19).
+
 * Fri Jun 21 2024 Andrey Bergman <vkni@altlinux.org> 0.22-alt1
 - Update to version 0.22 (Clang 18).
 
