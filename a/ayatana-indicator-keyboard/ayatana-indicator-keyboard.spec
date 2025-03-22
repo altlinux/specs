@@ -8,8 +8,8 @@
 %define backendlomiriname %libbasename-lomiri0
 
 Name: ayatana-indicator-keyboard
-Version: 24.7.0
-Release: alt2
+Version: 24.7.2
+Release: alt1
 
 Summary: Ayatana Indicator for managing keyboard layout and desktop language
 License: GPLv3
@@ -98,7 +98,6 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_libdir/libayatana-keyboard-x11.so*
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
-%_sharedstatedir/polkit-1/localauthority/10-vendor.d/50-org.ayatana.indicator.keyboard.AccountsService.pkla
 %_iconsdir/hicolor/scalable/status/*
 %_iconsdir/ContrastHigh/scalable/status/*
 %_datadir/ayatana/indicators/org.ayatana.indicator.keyboard
@@ -106,6 +105,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.7.2-alt1
+- New version 24.7.2.
+
 * Sun Jan 19 2025 Nikolay Strelkov <snk@altlinux.org> 24.7.0-alt2
 - Added matekbd-keyboard-display to Requires for the full functionality
 

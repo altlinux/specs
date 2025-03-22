@@ -5,7 +5,7 @@
 %define typelib %libname-gir
 %define sover   0
 Name: ayatana-indicator-messages
-Version: 24.5.0
+Version: 24.5.1
 Release: alt1
 
 Summary: Ayatana Indicator for collecting messages that need a response
@@ -147,6 +147,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_libdir/girepository-1.0/MessagingMenu-1.0.typelib
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
+- New version 24.5.1.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
 - New version 24.5.0.
 

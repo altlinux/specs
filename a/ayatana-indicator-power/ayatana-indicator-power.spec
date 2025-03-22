@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-power
-Version: 24.5.1
+Version: 24.5.2
 Release: alt1
 
 Summary: Ayatana Indicator showing power state
@@ -80,6 +80,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt1
+- New version 24.5.2.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
 - New version 24.5.1.
 

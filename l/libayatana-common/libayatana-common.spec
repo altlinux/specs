@@ -7,7 +7,7 @@
 %define sover   0
 %define typelib %name-gir
 Name: libayatana-common
-Version: 0.9.10
+Version: 0.9.11
 Release: alt1
 
 Summary: Common files and libraries used by Ayatana System Indicators
@@ -131,17 +131,20 @@ install -d -m 755 %buildroot%_datadir/ayatana/indicators
 %_libdir/%soname.so*
 
 %files -n %typelib
-%_libdir/girepository-1.0/AyatanaCommon-0.0.typelib
+%_libdir/girepository-1.0/AyatanaCommon-*.typelib
 
 %files devel
 %doc COPYING AUTHORS ChangeLog
 %dir %_includedir/ayatana
 %_includedir/ayatana/common
 %_pkgconfigdir/%soname.pc
-%_datadir/gir-1.0/AyatanaCommon-0.0.gir
+%_datadir/gir-1.0/AyatanaCommon-*.gir
 %_vapidir/AyatanaCommon.vapi
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.11-alt1
+- New version 0.9.11.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 0.9.10-alt1
 - New version 0.9.10.
 

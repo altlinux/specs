@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-display
-Version: 24.5.0
+Version: 24.5.1
 Release: alt1
 
 Summary: Ayatana Indicator for Display configuration
@@ -35,6 +35,8 @@ BuildRequires: libsystemd-devel
 BuildRequires: pkg-config
 BuildRequires: properties-cpp-devel
 BuildRequires: zlib-devel
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xrandr)
 
 Requires: xsct
 
@@ -53,7 +55,8 @@ etc.).
 %build
 %cmake \
   -Denable_lomiri_features=Off \
-  -Denable_tests=OFF
+  -Denable_tests=OFF \
+  -DENABLE_RDA=OFF
 %cmake_build
 
 %install
@@ -88,10 +91,12 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 %_datadir/accountsservice/interfaces/org.ayatana.indicator.display.AccountsService.xml
 %_datadir/polkit-1/actions/org.ayatana.indicator.display.AccountsService.policy
-%_localstatedir/polkit-1/localauthority/10-vendor.d/50-org.ayatana.indicator.display.AccountsService.pkla
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.display.AccountsService.rules
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
+- New version 24.5.1.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
 - New version 24.5.0.
 

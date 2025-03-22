@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-sound
-Version: 24.5.1
+Version: 24.5.2
 Release: alt1
 
 Summary: Ayatana Indicator for managing system sound
@@ -67,10 +67,6 @@ protocol.
 %install
 %cmake_install
 
-# Move .pkla file to the correct polkit $HOME.
-mkdir -p %buildroot%_localstatedir/polkit-1/localauthority/10-vendor.d/
-mv -v %buildroot%_localstatedir/lib/polkit-1/localauthority/10-vendor.d/50-org.ayatana.indicator.sound.AccountsService.pkla %buildroot%_localstatedir/polkit-1/localauthority/10-vendor.d/
-
 # these translations are ignored by %%find_lang
 rm -fv %buildroot%_datadir/locale/it_CARES/LC_MESSAGES/%name.mo
 rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
@@ -99,10 +95,12 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_userunitdir/%name.service
 %_datadir/accountsservice/interfaces/org.ayatana.indicator.sound.AccountsService.xml
 %_datadir/polkit-1/actions/org.ayatana.indicator.sound.AccountsService.policy
-%_localstatedir/polkit-1/localauthority/10-vendor.d/50-org.ayatana.indicator.sound.AccountsService.pkla
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.sound.AccountsService.rules
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt1
+- New version 24.5.2.
+
 * Fri Jan 17 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
 - New version 24.5.1.
 

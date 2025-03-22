@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.2
+Version: 3.2.2
 Release: alt1
 
 Summary: Fortran Language Server for the Language Server Protocol
@@ -70,5 +70,8 @@ Supported LSP features include:
 %python3_sitelibdir/%{pypi_name}*dist-info/*
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 3.2.2-alt1
+- New version 3.2.2.
+
 * Sun Feb 23 2025 Nikolay Strelkov <snk@altlinux.org> 3.1.2-alt1
 - Initial build for Sisyphus
