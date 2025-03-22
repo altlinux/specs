@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.31
+Version:	0.9.32
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -39,7 +39,7 @@ Group:		System/Configuration/Networking
 Requires:	%name = %version-%release, wireless-tools
 Requires:	dhcpcd >= 1.3.22pl4-alt3, iptables, iptables-ipv6, ebtables, ipset >= 4.1-alt2
 Requires:	ethtool >= 0:3-alt4, ifplugd >= 0.28-alt2
-Requires:	hotplug, ppp, openvpn, wireguard-tools
+Requires:	hotplug, ppp, openvpn, wireguard-tools, amneziawg-tools
 Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 2.5.0-alt1
 
 %description full
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Fri Mar 21 2025 Anton Farygin <rider@altlinux.com> 0.9.32-alt1
+- Added interface TYPE=awg with amneziawg support.
+
 * Thu Mar 20 2025 Anton Farygin <rider@altlinux.ru> 0.9.31-alt1
 - Updated PPPoE configuration plugin to support PPP versions > 2.5.0.
 
