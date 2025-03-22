@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: fossology-nomos
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 Summary: Nomos detects licenses and copyrights in a file
 License: GPL-2.0-or-later
@@ -57,6 +57,9 @@ nomossa -d LICENSES
 %_bindir/nomossa
 
 %changelog
+* Wed Mar 19 2025 Vitaly Chikunov <vt@altlinux.org> 4.5.0-alt1
+- Update to 4.5.0 (2025-03-18).
+
 * Thu Jan 18 2024 Vitaly Chikunov <vt@altlinux.org> 4.4.0-alt1
 - Update to 4.4.0 (2024-01-15).
 
