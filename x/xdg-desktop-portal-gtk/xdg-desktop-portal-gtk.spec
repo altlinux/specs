@@ -3,13 +3,15 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 1.15.2
+Version: 1.15.3
 Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
 Group: Graphical desktop/GNOME
-License: LGPL-2.0
+License: LGPL-2.0-or-later
 Url: https://github.com/flatpak/%name
+
+Vcs: https://github.com/flatpak/xdg-desktop-portal-gtk.git
 
 %if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.xz
@@ -58,6 +60,9 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.15.3-alt1
+- 1.15.3
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.15.2-alt1
 - 1.15.2
 

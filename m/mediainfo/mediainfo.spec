@@ -1,6 +1,6 @@
-%define ver_major 24.12
+%define ver_major 25.03
 
-%def_disable kde4
+%def_enable kde5
 
 Name: mediainfo
 Version: %ver_major
@@ -11,13 +11,13 @@ Summary: MediaInfo supplies information about a video or audio file
 License: BSD-2-Clause
 Url: http://mediainfo.sourceforge.net
 
+Vcs: https://github.com/MediaArea/MediaInfo.git
+
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
 
 Requires: lib%name >= %ver_major
 
-%{?_enable_kde4:BuildRequires(pre): rpm-macros-kde-common-devel}
-BuildRequires(pre): rpm-build-kf5
-
+%{?_enable_kde5:BuildRequires(pre): rpm-build-kf5}
 BuildRequires: gcc-c++
 BuildRequires: dos2unix
 BuildRequires: zlib-devel
@@ -70,26 +70,16 @@ Subtitles: SRT, SSA, ASS, SAMI...
 
 This package contains the graphical user interface.
 
-%if_enabled kde4
-%package gui-KDE4
-Group: File tools
-Summary: KDE4 related MediaInfo files
-BuildArch: noarch
-Requires: %name-gui = %version-%release
-Requires: kde4libs
-
-%description gui-KDE4
-This package contains KDE4 related MediaInfo files for konqueror
-%endif
-
+%if_enabled kde5
 %package gui-KDE5
 Group: File tools
 Summary: KDE5 related MediaInfo files
 BuildArch: noarch
-Requires: %name-gui = %version-%release
+Requires: %name-gui = %EVR
 
 %description gui-KDE5
 This package contains KDE5 related MediaInfo files
+%endif
 
 %prep
 %setup -q -T -b 0 -n MediaInfo
@@ -145,15 +135,15 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_pixmapsdir/%name.xpm
 %_pixmapsdir/%name.png
 
-%if_enabled kde4
-%files gui-KDE4
-%_K4srv/ServiceMenus/%name-gui.desktop
-%endif
-
+%if_enabled kde5
 %files gui-KDE5
 %_K5srv/ServiceMenus/%name-gui.desktop
+%endif
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 25.03-alt1
+- 25.03
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 24.12-alt1
 - 24.12
 

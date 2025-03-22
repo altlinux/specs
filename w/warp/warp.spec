@@ -1,6 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 0.8
+%define ver_major 0.9
+%define git_tag d8270a33616c15bb810dab9d0517853b9a0198cd
 %define rdn_name app.drey.Warp
 
 %define optflags_lto %nil
@@ -21,19 +22,18 @@ Url: https://apps.gnome.org/Warp
 Vcs: https://gitlab.gnome.org/World/warp.git
 
 %if_disabled snapshot
-Source: %url/-/archive/v%version/%name-%version.tar.gz
+Source: https://gitlab.gnome.org/World/warp/-/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
-Patch1: warp-0.8.0-alt-aperture.patch
 
 #error: failed to run custom build command for `ring v0.16.20`
 ExcludeArch: ppc64le
 
-%define glib_ver 2.78
-%define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define glib_ver 2.80
+%define gtk_ver 4.18
+%define adwaita_ver 1.7
 
 Requires: yelp
 %{?_enable_qr:Requires: gst-plugins-bad1.0 gst-plugins-libcamera1.0}
@@ -58,19 +58,13 @@ protocol which includes local network transfer if possible. File
 transfers are encrypted.
 
 %prep
-%setup -n %name-%version %{?_disable_bootstrap:-a1}
+%setup -n %name-%{?_enable_snapshot:%version}%{?_disable_snapshot:v%version-%git_tag} %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-# AHTUNG: update aperture to 0.8.0
-%patch1 -b .aperture
 mkdir .cargo
-#cargo update -p aperture
-# --precise 0.8.0
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar Cargo.* .cargo/ vendor/}
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 ln -s %_datadir/license-list-data vendor/license/license-list-data
-
-
 
 %build
 %meson \
@@ -98,6 +92,9 @@ ln -s %_datadir/license-list-data vendor/license/license-list-data
 
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - updated to v0.8.1-3-g06ab98e
 

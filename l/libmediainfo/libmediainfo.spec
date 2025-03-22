@@ -1,4 +1,4 @@
-%define ver_major 24.12
+%define ver_major 25.03
 
 Name: libmediainfo
 Version: %ver_major
@@ -8,6 +8,8 @@ Group: System/Libraries
 Summary: %name - Shared library for mediainfo
 License: BSD-2-Clause
 Url: http://mediainfo.sourceforge.net
+
+Vcs: https://github.com/MediaArea/MediaInfoLib.git
 
 Source: https://mediaarea.net/download/source/%name/%version/%{name}_%{version}.tar.xz
 
@@ -91,6 +93,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 25.03-alt1
+- 25.03
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 24.12-alt1
 - 24.12
 
