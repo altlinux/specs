@@ -2,7 +2,7 @@
 
 Name: xli
 Version: 1.17.0
-Release: alt9
+Release: alt10
 Summary: X11 Image Loading Utility
 License: MIT
 Group: Graphics
@@ -13,9 +13,9 @@ Url: http://pantransit.reptiles.org/prog
 Source: %name-%version.tar
 
 Patch1: xli-1.17.0-mdk-path.patch
-Patch2: xli-1.17.0-alt-includes.patch
 
-# Patches from Debian
+# Patches from Debian (xli 1.17.0+20061110-10)
+Patch9:  030-manpage.patch
 Patch10: 040-8-bit_palette_support.patch
 Patch11: 050-read_past_bufferend_343718.patch
 Patch12: 060-security_fixes.patch
@@ -23,11 +23,18 @@ Patch13: 080-fillscreen_forall.patch
 Patch14: 090-multiple_images_merge.patch
 Patch15: 100-xpm_background.patch
 Patch16: 110-arrow_keys.patch
-Patch17: 130-zoom_auto_440768.patch
-Patch18: 150-fix-x-resource-leak.patch
-Patch19: 160-disable-libjpeg-scaling.patch
-Patch20: 170-fix-spelling.patch
-Patch21: 180-add_GCC_hardening.patch
+Patch17: 120-documentzooming.patch
+Patch18: 130-zoom_auto_440768.patch
+Patch19: 140-manpage_fixes.patch
+Patch20: 150-fix-x-resource-leak.patch
+Patch21: 160-disable-libjpeg-scaling.patch
+Patch22: 170-fix-spelling.patch
+Patch23: 180-add_GCC_hardening.patch
+Patch24: 190.added-directive.patch
+Patch25: 200.fix-assertion-image.patch
+Patch26: 210.fix-geometry-with-negative.patch
+Patch27: 220.fix-tgas-with-alpha.patch
+Patch28: 230.fix-buffer-overflow.patch
 
 Provides: xloadimage
 Obsoletes: xloadimage
@@ -48,7 +55,7 @@ PC Paintbrush Image, GEM Bit Image, MacPaint Image, X Pixmap, X Bitmap.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -61,6 +68,13 @@ PC Paintbrush Image, GEM Bit Image, MacPaint Image, X Pixmap, X Bitmap.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
 
 %build
 %add_optflags -Werror=implicit-function-declaration
@@ -99,6 +113,9 @@ chmod 644 README*
 # - look at 2006-11-10 snapshot?
 
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt10
+- NMU: fix FTBFS by refreshing and applying patches from Debian.
+
 * Thu Oct 22 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.17.0-alt9
 - Applied patches from Debian (Fixes: CVE-2005-3178).
 
