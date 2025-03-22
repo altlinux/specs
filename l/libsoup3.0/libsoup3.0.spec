@@ -19,13 +19,15 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/libsoup
+
+Vcs: https://gitlab.gnome.org/GNOME/libsoup.git
 
 %if_enabled snapshot
 Source: %_name-%version.tar
@@ -191,6 +193,9 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %endif
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.5-alt1
+- 3.6.5
+
 * Fri Jan 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
 - 3.6.4
 

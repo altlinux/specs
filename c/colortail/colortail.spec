@@ -1,18 +1,20 @@
+%def_disable snapshot
 %def_enable check
 
 Name: colortail
-Version: 0.3.4
-Release: alt0.5
+Version: 0.3.5
+Release: alt1
 
 Summary: A colorised tail with configuration files
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: Monitoring
-
 Url: https://github.com/joakim666/colortail
+
+Vcs: https://github.com/joakim666/colortail.git
+
 %if_disabled snapshot
 Source: %url/releases/download/%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/joakim666/colortail.git
 Source: %name-%version.tar
 %endif
 
@@ -46,6 +48,9 @@ install -pm644 example-conf/conf* %buildroot/%_sysconfdir/%name
 %doc INSTALL README AUTHORS ChangeLog BUGS TODO
 
 %changelog
+* Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.5-alt1
+- 0.3.5
+
 * Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt0.5
 - updated to 0.3.3-22-gad3bc53 (new GitHub homepage)
 
