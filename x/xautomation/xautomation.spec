@@ -1,17 +1,24 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_disable debug
 
 Name: xautomation
-Version: 1.07
+Version: 1.09
 Release: alt1
 Summary: Control X from the command line
 Summary(uk_UA.CP1251): Керування X з командного рядка
 License: GPLv2+
 Group: System/X11
+# Source: https://web.archive.org/web/20170705022950if_/https://www.hoopajoo.net/static/projects/xautomation-1.09.tar.gz
 URL: http://hoopajoo.net/projects/%name.html
-Source: http://hoopajoo.net/projects/%name-%version.tar
-Patch: %name-%version-%release.patch
 
-BuildRequires: imake libICE-devel libXtst-devel libpng-devel xorg-cf-files
+Source: %name-%version.tar
+
+BuildRequires: imake
+BuildRequires: libICE-devel
+BuildRequires: libXtst-devel
+BuildRequires: libpng-devel
+BuildRequires: xorg-cf-files
 
 %description
 Control X from the command line for scripts, and do "visual scraping"
@@ -22,21 +29,16 @@ when apps ignore sent events. The visgrep program finds images inside
 of images and reports the coordinates, allowing progams to find
 buttons, etc, on the screen to click on.
 
-
 %prep
 %setup -q
-%patch -p1
-
 
 %build
 %configure %{subst_enable debug}
 %make_build
 gzip -9c ChangeLog > ChangeLog.gz
 
-
 %install
 %makeinstall_std
-
 
 %files
 %doc AUTHORS ChangeLog.* README
@@ -44,8 +46,10 @@ gzip -9c ChangeLog > ChangeLog.gz
 %_man1dir/*
 %_man7dir/*
 
-
 %changelog
+* Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 1.09-alt1
+- NMU: fixed FTBFS by upgrading to 1.09
+
 * Sun Nov 04 2012 Led <led@altlinux.ru> 1.07-alt1
 - 1.07
 - cleaned up BuildRequires
