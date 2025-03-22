@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        134.0.6998.117
+Version:        134.0.6998.165
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -563,6 +563,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Mar 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.165-alt1
+- New version (134.0.6998.165).
+
 * Thu Mar 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.117-alt1
 - New version (134.0.6998.117).
 - Enable HW video encode, drop workarounds for ancient mesa bugs (thnx OpenMandriva).
