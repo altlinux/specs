@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name feedbackd
-%define ver_major 0.4
+%define ver_major 0.8
 
 %def_enable check
 
@@ -16,6 +16,7 @@ Url: https://source.puri.sm/Librem5/feedbackd-device-themes
 BuildArch: noarch
 
 Vcs: https://source.puri.sm/Librem5/feedbackd-device-themes.git
+
 %if_disabled snapshot
 #Source: https://storage.puri.sm/releases/%name/%name-%version.tar.xz
 Source: https://source.puri.sm/Librem5/%name/-/archive/v%version/%name-v%version.tar.gz
@@ -51,6 +52,9 @@ specific feedback theme files.
 %doc README.* NEWS
 
 %changelog
+* Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Mon Jun 24 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
