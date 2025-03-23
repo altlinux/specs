@@ -1,14 +1,14 @@
-%define git_commit 992b4ea9309899ebc7ca576ebea711a70523098a
+%define git_commit 9763c0a1e2b9db0c3861d25bc2f5a0ace6a15ee3
 
 %define enet_commit 2a85cd64459f6ba038d233a634d9440490dbba12
-%define implot_commit cc5e1daa5c7f2335a9460ae79c829011dc5cef2d
+%define implot_version 0.16
 %define rcheevos_version 11.4.0
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 %define zlib_ng_commit ce01b1e41da298334f8214389cc9369540a7560f
 
 Name: dolphin-emu
-Version: 2412
-Release: alt1.1
+Version: 2503
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -23,8 +23,8 @@ ExclusiveArch: x86_64 aarch64
 Source0: dolphin-%version.tar
 # https://github.com/lsalzman/enet/archive/%enet_commit/enet-%enet_commit.tar.gz
 Source1: enet-%enet_commit.tar
-# https://github.com/epezent/implot/archive/%implot_commit/implot-%implot_commit.tar.gz
-Source2: implot-%implot_commit.tar
+# https://github.com/epezent/implot/archive/v%implot_version/implot-%implot_version.tar.gz
+Source2: implot-%implot_version.tar
 # https://github.com/RetroAchievements/rcheevos/archive/v%rcheevos_version/rcheevos-%rcheevos_version.tar.gz
 Source3: rcheevos-%rcheevos_version.tar
 # https://github.com/syoyo/tinygltf/archive/%tinygltf_commit/tinygltf-%tinygltf_commit.tar.gz
@@ -33,8 +33,6 @@ Source4: tinygltf-%tinygltf_commit.tar
 Source5: zlib-ng-%zlib_ng_commit.tar
 
 Patch0: dolphin-gbacore-alt.patch
-Patch1: dolphin-fmt11.patch
-Patch2: dolphin-minizip-ng-4.0.8.patch
 
 BuildRequires: bzlib-devel
 BuildRequires: cmake
@@ -85,14 +83,12 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4 -b 5
 
 %__mv -Tf ../enet-%enet_commit Externals/enet/enet
-%__mv -Tf ../implot-%implot_commit Externals/implot/implot
+%__mv -Tf ../implot-%implot_version Externals/implot/implot
 %__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
 %__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
 %__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 export LDFLAGS="-Wl,--copy-dt-needed-entries"
@@ -126,6 +122,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sun Mar 23 2025 Nazarov Denis <nenderus@altlinux.org> 2503-alt1
+- Version 2503
+
 * Tue Jan 14 2025 Nazarov Denis <nenderus@altlinux.org> 2412-alt1.1
 - Fix FTBFS
 
