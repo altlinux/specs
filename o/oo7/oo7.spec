@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: oo7
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Secret Service provider
@@ -80,6 +80,9 @@ done
 %doc README*
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Fri Mar 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 

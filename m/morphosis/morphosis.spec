@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: morphosis
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Documents converter for the Gnome Desktop
@@ -57,6 +57,9 @@ Libadwaita. Conversions are done with Pandoc.
 %doc README.*
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

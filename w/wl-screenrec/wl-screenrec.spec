@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 0.1
 
 %def_disable bootstrap
@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: wl-screenrec
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: High performance screen recorder for wlroots Wayland
@@ -42,12 +42,9 @@ BuildRequires: pkgconfig(libswresample)
 
 %prep
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
-# update ffmpeg-next to 6.1.1
-#sed -i 's|\(ffmpeg-next = "6.1\)|\1.1|' Cargo.toml
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
-#cargo update -p ffmpeg-next && \
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -64,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.7-alt1
+- 0.1.7
+
 * Thu Dec 12 2024 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
 - updated to v0.1.6-6-gb36991d
 

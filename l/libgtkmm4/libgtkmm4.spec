@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define rname gtkmm
-%define ver_major 4.16
+%define ver_major 4.18
 %define api_ver 4.0
 
 %def_disable demos
@@ -16,6 +16,8 @@ License: GPL-2.0 and LGPL-2.1
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
 
+Vcs: https://gitlab.gnome.org/GNOME/gtkmm.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.tar.xz
 %else
@@ -24,9 +26,9 @@ Source: %rname-%version.tar
 
 Provides: %rname-%api_ver = %version
 
-%define gtk_ver 4.16.0
+%define gtk_ver 4.18.0
 %define glibmm_api_ver 2.68
-%define glibmm_ver 2.68.0
+%define glibmm_ver 2.75.0
 %define pangomm_api_ver 2.48
 %define pangomm_ver 2.50.0
 %define cairomm_api_ver 1.16
@@ -114,6 +116,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.0-alt1
+- 4.18.0
+
 * Tue Sep 10 2024 Yuri N. Sedunov <aris@altlinux.org> 4.16.0-alt1
 - 4.16.0
 

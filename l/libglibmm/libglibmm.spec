@@ -10,13 +10,15 @@
 %def_enable check
 
 Name: libglibmm
-Version: %major.7
+Version: %major.8
 Release: alt1
 
 Summary: C++ wrapper for GLib
 License: LGPL-2.1 and GPL-2.0
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
+
+Vcs: https://gitlab.gnome.org/GNOME/glibmm.git
 
 %if_enabled snapshot
 Source: %rname-%version.tar
@@ -104,6 +106,9 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %endif
 
 %changelog
+* Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.66.8-alt1
+- 2.66.8
+
 * Tue Apr 09 2024 Yuri N. Sedunov <aris@altlinux.org> 2.66.7-alt1
 - 2.66.7
 
