@@ -3,7 +3,7 @@
 %define rdn_name io.github.fragglet.sdl_sopwith
 
 Name: sdl_%__name
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
@@ -12,6 +12,7 @@ Group: Games/Arcade
 Url: https://github.com/fragglet/sdl-sopwith
 
 Vcs: https://github.com/fragglet/sdl-sopwith.git
+
 Source: %url/releases/download/%_name-%version/%_name-%version.tar.gz
 Source1: sopwith.png
 Source2: sopwith.desktop
@@ -49,6 +50,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %exclude %_docdir/%_name
 
 %changelog
+* Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
