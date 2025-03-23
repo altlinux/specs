@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -26,6 +26,7 @@ Requires: alterator-backend-component
 Requires: alterator-backend-component_categories
 Requires: alterator-backend-batch-component_categories
 Requires: alterator-backend-batch-components
+Requires: alterator-backend-systeminfo
 Requires: libqbase
 Requires: alt-components-base
 
@@ -66,6 +67,10 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Sun Mar 23 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.3-alt1
+- Filter packages in components by arch.
+- Add kflavour as a suffix for packages marked with kernel_module.
+
 * Mon Mar 17 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.2-alt1
 - Hide checkboxes of components with no packages.
 - Rename binary to alt-components.
