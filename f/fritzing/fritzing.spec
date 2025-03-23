@@ -1,9 +1,9 @@
 Name: fritzing
 Version: 0.9.6
-Release: alt1
+Release: alt2
 
 Summary: Intuitive EDA platform featuring from prototype to product
-License: GPLv3, CC-BY-SA-3.0
+License: GPLv2 and GPLv3 and CC-BY-SA-3.0
 Group: Engineering
 
 Url: http://fritzing.org
@@ -23,12 +23,15 @@ Source2: parts.db
 
 Patch: fritzing-desktop-file-translation.patch
 
+Patch1: %name-%version-%release.patch
+
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires: boost-devel-headers desktop-file-utils gcc-c++ glibc-devel-static
 BuildRequires: rpm-build-python3 rpmbuild-helper-desktop zlib-devel
 BuildRequires: rpmbuild-helper-sugar-activity ruby ruby-stdlibs qt5-tools
 BuildRequires: libgit2-devel qt5-base-devel qt5-svg-devel qt5-serialport-devel
+BuildRequires: quazip-qt5-devel
 
 # large chunk of arch-independent data is better not duplicated
 Requires: %name-data = %EVR
@@ -62,6 +65,7 @@ This package contains shared data files for Fritzing.
 sed -i 's/LIBGIT_STATIC = true/LIBGIT_STATIC = false/' phoenix.pro
 
 %patch -p1
+%patch1 -p1
 
 # make sure that russian translation will be removed
 rm translations/fritzing_ru.qm
@@ -99,6 +103,9 @@ install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
 %_datadir/%name
 
 %changelog
+* Sun Mar 23 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.6-alt2
+- NMU: fix FTBFS by using quazip from quazip-qt5-devel RPM package.
+
 * Thu Jul 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.6-alt1
 - Build new version (Closes: #40330).
 
