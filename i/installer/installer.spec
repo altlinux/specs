@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.14
+Version: 1.16.15
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,9 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Sat Mar 22 2025 Anton Midyukov <antohami@altlinux.org> 1.16.15-alt1
+- initinstall: fix repeat run 3x-* scripts
+
 * Thu Mar 20 2025 Anton Midyukov <antohami@altlinux.org> 1.16.14-alt1
 - install2.service: add altlinux-resolv.path to Wants
 
