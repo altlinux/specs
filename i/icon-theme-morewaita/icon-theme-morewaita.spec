@@ -1,5 +1,5 @@
 Name: icon-theme-morewaita
-Version: 47.4
+Version: 48.1
 Release: alt1
 
 Summary: An expanded Adwaita-styled companion icon theme with extra icons
@@ -42,6 +42,9 @@ rm %buildroot%_iconsdir/MoreWaita/scalable/apps/synaptic.svg
 %doc AUTHORS LICENSE README.md
 
 %changelog
+* Sun Mar 23 2025 Anton Midyukov <antohami@altlinux.org> 48.1-alt1
+- New version 48.1.
+
 * Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 47.4-alt1
 - New version 47.4.
 
