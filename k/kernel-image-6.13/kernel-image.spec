@@ -2,7 +2,7 @@ Name: kernel-image-6.13
 Release: alt1
 %define kernel_src_version	6.13
 %define kernel_base_version	6.13
-%define kernel_sublevel	.7
+%define kernel_sublevel	.8
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Mar 23 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.8-alt1
+- v6.13.8 (2025-03-22).
+- config: Disable obsolete input tablet drivers.
+- config-aarch64: enable more configs of battery and charger.
+
 * Thu Mar 13 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.7-alt1
 - v6.13.7 (2025-03-13).
 
