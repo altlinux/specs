@@ -2,11 +2,11 @@
 
 Name: python3-module-sphinx-reredirects
 
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: The extension for Sphinx documentation projects that handles redirects for moved pages
-License: BSD-3-Clause
+License: MIT
 Group: Development/Python3
 
 Url: https://pypi.org/project/sphinx-reredirects
@@ -34,10 +34,13 @@ to the new page location.
 %pyproject_install
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.rst *.md
 %python3_sitelibdir/%pypname/
 %python3_sitelibdir/%{pyproject_distinfo %pypname}
 
 %changelog
+* Sun Mar 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.6-alt1
+- 0.1.5 -> 0.1.6
+
 * Thu Feb 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.5-alt1
 - Initial build for ALT Linux
