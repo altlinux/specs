@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.19
+%define kernel_sublevel	.20
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -366,6 +366,13 @@ fi
 %modules_dir/build
 
 %changelog
+* Sun Mar 23 2025 Alexei Takaseev <taf@altlinux.org> 6.12.20-alt1
+- v6.12.20 (2025-03-22).
+- config: Disable obsolete input tablet drivers.
+- config-aarch64: enable more configs of battery and charger.
+- arm64: add dts for SoM NMS-SM-RK3568 and computer VSNF.466459.001 on
+  its basis.
+
 * Fri Mar 14 2025 Alexei Takaseev <taf@altlinux.org> 6.12.19-alt1
 - v6.12.19 (2025-03-13).
 
