@@ -1,6 +1,6 @@
 Name: istioctl
 Version: 1.25.0
-Release: alt1
+Release: alt2
 
 Summary: CLI for the istio service mesh in Kubernetes
 
@@ -40,6 +40,8 @@ Zsh command line completion support for %name.
 
 %prep
 %setup -a1
+sed '/buildVersion/s|"unknown"|"%version"|' \
+   -i pkg/version/version.go
 
 %build
 go build \
@@ -82,6 +84,9 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Mar 24 2025 Leontiy Volodin <lvol@altlinux.org> 1.25.0-alt2
+- Fixed istioctl version (ALT #53401).
+
 * Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 1.25.0-alt1
 - New version 1.25.0.
 
