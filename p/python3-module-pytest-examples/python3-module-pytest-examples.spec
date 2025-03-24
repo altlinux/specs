@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.15
+Version: 0.0.17
 Release: alt1
 
 Summary: Pytest plugin for testing examples in docstrings and markdown files
@@ -72,6 +72,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 24 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.17-alt1
+- Updated to 0.0.17.
+
 * Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.0.15-alt1
 - Updated to 0.0.15.
 
