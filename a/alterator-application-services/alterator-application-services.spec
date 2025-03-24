@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-services
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Alterator application for managing services
@@ -42,6 +42,10 @@ Requires: alterator-module-executor >= 0.1.14
 %doc *.md
 
 %changelog
+* Mon Mar 24 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.2-alt1
+- update interface by Andrey Alekseev <parovoz@altlinux.org>
+- add search bar by Andrey Alekseev <parovoz@altlinux.org>
+
 * Tue Mar 11 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.1-alt1
 - fix missing icon on some environments by Andrey Alekseev <parovoz@altlinux.org>
 - small ui improvements by Andrey Alekseev <parovoz@altlinux.org>
