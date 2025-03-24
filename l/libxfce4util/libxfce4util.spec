@@ -3,8 +3,8 @@
 %def_disable docs
 
 Name: libxfce4util
-Version: 4.20.0
-Release: alt2
+Version: 4.20.1
+Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
@@ -124,6 +124,10 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Mon Mar 24 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
+- Updated to 4.20.1.
+- Dropped fake changelog entry.
+
 * Thu Jan 23 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
 - Added fake changelog entry.
 
@@ -135,13 +139,6 @@ Vala bindings for %name.
 
 * Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.19.4-alt1
 - Updated to 4.19.4.
-
-* Sat Nov 02 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt2.ge76cbf7
-- Backported from 4.19.4:
-  + xfce-rc: Fix support for the LANGUAGE environment variable.
-- Patch from upstream git:
-  + fileutils: Fix MD5 hash in xfce_create_shared_thumbnail_path().
-- Fixed Patch tag.
 
 * Thu May 23 2024 Mikhail Efremov <sem@altlinux.org> 4.19.3-alt1
 - devel: Dropped html documentation.
