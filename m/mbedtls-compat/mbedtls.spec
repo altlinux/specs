@@ -9,8 +9,8 @@
 %filter_from_provides /^pkgconfig(mbedx509)/d
 
 Name: %pkgname-compat
-Version: 2.28.9
-Release: alt1.1
+Version: 2.28.10
+Release: alt1
 
 Summary: Transport Layer Security protocol suite
 License: Apache-2.0 OR GPL-2.0-or-later
@@ -147,6 +147,12 @@ sed -i 's/-Werror/-Wno-error/' CMakeLists.txt
 %endif
 
 %changelog
+* Mon Mar 24 2025 Nazarov Denis <nenderus@altlinux.org> 2.28.10-alt1
+- New version 2.28.10.
+- Security fixes:
+  + CVE-2025-27809
+  + CVE-2025-27810
+
 * Wed Nov 06 2024 Nazarov Denis <nenderus@altlinux.org> 2.28.9-alt1.1
 - Fix FTBFS
 
