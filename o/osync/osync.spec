@@ -1,18 +1,19 @@
 Name: 	  osync
 Version:  1.3
-Release:  alt1
+Release:  alt2
 
 Summary:  A robust two way (bidirectional) file sync script based on rsync with fault tolerance
 License:  BSD
-Group:    Other
+Group:    Archiving/Backup
 Url: 	  http://www.netpower.fr/osync
 # VCS:	  https://github.com/deajan/osync
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
-Patch:    %name-services.patch
+Patch:    %name-1.3-alt-services.patch
 
+Requires: inotify-tools
 BuildArch: noarch
 %filter_from_requires /^\/usr\/bin\/mail.php$/d
 
@@ -25,7 +26,7 @@ and can be run manually, by cron, or triggered via inotifytools
 
 %prep
 %setup
-%patch -p1
+%patch
 # Replace all /usr/local/bin by /usr/bin
 subst 's,/usr/local/bin,%_bindir,g' *.lyx *.sh osync*srv* *.md *.service*
 
@@ -36,11 +37,18 @@ install -Dp -m 0644 sync.conf.example %buildroot%_sysconfdir/osync/sync.conf
 # Fix command interpreter for executables
 subst '1,1 s,^.*,#!/bin/bash,' %buildroot%_bindir/*.sh
 
-%post
-%post_service osync-srv
-
-%preun
-%preun_service osync-srv
+%pre
+if [ $1 -eq 1 ]; then
+    echo "Before running service its necessery to edit configuration file:"
+    echo "INITIATOR_SYNC_DIR variable must contain existent directory with"
+    echo "stuff to be synced."
+    echo "TARGET_SYNC_DIR can be local/remote(e.g. NFS) location or"
+    echo "SSH destination where to place backup."
+    echo ""
+    echo "Enable %{name}-srv as template (systemd.unit(5))."
+    echo "with instantiated configuration file, e.g."
+    echo "# systemctl enable %{name}-srv@sync.conf.service"
+fi
 
 %files
 %doc *.md *.lyx
@@ -48,12 +56,17 @@ subst '1,1 s,^.*,#!/bin/bash,' %buildroot%_bindir/*.sh
 %dir %_sysconfdir/osync/
 %config(noreplace) %_sysconfdir/osync/sync.conf
 %_sysconfdir/osync/*.example
-%_initdir/osync-srv
-%_initdir/osync-target-helper-srv
 %_unitdir/*.service
 %_userunitdir/*.service.user
 
 %changelog
+* Mon Mar 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3-alt2
+- Changed package group.
+- Satisfied inotifywait requirement.
+- Edited patch to avoid SysV-init script installing in addition to
+  already installed systemd unit.
+- Service triggers removed until backup configured.
+
 * Mon Sep 16 2024 Andrey Cherepanov <cas@altlinux.org> 1.3-alt1
 - New version.
 
