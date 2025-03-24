@@ -6,8 +6,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name:    openvpn-%oname
-Version: 1.3.0
-Release: alt1.git17417199
+Version: 2.0.0
+Release: alt1
 
 BuildArch: noarch
 
@@ -70,5 +70,8 @@ rm -rf %buildroot%_defaultdocdir
 %_datadir/polkit-1/rules.d/*.rules
 
 %changelog
+* Mon Mar 24 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Tue Jun 25 2024 Ivan A. Melnikov <iv@altlinux.org> 1.3.0-alt1.git17417199
 - Initial build for Sisyphus
