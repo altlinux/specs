@@ -5,7 +5,7 @@
 %define gtk3_soname 4
 
 Name: xfce4-panel
-Version: 4.20.3
+Version: 4.20.4
 Release: alt1
 
 Summary: Panel for Xfce
@@ -19,16 +19,18 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+%define xfce_min_vers 4.18.0
+
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildRequires: libxfce4util-devel >= 4.17.2-alt1
-BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.11.2 libgarcon-gtk3-devel >= 4.17.0
+BuildRequires: libxfce4util-devel >= %xfce_min_vers
+BuildRequires: libxfce4ui-gtk3-devel >= %xfce_min_vers libexo-gtk3-devel >= %xfce_min_vers libgarcon-gtk3-devel >= %xfce_min_vers
 Buildrequires: libxfce4windowing-devel >= 4.20.1-alt1
 BuildRequires: libX11-devel libXext-devel libwnck3-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libwayland-client-devel libgtk-layer-shell-devel
 BuildRequires: libdbusmenu-gtk3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel >= 4.15.6-alt1}
-%{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala >= 4.15.6-alt1}
+%{?_enable_vala:BuildRequires: vala-tools libxfce4util-vala >= %xfce_min_vers}
 # NOTE: gtk-doc is required by build system even if docs are disabled.
 BuildRequires: gtk-doc
 
@@ -122,7 +124,6 @@ Vala bindings for libxfce4panel-gtk3.
 %xfce4reconf
 %configure \
 	--disable-static \
-	--enable-maintainer-mode \
 	--enable-x11 \
 	--enable-wayland \
 	%{subst_enable introspection} \
@@ -179,6 +180,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Mon Mar 24 2025 Mikhail Efremov <sem@altlinux.org> 4.20.4-alt1
+- Updated to 4.20.4.
+
 * Tue Feb 04 2025 Mikhail Efremov <sem@altlinux.org> 4.20.3-alt1
 - Updated to 4.20.3.
 
