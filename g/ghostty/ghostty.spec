@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Ghostty terminal emulator
@@ -28,7 +28,6 @@ Source: %name-%version%beta.tar
 Source1: %name-%version%beta-vendor.tar
 
 ExclusiveArch: %zig_arches
-#ExclusiveArch: x86_64
 
 %define adwaita_ver 1.6
 
@@ -111,10 +110,17 @@ EOF
 %doc README*
 
 %files nautilus
-%_datadir/nautilus-python/extensions/%xdg_name.py
+%_datadir/nautilus-python/extensions/%name.py
 %_datadir/nautilus-python/extensions/__pycache__/*
 
+%exclude %_datadir/bat/syntaxes/%name.sublime-syntax
+# kf6-kio
+%exclude %_datadir/kio/servicemenus/%xdg_name.desktop
+
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Fri Jan 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
