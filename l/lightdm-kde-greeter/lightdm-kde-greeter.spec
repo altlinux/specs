@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 6.0.2
-Release: alt4
+Release: alt5
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -14,6 +14,11 @@ Source: %name-%version.tar
 Patch1: add-russian-translations-to-desktop-files.patch
 Patch2: update-the-position-of-the-user-list-more-late.patch
 Patch3: don-t-zero-messages-list-s-width.patch
+Patch4: fix-white-font-in-the-input-field.patch
+
+%ifarch aarch64
+%define optflags_lto %nil
+%endif
 
 %K6init
 
@@ -49,6 +54,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %K6build \
@@ -88,6 +94,10 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Mar 24 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt5
+- fix white font in the input field (Closes: 53565)
+- disable lto for aarch64 (Closes: 52076)
+
 * Wed Mar 05 2025 Anton Golubev <golubevan@altlinux.org> 6.0.2-alt4
 - don't zero messages list's width
 
