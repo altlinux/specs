@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: converseen
-Version: 0.12.2.5
+Version: 0.13.0.0
 Release: alt1
 Summary: Converseen is a free cross-platform batch image processor
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений
@@ -61,6 +61,9 @@ desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Mar 24 2025 Anton Midyukov <antohami@altlinux.org> 0.13.0.0-alt1
+- New version 0.13.0.0.
+
 * Sun Feb 23 2025 Anton Midyukov <antohami@altlinux.org> 0.12.2.5-alt1
 - New version 0.12.2.5.
 
