@@ -11,7 +11,7 @@
 %endif
 
 Name: ravada
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -207,6 +207,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Mon Mar 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.3-alt1
+- 2.3.3
+
 * Fri Feb 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.2-alt1
 - 2.3.2
 - add get_fallback.pl to download web scripts and css (ALT #51894)
