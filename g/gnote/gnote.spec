@@ -2,7 +2,7 @@
 
 %define rdn_name org.gnome.Gnote
 %define _rdn_name org.gnome.gnote
-%define ver_major 47
+%define ver_major 48
 %define api_ver %ver_major
 %define beta %nil
 %define _libexecdir %_prefix/libexec
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnote
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Note-taking application
@@ -80,6 +80,9 @@ and consumes fewer resources.
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Jan 06 2025 Yuri N. Sedunov <aris@altlinux.org> 47.2-alt1
 - 47.2
 
