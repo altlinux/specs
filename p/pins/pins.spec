@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name Pins
 %define binary_name pinapp
-%define ver_major 2.1
+%define ver_major 2.2
 %define rdn_name io.github.fabrialberio.%binary_name
 
 %def_enable check
@@ -25,7 +25,7 @@ Source: %_name-%version.tar
 Source: %url/archive/v%version/%_name-%version.tar.gz
 %endif
 
-%define adw_ver 1.4
+%define adw_ver 1.7
 
 Requires: dconf
 
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Fri Mar 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 
