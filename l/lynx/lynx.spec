@@ -4,7 +4,7 @@
 
 Name: lynx
 Version: %ver
-Release: alt1.%subver
+Release: alt2.%subver
 
 Summary: Text based browser for the world wide web
 License: GPLv2
@@ -57,6 +57,9 @@ Data files for lynx
 #patch5 -p1
 %patch6 -p1
 %patch7 -p0
+
+# use unicode by default (ALT 51483)
+sed 's/^#CHARACTER_SET:.*/CHARACTER_SET:utf-8/' -i lynx.cfg
 
 %build
 #sed -i "s|\\$\\(SSL_DIR\\)/include|%_includedir/openssl|" makefile.in
@@ -160,6 +163,9 @@ install -m 644 %SOURCE101 %buildroot/%_liconsdir/lynx.xpm
 %_datadir/%name
 
 %changelog
+* Fri Mar 21 2025 Constantin Sunzow <protvin@altlinux.org> 2.9.2-alt2.rel.0
+- Use unicode by default in lynx.cfg (ALT 51483).
+
 * Thu Oct 31 2024 Alexei Takaseev <taf@altlinux.org> 2.9.2-alt1.rel.0
 - 2.9.2 (Fixes: CVE-2021-38165)
 
