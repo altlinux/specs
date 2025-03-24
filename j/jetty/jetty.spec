@@ -58,7 +58,7 @@ BuildRequires: jpackage-default
 %global appdir      %{jettylibdir}/webapps
 
 
-%global addver  .v20240826
+%global addver  .v20241219
 
 # minimal version required to build eclipse and thermostat
 # eclipse needs: util, server, http, continuation, io, security, servlet
@@ -67,7 +67,7 @@ BuildRequires: jpackage-default
 %bcond_without  jp_minimal
 
 Name:           jetty
-Version:        9.4.56
+Version:        9.4.57
 Release:        alt1
 Summary:        Java Webserver and Servlet Container
 
@@ -145,12 +145,12 @@ BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-policy)
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  glassfish-el
 BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
-BuildRequires:  junit5
 
 # duplicate providers, choose one
 BuildRequires:  jboss-websocket-1.0-api
 Requires:       jboss-websocket-1.0-api
 %endif
+BuildRequires:  junit5
 
 BuildArch:      noarch
 
@@ -1053,6 +1053,9 @@ exit 0
 %doc --no-dereference LICENSE NOTICE.txt LICENSE-MIT
 
 %changelog
+* Mon Mar 24 2025 Andrey Cherepanov <cas@altlinux.org> 9.4.57-alt1
+- New version (fixes CVE-2024-6763)
+
 * Thu Nov 21 2024 Andrey Cherepanov <cas@altlinux.org> 9.4.56-alt1
 - New version.
 - Change URL to https://jetty.org/
