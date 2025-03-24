@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.4.0
+Version: 7.5.1
 Release: alt1
 
 Summary: OpenStack Oslo Rootwrap
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-debtcollector >= 3.0.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 
 %if_with check
@@ -115,6 +116,9 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 7.5.1-alt1
+- Automatically updated to 7.5.1.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 7.4.0-alt1
 - Automatically updated to 7.4.0.
 

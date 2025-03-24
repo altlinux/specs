@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 
 Summary: An SDK for building applications to work with OpenStack
@@ -144,6 +144,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
+- Automatically updated to 4.4.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Automatically updated to 4.3.0.
 

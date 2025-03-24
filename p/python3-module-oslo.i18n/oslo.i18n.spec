@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.5.0
+Version: 6.5.1
 Release: alt1
 
 Summary: OpenStack Oslo i18n library
@@ -110,6 +110,9 @@ install -pDm 644 man/osloi18n.1 %buildroot%_man1dir/osloi18n.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 6.5.1-alt1
+- Automatically updated to 6.5.1.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 6.5.0-alt1
 - Automatically updated to 6.5.0.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.7.0
+Version: 3.7.1
 Release: alt1
 
 Summary: Python client library for OpenStack Aodh
@@ -113,6 +113,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.7.1-alt1
+- Automatically updated to 3.7.1.
+
 * Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 

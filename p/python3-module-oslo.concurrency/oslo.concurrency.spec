@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 
 Summary: OpenStack Oslo Concurrency library
@@ -36,6 +36,7 @@ BuildRequires: python3-module-eventlet >= 0.35.2
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-debtcollector >= 3.0.0
 %endif
 
 %if_with docs
@@ -114,6 +115,9 @@ install -pDm 644 man/osloconcurrency.1 %buildroot%_man1dir/osloconcurrency.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 7.1.0-alt1
+- Automatically updated to 7.1.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.0-alt1
 - Automatically updated to 7.0.0.
 

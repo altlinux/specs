@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.9.1
+Version: 5.10.0
 Release: alt1
 
 Summary: Authentication Library for OpenStack Identity
@@ -122,6 +122,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 5.10.0-alt1
+- Automatically updated to 5.10.0.
+
 * Sat Feb 01 2025 Grigory Ustinov <grenka@altlinux.org> 5.9.1-alt1
 - Automatically updated to 5.9.1.
 

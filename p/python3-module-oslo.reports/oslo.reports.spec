@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary: OpenStack Oslo reports library
@@ -123,6 +123,9 @@ install -pDm 644 man/osloreports.1 %buildroot%_man1dir/osloreports.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.5.1-alt1
+- Automatically updated to 3.5.1.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
 - Automatically updated to 3.5.0.
 

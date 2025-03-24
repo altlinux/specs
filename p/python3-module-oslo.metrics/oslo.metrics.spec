@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: OpenStack Oslo Metrics API
@@ -31,7 +31,6 @@ BuildRequires: python3-module-prometheus_client
 %if_with check
 BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-bandit >= 1.7.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 %endif
@@ -111,6 +110,9 @@ install -pDm 644 man/oslometrics.1 %buildroot%_man1dir/oslometrics.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Automatically updated to 0.11.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
 - Automatically updated to 0.10.1.
 

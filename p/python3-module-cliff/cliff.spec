@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.8.0
+Version: 4.9.1
 Release: alt1
 
 Summary: OpenStack Command Line Interface Formulation Framework
@@ -109,6 +109,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
+- Automatically updated to 4.9.1.
+
 * Thu Nov 28 2024 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
 - Automatically updated to 4.8.0.
 

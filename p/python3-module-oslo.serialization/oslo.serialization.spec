@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.6.0
+Version: 5.7.0
 Release: alt1
 
 Summary: OpenStack Oslo Serialization library
@@ -25,7 +25,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-msgpack >= 0.5.2
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-pytz >= 2013.6
 
 %if_with check
 BuildRequires: python3-module-netaddr >= 0.7.18
@@ -109,6 +108,9 @@ install -pDm 644 man/osloserialization.1 %buildroot%_man1dir/osloserialization.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 5.7.0-alt1
+- Automatically updated to 5.7.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.6.0-alt1
 - Automatically updated to 5.6.0.
 

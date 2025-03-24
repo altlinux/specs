@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: OpenStack Common code for writing OpenStack upgrade checks
@@ -33,7 +33,6 @@ BuildRequires: python3-module-hacking >= 6.1.0
 BuildRequires: python3-module-oslotest >= 3.5.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-oslo.serialization >= 2.21.1
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -111,6 +110,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
+- Automatically updated to 2.5.0.
+
 * Thu Oct 03 2024 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 

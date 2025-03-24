@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Useful additions to futures, from the future
@@ -30,14 +30,13 @@ BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-debtcollector >= 3.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-doc8 >= 0.6.0
 %endif
 
 %description
@@ -110,6 +109,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Thu May 30 2024 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 

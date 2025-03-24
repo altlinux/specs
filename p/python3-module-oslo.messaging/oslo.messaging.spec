@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 16.0.0
+Version: 16.1.0
 Release: alt1
 
 Summary: OpenStack Oslo Messaging API
@@ -135,6 +135,9 @@ install -pDm 644 man/oslomessaging.1 %buildroot%_man1dir/oslomessaging.1
 %endif
 
 %changelog
+* Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 1:16.1.0-alt1
+- Automatically updated to 16.1.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 1:16.0.0-alt1
 - Automatically updated to 16.0.0.
 
