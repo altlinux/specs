@@ -6,11 +6,11 @@
 %def_enable check
 
 Name: gnome-network-displays
-Version: 0.94.0
+Version: 0.95.0
 Release: alt1
 
 Summary: Miracast streaming GUI
-License: GPL-3.0
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/GNOME/gnome-network-displays
 
@@ -21,6 +21,8 @@ Source0: %name.tar
 
 %define nm_ver 1.15.1
 %define gst_ver 1.14
+
+Requires: xdg-desktop-portal
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -66,6 +68,9 @@ Choose a wireless display and stream your desktop to it.
 %doc README.md COPYING
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.95.0-alt1
+- 0.95.0
+
 * Thu Nov 14 2024 Yuri N. Sedunov <aris@altlinux.org> 0.94.0-alt1
 - 0.94.0
 
