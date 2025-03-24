@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name dramatiq
+%define mod_name dramatiq
 
 # tests require rabbitmq, redis, prometheus running services
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.17.0
+Version: 1.17.1
 Release: alt1
 
 Summary: A fast and reliable distributed task processing library for Python 3
@@ -48,11 +49,15 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %doc COPYING COPYING.LESSER README.md
-%_bindir/%{pypi_name}*
-%python3_sitelibdir/%pypi_name/
+%_bindir/dramatiq
+%_bindir/dramatiq-gevent
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 24 2025 Anton Zhukharev <ancieg@altlinux.org> 1.17.1-alt1
+- Updated to 1.17.1.
+
 * Thu May 16 2024 Anton Zhukharev <ancieg@altlinux.org> 1.17.0-alt1
 - Updated to 1.17.0.
 
