@@ -1,9 +1,9 @@
 %def_without check
 
 Name: drbd9
-Version: 9.2.12
+Version: 9.2.13
 Release: alt1
-%define githash 2da6f528dc4ab3fd25c511f7b03531100e54ab08
+%define githash 0457237e0448663529fe161781873b356f17b3c5
 
 Summary: The Linux kernel code for DRBD9
 License: GPLv2
@@ -62,6 +62,9 @@ make -C drbd KDIR=/lib/modules/*-*-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Mon Mar 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.13-alt1
+- 9.2.13
+
 * Mon Nov 18 2024 Andrew A. Vasilyev <andy@altlinux.org> 9.2.12-alt1
 - 9.2.12
 
