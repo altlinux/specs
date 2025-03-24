@@ -15,7 +15,7 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.13.10.0
+Version: 1.13.12.0
 Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -199,6 +199,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/*.so
 
 %changelog
+* Fri Jan 17 2025 L.A. Kostis <lakostis@altlinux.ru> 1.13.12.0-alt0.1
+- v1.13.12.0.
+
 * Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.10.0-alt0.1
 - 1.13.10.0.
 - compile with llvm18.

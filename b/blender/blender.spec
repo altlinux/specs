@@ -57,7 +57,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt4
+Release: alt5
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -78,6 +78,7 @@ Patch25: blender-3.4.1-gcc-13-fix.patch
 Patch26: blender-4.0.1-alt-pcre.patch
 Patch27: blender-4.3.0-upstream-Fix-FFmpeg-deprecation-warnings.patch
 Patch28: blender-4.3.0-upstream-Fix-Remove-internal-ffmpeg-API-usage-fix-ffmpeg-7-co.patch
+Patch29: blender-4.3.0-upstream-Cycles-Support-building-with-OpenVDB-12.patch
 
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
@@ -304,6 +305,7 @@ This package contains binaries for Nvidia GPUs to use with CUDA.
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
+%patch29 -p1 -b .openvdb12-support
 
 #%%patch30 -p1
 %patch31 -p1
@@ -476,6 +478,10 @@ popd
 %endif
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt5
+- Added fixes from upstream:
+  + cycles: added openvdb 12.x support.
+
 * Thu Feb 06 2025 Egor Ignatov <egori@altlinux.org> 4.3.0-alt4
 - Fix incorrect Provides/Obsoletes made in the previous release.
 

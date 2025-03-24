@@ -11,28 +11,29 @@
 %set_verify_elf_method strict
 %endif
 
+# for cuda
+%define gcc_ver 13
+
 %ifarch x86_64
 %def_with cuda
 %else
 %def_without cuda
 %endif
 
-%define soname 10.1
+%define soname 12.0
 
 Name: openvdb
-Version: 10.1.0
-Release: alt3.1
+Version: 12.0.0
+Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
-License: MPL-2.0-no-copyleft-exception
+License: Apache-2.0
 URL: https://www.openvdb.org
 
 # https://github.com/AcademySoftwareFoundation/openvdb
 Source: %name-%version.tar
 
 Patch1: openvdb-8.0.0-alt-link-with-libatomic-on-mips.patch
-Patch2: openvdb-10.1.0-add-missing-header.patch
-
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel boost-interprocess-devel
@@ -51,9 +52,11 @@ BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(zlib) > 1.2.7
 BuildRequires: pkgconfig(python3)
 BuildRequires: python3-module-numpy libnumpy-py3-devel
-BuildRequires: pybind11-devel
+BuildRequires: python3-module-nanobind
 %if_with cuda
-BuildRequires: nvidia-cuda-devel-static
+BuildRequires: nvidia-cuda-devel-static gcc%{gcc_ver}-c++
+# due different gcc our LTO data will clash
+%define optflags_lto %nil
 %endif
 
 %description
@@ -124,6 +127,9 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %endif
 
 %build
+%if_with cuda
+export GCC_VERSION=%gcc_ver
+%endif
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
@@ -140,8 +146,9 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 	-DOPENVDB_IMATH_VERSION=3 \
 	-DOPENVDB_BUILD_NANOVDB:BOOL=ON \
 	-DCMAKE_BUILD_TYPE=%build_type \
+	-Dnanobind_DIR=%python3_sitelibdir_noarch/nanobind/cmake \
 %ifarch x86_64
-	-DOPENVDB_SIMD=SSE42 \
+	-DOPENVDB_SIMD=AVX \
 %endif
 %if_with cuda
 	-DNANOVDB_USE_CUDA=ON \
@@ -167,7 +174,7 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %_libdir/lib%{name}.so.%{soname}.*
 
 %files -n python3-module-%name
-%python3_sitelibdir/py%{name}.cpython-*.so
+%python3_sitelibdir/%{name}.cpython-*.so
 
 %files devel
 %_includedir/*
@@ -178,8 +185,12 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %_defaultdocdir/OpenVDB
 
 %changelog
-* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 10.1.0-alt3.1
-- NMU: fix building with boost 1.84.0-alt1
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.0-alt1
+- 12.0.0.
+- upstream changed License MPL->APL.
+- BR: pybind11 -> nanobind.
+- BR: SSE42 -> AVX.
+- cuda/BR: build with gcc13 and disable LTO.
 
 * Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 10.1.0-alt3
 - E2K: fix build (lcc 1.26.x pretends to be like gcc 9.3.0)
