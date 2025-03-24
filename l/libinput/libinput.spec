@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.27.1
+Version: 1.28.0
 Release: alt1
 
 Summary: Input devices library
@@ -16,10 +16,11 @@ Group: System/Libraries
 License: MIT
 Url: http://www.freedesktop.org/wiki/Software/libinput/
 
+Vcs: https://gitlab.freedesktop.org/libinput/libinput.git
+
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/%name/%name/-/archive/%version/%name-%version.tar.bz2
 %else
-Vcs: https://gitlab.freedesktop.org/libinput/libinput.git
 Source: %name-%version.tar
 %endif
 
@@ -193,6 +194,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
+- 1.28.0
+
 * Mon Jan 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.27.1-alt1
 - 1.27.1
 
