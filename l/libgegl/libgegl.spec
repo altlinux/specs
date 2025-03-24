@@ -6,7 +6,7 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.56
+Version: %api_ver.58
 Release: alt1
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
@@ -99,6 +99,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Mon Mar 24 2025 Valery Inozemtsev <shrek@altlinux.ru> 0.4.58-alt1
+- 0.4.58
+
 * Tue Mar 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 0.4.56-alt1
 - 0.4.56
 
