@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.9.0
+Version: 4.9.1
 Release: alt1
 
 Summary: Pytest Snapshot Test Utility
@@ -49,6 +49,9 @@ to write tests which assert immutability of computed results.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 25 2025 Grigory Ustinov <grenka@altlinux.org> 4.9.1-alt1
+- Automatically updated to 4.9.1.
+
 * Mon Mar 10 2025 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
 - Automatically updated to 4.9.0.
 
