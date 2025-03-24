@@ -6,7 +6,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 3.6.2
+Version: 3.6.3
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -17,9 +17,7 @@ Url: https://www.trustedfirmware.org/projects/mbed-tls/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/ARMmbed/%name/archive/v%version/%name-%version.tar.gz
-Source0: %name-%version.tar
-# https://github.com/Mbed-TLS/%name-framework/archive/%framework_commit/%name-framework-%framework_commit.tar.gz
-Source1: %name-framework-%framework_commit.tar
+Source: %name-%version.tar
 
 BuildRequires: cmake
 BuildRequires: libssl-devel
@@ -90,10 +88,9 @@ Group: Development/Tools
 Cryptographic utilities based on mbed TLS
 
 %prep
-%setup -b 1
-%__mv -Tf ../%name-framework-%framework_commit framework
-%ifarch %ix86
-%add_optflags -mpclmul -msse2 -maes
+%setup
+%ifarch aarch64
+%add_optflags -Wno-error=array-bounds
 %endif
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
@@ -158,6 +155,12 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Mon Mar 24 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.3-alt1
+- New version 3.6.3.
+- Security fixes:
+  + CVE-2025-27809
+  + CVE-2025-27810
+
 * Tue Oct 15 2024 Nazarov Denis <nenderus@altlinux.org> 3.6.2-alt1
 - New version 3.6.2.
 
