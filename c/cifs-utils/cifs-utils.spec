@@ -1,8 +1,8 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 7.1
-Release: alt2
+Version: 7.3
+Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -12,7 +12,6 @@ Url: https://wiki.samba.org/index.php/LinuxCIFS_utils
 Source: %name-%version.tar
 
 Patch3: cifs-utils-alt-docutils.patch
-Patch4: smbinfo-bash-completion.patch
 
 BuildRequires(pre): rpm-macros-pam0 rpm-macros-alternatives
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
@@ -52,7 +51,6 @@ provide these credentials to the kernel automatically at login.
 %prep
 %setup
 %patch3 -p1
-%patch4 -p1
 
 %build
 %autoreconf
@@ -119,6 +117,17 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Tue Mar 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 7.3-alt1
+- Update to latest stable release.
+- Major fixes from upstream:
+  + Security enhancements including support for password rotation, better
+    credential management, and namespaces.
+    * getcifsacl: fix return code check for getting full ACL.
+    * cifs-utils: support and document password2 mount option.
+    * cifs-utils: Skip TGT check if valid service ticket is already available.
+    * Do not pass passwords with sec=none and sec=krb5.
+  + Various improvements to man pages.
+
 * Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 7.1-alt2
 - Fix FTBFS: use %%_pam_modules_dir for configure.
 
