@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.42.1
+Version: 1.43.0
 Release: alt1
 
 Summary: A personal full text search package
@@ -223,6 +223,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Mar 24 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.0-alt1
+- 1.43.0
+
 * Mon Feb 10 2025 Ilya Mashkin <oddity@altlinux.ru> 1.42.1-alt1
 - 1.42.1
 
