@@ -1,6 +1,6 @@
 Name: xfce4-session
-Version: 4.20.0
-Release: alt2
+Version: 4.20.2
+Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -17,9 +17,9 @@ Source2: xfce4-xscreensaver.desktop
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.12.0 libxfce4ui-gtk3-devel >= 4.18.4
+BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.18.0 libxfce4ui-gtk3-devel >= 4.18.4
 BuildRequires: libxfce4windowing-devel >= 4.19.2
-# gdk-pixbuf-csource needed in maintainer mode
+# For gdk-pixbuf-csource
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libX11-devel iceauth libICE-devel libSM-devel libwnck3-devel
@@ -52,7 +52,6 @@ Conflicts: libxfce4windowing < 4.19.6
 %xfce4reconf
 %configure \
 	--disable-static \
-	--enable-maintainer-mode \
 	--with-backend=linux \
 	--enable-x11 \
 	--enable-wayland \
@@ -81,9 +80,14 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_datadir/xsessions/*.desktop
 %_datadir/polkit-1/actions/*.policy
 %_datadir/wayland-sessions/xfce-wayland.desktop
+%_datadir/xfce4/labwc/
 %_datadir/xdg-desktop-portal/xfce-portals.conf
 
 %changelog
+* Mon Mar 24 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
+- Dropped fake changelog entry.
+- Updated to 4.20.2.
+
 * Thu Jan 23 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt2
 - Added fake changelog entry.
 
@@ -98,10 +102,6 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 
 * Wed Oct 16 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt3.g605c7c75
 - Upstream git snapshot (master branch).
-
-* Mon Jun 10 2024 Mikhail Efremov <sem@altlinux.org> 4.18.4-alt1
-- xinitrc: Don't use absolute path for sd_booted.
-- Updated to 4.18.4.
 
 * Wed Jun 05 2024 Mikhail Efremov <sem@altlinux.org> 4.19.2-alt2
 - Packaged autostart xscreensaver desktop file again.
