@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 9.4.3
+Version: 9.5.5
 Release: alt1
 
 Summary: AMQP 0.9 client designed for asyncio and humans
@@ -72,6 +72,9 @@ Features:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 24 2025 Anton Zhukharev <ancieg@altlinux.org> 9.5.5-alt1
+- Updated to 9.5.5.
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 9.4.3-alt1
 - Updated to 9.4.3.
 
