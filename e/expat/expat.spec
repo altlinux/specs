@@ -1,14 +1,16 @@
-Name: expat
-Version: 2.6.4
-Release: alt1
-
 %define pkgdocdir %_docdir/%name-%version
 
+Name: expat
+Version: 2.7.0
+Release: alt1
+
 Summary: An XML parser written in C
+
 License: MIT
 Group: System/Base
-Url: http://www.libexpat.org/
-# http://downloads.sourceforge.net/project/expat/expat/%version/expat-%version.tar.bz2
+URL: http://www.libexpat.org
+VCS: https://github.com/libexpat/libexpat
+
 Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
@@ -99,6 +101,9 @@ popd
 %pkgdocdir/examples
 
 %changelog
+* Tue Mar 25 2025 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
+- Automatically updated to 2.7.0.
+
 * Mon Dec 09 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.4-alt1
 - Automatically updated to 2.6.4.
 
