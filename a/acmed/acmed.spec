@@ -2,7 +2,7 @@
 
 Name: acmed
 Summary: An ACME (RFC 8555) client daemon
-Version: 0.24.0
+Version: 0.25.0
 Release: alt1
 License: MIT AND Apache-2.0
 Group: Networking/WWW
@@ -80,6 +80,9 @@ useradd -r -N -g %name -c 'ACME client daemon' -s /sbin/nologin \
 %attr(0700,%name,%name) %dir %_sharedstatedir/%name/accounts
 
 %changelog
+* Tue Mar 25 2025 Alexey Shabalin <shaba@altlinux.org> 0.25.0-alt1
+- 0.25.0.
+
 * Thu Jan 23 2025 Alexey Shabalin <shaba@altlinux.org> 0.24.0-alt1
 - 0.24.0.
 
