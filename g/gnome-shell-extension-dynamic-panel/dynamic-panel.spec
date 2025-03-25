@@ -2,8 +2,8 @@
 %define nameU dynamic-panel
 
 Name: gnome-shell-extension-dynamic-panel
-Version: 4.10.1
-Release: alt2
+Version: 4.10.2
+Release: alt1
 
 Summary: Dynamic top panel
 Summary(ru_RU.UTF-8): Динамическая верхняя панель
@@ -32,7 +32,7 @@ dark mode and light mode switching.
 %prep
 %setup -n %nameU-%version
 
-subst 's|"47"|"47", "48"|' metadata.json
+# subst 's|"47"|"47", "48"|' metadata.json
 
 %build
 %install
@@ -50,6 +50,9 @@ cp metadata.json %buildroot%_datadir/gnome-shell/extensions/%exID/metadata.json
 %doc *.md LICENSE 
 
 %changelog
+* Tue Mar 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.10.2-alt1
+- 4.10.1 -> 4.10.2
+
 * Wed Mar 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.10.1-alt2
 - fixed for GNOME 48
 

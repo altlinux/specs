@@ -1,5 +1,5 @@
 Name: tuifeed
-Version: 0.3.2
+Version: 0.4.1
 Release: alt1
 
 Summary: A terminal feed reader with a fancy ui
@@ -11,8 +11,6 @@ VCS: https://github.com/veeso/tuifeed
 Source0: %name-%version.tar
 Source1: vendor.tar
 
-ExclusiveArch: x86_64 i586 aarch64
- 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
@@ -22,7 +20,7 @@ It allows you read news from your favourite RSS and Atom sources,
 which can be easily configured in a TOML file.
 
 %prep
-%setup
+%setup -a1
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
 [source.crates-io]
@@ -31,8 +29,6 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
-
-tar -xf %SOURCE1 -C %_builddir/%name-%version/
 
 %build
 %rust_build 
@@ -65,5 +61,8 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %_datadir/applications/%name.desktop
 
 %changelog
+* Tue Mar 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.1-alt1
+- 0.3.2 -> 0.4.1
+
 * Mon Feb 24 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.2-alt1
 - Initial build for ALT Linux.
