@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: CLI for alterator browser
@@ -15,7 +15,8 @@ BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-backend-packages alterator-interface-component alterator-backend-component_categories 
-Requires: alterator-backend-batch-components alterator-backend-batch-component_categories alterator-interface-edition 
+Requires: alterator-backend-batch-components >= 0.1.3
+Requires: alterator-backend-batch-component_categories alterator-interface-edition
 Requires: alterator-interface-diag alterator-backend-systeminfo
 Requires: libtomlc99 polkit
 
@@ -39,6 +40,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Wed Mar 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.3-alt1
+- New version depending on the version of the alterator-backend-batch-components depending on the version
+
 * Tue Mar 18 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.2-alt1
 - New version
 
