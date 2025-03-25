@@ -5,7 +5,7 @@
 %def_with docs
 
 Name: python3-module-%pypi_name
-Version: 1.36.2
+Version: 1.37.0
 Release: alt1
 Summary: A linter for YAML files
 License: GPLv3
@@ -76,6 +76,9 @@ install -D -m0644 docs/_build/man/yamllint.1 %buildroot/%_man1dir/yamllint.1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 24 2025 Stanislav Levin <slev@altlinux.org> 1.37.0-alt1
+- 1.36.2 -> 1.37.0.
+
 * Mon Mar 17 2025 Stanislav Levin <slev@altlinux.org> 1.36.2-alt1
 - 1.36.0 -> 1.36.2.
 
