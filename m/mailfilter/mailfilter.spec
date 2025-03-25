@@ -1,17 +1,16 @@
-# unpackaged files in buildroot should terminate build
-%define _unpackaged_files_terminate_build 1
-
 Name: mailfilter
-Version: 0.8.6
-Release: alt1.1
+Version: 0.8.9
+Release: alt1
 
 Summary: A program that filters your incoming e-mail to help remove spam
+
 License: GPLv2+
 Group: Networking/Mail
-Url: http://mailfilter.sourceforge.net/
+URL: http://mailfilter.sourceforge.net
+VCS: https://github.com/nondeterministic/mailfilter
 
 Source: %name-%version.tar
-Patch1: %name-%version-alt.patch
+Patch1: mailfilter-alt-fixes.patch
 
 BuildRequires: flex gcc-c++ libssl-devel
 
@@ -30,6 +29,7 @@ sed -n '/^3\./,/^4\./p' INSTALL | grep -v '^[34]\.' > doc/rcfile.example
 
 %build
 %add_optflags
+./autogen.sh
 %configure
 %make_build
 
@@ -48,6 +48,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_mandir/*/*
 
 %changelog
+* Tue Mar 25 2025 Grigory Ustinov <grenka@altlinux.org> 0.8.9-alt1
+- Build new version.
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.8.6-alt1.1
 - NMU: Rebuild with new openssl 1.1.0.
 
