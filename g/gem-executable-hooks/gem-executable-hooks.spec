@@ -5,7 +5,7 @@
 %define        gemname executable-hooks
 
 Name:          gem-executable-hooks
-Version:       1.7.1.1
+Version:       1.7.1.2
 Release:       alt0.1
 Summary:       Hook into rubygems executables allowing extra actions to be taken before executable is run
 License:       Apache-2.0
@@ -22,23 +22,23 @@ BuildConflicts: gem(tf) >= 1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Provides:      executable-hooks = %EVR
-Provides:      gem(executable-hooks) = 1.7.1.1
+Provides:      gem(executable-hooks) = 1.7.1.2
 
 %description
 Hook into rubygems executables allowing extra actions to be taken before
 executable is run.
 
-%ruby_use_gem_version executable-hooks:1.7.1.1
+%ruby_use_gem_version executable-hooks:1.7.1.2
 
 %package       -n executable-hooks-uninstaller
-Version:       1.7.1.1
+Version:       1.7.1.2
 Release:       alt0.1
 Summary:       Hook into rubygems executables allowing extra actions to be taken before executable is run executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета executable-hooks
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(executable-hooks) = 1.7.1.1
+Requires:      gem(executable-hooks) = 1.7.1.2
 
 %description   -n executable-hooks-uninstaller
 Hook into rubygems executables allowing extra actions to be taken before
@@ -50,14 +50,14 @@ executable is run executable(s).
 
 %if_enabled    doc
 %package       -n gem-executable-hooks-doc
-Version:       1.7.1.1
+Version:       1.7.1.2
 Release:       alt0.1
 Summary:       Hook into rubygems executables allowing extra actions to be taken before executable is run documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета executable-hooks
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(executable-hooks) = 1.7.1.1
+Requires:      gem(executable-hooks) = 1.7.1.2
 
 %description   -n gem-executable-hooks-doc
 Hook into rubygems executables allowing extra actions to be taken before
@@ -70,14 +70,14 @@ executable is run documentation files.
 
 %if_enabled    devel
 %package       -n gem-executable-hooks-devel
-Version:       1.7.1.1
+Version:       1.7.1.2
 Release:       alt0.1
 Summary:       Hook into rubygems executables allowing extra actions to be taken before executable is run development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета executable-hooks
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(executable-hooks) = 1.7.1.1
+Requires:      gem(executable-hooks) = 1.7.1.2
 Requires:      gem(tf) >= 0.4
 Conflicts:     gem(tf) >= 1
 
@@ -112,6 +112,7 @@ executable is run development package.
 %files         -n executable-hooks-uninstaller
 %doc CHANGELOG.md LICENSE README.md
 %_bindir/executable-hooks-uninstaller
+%_bindir/ruby_executable_hooks
 
 %if_enabled    doc
 %files         -n gem-executable-hooks-doc
@@ -126,6 +127,10 @@ executable is run development package.
 
 
 %changelog
+* Wed Mar 26 2025 Pavel Skrylev <majioa@altlinux.org> 1.7.1.2-alt0.1
+- ^ 1.7.1p1 -> 1.7.1p2
+- ! added ruby_executable_hooks to gems executables with proper rights
+
 * Fri Dec 13 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.1.1-alt0.1
 - ^ 1.7.1 -> 1.7.1p1
 - ! fixed build for spec
