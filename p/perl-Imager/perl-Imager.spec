@@ -1,8 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-# SPEC file for Perl module Imager
 
 Name: perl-Imager
-Version: 1.012
+Version: 1.026
 Release: alt1
 
 Summary: Perl module for generating 24 bit Images
@@ -13,12 +12,27 @@ Group: Development/Perl
 URL: http://imager.perl.org/
 
 Source: Imager-%version.tar
+Patch: perl-Imager-1.026-freetype-include.patch
 
 BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Thu May 02 2019
-# optimized out: gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel perl perl-CPAN-Meta-Requirements perl-Class-Inspector perl-Class-Tiny perl-Devel-Symdump perl-Encode perl-Exporter-Tiny perl-File-ShareDir perl-JSON-PP perl-Lingua-EN-Inflect perl-List-MoreUtils-XS perl-Math-BigInt perl-Parse-CPAN-Meta perl-Path-Tiny perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Text-Balanced perl-devel perl-parent perl-threads pkg-config python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4 t1lib zlib-devel
-BuildRequires: git-core libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel perl-Affix-Infix2Postfix perl-CPAN-Meta perl-Image-Math-Constrain perl-List-MoreUtils perl-Params-Util perl-Parse-RecDescent perl-PerlIO-utf8_strict perl-Pod-Spell perl-Test-Pod-Coverage perl-bignum t1lib-devel xorg-rgb
+BuildRequires: git-core
+BuildRequires: libfreetype-devel
+BuildRequires: libgif-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
+BuildRequires: libtiff-devel
+BuildRequires: perl-Affix-Infix2Postfix
+BuildRequires: perl-CPAN-Meta
+BuildRequires: perl-Image-Math-Constrain
+BuildRequires: perl-List-MoreUtils
+BuildRequires: perl-Params-Util
+BuildRequires: perl-Parse-RecDescent
+BuildRequires: perl-PerlIO-utf8_strict
+BuildRequires: perl-Pod-Spell
+BuildRequires: perl-Test-Pod-Coverage
+BuildRequires: perl-bignum
+BuildRequires: t1lib-devel
+BuildRequires: xorg-rgb
 
 %description
 Imager is a module for creating and altering images. It can
@@ -35,6 +49,7 @@ Imager - модуль  Perl для  создания  и работы с  гра
 
 %prep
 %setup  -n Imager-%version
+%patch -p1
 
 %build
 IM_SUPPRESS_PROM=1 %perl_vendor_build
@@ -49,6 +64,9 @@ IM_SUPPRESS_PROM=1 %perl_vendor_build
 %exclude /.perl.req
 
 %changelog
+* Tue Mar 25 2025 Constantin Sunzow <protvin@altlinux.org> 1.026-alt1
+- New version.
+
 * Sun Jun 28 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.012-alt1
 - New version
 
