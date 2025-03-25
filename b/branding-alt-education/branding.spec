@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define brand alt
 %define Brand ALT
 %define theme education
@@ -26,7 +28,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.5.beta
+Release: alt0.6.beta
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -303,6 +305,7 @@ License: GPL-2.0
 Group: System/Base
 Requires(post): lightdm
 %branding_add_conflicts %flavour system-settings
+Conflicts: branding-xalt-kworkstation-graphics
 
 %description system-settings
 Some system settings for %distro_name.
@@ -449,6 +452,8 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 
 %files system-settings
 %config %_sysconfdir/polkit-1/rules.d/*.rules
+/etc/skel/.config/autostart/*.desktop
+%exclude /etc/skel/.config/autostart/nm-applet.desktop
 /etc/skel/.config/meditrc
 /etc/skel/.config/user-dirs.locale
 /etc/skel/.config/fontconfig/
@@ -458,6 +463,10 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.recoll
 
 %changelog
+* Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.6.beta
+- system-settings conflicted with branding-xalt-kworkstation-graphics.
+- system-settings: packaged all other autstart override rules.
+
 * Mon Mar 17 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.5.beta
 - kde-settings: returned chromium icon to panel.
 - kde-settings: adapted Plasma settings for KDE6.
