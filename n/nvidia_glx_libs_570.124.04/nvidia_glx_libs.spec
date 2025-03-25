@@ -21,10 +21,10 @@
 %define nv_version 570
 %define nv_release 124
 %define nv_minor   04
-%define pkg_rel alt1
-%define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
+%define pkg_rel alt2
+%define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
-%define nv_version_full %{nv_version}.%{nv_release}
+%define nv_version_full %nv_version.%nv_release
 %endif
 Name: nvidia_glx_libs_%nv_version_full
 Version: %nv_version_full
@@ -196,7 +196,12 @@ install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-fbc.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-opticalflow.so.%version %buildroot/%_libdir/
 %ifarch x86_64
-#install -m 0644 %subd/libnvidia-vksc-core.so.%version %buildroot/%_libdir/
+# allow to package libnvidia-vksc-core
+install -m 0644 %subd/libnvidia-glsi.so.%version %buildroot/%_libdir/
+#
+install -m 0644 %subd/libnvidia-vksc-core.so.%version %buildroot/%_libdir/
+mkdir -p %buildroot/%_datadir/vulkansc/icd.d/
+install -m0644 nvidia_icd_vksc.json %buildroot/%_datadir/vulkansc/icd.d/nvidia_icd.%_target_cpu.json
 %endif
 # all 64-bit
 %if "%_lib" != "lib"
@@ -223,7 +228,7 @@ fi
 mkdir -p  %buildroot/%_datadir/dbus-1/system.d/
 install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbus.conf
 %endif
-mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
+mkdir -p  %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 # fixing the work of CUDA rendering in DaVinci Resolve without nvidia-cuda-toolkit and more
 for l in libcuda libnvcuvid libnvidia-encode libnvidia-ml ; do
@@ -264,9 +269,10 @@ done
 %_libdir/libnvidia-opticalflow.so.%nvidia_sover
 %_libdir/libnvidia-opticalflow.so.%version
 %ifarch x86_64
-#%files -n libnvidia-vksc-core
-#%_libdir/libnvidia-vksc-core.so.%nvidia_sover
-#%_libdir/libnvidia-vksc-core.so.%version
+%files -n libnvidia-vksc-core
+%_libdir/libnvidia-vksc-core.so.%nvidia_sover
+%_libdir/libnvidia-vksc-core.so.%version
+%_datadir/vulkansc/icd.d/nvidia_icd.%_target_cpu.json
 %endif
 %if "%_lib" != "lib"
 %files -n nvidia-smi
@@ -293,6 +299,9 @@ done
 %endif
 
 %changelog
+* Tue Mar 25 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt2
+- package libnvidia-vksc-core
+
 * Tue Mar 04 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt1
 - new version
 
