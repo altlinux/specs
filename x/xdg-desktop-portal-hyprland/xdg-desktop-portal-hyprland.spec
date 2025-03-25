@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: xdg-desktop-portal-hyprland
-Version: %ver_major.6
+Version: %ver_major.9
 Release: alt1
 
 Summary: xdg-desktop-portal backend for Hyprland
@@ -13,10 +13,11 @@ Group: Graphical desktop/Other
 License: BSD-3-Clause
 Url: https://github.com/hyprwm/xdg-desktop-portal-hyprland
 
+Vcs: https://github.com/hyprwm/xdg-desktop-portal-hyprland.git
+
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/hyprwm/xdg-desktop-portal-hyprland.git
 Source: %name-%version.tar
 %endif
 
@@ -36,7 +37,7 @@ BuildRequires: pkgconfig(hyprutils)
 BuildRequires: pkgconfig(libpipewire-0.3) >= 1.2
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(libdrm)
-BuildRequires: pkgconfig(sdbus-c++)
+BuildRequires: pkgconfig(sdbus-c++) >= 2.0.0
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: qt6-tools pkgconfig(Qt6Widgets)
 
@@ -67,6 +68,12 @@ XDG Desktop Portal implementation for Hyprland.
 
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.9-alt1
+- 1.3.9
+
+* Sun Oct 27 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.7-alt1
+- 1.3.7
+
 * Sun Sep 29 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.6-alt1
 - 1.3.6
 
