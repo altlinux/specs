@@ -1,21 +1,22 @@
 %def_disable snapshot
-%define ver_major 1.13
+%define ver_major 1.14
 
 %def_enable check
 
 Name: terminology
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: EFL terminal emulator
 License: BSD-2-Clause
 Group: Terminals
 Url: http://www.enlightenment.org/p.php?p=about/terminology
 
+Vcs: https://git.enlightenment.org/enlightenment/terminology.git
+
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
 %else
-Vcs: https://git.enlightenment.org/enlightenment/terminology.git
 Source: %name-%version.tar
 %endif
 Patch: %name-1.0.0-alt-default_font.patch
@@ -68,6 +69,9 @@ EOF
 %doc AUTHORS ChangeLog* COPYING README.md
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Mon Aug 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1.1
 - added alternative for x-terminal-emulator
 
