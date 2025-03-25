@@ -1,10 +1,10 @@
-%define php_version 8.2
+%define php_version %php_defver
 %define system_requires apache2-base, apache2-mod_php%php_version, apache2-mod_ssl, mariadb-server
-%define deploy_requires deploy >= 0.4
+%define deploy_requires deploy >= 0.4.2
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
@@ -12,6 +12,7 @@ Group: System/Configuration/Other
 Source: %name-%version.tar
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-php
 Requires: %name-mediawiki = %EVR
 Requires: %name-nextcloud = %EVR
 Requires: %name-moodle = %EVR
@@ -97,6 +98,9 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
+- Used current supported PHP version in repository.
+
 * Sat Dec 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.4-alt1
 - Use PHP 8.2.
 - Add python3-module-pymysql, pwgen and curl.
