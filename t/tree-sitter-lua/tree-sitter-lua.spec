@@ -1,11 +1,11 @@
 Name: tree-sitter-lua
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Lua grammar for tree-sitter
 License: MIT
 Group: Development/Other
-Url: https://github.com/tree-sitter/tree-sitter-lua
+Url: https://github.com/tree-sitter-grammars/tree-sitter-lua
 
 Source: %name-%version.tar
 
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-lua
 %_libdir/tree-sitter-lua
 
 %changelog
+* Tue Mar 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.0-alt1
+- 0.3.0 relesed
+
 * Mon Sep 30 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.0-alt1
 - 0.2.0 released
 
