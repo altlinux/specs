@@ -2,17 +2,13 @@
 %define sover 7
 
 %def_enable check
-%ifarch %ix86 x86_64 aarch64 loongarch64 riscv64 ppc64le
 %def_with meson
-%else
-%def_without meson
-%endif
 
 %def_disable static
 
 Name: lib%_name
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: H.264 codec library
 License: BSD-2-Clause
@@ -80,6 +76,9 @@ This package provides %name static library.
 sed -i 's|^USE_ASM[[:space:]][[:space:]]*=.*|USE_ASM = No|' Makefile
 sed -i 's|^HAVE_AVX2[[:space:]][[:space:]]*:=.*|HAVE_AVX2 := No|' build/arch.mk
 %endif
+%ifarch %e2k
+sed -i "s/family == 'ppc64'/family == 'e2k'/" {,codec/*/}meson.build
+%endif
 sed -i -e 's|^CFLAGS_OPT=.*$|CFLAGS_OPT=%{optflags} %(getconf LFS_CFLAGS)|' Makefile
 #sed -i -e '/^CFLAGS_OPT=/i LDFLAGS={ldflags}' Makefile
 sed -i -e 's|^PREFIX=.*$|PREFIX=%{_prefix}|' Makefile
@@ -126,6 +125,9 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %changelog
+* Mon Mar 24 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.6.0-alt2
+- e2k build fix
+
 * Wed Feb 12 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 - built with meson for all arches
