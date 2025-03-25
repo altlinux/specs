@@ -6,8 +6,8 @@
 
 Name: libselinux
 Epoch: 1
-Version: 3.8
-Release: alt2
+Version: 3.8.1
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -126,6 +126,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8.1-alt1
+- (NMU) Updated to 3.8.1.
+
 * Mon Feb 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt2
 - (NMU) Shipped setrans.conf for systemd-tmpfiles (closes #43183).
 

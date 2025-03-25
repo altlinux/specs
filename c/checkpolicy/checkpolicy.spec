@@ -4,7 +4,7 @@
 
 Name: checkpolicy
 Epoch: 1
-Version: 3.8
+Version: 3.8.1
 Release: alt1
 Summary: SELinux policy compiler
 Group: System/Configuration/Other
@@ -53,6 +53,9 @@ done
 %_man8dir/*
 
 %changelog
+* Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8.1-alt1
+- (NMU) Updated to 3.8.1.
+
 * Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt1
 - (NMU) Updated to 3.8.
 

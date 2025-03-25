@@ -9,7 +9,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
-Version: 3.8
+Version: 3.8.1
 Release: alt1
 License: GPLv2
 Group: System/Base
@@ -421,6 +421,9 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8.1-alt1
+- (NMU) Updated to 3.8.1.
+
 * Mon Feb 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8-alt1
 - (NMU) Updated to 3.8.
 
