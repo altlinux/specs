@@ -1,9 +1,9 @@
-%define php_version 8.2
+%define php_version %php_defver
 %def_without pam
 
 Name: moodle
 Version: 4.5.3
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -13,6 +13,7 @@ Url: http://moodle.org/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-php
 BuildRequires(pre): rpm-macros-moodle
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): perl-HTML-Parser
@@ -253,6 +254,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/%php_version/apache2-mod_php/ph
 %endif
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 4.5.3-alt2
+- Use default PHP version for repository.
+
 * Wed Mar 19 2025 Andrey Cherepanov <cas@altlinux.org> 4.5.3-alt1
 - New version.
 - Security fixes: CVE-2025-26533, CVE-2025-26532, CVE-2025-26531,
