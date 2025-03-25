@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 1.4
+%def_disable snapshot
+%define ver_major 1.5
 %define rdn_name org.gnome.design.Emblem
 
 %def_disable bootstrap
@@ -14,22 +14,25 @@ License: GPL-3.0-or-later
 Group: Graphics
 Url: https://apps.gnome.org/Emblem
 
-%if_disabled snapshot
-Source: %url/archive/v%version/%name-%version.tar.gz
-%else
 Vcs: https://gitlab.gnome.org/World/design/emblem.git
+
+%if_disabled snapshot
+Source: https://gitlab.gnome.org/World/design/emblem/-/archive/%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define gtk_ver 4.14
-%define adwaita_ver 1.5
+%define gtk_ver 4.17
+%define adw_ver 1.7
+%define rsvg_ver 2.52
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
@@ -65,6 +68,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Tue Apr 16 2024 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - updated to 1.4.0-2-g7de26cf
 
