@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -112,6 +112,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed Mar 26 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.3-alt1
+- Add proxmox-backup-server and urbackup-server components to server
+  edition and urbackup-client component to server and domain editions
+
 * Tue Mar 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.2-alt1
 - Change apt-conf-branch-gostcrypto to apt-conf-branch in apt component
 - Replace alterator-legacy to main section from base
