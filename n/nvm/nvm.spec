@@ -1,5 +1,7 @@
+%def_disable   python
+
 Name:          nvm
-Version:       0.39.3
+Version:       0.40.2
 Release:       alt1
 Summary:       Node Version Manager
 License:       MIT
@@ -13,8 +15,10 @@ Source1:       nvm.profile
 Source2:       nvm.fish
 Source3:       nvm.bash
 Source4:       nvm.zsh
-#Requires:      python3-devel
-#Requires:      python3-module-simplejson
+%if_enabled    python
+Requires:      python3-devel
+Requires:      python3-module-simplejson
+%endif
 Requires:      gcc-c++
 Requires:      zlib-devel
 Requires:      openssl-devel
@@ -25,7 +29,7 @@ Requires:      libnghttp2-devel
 Requires:      libhttp-parser-devel
 Requires:      libcares-devel
 Requires:      curl
-
+Conflicts:     zsh-completions
 
 %description
 Node Version Manager - POSIX-compliant bash script to manage multiple active
@@ -52,13 +56,10 @@ install -D -m 755 %SOURCE3 %buildroot%_sysconfdir/bashrc.d/nvm.sh
 install -D -m 755 %SOURCE4 %buildroot%_datadir/zsh/site-functions/_nvm
 ln -s ../../../%_libexecdir/nvm/bash_completion %buildroot%_sysconfdir/bash_completion.d/nvm
 
-%pre
-# Add the "foreman" user and group
-getent group nvm >/dev/null || %_sbindir/groupadd -r nvm
-getent passwd nvm >/dev/null || \
-   %_sbindir/useradd -r -g nvm -G nvm -M -d %_localstatedir/nvm -s /bin/bash -c "NPM Version Manager" nvm
-exit 0
+%post
+[[ -s "/usr/lib/nvm/nvm.sh" ]] && source "/usr/lib/nvm/nvm.sh"
 
+nvm alias default system
 
 %files
 %doc README.md CODE_OF_CONDUCT.md CONTRIBUTING.md GOVERNANCE.md LICENSE.md PROJECT_CHARTER.md ROADMAP.md
@@ -68,13 +69,17 @@ exit 0
 %_sysconfdir/bashrc.d/nvm.sh
 %_datadir/zsh/site-functions/_nvm
 %_sysconfdir/bash_completion.d/nvm
-%_sysconfdir/bash_completion.d/nvm
-%dir %attr(775,nvm,nvm) %_cachedir/nvm/
-%dir %attr(775,nvm,nvm) %_localstatedir/nvm/
-%dir %attr(775,nvm,nvm) %_localstatedir/nvm/versions
-%dir %attr(775,nvm,nvm) %_localstatedir/nvm/alias
+%dir %attr(775,root,root) %_cachedir/nvm/
+%dir %attr(775,root,root) %_localstatedir/nvm/
+%dir %attr(775,root,root) %_localstatedir/nvm/versions
+%dir %attr(775,root,root) %_localstatedir/nvm/alias
 
 
 %changelog
+* Mon Aug 12 2024 Pavel Skrylev <majioa@altlinux.org> 0.40.2-alt1
+- ^ 0.39.3 -> 0.40.2
+- ! use nvm with just users (closes #49588)
+- * separated location of nvm node instances for root and regular users
+
 * Wed Apr 05 2023 Pavel Skrylev <majioa@altlinux.org> 0.39.3-alt1
 - initial build for Sisyphus
