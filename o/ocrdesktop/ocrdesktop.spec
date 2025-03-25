@@ -3,9 +3,9 @@
 
 Name:    ocrdesktop
 Version: 3.0
-Release: alt2
+Release: alt3
 
-Summary: Accessiblity tool for use the current window with OCR technique 
+Summary: Accessiblity tool for use the current window with OCR technique
 License: GPL
 Group:   Accessibility
 URL:     https://github.com/chrys87/ocrdesktop
@@ -14,13 +14,19 @@ Requires: tesseract-langpack-en
 Requires: tesseract-langpack-ru
 Requires: libwnck3-gir
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+
 BuildArch: noarch
 
 %description
-OCRdesktop is a useful accessibility tool to grab content from the screen as text via OCR technology.
+OCRdesktop is a useful accessibility tool to grab content from the screen as text via
+OCR technology.
 
-It takes an image of the current window or workspace, prepares it for better results and uses tesseract to recognize text on it. The result is presented in a caret enabled text area, in a detailed list with coordinates and confidence or in the clipboard. It also can emulate clicks on the text.
+It takes an image of the current window or workspace, prepares it for better results
+and uses tesseract to recognize text on it. The result is presented in a caret
+enabled text area, in a detailed list with coordinates and confidence or in the
+clipboard. It also can emulate clicks on the text.
 
 %prep
 %setup
@@ -46,6 +52,9 @@ install -m 644 ./%name.1.gz %buildroot%_man1dir/
  %_datadir/doc/%name/*
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 3.0-alt3
+- Cleaned-up the spec
+
 * Thu Oct 24 2024 Artem Semenov <savoptik@altlinux.org> 3.0-alt2
 - Added req to libwnck3-gir (ALT bug: 51815)
 

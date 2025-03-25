@@ -2,15 +2,18 @@
 
 Name:    gla11y
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: check accessibility of glade widgets
 License: ISC
 Group:   Development/Python3
 URL:     https://github.com/hypra/gla11y
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: help2man
 
 BuildArch: noarch
@@ -39,5 +42,8 @@ introduce accessibility regressions.
 %_man1dir/gla11y.1.xz
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 0.4-alt2
+- Cleaned-up the spec
+
 * Fri Dec 27 2024 Artem Semenov <savoptik@altlinux.org> 0.4-alt1
 - Initial build for Sisyphus (ALT bug: 52323)

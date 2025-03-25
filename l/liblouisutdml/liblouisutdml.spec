@@ -4,9 +4,9 @@
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt2
+Release: alt3
 Summary: Braille transcription library for UTDML documents
-License: LGPLv3+
+License: LGPL-3.0-or-later
 Group: Accessibility
 Url: http://liblouis.org
 Source: %name-%version.tar
@@ -19,7 +19,6 @@ Patch4: .gear/patches/0003-Fixed-segmentation-fault-in-the-file2brl-ALT-bug-513.
 
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: gcc
 BuildRequires: libtool
 BuildRequires: help2man
 BuildRequires: liblouis-devel  
@@ -28,7 +27,6 @@ BuildRequires: texinfo
 BuildRequires: texlive 
 BuildRequires: texlive-collection-basic
 BuildRequires: texlive-dist
-BuildRequires: make
 
 %description
 This is a library intended to provide complete braille transcription services
@@ -59,7 +57,6 @@ libraries and header files for developing applications that use %name.
 %package utils
 Group: Accessibility
 Summary: Utilities that convert various file formats into braille
-License: GPLv3+
 Requires: antiword
 Requires: poppler-utils
 Requires: %name = %EVR
@@ -124,6 +121,9 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_infodir/%name.info.*
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt3
+- Fixed license
+
 * Thu Oct 31 2024 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt2
 - Fixed segmentation fault in the file2brl (ALT bug: 51356)
 - Fixed build with GCC-14

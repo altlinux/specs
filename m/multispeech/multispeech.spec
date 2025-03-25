@@ -3,7 +3,7 @@
 
 Name:    multispeech
 Version: 4.6.2
-Release: alt2
+Release: alt3
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -24,9 +24,7 @@ BuildRequires: libpulseaudio-devel
 BuildRequires: autoconf-archive
 BuildRequires: automake
 BuildRequires: libtool
-BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: make
 BuildRequires: librutts-devel
 BuildRequires: libbobcat-devel
 BuildRequires: libspeechd-devel
@@ -84,6 +82,9 @@ mv -v %buildroot%_bindir/sd_%name %buildroot%_libdir/speech-dispatcher-modules/
 %_libdir/speech-dispatcher-modules/sd_%name
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt3
+- Unnecessary dependencies removed
+
 * Mon Dec 16 2024 Artem Semenov <savoptik@altlinux.org> 4.6.2-alt2
 - Fixed the build after the boost update
 

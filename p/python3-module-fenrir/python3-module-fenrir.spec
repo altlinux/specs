@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.9.8
-Release: alt2
+Release: alt3
 
 Summary: Python3 module for %pypi_name
 License: LGPL-3.0
@@ -18,8 +18,11 @@ Requires: speech-dispatcher
 Requires: python3-module-pyenchant
 Requires: python3-module-daemonize
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -29,14 +32,15 @@ Source: %pypi_name-%version.tar
 %summary
 
 %package -n %pypi_name
-Summary: An TTY screenreader for Linux.
+Summary: An TTY screenreader for Linux
 Group: Accessibility
 BuildArch: noarch
 Requires: %name = %EVR
 
 %description -n %pypi_name
 A modern, modular, flexible and fast console screenreader.
-It should run on any operating system. If you want to help, or write drivers to make it work on other systems, just let me know.
+It should run on any operating system.
+If you want to help, or write drivers to make it work on other systems, just let me know
 
 %prep
 %setup -n %pypi_name-%version
@@ -72,5 +76,8 @@ install -m 644 config/settings/settings.conf %buildroot%_sysconfdir/fenrirscreen
 %_man1dir/%pypi_name.1.xz
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 1.9.8-alt3
+- Cleaned-up the spec
+
 * Sat Nov 02 2024 Artem Semenov <savoptik@altlinux.org> 1.9.8-alt2
 - Initial build for Sisyphus (ALT bug: 51707)

@@ -3,9 +3,9 @@
 
 Name:    bobcat
 Version: 5.11.01
-Release: alt1
+Release: alt2
 
-Summary: Library of C++ classes and templates handling child processes, streams/sockets, shared memory, config files, etc.
+Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
 License: GPL-3.0-or-later
 Group:   Development/C++
 Url:     https://gitlab.com/fbb-git/bobcat
@@ -25,10 +25,16 @@ BuildRequires: libreadline-devel
 BuildRequires: yodl
 
 %description
-%summary
+Bobcat is an acronym of Brokken's Own Base Classes And Templates. It is a
+shared library implementing C++ classes that are frequently used in software
+developed by Frank Brokken.
+All of Frank's C++ programs hosted at GitLab depend on bobcat.
+
+The Bobcat library contains a variety of C++ classes and templates, some of
+them based on well-known Design Patterns.
 
 %package -n lib%name%sover
-Summary: Library of C++ classes and templates handling child processes, streams/sockets, shared memory, config files, etc.
+Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
 Group:   System/Libraries
 Provides: %name = %EVR
 
@@ -36,7 +42,7 @@ Provides: %name = %EVR
 %summary
 
 %package -n lib%name-devel
-Summary: Library of C++ classes and templates handling child processes, streams/sockets, shared memory, config files, etc.
+Summary: Devel files for %name
 Group:   Development/C++
 
 %description -n lib%name-devel
@@ -80,6 +86,10 @@ rm -v %buildroot%_libdir/lib%name.a
 %_datadir/doc/libbobcat5-dev/*
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 5.11.01-alt2
+- Added description
+- Cleaned-up the spec
+
 * Fri Sep 27 2024 Artem Semenov <savoptik@altlinux.org> 5.11.01-alt1
 - Initial build for Sisyphus
 - SSL updated to build with openssl3

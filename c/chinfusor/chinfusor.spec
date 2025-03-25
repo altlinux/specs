@@ -2,9 +2,9 @@
 
 Name:    chinfusor
 Version: 1.2
-Release: alt1
+Release: alt2
 
-Summary: A speech dispatcher module allowing to correctly read texts written in multiple alphabets.
+Summary: A speechd module allowing to correctly read texts written in multiple alphabets
 License: MIT
 Group:   Sound
 Url:     https://github.com/RastislavKish/Chinfusor
@@ -15,15 +15,19 @@ Patch0: lib64.patch
 
 Requires: speech-dispatcher
 
-BuildRequires(pre): rpm-build-rust
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 BuildRequires: /proc
 BuildRequires: libspeechd-devel
 BuildRequires: clang-devel
 BuildRequires: llvm-devel
 
 %description
-When one wants to learn a new language, or simply use a language other than his native, the very basic ability required in order to do so is to be able to read text written in the particular language. And while this is quite easy for latin-based languages, which can be read simply as they are, the situation gets much more complicated, when trying to read texts written in other alphabets.
-
+When one wants to learn a new language, or simply use a language other than his
+native, the very basic ability required in order to do so is to be able to read
+text written in the particular language. And while this is quite easy for
+latin-based languages, which can be read simply as they are, the situation gets
+much more complicated, when trying to read texts written in other alphabets.
 
 %prep
 %setup
@@ -71,5 +75,8 @@ popd
 %_libdir/speech-dispatcher-modules/sd_%name
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 1.2-alt2
+- Cleaned-up the spec
+
 * Thu Jan 16 2025 Artem Semenov <savoptik@altlinux.org> 1.2-alt1
 - Initial build for Sisyphus (Closes: #52270)

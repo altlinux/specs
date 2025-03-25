@@ -2,13 +2,13 @@
 
 Name:    lios
 Version: 20241022
-Release: alt1
+Release: alt2
 
 Summary: Linux-intelligent-ocr-solution
 License: GPL-3.0
 Group:   Graphics
 VCS:     https://github.com/zendalona/lios
-Url:            http://sourceforge.net/projects/lios/
+Url:     http://sourceforge.net/projects/lios/
 
 Requires: python3-module-Pillow
 Requires: python3-module-sane
@@ -24,15 +24,21 @@ Requires: aspell-ru
 Requires: gst-plugins-base1.0
 Requires: gstreamer1.0
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 %description
-Lios is a free and open source software for converting print in to text using either scanner, camera, or screenshot, It can also produce text out of scanned images from other sources such as Pdf, Image or Folder containing Images. Program is given total accessibility for visually impaired.  Lios is written in python3, and we release it under GPL-3 license.
+Lios is a free and open source software for converting print in to text using either scanner, camera, or screenshot
+It can also produce text out of scanned images from other sources such as Pdf, Image or Folder containing Images
+Program is given total accessibility for visually impaired
+Lios is written in python3, and we release it under GPL-3 license.
 
 %package -n python3-module-%name
 Summary: python3 module for %name
@@ -52,7 +58,9 @@ Group:          Development/Python3
 
 chmod 755 %buildroot%_bindir/%name
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %doc *.md NEWS COPYING
 %_bindir/%name
 %_datadir/applications/Lios-ocr-screenshot.desktop
@@ -60,8 +68,6 @@ chmod 755 %buildroot%_bindir/%name
 %_datadir/%name/icons/*.png
 %_datadir/%name/*.text
 %_datadir/%name/%name.png
-%_datadir/locale/fr/LC_MESSAGES/lios.mo
-%_datadir/locale/it/LC_MESSAGES/lios.mo
 %_datadir/pixmaps/lios.xpm
 %_docdir/%name/copyright
 %_man1dir/%name.1.xz
@@ -71,5 +77,8 @@ chmod 755 %buildroot%_bindir/%name
 %python3_sitelibdir/%name-2.5.dist-info
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 20241022-alt2
+- Cleaned-up the spec
+
 * Sat Dec 28 2024 Artem Semenov <savoptik@altlinux.org> 20241022-alt1
 - Initial build for Sisyphus (ALT bug: 52269)

@@ -3,7 +3,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.21
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform shared library loader which expects a certain path structure
 License: MIT
@@ -13,15 +13,19 @@ URL:     https://github.com/accessibleapps/libloader
 %add_python3_req_skip pywintypes
 %add_python3_req_skip win32com.client
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
 
 %description
-%summary
+Libloader provides a way to quickly and easily load shared libraries on macOS,
+Windows and Linux.
 
 %prep
 %setup -n %pypi_name-%version
@@ -37,5 +41,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 0.21-alt2
+- Added description
+- Cleaned-up the spec
+
 * Tue Jan 21 2025 Artem Semenov <savoptik@altlinux.org> 0.21-alt1
 - Initial build for Sisyphus

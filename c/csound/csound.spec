@@ -5,7 +5,7 @@
 
 Name: csound
 Version: 6.18.1
-Release: alt1
+Release: alt2
 
 Summary: A sound synthesis language and library
 License: LGPL-2.1
@@ -134,5 +134,8 @@ rm -r %buildroot%_datadir/locale
 %_javadir/csnd6.jar
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 6.18.1-alt2
+- Cleaned-up the spec
+
 * Wed Dec 04 2024 Artem Semenov <savoptik@altlinux.org> 6.18.1-alt1
-    - Initial build for Sisyphus (thx Paul Wolneykien)
+- Initial build for Sisyphus (thx Paul Wolneykien)

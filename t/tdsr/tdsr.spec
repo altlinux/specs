@@ -1,10 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without check
-
 Name:    tdsr
 Version: 20240602
-Release: alt1
+Release: alt2
 
 Summary: A console screen reader for macOS and Linux
 License: GPL-3.0
@@ -16,7 +14,8 @@ Patch0: 0001-Fixed-config-path.patch
 Requires: python3-module-pyte
 Requires: speech-dispatcher
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 
 BuildArch: noarch
 
@@ -51,5 +50,8 @@ install -D -m 444 readme.md %buildroot%_docdir/%name-%version/readme.md
 %_docdir/%name-%version/readme.md
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 20240602-alt2
+- Cleaned-up the spec
+
 * Fri Nov 01 2024 Artem Semenov <savoptik@altlinux.org> 20240602-alt1
 - Initial build for Sisyphus (ALT bug: 51706)

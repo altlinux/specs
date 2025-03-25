@@ -5,15 +5,18 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.5.4
-Release: alt1.1
+Release: alt2
 
 Summary: Basic platform-agnostic utilities for paths, clipboard, and stdout management
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/accessibleapps/platform_utils
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 %endif
@@ -43,6 +46,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 1.5.4-alt2
+- Cleaned-up the spec
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 1.5.4-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
