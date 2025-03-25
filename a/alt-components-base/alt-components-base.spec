@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -112,6 +112,11 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue Mar 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.2-alt1
+- Change apt-conf-branch-gostcrypto to apt-conf-branch in apt component
+- Replace alterator-legacy to main section from base
+- Add fonts-source component to main section for gnome-console
+
 * Wed Mar 19 2025 Andrey Limachko <liannnix@altlinux.org> 0.5.1-alt1
 - Add glibc package to glibc component
 - Add inxi component to base section in server edition
