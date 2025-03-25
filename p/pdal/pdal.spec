@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pdal
-Version: 2.8.1
-Release: alt2
+Version: 2.8.4
+Release: alt1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
@@ -71,7 +71,7 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %ninja_install -C "%_cmake__builddir"
 
 %files
-%doc AUTHORS.txt LICENSE.txt README.md
+%doc README.md LICENSE.txt
 %_bindir/%name
 
 %files -n lib%name
@@ -86,6 +86,9 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.4-alt1
+- New version.
+
 * Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt2
 - FTBFS: remove support for missing HDF.
 
