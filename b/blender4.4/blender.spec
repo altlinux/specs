@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
-%define git 416085d893a
+%define git %nil
 %define kern_dir scripts/addons_core/cycles/lib
 %define project blender
 %define gcc_ver 13
@@ -14,7 +14,7 @@
 %def_without embree
 %endif
 
-%ifarch x86_64 ppc64le aarch64
+%ifarch x86_64 aarch64
 # HIP should work on other 64-bit arches but clr needs to get built first
 %def_with hip
 %else
@@ -25,14 +25,14 @@
 %def_with cuda
 %def_with hiprt
 # oneapi needs dpcpp/sycl compiler
-%def_without oneapi
+%def_with oneapi
 %else
 %def_without cuda
 %def_without hiprt
 %def_without oneapi
 %endif
 
-%ifarch x86_64 ppc64le aarch64
+%ifarch x86_64 aarch64
 %def_with mold
 %else
 %def_without mold
@@ -58,7 +58,7 @@
 
 Name: %{project}4.4
 Version: 4.4.0
-Release: alt1.g%{git}
+Release: alt4
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -76,7 +76,6 @@ Patch22: blender-2.92-alt-include-deduplication-check-skip.patch
 Patch23: blender-2.80-alt-use-system-glog.patch
 Patch24: blender-2.90-alt-non-x86_64-linking.patch
 # Patch25: blender-3.4.1-gcc-13-fix.patch
-Patch26: blender-4.0.1-alt-pcre.patch
 # needed for static clang libs
 Patch30: blender-alt-fix-clang-linking.patch
 Patch31: blender-alt-osl-shader-dir.patch
@@ -87,10 +86,10 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
-Patch35: blender-4.4-alt-unbundle-hiprt.patch
 # use system libdraco.so.9 instead of bundled one
 Patch36: blender-4.4-system-draco.patch
 Patch37: blender-4.4-alt-hiprt-2.5.patch
+Patch38: blender-4.4-alt-hiprt-optflags.patch
 
 # upstream fixes to merge
 
@@ -105,9 +104,8 @@ BuildRequires: ninja-build /proc
 BuildRequires: libGLEW-devel libXi-devel
 BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresample-devel
 BuildRequires: libfftw3-devel >= 3.3.9 libjack-devel libopenal-devel libsndfile-devel
-BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
+BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libswscale-devel libxml2-devel
 BuildRequires: liblzo2-devel
-BuildRequires: libopenCOLLADA-devel >= 0-alt3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenimageio-devel
@@ -289,7 +287,7 @@ Summary: Cycles precompiled binaries for HIPRT
 Group: System/Libraries
 Requires: %name = %EVR, hip-runtime-amd
 # due hardcoded dependency in hiprtew
-Requires: libhiprt = 2.5-alt2.4e650d5
+Requires: libhiprt >= 2.5-alt2.4e650d5
 Conflicts: %project-cycles-hip-kernels
 
 %description cycles-hiprt-kernels
@@ -335,7 +333,6 @@ This package contains binaries for Intel GPUs to use with OpenAPI.
 %patch23 -p1
 %patch24 -p1
 #%%patch25 -p1
-%patch26 -p1
 #%%patch30 -p1
 %patch31 -p1
 #%%patch32 -p1
@@ -353,7 +350,7 @@ EOF
 %patch36 -p1
 %if_with hiprt
 %patch37 -p1
-%patch35 -p1
+%patch38 -p1
 %endif
 
 # upstream patches
@@ -385,8 +382,7 @@ popd
 BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
 BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
-# needed due to non-standard location of pcre.h header
-%add_optflags -I%_includedir/pcre -DGLOG_USE_GLOG_EXPORT
+%add_optflags -DGLOG_USE_GLOG_EXPORT
 %if_with hiprt
 export ALTWRAP_LLVM_VERSION=rocm
 %endif
@@ -427,7 +423,6 @@ export GCC_VERSION=%gcc_ver
 	-DWITH_INSTALL_PORTABLE=OFF \
 	-DWITH_PYTHON_SAFETY=OFF \
 	-DWITH_OPENMP=ON \
-	-DWITH_OPENCOLLADA=ON \
 	-DWITH_CYCLES=ON \
 %if_with embree
 	-DEMBREE_ROOT_DIR=%_prefix \
@@ -495,14 +490,14 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %exclude %_datadir/%project/*/%kern_dir/kernel_gfx*.fatbin*
 %endif
 %if_with hiprt
-%exclude %_datadir/%project/*/%kern_dir/kernel_rt_gfx.hipfb*
+%exclude %_datadir/%project/*/%kern_dir/kernel_rt_gfx*.hipfb*
 %endif
 %if_with cuda
 %exclude %_datadir/%project/*/%kern_dir/kernel_compute*.ptx*
 %exclude %_datadir/%project/*/%kern_dir/kernel_sm_*.cubin*
 %endif
 %if_with oneapi
-%_libdir/libcycles_kernel_oneapi_aot.so
+%_libdir/libcycles_kernel_oneapi_aot.so*
 %endif
 %_datadir/metainfo/*.metainfo.xml
 %_defaultdocdir/%project/
@@ -515,7 +510,7 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 
 %if_with hiprt
 %files cycles-hiprt-kernels
-%_datadir/%project/*/%kern_dir/kernel_rt_gfx.hipfb*
+%_datadir/%project/*/%kern_dir/kernel_rt_gfx*.hipfb*
 %endif
 
 %if_with cuda
@@ -530,6 +525,18 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Wed Mar 19 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt4
+- Drop dependency to OpenCOLLADA:
+  + see https://github.com/KhronosGroup/OpenCOLLADA/issues/655#issuecomment-2020333875
+    (upstream has abadoned the project and OpenUSD used as replacement).
+
+* Tue Mar 18 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt3
+- 4.4.0.
+
+* Fri Mar 14 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt2.gfdd402c3d85
+- 4.4.0 GIT fdd402c3d85.
+- hiprt: cleanup -alt patches (partially merged by upstream).
+
 * Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt1.g416085d893a
 - hiprt: unbundle hiprt (and skip bitcode/kernel creation).
 - hiprt: split out kernels from -hip (as in fact those are different kernels).
