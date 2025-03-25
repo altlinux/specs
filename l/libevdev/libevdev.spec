@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: libevdev
-Version: 1.13.3
+Version: 1.13.4
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -34,7 +34,7 @@ BuildRequires: valgrind
 %package devel
 Summary: kernel evdev device wrapper library development package
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development libraries and header files
@@ -73,6 +73,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.4-alt1
+- 1.13.4
+
 * Thu Sep 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1.13.3-alt1
 - 1.13.3
 
