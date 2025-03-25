@@ -1,5 +1,5 @@
 Name:    netbox-config-backup
-Version: 2.1.2
+Version: 2.1.8
 Release: alt1
 
 Summary: A configuration backup system using napalm
@@ -52,6 +52,9 @@ install -p -D -m 644 %SOURCE2 %buildroot%_unitdir/ncb-rq@.service
 %python3_sitelibdir/netbox_config_backup-%version.dist-info
 
 %changelog
+* Tue Mar 25 2025 Alexander Burmatov <thatman@altlinux.org> 2.1.8-alt1
+- New 2.1.8 version.
+
 * Thu Jan 30 2025 Alexander Burmatov <thatman@altlinux.org> 2.1.2-alt1
 - New 2.1.2 version.
 
