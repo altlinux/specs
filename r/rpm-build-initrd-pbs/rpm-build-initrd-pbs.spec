@@ -11,7 +11,7 @@
 
 Name: rpm-build-initrd-pbs
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: RPM helper post script for building PBS initrd image
 License: GPL
@@ -24,7 +24,7 @@ Requires(pre): make-initrd
 Requires(pre): make-initrd-pbs
 Requires(pre): /proc
 
-%if "%altbranch" == "p10"
+%if "%altbranch" == "p10" || "%altbranch" == "c10f2"
 Requires(pre): kernel >= 6.1
 Requires(pre): zfs-kernel-module
 # Force un-def kernel flavour
@@ -66,5 +66,8 @@ chmod 0644 %imagedir/{bzImage,initramfs.img}
 %config(noreplace) %imagedir/proxmox-backup-restore-image.mk
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 0.1-alt2
+- Added support for c10f2 branch.
+
 * Tue Mar 18 2025 Sergey Konev <darisishe@altlinux.org> 0.1-alt1
 - Initial build
