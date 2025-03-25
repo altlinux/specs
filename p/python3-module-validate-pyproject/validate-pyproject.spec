@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.24
+Version: 0.24.1
 Release: alt1
 Summary: Validation pyproject.toml files using JSON Schema
 License: MPL-2.0 and MIT and BSD-3-Clause
@@ -54,6 +54,9 @@ JSON Schema.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 24 2025 Stanislav Levin <slev@altlinux.org> 0.24.1-alt1
+- 0.24 -> 0.24.1.
+
 * Fri Mar 14 2025 Stanislav Levin <slev@altlinux.org> 0.24-alt1
 - 0.23 -> 0.24.
 
