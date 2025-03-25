@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.10
+%define ver_major 0.11
 %define rdn_name org.gnome.World.Iotas
 
 %def_enable check
 
 Name: iotas
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -26,6 +26,7 @@ Source: %name-%version.tar
 %define adw_ver 1.6
 %define gtksource_ver 5.6
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(WebKit) = 6.0
@@ -78,6 +79,9 @@ on sync with Nextcloud Notes.
 %doc README*
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
+- 0.11.0
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
 - 0.10.3
 
