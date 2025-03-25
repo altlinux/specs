@@ -1,7 +1,7 @@
 %define  modulename cppy
 
 Name:    python3-module-%modulename
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A collection of C++ headers which make it easier to write Python C extension modules
@@ -43,6 +43,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- New version.
+
 * Wed Dec 25 2024 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - New version.
 - Migrate to pyproject macroses.
