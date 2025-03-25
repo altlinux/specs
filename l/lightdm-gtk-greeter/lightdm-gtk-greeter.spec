@@ -3,7 +3,7 @@
 
 Name: lightdm-gtk-greeter
 Version: 2.0.7
-Release: alt11
+Release: alt12
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -18,9 +18,6 @@ Patch3: %name-%version-switch-lang.patch
 Patch4: %name-%version-load-css.patch
 
 Requires: lightdm >= 1.16.7-alt11
-#Requires: gnome-icon-theme gnome-icon-theme-symbolic gnome-themes-standard
-Requires: /usr/share/design/current
-
 Provides: lightdm-greeter
 
 BuildRequires: gcc-c++ intltool gnome-common gobject-introspection-devel
@@ -79,6 +76,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.7-alt12
+- Do not require /usr/share/design/current to prevent brending-*-graphics conflicts.
+
 * Fri Oct 11 2024 Paul Wolneykien <manowar@altlinux.org> 2.0.7-alt11
 - Optional delay before session start (closes: 51598).
 - Added "message-delay" configuration parameter.
