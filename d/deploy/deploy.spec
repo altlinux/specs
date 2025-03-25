@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -7,12 +7,11 @@ License: GPL-3.0+
 Group: System/Configuration/Other
 Url: https://altlinux.org/Deploy
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 BuildArch: noarch
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-build-php
 Requires: python3
 Requires: ansible
 
@@ -22,6 +21,8 @@ system services like PostgreSQL or Moodle.
 
 %prep
 %setup
+mkdir -p modules/vars
+echo "php_version: %php_defver" > modules/vars/php
 
 %install
 %makeinstall_std
@@ -31,6 +32,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Mon Mar 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt1
+- Used current supported PHP version in repository.
+
 * Tue Jan 16 2024 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
 - Added icinga2 role (thanks respublica@).
 
