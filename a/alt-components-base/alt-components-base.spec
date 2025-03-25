@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -112,6 +112,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed Mar 26 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.4-alt1
+- Remove jitsi-meet and nextcloud components from server edition
+
 * Wed Mar 26 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.3-alt1
 - Add proxmox-backup-server and urbackup-server components to server
   edition and urbackup-client component to server and domain editions
