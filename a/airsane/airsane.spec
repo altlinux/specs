@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: airsane
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Summary: A SANE WebScan frontend that supports Apple's AirScan protocol.
 License: GPLv3
@@ -86,6 +86,9 @@ mv %buildroot/%_sysconfdir/%name/*.png %buildroot/%_iconsdir/hicolor/512x512/app
 %_iconsdir/hicolor/*
 
 %changelog
+* Mon Mar 10 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.4.3-alt1
+- 0.4.3 
+
 * Thu Sep 12 2024 Alexey Shabalin <shaba@altlinux.org> 0.4.2-alt1
 - 0.4.2 (NMU)
 - add requires to sane-server and libsane for add user "_saned" and add group "scaner"
