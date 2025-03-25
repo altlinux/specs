@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 Summary: TPM 2.0 TSS Bindings for Python
 Group: Development/Python3
@@ -66,5 +66,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Mar 25 2025 Alexey Shabalin <shaba@altlinux.org> 2.3.0-alt1
+- 2.3.0.
+
 * Fri May 03 2024 Alexey Shabalin <shaba@altlinux.org> 2.2.1-alt1
 - Initial package.
