@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define php_version 8.2
+%define php_version %php_defver
 
 Name: nextcloud
-Version: 31.0.1
+Version: 31.0.2
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -14,6 +14,7 @@ Url: https://nextcloud.com/
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-php
 BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires: python3-base
 Requires(pre): webserver-common
@@ -167,6 +168,10 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.2-alt1
+- New version.
+- Used current supported PHP version in repository.
+
 * Wed Mar 19 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.1-alt1
 - New version.
 
