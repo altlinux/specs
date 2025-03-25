@@ -2,7 +2,7 @@
 %def_enable gui
 
 Name: calf
-Version: 0.90.4
+Version: 0.90.5
 Release: alt1
 
 Summary: Audio plugins pack
@@ -67,6 +67,8 @@ extensions.
 
 %prep
 %setup
+# CMake stuff is buggy and incomplete
+mv configure.ac.deprecated configure.ac
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -95,7 +97,7 @@ extensions.
 %_datadir/%name/sf2/
 %_man7dir/%{name}*
 %doc %_docdir/%name
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS ChangeLog README* TODO
 
 %if_enabled gui
 %files gui
@@ -113,6 +115,9 @@ extensions.
 
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.90.5-alt1
+- 0.90.5
+
 * Sun Nov 03 2024 Yuri N. Sedunov <aris@altlinux.org> 0.90.4-alt1
 - 0.90.4
 - fixed build with gcc-14
