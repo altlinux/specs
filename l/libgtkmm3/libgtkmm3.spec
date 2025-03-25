@@ -8,13 +8,15 @@
 %def_enable docs
 
 Name: libgtkmm3
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
 License: GPL-2.0 and LGPL-2.1
 Group: System/Libraries
 Url: http://gtkmm.sourceforge.net/
+
+Vcs: https://gitlab.gnome.org/GNOME/gtkmm.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.tar.xz
@@ -24,6 +26,7 @@ Source: %rname-%version.tar
 
 Provides: %rname = %version
 
+%define mm_ver 0.9.10
 %define gtk_ver 3.24.0
 %define glib_ver 2.54.0
 %define pangomm_ver 2.40.0
@@ -31,7 +34,7 @@ Provides: %rname = %version
 %define cairo_ver 1.12.0
 
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common libgtk+3-devel >= %gtk_ver
+BuildRequires: gcc-c++ mm-common >= %mm_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glib_ver libpangomm-devel >= %pangomm_ver
 BuildRequires: libcairomm-devel >= %cairo_ver libepoxy-devel
 %{?_enable_atkmm:BuildRequires: libatkmm-devel >= %atkmm_ver}
@@ -117,6 +120,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.24.10-alt1
+- 3.24.10
+
 * Tue Apr 09 2024 Yuri N. Sedunov <aris@altlinux.org> 3.24.9-alt1
 - 3.24.9
 

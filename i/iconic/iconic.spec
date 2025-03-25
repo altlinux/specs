@@ -1,13 +1,15 @@
+%def_disable snapshot
+
 %define _name Iconic
 %define binary_name folder_icon
-%define ver_major 2024.12
+%define ver_major 2025.3
 %define rdn_name nl.emphisia.icon
 
 %def_enable check
 %def_disable bootstrap
 
 Name: iconic
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Easilly add icons on top of folders
@@ -17,8 +19,12 @@ Url: https://github.com/youpie/Iconic
 
 Vcs: https://github.com/youpie/Iconic.git
 
-Source: %name-%version.tar
-Source1: %name-%version-cargo.tar
+%if_disabled snapshot
+Source: https://github.com/youpie/Iconic/archive/v%version/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
+Source1: %_name-%version-cargo.tar
 
 Requires: dconf
 Requires: icon-theme-adwaita
@@ -37,11 +43,11 @@ An application made for GNOME written in Rust to easilly add images on
 top of folders.
 
 %prep
-%setup %{?_disable_bootstrap:-a1}
+%setup -n %_name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
-tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %meson \
@@ -74,6 +80,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3.1-alt1
+- 2025.3.1
+
 * Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.12.2-alt1
 - updated to v2024.12.2-7-g8fc73bd
 
