@@ -6,7 +6,7 @@
 %def_with freerdp3
 
 Name: remmina
-Version: 1.4.37
+Version: 1.4.39
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -366,6 +366,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Tue Mar 25 2025 Alexey Shabalin <shaba@altlinux.org> 1.4.39-alt1
+- New version 1.4.39.
+
 * Thu Jan 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.4.37-alt1
 - New version 1.4.37.
 
