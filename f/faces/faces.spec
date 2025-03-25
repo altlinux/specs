@@ -1,9 +1,9 @@
 Name: faces
 Version: 1.7.7
-Release: alt7
+Release: alt8
 
 Summary: A list monitor with a visual output
-License: LGPL
+License: LGPL-2
 Group: Networking/Mail
 Url: http://www.cs.indiana.edu/ftp/faces/
 
@@ -70,6 +70,7 @@ sed -i 's|@GT_NO@||g' */Makefile.in
 sed -i 's|@GT_YES@|#NO#|g' */Makefile.in
 
 %build
+%add_optflags -Wno-error=implicit-function-declaration
 %autoreconf
 %configure --disable-static
 %make_build
@@ -100,6 +101,9 @@ install -pD -m644 faces.desktop %buildroot%_desktopdir/%name.desktop
 %_man3dir/compface.3.*
 
 %changelog
+* Wed Mar 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.7.7-alt8
+- NMU: fix FTBFS with gcc14
+
 * Tue May 05 2020 Anton Midyukov <antohami@altlinux.org> 1.7.7-alt7
 - Fix build with gettext >= 0.20.0
 
