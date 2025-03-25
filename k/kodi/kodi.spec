@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.2
-Release: alt2
+Release: alt3
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -60,9 +60,9 @@ BuildRequires: pkgconfig(libmicrohttpd)
 BuildRequires: pkgconfig(libnfs)
 BuildRequires: pkgconfig(libpcre)
 BuildRequires: pkgconfig(libpcrecpp)
+BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpostproc)
-BuildRequires: pkgconfig(libpulse-simple)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libtasn1)
@@ -211,6 +211,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Tue Mar 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt3
+- fixed build with pipewire
+
 * Fri Mar 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt2
 - rebuilt w/o pipewire for now
 
