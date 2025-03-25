@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.37.61
-Release: alt11.git863ca2109
+Release: alt12.git3e8815059
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -38,6 +38,10 @@ Requires: perl-Digest-SHA perl-Class-Date perl-DateTime perl-Date-Manip perl-lib
 Requires: perl-X10 perl-Sys-Mmap perl-DBD-mysql perl-Storable
 AutoReq: noperl
 BuildRequires: bzlib-devel ffmpeg gcc-c++ libswresample-devel libavdevice-devel libavformat-devel libgcrypt-devel libgnutls-openssl-devel libjpeg-devel libmysqlclient-devel libpcre-devel libswscale-devel netpbm perl-Archive-Tar perl-Archive-Zip perl-DBD-mysql perl-Date-Manip perl-MIME-Lite perl-MIME-tools perl-Module-Load perl-Sys-Mmap perl-X10 perl-devel perl-libwww zlib-devel libpolkit-devel cmake libv4l-devel rpm-macros-cmake libvlc-devel libcurl-devel libssl-devel libsystemd-devel libffi-devel libx264-devel libmount-devel
+BuildRequires: libavfilter-devel
+BuildRequires: libpostproc-devel
+BuildRequires: libidn2-devel
+BuildRequires: libbrotli-devel
 BuildRequires: libuuid-devel
 BuildRequires: libselinux-devel
 BuildRequires: libblkid-devel
@@ -177,6 +181,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Tue Mar 25 2025 Anton Farygin <rider@altlinux.com> 1.37.61-alt12.git3e8815059
+- update to upstream 3e8815059
+
 * Sun Feb 16 2025 Anton Farygin <rider@altlinux.ru> 1.37.61-alt11.git863ca2109
 - uodate to upstream 863ca2109
 
