@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -67,6 +67,13 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Tue Mar 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.4-alt1
+- Rename Debug menu to Tools.
+- Add option to show drafts in Tools menu.
+- Add reload components action in File menu.
+- Fix status for categories with only partially checked children.
+- Get kernel flavour using systeminfo backend.
+
 * Sun Mar 23 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.3-alt1
 - Filter packages in components by arch.
 - Add kflavour as a suffix for packages marked with kernel_module.
