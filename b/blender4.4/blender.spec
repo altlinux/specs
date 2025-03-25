@@ -14,15 +14,22 @@
 %def_without embree
 %endif
 
+%ifarch x86_64 ppc64le aarch64
+# HIP should work on other 64-bit arches but clr needs to get built first
+%def_with hip
+%else
+%def_without hip
+%endif
+
 %ifarch x86_64
 %def_with cuda
 %def_with hiprt
-# oneapi needs sycl compiler
-%def_without levelzero
+# oneapi needs dpcpp/sycl compiler
+%def_without oneapi
 %else
 %def_without cuda
 %def_without hiprt
-%def_without levelzero
+%def_without oneapi
 %endif
 
 %ifarch x86_64 ppc64le aarch64
@@ -49,16 +56,9 @@
 # https://devtalk.blender.org/t/does-blender-use-jemalloc-and-or-tbb/13388/10
 %def_with jemalloc
 
-%ifarch x86_64 ppc64le aarch64
-# HIP should work on other 64-bit arches but clr needs to get built first
-%def_with hip
-%else
-%def_without hip
-%endif
-
 Name: %{project}4.4
 Version: 4.4.0
-Release: alt0.7.g%{git}
+Release: alt1.g%{git}
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -87,9 +87,10 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
-Patch35: blender-4.4-alt-hiprt-inc.patch
+Patch35: blender-4.4-alt-unbundle-hiprt.patch
 # use system libdraco.so.9 instead of bundled one
 Patch36: blender-4.4-system-draco.patch
+Patch37: blender-4.4-alt-hiprt-2.5.patch
 
 # upstream fixes to merge
 
@@ -183,8 +184,12 @@ BuildRequires: openimagedenoise-devel
 BuildRequires: mold
 %endif
 
-%if_with levelzero
-BuildRequires: liboneapi-level-zero1-devel
+%if_with oneapi
+BuildRequires: libze-devel llvm-dpcpp-devel clang-dpcpp-devel
+BuildRequires: clang-dpcpp-tools intel-ocloc libigc2
+%filter_from_requires /libcycles_kernel_oneapi_aot\.so/d
+%set_verify_elf_skiplist %_libdir/libcycles_kernel_oneapi_aot.so
+%set_debuginfo_skiplist %_libdir/libcycles_kernel_oneapi_aot.so
 %endif
 
 %add_python3_path %_datadir/%project/scripts
@@ -269,13 +274,6 @@ This package contains documentation for Blender.
 Summary: Cycles precompiled binaries for HIP
 Group: System/Libraries
 Requires: %name = %EVR, hip-runtime-amd
-%if_with hiprt
-Requires: libhiprt
-# hiprtCreateGeometry relies on hardcoded headers
-# in /usr/include
-# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
-Requires: hiprt-devel
-%endif
 Conflicts: %project-cycles-hip-kernels
 
 %description cycles-hip-kernels
@@ -283,6 +281,22 @@ Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
 graphics cards.
 
 This package contains binaries for AMD GPUs to use with HIP.
+%endif
+
+%if_with hiprt
+%package cycles-hiprt-kernels
+Summary: Cycles precompiled binaries for HIPRT
+Group: System/Libraries
+Requires: %name = %EVR, hip-runtime-amd
+# due hardcoded dependency in hiprtew
+Requires: libhiprt = 2.5-alt2.4e650d5
+Conflicts: %project-cycles-hip-kernels
+
+%description cycles-hiprt-kernels
+Precompiled GPU kernels for GPU accelerated rendering with Cycles on various
+graphics cards.
+
+This package contains binaries for AMD GPUs to use with HIPRT.
 %endif
 
 %if_with cuda
@@ -297,6 +311,20 @@ Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
 graphics cards.
 
 This package contains binaries for Nvidia GPUs to use with CUDA.
+%endif
+
+%if_with oneapi
+%package cycles-intel-kernels
+Summary: Cycles precompiled binaries for OneAPI
+Group: System/Libraries
+Requires: %name = %EVR, libze-intel-gpu1
+Conflicts: %project-cycles-intel-kernels
+
+%description cycles-intel-kernels
+Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
+graphics cards.
+
+This package contains binaries for Intel GPUs to use with OpenAPI.
 %endif
 
 %prep
@@ -322,8 +350,11 @@ cat >/tmp/bits/math-vector.h <<EOF
 EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
-%patch35 -p1
 %patch36 -p1
+%if_with hiprt
+%patch37 -p1
+%patch35 -p1
+%endif
 
 # upstream patches
 
@@ -345,14 +376,14 @@ rm -f build_files/cmake/Modules/FindOpenJPEG.cmake
 # Remove bundled libraries which must not be used instead of system ones
 rm -rf extern/{Eigen3,glew,lzo,gflags,glog,draco}
 
-%build
-BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
-BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
-
 # Explicitly use python3 in hashbangs.
 pushd scripts/addons_core
 subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 popd
+
+%build
+BUILD_DATE="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%Y-%%m-%%d')"
+BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 
 # needed due to non-standard location of pcre.h header
 %add_optflags -I%_includedir/pcre -DGLOG_USE_GLOG_EXPORT
@@ -376,11 +407,13 @@ export GCC_VERSION=%gcc_ver
 	-DHIP_LINKER_EXECUTABLE=%_bindir/clang++-rocm \
 	-DHIPRT_COMPILER_PARALLEL_JOBS=4 \
 %endif #hiprt
-%if_with levelzero
+%if_with oneapi
 	-DLEVEL_ZERO_ROOT_DIR=%prefix \
+	-DSYCL_ROOT_DIR=%prefix/lib/llvm-dpcpp \
 	-DWITH_CYCLES_DEVICE_ONEAPI:BOOL=ON \
 	-DWITH_CYCLES_ONEAPI_BINARIES:BOOL=ON \
-%endif #levelzero
+	-DOCLOC_INSTALL_DIR=%prefix \
+%endif #oneapi
 	-DBUILD_SHARED_LIBS=OFF \
 	-DWITH_ALEMBIC:BOOL=ON \
 	-DWITH_FFTW3=ON \
@@ -441,7 +474,16 @@ popd
 %endif
 
 %install
+# oneapi needs special handling
+%if_with oneapi
+install -pD -m644 %_cmake__builddir/intern/cycles/kernel/libcycles_kernel_oneapi_aot.so %buildroot%_libdir/libcycles_kernel_oneapi_aot.so
+LD_LIBRARY_PATH=%buildroot%_libdir \
+doc/manpage/blender.1.py --blender %_cmake__builddir/bin/blender --output %_cmake__builddir/source/creator/blender.1
 %cmake_install
+rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
+%else
+%cmake_install
+%endif
 
 %files
 %_bindir/*
@@ -453,12 +495,14 @@ popd
 %exclude %_datadir/%project/*/%kern_dir/kernel_gfx*.fatbin*
 %endif
 %if_with hiprt
-%exclude %_datadir/%project/*/%kern_dir/kernel_rt_gfx.*
-%exclude %_datadir/%project/lib/*.hipfb
+%exclude %_datadir/%project/*/%kern_dir/kernel_rt_gfx.hipfb*
 %endif
 %if_with cuda
 %exclude %_datadir/%project/*/%kern_dir/kernel_compute*.ptx*
 %exclude %_datadir/%project/*/%kern_dir/kernel_sm_*.cubin*
+%endif
+%if_with oneapi
+%_libdir/libcycles_kernel_oneapi_aot.so
 %endif
 %_datadir/metainfo/*.metainfo.xml
 %_defaultdocdir/%project/
@@ -467,10 +511,11 @@ popd
 %if_with hip
 %files cycles-hip-kernels
 %_datadir/%project/*/%kern_dir/kernel_gfx*.fatbin*
-%if_with hiprt
-%_datadir/%project/*/%kern_dir/kernel_rt_gfx.*
-%_datadir/%project/lib/*.hipfb
 %endif
+
+%if_with hiprt
+%files cycles-hiprt-kernels
+%_datadir/%project/*/%kern_dir/kernel_rt_gfx.hipfb*
 %endif
 
 %if_with cuda
@@ -485,6 +530,18 @@ popd
 %endif
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt1.g416085d893a
+- hiprt: unbundle hiprt (and skip bitcode/kernel creation).
+- hiprt: split out kernels from -hip (as in fact those are different kernels).
+- hiprt: remove hiprt-devel dependency (not needed anymore).
+
+* Tue Feb 11 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.9.g416085d893a
+- Rebuild with new ROCm and HIPRT.
+- hiprt/hiprtew: update API/version numbers.
+
+* Sun Jan 26 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.8.g416085d893a
+- enable oneapi/sycl support.
+
 * Wed Jan 22 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt0.7.g416085d893a
 - 4.4.0 GIT 416085d893a (fixing cycles build without embree).
 

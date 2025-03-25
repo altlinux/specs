@@ -1,6 +1,6 @@
 Name: rocm-cmake
-Version: 6.1.2
-Release: alt0.1
+Version: 6.3.2
+Release: alt0.2
 License: MIT
 Group: Development/C++
 Summary: CMake modules used within the ROCm libraries
@@ -8,8 +8,13 @@ Summary: CMake modules used within the ROCm libraries
 Url: https://github.com/RadeonOpenCompute/rocm-cmake
 
 Source: %name-%version.tar
+Patch: %name-alt-tools.patch
 
 BuildRequires(pre): cmake
+
+# from cmake
+Requires: cppcheck, clang-tools
+
 BuildArch: noarch
 
 %description
@@ -22,6 +27,7 @@ is required for building some of the libraries that are a part of ROCm.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake
@@ -39,6 +45,13 @@ is required for building some of the libraries that are a part of ROCm.
 %_datadir/rocmcmakebuildtools/cmake
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.2
+- Patch cmake files to use system tools.
+- Add missing requires.
+
+* Tue Feb 11 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
+- rocm-6.3.2.
+
 * Wed Jul 03 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
 - rocm-6.1.2.
 - added rocmcmakebuildtools directory.

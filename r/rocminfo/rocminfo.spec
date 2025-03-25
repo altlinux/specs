@@ -1,5 +1,5 @@
 Name: rocminfo
-Version: 6.1.2
+Version: 6.3.2
 Release: alt0.1
 License: NCSA
 Summary: ROCm Application for Reporting System Info
@@ -37,6 +37,9 @@ subst '/.*{ROCMINFO_CXX_FLAGS} -m64)/d' CMakeLists.txt
 %_bindir/*
 
 %changelog
+* Tue Feb 11 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
+- rocm-6.3.2.
+
 * Sat Jul 06 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
 - rocm-6.1.2.
 

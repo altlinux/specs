@@ -5,8 +5,8 @@
 %filter_from_requires /python[0-9.]\+(libscanbuild[.].*)/d
 
 %global proj rocm
-# rocm llvm uses llvm17 as codebase
-%global v_major 17
+# rocm llvm uses llvm18 as codebase
+%global v_major 18
 %global llvm_name llvm-%proj
 %global clang_name clang-%proj
 %global lld_name lld-%proj
@@ -40,13 +40,14 @@ AutoProv: nopython
 
 %def_disable tests
 %def_with clang
+%def_with mold
 
 %define tarversion %version
 %define mversion %version
 
 Name: %llvm_name
-Version: 6.1.2
-Release: alt0.2
+Version: 6.3.2
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure with ROCm addition
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
@@ -55,22 +56,17 @@ Url: https://github.com/ROCm/llvm-project.git
 Source: llvm-project-%{version}.tar
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
-Patch3: llvm-alt-fix-linking.patch
 Patch4: clang-alt-aarch64-dynamic-linker-path.patch
 Patch5: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
 Patch6: clang-ALT-bug-40628-grecord-command-line.patch
 Patch7: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
-Patch8: llvm-10-alt-python3.patch
-Patch9: RH-0010-PATCH-clang-Produce-DWARF4-by-default.patch
 Patch10: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch11: lld-compact-unwind-encoding.h.patch
 Patch12: llvm-alt-cmake-build-with-install-rpath.patch
 Patch13: clang-16-alt-rocm-device-libs-path.patch
 Patch14: clang-alt-nvvm-libdevice.patch
 # https://projects.blender.org/blender/blender/issues/112084
-Patch15: 30a3adf50e2d49dfc97c1b614d9b93638eba672d.patch
-# https://github.com/llvm/llvm-project/pull/68273
-Patch16: compiler-rt-68273.patch
+#Patch15: 30a3adf50e2d49dfc97c1b614d9b93638eba672d.patch
 Patch17: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.patch
 
 # device-libs patches
@@ -78,9 +74,8 @@ Patch30: device-libs-cmake-alt-install-prefix.patch
 Patch31: device-libs-cmake-amdgcn-bitcode.patch
 
 # comgr patches
-Patch40: clang-alt-lld-rocm.patch
-Patch41: comgr-rocm-alt-device-libs-path.patch
-Patch42: rocm-comgr-llvm-static.patch
+Patch40: comgr-rocm-alt-device-libs-path.patch
+Patch41: rocm-comgr-llvm-static.patch
 
 # hipcc patches
 Patch50: hipcc-alt-hardcore-llvm-rocm.patch
@@ -110,6 +105,9 @@ BuildRequires: zip zlib-devel binutils-devel ninja-build
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
 BuildRequires: gcc-c++
+%endif
+%if_with mold
+BuildRequires: mold
 %endif
 
 %define requires_filesystem Requires: %name-filesystem = %EVR
@@ -360,36 +358,30 @@ compiler and HIP infrastructure.
 
 %prep
 %setup -n llvm-project-%{version}
-%patch1 -p1 -b .alt-triple
+%patch1 -p2 -b .alt-triple
 %patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
-%patch3 -p1 -b .alt-fix-linking
 %patch4 -p1 -b .alt-aarch64-dynamic-linker
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#%%patch8 -p1
-#%%patch9 -p1 -b .clang-DWARF4
-#%%patch10 -p1
+%patch10 -p1
 %patch11 -p1
-#%%patch12 -p1 -b .llvm-cmake-build-with-install-rpath
 %patch13 -p1 -b .clang-rocm-device-path
 %patch14 -p1
-%patch15 -p1 -R -b .fix-blender-crash
-%patch16 -p1
+#%%patch15 -p1 -R -b .fix-blender-crash
 %patch17 -p2
 
 pushd amd/device-libs
 %patch30 -p1
-%patch31 -p1
 popd
+%patch31 -p2
 
 # comgr patches
-#%%patch40 -p2
 pushd amd/comgr
-%patch41 -p4
+%patch40 -p4
 popd
-%patch42 -p2
+%patch41 -p2
 
 # hipcc
 %patch50 -p2
@@ -455,7 +447,11 @@ export NPROCS=48
 	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
 	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
+	%if_with mold
+	-DLLVM_USE_LINKER=mold \
+	%else
 	-DLLVM_USE_LINKER=lld \
+	%endif
 	%else
 	-DLLVM_USE_LINKER=gold \
 	-DLLVM_ENABLE_LTO=Off \
@@ -648,12 +644,11 @@ bin	llvm-ranlib
 bin	llvm-rc
 bin	llvm-readelf
 bin	llvm-readobj
+bin	llvm-readtapi
 bin	llvm-reduce
-bin	llvm-remark-size-diff
 bin	llvm-rtdyld
 bin	llvm-size
 bin	llvm-sim
-bin	llvm-tapi-diff
 bin	llvm-tli-checker
 bin	llvm-windres
 bin	llvm-split
@@ -831,6 +826,14 @@ ninja -C %builddir check-all || :
 %_bindir/hipconfig*
 
 %changelog
+* Tue Feb 11 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
+- 6.3.2.
+- Link with mold.
+
+* Mon Jul 22 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.3
+- Do not revert 30a3adf50e2d49dfc97c1b614d9b93638eba672d (testing
+  blender crash).
+
 * Wed Jul 10 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.2
 - hipcc: re-added hipcc-alt-remove-isystem.patch (without this patch hipcc
   can't find math.h headers).

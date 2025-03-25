@@ -57,7 +57,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt5
+Release: alt6
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -92,9 +92,10 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
-Patch35: blender-4.4-alt-hiprt-inc.patch
+Patch35: blender-4.4-alt-hiprt-2.5.patch
 Patch36: blender-4.3.0-generic-64bit.patch
 Patch37: blender-4.3.0-loongarch64.patch
+Patch38: blender-4.3.0-alt-unbundle-hiprt.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -265,18 +266,29 @@ This package contains documentation for Blender.
 Summary: Cycles precompiled binaries for HIP
 Group: System/Libraries
 Requires: %name = %EVR, hip-runtime-amd
-%if_with hiprt
-Requires: libhiprt
-# hiprtCreateGeometry relies on hardcoded headers in /usr/include
-# see https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/issues/7
-Requires: hiprt-devel
-%endif
 
 %description cycles-hip-kernels
 Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
 graphics cards.
 
 This package contains binaries for AMD GPUs to use with HIP.
+%endif
+
+%if_with hiprt
+%package cycles-hiprt-kernels
+Summary: Cycles precompiled binaries for HIPRT
+Group: System/Libraries
+Requires: %name = %EVR, hip-runtime-amd
+# hiprt version hardcoded in sources
+Requires: libhiprt = 2.5-alt2.4e650d5
+
+%description cycles-hiprt-kernels
+Precompiled GPU binaries for GPU accelerated rendering with Cycles on various
+graphics cards.
+
+This package contains binaries for AMD GPUs to use with HIPRT.
+NOTE: If you use HIPRT you don't need HIP kernels and vice versa!
+
 %endif
 
 %if_with cuda
@@ -321,9 +333,10 @@ cat >/tmp/bits/math-vector.h <<EOF
 EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
-%patch35 -p1
+%patch35 -p1 -b .hiprt-2.5
 %patch36 -p1
 %patch37 -p1
+%patch38 -p1 -b .unbundle-hiprt
 
 %ifarch %e2k
 %patch2000 -p1
@@ -448,7 +461,7 @@ popd
 %exclude %_datadir/%name/*/%kern_dir/kernel_gfx*.fatbin*
 %endif
 %if_with hiprt
-%exclude %_datadir/%name/*/%kern_dir/kernel_rt_gfx.*
+%exclude %_datadir/%name/*/%kern_dir/kernel_rt_gfx.hipfb*
 %endif
 %if_with cuda
 %exclude %_datadir/%name/*/%kern_dir/kernel_compute*.ptx*
@@ -461,9 +474,11 @@ popd
 %if_with hip
 %files cycles-hip-kernels
 %_datadir/%name/*/%kern_dir/kernel_gfx*.fatbin*
-%if_with hiprt
-%_datadir/%name/*/%kern_dir/kernel_rt_gfx.*
 %endif
+
+%if_with hiprt
+%files cycles-hiprt-kernels
+%_datadir/%name/*/%kern_dir/kernel_rt_gfx.hipfb*
 %endif
 
 %if_with cuda
@@ -478,6 +493,13 @@ popd
 %endif
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt6
+- Rebuild with new rocm-6.3.2 and HIPRT 2.5:
+  + cycles/hiprt: simplify hiprt kernel compilation (use system
+    kernels instead of manual compilation).
+  + hiprt: move hiprt kernels to separate package - you don't
+    need HIP if you use HIPRT and vice versa!
+
 * Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt5
 - Added fixes from upstream:
   + cycles: added openvdb 12.x support.

@@ -8,7 +8,7 @@
 %def_with HIP
 
 Name: clr
-Version: 6.1.2
+Version: 6.3.2
 Release: alt0.2
 License: MIT
 Summary: Radeon Open Compute Common Language Runtime
@@ -17,19 +17,25 @@ Group: System/Libraries
 
 Source0: %name-%version.tar
 # https://github.com/ROCm-Developer-Tools/HIP.git
-Source1: hip.tar
+Source1: hip-%version.tar
+
 # sane defaults for HIP
 Source2: hip.sh
 
 Patch0: rocclr-gcc-13-fixes.patch
 Patch1: opencl-gcc-13-fixes.patch
 Patch2: hipamd-pch-fix-arch.patch
+Patch3: clr-alt-rocm-path.patch
+Patch4: clr-alt-extra-arches.patch
 # patches from developer branch
 
 BuildRequires(pre): cmake /proc ninja-build
 BuildRequires: llvm-rocm-devel = %version clang-rocm-devel = %version clang-rocm-tools = %version rocm-device-libs >= %version
 BuildRequires: zlib-devel libstdc++-devel rocm-cmake >= %version rocm-comgr-devel = %version hsa-rocr-devel >= %version
-BuildRequires: libX11-devel libnuma-devel libGL-devel tbb-devel
+BuildRequires: libX11-devel libnuma-devel libGL-devel tbb-devel ocl-icd-devel
+%ifarch aarch64
+BuildRequires: sse2neon-devel
+%endif
 %if_with mold
 BuildRequires: mold
 %else
@@ -91,18 +97,20 @@ export ALTWRAP_LLVM_VERSION=rocm
 # we have a valid path in llvm-rocm but it's redefined during build
 # so set another env to correctly set bitcode search path again
 export HIP_DEVICE_LIB_PATH=%_datadir/amdgcn/bitcode
+export ROCM_LIBPATCH_VERSION=60302
 %_cmake \
-    -DUSE_COMGR_LIBRARY=ON \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
     -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF \
     -DCMAKE_PREFIX_PATH="../../" \
     -DCLR_BUILD_OCL=ON \
     -DBUILD_ICD:BOOL=TRUE \
+    -DHIP_ENABLE_ROCPROFILER_REGISTER:BOOL=OFF \
+    -DROCM_PATH=%prefix \
 %if_with HIP
     -DHIP_OFFICIAL_BUILD=ON \
     -DCLR_BUILD_HIP=ON \
     -DHIPCC_BIN_DIR=%_bindir \
-    -DHIP_COMMON_DIR=%_builddir/%name-%version/hip \
+    -DHIP_COMMON_DIR=%_builddir/%name-%version/hip-%version \
     -DCMAKE_MODULE_PATH=%_libdir/cmake \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_STRIP:STRING="" \
@@ -136,16 +144,19 @@ rm -f %buildroot%_bindir/hipvars.pm
 # hmm
 mv LICENCE LICENSE
 
+rm -rf %buildroot%_includedir/CL
+rm -rf %buildroot%_libdir/libOpenCL*
+
 %files -n rocm-opencl-runtime
 %doc README.md LICENSE CHANGELOG.md
 %_bindir/rocm-clinfo
-%_libdir/libamdocl%{bits}.so
+%_libdir/libamdocl%{bits}.so*
 %_libdir/libcltrace.so
 %_sysconfdir/OpenCL/vendors/amdocl%{bits}.icd
 
 %if_with HIP
 %files -n hip-devel
-%doc hip/README.md hip/RELEASE.md hip/LICENSE.txt
+%doc hip-%version/README.md hip-%version/RELEASE.md hip-%version/LICENSE.txt
 %_sysconfdir/profile.d/hip.sh
 %_bindir/*
 %exclude %_bindir/rocm-clinfo
@@ -166,6 +177,12 @@ mv LICENCE LICENSE
 %endif
 
 %changelog
+* Fri Feb 14 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.2
+- Apply fixes to compile on aarch64/ppc64le.
+
+* Tue Feb 11 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
+- rocm-6.3.2.
+
 * Sun Jul 07 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.2
 - fix hip-devel requires.
 

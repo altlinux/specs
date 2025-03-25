@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: hipify-clang
-Version: 6.1.2
+Version: 6.3.2
 Release: alt0.1
 License: MIT
 Summary: HIPIFY: Convert CUDA to Portable C++ Code
@@ -45,8 +45,12 @@ rm -rf %buildroot%_includedir
 %files
 %doc README.md LICENSE.txt CHANGELOG.md
 %_bindir/*
+%_prefix/libexec/hipify
 
 %changelog
+* Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
+- rocm-6.3.2.
+
 * Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 6.1.2-alt0.1
 - Initial build for ALTLinux.
 
