@@ -3,7 +3,7 @@
 
 Name: hipify-clang
 Version: 6.3.2
-Release: alt0.1
+Release: alt0.2
 License: MIT
 Summary: HIPIFY: Convert CUDA to Portable C++ Code
 Url: https://github.com/ROCm/HIPIFY
@@ -41,6 +41,7 @@ export ALTWRAP_LLVM_VERSION=rocm
 
 # remove includes as they are part of clang already
 rm -rf %buildroot%_includedir
+chmod 755 %buildroot%_bindir/hipify-perl
 
 %files
 %doc README.md LICENSE.txt CHANGELOG.md
@@ -48,6 +49,9 @@ rm -rf %buildroot%_includedir
 %_prefix/libexec/hipify
 
 %changelog
+* Wed Mar 26 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.2
+- Fix hipify-perl permissions.
+
 * Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
 - rocm-6.3.2.
 

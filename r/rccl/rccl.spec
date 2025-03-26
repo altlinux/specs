@@ -2,10 +2,10 @@
 %define optflags_lto %nil
 %define soname 1
 %def_with msccl
-%define rocm_version 6.1.2
+%define rocm_version 6.3.2
 
 Name: rccl
-Version: 2.18.6
+Version: 2.21.5
 Release: alt0.1
 License: BSD-3-Clause-Clear/Apache-2.0/MIT
 Summary: ROCm Communication Collectives Library
@@ -109,7 +109,8 @@ rm -rf %buildroot%_docdir/%name
 %endif
 
 %changelog
+* Wed Mar 26 2025 L.A. Kostis <lakostis@altlinux.ru> 2.21.5-alt0.1
+- 2.21.5 for rocm-6.3.2.
+
 * Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 2.18.6-alt0.1
 - initial build for ALTLinux.
-
-
