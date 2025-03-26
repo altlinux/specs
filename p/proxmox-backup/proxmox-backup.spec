@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 3.3.3.1
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -53,6 +53,7 @@ Requires: %name-client = %EVR pve-xtermjs >= 4.12.0  pbs-i18n %name-docs
 Requires: javascript-common javascript-extjs javascript-qrcodejs proxmox-widget-toolkit proxmox-mini-journalreader
 Requires: lvm2 zfs-utils sg3_utils smartmontools gdisk
 Requires: openssh-server
+Requires: update-kernel
 Provides: pve-backup-server = %EVR
 Obsoletes: pve-backup-server < %EVR
 
@@ -107,6 +108,16 @@ This package contains the Proxmox Backup Documentation files.
 %prep
 %setup
 rm -f docs/installation.rst
+
+# PATCH: downgrade 'http' version in 'h2' crate (which requires 'http = "1"')
+# Otherwise it conflicts with proxmox-http (from proxmox.git),
+# which depends on 'http = "0.2"'
+# Basically, their versions of 'http' should match.
+# So, erase/update this patch whenever proxmox.git catches up with latest 'http' version
+# (Upstream packages only 'http' 0.2.12. ArchLinux - patches 'h2' dependency too)
+sed -i -e '/^\[dependencies\.http\]$/{n; s/version *= *"[^"]*"/version = "0.2.12"/}' vendor/h2/Cargo.toml
+CHKSUM=$(sha256sum vendor/h2/Cargo.toml | cut -d' ' -f1)
+sed -i -e "s|Cargo.toml\":\"[^\"]*|Cargo.toml\":\"$CHKSUM|" vendor/h2/.cargo-checksum.json
 
 %build
 export REPOID=alt
@@ -236,6 +247,12 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Sun Mar 23 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt4
+- Erased Subscription info from Dashboard
+- Fixed APT support
+- Execute 'update-kernel' during upgrade
+- Fixed systemd notifications log flood
+
 * Wed Mar 19 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt3
 - Building restore-image on building server,
   not on user's host
