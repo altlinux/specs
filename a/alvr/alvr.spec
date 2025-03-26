@@ -1,5 +1,5 @@
 Name: alvr
-Version: 20.12.1
+Version: 20.13.0
 Release: alt1
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
@@ -12,7 +12,7 @@ Source1: %name-%version-vendor.tar
 
 # alvr helper script
 Source10: alvr.sh
-Source11: 20.12.1_session.json
+Source11: 20.13.0_session.json
 
 Patch1: use-static-x264-ffmpeg.patch
 Patch2: alvr-default-settings.patch
@@ -134,7 +134,7 @@ install -Dm644 %_alvrBuildDir/alvr_drm_lease_shim.so -t %buildroot%_libdir/%name
 
 # OpenVR Driver
 install -Dm644 %name/xtask/resources/driver.vrdrivermanifest -t %buildroot%_libdir/%name/
-install -Dm644 openvr/bin/linux64/libopenvr_api.so -t %buildroot%_libdir/%name/bin/linux64/
+# install -Dm644 openvr/bin/linux64/libopenvr_api.so -t %buildroot%_libdir/%name/bin/linux64/
 install -Dm644 %_alvrBuildDir/libalvr_server_openvr.so %buildroot%_libdir/%name/bin/linux64/driver_alvr_server.so
 
 # Vulkan Layer
@@ -166,6 +166,10 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Wed Mar 26 2025 Mikhail Tergoev <fidel@altlinux.org> 20.13.0-alt1
+- updated to version: 20.13.0
+- added error if PipeWire is not installed or not used (ALT bug: 53049)
+
 * Tue Feb 04 2025 Mikhail Tergoev <fidel@altlinux.org> 20.12.1-alt1
 - updated to version: 20.12.1
 - fixed FTBFS with nvidia-cuda-toolkit 12.4.1
