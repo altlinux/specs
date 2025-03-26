@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.2.1
+Version: 1.4.2.2
 Release: alt1
 
 Summary: Simple on-screen Keyboard
@@ -55,8 +55,10 @@ GNOME Shell support for onboard.
 %setup -q
 %autopatch -p1
 install -Dpm0644 %SOURCE1 po/ru.po
+rm settings_ui.py
 
 %build
+export FAKEROOTKEY=1
 %pyproject_build
 
 %install
@@ -105,6 +107,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Wed Mar 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.2.2-alt1
+- New version.
+
 * Tue Jan 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.2.1-alt1
 - New version.
 
