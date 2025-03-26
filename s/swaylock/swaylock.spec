@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaylock
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Swaylock is a screen locking utility for Wayland compositors
@@ -11,7 +11,8 @@ Url: https://github.com/swaywm/swaylock
 
 # Source-url: https://github.com/swaywm/%name/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Patch1: alt-rename-pam-login-module.patch
+Patch1: alt-fix-pam-config.patch
+Patch2: alt-allow-sgid.patch
 
 BuildRequires(pre): meson
 BuildRequires: pkgconfig(pam)
@@ -21,6 +22,7 @@ BuildRequires: pkgconfig(cairo)
 BuildRequires: libxkbcommon-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: pkgconfig(scdoc)
+BuildRequires: pkgconfig(pam)
 
 %description
 Swaylock is a screen locking utility for Wayland compositors. It is
@@ -30,6 +32,7 @@ ext-session-lock-v1 Wayland protocol.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %meson
@@ -40,13 +43,20 @@ ext-session-lock-v1 Wayland protocol.
 
 %files
 %config(noreplace) %_sysconfdir/pam.d/%name
-%_bindir/%name
+%attr(2711,root,chkpwd) %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_man1dir/%name.1.xz
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Mar 26 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.1-alt1
+- fixed unlocking with the correct password (closes: 53567)
+- new version
+
+* Fri Mar 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.1-alt1
+- new version
+
 * Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.0-alt1
 - 1.8.0-alt1
 - rename the name of the pam login module
