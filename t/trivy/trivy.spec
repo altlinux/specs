@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.58.0
+Version: 0.60.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -26,7 +26,7 @@ Source3: %name.sysconfig
 ExclusiveArch:  %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang wire golang >= 1.22.9
+BuildRequires: rpm-build-golang wire golang >= 1.24
 
 BuildRequires: /proc
 
@@ -114,6 +114,14 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Mon Mar 17 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.60.0-alt1
+- 0.60.0
+- Change ALT Linux Container Registry to altlinux.space Container Registry
+- Add altlinux.space Container Registry for java-db
+
+* Tue Mar 04 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.59.1-alt1
+- 0.59.1
+
 * Wed Dec 11 2024 Alexey Shabalin <shaba@altlinux.org> 0.58.0-alt1
 - 0.58.0
 
