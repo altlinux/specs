@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%set_gcc_version 12
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -9,7 +10,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt7
+Release: alt8
 Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
@@ -29,11 +30,13 @@ Requires: python-module-sidlx = %EVR
 Conflicts: openbabel
 
 BuildRequires(pre): rpm-build-compat rpm-build-python
-BuildRequires: gcc-c++ %mpiimpl-devel libltdl7-devel
+BuildRequires(pre): rpm-macros-java
+BuildRequires: gcc%_gcc_version-c++ gcc%_gcc_version
+BuildRequires: %mpiimpl-devel libltdl7-devel
 BuildRequires: libxml2-devel libparsifal-devel
 BuildRequires: jpackage-utils gnu-getopt
 %ifnarch %e2k
-BuildRequires: gcc-fortran
+BuildRequires: gcc%_gcc_version-fortran
 %endif
 %if_with python
 BuildRequires: python-devel libnumpy-devel
@@ -268,6 +271,7 @@ find -name Makefile.in -exec sed 's/-traditional/& -Ubool -Uvector/' -i {} \;
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %add_optflags -std=c++14
+%add_optflags -Wno-error=int-conversion -Wno-deprecated
 
 export JAVAPREFIX="%_libexecdir/jvm/java"
 export CLASSPATH=".:$(build-classpath gnu-getopt):$(pwd)/compiler"
@@ -275,6 +279,8 @@ export JAVACFLAGS="-classpath $CLASSPATH"
 export JAVAFLAGS=""
 export MPI_VENDOR=%mpiimpl
 source %mpidir/bin/mpivars.sh
+
+export CXX=g++-%_gcc_version
 
 %ifnarch %e2k
 # unsupported as of lcc 1.25.17 (mcst#6419); NB: fortran-only
@@ -403,6 +409,9 @@ done
 %_docdir/%name
 
 %changelog
+* Wed Mar 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0.0-alt8
+- NMU: fix FTBFS
+
 * Wed Jul 20 2022 Michael Shigorin <mike@altlinux.org> 2.0.0-alt7
 - E2K: completed the -alt5 change
 
