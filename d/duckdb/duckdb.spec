@@ -8,7 +8,7 @@
 
 Name: duckdb
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: An analytical in-process SQL database management system
 License: MIT
@@ -16,7 +16,7 @@ Group: Development/Databases
 Url: http://duckdb.org/
 Vcs: https://github.com/duckdb/duckdb
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -27,6 +27,7 @@ BuildRequires: gcc-c++
 BuildRequires: python3-dev
 BuildRequires: cmake
 BuildRequires: libssl-devel
+BuildRequires: libicu-devel
 
 %package devel
 Summary: Development header files for DuckDB
@@ -48,8 +49,12 @@ necessary to develop DuckDB applications.
 %setup
 %autopatch0 -p1
 
+# Remove vendored icu just to be sure
+find extension/icu/third_party/icu -name unicode -type d | xargs rm -rf
+
 %build
 %cmake  -GNinja \
+	-DWITH_INTERNAL_ICU=FALSE \
 	-DOVERRIDE_GIT_DESCRIBE="v%version" \
 	-DOVERRIDE_GIT_RELEASE="%release" \
 	-DOVERRIDE_GIT_NOHASH=1 \
@@ -83,6 +88,10 @@ EOF
 %_cmakedir/DuckDB/
 
 %changelog
+* Wed Mar 26 2025 Ilya Sorochan <k0tran@altlinux.org> 1.2.1-alt2
+- Switch to sisyphus libicu instead of vendored.
+- Fix jemalloc for loongarch64 and riscv64.
+
 * Tue Mar 25 2025 Artem Krasovskiy <aibure@altlinux.org> 1.2.1-alt1
 - New version 1.2.1-alt1
 
