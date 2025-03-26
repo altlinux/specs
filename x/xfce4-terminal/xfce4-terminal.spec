@@ -1,5 +1,5 @@
 Name: xfce4-terminal
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 %endif
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools >= 4.18.1
-BuildRequires: libxfconf-devel >= 4.16 libxfce4ui-gtk3-devel >= 4.17.5
+BuildRequires: libxfce4util >= 4.16.0 libxfconf-devel >= 4.16.0 libxfce4ui-gtk3-devel >= 4.17.5
 BuildRequires: libpcre2-devel
 BuildRequires: docbook-dtds docbook-style-xsl libvte3-devel
 %{?_enable_wayland:Buildrequires: libgtk-layer-shell-devel}
@@ -75,6 +75,9 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Wed Mar 26 2025 Mikhail Efremov <sem@altlinux.org> 1.1.5-alt1
+- Updated to 1.1.5.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.1.4-alt1
 - Updated to 1.1.4.
 
