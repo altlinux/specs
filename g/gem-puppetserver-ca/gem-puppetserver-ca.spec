@@ -5,8 +5,8 @@
 %define        gemname puppetserver-ca
 
 Name:          gem-puppetserver-ca
-Version:       2.7.0
-Release:       alt1
+Version:       2.7.0.1
+Release:       alt0.1
 Summary:       A simple Ruby CLI tool to interact with the Puppet Server's included CA
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -37,7 +37,9 @@ Requires:      gem(facter) >= 2.0.1
 Conflicts:     gem(facter) >= 5
 Obsoletes:     ruby-puppetserver-ca-cli < %EVR
 Provides:      ruby-puppetserver-ca-cli = %EVR
-Provides:      gem(puppetserver-ca) = 2.7.0
+Provides:      gem(puppetserver-ca) = 2.7.0.1
+
+%ruby_use_gem_version puppetserver-ca:2.7.0.1
 
 %description
 This gem provides the functionality behind the Puppet Server CA interactions.
@@ -45,14 +47,14 @@ The actual CLI executable lives within the Puppet Server project.
 
 
 %package       -n puppetserver-ca
-Version:       2.7.0
-Release:       alt1
+Version:       2.7.0.1
+Release:       alt0.1
 Summary:       A simple Ruby CLI tool to interact with the Puppet Server's included CA executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppetserver-ca
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(puppetserver-ca) = 2.7.0
+Requires:      gem(puppetserver-ca) = 2.7.0.1
 
 %description   -n puppetserver-ca
 A simple Ruby CLI tool to interact with the Puppet Server's included CA
@@ -67,14 +69,14 @@ The actual CLI executable lives within the Puppet Server project.
 
 %if_enabled    doc
 %package       -n gem-puppetserver-ca-doc
-Version:       2.7.0
-Release:       alt1
+Version:       2.7.0.1
+Release:       alt0.1
 Summary:       A simple Ruby CLI tool to interact with the Puppet Server's included CA documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppetserver-ca
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppetserver-ca) = 2.7.0
+Requires:      gem(puppetserver-ca) = 2.7.0.1
 Obsoletes:     ruby-puppetserver-ca-cli-doc < %EVR
 Provides:      ruby-puppetserver-ca-cli-doc = %EVR
 
@@ -92,14 +94,14 @@ The actual CLI executable lives within the Puppet Server project.
 
 %if_enabled    devel
 %package       -n gem-puppetserver-ca-devel
-Version:       2.7.0
-Release:       alt1
+Version:       2.7.0.1
+Release:       alt0.1
 Summary:       A simple Ruby CLI tool to interact with the Puppet Server's included CA development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppetserver-ca
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppetserver-ca) = 2.7.0
+Requires:      gem(puppetserver-ca) = 2.7.0.1
 Requires:      gem(bundler) >= 1.16
 Requires:      gem(hocon) >= 1.2
 Requires:      gem(pry) >= 0
@@ -156,6 +158,10 @@ The actual CLI executable lives within the Puppet Server project.
 
 
 %changelog
+* Wed Mar 26 2025 Pavel Skrylev <majioa@altlinux.org> 2.7.0.1-alt0.1
+- ^ 2.7.0 -> 2.7.0.1
+- + automatic detection of current pupper/server config folder
+
 * Fri Feb 14 2025 Pavel Skrylev <majioa@altlinux.org> 2.7.0-alt1
 - ^ 2.4.0 -> 2.7.0
 
