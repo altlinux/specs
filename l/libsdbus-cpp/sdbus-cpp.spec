@@ -1,6 +1,6 @@
 Name: libsdbus-cpp
 Version: 1.6.0
-Release: alt3
+Release: alt4
 
 Summary: A C++ bindings for libdbus
 License: LGPLv2.1
@@ -38,25 +38,14 @@ Development libraries for %name
 %install
 %cmake_install
 
-#install alternative
-mv %buildroot/%_pkgconfigdir/sdbus-c++{,-1}.pc
-install -d %buildroot/%_sysconfdir/alternatives/packages.d/
-cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name-devel <<__EOF__
-%_pkgconfigdir/sdbus-c++.pc %_pkgconfigdir/sdbus-c++-1.pc %version
-__EOF__
 
 %files
 %_libdir/*.so.*
 
-%files devel
-%doc %_defaultdocdir/sdbus-c++/*
-%config %_sysconfdir/alternatives/packages.d/%name-devel
-%_includedir/*
-%_libdir/*.so
-%_libdir/cmake/*
-%_pkgconfigdir/*.pc
-
 %changelog
+* Wed Mar 26 2025 Anton Farygin <rider@altlinux.com> 1.6.0-alt4
+- built without the devel component as a compatibility library
+
 * Wed Mar 26 2025 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt3
 - put pkgconfig-file on alternatives
 
