@@ -3,8 +3,8 @@
 %endif
 
 Name: mpv
-Version: 0.39.0
-Release: alt2
+Version: 0.40.0
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -31,7 +31,9 @@ BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-de
 
 BuildRequires: libgbm-devel libplacebo-devel >= 6.338.0 libSDL2-devel libavdevice-devel libXpresent-devel
 
-BuildRequires: libzimg-devel vapoursynth-devel nv-codec-headers pipewire-libs-devel libsixel-devel libmujs-devel
+BuildRequires: libzimg-devel vapoursynth-devel nv-codec-headers pipewire-libs-devel libsixel-devel libmujs-devel libcaca-devel libcdio-devel libcdio-paranoia-devel
+
+BuildRequires: libdisplay-info-devel
 
 BuildRequires: /usr/bin/rst2man
 
@@ -146,6 +148,13 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Wed Mar 26 2025 L.A. Kostis <lakostis@altlinux.ru> 0.40.0-alt1
+- 0.40.0.
+- BR:
+  + added cdio/cdio-paranoia (for cdda)
+  + added libcaca
+  + added libdisplay-info (for gbm).
+
 * Sat Feb 08 2025 L.A. Kostis <lakostis@altlinux.ru> 0.39.0-alt2
 - Rebuild with new libplacebo.
 - Added patch:
