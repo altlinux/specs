@@ -8,14 +8,14 @@
 %def_disable debug
 
 %if_enabled webgui
-%global php_version php8.2
+%global php_version php8.3
 %endif
 
 %define bacula_major 15
 
 Name: bacula%{bacula_major}
 Version: %{bacula_major}.0.2
-Release: alt2
+Release: alt3
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -934,6 +934,9 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Tue Mar 25 2025 Alexei Takaseev <taf@altlinux.org> 15.0.2-alt3
+- Use PHP 8.3 for Baculum
+
 * Thu Feb 20 2025 Alexei Takaseev <taf@altlinux.org> 15.0.2-alt2
 - Use PHP 8.2 for Baculum
 
