@@ -4,7 +4,7 @@
 
 Name: libsdbus-cpp2
 Version: 2.1.0
-Release: alt1
+Release: alt2
 License: LGPLv2.1
 
 Summary: High-level C++ D-Bus library for Linux
@@ -45,17 +45,28 @@ This package provides development files for %name library.
 %install
 %cmake_install
 
+#install alternative
+mv %buildroot/%_pkgconfigdir/sdbus-c++{,-2}.pc
+install -d %buildroot/%_sysconfdir/alternatives/packages.d/
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name-devel <<__EOF__
+%_pkgconfigdir/sdbus-c++.pc %_pkgconfigdir/sdbus-c++-2.pc %version
+__EOF__
+
 %files
 %_libdir/%libname.so.%soversion
 %_libdir/%libname.so.%version
 
 %files -n %name-devel
 %doc %_defaultdocdir/%_name/*
+%config %_sysconfdir/alternatives/packages.d/%name-devel
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_includedir/%_name
 %_libdir/cmake/%_name
 
 %changelog
+* Wed Mar 26 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- put pkgconfig-file on alternatives
+
 * Mon Mar 24 2025 Kirill Unitsaev <fiersik@altlinux.org> 2.1.0-alt1
 - Initial build
