@@ -4,7 +4,7 @@
 Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
 Version:	20250130
-Release:	alt1
+Release:	alt2
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -108,6 +108,18 @@ This is set of cores of game consoles emulators.
 %setup -q
 %patch1 -p1
 
+%ifarch riscv64
+sed -ie 's/HAVE_SSE = 1/HAVE_SSE = 0/' \
+    libretro-kronos/yabause/src/libretro/Makefile \
+    libretro-yabause/yabause/src/libretro/Makefile \
+    libretro-yabasanshiro/yabause/src/libretro/Makefile
+sed -i '1iundefine WITH_DYNAREC' \
+    libretro-parallel_n64/Makefile.common
+sed -i '1iCOREFLAGS += -DNO_ASM' \
+    libretro-parallel_n64/Makefile.common \
+    libretro-mupen64plus_next/Makefile.common
+%endif
+
 export CC=%__cc
 export CXX=%__cxx
 %build
@@ -146,6 +158,12 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Thu Mar 13 2025 Ilya Sorochan <k0tran@altlinux.org> 20250130-alt2
+- riscv64-only fixes:
+  + turned off sse for kronos, yabause, yabasanshiro
+  + turned off dynarec for parallel_n64
+  + turned off asm usage for parallel_n64, mupen64plus_next
+
 * Fri Jan 31 2025 Artyom Bystrov <arbars@altlinux.org> 20250130-alt1
 - Update to new versions
 
