@@ -2,8 +2,8 @@
 %define        gemname gem_plugin
 
 Name:          gem-gem-plugin
-Version:       0.2.3
-Release:       alt3.1
+Version:       0.2.3.1
+Release:       alt1
 Summary:       Gem Based Plugin System
 License:       GPLv2
 Group:         Development/Ruby
@@ -15,7 +15,7 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(gem_plugin) = 0.2.3
+BuildRequires: gem(gem_plugin) = 0.2.3.1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -24,9 +24,7 @@ BuildRequires: gem(gem_plugin) = 0.2.3
 %ruby_ignore_names <%= project %>
 Obsoletes:     ruby-gem_plugin < %EVR
 Provides:      ruby-gem_plugin = %EVR
-Provides:      gem(gem_plugin) = 0.2.3
-
-%ruby_bindir_to %ruby_bindir
+Provides:      gem(gem_plugin) = 0.2.3.1
 
 %description
 GemPlugin is a system that lets your users install gems and lets you load them
@@ -35,14 +33,14 @@ project but proved useful enough to break out into a separate project.
 
 
 %package       -n gpgen
-Version:       0.2.3
-Release:       alt3.1
+Version:       0.2.3.1
+Release:       alt1
 Summary:       Gem Based Plugin System executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gem_plugin
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gem_plugin) = 0.2.3
+Requires:      gem(gem_plugin) = 0.2.3.1
 
 %description   -n gpgen
 Gem Based Plugin System executable(s).
@@ -56,14 +54,14 @@ project but proved useful enough to break out into a separate project.
 
 
 %package       -n gem-gem-plugin-doc
-Version:       0.2.3
-Release:       alt3.1
+Version:       0.2.3.1
+Release:       alt1
 Summary:       Gem Based Plugin System documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gem_plugin
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gem_plugin) = 0.2.3
+Requires:      gem(gem_plugin) = 0.2.3.1
 
 %description   -n gem-gem-plugin-doc
 Gem Based Plugin System documentation files.
@@ -77,14 +75,14 @@ project but proved useful enough to break out into a separate project.
 
 
 %package       -n gem-gem-plugin-devel
-Version:       0.2.3
-Release:       alt3.1
+Version:       0.2.3.1
+Release:       alt1
 Summary:       Gem Based Plugin System development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gem_plugin
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gem_plugin) = 0.2.3
+Requires:      gem(gem_plugin) = 0.2.3.1
 
 %description   -n gem-gem-plugin-devel
 Gem Based Plugin System development package.
@@ -116,7 +114,7 @@ project but proved useful enough to break out into a separate project.
 
 %files         -n gpgen
 %doc README
-%ruby_bindir/gpgen
+%_bindir/gpgen
 
 %files         -n gem-gem-plugin-doc
 %doc README
@@ -127,6 +125,12 @@ project but proved useful enough to break out into a separate project.
 
 
 %changelog
+* Wed Mar 26 2025 Pavel Skrylev <majioa@altlinux.org> 0.2.3.1-alt1
+- ^ 0.2.3 -> 0.2.3p1
+- + exec sheband header for gpgen
+- ! spec bin dir to regular for %%_bindirv
+- ! get "gem_plugin" gem directory from rubygems directly (closes #51108)
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 0.2.3-alt3.1
 - ! spec for %%ruby_bindir
 

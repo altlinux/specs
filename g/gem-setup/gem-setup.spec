@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt19
+Release:       alt20
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -95,6 +95,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Wed Mar 26 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt20
+- ! enable to proceed the data tree except the other trees from the
+    beginning of the path
+
 * Fri Mar 14 2025 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt19
 - * used search of task name over all the rakefiles for the source
 
