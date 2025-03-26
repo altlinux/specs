@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: authenticator
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Generate Two-Factor Codes
@@ -25,9 +25,9 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define glib_ver 2.76
-%define gtk_ver 4.10
-%define adwaita_ver 1.5
+%define glib_ver 2.80
+%define gtk_ver 4.18
+%define adwaita_ver 1.7
 %define gst_ver 1.20
 
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -91,6 +91,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Thu Mar 27 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1
+- 4.6.2
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
 - 4.6.0
 
