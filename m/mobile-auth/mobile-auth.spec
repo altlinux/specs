@@ -1,7 +1,7 @@
 %define app_id io.github.SokolovValy.MobileAuth
 
 Name: mobile-auth
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Alt Mobile domain input tool.
@@ -52,6 +52,10 @@ Alt Mobile domain input tool.
 
 
 %changelog
+* Fri Mar 07 2025 Valentin Sokolov <sova@altlinux.org> 1.1-alt1
+- Added additional sections to .desktop file
+- Improver translation file
+
 * Mon Feb 10 2025 Valentin Sokolov <sova@altlinux.org> 1.0-alt1
 - Renamed interface and .policy file names (ru.basealt -> org.altlinux)
 - Renamed authentication metod (In_domain -> Join)
