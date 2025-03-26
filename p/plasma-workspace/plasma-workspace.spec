@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.3.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -90,6 +90,7 @@ Patch108: alt-def-background.patch
 Patch109: alt-def-start-empty-session.patch
 Patch110: alt-check-donat-auth.patch
 Patch111: alt-return-trash-desktop.patch
+Patch112: alt-desktopnames.patch
 #
 Patch114: alt-menu-search-results-add-genericname.patch
 #
@@ -312,6 +313,7 @@ Requires: %name-common >= %EVR
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
+%patch112 -p1
 #
 %patch114 -p1
 #
@@ -591,6 +593,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Mar 26 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.3-alt2
+- don't force $XDG_CURRENT_DESKTOP if already suitable
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.3-alt1
 - new version
 
