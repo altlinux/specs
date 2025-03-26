@@ -7,7 +7,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: criu
-Version: 4.0
+Version: 4.1
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
@@ -31,19 +31,24 @@ BuildRequires: python3-module-protobuf
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: python3(yaml)
 
 BuildRequires: glibc-devel
+BuildRequires: libaio-devel
 BuildRequires: libnl-devel
 BuildRequires: libcap-devel
 BuildRequires: libselinux-devel
 BuildRequires: libnet2-devel
+BuildRequires: pkgconfig(protobuf)
 BuildRequires: libprotobuf-c-devel %_bindir/protoc-c
 BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: asciidoc xmlto %_bindir/a2x
 BuildRequires: libnftables-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libbsd-devel
+BuildRequires: libuuid-devel
 BuildRequires: git
+
 %ifdef with_amdgpu
 BuildRequires: libdrm-devel
 %endif
@@ -195,6 +200,9 @@ rm -f %buildroot%_libdir/criu/cuda_plugin.so
 %endif
 
 %changelog
+* Wed Mar 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.1-alt1
+- Updated to 4.1.
+
 * Sun Sep 22 2024 Andrew A. Vasilyev <andy@altlinux.org> 4.0-alt1
 - Updated to 4.0.
 
