@@ -2,18 +2,18 @@
 %define vma_commit 5a53a198945ba8260fbc58fadb788745ce6aa263
 %define robin_map_commit fe845fd7852ef541c5479ae23b3d36b57f8608ee
 %define magic_enum_commit 1a1824df7ac798177a521eed952720681b0bf482
-%define sirit_commit d6f3c0d99862ab2ff8f95e9ac221560f1f97e29a
+%define sirit_commit 8b9b12c2089505ac8b10fa56bf56b3ed49d9d7b0
 %define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
-%define cryptopp_commit 60f81a77e0c9a0e7ffc1ca1bc438ddfa2e43b78e
+%define cryptopp_commit effed0d0b865afc23ed67e0916f83734e4b9b3b7
 %define zydis_commit bffbb610cfea643b98e87658b9058382f7522807
 %define dear_imgui_commit 636cd4a7d623a2bc9bf59bb3acbb4ca075befba3
 %define discord_rpc_commit 51b09d426a4a1bcfa6ee6d4894e57d669f4a2e65
 %define vulkan_headers_version 1.4.305
-%define libatrac9_commit 9640129dc6f2afbca6ceeca3019856e8653a5fb2
+%define libatrac9_commit ec8899dadf393f655f2871a94e0fe4b3d6220c9a
 
 Name: shadps4
-Version: 0.6.0
-Release: alt1.1
+Version: 0.7.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -54,6 +54,7 @@ Source12: ext-LibAtrac9-%libatrac9_commit.tar
 Patch0: %name-0.6.0-vulakn-headers.patch
 
 BuildRequires: boost-asio-devel
+BuildRequires: clang
 BuildRequires: glslang-devel
 BuildRequires: libGLU-devel
 BuildRequires: libSDL3-devel
@@ -64,7 +65,7 @@ BuildRequires: libhalf-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
 BuildRequires: libspirv-tools-devel
-BuildRequires: libssl-devel
+BuildRequires: libstb-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libtoml11-devel
@@ -72,9 +73,12 @@ BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxbyak-devel
 BuildRequires: libxxhash-devel
 BuildRequires: libzydis-devel
+BuildRequires: lld
+BuildRequires: llvm
 BuildRequires: qt6-multimedia-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: rapidjson-devel
+BuildRequires: renderdoc-devel
 BuildRequires: spirv-headers
 
 Provides: %name-qt = %EVR
@@ -104,9 +108,17 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %build
 %add_optflags -Wno-error=return-type
 
+export CC="clang"
+export CXX="clang++"
+export RANLIB="llvm-ranlib"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+
 %cmake \
 	-DENABLE_QT_GUI:BOOL=TRUE \
 	-DSIRIT_USE_SYSTEM_SPIRV_HEADERS:BOOL=TRUE \
+	-GNinja \
 	-Wno-dev
 %cmake_build
 
@@ -129,6 +141,9 @@ shadPS4 is an early PS4 emulator for Windows and Linux written in C++
 %_libexecdir/%name
 
 %changelog
+* Wed Mar 26 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.0-alt1
+- Version 0.7.0
+
 * Wed Feb 19 2025 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1.1
 - Fix FTBFS
 
