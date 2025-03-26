@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.15
+Version: 1.16.16
 Release: alt1
 
 Summary: Installer common parts
@@ -138,6 +138,10 @@ popd
 %_desktopdir/install2.desktop
 
 %changelog
+* Wed Mar 26 2025 Anton Midyukov <antohami@altlinux.org> 1.16.16-alt1
+- 31-enable-networkmanager.sh: setup wired connections as
+  NetworkManager(etcnet)
+
 * Sat Mar 22 2025 Anton Midyukov <antohami@altlinux.org> 1.16.15-alt1
 - initinstall: fix repeat run 3x-* scripts
 
