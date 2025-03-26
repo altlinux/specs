@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 3.3.3.1
-Release: alt4
+Release: alt5
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -35,9 +35,7 @@ BuildRequires: libudev-devel libssl-devel libacl-devel libsystemd-devel libpam-d
 BuildRequires: libsgutils-devel python3-module-sphinx python3-module-docutils python3-module-sphinx-sphinx-build-symlink
 BuildRequires: proxmox-widget-toolkit-dev
 BuildRequires: rsync jq
-%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
 BuildRequires: pkgconf
-%endif
 BuildRequires: /proc
 
 %description
@@ -247,6 +245,10 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Wed Mar 26 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.3.3.1-alt5
+- Put errors from running qemu to log file.
+- Removed pkgconf requirement based on repository name.
+
 * Sun Mar 23 2025 Sergey Konev <darisishe@altlinux.org> 1:3.3.3.1-alt4
 - Erased Subscription info from Dashboard
 - Fixed APT support
