@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -365,6 +365,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Mar 26 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt2
+- browser-qt: replace logo_width.png with smaller size
+- gnome-settings: add software-installation-priority override
+- gnome-settings: remove primary-monitor=0
+
 * Fri Mar 07 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt1
 - Use substitution @BRANCH@ (thx antohami@alt)
 - Revert mate-settings subpackage (thx antohami@alt)
