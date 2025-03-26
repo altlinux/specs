@@ -9,7 +9,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4.0.23.9559
-Release: alt1
+Release: alt2
 
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -59,6 +59,7 @@ for s in "GenericName=Simple screen recorder" \
 	"Comment[ru]=Программа записи видео с экрана" ; do
 	grep -F -q "${s%%=}" "$f" || echo "$s" >> "$f"
 done
+echo "NotShowIn=KDE-Wayland" >> data/simplescreenrecorder.desktop
 # XXX waiting for support for channels
 ##sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
 
@@ -97,6 +98,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Wed Mar 26 2025 Sergey V Turchin <zerg@altlinux.org> 0.4.4.0.23.9559-alt2
+- Hide from Plasma Wayland session. (closes: 53626)
+
 * Fri Dec 27 2024 Leontiy Volodin <lvol@altlinux.org> 0.4.4.0.23.9559-alt1
 - New version 0.4.4-23-g9559eb2.
 - Fixed build with ffmpeg7.
