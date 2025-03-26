@@ -12,6 +12,7 @@
 %define theme server
 %define Theme Server
 %define codename Mendelevium
+%define icon_theme AltWorkstation
 
 %if "%altbranch" == "sisyphus"
 %define status sisyphus_alpha
@@ -36,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt15
+Release: alt16
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -279,7 +280,7 @@ sed -i 's,#alt-server,&-e2k,' indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ALTBRANCH='%altbranch' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' ICON_THEME='%icon_theme' ALTBRANCH='%altbranch' ./configure
 make
 
 %install
@@ -390,6 +391,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Mar 26 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt16
+- Add settings to use Alt icons
+
 * Thu Mar 20 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt15
 - Set list of favorite applications
 - Set status sisyphus_alpha for Sisyphus
