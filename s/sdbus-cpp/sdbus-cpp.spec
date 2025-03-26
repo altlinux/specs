@@ -1,7 +1,7 @@
 %define soversion 2
 Name: sdbus-cpp
 Version: 2.1.0
-Release: alt3
+Release: alt4
 License: LGPLv2.1
 Summary: High-level C++ D-Bus library for Linux
 Group: System/Libraries
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: pkgconfig(libsystemd)
+BuildRequires: libgtest-devel ctest
 
 %description
 sdbus-c++ is a high-level C++ D-Bus library for Linux designed to provide expressive,
@@ -43,11 +44,14 @@ This package provides development files for %name library.
 %setup
 
 %build
-%cmake
+%cmake -DSDBUSCPP_BUILD_TESTS=ON
 %cmake_build
 
 %install
 %cmake_install
+
+%check
+%ctest -E "sdbus-c\+\+-integration-tests"
 
 %files -n libsdbus-cpp%soversion
 %_libdir/libsdbus-c++.so.%soversion
@@ -61,6 +65,9 @@ This package provides development files for %name library.
 %_libdir/cmake/sdbus-c++
 
 %changelog
+* Wed Mar 26 2025 Anton Farygin <rider@altlinux.com> 2.1.0-alt4
+- enabled tests
+
 * Wed Mar 26 2025 Anton Farygin <rider@altlinux.com> 2.1.0-alt3
 - renamed source package to sdbus-cpp according upstream
 - dropped support for devel packages of several libsdbus-cpp library versions
