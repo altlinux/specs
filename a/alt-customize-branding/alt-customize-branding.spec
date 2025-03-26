@@ -2,8 +2,8 @@
 
 Name: %rname
 Version: 1.2.0
-Release: alt1
-%K6init altplace
+Release: alt2
+%K6init no_altplace
 
 #Group: Graphics
 Group: Graphical desktop/Other
@@ -133,6 +133,9 @@ fi
 #%%doc README
 
 %changelog
+* Wed Mar 26 2025 Sergey V Turchin <zerg at altlinux dot org> 1.2.0-alt2
+- move to standard place
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg at altlinux dot org> 1.2.0-alt1
 - port to KF6
 
