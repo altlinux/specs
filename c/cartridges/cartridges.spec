@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name cartridges
-%define ver_major 2.11
+%define ver_major 2.12
 %define rdn_name page.kramo.Cartridges
 
 %def_enable check
@@ -26,9 +26,10 @@ Source: %_name-%version.tar
 
 BuildArch: noarch
 
-%define bp_ver 0.10
+%define bp_ver 0.14
 %define adw_ver 1.6
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: libadwaita-gir >= %adw_ver
 Requires: dconf
@@ -77,6 +78,9 @@ SteamGridDB.
 
 
 %changelog
+* Wed Mar 26 2025 Yuri N. Sedunov <aris@altlinux.org> 2.12.1-alt1
+- 2.12.1
+
 * Mon Feb 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.11.1-alt1
 - 2.11.1
 
