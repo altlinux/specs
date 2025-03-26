@@ -6,7 +6,7 @@
 
 Name: fbi
 Version: 2.14
-Release: alt2.1
+Release: alt3
 
 Summary: Image viewer for Linux framebuffer console
 License: GPL-2.0-or-later
@@ -21,6 +21,7 @@ Source: fbida-%version.tar
 %endif
 # according to changes in libxkbcommon-1.6
 Patch10: fbida-2.14-alt-libxkbcommon-1.6.patch
+Patch11: fbida-2.14-alt-tsm-draw-cb.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -76,6 +77,7 @@ Framebuffer terminal console.
 %prep
 %setup -n fbida-%version
 %patch10
+%patch11
 
 echo %version > VERSION
 
@@ -102,6 +104,11 @@ echo %version > VERSION
 %_datadir/wayland-sessions/fbcon.desktop
 
 %changelog
+* Wed Mar 26 2025 Constantin Sunzow <protvin@altlinux.org> 2.14-alt3
+- Fix FTBFS: update fbcon_tsm_draw_cb function, changing type of id variable
+  to uint64_t, because libtsm updated tsm_screen_draw type definition, now
+  using uint64_t type instead of uint32_t for id variable.
+
 * Sun Oct 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt2.1
 - fixed build with libxkbcommon-1.6
 
