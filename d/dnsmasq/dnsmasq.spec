@@ -4,9 +4,9 @@
 %def_with nftset
 
 Name: dnsmasq
-Version: 2.90
+Version: 2.91
 
-Release: alt4
+Release: alt1
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -20,9 +20,6 @@ Source4: %name.service
 Source5: %name@.service
 Source6: dbus.conf
 Patch: %name-%version-%release.patch
-
-# Patch from upstream git, must be dropped during update to new version.
-Patch100: Fix-crash-when-reloading-DHCP-config-on-SIGHUP.patch
 
 BuildRequires: glibc-kernheaders
 
@@ -80,8 +77,6 @@ query/remove a DHCP server's leases.
 %prep
 %setup
 %patch -p1
-
-%patch100 -p1
 
 # Setup version
 sed -r -i "s;-DVERSION=.+;-DVERSION='\\\\\"%version\\\\\"';" Makefile
@@ -180,6 +175,12 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Wed Mar 26 2025 Mikhail Efremov <sem@altlinux.org> 2.91-alt1
+- Driopped obsoleted patch.
+- dnsmasq.service: Fixed race with openresolv.
+- dnsmasq.sysconfig: Commented out CONFIG_DIR.
+- Updated to 2.91.
+
 * Mon Jan 27 2025 Alexey Shabalin <shaba@altlinux.org> 2.90-alt4
 - Enable CONNTRACK support.
 - Enable NFTSET support.
