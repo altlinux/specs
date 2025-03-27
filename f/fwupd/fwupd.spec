@@ -21,10 +21,9 @@
 %def_enable tests
 %def_enable flashrom
 
-# fwupdate is only available on these arches
+# fwupd-efi is only available on these arches
 %ifarch x86_64 aarch64
 %def_enable uefi
-%def_enable gpio
 %endif
 
 %ifarch x86_64 %ix86
@@ -34,7 +33,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.6
+Version: 2.0.7
 Release: alt1
 
 Summary: Firmware update daemon
@@ -186,38 +185,19 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
     -Dman=true \
     -Dlvfs=true \
     -Dsupported_build=enabled \
-    -Dlaunchd=disabled \
 %if_enabled flashrom
     -Dplugin_flashrom=enabled \
 %else
     -Dplugin_flashrom=disabled \
-%endif
-%if_enabled msr
-    -Dplugin_msr=enabled \
-%else
-    -Dplugin_msr=disabled \
 %endif
 %if_enabled tests
     -Dtests=true \
 %else
     -Dtests=false \
 %endif
-%if_enabled gpio
-    -Dplugin_gpio=enabled \
-%else
-    -Dplugin_gpio=disabled \
-%endif
-%if_enabled uefi
-    -Dplugin_uefi_capsule=enabled \
-    -Dplugin_uefi_pk=enabled \
-    -Dplugin_tpm=enabled \
-%else
-    -Dplugin_redfish=enabled \
-    -Dplugin_uefi_capsule=disabled \
-    -Dplugin_uefi_pk=disabled \
-    -Dplugin_nvme=enabled \
-%endif
     -Dplugin_modem_manager=enabled \
+    -Dplugin_qc_firehose=true \
+    -Dbluez=enabled
 #
 
 %__meson_build
@@ -337,6 +317,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Wed Mar 26 2025 Egor Ignatov <egori@altlinux.org> 2.0.7-alt1
+- 2.0.7
+
 * Fri Feb 14 2025 Egor Ignatov <egori@altlinux.org> 2.0.6-alt1
 - 2.0.6
 
