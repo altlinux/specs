@@ -2,7 +2,7 @@
 %define nameU dynamic-panel
 
 Name: gnome-shell-extension-dynamic-panel
-Version: 4.10.2
+Version: 4.10.3
 Release: alt1
 
 Summary: Dynamic top panel
@@ -50,6 +50,9 @@ cp metadata.json %buildroot%_datadir/gnome-shell/extensions/%exID/metadata.json
 %doc *.md LICENSE 
 
 %changelog
+* Thu Mar 27 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.10.3-alt1
+- 4.10.2 -> 4.10.3
+
 * Tue Mar 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.10.2-alt1
 - 4.10.1 -> 4.10.2
 
