@@ -2,7 +2,7 @@
 
 Name: 	 qcad
 Version: 3.32.2.0
-Release: alt1
+Release: alt2
 
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -80,6 +80,8 @@ echo 'DEFINES -= QT_NO_DEBUG_OUTPUT' >> shared.pri
 
 %ifarch %e2k
 sed -i '/CONFIG += precompile_header/d' src/scripting/ecmaapi/ecmaapi.pro
+sed -i '/#include <QString>/i #include <QScriptEngine>' \
+	src/scripting/ecmaapi/RScriptHandlerEcma.h
 # cpio archive too big - 4622M
 %add_optflags -g0
 %endif
@@ -152,6 +154,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Mar 26 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.32.2.0-alt2
+- Fixed build for Elbrus.
+
 * Thu Feb 20 2025 Andrey Cherepanov <cas@altlinux.org> 3.32.2.0-alt1
 - New version.
 
