@@ -4,8 +4,10 @@
 
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
+%def_with check
+
 Name: pam_u2f
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Pluggable Authentication Module (PAM) for U2F and FIDO2
@@ -21,6 +23,9 @@ BuildRequires: asciidoc-a2x
 BuildRequires: libfido2-devel
 BuildRequires: libssl-devel
 BuildRequires: libpam-devel
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
 This module implements PAM over U2F and FIDO2, providing an easy way to
@@ -32,24 +37,26 @@ your existing infrastructure.
 %autopatch -p1
 
 %build
-%autoreconf
-%configure --with-pam-dir=%_pam_modules_dir
-%make_build
+%cmake -DPAM_INCLUDE_DIRS=%_includedir/security
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %check
-%make_build check
+%ctest
 
 %files
 %doc README AUTHORS COPYING NEWS
-%_bindir/*
-%_pam_modules_dir/*.so
-%_man1dir/*
-%_man8dir/*
+%_bindir/pamu2fcfg
+%_pam_modules_dir/pam_u2f.so
+%_man1dir/pamu2fcfg.1*
+%_man8dir/pam_u2f.8*
 
 %changelog
+* Thu Mar 27 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Fri Jan 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1.3.2-alt1
 - Updated to 1.3.2 (closes CVE-2025-23013).
 
