@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname.core
 Version: 4.6.0
-Release: alt1
+Release: alt2
 
 Summary: Chameleon Template Compiler
 License: BSD-4-Clause
@@ -13,6 +13,8 @@ VCS: https://github.com/malthe/chameleon
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Patch: chameleon.core-fix-building-docs.patch
 
 BuildRequires: time
 
@@ -61,6 +63,8 @@ This package contains documentation for Chameleon Template Compiler.
 %prep
 %setup
 
+%patch -p1
+
 %build
 %pyproject_build
 
@@ -91,6 +95,9 @@ cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc _build/html/*
 
 %changelog
+* Thu Mar 27 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt2
+- Fixed building with sphinx>=8.
+
 * Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 
