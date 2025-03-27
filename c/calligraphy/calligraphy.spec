@@ -1,7 +1,7 @@
 %define xdg_name dev.geopjr.Calligraphy
 
 Name: calligraphy
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 License: GPL-3.0
 
@@ -50,5 +50,8 @@ rm -rf %buildroot%_datadir/locale/zh_Hans
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Mar 27 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.2.0-alt1
+- new version 1.2.0 (with rpmrb script)
+
 * Sun Feb 16 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.1.0-alt1
 - Initial build
