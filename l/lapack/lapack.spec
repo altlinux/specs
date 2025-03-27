@@ -1,6 +1,6 @@
 Name: lapack
 Version: 3.8.0
-Release: alt7
+Release: alt8
 Epoch: 1
 
 %define sover 4
@@ -14,6 +14,8 @@ Url: http://www.netlib.org/
 
 Source: %name-%version.tar
 Source1: manpages.tar
+
+Patch100: CVE-2021-4048.patch
 
 BuildRequires: cmake gcc-fortran libxblas-devel
 %{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
@@ -111,6 +113,7 @@ real and complex matrices in both single and double precision.
 
 %prep
 %setup -a1
+%patch100 -p1
 
 export LC_COLLATE=C
 ls manpages/blas/man/manl >blas.manpages
@@ -170,6 +173,9 @@ done >lapack-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Thu Mar 27 2025 Alexander Danilov <admsasha@altlinux.org> 1:3.8.0-alt8
+- Applied security fixes from upstream (Fixes: CVE-2021-4048).
+
 * Wed Jan 19 2022 Michael Shigorin <mike@altlinux.org> 1:3.8.0-alt7
 - use openblas on %%e2k
 
