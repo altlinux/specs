@@ -3,7 +3,7 @@
 %define itkver 5.4
 
 Name: itk
-Version: %itkver.2
+Version: %itkver.3
 Release: alt1
 
 Group: System/Libraries
@@ -423,6 +423,9 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Thu Mar 27 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.3-alt1
+- New version.
+
 * Thu Jan 23 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.2-alt1
 - Added upstream patch (LesionSizingToolkit) to provide compat with cxx-17.
 - Rebase ALT patches (Cleaver, RTK, VkFFTBackend, WebAssemblyInterface).
