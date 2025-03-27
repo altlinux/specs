@@ -5,8 +5,8 @@
 %endif
 
 Name: kde-set
-Version: 25.02.2
-Release: alt2
+Version: 25.03.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Set of KDE applications
@@ -121,7 +121,6 @@ Requires: ktorrent
 Requires: plasma6-oxygen
 Requires: icon-theme-oxygen
 Requires: plasma-workspace-wallpapers
-Requires: kwrited
 Requires: ksystemlog
 Requires: krdc
 Requires: kcron kruler ffmpegthumbs
@@ -144,6 +143,7 @@ Requires: kde-games
 Requires: kde-printing
 Requires: kde-scanning
 #
+Requires: kwrited
 Requires: plasma-discover-maxi
 Requires: keditbookmarks
 Requires: kteatime
@@ -279,6 +279,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Thu Mar 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.03.1-alt1
+- relax deps on kwrited because we have kbroadcastnotification
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.02.2-alt2
 - fix requires
 
