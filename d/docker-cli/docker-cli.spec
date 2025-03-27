@@ -6,11 +6,11 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      0442a7378f37ef9482ade1c8addf618cb8becb00
+%global commit      b8034c0ed70494a90c133461d145cd072d920d7c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    28.0.2
+Version:    28.0.4
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -21,7 +21,6 @@ ExclusiveArch: %go_arches
 Conflicts: docker
 
 Source0: %name-%version.tar
-Patch1: docker-cli-23.0.0-alt-fix-man-page-gen.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3 libseccomp-devel gcc glibc-devel
@@ -41,7 +40,6 @@ CLI for Docker Engine
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 # Temporary workaround to build with golang 1.16. Waiting for upstream to
@@ -95,6 +93,9 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Thu Mar 27 2025 Vladimir Didenko <cow@altlinux.org> 28.0.4-alt1
+- new release
+
 * Mon Mar 24 2025 Vladimir Didenko <cow@altlinux.org> 28.0.2-alt1
 - new release
 
