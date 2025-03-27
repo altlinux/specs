@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swaylock
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Swaylock is a screen locking utility for Wayland compositors
@@ -50,11 +50,12 @@ ext-session-lock-v1 Wayland protocol.
 %_datadir/zsh/site-functions/_%name
 
 %changelog
-* Wed Mar 26 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.1-alt1
-- fixed unlocking with the correct password (closes: 53567)
+* Thu Mar 27 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.2-alt1
+- fixed inconsistent package changelog
 - new version
 
-* Fri Mar 21 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.1-alt1
+* Wed Mar 26 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.1-alt1
+- fixed unlocking with the correct password (closes: 53567)
 - new version
 
 * Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.8.0-alt1
