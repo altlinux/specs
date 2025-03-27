@@ -1,5 +1,7 @@
+%def_enable snapshot
+
 %define _name calls
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Calls
 
@@ -16,10 +18,15 @@ Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/GNOME/calls
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+#Source: https://gitlab.gnome.org/GNOME/%_name/-/archive/v%version/%_name-%version%beta.tar.gz
+%else
+Source: %_name-%version%beta.tar
+%endif
 
-%define glib_ver 2.62
-%define adw_ver 1.4.0
+%define glib_ver 2.74
+%define adw_ver 1.6
 %define mm_ver 1.12.0
 %define feedback_ver 0.0.1
 
@@ -89,6 +96,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Thu Mar 27 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Sep 14 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1
 - 47.0
 
