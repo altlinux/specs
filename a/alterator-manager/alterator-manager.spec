@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.27
-Release: alt5
+Version: 0.1.28
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -54,7 +54,6 @@ mkdir -p %buildroot%_sysconfdir/alterator/backends
 mkdir -p %buildroot%_sysconfdir/alterator/backends/user
 mkdir -p %buildroot%_sysconfdir/alterator/backends/system
 mkdir -p %buildroot%_datadir/polkit-1/actions
-mkdir -p %buildroot%_rpmlibdir/
 mv -f %buildroot%_prefix/lib/systemd/user/alterator-manager.service-user \
       %buildroot%_prefix/lib/systemd/user/alterator-manager.service
 mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service-user \
@@ -68,7 +67,6 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %_unitdir/alterator-manager.service
 %_prefix/lib/systemd/user/alterator-manager.service
 %_datadir/polkit-1/actions/org.altlinux.alterator.manager.policy
-%_rpmlibdir/%name.filetrigger
 %dir %alterator_libexecdir
 %dir %_datadir/alterator/backends
 %dir %_datadir/alterator/backends/user
@@ -88,6 +86,11 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Thu Mar 27 2025 Ivan Savin <svn17@altlinux.org> 0.1.28-alt1
+- Add functionality that restarts the service when there are changes in
+  directories with backend files. The corresponding filetrigger has been
+  removed.
+
 * Mon Mar 10 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.27-alt5
 - Add preun script to stop alterator-manager service.
 

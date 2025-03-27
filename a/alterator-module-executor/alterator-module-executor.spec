@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.18
+Version: 0.1.19
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -9,9 +9,9 @@ URL: https://gitlab.basealt.space/alt/alterator-module-executor
 
 BuildRequires: cmake gcc libtomlc99-devel
 BuildRequires: libgio-devel libsystemd-devel libpolkit-devel
-BuildRequires: alterator-manager-devel >= 0.1.27
+BuildRequires: alterator-manager-devel >= 0.1.28
 
-Requires: alterator-manager >= 0.1.27-alt1
+Requires: alterator-manager >= 0.1.28-alt1
 Requires: libtomlc99 >= 1.0
 
 Source: %name-%version.tar
@@ -35,6 +35,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Mar 27 2025 Ivan Savin <svn17@altlinux.org> 0.1.19-alt1
+- Add functionality allowing the manager to track whether the module is busy.
+
 * Tue Mar 04 2025 Ivan Savin <svn17@altlinux.org> 0.1.18-alt1
 - Add the ability to return stdout as an array of byte arrays.
 - Fix error handling on stdout strings.
