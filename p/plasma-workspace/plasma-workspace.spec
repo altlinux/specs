@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.3.3
-Release: alt2
+Release: alt3
 Epoch: 1
 %K6init
 
@@ -593,6 +593,11 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Mar 27 2025 Oleg Solovyov <mcpain@altlinux.org> 1:6.3.3-alt3
+- update freememorynotifer:
+  + fix duplicating buttons (Closes: #53011)
+  + show notifications from systemd-oomd
+
 * Wed Mar 26 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.3-alt2
 - don't force $XDG_CURRENT_DESKTOP if already suitable
 
