@@ -1,6 +1,6 @@
 Name: hypridle
-Version: 0.1.2
-Release: alt2
+Version: 0.1.5
+Release: alt1
 License: BSD-3-Clause
 
 Summary: Hyprland's idle daemon
@@ -11,12 +11,16 @@ Group: Graphical desktop/Other
 Url: https://github.com/hyprwm/hypridle
 Vcs: https://github.com/hyprwm/hypridle.git
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: gcc-c++ cmake
-BuildRequires: libsdbus-cpp-devel libhyprlang-devel
+
+BuildRequires: pkgconfig(hyprutils)
+BuildRequires: pkgconfig(hyprlang)
+
+BuildRequires: pkgconfig(sdbus-c++)
 BuildRequires: wayland-protocols wayland-devel libwayland-client-devel
 
 %description
@@ -42,8 +46,13 @@ Hypridle поддерживает команды блокировки, разб�
 %files
 %_bindir/%name
 %_userunitdir/%name.service
+%_datadir/hypr/%name.conf
 
 %changelog
+* Wed Mar 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.5-alt1
+- new version 0.1.5 (with rpmrb script)
+- pack base config
+
 * Thu Sep 19 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.2-alt2
 - Fix the systemd service path (ALT bug 51488)
 

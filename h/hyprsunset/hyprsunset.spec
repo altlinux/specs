@@ -1,5 +1,5 @@
 Name: hyprsunset
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -34,7 +34,7 @@ BuildRequires: pkgconfig(libffi)
 %setup
 
 %build
-%cmake
+%cmake -DCMAKE_INSTALL_LIBDIR=lib
 %cmake_build
 
 %install
@@ -42,7 +42,12 @@ BuildRequires: pkgconfig(libffi)
 
 %files
 %_bindir/%name
+%_userunitdir/%name.service
 
 %changelog
+* Tue Mar 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
+- new version 0.2.0 (with rpmrb script)
+- add a systemd service
+
 * Sun Nov 10 2024 Kirill Unitsaev <fiersik@altlinux.org> 0.1.0-alt1
 - Initial build

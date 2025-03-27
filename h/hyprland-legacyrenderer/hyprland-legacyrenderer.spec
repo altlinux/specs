@@ -2,7 +2,7 @@
 %define upstream hyprland
 
 Name: hyprland-legacyrenderer
-Version: 0.47.2
+Version: 0.48.0
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor (legacy renderer)
@@ -121,6 +121,14 @@ rm -rf %buildroot%_datadir/pkgconfig/hyprland.pc
 %_datadir/zsh/site-functions/_hyprpm
 
 %changelog
+* Tue Mar 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.0-alt1
+- new version 0.48.0 (with rpmrb script)
+- config:
+  + drop opengl:force_introspection
+  + drop render:allow_early_buffer_release
+  + drop windowrule v1 syntax
+  + windowrulev2 -> windowrule
+
 * Fri Feb 07 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.47.2-alt1
 - new version 0.47.2 (with rpmrb script)
 - add hyprland symlink to Hyprland

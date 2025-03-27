@@ -1,7 +1,7 @@
 %define plugin dynamic-cursors
 
 Name: hyprland-plugin-%plugin
-Version: 0.47.2
+Version: 0.48.0
 Release: alt1
 License: MIT
 
@@ -53,6 +53,9 @@ install out/%plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Wed Mar 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.0-alt1
+- new version 0.48.0 (with rpmrb script)
+
 * Thu Feb 13 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.47.2-alt1
 - new version 0.47.2 (with rpmrb script)
 

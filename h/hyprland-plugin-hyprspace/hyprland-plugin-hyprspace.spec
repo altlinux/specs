@@ -1,7 +1,7 @@
 %define plugin Hyprspace
 
 Name: hyprland-plugin-hyprspace
-Version: 0.47.2
+Version: 0.48.0
 Release: alt1
 License: GPL-2.0
 
@@ -37,6 +37,7 @@ a efficient way of workspace and window management.
 
 %prep
 %setup
+subst "s|addDispatcher|addDispatcherV2|" src/main.cpp
 
 %build
 %make_build all 
@@ -50,6 +51,9 @@ install %plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Tue Mar 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.0-alt1
+- new version 0.48.0 (with rpmrb script)
+
 * Thu Feb 13 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.47.2-alt1
 - new version 0.47.2 (with rpmrb script)
 
