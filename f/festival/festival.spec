@@ -14,7 +14,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt0.4
+Release:	alt0.5
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs el file is GPL+, there is one TCL licensed source file, and
@@ -432,6 +432,7 @@ make test
 # Build Festival
 cd $RPM_BUILD_DIR/festival
 cp -pv /usr/share/gnu-config/* .
+sed -i 's!main(){return(0);}!int main(){return(0);}!' configure
 %configure
 cat <<EOF >>config/config
 # FESTIVAL_HOME := %_prefix
@@ -740,6 +741,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Thu Mar 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.5-alt0.5
+- NMU: fix FTBFS with gcc14
+
 * Sun Sep 27 2020 Igor Vlasenko <viy@altlinux.ru> 2.5-alt0.4
 - updated conflict list with unsupported festival voices
 - festival.service
