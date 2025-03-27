@@ -1,5 +1,5 @@
 Name: volumes-profile-kdesktop
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 
 Summary: Volumes description for Desktop KDE distribution
@@ -29,6 +29,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Thu Mar 27 2025 Sergey V Turchin <zerg@altlinux.org> 0.13.2-alt1
+- increase maximum swap size
+
 * Thu Sep 19 2024 Sergey V Turchin <zerg@altlinux.org> 0.13.1-alt1
 - fix detect VMWare
 
