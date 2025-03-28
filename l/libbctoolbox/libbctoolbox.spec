@@ -1,5 +1,5 @@
 Name: libbctoolbox
-Version: 5.4.0
+Version: 5.4.2
 Release: alt1
 Summary: Utilities library used by Belledonne Communications softwares
 Group: System/Libraries
@@ -52,6 +52,9 @@ Libraries and headers required to develop software with belle-sip, mediastreamer
 %_datadir/BCToolbox
 
 %changelog
+* Fri Mar 28 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.2-alt1
+- 5.4.2
+
 * Thu Mar 13 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
 - 5.4.0
 
