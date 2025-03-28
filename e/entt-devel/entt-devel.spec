@@ -1,5 +1,5 @@
 Name: entt-devel
-Version: 3.14.0
+Version: 3.15.0
 Release: alt1
 License: MIT
 
@@ -26,7 +26,7 @@ the ArcGIS Runtime SDKs by Esri and the amazing Ragdoll.
 %setup
 
 %build
-%cmake
+%cmake -DENTT_INSTALL=on
 %cmake_build
 
 %install
@@ -38,6 +38,9 @@ the ArcGIS Runtime SDKs by Esri and the amazing Ragdoll.
 %_pkgconfigdir/entt.pc
 
 %changelog
+* Fri Mar 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.15.0-alt1
+- new version 3.15.0 (with rpmrb script)
+
 * Fri Feb 21 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.14.0-alt1
 - new version (3.14.0) with rpmgs script
 - spec: add vcs
