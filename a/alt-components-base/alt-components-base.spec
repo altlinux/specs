@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.5.5
+Version: 0.6.0
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -32,6 +32,15 @@ Requires: alt-components-base = %version-%release
 %description -n alt-editions-server
 %summary.
 
+%package -n alt-components-vendors
+Summary: Vendors set of ALT Distributions components
+Group: System/Configuration/Other
+
+Requires: alt-components-base = %version-%release
+
+%description -n alt-components-vendors
+%summary.
+
 %prep
 %setup
 
@@ -46,10 +55,30 @@ done
 # install Components
 mkdir -p "%buildroot%_alterator_datadir/components/categories"
 
+rm -f install.base_components.list install.vendors_components.list vendors_categories.list
+touch install.base_components.list install.vendors_components.list vendors_categories.list
+
+for d in categories/* ; do
+    d="$(basename "$d")"
+    f="categories/$d"
+    c="$(alterator-entry get "$f" category ||:)"
+
+    install -v -p -m 644 -D "$f" "%buildroot%_alterator_datadir/components/categories"
+    if [ "$c" != "vendors" ]; then
+        echo "%_alterator_datadir/components/categories/$d" >>install.base_components.list
+    else
+        echo "%_alterator_datadir/components/categories/$d" >>install.vendors_components.list
+        echo "$(alterator-entry get "$f" name)" >>vendors_categories.list
+    fi
+done
+
 for d in components/*/ ; do
     d="$(basename "$d")"
+    f="components/$d/$d.component"
+    c="$(alterator-entry get "$f" category)"
+
     mkdir -p "%buildroot%_alterator_datadir/components/$d"
-    install -v -p -m 644 -D "components/$d/$d.component" "%buildroot%_alterator_datadir/components/$d"
+    install -v -p -m 644 -D "$f" "%buildroot%_alterator_datadir/components/$d"
 
     find "components/$d" -name '*.png' -type f | while read -r file; do
         install -v -p -m 664 -D "$file" "%buildroot%_alterator_datadir/components/$d"
@@ -58,11 +87,12 @@ for d in components/*/ ; do
     find "components/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
         install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/components/$d"
     done
-done
 
-for d in categories/* ; do
-    d="$(basename "$d")"
-    install -v -p -m 644 -D "categories/$d" "%buildroot%_alterator_datadir/components/categories"
+    if grep -q "^$c$" vendors_categories.list; then
+        echo "%_alterator_datadir/components/$d" >>install.vendors_components.list
+    else
+        echo "%_alterator_datadir/components/$d" >>install.base_components.list
+    fi
 done
 
 # install Editions
@@ -103,8 +133,11 @@ for e in `find ./editions -name '*.edition' -type f`; do
     done
 done
 
-%files
-%_alterator_datadir/components/*
+%files -f install.base_components.list
+%dir %_alterator_datadir/components
+%dir %_alterator_datadir/components/categories
+
+%files -n alt-components-vendors -f install.vendors_components.list
 
 %files -n alt-editions-server
 %dir %_alterator_datadir/editions
@@ -112,6 +145,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Sat Mar 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.0-alt1
+- Replace all vendors components and categories to separate
+  alt-components-vendors subpackage
+
 * Sat Mar 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.5-alt1
 - components: adjust desktop option for alterator-legacy-kiosk,
   gtkhash and libreoffice{-still}
