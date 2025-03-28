@@ -1,7 +1,7 @@
 %define oname eigen
 Name: %{oname}3
 Version: 3.4.0
-Release: alt2.1
+Release: alt3
 
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -11,9 +11,6 @@ Url: http://eigen.tuxfamily.org/
 Source: %name-%version.tar
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-# Install FindEigen3.cmake
-# Fix pkg-config file
-Patch1: eigen_pkgconfig.patch
 # Fix the include paths in the new Eigen3Config.cmake file
 Patch2: eigen3-3.3.1-fixcmake.patch
 # Avoid SSE4.2/AVX on e2k
@@ -66,7 +63,6 @@ This package contains examples for Eigen.
 
 %prep
 %setup
-%patch1 -p1
 %patch2 -p0 -b .fixcmake
 %ifarch %e2k
 %patch3 -p2 -b .e2k
@@ -121,6 +117,9 @@ cd -
 %doc %_cmake__builddir/doc/html/*
 
 %changelog
+* Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt3
+- Fixed path to includes in pkgconfig file (ALT #53643).
+
 * Wed Jan 12 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.4.0-alt2.1
 - E2K: updated patch, enabled build of docs and examples
 
