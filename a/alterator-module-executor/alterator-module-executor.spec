@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.19
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -35,6 +35,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Mar 28 2025 Ivan Savin <svn17@altlinux.org> 0.1.19-alt2
+- Updated the warning text displayed when a spawned process fails.
+
 * Thu Mar 27 2025 Ivan Savin <svn17@altlinux.org> 0.1.19-alt1
 - Add functionality allowing the manager to track whether the module is busy.
 
