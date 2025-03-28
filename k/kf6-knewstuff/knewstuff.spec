@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.12.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -14,6 +14,7 @@ Requires: kf6-kirigami
 
 Source: %rname-%version.tar
 Patch1: alt-check-ghns-auth.patch
+Patch2: alt-warning.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel qt6-declarative-devel qt6-tools-devel
@@ -70,6 +71,7 @@ KF6 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build
@@ -103,6 +105,9 @@ KF6 library
 
 
 %changelog
+* Fri Mar 28 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt2
+- more serious warning about downloadable content
+
 * Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
 - new version
 
