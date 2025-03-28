@@ -1,5 +1,5 @@
 Name: rack
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: VCV virtual Eurorack host
@@ -67,7 +67,7 @@ This package contains Rack plugin SDK.
 
 %build
 %make_build -C dep
-%make_build VERSION=%version
+%make_build RACK_VERSION=%version
 
 %install
 install -pm0755 -D rack %buildroot%_bindir/rack
@@ -118,6 +118,9 @@ install -pm0644 -D rack.desktop %buildroot%_desktopdir/rack.desktop
 %_datadir/rack/sdk
 
 %changelog
+* Fri Mar 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.3-alt1
+- 2.6.3 released
+
 * Mon Mar 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.2-alt1
 - 2.6.2 released
 
