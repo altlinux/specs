@@ -1,7 +1,7 @@
 %define abiversion 0
 
 Name:    ftxui
-Version: 5.1.0
+Version: 6.0.0
 Release: alt1
 
 Summary: Functional Terminal (X) User interface
@@ -63,6 +63,9 @@ Summary: %summary development files and headers
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Mar 28 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 6.0.0-alt1
+- 5.1.0 -> 6.0.0.
+
 * Thu Jan 09 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.1.0-alt1
 - 5.0.0 -> 5.1.0.
 
