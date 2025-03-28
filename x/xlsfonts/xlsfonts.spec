@@ -1,9 +1,9 @@
 Name: xlsfonts
-Version: 1.0.6
+Version: 1.0.8
 Release: alt1
 
 Summary: server font list displayer for X
-License: MIT/X11
+License: MIT X11
 Group: System/X11
 
 Url: http://xorg.freedesktop.org
@@ -35,6 +35,9 @@ given, "*" is assumed.
 %_man1dir/*
 
 %changelog
+* Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.8-alt1
+- 1.0.8
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
 - Autobuild version bump to 1.0.6
 
