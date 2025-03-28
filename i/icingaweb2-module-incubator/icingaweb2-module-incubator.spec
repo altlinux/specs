@@ -22,7 +22,7 @@
 
 Name: icingaweb2-module-%module_name
 Version: 0.20.0
-Release: alt2
+Release: alt3
 Summary: Bleeding edge Icinga Web 2 libraries
 License: MIT
 Group: Monitoring
@@ -30,6 +30,7 @@ Url: https://www.icinga.org
 
 Source0: https://github.com/Icinga/icingaweb2-module-%module_name/archive/v%version/%name-%version.tar
 Patch0:  incubator-no-deprecated-modules.patch
+Patch1:  upstream-Fix-form-validation.patch
 
 BuildArch: noarch
 
@@ -44,6 +45,7 @@ Icinga Web 2 - ReactPHP-based 3rd party libraries
 %prep
 %setup
 %patch0 -p2
+%patch1 -p1
 
 %build
 
@@ -63,6 +65,9 @@ cp -pv *.md *.php *.info %buildroot%basedir/modules/%module_name
 %basedir/modules/%module_name/*
 
 %changelog
+* Fri Mar 28 2025 Alexander Danilov <admsasha@altlinux.org> 0.20.0-alt3
+- Applied security fixes from upstream (Fixes: CVE-2024-24819).
+
 * Wed Jan 10 2024 Paul Wolneykien <manowar@altlinux.org> 0.20.0-alt2
 - Remove deprecated dependencies: 'ipl' and 'reactbundle' modules.
 
