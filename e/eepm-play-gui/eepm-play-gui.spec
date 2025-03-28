@@ -1,5 +1,5 @@
 Name: eepm-play-gui
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 License: AGPL2
 
@@ -52,6 +52,9 @@ GUI frontend for install third-party applications using epm play.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Sat Mar 29 2025 Roman Alifanov <ximper@altlinux.org> 0.7.0-alt1
+- very large speed up of getting a list of packages
+
 * Sat Dec 28 2024 Roman Alifanov <ximper@altlinux.org> 0.6.0-alt1
 - fixed bug: programs could not be installed if the list of installed programs from epm play was empty
 - implemented `epm play --product-alternatives` support
