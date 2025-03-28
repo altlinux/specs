@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 Summary: A collection of ASN.1-based protocols modules
 License: BSD-2-Clause
@@ -48,6 +48,9 @@ expressed as Python classes based on pyasn1 data model.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Mar 28 2025 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
+- 0.4.1 -> 0.4.2.
+
 * Mon Feb 24 2025 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4.0 -> 0.4.1.
 
