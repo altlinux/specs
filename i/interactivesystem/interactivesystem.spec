@@ -1,6 +1,6 @@
 Name: interactivesystem
 Version: sisyphus
-Release: alt25
+Release: alt26
 Epoch: 1
 
 Summary: The skeleton package which defines an interactive %distribution system
@@ -10,12 +10,12 @@ BuildArch: noarch
 
 Requires: basesystem
 
-Requires: console-common-scripts
 Requires: crontabs
 Requires: info
+Requires: kbd
+Requires: kbd-data
 Requires: losetup
 Requires: man
-Requires: network-config-subsystem
 Requires: passwd
 Requires: sash
 Requires: time
@@ -35,6 +35,7 @@ Requires: chkconfig
 Requires: mingetty
 Requires: stmpclean
 Requires: sysvinit
+Requires: console-common-scripts
 
 %description
 This package defines the components of an interactive %distribution system
@@ -60,6 +61,12 @@ making sure to avoid tools from the systemd project.
 %files sysv
 
 %changelog
+* Sun Mar 09 2025 Anton Midyukov <antohami@altlinux.org> 1:sisyphus-alt26
+- Cleaned up dependencies on network-config-subsystem of interactivesystem
+- interactivesystem: replace dependency on console-common-scripts with kbd and
+  kbd-data
+- interactivesystem-sysv: add dependency on console-common-scripts
+
 * Sun Dec 10 2023 Arseny Maslennikov <arseny@altlinux.org> 1:sisyphus-alt25
 - Split interactivesystem away from basesystem to its own source package.
 - Added two new interactivesystem-* packages (Closes: 28681):

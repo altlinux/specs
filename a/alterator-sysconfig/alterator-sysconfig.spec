@@ -1,7 +1,10 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1	
+
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.22
+Version: 1.3.23
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -11,7 +14,6 @@ Obsoletes: alterator-syskbd, alterator-proxy
 
 Url: http://www.altlinux.org/Alterator
 Source:%name-%version.tar
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
 BuildArch: noarch
 
@@ -19,6 +21,7 @@ Summary: alterator module for basic system settings
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
+Requires: %name-functions = %EVR
 Requires: alterator-sh-functions, setup >= 2.2.12-alt1
 Requires: alterator >= 3.5-alt1 vhttpd-utils >= 0.3-alt6
 Requires: alterator-sh-functions >= 0.6-alt2
@@ -33,6 +36,14 @@ BuildPreReq: alterator >= 3.2-alt6
 alterator module for basic system settings
 (console and X11 keyboard, console font, system locale)
 
+%package functions
+Summary: Shell functions and kbd data for %name
+Group: System/Configuration/Other
+Requires: kbd-data
+
+%description functions
+Shell functions and kbd data for %name.
+
 %prep
 %setup
 
@@ -43,13 +54,28 @@ alterator module for basic system settings
 %makeinstall
 
 %files
-%config(noreplace) %_sysconfdir/alterator/sysconfig
+%dir %_sysconfdir/alterator/sysconfig/lang
+%config(noreplace) %_sysconfdir/alterator/sysconfig/lang/langlist.all
 %_datadir/alterator/ui/*/
 %_datadir/alterator/applications/*
 %_alterator_backend3dir/*
 %_datadir/install2/preinstall.d/*
 
+%files functions
+%_bindir/alterator-sysconfig-functions
+%dir %_sysconfdir/alterator/sysconfig/
+%_sysconfdir/alterator/sysconfig/kbd
+%_sysconfdir/alterator/sysconfig/gnome-kbd
+
 %changelog
+* Sun Mar 09 2025 Anton Midyukov <antohami@altlinux.org> 1.3.23-alt1
+- sysconfig-base: make run the syskeytable optional
+- sysconfig-base: fix slideshow setup for all cases
+- preinstall.d/20-sysconfig.sh: simplyfi install configs
+- Separate new subpackage alterator-sysconfig-functions
+- spec: Unpackaged files in buildroot should terminate build
+- spec: clean Packager
+
 * Tue Feb 25 2025 Anton Midyukov <antohami@altlinux.org> 1.3.22-alt1
 - sysconfig-base: make keyboard layout sorting predictable (Closes: 53027)
 

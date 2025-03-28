@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.3.15
+Version: 0.3.16
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -8,8 +8,7 @@ Group: System/Configuration/Other
 
 Source: %name-%version.tar
 BuildArch: noarch
-# NB: alterator-sysconfig's kbd data is required
-Requires: alterator-sysconfig
+Requires: alterator-sysconfig-functions >= 1.3.23
 
 %description
 Service to automatically set locale from /proc/cmdline
@@ -35,6 +34,9 @@ rm -f %_sysconfdir/profile.d/00dconf-kbd.sh
 %_unitdir/livecd-setlocale.service
 
 %changelog
+* Sun Mar 09 2025 Anton Midyukov <antohami@altlinux.org> 0.3.16-alt1
+- Use alterator-sysconfig-functions
+
 * Mon Sep 30 2024 Anton Midyukov <antohami@altlinux.org> 0.3.15-alt1
 - Separate init script from livecd-setlocale script
 - Cleanup dconf hook
