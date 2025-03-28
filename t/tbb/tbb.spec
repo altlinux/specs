@@ -5,7 +5,7 @@
 %def_with python
 
 Name: tbb
-Version: 2022.0.0
+Version: 2022.1.0
 Release: alt1
 Summary: Threading Building Blocks
 License: Apache-2.0
@@ -170,6 +170,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %endif
 
 %changelog
+* Fri Mar 28 2025 Anton Farygin <rider@altlinux.com> 2022.1.0-alt1
+- 2022.0.0 -> 2022.1.0
+
 * Fri Feb 28 2025 Anton Farygin <rider@altlinux.ru> 2022.0.0-alt1
 - 2021.13.0 -> 2022.0.0
 
