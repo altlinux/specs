@@ -8,8 +8,8 @@
 %endif
 
 Name: pam_pkcs11
-Version: 0.6.13
-Release: alt2
+Version: 0.6.13.1
+Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
@@ -18,11 +18,13 @@ Url: https://github.com/OpenSC/pam_pkcs11
 
 Source: %name-%version.tar
 
-Patch0: %name-%version-confdir.patch
-Patch1: %name-%version-gost.patch
-Patch2: %name-%version-query-config.patch
-Patch4: %name-%version-scconf.patch
-Patch6: %name-%version-altconf.patch
+Patch0: %name-0.6.13-confdir.patch
+Patch1: %name-0.6.13-gost.patch
+Patch2: %name-0.6.13-query-config.patch
+Patch4: %name-0.6.13-scconf.patch
+Patch6: %name-0.6.13-altconf.patch
+Patch7: no-changelog-git.patch
+Patch8: kde-smartcard-screensaver.patch
 
 Requires: pam-config PAM(pam_mkhomedir.so) PAM(pam_pkcs11.so) PAM(pam_succeed_if.so)
 Requires: pcsc-lite pcsc-lite-ccid
@@ -133,6 +135,11 @@ rm %buildroot%_libdir/*/*.la
 
 %find_lang %name
 
+%check
+# This is not really a test-suite check. However, run
+# distcheck, following the CI workflow in upstream.
+%make_build distcheck
+
 %post
 [ ! -e %_sysconfdir/security/%name/openssl.cnf ] || \
     mv -v %_sysconfdir/security/%name/openssl.cnf \
@@ -166,6 +173,11 @@ rm %buildroot%_libdir/*/*.la
 %_libdir/%name/ldap_mapper.so
 
 %changelog
+* Wed Mar 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.6.13.1-alt1
+- Added "kde-smartcard" to the list of screen savers.
+- Fixed some spelling errors.
+- Added Georgian translation (thx Ekaterine Papava).
+
 * Fri Feb 28 2025 Paul Wolneykien <manowar@altlinux.org> 0.6.13-alt2
 - Fix build on older branches.
 
