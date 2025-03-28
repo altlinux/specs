@@ -1,6 +1,6 @@
 Name:		gis-weather
 Version:	0.8.4.17
-Release:	alt2
+Release:	alt3
 License:	GPLv3
 Summary:	Customizable weather widget
 
@@ -17,7 +17,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-gir
 
-BuildRequires: dos2unix libappindicator-gtk3
+BuildRequires: dos2unix
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: python3(cairo) python3(changelog) python3(distro) python3(gi) python3(gi.repository) python3-base
@@ -73,6 +73,9 @@ grep -rl '^#!' %buildroot%_datadir/%name/ | xargs chmod 0755
 %_datadir/%name
 
 %changelog
+* Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.8.4.17-alt3
+- NMU: fix FTBFS (drop BR: libappindicator-gtk3)
+
 * Tue Jul 16 2024 Hihin Ruslan <ruslandh@altlinux.ru> 0.8.4.17-alt2
 - Add requires libgtk+3-gir
 
