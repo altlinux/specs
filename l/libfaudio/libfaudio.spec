@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: libfaudio
-Version: 24.10
+Version: 25.03
 Release: alt1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake pkgconfig
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: gcc-c++ chrpath
 
 Packager: L.A. Kostis <lakostis@altlinux.ru>
@@ -82,6 +82,10 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 25.03-alt1
+- 25.03.
+- Switch to SDL3.
+
 * Wed Oct 16 2024 L.A. Kostis <lakostis@altlinux.ru> 24.10-alt1
 - 24.10.
 
