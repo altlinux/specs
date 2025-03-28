@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-systeminfo
-Version: 0.2.2
+Version: 0.3.0
 Release: alt1
 
 Summary: Alterator backends for getting system information
@@ -12,9 +12,10 @@ URL: https://gitlab.basealt.space/alt/alterator-backend-systeminfo
 BuildArch: noarch
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-alterator
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
+
+BuildRequires(pre): rpm-macros-alterator
 
 %description
 Alterator backends for getting system information.
@@ -40,6 +41,9 @@ Alterator backends for getting system information.
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Fri Mar 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.0-alt1
+- New version.
+
 * Mon Mar 17 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.2-alt1
 - New version.
 

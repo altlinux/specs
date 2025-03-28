@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-systeminfo
-Version: 0.4.1
-Release: alt2
+Version: 0.4.2
+Release: alt1
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
 License: GPLv2+
@@ -11,7 +11,7 @@ URL: https://gitlab.basealt.space/alt/alterator-application-systeminfo
 
 Source: %name-%version.tar
 
-Requires: alterator-backend-systeminfo >= 0.2.2
+Requires: alterator-backend-systeminfo >= 0.3.0
 
 # Recommends: alterator-backend-edition >= 0.1.5
 # Recommends: alterator-backend-packages >= 0.1.4
@@ -48,6 +48,9 @@ ALT Systeminfo - Alterator application that shows information about system.
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Fri Mar 28 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.2-alt1
+- New version.
+
 * Wed Mar 19 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.1-alt2
 - Change summary and description.
 
