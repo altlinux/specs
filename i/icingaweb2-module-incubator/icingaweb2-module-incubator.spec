@@ -22,7 +22,7 @@
 
 Name: icingaweb2-module-%module_name
 Version: 0.20.0
-Release: alt3
+Release: alt4
 Summary: Bleeding edge Icinga Web 2 libraries
 License: MIT
 Group: Monitoring
@@ -50,6 +50,7 @@ Icinga Web 2 - ReactPHP-based 3rd party libraries
 %build
 
 %install
+patch -p1 < patches/gipfl-web-form.patch
 mkdir -p %buildroot%basedir/modules/%module_name
 mkdir -p %buildroot%basedir/modules/%module_name/vendor
 mkdir -p %buildroot%basedir/modules/%module_name/public
@@ -65,6 +66,9 @@ cp -pv *.md *.php *.info %buildroot%basedir/modules/%module_name
 %basedir/modules/%module_name/*
 
 %changelog
+* Fri Mar 28 2025 Alexander Danilov <admsasha@altlinux.org> 0.20.0-alt4
+- Manual applied patch.
+
 * Fri Mar 28 2025 Alexander Danilov <admsasha@altlinux.org> 0.20.0-alt3
 - Applied security fixes from upstream (Fixes: CVE-2024-24819).
 
