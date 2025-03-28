@@ -1,7 +1,7 @@
 %def_disable german
 Name: ispell
 Version: 3.2.06
-Release: alt14
+Release: alt15
 Epoch: 1
 
 Summary: The GNU interactive spelling checker program
@@ -152,6 +152,11 @@ cat > %buildroot%_altdir/%name-spell <<'EOF'
 /usr/bin/spell	/usr/bin/ispell-spell	40
 EOF
 
+%if_disabled german
+rm %buildroot%_libdir/%name/deutsch*
+rm %buildroot%_libdir/%name/german.hash
+%endif
+
 %files
 %doc README
 %attr(755,root,root) %_bindir/*
@@ -189,6 +194,9 @@ EOF
 %endif
 
 %changelog
+* Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 1:3.2.06-alt15
+- NMU: fix FTBFS with gcc14
+
 * Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.2.06-alt14
 - group should be Text tools
 
