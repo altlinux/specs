@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		237358b56b2
+%define svnrev		7b462dfe68e
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.10
+Version: 7.0.11
 Release: alt1
 Epoch: 1
 
@@ -865,6 +865,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Fri Mar 28 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.11-alt1
+- 7.0.11
+
 * Tue Feb 25 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.10-alt1
 - 7.0.10
 - Add support php 8.4
