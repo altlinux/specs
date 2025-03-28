@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -69,6 +69,10 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Mar 28 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.0-alt1
+- Add new entity for services: examples, schema and docs (thx Evgenii Sozonov)
+- Change desktop option in components schema to set of desktops
+
 * Mon Mar 17 2025 Michael Chernigin <chernigin@altlinux.org> 0.3.1-alt1
 - Introduce draft flag
 

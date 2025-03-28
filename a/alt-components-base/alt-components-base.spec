@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -14,7 +14,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 
 BuildRequires: cmark
-BuildRequires: alterator-entry >= 0.3.1
+BuildRequires: alterator-entry >= 0.4.0
 BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
@@ -112,6 +112,12 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Sat Mar 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.5-alt1
+- components: adjust desktop option for alterator-legacy-kiosk,
+  gtkhash and libreoffice{-still}
+- components: add new vendors with compatible components (thx Anna Ivanova)
+- components: add telegram_desktop to the desktop-apps category (thx Anna Ivanova)
+
 * Wed Mar 26 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.5.4-alt1
 - Remove jitsi-meet and nextcloud components from server edition
 
