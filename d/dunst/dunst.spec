@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: dunst
-Version: 1.8.1
+Version: 1.12.2
 Release: alt1
 Summary: Lightweight replacement for the notification-daemons
 License: BSD
@@ -33,7 +33,11 @@ Dunst is a highly configurable and lightweight notification daemon.
 %makeinstall_std PREFIX=%prefix SYSCONFDIR=%_sysconfdir SYSTEMD=1
 
 %check
-%make_build test
+# Skip some tests in hasher
+sed -i '/RUN_SUITE(suite_dbus)/d' test/test.c
+sed -i '/RUN_SUITE(suite_draw)/d' test/test.c
+
+%make_build PREFIX=%prefix SYSCONFDIR=%_sysconfdir SYSTEMD=1 test
 
 %files
 %doc AUTHORS CHANGELOG* LICENSE README* RELEASE_NOTES*
@@ -41,10 +45,17 @@ Dunst is a highly configurable and lightweight notification daemon.
 %_man1dir/*
 %_man5dir/*
 %_datadir/dbus-1/services/*
+%_datadir/bash-completion/completions/%{name}*
+%_datadir/fish/vendor_completions.d/%{name}*
+%_datadir/zsh/site-functions/_%{name}*
 %_libexecdir/systemd/user/*
 %_sysconfdir/%name
 
 %changelog
+* Mon Mar 24 2025 Ulysses Apokin <ulysses@altlinux.org> 1.12.2-alt1
+- NMU: Autobuild version bump to 1.12.2
+- Add sh-completions
+
 * Fri Mar 25 2022 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
 - Autobuild version bump to 1.8.1
 - Remove systemd dependency
