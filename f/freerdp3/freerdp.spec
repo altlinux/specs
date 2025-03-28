@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.14.0
+Version: 3.14.1
 Release: alt1
 
 Group: Networking/Remote access
@@ -403,6 +403,10 @@ the RDP protocol.
 %else
   -DWITH_SSE2=OFF \
 %endif
+%ifarch armh                                                                                                                                                                                  
+  -DARM_FP_ABI=hard \
+  -DWITH_NEON=OFF \
+%endif
   -DWITH_SWSCALE=ON \
   -DWITH_SYSTEMD=ON \
   -DWITH_THIRD_PARTY=OFF \
@@ -540,6 +544,12 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Mar 27 2025 Andrey Cherepanov <cas@altlinux.org> 3.14.1-alt1
+- New version.
+
+* Sat Mar 15 2025 Andrey Cherepanov <cas@altlinux.org> 3.14.0-alt2
+- Fix build for armh.
+
 * Sat Mar 15 2025 Andrey Cherepanov <cas@altlinux.org> 3.14.0-alt1
 - New version.
 
