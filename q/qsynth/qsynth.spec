@@ -3,7 +3,7 @@
 %define rdn_name org.rncbc.qsynth
 
 Name: qsynth
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: QSynth is a GUI front-end for FluidSynth
@@ -13,6 +13,7 @@ License: GPL-2.0-or-later
 Url: https://%name.sourceforge.net
 
 Vcs: https://github.com/rncbc/qsynth.git
+
 Source: https://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
 
 Requires: fluidsynth
@@ -65,6 +66,9 @@ QSynth -- это графическая надстройка над FluidSynth. 
 %doc ChangeLog README
 
 %changelog
+* Fri Mar 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Fri Oct 04 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
