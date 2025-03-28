@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: A small binding library that exposes C++ types in Python and vice versa
@@ -23,7 +23,7 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: python3(wheel) python3(scikit_build_core)
 BuildRequires: cmake gcc-c++
 %{?_enable_check:BuildRequires: python3(pytest)}
@@ -55,6 +55,9 @@ py.test-3
 %doc README*
 
 %changelog
+* Fri Mar 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Sun Feb 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
