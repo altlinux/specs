@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,18 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 1.7.6-alt1
+- kernel: Switch to kernel-image-6.12 for loongarch64
+- plymouth: Enable on loongarch64
+- branding: do not add bootsplash in use/branding/full
+- x11: add 'module_blacklist=nvidia' to RESCUE_BOOTARGS in use/x11/nvidia
+- Cleanup ppc64le everything
+- grub,tty: add serial console support for STAGE1
+- sound: separate pipewire services into a separate target
+- e2k, install2, live-install: replace install packages from e2k
+- mobile: separate gnome-apps list
+- live-install: remove kernel also when install from squash
+
 * Wed Mar 12 2025 Anton Midyukov <antohami@altlinux.org> 1.7.5-alt1
 - Refactoring for fix enable unicode support in console of installer
 - Remove +systemd-optimal everything
