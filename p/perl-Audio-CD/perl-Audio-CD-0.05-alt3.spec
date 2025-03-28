@@ -1,7 +1,7 @@
 %define dist Audio-CD
 Name: perl-%dist
 Version: 0.05
-Release: alt4.2
+Release: alt4.3
 
 Summary: Perl interface to libcdaudio
 License: Artistic
@@ -9,6 +9,7 @@ Group: Sound
 
 URL: %CPAN %dist
 Source: http://www.vanhemert.co.uk/files/Audio-CD-0.05.tar.gz
+Patch: implicit-function-declaration.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libcdaudio-devel perl-devel
@@ -19,6 +20,7 @@ tray eject.
 
 %prep
 %setup -q -n %dist-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -31,6 +33,9 @@ tray eject.
 %perl_vendor_autolib/Audio
 
 %changelog
+* Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.05-alt4.3
+- NMU: fix FTBFS with gcc14
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.05-alt4.2
 - rebuild with new perl 5.28.1
 
