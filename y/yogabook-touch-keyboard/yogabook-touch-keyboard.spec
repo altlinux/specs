@@ -1,7 +1,9 @@
+%define git babd1a2
+
 Name: yogabook-touch-keyboard
 Summary: Userspace driver for touchpad-based keyboard
 Version: 1.4.1
-Release: alt1
+Release: alt2.g%{git}
 Group: System/Configuration/Hardware
 License: BSD
 Url: https://salsa.debian.org/debian/touch-keyboard
@@ -49,9 +51,12 @@ popd
 %_sbindir/touch_keyboard_handler
 
 %changelog
+* Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.1-alt2.gbabd1a2
+- GIT babd1a2.
+- Update -alt patch.
+
 * Thu Jan 02 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.1-alt1
 - 1.4.1.
 
 * Thu Dec 26 2024 L.A. Kostis <lakostis@altlinux.ru> 1.2-alt1
 - Initial build for ALTLinux.
-
