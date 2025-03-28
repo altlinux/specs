@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: libnvme
-Version: 1.11.1
+Version: 1.12
 Release: alt1
 Summary: Linux-native nvme device management library
 Group: System/Libraries
@@ -14,8 +14,8 @@ Url: http://github.com/linux-nvme/libnvme
 
 BuildRequires(pre): meson
 BuildRequires: libjson-c-devel libdbus-devel openssl-devel
-BuildRequires: python3-dev rpm-macros-python3 rpm-build-python3 
-BuildRequires: swig libkeyutils-devel
+BuildRequires: python3-dev rpm-macros-python3 rpm-build-python3
+BuildRequires: swig libkeyutils-devel gcc-c++
 
 %description
 Provides library functions for accessing and managing nvme devices on a Linux
@@ -76,6 +76,9 @@ rm -f %buildroot%_libdir/*.a
 %python3_sitelibdir/libnvme/
 
 %changelog
+* Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 1.12-alt1
+- 1.12.
+
 * Sun Nov 17 2024 L.A. Kostis <lakostis@altlinux.ru> 1.11.1-alt1
 - 1.11.1.
 

@@ -1,8 +1,8 @@
 %define libnvme_ver 1.11
 
 Name: nvme
-Version: 2.11
-Release: alt1.1
+Version: 2.12
+Release: alt1
 Summary: NVM-Express user space tooling for Linux
 License: GPL-2.0+
 Group: System/Configuration/Hardware
@@ -76,6 +76,9 @@ if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
 fi
 
 %changelog
+* Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 2.12-alt1
+- 2.12.
+
 * Sat Dec 21 2024 L.A. Kostis <lakostis@altlinux.ru> 2.11-alt1.1
 - Fix build.
 
