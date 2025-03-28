@@ -4,7 +4,7 @@
 %define rdn_name org.zim_wiki.Zim
 
 Name: zim-wiki
-Version: 0.76.2
+Version: 0.76.3
 Release: alt1
 
 Summary: A desktop wiki and outliner
@@ -22,6 +22,8 @@ Patch: %name-%version-%release.patch
 Patch1: AyatanaAppindicator.patch
 
 BuildArch: noarch
+
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(GtkSource) = 4
 Requires: python3-module-pygobject3
@@ -58,6 +60,8 @@ control.
 
 %install
 %pyproject_install
+install -pD -m644 data/globe.svg %buildroot%_iconsdir/hicolor/scalable/apps/%rdn_name.svg
+
 %find_lang %real_name
 
 %files -f %real_name.lang
@@ -70,11 +74,15 @@ control.
 %_datadir/mime/*
 %_datadir/metainfo/*
 %_iconsdir/*/*/*/*.svg
+%_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 %exclude %_iconsdir/ubuntu*
 
 %doc README.md CHANGELOG.md
 
 %changelog
+* Fri Mar 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.76.3-alt1
+- 0.76.3
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.76.2-alt1
 - 0.76.2
 
