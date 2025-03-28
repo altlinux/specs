@@ -1,12 +1,13 @@
 Name: alt-rootfs-installer
 Version: 0.6.3
-Release: alt1
+Release: alt2
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Url:  https://git.altlinux.org/people/antohami/packages/alt-rootfs-installer.git
 BuildArch: noarch
-Source0: %name-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %description
 Allows one to first select a source rootfs archive installer. The rootfs must be
@@ -15,6 +16,7 @@ This fork arm-image-installer.
 
 %prep
 %setup
+%autopatch -p1
 
 %install
 install -d %buildroot%_datadir/%name
@@ -38,6 +40,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt2
+- socs-utils: fix conditions for add boot part (Closes: 53651)
+
 * Mon Mar 24 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
 - Add New Platforms NP-504a board support (thx Daniil Gnusarev)
 
