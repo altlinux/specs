@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: alterator-ca
-Version: 0.5.8
+Version: 0.5.9
 Release: alt1
 
 Summary: Office Server CA Manager
@@ -53,6 +53,9 @@ install -p -m755 hook/ca %buildroot%_libexecdir/alterator/hooks/trust.d
 %dir %_localstatedir/alterator-ca/out
 
 %changelog
+* Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 0.5.9-alt1
+- Allow copy extension for created certificates.
+
 * Sun May 10 2020 Andrey Cherepanov <cas@altlinux.org> 0.5.8-alt1
 - Hide all messages from c_rehash (ALT #38463).
 

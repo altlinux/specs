@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: cert-sh-functions
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 BuildArch: noarch
@@ -28,6 +28,9 @@ install -Dpm644 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
+- Create request with subjectAltName specified in $SUBJECTALTNAME.
+
 * Fri Mar 13 2020 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
 - Use sha256 algorithm for cert generate for request (ALT #38213).
 

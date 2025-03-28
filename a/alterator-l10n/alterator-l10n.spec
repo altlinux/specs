@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.155
+Version: 2.9.156
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.156-alt1
+- alterator-sslkey: update translations
+
 * Fri Mar 07 2025 Andrey Cherepanov <cas@altlinux.org> 2.9.155-alt1
 - ru/alterator-mirror: return manually translated messages
 
