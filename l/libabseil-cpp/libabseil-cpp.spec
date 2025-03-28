@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: libabseil-cpp
-Version: 20250127.0
+Version: 20250127.1
 Release: alt1
 
 Summary: C++ Common Libraries
@@ -258,6 +258,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Mar 28 2025 Anton Farygin <rider@altlinux.com> 20250127.1-alt1
+- 20250127.0 -> 20250127.1 (Fixes: CVE-2025-0838)
+
 * Tue Feb 18 2025 Anton Farygin <rider@altlinux.ru> 20250127.0-alt1
 - 20240722.0 -> 20250127.0
 
