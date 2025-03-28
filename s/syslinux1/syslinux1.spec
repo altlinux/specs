@@ -2,14 +2,15 @@
 Summary: Simple kernel loader which boots from a FAT filesystem
 Name: %{rname}1
 Version: 1.62
-Release: alt4.1.qa1
-License: GPL v2 or later
+Release: alt4.2.qa1
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 Packager: Kachalov Anton <mouse@altlinux.ru>
 Url: http://syslinux.zytor.com
 
 Source: ftp://ftp.kernel.org/pub/linux/utils/boot/syslinux/Old/%rname-%version.tar.bz2
 Patch: %rname-%version.patch.bz2
+Patch1: %rname-%version-stdlib.patch
 
 BuildPrereq: nasm, perl, libpng3
 
@@ -24,6 +25,7 @@ PXE bootloader during network boots.
 %prep
 %setup -n %rname-%version
 %patch -p1
+%patch1 -p1
 
 %build
 chmod +x add_crc
@@ -53,6 +55,9 @@ install -c pxelinux.0 %buildroot%_libdir/%rname
 %_libdir/syslinux
 
 %changelog
+* Fri Mar 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.62-alt4.2.qa1
+- NMU: fix FTBFS with gcc14
+
 * Fri Apr 19 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.62-alt4.1.qa1
 - NMU: rebuilt for updated dependencies.
 
