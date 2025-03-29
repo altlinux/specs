@@ -2,20 +2,18 @@
 %define app_id org.altlinux.Tour
 
 Name: alt-tour
-Version: 1.1
+Version: 1.1.5
 Release: alt1
 
 Summary: ALT Tour and Greeter
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://gitlab.gnome.org/Armatik/alt-tour
-Vcs: https://gitlab.gnome.org/Armatik/alt-tour
+Url: https://altlinux.space/alt-gnome/alt-tour
+Vcs: https://altlinux.space/alt-gnome/alt-tour
 Source: %name-%version.tar
 
 Requires: alt-panelmoded
-
-Conflicts: gnome-tour
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -41,11 +39,31 @@ A guided tour and greeter for Alt with GNOME DE.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%app_id.desktop
-%_desktopdir/org.gnome.Tour.desktop
+%_sysconfdir/xdg/autostart/%app_id.desktop
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %doc README.md
 
 %changelog
+* Fri Mar 28 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.5-alt1
+- updated translations
+
+* Fri Mar 28 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.4-alt1
+- added new tour pages
+
+* Tue Mar 18 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.3-alt1
+- fixed autostart path
+
+* Tue Mar 18 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.2-alt1
+- updated autostart logic
+
+* Mon Mar 17 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.1-alt1
+- added window title
+- added video support
+- added wallpaper button
+- removed gnome tour conflict and desktop file
+- updated russian translations
+- added autoremove from startup apps
+
 * Thu Mar 06 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1-alt1
 - Added settings page with color scheme selector and topbar buttons.
 - Added tour pages for each system style.
