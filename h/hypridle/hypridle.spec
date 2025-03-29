@@ -1,5 +1,5 @@
 Name: hypridle
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 License: BSD-3-Clause
 
@@ -11,12 +11,15 @@ Group: Graphical desktop/Other
 Url: https://github.com/hyprwm/hypridle
 Vcs: https://github.com/hyprwm/hypridle.git
 
+ExcludeArch: i586
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: gcc-c++ cmake
 
+BuildRequires: pkgconfig(hyprwayland-scanner)
+BuildRequires: pkgconfig(hyprland-protocols)
 BuildRequires: pkgconfig(hyprutils)
 BuildRequires: pkgconfig(hyprlang)
 
@@ -49,6 +52,11 @@ Hypridle поддерживает команды блокировки, разб�
 %_datadir/hypr/%name.conf
 
 %changelog
+* Sat Mar 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.6-alt1
+- new version 0.1.6 (with rpmrb script)
+- added support for hyprland-lock-notify protocol
+- drop i586 support
+
 * Wed Mar 26 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.5-alt1
 - new version 0.1.5 (with rpmrb script)
 - pack base config

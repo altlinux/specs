@@ -1,7 +1,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.48.0
+Version: 0.48.1
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -126,6 +126,14 @@ subst '/generateVersion\.sh/d' meson.build
 %_includedir/%name
 
 %changelog
+* Sat Mar 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.1-alt1
+- new version 0.48.1 (with rpmrb script)
+- renderer: Simplify and fix hdr metadata setting
+- seat: avoid sending null surfaces in leave/enter events
+- groupbar:
+  + round boxes
+  + include clipBox in opaque calculations
+
 * Tue Mar 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.0-alt1
 - new version 0.48.0 (with rpmrb script)
 - config:
