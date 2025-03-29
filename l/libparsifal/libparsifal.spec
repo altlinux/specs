@@ -3,7 +3,7 @@
 
 Name: libparsifal
 Version: 1.1.0
-Release: alt5
+Release: alt6
 Summary: Parsifal is a validating XML 1.0 parser based on SAX2
 License: Public
 Group: System/Libraries
@@ -59,6 +59,7 @@ Documentation for Parsifal XML parser.
 %setup
 
 %build
+%add_optflags -Wno-error=incompatible-pointer-types -Wno-error=int-conversion
 %autoreconf
 %configure --with-gnu-ld
 %make_build
@@ -85,6 +86,9 @@ cp -fR doc/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Sat Mar 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.1.0-alt6
+- NMU: fix FTBFS with gcc14
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt5
 - NMU: fixed build with LTO
 
