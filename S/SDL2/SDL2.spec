@@ -7,7 +7,7 @@
 
 Name: SDL2
 Version: 2.32.2
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -90,6 +90,7 @@ This is the static libraries you can use to develop SDL applications.
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
+%add_optflags -Wno-incompatible-pointer-types
 %ifarch loongarch64
 export LDFLAGS='-mlsx -mlasx'
 %endif
@@ -121,6 +122,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Sat Mar 29 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.2-alt1.1
+- Fix FTBFS
+
 * Sun Mar 02 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.2-alt1
 - New version 2.32.2.
 
