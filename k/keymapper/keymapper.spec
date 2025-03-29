@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: keymapper
-Version: 4.11.0
+Version: 4.11.2
 Release: alt1
 
 Summary: A cross-platform context-aware key remapper
@@ -60,5 +60,8 @@ A cross-platform context-aware key remapper. It allows to:
 %_datadir/kwin/scripts/keymapper/*
 
 %changelog
+* Sat Mar 29 2025 Nikolay Strelkov <snk@altlinux.org> 4.11.2-alt1
+- New version 4.11.2.
+
 * Thu Mar 13 2025 Nikolay Strelkov <snk@altlinux.org> 4.11.0-alt1
 - Initial build for Sisyphus
