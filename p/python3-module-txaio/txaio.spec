@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 23.1.1
-Release: alt1
+Release: alt2
 
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
@@ -77,6 +77,7 @@ This package contains pickles for %oname.
 %setup
 
 sed -i 's|sphinx-build|&-3|' docs/Makefile
+sed -i "/'python'/d" docs/conf.py
 
 %build
 %pyproject_build
@@ -106,6 +107,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Fri Mar 28 2025 Anton Vyatkin <toni@altlinux.org> 23.1.1-alt2
+- Fixed FTBFS.
+
 * Tue Aug 01 2023 Grigory Ustinov <grenka@altlinux.org> 23.1.1-alt1
 - Automatically updated to 23.1.1.
 
