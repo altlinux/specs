@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: CLI for alterator browser
@@ -11,6 +11,7 @@ URL: https://gitlab.basealt.space/alt/alteratorctl
 
 BuildRequires: cmake rpm-macros-cmake cmake-modules gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel
 BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
+BuildRequires: libpolkit-devel
 
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
@@ -40,6 +41,9 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Thu Mar 27 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.4-alt1
+- Add libpolkit-devel to build requires
+
 * Wed Mar 26 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.3-alt1
 - New version depending on the version of the alterator-backend-batch-components depending on the version
 
