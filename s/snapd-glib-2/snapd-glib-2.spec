@@ -13,16 +13,17 @@
 %def_enable check
 
 Name: snapd-glib-%api_ver
-Version: 1.66
+Version: 1.67
 Release: alt1
 
 Group: System/Libraries
 Summary: Library providing a GLib interface to snapd (API 2)
 License: LGPL-2.0-or-later
-Url: https://github.com/snapcore/snapd-glib
+Url: https://github.com/canonical/snapd-glib
 
-Vcs: https://github.com/snapcore/snapd-glib.git
-Source: https://github.com/snapcore/%_name/releases/download/%version/%_name-%version.tar.xz
+Vcs: https://github.com/canonical/snapd-glib.git
+
+Source: https://github.com/canonical/%_name/archive/%version/%_name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt6}
 BuildRequires: meson gcc-c++
@@ -33,7 +34,7 @@ BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libsoup-3.0)
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_docs:BuildRequires: gtk-doc}
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_qt:
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Network)}
@@ -122,7 +123,7 @@ for snapd-qt to verify the functionality of snapd-qt.
 %meson_install
 
 %check
-%__meson_test
+%__meson_test -t 2
 
 %files -n %libsnapd_glib
 %_libdir/lib%_name-%api_ver.so.%{sover}*
@@ -135,7 +136,7 @@ for snapd-qt to verify the functionality of snapd-qt.
 %_pkgconfigdir/%_name-%api_ver.pc
 %_girdir/Snapd-%api_ver.gir
 %_vapidir/%_name-%api_ver.*
-%{?_enable_docs:%doc %_datadir/gtk-doc/html/%_name/}
+%{?_enable_docs:%doc %_datadir/doc/%_name/}
 
 %files tests
 %_libexecdir/installed-tests/%_name-%api_ver/*-glib
@@ -162,6 +163,9 @@ for snapd-qt to verify the functionality of snapd-qt.
 %endif
 
 %changelog
+* Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.67-alt1
+- 1.67
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.66-alt1
 - 1.66
 - enabled %%check
