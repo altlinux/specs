@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: overskride
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A simple but powerful bluetooth app
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.10
-%define adwaita_ver 1.4
+%define adw_ver 1.4
 
 Requires: bluez obexd
 
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
 BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: typelib(Adw)
 BuildRequires: pkgconfig(dbus-1)
 
@@ -79,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
+- 0.6.2
+
 * Thu Oct 10 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 

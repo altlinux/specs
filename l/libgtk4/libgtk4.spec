@@ -5,6 +5,7 @@
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
+%define rdn_name org.gtk.gtk4
 %define _libexecdir %_prefix/libexec
 
 %def_enable x11
@@ -38,7 +39,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -305,10 +306,11 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_man1dir/gtk4-encode-symbolic-svg.1.*
 %endif
 
-%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.ColorChooser.gschema.xml
-%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.Debug.gschema.xml
-%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.EmojiChooser.gschema.xml
-%_datadir/glib-2.0/schemas/org.gtk.gtk4.Settings.FileChooser.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.Settings.ColorChooser.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.Settings.Debug.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.Settings.EmojiChooser.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.Settings.FileChooser.gschema.xml
+%_datadir/glib-2.0/schemas/%rdn_name.Inspector.gschema.xml
 
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README.md
@@ -350,14 +352,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %files -n gtk4-demo
 %_desktopdir/org.gtk.Demo4.desktop
-#%_desktopdir/org.gtk.IconBrowser4.desktop
-%_desktopdir/org.gtk.gtk4.NodeEditor.desktop
+%_desktopdir/%rdn_name.NodeEditor.desktop
 %_desktopdir/org.gtk.WidgetFactory4.desktop
 %_desktopdir/org.gtk.PrintEditor4.desktop
 %_bindir/gtk4-demo
 %_bindir/gtk4-demo-application
 %_bindir/gtk4-widget-factory
-#%_bindir/gtk4-icon-browser
 %_bindir/gtk4-node-editor
 %_bindir/gtk4-print-editor
 %_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
@@ -369,25 +369,22 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 #%_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
-%_iconsdir/hicolor/*/*/org.gtk.gtk4.NodeEditor*.svg
+%_iconsdir/hicolor/*/*/%rdn_name.NodeEditor*.svg
 
 %_datadir/metainfo/org.gtk.Demo4.appdata.xml
-#%_datadir/metainfo/org.gtk.IconBrowser4.appdata.xml
 %_datadir/metainfo/org.gtk.PrintEditor4.appdata.xml
 %_datadir/metainfo/org.gtk.WidgetFactory4.appdata.xml
-%_datadir/metainfo/org.gtk.gtk4.NodeEditor.appdata.xml
+%_datadir/metainfo/%rdn_name.NodeEditor.appdata.xml
 
 %if_enabled man
 %_man1dir/gtk4-demo.1.*
 %_man1dir/gtk4-demo-application.1.*
-#%_man1dir/gtk4-icon-browser.1.*
 %_man1dir/gtk4-widget-factory.1.*
 %_man1dir/gtk4-node-editor.1*
 %endif
 
 %if_enabled gtk_doc
 %files devel-doc
-#%_datadir/gtk-doc/html/*
 %_datadir/doc/gdk4/
 %_datadir/doc/gdk4-wayland/
 %_datadir/doc/gdk4-x11/
@@ -420,6 +417,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.3-alt1
+- 4.18.3
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.2-alt1
 - 4.18.2
 
