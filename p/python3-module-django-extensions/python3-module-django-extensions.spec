@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2.3
-Release: alt3
+Release: alt4
 
 Summary: Extensions for Django
 License: MIT
@@ -17,6 +17,7 @@ BuildArch: noarch
 Source: %pypi_name-%version.tar
 Patch: remove-distutils-version.patch
 Patch1: django-5.0-compat.patch
+Patch2: django-5.1-test-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -66,6 +67,7 @@ export DJANGO_SETTINGS_MODULE=tests.testapp.settings
 # PipCheckerTests use network
 sed -i 's/djangorestframework==[0-9.]*/djangorestframework/g;s/pip==[0-9.]*/pip/g' tests/management/commands/test_pipchecker.py
 
+# not compatible with Django 5.1
 %pyproject_run_pytest -k "\
 not PipCheckerTests \
 and not DumpScriptTests \
@@ -73,7 +75,10 @@ and not test_migration_is_last_applied \
 and not test_installed_apps_no_resolve_conflicts_function \
 and not test_validate_templates \
 and not test_pipchecker_when_requirements_file_does_not_exist \
-and not test_should_highlight_python_syntax_with_name"
+and not test_should_highlight_python_syntax_with_name \
+and not test_get_index_together \
+and not test_without_args \
+and not test_with_length_args"
 
 %files
 %doc README.*
@@ -81,6 +86,9 @@ and not test_should_highlight_python_syntax_with_name"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 28 2025 Anton Vyatkin <toni@altlinux.org> 3.2.3-alt4
+- Fixed FTBFS.
+
 * Wed Jan 22 2025 Anton Vyatkin <toni@altlinux.org> 3.2.3-alt3
 - Fixed FTBFS.
 
