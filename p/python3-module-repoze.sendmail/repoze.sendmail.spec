@@ -4,18 +4,19 @@
 
 Name: python3-module-%oname
 Version: 4.4.1
-Release: alt1
+Release: alt2
 
 Summary: Send e-mails transactionally (originally cloned from zope.sendmail)
-License: Repoze Public License
+License: ZPL-2.1
 Group: Development/Python3
-Url: https://github.com/repoze/repoze.sendmail
+Url: https://pypi.org/project/repoze.sendmail
+Vcs: https://github.com/repoze/repoze.sendmail
 
-# https://github.com/repoze/repoze.sendmail.git
-Source0: https://pypi.python.org/packages/54/60/102fdd3a16f3d42f6b3e429116ac190a2c78c629d50a82cbc7d4193c7cdc/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx python3-module-repoze.sphinx.autointerface
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %py3_requires repoze zope.interface transaction
 
@@ -55,60 +56,14 @@ more generally useful to users of other frameworks.
 
 This package contains tests for repoze.sendmail.
 
-%package pickles
-Summary: Pickles for repoze.sendmail
-Group: Development/Python3
-
-%description pickles
-`repoze.sendmail` allows coupling the sending of email messages with a
-transaction, using the Zope transaction manager.  This allows messages to
-only be sent out when and if a transaction is committed, preventing users
-from receiving notifications about events which may not have completed
-successfully.  Messages may be sent directly or stored in a queue for later
-sending.  The queued mail approach is the more common and recommended path.  A
-console application which can flush the queue, sending the messages that it
-finds, is included for convenience.
-
-`repoze.sendmail` is a fork of `zope.sendmail`.  Functionality that was
-specific to running in a Zope context has been removed, making this version
-more generally useful to users of other frameworks.
-
-This package contains pickles for repoze.sendmail.
-
-%package docs
-Summary: Documentation for repoze.sendmail
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-`repoze.sendmail` allows coupling the sending of email messages with a
-transaction, using the Zope transaction manager.  This allows messages to
-only be sent out when and if a transaction is committed, preventing users
-from receiving notifications about events which may not have completed
-successfully.  Messages may be sent directly or stored in a queue for later
-sending.  The queued mail approach is the more common and recommended path.  A
-console application which can flush the queue, sending the messages that it
-finds, is included for convenience.
-
-`repoze.sendmail` is a fork of `zope.sendmail`.  Functionality that was
-specific to running in a Zope context has been removed, making this version
-more generally useful to users of other frameworks.
-
-This package contains documentation for repoze.sendmail.
-
 %prep
-%setup -q -n %{oname}-%{version}
-
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
+%setup -q -n %oname-%version
 
 %build
-%python3_build
-
-%make -C docs pickle
-%make -C docs html
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -117,27 +72,21 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files
-%doc *.txt *.rst
+%doc README.*
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/pickle
 
 %files tests
 %python3_sitelibdir/*/*/tests
 
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
-
-
 %changelog
+* Fri Mar 28 2025 Anton Vyatkin <toni@altlinux.org> 4.4.1-alt2
+- Fixed FTBFS.
+
 * Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.4.1-alt1
 - version updated to 4.4.1
 - build for python2 disabled
