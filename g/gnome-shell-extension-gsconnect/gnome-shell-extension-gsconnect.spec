@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 58
+%define ver_major 62
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -13,7 +13,7 @@
 
 Name: gnome-shell-extension-gsconnect
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
@@ -100,6 +100,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 62-alt1
+- 62
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 58-alt2
 - v58-121-ga54b38ae (GNOME 48 supported)
 
