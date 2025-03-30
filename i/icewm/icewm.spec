@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.6.0
+Version: 3.7.2
 Release: alt1
 Epoch:3
 
@@ -59,6 +59,16 @@ maintained on Github https://github.com/bbidulock/icewm
 
 Recommends: iftop, mutt
 
+%package menu-method
+Summary: Menu-method to create old style IceWM menu
+Group: Graphical desktop/Icewm
+BuildArch: noarch
+
+Requires: %realname = %EVR
+
+%description menu-method
+This package contains menu-method to create old style IceWM menu
+
 %package themes
 Summary: Extra themes for IceWM
 Group: Graphical desktop/Icewm
@@ -68,7 +78,7 @@ Requires: design-%realname >= 1.0-alt12
 Conflicts: design-%realname-themes <= 1.0-alt5
 
 %description themes
-Extra themes that included to IceWM distribution
+This package contains extra themes that included to IceWM distribution
 
 %prep
 %setup
@@ -98,9 +108,9 @@ Extra themes that included to IceWM distribution
 DESTDIR=%buildroot %cmake_build -t install
 %cmake_install
 
-mkdir -p %buildroot%_sysconfdir/menu-methods
-install -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%realname
-
+mkdir -p %buildroot%_x11sysconfdir/%realname
+cp -f %buildroot%_x11x11dir/%realname/menu %buildroot%_x11sysconfdir/%realname/menu
+install -pD -m755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%realname
 install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%realname.png
 install -pD -m644 %SOURCE4 %buildroot%_niconsdir/%realname.png
 install -pD -m644 %SOURCE5 %buildroot%_liconsdir/%realname.png
@@ -111,10 +121,7 @@ install -m644 %SOURCE12 %buildroot%_icewmdocdir/icewm-old-changelog.bz2
 install -m644 AUTHORS %buildroot%_icewmdocdir/AUTHORS
 install -m644 NEWS %buildroot%_icewmdocdir/NEWS
 install -m644 README.md %buildroot%_icewmdocdir/README.md
-
-mkdir -p %buildroot%_x11sysconfdir/%realname
-
-install -m 755 %SOURCE6 %buildroot%_bindir/start%realname
+install -m755 %SOURCE6 %buildroot%_bindir/start%realname
 
 %find_lang  %realname
 
@@ -124,7 +131,7 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 %files -f %realname.lang
 %dir %_x11sysconfdir/%realname
-%config(noreplace) %_sysconfdir/menu-methods/*
+%_x11sysconfdir/%realname/*
 %_x11sysconfdir/wmsession.d/*
 %_bindir/*
 %dir %_x11x11dir/%realname
@@ -141,10 +148,24 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %dir %_icewmdocdir
 %_icewmdocdir/*
 
+%files menu-method
+%config(noreplace) %_sysconfdir/menu-methods/*
+
 %files themes
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sat Mar 29 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.2-alt1
+- 3.7.2
+- moved menu-method to separate package because uses freedesktop menu
+  by default
+
+* Thu Mar 20 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.1-alt1
+- 3.7.1
+
+* Thu Mar 20 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.0-alt1
+- 3.7.0
+
 * Mon Jun 17 2024 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.6.0-alt1
 - 3.6.0
 
