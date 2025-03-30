@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.8.0
+Version: 128.8.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -260,6 +260,8 @@ export srcdir="$PWD"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
+export MOZ_APP_REMOTINGNAME="firefox"
+
 python3 ./mach build
 
 while read -r loc; do
@@ -387,6 +389,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat Mar 29 2025 Pavel Vasenkov <pav@altlinux.org> 128.8.1-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-2857 Incorrect handle could lead to sandbox escapes
+
 * Tue Mar 04 2025 Pavel Vasenkov <pav@altlinux.org> 128.8.0-alt1
 - New ESR version.
 - Security fixes:
