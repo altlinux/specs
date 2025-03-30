@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt28
+Release: alt29
 
 Summary: %child modules set for %parent
 License: GPL-3.0
@@ -208,6 +208,10 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sat Mar 29 2025 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt29
+- altboot: save vars to /run/stage1/vars
+- altboot: save /etc/network to /run/stage1
+
 * Sat Jan 11 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt28
 - fixed uninitialized value of variable (ALT #52670)
 
