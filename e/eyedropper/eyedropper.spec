@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name eyedropper
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name com.github.finefindus.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Eyedropper
@@ -27,12 +27,12 @@ Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
 %define gtk_ver 4.14
-%define adwaita_ver 1.6
+%define adw_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: blueprint-compiler gir(Adw)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc CHANGELOG* README*
 
 %changelog
+* Sun Mar 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
