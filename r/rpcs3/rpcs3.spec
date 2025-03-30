@@ -1,6 +1,6 @@
 %define optflags_lto %nil
 
-%define git_ver 17533
+%define git_ver 17723
 %define git_commit b266e3d4bf0e7b067efab0db6cba2ef31bd37974
 
 %define glslang_version 13.1.1
@@ -14,9 +14,10 @@
 %define zstd_version 1.5.7
 %define openal_version 1.24.1
 %define fusion_version 1.2.8
+%define vulkan_memory_allocator_commit 37064843398c69cc0ca7f8cf5b33128c03a2bd74
 
 Name: rpcs3
-Version: 0.0.35
+Version: 0.0.36
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -52,6 +53,8 @@ Source9: zstd-%zstd_version.tar
 Source10: openal-soft-%openal_version.tar
 # https://github.com/xioTechnologies/Fusion/archive/v%fusion_version/Fusion-%fusion_version.tar.gz
 Source11: Fusion-%fusion_version.tar
+# https://github.com/Megamouse/VulkanMemoryAllocator/archive/%vulkan_memory_allocator_commit/VulkanMemoryAllocator-vulkan_memory_allocator_commit.tar.gz
+Source12: VulkanMemoryAllocator-%vulkan_memory_allocator_commit.tar
 
 BuildRequires: /proc
 BuildRequires: clang
@@ -61,6 +64,7 @@ BuildRequires: glslc
 BuildRequires: graphviz
 BuildRequires: libGLEW-devel
 BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
 BuildRequires: libcurl-devel
@@ -95,7 +99,7 @@ BuildRequires: qt6-svg-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
@@ -108,6 +112,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../openal-soft-%openal_version 3rdparty/OpenAL/openal-soft
 %__mv -Tf ../Fusion-%fusion_version 3rdparty/fusion/fusion
+%__mv -Tf ../VulkanMemoryAllocator-%vulkan_memory_allocator_commit 3rdparty/GPUOpen/VulkanMemoryAllocator
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -126,13 +131,15 @@ echo "// This is a generated file.
 %build
 %add_optflags -I%_includedir/stb
 
+export CC="clang"
+export CXX="clang++"
+export RANLIB="llvm-ranlib"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+
 %cmake \
-	-DCMAKE_C_COMPILER:STRING=clang \
-	-DCMAKE_CXX_COMPILER:STRING=clang++ \
-	-DCMAKE_RANLIB:PATH=%_bindir/llvm-ranlib \
-	-DCMAKE_AR:PATH=%_bindir/llvm-ar \
-	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
-	-DCMAKE_EXE_LINKER_FLAGS:STRING="-fuse-ld=lld" \
+	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DUSE_NATIVE_INSTRUCTIONS:BOOL=FALSE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
@@ -163,6 +170,9 @@ echo "// This is a generated file.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Mon Mar 31 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.36-alt1
+- Version 0.0.36
+
 * Sat Mar 01 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.35-alt1
 - Version 0.0.35
 
