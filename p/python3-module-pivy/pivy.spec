@@ -1,6 +1,6 @@
 %define oname pivy
 Name: python3-module-%oname
-Version: 0.6.9
+Version: 0.6.10
 Release: alt1
 Epoch: 2
 Summary: Pivy is a Coin binding for Python
@@ -59,6 +59,9 @@ mv %buildroot%python3_sitelibdir_noarch/%oname \
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 30 2025 Andrey Cherepanov <cas@altlinux.org> 2:0.6.10-alt1
+- New version.
+
 * Fri Sep 27 2024 Andrey Cherepanov <cas@altlinux.org> 2:0.6.9-alt1
 - New version.
 
