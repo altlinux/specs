@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: libomemo-c
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: OMEMO C Library
@@ -10,10 +10,13 @@ Group: System/Libraries
 Url: https://github.com/dino/libomemo-c
 
 Vcs: https://github.com/dino/libomemo-c.git
-Source: %url/archive/v%version/%name-version.tar.gz
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libgcrypt-devel libssl-devel
+Source: %url/archive/v%version/%name-%version.tar.gz
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
+BuildRequires: pkgconfig(libprotobuf-c) protobuf-c-compiler
+BuildRequires: libgcrypt-devel libssl-devel
 %{?_enable_check:BuildRequires: ctest libcheck-devel}
 
 %description
@@ -33,21 +36,16 @@ applications with %name.
 
 %prep
 %setup
-sed -i 's|SIGNAL_PROTOCOL_C_VERSION|OMEMO_C_VERSION|' src/%name.pc.in
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_STATIC_LIBS=FALSE \
-    -DBUILD_SHARED_LIBS=TRUE \
-    %{?_enable_check:-DBUILD_TESTING=TRUE}
-%nil
-%cmake_build
+%meson
+%meson_build
 
 %install
-%cmake_install
+%meson_install
 
 %check
-%cmake_build -t test
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -59,6 +57,9 @@ sed -i 's|SIGNAL_PROTOCOL_C_VERSION|OMEMO_C_VERSION|' src/%name.pc.in
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Mar 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus
 
