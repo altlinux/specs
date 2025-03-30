@@ -9,7 +9,7 @@
 
 Name: gnome-%__name
 Version: %ver_major.5
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Tweak various aspects of GNOME
 License: GPL-3.0-or-later
@@ -24,6 +24,9 @@ Source: %url/-/archive/%version/%_name-%version.tar.gz
 Source: %_name-%version.tar
 %endif
 
+Provides: %_name = %EVR
+Provides: %__name = %EVR
+
 BuildArch: noarch
 
 %add_python3_path %_datadir/%__name
@@ -32,6 +35,7 @@ BuildArch: noarch
 #adw_about_dialog_add_other_app
 #%%define adw_ver 1.7
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1 typelib(XdpGtk4) dconf
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -74,6 +78,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1.1
+- added provides {R,r}efine
+
 * Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
 - 0.5.5
 
