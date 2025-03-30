@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.6.0
+Version: 0.6.3
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -148,6 +148,12 @@ kill %%?ollama
 %endif
 
 %changelog
+* Fri Mar 28 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.3-alt1
+- Update to v0.6.3 (2025-03-26). Primarily focused on Gemma 3 improvements.
+
+* Sat Mar 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt1
+- Update to v0.6.1 (2025-03-14).
+
 * Wed Mar 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.0-alt1
 - Update to v0.6.0 (2025-03-11).
 
