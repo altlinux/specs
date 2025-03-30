@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+*  Sun Mar 30 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
+- update audit, gnome-desktop
+- add software center
+
 * Tue Mar 25 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt1
 - update to ALT Server 11.0
 
