@@ -1,6 +1,6 @@
 Name: event-driven-servers
 Version: 1.0
-Release: alt5
+Release: alt6
 
 Summary: This is a collection of high-performance and scalable event-driven servers
 License: BSD-3-Clause
@@ -10,7 +10,7 @@ Vcs: https://github.com/MarcJHuber/event-driven-servers.git
 
 Source: %name-%version.tar
 
-ExcludeArch: %ix86 ppc64le
+ExcludeArch: %ix86 ppc64le armh
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3
@@ -178,6 +178,9 @@ sed -i 's!/usr/bin/env -S !!' %buildroot%_sysconfdir/tac_plus-ng.cfg %buildroot%
 %python3_sitelibdir_noarch/mavis
 
 %changelog
+* Mon Mar 31 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt6
+- update to upstream/master
+
 * Mon Mar 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt5
 - update to upstream/master and reduce NPROCS
 
