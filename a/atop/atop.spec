@@ -2,7 +2,7 @@
 %filter_from_requires /^.usr.bin.systemctl/d
 
 Name: atop
-Version: 2.11.0
+Version: 2.11.1
 Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
@@ -52,7 +52,7 @@ done
 %preun_service %name ||:
 
 %files
-%doc AUTHORS ChangeLog.* README
+%doc ChangeLog.* README
 %ghost %config(noreplace) %_sysconfdir/%{name}rc
 %config(noreplace) %_sysconfdir/default/%name
 %_bindir/*
@@ -71,6 +71,10 @@ done
 %_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Mon Mar 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.11.1-alt1
+- atop 2.11.1
+- Security fixes: CVE-2025-31160
+
 * Thu Dec 19 2024 Leontiy Volodin <lvol@altlinux.org> 2.11.0-alt1
 - atop 2.11.0
 
