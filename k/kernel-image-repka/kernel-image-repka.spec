@@ -3,7 +3,7 @@
 %def_disable domU
 
 Name: kernel-image-repka
-Release: alt1
+Release: alt2
 
 %define kernel_base_version	6.1
 %define kernel_sublevel	.11
@@ -20,7 +20,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
 
-#Remove oss
+# Remove oss
 %def_disable oss
 ## Don't edit below this line ##################################
 
@@ -40,7 +40,7 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 # https://github.com/repka-pi/patched-linux
 
-Patch0: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 ExclusiveArch: aarch64
 
@@ -81,7 +81,7 @@ BuildRequires: u-boot-tools
 BuildRequires: gcc-aarch64-linux-gnu
 %endif
 
-# for check
+# For check
 %{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static}}
 
 %if_enabled docs
@@ -99,7 +99,7 @@ BuildRequires: ccache
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
-your system and supports Repka Pi SBC.
+your system and supports Repka Pi 3 SBC.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot
@@ -157,7 +157,7 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %define _default_patch_flags -s
 %autopatch -p1
 
-# this file should be usable both with make and sh (for broken modules
+# This file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
@@ -166,7 +166,7 @@ subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavo
 subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
 %endif
 
-# get rid of unwanted files resulting from patch fuzz
+# Get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
 
 %if 0%{?_is_ilp32}
@@ -186,7 +186,7 @@ echo "Building Kernel $KernelVer"
 
 %make_build mrproper
 
-#configuration construction
+# Configuration construction
 
 CONFIGS="config-%_target_cpu"
 
@@ -233,7 +233,7 @@ cp -a arch/%arch_dir/include %buildroot%kbuild_dir/arch/%arch_dir
 find %buildroot%kbuild_dir/include/config -name '[0-9A-Z]*' -delete
 find %buildroot%kbuild_dir -name '*.cmd' -delete
 
-# drivers-headers install
+# Drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/scsi
 install -d %buildroot%kbuild_dir/drivers/md
 install -d %buildroot%kbuild_dir/drivers/usb/core
@@ -323,19 +323,19 @@ ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
 # Provide kernel headers for userspace
 %make_build headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
 
-#provide symlink to autoconf.h for back compat
+# Provide symlink to autoconf.h for back compat
 pushd %buildroot%old_kbuild_dir/include/linux
 ln -s ../generated/autoconf.h
 ln -s ../generated/utsrelease.h
 ln -s ../generated/uapi/linux/version.h
 popd
 
-# remove *.bin files
+# Remove *.bin files
 rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 touch %buildroot%modules_dir/modules.{alias,dep,devname,softdep,symbols}
 
-# install documentation
+# Install documentation
 %if_enabled docs
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
@@ -409,5 +409,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Mar 31 2025 Anton Kurachenko <srebrov@altlinux.org> 6.1.11-alt2
+- Changed package description.
+- Minor changes in the spec and config.
+
 * Sun Feb 02 2025 Anton Kurachenko <srebrov@altlinux.org> 6.1.11-alt1
 - Initial build for ALT Linux.
