@@ -13,7 +13,7 @@
 
 Name: talos
 Version: 1.10.0
-Release: alt0.alpha.2
+Release: alt0.alpha.3
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -110,6 +110,11 @@ sed -i \
   -e 's|KubeletImage = .*|KubeletImage = "%alt_registry/%altbranch/kubelet"|' \
   pkg/machinery/constants/constants.go
 
+sed -i \
+  -e 's|ghcr.io/siderolabs/flannel|%alt_registry/%altbranch/flannel|' \
+  -e 's|DefaultSandboxImage = .*| DefaultSandboxImage = "%alt_registry/%altbranch/pause:latest"|' \
+  pkg/images/list.go
+
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
@@ -171,6 +176,10 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Mon Mar 31 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt0.alpha.3
+- v1.10.0-alpha.3
+- set url for pause and flannel images to registry.a.o
+
 * Fri Mar 07 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt0.alpha.2
 - v1.10.0-alpha.2
 
