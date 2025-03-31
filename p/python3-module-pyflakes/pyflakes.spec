@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.0
-Release: alt2
+Version: 3.3.1
+Release: alt1
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
@@ -70,6 +70,9 @@ mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 %python3_sitelibdir/%pypi_name/test
 
 %changelog
+* Mon Mar 31 2025 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
+- 3.2.0 -> 3.3.1.
+
 * Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
 - Built with tests subpackage.
 
