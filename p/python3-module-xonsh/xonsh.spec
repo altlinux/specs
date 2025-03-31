@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.19.3
+Version: 0.19.4
 Release: alt1
 
 Summary: Python-powered, cross-platform, Unix-gazing shell
@@ -68,6 +68,9 @@ Xonsh (pronounced conch) is meant for the daily use of experts and novices alike
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Mar 28 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.19.4-alt1
+- New version.
+
 * Mon Mar 24 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.19.3-alt1
 - New version.
 
