@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 10.1.1
+Version: 10.2.2
 Release: alt1
 Summary: pytest plugin for infrastructure testing
 License: Apache-2.0
@@ -33,8 +33,11 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra ansible
+%pyproject_builddeps_metadata_extra paramiko
+%pyproject_builddeps_metadata_extra salt
+%pyproject_builddeps_metadata_extra winrm
 BuildRequires: /proc
 %endif
 
@@ -54,9 +57,6 @@ plugin to the powerful Pytest test engine
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.txt
-%endif
 
 %build
 %pyproject_build
@@ -73,6 +73,9 @@ plugin to the powerful Pytest test engine
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Mar 31 2025 Stanislav Levin <slev@altlinux.org> 10.2.2-alt1
+- 10.1.1 -> 10.2.2.
+
 * Fri May 31 2024 Stanislav Levin <slev@altlinux.org> 10.1.1-alt1
 - 10.0.0 -> 10.1.1.
 
