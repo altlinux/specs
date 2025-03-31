@@ -1,40 +1,43 @@
 %define _unpackaged_files_terminate_build 1
+%define _name Alpaca
+%define app_id com.jeffser.%_name
+
 %def_enable check
-%define app_id com.jeffser.Alpaca
 
 Name: alpaca
-Version: 4.0.0
+Version: 5.3.0
 Release: alt1
 
-Summary: Chat with local AI models
+Summary: Chat with AI models
 License: GPL-3.0-or-later
 Group: Office
-
 Url: https://github.com/Jeffser/Alpaca
+
 Vcs: https://github.com/Jeffser/Alpaca
+
 Source: %name-%version.tar
 
-%add_python3_path %_datadir/Alpaca
+%add_python3_path %_datadir/%_name
 
-Requires: typelib(GtkSource) = 5
+Requires: python3-module-pygobject3
+Requires: typelib(Adw) = 1 typelib(GtkSource) = 5 typelib(Vte) = 3.91
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: /usr/bin/glib-compile-resources 
+BuildRequires: /usr/bin/glib-compile-resources
 BuildRequires: /usr/bin/gtk4-update-icon-cache
 %if_enabled check
 BuildRequires: desktop-file-utils
-BuildRequires: appstream
-BuildRequires: libgio
+BuildRequires: /usr/bin/appstreamcli
+BuildRequires: /usr/bin/glib-compile-schemas
 %endif
 
 ExclusiveArch: aarch64 x86_64
 
 %description
-An Ollama client
-
-Features
+A private AI client
+Features:
 * Built in Ollama instance
 * Talk to multiple models in the same conversation
 * Pull and delete models from the app
@@ -103,11 +106,14 @@ by any models.
 %_datadir/dbus-1/services/%app_id.SearchProvider.service
 %_datadir/gnome-shell/search-providers/%app_id.search-provider.ini
 %_desktopdir/%app_id.SearchProvider.desktop
-%doc README.md
+%doc README.md SECURITY.md
 
 %files local
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 5.3.0-alt1
+- 5.3.0
+
 * Sat Feb 01 2025 Semen Fomchenkov <armatik@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
