@@ -4,7 +4,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.23
+Version: 1.3.24
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -68,6 +68,9 @@ Shell functions and kbd data for %name.
 %_sysconfdir/alterator/sysconfig/gnome-kbd
 
 %changelog
+* Mon Mar 31 2025 Anton Midyukov <antohami@altlinux.org> 1.3.24-alt1
+- add Mari and Tatar keyboard layout support (thanks Kirill Izmestev <felixz@)
+
 * Sun Mar 09 2025 Anton Midyukov <antohami@altlinux.org> 1.3.23-alt1
 - sysconfig-base: make run the syskeytable optional
 - sysconfig-base: fix slideshow setup for all cases
