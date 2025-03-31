@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.20
+%define kernel_sublevel	.21
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -366,6 +366,11 @@ fi
 %modules_dir/build
 
 %changelog
+* Mon Mar 31 2025 Alexei Takaseev <taf@altlinux.org> 6.12.21-alt1
+- v6.12.21 (2025-03-28).
+- arm64: dts: rockchip: add dts to support NP-504a board.
+- config-rk3588: add some NIC, WiFi and USB devices
+
 * Sun Mar 23 2025 Alexei Takaseev <taf@altlinux.org> 6.12.20-alt1
 - v6.12.20 (2025-03-22).
 - config: Disable obsolete input tablet drivers.
