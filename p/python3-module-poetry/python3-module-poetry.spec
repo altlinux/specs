@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Poetry -- Python build system
@@ -23,7 +23,7 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-%define core_ver 2.1.1
+%define core_ver 2.1.2
 %define dulwich_ver 0.22.6
 %define pkginfo_ver 1.12.0
 
@@ -72,6 +72,9 @@ that: the new, standardized pyproject.toml.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Sun Mar 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+
 * Mon Feb 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - 2.1.1
 
