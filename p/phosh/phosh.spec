@@ -1,10 +1,11 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.45
+%define ver_major 0.46
 %define beta %nil
+%define libver 0.45
+%define gi_api_ver 0
 %define namespace Phosh
 %define api_ver %ver_major
-%define gi_api_ver 0
 %define doc_api_ver 0
 %define rdn_name mobi.phosh.Shell
 %define dev_uid 1000
@@ -32,10 +33,11 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://gitlab.gnome.org/World/Phosh/phosh
 
+Vcs: https://gitlab.gnome.org/World/Phosh/phosh.git
+
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/World/Phosh/phosh.git
 Source: %name-%version%beta.tar
 %endif
 Source1: %name.pam
@@ -51,11 +53,16 @@ Patch2: %name-0.43.0-alt-service.patch
 # https://bugzilla.altlinux.org/46978
 Patch3: %name-0.29.0-alt-service-dm.patch
 
+%define gmobile_ver 0.1.0
+%define feedback_ver 0.4.0
+%define appstream_ver 1.0.0
+
 Requires: %name-data = %EVR
 # to avoid circular dependency
 %filter_from_requires /\/usr\/bin\/%name-session/d
 %filter_from_requires /\/usr\/libexec\/%name/d
 Requires: phoc >= %ver_major
+Requires: feedbackd >= %feedback_ver
 Requires: gnome-shell-data
 Requires: mutter-gnome
 Requires: gnome-session
@@ -73,9 +80,6 @@ Requires: gnome-software
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
 
-%define gmobile_ver 0.1.0
-%define feedback_ver 0.4.0
-%define appstream_ver 1.0.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
@@ -200,7 +204,7 @@ mkdir -p %buildroot%_sysconfdir/systemd/system/%name.service.d
 install -d %buildroot%_datadir/applications
 desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
 
-%{?_enable_shared_libs:rm -f %buildroot%_libdir/lib%name-%api_ver.a}
+%{?_enable_shared_libs:rm -f %buildroot%_libdir/lib%name-%libver.a}
 
 %find_lang %name
 
@@ -270,7 +274,8 @@ xvfb-run %__meson_test
 %_datadir/xdg-desktop-portal/%name-portals.conf
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %{?_enable_man:%_man1dir/%name.1*
-%_man1dir/%name-session.1*}
+%_man1dir/%name-session.1*
+%_man5dir/%name.gsettings.5*}
 
 %files devel
 %_includedir/%name/
@@ -280,17 +285,20 @@ xvfb-run %__meson_test
 
 %{?_enable_shared_libs:
 %files -n lib%name
-%_libdir/lib%name-%api_ver.so.*
+%_libdir/lib%name-%libver.so.*
 %{?_enable_introspection:%_typelibdir/%namespace-%gi_api_ver.typelib}
 
 %files -n lib%name-devel
-%_includedir/lib%name-%api_ver
-%_libdir/lib%name-%api_ver.so
-%_pkgconfigdir/lib%name-%api_ver.pc
+%_includedir/lib%name-%libver
+%_libdir/lib%name-%libver.so
+%_pkgconfigdir/lib%name-%libver.pc
 %{?_enable_introspection:%_girdir/%namespace-%gi_api_ver.gir}
 }
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
+- 0.46.0
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
 - updated to v0.45.0-2-g8fc14f4c
 

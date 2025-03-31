@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.45
+%define ver_major 0.46
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -66,7 +66,7 @@ BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xcb-renderutil)
 BuildRequires: pkgconfig(xcb-errors)
 BuildRequires: pkgconfig(hwdata)
-BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel
+BuildRequires: xorg-xwayland-devel libglvnd-devel libvulkan-devel glslang
 BuildRequires: pkgconfig(libliftoff)}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen pkgconfig(gobject-introspection-1.0) /usr/bin/g-ir-scanner}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
@@ -135,6 +135,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
+- updated to v0.46.0-4-gf13f582
+
 * Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
 - 0.45.0
 

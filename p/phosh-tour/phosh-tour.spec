@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.45
+%define ver_major 0.46
 %define beta %nil
 %define gmobile_ver v0.1.0
 %define rdn_name mobi.phosh.PhoshTour
@@ -74,6 +74,9 @@ rm %buildroot%_pkgconfigdir/gmobile.pc
 %doc README* NEWS
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
+- 0.46.0
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
 - 0.45.0
 

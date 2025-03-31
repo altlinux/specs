@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.45
+%define ver_major 0.46
 %define beta %nil
 %define gmobile_ver 0.2.1
 %define rdn_name mobi.phosh.MobileSettings
@@ -32,7 +32,7 @@ Source: %name-%version%beta.tar
 %define phosh_ver %ver_major
 %define desktop_ver 44
 
-Requires: dconf lm_sensors3
+Requires: dconf feedbackd lm_sensors3
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson
@@ -48,6 +48,9 @@ BuildRequires: libsensors3-devel
 BuildRequires: pkgconfig(phosh-plugins)
 BuildRequires: pkgconfig(phosh-settings) >= %phosh_ver
 BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(libfeedback-0.0)
+BuildRequires: pkgconfig(libportal-gtk4)
 %if_enabled embed_gmobile
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: gobject-introspection-devel}
@@ -55,9 +58,6 @@ BuildRequires: gobject-introspection-devel}
 BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 %endif
 %{?_enable_check:BuildRequires: xvfb-run phoc >= %phoc_ver phosh /usr/bin/Xwayland}
-
-# for gmobile
-BuildRequires: pkgconfig(json-glib-1.0)
 
 %description
 Mobile Settings App for phosh and related components.
@@ -95,6 +95,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
+- 0.46.0
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt1
 - 0.45.0
 

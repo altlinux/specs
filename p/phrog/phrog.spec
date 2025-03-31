@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
 
-%define ver_major 0.45
+%define ver_major 0.46
 %define xdg_name mobi.phosh.Phrog
 %define rdn_name mobi.phosh.phrog
 
@@ -27,7 +27,9 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-%define phosh_ver %ver_major
+%define phosh_ver 0.45
+
+Provides: greetd-greeter
 
 Requires: greetd accountsservice
 Requires: dconf osk-wayland font(lato)
@@ -49,6 +51,8 @@ It is the spiritual successor of phog.
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
+
+sed -i 's|user = "greetd"|user = "_greeter"|' dist/fedora/greetd-config.toml
 
 %build
 %rust_build
@@ -85,6 +89,11 @@ dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 %doc README*
 
 %changelog
+* Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt0.5
+- 0.46.0
+- added greetd-greeter provides
+- changed the user from greetd to _greeter
+
 * Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.45.0-alt0.5
 - 0.45.0
 
