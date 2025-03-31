@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.0
-Release: alt2
+Version: 3.4.0
+Release: alt1
 
 Summary: Python command-line client for tldr pages
 License: MIT
@@ -61,6 +61,9 @@ make SPHINXBUILD="sphinx-build-3" -C docs
 install -Dpm644 %mod_name.bash %buildroot%_datadir/bash-completion/completions/%mod_name
 install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
 
+# clean up sphinx build artifacts
+rm -r %buildroot%_man1dir/.doctrees/
+
 %check
 %pyproject_run_pytest -ra -Wignore
 
@@ -77,6 +80,9 @@ install -Dpm644 %mod_name.zsh %buildroot%_datadir/zsh/site-functions/_%mod_name
 # TODO: package http://github.com/tldr-pages/tldr itself
 
 %changelog
+* Mon Mar 31 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
+- 3.3.0 -> 3.4.0.
+
 * Fri Jul 12 2024 Alexander Stepchenko <geochip@altlinux.org> 3.3.0-alt2
 - Add tealdeer and tlrc to the Conflicts.
 
