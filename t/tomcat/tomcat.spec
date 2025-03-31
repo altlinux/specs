@@ -10,13 +10,13 @@ BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-generic-compat
+BuildRequires: java-17-devel
 %define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.98
+%define version 9.0.102
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: jpackage-generic-compat
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 98
+%global micro_version 102
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -75,7 +75,7 @@ BuildRequires: jpackage-generic-compat
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_1jpp11
+Release:       alt1
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -105,6 +105,8 @@ Patch4:        rhbz-1857043.patch
 Patch6:        %{name}-%{major_version}.%{minor_version}-bnd-annotation.patch
 
 BuildArch:     noarch
+# Avoid non-identical noarch packages
+ExcludeArch:   armh
 
 BuildRequires: ant
 BuildRequires: ecj >= 1:4.10
@@ -123,6 +125,7 @@ Requires:    tomcat-native >= %{native_version}
 Requires(pre):    shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-submap shadow-utils
 
 # added after log4j sub-package was removed
+Conflicts: %{name}10
 Provides:         %{name}-log4j = %{epoch}:%{version}-%{release}
 Source44: import.info
 Patch33: tomcat-8.0.46-alt-tomcat-jasper.pom.patch
@@ -146,6 +149,7 @@ to be a collaboration of the best-of-breed developers from around the world.
 Group: System/Base
 Summary: The host-manager and manager web applications for Apache Tomcat
 Requires: %{name} = %{epoch}:%{version}-%{release}
+Conflicts: %{name}10-admin-webapps
 
 %description admin-webapps
 The host-manager and manager web applications for Apache Tomcat.
@@ -154,6 +158,7 @@ The host-manager and manager web applications for Apache Tomcat.
 Group: Text tools
 Summary: The docs web application for Apache Tomcat
 Requires: %{name} = %{epoch}:%{version}-%{release}
+Conflicts: %{name}10-docs-webapp
 
 %description docs-webapp
 The docs web application for Apache Tomcat.
@@ -165,6 +170,7 @@ Provides: jsp = %{jspspec}
 Obsoletes: %{name}-jsp-2.2-api
 Requires: tomcat-lib tomcat-servlet-4.0-api
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
+Conflicts: %{name}10-jsp-3.1-api
 
 %description jsp-%{jspspec}-api
 Apache Tomcat JSP API Implementation Classes.
@@ -177,6 +183,7 @@ Requires: tomcat-lib tomcat-servlet-4.0-api
 Requires: %{name}-el-%{elspec}-api = %{epoch}:%{version}-%{release}
 Requires: ecj >= 1:4.10
 Requires(preun): coreutils
+Conflicts: %{name}10-lib
 
 %description lib
 Libraries needed to run the Tomcat Web container.
@@ -188,6 +195,7 @@ Provides: servlet = %{servletspec}
 Provides: servlet6
 Provides: servlet3
 Obsoletes: %{name}-servlet-3.1-api
+Conflicts: %{name}10-servlet-6.0-api
 
 %description servlet-%{servletspec}-api
 Apache Tomcat Servlet API Implementation Classes.
@@ -197,6 +205,7 @@ Group: Development/Other
 Summary: Apache Tomcat Expression Language v%{elspec} API Implementation Classes
 Provides: el_api = %{elspec}
 Obsoletes: %{name}-el-2.2-api
+Conflicts: %{name}10-el-5.0-api
 
 %description el-%{elspec}-api
 Apache Tomcat EL API Implementation Classes.
@@ -205,6 +214,7 @@ Apache Tomcat EL API Implementation Classes.
 Group: Networking/WWW
 Summary: The ROOT web application for Apache Tomcat
 Requires: %{name} = %{epoch}:%{version}-%{release}
+Conflicts: %{name}10-webapps
 
 %description webapps
 The ROOT web application for Apache Tomcat.
@@ -543,6 +553,9 @@ exit 0
 %exclude %{_javadir}/%{name}-servlet-api.jar
 %exclude %{_javadir}/%{name}-el-api.jar
 %exclude %{_javadir}/%{name}-jsp-api.jar
+%exclude %{libdir}/%{name}-servlet-api.jar
+%exclude %{libdir}/%{name}-el-api.jar
+%exclude %{libdir}/%{name}-jsp-api.jar
 %exclude %{_jnidir}/*
 
 %files jsp-%{jspspec}-api -f .mfiles-tomcat-jsp-api
@@ -570,6 +583,9 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Mon Mar 31 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.102-alt1
+- new version (Fixes: CVE-2025-24813)
+
 * Fri Jan 17 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.98-alt1_1jpp11
 - NMU: new version
 - suppress unmet lsb-init symlink
