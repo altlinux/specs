@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    pdfminersix
-Version: 20250324
+Version: 20250327
 Release: alt1
 
 Summary: Community maintained fork of pdfminer - we fathom PDF
@@ -28,6 +28,7 @@ or color of the text.
 %prep
 %setup
 subst 's/__VERSION__/%version/' pdfminer/__init__.py
+subst 's/^license = .*/license = {text = "MIT"}/' pyproject.toml
 
 %build
 %pyproject_build
@@ -46,6 +47,9 @@ subst 's/__VERSION__/%version/' pdfminer/__init__.py
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Sat Mar 29 2025 Andrey Cherepanov <cas@altlinux.org> 20250327-alt1
+- New version.
+
 * Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 20250324-alt1
 - New version.
 
