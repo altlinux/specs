@@ -7,7 +7,7 @@
 
 Name: vtk
 Version: %ver.1
-Release: alt2
+Release: alt3
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -984,6 +984,8 @@ This package contains VTK QML plugin.
 
 %ifarch %e2k
 sed -i 's/decltype(resRange)::/typename &/' Common/Math/vtkFFT.txx
+sed -i -E 's/(std::vector<.*(pointList_|transforms_))\{\}/\1={}/' \
+	ThirdParty/ioss/vtkioss/Ioss_{Field,CoordinateFrame}.h
 %endif
 
 # apply build timestamp
@@ -1554,6 +1556,9 @@ EOF
 %endif
 
 %changelog
+* Sat Mar 29 2025 Michael Shigorin <mike@altlinux.org> 9.4.1-alt3
+- E2K: more workarounds to actually build slicer (ilyakurdyukov@).
+
 * Fri Mar 07 2025 Constantin Sunzow <protvin@altlinux.org> 9.4.1-alt2
 - Add macros subpackage.
 - Update summaries.

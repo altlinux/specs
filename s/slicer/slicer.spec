@@ -4,7 +4,7 @@
 %define slicerver 5.8
 Name: slicer
 Version: %slicerver.0
-Release: alt1
+Release: alt2
 Summary: Medical Visualization and Processing Environment for Research
 License: 3D-Slicer-1.0
 Group: Sciences/Medicine
@@ -113,6 +113,12 @@ This package contains Slicer plugins for qt5 designer.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+sed -i 's/~DiffusionTensor3D.*() = default;//' \
+	Modules/CLI/ResampleDTIVolume/itkDiffusionTensor3D*Correction.h
+sed -i 's/~ConstrainedValueMultiplication() *= default;//' \
+	Libs/vtkITK/itkConstrainedValueMultiplicationImageFilter.h
+%endif
 
 # Compat with VTK 9.4
 # https://github.com/Slicer/Slicer/pull/8238
@@ -222,6 +228,9 @@ rm -rf %buildroot%_libdir/Slicer-%slicerver/lib/Slicer-%slicerver/cmake
 %_qt5_plugindir/designer/*.so
 
 %changelog
+* Sat Mar 29 2025 Michael Shigorin <mike@altlinux.org> 5.8.0-alt2
+- E2K: ftbfs workaround for lcc 1.29.06 (ilyakurdyukov@).
+
 * Wed Feb 19 2025 Constantin Sunzow <protvin@altlinux.org> 5.8.0-alt1
 - Update summaries.
 - New version.
