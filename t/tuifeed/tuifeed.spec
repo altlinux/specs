@@ -1,5 +1,5 @@
 Name: tuifeed
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: A terminal feed reader with a fancy ui
@@ -61,6 +61,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %_datadir/applications/%name.desktop
 
 %changelog
+* Mon Mar 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.2-alt1
+- 0.4.1 -> 0.4.2
+
 * Tue Mar 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.1-alt1
 - 0.3.2 -> 0.4.1
 
