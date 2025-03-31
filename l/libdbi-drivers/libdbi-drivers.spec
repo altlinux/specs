@@ -8,7 +8,7 @@
 Name: libdbi-drivers
 Epoch: 1
 Version: 0.9.0
-Release: alt7
+Release: alt7.1
 Summary: Database drivers for libdbi
 License: LGPL
 Group: System/Libraries
@@ -16,6 +16,11 @@ Url: http://libdbi-drivers.sourceforge.net/
 
 Source: %name-%version.tar
 Patch: 0001-freetds-resolve-compile-error-with-1.0.patch
+
+Patch2: libdbi-drivers-fedora-sys-wait.patch
+Patch3: libdbi-drivers-fedora-c99.patch
+Patch4: libdbi-drivers-alt-firebird-driver-gcc14-fix.patch
+Patch5: libdbi-drivers-alt-firebird-driver-proper-pvector-type.patch
 
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: gcc-c++ libdbi-devel zlib-devel
@@ -149,7 +154,7 @@ This package contains the doc.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # lib64 fix
 sed -i "s|/lib\b|/%_lib|g" acinclude.m4
@@ -253,6 +258,9 @@ rm -f %buildroot%_libdir/dbd/*.la
 %endif
 
 %changelog
+* Mon Mar 31 2025 Ivan A. Melnikov <iv@altlinux.org> 1:0.9.0-alt7.1
+- NMU: fix FTBFS
+
 * Tue Aug 31 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.9.0-alt7
 - Disabled static libraries.
 
