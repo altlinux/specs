@@ -1,9 +1,12 @@
 # due to sysv-systemd conflict we should not have systemd deps
 %filter_from_requires /^.usr.bin.systemctl/d
 
+# simplified backport to older branches
+%define _systemddir /usr/lib/systemd
+
 Name: atop
 Version: 2.11.1
-Release: alt1
+Release: alt1.1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -71,6 +74,9 @@ done
 %_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Mon Mar 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.11.1-alt1.1
+- Simplified backport to older branches
+
 * Mon Mar 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.11.1-alt1
 - atop 2.11.1
 - Security fixes: CVE-2025-31160
