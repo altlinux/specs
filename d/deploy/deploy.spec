@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -11,7 +11,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-php
+BuildRequires(pre): rpm-build-php rpm-macros-postgresql
 Requires: python3
 Requires: ansible
 
@@ -23,6 +23,7 @@ system services like PostgreSQL or Moodle.
 %setup
 mkdir -p modules/vars
 echo "php_version: %php_defver" > modules/vars/php
+echo "pg_ver: %pg_ver" > modules/vars/postgresql
 
 %install
 %makeinstall_std
@@ -32,6 +33,9 @@ echo "php_version: %php_defver" > modules/vars/php
 %_datadir/%name
 
 %changelog
+* Mon Mar 31 2025 Alexei Takaseev <taf@altlinux.org> 0.4.3-alt1
+- Used last PostgreSQL version in repository.
+
 * Mon Mar 24 2025 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt1
 - Used current supported PHP version in repository.
 
