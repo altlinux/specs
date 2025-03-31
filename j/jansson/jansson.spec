@@ -2,8 +2,8 @@
 %define soname 4
 
 Name: jansson
-Version: 2.14
-Release: alt4
+Version: 2.14.1
+Release: alt1
 
 Summary: C library for encoding, decoding and manipulating JSON data
 License: MIT
@@ -96,6 +96,9 @@ It features:
 %endif
 
 %changelog
+* Mon Mar 31 2025 Anton Farygin <rider@altlinux.com> 2.14.1-alt1
+- 2.14 -> 2.14.1
+
 * Wed Dec 04 2024 Anton Farygin <rider@altlinux.ru> 2.14-alt4
 - fixed libdir location in pkgconfig file
 
