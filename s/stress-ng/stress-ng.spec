@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.18.11
+Version: 0.18.12
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -46,12 +46,12 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-  * 350+ stress tests
-  * 80+ CPU specific stress tests that exercise floating point, integer,
+  * 360+ stress tests
+  * 100+ CPU specific stress tests that exercise floating point, integer,
     bit manipulation and control flow
-  * 20+ virtual memory stress tests
-  * 40+ file system stress tests
-  * 30+ memory/CPU cache stress tests
+  * 60+ virtual memory stress tests
+  * 80+ file system stress tests
+  * 50+ memory/CPU cache stress tests
   * portable: builds on Linux (Debian, Devuan, RHEL, Fedora, Centos,
     Slackware OpenSUSE, Ubuntu, etc..), Solaris, FreeBSD, NetBSD, OpenBSD,
     DragonFlyBSD, Minix, Android, MacOS X, Serenity OS, GNU/Hurd, Haiku,
@@ -118,6 +118,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon Mar 31 2025 Vitaly Chikunov <vt@altlinux.org> 0.18.12-alt1
+- Update to V0.18.12 (2025-03-30).
+
 * Sun Mar 02 2025 Vitaly Chikunov <vt@altlinux.org> 0.18.11-alt1
 - Update to V0.18.11 (2025-03-01).
 
