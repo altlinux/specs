@@ -6,8 +6,8 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.32.2
-Release: alt1.1
+Version: 2.32.4
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -122,6 +122,9 @@ export LDFLAGS='-mlsx -mlasx'
 %_libdir/lib%{name}*.a
 
 %changelog
+* Mon Mar 31 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.4-alt1
+- New version 2.32.4.
+
 * Sat Mar 29 2025 Nazarov Denis <nenderus@altlinux.org> 2.32.2-alt1.1
 - Fix FTBFS
 
