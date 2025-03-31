@@ -1,5 +1,5 @@
 Name: orage
-Version: 4.20.0
+Version: 4.20.1
 Release: alt1
 
 Summary: Time-managing application for the Xfce desktop environment
@@ -61,6 +61,9 @@ Xfce.
 %_datadir/themes/Default/orage-4.0/
 
 %changelog
+* Mon Mar 31 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
+- Updated to 4.20.1.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Disabled X11 tray icon.
 - Updated to 4.20.0.
