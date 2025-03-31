@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: firejail
-Version: 0.9.72
+Version: 0.9.74
 Release: alt1
 Summary: Linux namespaces sandbox program
 License: GPLv2+
@@ -45,6 +45,7 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %_datadir/bash-completion/completions/firemon
 %_datadir/zsh/site-functions/_firejail
 %_datadir/vim/vimfiles/ftdetect/%name.vim
+%_datadir/vim/vimfiles/ftplugin/%name.vim
 %_datadir/vim/vimfiles/syntax/%name.vim
 %exclude %_docdir/%name
 %_man1dir/%name.1*
@@ -57,6 +58,9 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %config %_sysconfdir/%name
 
 %changelog
+* Mon Mar 31 2025 Anton Farygin <rider@altlinux.com> 0.9.74-alt1
+- 0.9.72 -> 0.9.74
+
 * Tue Mar 21 2023 Anton Farygin <rider@altlinux.ru> 0.9.72-alt1
 - 0.9.68 -> 0.9.72 (Fixes: CVE-2022-31214)
 
