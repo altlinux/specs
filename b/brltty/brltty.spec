@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 %filter_from_requires /^sudo$/d
@@ -22,7 +23,7 @@
 
 Name: brltty
 Version: %pkg_version
-Release: alt1
+Release: alt2
 
 Summary: Braille display driver for Linux/Unix
 Group: System/Servers
@@ -116,7 +117,6 @@ Version: %api_ver
 Group: File tools
 License: LGPL-2.0-or-later
 Summary: Application Programming Interface for BRLTTY
-Requires: %name = %pkg_version-%release
 
 %description -n brlapi
 This package provides the run-time support for the Application
@@ -207,7 +207,7 @@ export CPPFLAGS="$java_inc"
 
 # there is no curses packages in BuildRequires, so the package builds
 # without them in mock; let's express this decision explicitly
-opts="--disable-stripping --without-curses --libdir=/%_lib \
+opts="--disable-stripping --without-curses --libdir=%_libdir \
 %if_with speech_dispatcher
   --with-speechd=%prefix \
 %endif
@@ -245,18 +245,14 @@ install -d -m755 %buildroot{%_sysconfdir,%_man5dir}
 install -m644 Documents/brltty.conf %buildroot%_sysconfdir
 echo ".so man1/brltty.1" > %buildroot%_man5dir/brltty.conf.5
 
-%if %_lib == "lib64"
-	#Manually place java plugin on 64-bit arches
-	mkdir -p %buildroot%prefix/%_lib/java/
-	install -m 755 Bindings/Java/libbrlapi_java.so "%buildroot%prefix/%_lib/java/"
-%endif
+install -m 755 Bindings/Java/libbrlapi_java.so "%buildroot%_jnidir/"
 
 # clean up the manuals:
 rm -rf Documents/BrlAPIref/BrlAPIref/html
 mv -f Documents/BrlAPIref/{html,BrlAPIref}
 
 # Don't want static lib
-rm -rf %buildroot/%_lib/libbrlapi.a
+rm -rf %buildroot/%_libdir/lib*.a
 
 %__subst s/'#text-table.ru'/'text-table ru'/ %buildroot/etc/brltty.conf
 %__cp %SOURCE2 ru_brltty.tar
@@ -291,6 +287,7 @@ chmod +x %buildroot%_bindir/%name-config.sh
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/brltty.conf
+%dir %_sysconfdir/brltty
 %_sysconfdir/brltty/
 %_sysusersdir/%name.conf
 %_udevrulesdir/90-%name-hid.rules
@@ -311,17 +308,17 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %_bindir/brltty-*
 %exclude %_bindir/brltty-config.sh
 %_bindir/eutp
-/%_lib/brltty/
-%exclude /%_lib/brltty/libbrlttybba.so
-%exclude /%_lib/brltty/libbrlttybxw.so
+%_libdir/brltty/
+%exclude %_libdir/brltty/libbrlttybba.so
+%exclude %_libdir/brltty/libbrlttybxw.so
 %if_with speech_dispatcher
-%exclude /%_lib/brltty/libbrlttyssd.so
+%exclude %_libdir/brltty/libbrlttyssd.so
 %endif
 %if_with at_spi1
-%exclude /%_lib/brltty/libbrlttyxas.so
+%exclude %_libdir/brltty/libbrlttyxas.so
 %endif
 %if_with at_spi2
-%exclude /%_lib/brltty/libbrlttyxa2.so
+%exclude %_libdir/brltty/libbrlttyxa2.so
 %endif
 %_man1dir/brltty.*
 %_man1dir/eutp.1.*
@@ -335,30 +332,31 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %if_with speech_dispatcher
 %files speech-dispatcher
 %doc Drivers/Speech/SpeechDispatcher/README
-/%_lib/brltty/libbrlttyssd.so
+%_libdir/brltty/libbrlttyssd.so
 %endif
 
 %files xw
 %doc Drivers/Braille/XWindow/README
 %_x11sysconfdir/xsession.user.d/90xbrlapi
-/%_lib/brltty/libbrlttybxw.so
+%_libdir/brltty/libbrlttybxw.so
 
 %if_with at_spi1
 %files at-spi
-/%_lib/brltty/libbrlttyxas.so
+%_libdir/brltty/libbrlttyxas.so
 %endif
 
 %if_with at_spi2
 %files at-spi2
-/%_lib/brltty/libbrlttyxa2.so
+%_libdir/brltty/libbrlttyxa2.so
 %_datadir/gdm/greeter/autostart/xbrlapi.desktop
 %endif
 
 %files -n brlapi
 %_bindir/vstp
 %_bindir/xbrlapi
-/%_lib/brltty/libbrlttybba.so
-/%_lib/libbrlapi.so.*
+%dir %_libdir/brltty
+%_libdir/brltty/libbrlttybba.so
+%_libdir/libbrlapi.so.*
 %doc Drivers/Braille/XWindow/README
 %doc Documents/Manual-BrlAPI/
 %doc %_mandir/man1/xbrlapi.*
@@ -366,7 +364,7 @@ chmod +x %buildroot%_bindir/%name-config.sh
 
 %files -n brlapi-devel
 %_bindir/%name-config.sh
-/%_lib/libbrlapi.so
+%_libdir/libbrlapi.so
 %_includedir/brltty
 %_includedir/brlapi*.h
 %_pkgconfigdir/brltty.pc
@@ -390,11 +388,16 @@ chmod +x %buildroot%_bindir/%name-config.sh
 
 %if_with ocaml
 %files -n ocaml-brlapi
-%prefix/%_lib/ocaml/brlapi/
-#%prefix/%_lib/ocaml/stublibs/
+%dir %_libdir/ocaml/brlapi/
+%_libdir/ocaml/brlapi/
+#_libdir/ocaml/stublibs/
 %endif
 
 %changelog
+* Tue Mar 25 2025 Artem Semenov <savoptik@altlinux.org> 6.7-alt2
+- The package is prepared for Usrmerge.
+- Removed cyclic dependency on brlapi
+
 * Tue Mar 11 2025 Artem Semenov <savoptik@altlinux.org> 6.7-alt1
 - Updated to version 6.7.
 - Cleanup spec: remove unused patches and sources.
