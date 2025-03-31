@@ -3,7 +3,7 @@
 %define legacy_name acc-legacy
 
 Name: alterator-standalone
-Version: 7.4.4
+Version: 7.5.0
 Release: alt1
 
 Summary: System Management center
@@ -17,7 +17,6 @@ Requires: alterator >= 5.0
 Requires: alterator-l10n
 Requires: alterator-lookout >= 2.5
 Requires: alterator-browser-qt >= 2.11.6-alt1
-Requires: consolehelper
 
 #backward compatibility
 Provides: acc = %version, alterator-profile = %version, %name-usermode = %version
@@ -45,46 +44,10 @@ Contains engine for system management
 %install
 %makeinstall
 
-#rename acc -> acc-legacy
-mv %buildroot/%_sbindir/%alt_name %buildroot/%_sbindir/%legacy_name
-
-#install consolehelper
-for obj in %legacy_name alterator-standalone;
-do
-install -d %buildroot/%_bindir
-ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/$obj
-install -d %buildroot%_sysconfdir/pam.d/
-
-cat>%buildroot%_sysconfdir/pam.d/$obj<<EOF
-#%PAM-1.0
-auth	sufficient	pam_rootok.so
-auth	required	pam_stack.so service=system-auth
-account	required	pam_permit.so
-password	required	pam_deny.so
-session	optional	pam_xauth.so
-EOF
-
-install -d %buildroot%_sysconfdir/security/console.apps/
-cat>%buildroot%_sysconfdir/security/console.apps/$obj<<EOF
-USER=root
-PROGRAM=%_sbindir/$obj
-SESSION=true
-FALLBACK=true
-EOF
-done
-
-#install symlink helper for consolhelper
-install -d %buildroot/%_libexecdir/%name
-cat>%buildroot/%_libexecdir/%name/%legacy_name<<EOF
-#!/bin/sh -e
-exec %_bindir/%legacy_name
-EOF
-chmod a+x %buildroot/%_libexecdir/%name/%legacy_name
-
 #install acc as alternative for acc-legacy
 install -d %buildroot/%_altdir
 cat>%buildroot/%_altdir/%name<<EOF
-%_bindir/%alt_name	%_libexecdir/%name/%legacy_name 20
+%_bindir/%alt_name	%_bindir/%legacy_name 20
 EOF
 touch %buildroot/%_bindir/%alt_name
 
@@ -92,19 +55,20 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 
 %files
 %config %_altdir/%name
-%_sbindir/*
-%_libexecdir/%name/*
+%ghost %_bindir/%alt_name
+%_bindir/acc-legacy
+%_sbindir/acc
+%_sbindir/%name
 # The UI modules aren't currently compiled
 #%_alterator_libdir/ui/*
 %_alterator_datadir/ui/*
 %_desktopdir/*
 %_man8dir/*
-%config(noreplace) %_sysconfdir/pam.d/*
-%config(noreplace) %_sysconfdir/security/console.apps/*
-%ghost %_bindir/%alt_name
-%_bindir/*
 
 %changelog
+* Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 7.5.0-alt1
+- Replace consolehelper with polkit (closes: 53655)
+
 * Thu Oct 17 2024 Sergey V Turchin <zerg@altlinux.org> 7.4.4-alt1
 - change desktop icon to alterator
 
