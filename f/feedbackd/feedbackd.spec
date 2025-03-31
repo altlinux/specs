@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -150,6 +150,9 @@ sed -i 's|-G %name|-G users|' data/90-feedbackd.rules
 %endif
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
