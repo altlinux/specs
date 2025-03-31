@@ -2,14 +2,14 @@
 %define optflags_lto %nil
 
 %define _name identity
-%define ver_major 0.7
+%define ver_major 25.03
 %define xdg_name org.gnome.gitlab.YaLTeR.Identity
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major
 Release: alt1
 
 Summary: Compare images and videos
@@ -77,6 +77,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 25.03-alt1
+- 25.03
+
 * Wed Oct 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 

@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name video-trimmer
-%define ver_major 0.9
+%define ver_major 25.03
 %define rdn_name org.gnome.gitlab.YaLTeR.VideoTrimmer
 
 %def_disable bootstrap
 
 Name: gnome-%_name
-Version: %ver_major.0
+Version: %ver_major
 Release: alt1
 
 Summary: GNOME Video Trimmer
@@ -24,7 +24,7 @@ Source: %_name-%version.tar
 Source1: %_name-%version-cargo.tar
 
 %define gtk_ver 4.16.0
-%define adwaita_ver 1.6
+%define adw_ver 1.7
 
 Requires: ffmpeg ffprobe
 
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: typelib(Adw)
 
 %description
@@ -69,6 +69,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 25.03-alt1
+- 25.03
+
 * Wed Oct 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - updated to v0.9.0-2-g4cef814
 
