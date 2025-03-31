@@ -14,7 +14,7 @@
 
 Name: zed
 Version: 0.179.4
-Release: alt1
+Release: alt2
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and AGPL-3.0 and Apache-2.0
@@ -31,6 +31,10 @@ Source3: update-metadata-releases.py
 Source4: https://github.com/zed-industries/webrtc/releases/download/m114_release_patched/webrtc-linux-x64-release.zip
 Source5: https://github.com/livekit/rust-sdks/releases/download/webrtc-dac8015-6/webrtc-linux-arm64-release.zip
 Patch0: %name-%version-alt.patch
+
+# zed needs netcat to do `git fetch'
+# see https://bugzilla.altlinux.org/53668
+Requires: netcat
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
@@ -100,6 +104,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Mon Mar 31 2025 Anton Zhukharev <ancieg@altlinux.org> 0.179.4-alt2
+- Added dependency on netcat to fix `git fetch' (closes 53668).
+
 * Fri Mar 28 2025 Anton Zhukharev <ancieg@altlinux.org> 0.179.4-alt1
 - Updated to 0.179.4.
 
