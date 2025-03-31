@@ -1,5 +1,5 @@
 Name: localization-tt
-Version: 241020
+Version: 250330
 Release: alt1
 
 Summary: Translation files for Tatar language
@@ -52,7 +52,6 @@ msgfmt po/xfce4-pulseaudio-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGE
 msgfmt po/xfce4-screensaver.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-screensaver.mo
 msgfmt po/xfce4-screenshooter.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-screenshooter.mo
 msgfmt po/xfce4-session.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-session.mo
-msgfmt po/xfce4-settings.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-settings.mo
 msgfmt po/xfce4-systemload-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-systemload-plugin.mo
 msgfmt po/xfce4-taskmanager.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-taskmanager.mo
 msgfmt po/xfce4-terminal.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4-terminal.mo
@@ -68,6 +67,9 @@ msgfmt po/xfce4-xkb-plugin.po -o %buildroot%_datadir/locale/tt/LC_MESSAGES/xfce4
 %_datadir/locale/tt/LC_MESSAGES/*
 
 %changelog
+* Sun Mar 30 2025 Kirill Izmestev <felixz@altlinux.org> 250330-alt1
+- Move xfce4-settings.po to xfce4-settings package.
+
 * Sun Oct 20 2024 Kirill Izmestev <felixz@altlinux.org> 241020-alt1
 - Move thunar.po to Thunar package.
 
