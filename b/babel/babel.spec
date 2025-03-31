@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-%set_gcc_version 12
+%set_gcc_version 13
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -10,7 +10,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt8
+Release: alt8.1
 Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
@@ -409,6 +409,9 @@ done
 %_docdir/%name
 
 %changelog
+* Mon Mar 31 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt8.1
+- NMU: build with gcc13 (fixes FTBFS on loongarch64)
+
 * Wed Mar 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0.0-alt8
 - NMU: fix FTBFS
 
