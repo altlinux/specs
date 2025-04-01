@@ -13,8 +13,8 @@
 %endif
 
 Name: zed
-Version: 0.179.4
-Release: alt2
+Version: 0.179.5
+Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and AGPL-3.0 and Apache-2.0
@@ -104,6 +104,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Tue Apr 01 2025 Anton Zhukharev <ancieg@altlinux.org> 0.179.5-alt1
+- Updated to 0.179.5.
+
 * Mon Mar 31 2025 Anton Zhukharev <ancieg@altlinux.org> 0.179.4-alt2
 - Added dependency on netcat to fix `git fetch' (closes 53668).
 
