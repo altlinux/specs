@@ -10,10 +10,8 @@
 %endif
 
 # Use JIT
-%ifarch loongarch64
-# XXX: llvm versions <= 15 do not support LoongArch targets.
-# pgsql jit relies on deprecated llvm's typed pointers which are not
-# available since llvm 16 (the first version which supports LoongArch).
+%ifarch %e2k
+# LLVM no official support on E2K
 %def_without jit
 %else
 %def_with jit
@@ -24,7 +22,7 @@
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     8
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -71,7 +69,7 @@ BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm18.1-devel clang18.1-devel gcc-c++
+BuildRequires: llvm19.1-devel clang19.1-devel gcc-c++
 %endif
 %if_without devel
 BuildRequires: libpq5
@@ -291,7 +289,7 @@ Group: Development/Databases
 Requires: %libpq_name-%postgresql_major-devel
 Requires: %libecpg_name-%postgresql_major-devel
 %if_with jit
-Requires: llvm18.1-devel clang18.1-devel gcc-c++
+Requires: llvm19.1-devel clang19.1-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
@@ -409,7 +407,7 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm18.1
+Requires: llvm19.1
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -434,8 +432,8 @@ export CC=%__cc
 export CXX=%__cxx
 
 %if_with jit
-export LLVM_CONFIG=/usr/bin/llvm-config-18
-export CLANG=/usr/bin/clang-18
+export LLVM_CONFIG=/usr/bin/llvm-config-19
+export CLANG=/usr/bin/clang-19
 %endif
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -542,6 +540,9 @@ cp -a %buildroot%_bindir/pg_config %buildroot%_bindir/pg_server_config
 cp -a COPYRIGHT README README.git \
     doc/{KNOWN_BUGS,MISSING_FEATURES,TODO} \
     src/tutorial %buildroot%docdir/
+
+# Install log directory
+install -d %buildroot%_logdir/postgres
 
 %find_lang ecpglib%libecpg_major-%postgresql_major
 %find_lang ecpg-%postgresql_major
@@ -972,6 +973,7 @@ fi
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/backups
 %attr(700,postgres,postgres)  %dir %_localstatedir/%PGSQL/data
+%attr(750,postgres,postgres)  %dir %_logdir/postgres
 %_unitdir/*
 # Fix CVE-2024-4317
 %_datadir/%PGSQL/fix-CVE-2024-4317.sql
@@ -1082,6 +1084,11 @@ fi
 %endif
 
 %changelog
+* Tue Apr 01 2025 Alexei Takaseev <taf@altlinux.org> 16.8-alt2
+- Add catalog /var/log/postgres for logs
+- Use LLVM 19.1
+- Enable JIT on loongarch64 and Disable on E2K
+
 * Tue Feb 18 2025 Alexei Takaseev <taf@altlinux.org> 16.8-alt1
 - 16.8 (Fixes CVE-2025-1094)
 
