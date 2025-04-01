@@ -1,7 +1,7 @@
 %define plugin hyprsplit
 
 Name: hyprland-plugin-%plugin
-Version: 0.48.0
+Version: 0.48.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -47,6 +47,9 @@ install %plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Tue Apr 01 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.1-alt1
+- new version 0.48.1 (with rpmrb script)
+
 * Tue Mar 25 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.0-alt1
 - new version 0.48.0 (with rpmrb script)
 
