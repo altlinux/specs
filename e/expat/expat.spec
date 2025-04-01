@@ -1,7 +1,7 @@
 %define pkgdocdir %_docdir/%name-%version
 
 Name: expat
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: An XML parser written in C
@@ -101,6 +101,9 @@ popd
 %pkgdocdir/examples
 
 %changelog
+* Tue Apr 01 2025 Grigory Ustinov <grenka@altlinux.org> 2.7.1-alt1
+- Automatically updated to 2.7.1.
+
 * Tue Mar 25 2025 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
 - Automatically updated to 2.7.0.
 
