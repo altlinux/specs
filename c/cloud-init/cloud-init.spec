@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name:    cloud-init
-Version: 24.2
-Release: alt3
+Version: 24.4.1
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -32,6 +32,9 @@ Source41: 90_datasource-list.cfg
 
 Patch1: %name-%version-%release.patch
 Patch2: use_python3_in_uncloud-init.patch
+# Add commit from upstream/main. Fix ovfTools error. 
+# https://github.com/canonical/cloud-init/commit/266536dabab7dc746ff51017ba5240d6a5a5a971
+Patch3: ofvtool-cloud-init.patch
 
 %add_findreq_skiplist %_systemdgeneratordir/cloud-init-generator
 
@@ -43,6 +46,7 @@ BuildArch: noarch
 %filter_from_requires s/requests.packages.urllib3.connectionpool/urllib3.connectionpool/
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-systemd >= 5
 #BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-yaml python3-module-oauthlib
@@ -69,8 +73,11 @@ Requires: cloud-utils-growpart
 Requires: procps
 Requires: iproute net-tools
 Requires: shadow-utils
+Requires: shadow-change
+Requires: shadow-convert
 Requires: /bin/run-parts
 Requires: dhcp-client
+Requires: netcat-tls
 # add not autoreq'ed
 %py3_requires Cheetah
 %py3_requires jinja2
@@ -125,6 +132,7 @@ Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %python3_build
@@ -185,16 +193,22 @@ python3 -m pytest -v tests/unittests \
   --ignore tests/unittests/config/test_apt_configure_sources_list_v3.py
 
 %post
-%post_service cloud-config
-%post_service cloud-final
-%post_service cloud-init
-%post_service cloud-init-local
+%post_systemd cloud-init-main.service cloud-init-local.service cloud-init-network.service cloud-config.service cloud-final.service
 
 %preun
-%preun_service cloud-config
-%preun_service cloud-final
-%preun_service cloud-init
-%preun_service cloud-init-local
+%preun_systemd cloud-init-main.service cloud-init-local.service cloud-init-network.service cloud-config.service cloud-final.service
+%preun_systemd cloud-init.service
+
+%triggerin -- %name < 24.4.1
+# Update systemd units to version 24.4.1
+if systemctl is-enabled cloud-init.service >/dev/null 2>&1; then
+        systemctl disable --now cloud-init.service >/dev/null 2>&1 ||:
+fi
+if systemctl is-enabled cloud-init-local.service >/dev/null 2>&1; then
+	systemctl stop cloud-init-local.service cloud-init-network.service cloud-config.service cloud-final.service >/dev/null 2>&1 ||:
+	systemctl enable --now cloud-init-main.service >/dev/null 2>&1 ||:
+	systemctl start cloud-init-local.service cloud-init-network.service cloud-config.service cloud-final.service >/dev/null 2>&1 ||:
+fi
 
 %files config-netplan
 %config            %_sysconfdir/cloud/cloud.cfg.d/01_netplan.cfg
@@ -218,7 +232,7 @@ python3 -m pytest -v tests/unittests \
 %doc               %_sysconfdir/cloud/cloud.cfg.d/README
 %dir               %_sysconfdir/cloud/templates
 %config(noreplace) %_sysconfdir/cloud/templates/*
-%config %_sysconfdir/systemd/system/sshd-keygen@.service.d/disable-sshd-keygen-if-cloud-init-active.conf
+%config %_unitdir/sshd-keygen@.service.d/disable-sshd-keygen-if-cloud-init-active.conf
 %_datadir/bash-completion/completions/%name
 %_udevrulesdir/66-azure-ephemeral.rules
 %_initdir/*
@@ -233,6 +247,11 @@ python3 -m pytest -v tests/unittests \
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Mar 05 2025 Nadezhda Fedorova <fedor@altlinux.org> 24.4.1-alt1
+- 24.4.1
+- Added fix of ovfEnv reading error from upstream/main.
+- Added update scripts of systemd services.
+
 * Wed Jan 29 2025 Alexander Stepchenko <geochip@altlinux.org> 24.2-alt3
 - Implement expiring passwords for ALT
 
