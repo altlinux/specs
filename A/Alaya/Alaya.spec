@@ -6,7 +6,7 @@
 
 Name:    Alaya
 Version: 4.6
-Release: alt1
+Release: alt2
 
 Summary: Webdav enabled webserver mostly focused on file storage
 
@@ -62,7 +62,7 @@ needed functionality like resizeable strings, linked lists and maps.
 %install
 %makeinstall_std
 install -d %buildroot%_man1dir
-help2man --name='Alaya Webdav Server' --no-info --source='Alaya 4.5' \
+help2man --name='Alaya Webdav Server' --no-info --source='Alaya %version' \
 --version-string='Alaya' --output='%buildroot%_man1dir/%oname.1' \
 %buildroot%_sbindir/%oname
 
@@ -88,6 +88,9 @@ cp --preserve=all %lib_name/*.md %buildroot%_defaultdocdir/%lib_name-%version
 %endif
 
 %changelog
+* Tue Apr 01 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.6-alt2
+- Version inside man page fixed.
+
 * Tue Mar 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.6-alt1
 - New version.
 
