@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define ver_major 0.9
-%define git_tag d8270a33616c15bb810dab9d0517853b9a0198cd
+%define git_tag 5471f93abac8d2a264493aed9826be66adb76082
 %define rdn_name app.drey.Warp
 
 %define optflags_lto %nil
@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: warp
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Fast and secure file transfer tool
@@ -92,6 +92,9 @@ ln -s %_datadir/license-list-data vendor/license/license-list-data
 
 
 %changelog
+* Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
+- 0.9.2
+
 * Sat Mar 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
