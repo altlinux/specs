@@ -42,7 +42,7 @@
 
 Name: NetworkManager
 Version: 1.52.0
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -640,6 +640,10 @@ fi
 %endif
 
 %changelog
+* Tue Apr 01 2025 Mikhail Efremov <sem@altlinux.org> 1.52.0-alt2
+- Patch from upstream:
+  + meson: Fix docs generation with PyGObject 3.52.
+
 * Sun Mar 02 2025 Mikhail Efremov <sem@altlinux.org> 1.52.0-alt1
 - Updated to 1.52.0.
 
