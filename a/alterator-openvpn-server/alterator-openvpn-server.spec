@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openvpn-server
-Version: 0.8.7
+Version: 0.8.8
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -43,6 +43,11 @@ Alterator module for openvpn server configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 01 2025 Alexey Volkov <qualimock@altlinux.org> 0.8.8-alt1
+NMU:
+  + fix DHPARAM_NUMBITS small value
+  + remove ncp_disable option due to obsolescence
+
 * Tue Jun 09 2020 Slava Aseev <ptrnine@altlinux.org> 0.8.7-alt1
 - Add ability to disable NCP
 
