@@ -1,6 +1,6 @@
 Name: libntlm
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: NTLMv1 authentication library
 License: LGPL-2.1-or-later
@@ -8,6 +8,8 @@ Group: System/Libraries
 Url: https://nongnu.org/libntlm/
 # https://nongnu.org/libntlm/releases/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: upstream-fix-buffer-overflow-CVE-2019-17455.patch
 
 %description
 %name is a library for authenticating with Microsoft NTLMv1
@@ -29,6 +31,7 @@ This package contains files for development of %name-based applications.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %configure --disable-static
@@ -53,6 +56,9 @@ This package contains files for development of %name-based applications.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Mar 31 2025 Alexander Danilov <admsasha@altlinux.org> 1.5-alt2
+- Applied upstream patch (fixed CVE-2019-17455).
+
 * Fri Aug 24 2018 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt1
 - 1.3 -> 1.5.
 
