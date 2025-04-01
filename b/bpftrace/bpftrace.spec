@@ -6,7 +6,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.22.1
+Version: 0.23.0
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -47,6 +47,7 @@ BuildRequires: xxd
 # Assuming 'kernel' dependency will bring un-def kernel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires(pre): rpm-build-kernel
+BuildRequires: bc
 BuildRequires: bpftool
 BuildRequires: dwarves
 BuildRequires: kernel-headers-modules-%kernel_latest
@@ -131,8 +132,12 @@ fi
 %_bindir/*
 %_datadir/%name
 %_man8dir/*
+%_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Wed Mar 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.23.0-alt1
+- Update to v0.23.0 (2025-03-25).
+
 * Fri Jan 17 2025 Vitaly Chikunov <vt@altlinux.org> 0.22.1-alt1
 - Update to v0.22.1 (2025-01-16).
 
