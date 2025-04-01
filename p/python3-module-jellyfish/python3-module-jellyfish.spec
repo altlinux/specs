@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.3
+Version: 1.2.0
 Release: alt1
 
 Summary: Python library for doing approximate and phonetic matching of strings
@@ -55,6 +55,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 01 2025 Anton Zhukharev <ancieg@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 1.1.3-alt1
 - Updated to 1.1.3.
 
