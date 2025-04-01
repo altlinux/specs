@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.2
-Release: alt1
+Release: alt2
 
 Summary: Video editing with Python
 
@@ -87,10 +87,8 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 	and not test_correct_video_rotation \
 	and not test_ffmpeg_resize \
 	and not test_ffmpeg_stabilize_video \
-	and not test_audio_delay \
-	and not test_setup"
+	and not test_audio_delay"
 # test_audio_delay failed on i586
-# test_setup failed on ppc64le
 
 %files
 %doc *.txt *.md
@@ -104,5 +102,9 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Sat Mar 29 2025 Alexander Kovalev <alexvk@altlinux.org> 2.1.2-alt2
+- Merge upstream commit 4dd5fe4.
+- Spec: return test_setup to check.
+
 * Wed Jan 22 2025 Alexander Kovalev <alexvk@altlinux.org> 2.1.2-alt1
 - Initial build for ALT.
