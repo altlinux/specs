@@ -14,8 +14,8 @@
 %define bacula_major 15
 
 Name: bacula%{bacula_major}
-Version: %{bacula_major}.0.2
-Release: alt3
+Version: %{bacula_major}.0.3
+Release: alt1
 
 License: AGPL-3.0
 Summary: Network based backup program
@@ -48,7 +48,7 @@ Patch2000: bacula11-e2k.patch
 Patch2001: bacula13-alt-fix-create-pg-database.patch
 
 BuildRequires: gcc-c++
-BuildRequires: libMySQL-devel postgresql-devel
+BuildRequires: libMySQL-devel libpq-devel
 BuildRequires: libssl-devel libncurses-devel libsqlite3-devel libacl-devel libcap-devel zlib-devel
 BuildRequires: liblz4-devel liblzo2-devel
 BuildRequires: dvd+rw-tools groff-base iputils bc
@@ -934,6 +934,10 @@ rm -rf %_cachedir/baculum/runtime/*
 %endif
 
 %changelog
+* Tue Apr 01 2025 Alexei Takaseev <taf@altlinux.org> 15.0.3-alt1
+- 15.0.3
+- Change BR postgresql-devel -> libpq-devel
+
 * Tue Mar 25 2025 Alexei Takaseev <taf@altlinux.org> 15.0.2-alt3
 - Use PHP 8.3 for Baculum
 
