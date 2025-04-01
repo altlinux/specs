@@ -1,6 +1,6 @@
 Name: rpm-macros-uefi
-Version: 0.7
-Release: alt2
+Version: 0.8
+Release: alt1
 
 Summary: A set of RPM macros to help package UEFI related things
 License: ALT-Public-Domain
@@ -39,15 +39,19 @@ cat > %buildroot%macrofile << EOF
 
 %ifarch x86_64
 %%_efi_arch x64
+%%_efi_arch_upper X64
 %endif
 %ifarch %ix86
 %%_efi_arch ia32
+%%_efi_arch_upper IA32
 %endif
 %ifarch aarch64
 %%_efi_arch aa64
+%%_efi_arch_upper AA64
 %endif
 %ifarch loongarch64
 %%_efi_arch loongarch64
+%%_efi_arch_upper LOONGARCH64
 %endif
 EOF
 
@@ -57,6 +61,9 @@ EOF
 %files -n rpm-build-uefi
 
 %changelog
+* Mon Mar 31 2025 Egor Ignatov <egori@altlinux.org> 0.8-alt1
+- added %%_efi_arch_upper definitions
+
 * Tue Nov 28 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.7-alt2
 - added %%_efi_arch definition for loongarch64
 - do NOT require pesing on LoongArch (restricted boot is not available)

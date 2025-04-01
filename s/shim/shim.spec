@@ -3,8 +3,8 @@
 %def_with check
 
 Name: shim
-Version: 15.8
-Release: alt2
+Version: 16.0
+Release: alt1
 
 Summary: First-stage UEFI bootloader
 License: BSD
@@ -14,8 +14,6 @@ Url: https://github.com/rhboot/shim
 Source: %name-%version.tar
 Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
-
-Patch0: shim-15.8-alt-Bump-grub-SBAT-revocation-to-4.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -28,9 +26,8 @@ BuildRequires: libefivar-devel
 %endif
 
 # Shim is only required on platforms implementing the UEFI secure boot
-# protocol. The only one of those we currently wish to support is 64-bit x86.
-# Adding further platforms will require adding appropriate relocation code.
-ExclusiveArch: x86_64
+# protocol.
+ExclusiveArch: x86_64 aarch64
 
 # Figure out the right file path to use
 %global efidir altlinux
@@ -52,9 +49,8 @@ Includes both ia32 and x64 EFI binaries.
 
 %prep
 %setup -a 2
-%patch0 -p1
 
-echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,http://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
+echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,https://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
 
 %build
 MAKEFLAGS="DISABLE_REMOVABLE_LOAD_OPTIONS=1"
@@ -62,16 +58,30 @@ if [ -f "%SOURCE1" ]; then
 	MAKEFLAGS="VENDOR_CERT_FILE=%SOURCE1 $MAKEFLAGS"
 fi
 
-mkdir build-ia32 build-x64
-pushd build-ia32
-  %make_build ${MAKEFLAGS} TOPDIR=.. ARCH=ia32 -f ../Makefile
-popd
-pushd build-x64
+mkdir build
+pushd build
   %make_build ${MAKEFLAGS} TOPDIR=.. -f ../Makefile
 popd
 
+%ifarch x86_64
+mkdir build-ia32
+pushd build-ia32
+  %make_build ${MAKEFLAGS} TOPDIR=.. ARCH=ia32 -f ../Makefile
+popd
+%endif
+
 %install
-#be aware of installation target options - refer to BUILDING
+pushd build
+make TOPDIR=.. DESTDIR=%buildroot EFIDIR=%efidir \
+     -f ../Makefile install-as-data
+pesign -h -P -i shim%_efi_arch.efi -h > shim%_efi_arch.hash
+install -m 0644 shim%_efi_arch.hash \
+        %buildroot%_datadir/shim/%version/%_efi_arch/shim%_efi_arch.hash
+install -m 0644 BOOT%_efi_arch_upper.CSV \
+        %buildroot%_datadir/shim/%version/%_efi_arch/BOOT%_efi_arch_upper.CSV
+popd
+
+%ifarch x86_64
 pushd build-ia32
 make TOPDIR=.. ARCH=ia32 \
      DESTDIR=%buildroot EFIDIR=%efidir \
@@ -80,13 +90,7 @@ pesign -h -P -i shimia32.efi -h > shimia32.hash
 install -m 0644 shimia32.hash %buildroot%_datadir/shim/%version/ia32/shimia32.hash
 install -m 0644 BOOTIA32.CSV %buildroot%_datadir/shim/%version/ia32/BOOTIA32.CSV
 popd
-pushd build-x64
-make TOPDIR=.. DESTDIR=%buildroot EFIDIR=%efidir \
-     -f ../Makefile install-as-data
-pesign -h -P -i shimx64.efi -h > shimx64.hash
-install -m 0644 shimx64.hash %buildroot%_datadir/shim/%version/%_efi_arch/shimx64.hash
-install -m 0644 BOOTX64.CSV %buildroot%_datadir/shim/%version/%_efi_arch/BOOTX64.CSV
-popd
+%endif
 
 %check
 %make_build test
@@ -95,12 +99,27 @@ popd
 %doc README.md README.fallback README.tpm COPYRIGHT
 %dir %_datadir/shim
 %dir %_datadir/shim/%version
-%dir %_datadir/shim/%version/ia32
 %dir %_datadir/shim/%version/%_efi_arch
-%_datadir/shim/%version/%_efi_arch/*
-%_datadir/shim/%version/ia32/*
+%_datadir/shim/%version/%_efi_arch/BOOT%_efi_arch_upper.CSV
+%_datadir/shim/%version/%_efi_arch/fb%_efi_arch.efi
+%_datadir/shim/%version/%_efi_arch/mm%_efi_arch.efi
+%_datadir/shim/%version/%_efi_arch/shim%_efi_arch.efi
+%_datadir/shim/%version/%_efi_arch/shim%_efi_arch.hash
+%ifarch x86_64
+%dir %_datadir/shim/%version/ia32
+%_datadir/shim/%version/ia32/BOOTIA32.CSV
+%_datadir/shim/%version/ia32/fbia32.efi
+%_datadir/shim/%version/ia32/mmia32.efi
+%_datadir/shim/%version/ia32/shimia32.efi
+%_datadir/shim/%version/ia32/shimia32.hash
+%endif
 
 %changelog
+* Wed Mar 19 2025 Egor Ignatov <egori@altlinux.org> 16.0-alt1
+- new version
+- remove shim-15.8-alt-Bump-grub-SBAT-revocation-to-4 patch
+- enable build on aarch64
+
 * Wed May 08 2024 Egor Ignatov <egori@altlinux.org> 15.8-alt2
 - replace altlinux-ca.cer
 
