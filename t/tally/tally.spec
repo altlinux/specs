@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name tally
 %define __name Tally
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name ca.vlacroix.%__name
 
 # no tests
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: GNOME Counter
@@ -58,5 +58,8 @@ A counter for GNOME.
 %doc README*
 
 %changelog
+* Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - first build for Sisyphus (0.4.1-2-g9cae28f)
