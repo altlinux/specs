@@ -150,7 +150,7 @@
 # }}}
 
 Name: qemu
-Version: 9.2.1
+Version: 9.2.3
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -1395,6 +1395,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Apr 01 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.3-alt1
+- 9.2.3.
+
 * Tue Feb 11 2025 Alexey Shabalin <shaba@altlinux.org> 9.2.1-alt1
 - 9.2.1 (Fixes: CVE-2023-2861).
 
