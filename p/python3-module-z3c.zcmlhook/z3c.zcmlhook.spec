@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0
-Release: alt2
+Version: 2.1
+Release: alt1
 
 Summary: Easily hook into the ZCML processing machinery
 License: ZPL-2.1
@@ -68,6 +68,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Sat Mar 29 2025 Anton Vyatkin <toni@altlinux.org> 2.1-alt1
+- New version 2.1.
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 2.0-alt2
 - Fixed FTBFS.
 
