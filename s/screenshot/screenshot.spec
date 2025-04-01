@@ -3,7 +3,7 @@
 
 Name: screenshot
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: A screenshot app for GNOME based desktops
 License: GPL-3.0
@@ -15,7 +15,6 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
 BuildRequires: blueprint-compiler
 BuildRequires: desktop-file-utils
 BuildRequires: libgtk4-devel
@@ -46,6 +45,9 @@ BuildRequires: libportal-gtk4-devel
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Apr 01 2025 Alexey Volkov <qualimock@altlinux.org> 0.7.1-alt2
+- remove unused BR: cmake
+
 * Thu Jan 23 2025 Alexey Volkov <qualimock@altlinux.org> 0.7.1-alt1
 - New version 0.7.1
 
