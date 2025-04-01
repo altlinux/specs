@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue Apr 01 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.1-alt1
+- Set system browser as component in server editions
+- Add system browser component for products on different architectures
+
 * Sat Mar 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.0-alt1
 - Replace all vendors components and categories to separate
   alt-components-vendors subpackage
