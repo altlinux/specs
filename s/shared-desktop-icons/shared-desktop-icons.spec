@@ -1,5 +1,5 @@
 Name:     shared-desktop-icons
-Version:  1.1
+Version:  2.0
 Release:  alt1
 
 Summary:  Put all files from /usr/share/Desktop to all user desktops
@@ -36,6 +36,9 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/shared-desktop-icons-sync
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Thu Mar 27 2025 Mikhail Efremov <sem@altlinux.org> 2.0-alt1
+- Mark desktop files as trusted on Xfce.
+
 * Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Sync only files which are not deleted early from desktop by user.
 
