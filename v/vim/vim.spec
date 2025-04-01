@@ -48,8 +48,8 @@
 
 Name: vim
 %define branch 9.1
-Version: %branch.0917
-Release: alt3
+Version: %branch.1264
+Release: alt1
 Epoch: 4
 
 Summary: VIsual editor iMproved
@@ -846,7 +846,7 @@ install -p -m644 alternatives/vim-X11-motif %buildroot%_altdir/vim-X11-motif
 # {{{2 Language-specific parts
 %find_lang --with-man --output vim.lang vim ex rview rvim view vimdiff
 %find_lang --with-man --output xxd.lang xxd
-%find_lang --with-man --output vimtutor.lang --custom-file-script 's:\(%_datadir/vim/tutor/tutor[1-9]\?\)\(\.\([a-z][a-z]\)\(\..*\)\?\)$:%%lang(\3) \1\2:; s:^\([^%%].*\)::; s:%%lang(en) ::;' vimtutor
+%find_lang --with-man --output vimtutor.lang --custom-file-script 's:\(%_datadir/vim/tutor/tutor[1-9]\?\)\(\.\([a-z][a-z]\)\(\..*\)\?\)$:%%lang(\3) \1\2:; s:\(%_datadir/vim/tutor/\([a-z][a-z]\)/[^/]*\)$:%%lang(\2) \1:; s:^\([^%%].*\)::; s:%%lang(en) ::;' vimtutor
 %find_lang --with-man --output vim-X11.lang evim eview gvim gview gvimdiff rgvim rgview
 install -p -m644 runtime/langrc/* %buildroot%_datadir/vim/langrc
 install -p -m644 runtime/langmap/*.vim %buildroot%_datadir/vim/langmap
@@ -859,6 +859,7 @@ cd %buildroot
 rm ./usr/share/applications/vim.desktop
 rm ./usr/share/icons/locolor/16x16/apps/gvim.png
 rm ./usr/share/icons/locolor/32x32/apps/gvim.png
+rm ./usr/share/vim/LICENSE
 rm ./usr/share/vim/doc/vim2html.pl
 rm ./usr/share/vim/spell/check_locales.vim
 rm ./usr/share/vim/spell/en.ascii.spl
@@ -924,6 +925,7 @@ fi
 # {{{ vim-common files
 %files common -f vim.lang
 # Note to self: NEVER try to use %%doc in subpackages
+%doc LICENSE
 %doc README*.txt runtime/gvimrc_example.vim
 %doc runtime/termcap runtime/vimrc_example.vim vimrc_hebrew
 %doc README.ALT-ru_RU.UTF-8
@@ -938,9 +940,7 @@ fi
 %_datadir/vim/compiler
 %dir %_datadir/vim/doc
 %doc %_datadir/vim/doc/*.txt
-%doc %lang(ru) %_datadir/vim/doc/*.rux
 %doc %_datadir/vim/doc/tags
-%doc %lang(ru) %_datadir/vim/doc/tags-ru
 %_datadir/vim/ftdetect
 %_datadir/vim/ftplugin
 %_datadir/vim/import
@@ -979,6 +979,9 @@ fi
 %_bindir/vimtutor
 %dir %_datadir/vim/tutor
 %_datadir/vim/tutor/en/
+%_datadir/vim/tutor/it/
+%_datadir/vim/tutor/ru/
+%_datadir/vim/tutor/sr/
 %_datadir/vim/tutor/tutor.tutor
 %_datadir/vim/tutor/tutor.tutor.json
 %_datadir/vim/tutor/tutor1
@@ -1075,6 +1078,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Tue Apr 01 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.1264-alt1
+- Updated to v9.1.1264 (fixes CVE-2025-22134).
+
 * Mon Dec 16 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.1.0917-alt3
 - vim-common: dropped ftplugin/nim.vim to avoid conflict
   with vim-plugin-nim (ALT#52424).
