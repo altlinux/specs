@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
@@ -70,6 +70,9 @@ mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 %python3_sitelibdir/%pypi_name/test
 
 %changelog
+* Tue Apr 01 2025 Stanislav Levin <slev@altlinux.org> 3.3.2-alt1
+- 3.3.1 -> 3.3.2.
+
 * Mon Mar 31 2025 Stanislav Levin <slev@altlinux.org> 3.3.1-alt1
 - 3.2.0 -> 3.3.1.
 
