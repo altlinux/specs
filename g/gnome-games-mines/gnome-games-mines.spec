@@ -5,19 +5,21 @@
 %define _name mines
 %define __name gnome-%_name
 %define ver_major 48
-%define beta .alpha.2
+%define beta %nil
 %define xdg_name org.gnome.Mines
 
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Classic find the mines in the minefield game
 Group: Games/Boards
 License: GPL-3.0-or-later
 Url: https://wiki.gnome.org/Apps/Mines
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-mines.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%__name/%ver_major/%__name-%version%beta.tar.xz
@@ -67,6 +69,9 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Sat Jan 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt0.5.alpha.2
 - 48.alpha.2 (ported to GTK4/Libadwaita)
 

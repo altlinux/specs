@@ -1,12 +1,12 @@
 %def_disable snapshot
-%define ver_major 2024
+%define ver_major 2025
 %define rdn_name io.bassi.Amberol
 
 %def_enable check
 %def_disable bootstrap
 
 Name: amberol
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: A small and simple sound and music player that is well integrated with GNOME
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
-%define gtk_ver 4.14
+%define gtk_ver 4.16
 %define adwaita_ver 1.5
 %define gst_ver 1.20
 
@@ -81,6 +81,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.1-alt1
+- 2025.1
+
 * Sat Oct 26 2024 Yuri N. Sedunov <aris@altlinux.org> 2024.2-alt1
 - 2024.2
 
