@@ -1,7 +1,9 @@
 %define oname libressl
-%define libcrypto_sover 50
-%define libssl_sover 53
-%define libtls_sover 26
+%define libcrypto_sover 55
+%define libssl_sover 58
+%define libtls_sover 31
+
+%def_enable check
 
 # to avoid colission with OpenSSL pkgconfig provides
 %filter_from_provides /^pkgconfig(libcrypto)/d
@@ -11,7 +13,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.7.3
+Version: 4.0.0
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -33,8 +35,9 @@ Patch4: 0004-ALT-openssl-manpage.patch
 Patch5: 0005-ALT-OPENSSLDIR.patch
 Patch6: 0006-SUSE-des-fcrypt.patch
 Patch7: 0007-SUSE-extra-symver.patch
-Patch8: 0008-ALT-netcat-fix-linkage-with-libcrypto.patch
-Patch9: 0009-ALT-TLS_DEFAULT_CA_FILE-and-cert.pem.patch
+Patch9: 0008-ALT-TLS_DEFAULT_CA_FILE-and-cert.pem.patch
+
+Patch100: 0100-ALT-basic-loongarch64-support.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
@@ -44,10 +47,23 @@ applying best practice development processes.
 %description
 %common_descr
 
+%package common
+Summary: Common %name files
+Group: System/Configuration/Other
+# Files conflict
+Conflicts: libcrypto45 libcrypto46 libcrypto47 libcrypto49 libcrypto50
+
+%description common
+%common_descr
+
+This package contains common files for %name, including its
+configuration and default certificate bundle.
+
 %package -n openssl-LibreSSL
 Summary: LibreSSL openssl utility, which provides tools for managing keys, certificates, etc
 Group: Security/Networking
 Obsoletes: LibreSSL-openssl
+Requires: %_sysconfdir/%oname
 
 %description -n openssl-LibreSSL
 %common_descr
@@ -79,9 +95,8 @@ This package contains documantation pages for %name
 %package -n libcrypto%libcrypto_sover
 Summary: LibreSSL libcrypto shared library
 Group: Security/Networking
-# Files conflict
-Conflicts: libcrypto45 libcrypto46 libcrypto47
 Obsoletes: libcrypto-LibreSSL < %version
+Requires: %_sysconfdir/%oname
 
 %description -n libcrypto%libcrypto_sover
 %common_descr
@@ -92,6 +107,7 @@ LibreSSL libcrypto shared library
 Summary: LibreSSL libssl shared library
 Group: Security/Networking
 Obsoletes: libssl-LibreSSL < %version
+Requires: %_sysconfdir/%oname
 
 %description -n libssl%libssl_sover
 %common_descr
@@ -141,6 +157,7 @@ Thins package contains manual pages for libtls
 %package -n ocspcheck
 Summary: utility to validate a certificate
 Group: Security/Networking
+Requires: %_sysconfdir/%oname
 
 %description -n ocspcheck
 utility to validate a certificate against its OCSP responder and save the reply
@@ -155,6 +172,7 @@ Conflicts: netcat
 Provides: nc
 Provides: netcat
 Provides: netcat-ssl
+Requires: %_sysconfdir/%oname
 
 %description -n netcat-tls
 The nc (or netcat) utility is used for just about anything under the sun
@@ -180,7 +198,12 @@ Common uses include:
 %autoreconf
 %configure \
 	--disable-static \
+%if_enabled check
+	--enable-tests \
+	--enable-extra-tests \
+%else
 	--disable-tests \
+%endif
 	--enable-nc \
 	--with-openssldir='%_sysconfdir/%oname' \
 	#
@@ -222,8 +245,23 @@ install -pm 644 ChangeLog COPYING \
 	%buildroot%docdir
 xz %buildroot%docdir/ChangeLog
 
-%files -n openssl-LibreSSL
+%check
+%make_build check V=1
+
+%files common
 %dir %docdir
+%doc %docdir/*
+
+%dir %_sysconfdir/%oname/
+%config(noreplace) %_sysconfdir/%oname/openssl.cnf
+%config(noreplace) %_sysconfdir/%oname/x509v3.cnf
+%_sysconfdir/%oname/*
+%_var/lib/libressl/cert.pem
+
+%_man5dir/openssl-LibreSSL.cnf.5*
+
+
+%files -n openssl-LibreSSL
 %_bindir/openssl-LibreSSL
 %_man1dir/openssl-LibreSSL.1*
 %_man5dir/x509v3-LibreSSL.cnf.5*
@@ -240,20 +278,10 @@ xz %buildroot%docdir/ChangeLog
 %exclude %_man3dir/tls_*
 
 %files -n libcrypto%libcrypto_sover
-%dir %docdir
-%doc %docdir/*
-
-%dir %_sysconfdir/%oname/
-%config(noreplace) %_sysconfdir/%oname/openssl.cnf
-%config(noreplace) %_sysconfdir/%oname/x509v3.cnf
-%_sysconfdir/%oname/*
-%_man5dir/openssl-LibreSSL.cnf.5*
 %_libdir/libcrypto.so.%libcrypto_sover
 %_libdir/libcrypto.so.%libcrypto_sover.*
-%_var/lib/libressl/cert.pem
 
 %files -n libssl%libssl_sover
-%dir %docdir
 %_libdir/libssl.so.%libssl_sover
 %_libdir/libssl.so.%libssl_sover.*
 
@@ -262,7 +290,6 @@ xz %buildroot%docdir/ChangeLog
 %_man8dir/ocspcheck.8*
 
 %files -n libtls%libtls_sover
-%dir %docdir
 %_libdir/libtls.so.%libtls_sover
 %_libdir/libtls.so.%libtls_sover.*
 
@@ -281,6 +308,12 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Tue Apr 01 2025 Ivan A. Melnikov <iv@altlinux.org> 4.0.0-alt1
+- Updated to 4.0.0.
+- Basic loongarch64 support.
+- Enable tests.
+- Move config and certificates to common subpackage.
+
 * Mon May 29 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7.3-alt1
 - Updated to 3.7.3.
 
