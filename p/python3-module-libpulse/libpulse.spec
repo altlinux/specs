@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%pypi_name
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: Asyncio interface to the Pulseaudio and Pipewire pulse library
@@ -108,5 +108,8 @@ rm -rv docs/build/html/{.buildinfo,objects.inv}
 %endif
 
 %changelog
+* Sat Mar 29 2025 Alexander Kovalev <alexvk@altlinux.org> 0.7-alt1
+- New version 0.7.
+
 * Fri Dec 06 2024 Alexander Kovalev <alexvk@altlinux.org> 0.6-alt1
 - Initial build for ALT.
