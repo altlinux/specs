@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.10.3
+Version: 1.0.0
 Release: alt1
 
 Summary: Mypy static type checker plugin for Pytest
@@ -26,6 +26,8 @@ BuildRequires: python3-module-attrs
 BuildRequires: python3-module-mypy
 BuildRequires: python3-module-filelock
 BuildRequires: python3-module-pexpect
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: /dev/pts
 %endif
 
 BuildArch: noarch
@@ -50,10 +52,12 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %files
 %doc LICENSE *.rst *.md
-%python3_sitelibdir/pytest_mypy.py
-%python3_sitelibdir/__pycache__
+%python3_sitelibdir/pytest_mypy
 %python3_sitelibdir/pytest_mypy-%version.dist-info
 
 %changelog
+* Tue Apr 01 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Automatically updated to 1.0.0.
+
 * Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 0.10.3-alt1
 - Initial build for Sisyphus.
