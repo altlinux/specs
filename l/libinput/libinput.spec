@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.28.0
+Version: 1.28.1
 Release: alt1
 
 Summary: Input devices library
@@ -194,6 +194,9 @@ the functionality of the installed libinput library.
 %endif
 
 %changelog
+* Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1
+- 1.28.1
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.28.0-alt1
 - 1.28.0
 
