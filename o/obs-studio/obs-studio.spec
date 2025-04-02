@@ -9,7 +9,7 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 31.0.2
+Version: 31.0.3
 Release: alt1
 License: GPL-2.0-or-later
 Group: Video
@@ -22,6 +22,9 @@ Patch: %name-%version-%release.patch
 
 # https://bugzilla.altlinux.org/47318
 Requires: qt6-svg
+
+# https://bugzilla.altlinux.org/53023
+Requires: pipewire
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-luajit
@@ -210,6 +213,10 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Tue Apr 01 2025 Anton Midyukov <antohami@altlinux.org> 31.0.3-alt1
+- new version (31.0.3) with rpmgs script
+- add dependency on pipewire (Closes: 53023)
+
 * Mon Mar 10 2025 Anton Midyukov <antohami@altlinux.org> 31.0.2-alt1
 - new version (31.0.2) with rpmgs script
 
