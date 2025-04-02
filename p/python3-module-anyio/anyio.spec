@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-anyio
-Version: 4.8.0
-Release: alt2
+Version: 4.9.0
+Release: alt1
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
 License: MIT
@@ -30,8 +30,8 @@ BuildRequires: python3-module-trio-tests
 
 # either asyncio or trio
 %filter_from_requires /python3(trio.*)/d
-# clean pytest from requirements
-%add_python3_req_skip pytest _pytest.fixtures _pytest.outcomes
+# don't add found requires from pytest plugin to requirement list
+%add_findreq_skiplist %python3_sitelibdir/%pypi_name/pytest_plugin.py
 
 %description
 AnyIO is an asynchronous networking and concurrency library
@@ -59,7 +59,10 @@ It will blend in with native libraries of your chosen backend.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -Wignore -m "not network"
+# tests/test_socket.py:
+# Ignore this file since configured DNS and internet are required by most of
+# the tests. Another tests are bad itself and can fail accidentally.
+%pyproject_run_pytest -Wignore -m "not network" --ignore="tests/test_sockets.py"
 
 %files
 %doc README.rst
@@ -67,6 +70,9 @@ It will blend in with native libraries of your chosen backend.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 4.9.0-alt1
+- Updated to 4.9.0.
+
 * Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 4.8.0-alt2
 - skip _pytest.fixtures _pytest.outcomes from requires
 
