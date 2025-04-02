@@ -7,7 +7,7 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.6.5
+Version: 2.6.6
 Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
@@ -15,10 +15,11 @@ Group: System/Libraries
 License: BSD-3-Clause
 Url: https://libopenraw.freedesktop.org/exempi/
 
+Vcs: https://gitlab.freedesktop.org/libopenraw/exempi.git
+
 %if_disabled snapshot
 Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.xz
 %else
-Vcs: https://gitlab.freedesktop.org/libopenraw/exempi.git
 Source: %_name-%version.tar
 %endif
 
@@ -32,7 +33,7 @@ port of Adobe XMP SDK to work on UNIX.
 %package devel
 Summary: Headers for developing programs that will use %name
 Group: Development/C
-Requires: %name%{?_disable_shared:-devel-static} = %version-%release
+Requires: %name%{?_disable_shared:-devel-static} = %EVR
 
 %description devel
 This package contains the libraries and header files needed for
@@ -42,7 +43,7 @@ developing with %name.
 %package devel-static
 Summary: Static library for developing programs that will use %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains the static library needed for developing with
@@ -56,6 +57,7 @@ This package contains the static library needed for developing with
 sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure  \
     %{subst_enable static} \
@@ -86,6 +88,10 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.6-alt1
+- 2.6.6 (fixed GHSL-2024-083, GHSL-2024-084, GHSL-2024-085
+  GHSL-2024-086, GHSL-2024-087)
+
 * Mon Dec 25 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.5-alt1
 - 2.6.5
 
