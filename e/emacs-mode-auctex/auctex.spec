@@ -1,17 +1,9 @@
 %def_without texmf
-%define emacsbin emacs
-# define emacsbin emacs-nox
 %define ModeName auctex
-%define emacs_version %(%emacsbin --version | head --lines=1 | cut -d' ' --fields=3 | cut -d. --fields=1,2,3)
-%if "%emacs_version" == ""
-# Not to leave the macro undefined in case of no emacs.
-%define emacs_version 0
-%endif
-%define _aucstatedir %_localstatedir/%ModeName
 
 Name: emacs-mode-%ModeName
 Version: 13.3
-Release: alt2.1
+Release: alt2.2
 
 Summary: Enhanced LaTeX mode for GNU Emacs
 License: GPLv3
@@ -22,19 +14,11 @@ BuildArch: noarch
 
 #Source0: ftp://sunsite.auc.dk/packages/auctex/%ModeName-%version.tar.bz2
 Source0: ftp://ftp.gnu.org/pub/gnu/auctex/%ModeName-%version.tar.gz
-Source1: auctex.el
-
-Source10: %name-11.10-info.ALT
-
-Patch1: %ModeName-11.87-printerlist.patch
-Patch2: %ModeName-9.9p-customize.patch
-Patch3: %ModeName-rumakeindex.patch
 
 # Due to patches 1 and 2, the administrator of a system won't have to set
 # any site-specific variables for AUC TeX.
 
 Requires: common-licenses
-Requires: emacs >= %emacs_version
 %if_with texmf
 Requires: texmf-latex-preview
 %else
@@ -48,23 +32,9 @@ Obsoletes: auctex
 
 Requires: gnu-ghostscript /usr/bin/dvips /usr/bin/latex
 
-%define require_compiler %(rpm -qf "$(which %emacsbin)" --queryformat=%%{NAME} 2> /dev/null)
-
-# Automatically added by buildreq on Fri Feb 22 2019
-# optimized out: emacs-base emacs-common fontconfig ghostscript-classic libX11-locales libp11-kit libsasl2-3 perl python-base python-modules sh4 tex-common texlive texlive-collection-basic
-BuildRequires: emacs-nox texlive-dist
-BuildRequires: emacs-common rpm-build-emacs
-
 BuildRequires(pre): rpm-build-tex
-BuildRequires: fontconfig /usr/bin/dvips /usr/bin/latex
-
-%if "%require_compiler" != ""
-BuildPreReq: %require_compiler
-%(echo '%require_compiler provides the used Emacs Lisp compiler (%emacsbin)' 1>&2)
-%else
-BuildPreReq: emacs
-%(echo 'emacs provides the used Emacs Lisp compiler (%emacsbin)' 1>&2)
-%endif
+BuildRequires: texlive-dist
+BuildRequires: /usr/bin/emacs /usr/bin/dvips /usr/bin/latex
 
 %description
 AUC TeX is a comprehensive, customizable, integrated environment for
@@ -116,76 +86,32 @@ You need to install %name-el only if you intend to modify any of the
 
 %prep
 %setup -q -n %ModeName-%version
-#patch1 -p1
-#patch2 -p1
-#patch3 -p1
 
 %build
-%configure --with-emacs=%emacsbin --with-tex-input-dirs=/usr/share/texmf/tex 
+%configure --with-tex-input-dirs=/usr/share/texmf/tex \
+           --with-auctexstartfile=%_datadir/emacs/site-lisp/auctex.el \
+           --with-previewstartfile=%_datadir/emacs/site-lisp/preview-latex.el
 %make_build 
 
-# Build documentation in various formats
-
-#pushd doc
-#make extradist
-#popd
-
 %install
-install -d $RPM_BUILD_ROOT{%_emacslispdir/site-start.d,%_infodir}
-
-%define _makeinstall_target install
-#makeinstall %_makeinstall_target
 %makeinstall_std
 
-###make_install
-install -d %buildroot/etc/emacs/site-start.d
-install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/auctex.el
-
-# install ALT's info:
-install -m0644 %SOURCE10 ALT-packaging-info
-
-# The license:
 ln -s -f %_licensedir/GPL-2 COPYING
-
-rm -f $RPM_BUILD_ROOT/%_infodir/dir
-mkdir -p $RPM_BUILD_ROOT/%_docdir/%name-%version/
-mv -f $RPM_BUILD_ROOT/%_docdir/auctex/* $RPM_BUILD_ROOT/%_docdir/%name-%version/
-
-mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/
-mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
-
-mkdir -p $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
-
-
-cp $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
-cp $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/preview-latex.el $RPM_BUILD_ROOT%_emacslispdir/site-start.d/
-cp $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/tex-site.el $RPM_BUILD_ROOT%_emacslispdir/
-
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/style/*.el $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/images/*.xpm $RPM_BUILD_ROOT%_emacslispdir/auctex/images/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/style/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/style/
-mv -f $RPM_BUILD_ROOT/usr/share/emacs/%emacs_version/site-lisp/auctex/*.elc $RPM_BUILD_ROOT%_emacslispdir/auctex/
+rm -f %buildroot%_infodir/dir
 
 # Create these .nosearch files to keep the directories from the elisp search path
-touch %buildroot%_emacslispdir/auctex/.nosearch
 touch %buildroot%_emacslispdir/auctex/style/.nosearch
 
+%global _customdocdir %_defaultdocdir/auctex
 
 %files
-%doc --no-dereference COPYING
 %_infodir/*
-%config(noreplace) %_sysconfdir/emacs/site-start.d/auctex.el
-%_aucstatedir
-%_emacslispdir/tex-site.el 
-%exclude %_emacslispdir/site-start.d/auctex.el
-%exclude %_emacslispdir/site-start.d/preview-latex.el
+%_emacslispdir/*.el
 %_emacslispdir/auctex
 %_datadir/texmf/tex/latex/preview
 %exclude %_texmfmain/tex/latex/preview/preview.sty
 %exclude %_emacslispdir/auctex/*.el
 %exclude %_emacslispdir/auctex/style/*.el
-%_emacslispdir/auctex/.nosearch
 %_emacslispdir/auctex/style/.nosearch
 
 %files el 
@@ -194,8 +120,9 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 
 %files -n %name-doc
 %_datadir/texmf/doc/latex/styles/*
+%_datadir/doc/auctex
+%doc --no-dereference COPYING
 %doc ChangeLog*
-%doc ALT-packaging-info
 
 %if_with texmf
 %files -n texmf-latex-preview
@@ -203,6 +130,9 @@ touch %buildroot%_emacslispdir/auctex/style/.nosearch
 %endif
 
 %changelog
+* Wed Apr 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 13.3-alt2.2
+- FTBFS fixed
+
 * Wed Jan 22 2025 Ivan A. Melnikov <iv@altlinux.org> 13.3-alt2.1
 - NMU: update emacs_version macro to match emacs 30
   extension installation path (fixes FTBFS)
