@@ -5,8 +5,8 @@
 %def_enable static
 
 Name: leancrypto
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Cryptographic library with stack-only support and PQC-safe algorithms
 License: BSD-2-Clause and MIT and CC0-1.0 and ISC and BSD-3-Clause and Apache-2.0 and GPL-2.0-only and GPL-2.0-or-later
@@ -137,15 +137,20 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 %files -n lib%name%soname
 %doc LICENSE README.md CHANGES.md SECURITY.md
 %_libdir/lib%name.so.%soname
+%exclude %_libdir/lib%name-fips.so.%soname
 
 %files -n lib%name-devel
 %_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_libdir/lib%name.so
+%_libdir/pkgconfig/%name.pc
+
+%exclude %_libdir/lib%name-fips.so
+%exclude %_libdir/pkgconfig/%name-fips.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/lib%name.a
+%exclude %_libdir/lib%name-fips.a
 %endif
 
 %if_enabled doc
@@ -159,6 +164,10 @@ This subpackage holds the tools provided by the library, such as sha*sum.
 %endif
 
 %changelog
+* Wed Apr 02 2025 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Don't package fips variant.
+- Updated to 1.3.0.
+
 * Fri Feb 21 2025 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
 - Added devel-static subpackage.
 - Disabled tools subpackage.
