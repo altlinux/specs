@@ -3,7 +3,7 @@
 
 Name: plymouth-theme-%theme_name
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: This is a simple Plymouth theme with Pedro racoon meme
 License: MIT
@@ -13,7 +13,7 @@ Url: https://github.com/FilaCo/pedro-raccoon-plymouth
 Vcs: https://github.com/FilaCo/pedro-raccoon-plymouth
 Source: %name-%version.tar
 
-Requires: plymouth
+Requires: plymouth-plugin-script
 
 BuildArch: noarch
 
@@ -32,5 +32,8 @@ mv %theme_name %buildroot%_datadir/plymouth/themes
 %doc README.md
 
 %changelog
+* Tue Apr 01 2025 David Sultaniiazov <x1z53@altlinux.org> 1.1-alt2
+- Fix Requires: plymouth-plugin-script
+
 * Thu Mar 13 2025 David Sultaniiazov <x1z53@altlinux.org> 1.1-alt1
 - Initial build
