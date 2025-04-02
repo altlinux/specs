@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.2.8
-Release: alt1.1
+Version: 3.2.10
+Release: alt1
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -96,6 +96,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Tue Apr 01 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.10-alt1
+- New version 3.2.10.
+
 * Wed Mar 12 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.8-alt1.1
 - Add conflicts on devel package (ALT #53411)
 
