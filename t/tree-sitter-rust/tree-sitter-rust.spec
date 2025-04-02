@@ -1,5 +1,5 @@
 Name: tree-sitter-rust
-Version: 0.23.2
+Version: 0.24.0
 Release: alt1
 
 Summary: Rust grammar for tree-sitter
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-rust
 %_libdir/tree-sitter-rust
 
 %changelog
+* Wed Apr 02 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.24.0-alt1
+- 0.24.0 released
+
 * Wed Feb 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.23.2-alt1
 - 0.23.2 released
 
