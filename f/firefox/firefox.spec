@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 136.0.2
+Version: 137.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -386,6 +386,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Apr 01 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0-alt1
+- New version (137.0).
+- Security fixes:
+  + CVE-2025-2857: Incorrect handle could lead to sandbox escapes
+  + CVE-2025-3028: Use-after-free triggered by XSLTProcessor
+  + CVE-2025-3031: JIT optimization bug with different stack slot sizes
+  + CVE-2025-3032: Leaking file descriptors from the fork server
+  + CVE-2025-3029: URL bar spoofing via non-BMP Unicode characters
+  + CVE-2025-3035: Tab title disclosure across pages when using AI chatbot
+  + CVE-2025-3033: Opening local .url files could lead to another file being opened
+  + CVE-2025-3030: Memory safety bugs fixed in Firefox 137, Thunderbird 137, Firefox ESR 128.9, and Thunderbird 128.9
+  + CVE-2025-3034: Memory safety bugs fixed in Firefox 137 and Thunderbird 137
+
 * Tue Mar 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 136.0.2-alt1
 - New version (136.0.2).
 - Set the MOZ_APP_REMOTINGNAME variable (closes: 52594, 53117).
