@@ -4,7 +4,7 @@
 %define default_fw nftables
 
 Name: netavark
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Summary: OCI network stack
@@ -100,6 +100,9 @@ NETAVARK_DEFAULT_FW=%{default_fw} %make_build
 %_unitdir/*
 
 %changelog
+* Wed Apr 02 2025 Alexey Shabalin <shaba@altlinux.org> 1.14.1-alt1
+- New version 1.14.1.
+
 * Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.14.0-alt1
 - New version 1.14.0.
 
