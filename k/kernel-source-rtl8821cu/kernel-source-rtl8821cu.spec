@@ -1,9 +1,9 @@
 %define module_name rtl8821cu
-%define git_rev e49409f
+%define git_rev 132dcf0
 
 Name: kernel-source-%module_name
 Version: 5.12.0.4
-Release: alt1.git%git_rev
+Release: alt2.git%git_rev
 
 Summary: Realtek RTL8811CU/RTL8821CU USB wifi adapter driver
 Group: Development/Kernel
@@ -31,6 +31,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Apr 01 2025 Paul Wolneykien <manowar@altlinux.org> 5.12.0.4-alt2.git132dcf0
+- Updated to git@132dcf0 (support for kernel 6.13 and 6.14, thx morrownr).
+
 * Thu May 25 2023 Andrey Cherepanov <cas@altlinux.org> 5.12.0.4-alt1.gite49409f
 - New version from https://github.com/morrownr/8821cu-20210916.
 
