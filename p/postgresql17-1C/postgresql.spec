@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    5
+%define postgresql_altrel    6
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -58,6 +58,7 @@ Patch9: 0008-Add_event-id_to_jsonlog.patch
 
 # 1C
 Patch101: 00001-1C-FULL.patch
+Patch102: 00001-Estimate-the-selectivity-as-quadratic-mean-of-non.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -410,6 +411,7 @@ goal of accelerating analytics queries.
 
 # 1C
 %patch101 -p1
+%patch102 -p1
 
 %build
 export CC=%__cc
@@ -1088,6 +1090,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 02 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt6
+- Add 00001-Estimate-the-selectivity-as-quadratic-mean-of-non.patch for speedup 1C operations
+
 * Tue Apr 01 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt5
 - Add catalog /var/log/postgres for logs
 - Use LLVM 19.1
