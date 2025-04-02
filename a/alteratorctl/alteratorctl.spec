@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
-Summary: CLI for alterator browser
+Summary: CLI for alterator-explorer
 License: GPL-2.0+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alteratorctl
@@ -13,18 +13,22 @@ BuildRequires: cmake rpm-macros-cmake cmake-modules gcc glib2-devel libdbus-glib
 BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
 BuildRequires: libpolkit-devel
 
-Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.14
-Requires: alterator-backend-packages alterator-interface-component alterator-backend-component_categories 
-Requires: alterator-backend-batch-components >= 0.1.3
-Requires: alterator-backend-batch-component_categories alterator-interface-edition
-Requires: alterator-interface-diag alterator-backend-systeminfo
+Requires: alterator-manager >= 0.1.28
+Requires: alterator-module-executor >= 0.1.19
+Requires: alterator-backend-packages >= 0.1.4
+Requires: alterator-interface-component >= 0.1.8
+Requires: alterator-backend-component_categories
+Requires: alterator-backend-batch-components >= 0.2
+Requires: alterator-backend-batch-component_categories
+Requires: alterator-interface-edition >= 0.1.5
+Requires: alterator-interface-diag
+Requires: alterator-backend-systeminfo >= 0.3.0
 Requires: libtomlc99 polkit
 
 Source0: %name-%version.tar
 
 %description
-A command line tool for using DBus objects
+A command line tool for using alterator DBus objects.
 
 %prep
 %setup
@@ -41,6 +45,11 @@ A command line tool for using DBus objects
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Tue Apr 01 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.5-alt1
+- Add dependencies from specified required packages
+- Add LICENSE file
+- Edit summary and description
+
 * Thu Mar 27 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.4-alt1
 - Add libpolkit-devel to build requires
 
