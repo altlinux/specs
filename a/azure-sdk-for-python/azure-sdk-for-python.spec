@@ -2,7 +2,7 @@
 
 Name:          azure-sdk-for-python
 Version:       20230815
-Release:       alt1.1
+Release:       alt2
 
 Summary:       Azure SDK for Python
 License:       MIT
@@ -25,22 +25,6 @@ Packages Dependencies DepGraph Python Build Status
 This repository is for active development of the Azure SDK for Python. For
 consumers of the SDK we recommend visiting our public developer docs or our
 versioned developer docs.
-
-%package       -n python3-module-azure-core
-Version:       1.29.2
-Release:       alt1
-Summary:       Azure Core shared client library for Python
-Group:         Development/Python3
-
-%description   -n python3-module-azure-core
-Azure Core shared client library for Python.
-
-Azure core provides shared exceptions and modules for Python SDK client
-libraries. These libraries follow the Azure SDK Design Guidelines for Python.
-
-If you are a client library developer, please reference client library developer
-reference for more information.
-
 
 %package       -n python3-module-azure-common
 Version:       1.1.28
@@ -132,9 +116,6 @@ see the azure sdk python release.
 %setup
 
 %build
-pushd sdk/core/azure-core
-%pyproject_build
-popd
 pushd sdk/core/azure-common
 %pyproject_build
 popd
@@ -155,9 +136,6 @@ pushd sdk/subscription/azure-mgmt-subscription
 popd
 
 %install
-pushd sdk/core/azure-core
-%pyproject_install
-popd
 pushd sdk/core/azure-common
 %pyproject_install
 popd
@@ -180,11 +158,6 @@ popd
 
 %files
 %doc *.rst
-
-%files         -n python3-module-azure-core
-%doc *.rst sdk/core/azure-core/README.md
-%python3_sitelibdir/azure/core
-%python3_sitelibdir/azure_core*
 
 %files         -n python3-module-azure-common
 %doc *.rst sdk/core/azure-common/README.md
@@ -218,6 +191,9 @@ popd
 %python3_sitelibdir/azure_mgmt_subscription*
 
 %changelog
+* Wed Apr 02 2025 Anton Vyatkin <toni@altlinux.org> 20230815-alt2
+- NMU: remove azure-core subpackage.
+
 * Mon Mar 18 2024 Stanislav Levin <slev@altlinux.org> 20230815-alt1.1
 - NMU: added missing build dependency on setuptools.
 
