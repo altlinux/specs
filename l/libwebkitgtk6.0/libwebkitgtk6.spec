@@ -52,7 +52,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -340,6 +340,7 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
 %pkglibexecdir/WebKitWebProcess
+%pkglibexecdir/WebKitGPUProcess
 %dir %_libdir/webkitgtk-%api_ver
 %dir %_libdir/webkitgtk-%api_ver/injected-bundle
 %_libdir/webkitgtk-%api_ver/injected-bundle/libwebkitgtkinjectedbundle.so
@@ -388,6 +389,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.1-alt1
+- 2.48.1
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 2.48.0-alt1
 - 2.48.0
 
