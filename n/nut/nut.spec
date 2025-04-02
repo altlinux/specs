@@ -3,7 +3,7 @@
 
 Name: nut
 Version: 2.8.2
-Release: alt5
+Release: alt6
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -21,22 +21,19 @@ Source4: upsd.sysconfig
 
 Source104: libs.sh
 
-Patch6: nut-2.6.0-alt-upsstats.patch
-Patch21: nut-2.8.2-upsd-listen.patch
-Patch24: nut-2.8.2-bcmxcp.patch
-Patch25: nut-2.8.2-alt-chroot.patch
-Patch26: nut-2.8.2-alt-upsdrvctl-list.patch
-Patch27: nut-2.8.2-alt-drivers.patch
-Patch28: nut-2.8.0-alt-usb.patch
-Patch29: nut-2.8.0-snmp-noAES.patch
-Patch30: nut-2.8.0-usb_submit_urb.patch
-Patch31: nut-2.8.2-alt-systemd.patch
-Patch32: nut-2.8.0-alt-gdlib.patch
-Patch34: nut-2.8.0-alt-fix-strip.patch
-Patch35: nut-2.8.0-alt-upssched-cmd.patch
-
-# Fedora patches
-Patch111: nut-2.8.2-rmpidf.patch
+Patch0: nut-2.6.0-alt-upsstats.patch
+Patch1: nut-2.8.0-alt-usb.patch
+Patch2: nut-2.8.0-snmp-noAES.patch
+Patch3: nut-2.8.0-usb_submit_urb.patch
+Patch4: nut-2.8.0-alt-gdlib.patch
+Patch5: nut-2.8.0-alt-fix-strip.patch
+Patch6: nut-2.8.0-alt-upssched-cmd.patch
+Patch7: nut-2.8.2-upsd-listen.patch
+Patch8: nut-2.8.2-alt-chroot.patch
+Patch9: nut-2.8.2-alt-upsdrvctl-list.patch
+Patch10: nut-2.8.2-alt-drivers.patch
+Patch11: nut-2.8.2-alt-systemd.patch
+Patch12: nut-2.8.2-upstream-deps-linking.patch
 
 %def_with ssl
 %def_with cgi
@@ -52,7 +49,7 @@ Patch111: nut-2.8.2-rmpidf.patch
 %define drvdir /lib/%name
 %define cgidir /var/www/cgi-bin
 %define htmldir /var/www/html/%name
-%define runas upsmon
+%define runas upsd
 %define ROOT %_localstatedir/%name
 %define fdi_hal %_datadir/hal/fdi/information/20thirdparty
 
@@ -295,7 +292,7 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 	--with-drvpath=%drvdir \
 	--with-statepath=%ROOT%_localstatedir/upsd \
 	%{subst_with usb} \
-    --with-udev-dir=%_udevdir \
+	--with-udev-dir=%_udevdir \
 	%{subst_with snmp} %snmp_opts \
 	--with-pkgconfig-dir=%_pkgconfigdir \
 	--with-dev \
@@ -312,10 +309,10 @@ sh %SOURCE104 >>include/config.h
 %install
 %makeinstall_std
 
-# Provide %drvdir/newapc for compatibility with nut-1.4.x
+# Provide %%drvdir/newapc for compatibility with nut-1.4.x
 ln -s apcsmart %buildroot%drvdir/newapc
 
-# Provide %drvdir/powermust for compatibility with nut-2.0.4
+# Provide %%drvdir/powermust for compatibility with nut-2.0.4
 ln -s blazer_ser %buildroot%drvdir/powermust
 ln -s blazer_ser %buildroot%drvdir/megatec
 
@@ -404,6 +401,8 @@ fi
 /usr/sbin/groupadd -r -f upsd
 /usr/sbin/useradd -r -g upsd -G upsdrv -d %ROOT -s /dev/null \
 	-c "NUT information server" -n upsd >/dev/null 2>&1 ||:
+
+/usr/sbin/usermod -aG upsd upsdrv
 
 %post server
 %if_without systemd
@@ -598,6 +597,9 @@ fi
 %python3_sitelibdir/test_nutclient.py
 
 %changelog
+* Tue Mar 25 2025 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt6
+- Fixed an error with the nut-driver and deps linking (closed: #51704)
+
 * Thu Jan 21 2025 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt5
 - Removed upsdrv.service (closes: #51566)
 
