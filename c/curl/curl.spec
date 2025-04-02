@@ -31,14 +31,15 @@
 %endif
 
 Name: curl
-Version: 8.12.1
+Version: 8.13.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
 License: MIT
 Group: Networking/File transfer
-Url: http://curl.haxx.se
+Url: https://curl.se/
+VCS: https://github.com/curl/curl
 
 Source: %url/download/%name-%version.tar
 Source1: %name.watch
@@ -207,6 +208,9 @@ popd
 %endif
  
 %changelog
+* Wed Apr 02 2025 Anton Farygin <rider@altlinux.com> 8.13.0-alt1
+- 8.12.1 -> 8.13.0
+
 * Thu Feb 13 2025 Anton Farygin <rider@altlinux.ru> 8.12.1-alt1
 - 8.12.0 -> 8.12.1
 
