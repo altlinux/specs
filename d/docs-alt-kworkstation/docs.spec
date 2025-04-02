@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Apr 2 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt3
+- update to ALT Kworkstation 11.0RC2
+- whatis-alt: updated text about platform p11 (thx Anton Abramov)
+- typo fixes (closes #53600)
+
 * Thu Mar 20 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
 - typo fixes, small improvements (closes #53557, #53571, #53572, #53574)
 
