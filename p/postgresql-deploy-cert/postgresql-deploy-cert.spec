@@ -1,6 +1,6 @@
 Name:    postgresql-deploy-cert
-Version: 0.8
-Release: alt9
+Version: 0.9
+Release: alt1
 
 Summary: deploy script for postgresql cert config
 License: MIT
@@ -14,7 +14,8 @@ Source: %name-%version.tar
 BuildArch: noarch
 Requires: deploy
 Requires: integalert-postgresql
-
+%filter_from_requires /^\/etc\/sysconfig\/postgresql/d
+%filter_from_requires /^\/usr\/bin\/pg_checksums_ext/d
 
 %description
 A module for deploy ansible configuration maker for postgresql config
@@ -57,6 +58,9 @@ install -Dm 0750 pw_krb_unblocker %buildroot/%_bindir
 
 
 %changelog
+* Mon Mar 31 2025 Alexei Takaseev <taf@altlinux.org> 0.9-alt1
+- PostgreSQL 16 -> PostgreSQL 17
+
 * Tue Feb 04 2025 Alexei Takaseev <taf@altlinux.org> 0.8-alt9
 - Add cron.hourly script for check databases
 
