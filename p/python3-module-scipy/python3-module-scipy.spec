@@ -11,7 +11,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -183,6 +183,10 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Wed Mar 26 2025 Alexey Volkov <qualimock@altlinux.org> 1.11.4-alt4
+- Replaced usage of `suppress_warnings` with standard Python warning handling.
+- Fixed runtime error caused by missing `numpy.testing` import (Closes: #52821).
+
 * Tue Apr 23 2024 Stanislav Levin <slev@altlinux.org> 1.11.4-alt3
 - Packaged datasets.
 
