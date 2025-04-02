@@ -9,8 +9,8 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2025.02
-Release: alt2
+Version: 2025.04
+Release: alt1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -236,6 +236,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Wed Apr 02 2025 Anton Midyukov <antohami@altlinux.org> 2025.04-alt1
+- phosh-settings: fix override settings for phosh >= 0.46.0
+
 * Fri Feb 21 2025 Oleg Shchavelev <oleg@altlinux.org> 2025.02-alt2
 - phosh-settings: set accent color to orange using gschema overrides
 
