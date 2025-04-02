@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8821ce
 Version: 5.5.2
-Release: alt11.gita478095
+Release: alt12.git98cff1d
 Summary: Source for the rtl8821ce driver
 License: GPLv2
 Group: Development/Kernel
@@ -39,6 +39,9 @@ install -Dpm0644 %SOURCE1 %buildroot%_sysconfdir/modprobe.d/blacklist-rtl8821ce.
 %config %_sysconfdir/modprobe.d/blacklist-rtl8821ce.conf
 
 %changelog
+* Tue Apr 01 2025 Paul Wolneykien <manowar@altlinux.org> 5.5.2-alt12.git98cff1d
+- Updated to git@98cff1d.
+
 * Wed Sep 13 2023 Andrey Cherepanov <cas@altlinux.org> 5.5.2-alt11.gita478095
 - added package with blacklist rules for rtl8821ce.
 
