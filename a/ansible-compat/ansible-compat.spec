@@ -1,6 +1,6 @@
 
 Name: ansible-compat
-Version: 25.0.0
+Version: 25.1.4
 Release: alt1
 Summary: Ansible python helper functions
 
@@ -16,7 +16,7 @@ BuildRequires: python3-module-wheel python3-module-tox python3-module-pip
 BuildRequires: %pyproject_buildrequires
 
 # for tests
-BuildRequires: python3-module-flaky python3-module-pytest python3-module-pytest-mock
+BuildRequires: python3-module-flaky python3-module-pytest python3-module-pytest-mock python3-module-pytest-instafail
 BuildRequires: ansible-core python3-module-yaml
 BuildRequires: python3-module-subprocess-tee >= 0.4.1 python3-module-jsonschema >= 4.6.0 
 BuildRequires: /proc
@@ -64,6 +64,9 @@ echo "ref-names: tag: v%version" >> .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 02 2025 Alexey Shabalin <shaba@altlinux.org> 25.1.4-alt1
+- New version 25.1.4.
+
 * Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 25.0.0-alt1
 - New version 25.0.0.
 

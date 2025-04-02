@@ -1,5 +1,5 @@
 Name: ansible-lint
-Version: 25.1.0
+Version: 25.2.0
 Release: alt1
 
 Summary: Best practices checker for Ansible
@@ -13,14 +13,13 @@ BuildArch: noarch
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: python3-devel >= 3.10
 BuildRequires: rpm-build-python3 %pyproject_buildrequires
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-tox python3-module-pip python3-module-wheel
 BuildRequires: python3-module-setuptools >= 65.3.0
 BuildRequires: python3-module-setuptools_scm >= 7.0.5
 BuildRequires: python3-module-rich >= 12.0.0
 BuildRequires: python3-module-ruamel-yaml >= 0.18.5
 BuildRequires: python3-module-yamllint >= 1.30.0
-BuildRequires: ansible-core >= 2.17.6 python3-module-ansible-compat >= 24.10.0
+BuildRequires: ansible-core >= 2.17.6 python3-module-ansible-compat >= 25.1.3
 
 # for tests
 #BuildRequires: python3-module-yaml >= 5.4.1
@@ -31,7 +30,7 @@ BuildRequires: ansible-core >= 2.17.6 python3-module-ansible-compat >= 24.10.0
 #BuildRequires: python3-module-wcmatch
 
 Requires: ansible-core >= 2.17.6
-Requires: ansible-compat >= 24.10.0
+Requires: ansible-compat >= 25.1.3
 Requires: python3-module-yamllint
 
 %description
@@ -57,6 +56,9 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 02 2025 Alexey Shabalin <shaba@altlinux.org> 25.2.0-alt1
+- New version 25.2.0.
+
 * Wed Jan 22 2025 Alexey Shabalin <shaba@altlinux.org> 25.1.0-alt1
 - New version 25.1.0.
 
