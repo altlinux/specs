@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-kopidel
-Version: 0.0.4
+Version: 0.1.0
 Release: alt1
 
 Summary: Creating a bootable iso that copies the file system
@@ -69,6 +69,16 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Wed Apr 02 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.0-alt1
+- Add CLI progress bar.
+- Add --step flag to CLI.
+- Ignore the exfat partitions when creating the vm-profile.scm.
+- Add libsysfs2 to the squashfs image (closes: 53697).
+- Ignore partitions which are not listed in the
+  /etc/fstab when creating the vm-profile.scm.
+- Add preinstall.d/00-cp-diskinfo.sh cleanup.
+- Add X-Alterator-UI=qt to the desktop file (closes: 53477).
+
 * Wed Feb 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.0.4-alt1
 - Ignore all NFS when copying (thx protvin@).
 
