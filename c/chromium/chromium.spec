@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        134.0.6998.165
+Version:        135.0.7049.52
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,6 +80,7 @@ Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
+Patch032: 0032-FEDORA-chromium-135-add-cfi-suppressions-for-pipewire-functions.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
@@ -91,6 +92,7 @@ Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
 Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 
+Patch061: 0061-DEBIAN-disable-buildtools-libc.patch
 Patch062: 0062-DEBIAN-cacheline.patch
 Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
 # trying to fix issues with YT playback:
@@ -99,9 +101,10 @@ Patch065: 0065-DEBIAN-stdatomic.patch
 Patch066: 0066-DEBIAN-clang19.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
 Patch068: 0068-DEBIAN-adler1.patch
-Patch069: 0069-DEBIAN-swiftshader-llvm.patch
+# Patch069: 0069-DEBIAN-swiftshader-llvm.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch071: 0071-FEDORA-pipewire-cast.patch
+Patch072: 0072-135-fix-gtk4.patch
 
 ### End Patches
 
@@ -563,6 +566,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Apr 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.52-alt1
+- New version (135.0.7049.52).
+- Security fixes:
+  + CVE-2025-3066: Use after free in Navigations
+  + CVE-2025-3067: Inappropriate implementation in Custom Tabs
+  + CVE-2025-3068: Inappropriate implementation in Intents
+  + CVE-2025-3069: Inappropriate implementation in Extensions
+  + CVE-2025-3070: Insufficient validation of untrusted input in Extensions
+  + CVE-2025-3071: Inappropriate implementation in Navigations
+  + CVE-2025-3072: Inappropriate implementation in Custom Tabs
+  + CVE-2025-3073: Inappropriate implementation in Autofill
+  + CVE-2025-3074: Inappropriate implementation in Downloads
+
 * Sat Mar 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 134.0.6998.165-alt1
 - New version (134.0.6998.165).
 
