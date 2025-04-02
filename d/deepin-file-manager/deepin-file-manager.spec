@@ -1,10 +1,12 @@
 %define repo dde-file-manager
+%define _libexecdir %_prefix/libexec
 %define soname 1
+%define __builddir BUILD
 
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.0.50
+Version: 6.5.44
 Release: alt1
 
 Summary: Deepin File Manager
@@ -12,19 +14,26 @@ Summary: Deepin File Manager
 License: GPL-3.0-or-later
 Group: File tools
 Url: https://github.com/linuxdeepin/dde-file-manager
+Vcs: git://github.com/linuxdeepin/dde-file-manager.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch0: deepin-file-manager-6.0.50-alt-fix-paths.patch
+Patch0: deepin-file-manager-6.5.42-alt-fixes-paths.patch
+Patch1: deepin-file-manager-6.5.42-alt-fixes-underlinked-elfs.patch
+
+# /usr/include/dqt6/QtCore/qhash.h:65:33:
+# error: static assertion failed:
+# The key type must have a qHash overload or a std::hash specialization
+ExcludeArch: i586
 
 Provides: %repo = %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Thu Oct 26 2023
-# optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gsettings-qt-devel icu-utils libX11-devel libdeepin-pdfium1 libdfm-burn1 libdfm-io1 libdfm-mount1 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libicu-devel libisoburn-devel libp11-kit libpolkit-dqt5-agent libpolkit-qt5-core libpolkit-qt5-gui libpoppler0-cpp libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-multimedia libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libudisks2-devel libxcb-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-common dqt5-base-devel dqt5-x11extras-devel sh5 xorg-proto-devel zlib-devel
-BuildRequires: cmake deepin-dock-devel deepin-qt-dbus-factory-devel dtk6-common-devel dtkcore kf5-kcodecs-devel libcryptsetup-devel libdeepin-pdfium-devel libdfm-burn-devel libdfm-io-devel libdfm-mount-devel libdmr-devel libdocparser-devel liblucene++-devel libmount-devel libpcre-devel libpolkit-devel libpolkitqt5-qt5-devel libpoppler-cpp-devel libtag-devel dqt5-multimedia-devel dqt5-svg-devel dqt5-tools dqt5-x11extras-devel gsettings-qt-devel libffmpegthumbnailer-devel
-BuildRequires: deepin-gettext-tools deepin-desktop-base
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+# Automatically added by buildreq on Tue Apr 01 2025
+# optimized out: boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libX11-devel libdde-shell0 libdeepin-pdfium1 libdeepin-qdbus-service0 libdfm6-burn1 libdfm6-io1 libdfm6-mount1 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-sql libdqt6-svg libdqt6-svgwidgets libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libdtk6widget-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libicu-devel libjson-c5 libp11-kit libpng-devel libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libpoppler2-cpp libqt6-core libqt6-gui libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-devel sh5 vulkan-headers xorg-proto-devel zlib-devel
+BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-qt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel
+BuildRequires: deepin-gettext-tools deepin-desktop-base libfreetype-devel libpng-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel libstdc++-devel
@@ -32,7 +41,7 @@ BuildRequires: clang-devel lld-devel libstdc++-devel
 BuildRequires: gcc-c++
 %endif
 
-Requires: libdqt5-gui = %_dqt5_version libdqt5-widgets = %_dqt5_version
+Requires: libdqt6-gui = %_dqt6_version libdqt6-widgets = %_dqt6_version
 
 %description
 File manager front end of Deepin OS.
@@ -65,37 +74,38 @@ Group: Development/Other
 %description -n libdfm-extension-devel
 Development files for %name extensions.
 
-%package -n libdfm-base%soname
+%package -n libdfm6-base%soname
 Summary: Library for %name extensions
 Group: System/Libraries
 
-%description -n libdfm-base%soname
+%description -n libdfm6-base%soname
 Library for %name extensions.
 
-%package -n libdfm-base-devel
+%package -n libdfm6-base-devel
 Summary: Development files for %name extensions
 Group: Development/Other
 
-%description -n libdfm-base-devel
+%description -n libdfm6-base-devel
 Development files for %name extensions.
 
-%package -n libdfm-framework%soname
+%package -n libdfm6-framework%soname
 Summary: Library for %name extensions
 Group: System/Libraries
 
-%description -n libdfm-framework%soname
+%description -n libdfm6-framework%soname
 Library for %name extensions.
 
-%package -n libdfm-framework-devel
+%package -n libdfm6-framework-devel
 Summary: Development files for %name extensions
 Group: Development/Other
 
-%description -n libdfm-framework-devel
+%description -n libdfm6-framework-devel
 Development files for %name extensions.
 
 %package -n deepin-desktop
 Summary: Deepin desktop environment - desktop module
 Group: Graphical desktop/Other
+BuildArch: noarch
 
 %description -n deepin-desktop
 Deepin desktop environment - desktop module.
@@ -103,8 +113,25 @@ Deepin desktop environment - desktop module.
 %prep
 %setup -n %repo-%version
 %autopatch -p1
+# fix bad_elf_symbols
+sed -e '/stopSpinner/d;' \
+    -e '/startSpinner/d;' \
+    -i src/plugins/filemanager/dfmplugin-titlebar/views/private/addressbar_p.h
+sed -e '/removeCachedMnts/d;' \
+    -i src/plugins/filemanager/dfmplugin-workspace/utils/filedatamanager.h
 
 %build
+# ninja generates dependency cycle
+# [0/2] /usr/bin/cmake -P /usr/src/RPM/BUILD/dde-file-manager-6.5.42/BUILD/CMakeFiles/VerifyGlobs.cmake
+# ninja: error: dependency cycle:
+# src/dfm-base/libdfm6-base.so ->
+# src/dfm-base/libdfm6-base.so.6.5.42 ->
+# src/dfm-base/CMakeFiles/dfm6-base.dir/dfm6-base_autogen/mocs_compilation.cpp.o ->
+# cmake_object_order_depends_target_dfm6-base ->
+# src/dfm-base/devicemanager_interface_qt6.cpp ->
+# /usr/src/RPM/BUILD/dde-file-manager-6.5.42/assets/dbus/org.deepin.Filemanager.Daemon.DeviceManager.xml ->
+# src/dfm-base/libdfm6-base.so
+
 %define optflags_lto %nil
 %if_with clang
 export CC=clang
@@ -114,15 +141,11 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 export CC=gcc
 export CXX=g++
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export CPLUS_INCLUDE_PATH=%_includedir/qt5:$CPLUS_INCLUDE_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+export CPLUS_INCLUDE_PATH=%_includedir/qt6:$CPLUS_INCLUDE_PATH
+%DQ6cmake \
+    -G "Unix Makefiles" \
+    -DCMAKE_MAKE_PROGRAM=make \
+    -DLIB_DESTINATION=%_lib \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
     -DSYSTEMD_USER_UNIT_DIR=%_userunitdir \
@@ -130,12 +153,12 @@ export PATH=%_dqt5_bindir:$PATH
     -DLIB_INSTALL_DIR=%_lib \
     -DDFM_PLUGIN_DIR=%_libdir/%repo/plugins \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
+%make_build -C %__builddir
 
 %install
-%cmake_install
+%makeinstall_std -C %__builddir
 chmod +x %buildroot%_sysconfdir/deepin/dde-file-manager/dfm-dlnfs-automount
-chmod +x %buildroot%_bindir/%repo-pkexec
+chmod +x %buildroot%_bindir/dfm-open.sh
 chmod +x %buildroot%_bindir/dde-property-dialog
 
 %files
@@ -143,39 +166,49 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_bindir/%repo
 %_bindir/%repo-daemon
 %_bindir/%repo-pkexec
-%_bindir/%repo-server
 %_bindir/dde-property-dialog
 %_bindir/dde-select-dialog-x11
 %_bindir/dde-select-dialog-wayland
 %_bindir/dde-file-dialog
+%_bindir/deepin-diskencrypt-service
+%_bindir/file-manager.sh
 %_bindir/dfm-open.sh
+%_libexecdir/%repo
+%_libexecdir/%repo-preview
 %_datadir/%repo/
 %_desktopdir/%repo.desktop
 %_sysconfdir/X11/Xsession.d/99dfm-dlnfs-automount
 %dir %_sysconfdir/deepin/
 %dir %_sysconfdir/deepin/dde-file-manager/
 %_sysconfdir/deepin/dde-file-manager/dfm-dlnfs-automount
+%_sysconfdir/polkit-1/localauthority/10-vendor.d/99-dde-file-manager-encrypt.pkla
 %_datadir/dbus-1/interfaces/com.deepin.filemanager.filedialog.xml
 %_datadir/dbus-1/interfaces/com.deepin.filemanager.filedialogmanager.xml
-%_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.disk-mount.gschema.xml
 %_datadir/glib-2.0/schemas/com.deepin.dde.filemanager.gschema.xml
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager.service
-%_datadir/dbus-1/system-services/com.deepin.filemanager.daemon.service
-%_sysconfdir/dbus-1/system.d/com.deepin.filemanager.daemon.conf
-%_unitdir/dde-filemanager-daemon.service
+%_datadir/dbus-1/services/com.deepin.filemanager.filedialog_x11.service
+%_datadir/dbus-1/services/com.deepin.filemanager.filedialog_wayland.service
+%_datadir/dbus-1/services/org.deepin.Filemanager.Daemon.service
+%_datadir/dbus-1/system-services/org.deepin.Filemanager.DiskEncrypt.service
+%_datadir/dbus-1/system-services/org.deepin.Filemanager.MountControl.service
+%_datadir/dbus-1/system-services/org.deepin.Filemanager.UserShareManager.service
+%_datadir/dbus-1/system.d/org.deepin.filemanager.accesscontrol.conf
+%_datadir/dbus-1/system.d/org.deepin.filemanager.diskencrypt.conf
+%_datadir/dbus-1/system.d/org.deepin.filemanager.mountcontrol.conf
+%_datadir/dbus-1/system.d/org.deepin.filemanager.usersharemanager.conf
 %_userunitdir/dde-file-manager.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/dde-file-manager.service
-%_datadir/dbus-1/services/com.deepin.filemanager.filedialog_x11.service
-%_datadir/dbus-1/services/com.deepin.filemanager.filedialog_wayland.service
-%_datadir/dbus-1/services/org.deepin.filemanager.server.service
+%dir %_sysconfdir/systemd/system/deepin-service-group@.service.d/
+%_sysconfdir/systemd/system/deepin-service-group@.service.d/dde-file-manage-service-override.conf
 %dir %_datadir/deepin/
 %_datadir/deepin/%repo/
 %_datadir/mime/packages/dtk-dci.xml
 %_datadir/polkit-1/actions/com.deepin.pkexec.dde-file-manager.policy
-%_datadir/polkit-1/actions/com.deepin.filemanager.daemon.accesscontrol.policy
-%_datadir/polkit-1/actions/com.deepin.filemanager.daemon.sharecontrol.policy
+%_datadir/polkit-1/actions/org.deepin.filemanager.accesscontrol.policy
+%_datadir/polkit-1/actions/org.deepin.filemanager.diskencrypt.policy
+%_datadir/polkit-1/actions/org.deepin.filemanager.usersharemanager.policy
 %_datadir/polkit-1/actions/com.deepin.filemanager.vault.policy
 %_datadir/applications/context-menus/.readme
 %dir %_datadir/dsg/
@@ -188,8 +221,24 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_libdir/dde-dock/plugins/system-trays/libdde-disk-mount-plugin.so
 %dir %_libdir/%repo/
 %dir %_libdir/%repo/tools/
-%_libdir/%repo/tools/libdfm-upgrade.so
+%_libdir/%repo/tools/libdfm-upgrade-qt6.so
 %_libdir/%repo/plugins/
+%dir %_libdir/dde-shell/
+%_libdir/dde-shell/org.deepin.ds.desktop.so
+%dir %_datadir/dde-shell/
+%dir %_datadir/dde-shell/org.deepin.ds.desktop/
+%_datadir/dde-shell/org.deepin.ds.desktop/metadata.json
+%dir %_libdir/deepin-service-manager/
+%_libdir/deepin-service-manager/libdde-filemanager*.so
+%dir %_datadir/deepin-service-manager/
+%dir %_datadir/deepin-service-manager/other/
+%dir %_datadir/deepin-service-manager/system/
+%dir %_datadir/deepin-service-manager/user/
+%_datadir/deepin-service-manager/other/deepin-diskencrypt-service.json
+%_datadir/deepin-service-manager/system/dde-filemanager-accesscontrol.json
+%_datadir/deepin-service-manager/system/dde-filemanager-mountcontrol.json
+%_datadir/deepin-service-manager/system/dde-filemanager-sharecontrol.json
+%_datadir/deepin-service-manager/user/dde-filemanager-textindex.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -201,6 +250,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %dir %_datadir/deepin-debug-config/
 %dir %_datadir/deepin-debug-config/deepin-debug-config.d/
 %_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.file-manager.json
+%_udev_rulesdir/99-dfm-encrypt.rules
 
 %files -n lib%repo%soname
 %_libdir/lib%repo.so.%version
@@ -219,28 +269,27 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %exclude %_pkgconfigdir/dfm-extension.pc
 %_libdir/cmake/dfm-extension/
 
-%files -n libdfm-base%soname
-%_libdir/libdfm-base.so.%version
-%_libdir/libdfm-base.so.%soname
+%files -n libdfm6-base%soname
+%_libdir/libdfm6-base.so.%version
+%_libdir/libdfm6-base.so.%soname
 
-%files -n libdfm-base-devel
-%_libdir/libdfm-base.so
-%exclude %_pkgconfigdir/dfm-base.pc
+%files -n libdfm6-base-devel
+%_libdir/libdfm6-base.so
+%exclude %_pkgconfigdir/dfm6-base.pc
 %_includedir/dfm-base/
-%_libdir/cmake/dfm-base/
+%_libdir/cmake/dfm6-base/
 
-%files -n libdfm-framework%soname
-%_libdir/libdfm-framework.so.%version
-%_libdir/libdfm-framework.so.%soname
+%files -n libdfm6-framework%soname
+%_libdir/libdfm6-framework.so.%version
+%_libdir/libdfm6-framework.so.%soname
 
-%files -n libdfm-framework-devel
-%_libdir/libdfm-framework.so
-%exclude %_pkgconfigdir/dfm-framework.pc
+%files -n libdfm6-framework-devel
+%_libdir/libdfm6-framework.so
+%exclude %_pkgconfigdir/dfm6-framework.pc
 %_includedir/dfm-framework/
-%_libdir/cmake/dfm-framework/
+%_libdir/cmake/dfm6-framework/
 
 %files -n deepin-desktop
-%_bindir/dde-desktop
 %_desktopdir/dde-computer.desktop
 %_desktopdir/dde-trash.desktop
 %_desktopdir/dde-home.desktop
@@ -248,6 +297,11 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Wed Apr 02 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.44-alt1
+- New version 6.5.44.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.50-alt1
 - New version 6.0.50.
 - Built via separate qt5 instead system (ALT #48138).

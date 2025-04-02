@@ -1,8 +1,7 @@
 %def_disable clang
-%def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.9.18
+Version: 6.0.15
 Release: alt1
 
 Summary: Image viewer for Deepin
@@ -10,33 +9,21 @@ Summary: Image viewer for Deepin
 License: GPL-3.0-or-later
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-image-viewer
+Vcs: https://github.com/linuxdeepin/deepin-image-viewer.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 ExcludeArch: armh
 
-Requires: deepin-qt5integration
-
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-%if_enabled cmake
-BuildRequires(pre): cmake rpm-build-ninja
-%endif
-BuildRequires: dqt5-base-devel
-BuildRequires: dqt5-tools-devel
-BuildRequires: libraw-devel
-BuildRequires: dqt5-tools
-BuildRequires: libexif-devel
-BuildRequires: libdtkwidget-devel
-BuildRequires: libimageviewer-devel
-BuildRequires: libgio-qt-devel
-BuildRequires: dqt5-svg-devel
-BuildRequires: dqt5-x11extras-devel
-BuildRequires: libfreeimage-devel
+# Automatically added by buildreq on Wed Mar 26 2025
+# optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdeepin-ocr-plugin-manager1 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libjson-c5 liblcms2-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers
+BuildRequires: dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcups-devel libdeepin-ocr-plugin-manager-devel libdtk6declarative-devel libdtk6widget-devel libraw-devel
 
 %description
 %summary.
@@ -50,15 +37,11 @@ Development libraries for %name.
 
 %prep
 %setup
-%patch -p1
-sed -i 's|qt5/plugins/imageformats|../../dqt5/plugins/imageformats|' \
+%autopatch -p1
+sed -i 's|/qt${QT_VERSION_MAJOR}/plugins|/dqt${QT_VERSION_MAJOR}/plugins|' \
   qimage-plugins/libraw/CMakeLists.txt
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%if_enabled cmake
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -66,56 +49,41 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%DQ6build \
   -DVERSION=%version \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
 #
-cmake --build "%_cmake__builddir" -j1
-%else
-%qmake_dqt5 \
-%if_enabled clang
-  QMAKE_STRIP= -spec linux-clang \
-%endif
-  CONFIG+=nostrip \
-  PREFIX=%prefix \
-  DAPP_VERSION=%version \
-  DVERSION=%version \
-  LIB_INSTALL_DIR=%_libdir \
-  QMAKE_RPATHDIR=%_dqt5_libdir \
-#
-%make
-%endif
 
 %install
-%if_enabled cmake
-%cmake_install
-%else
-%makeinstall INSTALL_ROOT=%buildroot
-%endif
-%find_lang %name
+%DQ6install
+%find_lang --with-qt %name
 
 %files -f %name.lang
 %doc LICENSE.txt README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/%name/
+%dir %_datadir/%name/
+%dir %_datadir/%name/translations/
+%_datadir/%name/translations/deepin-image-viewer.qm
+%_datadir/applications/context-menus/deepin-print-pictures.conf
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/image-viewer/
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_dqt5_plugindir/imageformats/libxraw.so.*
-%_datadir/dbus-1/services/com.deepin.ImageViewer.service
+%_datadir/dbus-1/services/com.deepin.imageViewer.service
+%_dqt6_plugindir/imageformats/libxraw.so.*
 
 %files devel
-%_dqt5_plugindir/imageformats/libxraw.so
+%_dqt6_plugindir/imageformats/libxraw.so
 
 %changelog
+* Wed Mar 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.15-alt1
+- New version 6.0.15.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 5.9.18-alt1
 - New version 5.9.18.
 - Built via separate qt5 instead system (ALT #48138).

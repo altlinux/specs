@@ -1,38 +1,32 @@
 %define repo image-editor
-%define repoiv imageviewer
-%define repoivr imagevisualresult
-%define sonameiv 0
-%define sonameivr 0
+%define repoiv imageviewer6
+%define repoivr imagevisualresult6
+%define sonameiv 0.1
+%define sonameivr 0.1
 
 %def_without clang
-%def_with cmake
 
 Name: deepin-image-editor
-Version: 1.0.41
-Release: alt2
+Version: 6.5.0
+Release: alt1
 
 Summary: Image editor libraries for Deepin
 
 License: GPL-3.0+
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/image-editor
+Vcs: https://github.com/linuxdeepin/image-editor.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-# Applied the patch by archlinux:
-# https://gitlab.archlinux.org/archlinux/packaging/packages/deepin-image-editor/-/raw/main/remove-broken-flags.patch
-Patch: %name-%version-%release.patch
-Patch1: deepin-image-editor-1.0.40-archlinux-remove-broken-flags.patch
-Patch2: deepin-image-editor-1.0.40-alt-fix-broken-pkgconfig.patch
-Patch3: deepin-image-editor-1.0.40-alt-fix-GNUInstallDirs.patch
-Patch4: deepin-image-editor-1.0.41-alt-fix-dqt5-pkgconfig.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-image-editor-6.5.0-alt-fix-broken-pkgconfig.patch
+Patch2: deepin-image-editor-6.5.0-alt-fix-dqt6-pkgconfig.patch
 
 %if_with clang
 ExcludeArch: armh
 %endif
 
-# Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libsasl2-3 libssl-devel libstdc++-devel libzen-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-tools sh5 tbb-devel zlib-devel
-BuildRequires: glib2-devel libdtkwidget-devel libffmpegthumbnailer-devel libfreeimage-devel libmediainfo-devel libtiff-devel dqt5-svg-devel dqt5-tools-devel libdfm-io-devel
+BuildRequires: cmake glib2-devel dtk6-common-devel libdtk6widget-devel libffmpegthumbnailer-devel libfreeimage-devel libmediainfo-devel libtiff-devel dqt6-svg-devel dqt6-tools-devel libdfm6-io-devel libcups-devel
 
 %if_with clang
 BuildRequires: clang-devel
@@ -40,9 +34,6 @@ BuildRequires: clang-devel
 BuildRequires: gcc-c++
 %endif
 
-%if_with cmake
-BuildRequires: cmake rpm-build-ninja
-%endif
 
 %description
 Image editor is a public library for deepin-image-viewer
@@ -64,12 +55,12 @@ BuildArch: noarch
 %description -n lib%repoivr-data
 Data files for libimagevisualresult.
 
-%package -n lib%repoiv%sonameiv
+%package -n lib%{repoiv}_%sonameiv
 Summary: Image editor library for deepin-image-viewer
 Group: System/Libraries
 Requires: lib%repoiv-data
 
-%description -n lib%repoiv%sonameiv
+%description -n lib%{repoiv}_%sonameiv
 Image editor is a public library for deepin-image-viewer
 by Deepin Technology.
 
@@ -80,11 +71,11 @@ Group: Development/C++
 %description -n lib%repoiv-devel
 Development libraries for deepin-image-viewer.
 
-%package -n lib%repoivr%sonameivr
+%package -n lib%{repoivr}_%sonameivr
 Summary: Image editor library for deepin-album
 Group: System/Libraries
 
-%description -n lib%repoivr%sonameivr
+%description -n lib%{repoivr}_%sonameivr
 Image editor is a public library for deepin-image-viewer
 by Deepin Technology.
 
@@ -98,12 +89,11 @@ Development libraries for deepin-album.
 %prep
 %setup -n %repo-%version
 %autopatch -p1
+sed '/qt5.cmake/d' \
+  -i libimageviewer/CMakeLists.txt \
+  -i libimagevisualresult/CMakeLists.txt
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%if_with cmake
 %if_with clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -112,36 +102,12 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
 %define optflags_lto %nil
 %endif
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-    -DLIB_INSTALL_DIR=%_libdir \
-    -DCMAKE_INSTALL_LIBDIR=%_lib \
+%DQ6build \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
 #
-cmake --build "%_cmake__builddir"
-%else
-%qmake_dqt5 \
-%if_with clang
-    QMAKE_STRIP= -spec linux-clang \
-%endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix \
-    DAPP_VERSION=%version \
-    DVERSION=%version \
-    LIB_INSTALL_DIR=%_libdir \
-    QMAKE_RPATHDIR=%_dqt5_libdir \
-#
-%make
-%endif
 
 %install
-%if_with cmake
-%cmake_install
-%else
-%makeinstall INSTALL_ROOT=%buildroot
-%endif
+%DQ6install
 %find_lang --with-qt lib%repoiv
 
 %files -n lib%repoiv-data -f lib%repoiv.lang
@@ -154,7 +120,7 @@ cmake --build "%_cmake__builddir"
 %dir %_datadir/lib%repoivr/
 %_datadir/lib%repoivr/filter*
 
-%files -n lib%repoiv%sonameiv
+%files -n lib%{repoiv}_%sonameiv
 %_libdir/lib%repoiv.so.%{sonameiv}*
 
 %files -n lib%repoiv-devel
@@ -162,7 +128,7 @@ cmake --build "%_cmake__builddir"
 %_includedir/lib%repoiv/
 %_pkgconfigdir/lib%repoiv.pc
 
-%files -n lib%repoivr%sonameivr
+%files -n lib%{repoivr}_%sonameivr
 %_libdir/lib%repoivr.so.%{sonameivr}*
 
 %files -n lib%repoivr-devel
@@ -171,6 +137,11 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Wed Mar 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.0-alt1
+- New version 6.5.0.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt2
 - Built via separate qt5 instead system (ALT #48138).
 

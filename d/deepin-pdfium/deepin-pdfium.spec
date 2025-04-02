@@ -3,18 +3,20 @@
 %define sover 1
 
 Name: deepin-pdfium
-Version: 1.0.2
-Release: alt2
+Version: 1.5.1
+Release: alt1
 
 Summary: Development library for pdf on Deepin
 
 License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-pdfium
+Vcs: https://github.com/linuxdeepin/deepin-pdfium.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-pdfium-1.5.1-alt-pkgconfig-dqt6.patch
 
-BuildRequires: dqt5-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
+BuildRequires: dqt6-base-devel libchardet-devel liblcms2-devel libfreetype-devel libopenjpeg2.0-devel libjpeg-devel
 %if_with clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -22,9 +24,6 @@ BuildRequires: llvm-devel
 %else
 BuildRequires: gcc-c++
 %endif
-
-# find libraries
-%add_findprov_lib_path %_dqt5_libdir
 
 %description
 %summary.
@@ -45,9 +44,9 @@ This package provides development files for %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-export PATH=%_dqt5_bindir:$PATH
 %if_with clang
 %define optflags_lto -flto=thin
 export CC=clang
@@ -55,21 +54,13 @@ export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
-%qmake_dqt5 \
-  CONFIG+=nostrip \
-  QMAKE_RPATHDIR=%_dqt5_libdir \
-  VERSION=%version \
-  LIB_INSTALL_DIR=%_libdir \
-  unix:LIBS+="-L%_libdir -ljpeg -licuuc" \
-  unix:LIBS+="-L/%_lib -lz" \
-%if_enabled clang
-  QMAKE_STRIP= -spec linux-clang \
-%endif
+%DQ6build \
+  -DVERSION=%version \
+  -DCMAKE_INSTALL_LIBDIR=%_lib \
 #
-%make_build
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%DQ6install
 
 %files -n lib%name%sover
 %doc LICENSE
@@ -80,8 +71,14 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_includedir/%name/
 %_includedir/%name/*.h
 %_pkgconfigdir/%name.pc
+%_libdir/cmake/%name/
 
 %changelog
+* Tue Mar 11 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+- Switched to dqt6.
+- Added vcs tag.
+
 * Thu May 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.2-alt2
 - Built via separate qt5 instead system (ALT #48138).
 

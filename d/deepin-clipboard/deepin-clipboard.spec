@@ -2,7 +2,7 @@
 %def_disable clang
 
 Name: deepin-clipboard
-Version: 6.0.9
+Version: 6.1.6
 Release: alt1
 
 Summary: Clipboard for DDE
@@ -10,13 +10,14 @@ Summary: Clipboard for DDE
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-clipboard
+Vcs: https://github.com/linuxdeepin/dde-clipboard.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Fri Dec 15 2023
-# optimized out: bash5 bashrc cmake cmake-modules dtkcore gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-qt libglibmm-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libsigc++2-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel sh5 wayland-devel
-BuildRequires: dtk6-common-devel dwayland-devel extra-cmake-modules libdtkwidget-devel libgio-qt-devel libgtest-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel dqt5-tools
+BuildRequires(pre): rpm-macros-dqt6
+# Automatically added by buildreq on Wed Mar 26 2025
+# optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools dtk6core gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-shell0 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-test libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-qt6_0 libglibmm-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libsigc++2-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libxcbutil-icccm libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers wayland-devel
+BuildRequires: dde-dock-devel deepin-shell deepin-tray-loader-devel dqt6-declarative-devel dqt6-tools-devel dqt6-wayland-devel dtk6-common-devel extra-cmake-modules libcups-devel libdde-shell-devel libdtk6widget-devel libgio-qt6-devel libgtest-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: libsystemd-devel
 %if_enabled clang
 BuildRequires: clang-devel
@@ -24,11 +25,15 @@ BuildRequires: clang-devel
 BuildRequires: gcc-c++
 %endif
 
+Requires: libdqt6-waylandclient = %_dqt6_version
+
 %description
 %summary.
 
 %prep
 %setup -n %repo-%version
+sed '/DESTINATION/s|lib/dde-dock/plugins|%_lib/dde-dock/plugins|' \
+  -i CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -36,19 +41,10 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-#
-cmake --build "%_cmake__builddir" -j%__nprocs
+%DQ6build
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
@@ -61,6 +57,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_userunitdir/%repo.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/dde-clipboard.service
+%dir %_datadir/dde-dock/
+%dir %_datadir/dde-dock/icons/
+%dir %_datadir/dde-dock/icons/dcc-setting/
+%_datadir/dde-dock/icons/dcc-setting/clipboard.svg
+%_datadir/dde-dock/icons/dcc-setting/dcc-clipboard.dci
+%dir %_libdir/dde-dock/
+%dir %_libdir/dde-dock/plugins/
+%_libdir/dde-dock/plugins/libdock-clipboard-plugin.so
 # translations
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
@@ -69,6 +73,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%repo/translations/dde-clipboard_ky@Arab.qm
 
 %changelog
+* Wed Mar 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.6-alt1
+- New version 6.1.6.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Wed May 29 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.9-alt1
 - New version 6.0.9.
 - Built via separate qt5 instead system (ALT #48138).
