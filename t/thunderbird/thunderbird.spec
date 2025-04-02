@@ -16,8 +16,8 @@
 %endif
 
 Name: 	 thunderbird
-Version: 136.0.1
-Release: alt2
+Version: 137.0
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -376,6 +376,8 @@ export NPROCS=8
 export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 ./mach configure
 
+export MOZ_APP_REMOTINGNAME="thunderbird"
+
 %if_with mach_build
 ./mach build -j $NPROCS
 ./mach buildsymbols
@@ -527,6 +529,18 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Apr 02 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0-alt1
+- New version.
+- Set the MOZ_APP_REMOTINGNAME variable.
+- Security fixes:
+  + CVE-2025-3028: Use-after-free triggered by XSLTProcessor
+  + CVE-2025-3031: JIT optimization bug with different stack slot sizes
+  + CVE-2025-3032: Leaking file descriptors from the fork server
+  + CVE-2025-3029: URL bar spoofing via non-BMP Unicode characters
+  + CVE-2025-3033: Opening local .url files could lead to another file being opened
+  + CVE-2025-3030: Memory safety bugs fixed in Firefox 137, Thunderbird 137, Firefox ESR 128.9, and Thunderbird 128.9
+  + CVE-2025-3034: Memory safety bugs fixed in Firefox 137 and Thunderbird 137
+
 * Wed Mar 26 2025 Ajrat Makhmutov <rauty@altlinux.org> 136.0.1-alt2
 - Fix opening of email attachments in applications running on XWayland.
 
