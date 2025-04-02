@@ -3,7 +3,7 @@
 
 Name: plymouth-theme-cat
 Version: 20250109
-Release: alt1
+Release: alt2
 
 Summary: This is a Plymouth theme created that can be used in Linux Distributions
 License: GPL-3.0-only
@@ -13,7 +13,7 @@ Url: https://github.com/krishnan793/PlymouthTheme-Cat
 Vcs: https://github.com/krishnan793/PlymouthTheme-Cat
 Source: %name-%version.tar
 
-Requires: plymouth
+Requires: plymouth-plugin-script
 
 BuildArch: noarch
 
@@ -32,5 +32,8 @@ mv *.script *.plymouth *.png %buildroot%_datadir/plymouth/themes/%theme_name
 %doc README.md
 
 %changelog
+* Tue Apr 01 2025 David Sultaniiazov <x1z53@altlinux.org> 20250109-alt2
+- Fix Requires: plymouth-plugin-script
+
 * Fri Mar 21 2025 David Sultaniiazov <x1z53@altlinux.org> 20250109-alt1
 - Initial build
