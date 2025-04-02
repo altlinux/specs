@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.2.3
+Version: 9.2.4
 Release: alt1
 
 Summary: Automatically find diff lines that need test coverage
@@ -58,5 +58,8 @@ tools such as pycodestyle, pyflakes, flake8, or pylint).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Apr 01 2025 Anastasia Doronina <swaggyglice@altlinux.org> 9.2.4-alt1
+- Update to 9.2.4.
+
 * Wed Feb 19 2025 Anastasia Doronina <swaggyglice@altlinux.org> 9.2.3-alt1
 - Initial Build for Sisyphus.
