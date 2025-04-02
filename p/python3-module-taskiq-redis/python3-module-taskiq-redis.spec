@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Broker and result backend for taskiq
@@ -61,6 +61,9 @@ sed -i '/^version =/s/.*/version="%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Anton Zhukharev <ancieg@altlinux.org> 1.0.4-alt1
+- Updated to 1.0.4.
+
 * Fri Mar 14 2025 Anton Zhukharev <ancieg@altlinux.org> 1.0.3-alt1
 - Updated to 1.0.3.
 
