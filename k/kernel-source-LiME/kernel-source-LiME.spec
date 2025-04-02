@@ -1,6 +1,6 @@
 %define module_name LiME
 %define module_version 1.9.1
-%define module_release	alt2
+%define module_release	alt4
 
 %define module_source	%module_name-%module_version.tar
 
@@ -12,6 +12,8 @@ Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name modules sources for LiME.
 License: GPLv2
 Group: Development/Kernel
+Url: https://github.com/504ensicsLabs/LiME
+Vcs: https://github.com/504ensicsLabs/LiME
 BuildArch: noarch
 
 BuildRequires: kernel-build-tools
@@ -36,6 +38,12 @@ cd ..
 %_usrsrc/*
 
 %changelog
+* Wed Apr 02 2025 Paul Wolneykien <manowar@altlinux.org> 1.9.1-alt4
+- Fixed Wint-conversion error on aarch64 (thx Vitaly Chikunov).
+
+* Wed Apr 02 2025 Paul Wolneykien <manowar@altlinux.org> 1.9.1-alt3
+- Updated to git@1f99bc6 from github.com/504ensicsLabs/LiME.
+
 * Wed Dec 16 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.9.1-alt2
 - compat with kernel 5.10
 
