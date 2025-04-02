@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.9.3
+Version: 4.9.4
 Release: alt1
 
 Summary: Open source computer monitoring and classroom management
@@ -130,6 +130,9 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 %_desktopdir/veyon-*.desktop
 
 %changelog
+* Mon Mar 24 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.4-alt1
+- New version.
+
 * Mon Feb 17 2025 Ajrat Makhmutov <rauty@altlinux.org> 4.9.3-alt1
 - New version.
 
