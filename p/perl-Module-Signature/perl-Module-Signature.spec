@@ -2,7 +2,7 @@
 %define module_name Module-Signature
 
 Name: perl-%module_name
-Version: 0.88
+Version: 0.89
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -12,7 +12,7 @@ License: CC0 1.0
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source0: http://www.cpan.org/authors/id/A/AU/AUDREYT/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{module_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -56,6 +56,9 @@ mv ../.perl.req .
 %_man1dir/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.89-alt1
+- automated CPAN update
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.88-alt1
 - automated CPAN update
 
