@@ -13,14 +13,14 @@ BuildRequires: perl(Devel/Trepan.pm) perl(Module/Build.pm) perl-podlators
 %global __requires_exclude %__requires_exclude|^perl\\(CPAN\\)
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.2020
+Release:    alt1
 
 Summary:    Adds CPAN Testers reporting to CPAN.pm
 License:    Apache License
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    https://cpan.metacpan.org/modules/by-module/CPAN/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/G/GA/GARU/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(CPAN.pm)
@@ -74,7 +74,7 @@ project. Full support for CPAN::Reporter is available in CPAN.pm as of
 version 1.92.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -87,10 +87,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README examples
+%doc Changes META.json META.yml README examples Todo
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.2020-alt1
+- automated CPAN update
+
 * Thu Aug 31 2023 Igor Vlasenko <viy@altlinux.org> 1.2019-alt1_1
 - update by mgaimport
 
