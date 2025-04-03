@@ -6,7 +6,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 2.0.7
+Version: 2.1.0
 Release: alt1
 
 Summary: Planar geometries, predicates, and operations
@@ -117,6 +117,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Apr 03 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 2.0.7-alt1
 - Automatically updated to 2.0.7.
 
