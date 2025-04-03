@@ -6,14 +6,14 @@ BuildRequires: perl(CACertOrg/CA.pm) perl(Config.pm) perl(ConfigReader/Simple.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.135
+Version: 2.136
 Release: alt1
 Summary: Automate Perl distribution releases
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -37,7 +37,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc Changes README* examples
+%doc Changes README* examples SECURITY.md
 %perl_vendor_privlib/M*
 
 %files scripts
@@ -45,6 +45,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.136-alt1
+- automated CPAN update
+
 * Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 2.135-alt1
 - automated CPAN update
 
