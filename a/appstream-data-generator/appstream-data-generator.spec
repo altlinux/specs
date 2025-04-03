@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20241002
+Version: 20250314
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -43,6 +43,9 @@ Collection of tools for generation of appstream-data
 %_datadir/locale/*/LC_MESSAGES/appstream-data.mo
 
 %changelog
+* Wed Mar 14 2025 Vladimir Vaskov <rirusha@altlinux.org> 20250314-alt1
+- Fixed missing app icons in app stores.
+
 * Wed Oct 02 2024 Kirill Izmestev <felixz@altlinux.org> 20241002-alt1
 - Added removal of unnecessary languages in \
 appstream-data-appdata-converter (ALT #51298, #51299).
