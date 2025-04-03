@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Pluggable
 Name: perl-%dist
-Version: 5.2
+Version: 6.3
 Release: alt1
 
 Summary: Automatically give your module the ability to have plugins
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SI/SIMONW/Module-Pluggable-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SIMONW/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ Provides a simple but, hopefully, extensible way of having 'plugins'
 for your module.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ for your module.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 6.3-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 5.2-alt1
 - automated CPAN update
 
