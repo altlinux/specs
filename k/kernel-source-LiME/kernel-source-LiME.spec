@@ -1,43 +1,48 @@
 %define module_name LiME
 %define module_version 1.9.1
-%define module_release	alt4
+%define module_release	alt5
 
-%define module_source	%module_name-%module_version.tar
-
-#### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
 Release: %module_release
-Provides: kernel-source-%module_name-%module_version
-Summary: Linux %module_name modules sources for LiME.
+Summary: External Linux kernel modules sources for LiME
 License: GPLv2
 Group: Development/Kernel
 Url: https://github.com/504ensicsLabs/LiME
-Vcs: https://github.com/504ensicsLabs/LiME
 BuildArch: noarch
 
-BuildRequires: kernel-build-tools
+BuildRequires(pre): rpm-build-kernel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-headers-modules-%kernel_latest
+BuildRequires: kernel-%kernel_latest
+BuildRequires: rpm-build-vm
+}}
 
-Source0: %module_source
+Source0: %name-%version.tar.bz2
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 %description
 %module_name Linux Memory Extractor module sources for Linux kernel.
 
 %prep
-%setup -n %module_name-%module_version
+%setup
 
 %install
-%__mkdir_p %kernel_srcdir
-cd ..
-%__mv %module_name-%module_version kernel-source-%module_name-%module_version
-%__tar -c  kernel-source-%module_name-%module_version | %__bzip2 -c > \
-	%kernel_srcdir/kernel-source-%module_name-%module_version.tar.bz2
+install -pDm0644 %_sourcedir/%name-%version.tar.bz2 -t %kernel_srcdir
 
 %files
 %_usrsrc/*
 
+%check
+# Testing here is convenient, but ignore the test result as it is
+# supposed for kernel-modules build stage to match the flavour exactly.
+./check.sh || true
+
 %changelog
+* Thu Apr 03 2025 Vitaly Chikunov <vt@altlinux.org> 1.9.1-alt5
+- Add informational build/run tests in %%check and make them runnable at
+  kernel-modules build.
+
 * Wed Apr 02 2025 Paul Wolneykien <manowar@altlinux.org> 1.9.1-alt4
 - Fixed Wint-conversion error on aarch64 (thx Vitaly Chikunov).
 

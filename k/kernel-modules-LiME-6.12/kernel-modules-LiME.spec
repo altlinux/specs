@@ -1,7 +1,7 @@
 %define module_name	LiME
 %define module_version	1.9.1
 
-%define module_release alt4
+%define module_release alt5
 
 %define flavour		6.12
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -16,7 +16,7 @@ Summary: LiME module for Linux kernel
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
-License: BSD 3-clause
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
@@ -28,6 +28,10 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires: rpm >= 4.0.2-75
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-image-%flavour = %kepoch%kversion-%krelease
+BuildRequires: rpm-build-vm
+}}
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
@@ -50,6 +54,9 @@ make -C %_usrsrc/linux-%kversion-%flavour-%krelease M=$(pwd) modules
 %install
 mkdir -p %buildroot/%module_dir
 install lime.ko %buildroot/%module_dir
+
+%check
+./tests.sh %kversion-%flavour-%krelease
 
 %files
 %defattr(644,root,root,755)
