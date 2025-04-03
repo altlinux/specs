@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Action-RenderView
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: %m_name - Sensible default end action
@@ -23,7 +23,7 @@ Url: http://www.cpan.org
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/Catalyst-Action-RenderView-0.16.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010 (-bi)
 BuildRequires: perl-Catalyst-Devel perl-Data-Visitor perl-Test-Pod perl-Test-Pod-Coverage
@@ -34,7 +34,7 @@ forward to the first available view, unless status is set to
 3xx, or there is a response body.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -43,9 +43,13 @@ forward to the first available view, unless status is set to
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
