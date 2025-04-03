@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-DBIx-Class
-Version: 0.082843
+Version: 0.082844
 Release: alt1
 
 Summary: Extensible and flexible object <-> relational mapper
@@ -51,6 +51,9 @@ HAVING support.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.082844-alt1
+- automated CPAN update
+
 * Fri May 20 2022 Igor Vlasenko <viy@altlinux.org> 0.082843-alt1
 - automated CPAN update
 
