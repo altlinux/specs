@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build/Tiny.pm) perl(Sub/Identify.pm) perl(Test/Requires.pm) perl(Module/Build.pm) perl(Test/Needs.pm)
 %define dist namespace-autoclean
 Name: perl-%dist
-Version: 0.29
+Version: 0.31
 Release: alt1
 
 Summary: Keep imports out of your namespace
@@ -40,6 +40,9 @@ class or instances.
 %perl_vendor_privlib/namespace
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- automated CPAN update
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - automated CPAN update
 
