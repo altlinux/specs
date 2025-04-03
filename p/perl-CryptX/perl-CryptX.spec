@@ -2,8 +2,8 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.080
-Release: alt2
+Version: 0.085
+Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
@@ -103,6 +103,9 @@ sed -i 's,-msse4.[12] -maes,,' Makefile.PL
 %perl_vendor_archlib/Math
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.085-alt1
+- automated CPAN update
+
 * Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 0.080-alt2
 - removed -msse4.1 -maes, for early x86_64 support
 
