@@ -1,15 +1,18 @@
 %define _unpackaged_files_terminate_build 1
+%global _libexecdir %prefix/libexec
 
 Name: icmake
-Version: 9.03.01
+Version: 13.01.00
 Release: alt1
 Summary: Hybrid between a 'make' utility and a 'shell script' language
 License: GPLv3
 Group: Development/Tools
 Url: https://gitlab.com/fbb-git/icmake
 
-# https://gitlab.com/fbb-git/icmake.git
+VCS: https://gitlab.com/fbb-git/icmake.git
 Source: %name-%version.tar
+Patch0: %name-%version-%release.patch
+BuildRequires: gcc-c++
 
 %description
 Icmake is a hybrid between a 'make' utility and a 'shell script'
@@ -36,22 +39,29 @@ This package contains documentation for Icmake.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
+echo "/* created during rpmbuild */" >  %name/INSTALL.im
+echo "#define BINDIR      \"%_bindir\"" >>  %name/INSTALL.im
+echo "#define SKELDIR     \"%_datadir/%name\"" >>  %name/INSTALL.im
+echo "#define MANDIR      \"%_mandir\"" >>  %name/INSTALL.im
+echo "#define LIBDIR      \"%_libexecdir/%name\"" >>  %name/INSTALL.im
+echo "#define CONFDIR     \"%_sysconfdir/%name\"" >>  %name/INSTALL.im
+echo "#define DOCDIR      \"%_docdir/%name-%version\"" >>  %name/INSTALL.im
+export ICMAKE_CPPSTD=--std=c++26
 pushd %name
-./icm_prepare /
-./icm_bootstrap /
+./prepare /
+./buildlib /
+./build all
 popd
-
-./manpages
 
 %install
 pushd %name
-./icm_install all %buildroot
+./install all %buildroot
 popd
 
 %files
-%doc %name/changelog %name/doc/*.doc
 %_sysconfdir/*
 %_bindir/*
 %_libexecdir/%name
@@ -60,10 +70,12 @@ popd
 %_man7dir/*
 
 %files doc
-%_docdir/%name
-%_docdir/icmake-doc
+%_docdir/%name-%version
 
 %changelog
+* Thu Apr 03 2025 Anton Farygin <rider@altlinux.com> 13.01.00-alt1
+- 9.03.01 -> 13.01.00
+
 * Wed Oct 28 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 9.03.01-alt1
 - Updated to upstream version 9.03.01.
 
