@@ -10,14 +10,14 @@ BuildRequires: perl(Module/Build.pm) perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.0.7
+Release:    alt1
 
 Summary:    Web service API to MusicBrainz database
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    https://cpan.metacpan.org/modules/by-module/WebService/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/B/BF/BFAIST/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(Mojolicious.pm)
@@ -29,7 +29,7 @@ This module will act as a factory using static methods to return specific
 web service objects;
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -44,10 +44,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml 
+%doc Changes META.json META.yml README.md
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.0.7-alt1
+- automated CPAN update
+
 * Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 1.0.6-alt1_1
 - update by mgaimport
 
