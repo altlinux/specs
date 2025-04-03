@@ -19,9 +19,9 @@
 %endif
 
 %define nv_version 570
-%define nv_release 124
-%define nv_minor   04
-%define pkg_rel alt2
+%define nv_release 133
+%define nv_minor   07
+%define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -299,6 +299,9 @@ done
 %endif
 
 %changelog
+* Thu Apr 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt1
+- new version
+
 * Tue Mar 25 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt2
 - package libnvidia-vksc-core
 

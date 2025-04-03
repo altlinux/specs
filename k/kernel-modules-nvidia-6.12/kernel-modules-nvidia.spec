@@ -8,12 +8,12 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	570.124.04
+%define package_version	570.133.07
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt2
+%define module_release	alt1
 %define flavour		6.12
 %define karch x86_64 aarch64 %ix86
 
@@ -293,6 +293,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Apr 03 2025 Sergey V Turchin <zerg at altlinux dot org> 570.133.07-alt1
+- new release (570.133.07)
 
 * Fri Mar 14 2025 Sergey V Turchin <zerg at altlinux dot org> 570.124.04-alt2
 - build peermem module

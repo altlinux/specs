@@ -21,9 +21,9 @@
 # version-release
 
 %define nv_version 570
-%define nv_release 124
-%define nv_minor 04
-%define pkg_rel alt288
+%define nv_release 133
+%define nv_minor 07
+%define pkg_rel alt289
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -368,6 +368,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu Apr 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt289
+- new version
+
 * Fri Mar 14 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt288
 - switch peermem module
 
