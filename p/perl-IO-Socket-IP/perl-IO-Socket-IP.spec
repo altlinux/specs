@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-IO-Socket-IP
-Version: 0.42
+Version: 0.43
 Release: alt1
 
 Summary: IO::Socket::IP - A drop-in replacement for IO::Socket::INET supporting both IPv4 and IPv6
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Module-Build
+BuildRequires: perl-devel perl-Module-Build perl(Test2/V0.pm)
 
 %description
 This module provides a protocol-independent way to use IPv4 and IPv6
@@ -42,6 +42,9 @@ while still falling back to IPv4-only on systems which don't.
 %doc Changes README
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.43-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.42-alt1
 - new version
 
