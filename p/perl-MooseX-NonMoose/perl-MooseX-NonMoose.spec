@@ -1,15 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test2/Require/Module.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-NonMoose
 Name: perl-%dist
-Version: 0.26
-Release: alt1.2
+Version: 0.27
+Release: alt1
 
 Summary: Easy subclassing of non-Moose classes
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DO/DOY/MooseX-NonMoose-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PL/PLICEASE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,7 +34,7 @@ only inherit from Moose modules, or even classes that don't inherit from
 anything at all.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -40,10 +43,13 @@ anything at all.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README author.yml
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.27-alt1
+- automated CPAN update
+
 * Thu Jan 19 2017 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1.2
 - fixed build
 
