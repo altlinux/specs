@@ -4,7 +4,7 @@ BuildRequires: perl(Crypt/OpenSSL/Guess.pm)
 # END SourceDeps(oneline)
 %define bname Crypt-OpenSSL-X509
 Name: perl-%bname
-Version: 1.915
+Version: 2.0.1
 Release: alt1
 Summary: Perl interface to OpenSSL for X509
 License: Perl
@@ -42,6 +42,9 @@ rm -rf ./inc
 
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.0.1-alt1
+- automated CPAN update
+
 * Thu Jun 22 2023 Igor Vlasenko <viy@altlinux.org> 1.915-alt1
 - automated CPAN update
 
