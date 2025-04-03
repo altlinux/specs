@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Business-ISSN
-Version: 1.005
+Version: 1.008
 Release: alt1
 
 Summary: Work with International Standard Serial Numbers
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-Module-Build
 
@@ -98,10 +98,13 @@ the error might have been in any of the other nine positions.
 %perl_vendor_install
 
 %files
-%doc README.pod Changes examples
+%doc README.pod Changes examples SECURITY.md
 %perl_vendor_privlib/Business/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.008-alt1
+- automated CPAN update
+
 * Fri Feb 18 2022 Igor Vlasenko <viy@altlinux.org> 1.005-alt1
 - automated CPAN update
 
