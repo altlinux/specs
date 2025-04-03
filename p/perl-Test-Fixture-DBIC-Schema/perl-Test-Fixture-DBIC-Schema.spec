@@ -9,14 +9,14 @@ BuildRequires: perl(DBD/SQLite.pm)
 %define upstream_version 0.04
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_8
+Version:    0.051
+Release:    alt1
 
 Summary:    Load fixture data to storage
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Test/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(DBIx/Class.pm)
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
@@ -34,7 +34,7 @@ Source44: import.info
 Test::Fixture::DBIC::Schema is fixture data loader for DBIx::Class::Schema.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -48,11 +48,14 @@ Test::Fixture::DBIC::Schema is fixture data loader for DBIx::Class::Schema.
 %makeinstall_std
 
 %files
-%doc Changes META.yml  README
+%doc Changes META.yml README
 %perl_vendor_privlib/*
 
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.051-alt1
+- automated CPAN update
+
 * Fri Oct 13 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1_8
 - update by mgaimport
 
