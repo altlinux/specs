@@ -2,7 +2,7 @@
 %define module Test-Output
 
 Name: perl-%module
-Version: 1.034
+Version: 1.035
 Release: alt1
 
 Summary: Utilities to test STDOUT and STDERR messages
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,10 +32,13 @@ as possible to the tester.
 %perl_vendor_install
 
 %files
-%doc Changes README.pod
+%doc Changes README.pod SECURITY.md
 %perl_vendor_privlib/Test/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.035-alt1
+- automated CPAN update
+
 * Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 1.034-alt1
 - automated CPAN update
 
