@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Tie-Cycle
-Version: 1.228
+Version: 1.229
 Release: alt1
 
 Summary: Cycle through a list of values via a scalar
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-devel
 
@@ -59,10 +59,13 @@ example of this effect.
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING.md README.pod Changes examples
+%doc CONTRIBUTING.md README.pod Changes examples SECURITY.md
 %perl_vendor_privlib/Tie/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.229-alt1
+- automated CPAN update
+
 * Tue Feb 06 2024 Igor Vlasenko <viy@altlinux.org> 1.228-alt1
 - automated CPAN update
 
