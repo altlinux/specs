@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Crypt-DES_EDE3
-Version: 0.01
-Release: alt2.1
+Version: 0.03
+Release: alt1
 
 Summary: Crypt-DES_EDE3 - Triple-DES EDE encryption/decryption
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/B/BT/BTROTT/%m_distro-%version.tar.bz2
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Aug 27 2005
 BuildRequires: perl-Crypt-DES perl-devel
@@ -47,7 +47,7 @@ module in conjunction with *Crypt::CBC*, for example. This would be
 DES-EDE3-CBC, or triple-DES in outer CBC mode.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -56,9 +56,13 @@ DES-EDE3-CBC, or triple-DES in outer CBC mode.
 %perl_vendor_install
 
 %files
+%doc Changes README LICENSE
 %perl_vendor_privlib/Crypt/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.03-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
