@@ -7,13 +7,13 @@ BuildRequires: perl-podlators
 %global old_test_more %(perl -MTest::More -e 'print (($Test::More::VERSION) < 0.88 ? 1 : 0);' 2>/dev/null || echo 0)
 
 Name:		perl-ExtUtils-Helpers
-Version:	0.026
+Version:	0.028
 Release:	alt1
 Summary:	Various portability utilities for module builders
 Group:		Development/Perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-Helpers
-Source:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-Helpers-%{version}.tar.gz
 Patch3:		ExtUtils-Helpers-0.021-old-Test::More.patch
 BuildArch:	noarch
 # Build
@@ -72,12 +72,15 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 make test AUTHOR_TESTING=1 RELEASE_TESTING=1
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %{perl_vendor_privlib}/ExtUtils/
 #perl(ExtUtils/PL2Bat.pm)
 %exclude %{perl_vendor_privlib}/ExtUtils/Helpers/Windows.pm
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.028-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 0.026-alt1
 - automated CPAN update
 
