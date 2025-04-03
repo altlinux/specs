@@ -6,12 +6,12 @@ BuildRequires: perl(DateTime/Locale.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-DB2
-Version:        0.05
-Release:        alt3_30
+Version:        0.06
+Release:        alt1
 Summary:        Parse and format DB2 dates and times
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/DateTime-Format-DB2
-Source0:        https://cpan.metacpan.org/authors/id/J/JR/JROBINSON/DateTime-Format-DB2-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/J/JR/JROBINSON/DateTime-Format-DB2-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(DateTime.pm)
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- automated CPAN update
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.05-alt3_30
 - fixed build
 
