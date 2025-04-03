@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist XML-Twig
 Name: perl-%dist
-Version: 3.52
+Version: 3.53
 Release: alt1
 
 Summary: A perl module for processing huge XML documents in tree mode
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MI/MIROD/XML-Twig-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIROD/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,7 +31,7 @@ xml_split	cut a big XML file into smaller chunks
 xml_merge	merge back XML files split with xml_split
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -49,6 +49,9 @@ xml_merge	merge back XML files split with xml_split
 	%perl_vendor_privlib/XML/Twig/XPath.pm
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 3.53-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 3.52-alt1
 - automated CPAN update
 
