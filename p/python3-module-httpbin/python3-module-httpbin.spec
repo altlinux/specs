@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: HTTP Request and Response Service
 License: ISC
@@ -55,6 +55,9 @@ All endpoint responses are JSON-encoded.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 03 2025 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt2
+- Fixed /bytes endpoint with newer werkzeug versions.
+
 * Wed Feb 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.10.2-alt1
 - Updated to 0.10.2.
 
