@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Try-Tiny
 Name: perl-Try-Tiny
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: Minimal try/catch with proper localization of $@
@@ -35,6 +35,9 @@ to minimize common mistakes with eval blocks, and NOTHING else.
 %perl_vendor_privlib/Try/Tiny.pm
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
+- automated CPAN update
+
 * Fri Nov 26 2021 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
 - automated CPAN update
 
