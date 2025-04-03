@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Tie-RefHash
 Name: perl-%dist
-Version: 1.40
+Version: 1.41
 Release: alt1
 
 Summary: Use references as hash keys
@@ -37,6 +37,9 @@ part of Tie::RefHash.
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.41-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.40-alt1
 - automated CPAN update
 
