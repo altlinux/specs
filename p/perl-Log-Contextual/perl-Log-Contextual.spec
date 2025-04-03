@@ -1,17 +1,17 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
+BuildRequires: perl(Test/Needs.pm) perl(Test/PerlTidy.pm) perl(Test/Pod.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Log-Contextual
-Version:        0.008001
-Release:        alt1_7
+Version:        0.009001
+Release:        alt1
 Summary:        Simple logging interface with a contextual log
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Log-Contextual
-Source0:        https://cpan.metacpan.org/authors/id/F/FR/FREW/Log-Contextual-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/H/HA/HAARG/Log-Contextual-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
@@ -70,11 +70,13 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc --no-dereference LICENSE
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.009001-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.008001-alt1_7
 - update to new release by fcimport
 
