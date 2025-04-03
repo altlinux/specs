@@ -15,8 +15,8 @@
 %define _enable_test 1
 
 Name: perl-Email-Send
-Version: 2.201
-Release: alt2
+Version: 2.202
+Release: alt1
 
 Summary: Simply Sending Email
 
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/~rjbs/%m_distro-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Send-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module}-%{version}.tar.gz
 
 # manually removed: postfix
 # Automatically added by buildreq on Sat Dec 15 2007
@@ -41,7 +41,7 @@ to multiple Email mailers. The goal of this software is to be small
 and simple, easy to use, and easy to extend.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -50,10 +50,13 @@ and simple, easy to use, and easy to extend.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc Changes README.md
 %perl_vendor_privlib/Email/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.202-alt1
+- automated CPAN update
+
 * Fri Mar 08 2019 Igor Vlasenko <viy@altlinux.ru> 2.201-alt2
 - fixed build
 
