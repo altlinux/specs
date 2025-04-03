@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Summary: Caching infrastructure for web apps
 License: ZPL-2.1
@@ -90,6 +90,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Thu Apr 03 2025 Anton Vyatkin <toni@altlinux.org> 3.1-alt1
+- New version 3.1.
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 3.0-alt2
 - Fixed FTBFS.
 
