@@ -7,7 +7,7 @@ BuildRequires: perl(Benchmark.pm) perl(Carp.pm) perl(Config.pm) perl(Exporter.pm
 %define upstream_version 0.0304
 
 Name:       perl-%{upstream_name}
-Version:    0.0305
+Version:    0.0306
 Release:    alt1
 
 Summary:    Named sprintf according to the
@@ -61,6 +61,9 @@ same as of
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.0306-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.0305-alt1
 - automated CPAN update
 
