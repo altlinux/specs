@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Devel-PDB
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Summary: A simple Curses-based Perl Debugger
@@ -47,10 +47,14 @@ tracing complicated Perl applications on the spot.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc Changes README
 #perl_vendor_privlib/Devel/PDB.pm
 %perl_vendor_privlib/Devel/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.7-alt1
+- automated CPAN update
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1
 - automated CPAN update
 
