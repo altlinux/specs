@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(autodie.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist podlators
 Name: perl-%dist
-Version: 5.01
+Version: 6.0.2
 Release: alt1
 
 Summary: Convert POD data to various other formats
@@ -9,7 +12,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/R/RR/RRA/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RR/RRA/%{dist}-v%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +28,7 @@ the POD parsing themselves, and are designed to be object-oriented and
 to subclass.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n %{dist}-v%{version}
 
 %build
 %perl_vendor_build
@@ -43,6 +46,9 @@ to subclass.
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 6.0.2-alt1
+- automated CPAN update
+
 * Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 5.01-alt1
 - automated CPAN update
 
