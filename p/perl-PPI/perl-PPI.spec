@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Safe/Isa.pm) perl(YAML/PP.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist PPI
 Name: perl-%dist
-Version: 1.278
+Version: 1.281
 Release: alt1
 
 Summary: Parse, Analyze and Manipulate Perl (without perl)
@@ -9,7 +12,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MITHALDU/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +42,9 @@ it's also a reverse acronym for "I Parse Perl".
 %perl_vendor_privlib/PPI*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.281-alt1
+- automated CPAN update
+
 * Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 1.278-alt1
 - automated CPAN update
 
