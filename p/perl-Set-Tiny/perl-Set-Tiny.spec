@@ -1,4 +1,3 @@
-%define module_version 0.04
 %define module_name Set-Tiny
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.04
-Release: alt2
+Version: 0.06
+Release: alt1
 Summary: Simple sets of strings
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/T/TR/TRENDELS/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- automated CPAN update
+
 * Tue Jan 31 2017 Igor Vlasenko <viy@altlinux.ru> 0.04-alt2
 - to Sisyphus
 
