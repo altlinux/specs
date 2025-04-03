@@ -4,7 +4,7 @@ BuildRequires: perl(Clone.pm) perl(Test/Needs.pm)
 # END SourceDeps(oneline)
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.45
+Version: 7.00
 Release: alt1
 
 Summary: HTTP style messages
@@ -39,6 +39,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 7.00-alt1
+- automated CPAN update
+
 * Sun Oct 01 2023 Igor Vlasenko <viy@altlinux.org> 6.45-alt1
 - automated CPAN update
 
