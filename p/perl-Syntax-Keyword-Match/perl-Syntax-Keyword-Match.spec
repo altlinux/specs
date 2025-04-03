@@ -7,7 +7,7 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.13
+Version: 0.15
 Release: alt1
 Summary: a C<match/case> syntax for perl
 Group: Development/Perl
@@ -43,6 +43,9 @@ experimental. No API or compatbility guarantees are made at this time.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.15-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.13-alt1
 - automated CPAN update
 
