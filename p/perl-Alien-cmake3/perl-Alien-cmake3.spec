@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Alien-cmake3
-Version:        0.08
+Version:        0.09
 Release:        alt1
 Summary:        Find or download or build cmake 3 or better
 License:        GPL+ or Artistic
@@ -70,6 +70,9 @@ make test
 %{perl_vendor_archlib}/Alien*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Sun Jul 18 2021 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
 - automated CPAN update
 
