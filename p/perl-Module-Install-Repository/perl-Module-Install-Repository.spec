@@ -1,14 +1,14 @@
 %define dist Module-Install-Repository
 Name: perl-%dist
-Version: 0.06
-Release: alt3
+Version: 0.08
+Release: alt1
 
 Summary: Automatically sets repository URL from svn/svk/Git checkout
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ automatically figure out repository URL and set it via repository()
 which then will be added to resources under META.yml.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ which then will be added to resources under META.yml.
 %perl_vendor_privlib/Module*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.06-alt3
 - rebuilt as plain src.rpm
 
