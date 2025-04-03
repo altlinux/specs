@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Sub-Override
-Version: 0.10
+Version: 0.12
 Release: alt1
 
 Summary: Perl extension for easily overriding subroutines
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/O/OV/OVID/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MV/MVSJES/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu May 24 2012 (-bb)
 # optimized out: perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Sub-Uplevel perl-devel python-base
@@ -49,6 +49,9 @@ None.
 %perl_vendor_privlib/Sub/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Fri Dec 08 2023 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
 - automated CPAN update
 
