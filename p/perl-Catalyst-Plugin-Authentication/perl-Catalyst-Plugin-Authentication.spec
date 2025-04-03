@@ -1,6 +1,6 @@
 %define dist Catalyst-Plugin-Authentication
 Name: perl-%dist
-Version: 0.10023
+Version: 0.10024
 Release: alt1
 
 Summary: Infrastructure plugin for the Catalyst
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/Catalyst-Plugin-Authentication-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JJ/JJNAPIORK/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ the user is who they claim to be), and authorization (allowing
 the user to do what the system authorises them to do).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ the user to do what the system authorises them to do).
 %perl_vendor_privlib/Catalyst
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.10024-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.10023-alt1
 - automated CPAN update
 
