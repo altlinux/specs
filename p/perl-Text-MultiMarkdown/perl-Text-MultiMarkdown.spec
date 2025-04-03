@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Unicode/Normalize.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 Epoch: 1
 #
@@ -16,7 +19,7 @@ Epoch: 1
 %define _enable_test 1
 
 Name: perl-Text-MultiMarkdown
-Version: 1.002
+Version: 1.004
 Release: alt1
 
 Summary: Convert MultiMarkdown syntax to (X)HTML
@@ -26,7 +29,7 @@ Group: Development/Perl
 Url: http://www.cpan.org
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Encode perl-Text-Markdown perl-Test-Exception perl-List-MoreUtils
 BuildRequires: perl-Text-Diff perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Spelling
@@ -62,12 +65,15 @@ export TEST_POD=1
 %perl_vendor_install
 
 %files
-%doc MARKDOWN.md README.pod Changes
+%doc MARKDOWN.md README.pod Changes SECURITY.md
 %_bindir/MultiMarkdown.pl
 %_man1dir/*
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1:1.004-alt1
+- automated CPAN update
+
 * Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 1:1.002-alt1
 - automated CPAN update
 
