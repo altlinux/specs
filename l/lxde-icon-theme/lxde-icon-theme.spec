@@ -1,19 +1,19 @@
 Name:           lxde-icon-theme
-Version:        0.5.1
-Release:        alt1.qa1
+Version:        0.5.2
+Release:        alt1
 Summary:        Default icon theme for LXDE
 
 Group:          Graphical desktop/Other
 License:        LGPLv3
 URL:            http://lxde.org
-# Download from http://sourceforge.net/projects/lxde/files/LXDE Icon Theme/
+Vcs:		https://github.com/lxde/lxde-icon-theme
 Source0:        %name-%version.tar.bz2
 
 BuildArch:      noarch
 Provides:       nuoveXT2-icon-theme = 2.2
 
 %description
-nuoveXT2 is a very complete set of icons for several operating systems. It is 
+nuoveXT2 is a very complete set of icons for several operating systems. It is
 also the default icon-theme of LXDE, the Lightweight X11 Desktop Environment.
 
 
@@ -33,6 +33,9 @@ touch %buildroot%_iconsdir/nuoveXT2/icon-theme.cache
 %_iconsdir/nuoveXT2
 
 %changelog
+* Tue Mar 25 2025 Kirill Izmestev <felixz@altlinux.org> 0.5.2-alt1
+- New version.
+
 * Sun Oct 14 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1.qa1
 - NMU: applied repocop patch
 
