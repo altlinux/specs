@@ -10,14 +10,14 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    0.60
+Release:    alt1
 
 Summary:    Magic functions available inside filter conditions
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    https://cpan.metacpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/S/SC/SCHWIGON/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Class/XSAccessor.pm)
 BuildRequires: perl(Class/XSAccessor/Array.pm)
@@ -49,7 +49,7 @@ Source44: import.info
 no description found
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -63,10 +63,13 @@ no description found
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes META.json META.yml README todo.org
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.60-alt1
+- automated CPAN update
+
 * Thu Aug 31 2023 Igor Vlasenko <viy@altlinux.org> 0.59-alt1_1
 - update by mgaimport
 
