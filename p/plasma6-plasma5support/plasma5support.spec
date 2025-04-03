@@ -4,7 +4,7 @@
 %define libplasma5support libplasma5support%sover
 
 Name: plasma6-%rname
-Version: 6.3.3
+Version: 6.3.4
 Release: alt1
 %K6init
 
@@ -21,7 +21,7 @@ BuildRequires: libvulkan-devel libXfixes-devel
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-knotifications-devel kf6-solid-devel kf6-kio-devel kf6-kidletime-devel
-BuildRequires: plasma6-libksysguard-devel
+BuildRequires: plasma6-libksysguard-devel plasma6-activities-devel
 
 %description
 %summary.
@@ -85,6 +85,9 @@ KF6 library
 
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
+- new version
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 

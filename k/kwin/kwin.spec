@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.3.3
-Release: alt2
+Version: 6.3.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -37,7 +37,6 @@ Requires(post): /sbin/setcap
 
 Source: %rname-%version.tar
 #
-Patch0: kdebug-501357.patch
 Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
@@ -131,7 +130,6 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -201,6 +199,9 @@ done
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
+- new version
+
 * Fri Mar 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt2
 - add patch against kdebug#501357
 

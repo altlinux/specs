@@ -20,8 +20,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma-%rname
-Version: 6.3.3
-Release: alt2
+Version: 6.3.4
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -347,6 +347,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
+- new version
+
 * Fri Mar 14 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 6.3.3-alt2
 - Update the patch for correcting the markdown syntax of the changelog
   before converting it to HTML.

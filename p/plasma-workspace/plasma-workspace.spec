@@ -32,8 +32,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.3.3
-Release: alt3
+Version: 6.3.4
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -593,6 +593,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.4-alt1
+- new version
+
 * Thu Mar 27 2025 Oleg Solovyov <mcpain@altlinux.org> 1:6.3.3-alt3
 - update freememorynotifer:
   + fix duplicating buttons (Closes: #53011)

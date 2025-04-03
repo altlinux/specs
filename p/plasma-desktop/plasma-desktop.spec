@@ -13,8 +13,8 @@
 %endif
 
 Name: %rname
-Version: 6.3.3
-Release: alt2
+Version: 6.3.4
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -260,6 +260,9 @@ done
 %_K6dbus_iface/*.xml
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
+- new version
+
 * Fri Mar 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt2
 - don't force disable audio indicators control on taskbar
 

@@ -5,7 +5,7 @@
 
 %define rname libplasma
 Name: plasma6-lib
-Version: 6.3.3
+Version: 6.3.4
 Release: alt1
 %K6init
 
@@ -104,6 +104,9 @@ Requires: %name-common
 
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
+- new version
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 

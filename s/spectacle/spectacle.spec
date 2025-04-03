@@ -5,8 +5,9 @@
 %define service_name app-org.kde.spectacle
 
 Name: %rname
-Version: 24.12.3
+Version: 6.3.4
 Release: alt1
+Epoch: 1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -22,8 +23,8 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel
 BuildRequires: qt6-wayland-devel plasma-wayland-protocols
-BuildRequires: pipewire-libs-devel plasma6-kpipewire-devel
 BuildRequires: libopencv-devel libvulkan-devel
+BuildRequires: libcups-devel
 BuildRequires: libxcbutil-cursor-devel libxcbutil-devel libxcbutil-image-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel kf6-kdoctools-devel
@@ -31,8 +32,8 @@ BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidget
 BuildRequires: kf6-kservice-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-knewstuff-devel kf6-kglobalaccel-devel
 BuildRequires: kf6-purpose-devel kf6-kirigami-devel kf6-kstatusnotifieritem-devel kf6-prison-devel
+BuildRequires: pipewire-libs-devel plasma6-kpipewire-devel
 BuildRequires: plasma6-libkscreen-devel plasma6-kwayland-devel plasma6-layer-shell-qt-devel
-BuildRequires: kde6-kcolorpicker-devel kde6-kimageannotator-devel
 
 %description
 Spectacle is screenshot taking utility for the KDE desktop. Spectacle
@@ -68,6 +69,12 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.4-alt1
+- new version
+
+* Fri Mar 21 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.3-alt1
+- build Plasma version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

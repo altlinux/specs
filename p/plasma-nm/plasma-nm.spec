@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.3.3
+Version: 6.3.4
 Release: alt1
 #Epoch: 1
 %K6init
@@ -21,6 +21,7 @@ License: GPL-2.0-or-later
 Requires: NetworkManager-daemon
 Requires: NetworkManager-adsl NetworkManager-wifi
 Requires: mobile-broadband-provider-info
+Requires: libcups-devel
 Requires: qca-qt6-ossl
 # prison qml
 Requires: libkf6prison
@@ -275,6 +276,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
+- new version
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.3-alt1
 - new version
 
