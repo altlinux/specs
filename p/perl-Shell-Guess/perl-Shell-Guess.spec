@@ -6,7 +6,7 @@ BuildRequires: perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.09
+Version: 0.10
 Release: alt1
 Summary: Make an educated guess about the shell in use
 Group: Development/Perl
@@ -29,10 +29,13 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes author.yml
+%doc README Changes author.yml
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
