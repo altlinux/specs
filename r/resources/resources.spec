@@ -1,15 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.7
+%define ver_major 1.8
 %define rdn_name net.nokyan.Resources
 
 %def_enable check
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: System monitor
 License: GPL-3.0-or-later
@@ -19,7 +19,7 @@ Url: https://apps.gnome.org/Resources
 Vcs: https://github.com/nokyan/resources.git
 
 %if_disabled snapshot
-Source: %url/archive/v%version/%name-%version.tar.gz
+Source: https://github.com/nokyan/resources/archive/v%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -27,8 +27,8 @@ Source1: %name-%version-cargo.tar
 
 ExcludeArch: ppc64le
 
-%define gtk_ver 4.10
-%define adwaita_ver 1.5
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 
 Requires: dconf /usr/sbin/dmidecode polkit
 
@@ -90,6 +90,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Thu Apr 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Fri Dec 20 2024 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1.1
 - rebuilt with -Dprofile=default
 
