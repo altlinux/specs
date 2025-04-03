@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Mypy static type checker plugin for Pytest
@@ -56,6 +56,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/pytest_mypy-%version.dist-info
 
 %changelog
+* Thu Apr 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Automatically updated to 1.0.1.
+
 * Tue Apr 01 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
 - Automatically updated to 1.0.0.
 
