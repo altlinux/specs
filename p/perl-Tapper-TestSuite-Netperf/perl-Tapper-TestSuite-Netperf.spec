@@ -6,14 +6,14 @@ BuildRequires: perl-podlators
 %define upstream_version 4.1.1
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_8
+Version:    5.0.0
+Release:    alt1
 
 Summary:    Tapper - Network performance measurements - Client
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/Temp.pm)
@@ -33,7 +33,7 @@ Source44: import.info
 Network performance measurements client for Tapper.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -47,7 +47,7 @@ Network performance measurements client for Tapper.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes META.json META.yml README
 %perl_vendor_privlib/*
 /usr/bin/tapper-testsuite-netperf-client
 /usr/bin/tapper-testsuite-netperf-server
@@ -55,6 +55,9 @@ Network performance measurements client for Tapper.
 /usr/share/man/man1/tapper-testsuite-netperf-server.1*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 5.0.0-alt1
+- automated CPAN update
+
 * Wed Jul 27 2016 Igor Vlasenko <viy@altlinux.ru> 4.1.1-alt1_8
 - update by mgaimport
 
