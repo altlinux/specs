@@ -4,7 +4,7 @@ BuildRequires: perl(autodie.pm)
 # END SourceDeps(oneline)
 %define dist XML-LibXSLT
 Name: perl-%dist
-Version: 2.002001
+Version: 2.003000
 Release: alt1
 
 Summary: Perl interface to the Gnome libxslt library
@@ -44,6 +44,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.003000-alt1
+- automated CPAN update
+
 * Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 2.002001-alt1
 - automated CPAN update
 
