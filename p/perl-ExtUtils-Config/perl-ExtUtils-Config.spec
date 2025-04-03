@@ -6,12 +6,12 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/Pod.pm) perl(Test/Pod/Co
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-Config
-Version:	0.008
-Release:	alt1_17
+Version:	0.010
+Release:	alt1
 Summary:	A wrapper for perl's configuration
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-Config
-Source0:	https://cpan.metacpan.org/modules/by-module/ExtUtils/ExtUtils-Config-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-Config-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -49,14 +49,15 @@ make test
 
 %files
 %if 0%{?_licensedir:1}
-%doc --no-dereference LICENSE
 %else
-%doc LICENSE
 %endif
 %doc Changes README
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.010-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1_17
 - update to new release by fcimport
 
