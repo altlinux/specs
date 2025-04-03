@@ -3,7 +3,7 @@
 %define _without_test 1
 %define module_name Captcha-reCAPTCHA-V3
 Name: perl-%module_name
-Version: 0.05
+Version: 0.06
 Release: alt1
 Summary: A Perl implementation of reCAPTCHA API version v3
 Group: Development/Perl
@@ -34,6 +34,9 @@ Captcha::reCAPTCHA::V3 - A Perl implementation of reCAPTCHA API version v3
 %perl_vendor_privlib/auto/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- automated CPAN update
+
 * Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 0.05-alt1
 - automated CPAN update
 
