@@ -7,7 +7,7 @@ BuildRequires: perl(DateTime.pm) perl(DateTime/Locale.pm) perl(ExtUtils/MakeMake
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.8.0
+Version: 1.10.0
 Release: alt1
 Summary: Parse and format RFC3339 datetime strings
 Group: Development/Perl
@@ -37,6 +37,9 @@ objects.
 %perl_vendor_privlib/D*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1:1.10.0-alt1
+- automated CPAN update
+
 * Fri Jan 26 2024 Igor Vlasenko <viy@altlinux.org> 1:1.8.0-alt1
 - automated CPAN update
 
