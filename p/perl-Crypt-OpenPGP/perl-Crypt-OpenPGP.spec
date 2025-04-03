@@ -2,15 +2,15 @@
 BuildRequires: perl-podlators perl(Digest/SHA.pm)
 %define dist Crypt-OpenPGP
 Name: perl-%dist
-Version: 1.12
-Release: alt1.1
+Version: 1.19
+Release: alt1
 
 Summary: Pure-Perl OpenPGP-compatible PGP implementation
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SR/SROMANOV/Crypt-OpenPGP-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,7 +33,7 @@ scripts for %name
 
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -42,7 +42,7 @@ scripts for %name
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CREDITS
 %perl_vendor_privlib/Crypt
 
 %files scripts
@@ -51,6 +51,9 @@ scripts for %name
 
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.19-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
