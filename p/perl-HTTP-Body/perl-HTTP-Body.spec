@@ -1,15 +1,15 @@
 %define module HTTP-Body
 
 Name: perl-%module
-Version: 1.22
-Release: alt1.1
+Version: 1.23
+Release: alt1
 
 Summary: %module - HTTP Body Parser
 License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/G/GE/GETTY/HTTP-Body-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GE/GETTY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-Test-Deep perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
 HTTP Body Parser.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 export TEST_POD=1
@@ -30,9 +30,13 @@ export TEST_POD=1
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
