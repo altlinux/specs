@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Best
-Version: 0.15
+Version: 0.17
 Release: alt1
 
 Summary: Best - Fallbackable module loader
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Best/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/G/GA/GAAL/Best-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GA/GAAL/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
 BuildRequires: perl-Module-Install perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
@@ -37,7 +37,7 @@ Often there are several possible providers of some functionality your program ne
 Best attempts to load modules from a list, stopping at the first successful load and failing only if no alternative was found.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -46,10 +46,14 @@ Best attempts to load modules from a list, stopping at the first successful load
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README example
 %perl_vendor_privlib/Best*
 %doc Changes README
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- automated CPAN update
+
 * Wed Jul 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
