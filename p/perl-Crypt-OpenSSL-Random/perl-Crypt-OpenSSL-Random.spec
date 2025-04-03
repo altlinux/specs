@@ -2,8 +2,8 @@
 %define module Crypt-OpenSSL-Random
 
 Name: perl-%module
-Version: 0.15
-Release: alt1.2
+Version: 0.17
+Release: alt1
 
 Summary: Routines for accessing the OpenSSL pseudo-random number generator
 License: Perl
@@ -29,11 +29,14 @@ OpenSSL library's pseudo-random number generator.
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE
+%doc Changes README
 %perl_vendor_archlib/Crypt
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.17-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1.2
 - rebuild with new perl 5.28.1
 
