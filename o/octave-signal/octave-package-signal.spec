@@ -5,7 +5,7 @@ BuildRequires: makeinfo texinfo
 %define octpkg signal
 Epoch: 2
 Name: octave-%octpkg
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 Summary: Signal Processing
 
@@ -16,6 +16,7 @@ URL: https://octave.sourceforge.io/signal/
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-octave
+BuildRequires(pre): rpm-build-python3
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
@@ -47,6 +48,9 @@ Signal processing tools, including filtering, windowing and display functions.
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 2:1.4.6-alt1
+- new version
+
 * Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 2:1.4.5-alt1
 - regenerated from template by package builder
 

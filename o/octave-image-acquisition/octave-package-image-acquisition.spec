@@ -4,8 +4,8 @@ BuildRequires: fontconfig-devel libXcursor-devel libXext-devel libXfixes-devel l
 %def_with _octave_arch
 %define octpkg image-acquisition
 Name: octave-%octpkg
-Version: 0.2.2
-Release: alt6
+Version: 0.3.0
+Release: alt1
 Summary: Image Acquisition
 
 Group: Sciences/Mathematics
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
+BuildRequires: libjpeg-devel
 %else
 BuildArch: noarch
 %endif
@@ -43,13 +44,16 @@ subst 's/error_state/0/' `grep -Rlw error_state *`
 %octave_install
 
 %files
-%doc COPYING NEWS DESCRIPTION doc
+%doc COPYING NEWS DESCRIPTION
 %_datadir/octave/packages/%octpkg-%version
 %if_with _octave_arch
 %_libdir/octave/packages/%octpkg-%version
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 0.3.0-alt1
+- new version
+
 * Sat Mar 11 2023 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt6
 - rebuild with octave 8
 

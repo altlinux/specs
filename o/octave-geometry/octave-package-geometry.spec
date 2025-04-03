@@ -4,8 +4,8 @@ BuildRequires: makeinfo rpm-build-python3
 %def_with _octave_arch
 %define octpkg geometry
 Name: octave-%octpkg
-Version: 4.0.0
-Release: alt3
+Version: 4.1.0
+Release: alt1
 Summary: Computational Geometry
 
 Group: Sciences/Mathematics
@@ -25,16 +25,14 @@ Provides: octave(geometry) = %version
 # Depends: octave (>= 4.0.1)
 Requires: octave >= 4.0.1
 
-Patch: geometry-4.0.0-04965c.patch 
-
 %description
 Library for geometric computing extending MatGeom functions.
 
 %prep
 %setup -q -n %{octpkg}-%{version}
-%patch -p1
 
 %build
+export LDFLAGS=-Wl,-rpath,`octave-config -p OCTLIBDIR`
 %octave_build
 
 %install
@@ -48,6 +46,9 @@ Library for geometric computing extending MatGeom functions.
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
+- New version.
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt3
 - fixed build
 

@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/octave makeinfo
 %def_with _octave_arch
 %define octpkg image
 Name: octave-%octpkg
-Version: 2.14.0
+Version: 2.16.0
 Release: alt1
 Summary: Image Processing
 
@@ -46,6 +46,9 @@ The Octave-forge Image package provides functions for
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt1
+- new version
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt1
 - new version
 

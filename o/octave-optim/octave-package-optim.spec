@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 Epoch: 1
 Name: octave-%octpkg
 Version: 1.6.2
-Release: alt1
+Release: alt2
 Summary: Optimization.
 
 Group: Sciences/Mathematics
@@ -14,6 +14,7 @@ License: GPLv3+, modified BSD, public domain
 Url: http://octave.sourceforge.net/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
+Patch0: octave-optim-octave-10.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -32,6 +33,7 @@ Non-linear optimization toolkit.
 
 %prep
 %setup -q -n %{octpkg}-%{version}
+%patch0 -p1
 
 %build
 %octave_build
@@ -47,6 +49,9 @@ Non-linear optimization toolkit.
 %endif
 
 %changelog
+* Tue Apr 01 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.6.2-alt2
+- rebuild with octave 10.x
+
 * Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.6.2-alt1
 - new version
 

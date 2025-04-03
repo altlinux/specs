@@ -6,7 +6,7 @@
 %endif
 
 Name: octave
-Version: 9.4.0
+Version: 10.1.0
 Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
@@ -27,7 +27,7 @@ Patch0: octave-alt-desktop-l10n.patch
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
 BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
 BuildRequires: libreadline-devel libstdc++-devel libtinfo-devel libX11-devel libXext-devel
-BuildRequires: libSM-devel libICE-devel liblcms-devel bzlib-devel libltdl-devel
+BuildRequires: libSM-devel libICE-devel liblcms2-devel bzlib-devel libltdl-devel
 BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-devel
 BuildRequires: libftgl-devel zlib-devel desktop-file-utils gnuplot less
 BuildRequires: texlive-base-bin texlive-generic-recommended
@@ -229,6 +229,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Sun Mar 30 2025 Andrey Cherepanov <cas@altlinux.org> 10.1.0-alt1
+- New version.
+
 * Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 9.4.0-alt1
 - New version (ALT #53028).
 

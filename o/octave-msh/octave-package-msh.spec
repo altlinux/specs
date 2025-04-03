@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: makeinfo
 # END SourceDeps(oneline)
-%def_with _octave_arch
+%def_without _octave_arch
 %define octave_pkg_name msh
 Name: octave-%octave_pkg_name
-Version: 1.0.10
-Release: alt3
+Version: 1.0.12
+Release: alt1
 Summary: MeSHing software package for octave
 
 Group: Sciences/Mathematics
 License: GPLv2+
 URL: http://octave.sf.net
 
-Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octave_pkg_name}-%{version}.tar.gz
+Source0: https://github.com/carlodefalco/msh/archive/refs/tags/v%{version}.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
@@ -32,7 +32,7 @@ Requires: octave >= 3.0 octave(splines)
 Create and manage triangular and tetrahedral meshes for Finite Element or Finite Volume PDE solvers. Use a mesh data structure compatible with PDEtool. Rely on gmsh for unstructured mesh generation.
 
 %prep
-%setup -q -n %{octave_pkg_name}
+%setup -q -n %{octave_pkg_name}-%{version}
 
 %build
 octave -q -H --no-window-system --no-site-file --eval "pkg build -verbose -nodeps . %SOURCE0"
@@ -54,6 +54,9 @@ octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_da
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.12-alt1
+- new version
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt3
 - rebuild with octave 5
 

@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %def_with _octave_arch
 %define octpkg octproj
 Name: octave-%octpkg
-Version: 2.0.1
+Version: 3.0.2
 Release: alt1
 Summary: GNU Octave bindings to PROJ
 
@@ -49,6 +49,9 @@ This package allows to call functions of PROJ library for
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.2-alt1
+- new version
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1
 - regenerated from template by package builder
 

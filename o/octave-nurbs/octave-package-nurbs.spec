@@ -4,7 +4,7 @@ BuildRequires: libgomp-devel makeinfo
 %def_with _octave_arch
 %define octpkg nurbs
 Name: octave-%octpkg
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 Summary: Nurbs.
 
@@ -46,6 +46,9 @@ Collection of routines for the creation, and manipulation of Non-Uniform Rationa
 %endif
 
 %changelog
+* Mon Mar 31 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt1
 - regenerated from template by package builder
 
