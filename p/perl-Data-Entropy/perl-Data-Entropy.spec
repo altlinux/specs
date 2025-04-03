@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Crypt/URandom.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -8,14 +8,14 @@ BuildRequires: perl(CPAN.pm) perl-podlators
 %define upstream_version 0.007
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt4_8
+Version:    0.008
+Release:    alt1
 
 Summary:    Download entropy from
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Data/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/R/RR/RRWO/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Crypt/Rijndael.pm)
@@ -55,7 +55,7 @@ between parts of the pseudo-entropy stream. If more true entropy is
 required then it is necessary to configure a different entropy source.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -68,10 +68,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README SIGNATURE
+%doc Changes META.json META.yml README SIGNATURE SECURITY.md
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.008-alt1
+- automated CPAN update
+
 * Wed Jan 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.007-alt4_8
 - to Sisyphus
 
