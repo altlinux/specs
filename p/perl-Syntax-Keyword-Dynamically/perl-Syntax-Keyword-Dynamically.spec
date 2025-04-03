@@ -17,12 +17,12 @@ BuildRequires: perl-podlators
 %bcond_with perl_Syntax_Keyword_Dynamically_enables_optional_test
 
 Name:           perl-Syntax-Keyword-Dynamically
-Version:        0.13
-Release:        alt1_1
+Version:        0.14
+Release:        alt1
 Summary:        Dynamically change the value of a variable
 License:        GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:            https://metacpan.org/release/Syntax-Keyword-Dynamically
-Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Syntax-Keyword-Dynamically-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Syntax-Keyword-Dynamically-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -141,7 +141,6 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 ./Build test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %dir %{perl_vendor_archlib}/auto/Syntax
 %dir %{perl_vendor_archlib}/auto/Syntax/Keyword
@@ -154,6 +153,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
+- automated CPAN update
+
 * Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.13-alt1_1
 - updated import, removed circular deps
 
