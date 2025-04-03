@@ -11,7 +11,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 #BuildRequires: perl(Future/AsyncAwait.pm)
 
 Name: perl-%module_name
-Version: 0.29
+Version: 0.30
 Release: alt1
 Summary: a C<try/catch/finally> syntax for perl
 Group: Development/Perl
@@ -45,6 +45,9 @@ code.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.29-alt1
 - automated CPAN update
 
