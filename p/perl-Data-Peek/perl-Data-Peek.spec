@@ -16,7 +16,7 @@ BuildRequires: perl-podlators
 %{bcond_without perl_Data_Peek_enables_option_test}
 
 Name:           perl-Data-Peek
-Version:        0.52
+Version:        0.53
 Release:        alt1
 Summary:        Collection of low-level debug facilities
 License:        GPL+ or Artistic
@@ -73,12 +73,15 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 make test
 
 %files
-%doc ChangeLog README CONTRIBUTING.md examples
+%doc ChangeLog README CONTRIBUTING.md examples SECURITY.md
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Data*
 %{perl_vendor_archlib}/DP.pm
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
+- automated CPAN update
+
 * Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.52-alt1
 - automated CPAN update
 
