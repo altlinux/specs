@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:    pi-hole-ftl
-Version: 6.0.4
-Release: alt3
+Version: 6.1
+Release: alt1
 
 Summary: The Pi-hole FTL engine
 License: EUPL-1.2
@@ -43,10 +43,10 @@ FTLDNS (pihole-FTL) provides an interactive API and also generates statistics fo
 
 %build
 export GIT_BRANCH="master"
-export GIT_HASH="b7eb53bf32ab76546db87c6db6d7085526788d67"
+export GIT_HASH="a3313229c21eefcb608e5d30b7255723d9efa3a9"
 export GIT_VERSION="%version"
 export GIT_DATE=""
-export GIT_TAG="v6.0.4"
+export GIT_TAG="v6.1"
 
 sed -i "s/-Werror/-Wno-error/" src/CMakeLists.txt
 # No libtermcap in ALT:
@@ -84,6 +84,9 @@ sed -i -e 's/ AND LIBTERMCAP//' -e 's/ ${LIBTERMCAP}//' src/CMakeLists.txt
 %_unitdir/multi-user.target.wants/%_servicename.service
 
 %changelog
+* Thu Apr 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.1-alt1
+- v6.1
+
 * Mon Mar 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 6.0.4-alt3
 - drop dnsmasq dropin support (ALT #53462)
 
