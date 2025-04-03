@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-Data-Inheritable
 Name: perl-%dist
-Version: 0.09
+Version: 0.10
 Release: alt1
 
 Summary: Inheritable, overridable class data
@@ -36,6 +36,9 @@ by your subclasses and can be overriden.
 %perl_vendor_privlib/Class*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
+- automated CPAN update
+
 * Mon Aug 02 2021 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
 - automated CPAN update
 
