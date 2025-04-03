@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.1.4
+Version: 0.2.0
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -17,12 +17,12 @@ BuildRequires(pre): rpm-macros-alterator
 
 Requires: alterator-interface-packages
 Requires: alterator-manager >= 0.1.25
-Requires: alterator-module-executor >= 0.1.14
+Requires: alterator-module-executor >= 0.1.21
 
 %package -n alterator-interface-packages
 Summary: Alterator interfaces for managing system packages
 Group: System/Configuration/Other
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 %description
@@ -86,8 +86,12 @@ chmod 644 %buildroot%_logdir/alterator/apt/updates.log
 %dir %_datadir/polkit-1/actions
 %_datadir/dbus-1/interfaces/*.xml
 %_datadir/polkit-1/actions/*.policy
+%doc LICENSE CHANGELOG.md
 
 %changelog
+* Thu Apr 03 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
+- New version (see CHANGELOG.md).
+
 * Wed Feb 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
 - Fix timeouts for install and remove (thx Kozyrev Yuri).
 - Turn lastUpdate tracker into loggers for apt updates and dist-upgrades
