@@ -7,8 +7,8 @@ BuildRequires: perl(Cairo.pm) perl(Carp/Always.pm) perl(Glib.pm) perl(Glib/Objec
 %define _without_test 1
 
 Name: perl-Gtk3-ImageView
-Version: 10
-Release: alt2
+Version: 12
+Release: alt1
 
 Summary: Image viewer widget for GTK 3
 
@@ -70,6 +70,9 @@ xvfb-run -a make test
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 12-alt1
+- automated CPAN update
+
 * Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 10-alt2
 - enabled tests
 
