@@ -1,27 +1,26 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B.pm) perl(Data/Dumper.pm) perl(Module/Build.pm) perl(Storable.pm) perl(Test/More.pm) perl(Try/Tiny.pm)
 # END SourceDeps(oneline)
-%define module_version 0.13
 %define module_name Role-Basic
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.13
-Release: alt2
+Version: 0.16
+Release: alt1
 Summary: Just roles. Nothing else.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://cpan.org.ua/authors/id/O/OV/OVID/%module_name-%module_version.tar.gz
+Source0: http://www.cpan.org/authors/id/O/OV/OVID/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/R*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.16-alt1
+- automated CPAN update
+
 * Fri Mar 28 2014 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2
 - moved to Sisyphus by lav@ request
 
