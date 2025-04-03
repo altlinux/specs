@@ -11,8 +11,8 @@ BuildRequires: perl(Future.pm) perl(Module/Build.pm) perl(Struct/Dumb.pm) perl(T
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.15
-Release: alt3
+Version: 0.16
+Release: alt1
 Summary: Future-returning IO methods
 Group: Development/Perl
 License: perl
@@ -67,6 +67,9 @@ esac
 %endif
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.16-alt1
+- automated CPAN update
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 0.15-alt3
 - fixed build with perl 5.38
 
