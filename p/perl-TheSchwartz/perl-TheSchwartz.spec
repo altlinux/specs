@@ -16,7 +16,7 @@ BuildRequires: perl(Module/Build.pm) perl(Module/Build/Tiny.pm)
 %define _enable_test 1
 
 Name: perl-TheSchwartz
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: TheSchwartz is a reliable job queue system
@@ -62,6 +62,9 @@ is used to automatically dispatch to the proper class to do the actual work.
 %perl_vendor_privlib/TheSchwartz/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.18-alt1
+- automated CPAN update
+
 * Sat Jan 01 2022 Igor Vlasenko <viy@altlinux.org> 1.17-alt1
 - automated CPAN update
 
