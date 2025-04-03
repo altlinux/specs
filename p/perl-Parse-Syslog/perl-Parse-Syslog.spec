@@ -1,15 +1,15 @@
 %define module Parse-Syslog
 
 Name: perl-%module
-Version: 1.10
-Release: alt1.1
+Version: 1.11
+Release: alt1
 
 Summary: Parse-Syslog perl module
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Parse/%module-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DS/DSCHWEI/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -20,7 +20,7 @@ BuildRequires: perl-File-Tail perl-IO-stringy perl-devel
 Parse::Syslog presents a simple interface to parse syslog files.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -29,10 +29,14 @@ Parse::Syslog presents a simple interface to parse syslog files.
 %perl_vendor_install
 
 %files
+%doc README Changes License
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.11-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
