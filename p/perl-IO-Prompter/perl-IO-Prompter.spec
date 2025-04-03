@@ -6,7 +6,7 @@ BuildRequires: perl(Contextual/Return.pm) perl(ExtUtils/MakeMaker.pm) perl(Scala
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.005001
+Version: 0.005002
 Release: alt1
 Summary: Prompt for input, read it, clean it, return it.
 Group: Development/Perl
@@ -82,6 +82,9 @@ designed to be a drop-in replacement for `readline' or `<>'.
 %perl_vendor_privlib/I*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.005002-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.005001-alt1
 - automated CPAN update
 
