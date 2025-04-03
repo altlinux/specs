@@ -10,7 +10,7 @@ BuildRequires: perl-podlators
 %define _enable_test 1
 
 Name: perl-Clipboard
-Version: 0.28
+Version: 0.32
 Release: alt1
 
 Summary: Cliboard - Copy and Paste with any OS
@@ -60,6 +60,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
+- automated CPAN update
+
 * Wed Feb 24 2021 Igor Vlasenko <viy@altlinux.org> 0.28-alt1
 - automated CPAN update
 
