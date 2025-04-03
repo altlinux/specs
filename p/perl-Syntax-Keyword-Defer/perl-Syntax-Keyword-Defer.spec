@@ -8,7 +8,7 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Syntax/Keyw
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 Summary: add C<defer> block syntax to perl
 Group: Development/Perl
@@ -42,6 +42,9 @@ other languages, and this module.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
+- automated CPAN update
+
 * Mon Sep 25 2023 Igor Vlasenko <viy@altlinux.org> 0.10-alt1
 - automated CPAN update
 
