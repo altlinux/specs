@@ -10,14 +10,14 @@ BuildRequires: perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    1.297
+Release:    alt1
 
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Summary:    Read simple configuration file formats
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    https://cpan.metacpan.org/modules/by-module/ConfigReader/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -51,7 +51,7 @@ The configuration file format
     line, including any other whitespace.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -64,10 +64,13 @@ make test
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  eg examples
+%doc Changes META.json META.yml eg examples README.pod SECURITY.md
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.297-alt1
+- automated CPAN update
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 1.296-alt1_1
 - update by mgaimport
 
