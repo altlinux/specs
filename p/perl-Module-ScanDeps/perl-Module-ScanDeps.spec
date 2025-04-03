@@ -4,7 +4,7 @@ BuildRequires: perl(IPC/Run3.pm)
 # END SourceDeps(oneline)
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.35
+Version: 1.37
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
@@ -41,6 +41,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.37-alt1
+- automated CPAN update
+
 * Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 1.35-alt1
 - automated CPAN update
 
