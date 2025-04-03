@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Parallel-ForkManager
 Name: perl-%dist
-Version: 2.02
+Version: 2.03
 Release: alt1
 
 Summary: A simple parallel processing fork manager
@@ -31,13 +31,16 @@ use is a downloader which will be retrieving hundreds/thousands of files.
 %perl_vendor_install
 
 %files
-%doc Changes CODE_OF_CONDUCT.md CONTRIBUTORS README.mkdn examples
+%doc Changes CONTRIBUTORS README.mkdn examples
 %dir %perl_vendor_privlib/Parallel
 %perl_vendor_privlib/Parallel/ForkManager.pm
 %dir %perl_vendor_privlib/Parallel/ForkManager
 %perl_vendor_privlib/Parallel/ForkManager/Child.pm
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.03-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
 - automated CPAN update
 
