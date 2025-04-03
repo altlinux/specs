@@ -1,14 +1,14 @@
 %define dist Class-MethodMaker
 Name: perl-%dist
-Version: 2.24
-Release: alt2.3
+Version: 2.25
+Release: alt1
 
 Summary: Easy building of Perl Classes
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SC/SCHWIGON/class-methodmaker/Class-MethodMaker-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SC/SCHWIGON/class-methodmaker/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-IPC-Run perl-autodie perl-devel
@@ -18,7 +18,7 @@ This module solves the problem of having to continually write
 accessor methods for your objects that perform standard tasks.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -27,11 +27,14 @@ accessor methods for your objects that perform standard tasks.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README examples
 %perl_vendor_archlib/Class
 %perl_vendor_autolib/Class
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.25-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 2.24-alt2.3
 - Reverted previous change.
 
