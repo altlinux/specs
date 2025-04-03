@@ -10,8 +10,8 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.109.1
-Release: alt2
+Version: 2.110.0
+Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
 License: BSL-1.0
@@ -25,7 +25,7 @@ Source2: phobos-%version.tar
 # https://github.com/dlang/tools.git
 Source3: tools-%version.tar
 
-Patch1: druntime-2.109.1-alt-build.patch
+Patch1: druntime-2.110.0-alt-build.patch
 Patch2: dmd-2.109.1-alt-build.patch
 
 BuildRequires: gcc-c++ curl-devel
@@ -205,6 +205,8 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed Mar 19 2025 Andrey Kovalev <ded@altlinux.org> 2.110.0-alt1
+
 * Wed Sep 04 2024 Andrey Kovalev <ded@altlinux.org> 2.109.1-alt2
 - Split /usr/include/d into /usr/include/dmd/druntime/ and /usr/include/phobos.
   Separated dmd-tools from dmd (closes: #40214).

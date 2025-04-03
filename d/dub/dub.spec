@@ -4,7 +4,7 @@
 ExclusiveArch: %ix86 x86_64
 
 Name: dub
-Version: 1.38.1
+Version: 1.39.0
 Release: alt1
 Summary: Package and build management system for D
 Group: Development/Other
@@ -56,6 +56,9 @@ install -Dm755 bin/dub %buildroot%_bindir/dub
 %_bindir/dub
 
 %changelog
+* Wed Mar 19 2025 Andrey Kovalev <ded@altlinux.org> 1.39.0-alt1
+- Updated to upstream version 1.39.0.
+
 * Tue Sep 03 2024 Andrey Kovalev <ded@altlinux.org> 1.38.1-alt1
 - Updated to upstream version 1.38.1.
 
