@@ -6,7 +6,7 @@ BuildRequires: perl(Convert/Color.pm) perl(Convert/Color/XTerm.pm) perl(Module/B
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.07
+Version: 0.08
 Release: alt1
 Summary: format terminal output using String::Tagged
 Group: Development/Perl
@@ -34,6 +34,9 @@ sequences, to render the the output in the appropriate style.
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- automated CPAN update
+
 * Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
 - automated CPAN update
 
