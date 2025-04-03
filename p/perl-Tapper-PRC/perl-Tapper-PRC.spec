@@ -11,14 +11,14 @@ BuildRequires: perl(File/Slurp.pm)
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt1_1
+Version:    5.0.5
+Release:    alt1
 
 Summary:    Control running test programs
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -60,7 +60,7 @@ Source44: import.info
 Tapper - Program run control for test program automation.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -74,7 +74,7 @@ Tapper - Program run control for test program automation.
 %makeinstall_std
 
 %files
-%doc Changes LICENSE META.json META.yml  README
+%doc Changes META.json META.yml README
 %{_mandir}/man1/*
 %{perl_vendor_privlib}/*
 %{_bindir}/tapper-automatic-test.pl
@@ -83,6 +83,9 @@ Tapper - Program run control for test program automation.
 %{_bindir}/tapper-minion-worker
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 5.0.5-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1_1
 - update by mgaimport
 
