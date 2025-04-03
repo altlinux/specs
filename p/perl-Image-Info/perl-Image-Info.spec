@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Image-Info
 Name: perl-%dist
-Version: 1.44
+Version: 1.45
 Release: alt1
 
 Summary: Extract meta information from image files
@@ -49,6 +49,9 @@ formats are supported:
 %exclude %perl_vendor_privlib/Bundle/Image
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.45-alt1
+- automated CPAN update
+
 * Sat Aug 05 2023 Igor Vlasenko <viy@altlinux.org> 1.44-alt1
 - automated CPAN update
 
