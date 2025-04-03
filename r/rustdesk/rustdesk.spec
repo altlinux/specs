@@ -1,5 +1,5 @@
 Name: rustdesk
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
@@ -114,6 +114,9 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Wed Apr 02 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.9-alt1
+- New version 1.3.9.
+
 * Sun Feb 23 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.8-alt1
 - New version 1.3.8.
 - Disabled notification of the availability updates.
