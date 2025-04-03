@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Snappy
 Name: perl-%dist
-Version: 0.24
-Release: alt1.2
+Version: 0.25
+Release: alt1
 
 Summary: Perl interface to Google's Snappy (de)compressor
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GR/GRAY/Compress-Snappy-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/G/GR/GRAY/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel perl-parent perl(Devel/CheckLib.pm)
@@ -25,7 +25,7 @@ an order of magnitude faster for most inputs, but the resulting compressed
 files are anywhere from 20%% to 100%% bigger.
 
 %prep
-%setup -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 # do not override default CCFLAGS
 sed -i- '/CCFLAGS/d' Makefile.PL
@@ -42,6 +42,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.25-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1.2
 - rebuild with new perl 5.28.1
 
