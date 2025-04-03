@@ -6,14 +6,14 @@ BuildRequires: perl(List/Util.pm) perl(Module/Build.pm) perl(Test/Builder.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.06
-Release: alt2
+Version: 0.07
+Release: alt1
 Summary: C<expect/check>-style unit testing with object methods
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,10 +33,13 @@ object is checked to ensure all the expected methods were called.
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE
+%doc README Changes
 %perl_vendor_privlib/T*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
+- automated CPAN update
+
 * Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 0.06-alt2
 - moved to Sisyphus as perl-Future-IO test dep
 
