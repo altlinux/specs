@@ -1,5 +1,5 @@
 Name: libdwarf
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 Epoch: 1
 
@@ -57,6 +57,9 @@ to access DWARF debug information.
 %_man1dir/dwarfdump.1*
 
 %changelog
+* Thu Apr 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.12.0-alt1
+- 0.12.0 released
+
 * Wed Dec 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.11.1-alt1
 - 0.11.1 released
 
