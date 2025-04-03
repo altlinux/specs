@@ -1,7 +1,7 @@
 %define module Geo-Coordinates-DecimalDegrees
 
 Name: perl-%module
-Version: 0.09
+Version: 0.11
 Release: alt1
 
 Summary: Module to convert between degrees/minutes/seconds and decimal degrees
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Geo/%module-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/W/WA/WALTMAN/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ This module provides functions for converting latitudes and longitudes between
 degrees/minutes/seconds and decimal degrees.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,9 +30,13 @@ degrees/minutes/seconds and decimal degrees.
 %perl_vendor_install
 
 %files
+%doc Changes README
 %perl_vendor_privlib/Geo
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
+- automated CPAN update
+
 * Fri Mar 23 2012 Victor Forsiuk <force@altlinux.org> 0.09-alt1
 - 0.09
 
