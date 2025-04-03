@@ -22,12 +22,12 @@ BuildRequires: perl-Filter
 
 Name:           perl-YAML-LibYAML
 Epoch:          1
-Version:        0.89
+Version:        0.903.0
 Release:        alt1
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/YAML-LibYAML
-Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/T/TI/TINITA/YAML-LibYAML-v%{version}.tar.gz
 Patch0:         YAML-LibYAML-0.79-Unbundled-libyaml.patch
 
 # Build
@@ -92,7 +92,7 @@ library is written precisely to the YAML 1.1 specification. It was originally
 bound to Python and was later bound to Ruby.
 
 %prep
-%setup -q -n YAML-LibYAML-%{version}
+%setup -q -n YAML-LibYAML-v%{version}
 # Unbundled libyaml, the source files are the same as in libyaml-0.2.2
 # It was determined by comparing commits in upstream repo:
 # https://github.com/yaml/libyaml/
@@ -116,11 +116,14 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test
 
 %files
-%doc Changes CONTRIBUTING README
+%doc Changes README CONTRIBUTING.md
 %{perl_vendor_archlib}/auto/YAML/
 %{perl_vendor_archlib}/YAML/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1:0.903.0-alt1
+- automated CPAN update
+
 * Tue Feb 06 2024 Igor Vlasenko <viy@altlinux.org> 1:0.89-alt1
 - automated CPAN update
 
