@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-General
 Name: perl-%dist
-Version: 2.65
+Version: 2.67
 Release: alt1
 
 Summary: Generic Config Module
@@ -41,6 +41,9 @@ files.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.67-alt1
+- automated CPAN update
+
 * Mon Apr 11 2022 Igor Vlasenko <viy@altlinux.org> 2.65-alt1
 - automated CPAN update
 
