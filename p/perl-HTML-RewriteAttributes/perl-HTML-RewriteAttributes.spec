@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-HTML-RewriteAttributes
-Version: 0.05
+Version: 0.06
 Release: alt1
 
 Summary: concise attribute rewriting
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/T/TS/TSIBLEY/HTML-RewriteAttributes-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BP/BPS/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat May 03 2008
 BuildRequires: perl-HTML-Parser perl-devel
@@ -39,7 +39,7 @@ subclassable to make handling special cases eaiser. See the source for
 methods you can override.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -49,9 +49,13 @@ methods you can override.
 rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
+%doc Changes README
 %perl_vendor_privlib/HTML/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- automated CPAN update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - automated CPAN update
 
