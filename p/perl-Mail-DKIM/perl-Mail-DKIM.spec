@@ -8,7 +8,7 @@ BuildRequires: perl(Carp.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Crypt/PK/Ed25519.pm
 %define module Mail-DKIM
 
 Name: perl-%module
-Version: 1.20240124
+Version: 1.20240923
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -43,6 +43,9 @@ verifying standard for Internet mail.
 %perl_vendor_privlib/Mail
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.20240923-alt1
+- automated CPAN update
+
 * Fri Jan 26 2024 Igor Vlasenko <viy@altlinux.org> 1.20240124-alt1
 - automated CPAN update
 
