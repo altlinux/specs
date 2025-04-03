@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: iconic
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Easilly add icons on top of folders
@@ -80,6 +80,9 @@ _EOF_
 %doc README*
 
 %changelog
+* Thu Apr 03 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3.2-alt1
+- 2025.3.2
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3.1-alt1
 - 2025.3.1
 
