@@ -7,7 +7,7 @@
 
 Name: deepin-file-manager
 Version: 6.5.44
-Release: alt1
+Release: alt2
 
 Summary: Deepin File Manager
 
@@ -21,6 +21,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: deepin-file-manager-6.5.42-alt-fixes-paths.patch
 Patch1: deepin-file-manager-6.5.42-alt-fixes-underlinked-elfs.patch
+Patch2: deepin-file-manager-6.5.44-alt-options-uos.patch
 
 # /usr/include/dqt6/QtCore/qhash.h:65:33:
 # error: static assertion failed:
@@ -297,6 +298,9 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Thu Apr 03 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.44-alt2
+- Always use xdg-open (ALT #53701).
+
 * Wed Apr 02 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.44-alt1
 - New version 6.5.44.
 - Added vcs tag.

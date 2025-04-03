@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 5.5.11
+Version: 6.0.7
 Release: alt1
 
 Summary: Basic search tool for DDE
@@ -21,10 +21,10 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Tue Jan 14 2025
-# optimized out: alt-os-release bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt5-base-common dtkcore gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdeepin-qdbus-service0 libdouble-conversion3 libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xml libdtkcore-devel libdtkgui-devel libdtklog-devel libglvnd-devel libgpg-error libgsettings-qt1 libp11-kit libqt5-svg libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor pkg-config python3 python3-base sh5 zlib-devel
-BuildRequires: deepin-dock-devel deepin-qt-dbus-factory-devel dqt5-base-devel dqt5-tools libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtkwidget-devel libffmpegthumbnailer-devel libgio-devel libgsettings-qt-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+# Automatically added by buildreq on Thu Apr 03 2025
+# optimized out: bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdeepin-qdbus-service0 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
+BuildRequires: dde-dock-devel dqt6-5compat-devel dqt6-tools dtk6-common-devel libcups-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtk6widget-devel libffmpegthumbnailer-devel libgio-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel
 # aarch64
 BuildRequires: libpcre-devel
 
@@ -46,20 +46,13 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
+  -DLIB_DESTINATION=%_lib \
 #
-cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
@@ -84,11 +77,17 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_datadir/dde-grand-search/translations/
 %_datadir/dde-grand-search/translations/dde-grand-search.qm
 %_datadir/dbus-1/interfaces/com.deepin.dde.GrandSearch.xml
+%_datadir/dbus-1/interfaces/com.deepin.dde.GrandSearchSetting.xml
 %_datadir/dbus-1/services/com.deepin.dde.GrandSearch.service
 %_datadir/dbus-1/services/org.deepin.dde.GrandSearchDaemon.service
+%_datadir/dbus-1/services/com.deepin.dde.GrandSearchSetting.service
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.grand-search.gschema.xml
 
 %changelog
+* Thu Apr 03 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
+- New version 6.0.7.
+- Switched to dqt6.
+
 * Tue Jan 14 2025 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt1
 - New version 5.5.11.
 - Added vcs tag.
