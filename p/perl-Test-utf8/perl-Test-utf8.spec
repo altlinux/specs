@@ -7,12 +7,12 @@ BuildRequires: perl(App/pod2pdf.pm) perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-utf8
-Version:        1.02
+Version:        1.03
 Release:        alt1
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Test-utf8
-Source0:        http://www.cpan.org/authors/id/M/MA/MARKF/Test-utf8-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SC/SCHWIGON/Test-utf8-%{version}.tar.gz
 # Do not require author's dependencies
 Patch0:         Test-utf8-1.01-Drop-useless-build-time-dependencies.patch
 # Until the POD has changed, there is no point in regenerating README. This
@@ -71,6 +71,9 @@ make test
 %{perl_vendor_privlib}/Test/
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.03-alt1
+- automated CPAN update
+
 * Tue Mar 03 2020 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
