@@ -36,7 +36,7 @@
 %add_python3_req_skip util.gpoa_ini_parsing
 
 Name: gpupdate
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 
 Summary: GPT applier
@@ -199,6 +199,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Apr 03 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.2-alt1
+- Fixed: Check directory existence before cleanup to avoid errors(closes:53703)
+
 * Fri Mar 14 2025 Valery Sinelnikov <greh@altlinux.org> 0.13.1-alt1
 - Refined registry key handling: LAPS enablement and user presence check
 
