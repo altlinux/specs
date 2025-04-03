@@ -6,12 +6,12 @@ BuildRequires: perl(Imager.pm) perl(Math/Complex.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Math-Symbolic
-Version:        0.612
-Release:        alt2_18
+Version:        0.613
+Release:        alt1
 Summary:        Symbolic calculations
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Math-Symbolic
-Source0:        https://cpan.metacpan.org/authors/id/S/SM/SMUELLER/Math-Symbolic-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Math-Symbolic-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -61,10 +61,13 @@ perl Build.PL installdirs=vendor
 ./Build test
 
 %files
-%doc Changes README TODO Yapp.yp examples
+%doc Changes README Yapp.yp examples
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.613-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.612-alt2_18
 - update to new release by fcimport
 
