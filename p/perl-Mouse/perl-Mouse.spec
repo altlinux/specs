@@ -2,8 +2,8 @@
 BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.5.10
-Release: alt1.1
+Version: 2.5.11
+Release: alt1
 
 Summary: Moose minus the antlers
 License: GPL or Artistic
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.5.11-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 2.5.10-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
