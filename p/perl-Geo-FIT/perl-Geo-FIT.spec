@@ -6,7 +6,7 @@ BuildRequires: perl(Clone.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.11
+Version: 1.13
 Release: alt1
 Summary: Decode Garmin FIT files
 Group: Development/Perl
@@ -47,6 +47,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.13-alt1
+- automated CPAN update
+
 * Sat Oct 21 2023 Igor Vlasenko <viy@altlinux.org> 1.11-alt1
 - automated CPAN update
 
