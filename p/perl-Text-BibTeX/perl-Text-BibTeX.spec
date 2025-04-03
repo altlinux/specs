@@ -2,8 +2,8 @@
 %define __spec_autodep_custom_pre export LD_LIBRARY_PATH=%buildroot%_libdir
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.89
-Release: alt2
+Version: 0.91
+Release: alt1
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -49,6 +49,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %exclude %_includedir/btparse.h
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.91-alt1
+- automated CPAN update
+
 * Wed Oct 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.89-alt2
 - NMU: fixed FTBFS on LoongArch.
 
