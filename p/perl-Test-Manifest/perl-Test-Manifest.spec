@@ -4,7 +4,7 @@
 %define m_name		Test::Manifest
 %define m_author_id	BDFOY
 Name: perl-%module
-Version: 2.024
+Version: 2.025
 Release: alt1
 
 Summary: Interact with a t/test_manifest file
@@ -12,7 +12,7 @@ Group: Development/Perl
 License: Artistic
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/B/BD/BDFOY/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BR/BRIANDFOY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,12 +34,15 @@ right value for MakeMaker to do the right thing.
 %perl_vendor_install
 
 %files
-%doc README.pod Changes examples
+%doc README.pod Changes examples SECURITY.md
 %perl_vendor_privlib/Test
 #%perl_vendor_man3dir/*
 %doc Changes
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.025-alt1
+- automated CPAN update
+
 * Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 2.024-alt1
 - automated CPAN update
 
