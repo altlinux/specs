@@ -9,7 +9,7 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.031001
+Version: 2.033000
 Release: alt1
 Summary: A comprehensive, DWIM-featured client to the MetaCPAN API
 Group: Development/Perl
@@ -36,6 +36,9 @@ From summary: %summary
 %perl_vendor_privlib/M*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.033000-alt1
+- automated CPAN update
+
 * Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 2.031001-alt1
 - automated CPAN update
 
