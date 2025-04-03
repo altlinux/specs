@@ -3,8 +3,8 @@ BuildRequires: perl(HTTP/Cookies.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 Name: perl-Plack-Middleware-Session
-Version: 0.33
-Release: alt2
+Version: 0.34
+Release: alt1
 Summary: Plack::Middleware::Session - Middleware for session management
 
 Group: Development/Perl
@@ -12,14 +12,14 @@ License: Perl
 Url: %CPAN Plack-Middleware-Session
 
 BuildArch: noarch
-Source: %name-%version.tar
+Source0: http://www.cpan.org/authors/id/M/MI/MIYAGAWA/Plack-Middleware-Session-%{version}.tar.gz
 BuildRequires: perl-devel perl-Plack perl-Test-Fatal perl-Test-Requires perl-Digest-SHA1 perl-Digest-HMAC perl(Module/Build/Tiny.pm) perl(Cookie/Baker.pm)
 
 %description
 %summary
 
 %prep
-%setup -q
+%setup -q -n Plack-Middleware-Session-%{version}
 
 %build
 %perl_vendor_build
@@ -28,11 +28,14 @@ BuildRequires: perl-devel perl-Plack perl-Test-Fatal perl-Test-Requires perl-Dig
 %perl_vendor_install
 
 %files
-%doc Changes README* LICENSE examples
+%doc Changes README* examples
 %perl_vendor_privlib/Plack/Middleware/Session*
 %perl_vendor_privlib/Plack/Session*
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- automated CPAN update
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.33-alt2
 - NMU: fixed build
 
