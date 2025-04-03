@@ -3,7 +3,7 @@
 %def_without test
 %define dist CPAN-Meta-YAML
 Name: perl-%dist
-Version: 0.018
+Version: 0.020
 Release: alt1
 
 Summary: Read and write a subset of YAML for CPAN Meta files
@@ -11,7 +11,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/CPAN-Meta-YAML-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ It should not be used for any other general YAML parsing or generation
 task.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -39,6 +39,9 @@ task.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.020-alt1
+- automated CPAN update
+
 * Tue Dec 15 2015 Igor Vlasenko <viy@altlinux.ru> 0.018-alt1
 - automated CPAN update
 
