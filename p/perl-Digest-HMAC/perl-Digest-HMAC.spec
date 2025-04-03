@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Digest-HMAC
 Name: perl-%dist
-Version: 1.04
+Version: 1.05
 Release: alt1
 
 Summary: Keyed-Hashing for Message Authentication
@@ -36,6 +36,9 @@ RFC 2104.
 %perl_vendor_privlib/Digest
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.05-alt1
+- automated CPAN update
+
 * Tue Apr 13 2021 Igor Vlasenko <viy@altlinux.org> 1.04-alt1
 - automated CPAN update
 
