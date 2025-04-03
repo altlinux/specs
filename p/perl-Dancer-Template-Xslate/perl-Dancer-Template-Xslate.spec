@@ -1,5 +1,5 @@
 Name: perl-Dancer-Template-Xslate
-Version: 0.03
+Version: 0.04
 Release: alt1
 
 Summary: Dancer::Template::Xslate - Text::Xslate wrapper for Dancer
@@ -26,9 +26,12 @@ BuildRequires: perl-Dancer perl-Text-Xslate perl-Mouse perl-Module-Build
 
 %files
 %perl_vendor_privlib/Dancer/Template/Xslate.pm
-%doc LICENSE Changes README
+%doc Changes README
 
 %changelog
+* Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.04-alt1
+- automated CPAN update
+
 * Thu May 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt1
 - 0.02 -> 0.03
 
