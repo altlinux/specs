@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators
 %define dist BerkeleyDB
 Name: perl-%dist
-Version: 0.65
+Version: 0.66
 Release: alt1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
@@ -30,7 +30,7 @@ currently supported by Berkeley DB.
 %prep
 %setup -q -n %{dist}-%{version}
 %patch -p1
-rm -rv t/Test/
+#rm -rv t/Test/
 
 %build
 %perl_vendor_build
@@ -49,6 +49,9 @@ rm %buildroot%perl_vendor_archlib/scan.pl
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.66-alt1
+- automated CPAN update
+
 * Sat May 14 2022 Igor Vlasenko <viy@altlinux.org> 0.65-alt1
 - automated CPAN update
 
