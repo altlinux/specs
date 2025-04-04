@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 6.1.0
 Release: alt1
 Summary: Pytest plugin for measuring coverage
 License: MIT
@@ -52,16 +52,24 @@ sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 %pyproject_install
 
 %check
-export PYTHONPATH_PY3=%_libdir/python3/site-packages
-%pyproject_run_pytest -ra -Wignore
+# PYTHONPATH_ALT sets PYTHONPATH to measure coverage for subprocesses because
+# *.pth files are processed by site module *before* getting access to
+# global site packages
+export PYTHONPATH_ALT=$(python3 -c "import os, sys, site;print(os.pathsep.join(site.getsitepackages([sys.base_prefix])))")
+# let virtual environments have access to globally installed packages by default
+export VIRTUALENV_SYSTEM_SITE_PACKAGES=1
+%pyproject_run_pytest -vra -Wignore
 
 %files
-%doc README.rst CHANGELOG.rst
+%doc README.*
 %python3_sitelibdir/pytest-cov.pth
 %python3_sitelibdir/pytest_cov/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
+- 5.0.0 -> 6.1.0.
+
 * Tue Mar 26 2024 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.1.0 -> 5.0.0.
 
