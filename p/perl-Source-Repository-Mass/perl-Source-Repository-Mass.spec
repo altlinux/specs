@@ -1,7 +1,7 @@
 %define module Source-Repository-Mass
 
 Name: perl-%module
-Version: 0.450
+Version: 0.451
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -37,6 +37,9 @@ Conflicts: perl-Source-Repository < 0.391
 %perl_vendor_privlib/Source*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.451-alt1
+- russianfedora no more
+
 * Tue Nov 14 2023 Igor Vlasenko <viy@altlinux.org> 0.450-alt1
 - cronbuild node support
 
