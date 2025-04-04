@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.2
+Version: 1.0.0
 Release: alt1
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: ISC
@@ -58,6 +58,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Apr 04 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
+- 0.4.2 -> 1.0.0.
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 0.4.2-alt1
 - 0.4.1 -> 0.4.2.
 
