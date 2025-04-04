@@ -11,7 +11,7 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.94
+Version: 1.0.96
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
@@ -166,6 +166,9 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Fri Apr 04 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.96-alt1
+- 1.0.96
+
 * Tue Dec 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.0.94-alt1
 - 1.0.94
 
