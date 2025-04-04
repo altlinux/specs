@@ -2,8 +2,8 @@
 %define pg_ver 15
 
 Name: postgresql%pg_ver-pg-auto-failover
-Version: 2.1
-Release: alt2
+Version: 2.2
+Release: alt1
 
 Summary: Postgres %pg_ver extension and service for automated failover and high-availability
 License: PostgreSQL
@@ -61,6 +61,9 @@ by the monitor.
 %_datadir/pgsql/extension
 
 %changelog
+* Fri Apr 04 2025 Alexei Takaseev <taf@altlinux.org> 2.2-alt1
+- 2.2
+
 * Sat Feb 15 2025 Alexei Takaseev <taf@altlinux.org> 2.1-alt2
 - Add support PostgreSQL 17
 
