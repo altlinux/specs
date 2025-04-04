@@ -6,12 +6,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-ExtUtils-InstallPaths
-Version:	0.012
-Release:	alt1_7
+Version:	0.014
+Release:	alt1
 Summary:	Build.PL install path logic made easy
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/ExtUtils-InstallPaths
-Source0:	https://cpan.metacpan.org/modules/by-module/ExtUtils/ExtUtils-InstallPaths-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/L/LE/LEONT/ExtUtils-InstallPaths-%{version}.tar.gz
 BuildArch:	noarch
 # Build
 BuildRequires:	coreutils
@@ -61,15 +61,17 @@ find %{buildroot} -type f -name .packlist -delete
 make test
 
 %files
+%doc LICENSE Changes README
 %if 0%{?_licensedir:1}
-%doc --no-dereference LICENSE
 %else
-%doc LICENSE
 %endif
 %doc Changes
 %{perl_vendor_privlib}/ExtUtils/
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.014-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.012-alt1_7
 - update to new release by fcimport
 
