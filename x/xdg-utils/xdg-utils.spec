@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt2
+Release: alt3
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -122,6 +122,9 @@ popd
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Fri Apr 04 2025 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt3
+- fix detect KDE
+
 * Wed Jul 24 2024 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt2
 - fix su_kde()
 
