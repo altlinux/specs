@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Encode.pm) perl(English.pm) perl(Exporter.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.40
+Version: 0.54
 Release: alt1
 Summary: Provide non blocking randomness
 Group: Development/Perl
@@ -14,7 +14,6 @@ License: perl
 Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/D/DD/DDICK/%{module_name}-%{version}.tar.gz
-BuildArch: noarch
 
 %description
 %summary
@@ -29,10 +28,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README Changes README.md
-%perl_vendor_privlib/C*
+%doc README Changes README.md SECURITY.md
+%perl_vendor_archlib/C*
+%perl_vendor_autolib/C*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.54-alt1
+- automated CPAN update
+
 * Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 0.40-alt1
 - automated CPAN update
 
