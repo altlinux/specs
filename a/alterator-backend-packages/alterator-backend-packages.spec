@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -23,7 +23,7 @@ Requires: alterator-module-executor >= 0.1.21
 Summary: Alterator interfaces for managing system packages
 Group: System/Configuration/Other
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 %description
 Alterator backends for managing system packages and package repositories
@@ -89,6 +89,12 @@ chmod 644 %buildroot%_logdir/alterator/apt/updates.log
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Thu Apr 04 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.1-alt1
+- New version (see CHANGELOG.md).
+
+* Thu Apr 04 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt2
+- Fix release record in CHANGELOG.md.
+
 * Thu Apr 03 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
 - New version (see CHANGELOG.md).
 
