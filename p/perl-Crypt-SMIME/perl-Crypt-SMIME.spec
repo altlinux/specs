@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 BuildRequires: openssl
 Name:           perl-%real_name
-Version:        0.30
+Version:        0.31
 Release:        alt1
 Summary:        S/MIME message signing, verification, encryption and decryption
 License:        %perl_license
@@ -64,6 +64,9 @@ echo '\.perl.req$' >> MANIFEST.SKIP
 %perl_vendor_archlib/Crypt*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- automated CPAN update
+
 * Tue May 07 2024 L.A. Kostis <lakostis@altlinux.ru> 0.30-alt1
 - 0.30.
 
