@@ -5,7 +5,7 @@
 
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Future.pm) perl(IO/Async/Loop.pm) perl(Module/Build.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Test/Fatal.pm) perl(Test/Future/Deferred.pm) perl(Test/MemoryGrowth.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(File/ShareDir.pm) perl(Future.pm) perl(IO/Async/Loop.pm) perl(Module/Build.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Test/Fatal.pm) perl(Test/Future/Deferred.pm) perl(Test/MemoryGrowth.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
@@ -20,8 +20,8 @@ BuildRequires: perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm)
 %endif
 
 Name: perl-%module_name
-Version: 0.66
-Release: alt3
+Version: 0.70
+Release: alt1
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
 License: perl
@@ -61,6 +61,9 @@ The new syntax takes the form of two new keywords, async and await.
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.70-alt1
+- automated CPAN update
+
 * Thu Nov 30 2023 Igor Vlasenko <viy@altlinux.org> 0.66-alt3
 - unbootstrap
 
