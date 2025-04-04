@@ -1,6 +1,6 @@
 Name: SDL3_ttf
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
 License: Zlib
@@ -15,6 +15,8 @@ Source: SDL_ttf-release-%version.tar
 BuildRequires: cmake
 BuildRequires: libSDL3-devel
 BuildRequires: libharfbuzz-devel
+BuildRequires: libplutosvg-devel
+BuildRequires: libplutovg-devel
 
 %description
 This library allows you to use TrueType fonts to render text in SDL
@@ -58,5 +60,8 @@ applications.
 %_libdir/cmake/%name
 
 %changelog
+* Sat Apr 05 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.2-alt2
+- Build with PlutoVG and PlutoSVG
+
 * Tue Apr 01 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.2-alt1
 - Initial build for ALT Linux
