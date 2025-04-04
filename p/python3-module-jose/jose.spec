@@ -2,38 +2,33 @@
 %define pypi_name python-jose
 %define oname jose
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.3.0
-Release: alt3
+Version: 3.4.0
+Release: alt1
 Summary: JOSE implementation in Python
 Group: Development/Python3
 License: MIT
-URL: https://github.com/mpdavis/python-jose
+URL: https://pypi.org/project/python-jose
+Vcs: https://github.com/mpdavis/python-jose.git
 
 BuildArch: noarch
 
-# https://github.com/mpdavis/python-jose.git
 Source: %name-%version.tar
-
-# Due to version of ecdsa 0.15, which is available in YUM repo already
-# https://github.com/mpdavis/python-jose/issues/176#issuecomment-642352816
-Patch1: %oname-fedora-disable-test_key_too_short.patch
 
 Provides: python3-module-%pypi_name
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-wheel
+BuildRequires: python3-module-wheel
 BuildRequires: python3(setuptools)
-BuildRequires: python3(six)
-# Backends
-BuildRequires: python3(cryptography)
-BuildRequires: python3(Crypto)
-BuildRequires: python3(ecdsa)
-BuildRequires: python3(rsa)
-BuildRequires: python3(pyasn1)
-# Run tests
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest_cov)
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-ecdsa
+BuildRequires: python3-module-rsa
+BuildRequires: python3-module-pyasn1
+%endif
 
 %description
 A JOSE implementation in Python
@@ -49,7 +44,6 @@ Documentation: https://python-jose.readthedocs.org/en/latest/
 
 %prep
 %setup
-%patch1 -p0
 
 %build
 %pyproject_build
@@ -58,7 +52,7 @@ Documentation: https://python-jose.readthedocs.org/en/latest/
 %pyproject_install
 
 %check
-%tox_check_pyproject -e compatibility
+%pyproject_run_pytest -v
 
 %files
 %doc LICENSE
@@ -67,6 +61,9 @@ Documentation: https://python-jose.readthedocs.org/en/latest/
 %python3_sitelibdir/python_jose-%version.dist-info
 
 %changelog
+* Fri Apr 04 2025 Anton Vyatkin <toni@altlinux.org> 3.4.0-alt1
+- New version 3.4.0.
+
 * Sat May 06 2023 Anton Zhukharev <ancieg@altlinux.org> 3.3.0-alt3
 - (NMU) Added missing provide.
 
