@@ -5,7 +5,7 @@
 
 Name: qt6-quick3d
 Version: 6.8.2
-Release: alt1
+Release: alt1.1
 
 Group: System/Libraries
 Summary: Qt6 - 3D content in Qt Quick
@@ -164,6 +164,8 @@ Requires: libqt6-core = %_qt6_version
 # error: constant is inaccessible
 sed -i 's/enum Dirty :/public: &/' \
   src/quick3d/qquick3dcustommaterial_p.h
+sed -i 's/m68k/e2k/' \
+  src/3rdparty/openxr/src/common/platform_utils.hpp
 %endif
 
 %build
@@ -246,6 +248,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Sat Mar 15 2025 Michael Shigorin <mike@altlinux.org> 6.8.2-alt1.1
+- E2K: extend workarounds (ilyakurdyukov@)
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 
