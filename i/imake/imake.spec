@@ -1,6 +1,6 @@
 Name: imake
 Version: 1.0.8
-Release: alt1
+Release: alt2
 
 Summary: C preprocessor interface to the make utility
 License: X11
@@ -11,6 +11,7 @@ Source: %name-%version.tar.bz2
 
 Patch: %name-1.0.5-alt-tmpdir.patch
 Patch1: 0001-1.0.7-alt1.patch
+Patch2: %name-1.0.8-alt-fix-gcc14.patch
 
 # Automatically added by buildreq on Mon Mar 11 2013
 # optimized out: pkg-config
@@ -30,6 +31,7 @@ descriptions of the various items to be built.
 
 %patch -p1 -b .orig
 %patch1 -p2 -b .redirect
+%patch2 -p1
 
 %build
 %autoreconf
@@ -47,6 +49,9 @@ descriptions of the various items to be built.
 %_man1dir/*
 
 %changelog
+* Fri Apr 04 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.0.8-alt2
+- NMU: Fixed FTBFS with gcc14
+
 * Fri Jun 24 2022 Fr. Br. George <george@altlinux.org> 1.0.8-alt1
 - Autobuild version bump to 1.0.8
 - Drop already upstreamed lcc patch
