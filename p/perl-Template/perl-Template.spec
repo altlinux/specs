@@ -3,7 +3,7 @@
 %def_without altbugzilla
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 3.101
+Version: 3.102
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -43,7 +43,7 @@ LaTeX, and so on.
 %perl_vendor_install
 
 %files
-%doc	Changes README.md
+%doc	Changes README.md HACKING.md INSTALL.md
 
 	%perl_vendor_archlib/Template.pm
 %dir	%perl_vendor_archlib/Template
@@ -69,8 +69,13 @@ LaTeX, and so on.
 	%_bindir/ttree
 	%_man1dir/tpage.*
 	%_man1dir/ttree.*
+%dir	%perl_vendor_archlib/Template/App
+	%perl_vendor_archlib/Template/App/ttree.pm
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 3.102-alt1
+- automated CPAN update
+
 * Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 3.101-alt1
 - new version
 
