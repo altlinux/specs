@@ -5,31 +5,24 @@
 
 Name: httpie
 Version: 3.2.4
-Release: alt3
+Release: alt4
 
 Summary: HTTPie: modern, user-friendly command-line HTTP client for the API era
 Group: Networking/WWW
 License: BSD
-Url: http://httpie.org
+Url: https://httpie.io/cli
 VCS: https://github.com/httpie/cli.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pygments
-BuildRequires: python3-module-requests_toolbelt
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-defusedxml
-BuildRequires: python3-module-multidict
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-httpbin
-BuildRequires: python3-module-responses
-BuildRequires: python3-module-pytest-mock
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -44,6 +37,8 @@ responses.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -60,13 +55,17 @@ responses.
 %_bindir/httpie
 %_bindir/https
 %python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-%{version}*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_man1dir/http.1*
 %_man1dir/https.1*
 %_man1dir/httpie.1*
 %doc LICENSE README.md
 
 %changelog
+* Fri Apr 04 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.2.4-alt4
+- Update dependencies managment.
+- Enable previously skipped tests.
+
 * Wed Jan 22 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.2.4-alt3
 - New version 3.2.4
 - Updated build system
