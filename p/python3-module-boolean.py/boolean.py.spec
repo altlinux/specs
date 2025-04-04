@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0
-Release: alt2
+Version: 5.0
+Release: alt1
 Summary: Define boolean algebras, create and parse boolean expressions and create custom boolean DSL
 License: BSD-2-Clause
 Group: Development/Python3
@@ -61,6 +61,9 @@ rm %buildroot%python3_sitelibdir/boolean/test_boolean.py
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Apr 04 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1
+- 4.0 -> 5.0.
+
 * Wed Mar 20 2024 Stanislav Levin <slev@altlinux.org> 4.0-alt2
 - Mapped PyPI name to distro's one.
 
