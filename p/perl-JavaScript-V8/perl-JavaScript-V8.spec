@@ -2,7 +2,7 @@
 
 Name: perl-JavaScript-V8
 Version: 0.09
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: JavaScript::V8 - Perl interface to the V8 JavaScript engine
@@ -10,6 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN JavaScript-V8
+VCS: git+https://github.com/dgl/javascript-v8
 Source: %name-%version.tar
 Patch: perl-JavaScript-V8-0.070-alt-test32.patch
 
@@ -39,6 +40,9 @@ rm t/interrupt.t
 %doc Changes README*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 1:0.09-alt4
+- updated VCS url
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:0.09-alt3
 - added BR: perl(Devel/CheckLib.pm) for future use
 
