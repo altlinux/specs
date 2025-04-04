@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 
-%define mod_name pydantic_extra_types
+%define module_name pydantic_extra_types
 %define pypi_name pydantic-extra-types
 
 Name: python3-module-%pypi_name
-Version: 2.10.2
+Version: 2.10.3
 Release: alt1
 
 Summary: Extra Pydantic types
@@ -56,10 +56,13 @@ See https://github.com/pydantic/pydantic/issues/5012 for more info.
 
 %files
 %doc LICENSE README.*
-%python3_sitelibdir/%mod_name
+%python3_sitelibdir/%module_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Apr 04 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.3-alt1
+- Updated to 2.10.3.
+
 * Thu Jan 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.2-alt1
 - Updated to 2.10.2.
 

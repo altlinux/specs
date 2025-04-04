@@ -4,7 +4,7 @@
 %define pypi_name pydantic
 
 Name: python3-module-%pypi_name
-Version: 2.10.6
+Version: 2.11.2
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -65,7 +65,7 @@ with pydantic.
 # Also generating north_star_data.json at each test exec and comparing it with
 # expected md5sum leads to failed build, because of Faker or something else has
 # been updated.
-%pyproject_run_pytest -Wignore --ignore='tests/test_docs.py' --benchmark-skip
+%pyproject_run_pytest --ignore='tests/test_docs.py' --benchmark-skip
 
 %files
 %doc LICENSE *.md
@@ -73,6 +73,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Apr 04 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.11.2-alt1
+- Updated to 2.11.2.
+
 * Fri Jan 24 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.10.6-alt1
 - Updated to 2.10.6.
 

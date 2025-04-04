@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name fastapi
+%define module_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.115.11
+Version: 0.115.12
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -30,6 +31,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata -- --extra all
 %pyproject_builddeps_check
@@ -76,17 +78,20 @@ cat requirements-docs-tests.txt requirements-tests.txt > alt-requirements-tests.
 %check
 # Clean of the using coverage module, because we don't needs to it.
 %SOURCE2 tests/
-%pyproject_run_pytest -q -Wignore tests
+%pyproject_run_pytest -vvv -Wignore --timeout=300 tests
 
 %files
 %doc README.*
 # Temporary exclude /usr/bin/fastapi to resolve conflict with fastapi-cli.
 # For more details see https://github.com/fastapi/fastapi-cli/pull/85
 %exclude %_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%module_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Apr 04 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.12-alt1
+- Updated to 0.115.12.
+
 * Mon Mar 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.115.11-alt1
 - Updated to 0.115.11.
 
