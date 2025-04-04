@@ -7,8 +7,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.011
-Release: alt2
+Version: 0.013
+Release: alt1
 Summary: Make your Moo-based object constructors blow up on unknown attributes.
 Group: Development/Perl
 License: %perl_license
@@ -30,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE
+%doc Changes README
 %perl_vendor_privlib/M*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.013-alt1
+- automated CPAN update
+
 * Tue Mar 07 2023 L.A. Kostis <lakostis@altlinux.ru> 0.011-alt2
 - fix License.
 
