@@ -2,7 +2,7 @@
 
 Name: klevernotes
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -13,7 +13,8 @@ Packager: Aleksandr Shamaraev <shad@altlinux.org>
 URL: https://invent.kde.org/office/klevernotes
 Vcs: https://invent.kde.org/office/klevernotes
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: ru.tar
 
 ExclusiveArch: x86_64 aarch64 loongarch64
 
@@ -31,6 +32,8 @@ KleverNotes is a note taking and management application for your mobile and desk
 %prep
 %setup
 
+tar -xf %SOURCE1 -C po/
+
 %build
 %cmake
 %cmake_build
@@ -47,6 +50,9 @@ KleverNotes is a note taking and management application for your mobile and desk
 %doc *.md 
 
 %changelog
+* Fri Apr 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt2
+- Created and added russian translate.
+
 * Tue Mar 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt1
 - 1.2.1 -> 1.2.2
 
