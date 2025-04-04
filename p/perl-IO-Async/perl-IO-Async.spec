@@ -2,8 +2,8 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.802
-Release: alt3
+Version: 0.803
+Release: alt1
 
 Summary: Asynchronous event-driven programming
 Group: Development/Perl
@@ -11,7 +11,7 @@ License: perl
 
 Url: %CPAN %oname
 # https://cpan.metacpan.org/authors/id/P/PE/PEVANS/%oname-%version.tar.gz
-Source: %oname-%version.tar
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{oname}-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: /proc perl(IO/Socket/IP.pm) perl(Module/Build.pm) perl(Future.pm) perl(Future/Utils.pm) perl-devel perl(Struct/Dumb.pm) perl(Future/IO.pm)
@@ -41,7 +41,7 @@ Requires: %name = %EVR
 This package contains tests for %name.
 
 %prep
-%setup -q -n %oname-%version
+%setup -q -n %{oname}-%{version}
 
 # broken on LoongArch and ppc64le, but ifarch did not expand here :(
 case `uname -m` in
@@ -70,6 +70,9 @@ esac
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.803-alt1
+- automated CPAN update
+
 * Wed Dec 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.802-alt3
 - NMU: fixed FTBFS on LoongArch (disabled 70future-io.t which also fail
   on other architectures, in particular ppc64)
