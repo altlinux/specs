@@ -2,25 +2,27 @@
 %global _libexecdir %prefix/libexec
 
 Name: icmake
-Version: 13.01.00
+Version: 13.02.00
 Release: alt1
-Summary: Hybrid between a 'make' utility and a 'shell script' language
+Summary: A make utility using a C-like syntax
 License: GPLv3
 Group: Development/Tools
 Url: https://gitlab.com/fbb-git/icmake
-
 VCS: https://gitlab.com/fbb-git/icmake.git
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildRequires: gcc-c++
 
 %description
-Icmake is a hybrid between a 'make' utility and a 'shell script'
-language.  Originally, it was concocted to provide a useful tool for
-automatic program maintenance and system administrative tasks on MS-DOS
-platforms.  As we learned to appreciate its flexibility, Icmake was
-eventually ported to Unix platforms (SCO and Linux). By now Icmake also
-runs on a HP-Unix platform.
+Icmake (Intelligent C-like MAKE) is a hybrid between a make utility and a
+shell script language, designed for software development and system
+administration. Unlike traditional make, icmake uses a C-like scripting
+language, giving developers more power and flexibility when defining build
+rules or automating tasks.
+
+It includes a compiler, executor, and utilities to support cross-platform
+script execution. Icmake is especially useful for managing complex build
+environments and packaging systems.
 
 %package doc
 Summary: Documentation for Icmake
@@ -28,12 +30,15 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description doc
-Icmake is a hybrid between a 'make' utility and a 'shell script'
-language.  Originally, it was concocted to provide a useful tool for
-automatic program maintenance and system administrative tasks on MS-DOS
-platforms.  As we learned to appreciate its flexibility, Icmake was
-eventually ported to Unix platforms (SCO and Linux). By now Icmake also
-runs on a HP-Unix platform.
+Icmake (Intelligent C-like MAKE) is a hybrid between a make utility and a
+shell script language, designed for software development and system
+administration. Unlike traditional make, icmake uses a C-like scripting
+language, giving developers more power and flexibility when defining build
+rules or automating tasks.
+
+It includes a compiler, executor, and utilities to support cross-platform
+script execution. Icmake is especially useful for managing complex build
+environments and packaging systems.
 
 This package contains documentation for Icmake.
 
@@ -73,6 +78,10 @@ popd
 %_docdir/%name-%version
 
 %changelog
+* Fri Apr 04 2025 Anton Farygin <rider@altlinux.com> 13.02.00-alt1
+- 13.01.00 -> 13.02.00
+- updated summary and description
+
 * Thu Apr 03 2025 Anton Farygin <rider@altlinux.com> 13.01.00-alt1
 - 9.03.01 -> 13.01.00
 
