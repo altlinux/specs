@@ -4,20 +4,21 @@
 BuildRequires: libgmp-devel libmpfr-devel perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Math/BigInt.pm) perl(Math/GMP.pm) perl(Math/GMPf.pm) perl(Math/GMPq.pm) perl(Math/GMPz.pm) perl(Math/LongDouble.pm) perl(Math/Trig.pm) perl(overload.pm) perl(subs.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
-%ifnarch %e2k %arm aarch64
+%ifnarch %e2k %arm aarch64 loongarch64 riscv64
 BuildRequires: perl(Math/Decimal64.pm)
 %endif
+# see the latest GCC spec
+%define libquadmath_arches	%ix86 x86_64 ppc64le
 # not needed for now, but safe due to -Wl,as-needed
-%ifnarch %e2k %arm aarch64
+%ifarch %libquadmath_arches
 BuildRequires: libquadmath-devel
 %endif
-# not yet implemented _Decimal64 on aarch64 in our gcc9?
-#https://gcc.gnu.org/legacy-ml/gcc-patches/2017-07/msg00788.html
-ExcludeArch: aarch64 %arm
+
+Packager: Igor Vlasenko <viy@altlinux.org>
 
 Name: perl-%module_name
 Version: 4.38
-Release: alt1
+Release: alt1.1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
 License: perl
@@ -37,6 +38,12 @@ A bigfloat module utilising the MPFR library. Basically.
 %prep
 %setup -q -n %{module_name}-%{version}
 
+%ifnarch libquadmath_arches
+# These test don't try to detect long double presence
+# and just fail. Skip them when libquadmath is not available.
+rm -vf t/LongDouble.t t/uselongdouble.t
+%endif
+
 # todo: MPFR?
 %ifarch ppc64le
 #expected 1.00000000000000000000000000000001, got 9.99999999999999999999999999999991
@@ -55,6 +62,16 @@ rm t/LongDouble.t
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Apr 04 2025 Ivan A. Melnikov <iv@altlinux.org> 4.38-alt1.1
+- NMU: fix FTBFS on loongarch64 and riscv64
+  + disable Math/Decimal64 BR on loongarch64 and riscv64,
+    as decimal floating-point not supported by GCC on
+    these platforms
+  + copy libquadmath_arches definition from gcc14 spec
+    and skip BR on libquadmath-devel and long double
+    tests there
+  + enable building on aarch64, as now it should work, too.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 4.38-alt1
 - automated CPAN update
 
