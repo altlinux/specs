@@ -8,7 +8,7 @@
 
 Name: gerbera
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: UPnP Media Server
 Group: System/Servers
@@ -64,6 +64,9 @@ Data files for the Gerbera media server.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+sed -i 's/upnpMap {}/upnpMap = {}/' src/content/import_service.h
+%endif
 
 %build
 %cmake \
@@ -138,6 +141,9 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/%name
 
 %changelog
+* Fri Apr 04 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.4.1-alt2
+- Fixed build for Elbrus.
+
 * Wed Mar 05 2025 Constantin Sunzow <protvin@altlinux.org> 2.4.1-alt1
 - New version 2.4.1.
 
