@@ -5,7 +5,7 @@
 
 Name: tcl-img
 Version: 1.4.14
-Release: alt1
+Release: alt2
 
 Summary: Tcl Image Formats (Img)
 License: TCL
@@ -93,6 +93,9 @@ make test 2>&1 |tee "$log"
 %_mandir/mann/*
 
 %changelog
+* Fri Apr 04 2025 Constantin Sunzow <protvin@altlinux.org> 1.4.14-alt2
+- Fix FTBFS: remove assignment data_precision.
+
 * Sun Mar 19 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.14-alt1
 - Updated to 1.4.14.
 - Built against system libtiff again.
