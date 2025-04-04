@@ -1,10 +1,10 @@
 Name: bluefish
 Summary: A GTK3 web development application for experienced users
-Version: 2.2.16
+Version: 2.2.17
 Release: alt1
 Epoch: 2
 
-Url: http://bluefish.openoffice.nl
+Url: https://bluefish.openoffice.nl
 License: GPL-3.0-or-later
 Group: Editors
 
@@ -22,11 +22,11 @@ Patch0: bluefish-2.2.13-strict-aliasing.patch
 
 # Avoid use of /usr/bin/env in shipped scripts
 # Also change /usr/bin/python → /usr/bin/python3 (for now)
-Patch1: bluefish-2.2.16-shellbang.patch
+Patch1: bluefish-2.2.17-shellbang.patch
 
 Patch3: bluefish-2.2.12-fix-command-chmod-a-x.patch
 
-Patch4: bluefish-2.2.16-russian-translation.patch
+Patch4: bluefish-2.2.17-russian-translation.patch
 
 Obsoletes: bluefish-common =< %EVR
 
@@ -57,7 +57,7 @@ find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 %patch0
 %patch1 -p2
 %patch3 -p2
-%patch4 -p2
+%patch4 -p1
 
 # Update russian translation
 #cp %SOURCE1 po/ru.po
@@ -105,6 +105,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Fri Apr 04 2025 Anton Midyukov <antohami@altlinux.org> 2:2.2.17-alt1
+- new version (2.2.17)
+
 * Tue Sep 24 2024 Anton Midyukov <antohami@altlinux.org> 2:2.2.16-alt1
 - new version (2.2.16) with rpmgs script
 - use upstream russian translation
