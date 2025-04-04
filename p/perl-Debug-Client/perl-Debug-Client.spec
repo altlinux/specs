@@ -1,30 +1,22 @@
 Name: perl-Debug-Client
-Version: 0.31
-Release: alt3
+Version: 0.34
+Release: alt1
 
 Summary: debugger client side code for Padre, The Perl IDE.
 Group: Development/Perl
 License: perl
 
 Url: %CPAN Debug-Client
-Source: %name-%version.tar
-Patch0: perl-Debug-Client-0.31-issue2.patch
-Patch1: perl-Debug-Client-0.31-perl5.38-no-given-when.patch
+Source0: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Debug-Client-%{version}.tar.gz
 
 BuildArch: noarch
-BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm) perl(Test/Deep.pm) perl(parent.pm) perl(Test/Class.pm) perl(File/HomeDir.pm) perl-devel perl(IO/Socket/IP.pm) perl(Term/ReadLine/Gnu.pm)
+BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm) perl(Test/Deep.pm) perl(parent.pm) perl(Test/Class.pm) perl(File/HomeDir.pm) perl-devel perl(IO/Socket/IP.pm) perl(Term/ReadLine/Gnu.pm) perl(Pod/Usage.pm)
 
 %description
 %summary
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
-
-# no upstream patch yet
-# see https://github.com/PadreIDE/Debug-Client/issues/12
-[ %version = 0.31 ] && rm -f t/11-add.t
+%setup -q -n Debug-Client-%{version}
 
 %build
 %perl_vendor_build
@@ -33,11 +25,14 @@ BuildRequires: perl(PadWalker.pm) perl(Test/Requires.pm) perl(Test/CheckDeps.pm)
 %perl_vendor_install
 
 %files
-%doc Changes README.md README
+%doc Changes README.md
 %perl_vendor_privlib/Debug/Client*
-%doc Changes README
+%doc Changes
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.34-alt1
+- automated CPAN update
+
 * Wed Dec 06 2023 Igor Vlasenko <viy@altlinux.org> 0.31-alt3
 - fixed https://github.com/PadreIDE/Debug-Client/issues/13
 
