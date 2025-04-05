@@ -6,8 +6,8 @@
 %define soname 1
 
 Name: vtk
-Version: %ver.1
-Release: alt3
+Version: %ver.2
+Release: alt1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-3-Clause
 Group: Development/Tools
@@ -33,6 +33,7 @@ Patch5: vtk-9.4.1-arch-fmt-11.patch
 Patch6: vtk-%version-alt.patch
 Patch7: vtk-9.4.1-fix-vtkparseproperties-getnth-setnth-detection.patch
 Patch8: vtk-9.4.1-fix-restore-visibility-of-findpoint-method.patch
+Patch9: vtk-9.4.2-fix-build-netcdf.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt5
@@ -1556,6 +1557,9 @@ EOF
 %endif
 
 %changelog
+* Sat Apr 05 2025 Anton Farygin <rider@altlinux.com> 9.4.2-alt1
+- 9.4.1 -> 9.4.2
+
 * Sat Mar 29 2025 Michael Shigorin <mike@altlinux.org> 9.4.1-alt3
 - E2K: more workarounds to actually build slicer (ilyakurdyukov@).
 

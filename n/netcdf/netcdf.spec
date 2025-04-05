@@ -1,22 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname netcdf
-%define sover 19
+%define sover 22
 
-Name: lib%oname
-Version: 4.8.0
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
+
+Name: netcdf
+Version: 4.9.3
 Release: alt1
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/software/netcdf/
+Url: https://www.unidata.ucar.edu/software/netcdf/
 
-# https://github.com/Unidata/netcdf-c.git
+VCS: https://github.com/Unidata/netcdf-c.git
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sun Jan 18 2009
-BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
+BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel libxml2-devel
 BuildRequires: /usr/bin/tex libcurl-devel libexpat-devel doxygen graphviz
+%if_with check
+BuildRequires: /proc unzip
+%endif
 
 %description
 NetCDF (network Common Data Form) is an interface for array-oriented
@@ -63,11 +70,11 @@ NetCDF (network Common Data Form) - это ориентированный на �
 поддерживают создание, доступ и совместное использование научных
 данных.
 
-%package -n %name%sover
+%package -n libnetcdf%sover
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 Group: System/Libraries
 
-%description -n %name%sover
+%description -n libnetcdf%sover
 NetCDF (network Common Data Form) is an interface for array-oriented
 data access and a freely-distributed collection of software libraries
 for C, Fortran, C++, and perl that provides an implementation of the
@@ -98,7 +105,7 @@ NetCDF data is:
    o Sharable. One writer and multiple readers may simultaneously
      access the same netCDF file.
 
-%description -l ru_RU.UTF-8 -n %name%sover
+%description -l ru_RU.UTF-8 -n libnetcdf%sover
 NetCDF (network Common Data Form) - это ориентированный на массивы
 интерфейс для доступа к данным и, одновременно, свободно
 распространяемая коллекция программ и библиотек для C, Fortran, C++,
@@ -112,27 +119,27 @@ NetCDF (network Common Data Form) - это ориентированный на �
 поддерживают создание, доступ и совместное использование научных
 данных.
 
-%package -n %oname-tools
+%package tools
 Summary: NetCDF tools
 Group: Development/Tools
 
-%description -n %oname-tools
+%description tools
 This package contains tools for work with NetCDF
 
-%package devel
+%package -n libnetcdf-devel
 Summary: Development tools for the NetCDF library
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF
 Group: Development/C
 Provides: pkgconfig(netcdf) = %EVR
 
-%description devel
+%description -n libnetcdf-devel
 This package contains the netCDF-3 header files, shared devel libs, and
 man pages.
 
 If you want to develop applications which will use the NetCDF library,
 you'll need to install the %name-devel package.
 
-%description -l ru_RU.UTF-8 devel
+%description -l ru_RU.UTF-8 -n libnetcdf-devel
 Заголовочные файлы и документация для использования библиотеки NetCDF
 в приложениях.
 
@@ -140,17 +147,32 @@ you'll need to install the %name-devel package.
 использовать библиотеку NetCDF, вам необходимо установить пакет
 %name-devel.
 
-%package doc
+%package -n libnetcdf-doc
 Summary: Documentation for NetCDF
 Summary(ru_RU.UTF-8): Документация по NetCDF
 Group: Documentation
-BuildArch: noarch
 
-%description doc
+%description -n libnetcdf-doc
 Documentation for NetCDF library.
 
-%description -l ru_RU.UTF-8 doc
+%description -l ru_RU.UTF-8 -n libnetcdf-doc
 Документация по NetCDF.
+
+%package -n hdf5-netcdf-plugins
+Summary:        HDF5 filter plugins for NetCDF
+Group:          System/Libraries
+
+%description -n hdf5-netcdf-plugins
+This package provides HDF5 filter plugins used by NetCDF for enhanced compression
+and data processing capabilities. The plugins include:
+- BZIP2 compression filter
+- DEFLATE compression filter
+- Fletcher32 checksum filter
+- Shuffle filter
+- Standard filters for NCZarr format
+
+These plugins are required for advanced NetCDF functionality when working with
+HDF5-based NetCDF files that use these compression methods.
 
 %prep
 %setup
@@ -169,37 +191,56 @@ rm -fR udunits/expat
 	--enable-v2 \
 	--enable-mmap \
 	--disable-dap-remote-tests \
-	--disable-filter-testing \
+	--enable-extra-example-test \
+	--enable-filter-testing \
+	--with-plugin-dir=%_libdir/hdf5/plugin \
 	%nil
 
 %make
 
+%check
+%make check
+
 %install
 %makeinstall_std
+rm -f %buildroot%_libdir/hdf5/plugin/*.la
 
-%files -n %name%sover
+%files -n libnetcdf%sover
 %doc COPYRIGHT
 %doc README* RELEASE_NOTES*
 %_libdir/*.so.%{sover}
 %_libdir/*.so.%{sover}.*
 
-%files devel
+%files -n libnetcdf-devel
 %_bindir/nc-config
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
 %_man3dir/netcdf.3*
 
-%files -n %oname-tools
+%files tools
 %_bindir/*
 %exclude %_bindir/nc-config
 %_libdir/*.settings
 %_man1dir/*
 
-%files doc
+%files -n hdf5-netcdf-plugins
+%dir %_libdir/hdf5/plugin
+%_libdir/hdf5/plugin/lib__nch5*.so
+%_libdir/hdf5/plugin/lib__ncz*.so
+
+%files -n libnetcdf-doc
 %doc docs/html examples
 
 %changelog
+* Tue Apr 01 2025 Anton Farygin <rider@altlinux.com> 4.9.3-alt1
+- 4.9.2 -> 4.9.3
+- renamed source package from libnetcdf to netcdf according upstream name
+- made doc subpackage arch-specific since it contains compiled examples
+
+* Wed Jul 17 2024 Anton Farygin <rider@altlinux.ru> 4.9.2-alt1
+- 4.8.0 -> 4.9.2
+
 * Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0-alt1
 - Updated to upstream version 4.8.0.
 - Removed alternatives.
