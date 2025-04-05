@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Planify
 License: GPL-3.0-or-later
@@ -21,6 +21,8 @@ Source: %url/archive/%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
+#https://github.com/alainm23/planify/commit/7f3a2be69751259eb59a295455189117ca761301
+Patch10: %name-4.12.0-up-build.patch
 
 # to avoid conflict between webki2gtk{4.1,6.0}-debuginfo
 %add_debuginfo_skiplist %_bindir/%rdn_name
@@ -70,6 +72,7 @@ This package contains files necessary to develop Planify plugins.
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 
 %build
 %meson %{?_disable_snapshot:-Dprofile=default}
@@ -104,6 +107,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 4.12.0-alt1.1
+- fixed FTBFS
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 4.12.0-alt1
 - 4.12.0
 

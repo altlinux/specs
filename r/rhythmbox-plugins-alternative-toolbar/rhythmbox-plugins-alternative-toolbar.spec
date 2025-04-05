@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name alternative-toolbar
 %define ver_major 0.20
@@ -7,17 +7,18 @@
 
 Name: rhythmbox-plugins-%_name
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt3%beta
 
 Summary: An alternative toolbar for Rhythmbox
 Group: Sound
-License: GPL-3.0
+License: GPL-3.0-or-later
 Url: https://github.com/fossfreedom/alternative-toolbar
+
+Vcs: https://github.com/fossfreedom/alternative-toolbar.git
 
 %if_disabled snapshot
 Source: https://github.com/fossfreedom/alternative-toolbar/releases/download/v%version/%_name-%version%beta.tar.xz
 %else
-Vcs: https://github.com/fossfreedom/alternative-toolbar.git
 Source: %_name-%version%beta.tar
 %endif
 
@@ -27,7 +28,9 @@ Requires: rhythmbox-plugins-python >= 3.4.7-alt2
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgio-devel python3(gi)
-BuildRequires: libpeas-gir librhythmbox-gir
+BuildRequires: typelib(Peas) = 1.0
+BuildRequires: typelib(GIRepository) = 2.0
+BuildRequires: librhythmbox-gir
 BuildRequires: intltool
 
 %description
@@ -36,6 +39,10 @@ Compact toolbar which can be hidden.
 
 %prep
 %setup -n %_name-%version%beta
+# With pygobject >= 3.52.0, importing GIRepository-2.0 is no longer
+# supported.
+
+sed -i 's/^AC_PYTHON.*Peas/#&/' configure.ac
 
 %build
 %autoreconf
@@ -55,6 +62,13 @@ Compact toolbar which can be hidden.
 %doc ChangeLog README*
 
 %changelog
+* Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt3
+- fixed FTBFS with PyGobject-3.52
+
+* Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt2
+- updated to v0.20.4-2-ga03f1b3
+- fixed BR
+
 * Wed Nov 22 2023 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
 - 0.20.4
 

@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gnome-bluetooth
 %define ver_major 47
@@ -15,7 +15,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -180,6 +180,9 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt2
+- 47.1-43-g961f2740 (fixed test setup with PyGobject-3.52, updated translations)
+
 * Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 
