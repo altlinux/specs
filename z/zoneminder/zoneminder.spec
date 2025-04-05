@@ -7,7 +7,7 @@ ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.37.61
-Release: alt12.git3e8815059
+Release: alt13.git4300a5872
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -181,6 +181,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Sat Apr 05 2025 Anton Farygin <rider@altlinux.com> 1.37.61-alt13.git4300a5872
+- update to upstream 4300a5872
+
 * Tue Mar 25 2025 Anton Farygin <rider@altlinux.com> 1.37.61-alt12.git3e8815059
 - update to upstream 3e8815059
 
