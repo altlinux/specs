@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-kopidel
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Creating a bootable iso that copies the file system
@@ -69,6 +69,12 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Sat Apr 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.1-alt1
+- Create smaller partitions first (closes: 53632).
+- Add regular expression support to package names for the squashfs image.
+- Add less to squashfs packages.
+- Add libproc2_1 to squashfs packages.
+
 * Wed Apr 02 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.0-alt1
 - Add CLI progress bar.
 - Add --step flag to CLI.
