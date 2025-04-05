@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-typescript
-Version: 5.7.3
+Version: 5.8.2
 Release: alt1
 
 Summary: TypeScript is a language for application scale JavaScript development
@@ -58,6 +58,9 @@ ln -s %nodejs_sitelib/%node_module/bin/tsserver %buildroot%_bindir
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Thu Apr 03 2025 Vitaly Lipatov <lav@altlinux.ru> 5.8.2-alt1
+- new version 5.8.2 (with rpmrb script)
+
 * Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 5.7.3-alt1
 - new version 5.7.3 (with rpmrb script)
 
