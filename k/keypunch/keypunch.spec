@@ -1,5 +1,7 @@
+%def_disable snapshot
+
 %define _name Keypunch
-%define ver_major 5.1
+%define ver_major 6.0
 %define rdn_name dev.bragefuglseth.%_name
 
 %def_enable check
@@ -12,10 +14,15 @@ Release: alt1
 Summary: Keypunch is a typing tutor
 License: GPL-3.0-or-later
 Group: Games/Educational
-Url: https://github.com/bragefuglseth/keypunch
+Url: https://apps.gnome.org/Keypunch/
 
 Vcs: https://github.com/bragefuglseth/keypunch.git
+
+%if_disabled snapshot
+Source: https://github.com/bragefuglseth/keypunch/archive/v%version/%name-%version.tar.gz
+%else
 Source: %name-%version.tar
+%endif
 Source1: %name-%version-cargo.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -34,7 +41,8 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson
+%meson -Dbuildtype=release
+%nil
 %meson_build
 
 %install
@@ -46,13 +54,16 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %files -f %name.lang
 %_bindir/%name
-%_desktopdir/%{rdn_name}*.desktop
+%_desktopdir/%{rdn_name}.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README.*
 
 %changelog
+* Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 6.0-alt1
+- 6.0
+
 * Sun Dec 29 2024 Yuri N. Sedunov <aris@altlinux.org> 5.1-alt1
 - 5.1
 

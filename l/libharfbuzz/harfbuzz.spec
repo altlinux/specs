@@ -18,7 +18,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -46,7 +46,7 @@ BuildRequires: pkgconfig(freetype2) >= %freetype_ver libcairo-devel >= %cairo_ve
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_graphite2:BuildRequires: libgraphite2-devel >= %graphite2_ver}
 %{?_enable_icu:BuildRequires: pkgconfig(icu-uc) >= %icu_ver}
-%{?_enable_docs:BuildRequires: gtk-doc}
+%{?_enable_docs:BuildRequires: gtk-doc help2man}
 %{?_enable_check:BuildRequires: python3-test fonttools}
 
 %description
@@ -198,9 +198,9 @@ GObject introspection devel data for the HarfBuzz library
 %files utils
 %_bindir/hb-info
 %_bindir/hb-view
-%_bindir/hb-ot-shape-closure
 %_bindir/hb-shape
 %_bindir/hb-subset
+%_man1dir/hb-*
 
 %if_enabled introspection
 %files gir
@@ -211,6 +211,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Sat Apr 05 2025 Yuri N. Sedunov <aris@altlinux.org> 11.0.1-alt1
+- 11.0.1
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 11.0.0-alt1
 - 11.0.0
 
