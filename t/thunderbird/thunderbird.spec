@@ -16,7 +16,7 @@
 %endif
 
 Name: 	 thunderbird
-Version: 137.0
+Version: 137.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -372,11 +372,11 @@ export NPROCS=16
 export NPROCS=8
 %endif
 
+export MOZ_APP_REMOTINGNAME="thunderbird"
+
 #python3 ./mach python --exec-file /dev/null
 export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 ./mach configure
-
-export MOZ_APP_REMOTINGNAME="thunderbird"
 
 %if_with mach_build
 ./mach build -j $NPROCS
@@ -529,6 +529,9 @@ cat %SOURCE2 | \
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sat Apr 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0.1-alt1
+- New version.
+
 * Wed Apr 02 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0-alt1
 - New version.
 - Set the MOZ_APP_REMOTINGNAME variable.
