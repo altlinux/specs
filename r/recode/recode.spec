@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: recode
-Version: 3.7.14
+Version: 3.7.15
 Release: alt1
 
 Summary: The `recode' library converts files between character sets and usages
@@ -137,8 +137,8 @@ files to allow you to develop applications using the `recode' libraries.
 %ifarch %e2k
 #patch3 -p1
 %endif
-%patch6 -p1
-%patch7 -p1
+#patch6 -p1
+#patch7 -p1
 
 %build
 #rm acinclude.m4 m4/libtool.m4 m4/flex.m4
@@ -185,6 +185,9 @@ chrpath -d %buildroot%_bindir/%name
 # - configure.in:18: error: automatic de-ANSI-fication support has been removed
 
 %changelog
+* Sat Apr 05 2025 Ilya Mashkin <oddity@altlinux.ru> 3.7.15-alt1
+- 3.7.15
+
 * Thu Feb 15 2024 Ilya Mashkin <oddity@altlinux.ru> 3.7.14-alt1
 - 3.7.14
 
