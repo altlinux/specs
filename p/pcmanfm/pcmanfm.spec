@@ -1,15 +1,17 @@
-%define gtkver 2
+%define gtkver 3
 
 Name: pcmanfm
-Version: 1.3.2
-Release: alt2.20240821
+Version: 1.4.0
+Release: alt1
 
 Summary: PCMan File Manager
 License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 
 Url: https://github.com/lxde/pcmanfm
+VCS: https://github.com/lxde/pcmanfm.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Provides: pcmanfm2 = %version-%release
 Obsoletes: pcmanfm2 < 1.2.0
@@ -50,6 +52,7 @@ This package contains header files.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -74,6 +77,11 @@ ln -s %name %buildroot%_bindir/pcmanfm2
 %_includedir/*
 
 %changelog
+* Mon Mar 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+- build with gtk+3
+- add VCS tag
+
 * Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt2.20240821
 - new snapshot for fix build with gcc14
 

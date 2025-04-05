@@ -1,48 +1,49 @@
 %define _unpackaged_files_terminate_build 1
 %define origname lxpanel
-%define gtkver 2
 
 Name: lxde-%origname
 Version: 0.10.1
-Release: alt2.20240823
+Release: alt3.20250321
 
 Summary: LXPanel is a lightweight X11 desktop panel
-License: GPL
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
 
 Url: https://github.com/lxde/lxpanel
-Source: %origname-%version.tar
+VCS: https://github.com/lxde/lxpanel.git
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 #Requires: lxde-freedesktop-menu
 Requires: altlinux-freedesktop-menu-lxde
 Requires: menu-cache
 
-# Automatically added by buildreq on Wed Jan 23 2013
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libmenu-cache libpango-devel libsystemd-daemon libwayland-client libwayland-server pkg-config xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel xz
-BuildRequires: docbook-dtds docbook-style-xsl imake intltool libalsa-devel libmenu-cache-devel libwireless-devel libwnck-devel xorg-cf-files xsltproc 
-
-BuildRequires: libfm-devel libxml2-devel libkeybinder-devel
-BuildRequires: libgdk-pixbuf-xlib-devel
+BuildPreReq: libfm-devel
+BuildPreReq: rpm-build-xdg
+BuildPreReq: libgtk+3-devel
+BuildRequires: intltool
+BuildRequires: libmenu-cache-devel
+BuildRequires: libwireless-devel
 BuildRequires: libcurl-devel
-BuildPreReq: rpm-build-xdg libgtk+%gtkver-devel
+BuildRequires: pkgconfig(libwnck-3.0)
+BuildRequires: pkgconfig(keybinder-3.0)
+BuildRequires: pkgconfig(libxml-2.0)
 
 %description
 lxpanel is a program that provides a panel for desktop, usually LXDE.
-It is lightweight GTK+ %gtkver.x based desktop panel.
+It is lightweight GTK+ 3.x based desktop panel.
 
 %package devel
 Summary: development headers to build %name plugins
-License: LGPL
 Group: System/Libraries
 Requires: %name = %version
 
 %description devel
 This package provides files required to build plugins
-for %name
+for %name.
 
 %prep
-%setup -n %origname-%version
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -50,9 +51,7 @@ for %name
 	--enable-man \
 	--with-plugins=all \
 	--enable-cast-checks \
-%if %gtkver==3
-    --enable-gtk3
-%endif
+	--enable-gtk3
 
 %make_build
 
@@ -73,6 +72,14 @@ for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 25 2025 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt3.20250321
+- new snapshot
+- build with gtk+3
+- update build dependecncies
+- clean Packager tag
+- fix License tag
+- add VCS tag
+
 * Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt2.20240823
 - new snapshot
 

@@ -1,16 +1,17 @@
 %define upstreamname obconf
-%define gtkver 2
+%define gtkver 3
 Name: lxde-lxappearance-%upstreamname
-Version: 0.2.3
-Release: alt2
+Version: 0.2.4
+Release: alt1
 
 Summary: %name is tool for configuring openbox within LXDE.
-License: GPL
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
-Url: http://lxde.sf.net
-#Url: git://git.lxde.org/lxde/lxappearance-obconf.git
+Url: https://github.com/lxde/lxappearance-obconf
+VCS: https://github.com/lxde/lxappearance-obconf.git
 
-Source: %upstreamname-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildPreReq: libgtk+%gtkver-devel intltool libopenbox-devel lxde-lxappearance-devel
 
@@ -20,7 +21,8 @@ LXAppearance is part of LXDE project.
 This plugin allows to configure openbox.
 
 %prep
-%setup -n %upstreamname-%version
+%setup
+%autopatch -p1
 
 %build
 %autoreconf
@@ -37,12 +39,22 @@ This plugin allows to configure openbox.
 %makeinstall_std
 %find_lang lxappearance-%upstreamname
 
+# remove static library
+rm %buildroot%_libdir/lxappearance/plugins/obconf.la
+
 %files -f lxappearance-%upstreamname.lang
 %doc CHANGELOG README
 %_libdir/lxappearance/plugins/%upstreamname.so
 %_datadir/lxappearance/%upstreamname
 
 %changelog
+* Tue Mar 25 2025 Anton Midyukov <antohami@altlinux.org> 0.2.4-alt1
+- new version
+- build with gtk+3
+- fix License tag
+- update Url tag
+- add VCS tag
+
 * Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2
 - disable building static libraries
 

@@ -1,18 +1,20 @@
-%define soname 4
-%define gtkver 2
+%define sover 4
+%define gtkver 3
 
 %def_disable bootstrap
 
 Name: libfm
-Version: 1.3.2
-Release: alt2.20240823
+Version: 1.4.0
+Release: alt1
 
 Summary: Core library of PCManFM file manager
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Libraries
 
 Url: https://github.com/lxde/libfm
+VCS: https://github.com/lxde/libfm.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %{?_disable_bootstrap:BuildPreReq: rpm-build-xdg}
 BuildRequires: intltool %{?_disable_bootstrap:libmenu-cache-devel}
@@ -23,18 +25,19 @@ BuildRequires: vala >= 0.13.0
 BuildRequires: libexif-devel
 BuildRequires: libxslt-devel
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 
 %description
 LibFM is a core library of PCManFM file manager.
 
-%package -n %name%soname
+%package -n %name%sover
 Summary: %summary
 Group: System/Libraries
 Requires: gvfs wm-common-freedesktop
 Conflicts: libfm2
 
-%description -n %name%soname
+%description -n %name%sover
 LibFM is a core library of PCManFM file manager.
 
 It is developed as the core of next generation PCManFM and takes care
@@ -98,8 +101,9 @@ rm -f %buildroot%_libdir/%name/modules/*.la
     rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %endif
 
-%files -n %name%soname -f libfm.lang
-%_libdir/*.so.*
+%files -n %name%sover -f libfm.lang
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 %if_disabled bootstrap
 %_xdgconfigdir/*
 %dir %_libdir/%name
@@ -126,6 +130,12 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 %endif
 
 %changelog
+* Mon Mar 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+- build with gtk+3
+- convert License tag to SPDX-format
+- add VCS tag
+
 * Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 1.3.2-alt2.20240823
 - new snapshot for fix build with gcc14
 
@@ -160,7 +170,7 @@ rm -f %buildroot%_libdir/%name/modules/*.la
 - 1.2.4
 
 * Mon Mar 02 2015 Michael Shigorin <mike@altlinux.org> 1.2.3-alt3
-- added missing Requires: wm-common-freedesktop to %name%soname
+- added missing Requires: wm-common-freedesktop to %%name%%soname
   as per http://www.altlinux.org/Window_Manager_Policy
   (MIME type handling should work now)
 

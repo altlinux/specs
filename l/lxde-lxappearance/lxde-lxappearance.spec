@@ -1,21 +1,20 @@
-#%%set_automake_version 1.11
-
 %define upstreamname lxappearance
 %define gtkver 3
 Name: lxde-%upstreamname
-Version: 0.6.3
-Release: alt4
+Version: 0.6.4
+Release: alt1
 
-Summary: %name is desktop-independent theme swither for GTK+.
-License: GPL
+Summary: %name is desktop-independent theme swither for GTK+
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
-Url: https://git.lxde.org/gitweb/?p=lxde/lxappearance.git
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
+Url: https://github.com/lxde/lxappearance
+VCS: https://github.com/lxde/lxappearance.git
 
 Source: %upstreamname-%version.tar
+Patch: %name-%version-%release.patch
 Patch1: lxappearance-0.5.2-alt-fixbuild.patch
 
-BuildPreReq: libgtk+%gtkver-devel intltool gtk-doc xsltproc libdbus-glib-devel
+BuildPreReq: libgtk+%gtkver-devel intltool gtk-doc xsltproc
 
 %description
 LXAppearance is part of LXDE project.
@@ -26,10 +25,11 @@ Summary: devel files for lxappearance
 Group: Development/Other
 
 %description devel
-This package contains files needed to build plugins for lxappearance
+This package contains files needed to build plugins for lxappearance.
 
 %prep
 %setup -n %upstreamname-%version
+%patch -p1
 %patch1 -p2
 
 %build
@@ -63,6 +63,13 @@ mkdir -p %buildroot%_libdir/%upstreamname/plugins
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Mar 25 2025 Anton Midyukov <antohami@altlinux.org> 0.6.4-alt1
+- new version
+- build with gtk+3
+- clean Packager tag
+- update Url tag
+- add VCS tag
+
 * Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt4
 - enable LTO flag (was disabled by mistake)
 
