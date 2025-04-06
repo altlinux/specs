@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Linux GPU Control Application
@@ -56,18 +56,26 @@ cargo build --release --offline
 
 %install
 DESTDIR=%buildroot PREFIX=%prefix make install
-%__chmod 644 %buildroot%_desktopdir/io.github.%name-linux.desktop
-%__chmod 644 %buildroot%_pixmapsdir/io.github.%name-linux.png
+
+%post
+%post_systemd %{name}d.service
+
+%preun
+%preun_systemd %{name}d.service
 
 %files
 %doc API.md LICENSE README.md
 %_bindir/%name
-%_desktopdir/io.github.%name-linux.desktop
-%_pixmapsdir/io.github.%name-linux.png
-%_iconsdir/hicolor/scalable/apps/io.github.%name-linux.svg
+%_desktopdir/io.github.ilya_zlobintsev.LACT.desktop
+%_pixmapsdir/io.github.ilya_zlobintsev.LACT.png
+%_iconsdir/hicolor/scalable/apps/io.github.ilya_zlobintsev.LACT.svg
+%_datadir/metainfo/io.github.ilya_zlobintsev.LACT.metainfo.xml
 %_unitdir/%{name}d.service
 
 %changelog
+* Sun Apr 06 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.3-alt1
+- New version 0.7.3.
+
 * Sun Mar 23 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.2-alt1
 - New version 0.7.2.
 
