@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.7.2
+Version: 3.7.3
 Release: alt1
 Epoch:3
 
@@ -109,7 +109,7 @@ DESTDIR=%buildroot %cmake_build -t install
 %cmake_install
 
 mkdir -p %buildroot%_x11sysconfdir/%realname
-cp -f %buildroot%_x11x11dir/%realname/menu %buildroot%_x11sysconfdir/%realname/menu
+for i in menu menu.lock; do touch %buildroot%_x11sysconfdir/%realname/$i; done
 install -pD -m755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%realname
 install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%realname.png
 install -pD -m644 %SOURCE4 %buildroot%_niconsdir/%realname.png
@@ -123,15 +123,41 @@ install -m644 NEWS %buildroot%_icewmdocdir/NEWS
 install -m644 README.md %buildroot%_icewmdocdir/README.md
 install -m755 %SOURCE6 %buildroot%_bindir/start%realname
 
-%find_lang  %realname
+%find_lang %realname
 
 # remove unpackaged files
 rm -f %buildroot/%_bindir/%realname-set-gnomewm
 rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
+%post
+if [ ! -f %_x11sysconfdir/%realname/menu.lock ]
+then
+  if [ -f %_x11sysconfdir/%realname/menu ]
+  then
+    rm -f %_x11sysconfdir/%realname/menu
+  fi
+  cp -f %_x11x11dir/%realname/menu %_x11sysconfdir/%realname/menu
+fi
+
+%pre menu-method
+if [ $1 -eq 1 ]
+  then
+  if [ -e %_x11sysconfdir/%realname/menu ]
+    then mv -f %_x11sysconfdir/%realname/menu %_x11sysconfdir/%realname/menu.save
+  fi
+fi
+
+%postun menu-method
+if [ $1 -eq 0 ]
+  then
+  if [ -e %_x11sysconfdir/%realname/menu.save ]
+    then mv -f %_x11sysconfdir/%realname/menu.save %_x11sysconfdir/%realname/menu
+  fi
+fi
+
 %files -f %realname.lang
 %dir %_x11sysconfdir/%realname
-%_x11sysconfdir/%realname/*
+%ghost %_x11sysconfdir/%realname/*
 %_x11sysconfdir/wmsession.d/*
 %_bindir/*
 %dir %_x11x11dir/%realname
@@ -155,6 +181,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sun Apr 06 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.3-alt1
+- 3.7.3
+
 * Sat Mar 29 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.2-alt1
 - 3.7.2
 - moved menu-method to separate package because uses freedesktop menu
