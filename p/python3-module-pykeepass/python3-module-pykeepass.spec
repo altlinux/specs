@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1%beta
 
 Summary: Python library to interact with KeePass databases
@@ -15,6 +15,7 @@ License: GPL-3.0
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/libkeepass/pykeepass.git
+
 %if_disabled snapshot
 Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version%beta.tar.gz
 %else
@@ -50,11 +51,15 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 
 %files
 %python3_sitelibdir_noarch/%pypi_name
-%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+#%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir_noarch/%pypi_name-*.dist-info
 %doc README* CHANGELOG*
 
 
 %changelog
+* Sun Apr 06 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- v4.1.1.post1
+
 * Wed Jul 03 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 

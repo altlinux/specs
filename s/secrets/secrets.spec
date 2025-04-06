@@ -1,13 +1,13 @@
 %def_enable snapshot
 
-%define ver_major 10
+%define ver_major 11
 %define pypi_name gsecrets
 %define xdg_name org.gnome.World.Secrets
 
 %def_disable check
 
 Name: secrets
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -23,11 +23,15 @@ Source: %url/-/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.76
-%define gtk_ver 4.16
-%define adwaita_ver 1.6
+%define glib_ver 2.80
+%define gtk_ver 4.18
+%define adwaita_ver 1.7
+%define pygobject_ver 3.50
+%define gtksource_api_ver 5
 
+Requires: python3-module-pygobject3 >= %pygobject_ver
 Requires: typelib(Adw) = 1
+Requires: typelib(GtkSource) = %gtksource_api_ver
 Requires: yelp
 
 BuildArch: noarch
@@ -37,6 +41,8 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson yelp-tools
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(gtksourceview-%gtksource_api_ver)
+BuildRequires: pkgconfig(pygobject-3.0) >= %pygobject_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: python3(pykeepass) python3(pyotp) python3(validators)
@@ -77,6 +83,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Sun Apr 06 2025 Yuri N. Sedunov <aris@altlinux.org> 11.0-alt1
+- 11.0
+
 * Fri Dec 27 2024 Yuri N. Sedunov <aris@altlinux.org> 10.4-alt1
 - 10.4
 
