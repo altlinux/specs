@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt89
+Release: alt90
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -142,8 +142,8 @@ BuildArch: noarch
 Requires: rpm-build
 Requires: /usr/bin/genbasedir
 # optional
-%global complete_reqs_of_tests %name-https /usr/sbin/nginx /usr/bin/openssl
-%global reqs_of_tests_to_filter_out \\(%name-https\\|/usr/sbin/nginx\\|nginx\\|/usr/bin/openssl\\|openssl\\)
+%global complete_reqs_of_tests %name-https /usr/sbin/nginx tinyproxy /usr/bin/openssl
+%global reqs_of_tests_to_filter_out \\(%name-https\\|/usr/sbin/nginx\\|nginx\\|/usr/bin/openssl\\|openssl\\|/usr/bin/tinyproxy\\|tinyproxy\\)
 %filter_from_requires \,^%reqs_of_tests_to_filter_out\($\|[[:blank:]]\),d
 
 # {{{ descriptions
@@ -364,9 +364,9 @@ pushd %_datadir/%name/tests/
 system_arch="$(rpm -q rpm --qf='%%{ARCH}')"
 export APT_TEST_TARGET="$system_arch"
 
-# cache built pkgs
-APT_TEST_BUILDDIR="$(mktemp -d)/pkgs"
-export APT_TEST_BUILDDIR
+# cache built pkgs and other stuff
+APT_TEST_INTERMEDIATES="$(mktemp -d)"
+export APT_TEST_INTERMEDIATES
 
 # this macro can be prefixed (e.g., by environment assignments),
 # therefore the extra backslash in the first line
@@ -427,9 +427,9 @@ gpg-keygen --passphrase '' \
 
 export APT_TEST_GPGPUBKEY
 
-# cache built pkgs
-APT_TEST_BUILDDIR="$(mktemp -d)/pkgs"
-export APT_TEST_BUILDDIR
+# cache built pkgs and other stuff
+APT_TEST_INTERMEDIATES="$(mktemp -d)"
+export APT_TEST_INTERMEDIATES
 
 %runtests
 
@@ -475,9 +475,11 @@ gpg-keygen --passphrase '' \
 
 export APT_TEST_GPGPUBKEY
 
-# cache built pkgs
-APT_TEST_BUILDDIR="$(mktemp -d)/pkgs"
-export APT_TEST_BUILDDIR
+# cache built pkgs and other stuff
+APT_TEST_INTERMEDIATES="$(mktemp -d)"
+export APT_TEST_INTERMEDIATES
+
+. ./run-tests.defaults.sh
 
 # Below we run the same tests many times in order to possibly catch
 # bad races. (It's more probable to catch a race under heavy load;
@@ -499,7 +501,7 @@ fi
 already_once=0
 for (( try = 0; try < TRIES; )); do
     # all methods (you might want to update the list if there are new ones)
-    for method in file copy cdrom http https; do
+    for method in "${APT_TEST_ALL_METHODS[@]}"; do
 	# do the same method several times in parallel (to provoke races)
 	for (( repeat = 0; repeat < 2; ++repeat )); do
 	    echo "$((try++)):$method"
@@ -607,6 +609,17 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Fri Apr  4 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt90
+- http:
+  + Fixed corrupt files. (The end of valid data from read(2) was overrun
+  when looking for the end of headers, so headers and content got corrupt.)
+  + Implemented Debug::Connect config parameter (a dir; if set, operations
+  on the FDs from Connect() are logged there with all the data).
+- tests:
+  + Decoupled testing just HTTPS from testing certificate pinning.
+  + Added testing HTTP(S) over HTTP proxy beside testing just HTTP(S).
+- tests & checkinstall subpkgs: cache & re-use generated certs etc (for speed).
+
 * Sun Nov 24 2024 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt89
 - apt-get changelog: new Debian-compatible cmd; in ALT, it just reads it from
   the cache rather than downloads. (Thx Sergey Konev konevsa@) (ALT#51975)
