@@ -1,6 +1,6 @@
 Name:     asusctl
-Version:  6.0.12
-Release:  alt1.2
+Version:  6.1.12
+Release:  alt1
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
 License:  MPL-2.0
@@ -22,13 +22,11 @@ Source5: config.toml
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd >= 5
 BuildRequires(pre): rust-cargo 
 
-# Automatically added by buildreq on Sat Oct 26 2024
-# optimized out: ca-trust glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libudev-devel libwayland-server llvm17.0-libs pkg-config python3 python3-base python3-dev rust rust-cargo sh5
-BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope
+# Automatically added by buildreq on Sun Apr 06 2025
+# optimized out: alt-os-release ca-trust clang19.1 clang19.1-devel clang19.1-support glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libgpg-error libp11-kit libsasl2-3 llvm-common llvm18.1-libs llvm19.1-libs openssl-config pkg-config python3 python3-base python3-dev rust sh5
+BuildRequires: libudev-devel python3-module-setuptools python3-module-zope
 
-Buildrequires: libxkbcommon-x11-devel cargo-vendor-filterer
-
-# For Version 6.x BuildRequires: libgbm-devel libinput-devel libseat1-devel libxkbcommon-devel python3-module-setuptools python3-module-zope rust-cargo
+Buildrequires: libxkbcommon-x11-devel cargo-vendor-filterer clang-devel
 
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -128,6 +126,9 @@ install data/asusd.service %buildroot/%_unitdir/asusd.service
 %_datadir/rog-gui/*
 
 %changelog
+* Sun Apr 06 2025 Hihin Ruslan <ruslandh@altlinux.ru> 6.1.12-alt1
+- Version 6.1.12
+
 * Sun Jan 05 2025 Anton Midyukov <antohami@altlinux.org> 6.0.12-alt1.2
 - NMU:
   + remove unnecessary BuildRequires and Requires
