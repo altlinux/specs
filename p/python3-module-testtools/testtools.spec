@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.7.2
-Release: alt1
+Release: alt2
 Summary: Extensions to the Python standard library's unit testing framework
 License: MIT
 Group: Development/Python3
@@ -13,6 +13,8 @@ URL: https://pypi.org/project/testtools
 VCS: https://github.com/testing-cabal/testtools
 BuildArch: noarch
 Source: %name-%version.tar
+Patch: testtools-2.7.2-twisted-test-fix.patch
+
 %add_python3_req_skip twisted
 
 BuildRequires(pre): rpm-build-python3
@@ -34,6 +36,7 @@ sources.
 
 %prep
 %setup
+%patch -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -51,6 +54,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Apr 06 2025 Anton Vyatkin <toni@altlinux.org> 2.7.2-alt2
+- Fixed FTBFS.
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 2.7.2-alt1
 - Automatically updated to 2.7.2.
 - Fixed package building scheme.
