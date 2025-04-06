@@ -1,36 +1,18 @@
 Name: libwmf
-Version: 0.2.8.4
-Release: alt13
+Version: 0.2.13
+Release: alt1
 
 Summary: A library to convert wmf files
-License: GPL
+License: GPLv2
 Group: Text tools
-Url: http://sourceforge.net/projects/wvware
-
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
+Url: https://github.com/caolanm/libwmf
+VCS: https://github.com/caolanm/libwmf.git
 Requires: fonts-type1-urw
 Obsoletes: wmf-fonts < %version-%release
 
-Source: %name-%version.tar.bz2
-Patch0: libwmf-0.2.6-cflags.patch
-Patch1: libwmf-0.2.8.3-CAN-2004-0941.patch
-Patch2: libwmf-0.2.8.3-CAN-2004-0990.patch
-Patch3: libwmf-0.2.8.4-CVE-2007-0455.patch
-Patch4: libwmf-0.2.8.4-CVE-2007-2756.patch
-Patch5: libwmf-0.2.8.4-CVE-2007-3472.patch
-Patch6: libwmf-0.2.8.4-CVE-2007-3473.patch
-Patch7: libwmf-0.2.8.4-CVE-2007-3477.patch
-Patch8: libwmf-0.2.8.4-CVE-2009-1364.patch
-Patch9: libwmf-0.2.8.4-CVE-2009-3546.patch
-Patch10: libwmf-0.2.8.4-intoverflow.patch
-Patch11: libwmf-0.2.8.4-pixbufloaderdir.patch
-Patch12: libwmf-0.2.8.4-reducesymbols.patch
-Patch13: libwmf-0.2.8.4-fallbackfont.patch
-Patch14: CVE-2015-0848_CVE-2015-4588_CVE-2015-4695_CVE-2015-4696.patch
-Patch15: CVE-2016-9011.patch
-
+Source: %name-%version.tar
 BuildRequires: libICE-devel libexpat-devel libfreetype-devel libgdk-pixbuf-devel libjpeg-devel libpng-devel
+BuildRequires: libxml2-devel
 
 %description
 %name is a library for unix like machines that can convert wmf
@@ -80,30 +62,13 @@ support.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-#%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-
-rm -f configure.in
 
 %build
 %autoreconf
 %configure \
+	--with-libxml2 \
 	--disable-static \
-	--with-fontdir=%_datadir/fonts/type1/urw \
+	--with-gsfontdir=%_datadir/fonts/type1/urw \
 	--with-xtrafontmap=%_datadir/%name/fontmap \
 	--with-docdir=%_docdir/%name-%version
 %make_build
@@ -114,7 +79,6 @@ rm -f configure.in
 install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 
 %files
-%doc AUTHORS README
 %_libdir/%name-*.so.*
 %_datadir/%name
 
@@ -123,6 +87,7 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 
 %files -n wmf-utils
 %_bindir/wmf2*
+%_bindir/libwmf-fontmap
 
 %files -n wmf-gtk-loader
 %_libdir/gdk-pixbuf-2.0/*/loaders/*.so
@@ -130,10 +95,13 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 %files devel
 %_libdir/*.so
 %_bindir/%name-config
+%_libdir/pkgconfig/libwmf.pc
 %_includedir/%name
-%_docdir/%name-%version
 
 %changelog
+* Sat Apr 05 2025 Anton Farygin <rider@altlinux.com> 0.2.13-alt1
+- 0.2.8.4 -> 0.2.13
+
 * Wed Sep 27 2017 Anton V. Boyarshinov <boyarsh@altlinux.org> 0.2.8.4-alt13
 - Secutity (Fixes: CVE-2015-0848, CVE-2015-4588, CVE-2015-4695,
   CVE-2015-4696, CVE-2016-9011)
