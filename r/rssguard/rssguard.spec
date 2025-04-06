@@ -1,7 +1,7 @@
 
 Name: rssguard
-Version: 4.8.1
-Release: alt2.1
+Version: 4.8.3
+Release: alt1
 
 Summary: RSS Guard is a simple RSS/ATOM feed reader
 Summary(ru_RU.UTF-8): RSS Guard - программа для чтения RSS/ATOM 
@@ -94,6 +94,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssgua
 %_libdir/%name/*
 
 %changelog
+* Sun Apr 06 2025 Alexei Mezin <alexvm@altlinux.org> 4.8.3-alt1
+- New version
+
 * Mon Jan 13 2025 Ivan A. Melnikov <iv@altlinux.org> 4.8.1-alt2.1
 - NMU: Use rpm-macros-qt6-webengine to detect Qt6WebEngineCore
   presence (adds loongarch64 support)
