@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 46
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.SimpleScan
 
@@ -7,13 +7,15 @@
 %def_enable check
 
 Name: simple-scan
-Version: %ver_major.0
-Release: alt2%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Simple scanning utility
 License: GPL-3.0-or-later
 Group: Graphics
 Url: https://apps.gnome.org/SimpleScan
+
+Vcs: https://gitlab.gnome.org/GNOME/simple-scan.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -66,6 +68,9 @@ sed -i 's|libsane-hpaio|hplip-sane|' src/app-window.vala
 %_man1dir/*
 
 %changelog
+* Sun Apr 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Sun Jun 09 2024 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt2
 - updated to 46.0-16-g3cca2c49
 - fixed build without %%check
