@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.8.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Django authentication backend that authenticates against an LDAP service.
@@ -14,16 +14,16 @@ Url: https://github.com/django-auth-ldap/django-auth-ldap.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 BuildRequires: python3-module-ldap
 
 %if_with check
 BuildRequires: openldap-clients
 BuildRequires: openldap-servers
-BuildRequires: python3(django)
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
 
@@ -35,8 +35,12 @@ options for working with users, groups, and permissions.
 
 %prep
 %setup
+export SETUPTOOLS_SCM_PRETEND_VERSION_FOR_DJANGO_AUTH_LDAP=%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION_FOR_DJANGO_AUTH_LDAP=%version
 %pyproject_build
 
 %install
@@ -52,6 +56,9 @@ python3 -Wa -b -m django test --settings tests.settings
 
 
 %changelog
+* Mon Apr 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 5.1.0-alt1
+- 4.8.0 -> 5.1.0
+
 * Wed Apr 10 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 4.8.0-alt1
 - 4.3.0 -> 4.8.0
 
