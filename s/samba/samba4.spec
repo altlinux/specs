@@ -121,8 +121,8 @@
 %endif
 
 Name:    samba
-Version: 4.20.7
-Release: alt3
+Version: 4.20.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2251,6 +2251,25 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Apr 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.8-alt1
+- Update to security release of Samba 4.20
+- Major fixes from upstream (Samba#15782, Samba#15738, Samba#15795, Samba#15151,
+                             Samba#15796, Samba#14213, Samba#15783, Samba#15703,
+                             Samba#15797, Samba#15634, Samba#15804):
+  + winbindd shows memleak in kerberos_decode_pac.
+  + Creation of GPOs applicable to more than one group is impossible with
+    Samba 4.20.0 and later.
+  + ldb index cache is too small on known large transactions (schemaupgrade,
+    provision).
+  + vfs_gpfs silently garbles timestamps > year 2106.
+  + Spotlight search results don't show file size and creation date.
+  + Windows Explorer crashes on S-1-22-* Unix-SIDs when accessing security tab.
+  + NETLOGON_NTLMV2_ENABLED is missing in the SamLogon* user_flags field.
+  + General improvements for vfs_ceph_new module.
+  + Unable to connect to CephFS subvolume shares with vfs_shadow_copy2.
+  + unicodePwd cannot be modified over ldapi.
+  + "samba-tool domain backup offline" hangs.
+
 * Fri Mar 14 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.7-alt3
 - mdb_util: enable compact while copying due it deadlock in offline backup.
 
