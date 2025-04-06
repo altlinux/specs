@@ -1,5 +1,5 @@
 Name: nwg-panel
-Version: 0.9.62
+Version: 0.10.0
 Release: alt1
 License: MIT
 
@@ -53,5 +53,8 @@ install -Dpm0755 %name.service -t %buildroot%_userunitdir/
 %_userunitdir/%name.service
 
 %changelog
+* Sun Apr 06 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.10.0-alt1
+- new version 0.10.0 (with rpmrb script)
+
 * Mon Mar 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.9.62-alt1
 - Initial build
