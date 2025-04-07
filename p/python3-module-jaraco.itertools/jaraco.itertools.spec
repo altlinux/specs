@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.4.1
+Version: 6.4.2
 Release: alt1
 Summary: Tools to supplement packaging Python releases
 License: MIT
@@ -24,7 +24,7 @@ Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata_extra test
 %endif
 
 %description
@@ -53,6 +53,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Apr 07 2025 Stanislav Levin <slev@altlinux.org> 6.4.2-alt1
+- 6.4.1 -> 6.4.2.
+
 * Fri Jul 21 2023 Stanislav Levin <slev@altlinux.org> 6.4.1-alt1
 - 6.3.0 -> 6.4.1.
 
