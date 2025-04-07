@@ -2,7 +2,7 @@ Name: kernel-image-6.13
 Release: alt1
 %define kernel_src_version	6.13
 %define kernel_base_version	6.13
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Apr 07 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.10-alt1
+- v6.13.10 (2025-04-07).
+- config: add prefix DISPLAY for CONFIG_DRM_DP_CEC, DRM_DP_AUX_CHARDEV.
+- config: Enable CONFIG_SND_SOC_INTEL_AVS=n.
+
 * Sat Mar 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.13.9-alt1
 - v6.13.9 (2025-03-28).
 
