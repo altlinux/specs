@@ -1,0 +1,89 @@
+Name: handhelds-virtual-controller
+Version: 0.7
+Release: alt1
+
+Summary: Set of tools to combine several input devices into one virtual controller on handheld game consoles
+
+License: GPLv2
+Group: System/Configuration/Boot and Init
+ExclusiveArch: aarch64
+BuildRequires(pre): rpm-macros-systemd
+
+Packager: Artyom Bystrov <arbars@altlinux.org>
+
+Source: %name-%version.tar
+Requires: evsieve
+
+Conflicts: anbernic-virtual-controller
+Obsoletes: anbernic-virtual-controller
+
+%description
+%summary
+
+%prep
+%setup -n %name-%version
+
+%install
+install -Dm0755 %name %buildroot%_bindir/%name
+
+install -Dm0644 %name.service %buildroot%_unitdir/%name.service
+
+mkdir -p %buildroot%_presetdir
+install -m 0644 20-%name.preset %buildroot%_presetdir/20-%name.preset
+
+mkdir -p %buildroot%_udevrulesdir
+install -m 0644 99-%name.rules %buildroot%_udevrulesdir/99-%name.rules
+
+mkdir -p %buildroot%_datadir
+install -m 0644 gamecontrollerdb.handhelds.txt %buildroot%_datadir/gamecontrollerdb.handhelds.txt
+
+
+%post
+%post_service %name.service
+
+%preun
+%preun_service %name.service
+
+%files
+%_bindir/%name
+%_unitdir/%name.service
+%_udevrulesdir/99-%name.rules
+%_presetdir/20-%name.preset
+%_datadir/gamecontrollerdb.handhelds.txt
+
+%changelog
+* Wed Apr  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.7-alt1
+- Rename package
+- Add new device: Anbernic RG503
+
+* Thu Mar 20 2025 Artyom Bystrov <arbars@altlinux.org> 0.6-alt1
+- Add new devices: Powkiddy RGB30 and RK2023
+
+* Wed Mar  5 2025 Artyom Bystrov <arbars@altlinux.org> 0.5-alt1
+- Add new device: Powkiddy RGB10Max3
+
+* Tue Feb 18 2025 Artyom Bystrov <arbars@altlinux.org> 0.4-alt1
+- Add new device: Powkiddy x55
+- Fix order of face buttons
+
+* Sun Feb  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.3.2-alt1
+- Add new device: RG353PS
+
+* Mon Jan  6 2025 Artyom Bystrov <arbars@altlinux.org> 0.3.1-alt1
+- Remove udev rule for uinput (moved to gptokeyb)
+
+* Sat Dec 28 2024 Artyom Bystrov <arbars@altlinux.org> 0.3-alt1
+- Added new devices: RG353P and ARC S
+
+* Sun Dec 22 2024 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
+- Add keybinding file for keyboard emulator (needed for gptokeyb)
+- Change type of systemd service
+
+* Fri Dec 20 2024 Artyom Bystrov <arbars@altlinux.org> 0.1.2-alt1
+- Fix virtual device multiplying :)
+
+* Fri Dec 20 2024 Artyom Bystrov <arbars@altlinux.org> 0.1.1-alt1
+- Add udev rule for uinput support 
+
+* Wed Dec 18 2024 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
+- Initial commit for Sisyphus

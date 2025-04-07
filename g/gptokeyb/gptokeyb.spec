@@ -1,5 +1,5 @@
 Name:    gptokeyb
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1.git2c7a017
 
 Summary: Gamepad to Keyboard/mouse/xbox360(gamepad) emulator
@@ -75,6 +75,9 @@ install -Dm0644 %SOURCE7 %buildroot%_presetdir/20-%name.preset
 %_presetdir/20-%name.preset
 
 %changelog
+* Wed Apr  2 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.9-alt1.git2c7a017
+- Add new device: Anbernic RG503
+
 * Thu Mar 20 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.8-alt1.git2c7a017
 - Add support of Powkiddy RGB30 and RK2023
 
