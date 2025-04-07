@@ -3,7 +3,7 @@
 
 Name: ioprocess
 Version: 1.4.2
-Release: alt2
+Release: alt3
 Summary: Slave process to perform risky IO
 
 Group: System/Base
@@ -11,6 +11,7 @@ License: GPLv2+
 Url: https://github.com/oVirt/ioprocess
 
 Source: %name-%version.tar
+Patch:  %name-%version-alt-fix-calloc.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -35,6 +36,7 @@ Python bindings for ioprocess
 
 %prep
 %setup
+%patch
 
 %build
 %autoreconf
@@ -52,6 +54,9 @@ Python bindings for ioprocess
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Apr 07 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.4.2-alt3
+- NMU: Fixed FTBFS where calloc() transposed arguments raised error.
+
 * Mon May 06 2024 Alexey Shabalin <shaba@altlinux.org> 1.4.2-alt2
 - Fix build with python-3.12.
 
