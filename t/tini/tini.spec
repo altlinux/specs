@@ -3,7 +3,7 @@
 
 Name:		tini
 Version:	0.19.0
-Release:	alt2
+Release:	alt3
 Summary:	A tiny but valid init for containers
 
 Group:		Development/Other
@@ -32,7 +32,7 @@ forwarding.
 %autopatch -p1
 
 %build
-cmake .
+cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .
 make tini-static
 
 %install
@@ -44,6 +44,9 @@ cp -a -- tini-static    %buildroot%_bindir/tini
 %_bindir/tini
 
 %changelog
+* Mon Apr 7 2025 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt3
+- Fix build with cmake 4.0
+
 * Wed May 3 2023 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt2
 - Fix build with FORTIFY_SOURCE=3
 
