@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+
 %add_findreq_skiplist %_libdir/imhex/plugins/*
 
 Name: imhex
-Version: 1.36.2
+Version: 1.37.4
 Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
@@ -46,6 +48,7 @@ sed -i '/generateSDKDirectory()/d' CMakeLists.txt
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo      \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5     \
     -DIMHEX_STRIP_RELEASE=OFF              \
     -DIMHEX_OFFLINE_BUILD=ON               \
     -DIMHEX_ENABLE_UNIT_TESTS=ON           \
@@ -84,14 +87,19 @@ rm -fv %buildroot%_bindir/imhex-updater
 %files
 %doc README.md *LICENSE
 %_bindir/imhex
-%_pixmapsdir/%name.png
+%_pixmapsdir/%name.svg
 %_desktopdir/%name.desktop
 %_libdir/libimhex.so*
 %_libdir/%name/
+%_datadir/%name/
 %_datadir/metainfo/*
 %_datadir/mime/packages/imhex.xml
 
 %changelog
+* Mon Apr 07 2025 Mikhail Tergoev <fidel@altlinux.org> 1.37.4-alt1
+- updated tp upstream 1.37.4
+- fixed FTBFS
+
 * Thu Jan 09 2025 Mikhail Tergoev <fidel@altlinux.org> 1.36.2-alt1
 - updated to upstream 1.36.2
 
