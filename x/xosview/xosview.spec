@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xosview
-Version: 1.23
+Version: 1.24
 Release: alt1
 Summary: An X Window System utility for monitoring system resources
 License: GPL-2.0 and BSD-4-Clause-UC
@@ -70,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_miconsdir/*.png
 
 %changelog
+* Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 1.24-alt1
+- 1.23 -> 1.24
+
 * Thu Mar 03 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.23-alt1
 - Updated to upstream version 1.23.
 
