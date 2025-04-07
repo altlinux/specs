@@ -2,8 +2,8 @@
 %define soname 5
 
 Name: mmg
-Version: 5.5.2
-Release: alt1.1
+Version: 5.8.0
+Release: alt1
 Summary: Surface and volume remeshers
 
 License: LGPLv3+
@@ -19,6 +19,7 @@ BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  make
 BuildRequires:  libscotch-devel
+BuildRequires:  graphviz
 
 Requires:       libmmg-%soname = %EVR
 Requires:       mmgs = %EVR
@@ -52,6 +53,18 @@ Requires:       libmmg-%soname = %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package devel-doc
+Summary:        Development documentation for mmg
+Group:          Development/C
+BuildArch:      noarch
+
+%description devel-doc
+The %name-devel-doc package contains the documentation for developing
+applications that use mmg libraries.
+Obsoletes:      mmgs-devel-doc < %EVR
+Obsoletes:      mmg2d-devel-doc < %EVR
+Obsoletes:      mmg3d-devel-doc < %EVR
+
 %package -n mmg2d
 Summary:        Surface remesher
 Group:          Graphics
@@ -78,15 +91,6 @@ Requires:       mmg2d = %EVR
 The mmg2d-devel package contains libraries and header files for
 developing applications that use mmg2d.
 
-%package -n mmg2d-devel-doc
-Summary:        Development documentation for mmg2d
-Group:          Development/C
-BuildArch:      noarch
-
-%description -n mmg2d-devel-doc
-The mmg2d-devel-doc package contains the documentation for developing
-applications that use mmg2d.
-
 %package -n mmgs
 Summary:        Surface remesher
 Group:          Graphics
@@ -112,15 +116,6 @@ Requires:       mmgs = %EVR
 %description -n mmgs-devel
 The mmgs-devel package contains libraries and header files for
 developing applications that use mmgs.
-
-%package -n mmgs-devel-doc
-Summary:        Development documentation for mmgs
-Group:          Development/C
-BuildArch:      noarch
-
-%description -n mmgs-devel-doc
-The mmgs-devel-doc package contains the documentation for developing
-applications that use mmgs.
 
 %package -n mmg3d
 Summary:        Volume remesher
@@ -149,21 +144,12 @@ Requires:       mmg3d = %EVR
 The mmg3d-devel package contains libraries and header files for
 developing applications that use mmg3d
 
-%package -n mmg3d-devel-doc
-Summary:        Development documentation for mmg3d
-Group:          Development/C
-Requires:       mmg3d = %EVR
-
-%description -n mmg3d-devel-doc
-The mmg3d-devel-doc package contains the documentation for developing
-applications that use mmg3d
-
 %prep
 %setup
 %patch0 -p1
 
 %build
-%cmake -DBUILD_SHARED_LIBS=ON
+%cmake -DBUILD_SHARED_LIBS=ON -DBUILD_DOC=yes
 
 %cmake_build
 %cmake_build -t doc
@@ -181,6 +167,14 @@ install -Dpm 0644 doc/man/mmg2d.1.gz %buildroot%_man1dir/mmg2d.1.gz
 install -Dpm 0644 doc/man/mmgs.1.gz %buildroot%_man1dir/mmgs.1.gz
 install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 
+# remove LaTex artefacts from docs
+rm -rf %_cmake__builddir/doc/latex
+# remove changing temporary files
+rm -f %_cmake__builddir/doc/bib*.aux
+rm -f %_cmake__builddir/doc/citelist.doc*
+# rename directory to match with contents
+mv %_cmake__builddir/doc %_cmake__builddir/html
+
 %files
 
 %files -n libmmg-%soname
@@ -190,10 +184,15 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 
 %files devel
 %dir %_includedir/mmg
+%dir %_includedir/mmg/common
 %_includedir/mmg/libmmg.h
 %_includedir/mmg/libmmgf.h
+%_includedir/mmg/common/*.h
 %_libdir/libmmg.so
 %_libdir/cmake/mmg/
+
+%files devel-doc
+%doc %_cmake__builddir/html
 
 %files -n mmg2d
 %doc AUTHORS README.md LICENSE COPYING COPYING.LESSER
@@ -210,9 +209,6 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 %_includedir/mmg/mmg2d/
 %_libdir/libmmg2d.so
 
-%files -n mmg2d-devel-doc
-%doc %_cmake__builddir/doc/mmg2d/html
-
 %files -n mmgs
 %doc AUTHORS README.md LICENSE COPYING COPYING.LESSER
 %_bindir/mmgs_O3
@@ -227,9 +223,6 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 %dir %_includedir/mmg
 %_includedir/mmg/mmgs/
 %_libdir/libmmgs.so
-
-%files -n mmgs-devel-doc
-%doc %_cmake__builddir/doc/mmgs/html
 
 %files -n mmg3d
 %doc AUTHORS README.md LICENSE COPYING COPYING.LESSER
@@ -246,10 +239,11 @@ install -Dpm 0644 doc/man/mmg3d.1.gz %buildroot%_man1dir/mmg3d.1.gz
 %_includedir/mmg/mmg3d/
 %_libdir/libmmg3d.so
 
-%files -n mmg3d-devel-doc
-%doc %_cmake__builddir/doc/mmg3d/html
-
 %changelog
+* Mon Apr 07 2025 Danil Shein <dshein@altlinux.org> 5.8.0-alt1
+- New version 5.8.0
+  - change documentation packaging
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 5.5.2-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
