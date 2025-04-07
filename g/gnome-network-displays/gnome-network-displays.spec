@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: gnome-network-displays
-Version: 0.95.0
+Version: 0.96.0
 Release: alt1
 
 Summary: Miracast streaming GUI
@@ -68,6 +68,9 @@ Choose a wireless display and stream your desktop to it.
 %doc README.md COPYING
 
 %changelog
+* Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.96.0-alt1
+- 0.96.0
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.95.0-alt1
 - 0.95.0
 
