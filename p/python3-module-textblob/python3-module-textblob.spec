@@ -1,8 +1,10 @@
 %define pypi_name textblob
+# wordnet data required
+# https://www.nltk.org/data.html
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.17.1
+Version: 0.19.0
 Release: alt1
 
 Summary: TextBlob is a Python3 library for processing textual data
@@ -10,13 +12,15 @@ Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/%pypi_name
 
-Vcs: https://github.com/sloria/TextBlob
+Vcs: https://github.com/sloria/TextBlob.git
+
 Source: https://pypi.io/packages/source/t/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 >= 0.1.19
-BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3(wheel) python3(flit_core)
+%{?_enable_check:BuildRequires: python3(pytest) python3(nltk)}
 
 %description
 TextBlob is a Python3 library for processing textual data. It provides a
@@ -39,9 +43,12 @@ py.test3
 
 %files
 %python3_sitelibdir_noarch/*
-%doc README* CHANGELOG* NOTICE AUTHORS*
+%doc README* CHANGELOG*
 
 %changelog
+* Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Fri Jun 30 2023 Yuri N. Sedunov <aris@altlinux.org> 0.17.1-alt1
 - first build for Sisyphus
 
