@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.32
-Release: alt1.git2e6af22d7
+Version: 1.4.1.38
+Release: alt1.g1fc7fe0e1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -10,6 +10,7 @@ License: %lgpl3only
 Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
+Patch1: 01-fix-cmake.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake cmake
@@ -27,12 +28,14 @@ BuildRequires: qt5-tools-devel
 BuildRequires: libalsa-devel
 BuildRequires: libfftw3-devel
 BuildRequires: git
+#BuildRequires: liblastfm-devel
 
 BuildRequires: protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
 BuildRequires: libavcodec-devel libavformat-devel libpcre-devel
 BuildRequires: libprotobuf-devel qjson-qt5-devel libcdio-devel
+BuildRequires: pkgconfig(libpcre2-8)
 
 # Clementine crashes without it
 Requires: gst-plugins-base%{gst_api_ver}
@@ -45,6 +48,7 @@ Clementine is a modern music player and library organizer
 
 %prep
 %setup
+%patch1 -p2
 %ifarch %e2k
 %add_optflags -Winvalid-offsetof
 sed -i "s|== Separator|== QChar(Separator)|" \
@@ -81,6 +85,10 @@ fi
 
 
 %changelog
+* Mon Apr 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.38-alt1.g1fc7fe0e1
+- Update upstream source to 1.4.1-38-g1fc7fe0e1
+- Fix build with cmake 4.0
+
 * Fri Feb 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.32-alt1.git2e6af22d7
 - Update upstream source to 1.4.1-32-g2e6af22d7
 
