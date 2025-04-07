@@ -1,5 +1,5 @@
 Name: installer-feature-serial
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: serial console support
@@ -47,9 +47,12 @@ so that serial login is available.
 %_datadir/install2/initinstall.d/*
 
 %files stage3
-%_datadir/install2/postinstall.d/*
+%_datadir/install2/preinstall.d/*
 
 %changelog
+* Mon Apr 07 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
+- replace 65-serial.sh from postinstall.d to preinstall.d
+
 * Fri Feb 16 2024 Michael Shigorin <mike@altlinux.org> 0.6.2-alt1
 - E2K: support ttyS1 if present
 
