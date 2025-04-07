@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 24.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -34,6 +34,11 @@ BuildRequires: kf6-kirigami-addons-devel
 %setup -n %rname-%version
 #%patch1 -p1
 
+for f in po/*/*.po ; do
+    dir=`dirname "$f"`
+    cp -ar "$f" "$dir/kcm_cron.po"
+done
+
 %build
 %K6build
 
@@ -55,6 +60,9 @@ BuildRequires: kf6-kirigami-addons-devel
 
 
 %changelog
+* Mon Apr 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
+- fix translations
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
