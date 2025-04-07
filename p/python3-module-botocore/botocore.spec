@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.37.13
+Version: 1.37.28
 Release: alt1
 Summary: The low-level, core functionality of boto 3
 License: Apache-2.0
@@ -81,6 +81,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 07 2025 Stanislav Levin <slev@altlinux.org> 1.37.28-alt1
+- 1.37.13 -> 1.37.28.
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.37.13-alt1
 - New version 1.37.13.
 
