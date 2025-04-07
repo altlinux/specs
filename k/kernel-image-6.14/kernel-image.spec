@@ -2,10 +2,10 @@ Name: kernel-image-6.14
 Release: alt1
 %define kernel_src_version	6.14
 %define kernel_base_version	6.14
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest1
 Version: %kversion
 
 %define krelease	%release
@@ -610,6 +610,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Apr 07 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.1-alt1
+- v6.14.1 (2025-04-07).
+- config: add prefix DISPLAY for CONFIG_DRM_DP_CEC, DRM_DP_AUX_CHARDEV.
+- config: Enable more Intel hardware.
+- config: Enable CONFIG_SND_SOC_INTEL_AVS=n.
+- config: Enable CONFIG_NTSYNC=m (ALT#53603).
+- config: Disable obsolete input tablet drivers.
+
 * Mon Mar 24 2025 Vitaly Chikunov <vt@altlinux.org> 6.14.0-alt1
 - Update to v6.14 (2025-03-24).
 
