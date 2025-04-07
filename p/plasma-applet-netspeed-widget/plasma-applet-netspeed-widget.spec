@@ -1,6 +1,6 @@
 Name: plasma-applet-netspeed-widget
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Plasma widget that displays the currently used network bandwidth
 License: GPL-2.0
@@ -24,6 +24,9 @@ BuildRequires: kf6-kcoreaddons-devel kf6-kwindowsystem-devel
 %prep
 %setup
 
+#fixed FTBFS
+subst "s|VERSION 2.8.12|VERSION 3.5|" CMakeLists.txt
+
 %build
 %K6cmake
 %K6make
@@ -37,6 +40,9 @@ BuildRequires: kf6-kcoreaddons-devel kf6-kwindowsystem-devel
 %doc README.md
 
 %changelog
+* Mon Apr 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.1-alt2
+- fixed FTBFS
+
 * Wed Apr 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.1-alt1
 - Initial build for ALT Linux.
 
