@@ -6,11 +6,13 @@
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable docbook_docs
-%def_enable check
 %def_enable man
+# interactive tests
+%def_disable check
+
 
 Name: libnotify
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Desktop notification library
@@ -145,6 +147,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
+- 0.8.6
+
 * Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
 - 0.8.4
 
