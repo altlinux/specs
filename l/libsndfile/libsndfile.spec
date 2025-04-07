@@ -2,19 +2,20 @@
 %def_enable check
 
 Name: libsndfile
-Version: 1.1.0
+Version: 1.2.2
 Release: alt1
 
 Summary: A library to handle various audio file formats
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://libsndfile.github.io/libsndfile
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
+
+Vcs: https://github.com/libsndfile/libsndfile.git
 
 %if_disabled snapshot
 Source: https://github.com/libsndfile/libsndfile/releases/download/%version/%name-%version.tar.xz
 %else
-Vcs: https://github.com/libsndfile/libsndfile.git
 Source: %name-%version.tar
 %endif
 Patch0: libsndfile-1.1.0+-fc-system-gsm.patch
@@ -95,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/*.1*
 
 %changelog
+* Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- updated to 1.2.2-50-gea9ff560 (fixed CVE-2022-33065)
+
 * Fri Sep 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - updated to 1.1.0-26-gcefd7b59 (added MP3 support)
 - updated system-gsm patch
