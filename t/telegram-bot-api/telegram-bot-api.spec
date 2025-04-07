@@ -1,5 +1,5 @@
 Name:    telegram-bot-api
-Version: 6.6.2
+Version: 8.3
 Release: alt1
 
 Summary: The Telegram Bot API provides an HTTP API for creating Telegram Bots.
@@ -24,7 +24,7 @@ The Telegram Bot API provides an HTTP API for creating Telegram Bots.
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=Release
+%cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 %cmake_build
 
 %install
@@ -35,6 +35,9 @@ The Telegram Bot API provides an HTTP API for creating Telegram Bots.
 %_bindir/*
 
 %changelog
+* Mon Apr 07 2025 Hihin Ruslan <ruslandh@altlinux.ru> 8.3-alt1
+- Version 8.3
+
 * Tue Mar 28 2023 Hihin Ruslan <ruslandh@altlinux.ru> 6.6.2-alt1
 - New Version
 
