@@ -1,5 +1,5 @@
 Name:    sakura
-Version: 3.8.8
+Version: 3.8.9
 Release: alt1
 
 Summary: Simple but powerful libvte based terminal emulator for X11
@@ -62,6 +62,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/%name.1.xz
 
 %changelog
+* Fri Apr 04 2025 Ulysses Apokin <ulysses@altlinux.org> 3.8.9-alt1
+- new version
+
 * Tue Dec 03 2024 Ulysses Apokin <ulysses@altlinux.org> 3.8.8-alt1
 - new version
 
