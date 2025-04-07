@@ -1,7 +1,7 @@
 %define sover 1
 
 Name: imlib2
-Version: 1.12.4
+Version: 1.12.5
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -15,7 +15,6 @@ Source: %name-%version.tar
 %def_disable static
 %def_enable mmx
 
-BuildRequires(pre): patchelf
 # Automatically added by buildreq on Sun Sep 16 2012
 # optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: gcc-c++ libgomp-devel
@@ -91,10 +90,6 @@ export LIBS+=" -lwebp -L/%_lib -lm"
 # remove non-packaged files
 find %buildroot%_libdir/ -name '*.la' -delete
 
-# fix undefined symbols
-patchelf %buildroot%_libdir/%name/filters/*.so --add-needed libImlib2.so.%sover
-patchelf %buildroot%_libdir/%name/loaders/*.so --add-needed libImlib2.so.%sover
-
 %check
 make check
 
@@ -123,6 +118,9 @@ make check
 %endif
 
 %changelog
+* Mon Apr 07 2025 Leontiy Volodin <lvol@altlinux.org> 1.12.5-alt1
+- New version 1.12.5.
+
 * Tue Mar 18 2025 Leontiy Volodin <lvol@altlinux.org> 1.12.4-alt1
 - New version 1.12.4.
 - Added vcs tag.
