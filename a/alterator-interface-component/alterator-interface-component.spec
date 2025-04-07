@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-interface-component
-Version: 0.1.8
-Release: alt4
+Version: 0.1.9
+Release: alt1
 
 Summary: Components interface for alterator browser
 License: GPLv2+
@@ -25,7 +25,7 @@ BuildRequires: python3-devel
 Requires: %name = %EVR
 Requires: alterator-module-executor >= 0.1.19
 Requires: alterator-entry >= 0.2.0
-Requires: alterator-backend-edition
+Requires: alterator-backend-systeminfo >= 0.3
 
 %description -n alterator-backend-component
 %summary.
@@ -68,6 +68,9 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Mon Mar 31 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.9-alt1
+- Filter using DEs, language and kflavour from system.
+
 * Sat Mar 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.1.8-alt4
 - Avoid to try-restart alterator-manager.service due new release supported
   dynamic restart based on inotify.
