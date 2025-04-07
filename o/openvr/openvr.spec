@@ -6,7 +6,7 @@
 
 Name: openvr
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Virtual reality SDK
 
@@ -55,6 +55,7 @@ rm -rv lib bin
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DBUILD_SHARED=ON \
     -DBUILD_UNIVERSAL=OFF \
     -DUSE_LIBCXX=OFF \
@@ -75,6 +76,9 @@ rm -rv lib bin
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Mon Apr 07 2025 Mikhail Tergoev <fidel@altlinux.org> 2.5.1-alt2
+- fixed FTBFS
+
 * Mon Apr 01 2024 Mikhail Tergoev <fidel@altlinux.org> 2.5.1-alt1
 - 2.5.1
 
