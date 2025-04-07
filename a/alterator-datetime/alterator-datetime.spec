@@ -1,7 +1,7 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.9.2
+Version: 4.9.3
 Release: alt1
 
 Summary: alterator module for date/time setup
@@ -62,12 +62,15 @@ Helper functions for %name.
 %_alterator_backend3dir/*
 %_alterator_libdir/ui/*
 %_alterator_libdir/type/*
-%_datadir/install2/postinstall.d/*
+%_datadir/install2/preinstall.d/*
 
 %files functions
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Sun Apr 06 2025 Anton Midyukov <antohami@altlinux.org> 4.9.3-alt1
+- replace 20-datetime.sh from postinstall.d to preinstall.d
+
 * Fri Oct 04 2024 Mikhail Efremov <sem@altlinux.org> 4.9.2-alt1
 - datetime-functions: Don't allow duplicated translated names.
 

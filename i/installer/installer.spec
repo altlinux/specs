@@ -1,9 +1,9 @@
 Name: installer
-Version: 1.16.17
+Version: 1.16.18
 Release: alt1
 
 Summary: Installer common parts
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer
@@ -28,6 +28,7 @@ Requires: alterator-preinstall >= 0.9-alt1
 # scripts/install2
 Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-server xorg-drv-video
 Requires: glibc-locales
+Requires: installer-scripts-remount-stage2 >= 0.6.8
 # scripts/postinstall
 Requires: eject
 # initinstall.d/10-vt.sh
@@ -94,6 +95,7 @@ Group: System/Configuration/Other
 BuildArch: noarch
 Requires: installer-common-stage2 = %EVR
 Requires: polkit
+Requires: installer-alterator-livecd-stage2
 Conflicts: livecd-install
 
 %description common-desktop
@@ -117,6 +119,8 @@ ln -s %_unitdir/install2.service \
 	%buildroot/%_unitdir/install2.target.wants/install2.service
 popd
 
+touch %buildroot%_datadir/installer-livecd-steps
+
 %files common-stage2
 %_sbindir/*
 %exclude %_sbindir/install2
@@ -134,10 +138,24 @@ popd
 %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
 %files common-desktop
+%_sysconfdir/profile.d/zdg-user-dirs-install.sh
 %_bindir/install2-desktop
 %_desktopdir/install2.desktop
+%ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Thu Apr 03 2025 Anton Midyukov <antohami@altlinux.org> 1.16.18-alt1
+- install2-desktop.sh: do not use $XDG_RUNTIME_DIR
+- use two additional steps in install2-desktop (Closes: 53674)
+- replace 86-all-groups from postinstall.d to preinstall.d
+- postinstall.d/10-increase-raid-limit.sh: fix shebang
+- preinstall.d/90-setup-bootloader.sh: fix script
+- common-desktop: copy install2.desktop to $XDG_DESKTOP_DIR for first user
+- postinstall.d/65-setup-services.sh: use variable $datadir
+- postinstall.d/66-setup-mdmon.sh: use exec_chroot function
+- steps: add livecd-start.desktop, livecd-finish.desktop
+- convert License tag to SPDX-format
+
 * Sat Mar 29 2025 Anton Midyukov <antohami@altlinux.org> 1.16.17-alt1
 - install2-sh-functions: source /run/stage1/vars
 

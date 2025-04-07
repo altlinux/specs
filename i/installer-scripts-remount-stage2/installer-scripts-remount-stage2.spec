@@ -1,9 +1,9 @@
 Name: installer-scripts-remount-stage2
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 
 Summary: Shared installer scripts: remount
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer
@@ -48,6 +48,10 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Sun Apr 06 2025 Anton Midyukov <antohami@altlinux.org> 0.6.8-alt1
+- mount --bind /tmp $destdir/tmp
+- convert License tag to SPDX format
+
 * Tue Mar 04 2025 Anton Midyukov <antohami@altlinux.org> 0.6.7-alt1
 - Fix condition in set_active function
 - Check for the presence of a directory /sys/block/"$BOOTDEV"/slaves/
