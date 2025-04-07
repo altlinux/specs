@@ -1,11 +1,11 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: installer-livecd-install
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: Special step livecd-install for installers
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Alterator
@@ -38,6 +38,10 @@ BuildArch: noarch
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Apr 07 2025 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
+- backend3: add autoinstall support
+- spec: convert License tag to SPDX-format
+
 * Thu Dec 21 2023 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt1
 - backend3: copy files instead unsquashfs when in kernel cmdline 'oldinst'
 
