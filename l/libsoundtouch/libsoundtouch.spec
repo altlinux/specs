@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.3.3
+Version: 2.4.0
 Release: alt1
 
 Summary: SoundTouch audio processing library
@@ -12,10 +12,11 @@ License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://www.surina.net/soundtouch/
 
+Vcs: https://codeberg.org/soundtouch/soundtouch.git
+
 %if_disabled snapshot
 Source: %url/%_name-%version.tar.gz
 %else
-Vcs: https://codeberg.org/soundtouch/soundtouch.git
 Source: %_name-%version.tar
 %endif
 
@@ -79,6 +80,9 @@ rm -rf %buildroot/%_prefix/doc
 
 
 %changelog
+* Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
+- 2.4.0
+
 * Sat Mar 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
 - 2.3.3
 
