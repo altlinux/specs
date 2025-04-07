@@ -1,6 +1,6 @@
 %define phpversion php%php_defver
 Name: cacti
-Version: 1.2.29
+Version: 1.2.30
 Release: alt1
 
 %define cactidir %_datadir/%name
@@ -164,6 +164,9 @@ fi
 %cactidir/install
 
 %changelog
+* Mon Apr 07 2025 Anton Farygin <rider@altlinux.com> 1.2.30-alt1
+- 1.2.30
+
 * Tue Mar 04 2025 Anton Farygin <rider@altlinux.ru> 1.2.29-alt1
 - 1.2.29
 - used %%php_defver to determine the default of the PHP version
