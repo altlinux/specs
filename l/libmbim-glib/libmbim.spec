@@ -5,7 +5,7 @@
 
 Name: %_name-glib
 Version: 1.30.0
-Release: alt1
+Release: alt2
 
 Summary: MBIM modem protocol helper library
 License: LGPLv2+
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 Patch: %_name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
 BuildRequires: glib2-devel libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -85,11 +85,7 @@ This package contains development documentation for %name
 
 %build
 %meson \
-%if_enabled introspection
-	-Dintrospection=true \
-%else
-	-Dintrospection=false \
-%endif
+	%{subst_enable_meson_bool introspection introspection} \
 	-Dgtk_doc=true
 
 %meson_build -v
@@ -128,6 +124,10 @@ This package contains development documentation for %name
 
 
 %changelog
+* Mon Apr 07 2025 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt2
+- Fixed build with meson >= 1.7.0.
+- Used macros from rpm-macros-meson.
+
 * Mon Oct 16 2023 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt1
 - Updated to 1.30.0.
 
