@@ -2,7 +2,7 @@
 
 Name: nautilus-admin-gtk4
 Version: 1.2.0
-Release: alt3
+Release: alt4
 
 Summary: Extension for Nautilus to do administrative operations
 License: GPL-3.0
@@ -34,6 +34,9 @@ manager that adds some administrative actions to the right-click menu:
 %prep
 %setup
 
+#fixed FTBFS
+subst "s|VERSION 2.6|VERSION 3.5|" CMakeLists.txt
+
 %patch -p0
 
 %build
@@ -50,6 +53,9 @@ manager that adds some administrative actions to the right-click menu:
 %_datadir/nautilus-python/extensions/__pycache__/*
 
 %changelog
+* Mon Apr 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt4
+- fixed FTBFS
+
 * Sun Jan 05 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt3
 - drop ru.po
 - fix for translated locales
