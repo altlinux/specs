@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.6
+Version:        1.0.7
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -58,6 +58,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Mon Apr 07 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.7-alt1
+- 1.0.7 (See CHANGELOG.txt for details)
+
 * Tue Feb 11 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.6-alt1
 - Fix error message display (corrected encoding) in Windows
 - Closes: #52045
