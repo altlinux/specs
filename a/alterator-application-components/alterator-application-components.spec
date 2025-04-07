@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.4
+Version: 0.2.6
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -67,6 +67,13 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Mon Apr 07 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.6-alt1
+- Filter by DE, language and arch from systeminfo backend.
+
+* Sun Mar 30 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.5-alt1
+- Add option to show/hide sections in View menu.
+- Add exit action in File menu.
+
 * Tue Mar 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.4-alt1
 - Rename Debug menu to Tools.
 - Add option to show drafts in Tools menu.
