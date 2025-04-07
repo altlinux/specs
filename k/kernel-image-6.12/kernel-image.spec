@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.21
+%define kernel_sublevel	.22
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Apr 07 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.22-alt1
+- v6.12.22 (2025-04-07).
+- config: add prefix DISPLAY for CONFIG_DRM_DP_CEC, DRM_DP_AUX_CHARDEV.
+- config: Enable CONFIG_SND_SOC_INTEL_AVS=n (ALT#53634).
+
 * Sat Mar 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.21-alt1
 - v6.12.21 (2025-03-28).
 - arm64: dts: rockchip: add dts to support NP-504a board.
