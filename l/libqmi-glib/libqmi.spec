@@ -5,7 +5,7 @@
 
 Name: %_name-glib
 Version: 1.34.0
-Release: alt1
+Release: alt2
 
 Summary: QMI modem protocol helper library
 License: LGPLv2+
@@ -15,7 +15,7 @@ Vcs: https://gitlab.freedesktop.org/mobile-broadband/libqmi.git
 Source: %name-%version.tar
 Patch: %_name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: libmbim-glib-devel >= 1.18.0
@@ -88,12 +88,8 @@ touch README ChangeLog
 	-Dfirmware_update=true \
 	-Dudev=true \
 	-Dqrtr=true \
-%if_enabled introspection
-    -Dintrospection=true \
-%else
-    -Dintrospection=false \
-%endif
-    -Dgtk_doc=true
+	%{subst_enable_meson_bool introspection introspection} \
+	-Dgtk_doc=true
 
 %meson_build -v
 
@@ -130,6 +126,10 @@ touch README ChangeLog
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Apr 07 2025 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt2
+- Fixed build with meson >= 1.7.0.
+- Used macros from rpm-macros-meson.
+
 * Mon Oct 16 2023 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt1
 - Updated to 1.34.0.
 
