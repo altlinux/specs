@@ -1,7 +1,7 @@
 %define oname mpmath
 
 Name: python3-module-%oname
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: Python library for arbitrary-precision floating-point arithmetic
@@ -59,6 +59,9 @@ xvfb-run pytest3
 %python3_sitelibdir/*
 
 %changelog
+* Mon Apr 07 2025 Alexander Danilov <admsasha@altlinux.org> 1.3.0-alt1
+- new version 1.3.0.
+
 * Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
 - new version 1.2.1 (with rpmrb script)
 
