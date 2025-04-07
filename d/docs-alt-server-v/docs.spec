@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.4
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Apr 07 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt6
+- fix some typos (ALT 53728, 53724, 53744, 53713, 53702, 53963, 53691, 53601, 53623)
+- small improvements (ALT 53635, 53716)
+
 * Wed Feb 26 2025 Elena Mishina <lepata@altlinux.org> 10.4-alt5
 - fix some typos (ALT 53118, 53127, 53187, 53142, 53214)
 - small improvements (ALT 53139, 53212, 53213)
