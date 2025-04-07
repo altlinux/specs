@@ -5,7 +5,7 @@
 %define rname xdg-desktop-portal-kde
 Name: %rname
 Version: 6.3.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -23,6 +23,7 @@ Requires: plasma-workspace-qml
 
 Source: %rname-%version.tar
 Source1: env.sh
+Patch1: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libvulkan-devel
@@ -43,6 +44,7 @@ that is using Qt/KF6.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -69,6 +71,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 
 
 %changelog
+* Mon Apr 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt2
+- fix parsing $XDG_CURRENT_DESKTOP (closes: 53733)
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
 - new version
 
