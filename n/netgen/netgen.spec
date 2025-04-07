@@ -21,7 +21,7 @@
 
 Name: netgen
 Version: 6.2.2406
-Release: alt3
+Release: alt4
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -79,7 +79,7 @@ BuildRequires: libmetis-devel
 BuildRequires: %mpiimpl-devel
 %endif
 %if_with shared_togl
-BuildRequires: tcl-togl-devel 
+BuildRequires: tcl-togl-devel
 %endif
 BuildRequires: libGLU-devel
 BuildRequires: git-core
@@ -289,6 +289,7 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DUSE_MPI=OFF \
     -DUSE_OCC=ON \
     -DUSE_JPEG=ON \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
 %if_with ffmpeg
     -DUSE_MPEG=ON \
 %else
@@ -343,7 +344,7 @@ export MPIDIR=%mpidir
     -DUSE_MPEG=ON \
 %else
     -DUSE_MPEG=OFF \
-%endif 
+%endif
     ../..
 
 %cmake_build VERBOSE=1
@@ -415,6 +416,9 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Mon Apr 7 2025 Leonid Znamenok <respublica@altlinux.org> 6.2.2406-alt4
+- Fixed FTBFS with CMake 4.0.
+
 * Wed Jan 29 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.2.2406-alt3
 - Fixed build for Elbrus.
 
