@@ -4,8 +4,8 @@
 %define major 1.4
 
 Name: tcl-img
-Version: 1.4.14
-Release: alt2
+Version: 2.0.1
+Release: alt1
 
 Summary: Tcl Image Formats (Img)
 License: TCL
@@ -26,7 +26,6 @@ Patch4: 0004-DEBIAN-libpng.patch
 Patch5: 0005-DEBIAN-libtiff.patch
 Patch6: 0006-DEBIAN-pixmap.patch
 Patch7: 0007-DEBIAN-window.patch
-Patch8: 0008-ALT-tests-TCLLIBPATH.patch
 
 BuildRequires: rpm-build-tcl >= 0.5-alt1
 BuildRequires: libjpeg-devel libpng-devel tk-devel zlib-devel
@@ -41,7 +40,7 @@ BMP, XBM, XPM, GIF, PNG, JPEG, postscript and others.
 
 %prep
 %setup -q -n tkimg-%version
-%autopatch -p2
+%autopatch -p1
 find . -name config.cache -delete
 
 %build
@@ -54,8 +53,6 @@ export TK_SRC_DIR=%_includedir/tk
 	   --enable-threads \
 	   #
 %make_build
-
-xz ChangeLog
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -80,19 +77,25 @@ export DISPLAY=:0
 # broken
 rm tests/jpeg.test
 
+# do not use system installed package
+export TCLLIBPATH="$PWD/Img/exec_prefix/lib"
+
 # tcltest always retuns 0
 set -eo pipefail
 make test 2>&1 |tee "$log"
 ! grep -q FAILED "$log" ||exit 1
 
 %files
-%doc ANNOUNCE ChangeLog* README doc/*.css doc/*.htm license.terms
+%doc license.terms
 %dir %_tcllibdir/Img%version
 %_tcllibdir/Img%version/*.so
 %_tcllibdir/Img%version/pkgIndex.tcl
 %_mandir/mann/*
 
 %changelog
+* Mon Apr 07 2025 Constantin Sunzow <protvin@altlinux.org> 2.0.1-alt1
+- New version.
+
 * Fri Apr 04 2025 Constantin Sunzow <protvin@altlinux.org> 1.4.14-alt2
 - Fix FTBFS: remove assignment data_precision.
 
