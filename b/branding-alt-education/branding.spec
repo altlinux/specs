@@ -28,7 +28,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.6.beta
+Release: alt0.7.beta
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -463,6 +463,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.recoll
 
 %changelog
+* Tue Apr 08 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.7.beta
+- Updated slideshow.
+
 * Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.6.beta
 - system-settings conflicted with branding-xalt-kworkstation-graphics.
 - system-settings: packaged all other autstart override rules.
