@@ -1,7 +1,7 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %arm aarch64 ppc64le loongarch64 riscv64
+%ifarch %arm aarch64 ppc64le loongarch64 riscv64 %e2k
 %def_without glinject
 %else
 %def_with glinject
@@ -9,7 +9,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4.0.23.9559
-Release: alt2
+Release: alt3
 
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -63,11 +63,6 @@ echo "NotShowIn=KDE-Wayland" >> data/simplescreenrecorder.desktop
 # XXX waiting for support for channels
 ##sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
 
-%ifarch %e2k
-sed -i 's,^#ifdef __x86_64__,#if defined (__x86_64__) || defined (__e2k__),' \
-	glinject/elfhacks.h
-%endif
-
 %build
 export PATH=%_qt5_bindir:$PATH
 %cmake \
@@ -98,6 +93,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Tue Apr 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.4.4.0.23.9559-alt3
+- Disable glinject on e2k.
+
 * Wed Mar 26 2025 Sergey V Turchin <zerg@altlinux.org> 0.4.4.0.23.9559-alt2
 - Hide from Plasma Wayland session. (closes: 53626)
 
