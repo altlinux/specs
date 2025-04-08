@@ -1,29 +1,29 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major 3
-%define libname libx86emu%{major}
+%define major     3
+%define libname   libx86emu%{major}
 %define develname libx86emu-devel
 
 Name:           libx86emu
+Version:        3.7
+Release:        alt1_1
+Summary:        A small x86 emulation library
 License:        BSD
 Group:          System/Libraries
-Summary:        A small x86 emulation library
-Version:        3.5
-Release:        alt1_1
-URL:		https://github.com/wfeldt/libx86emu
+URL:            https://github.com/wfeldt/libx86emu
 Source:         https://github.com/wfeldt/libx86emu/archive/%{version}/%{name}-%{version}.tar.gz
 Source44: import.info
 ExclusiveArch: %ix86 x86_64
- 
+
 %description
 Small x86 emulation library with focus of easy usage and extended
 execution logging functions.
- 
+
 %package -n     %{libname}
 License:        BSD 3-Clause
 Summary:        A small x86 emulation library
 Group:          System/Libraries
- 
+
 %description -n %{libname}
 Small x86 emulation library with focus of easy usage and extended
 execution logging functions.
@@ -32,19 +32,19 @@ execution logging functions.
 License:        BSD
 Summary:        Headers for %{name}
 Group:          System/Libraries
-Provides: 	%{name}-devel = %{version}-%{release}
+Provides:       %{name}-devel = %{version}-%{release}
 Requires:       %{libname} = %{version}
- 
+
 %description -n %{develname}
-Devel files for %{name}
- 
+Devel files for %{name}.
+
 %prep
-%setup -q 
- 
+%setup -q
+
 %build
 echo %{version} > VERSION
 make shared LIBDIR=%{_libdir}
- 
+
 %install
 install -d -m 755 %{buildroot}%{_libdir}
 make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
@@ -52,7 +52,7 @@ make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
 %files -n %{libname}
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{major}.*
- 
+
 %files -n %{develname}
 %{_libdir}/%{name}.so
 %{_includedir}/x86emu.h
@@ -60,6 +60,9 @@ make install DESTDIR=%{buildroot} LIBDIR=%{_libdir}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.7-alt1_1
+- update by mgaimport
+
 * Sun Apr 10 2022 Igor Vlasenko <viy@altlinux.org> 3.5-alt1_1
 - update by mgaimport
 
