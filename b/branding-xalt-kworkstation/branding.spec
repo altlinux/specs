@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.26
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -49,8 +49,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
-%define status RC
-%define status_ru RC
+%define status %nil
+%define status_ru %nil
 %define ProductName %Brand %Theme %altversion
 %define ProductName_ru %Brand_ru %Theme_ru %altversion
 %define branding_data_dir %_datadir/branding-data-current
@@ -498,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 08 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt1
+- clear status
+
 * Tue Apr 08 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.26
 - update slideshow
 
