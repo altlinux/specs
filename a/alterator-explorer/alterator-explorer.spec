@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -15,6 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
@@ -105,6 +106,14 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Mon Mar 31 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.13-alt1
+- support release-notes-applications
+- add control interface
+- refresh button
+- fixed category icons size
+- hide legacy switch button if acc-legacy not available
+- toolbar apperance in different themes
+
 * Tue Mar 11 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.12-alt1
 - fix empty categories by <alekseevam@altlinux.org>
 
