@@ -2,7 +2,7 @@
 %define twver 0
 
 Name: deepin-terminal
-Version: 6.0.17
+Version: 6.5.4
 Release: alt1
 
 Summary: Default terminal emulation application for Deepin
@@ -13,7 +13,6 @@ Url: https://github.com/linuxdeepin/deepin-terminal
 Vcs: git://github.com/linuxdeepin/deepin-terminal.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-terminal-6.0.9-alt-dtk.patch
 
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
@@ -23,10 +22,8 @@ Requires: libdqt5-widgets = %_dqt5_version
 #Recommends:     deepin-manual
 #Recommends:     zssh
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 patchelf
-# Automatically added by buildreq on Mon Oct 23 2023
-# optimized out: cmake-modules fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libxcb-devel libxcbutil-icccm pkg-config python3 python3-base dqt5-base-devel dqt5-tools sh5
-BuildRequires: cmake libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5 patchelf rpm-macros-cmake
+BuildRequires: cmake dtk6-common-devel libdtkwidget-devel libsecret-devel libxcbutil-icccm-devel lxqt-build-tools dqt5-tools-devel dqt5-x11extras-devel libchardet-devel libuchardet-devel
 
 %description
 %summary.
@@ -67,7 +64,6 @@ Development package for QTermWidget. Contains headers and dev-libs.
 
 %prep
 %setup
-%patch -p1
 
 %build
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
@@ -109,6 +105,16 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/terminal/
+%dir %_datadir/deepin-debug-config/
+%dir %_datadir/deepin-debug-config/deepin-debug-config.d/
+%_datadir/deepin-debug-config/deepin-debug-config.d/org.deepin.terminal.json
+%dir %_datadir/deepin-log-viewer/
+%dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
+%_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.terminal.json
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.terminal/
+%_datadir/dsg/configs/org.deepin.terminal/org.deepin.terminal.json
 # outside %%find_lang
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations/
@@ -131,6 +137,9 @@ sed -i -e '/Libs/s|terminalwidget5|terminalwidget5 -L%_dqt5_libdir -lQt5Widgets|
 %_includedir/terminalwidget5/
 
 %changelog
+* Tue Apr 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.4-alt1
+- New version 6.5.4.
+
 * Wed Jan 15 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.17-alt1
 - New version 6.0.17.
 
