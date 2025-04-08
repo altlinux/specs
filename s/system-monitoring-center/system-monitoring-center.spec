@@ -1,6 +1,6 @@
 Name:     system-monitoring-center 
 Version:  2.26.0
-Release:  alt2
+Release:  alt2.1
 
 Summary:  Multi-featured system monitor
 License:  GPLv3+
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
 BuildRequires: gtk4-update-icon-cache
+# See https://bugzilla.altlinux.org/52950
+Requires: python3-module-pygobject3
 
 %add_python3_path %_datadir/%name
 
@@ -42,6 +44,9 @@ BuildRequires: gtk4-update-icon-cache
 %_desktopdir/*
 
 %changelog
+* Tue Apr 01 2025 Maria Alexeeva <alxvmr@altlinux.org> 2.26.0-alt2.1
+- NMU: add missing requirement
+
 * Mon Sep 16 2024 Roman Alifanov <ximper@altlinux.org> 2.26.0-alt2
 - fix missing requires (ALT bug 51047)
 
