@@ -2,7 +2,7 @@
 %define themename adw-gtk3
 
 Name: gtk3-theme-%themename
-Version: 5.7
+Version: 5.8
 Release: alt1
 
 Summary: The theme from libadwaita ported to GTK+3
@@ -41,6 +41,9 @@ BuildRequires: meson sassc
 %doc README*
 
 %changelog
+* Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt1
+- 5.8
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.7-alt1
 - 5.7
 
