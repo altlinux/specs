@@ -1,19 +1,18 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name llm
-%define pypi_nname llm
-%define mod_name llm
+%define pypi_name condense-json
+%define mod_name condense_json
 
 %def_with check
 
-Name: python3-module-%pypi_nname
-Version: 0.24
+Name: python3-module-%pypi_name
+Version: 0.1.2
 Release: alt1
 
-Summary: Access large language models from the command-line
+Summary: Python function for condensing JSON using replacement strings
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/llm/
-Vcs: https://github.com/simonw/llm
+Url: https://pypi.org/project/condense-json/
+Vcs: https://github.com/simonw/condense-json
 
 BuildArch: noarch
 
@@ -29,9 +28,7 @@ BuildRequires(pre): rpm-build-pyproject
 %endif
 
 %description
-A CLI utility and Python library for interacting with Large Language
-Models, both via remote APIs and models that can be installed and run
-on your own machine.
+%summary.
 
 %prep
 %setup
@@ -46,18 +43,15 @@ on your own machine.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -o=addopts=-Wignore
+%pyproject_run_pytest -vra
 
 %files
 %doc README.md
-%_bindir/llm
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Tue Apr 08 2025 Anton Zhukharev <ancieg@altlinux.org> 0.24-alt1
-- Updated to 0.24.
-
-* Tue Mar 04 2025 Anton Zhukharev <ancieg@altlinux.org> 0.23-alt1
+* Tue Apr 08 2025 Anton Zhukharev <ancieg@altlinux.org> 0.1.2-alt1
 - Built for ALT Sisyphus.
+
 
