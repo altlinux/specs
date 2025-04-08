@@ -1,6 +1,6 @@
 Name: atf-rockchip
 Version: 2.12
-Release: alt1
+Release: alt2
 
 Summary: ARM Trusted Firmware
 License: BSD
@@ -21,7 +21,7 @@ This package provides support for the RK3328, RK3399 and PX30 SoC families.
 
 %build
 export CROSS_COMPILE=aarch64-alt-linux-
-for plat in px30 rk3328 rk3368 rk3399 rk3568 rk3588; do
+for plat in px30 rk3328 rk3368 rk3399 rk3588; do
 	make distclean
 	make -j8 PLAT=$plat bl31
 	install -pm0644 -D build/$plat/release/bl31/bl31.elf out/$plat/bl31.elf
@@ -37,6 +37,9 @@ cp -a out/* %buildroot%_datadir/atf/
 %_datadir/atf/*
 
 %changelog
+* Fri Feb 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12-alt2
+- 3568 bl31 lacks SCMI support, drop it from build
+
 * Fri Jan 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12-alt1
 - 2.12 released
 
