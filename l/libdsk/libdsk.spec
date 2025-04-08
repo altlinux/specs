@@ -1,3 +1,4 @@
+BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
@@ -11,7 +12,7 @@ BuildRequires: gcc-c++
 
 Name:           lib%sname
 Summary:        A library for accessing floppy drives and disk images transparently
-Version:        1.5.19
+Version:        1.5.21
 Release:        alt1_1
 License:        LGPLv2+
 Group:          System/Libraries
@@ -74,21 +75,20 @@ files. You'll also need to install the libdsk package.
 sed -i -e 's,\(^AM_INIT_AUTOMAKE\)\((\[\(.*\)\])\|(\(.*\))\|.*\),\1([%{automake_opts} \3\4]),' configure.ac
 
 %build
-# fix build on aarch64
-autoreconf -vfi
-
 %configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-
-# we don't want these
-find %{buildroot} -name '*.la' -delete
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
 
 %files -n %{libname}
 %doc ChangeLog doc/COPYING doc/README doc/TODO
-%{_libdir}/lib*.so.%{major}*
+%{_libdir}/lib*.so.%{major}
+%{_libdir}/lib*.so.%{major}.*
 
 %files -n %{libname_devel}
 %doc doc/COPYING doc/cfi.html doc/libdsk.*
@@ -103,6 +103,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.5.21-alt1_1
+- update by mgaimport
+
 * Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 1.5.19-alt1_1
 - update by mgaimport
 
