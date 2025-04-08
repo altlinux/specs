@@ -14,8 +14,8 @@ BuildRequires(pre): rpm-macros-mageia-compat
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.9.12
-Release:       alt1_2
+Version:       1.0.1
+Release:       alt1_1
 License:       LGPLv2
 Group:         System/Libraries
 URL:           https://www.linuxsampler.org/
@@ -93,6 +93,9 @@ Docs for %oname.
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt1_1
+- update by mgaimport
+
 * Fri Mar 22 2024 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_2
 - update by mgaimport
 
