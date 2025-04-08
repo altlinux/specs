@@ -10,19 +10,18 @@ BuildRequires: /usr/bin/update-mime-database gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.7.0
-Release:        alt1_3
+Version:        0.8
+Release:        alt1_2
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
 URL:            https://easyrpg.org
 Source0:        https://easyrpg.org/downloads/player/%{version}/%{name}-%{version}.tar.xz
-# liblcf is not detected without this patch https://github.com/EasyRPG/Editor/issues/214
-Patch0:         liblcf-0.7.0-fix-cmake-detection.patch
+Patch0:         liblcf-libify.patch
 
 BuildRequires:  ccmake cmake ctest
+BuildRequires:  doxygen
 BuildRequires:  libicu-devel
-BuildRequires:  libtool
 BuildRequires:  pkgconfig(expat)
 Source44: import.info
 
@@ -54,7 +53,8 @@ liblcf is part of the EasyRPG Project. More information is available
 at the project website: easy-rpg.org
 
 %files -n       %{libname}
-%doc AUTHORS.md COPYING README.md
+%doc AUTHORS.md README.md
+%doc --no-dereference COPYING
 %{_datadir}/mime/*
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{version}
@@ -65,6 +65,7 @@ at the project website: easy-rpg.org
 Summary:        Development headers and library for %{name}
 Group:          Development/C++
 Requires:       %{libname} = %{version}-%{release}
+Provides:       %{shortname}-devel = %{version}-%{release}
 
 %description -n %{devname}
 This package contains development headers and library for %{name},
@@ -83,6 +84,9 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 %patch0 -p1
 
 
+# Fix build with ICU >= 76
+sed -i -e 's/CMAKE_CXX_STANDARD\s\+[0-9]\+/CMAKE_CXX_STANDARD 17/' CMakeLists.txt
+
 %build
 %{mageia_cmake} \
   -DDISABLE_UPDATE_MIMEDB=ON
@@ -91,12 +95,11 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 %install
 %mageia_cmake_install
 
-# FIXME: CMake should do it itself
-pushd %{buildroot}%{_libdir}
-ln -s %{name}.so.%{major} %{name}.so.%{version}
-
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.8-alt1_2
+- update by mgaimport
+
 * Wed Apr 19 2023 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt1_3
 - update by mgaimport
 
