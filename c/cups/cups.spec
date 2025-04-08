@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.4.11
-Release: alt2
+Version: 2.4.12
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -403,6 +403,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Tue Apr 08 2025 Anton Farygin <rider@altlinux.com> 2.4.12-alt1
+- 2.4.11 -> 2.4.12
+
 * Tue Mar 04 2025 Anton Farygin <rider@altlinux.ru> 2.4.11-alt2
 - removed TCP listening from socket service (Closes: #51610)
 - relocate CUPS .po files from /usr/share/locale to /usr/share/cups/locale
