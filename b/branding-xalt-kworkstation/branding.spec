@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt0.25
+Release: alt0.26
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -498,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Apr 08 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.26
+- update slideshow
+
 * Mon Mar 31 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt0.25
 - fix alerator-browser slyle
 
