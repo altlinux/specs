@@ -4,37 +4,40 @@
 %define _enable_debug_packages %{nil}
 %define debug_package          %{nil}
 
-Name: libpthread-stubs
-Summary: PThread Stubs for XCB
-Version: 0.4
-Release: alt1_1
-Group: System/X11
-License: MIT
-URL: http://xcb.freedesktop.org
-Source0: http://xcb.freedesktop.org/dist/libpthread-stubs-%{version}.tar.bz2
-BuildRequires: xorg-proto-devel >= 1.2.0
-BuildRequires: xorg-util-macros >= 1.0.1
-BuildRequires: xsltproc
+Name:           libpthread-stubs
+Summary:        PThread Stubs for XCB
+Version:        0.5
+Release:        alt1_1
+Group:          System/X11
+License:        MIT
+URL:            https://xcb.freedesktop.org
+Source0:        https://xcb.freedesktop.org/dist/libpthread-stubs-%{version}.tar.xz
+BuildRequires:  xorg-proto-devel >= 1.2.0
+BuildRequires:  xorg-util-macros >= 1.0.1
+BuildRequires:  xsltproc
 Source44: import.info
 
 %description
-PThread Stubs for XCB
+PThread Stubs for XCB.
 
 %prep
 %setup -q -n libpthread-stubs-%{version}
 
 %build
 %configure
-%make
+%make_build
 
 %install
 %makeinstall_std
 
-%files 
+%files
 %{_libdir}/pkgconfig/pthread-stubs.pc
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.5-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_1
 - new version
 
