@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.0.54
+Version: 6.1.19
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -14,80 +14,98 @@ Summary: New control center for Linux Deepin
 License: GPL-3.0-or-later and MIT
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-control-center
+Vcs: https://github.com/linuxdeepin/dde-control-center.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
-Patch1: deepin-control-center-6.0.47-alt-qch.patch
+Patch0: deepin-control-center-6.1.4-alt-qch.patch
+Patch1: deepin-control-center-6.1.19-alt-fixes-underlinked-libs.patch
 
-# Requires: deepin-account-faces deepin-api deepin-daemon deepin-qt5integration deepin-network-utils GeoIP-GeoLite-data GeoIP-GeoLite-data-extra gtk-murrine-engine proxychains-ng redshift startdde
-# Requires: libdeepin-pw-check
+#FAILED: src/plugin-mouse/CMakeFiles/mouse.dir/mouse_autogen/OYYSJO5W5K/qrc_mouse.cpp.o
+#virtual memory exhausted: Cannot allocate memory
+ExcludeArch: i586
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-dqt6 patchelf
+BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtk6widget-devel libpolkitqt6-qt6-devel dqt6-declarative-devel dqt6-tools-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-wayland-devel libdqt6-qmlcompiler libgtest-devel libsystemd-devel libgsettings-qt-devel treeland-protocols libwayland-egl-devel libdareader-devel libdde-shell-devel deepin-shell
 %if_enabled clang
-BuildRequires: clang-devel
+BuildRequires: clang-devel lld-devel
 %else
 BuildRequires: gcc-c++
 %endif
-# Automatically added by buildreq on Mon Oct 23 2023
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libpolkit-qt5-agent libpolkit-qt5-core libpolkit-qt5-gui libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-help libdqt5-multimedia libdqt5-network libdqt5-printsupport libdqt5-sql libdqt5-svg libdqt5-test libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel perl perl-Config-Tiny perl-Encode perl-XML-LibXML perl-parent pkg-config python3 python3-base dqt5-base-common dqt5-base-devel dqt5-tools sh5
-BuildRequires: cmake deepin-gettext-tools doxygen libdeepin-pw-check-devel dtk6-common-devel libdtkwidget-devel libpolkitqt5-qt5-devel dqt5-tools dqt5-multimedia-devel dqt5-svg-devel dqt5-wayland-devel libgtest-devel gsettings-qt-devel libsystemd-devel
 
 %description
 New control center for Linux Deepin.
 
-%package -n libdcc-interface%sover
+%package -n lib%repo%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n libdcc-interface%sover
+%description -n lib%repo%sover
 This package provides library for %name.
 
-%package -n libdcc-widgets%sover
-Summary: Library for %name
-Group: System/Libraries
-
-%description -n libdcc-widgets%sover
-This package provides library for %name.
-
-%package devel
+%package -n lib%repo-devel
 Summary: %summary
-Group: Development/Other
+Group: Development/C++
+Provides: %name-devel
+Obsoletes: %name-devel
 
-%description devel
-%summary.
+%description -n lib%repo-devel
+This package provides development files for %name.
 
 %prep
 %setup -n %repo-%version
 %autopatch -p1
+# We do not use dpkg and deepinid.
+sed -e '/add_subdirectory(src\/plugin-privacy)/d;' \
+    -e '/add_subdirectory(src\/plugin-deepinid)/d;' \
+    -i CMakeLists.txt
+# fix bad_elf_symbols
+sed -e '/add_subdirectory(src\/plugin-bluetooth)/d;' \
+    -i CMakeLists.txt
+sed -e '/QDebug &operator<<(QDebug dbg, const MetaData &md)/d;' \
+    -i src/plugin-datetime/operation/keyboard/metadata.h
+sed -e '/Q_INVOKABLE QString getListName(int index) const;/d;' \
+    -i src/plugin-sound/operation/soundmodel.h
 
 %build
-export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export CPLUS_INCLUDE_PATH=%_dqt5_headerdir/QtXkbCommonSupport/%{_dqt5_version}:%_includedir/qt5:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtXkbCommonSupport/%{_dqt6_version}:%_includedir/qt6:$CPLUS_INCLUDE_PATH
 export SYSTYPE=Desktop
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-    -DCVERSION=%version \
-    -DDISABLE_AUTHENTICATION=ON \
-    -DDISABLE_UPDATE=ON \
-    -DDISABLE_SOUND_ADVANCED=ON \
-%nil
-cmake --build "%_cmake__builddir" -j%__nprocs
+%DQ6build \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DDISABLE_AUTHENTICATION=ON \
+  -DDISABLE_UPDATE=ON \
+  -DDISABLE_SOUND_ADVANCED=ON \
+#
 
 %install
-%cmake_install
+%DQ6install
+
+# cleanup broken rpaths in elfs
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/dock/dock.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/display/display.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/notification/notification.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/update/update.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+#patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/blueTooth/blueTooth.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/wacom/wacom.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/datetime/datetime.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/touchscreen/touchscreen.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/commonInfo/commonInfo.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/systemInfo/systemInfo.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/keyboard/keyboard.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/personalization/personalization.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/mouse/mouse.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/power/power.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/defaultapp/defaultapp.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/sound/sound.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/authentication/authentication.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-center-plugin.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+
+# package translations
 %find_lang --with-qt %repo
 
 %files -f %repo.lang
@@ -97,8 +115,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/metainfo/org.deepin.dde.controlcenter.metainfo.xml
 %_datadir/dbus-1/services/org.deepin.dde.ControlCenter1.service
 %dir %_libdir/%repo/
-%dir %_libdir/%repo/modules/
-%_libdir/%repo/modules/libdcc*.so
+%_libdir/%repo/*.qml
+%_libdir/%repo/plugins_v1.0/
+%dir %_libdir/%repo/org/
+%dir %_libdir/%repo/org/deepin/
+%_libdir/%repo/org/deepin/dcc/
+%_libdir/%repo/sidebar.dci
 %dir %_libdir/dde-grand-search-daemon/
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
@@ -108,29 +130,33 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 %_datadir/dsg/configs/org.deepin.region-format.json
-%_datadir/doc/dqt5/dde-control-center.qch
 %dir %_datadir/%repo/
-%_datadir/%repo/developdocument.html
 %_userunitdir/org.deepin.dde.control-center.service
 # package outside find_lang
 %dir %_datadir/%repo/translations/
-%_datadir/%repo/translations/*es_419.qm
-%_datadir/%repo/translations/*ky@Arab.qm
+%dir %_datadir/%repo/translations/v1.0/
+%_datadir/%repo/translations/v1.0/datetime_country_es_419.qm
+%_datadir/%repo/translations/v1.0/datetime_country_ky@Arab.qm
+%_datadir/%repo/translations/v1.0/datetime_language_es_419.qm
+%_datadir/%repo/translations/v1.0/datetime_language_ky@Arab.qm
+%_datadir/%repo/translations/v1.0/keyboard_language_es_419.qm
+%_datadir/%repo/translations/v1.0/keyboard_language_ky@Arab.qm
 
-%files -n libdcc-interface%sover
-%_libdir/libdcc-interface.so.%{sover}*
+%files -n lib%repo%sover
+%_libdir/lib%repo.so.%{sover}*
 
-%files -n libdcc-widgets%sover
-%_libdir/libdcc-widgets.so.%{sover}*
-
-%files devel
+%files -n lib%repo-devel
+%_libdir/lib%repo.so
 %dir %_libdir/cmake/DdeControlCenter/
 %_libdir/cmake/DdeControlCenter/DdeControlCenter*.cmake
 %_includedir/%repo/
-%_libdir/libdcc-interface.so
-%_libdir/libdcc-widgets.so
 
 %changelog
+* Tue Apr 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.19-alt1
+- New version 6.1.19.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Mon Sep 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.54-alt1
 - New version 6.0.54.
 - Built via separate qt5 instead system (ALT #48138).

@@ -1,71 +1,80 @@
 %define repo dde-fcitx5configtool-plugin
+%define _libexecdir %_prefix/libexec
 
-%def_enable clang
+%def_disable clang
 
 Name: deepin-fcitx5configtool-plugin
-Version: 5.0.23
+Version: 6.0.7
 Release: alt1
 
 Summary: The input method management plug-in of DDE control center
 
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/dde-fcitx5configtool-plugin
+Url: https://github.com/linuxdeepin/deepin-fcitx5configtool-plugin
+Vcs: https://github.com/linuxdeepin/deepin-fcitx5configtool-plugin.git
 
 Provides: %repo = %EVR
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: %name-%version-%release.patch
 
-BuildRequires: cmake extra-cmake-modules dqt5-base-devel dqt5-tools-devel dqt5-x11extras-devel dqt5-svg-devel fcitx5-devel fcitx5-qt-devel xkeyboard-config-devel iso-codes-devel appstream libxkbcommon-devel libdtkwidget-devel deepin-control-center-devel deepin-qt-dbus-factory-devel kf5-kitemviews-devel kf5-kitemviews-devel kf5-kwidgetsaddons-devel
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
+# deepin-control-center
+ExcludeArch: i586
+
+BuildRequires(pre): rpm-macros-dqt6
 %if_enabled clang
 BuildRequires(pre): clang-devel lld-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
+# Automatically added by buildreq on Mon Apr 07 2025
+# optimized out: at-spi2-atk cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools fcitx5-libs fcitx5-qt-libfcitx5qt5widgets fcitx5-qt-libfcitx5qt6widgets fcitx5-qt-libfcitx5qtdbus fcitx5-qt6 gcc-c++ git-core glibc-kernheaders-generic glibc-kernheaders-x86 icon-naming-utils libEGL-mesa libGLX-mesa libX11-devel libat-spi2-core libcairo-gobject libcap-ng libclang-cpp19 libcrypt-devel libctf-nobfd0 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-qml libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgdk-pixbuf libglvnd-devel libgpg-error libjson-glib libp11-kit libqt5-core libqt5-dbus libqt5-eglfsdeviceintegration libqt5-gui libqt5-network libqt5-widgets libqt5-xcbqpa libqt6-core libqt6-dbus libqt6-eglfsdeviceintegration libqt6-eglfskmssupport libqt6-gui libqt6-network libqt6-opengl libqt6-qml libqt6-qmlmeta libqt6-qmlmodels libqt6-qmlworkerscript libqt6-quick libqt6-waylandclient libqt6-widgets libsasl2-3 libspirv-tools0 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-icccm libxcbutil-icccm-devel libxcbutil-image libxcbutil-keysyms libxkbcommon-devel libxkbcommon-x11 llvm19.1-libs ninja-build pam0_userpass perl pkg-config python3 python3-base sh5 vulkan-headers xorg-proto-devel
+BuildRequires: appstream deepin-qt-dbus-factory-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel extra-cmake-modules fcitx5-devel fcitx5-qt-devel iso-codes kf6-kitemviews-devel kf6-kwidgetsaddons-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libdqt6-eglfskmsgbmsupport libdqt6-labsqmlmodels libdqt6-xcbqpa libvulkan-devel libxkbfile-devel
+BuildRequires: iso-codes-devel xkeyboard-config-devel
 
 %description
 %summary.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 
 %build
+export CPLUS_INCLUDE_PATH=%_includedir/KF6/KWidgetsAddons:%_includedir/Fcitx5Qt5/Fcitx5QtWidgetsAddons:$CPLUS_INCLUDE_PATH
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
-%find_lang --with-qt --output=%name.lang dde-control-center fcitx5-configtool
+%DQ6install
+mkdir -p %buildroot%_libdir/dde-control-center
+mv -f %buildroot%_prefix%_libdir/dde-control-center/* %buildroot%_libdir/dde-control-center
+%find_lang --with-qt --output=%name.lang dde-control-center
 
 %files -f %name.lang
 %doc README*.md
-%_bindir/kbd-layout-viewer5
-%_desktopdir/kbd-layout-viewer5.desktop
+%_bindir/kbd-layout-viewer6
+%_libexecdir/dcc-fcitx5configtool-exec
+%_desktopdir/kbd-layout-viewer6.desktop
 %dir %_libdir/dde-control-center/
-%dir %_libdir/dde-control-center/modules/
-%_libdir/dde-control-center/modules/libdcc-fcitx5configtool-plugin.so
+%dir %_libdir/dde-control-center/plugins_v1.0/
+%_libdir/dde-control-center/plugins_v1.0/fcitx5configtool/
 # translations
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
-%_datadir/dde-control-center/translations/deepin-fcitx5configtool-plugin.qm
-%_datadir/dde-control-center/translations/deepin-fcitx5configtool-plugin_ky@Arab.qm
+%dir %_datadir/dde-control-center/translations/v1.0/
 
 %changelog
+* Mon Apr 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
+- New version 6.0.7.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Wed Sep 11 2024 Leontiy Volodin <lvol@altlinux.org> 5.0.23-alt1
 - New version 5.0.23.
 - Built via separate qt5 instead system (ALT #48138).

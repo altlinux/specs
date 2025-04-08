@@ -1,39 +1,42 @@
 %def_without clang
 
-%define repo dde-network-core
+%define repo dde-network-core6
 %define sover 2
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.26
+Version: 2.0.52
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-network-core
+Vcs: git://github.com/linuxdeepin/dde-network-core.git
 
-Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: %name-%version-%release.patch
+Source: %url/archive/%version/dde-network-core-%version.tar.gz
 Patch1: deepin-network-core-2.0.20-alt-GNUInstallDirs.patch
 
-BuildPreReq: rpm-build-ninja rpm-build-kf5 rpm-macros-dqt5
+# deepin-control-center
+ExcludeArch: i586
+
+BuildPreReq: rpm-build-ninja rpm-build-kf6 rpm-macros-dqt6 patchelf
 %if_with clang
 BuildPreReq: clang-devel
 %else
 BuildPreReq: gcc-c++
 %endif
-# Automatically added by buildreq on Wed Oct 25 2023
-# optimized out: cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdcc-interface6 libdcc-widgets6 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libgio-devel libglvnd-devel libgpg-error libgsettings-qt libnm-devel libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base dqt5-base-devel dqt5-tools sh5
-BuildRequires: cmake deepin-control-center-devel deepin-dock-devel deepin-session-shell-devel gsettings-qt-devel kf5-networkmanager-qt-devel libdtkwidget-devel libgtest-devel dqt5-svg-devel dqt5-tools-devel
+# Automatically added by buildreq on Fri Apr 04 2025
+# optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
+BuildRequires: deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel
 
 %description
 Deepin desktop-environment - network core files.
 
-%package -n lib%repo%sover
+%package -n lib%{repo}_%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n lib%repo%sover
+%description -n lib%{repo}_%sover
 This package provides library for %name.
 
 %package -n lib%repo-devel
@@ -46,7 +49,7 @@ Obsoletes: %name-devel < %version-%release
 This package provides development files for %name.
 
 %prep
-%setup -n %repo-%version
+%setup -n dde-network-core-%version
 %autopatch -p1
 
 %build
@@ -57,64 +60,82 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
 export CPLUS_INCLUDE_PATH=%_includedir/glib-2.0:%_libdir/glib-2.0/include:%_includedir/libnm:$CPLUS_INCLUDE_PATH
-# %%K5cmake fails build on ppc64le
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-  -DCMAKE_EXE_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
-  -DCMAKE_MODULE_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
-  -DCMAKE_SHARED_LINKER_FLAGS:STRING='-L%_K5lib -L%_K5link' \
-  -DCMAKE_LIBRARY_PATH='%_K5link;%_K5lib;/%_lib' \
+%DQ6build \
+  -DLIB_DESTINATION=%_lib \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DCMAKE_EXE_LINKER_FLAGS:STRING='-L%_K6lib -L%_K6link' \
+  -DCMAKE_MODULE_LINKER_FLAGS:STRING='-L%_K6lib -L%_K6link' \
+  -DCMAKE_SHARED_LINKER_FLAGS:STRING='-L%_K6lib -L%_K6link' \
+  -DCMAKE_LIBRARY_PATH='%_K6link;%_K6lib;/%_lib' \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
-%find_lang --with-qt --output=%name.lang dde-control-center dock-network-plugin dss-network-plugin
+%DQ6install
+mkdir -p %buildroot%_libdir/dde-control-center/plugins_v1.0/network/
+mv -f %buildroot%_prefix/%_libdir/dde-control-center/plugins_v1.0/network/* \
+      %buildroot%_libdir/dde-control-center/plugins_v1.0/network/
+# cleanup broken rpaths in elfs
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
+patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so --add-needed libQt6Qml.so.6
+# package translations
+%find_lang --with-qt --output=%name.lang dde-control-center dss-network-plugin dde-network-core deepin-service-manager
 
 %files -f %name.lang
 %dir %_libdir/dde-control-center/
-%dir %_libdir/dde-control-center/modules/
-%_libdir/dde-control-center/modules/libdcc-network-plugin.so
-%dir %_libdir/dde-dock/
-%dir %_libdir/dde-dock/plugins/
-%dir %_libdir/dde-dock/plugins/quick-trays/
-%_libdir/dde-dock/plugins/quick-trays/libdock-network-plugin.so
+%dir %_libdir/dde-control-center/plugins_v1.0/
+%_libdir/dde-control-center/plugins_v1.0/network/
 %dir %_libdir/dde-session-shell/
 %dir %_libdir/dde-session-shell/modules/
 %_libdir/dde-session-shell/modules/libdss-network-plugin.so
+%dir %_libdir/deepin-service-manager/
+%_libdir/deepin-service-manager/libnetwork-service.so
+%dir %_datadir/deepin-service-manager/
+%dir %_datadir/deepin-service-manager/system/
+%dir %_datadir/deepin-service-manager/user/
+%_datadir/deepin-service-manager/system/plugin-system-network.json
+%_datadir/deepin-service-manager/user/plugin-session-network.json
+%_datadir/dbus-1/system.d/org.deepin.service.SessionNetwork.conf
+%_datadir/dbus-1/system.d/org.deepin.service.SystemNetwork.conf
+%_datadir/polkit-1/rules.d/50-dss-network-plugin.rules
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.network/
 %_datadir/dsg/configs/org.deepin.dde.network/org.deepin.dde.network.json
-/var/lib/polkit-1/localauthority/10-vendor.d/10-network-manager.pkla
 # package translations outside %%find_lang
 %dir %_datadir/dde-control-center/
 %dir %_datadir/dde-control-center/translations/
-%_datadir/dde-control-center/translations/dcc-network-plugin.qm
-%dir %_datadir/dock-network-plugin/
-%dir %_datadir/dock-network-plugin/translations/
-%_datadir/dock-network-plugin/translations/dock-network-plugin.qm
+%dir %_datadir/dde-control-center/translations/v1.0/
+%dir %_datadir/dde-network-core/
+%dir %_datadir/dde-network-core/translations/
+%_datadir/dde-network-core/translations/dde-network-core.qm
+%_datadir/dde-network-core/translations/dde-network-core_es_419.qm
+%_datadir/dde-network-core/translations/dde-network-core_ky@Arab.qm
 %dir %_datadir/dss-network-plugin/
 %dir %_datadir/dss-network-plugin/translations/
 %_datadir/dss-network-plugin/translations/dss-network-plugin.qm
+%dir %_datadir/deepin-service-manager/
+%dir %_datadir/deepin-service-manager/network-service/
+%dir %_datadir/deepin-service-manager/network-service/translations/
+%_datadir/deepin-service-manager/network-service/translations/network-service-plugin.qm
+%_datadir/deepin-service-manager/network-service/translations/network-service-plugin_ky@Arab.qm
 
-%files -n lib%repo%sover
-%_libdir/libdde-network-core.so.%{sover}*
+%files -n lib%{repo}_%sover
+%_libdir/lib%repo.so.%{sover}*
 
 %files -n lib%repo-devel
 %dir %_includedir/libddenetworkcore/
 %_includedir/libddenetworkcore/*.h
 %_pkgconfigdir/dde-network-core.pc
-%_libdir/libdde-network-core.so
+%_libdir/lib%repo.so
 
 %changelog
+* Fri Apr 04 2025 Leontiy Volodin <lvol@altlinux.org> 2.0.52-alt1
+- New version 2.0.52.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Mon May 27 2024 Leontiy Volodin <lvol@altlinux.org> 2.0.26-alt1
 - New version 2.0.26.
 - Built via separate qt5 instead system (ALT #48138).

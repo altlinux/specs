@@ -6,21 +6,21 @@ BuildRequires: libX11-devel libxcb-devel pkgconfig(xkbcommon)
 %define _libexecdir %_prefix/libexec
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 3
+%define autorelease 4
 
 %global __provides_exclude_from ^%{_libdir}/(fcitx5|qt5)/.*\\.so$
 
 %global build_qt6 1
 
 Name:           fcitx5-qt
-Version:        5.1.1
+Version:        5.1.9
 Release:        alt1_%autorelease
 Summary:        Qt library and IM module for fcitx5
 # Fcitx5Qt{4,5}DBusAddons Library and Input context plugin are released under BSD.
 License:        LGPLv2+ and BSD
 URL:            https://github.com/fcitx/fcitx5-qt
-Source:         https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.xz
-Source1:        https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.xz.sig
+Source:         https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.zst
+Source1:        https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.zst.sig
 Source2:        https://pgp.key-server.io/download/0x8E8B898CBF2412F9
 
 BuildRequires:  gnupg2
@@ -38,6 +38,7 @@ BuildRequires:  qt5-base-devel
 %if %{build_qt6}
 BuildRequires:  pkgconfig(Qt6)
 BuildRequires:  qt6-base-devel
+BuildRequires:  qt6-wayland-devel
 %endif
 # This needs to be rebuilt on every minor Qt5 version bump
 
@@ -75,6 +76,13 @@ Summary:        Provide libFcitx5Qt5WidgetsAddons for fcitx5
 This package provides libFcitx5Qt5WidgetsAddons for fcitx5.
 
 %if %{build_qt6}
+%package -n fcitx5-qt6-libfcitx5qt6widgets
+Group: Graphical desktop/Other
+Summary:        Provide libFcitx5Qt6WidgetsAddons for fcitx5
+
+%description -n fcitx5-qt6-libfcitx5qt6widgets
+This package provides libFcitx5Qt6WidgetsAddons for fcitx5.
+
 %package -n fcitx5-qt6
 Group: Graphical desktop/Other
 Summary:        Qt 6 support for fcitx5
@@ -122,6 +130,9 @@ Development files for %{name}
 
 %if %{build_qt6}
 %files -n fcitx5-qt6
+%{_libexecdir}/fcitx5-qt6-gui-wrapper
+%{_libdir}/fcitx5/qt6/
+%{_datadir}/applications/org.fcitx.fcitx5-qt6-gui-wrapper.desktop
 %{_qt6_plugindir}/platforminputcontexts/libfcitx5platforminputcontextplugin.so
 %{_bindir}/fcitx5-qt6-immodule-probing
 %{_libdir}/libFcitx5Qt6DBusAddons.so.1
@@ -135,6 +146,7 @@ Development files for %{name}
 %{_libdir}/libFcitx5Qt5WidgetsAddons.so
 %if %{build_qt6}
 %{_libdir}/libFcitx5Qt6DBusAddons.so
+%{_libdir}/libFcitx5Qt6WidgetsAddons.so
 %{_libdir}/cmake/Fcitx5Qt6*
 %{_includedir}/Fcitx5Qt6/
 %endif
@@ -154,7 +166,17 @@ Development files for %{name}
 %{_libdir}/libFcitx5Qt5DBusAddons.so.1
 %{_libdir}/libFcitx5Qt5DBusAddons.so.*.*
 
+%if %{build_qt6}
+%files -n fcitx5-qt6-libfcitx5qt6widgets
+%doc --no-dereference LICENSES/LGPL-2.1-or-later.txt
+%{_libdir}/libFcitx5Qt6WidgetsAddons.so.2
+%{_libdir}/libFcitx5Qt6WidgetsAddons.so.*.*
+%endif
+
 %changelog
+* Mon Apr 07 2025 Leontiy Volodin <lvol@altlinux.org> 5.1.9-alt1_4
+- update (ALT #52979)
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_3
 - update
 
