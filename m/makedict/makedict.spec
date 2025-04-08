@@ -1,6 +1,6 @@
 Name: makedict
 Version: 0.4.1_beta1
-Release: alt5.git.ga70119
+Release: alt6.git.ga70119
 
 Summary: XDXF based converter from any dictionary format to any
 
@@ -13,10 +13,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-git: https://github.com/soshial/xdxf_makedict.git
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri May 31 2013
-# optimized out: cmake-modules libstdc++-devel pkg-config
-BuildRequires: cmake ctest discount gcc-c++ glib2-devel libexpat-devel zlib-devel
+BuildRequires: cmake ctest gcc-c++
+BuildRequires: glib2-devel libexpat-devel zlib-devel
+# markdown command
+BuildRequires: discount
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-tools
 
@@ -30,8 +32,8 @@ find -type f -name '*.py' -exec python3-2to3 -w -n '{}' +
 %__subst "s|/usr/bin/env python\$|/usr/bin/env python3|" src/*.py
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX:=%prefix \
-	-DBUILD_TESTS:=true \
+%cmake_insource \
+	-DBUILD_TESTS:=true
 
 %make_build
 markdown -o  format_standard/xdxf_description.html \
@@ -50,6 +52,9 @@ make test
 %_man1dir/*
 
 %changelog
+* Tue Apr 08 2025 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt6.git.ga70119
+- use %cmake macro
+
 * Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4.1_beta1-alt5.git.ga70119
 - switch to python3
 
