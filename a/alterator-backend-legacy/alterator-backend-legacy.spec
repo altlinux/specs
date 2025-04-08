@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-legacy
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Alterator manager backends generator for old alterator modules
@@ -19,7 +19,7 @@ BuildRequires: cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 
-Requires: alterator-manager >= 0.1.25
+Requires: alterator-manager >= 0.1.28
 Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-interface-legacy alterator-application-legacy
 Requires: alterator-standalone
@@ -94,7 +94,6 @@ install -v -b -m 644 -D legacy_runner.backend %buildroot%_alterator_datadir/back
 
 %post
 %_libexecdir/%name/alterator-generate-legacy-backends
-if [ -d /run/systemd/system ]; then systemctl try-restart alterator-manager.service; fi
 
 %postun
 if [ $1 = 0 ]; then
@@ -102,6 +101,11 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Fri Mar 28 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.6-alt1
+- chore: removed filetrigger and updated required manager version
+- fix: load translation correctly (thx Andrey Alekseev)
+- fix: do not ask if pid is not alterator-browser (thx Andrey Alekseev)
+
 * Mon Mar 10 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt1
 - Replace yad dialog to Qt dialog.
 
