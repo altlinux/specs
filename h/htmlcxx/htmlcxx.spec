@@ -7,21 +7,21 @@ BuildRequires: gcc-c++
 %define name htmlcxx
 %define		css_major 0
 %define		css_minor 0
-%define		major 3
-%define		minor 1
+%define		major     3
+%define		minor     1
 
 %define		libname lib%{name}%{major}
-%define		devel lib%{name}-devel
-%define		cssdev libcssparser%{css_major}
-%define		csslib libcssparser-devel
+%define		devel   lib%{name}-devel
+%define		csslib  libcssparser%{css_major}
+%define		cssdev  libcssparser-devel
 
 Name:		htmlcxx
 Version:	0.87
-Release:	alt3_4
+Release:	alt3_5
 Summary:	htmlcxx is a simple non-validating css1 and html parser for C++
-Group:		Development/Other 
+Group:		Development/Other
 License:	LGPLv2
-URL:		http://htmlcxx.sourceforge.net/
+URL:		https://htmlcxx.sourceforge.net/
 Source0:	https://sourceforge.net/projects/htmlcxx/files/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		htmlcxx-0.86-linking.patch
 Patch1:		htmlcxx-0.87-c++17.patch
@@ -43,35 +43,36 @@ using the excellent tree.hh library from Kasper Peeters.
 
 %package -n	%{devel}
 Summary:	Development files
-Group:		System/Libraries
+Group:		Development/Other
 Requires:	%{libname} = %{version}-%{release}
 Conflicts:	%{libname} < 0.8.6-4
 
 %description -n	%{devel}
-Development files
+Development files.
 
 %package -n	%{libname}
 Summary:	These are the main libraries
-Group:		Development/Other 
+Group:		System/Libraries
 Conflicts:	%{devel} < 0.8.6-4
 
 %description -n	%{libname}
-The main libraries
+The main libraries.
 
 %package -n	%{cssdev}
 Summary:	These are the css_parser development files
-Group:		Development/Other 
+Group:		Development/Other
 Conflicts:	%{devel} < 0.8.6-4
 
 %description -n	%{cssdev}
-Development files for libcss_*
+Development files for libcss_*.
 
 %package -n	%{csslib}
 Summary:	These are the css_parser libraries
 Group:		System/Libraries
+Conflicts:	libcssparser-devel < 0.87-5
 
 %description -n	%{csslib}
-Libraries containing the libcss_* files
+Libraries containing the libcss_* files.
 
 %prep
 %setup -q
@@ -94,14 +95,17 @@ find %{buildroot} -name *.*a -delete
 %{_bindir}/%{name}
 
 %files -n	%{libname}
-%{_libdir}/libhtmlcxx.so.%{major}*
+%{_libdir}/libhtmlcxx.so.%{major}
+%{_libdir}/libhtmlcxx.so.%{major}.*
 
 %files -n	%{devel}
+%dir %{_includedir}/%{name}
 %{_includedir}/%{name}/html/
 %{_libdir}/libhtmlcxx.so
 %{_libdir}/pkgconfig/%{name}.pc
 
 %files -n	%{cssdev}
+%dir %{_includedir}/%{name}
 %{_includedir}/%{name}/css/
 %{_datadir}/%{name}/
 %{_libdir}/libcss_parser.so
@@ -115,6 +119,9 @@ find %{buildroot} -name *.*a -delete
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.87-alt3_5
+- update by mgaimport
+
 * Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.87-alt3_4
 - update by mgaimport
 
