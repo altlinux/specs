@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt90
+Release: alt91
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -294,6 +294,7 @@ mkdir -p %buildroot%_libdir/%name/tests
 %makeinstall includedir=%buildroot%_includedir/apt-pkg
 
 install -pm644 apt.conf %buildroot%_sysconfdir/%name/
+install -pm644 apt.conf.d/* -t %buildroot%_sysconfdir/%name/apt.conf.d/
 
 # This is still needed.
 ln -sf rsh %buildroot%_libdir/%name/methods/ssh
@@ -571,6 +572,9 @@ exec 1>&2
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %dir %_sysconfdir/%name/*.d
+%config(noreplace) %_sysconfdir/%name/%name.conf.d/01-Debug-pkgMarkInstall.conf
+%config(noreplace) %_sysconfdir/%name/%name.conf.d/01-Debug-Acquire.conf
+%config(noreplace) %_sysconfdir/%name/%name.conf.d/01-UI.conf
 %_mandir/man?/*
 %doc README* TODO COPYING AUTHORS* ChangeLog-rpm.old.bz2 doc/examples contrib
 
@@ -609,6 +613,15 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Tue Apr  8 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt91
+- Fixes for ShowEssential output (showing the essential to-be-removed packages):
+  + Applied a trick to fix a bad case of columnar output (thx iv@). (ALT#51546)
+  + Restored a missing space in its translated output (be, ja, ru).
+- New sample configs in apt.conf.d:
+  + 01-Debug-pkgMarkInstall.conf: the common options for bug reports (ALT#49565)
+  + 01-Debug-Acquire.conf: for debugging fetching and connections
+  + 01-UI.conf: to turn off the columnar output from 0.5.15lorg2-alt88 in the UI
+
 * Fri Apr  4 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt90
 - http:
   + Fixed corrupt files. (The end of valid data from read(2) was overrun
