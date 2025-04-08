@@ -8,7 +8,7 @@
 # not ready for lua-5.3
 %def_disable lua
 %def_enable introspection
-%def_disable vala
+%def_enable vala
 %def_enable gtk_doc
 %def_disable check
 # no demo
@@ -16,7 +16,7 @@
 
 Name: %_name%api_ver
 Version: %ver_major.7
-Release: alt1
+Release: alt1.1
 
 Summary: A gobject-based plugins engine
 Group: System/Libraries
@@ -29,7 +29,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson gnome-common
 BuildRequires: libgio-devel >= 2.74.0
 # for python3 support
@@ -165,6 +165,9 @@ This package contains %name demonstration programs.
 %_libdir/%{_name}*-%api_ver.so
 %_includedir/%_name-%api_ver/
 %_pkgconfigdir/%_name-%api_ver.pc
+%{?_enable_vala:
+%_vapidir/%_name-%api_ver.deps
+%_vapidir/%_name-%api_ver.vapi}
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -188,6 +191,9 @@ This package contains %name demonstration programs.
 
 
 %changelog
+* Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1.1
+- devel: enabled vapi data (ALT #53777)
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
 - 2.0.7
 
