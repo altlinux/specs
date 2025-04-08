@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Apr 08 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt3
+- bug fixes (closes #53680, #53679)
+- update to ALT Server 10.4rc4
+- PBS: added webhook, removable datastores
+
 *  Sun Mar 30 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
 - update audit, gnome-desktop
 - add software center
