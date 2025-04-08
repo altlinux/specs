@@ -1,10 +1,10 @@
 Name: qiv
-Version: 2.3.3
+Version: 3.0.1
 Release: alt1
 Epoch: 1
 
 Summary: Quick Image Viewer
-License: GPL2
+License: GPLv2+
 Group: Graphics
 
 Url: http://spiegl.de/qiv
@@ -13,10 +13,9 @@ Source1: %name.watch
 
 # Automatically added by buildreq on Sun Apr 13 2014
 # optimized out: fontconfig glib2-devel imlib2 libX11-devel libXext-devel libcairo-devel libcloog-isl4 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config xorg-xextproto-devel xorg-xproto-devel
-BuildRequires: imlib2-devel libexif-devel libgtk+2-devel libjpeg-devel liblcms2-devel libmagic-devel libtiff-devel
+BuildRequires: imlib2-devel libexif-devel libgtk+3-devel libjpeg-devel liblcms2-devel libmagic-devel libtiff-devel
 
 Summary(ru_RU.UTF-8): Быстрая программа просмотра изображений
-Summary(uk_UA.UTF-8): Швидкий проглядач зображень
 
 %description
 %name is a small and fast image viewer for X based on gdk and imlib2.
@@ -24,10 +23,6 @@ Summary(uk_UA.UTF-8): Швидкий проглядач зображень
 %description -l ru_RU.UTF-8
 %name - это небольшая и быстрая программа просмотра изображений для X,
 основанная на gdk и imlib2.
-
-%description -l uk_UA.UTF-8
-%name - це малий та швидкий проглядач зображень для X, оснований на gdk
-та imlib2.
 
 %prep
 %setup
@@ -48,6 +43,11 @@ xz Changelog
 %_man1dir/*
 
 %changelog
+* Tue Apr 08 2025 Michael Shigorin <mike@altlinux.org> 1:3.0.1-alt1
+- new version (watch file uupdate)
+- updated License:
+- dropped obsolete spec translation
+
 * Sun Jan 29 2023 Michael Shigorin <mike@altlinux.org> 1:2.3.3-alt1
 - new version (watch file uupdate)
 
