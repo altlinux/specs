@@ -2,17 +2,20 @@
 
 %define ver_major 0.7
 %define api_ver %ver_major
+%define namespace Gepub
 %def_enable introspection
 %def_disable gtk_doc
 
 Name: libgepub
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Simple library to read epub files using glib
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://git.gnome.org/browse/libgepub
+
+Vcs: https://gitlab.gnome.org/GNOME/libgepub.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
@@ -34,7 +37,7 @@ documents.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -43,7 +46,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %name library
@@ -52,8 +55,8 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %name library
@@ -91,10 +94,10 @@ This package contains development documentation for %name
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Gepub-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Gepub-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled gtk_doc
@@ -103,6 +106,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
 * Tue Jun 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
