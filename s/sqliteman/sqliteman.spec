@@ -1,9 +1,9 @@
 Name: sqliteman
 Version: 1.2.2
-Release: alt1.qa9.1
+Release: alt2
 
 Url: http://sqliteman.com/
-License: GPL
+License: GPLv2-or-later
 Group: Databases
 
 Summary: Lightweigth but powerfull Sqlite3 manager
@@ -13,10 +13,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
 Patch1: sqliteman-1.2.2-gentoo-qt5.patch
+Patch2: sqliteman-1.2.2-cmake.patch
 
-# manually removed: libqt3-devel
+BuildRequires(pre): rpm-macros-cmake
+
 # Automatically added by buildreq on Wed Dec 10 2008
-BuildRequires: ccmake gcc-c++ libqscintilla2-qt5-devel qt5-base-devel xorg-sdk
+BuildRequires: cmake gcc-c++
+BuildRequires: libqscintilla2-qt5-devel qt5-base-devel xorg-sdk
 
 Requires: sqlite3
 Requires: libqt5-sql qt5-sql-sqlite
@@ -30,6 +33,7 @@ contains the most complette feature set of all tools available.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 # remove bundled qscintilla2
 rm -rf sqliteman/qscintilla2
@@ -52,8 +56,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_bindir/sqliteman
 %_desktopdir/sqliteman.desktop
 %_datadir/sqliteman/
+%_pixmapsdir/sqliteman.png
 
 %changelog
+* Tue Apr 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
+- fix build with cmake 4.0.0
+
 * Wed Oct 11 2023 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1.qa9.1
 - NMU: fix requires
 
