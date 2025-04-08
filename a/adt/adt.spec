@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.9
-Release: alt2
+Version: 0.1.10
+Release: alt1
 
 Summary: ALT Diagnostic tool
 License: GPLv2+
@@ -63,6 +63,9 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Tue Apr 08 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.10-alt1
+- fix tests filter
+
 * Wed Feb 26 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.9-alt2
 - fix test's log widget content
 - fix tests status in testswidget
