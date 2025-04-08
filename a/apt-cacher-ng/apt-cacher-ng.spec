@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
 Version: 0.8.5
-Release: alt4.1
+Release: alt5
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -15,9 +15,11 @@ Patch0: acng-conf.patch
 Patch1: acng-0.8.5-alt-vfilepattern.patch
 Patch2: acng-0.8.5-alt-perl_tobase64.patch
 
-# Automatically added by buildreq on Wed May 30 2012
-# optimized out: cmake cmake-modules libstdc++-devel pkg-config
-BuildRequires: boost-devel boost-devel-headers bzlib-devel ccmake gcc-c++ libfuse-devel liblzma-devel zlib-devel openssl-devel
+BuildRequires: boost-devel boost-devel-headers
+BuildRequires: bzlib-devel libfuse-devel liblzma-devel zlib-devel openssl-devel
+BuildRequires: cmake gcc-c++
+
+BuildRequires(pre): rpm-macros-cmake
 
 # workaround for sysvinit: see ALT bugs 11359 and 32101:
 Requires: su
@@ -36,16 +38,17 @@ resource usage.
 echo "-llzma" >> link.flags
 
 %build
-%make_build all
+%cmake
+%cmake_build
 
 %install
 mkdir -p %buildroot%_sbindir
-install -p -m 755 build/apt-cacher-ng %buildroot%_sbindir/
-install -p -m 755 build/in.acng %buildroot%_sbindir/
+install -p -m 755 %_cmake__builddir/apt-cacher-ng %buildroot%_sbindir/
+install -p -m 755 %_cmake__builddir/in.acng %buildroot%_sbindir/
 
 mkdir -p %buildroot%_libexecdir/%name
 install -p -m 755 scripts/{expire-caller.pl,distkill.pl,urlencode-fixer.pl} %buildroot%_libexecdir/%name/
-install -p -m 755 build/acngtool %buildroot%_libexecdir/%name/
+install -p -m 755 %_cmake__builddir/acngtool %buildroot%_libexecdir/%name/
 
 mkdir -p %buildroot%_sysconfdir/%name
 cp -a conf/* %buildroot%_sysconfdir/%name/
@@ -100,6 +103,9 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Tue Apr 08 2025 Vitaly Lipatov <lav@altlinux.ru> 0.8.5-alt5
+- use %cmake macros for build
+
 * Wed Aug 29 2018 Grigory Ustinov <grenka@altlinux.org> 0.8.5-alt4.1
 - NMU: Rebuild with new openssl 1.1.0.
 
