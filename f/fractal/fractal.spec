@@ -1,58 +1,45 @@
 Name: fractal
-Version: 7
+Version: 10.1
 Release: alt1
 Summary: Matrix messaging app for GNOME written in Rust
-License: GPL3
+License: GPLv3
 Group: Networking/Instant messaging
 Url: https://gitlab.gnome.org/GNOME/fractal/
-Source: https://gitlab.gnome.org/World/fractal/-/archive/7/fractal-7.tar
+Source: https://gitlab.gnome.org/World/fractal/-/archive/10.1/fractal-10.1.tar.gz
 Source1: vendor.tar
-Patch1: nix-loongarch64.patch
 ExcludeArch: i586 armh
 
 BuildRequires(pre): rpm-build-ninja rpm-build-rust
 # Automatically added by buildreq on Mon Oct 30 2023 (-bi)
 # optimized out: alt-os-release ca-trust clang17.0 clang17.0-devel clang17.0-support debugedit desktop-file-utils elfutils fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gst-plugins-bad1.0 gst-plugins1.0-devel gstreamer1.0-devel gtk4-update-icon-cache libX11-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libclang-cpp17 libctf-nobfd0 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgraphene-devel libgst-plugins1.0 libgtk4-devel libharfbuzz-devel libjson-glib libp11-kit libpango-devel libsasl2-3 libwayland-client libwayland-client-devel libwayland-egl llvm-common llvm17.0-libs ninja-build pipewire-libs pkg-config python3 python3-base python3-dev python3-module-setuptools rpm-build-file rpm-build-python3 rust sh5 shared-mime-info xml-utils xz
-BuildRequires: clang gst-plugins-bad1.0-devel libadwaita-devel libappstream-glib libgtk+3-devel libgtksourceview5-devel libshumate-devel libsqlite3-devel libssl-devel meson pipewire-libs-devel rust-cargo
+BuildRequires: clang gst-plugins-bad1.0-devel grass-sass libadwaita-devel libappstream-glib libgtk+3-devel libgtksourceview5-devel liblcms2-devel libseccomp-devel libshumate-devel libsqlite3-devel libssl-devel libwebp-devel meson pipewire-libs-devel rust-cargo
 
 BuildRequires: /proc
 BuildRequires: cmake xdg-desktop-portal-devel clang-devel
 
+Requires: glycin-loaders gst-plugin-gtk4
+
 %description
 Its interface is optimized for collaboration in large groups, such as free
-software projects.
+software projects, and will fit all screens, big or small.
 
-* Come to talk to us on Matrix: <https://matrix.to/#/#fractal:gnome.org>
-* Main repository: <https://gitlab.gnome.org/GNOME/fractal/>
+Highlights:
+
+* Find rooms to discuss your favorite topics, or talk privately to people,
+  securely thanks to end-to-end encryption
+* Send rich formatted messages, files, or your current location
+* Reply to specific messages, react with emoji, edit or remove messages
+* View images, and play audio and video directly in the conversation
+* See who has read messages, and who is typing
+* Log into multiple accounts at once (with Single-Sign On support)
 
 %prep
 %setup
 tar xf %SOURCE1
-#%%patch1 -p1
 
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/matrix-org/matrix-authentication-service?rev=099eabd1371d2840a2f025a6372d6428039eb511"]
-git = "https://github.com/matrix-org/matrix-authentication-service"
-rev = "099eabd1371d2840a2f025a6372d6428039eb511"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=88c4dec35f05ae295e0f2bf0362d6f5d72606d92"]
-git = "https://github.com/matrix-org/matrix-rust-sdk.git"
-rev = "88c4dec35f05ae295e0f2bf0362d6f5d72606d92"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/matrix-org/vodozemac?rev=0c75746fc8a5eda4a0e490d345d1798b4c6cbd67"]
-git = "https://github.com/matrix-org/vodozemac"
-rev = "0c75746fc8a5eda4a0e490d345d1798b4c6cbd67"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/ruma/ruma.git?rev=4c00bd010dbdca6005bd599b52e90a0b7015d056"]
-git = "https://github.com/ruma/ruma.git"
-rev = "4c00bd010dbdca6005bd599b52e90a0b7015d056"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -84,6 +71,9 @@ EOF
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Mar 15 2025 Ildar Mulyukov <ildar@altlinux.ru> 10.1-alt1
+- new version
+
 * Sat May 25 2024 Ildar Mulyukov <ildar@altlinux.ru> 7-alt1
 - new version
 
