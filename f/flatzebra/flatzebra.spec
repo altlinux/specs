@@ -5,21 +5,24 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name flatzebra
-%define major	2
-%define libname lib%{name}%{major}
+%define major     2
+%define api       0.2
+%define libname   lib%{name}%{api}_%{major}
 %define develname lib%{name}-devel
 
 Name:		flatzebra
-Version:	0.1.7
+Version:	0.2.0
 Release:	alt1_1
 Summary:	A Generic Game Engine library for 2D double-buffering animation
 Group:		System/Libraries
 License:	GPLv2
 URL:		http://perso.b2b2c.ca/~sarrazip/dev/burgerspace.html
-Source:		http://perso.b2b2c.ca/~sarrazip/dev/burgerspace.html/dev/%{name}-%{version}.tar.gz
-BuildRequires:	pkgconfig(sdl)
-BuildRequires:	pkgconfig(SDL_image)
-BuildRequires:	pkgconfig(SDL_mixer)
+Source:		http://perso.b2b2c.ca/~sarrazip/dev/%{name}-%{version}.tar.gz
+BuildRequires:	pkgconfig(sdl2)
+BuildRequires:	pkgconfig(SDL2_gfx)
+BuildRequires:	pkgconfig(SDL2_image)
+BuildRequires:	pkgconfig(SDL2_mixer)
+BuildRequires:	pkgconfig(SDL2_ttf)
 BuildRequires:	pkgconfig(zlib)
 Source44: import.info
 
@@ -28,19 +31,19 @@ Generic Game Engine library suitable for BurgerSpace, Afternoon Stalker
 and Cosmosmash.
 
 %package -n %{libname}
-Summary: Main library for %{name}
-Group: System/Libraries
+Summary:	A Generic Game Engine library for 2D double-buffering animation
+Group:		System/Libraries
 
 
 %description -n %{libname}
-This package contains the library needed to run programs dynamically
-linked with %{name}.
+Generic Game Engine library suitable for BurgerSpace, Afternoon Stalker
+and Cosmosmash.
 
 %package -n %{develname}
-Summary: Headers for developing programs that will use %{name}
-Group: Development/C
-Requires: %{libname} = %{version}-%{release}
-Provides: flatzebra-devel = %{version}-%{release}
+Summary:	Headers for developing programs that will use %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Provides:	flatzebra-devel = %{version}-%{release}
 
 
 %description -n %{develname}
@@ -51,31 +54,31 @@ applications which will use %{name}.
 %setup -q
 
 %build
-# fix build on aarch64
-autoreconf -vfi
-
 %configure
 %make_build
 
 %install
-
 %makeinstall_std
-rm -f %{buildroot}%{_libdir}/*.la
+
 rm -rf %{buildroot}%{_docdir}/%{name}-%{version}
+rm -rf %{buildroot}%{_datadir}/pixmaps
 
 %files -n %{libname}
-%doc AUTHORS COPYING README INSTALL NEWS
-%{_libdir}/lib*.so.%{major}*
+%doc AUTHORS README NEWS
+%doc --no-dereference COPYING
+%{_libdir}/lib%{name}-%{api}.so.%{major}
+%{_libdir}/lib%{name}-%{api}.so.%{major}.*
 
 %files -n %{develname}
-%{_includedir}/%name-0.1
+%{_includedir}/%{name}-%{api}/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 
 
-
-
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2.0-alt1_1
+- update by mgaimport
+
 * Thu Jan 20 2022 Igor Vlasenko <viy@altlinux.org> 0.1.7-alt1_1
 - update by mgaimport
 
