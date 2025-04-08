@@ -5,7 +5,7 @@
 %define devname libspiro-devel
 
 Name:           libspiro
-Version:        20221101
+Version:        20240903
 Release:        alt1_1
 Summary:        Library to simplify the drawing of beautiful curves
 
@@ -54,13 +54,12 @@ developing applications that use %{name}.
 %install
 %makeinstall_std
 
-find %{buildroot} -name '*.la' -delete
-
 %check
 make check
 
 %files -n %libname
-%doc COPYING README* ChangeLog AUTHORS
+%doc README* ChangeLog AUTHORS
+%doc --no-dereference COPYING
 %{_libdir}/*.so.%{major}
 %{_libdir}/*.so.%{major}.*
 
@@ -73,6 +72,9 @@ make check
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 20240903-alt1_1
+- update by mgaimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 20221101-alt1_1
 - update by mgaimport
 
