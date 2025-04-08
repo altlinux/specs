@@ -40,7 +40,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.11.0
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -54,6 +54,7 @@ Source3: expected_mods_ppc64le_aarch64.list
 
 Patch1: %name-4.5.5-alt-python-paths.patch
 Patch2: %name-4.5.5-alt-build.patch
+Patch3: libopencv-4.11.0-alt-cmake-compat.patch
 
 Patch2000: %name-e2k-simd.patch
 
@@ -255,6 +256,7 @@ This package contains %Name examples.
 %setup -b 1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -386,6 +388,9 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 1:4.11.0-alt2
+- NMU: compat with CMake 4.
+
 * Tue Feb 25 2025 Anton Farygin <rider@altlinux.ru> 1:4.11.0-alt1
 - 4.10.0 -> 4.11.0
 - enabled HDF5 module

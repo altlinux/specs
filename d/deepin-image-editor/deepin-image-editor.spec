@@ -8,7 +8,7 @@
 
 Name: deepin-image-editor
 Version: 6.5.0
-Release: alt1
+Release: alt2
 
 Summary: Image editor libraries for Deepin
 
@@ -21,6 +21,7 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Patch0: %name-%version-%release.patch
 Patch1: deepin-image-editor-6.5.0-alt-fix-broken-pkgconfig.patch
 Patch2: deepin-image-editor-6.5.0-alt-fix-dqt6-pkgconfig.patch
+Patch3: deepin-image-editor-6.5.0-alt-cmake-compat.patch
 
 %if_with clang
 ExcludeArch: armh
@@ -137,6 +138,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 6.5.0-alt2
+- NMU: compat with CMake 4.
+
 * Wed Mar 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.0-alt1
 - New version 6.5.0.
 - Added vcs tag.

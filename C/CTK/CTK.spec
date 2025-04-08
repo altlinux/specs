@@ -2,7 +2,7 @@
 
 Name: CTK
 Version: 0.1.0
-Release: alt7.git.82cae578
+Release: alt8.git.82cae578
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -170,6 +170,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 0.1.0-alt8.git.82cae578
+- Fix FTBFS: compat with CMake 4.
+
 * Fri Dec 13 2024 Anton Farygin <rider@altlinux.ru> 0.1.0-alt7.git.82cae578
 - update to git 82cae578
 

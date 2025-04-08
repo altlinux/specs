@@ -2,7 +2,7 @@
 
 Name: autopano-sift-C
 Version: 2.5.1
-Release: alt4.1
+Release: alt4.2
 Epoch: 1
 
 Group: Graphics
@@ -43,6 +43,9 @@ mkdir -p %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 1:2.5.1-alt4.2
+- NMU: compat with CMake 4.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 1:2.5.1-alt4.1
 - NMU: added URL
 
