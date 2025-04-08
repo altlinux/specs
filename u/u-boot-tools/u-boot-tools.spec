@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2025.01
+Version: 2025.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -37,6 +37,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
+- 2025.04 released
+
 * Fri Jan 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.01-alt1
 - 2025.01 released
 
