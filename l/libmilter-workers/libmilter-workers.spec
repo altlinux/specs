@@ -9,7 +9,7 @@
 
 Name:		libmilter-workers
 Version:	%(echo %realversion | sed 's/-/_/g')
-Release:	alt1_12
+Release:	alt1_14
 Summary:	Libmilter and a pool of threads
 License:	GPLv1
 Group:		Development/C
@@ -36,7 +36,6 @@ and distribute tasks when it receives commands from sendmail.
 %package -n	%{libnamestatic}
 Summary:	Libmilter and a pool of threads
 Group:		Development/C
-Obsoletes:	%{_lib}milterstatic-devel
 Provides:	milter-devel = %{version}-%{release}
 Provides:	libmilter-devel = %{version}-%{release}
 
@@ -59,7 +58,7 @@ and distribute tasks when it receives commands from sendmail.
 %setup -q -n %{name}-%{realversion}
 cp -f %{SOURCE1} ./
 
-perl -pi -e "s/-O2/%{optflags}/" devtools/OS/Linux
+perl -pi -e "s|-O2|%{optflags}|" devtools/OS/Linux
 
 %build
 %make_build
@@ -73,11 +72,15 @@ cp obj.`uname -s`.`uname -r`.`uname -m`/libmilter/libmilter.a %{buildroot}%{_lib
 
 %files -n %{libnamestatic}
 %doc README
+%dir %{_includedir}/libmilter
 %{_includedir}/libmilter/*.h
 %{_libdir}/*.a
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 8.14.3_1-alt1_14
+- update by mgaimport
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 8.14.3_1-alt1_12
 - fixed build with LTO
 
