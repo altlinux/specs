@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ python3-devel
 
 Name:		evemu
 Version:	2.7.0
-Release:	alt2_7
+Release:	alt2_9
 Summary:	Event Device Query and Emulation Program
 Group:		Development/Other
 License:	GPLv3+
@@ -24,7 +24,7 @@ BuildRequires:	libtool
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(libevdev) >= 0.5
 BuildRequires:	xmlto
-BuildRequires:	asciidoc
+BuildRequires:	asciidoc asciidoc-a2x
 Source44: import.info
 
 %description
@@ -48,7 +48,7 @@ dynamically linked with evemu.
 Summary:	Event Device Query and Emulation Program Development Package
 Group:		Development/Other
 Requires:       %{libname} = %{version}-%{release}
-Requires:	python3
+Requires:	python3 python3-tools
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 
@@ -94,6 +94,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt2_9
+- update by mgaimport
+
 * Sun Apr 10 2022 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt2_7
 - update by mgaimport
 
