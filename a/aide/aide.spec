@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: aide
-Version: 0.18.8
-Release: alt2
+Version: 0.19
+Release: alt1
 Summary: Intrusion Detection Environment
 License: GPL-2.0-or-later
 Group: System/Base
@@ -80,7 +80,7 @@ make check
 .gear/test.sh %buildroot
 
 %files
-%doc AUTHORS COPYING ChangeLog README NEWS contrib SECURITY.md
+%doc AUTHORS COPYING ChangeLog README NEWS SECURITY.md
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/aide.conf
 %_sbindir/aide
 %dir %attr(0700,root,root) %_localstatedir/%name
@@ -89,6 +89,9 @@ make check
 %_man5dir/*.5*
 
 %changelog
+* Sun Apr 06 2025 Vitaly Chikunov <vt@altlinux.org> 0.19-alt1
+- Update to v0.19 (2025-04-05).
+
 * Tue Jun 25 2024 Vitaly Chikunov <vt@altlinux.org> 0.18.8-alt2
 - Fix syntax errors in default aide.conf (ALT#50748).
 
