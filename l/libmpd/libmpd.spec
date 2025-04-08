@@ -8,11 +8,13 @@ Epoch: 1
 Summary:	Music Player Daemon Library
 Name:		libmpd
 Version:	11.8.17
-Release:	alt1_11
+Release:	alt1_13
 License:	GPLv2+
 Group:		System/Libraries
-Url:		http://sarine.nl/libmpd
-Source0:	http://download.sarine.nl/Programs/gmpc/%{version}/%{name}-%{version}.tar.gz
+Url:		https://sarine.nl/libmpd
+Source0:	https://download.sarine.nl/Programs/gmpc/%{version}/%{name}-%{version}.tar.gz
+Patch0:		libmpd-11.8.17-strndup.patch
+Patch1:		libmpd-c99.patch
 BuildRequires:	pkgconfig(glib-2.0) >= 2.16
 Source44: import.info
 
@@ -41,14 +43,15 @@ for developing program with libmpd.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+
 
 %build
 # to recognize aarch64
 autoreconf -vfi
 
-# _XOPEN_SOURCE=700 is to get strndup()
 %configure \
-    CPPFLAGS=-D_XOPEN_SOURCE=700 \
 	--disable-static
 
 %make_build
@@ -59,7 +62,8 @@ autoreconf -vfi
 rm -f %{buildroot}%{_libdir}/%{name}.la
 
 %files -n %{libname}
-%{_libdir}/libmpd.so.%{major}*
+%{_libdir}/libmpd.so.%{major}
+%{_libdir}/libmpd.so.%{major}.*
 
 %files -n %{develname}
 %doc ChangeLog README
@@ -69,6 +73,9 @@ rm -f %{buildroot}%{_libdir}/%{name}.la
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1:11.8.17-alt1_13
+- update by mgaimport
+
 * Wed Sep 09 2020 Igor Vlasenko <viy@altlinux.ru> 1:11.8.17-alt1_11
 - fixed build
 
