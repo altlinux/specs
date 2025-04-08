@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:     kernelshark
-Version: 2.3.2
+Version: 2.4.0
 Release: alt1
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
@@ -27,6 +27,7 @@ BuildRequires: fonts-ttf-freefont
 BuildRequires: gcc-c++
 BuildRequires: libaudit-devel
 BuildRequires: libfreeglut-devel
+BuildRequires: libgomp-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libtracecmd-devel
 BuildRequires: libtraceevent-devel
@@ -85,6 +86,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Sun Apr 06 2025 Vitaly Chikunov <vt@altlinux.org> 1:2.4.0-alt1
+- Update to kernelshark-v2.4.0 (2025-04-03).
+
 * Tue Jan 07 2025 Vitaly Chikunov <vt@altlinux.org> 1:2.3.2-alt1
 - Update to kernelshark-v2.3.2 (2025-01-01).
 
