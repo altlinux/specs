@@ -1,8 +1,8 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
 Name: osgearth
-Version: 3.7
-Release: alt1.1
+Version: 3.7.2
+Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
 License: LGPL-3.0 with exceptions
@@ -11,8 +11,7 @@ Group: Graphics
 Url: http://osgearth.org
 Source: %name-%version.tar
 Source1: submodules.tar
-Patch1: osgearth-alt-fix-pathes.patch
-Patch2: osgearth-disable-osgdb_zip.so.patch
+Patch1: osgearth-disable-osgdb_zip.so.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -168,6 +167,9 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %_datadir/osgEarth
 
 %changelog
+* Sat Apr 05 2025 Andrey Cherepanov <cas@altlinux.org> 3.7.2-alt1
+- New version.
+
 * Tue Mar 04 2025 Paul Wolneykien <manowar@altlinux.org> 3.7-alt1.1
 - Switch to C++17 for new Protobuf and Abseil.
 
