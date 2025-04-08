@@ -2,7 +2,7 @@
 
 Name: libaften
 Version: 0.0.8
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Aften: A/52 audio encoder
@@ -17,6 +17,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 ExcludeArch: ppc64le
 
+BuildRequires(pre): rpm-macros-cmake
+
 # Automatically added by buildreq on Thu Aug 02 2007
 BuildRequires: cmake yasm
 
@@ -26,7 +28,7 @@ A simple AC3-compatible audio encoder based on FFmpeg.
 %package devel
 Summary: Header files for %name library
 Group: Development/C++
-Requires: %name = %{?serial:%serial:}%version-%release
+Requires: %name = %{?serial:%serial:}%EVR
 
 %description devel
 Header files for %name library.
@@ -39,13 +41,12 @@ Header files for %name library.
 %patch3500 -p1
 
 %build
-mkdir -p default && cd default
-cmake .. -DCMAKE_INSTALL_PREFIX:STRING="%_usr" -DSHARED=yes
-%make_build
+%cmake \
+    -DCMAKE_INSTALL_PREFIX:STRING="%_usr" -DSHARED=yes
+%cmake_build
 
 %install
-cd default
-%makeinstall_std
+%cmakeinstall_std
 # hack due to broken install target in CMakeList
 test -d %buildroot%_libdir || mv %buildroot%_prefix/lib %buildroot%_libdir
 
@@ -59,6 +60,9 @@ test -d %buildroot%_libdir || mv %buildroot%_prefix/lib %buildroot%_libdir
 %_includedir/*
 
 %changelog
+* Tue Apr 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1:0.0.8-alt5
+- use %cmake macros
+
 * Wed Dec 06 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:0.0.8-alt4
 - NMU: fixed FTBFS on non-x86 architectures (except ppc64).
   While at it wiped out extraneous build requirements.
