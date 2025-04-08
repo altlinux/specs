@@ -23,8 +23,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.2
-Release: alt5.1
+Version: 10.2.1
+Release: alt1
 Epoch: 1
 Url: https://altsp.su
 
@@ -291,6 +291,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt1
+- 10.2.1
+- os-release: use STATUS_EN instead STATUS
+
 * Mon Dec 02 2024 Anton Midyukov <antohami@altlinux.org> 1:10.2-alt5.1
 - E2K: 11102-01 (thanks mike@)
 
