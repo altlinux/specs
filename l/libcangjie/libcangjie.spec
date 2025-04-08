@@ -1,18 +1,19 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major           2
+%define major           3
 %define libname         libcangjie%{major}
 %define develname       libcangjie-devel
 
 Name:             libcangjie
 Summary:          Cangjie Input Method Library
-Version:          1.3
-Release:          alt2_2
+Version:          1.4.0
+Release:          alt1_1
 License:          LGPLv3+
 Group:            System/Internationalization
-URL:              http://cangjians.github.io/projects/%{name}
-Source0:          https://github.com/Cangjians/libcangjie/releases/download/v%{version}/%{name}-%{version}.tar.xz
+URL:              https://cangjie.pages.freedesktop.org/projects/libcangjie
+Source0:          https://gitlab.freedesktop.org/cangjie/%{name}/-/archive/v%{version}/%{name}-%{version}.tar.xz
 
+BuildRequires:    meson
 BuildRequires:    pkgconfig(sqlite3)
 BuildRequires:    sqlite3
 Source44: import.info
@@ -48,36 +49,30 @@ Development files for %{name}.
 
 %prep
 %setup -q
-%ifarch %e2k
-# strip UTF-8 BOM for lcc < 1.24
-find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
-	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
-%endif
+
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
-find %{buildroot} -name '*.la' -delete
+%meson_install
 
 %check
-%make check
+%meson_test
 
 %files -n %{libname}
-%doc AUTHORS COPYING README.md
+%doc AUTHORS README.md
+%doc --no-dereference COPYING
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{major}.*
 
 %files data
-%doc data/README.table.rst
+%doc data/README.table.md
 %{_datadir}/%{name}/
 
 %files -n %{develname}
-%{_bindir}/libcangjie_*
+%{_bindir}/libcangjie*
 %{_includedir}/cangjie/
 %{_libdir}/%{name}.so
 %{_libdir}/pkgconfig/cangjie.pc
@@ -85,6 +80,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.4.0-alt1_1
+- update by mgaimport
+
 * Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 1.3-alt2_2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - autoreconf
