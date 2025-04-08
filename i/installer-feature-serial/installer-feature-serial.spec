@@ -1,5 +1,5 @@
 Name: installer-feature-serial
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: serial console support
@@ -50,6 +50,9 @@ so that serial login is available.
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 0.6.4-alt1
+- renamed 65-serial.sh -> 95-serial.sh
+
 * Mon Apr 07 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt1
 - replace 65-serial.sh from postinstall.d to preinstall.d
 
