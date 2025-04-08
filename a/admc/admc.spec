@@ -11,7 +11,7 @@
 
 Name: admc
 Version: 0.20.0
-Release: alt1
+Release: alt2
 
 Summary: Active Directory Management Center
 License: GPLv3+
@@ -124,6 +124,9 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Apr 08 2025 Semyon Knyazev <samael@altlinux.org> 0.20.0-alt2
+- Update CMake version (thx to Vladimir Rubanov).
+
 * Mon Mar 17 2025 Semyon Knyazev <samael@altlinux.org> 0.20.0-alt1
 - Native LAPS (Local administrator password solution) 2023 has been implemented.
   The corresponding tab has been added to the properties of computer class
