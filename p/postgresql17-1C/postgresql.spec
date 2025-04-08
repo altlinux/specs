@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    6
+%define postgresql_altrel    7
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1090,6 +1090,11 @@ fi
 %endif
 
 %changelog
+* Tue Apr 08 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt7
+- Rollback change log_directory from 17.2-alt5
+- Set path to logfile via /etc/sysconfig/postgresql
+- Enable checksums by default
+
 * Wed Apr 02 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt6
 - Add 00001-Estimate-the-selectivity-as-quadratic-mean-of-non.patch for speedup 1C operations
 

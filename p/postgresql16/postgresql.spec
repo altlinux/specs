@@ -22,7 +22,7 @@
 %define prog_name            postgresql
 %define postgresql_major     16
 %define postgresql_minor     8
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1084,6 +1084,11 @@ fi
 %endif
 
 %changelog
+* Tue Apr 08 2025 Alexei Takaseev <taf@altlinux.org> 16.8-alt3
+- Rollback change log_directory from 16.8-alt2
+- Set path to logfile via /etc/sysconfig/postgresql
+- Enable checksums by default
+
 * Tue Apr 01 2025 Alexei Takaseev <taf@altlinux.org> 16.8-alt2
 - Add catalog /var/log/postgres for logs
 - Use LLVM 19.1

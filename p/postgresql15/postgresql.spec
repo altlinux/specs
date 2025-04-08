@@ -17,7 +17,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     12
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1068,6 +1068,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 08 2025 Alexei Takaseev <taf@altlinux.org> 15.12-alt3
+- Rollback change log_directory from 15.12-alt2
+
 * Tue Apr 01 2025 Alexei Takaseev <taf@altlinux.org> 15.12-alt2
 - Add catalog /var/log/postgres for logs
 - Use LLVM 19.1
