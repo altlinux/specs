@@ -1,3 +1,4 @@
+BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define major	3
@@ -5,13 +6,13 @@
 %define devname	libshout-idjc-devel
 
 Name:		libshout-idjc
-Version:	2.4.3
-Release:	alt1_3
+Version:	2.4.6
+Release:	alt1_1
 Summary:	Libshout with extensions for IDJC
-Group:          System/Libraries
-License:        LGPL-2.1+
-URL:            https://sourceforge.net/projects/libshoutidjc.idjc.p/
-Source0:	https://downloads.sf.net/libshoutidjc.idjc.p/libshout-idjc-%{version}.tar.gz
+Group:		System/Libraries
+License:	LGPL-2.1+
+URL:		https://sourceforge.net/projects/libshoutidjc.idjc.p/
+Source0:	https://downloads.sf.net/libshoutidjc.idjc.p/libshout-idjc-%{version}-r1.tar.gz
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(vorbis)
@@ -21,6 +22,13 @@ Source44: import.info
 
 %description
 This is a modified version of libshout, with extensions for IDJC.
+
+%package -n shoutidjc
+Summary:	Broadcast streaming library with IDJC extensions (source client)
+Group:		Development/Tools
+
+%description -n shoutidjc
+Broadcast streaming library with IDJC extensions (source client).
 
 %package -n %{libname}
 Summary:	Libshout with extensions for IDJC
@@ -44,7 +52,6 @@ This package contains the development files for the library.
 %setup -q
 
 %build
-autoreconf -vfi
 %configure --disable-static
 %make_build
 
@@ -55,12 +62,21 @@ rm -rf %{buildroot}%{_datadir}/doc/libshout-idjc/COPYING
 
 # we don't have ckport tool ATM
 rm -rf %{buildroot}%{_libdir}/ckport/
+# kill rpath
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
+	chrpath -d $i ||:
+done
+
+%files -n shoutidjc
+%{_bindir}/shoutidjc
+%{_mandir}/man1/shoutidjc.1*
 
 %files -n %{libname}
 %doc --no-dereference COPYING
 %docdir %{_datadir}/doc/libshout-idjc
 %doc %{_datadir}/doc/libshout-idjc/
-%{_libdir}/libshout-idjc.so.%{major}*
+%{_libdir}/libshout-idjc.so.%{major}
+%{_libdir}/libshout-idjc.so.%{major}.*
 
 %files -n %{devname}
 %docdir %{_datadir}/doc/libshout-idjc
@@ -71,6 +87,9 @@ rm -rf %{buildroot}%{_libdir}/ckport/
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.4.6-alt1_1
+- update by mgaimport
+
 * Thu Mar 02 2023 Igor Vlasenko <viy@altlinux.org> 2.4.3-alt1_3
 - added conflict (closes: #45452)
 
