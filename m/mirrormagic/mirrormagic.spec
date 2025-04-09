@@ -6,9 +6,9 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           mirrormagic
 Version:        3.0.0
-Release:        alt1_14
+Release:        alt1_18
 Summary:        Puzzle game where you steer a beam of light using mirrors
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://www.artsoft.org/mirrormagic/
 Source0:        http://www.artsoft.org/RELEASES/unix/%{name}/%{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
@@ -77,6 +77,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_18
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_14
 - update to new release by fcimport
 
