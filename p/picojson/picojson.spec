@@ -7,9 +7,10 @@ Group: Other
 Name:           picojson
 Summary:        A header-file-only, JSON parser / serializer in C++
 Version:        1.3.0
-Release:        alt1_8
+Release:        alt1_21
 
-License:        BSD
+# Automatically converted from old format: BSD - review is highly recommended.
+License:        LicenseRef-Callaway-BSD
 # http://opensource.org/licenses/BSD-2-Clause
 URL:            https://github.com/kazuho/picojson
 Source0:        https://github.com/kazuho/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -49,6 +50,9 @@ install -p -m 0644 picojson.h %{buildroot}%{_includedir}/picojson.h
 %doc LICENSE README.mkdn examples
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt1_21
+- update to new release by fcimport
+
 * Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_8
 - new version
 
