@@ -1,15 +1,16 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install unzip
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           lacewing
 Version:        1.10
-Release:        alt2_31
+Release:        alt2_47
 Summary:        Arcade-style shoot-em-up
-Group:          Games/Other
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://users.olis.net.au/zel/
 Source0:        http://users.olis.net.au/zel/lwsrc.zip
 Source1:        http://users.olis.net.au/zel/lwdata.zip
@@ -21,6 +22,7 @@ Patch2:         lacewing-nicecpu.patch
 Patch3:         lacewing-warn.patch
 Patch4:         lacewing-format-security.patch
 Patch5:         lacewing-rhbz1045111.patch
+BuildRequires:  gcc
 BuildRequires:  liballegro-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -39,12 +41,12 @@ a single-player mode, and also co-operative and duel modes for two players
 %prep
 %setup -q -c
 unzip -qqo %{SOURCE1}
-%patch0 -p1 -z .unix
-%patch1 -p1 -z .fullscreen
-%patch2 -p1 -z .nicecpu
-%patch3 -p1 -z .warn
-%patch4 -p1
-%patch5 -p1
+%patch0  -p1 -z .unix
+%patch1  -p1 -z .fullscreen
+%patch2  -p1 -z .nicecpu
+%patch3  -p1 -z .warn
+%patch4  -p1
+%patch5  -p1
 sed -i 's/\r//' readme.txt licence.txt
 chmod 644 readme.txt licence.txt
 %patch33 -p1
@@ -85,6 +87,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.10-alt2_47
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_31
 - update to new release by fcimport
 
