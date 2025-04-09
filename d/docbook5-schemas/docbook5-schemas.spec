@@ -1,17 +1,14 @@
 Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(English.pm)
-# END SourceDeps(oneline)
 BuildRequires: xml-utils
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: docbook5-schemas
 Version: 5.1
-Release: alt1_1
+Release: alt1_14
 
 Summary: Norman Walsh's schemas (DTD, Relax NG, W3C schema) for Docbook 5.X
 
-License: Freely redistributable without restriction
+License: LicenseRef-OASIS-spec AND DocBook-Stylesheet AND LicenseRef-Fedora-UltraPermissive
 URL: http://www.oasis-open.org/docbook/
 
 Provides: docbook5-dtd = %{version}-%{release}
@@ -43,17 +40,24 @@ developed by the OASIS consortium.
 mkdir 5.0
 mkdir 5.1
 
-#Unzip Docbook 5.0 specification
+# Unzip Docbook 5.0 specification
 cd 5.0
 unzip %{SOURCE0}
 mv docbook-5.0/* .
-#Prepare docs to right place
+
+# Remove howto docs
+rm docs/howto.html
+rm docs/howto.pdf
+rm docs/howto.xml
+rm -rf docs/images/*
+
+# Prepare docs to right place
 mv docs/ ../
 mv README ../
 mv ChangeLog ../
 cd ..
 
-#Unzip Docbook 5.1 specification
+# Unzip Docbook 5.1 specification
 cd 5.1
 unzip %{SOURCE1}
 mv schemas/rng .
@@ -254,9 +258,9 @@ mkdir -p ${DOCBOOK5DIR}/schema/dtd/5.0
 mkdir -p ${DOCBOOK5DIR}/schema/xsd/5.0
 install -m644 5.0/dtd/* ${DOCBOOK5DIR}/schema/dtd/5.0
 install -m644 5.0/xsd/* ${DOCBOOK5DIR}/schema/xsd/5.0
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -m755 %{version}/tools/db4-entities.pl $RPM_BUILD_ROOT%{_bindir}
-mkdir -p ${DOCBOOK5DIR}/stylesheet/upgrade
+mkdir -p $RPM_BUILD_ROOT%{_bindir}            
+install -m755 %{version}/tools/db4-entities.pl $RPM_BUILD_ROOT%{_bindir}            
+mkdir -p ${DOCBOOK5DIR}/stylesheet/upgrade            
 install -m644 %{version}/tools/db4-upgrade.xsl ${DOCBOOK5DIR}/stylesheet/upgrade
 
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/xml
@@ -328,7 +332,7 @@ fi
 %dir %{_datadir}/xml/docbook5/schema/rng
 %dir %{_datadir}/xml/docbook5/schema/sch
 %dir %{_datadir}/xml/docbook5/schema/xsd
-%dir %{_datadir}/xml/docbook5/stylesheet
+%dir %{_datadir}/xml/docbook5/stylesheet            
 %dir %{_datadir}/xml/docbook5/stylesheet/upgrade
 # Docbook5.0
 %{_datadir}/xml/docbook5/schema/dtd/5.0
@@ -342,6 +346,9 @@ fi
 %{_bindir}/db4-entities.pl
 
 %ChangeLog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_14
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 5.1-alt1_1
 - update to new release by fcimport
 
