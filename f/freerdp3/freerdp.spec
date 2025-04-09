@@ -12,13 +12,14 @@
 
 Name: freerdp%sover
 Version: 3.14.1
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
 License: Apache-2.0
 URL: http://www.freerdp.com
-Packager: Andrey Cherepanov <cas@altlinux.org>
+
+ExcludeArch: armh
 
 Source: %oname-%version.tar
 Source1: freerdp-server.service
@@ -403,7 +404,7 @@ the RDP protocol.
 %else
   -DWITH_SSE2=OFF \
 %endif
-%ifarch armh                                                                                                                                                                                  
+%ifarch armh
   -DARM_FP_ABI=hard \
   -DWITH_NEON=OFF \
 %endif
@@ -544,6 +545,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 3.14.1-alt2
+- Completely exclude armh
+
 * Thu Mar 27 2025 Andrey Cherepanov <cas@altlinux.org> 3.14.1-alt1
 - New version.
 
