@@ -16,10 +16,11 @@ Group: System/Libraries
 
 Name:           openni
 Version:        1.5.7.10
-Release:        alt2_30
+Release:        alt2_36
 Summary:        Library for human-machine Natural Interaction
 
-License:        ASL 2.0 and BSD
+# Automatically converted from old format: ASL 2.0 and BSD - review is highly recommended.
+License:        Apache-2.0 AND LicenseRef-Callaway-BSD
 URL:            http://www.openni.org
 # To reproduce tarball (adapt version and shortcommit):
 # wget https://github.com/OpenNI/OpenNI/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
@@ -45,7 +46,7 @@ Patch9:         openni-ansi.patch
 
 Patch10:        python3.patch
 
-ExclusiveArch:  %{ix86} x86_64 %{arm}
+ExclusiveArch:  x86_64 %{arm}
 
 BuildRequires:  gcc-c++
 BuildRequires:  libfreeglut-devel, tinyxml-devel, libjpeg-devel, dos2unix, libusb-devel
@@ -107,18 +108,18 @@ The %{name}-examples package contains example programs for OpenNI.
 
 %prep
 %setup -q -n OpenNI-%{commit}
-%patch0 -p1 -b .willow
-%patch1 -p1 -b .fedora
-%patch2 -p1 -b .disable-sse
-%patch3 -p1 -b .silence-assert
-%patch4 -p1 -b .fedora-java
-%patch5 -p1 -b .disable-softfloat
-%patch6 -p1 -b .armsamples
-%patch7 -p1 -b .rename-equivalent-for-gcc6
-%patch8 -p0 -b .freeglut
-%patch9 -p1 -b .ansi
+%patch0  -p1 -b .willow
+%patch1  -p1 -b .fedora
+%patch2  -p1 -b .disable-sse
+%patch3  -p1 -b .silence-assert
+%patch4  -p1 -b .fedora-java
+%patch5  -p1 -b .disable-softfloat
+%patch6  -p1 -b .armsamples
+%patch7  -p1 -b .rename-equivalent-for-gcc6
+%patch8  -p0 -b .freeglut
+%patch9  -p1 -b .ansi
 dos2unix Platform/Linux/CreateRedist/Redist_OpenNi.py
-%patch10 -p1 -b python3
+%patch10  -p1 -b python3
 rm -rf Source/External
 rm -rf Platform/Linux/Build/Prerequisites/*
 find Samples -name GL -prune -exec rm -rf {} \;
@@ -192,8 +193,7 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
-# hack for error (#100): non-identical noarch packages
-find Source/DoxyGen/html -name '*.dot' -delete
+
 
 
 %post
@@ -243,6 +243,9 @@ fi
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.5.7.10-alt2_36
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 1.5.7.10-alt2_30
 - update to new release by fcimport (restored build on %{ix86})
 
