@@ -1,11 +1,12 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           asc-music
 Version:        1.0
-Release:        alt2_14
+Release:        alt2_31
 Summary:        Background music for the game asc
-Group:          Games/Other
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://www.asc-hq.org/
 # transcoded from: http://downloads.sourceforge.net/asc-hq/*.mp3
 Source0:        %{name}-%{version}.tar.gz
@@ -34,12 +35,16 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/asc/music
 install -p -m 644 *.ogg $RPM_BUILD_ROOT%{_datadir}/asc/music
 
 
+
 %files
 %doc README.fedora
 %{_datadir}/asc/music
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_31
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
 - update to new release by fcimport
 
