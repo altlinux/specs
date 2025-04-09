@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/less /usr/bin/zdump texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 24
+%define autorelease 28
 
 %global gcalmantag 4
 
@@ -25,6 +25,7 @@ Source0:	ftp://ftp.gnu.org/gnu/gcal/%{name}-%{version}.tar.xz
 Source1:	gcal-man-v%{gcalmantag}.tar.xz
 Patch0:		gcal-glibc-no-libio.patch
 Patch1:		gcal-configure-c99.patch
+Patch2:		gcal-4.1-oob-write.patch
 BuildRequires:  gcc
 BuildRequires:	gettext-tools libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  libunistring-devel
@@ -44,6 +45,7 @@ It also displays holiday lists for many countries around the globe.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 tar xf %{SOURCE1}
 
@@ -78,6 +80,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 4.1-alt3_28
+- update to new release by fcimport
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 4.1-alt3_24
 - update to new release by fcimport
 
