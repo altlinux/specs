@@ -1,15 +1,15 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libfc14audiodecoder
-Version: 1.0.3
-Release: alt1_12
+Version: 1.0.4
+Release: alt1_2
 
 Summary: C wrapper library for Future Composer audio decoding
-Group: System/Libraries
-License: GPLv2+
-URL: http://xmms-fc.sourceforge.net
-Source0: http://downloads.sourceforge.net/xmms-fc/%{name}-%{version}.tar.bz2
+License: GPL-2.0-or-later
+URL: https://github.com/mschwendt/libfc14audiodecoder
+Source0: https://github.com/mschwendt/%{name}/releases/download/%{name}-%{version}/%{name}-%{version}.tar.bz2
 
 BuildRequires: gcc-c++
 Source44: import.info
@@ -21,8 +21,8 @@ BMP, Audacious and GStreamer.
 
 
 %package devel
-Summary: Files needed for developing with %{name}
 Group: Development/Other
+Summary: Files needed for developing with %{name}
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -53,10 +53,14 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 %files devel
 %{_libdir}/%{name}.so
+#exclude %%{_libdir}/*.la
 %{_includedir}/fc14audiodecoder.h
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_2
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_12
 - update to new release by fcimport
 
