@@ -7,9 +7,10 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name:           ballz
 Version:        1.0.4
-Release:        alt1_2
+Release:        alt1_15
 Summary:        B.A.L.L.Z. - platform/puzzle game where you control a rolling ball
-License:        BSD
+# Automatically converted from old format: BSD - review is highly recommended.
+License:        LicenseRef-Callaway-BSD
 URL:            https://gitlab.com/groups/ballz
 Source0:        %{name}-%{version}.tar.gz
 BuildRequires:  gcc-c++
@@ -18,7 +19,7 @@ BuildRequires:  liballegro-devel dumb-devel libguichan-devel intltool
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/#_desktop_files
 BuildRequires:  desktop-file-utils
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/AppData/
-BuildRequires:  libappstream-glib
+BuildRequires:  libappstream-glib libappstream-glib-gir
 Source44: import.info
 
 %description
@@ -38,7 +39,6 @@ acronym for 'TINS is not Speedhack'.
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
-%add_optflags -DALLEGRO_NO_FIX_ALIASES
 %configure
 %make_build
 
@@ -60,6 +60,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.appdata.xml
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_15
+- update to new release by fcimport
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_2
 - fixed build
 
