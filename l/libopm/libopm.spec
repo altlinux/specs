@@ -8,8 +8,9 @@ Group: System/Libraries
 Summary:        Blitzed open proxy monitor library
 Name:           libopm
 Version:        0.1
-Release:        alt3_33.20050731cvs
-License:        GPLv2+
+Release:        alt3_39.20050731cvs
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://wiki.blitzed.org/BOPM
 # cvs -z3 -d:pserver:anon@cvs.blitzed.org:/ co -D "20050731 23:59" libopm
 # find libopm -type f -name .cvsignore -exec rm -f {} ';'
@@ -84,6 +85,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %endif
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1-alt3_39.20050731cvs
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.1-alt3_33.20050731cvs
 - update to new release by fcimport
 
