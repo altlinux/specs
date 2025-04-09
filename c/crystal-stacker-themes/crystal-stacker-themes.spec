@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,10 +6,10 @@ BuildRequires: unzip
 %define _localstatedir %{_var}
 Name:           crystal-stacker-themes
 Version:        1.0
-Release:        alt2_15
+Release:        alt2_33
 Summary:        Themes for the Crystal Stacker game
-Group:          Games/Other
-License:        Crystal Stacker
+# Automatically converted from old format: Crystal Stacker - review is highly recommended.
+License:        CrystalStacker
 URL:            http://www.t3-i.com/cstacker.htm
 Source0:        http://ncdgames.t3-i.com/csdream.zip
 Source1:        http://ncdgames.t3-i.com/csfood.zip
@@ -29,7 +30,7 @@ Source44: import.info
 
 %prep
 %setup -q -c -a5 -a6
-# don't pass these to %setup, their filenames must be forced to lowercase
+# don't pass these to %%setup, their filenames must be forced to lowercase
 unzip -qqLL %{SOURCE1}
 unzip -qqLL %{SOURCE2}
 unzip -qqLL %{SOURCE3}
@@ -47,6 +48,7 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/crystal-stacker
 install -p -m 644 *.xm *.cth $RPM_BUILD_ROOT%{_datadir}/crystal-stacker
 
 
+
 %files
 %doc crystal-stacker-theme-license.txt cs-readme.txt
 %{_datadir}/crystal-stacker/*.xm
@@ -54,6 +56,9 @@ install -p -m 644 *.xm *.cth $RPM_BUILD_ROOT%{_datadir}/crystal-stacker
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_33
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_15
 - update to new release by fcimport
 
