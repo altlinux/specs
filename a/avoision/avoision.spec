@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,15 +6,16 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:		avoision
 Version:	1.1
-Release:	alt1_11
+Release:	alt1_28
 Summary:	Arcade style game of evade and capture
-Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
-License:	GPLv2+ and CC-BY-SA
+# Automatically converted from old format: GPLv2+ and CC-BY-SA - review is highly recommended.
+License:	GPL-2.0-or-later AND LicenseRef-Callaway-CC-BY-SA
 URL:		http://avsn.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/avsn/%{name}-%{version}.tar.gz
 Source1:	%{name}.png
 Source2:	%{name}.desktop
+BuildRequires:  gcc
 BuildRequires:	radius-engine-devel >= 1.1, desktop-file-utils, zip
 Source44: import.info
 
@@ -47,6 +49,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications	%{SOURCE2}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.1-alt1_28
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_11
 - update to new release by fcimport
 
