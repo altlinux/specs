@@ -4,32 +4,38 @@ BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 3
+
 Name:           boswars
-Version:        2.7
-Release:        alt1_24.svn160110
+Version:        2.8
+Release:        alt1_3
 Summary:        Bos Wars is a futuristic real-time strategy game
-License:        GPLv2
-URL:            http://www.boswars.org/
-Source0:        ftp://ftp.nluug.nl/pub/os/Linux/distr/debian/pool/main/b/boswars/boswars_2.7+svn160110.orig.tar.xz
+License:        GPL-2.0-only
+URL:            https://www.boswars.org/
+Source0:        https://www.boswars.org/dist/releases/boswars-2.8-src.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}-48.png
 Source3:        %{name}-128.png
 Source4:        %{name}.appdata.xml
 Source5:        %{name}.6
-Patch0:         boswars-2.4.1-SConstruct.patch
-# incomplete patch to port boswars to the system guichan-0.6 instead of
-# using the included guichan-0.4. Incomplete, NOT finished and NOT working!
-#Patch1:         boswars-2.4.1-guichan26.patch
-# Incomplete Lua 5.2 patch, this fixes the C-code but not the actual lua scripts
-#Patch2:         boswars-2.6.1-lua-5.2.patch
-# Use compat-lua51 for now
-Patch3:         boswars-2.7-compat-lua-5.1.patch
-Patch4:         boswars-2.7-sconstruct-py3.patch
-BuildRequires:  gcc gcc-c++
-BuildRequires:  libtheora-devel libvorbis-devel libSDL-devel libGL-devel
-BuildRequires:  libtolua++-lua5.1-devel libpng-devel scons
-BuildRequires:  libappstream-glib desktop-file-utils
+Patch1:		boswars-0001-Convert-to-UTF-8.patch
+Patch2:		boswars-0002-fabricate.py-remove-deprecated-calls-to-os.stat_floa.patch
+Patch3:		boswars-0003-build-detect-alternative-name-for-Lua-5.1-libs.patch
+BuildRequires:	libSDL-devel
+BuildRequires:	liblua5.1-devel
+#BuildRequires:	compat-tolua++-devel
+BuildRequires:	desktop-file-utils
+BuildRequires:	gcc
+BuildRequires:	gcc-c++
+BuildRequires:	libGL-devel
+BuildRequires:	libappstream-glib libappstream-glib-gir
+BuildRequires:	libpng-devel libpng17-tools
+BuildRequires:	libtheora-devel
+BuildRequires:	libvorbis-devel
+BuildRequires:	python3
 Requires:       icon-theme-hicolor
+Provides:	bundled(guichan)
+Provides:	bundled(tolua++)
 Source44: import.info
 
 %description
@@ -39,49 +45,43 @@ Bos Wars aims to create a completly original and fun open source RTS game.
 
 
 %prep
-%setup -q -n %{name}
-%patch0 -p1
+%setup -q -n %{name}-%{version}-src
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
-iconv -f ISO-8859-1 -t UTF8 doc/guichan-copyright.txt > guichan-copyright.txt
+sed -i -e "s|-Wall -fsigned-char -D_GNU_SOURCE=1 -D_REENTRANT|%{optflags}|g" make.py
 find campaigns engine maps -type f -executable -exec chmod -x {} ';'
-# we want to use the system version of these
-rm engine/tolua/*.h engine/tolua/tolua_*.cpp
+# FIXME we want to use the system version of compat-tolua++
+# rm engine/tolua/*.h engine/tolua/tolua_*.cpp
 
 
 %build
-scons-3 %{?_smp_mflags} opengl=1 CC="gcc $RPM_OPT_FLAGS" CXX="g++ $RPM_OPT_FLAGS" LIBPATH=%{_libdir}
-
+/usr/bin/python3 make.py
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}/languages
-install -m 755 build/boswars-release $RPM_BUILD_ROOT%{_bindir}/%{name}
+mkdir -p %{buildroot}%{_datadir}/%{name}/languages
+install -D -p -m 755 fbuild/release/boswars %{buildroot}%{_bindir}/%{name}
 install -p -m 644 languages/*.po languages/*.pot \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}/languages
+  %{buildroot}%{_datadir}/%{name}/languages
 cp -a campaigns graphics intro maps scripts sounds units patches \
-  $RPM_BUILD_ROOT%{_datadir}/%{name}
+  %{buildroot}%{_datadir}/%{name}
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps
-install -p -m 644 %{SOURCE2} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-install -p -m 644 %{SOURCE3} \
-  $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/appdata
-install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/appdata
+mkdir -p %{buildroot}%{_datadir}/applications
+desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
+install -D -p -m 644 %{SOURCE2} \
+  %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+install -D -p -m 644 %{SOURCE3} \
+  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+install -D -p -m 644 %{SOURCE4} %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
 appstream-util validate-relax --nonet \
-  $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
-mkdir -p $RPM_BUILD_ROOT%{_mandir}/man6
-install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man6
+  %{buildroot}%{_datadir}/appdata/%{name}.appdata.xml
+install -D -p -m 644 %{SOURCE5} %{buildroot}%{_mandir}/man6/%{name}.6
 
 
 %files
 %doc README.txt CHANGELOG doc/*.html
-%doc --no-dereference COPYRIGHT.txt LICENSE.txt guichan-copyright.txt
+%doc --no-dereference COPYRIGHT.txt LICENSE.txt doc/guichan-copyright.txt
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/appdata/%{name}.appdata.xml
@@ -91,6 +91,9 @@ install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man6
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.8-alt1_3
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_24.svn160110
 - update to new release by fcimport
 
