@@ -1,18 +1,22 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 45
+
 Summary:	A text-mode maze game
 Name:		lsnipes
 Version:	0.9.4
-Release:	alt2_19
-License:	GPLv2+
-Group:		Games/Other
+Release:	alt2_%autorelease
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 Source:		http://www.ugcs.caltech.edu/~boultonj/snipes/%{name}-%{version}.tgz
 URL:		http://www.ugcs.caltech.edu/~boultonj/snipes.html
 Patch1:		lsnipes-adapt-CFLAGS-LIBS.patch
 # Man page update about levels from Debian package
 Patch2:		lsnipes-man-levels-doc.patch
 
-BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires:  gcc
+BuildRequires:	libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 Source44: import.info
 
 %description
@@ -26,20 +30,20 @@ partially implemented) let you build your skills gradually.
 
 %prep
 %setup -q
-%patch1 -p1 -b .cflags
-%patch2 -p1 -b .man-levels
+%patch1  -p1 -b .cflags
+%patch2  -p1 -b .man-levels
 
 # as-needed
 sed -i -e 's,${LIBS} ${OBJS},${OBJS} ${LIBS},' Makefile
 
 %build
-%{__make} RPM_CFLAGS="%{optflags}"
+make RPM_CFLAGS="%{optflags}"
 
 %install
-%{__install} -p -m 0755 -d	%{buildroot}%{_bindir}
-%{__install} -p -m 0755 snipes	%{buildroot}%{_bindir}/snipes
-%{__install} -p -m 0755 -d	%{buildroot}%{_mandir}/man6
-%{__install} -p -m 0644 snipes.6 %{buildroot}%{_mandir}/man6/snipes.6
+install -p -m 0755 -d	%{buildroot}%{_bindir}
+install -p -m 0755 snipes	%{buildroot}%{_bindir}/snipes
+install -p -m 0755 -d	%{buildroot}%{_mandir}/man6
+install -p -m 0644 snipes.6 %{buildroot}%{_mandir}/man6/snipes.6
 
 %files
 %doc README TODO COPYING CHANGELOG
@@ -47,6 +51,9 @@ sed -i -e 's,${LIBS} ${OBJS},${OBJS} ${LIBS},' Makefile
 %{_mandir}/man6/snipes.6*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.9.4-alt2_45
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_19
 - update to new release by fcimport
 
