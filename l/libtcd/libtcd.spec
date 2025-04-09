@@ -7,8 +7,8 @@ Group: System/Libraries
 
 %global		mainver		2.2.7
 
-%global		fedorarel	3
-%global		rpmrel		%{fedorarel}%{?postver:.%postrpmver}
+%global		baserelease	10
+%global		rpmrel		%{baserelease}%{?postver:.%postrpmver}
 
 Name:		libtcd
 Version:	%{mainver}
@@ -16,7 +16,9 @@ Release:	alt1_%{rpmrel}
 Summary:	Tide Constituent Database Library
 BuildRequires:	gcc
 
-License:	Public Domain
+# https://gitlab.com/fedora/legal/fedora-license-data/-/merge_requests/553
+# SPDX confirmed
+License:	LicenseRef-Fedora-Public-Domain
 URL:		http://www.flaterco.com/xtide/
 Source0:	ftp://ftp.flaterco.com/xtide/%{name}-%{version}%{?postver}.tar.xz
 Source44: import.info
@@ -67,6 +69,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}/*html
 %{_libdir}/*.so
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.2.7-alt1_10.r3
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt1_3.r3
 - update to new release by fcimport
 
