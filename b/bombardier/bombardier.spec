@@ -6,18 +6,18 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name: bombardier
 Version: 0.8.3
-Release: alt1_22
+Release: alt1_28
 Summary: The GNU Bombing utility
 
 License: GPL-2.0-or-later        
 URL: http://packages.debian.org/stable/source/bombardier
-Source0: http://http.debian.net/debian/pool/main/b/bombardier/bombardier_0.8.3+nmu3.tar.xz
+Source0: http://http.debian.net/debian/pool/main/b/bombardier/bombardier_0.8.3+nmu4.tar.xz
 Source1: bombardier.desktop
 Source2: bombardier-logo.png
 Patch0: bombardier-height.patch
 Patch1: bombardier-0.8.2-string-format.patch
 Patch2: format.patch
-BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, desktop-file-utils, gcc
+BuildRequires: libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, desktop-file-utils, gcc
 Requires: icon-theme-hicolor
 Source44: import.info
 
@@ -28,11 +28,11 @@ Fly an ncurses plane over an ncurses city, and try to level the buildings.
 %prep
 
 
-%setup -qn bombardier-0.8.3+nmu3
+%setup -qn bombardier
 
-%patch0 -p0
-%patch1 -p0
-%patch2 -p0
+%patch0  -p0
+%patch1  -p0
+%patch2  -p0
 
 # link with --as-needed
 sed -i -e 's,$(LDFLAGS) -o $@ $(OBJS),-o $@ $(OBJS) $(LDFLAGS),' Makefile
@@ -65,6 +65,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.8.3-alt1_28
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.8.3-alt1_22
 - update to new release by fcimport
 
