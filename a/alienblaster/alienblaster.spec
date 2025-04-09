@@ -1,14 +1,15 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           alienblaster
 Version:        1.1.0
-Release:        alt2_21
+Release:        alt2_39
 Summary:        Action-loaded 2D arcade shooter game
-Group:          Games/Other
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://www.schwardtnet.de/alienblaster/
 Source0:        http://www.schwardtnet.de/%{name}/archives/%{name}-%{version}.tgz
 Source1:        %{name}.sh
@@ -18,6 +19,7 @@ Source4:        %{name}-32x32.png
 Source5:        %{name}-48x48.png
 Patch0:         alienblaster-1.1.0-64bit.patch
 Patch1:         alienblaster-1.1.0-fullscreen.patch
+BuildRequires:  gcc-c++
 BuildRequires:  libSDL_mixer-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -29,8 +31,8 @@ Simultaneous two-player mode is available.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1 -z .64bit
-%patch1 -p1 -z .fs
+%patch0  -p1 -z .64bit
+%patch1  -p1 -z .fs
 
 # link with --as-needed
 sed -i -e 's,$(GAME_LIBS) -o $(GAME_NAME) $(OBJECT_FILES),-o $(GAME_NAME) $(OBJECT_FILES) $(GAME_LIBS),' src/Makefile
@@ -68,6 +70,9 @@ install -p -m 644 %{SOURCE5} \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.1.0-alt2_39
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_21
 - update to new release by fcimport
 
