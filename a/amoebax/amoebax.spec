@@ -1,19 +1,21 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++
+BuildRequires: /usr/bin/candle /usr/bin/desktop-file-install /usr/bin/light
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           amoebax
 Version:        0.2.1
-Release:        alt1_13
+Release:        alt1_31
 Summary:        Action-Puzzle Game
-Group:          Games/Other
-License:        GPLv2+ and Free Art
+# Automatically converted from old format: GPLv2+ and Free Art - review is highly recommended.
+License:        GPL-2.0-or-later AND LAL-1.3
 URL:            http://www.emma-soft.com/games/amoebax/
 Source0:        http://www.emma-soft.com/games/amoebax/download/amoebax-%{version}.tar.bz2
 Patch0:         amoebax-0.2.0-gcc43.patch
-BuildRequires:  libSDL_mixer-devel libSDL_image-devel zlib-devel libpng-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libSDL_mixer-devel libSDL_image-devel zlib-devel libpng-devel libpng17-tools
 BuildRequires:  libvorbis-devel doxygen desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -38,7 +40,7 @@ in the family.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0  -p1
 
 
 %build
@@ -112,6 +114,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2.1-alt1_31
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.1-alt1_13
 - update to new release by fcimport
 
