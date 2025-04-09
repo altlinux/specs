@@ -1,13 +1,13 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libgtextutils
 Version:	0.7
-Release:	alt1_22
+Release:	alt1_37
 Summary:	Assaf Gordon text utilities    
 
-Group:		System/Libraries
-License:	AGPLv3+
+License:	AGPL-3.0-or-later
 URL:		http://hannonlab.cshl.edu/fastx_toolkit/
 Source0:	https://github.com/agordon/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 Patch0:		libgtextutils-GCC6-iostream.patch
@@ -19,8 +19,8 @@ Source44: import.info
 Text utilities library used by the fastx_toolkit, from the Hannon Lab
 
 %package       devel
+Group: Development/Other
 Summary:       Development files for %{name}
-Group:	       Development/Other
 Requires:      %{name} = %{version}-%{release}
 Requires:      pkgconfig
 
@@ -32,7 +32,7 @@ developing applications that use %{name}.
 %prep
 %setup -q
 
-%patch0 -p1
+%patch0  -p1
 
 %build
 %configure --disable-static
@@ -48,6 +48,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 
+
+
+
 %files
 %doc AUTHORS COPYING README THANKS NEWS
 %{_libdir}/libgtextutils-*.so.*
@@ -59,6 +62,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.7-alt1_37
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_22
 - update to new release by fcimport
 
