@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 26.3.0
+Version: 26.4.0
 Release: alt1
 
 Summary: Software library for fast, message-based applications
@@ -90,6 +90,9 @@ This package contains the headers for the python bindings.
 %add_python3_req_skip cython.cimports.zmq.backend.cython._externs
 %add_python3_req_skip cython.cimports.zmq.backend.cython.libzmq
 %add_python3_req_skip cython.cimports.zmq.utils.buffers
+%add_python3_req_skip cython.cimports.cpython.buffer
+%add_python3_req_skip cython.cimports.cpython.bytes
+%add_python3_req_skip cython.cimports.cpython.exc
 
 %prep
 %setup
@@ -131,6 +134,9 @@ rm -v zmq/__init__.py
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 26.4.0-alt1
+- Automatically updated to 26.4.0.
+
 * Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 26.3.0-alt1
 - Automatically updated to 26.3.0.
 
