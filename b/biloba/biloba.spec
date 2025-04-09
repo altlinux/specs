@@ -1,12 +1,12 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install imake libSDL-devel libX11-devel libXt-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libICE-devel libSDL-devel libSM-devel libX11-devel libXt-devel libopenmotif-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_28
+Release:        alt2_34
 Summary:        A tactical board game
 
 License:        GPL-2.0-or-later
@@ -30,7 +30,7 @@ your opponents.
 
 
 %build
-export CFLAGS="$CFLAGS -fcommon -g"
+export CFLAGS="$CFLAGS -fcommon -g -std=c17"
 autoreconf -if
 %configure --prefix=%{_prefix}
 %make_build
@@ -97,6 +97,9 @@ desktop-file-install                    \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt2_34
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.9.3-alt2_28
 - update to new release by fcimport
 
