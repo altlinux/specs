@@ -1,22 +1,23 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           liblzf
 Version:        3.6
-Release:        alt2_14
+Release:        alt2_32
 Summary:        Small data compression library
 
-Group:          System/Libraries
-License:        BSD or GPLv2+
+# Automatically converted from old format: BSD or GPLv2+ - review is highly recommended.
+License:        LicenseRef-Callaway-BSD OR GPL-2.0-or-later
 URL:            http://oldhome.schmorp.de/marc/liblzf.html
 Source0:        http://dist.schmorp.de/liblzf/liblzf-%{version}.tar.gz
 # Adds autoconf and in particular support for building shared libraries.
 # 7th Feb 2011 - Mail sent upstream to author. Awaiting conclusion. 
 Patch0:         liblzf-%{version}-autoconf-20140314.patch
 
-BuildRequires:  autoconf-common
-BuildRequires:  automake-common
-BuildRequires:  libtool-common
+BuildRequires:  autoconf
+BuildRequires:  automake
+BuildRequires:  libtool
 Source44: import.info
 
 %description
@@ -26,12 +27,12 @@ incorporate into your own programs.  The compression algorithm
 is very, very fast, yet still written in portable C.
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %if 0%{?el4}%{?el5}
-Requires:       pkg-config
+Requires:       pkgconfig
 %endif
 
 
@@ -41,7 +42,7 @@ developing applications that use liblzf.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0  -p1
 
 %build
 sh ./bootstrap.sh
@@ -61,6 +62,8 @@ ln -s lzf unlzf
 popd
 rm -f %{buildroot}%{_libdir}/liblzf.la
 
+
+
 %files
 %{_bindir}/lzf
 %{_bindir}/unlzf
@@ -76,6 +79,9 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.6-alt2_32
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_14
 - update to new release by fcimport
 
