@@ -3,7 +3,7 @@
 
 Name: diag-%diagnostic_tool
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
@@ -42,7 +42,7 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %ifnarch %e2k
 shellcheck -e SC1090,SC1091,SC2004,SC2015,SC2034,SC2086,SC2154,SC2001,SC2120,SC2119,SC2317 %name
 %endif
-find ./alterator/ -type f -exec alterator-entry --verbose {} \+
+find ./alterator/ -type f -exec alterator-entry validate {} \+
 
 %files
 %_bindir/%name
@@ -52,6 +52,9 @@ find ./alterator/ -type f -exec alterator-entry --verbose {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Apr 09 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt2
+- spec: switch to new alterator-entry
+
 * Mon Dec 23 2024 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
 - Add Alterator Entry validation to .spec (thx Kozyrev Yuri)
 - Translate Alterator Entry files to toml (thx Kozyrev Yuri)
