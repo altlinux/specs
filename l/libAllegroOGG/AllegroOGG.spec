@@ -1,19 +1,21 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname AllegroOGG
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libAllegroOGG
 Version:        1.0.3
-Release:        alt2_19
+Release:        alt2_38
 Summary:        Ogg library for use with the Allegro game library
-Group:          System/Libraries
-License:        BSD
+# Automatically converted from old format: BSD - review is highly recommended.
+License:        LicenseRef-Callaway-BSD
 URL:            http://www.allegro.cc/resource/Libraries/Audio/alogg
 Source0:        http://www.hero6.com/filereviver/alogg.zip
 Source1:        AllegroOGG.pc.in
+BuildRequires:  gcc
 BuildRequires:  liballegro-devel libvorbis-devel
 Source44: import.info
 Provides: AllegroOGG = %{version}-%{release}
@@ -25,8 +27,8 @@ amongst a lot of other capabilites.
 
 
 %package devel
+Group: Development/Other
 Summary:        Developmental libraries and include files for AllegroOgg
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 Provides: AllegroOGG-devel = %{version}-%{release}
 
@@ -37,8 +39,8 @@ the %{oldname} library.
 
 %prep
 %setup -n %{oldname}-%{version} -q -c
-%{__sed} -i 's/\r//' docs/A*.txt
-%{__sed} -e "s#@prefix@#%{_prefix}#g" -e "s#@libdir@#%{_libdir}#g" \
+sed -i 's/\r//' docs/A*.txt
+sed -e "s#@prefix@#%{_prefix}#g" -e "s#@libdir@#%{_libdir}#g" \
   -e "s#@includedir@#%{_includedir}#g" -e "s#@version@#%{version}#g" \
   -e "s#@name@#%{oldname}#" %{SOURCE1} > %{oldname}.pc
 
@@ -60,6 +62,9 @@ mkdir -p $RPM_BUILD_ROOT%{_includedir}/%{oldname}
 install -m 644 include/* $RPM_BUILD_ROOT%{_includedir}/%{oldname}
 
 
+
+
+
 %files
 %doc docs/*.txt
 %{_libdir}/*.so.*
@@ -71,6 +76,9 @@ install -m 644 include/* $RPM_BUILD_ROOT%{_includedir}/%{oldname}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt2_38
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt2_19
 - update to new release by fcimport
 
