@@ -3,10 +3,11 @@ Group: Archiving/Other
 %define _localstatedir %{_var}
 Name: par2cmdline
 Version: 0.8.1
-Release: alt1_4
+Release: alt1_14
 Summary: PAR 2.0 compatible file verification and repair tool
 
-License: GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License: GPL-2.0-or-later
 URL: https://github.com/Parchive/par2cmdline/
 Source0: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2
 Source1: https://github.com/Parchive/par2cmdline/releases/download/v%{version}/par2cmdline-%{version}.tar.bz2.sig
@@ -20,7 +21,7 @@ Patch0: 0001-Fix-for-Github-issue-143.-Test-did-not-account-for-e.patch
 
 BuildRequires: gcc-c++
 # Needed for source file verification.
-BuildRequires: gnupg gnupg2
+BuildRequires: gnupg2
 Source44: import.info
 Conflicts: par2 < 0.5
 Obsoletes: par2 < 0.5
@@ -68,6 +69,9 @@ make check-TESTS
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt1_14
+- update to new release by fcimport
+
 * Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt1_4
 - update to new release by fcimport
 
