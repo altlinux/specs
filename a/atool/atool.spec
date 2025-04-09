@@ -1,15 +1,16 @@
 Group: Archiving/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl perl(Encode.pm)
+BuildRequires: perl(Encode.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		atool
 Version:	0.39.0
-Release:	alt1_16
+Release:	alt1_27
 Summary:	A perl script for managing file archives of various types
 
-License:	GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 URL:		http://www.nongnu.org/atool/
 Source0:	http://savannah.nongnu.org/download/%{name}/%{name}-%{version}.tar.gz
 
@@ -56,6 +57,9 @@ chmod 0644 NEWS
 %{_mandir}/man1/*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.39.0-alt1_27
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_16
 - update to new release by fcimport
 
