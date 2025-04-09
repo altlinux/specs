@@ -3,9 +3,11 @@
 %define HYP_DIR contrib/aw-el2-barebone
 %define RBS_VER 1
 
+%set_gcc_version 11
+
 Name: u-boot-repka4
 Version: 2020.04.rc3.%RBS_VER
-Release: alt1
+Release: alt2
 
 Summary: Boot Loader for Repka Pi 4
 License: GPLv2+
@@ -55,5 +57,8 @@ install -Dpm0644 %U_BOOT_DIR/u-boot-sunxi-with-spl.bin -t %buildroot%_datadir/u-
 %_datadir/u-boot/repka_pi4/*
 
 %changelog
+* Wed Apr 09 2025 Anton Kurachenko <srebrov@altlinux.org> 2020.04.rc3.1-alt2
+- Switched to use gcc11.
+
 * Tue Mar 25 2025 Anton Kurachenko <srebrov@altlinux.org> 2020.04.rc3.1-alt1
 - Initial build for ALT Linux.
