@@ -5,15 +5,16 @@ Group: Development/Tools
 
 Name:           grfcodec
 Version:        6.0.6
-Release:        alt1_16%{?prever}
+Release:        alt1_26%{?prever}
 Summary:        A suite of programs to modify Transport Tycoon Deluxe's GRF files
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://dev.openttdcoop.org/projects/grfcodec
 Source0:        http://binaries.openttd.org/extra/grfcodec/%{version}/grfcodec-%{version}-source.tar.xz
 #Source0:        http://binaries.openttd.org/extra/grfcodec-nightly/%{prever}/grfcodec-nightly-%{prever}-source.tar.xz
 Patch0:         gcc10.patch
 BuildRequires:  gcc-c++
-BuildRequires:  boost-complete libpng-devel
+BuildRequires:  boost-complete libpng-devel libpng17-tools
 Source44: import.info
 
 
@@ -23,7 +24,7 @@ A suite of programs to modify Transport Tycoon Deluxe's GRF files.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0  -p1
 
 
 %build
@@ -55,6 +56,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 6.0.6-alt1_26
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 6.0.6-alt1_16
 - update to new release by fcimport
 
