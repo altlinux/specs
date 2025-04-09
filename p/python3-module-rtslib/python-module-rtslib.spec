@@ -1,6 +1,6 @@
 Name:           python3-module-rtslib
-Version:        2.1.fb69
-Release:        alt3
+Version:        2.2.3
+Release:        alt1
 
 Summary:        API for Linux kernel LIO SCSI target
 
@@ -13,9 +13,8 @@ Source:         %name-%version.tar
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six
-BuildRequires: python3-module-pyudev
-BuildRequires: python3-module-kmod
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 Requires: python3-module-kmod
 
@@ -36,18 +35,15 @@ on system restart.
 
 sed 's|/var/target|/var/lib/target|' -i rtslib/root.py
 
-
-sed -i "s/__version__ = .*/__version__ = '%version'/g" \
-	rtslib/__init__.py
-
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 gzip --stdout doc/targetctl.8 > doc/targetctl.8.gz
 gzip --stdout doc/saveconfig.json.5 > doc/saveconfig.json.5.gz
 
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mkdir -p %buildroot{%_man8dir,%_man5dir,%_unitdir,%_sysconfdir/target/backup,%_localstatedir/target/{pr,alua}}
 
 install -m 644 systemd/target.service %buildroot%_unitdir/target.service
@@ -76,6 +72,9 @@ install -m 644 doc/saveconfig.json.5.gz %buildroot%_man5dir/
 %_man5dir/saveconfig.json.5.*
 
 %changelog
+* Tue Apr 08 2025 Anton Vyatkin <toni@altlinux.org> 2.2.3-alt1
+- New version 2.2.3.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.fb69-alt3
 - Rename package, spec cleanup.
 

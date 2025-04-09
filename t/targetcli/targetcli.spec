@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: targetcli
-Version: 2.1.54
+Version: 3.0.1
 Release: alt1
 Epoch: 1
 
@@ -20,8 +20,8 @@ Requires: python3-module-%name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %description
 An administration shell for configuring iSCSI, FCoE, and other
@@ -38,10 +38,8 @@ An administration shell for storage targets
 %prep
 %setup
 
-sed -i "s/__version__ = .*/__version__ = '%version'/g" \
-	%name/__init__.py
-
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 bzip2 --stdout targetcli.8 > targetcli.8.bz2
 
@@ -64,9 +62,12 @@ install -m 644 systemd/* %buildroot%_unitdir/
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%{pyproject_distinfo targetcli-fb}/
+%python3_sitelibdir/%{pyproject_distinfo targetcli}/
 
 %changelog
+* Tue Apr 08 2025 Anton Vyatkin <toni@altlinux.org> 1:3.0.1-alt1
+- New version 3.0.1.
+
 * Wed Feb 15 2023 Stanislav Levin <slev@altlinux.org> 1:2.1.54-alt1
 - 2.1.fb49 -> 2.1.54.
 
