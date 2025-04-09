@@ -7,10 +7,11 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_29
+Release:        alt3_36
 Summary:        A library for parsing the XNM format
 
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://xnm.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/xnm/%{name}-%{version}.tar.gz
 Patch0:         libxnm-c99.patch
@@ -60,6 +61,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt3_36
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt3_29
 - update to new release by fcimport
 
