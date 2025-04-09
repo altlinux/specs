@@ -4,10 +4,11 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libQGLViewer
 Version:        2.9.1
-Release:        alt1_2
+Release:        alt1_7
 Summary:        Qt based OpenGL generic 3D viewer library
 
-License:        GPLv2 with exceptions or GPLv3 with exceptions 
+# Automatically converted from old format: GPLv2 with exceptions or GPLv3 with exceptions - review is highly recommended.
+License:        LicenseRef-Callaway-GPLv2-with-exceptions OR LicenseRef-Callaway-GPLv3-with-exceptions 
 URL:            http://www.libqglviewer.com/index.html
 Source0:        http://www.libqglviewer.com/src/%{name}-%{version}.tar.gz
 
@@ -59,8 +60,8 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .exit
-%patch1 -p1 -b .dbg
+%patch0  -p1 -b .exit
+%patch1  -p1 -b .dbg
 
 # Fix permissions
 chmod a-x examples/*/*.vcproj
@@ -118,6 +119,9 @@ make -e INSTALL_ROOT=$RPM_BUILD_ROOT install STRIP=/usr/bin/true
 %doc examples
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_7
+- update to new release by fcimport
+
 * Fri Sep 15 2023 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_2
 - new version
 
