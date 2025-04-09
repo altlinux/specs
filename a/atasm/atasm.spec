@@ -1,19 +1,17 @@
 Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: unzip
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           atasm
-Version:        1.09
-%global verstr  %(echo %{version} | sed -e 's/\\.//')
+Version:        1.26
 Release:        alt1_1
 Summary:        6502 cross-assembler
 
-License:        GPLv2+
-URL:            https://atari.miribilist.com/atasm/
-Source0:        https://atari.miribilist.com/atasm/%{name}%{verstr}.zip
+License:        GPL-2.0-or-later AND RSA-MD
+URL:            https://github.com/CycoPH/atasm
+Source0:        https://github.com/CycoPH/atasm/archive/V%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc
 BuildRequires:  zlib-devel
@@ -28,12 +26,13 @@ with lightning speed.
 
 
 %prep
-%setup -q -n %{name}%{verstr}
+%setup -q
+
 
 
 %build
 pushd src
-%make_build CFLAGS="%{optflags} -DZLIB_CAPABLE -DUNIX" L="%{build_ldflags} -lz"
+%make_build CFLAGS="%{optflags} -DZLIB_CAPABLE -DUNIX" L="%{build_ldflags} -lz -lm"
 sed -e 's|\%\%DOCDIR\%\%|%{?_pkgdocdir}%{!?_pkgdocdir:%{_docdir}/%{name}-%{version}}|g' %{name}.1.in > %{name}.1
 popd
 
@@ -62,6 +61,9 @@ popd
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.26-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 15 2021 Igor Vlasenko <viy@altlinux.org> 1.09-alt1_1
 - update to new release by fcimport
 
