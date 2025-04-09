@@ -2,14 +2,14 @@ Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
-%define fedora 37
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_49
+Release:	alt4_56
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
-License:	GPL+
+License:	GPL-1.0-or-later
 URL:		http://gtorrentviewer.sourceforge.net/
 Source0:	http://downloads.sf.net/gtorrentviewer/GTorrentViewer-%{version}.tar.gz
 Patch0:		gtorrentviewer-0.2b-desktop.patch
@@ -24,7 +24,7 @@ BuildRequires:	coreutils
 BuildRequires:	gcc
 BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext gettext-tools
+BuildRequires:	gettext-tools
 BuildRequires:	intltool
 BuildRequires:	libcurl-devel
 
@@ -47,28 +47,28 @@ download.
 
 # Let drag and drop work with URIs as well as files (#206262)
 # Also drop ".png" suffix from icon filename, as per Icon Theme spec
-%patch0
+%patch0 
 
 # mainwindow.c requires ceil() from libm (#564928)
-%patch1 -p1
+%patch1  -p1
 
 # Fix crash due to use of uninitialized GValue (#542502, #572806)
-%patch2 -p1
+%patch2  -p1
 
 # Improve tracker support (#674726)
-%patch3 -p1
+%patch3  -p1
 
 # <curl/types.h> went away in curl 7.22.0
-%patch4 -p1
+%patch4  -p1
 
 # Add missing format strings in g_warning() invocations
-%patch5
+%patch5 
 
 # Avoid segfault when dealing with torrent that has no tracker (#1178062)
-%patch6
+%patch6 
 
-# C99 compatibility issues.
-%patch7 -p1
+# C99 compatibility issues
+%patch7  -p1
 
 # curl/types.h are no more; was true for  0.2b-22.
 sed -i 's,#include <curl/types.h>,,' src/main.c
@@ -108,6 +108,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2b-alt4_56
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.2b-alt4_49
 - update to new release by fcimport
 
