@@ -17,9 +17,10 @@ Group: System/Libraries
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_35
+Release:        alt3_42
 Summary:        CGI easy as C
-License:        LGPLv2+
+# Automatically converted from old format: LGPLv2+ - review is highly recommended.
+License:        LicenseRef-Callaway-LGPLv2+
 URL:            http://libcgi.sourceforge.net/
 Source:         http://prdownloads.sourceforge.net/libcgi/libcgi-%{version}.tar.gz
 Patch0:         libcgi-1.0-Makefile.in.patch
@@ -56,10 +57,10 @@ to develop programs that use the LibCGI library.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch0  -p1
+%patch1  -p1
+%patch2  -p1
+%patch3  -p1
 find examples/ -name "Makefile.am" -delete
 
 
@@ -130,6 +131,9 @@ fi
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0-alt3_42
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt3_35
 - update to new release by fcimport
 
