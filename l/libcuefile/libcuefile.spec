@@ -3,7 +3,7 @@
 %define sover 0
 Name: libcuefile
 Version: r475
-Release: alt2
+Release: alt3
 Summary: cue and toc file parsers and utilities
 License: GPLv2
 Group: System/Libraries
@@ -15,6 +15,7 @@ Source: %{name}_%{version}.tar
 # PATCH-FIX-OPENSUSE mathmeaning.patch asterios.dramis@gmail.com -- Fix rpm post build error "Program uses operation a <= b <= c, which is not well defined." (based on patch from openSUSE cuetools)
 Patch0:         mathmeaning.patch
 Patch1:         libcuefile-r475-ALT-fix-implict-declaration.patch
+Patch2:         libcuefile-r475-ALT-fix-CMakeLists.patch
 
 BuildPreReq: cmake
 
@@ -37,6 +38,7 @@ This package contains development files of %name.
 %setup -q -n %{name}_%{version}
 %patch0
 %patch1
+%patch2
 
 # Fix rpmlint error "spurious-executable-perm"
 chmod 644 AUTHORS COPYING README
@@ -73,6 +75,9 @@ rm -f %{buildroot}%{_libdir}/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Apr 07 2025 Ulysses Apokin <ulysses@altlinux.org> r475-alt3
+- fix FTBFS
+
 * Tue Mar 25 2025 Ulysses Apokin <ulysses@altlinux.org> r475-alt2
 - fix FTBFS
 
