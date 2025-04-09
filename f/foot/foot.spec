@@ -1,6 +1,6 @@
 Name: foot
 Version: 1.21.0
-Release: alt1
+Release: alt2
 
 Summary: A fast, lightweight and minimalistic Wayland terminal emulator
 License: MIT
@@ -49,6 +49,9 @@ BuildRequires: pkgconfig(libutf8proc)
 %_mandir/*/*
 
 %changelog
+* Wed Apr 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.21.0-alt2
+- fixed FTBFS with recent wayland-protocols
+
 * Tue Mar 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.21.0-alt1
 - 1.21.0 released
 
