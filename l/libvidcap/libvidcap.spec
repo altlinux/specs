@@ -7,13 +7,14 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libvidcap
 Version:	0.2.1
-Release:	alt1_26
+Release:	alt1_35
 Summary:	Cross-platform video capture library
-License:	LGPLv2+
+# Automatically converted from old format: LGPLv2+ - review is highly recommended.
+License:	LicenseRef-Callaway-LGPLv2+
 URL:		http://libvidcap.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/libvidcap/%{name}-%{version}.tar.gz
 BuildRequires:  gcc
-BuildRequires:	libcpupower-devel
+BuildRequires:	rdma-core-devel
 Source44: import.info
 
 %description
@@ -54,6 +55,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_includedir}/vidcap/
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2.1-alt1_35
+- update to new release by fcimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.2.1-alt1_26
 - fixed build with LTO
 
