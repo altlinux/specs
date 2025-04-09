@@ -2,7 +2,7 @@
 
 Name: zziplib
 Version: 0.13.78
-Release: alt1
+Release: alt2
 
 Summary: Lightweight library to easily extract data from zip files
 License: LGPL-2.0-or-later OR MPL-2.0
@@ -10,6 +10,8 @@ Group: System/Libraries
 
 URL: https://github.com/gdraheim/zziplib
 Source: %name-%version.tar
+
+Patch: zziplib-0.13.78-ALT-fix-CMakeLists.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake python3
@@ -49,6 +51,7 @@ This package contains some useful ZZipLib utilites.
 
 %prep
 %setup
+%patch
 
 %build
 %cmake
@@ -73,6 +76,9 @@ This package contains some useful ZZipLib utilites.
 %_bindir/*
 
 %changelog
+* Mon Apr 07 2025 Ulysses Apokin <ulysses@altlinux.org> 0.13.78-alt2
+- fixed build with CMake >= 4.0.0
+
 * Tue Feb 11 2025 Ulysses Apokin <ulysses@altlinux.org> 0.13.78-alt1
 - 0.13.78
 
