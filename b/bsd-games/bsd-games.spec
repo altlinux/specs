@@ -1,17 +1,18 @@
 Group: Games/Other
-%define fedora 37
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Ick!  This is only a temporary hack until I have more time
 # to rebase the affected patches (#4, and possibly more)
 
-%global wtf_ver 20200829
+%global wtf_ver 20230906
 
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt3_71
-License: BSD and BSD with advertising
+Release: alt3_81
+# Automatically converted from old format: BSD and BSD with advertising - review is highly recommended.
+License: LicenseRef-Callaway-BSD AND LicenseRef-Callaway-BSD-with-advertising
 URL: ftp://metalab.unc.edu/pub/Linux/games/
 Source0: ftp://metalab.unc.edu/pub/Linux/games/bsd-games-%{version}.tar.gz
 Source1: config.params
@@ -46,9 +47,11 @@ Patch22: bsd-games-2.17-getrandom.patch
 Patch23: bsd-games-2.17-printf.patch
 Patch24: bsd-games-2.17-printw.patch
 Patch25: bsd-games-c99.patch
-BuildRequires: gcc
+Patch26: atc.patch
+Patch27: boggle_fread_chk.patch
+
 BuildRequires: gcc-c++
-BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires: libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires: words
 BuildRequires: flex
 %if 0%{?fedora} > 33
@@ -57,7 +60,6 @@ BuildRequires: flex
 BuildRequires: flex
 %endif
 BuildRequires: bison
-Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
 Source44: import.info
 Patch33: bsd-games-2.17-alt-elbrus.patch
 
@@ -71,33 +73,42 @@ bsd-fbg, trek, worm, worms and wump.
 %prep
 %setup -q -a2
 install -p -m 755 %{SOURCE1} .
-%patch0 -p1 -b .debian
-%patch1 -p1 -b .ospeed
-%patch2 -p1 -b .getline
-%patch3 -p1 -b .utmpstruct
-%patch4 -p1 -b .setresgid
-%patch5 -p1 -b .tetrisgid
-%patch6 -p1 -b .hackgid
-%patch7 -p1 -b .phantasiagid
-%patch8 -p1 -b .monop.rename
-%patch9 -p0 -b .banner.rename
-%patch10 -p0 -b .cplusplus
-%patch11 -p0 -b .nolibtermcap
-%patch12 -p0 -b .tetris.rename
-%patch13 -p1 -b .gcc43
-%patch14 -p0 -b .wordlimit
-%patch16 -p0 -b .backgammonsize
-%patch17 -p0 -b .adventurecrc
+%patch0  -p1 -b .debian
+%patch1  -p1 -b .ospeed
+%patch2  -p1 -b .getline
+%patch3  -p1 -b .utmpstruct
+%patch4  -p1 -b .setresgid
+%patch5  -p1 -b .tetrisgid
+%patch6  -p1 -b .hackgid
+%patch7  -p1 -b .phantasiagid
+%patch8  -p1 -b .monop.rename
+%patch9  -p0 -b .banner.rename
+%patch10  -p0 -b .cplusplus
+%patch11  -p0 -b .nolibtermcap
+%patch12  -p0 -b .tetris.rename
+%patch13  -p1 -b .gcc43
+%patch14  -p0 -b .wordlimit
+%patch16  -p0 -b .backgammonsize
+%patch17  -p0 -b .adventurecrc
 pushd wtf-%{wtf_ver}
-%patch18 -p1 -b .wtfrpm
+%patch18  -p1 -b .wtfrpm
 popd
-%patch19 -p0 -b .adventureinit
-%patch20 -p1 -b .backgammonrecursion
-%patch21 -p1 -b .huntversion
-%patch22 -p1 -b .getrandom
-%patch23 -p1 -b .printf
-%patch24 -p1 -b .printw
-%patch25 -p1 -b .c99
+%patch19  -p0 -b .adventureinit
+%patch20  -p1 -b .backgammonrecursion
+%patch21  -p1 -b .huntversion
+%patch22  -p1 -b .getrandom
+%patch23  -p1 -b .printf
+%patch24  -p1 -b .printw
+%patch25  -p1 -b .c99
+%patch26  -p1 -b .atc
+%patch27  -p1 -b .fread_chk
+
+# Create a sysusers.d config file
+cat >bsd-games.sysusers.conf <<EOF
+g gamehack -
+g gamesail -
+g gamephant -
+EOF
 %patch33 -p1
 
 %build
@@ -150,13 +161,10 @@ install -p -m 0755 wtf $RPM_BUILD_ROOT%{_bindir}/
 gzip wtf.6
 install -p -m 0644 wtf.6.gz $RPM_BUILD_ROOT%{_mandir}/man6/
 install -p -m 0644 acronyms* $RPM_BUILD_ROOT%{_datadir}/misc/
+mv $RPM_BUILD_ROOT%{_datadir}/misc/acronyms-o.real $RPM_BUILD_ROOT%{_datadir}/misc/acronyms-o
 popd
 
-%pre
-for group in gamehack gamesail gamephant; do
-    getent group $group >/dev/null || groupadd -r $group
-done
-exit 0
+install -m0644 -D bsd-games.sysusers.conf %{buildroot}%{_sysusersdir}/bsd-games.conf
 
 %files
 %{_bindir}/adventure
@@ -203,7 +211,7 @@ exit 0
 %{_bindir}/wump
 %{_datadir}/%{name}
 %{_datadir}/misc/acronyms
-%{_datadir}/misc/acronyms-o.real
+%{_datadir}/misc/acronyms-o
 %{_datadir}/misc/acronyms.comp
 %{_datadir}/misc/acronyms-o.fake
 %{_mandir}/man6/*
@@ -223,8 +231,12 @@ exit 0
 %config(noreplace) %attr(664,root,games) %{_var}/games/snakerawscores
 %config(noreplace) %attr(664,root,games) %{_var}/games/bsd-fbg.scores
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
+%{_sysusersdir}/bsd-games.conf
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.17-alt3_81
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.17-alt3_71
 - update to new release by fcimport
 
