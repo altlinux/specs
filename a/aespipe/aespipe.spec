@@ -1,13 +1,13 @@
 Group: System/Base
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Summary:        AES-based encryption tool for tar/cpio and loop-aes imagemore 
+Summary:        AES-based encryption tool for tar/cpio and loop-aes imagemore
 Name:           aespipe
-Version:        2.4f
-Release:        alt1_3
-License:        GPLv2+
+Version:        2.4g
+Release:        alt1_5
+License:        GPL-2.0-or-later
 URL:            http://loop-aes.sourceforge.net/
-Source:         http://loop-aes.sourceforge.net/aespipe/aespipe-v%{version}.tar.bz2
+Source:         http://loop-aes.sourceforge.net//aespipe/aespipe-v%{version}.tar.bz2
 BuildRequires:  gcc
 BuildRequires:  gpg
 Requires:       gpg
@@ -28,10 +28,9 @@ kernel module.
 %prep
 %setup -q -n %{name}-v%{version}
 
-%build
-# Package calls CC to link, and violates strict-aliasing C rules
 
-CFLAGS="$CFLAGS -fno-strict-aliasing"
+%build
+
 %configure LDFLAGS="${CFLAGS}"
 
 %global make_target %{nil}
@@ -57,10 +56,13 @@ install -Dp -m0755 aespipe %{buildroot}%{_bindir}/aespipe
 %files
 %dir %{_defaultdocdir}/%{name}
 %{_defaultdocdir}/%{name}/*
-%{_mandir}/man1/*
+%{_mandir}/man1/aespipe.1*
 %{_bindir}/aespipe
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.4g-alt1_5
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.4f-alt1_3
 - update to new release by fcimport
 
