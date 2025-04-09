@@ -1,22 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libpar2
 Version:        0.2       
-Release:        alt3_27
+Release:        alt3_44
 Summary:        Library for performing comman tasks related to PAR recovery sets
      
-Group:          System/Libraries
-License:        GPLv2+        
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later        
 URL:            http://parchive.sourceforge.net/
 Source0:        http://prdownloads.sourceforge.net/sourceforge/parchive/%{name}-%{version}.tar.gz
 Patch0:         libpar2-0.2-cancel.patch
 Patch1:         libpar2-0.2-bugfixes.patch
   
-BuildRequires:  libsigc++2-devel libtool-common
+BuildRequires:  gcc-c++
+BuildRequires:  libsigc++2-devel libtool
 BuildRequires:  sed
 Source44: import.info
 
@@ -28,8 +27,8 @@ sets and is the basis for GUI applications such as GPar2.
 
 
 %package devel
-Summary: Development files for %{name}
 Group: Development/Other
+Summary: Development files for %{name}
 Requires: %{name} = %{version}-%{release}
 
 %description devel
@@ -39,8 +38,8 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p2
-%patch1 -p2
+%patch0  -p2
+%patch1  -p2
 #fix source files
 chmod -x *.cpp *.h ChangeLog
 touch tmpfile -r README 
@@ -71,6 +70,10 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
+
+
+
+
 %files
 %{_libdir}/*.so.*
 %doc COPYING README ChangeLog AUTHORS ROADMAP
@@ -82,6 +85,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2-alt3_44
+- update to new release by fcimport
+
 * Tue Jul 02 2019 Michael Shigorin <mike@altlinux.org> 0.2-alt3_27
 - E2K: explicit -std=c++11
 
