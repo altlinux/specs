@@ -15,16 +15,16 @@ BuildRequires: /usr/bin/R
 %endif
 ExcludeArch: %R_exclude_arches
 
-%undefine __cmake_in_source_build
-%global soversion 16
-%global apiversion 1.5
+%global soversion 17
+%global apiversion 1.6
 
 Name:           libompl
-Version:        1.5.0
-Release:        alt4_14
+Version:        1.6.0
+Release:        alt1_7
 Summary:        The Open Motion Planning Library
 
-License:        BSD
+# Automatically converted from old format: BSD - review is highly recommended.
+License:        LicenseRef-Callaway-BSD
 URL:            http://ompl.kavrakilab.org/
 Source0:        https://github.com/%{oldname}/%{oldname}/archive/%{version}/%{oldname}-%{version}.tar.gz
 BuildRequires:  gcc-c++
@@ -70,7 +70,7 @@ developing applications that use %{oldname}.
 # Get rid of bundled libs
 rm -rf src/external/
 rm -rf scripts/plannerarena
-%patch0 -p0 -b .cmakeinstall
+%patch0  -p0 -b .cmakeinstall
 
 %build
 # Python bindings are disabled because dependencies pygccxml and pyplusplus are not packaged for Fedora
@@ -97,12 +97,13 @@ rm -rf %{buildroot}%{_includedir}/%{oldname}/CMakeFiles
 rm -rf %{buildroot}%{_bindir}
 rm -f %{buildroot}%{_mandir}/man1/plannerarena*
 rm -f %{buildroot}%{_mandir}/man1/ompl_benchmark_statistics*
+rm -rf %{buildroot}%{_datadir}/ament_index
 
 %check
 export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 # Test failures can be triggered by builder CPU speed.
 # Accept test failures for slow builders.
-%fedora_v2_ctest --verbose  || exit 0
+%fedora_v2_ctest || exit 0
 
 
 %files
@@ -119,6 +120,9 @@ export LD_LIBRARY_PATH=%{buildroot}%{_libdir}
 %{_libdir}/%{oldname}
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.6.0-alt1_7
+- update to new release by fcimport
+
 * Tue Nov 07 2023 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt4_14
 - dropped unused man pages (closes: #48352)
 
