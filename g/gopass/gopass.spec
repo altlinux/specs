@@ -4,7 +4,7 @@
 %def_with check
 
 Name: gopass
-Version: 1.15.14
+Version: 1.15.15
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -18,6 +18,10 @@ Source1: vendor.tar
 
 # Fixes a unit test for the vendored build
 Patch0: gopass-1.15.5-alt-fix-tests-for-vendored-build.patch
+# Temporarily skipping TestGPGVerify due to key expiration issue
+# waiting for https://github.com/gopasspw/gopass/pull/3048
+# to be released
+Patch1: gopass-1.15.15-alt-disable-test-gpg-verify.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -38,6 +42,7 @@ Full autonomy - No network connectivity required, unless you want it.
 %prep
 %setup -a 1
 %patch0 -p0
+%patch1 -p1
 # -buildmode=pie requires external (cgo) linking
 sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/' Makefile
 
@@ -74,6 +79,9 @@ cd .build/src/%import_path
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Apr 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1.15.15-alt1
+- 1.15.14 -> 1.15.15
+
 * Tue Aug 06 2024 Alexander Stepchenko <geochip@altlinux.org> 1.15.14-alt1
 - 1.15.13 -> 1.15.14
 
