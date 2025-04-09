@@ -1,18 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: libglvnd-devel
 # END SourceDeps(oneline)
+Group: Engineering
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           liboglappth
 Summary:        An OpenGL wrapper library
 Version:        1.0.0
-Release:        alt1_6
-License:        GPLv2+
-Group:          Engineering
+Release:        alt1_22
+
+# SPDX confirmed
+License:        GPL-2.0-or-later
 URL:            http://www.bioinformatics.org/ghemical/ghemical/index.html
 Source0:        http://www.bioinformatics.org/ghemical/download/current/%{name}-%{version}.tar.gz
 BuildRequires:  libtool
+BuildRequires:  gcc-c++
 BuildRequires:  libGL-devel
 BuildRequires:  libGLU-devel
 Source44: import.info
@@ -22,33 +25,38 @@ Library for creating portable OpenGL applications with easy-to-code
 scene setup and selection operations.
 
 %package devel
+Group: Development/Other
 Summary:    Libraries and header files from %{name}
-Group:      Development/Other
 Requires:   %{name} = %{version}-%{release}
-Requires:   pkgconfig
 
 %description devel
 Libraries and header include files for developing programs
 based on %{name}.
 
 %prep
-%setup -n %{name}-%{version} -q
+%setup -q
 # FIXME: set -e behavior change between f26 and f27??
 [ -s NEWS ] && exit 1 || :
 [ -s README ] && exit 1 || :
+autoreconf -v -f -i
 
 %build
-autoreconf -v -f -i
 %configure --disable-static
 %make_build CCOPTIONS="%{optflags}" LIBS="-lGL -lGLU"
 
 %install
-make DESTDIR="%{buildroot}" INSTALL="install -p" install
+%makeinstall_std
 find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
+
+
 %files
-%doc AUTHORS ChangeLog COPYING
-%{_libdir}/liboglappth.so.*
+%doc AUTHORS
+%doc ChangeLog
+%doc --no-dereference COPYING
+
+%{_libdir}/liboglappth.so.2
+%{_libdir}/liboglappth.so.2.*
 
 %files devel
 %{_includedir}/oglappth/
@@ -57,6 +65,9 @@ find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt1_22
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_6
 - update to new release by fcimport
 
