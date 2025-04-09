@@ -6,9 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           crystal-stacker
 Version:        1.5
-Release:        alt2_31
+Release:        alt2_44
 Summary:        Falling blocks, match 3 or more of the same color crystals
-License:        Crystal Stacker
+# Automatically converted from old format: Crystal Stacker - review is highly recommended.
+License:        CrystalStacker
 URL:            http://www.t3-i.com/cstacker.htm
 Source0:        http://www.t3-i.com/games/crystal_stacker/downloads/crystal_stacker-1.5-src.zip
 Source1:        %{name}.desktop
@@ -19,7 +20,7 @@ Source5:        %{name}.appdata.xml
 Patch0:         crystal-stacker-1.5-ImplicitDSOLinking.patch
 Patch1:         crystal-stacker-1.5-fcommon-fix.patch
 BuildRequires:  gcc liballegro-devel dumb-devel
-BuildRequires:  ImageMagick-tools desktop-file-utils libappstream-glib
+BuildRequires:  ImageMagick-tools desktop-file-utils libappstream-glib libappstream-glib-gir
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -110,6 +111,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.5-alt2_44
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_31
 - update to new release by fcimport
 
