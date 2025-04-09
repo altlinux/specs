@@ -23,7 +23,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        135.0.7049.52
+Version:        135.0.7049.84
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -100,6 +100,7 @@ Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
 Patch065: 0065-DEBIAN-stdatomic.patch
 Patch066: 0066-DEBIAN-clang19.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
+# for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
 # Patch069: 0069-DEBIAN-swiftshader-llvm.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
@@ -566,6 +567,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Apr 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.84-alt1
+- New version (135.0.7049.84).
+- Security fixes:
+  + CVE-2025-3066: Use after free in Site Isolation
+
 * Wed Apr 02 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.52-alt1
 - New version (135.0.7049.52).
 - Security fixes:
