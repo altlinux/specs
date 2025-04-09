@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.16.1
-Release: alt1
+Release: alt2
 
 Summary: Bootstrap-based sphinx theme from the PyData community
 
@@ -37,11 +37,14 @@ BuildArch: noarch
 
 Source:  %name-%version.tar
 
+Patch: 2091.patch
+
 %description
 %summary.
 
 %prep
 %setup
+%patch -p1
 
 sed -i "s,^\(node-version = \)".*",\1\"$(node --version | sed 's/v//')\"," pyproject.toml
 
@@ -65,6 +68,9 @@ python3 -m nodeenv --node=system --prebuilt --clean-src $PWD/.nodeenv
 %python3_sitelibdir/pydata_sphinx_theme-%version.dist-info
 
 %changelog
+* Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt2
+- Fixed FTBFS.
+
 * Mon Dec 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt1
 - Build new version.
 
