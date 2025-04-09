@@ -2,7 +2,7 @@
 %define abiversion 1
 
 Name: lib%oname
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: A library to benchmark code snippets
@@ -98,6 +98,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure --force-new-ctest-process
 %_includedir/*
 
 %changelog
+* Tue Apr 08 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.2-alt1
+- NMU: new version 1.9.2
+
 * Thu Dec 19 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.1-alt1
 - NMU: new version 1.9.1
 
