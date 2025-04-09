@@ -3,9 +3,9 @@ Group: Archiving/Other
 %define _localstatedir %{_var}
 Name:      arc
 Version:   5.21p
-Release:   alt1_16
+Release:   alt1_27
 Summary:   Arc archiver
-License:   GPL+
+License:   GPL-1.0-or-later
 URL:       http://arc.sourceforge.net/
 Source0:   http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # 2 small polish patches courtesy of Debian
@@ -63,6 +63,9 @@ install -m 0644 arc.1 marc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 5.21p-alt1_27
+- update to new release by fcimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 5.21p-alt1_16
 - update to new release by fcimport
 
