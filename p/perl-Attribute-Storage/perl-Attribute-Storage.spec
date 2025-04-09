@@ -1,19 +1,19 @@
 %define module_name Attribute-Storage
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(XSLoader.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test2/V0.pm) perl(XSLoader.pm) perl(meta.pm)
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.10
-Release: alt1.1
+Version: 0.12
+Release: alt1
 Summary: declare and retrieve named attributes about CODE
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 %summary
@@ -28,11 +28,14 @@ Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_na
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE
+%doc Changes README
 %perl_vendor_archlib/A*
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Wed Nov 30 2022 Igor Vlasenko <viy@altlinux.org> 0.10-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
