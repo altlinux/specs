@@ -5,6 +5,13 @@
 %def_enable lto
 %def_enable dconf
 
+# build scripts don't need any help in enabling LTO
+%define optflags_lto %nil
+
+# with the default -g2 LibreOffice-common-debuginfo
+# doesn't fit into 4Gb limit of the payload
+%define optflags_debug -g1
+
 # enable kde5 UI
 %def_enable kf5
 
@@ -18,7 +25,7 @@
 %else
 %def_disable qt5
 %endif
-%def_disable mergelibs
+%def_enable mergelibs
 
 Name: LibreOffice
 %define hversion 25.2
@@ -28,7 +35,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -74,6 +81,8 @@ Patch406: alt-006-svg-icons-2.patch
 Patch407: alt-007-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+Patch501: alt-011-fix-external-project-build.patch
+Patch502: alt-012-fix-skia-build-on-loongarch64.patch
 
 # content of patch shared to Weblate-LibreOffice by @NeuroFreak
 Patch600: LibreOffice-7.4.2.3-update-russian-translation.patch
@@ -324,6 +333,9 @@ Provides additional %{langname} translations and resources for %name. \
 ##patch407 -p1
 
 %patch500 -p0
+%patch501 -p2
+%patch502 -p2
+
 # Patch with russian translation update
 #patch600 -p1
 
@@ -392,13 +404,16 @@ grep -l GCC_VERSION configure* | while read F; do
 done
 %ifarch mipsel
 export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g1"
-export CXXFLAGS="$CFLAGS"
+%else
+export CFLAGS="%optflags"
 %endif
+export CXXFLAGS="$CFLAGS"
+export LDFLAGS="$CFLAGS"
 
 # XXX no "thin" LTO option in GCC!
 sed -i 's/-flto=thin/-flto=jobserver/g' solenv/gbuild/platform/com_GCC_defs.mk
 
-PARALLEL=$(nproc)
+PARALLEL=${NPROCS:-%__nprocs}
 
 %ifarch ppc64le
 # reduce excessive resource use
@@ -498,7 +513,7 @@ $WORKDIR/CustomTarget/sysui/share/libreoffice/create_tree.sh
 %install
 unset RPM_PYTHON
 
-%make DESTDIR=%buildroot INSTALLDIR=%lodir distro-pack-install
+%make DESTDIR=%buildroot INSTALLDIR=%lodir DISABLE_STRIP=1 distro-pack-install
 rm -f %buildroot%lodir/sdk/config.*
 
 # Drop compatibility symlinks
@@ -642,6 +657,16 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Apr 09 2025 Ivan A. Melnikov <iv@altlinux.org> 25.2.0.3-alt2
+- Generate proper debuginfo
+  + reduce optflags_debug to -g1 to fit into 4Gb payload limit;
+- Enable mergelibs (gives measurable performance improvements
+  on certain tests).
+- Respect %%__nprocs.
+- Add a patch to fix external sporadic build failures of
+  external (that is, bundled) projects.
+- Fix skia build on loongarch64.
+
 * Mon Feb 03 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 25.2.0.3-alt1
 - Update to 25.8.0.3.
 
