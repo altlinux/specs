@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0b2
-Release: alt1
+Release: alt2
 
 Summary: Streamline the Sphinx theme development workflow
 
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flit
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pyproject-metadata
 BuildRequires: python3-module-rich
 BuildRequires: python3-module-nodeenv
@@ -59,5 +60,8 @@ standardised tools.
 %python3_sitelibdir/%{pyproject_distinfo sphinx_theme_builder}
 
 %changelog
+* Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.0b2-alt2
+- Fixed FTBFS.
+
 * Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.0b2-alt1
 - Initial build for Sisyphus.
