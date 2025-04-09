@@ -4,19 +4,22 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 1
+%define autorelease 6
 
 %global debug_package %{nil}
 
 Name:           elfio
 Version:        3.12
-Release:        alt1_1
+Release:        alt1_%autorelease
 Summary:        C++ library for reading and generating ELF files
 
 # This is the proper SPDX license
 License:        MIT
 URL:            http://elfio.sourceforge.net/
 Source0:        https://downloads.sf.net/elfio/elfio-%{version}.tar.gz
+# Add missing includes - fixes FTBFS rhbz 2340118
+# https://github.com/serge1/ELFIO/pull/148
+Patch0:         elfio-includes.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
@@ -54,6 +57,7 @@ format is required. Such Information can easily be found on the Web.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 
@@ -81,6 +85,9 @@ rm -r %{buildroot}%{_datadir}/docs
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.12-alt1_6
+- update to new release by fcimport
+
 * Fri Sep 08 2023 Igor Vlasenko <viy@altlinux.org> 3.12-alt1_1
 - update to new release by fcimport
 
