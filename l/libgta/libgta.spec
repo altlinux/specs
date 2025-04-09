@@ -9,9 +9,10 @@ Group: System/Libraries
 Name:      libgta
 Version:   1.2.1
 %global so_version 1
-Release:   alt1_5
+Release:   alt1_15
 Summary:   Library that implements the Generic Tagged Arrays file format
-License:   LGPLv2+
+# Automatically converted from old format: LGPLv2+ - review is highly recommended.
+License:   LicenseRef-Callaway-LGPLv2+
 URL:       https://marlam.de/gta/
 Source0:   https://marlam.de/gta/releases/%{name}-%{version}.tar.xz
 BuildRequires: ctest cmake
@@ -83,6 +84,9 @@ rm -rf %{buildroot}%{_docdir}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_15
+- update to new release by fcimport
+
 * Thu Jul 08 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_5
 - update to new release by fcimport
 
