@@ -3,7 +3,7 @@
 %define soname 2
 
 Name: c-ares
-Version: 1.34.4
+Version: 1.34.5
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -74,6 +74,9 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Wed Apr 09 2025 Anton Farygin <rider@altlinux.com> 1.34.5-alt1
+- 1.34.5
+
 * Thu Dec 26 2024 Anton Farygin <rider@altlinux.ru> 1.34.4-alt1
 - 1.34.4
 
