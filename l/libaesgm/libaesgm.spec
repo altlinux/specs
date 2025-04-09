@@ -8,8 +8,9 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libaesgm
 Version:	20090429
-Release:	alt2_24
-License:	BSD
+Release:	alt2_35
+# Automatically converted from old format: BSD - review is highly recommended.
+License:	LicenseRef-Callaway-BSD
 Summary:	Library implementation of AES (Rijndael) cryptographic methods
 URL:		http://gladman.plushost.co.uk/oldsite/AES/index.php
 Source0:	http://gladman.plushost.co.uk/oldsite/AES/aes-src-29-04-09.zip
@@ -38,8 +39,8 @@ Development headers and libraries for libaesgm.
 %prep
 %setup -q -c -n %{name}-%{version}
 cp %{SOURCE1} Makefile
-%patch0 -p1 -b .fileencrypt
-%patch1 -p1 -b .git8798ad82
+%patch0  -p1 -b .fileencrypt
+%patch1  -p1 -b .git8798ad82
 sed -i 's/\r//' *.txt
 
 %build
@@ -59,6 +60,9 @@ make DESTDIR="%{buildroot}" LIBDIR="%{_libdir}" install
 %{_libdir}/libaesgm.so
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 20090429-alt2_35
+- update to new release by fcimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_24
 - update to new release by fcimport
 
