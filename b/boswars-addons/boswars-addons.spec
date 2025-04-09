@@ -1,12 +1,13 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		boswars-addons
 Version:	2.6
-Release:	alt2_14
+Release:	alt2_31
 Summary:	Addon maps for Bos Wars real-time strategy game
 
-Group:		Games/Other
-License:	GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 URL:		http://www.boswars.org/addons/addons.shtml
 Source0:	http://www.boswars.org/addons/maps/greenlands.map.tgz
 Source1:	http://www.boswars.org/addons/maps/obese.map.tgz
@@ -44,6 +45,9 @@ cp -a * $RPM_BUILD_ROOT%{_datadir}/boswars/maps
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.6-alt2_31
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_14
 - update to new release by fcimport
 
