@@ -1,6 +1,6 @@
 %define dist Crypt-DSA
 Name: perl-%dist
-Version: 1.17
+Version: 1.19
 Release: alt1
 
 Summary: %dist - DSA signatures and key generation
@@ -10,10 +10,10 @@ Group: Development/Perl
 Url: %CPAN %dist
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Crypt-DSA-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 17 2008
-BuildRequires: openssl perl-Convert-PEM perl-Crypt-DES_EDE3 perl-Data-Buffer perl-Digest-SHA1 perl-Module-Install perl-File-Which
+BuildRequires: openssl perl-Convert-PEM perl-Crypt-DES_EDE3 perl-Data-Buffer perl-Digest-SHA1 perl-Module-Install perl-File-Which perl(Crypt/URandom.pm)
 
 %description
 Crypt::DSA is an implementation of the DSA (Digital Signature Algorithm)
@@ -23,7 +23,7 @@ Math::Pari library.  This package provides DSA signing, signature
 verification, and key generation.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,9 +32,13 @@ verification, and key generation.
 %perl_vendor_install
 
 %files
+%doc LICENSE Changes README
 %perl_vendor_privlib/Crypt/DSA*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 1.19-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
