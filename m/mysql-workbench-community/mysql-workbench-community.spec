@@ -2,7 +2,7 @@
 
 Name: mysql-workbench-community
 Version: 8.0.41
-Release: alt1
+Release: alt1.1
 
 Summary: A MySQL visual database modeling tool
 
@@ -16,7 +16,7 @@ Source0: %name-%version.tar
 Source1: antlr-4.13.2-complete.jar
 
 # https://www.mysql.com/support/supportedplatforms/workbench.html
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 Patch0: mysql-workbench-community-8.0.32-alt-suppress-unsupported.patch
 Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
@@ -258,6 +258,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Wed Apr 09 2025 Ivan A. Melnikov <iv@altlinux.org> 8.0.41-alt1.1
+- Build on loongarch64 and riscv64
+
 * Sun Feb 02 2025 Andrey Cherepanov <cas@altlinux.org> 8.0.41-alt1
 - New version.
 - Build only for x86_64 and aarch64.
