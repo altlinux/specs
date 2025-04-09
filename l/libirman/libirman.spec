@@ -1,3 +1,4 @@
+%add_optflags %optflags_shared
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
@@ -5,7 +6,7 @@ Group: System/Libraries
 Name:           libirman
 Epoch:          1
 Version:        0.5.2
-Release:        alt1_10
+Release:        alt1_23
 Summary:        Library for IRMAN hardware
 
 
@@ -13,7 +14,8 @@ Summary:        Library for IRMAN hardware
 #General Public License, which is in the file COPYING.lib.
 #The files which make up the test programs and the documentation are covered
 #under the GNU General Public License, which is in the file COPYING.
-License:        GPLv2+ and LGPLv2+
+# Automatically converted from old format: GPLv2+ and LGPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later AND LicenseRef-Callaway-LGPLv2+
 URL:            http://sourceforge.net/projects/libirman/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 
@@ -92,6 +94,9 @@ rm  $RPM_BUILD_ROOT%{_docdir}/libirman/TECHNICAL
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1:0.5.2-alt1_23
+- update to new release by fcimport
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1:0.5.2-alt1_10
 - fixed self-BR (closes: #37157)
 
