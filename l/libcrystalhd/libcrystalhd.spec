@@ -1,8 +1,9 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 BuildRequires(pre): rpm-build-kernel
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global majorminor 1.0
@@ -13,8 +14,9 @@ BuildRequires(pre): rpm-build-kernel
 Summary:       Broadcom Crystal HD device interface library
 Name:          libcrystalhd
 Version:       3.10.0
-Release:       alt3_24
-License:       LGPLv2
+Release:       alt3_35
+# Automatically converted from old format: LGPLv2 - review is highly recommended.
+License:       LicenseRef-Callaway-LGPLv2
 URL:           http://www.broadcom.com/support/crystal-hd/
 ExcludeArch:   s390 s390x
 
@@ -59,7 +61,8 @@ Development libraries needed to build applications against libcrystalhd.
 %package -n firmware-crystalhd
 Group: System/Kernel and hardware
 Summary:       Firmware for the Broadcom Crystal HD video decoder
-License:       Redistributable, no modification permitted
+# Automatically converted from old format: Redistributable, no modification permitted - review is highly recommended.
+License:       LicenseRef-Callaway-Redistributable-no-modification-permitted
 BuildArch:     noarch
 Requires:      %{name} = %{version}-%{release}
 
@@ -71,7 +74,7 @@ video decoders.
 Group: Sound
 Summary:       Gstreamer crystalhd decoder plugin
 Requires:      %{name} = %{version}-%{release}
-Requires:      gst-plugins-base1.0
+Requires:      gst-plugins-base1.0 libgst-plugins1.0-gir
 
 %description -n gstreamer-plugin-crystalhd
 Gstreamer crystalhd decoder plugin
@@ -89,10 +92,10 @@ Crystalhd module sources for Linux kernel.
 %setup -q -n libcrystalhd-%{date}
 cp %{SOURCE1} %{SOURCE4} .
 %ifnarch %{ix86} ia64 x86_64
-%patch0 -p1 -b .nosse2
+%patch0  -p1 -b .nosse2
 sed -i -e 's|-msse2||' linux_lib/libcrystalhd/Makefile
 %endif
-%patch1 -p1 -b .gst1
+%patch1  -p1 -b .gst1
 %patch33 -p1
 
 %build
@@ -162,6 +165,9 @@ tar jcf %kernel_srcdir/kernel-source-crystalhd-%version.tar.bz2 kernel-source-cr
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.10.0-alt3_35
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt3_24
 - updated BR:
 
