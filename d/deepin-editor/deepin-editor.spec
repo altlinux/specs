@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 6.5.16
+Version: 6.5.21
 Release: alt1
 
 Summary: Simple editor for Linux Deepin
@@ -15,7 +15,9 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-6.0.16-armh-ppc64le.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake dqt6-svg-devel dqt6-tools dqt6-5compat-devel libcups-devel libicu-devel libchardet-devel libuchardet-devel dtk6-common-devel libdtk6widget-devel deepin-qt-dbus-factory-devel kf6-kcodecs-devel kf6-syntax-highlighting-devel
+# Automatically added by buildreq on Wed Apr 09 2025
+# optimized out: at-spi2-atk cmake cmake-modules dqt6-base-common dqt6-base-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icon-naming-utils icu-utils libEGL-mesa libGLX-mesa libX11-devel libat-spi2-core libcairo-gobject libcap-ng libclang-cpp19 libcrypt-devel libctf-nobfd0 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgdk-pixbuf libglvnd-devel libgpg-error libjson-glib libp11-kit libqt6-core libqt6-dbus libqt6-eglfsdeviceintegration libqt6-eglfskmssupport libqt6-gui libqt6-network libqt6-opengl libqt6-qml libqt6-qmlmeta libqt6-qmlmodels libqt6-qmlworkerscript libqt6-quick libsasl2-3 libspirv-tools0 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server libxcb-devel libxcb-render-util libxcbutil-cursor libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxkbcommon-devel libxkbcommon-x11 llvm19.1-libs ninja-build pam0_userpass perl pkg-config python3 python3-base sh5 vulkan-headers
+BuildRequires: deepin-qt-dbus-factory-devel dqt6-5compat-devel dqt6-svg-devel dqt6-tools dtk6-common-devel kf6-kcodecs-devel kf6-syntax-highlighting-devel libchardet-devel libcups-devel libdtk6widget-devel libicu-devel libuchardet-devel
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -76,6 +78,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Wed Apr 09 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.21-alt1
+- New version 6.5.21.
+
 * Tue Mar 11 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.16-alt1
 - New version 6.5.16.
 - Switched to dqt6.
