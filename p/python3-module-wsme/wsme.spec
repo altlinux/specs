@@ -5,7 +5,7 @@
 
 Name:           python3-module-%lpypi_name
 Version:        0.12.1
-Release:        alt1
+Release:        alt2
 Summary:        Web Services Made Easy
 Group:          Development/Python3
 
@@ -21,6 +21,7 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr
 
 %if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-webob
 BuildRequires: python3-module-simplegeneric
 BuildRequires: python3-module-pytz
@@ -76,6 +77,9 @@ rm -rv %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/WSME-%version.dist-info
 
 %changelog
+* Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt2
+- Fixed FTBFS.
+
 * Tue Jul 30 2024 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
 - Build new version.
 - Build with check.
