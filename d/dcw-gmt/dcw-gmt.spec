@@ -1,12 +1,14 @@
 Group: Other
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 Name:           dcw-gmt
-Version:        1.1.1
-Release:        alt1_1
+Version:        2.2.0
+Release:        alt1_4
 Summary:        Digital Chart of the World (DCW) for GMT
 
-License:        LGPLv3+
-URL:            http://www.soest.hawaii.edu/wessel/dcw/
-Source0:        http://www.soest.hawaii.edu/pwessel/dcw/%{name}-%{version}.tar.gz
+License:        LGPL-3.0-or-later
+URL:            https://github.com/GenericMappingTools/dcw-gmt
+Source0:        https://github.com/GenericMappingTools/dcw-gmt/releases/download/%{version}/dcw-gmt-%{version}.tar.gz
 BuildArch:      noarch
 Source44: import.info
 
@@ -30,11 +32,15 @@ cp -a *.nc *.txt %{buildroot}/%{_datadir}/%{name}/
 
 
 %files
-%doc COPYING.LESSERv3 COPYINGv3 LICENSE.TXT README.TXT
+%doc --no-dereference LICENSE
+%doc README.md
 %{_datadir}/%{name}/
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.2.0-alt1_4
+- update to new release by fcimport
+
 * Sat Apr 05 2014 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_1
 - import
 
