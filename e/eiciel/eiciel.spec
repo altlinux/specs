@@ -5,14 +5,16 @@ BuildRequires: /usr/bin/desktop-file-validate
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: eiciel
-Version: 0.10.0
+Version: 0.10.1
 %global tar_version %{version}
 
-Release: alt1_2
+Release: alt1_3
 Summary: Graphical editor for ACLs and xattr
-License: GPLv2+
+License: GPL-2.0-or-later
 URL: http://rofi.roger-ferrer.org/eiciel
 Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{tar_version}.tar.xz
+
+Patch0: eiciel-0.10.1-rawhide-gcc.patch
 
 BuildRequires: meson
 BuildRequires: gcc-c++
@@ -40,6 +42,7 @@ utility.
 
 %prep
 %setup -q -n %{name}-%{tar_version}
+%patch0 -p1
 
 
 
@@ -67,6 +70,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.10.1-alt1_3
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.10.0-alt1_2
 - update to new release by fcimport
 
