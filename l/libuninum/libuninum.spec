@@ -8,14 +8,15 @@ Group: Development/Other
 Summary:       Library for converting unicode strings to numbers
 Name:          libuninum
 Version:       2.7
-Release:       alt3_33
+Release:       alt3_40
 # numconv is GPLv2, lib is LGPLv2
-License:       GPLv2 and LGPLv2
+# Automatically converted from old format: GPLv2 and LGPLv2 - review is highly recommended.
+License:       GPL-2.0-only AND LicenseRef-Callaway-LGPLv2
 URL:           http://billposer.org/Software/libuninum.html
 Source0:       http://billposer.org/Software/Downloads/libuninum-%{version}.tar.bz2
 Patch0:        libuninum-2.7-64bit-clean.patch
 Patch1:        libuninum-configure-c99.patch
-BuildRequires:  gcc
+BuildRequires: gcc
 BuildRequires: libgmp-devel libgmpxx-devel
 Source44: import.info
 %description
@@ -42,8 +43,9 @@ using %{name}, you will need to install %{name}-devel.
 
 %prep
 %setup -q
-%patch0 -p1 -b .64bit-clean
+%patch0 -p1
 %patch1 -p1
+
 
 %build
 %configure --disable-static --disable-rpath
@@ -71,6 +73,9 @@ rm -f %{buildroot}%{_libdir}/libuninum.la
 %{_libdir}/libuninum.so
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.7-alt3_40
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.7-alt3_33
 - update to new release by fcimport
 
