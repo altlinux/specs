@@ -3,11 +3,12 @@ Group: System/Base
 %define _localstatedir %{_var}
 Name:             ddccontrol-db
 URL:              https://github.com/ddccontrol/ddccontrol-db
-Version:          20231004
+Version:          20250320
 Release:          alt1_1
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
-License:          GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:          GPL-2.0-or-later
 Summary:          DDC/CI control database for ddccontrol
 Source0:          https://github.com/ddccontrol/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 # use autopoint instead of gettextize that is interactive tool
@@ -45,6 +46,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 20250320-alt1_1
+- update to new release by fcimport
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 20231004-alt1_1
 - update to new release by fcimport
 
