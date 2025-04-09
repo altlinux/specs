@@ -2,13 +2,13 @@ Group: Text tools
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ascii
-Version:        3.18
-Release:        alt1_15
+Version:        3.30
+Release:        alt1_3
 URL:            http://www.catb.org/~esr/ascii/
-Source0:        http://www.catb.org/~esr/ascii/ascii-3.18.tar.gz
+Source0:        http://www.catb.org/~esr/ascii/ascii-%{version}.tar.gz
 BuildRequires:  xmlto, gcc
 
-License:        BSD
+License:        BSD-2-Clause
 Summary:        Interactive ascii name and synonym chart
 Source44: import.info
 
@@ -35,10 +35,13 @@ cp ascii.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 %files
 %{_mandir}/man1/ascii.1*
 %{_bindir}/ascii
-%doc README NEWS
+%doc README NEWS.adoc ascii.adoc
 %doc --no-dereference COPYING
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.30-alt1_3
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 3.18-alt1_15
 - update to new release by fcimport
 
