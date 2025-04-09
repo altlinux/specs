@@ -3,11 +3,12 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           avl
 Version:        3.36
-Release:        alt1_3
+Release:        alt1_20
 Summary:        Aerodynamic and flight-dynamic analysis of rigid aircrafts
 
 # Plotlib is LGPLv2+, the rest is GPLv2+
-License:        GPLv2+ and LGPLv2+
+# Automatically converted from old format: GPLv2+ and LGPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later AND LicenseRef-Callaway-LGPLv2+
 URL:            http://web.mit.edu/drela/Public/web/avl/
 Source0:        http://web.mit.edu/drela/Public/web/avl/avl%{version}.tgz
 # The package does not ship a license file
@@ -16,7 +17,8 @@ Source2:        LICENSE.LGPL
 # Makefile variables and flags
 Patch0:         avl3.36-makefile.patch
 
-BuildRequires:  gcc-fortran libX11-devel
+BuildRequires:  gcc-fortran
+BuildRequires:  libX11-devel
 Requires:       fonts-bitmap-misc
 Source44: import.info
 
@@ -32,6 +34,7 @@ together with specified mass properties.
 %prep
 %setup -q -n Avl
 %patch0 -p1
+
 cp %{SOURCE1} .
 cp %{SOURCE2} .
 
@@ -51,11 +54,14 @@ export CFLAGS="%{optflags}"
 
 %files
 %doc version_notes.txt avl_doc.txt session1.txt session2.txt
-%doc LICENSE.GPL LICENSE.LGPL
+%doc --no-dereference LICENSE.GPL LICENSE.LGPL
 %{_bindir}/avl
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.36-alt1_20
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 3.36-alt1_3
 - update to new release by fcimport
 
