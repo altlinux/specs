@@ -4,25 +4,21 @@ BuildRequires: /usr/bin/desktop-file-install texinfo
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Enable oldstyle to have a nearly nothing requiring package after rebuilding
-%global oldstyle 0
-
 Summary:         Drive and jump with some kind of car across the moon
 Name:            moon-buggy
 Version:         1.0.51
-Release:         alt2_24
-License:         GPL+
-URL:             http://seehuhn.de/pages/%{name}
-Source0:         http://seehuhn.de/media/programs/%{name}-%{version}.tar.gz
-Source1:         http://seehuhn.de/media/programs/%{name}-sound-%{version}.tar.gz
+Release:         alt2_38
+License:         GPL-1.0-or-later
+URL:             https://seehuhn.de/pages/%{name}
+Source0:         https://seehuhn.de/media/programs/%{name}-%{version}.tar.gz
+Source1:         https://seehuhn.de/media/programs/%{name}-sound-%{version}.tar.gz
 Source2:         %{name}.desktop
 Source3:         %{name}-sound.desktop
 Patch0:          moon-buggy-1.0.51-pause.patch
 Patch1:          moon-buggy-1.0.51-sound.patch
-%if 0%{?rhel} && 0%{?rhel} <= 7
-%endif
-BuildRequires:   gcc libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, makeinfo
-%if !%{oldstyle}
+Patch2:          https://github.com/seehuhn/moon-buggy/pull/11.patch#/moon-buggy-1.0.51-c23.patch
+BuildRequires:   gcc libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel, makeinfo
+%if 0%{!?_without_sound:1}
 BuildRequires:   libesd-devel, desktop-file-utils, autoconf, automake
 %endif
 Source44: import.info
@@ -33,15 +29,16 @@ of car across the moon's surface. Unfortunately there are dangerous craters
 there. Fortunately your car can jump over them! 
 
 The game has some resemblance of the classic arcade game moon-patrol which
-was released in 1982. A clone of this game was relased for the Commodore
+was released in 1982. A clone of this game was released for the Commodore
 C64 in 1983. The present, ASCII art version of moon-buggy was written many
 years later by Jochen Voss.
 
 %prep
 %setup -q -a 1
-%patch0 -p1 -b .pause
-%if !%{oldstyle}
-%patch1 -p1 -b .sound
+%patch0  -p1 -b .pause
+%if 0%{!?_without_sound:1}
+%patch1  -p1 -b .sound
+%patch2  -p1 -b .c23
 mv -f %{name}-%{version}/* .
 autoreconf -f -i
 %endif
@@ -51,13 +48,13 @@ autoreconf -f -i
 %make_build
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p" install
+%makeinstall_std
 
 # Create zero-sized highscore file
 touch $RPM_BUILD_ROOT%{_localstatedir}/games/%{name}/mbscore
 
 # Install working *.desktop files and an icon
-%if !%{oldstyle}
+%if 0%{!?_without_sound:1}
 desktop-file-install --vendor "" --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE2}
 desktop-file-install --vendor "" --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE3}
 
@@ -81,7 +78,7 @@ mv -f TODO.utf8 TODO
 %files 
 %doc --no-dereference COPYING
 %doc ANNOUNCE AUTHORS ChangeLog README THANKS
-%if !%{oldstyle}
+%if 0%{!?_without_sound:1}
 %doc README.sound
 %{_datadir}/%{name}/
 %{_datadir}/pixmaps/%{name}.png
@@ -95,6 +92,9 @@ mv -f TODO.utf8 TODO
 %verify(not md5 size mtime) %config(noreplace) %attr(664,root,games) %{_localstatedir}/games/%{name}/mbscore
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.51-alt2_38
+- update to new release by fcimport
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.0.51-alt2_24
 - update to new release by fcimport
 
