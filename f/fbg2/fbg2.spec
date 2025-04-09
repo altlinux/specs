@@ -1,16 +1,17 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
-%define fedora 25
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		fbg2
 Version:	0.4
-Release:	alt3_18
+Release:	alt3_35
 Summary:	A falling block stacking game
-Group:		Games/Other
 # Code is GPLv2+, music and graphics are CC-BY-SA
-License:	GPLv2+ and CC-BY-SA
+# Automatically converted from old format: GPLv2+ and CC-BY-SA - review is highly recommended.
+License:	GPL-2.0-or-later AND LicenseRef-Callaway-CC-BY-SA
 URL:		http://sourceforge.net/projects/fbg/
 # Cannot use this source as is. Need to remove
 # fbg2-0.4/Data/Music/FallingBlockGameSndTrk.ogg
@@ -25,6 +26,7 @@ Source2:	README.music
 # 64 x 64 public domain image for logo
 Source3:	fbg2.png
 Patch0:		fbg2-0.4-desktop-fix.patch
+BuildRequires:  gcc
 BuildRequires:	radius-engine-devel >= 0.7, desktop-file-utils, zip
 # rhbz#949506, also see rhbz#949167
 %if 0%{?fedora} >= 19
@@ -40,7 +42,7 @@ more rows you clear at once, the more points you score!
 
 %prep
 %setup -q
-%patch0 -p1 -b .fix
+%patch0  -p1 -b .fix
 cp %{SOURCE1} Data/Music/FallingBlockGameSndTrk.ogg
 cp %{SOURCE2} .
 mv fbg2.png fbg2-small.png
@@ -100,6 +102,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/fbg2.desktop
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.4-alt3_35
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_18
 - update to new release by fcimport
 
