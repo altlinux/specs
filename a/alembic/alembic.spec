@@ -5,19 +5,18 @@
 %define soname 1.8
 
 Name: alembic
-Version: 1.8.3
-Release: alt2
+Version: 1.8.7
+Release: alt1
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
 License: BSD-3-Clause and BSL-1.0
 URL: https://www.alembic.io
 
-# https://github.com/alembic/alembic.git
+VCS: https://github.com/alembic/alembic.git
 Source: %name-%version.tar
-
+Patch0: alembic-1.8.7-alt-set-correct-cmakedir.patch
 # Patches from Gentoo
 Patch1: alembic-1.7.11-gentoo-0002-Find-IlmBase-by-setting-a-proper-ILMBASE_ROOT-value.patch
-Patch2: alembic-1.8.0-gentoo-0001-set-correct-libdir.patch
 
 BuildRequires: boost-devel
 BuildRequires: cmake
@@ -60,8 +59,8 @@ applications that use %{name}.
 
 %prep
 %setup
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && \
 	mv -f ACKNOWLEDGEMENTS.txt.conv ACKNOWLEDGEMENTS.txt
@@ -113,6 +112,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Wed Apr 09 2025 Anton Farygin <rider@altlinux.com> 1.8.7-alt1
+- 1.8.3 -> 1.8.7
+
 * Tue Mar 21 2023 Alexander Burmatov <thatman@altlinux.org> 1.8.3-alt2
 - Fix build requires.
 
