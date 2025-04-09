@@ -6,9 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install unzip
 %define _localstatedir %{_var}
 Name:           nogravity
 Version:        2.00
-Release:        alt2_37
+Release:        alt2_47
 Summary:        Space shooter in 3D
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://www.realtech-vr.com/nogravity/
 Source0:        http://downloads.sourceforge.net/%{name}/rt-%{name}-src.zip
 Source2:        %{name}.desktop
@@ -34,41 +35,44 @@ Patch11:        0001-v3xscene-Remove-some-unused-code.patch
 Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
 Patch13:        nogravity-2.00-stdint_h.patch
 Patch14:        nogravity--gcc6.patch
+Patch15:        nogravity-2.00-build-fixes.patch
 Requires:       %{name}-data = %{version}
 BuildRequires:  gcc-c++
-BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
-BuildRequires:  automake desktop-file-utils libappstream-glib
-Requires:       icon-theme-hicolor glxgears glxinfo
+BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libpng17-tools libvorbis-devel
+BuildRequires:  automake desktop-file-utils libappstream-glib libappstream-glib-gir
+Requires:       icon-theme-hicolor mesa-gears mesa-info
 Source44: import.info
 Patch33: nogravity-2.00-alt-libpng15.patch
 
 %description
 No Gravity is a fantastic and futuristic universe made of five
-intergalactic worlds. An arcade type game with great playability,
-where it is easy to plunge into space battles against spacefighters,
+intergalactic worlds. An arcade type game with great play-ability,
+where it is easy to plunge into space battles against space-fighters,
 space stations and more!
 
 
 %prep
 %setup -q -c
-cp %{SOURCE4} ./src/Linux/Makefile.am
-cp %{SOURCE5} ./src/Linux/bootstrap
-cp %{SOURCE6} ./src/Linux/configure.in
-%patch0 -b .snd_sdlmixer_c-powerpc-fix
-%patch1 -b .fullscreen_as_option 
-%patch2 -b .fixed_path_to_game_data
-%patch3 -p1 -b .64-bit
-%patch4 -p1 -b .cvs
-%patch5 -p1 -b .openal
-%patch6 -p1 -b .license
-%patch7 -p1 -b .buf-oflow
-%patch8 -p1 -b .strcpy
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 %patch9 -p1
 #patch10 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
+
+cp %{SOURCE4} ./src/Linux/Makefile.am
+cp %{SOURCE5} ./src/Linux/bootstrap
+cp %{SOURCE6} ./src/Linux/configure.in
 sed -i 's/\r//g' GNU.TXT README.TXT
 pushd src/Linux
 sh bootstrap
@@ -109,7 +113,8 @@ appstream-util validate-relax --nonet \
   $RPM_BUILD_ROOT%{_datadir}/appdata/%{name}.appdata.xml
 
 %files
-%doc GNU.TXT README.TXT
+%doc README.TXT
+%doc --no-dereference GNU.TXT
 %{_bindir}/%{name}*
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
@@ -117,6 +122,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.00-alt2_47
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.00-alt2_37
 - update to new release by fcimport
 
