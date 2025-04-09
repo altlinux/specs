@@ -1,3 +1,4 @@
+Group: Graphical desktop/Other
 %define oldname faience-icon-theme
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -5,11 +6,11 @@
 
 Name:           icon-theme-faience
 Version:        0.5
-Release:        alt1_7
+Release:        alt1_24
 Summary:        Faience icon theme
-Group:          Graphical desktop/Other
 
-License:        GPLv3
+# Automatically converted from old format: GPLv3 - review is highly recommended.
+License:        GPL-3.0-only
 URL:            https://code.google.com/p/faience-theme
 Source0:        http://raveit65.fedorapeople.org/Others/Source/%{oldname}_%{version}.tar.xz
 
@@ -66,7 +67,7 @@ if [ $1 -eq 0 ] ; then
     for theme in %{themes}
     do
         touch --no-create %{_datadir}/icons/${theme} &>/dev/null
-
+:
     done
 fi
 
@@ -80,6 +81,9 @@ fi
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.5-alt1_24
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_7
 - update to new release by fcimport
 
