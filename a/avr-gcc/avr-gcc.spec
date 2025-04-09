@@ -3,6 +3,7 @@ Group: Development/Other
 BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr/bin/runtest liblzma-devel libzstd-devel swig texinfo
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define target avr
@@ -10,8 +11,8 @@ BuildRequires: /usr/bin/bison /usr/bin/expect /usr/bin/m4 /usr/bin/makeinfo /usr
 Name:           %{target}-gcc
 #FIXME:11.2 fails with Werror-format-security https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100431
 #revert -Wno-format-security once fix is available
-Version:        13.2.0
-Release:        alt1_1
+Version:        14.2.0
+Release:        alt1_2
 Epoch:          1
 Summary:        Cross Compiling GNU GCC targeted at %{target}
 License:        GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.0-or-later AND MIT AND BSD-2-Clause
@@ -29,6 +30,11 @@ BuildRequires:  gettext-tools libasprintf-devel automake
 #BuildRequires:  autoconf = 2.69
 Requires:       %{target}-binutils >= 1:2.23
 Provides:       bundled(libiberty)
+
+%if 0%{?fedora} > 39
+# as per https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+ExcludeArch:    %{ix86}
+%endif
 Source44: import.info
 
 %description
@@ -57,9 +63,6 @@ pushd gcc-%{version}
 #patch -P1 -p2 -b .config
 
 pushd libiberty
-#autoconf -f
-popd
-pushd intl
 #autoconf -f
 popd
 
@@ -94,9 +97,6 @@ acv=$(autoreconf --version | head -n1)
 acv=${acv##* }
 sed -i "/_GCC_AUTOCONF_VERSION/s/2.64/$acv/" config/override.m4
 #autoreconf -fiv
-pushd intl
-#autoreconf -ivf
-popd
 popd
 mkdir -p gcc-%{target}
 pushd gcc-%{target}
@@ -154,6 +154,9 @@ rm -r $RPM_BUILD_ROOT%{_libexecdir}/gcc/%{target}/%{version}/install-tools ||:
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1:14.2.0-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1:13.2.0-alt1_1
 - update to new release by fcimport
 
