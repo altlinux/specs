@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++
 # END SourceDeps(oneline)
@@ -5,13 +6,13 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           gemdropx
 Version:        0.9
-Release:        alt6_20
+Release:        alt6_37
 Summary:        Falling blocks puzzlegame
-Group:          Games/Other
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://www.newbreedsoftware.com/gemdropx
 Source0:        ftp://ftp.billsgames.com/unix/x/%{name}/src/%{name}-%{version}.tar.gz
 Source1:        %{name}.desktop
+BuildRequires:  gcc
 BuildRequires:  libSDL_mixer-devel ImageMagick-tools desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -48,6 +49,8 @@ convert data/images/%{name}-icon.xpm \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 
+
+
 %files
 %doc README*.txt COPYING.txt AUTHORS.txt CHANGES.txt TODO.txt
 %{_bindir}/%{name}
@@ -57,6 +60,9 @@ convert data/images/%{name}-icon.xpm \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.9-alt6_37
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 0.9-alt6_20
 - update to new release by fcimport
 
