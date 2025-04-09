@@ -4,10 +4,11 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           libyubikey
 Version:        1.13
-Release:        alt1_12
+Release:        alt1_25
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
-License:        BSD
+# Automatically converted from old format: BSD - review is highly recommended.
+License:        LicenseRef-Callaway-BSD
 URL:            http://opensource.yubico.com/yubico-c
 Source0:        http://opensource.yubico.com/yubico-c/releases/%{name}-%{version}.tar.gz
 BuildRequires:  gcc
@@ -62,6 +63,9 @@ make check
 %{_libdir}/libyubikey.so
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.13-alt1_25
+- update to new release by fcimport
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_12
 - update to new release by fcimport
 
