@@ -2,12 +2,12 @@
 %define module_name Commandable
 %set_perl_req_method relaxed
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Attribute/Storage.pm) perl(Convert/Color.pm) perl(Module/Build.pm) perl(Module/Pluggable/Object.pm) perl(String/Tagged.pm) perl(String/Tagged/Terminal.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warnings.pm) perl(Test2/V0.pm)
+BuildRequires: perl(Attribute/Storage.pm) perl(Convert/Color.pm) perl(Module/Build.pm) perl(Module/Pluggable/Object.pm) perl(String/Tagged.pm) perl(String/Tagged/Terminal.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/NoWarnings.pm) perl(Test/Warnings.pm) perl(Test2/V0.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.11
+Version: 0.14
 Release: alt1
 Summary: utilities for commandline-based programs
 Group: Development/Perl
@@ -42,6 +42,9 @@ program.
 %perl_vendor_privlib/C*
 
 %changelog
+* Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
+- automated CPAN update
+
 * Tue Jun 13 2023 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
 - automated CPAN update
 
