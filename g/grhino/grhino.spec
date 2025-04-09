@@ -6,10 +6,11 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           grhino
 Version:        0.16.1
-Release:        alt1_7
+Release:        alt1_22
 Summary:        Reversi game for GNOME, supporting the Go/Game Text Protocol
 
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://rhino.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/rhino/grhino-%{version}.tar.gz
 # from https://packages.debian.org/sid/grhino
@@ -17,7 +18,7 @@ Patch0:         %{name}-0.16.1-fix-format-security.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 BuildRequires:  libgnomeui-devel
 BuildRequires:  scrollkeeper
 #Requires:       
@@ -43,6 +44,7 @@ engine for a GTP-compliant controller like Quarry.
 %prep
 %setup -q
 %patch0 -p1
+
 
 
 %build
@@ -77,6 +79,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.16.1-alt1_22
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.16.1-alt1_7
 - update to new release by fcimport
 
