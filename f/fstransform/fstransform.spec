@@ -1,5 +1,5 @@
 Group: File tools
-%define fedora 37
+%define fedora 38
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,10 +18,11 @@ Group: File tools
 
 Name:		fstransform
 Version:	0.9.4
-Release:	alt2_11
+Release:	alt2_16
 Summary:	Tool for in-place file-system conversion without backup
 
-License:	GPLv3+
+# Automatically converted from old format: GPLv3+ - review is highly recommended.
+License:	GPL-3.0-or-later
 URL:		https://github.com/cosmos72/%{name}
 Source0:	https://github.com/cosmos72/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 
@@ -98,6 +99,9 @@ done
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.9.4-alt2_16
+- update to new release by fcimport
+
 * Thu Aug 31 2023 Igor Vlasenko <viy@altlinux.org> 0.9.4-alt2_11
 - moved to Sisyphus (feature #109461)
 
