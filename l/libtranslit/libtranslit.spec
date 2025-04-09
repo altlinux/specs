@@ -1,21 +1,23 @@
-Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: glib2-devel pkgconfig(gio-2.0)
 # END SourceDeps(oneline)
+Group: System/Libraries
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		libtranslit
 Version:	0.0.3
-Release:	alt1_23
+Release:	alt1_48
 Summary:	ASCII to Unicode transliteration library with multiple backends
 
-License:	GPLv3+
+# Automatically converted from old format: GPLv3+ - review is highly recommended.
+License:	GPL-3.0-or-later
 URL:		http://github.com/ueno/libtranslit
 Source0:	http://du-a.org/files/libtranslit/%{name}-%{version}.tar.gz
 
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	intltool
-BuildRequires:	vala vala-tools
+BuildRequires:	vala vala-tools valadoc-devel
 Source44: import.info
 
 %description
@@ -90,6 +92,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f '{}' ';'
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.0.3-alt1_48
+- update to new release by fcimport
+
 * Fri Feb 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1_23
 - rebuild with icu63
 
