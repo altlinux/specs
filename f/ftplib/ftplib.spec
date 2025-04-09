@@ -1,12 +1,12 @@
+Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global minorver 1
 
 Name:		ftplib
 Version:	4.0
-Release:	alt1_9
+Release:	alt1_24
 Summary:	Library of FTP routines
-Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://nbpfaus.net/~pfau/ftplib-4/
 Source0:	http://nbpfaus.net/~pfau/ftplib-4/%{name}-%{version}-%{minorver}.tar.gz
@@ -20,24 +20,25 @@ applications to create and access remote files through function calls
 instead of needing to fork and exec an interactive ftp client program.
 
 %package devel
+Group: Development/Other
 Summary:	Development files for ftplib
-Group:		Development/Other
 Requires:	ftplib = %{version}-%{release}
 
 %description devel
 Development libraries and headers for ftplib.
 
 %package -n qftp
+Group: Networking/WWW
 Summary:	Simple ftp client application
-Group:		Networking/WWW
-License:	GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 
 %description -n qftp
 Command line driven ftp file transfer program using ftplib.
 
 %prep
 %setup -q -n %{name}-%{version}-%{minorver}
-%patch0 -p1 -b .modern
+%patch0  -p1 -b .modern
 
 %build
 cd src/
@@ -61,6 +62,8 @@ for f in ftpdir ftpget ftplist ftprm ftpsend; do
 	ln -s qftp $f
 done
 
+
+
 %files
 %doc CHANGES
 %doc --no-dereference LICENSE
@@ -81,6 +84,9 @@ done
 %{_bindir}/qftp
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 4.0-alt1_24
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_9
 - update to new release by fcimport
 
