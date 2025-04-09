@@ -3,10 +3,11 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:          archivemount
 Version:       0.9.1
-Release:       alt1_1
+Release:       alt1_13
 Summary:       FUSE based filesystem for mounting compressed archives
 
-License:       LGPLv2+
+# Automatically converted from old format: LGPLv2+ - review is highly recommended.
+License:       LicenseRef-Callaway-LGPLv2+
 URL:           http://www.cybernoia.de/software/archivemount/
 Source0:       http://www.cybernoia.de/software/archivemount/%{name}-%{version}.tar.gz
 
@@ -41,6 +42,9 @@ rm -f archivemount.1
 %{_bindir}/archivemount
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1_13
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1_1
 - update to new release by fcimport
 
