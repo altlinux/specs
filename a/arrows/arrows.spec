@@ -6,16 +6,17 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++
 %define _localstatedir %{_var}
 Name:           arrows
 Version:        0.6
-Release:        alt3_28
+Release:        alt3_39
 Summary:        Neat little maze game
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://noreason.ca/?file=software
 Source0:        http://noreason.ca/data/arrows-%{version}.tar.gz
 Source1:        arrows.desktop
 Source2:        arrows.png
 Patch0:         arrows-level-5.patch 
 BuildRequires:  gcc
-BuildRequires:  libgtk+2-devel desktop-file-utils
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -26,7 +27,7 @@ to collect the green things.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0  -p1
 make clean
 
 %build
@@ -52,6 +53,9 @@ install -p -m 644 %{SOURCE2}\
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.6-alt3_39
+- update to new release by fcimport
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_28
 - updated buildrequires
 
