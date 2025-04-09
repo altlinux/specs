@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix.1
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Game programming library
@@ -67,6 +67,7 @@ pushd Build
 
 FLAGS="-fno-strict-aliasing %optflags %optflags_shared"
 cmake \
+	-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
@@ -116,6 +117,9 @@ install -pm 644 keyboard.dat language.dat %buildroot%_datadir/allegro
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.3.1-alt3
+- fixed FTBFS with cmake4
+
 * Wed Aug 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.3.1-alt2
 - fix build with pw jack substitute
 
