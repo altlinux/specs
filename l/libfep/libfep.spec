@@ -7,15 +7,14 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libfep
 Version:	0.1.0
-Release:	alt3_20
+Release:	alt3_28
 Summary:	Library to implement FEP (front end processor) on ANSI terminals
 
-License:	BSD and GPLv3+
+# Automatically converted from old format: BSD and GPLv3+ - review is highly recommended.
+License:	LicenseRef-Callaway-BSD AND GPL-3.0-or-later
 URL:		http://github.com/ueno/libfep
 Source0:	https://github.com/ueno/libfep/releases/download/%{version}/%{name}-%{version}.tar.gz
 
-# FIXME switch to libgee-0.8 once this package is ready for the new libgee API
-BuildRequires:	pkgconfig(gee-1.0)
 BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	vala vala-tools valadoc-devel
@@ -74,6 +73,9 @@ cp -p fep/README README.fep
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1.0-alt3_28
+- update to new release by fcimport
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 0.1.0-alt3_20
 - to Sisyphus for fcitx5-*
 
