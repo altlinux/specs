@@ -4,17 +4,16 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		mg
-Version:	20200723
-Release:	alt1_2
-Summary:	Tiny Emacs-like editor
-
-License:	BSD and ISC and MirOS
-URL:		http://homepage.boetes.org/software/mg/
-Source0:	https://github.com/hboetes/%{name}/archive/%{version}.tar.gz
-BuildRequires:  gcc
-BuildRequires:	libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
-BuildRequires:	libbsd-devel >= 0.7.0
+Name:          mg
+Version:       20240709
+Release:       alt1_4
+Summary:       Tiny Emacs-like editor
+License:       LicenseRef-Fedora-Public-Domain
+URL:           https://github.com/hboetes/mg
+Source0:       https://github.com/hboetes/%{name}/archive/%{version}.tar.gz
+BuildRequires: gcc
+BuildRequires: libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
+BuildRequires: libbsd-devel >= 0.7.0
 Source44: import.info
 
 %description
@@ -37,6 +36,9 @@ reason to learn more editor types than Emacs or vi.
 %{_mandir}/man1/mg.1*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 20240709-alt1_4
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 20200723-alt1_2
 - update to new release by fcimport
 
