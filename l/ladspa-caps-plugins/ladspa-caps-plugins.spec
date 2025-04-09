@@ -1,23 +1,24 @@
+Group: Sound
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ladspa-caps-plugins
 Version:        0.9.24
-Release:        alt4_6
+Release:        alt4_22
 Summary:        The C* Audio Plugin Suite
-License:        GPLv3+
-Group:          Sound
+# Automatically converted from old format: GPLv3+ - review is highly recommended.
+License:        GPL-3.0-or-later
 URL:            http://quitte.de/dsp/caps.html
 Source0:        http://quitte.de/dsp/caps_%{version}.tar.bz2
 Patch0:         caps-0.9.10-nostrip.patch
 Patch1:         caps-0.9.24-gcc6.patch
 Patch2:         caps-pow-exp.patch
-Patch3:         caps-0.9.24-alt-e2k.patch
 BuildRequires:  gcc-c++
 BuildRequires:  ladspa_sdk
 Requires:       ladspa_sdk
 Obsoletes:      caps <= 0.3.0-2
 Provides:       caps = %{version}-%{release}
 Source44: import.info
+Patch33: caps-0.9.24-alt-e2k.patch
 Conflicts: ladspa-caps < 0.4.3
 Obsoletes: ladspa-caps < 0.4.3
 Provides: ladspa-caps = %version
@@ -31,15 +32,12 @@ equalization and others.
 
 %prep
 %setup -q -n caps-%{version}
-%patch0 -p1 -z .nostrip
-%patch1 -p1
-%patch2 -p1
-%ifarch %e2k
-# mcst#4314
-%patch3 -p1
-%endif
+%patch0  -p1 -z .nostrip
+%patch1  -p1
+%patch2  -p1
 # use the system version of ladspa.h
 rm ladspa.h
+%patch33 -p1
 
 
 %build
@@ -47,7 +45,7 @@ rm ladspa.h
 # mcst#4314
 %add_optflags -D__builtin_cosf=cosf -D__builtin_sinf=sinf
 %endif
-%make_build OPTS="%optflags -fPIC" LDFLAGS="-shared"
+%make_build OPTS="%optflags -fPIC" LDFLAGS="$RPM_LD_FLAGS -shared"
 
 
 %install
@@ -62,6 +60,9 @@ rm ladspa.h
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.9.24-alt4_22
+- update to new release by fcimport
+
 * Sun Sep 01 2019 Michael Shigorin <mike@altlinux.org> 0.9.24-alt4_6
 - E2K: ftbfs workaround (mcst#4314)
 
