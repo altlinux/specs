@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 0.24
+Version: 0.24.2
 Release: alt1
 
 Summary: Access large language models from the command-line
@@ -55,6 +55,9 @@ on your own machine.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 09 2025 Anton Zhukharev <ancieg@altlinux.org> 0.24.2-alt1
+- Updated to 0.24.2.
+
 * Tue Apr 08 2025 Anton Zhukharev <ancieg@altlinux.org> 0.24-alt1
 - Updated to 0.24.
 
