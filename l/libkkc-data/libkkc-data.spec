@@ -8,11 +8,12 @@ BuildRequires(pre): rpm-build-python3
 
 Name:		libkkc-data
 Version:	0.2.7
-Release:	alt1_22
+Release:	alt1_29
 Epoch:		1
 Summary:	Language model data for libkkc
 
-License:	GPLv3+
+# Automatically converted from old format: GPLv3+ - review is highly recommended.
+License:	GPL-3.0-or-later
 URL:		https://github.com/ueno/libkkc/
 Source0:	https://github.com/ueno/libkkc/releases/download/v0.3.5/%{name}-%{version}.tar.xz
 Patch0:		https://github.com/ueno/libkkc/commit/ba1c1bd3eb86d887fc3689c3142732658071b5f7.patch
@@ -29,7 +30,7 @@ at run time.
 
 %prep
 %setup -q
-%patch0 -p4 -b .orig
+%patch0  -p4 -b .orig
 
 
 %build
@@ -48,6 +49,9 @@ export PYTHON=%{__python3}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1:0.2.7-alt1_29
+- update to new release by fcimport
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 1:0.2.7-alt1_22
 - new version
 
