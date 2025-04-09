@@ -3,10 +3,10 @@ Group: Other
 %define _localstatedir %{_var}
 Name:           gshhg-gmt-nc4
 Version:        2.3.7
-Release:        alt1_1
+Release:        alt1_13
 Summary:        Global Self-consistent Hierarchical High-resolution Geography (GSHHG)
 
-License:        LGPLv3+
+License:        LGPL-3.0-or-later
 URL:            https://github.com/GenericMappingTools/gshhg-gmt
 # seems to be derived at least from 2 Public Domain datasets, 
 # CIA World DataBank II and World Vector Shoreline (already in fedora),
@@ -90,6 +90,9 @@ cp -a *.nc %{buildroot}/%{_datadir}/%{name}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.3.7-alt1_13
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_1
 - update to new release by fcimport
 
