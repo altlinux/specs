@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -6,9 +7,9 @@ BuildRequires: /usr/bin/desktop-file-install
 Name:           lpairs
 Summary:        Classical memory game with cards
 Version:        1.0.5
-Release:        alt1_1
-License:        GPLv2+ and CC-BY-SA and Freely redistributable without restriction
-Group:          Games/Other
+Release:        alt1_16
+# Automatically converted from old format: GPLv2+ and CC-BY-SA and Freely redistributable without restriction - review is highly recommended.
+License:        GPL-2.0-or-later AND LicenseRef-Callaway-CC-BY-SA AND LicenseRef-Fedora-UltraPermissive
 URL:            https://lgames.sourceforge.net/index.php?project=LPairs
 Source0:        https://downloads.sourceforge.net/lgames/lpairs-%{version}.tar.gz
 #there is a problem with data dir
@@ -18,7 +19,7 @@ Patch1:         lpairs-1.0.4-desktop.diff
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL-devel
-BuildRequires:  gettext gettext-tools
+BuildRequires:  gettext-tools
 Source44: import.info
 
 %description
@@ -28,8 +29,8 @@ will be counted but there is no highscore chart or limit to this.
 
 %prep
 %setup -q
-%patch0 -p0
-%patch1 -p0
+%patch0  -p0
+%patch1  -p0
 
 %build
 # FIXME: Package suffers from c11/inline issues
@@ -58,6 +59,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt1_16
+- update to new release by fcimport
+
 * Mon Dec 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
 - update to new release by fcimport
 
