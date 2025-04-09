@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.13.2
+Version: 3.13.4
 Release: alt1
 
 Summary: Python socket mock framework
@@ -41,6 +41,10 @@ BuildArch: noarch
 
 Source:  %name-%version.tar
 
+# mocket/__init__.py lines 14-16. It's ok!
+%add_python3_req_skip mocket.async_mocket
+%add_python3_req_skip mocket.mockhttp
+
 %description
 Socket Mock Framework - for all kinds of socket animals, web-clients
 included, with gevent/asyncio/SSL support.
@@ -63,7 +67,7 @@ export LANG=en_US.UTF-8
 py.test-3 -k "not test_file_object and \
               not test_truesendall_with_dump_from_recording and \
               not test_asyncio_record_replay and \
-              not TrueRedisTestCase"
+              not TrueRedisTestCase and not RedisTestCase"
 
 %files
 %doc LICENSE *.rst
@@ -71,6 +75,9 @@ py.test-3 -k "not test_file_object and \
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 3.13.4-alt1
+- Automatically updated to 3.13.4.
+
 * Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 3.13.2-alt1
 - Automatically updated to 3.13.2.
 
