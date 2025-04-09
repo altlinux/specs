@@ -5,9 +5,10 @@ BuildRequires: /usr/bin/desktop-file-install perl(SOAP/Lite.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:         amtterm
-License:      GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:      GPL-2.0-or-later
 Version:      1.6
-Release:      alt1_12
+Release:      alt1_23
 Summary:      Serial-over-lan (sol) client for Intel AMT
 URL:          http://www.kraxel.org/blog/linux/amtterm/
 Source:       http://www.kraxel.org/releases/%{name}/%{name}-%{version}.tar.gz
@@ -52,6 +53,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ \
 %{_datadir}/applications/gamt.desktop
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.6-alt1_23
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_12
 - update to new release by fcimport
 
