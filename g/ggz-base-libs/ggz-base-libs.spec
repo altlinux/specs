@@ -6,9 +6,10 @@ Group: System/Libraries
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt3_35
+Release: alt3_40
 
-License: LGPLv2+ and GPLv2+
+# Automatically converted from old format: LGPLv2+ and GPLv2+ - review is highly recommended.
+License: LicenseRef-Callaway-LGPLv2+ AND GPL-2.0-or-later
 URL: http://www.ggzgamingzone.org/
 #Source0: http://ftp.belnet.be/packages/ggzgamingzone/ggz/%{version}/ggz-base-libs-snapshot-%{version}.tar.gz
 Source0: http://mirrors.ibiblio.org/pub/mirrors/ggzgamingzone/ggz/snapshots/ggz-base-libs-snapshot-%{version}.tar.gz
@@ -59,8 +60,8 @@ Requires: pkgconfig
 %prep
 %setup -q -n %{name}-snapshot-%{version}
 
-%patch50 -p1 -b .tls_nss3
-%patch99 -p1
+%patch50  -p1 -b .tls_nss3
+%patch99  -p1
 
 %if 0 
 # some auto*/libtool love to quash rpaths
@@ -152,6 +153,9 @@ make check ||:
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.99.5-alt3_40
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.99.5-alt3_35
 - update to new release by fcimport
 
