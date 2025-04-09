@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -71,6 +71,7 @@ uzguard-server \
 uzguard-workstation \
 alt-container \
 asman \
+qazos \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -82,6 +83,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.17-alt1
+- Added qazos
+
 * Sun Oct 13 2024 Alexey Shabalin <shaba@altlinux.org> 1.0.16-alt1
 - Added alt-virtualization-pve and alt-virtualization-one
 
