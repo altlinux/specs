@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 6.3.4
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -21,7 +21,6 @@ License: GPL-2.0-or-later
 Requires: NetworkManager-daemon
 Requires: NetworkManager-adsl NetworkManager-wifi
 Requires: mobile-broadband-provider-info
-Requires: libcups-devel
 Requires: qca-qt6-ossl
 # prison qml
 Requires: libkf6prison
@@ -43,6 +42,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel
 %if_enabled qtwebengine
 BuildRequires: qt6-webengine-devel qt6-webchannel-devel
 %endif
+BuildRequires: libcups-devel
 BuildRequires: libvulkan-devel
 BuildRequires: mobile-broadband-provider-info libqca-qt6-devel qcoro6-devel
 BuildRequires: ModemManager-devel libopenconnect-devel
@@ -276,6 +276,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 
 
 %changelog
+* Wed Apr 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt2
+- fix requires
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
 - new version
 
