@@ -7,11 +7,12 @@ Group: System/Libraries
 
 Name:           libcutl
 Version:        %{base_version}.0
-Release:        alt1_23
+Release:        alt1_32
 Summary:        C++ utility library from Code Synthesis
 
 #Used internal Boost files
-License:        MIT and Boost
+# Automatically converted from old format: MIT and Boost - review is highly recommended.
+License:        LicenseRef-Callaway-MIT AND BSL-1.0
 URL:            http://www.codesynthesis.com/projects/libcutl/
 Source0:        http://www.codesynthesis.com/download/libcutl/%{base_version}/%{name}-%{version}.tar.bz2
 Patch0:         libcutl_no_boost_license.patch
@@ -67,6 +68,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}
 %{_libdir}/pkgconfig/libcutl.pc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.10.0-alt1_32
+- update to new release by fcimport
+
 * Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 1.10.0-alt1_23
 - update to new release by fcimport
 
