@@ -1,23 +1,24 @@
 Name: screen
-Version: 4.8.0
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
 Group: Terminals
-Url: http://www.gnu.org/software/screen/
+Url: http://www.gnu.org/software/screen
+Vcs: git://git.savannah.gnu.org/screen.git
 
-# git://git.savannah.gnu.org/screen.git
-# git://git.altlinux.org/gears/s/screen.git
-Source: screen-%version-%release.tar
+Source0: %name-%version.tar
 
-Requires(post): libutempter >= 1.0.6, pam_tcb >= 0.9.7.1, coreutils
+# ALT configuration files for GNU Screen
+Source1: %name.pamd
+Source2: %name.conf
+Source3: %{name}rc
+Source4: %{name}cap
 
-BuildPreReq: libutempter-devel >= 1.0.6
-
-# Automatically added by buildreq on Mon Jan 25 2016
-# optimized out: libpam-devel libtinfo-devel pam0_userpass perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore xz
 BuildRequires: libncurses-devel libutempter-devel makeinfo pam_userpass-devel
+
+Requires: libutempter pam_tcb
 
 %description
 The screen utility allows you to run interactive text-mode programs
@@ -37,86 +38,83 @@ Install the screen package if you may need to use virtual terminals
 managed by the screen utility.
 
 %prep
-%setup -q -n screen-%version-%release
+%setup
+cp %SOURCE1 .
+cp %SOURCE2 .
+cp %SOURCE3 .
+cp %SOURCE4 .
 
 %build
 pushd src
 %autoreconf
-%add_optflags -D_GNU_SOURCE
-%if_enabled debug
-%add_optflags -DDEBUG
-%endif
 %configure \
-	--with-sys-screenrc=/etc/screenrc \
-	--with-socket-dir=/var/run/screen \
+	--with-system_screenrc=%_sysconfdir/%{name}rc \
+	--enable-socket-dir=%_var/run/%name \
 	--enable-pam \
 	--enable-telnet \
 	--enable-colors256 \
-	--enable-rxvt_osc \
-	#
-
+	--enable-rxvt_osc
 popd
-
 %make_build -C src CFLAGS="%optflags"
-%make_build -C src/doc screen.info
-xz -kf src/doc/*.ps
 
 %install
 %makeinstall_std -C src
 
-pushd %buildroot%_bindir
-	rm -f screen.old screen
-	mv screen-%version screen
-popd
+# Create directory for GNU Screen socket
+mkdir -p %buildroot%_var/run/%name
 
-install -pD -m644 alt/screenrc %buildroot/etc/screenrc
-install -pD -m644 alt/screencap %buildroot/etc/screencap
+# Create files for tcb and utmp
+mkdir -p %buildroot%_libexecdir/%name
+touch %buildroot%_libexecdir/%name/tcb_chkpwd
+touch %buildroot%_libexecdir/%name/utempter
 
-install -pD -m644 alt/screen.pamd %buildroot/etc/pam.d/screen
-
-mkdir -p %buildroot{/var/run/screen,%_tmpfilesdir}
-echo 'd /var/run/screen 0775 root screen' > %buildroot%_tmpfilesdir/screen.conf
-
-mkdir -p %buildroot%_libexecdir/screen
-touch %buildroot%_libexecdir/screen/{tcb_chkpwd,utempter}
+# Install ALT configuration files for GNU Screen
+mkdir -p %buildroot%_sysconfdir/pam.d
+install -Dpm 0644 %{name}rc %buildroot%_sysconfdir
+install -Dpm 0644 %{name}cap %buildroot%_sysconfdir
+install -Dpm 0644 %name.pamd %buildroot%_sysconfdir/pam.d/%name
+mkdir -p %buildroot%_tmpfilesdir
+install -Dpm 0644 %name.conf %buildroot%_tmpfilesdir
 
 %pre
-/usr/sbin/groupadd -r -f screen
+%_sbindir/groupadd -r -f %name
 
 %post
-ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
-ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/%name
+ln -f %_libexecdir/utempter/utempter %_libexecdir/%name
 
 %preun
 if [ $1 -eq 0 ]; then
-	rm -f %_libexecdir/screen/{tcb_chkpwd,utempter}
+	rm -f %_libexecdir/%name/tcb_chkpwd
+	rm -f %_libexecdir/%name/utempter
 fi
 
-%triggerin -- pam_tcb >= 0.9.7.1
-ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
+%triggerin -- pam_tcb
+ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/%name
 
-%triggerin -- libutempter >= 1.0.6
-ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+%triggerin -- libutempter
+ln -f %_libexecdir/utempter/utempter %_libexecdir/%name
 
 %files
-%attr(2711,root,screen) %_bindir/screen
-%attr(710,root,screen) %dir %_libexecdir/screen
-%attr(2711,root,shadow) %ghost %_libexecdir/screen/tcb_chkpwd
-%attr(2711,root,utmp) %ghost %_libexecdir/screen/utempter
-%attr(775,root,screen) %dir /var/run/screen/
-
-%_datadir/screen
-%_man1dir/screen.*
-%_infodir/*.info*
-%config(noreplace) /etc/screenrc
-%config(noreplace) /etc/screencap
-%config(noreplace) /etc/pam.d/screen
-%_tmpfilesdir/screen.conf
-
-%doc src/etc/*screenrc
-%doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
+%doc COPYING src/README src/ChangeLog src/HACKING src/doc/FAQ src/etc/screenrc
+%attr(2711, root, %name) %_bindir/%name
+%attr(2711, root, %name) %_bindir/%name-%version
+%attr(0755, root, %name) %dir %_libexecdir/%name
+%attr(2711, root, shadow) %ghost %_libexecdir/%name/tcb_chkpwd
+%attr(2711, root, utmp) %ghost %_libexecdir/%name/utempter
+%attr(0775, root, %name) %dir %_var/run/%name
+%_datadir/%name
+%_infodir/%name.info.xz
+%_man1dir/%name.1.xz
+%config(noreplace) %_sysconfdir/%{name}rc
+%config(noreplace) %_sysconfdir/%{name}cap
+%config(noreplace) %_sysconfdir/pam.d/%name
+%_tmpfilesdir/%name.conf
 
 %changelog
+* Fri Apr 04 2025 Ulysses Apokin <ulysses@altlinux.org> 5.0.0-alt1
+- Updated to v.5.0.0.
+
 * Thu Nov 11 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.8.0-alt2
 - Applied SUSE combchar.diff to prevent DoS via crafted UTF-8 character
   sequence (fixes CVE-2021-26937).
