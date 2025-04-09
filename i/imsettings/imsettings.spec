@@ -1,7 +1,7 @@
 Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives
-BuildRequires: /usr/bin/desktop-file-validate /usr/bin/gtkdocize gcc-c++ glib2-devel pkgconfig(check) pkgconfig(gconf-2.0) pkgconfig(gdk-2.0) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/desktop-file-validate gcc-c++ pkgconfig(check) pkgconfig(gconf-2.0) pkgconfig(gdk-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %filter_from_requires /^systemd/d
 %add_findreq_skiplist %_libexecdir/xinputinfo.sh
@@ -10,18 +10,18 @@ BuildRequires: libdbus-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		imsettings
-Version:	1.8.9
-Release:	alt1
-License:	LGPLv2+
+Version:	1.8.10
+Release:	alt1_2
+License:	LGPL-2.0-or-later
 URL:		https://gitlab.com/tagoh/%{name}/
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext gettext-tools
-BuildRequires:	libtool automake autoconf
-BuildRequires:	libgio >= 2.32.0, gobject-introspection-devel gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:	gettext-tools libasprintf-devel
+BuildRequires:	libtool automake autoconf autoconf-archive
+BuildRequires:	glib2-devel libgio libgio-devel, gobject-introspection-devel gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-doc gtk-doc-mkpdf
 BuildRequires:	libnotify-devel libnotify-gir-devel
-BuildRequires:	libX11-devel, libgxim-devel >= 0.5.0
+BuildRequires:	libX11-devel
 %if !0%{?rhel}
-BuildRequires:	libxfconf-devel
+BuildRequires:	libxfconf-devel, libgxim-devel >= 0.5.0
 %endif
 Source0:	https://bitbucket.org/tagoh/%{name}/downloads/%{name}-%{version}.tar.bz2
 ## Fedora specific: run IM for certain languages only
@@ -30,15 +30,18 @@ Patch0:		%{name}-constraint-of-language.patch
 Patch1:		%{name}-disable-xim.patch
 ## Fedora specific: Enable xcompose for certain languages
 Patch2:		%{name}-xinput-xcompose.patch
+%if 0%{?rhel}
+Patch4:		%{name}-glib.patch
+%endif
 ## Fedora specific: Force enable the IM management on imsettings for Cinnamon
-Patch3:		%{name}-force-enable-for-cinnamon.patch
+Patch7:		%{name}-force-enable-for-cinnamon.patch
 
 Summary:	Delivery framework for general Input Method configuration
 Requires:	xinit >= 1.0.2
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	%{name}-desktop-module = %{version}-%{release}
 Requires:	/bin/bash
-Requires:	%{name}-systemd
+Requires:	%{name}-gsettings
 Source44: import.info
 
 %description
@@ -77,20 +80,6 @@ or the desktop.
 This package contains the development files to make any
 applications with imsettings.
 
-%package	xim
-Group: System/Base
-Summary:	XIM support on imsettings
-Requires:	%{name} = %{version}-%{release}
-Requires:	im-chooser
-
-%description	xim
-IMSettings is a framework that delivers Input Method
-settings and applies the changes so they take effect
-immediately without any need to restart applications
-or the desktop.
-
-This package contains a module to get this working with XIM.
-
 %package	gsettings
 Group: System/Base
 Summary:	GSettings support on imsettings
@@ -99,6 +88,8 @@ Requires:	dconf libdconf
 Provides:	imsettings-desktop-module = %{version}-%{release}
 Provides:	%{name}-gnome = %{version}-%{release}
 Obsoletes:	%{name}-gnome < 1.5.1-3
+Provides:	%{name}-systemd = %{version}-%{release}
+Obsoletes:	%{name}-systemd < 1.8.3-6
 
 %description	gsettings
 IMSettings is a framework that delivers Input Method
@@ -126,7 +117,56 @@ or the desktop.
 This package contains a module to get this working on Qt
 applications.
 
+%package	plasma
+Group: System/Base
+Summary:	Plasma Workspace support on imsettings
+Requires:	%{name} = %{version}-%{release}
+Requires:	im-chooser
+Requires:	kf5-filesystem
+Provides:	imsettings-desktop-module = %{version}-%{release}
+
+%description	plasma
+IMSettings is a framework that delivers Input Method
+settings and applies the changes so they take effect
+immediately without any need to restart applications
+or the desktop.
+
+This package contains Plasma Workspace support on
+imsettings.
+
+%package	mate
+Group: System/Base
+Summary:	MATE support on imsettings
+Requires:	%{name} = %{version}-%{release}
+# need to keep more deps for similar reason to https://bugzilla.redhat.com/show_bug.cgi?id=693809
+Requires:	mate-settings-daemon >= 1.5.0
+Requires:	mate-session
+Requires:	im-chooser
+Provides:	imsettings-desktop-module = %{version}-%{release}
+
+%description	mate
+IMSettings is a framework that delivers Input Method
+settings and applies the changes so they take effect
+immediately without any need to restart applications
+or the desktop.
+
+This package contains a module to get this working on MATE.
+
 %if !0%{?rhel}
+%package	xim
+Group: System/Base
+Summary:	XIM support on imsettings
+Requires:	%{name} = %{version}-%{release}
+Requires:	im-chooser
+
+%description	xim
+IMSettings is a framework that delivers Input Method
+settings and applies the changes so they take effect
+immediately without any need to restart applications
+or the desktop.
+
+This package contains a module to get this working with XIM.
+
 %package	xfce
 Group: System/Base
 Summary:	Xfce support on imsettings
@@ -141,7 +181,7 @@ settings and applies the changes so they take effect
 immediately without any need to restart applications
 or the desktop.
 
-This package contains a module to get this working on Xfce.  
+This package contains a module to get this working on Xfce.
 
 %package	lxde
 Group: System/Base
@@ -162,24 +202,6 @@ or the desktop.
 
 This package contains a module to get this working on LXDE.
 
-%package	mate
-Group: System/Base
-Summary:	MATE support on imsettings
-Requires:	%{name} = %{version}-%{release}
-# need to keep more deps for similar reason to https://bugzilla.redhat.com/show_bug.cgi?id=693809
-Requires:	mate-settings-daemon >= 1.5.0
-Requires:	mate-session
-Requires:	im-chooser
-Provides:	imsettings-desktop-module = %{version}-%{release}
-
-%description	mate
-IMSettings is a framework that delivers Input Method
-settings and applies the changes so they take effect
-immediately without any need to restart applications
-or the desktop.
-
-This package contains a module to get this working on MATE.
-
 %package	cinnamon
 Group: System/Base
 Summary:	Cinnamon support on imsettings
@@ -199,28 +221,17 @@ or the desktop.
 This package contains a module to get this working on Cinnamon.
 %endif
 
-%package	systemd
-Group: System/Base
-Summary:	Generic support for imsettings by systemd
-Requires:	%{name} = %{version}-%{release}
-Requires:	im-chooser
-Provides:	imsettings-desktop-module = %{version}-%{release}
-
-%description	systemd
-IMSettings is a framework that delivers Input Method
-settings and applies the changes so they take effect
-immediately without any need to restart applications
-or the desktop.
-
-This package contains a module to support basic functionality for imsettings by systemd.
-
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+%if 0%{?rhel}
+%patch4 -p1
+%endif
+%patch7 -p1
 
+autoreconf -i
 
 %build
 %configure	\
@@ -239,12 +250,15 @@ chmod 0755 $RPM_BUILD_ROOT%{_libexecdir}/imsettings-target-checker.sh
 chmod 0755 $RPM_BUILD_ROOT%{_libexecdir}/xinputinfo.sh
 chmod 0755 $RPM_BUILD_ROOT%{_sysconfdir}/X11/xinit/xinitrc.d/50-xinput.sh
 
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/xdg/plasma-workspace/env
+ln -sf $(realpath --relative-to=$RPM_BUILD_ROOT%{_sysconfdir}/xdg/plasma-workspace/env/ $RPM_BUILD_ROOT%{_sysconfdir}/X11/xinit/xinitrc.d/)/50-xinput.sh $RPM_BUILD_ROOT%{_sysconfdir}/xdg/plasma-workspace/env/xinput.sh
+
 # clean up the unnecessary files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/*.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{gconf,mateconf}.so
+rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{gconf,mateconf,systemd-gtk,systemd-qt}.so
 %if 0%{?rhel}
-rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{lxde,xfce,mate-gsettings,cinnamon-gsettings}.so
+rm -f $RPM_BUILD_ROOT%{_libdir}/imsettings/libimsettings-{lxde,xfce,xim,cinnamon-gsettings}.so
 %endif
 
 desktop-file-validate $RPM_BUILD_ROOT%{_sysconfdir}/xdg/autostart/imsettings-start.desktop
@@ -314,12 +328,6 @@ fi
 %{_datadir}/gir-*/IMSettings-*.gir
 %{_datadir}/gtk-doc/html/imsettings
 
-%files	xim
-%doc --no-dereference COPYING
-%doc AUTHORS ChangeLog NEWS README
-%{_bindir}/imsettings-xim
-%{_libdir}/imsettings/libimsettings-xim.so
-
 %files	gsettings
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
@@ -330,7 +338,23 @@ fi
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-qt.so
 
+%files	plasma
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
+%{_sysconfdir}/xdg/plasma-workspace/env/xinput.sh
+
+%files	mate
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
+%{_libdir}/imsettings/libimsettings-mate-gsettings.so
+
 %if !0%{?rhel}
+%files	xim
+%doc --no-dereference COPYING
+%doc AUTHORS ChangeLog NEWS README
+%{_bindir}/imsettings-xim
+%{_libdir}/imsettings/libimsettings-xim.so
+
 %files	xfce
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
@@ -340,11 +364,6 @@ fi
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README
 %{_libdir}/imsettings/libimsettings-lxde.so
-
-%files	mate
-%doc --no-dereference COPYING
-%doc AUTHORS ChangeLog NEWS README
-%{_libdir}/imsettings/libimsettings-mate-gsettings.so
 
 # note: done by robot; when cinnamon is supported, not just unifdef me, notify viy@ too
 # because cinnamon isn't supported on e2k yet
@@ -356,13 +375,10 @@ fi
 %endif
 
 %endif
-%files systemd
-%doc --no-dereference COPYING
-%doc AUTHORS ChangeLog NEWS README
-%{_libdir}/imsettings/libimsettings-systemd-gtk.so
-%{_libdir}/imsettings/libimsettings-systemd-qt.so
-
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.8.10-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 11 2024 Ilya Mashkin <oddity@altlinux.ru> 1.8.9-alt1
 - 1.8.9
 
