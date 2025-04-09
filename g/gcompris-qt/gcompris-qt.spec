@@ -1,6 +1,6 @@
 Name:    gcompris-qt
 Version: 25.0.12
-Release: alt2
+Release: alt3
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
 
@@ -35,6 +35,7 @@ BuildRequires: chrpath
 
 Requires: libqt6-multimedia
 Requires: libqt6-svg
+Requires: libqt6-multimediaquick
 Requires: libqt6-quickcontrols2
 Requires: libqt6-quickparticles
 Requires: chess sqlite3 gnucap tuxpaint
@@ -76,6 +77,8 @@ install -Dpm0644 %SOURCE2 poqm/ru/gcompris_qt.po
 install -Dpm0644 %SOURCE3 po/ru/gcompris_voices.po
 # Remove geography activity due to non actial maps
 subst '/geography/d' src/activities/activities.txt
+# Remove balancebox activity due to QtSensors 5.0 (ALT #53765)
+subst '/balancebox/d' src/activities/activities.txt
 
 %build
 export LANG=en_US.UTF-8
@@ -102,6 +105,10 @@ chrpath -d %buildroot%_libexecdir/qml/Box2D.2.0/libqmlbox2d.so
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 25.0.12-alt3
+- Removed balancebox activity due to QtSensors 5.0 (ALT #53765).
+- Add libqt6-multimediaquick as requirement (ALT #53579)
+
 * Mon Feb 24 2025 Andrey Cherepanov <cas@altlinux.org> 25.0.12-alt2
 - Completed Russian translation (thanks Olesya Gerasimenko).
 
