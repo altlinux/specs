@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,10 +6,10 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           overgod
 Version:        1.0
-Release:        alt2_28
+Release:        alt2_46
 Summary:        Another arcade-style shoot-em-up
-Group:          Games/Other
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://www.allegro.cc/depot/Overgod
 Source0:        http://downloads.sourceforge.net/overgod/overgod.tar.gz
 Source1:        overgod.desktop
@@ -18,7 +19,8 @@ Patch0:         overgod-1.0.patch
 Patch1:         overgod-1.0-format-string.patch
 Patch2:         overgod-1.0-shield_bmp_array_overrun.patch
 Patch3:         overgod-1.0-inline-use-fix.patch
-BuildRequires:  liballegro-devel desktop-file-utils libappstream-glib
+BuildRequires:  gcc
+BuildRequires:  liballegro-devel desktop-file-utils libappstream-glib libappstream-glib-gir
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -35,10 +37,10 @@ ways.
 
 %prep
 %setup -q
-%patch0 -p1 -z .unix
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch0  -p1 -z .unix
+%patch1  -p1
+%patch2  -p1
+%patch3  -p1
 sed -i 's/\r//' readme.txt licence.txt
 
 # as-needed
@@ -74,6 +76,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_46
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_28
 - update to new release by fcimport
 
