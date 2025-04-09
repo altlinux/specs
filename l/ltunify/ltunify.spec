@@ -4,8 +4,9 @@ Group: Other
 Name:           ltunify
 URL:            https://lekensteyn.nl/logitech-unifying.html
 Version:        0.1
-Release:        alt1_13
-License:        GPLv3+
+Release:        alt1_26
+# Automatically converted from old format: GPLv3+ - review is highly recommended.
+License:        GPL-3.0-or-later
 Summary:        Command line utility for Logitech Unifying Receiver
 Source:         https://git.lekensteyn.nl/ltunify/snapshot/ltunify-0.1.tar.gz
 
@@ -39,6 +40,9 @@ install -p -m0755 usbmon.awk %{buildroot}%{_bindir}
 %{_bindir}/usbmon.awk
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1-alt1_26
+- update to new release by fcimport
+
 * Mon Sep 30 2019 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_13
 - new version
 
