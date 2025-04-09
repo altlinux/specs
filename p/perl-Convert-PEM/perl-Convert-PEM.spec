@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Convert-PEM
-Version: 0.08
-Release: alt2
+Version: 0.13
+Release: alt1
 
 Summary: Convert-PEM - Read/write encrypted ASN.1 PEM files
 
@@ -28,11 +28,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/B/BT/BTROTT/Convert-PEM-%version.tar.gz
 
-# https://rt.cpan.org/Public/Bug/Display.html?id=27574
-Patch: 0001-Do-not-test-the-reason-for-decryption-failure-on-bad.patch
-
 # Automatically added by buildreq on Sat Aug 27 2005
-BuildRequires: perl-Class-ErrorHandler perl-Convert-ASN1 perl-Crypt-DES perl-Crypt-DES_EDE3 perl-Encode perl-Math-BigInt perl-devel
+BuildRequires: perl-Class-ErrorHandler perl-Convert-ASN1 perl-Crypt-DES perl-Crypt-DES_EDE3 perl-Encode perl-Math-BigInt perl-devel perl(Crypt/PRNG.pm) perl(Test/Exception.pm)
 
 %description
 This is Convert::PEM, a module implementing read/write access
@@ -40,7 +37,6 @@ to ASN.1-encoded PEM files (with optional encryption).
 
 %prep
 %setup -n %m_distro-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -53,6 +49,9 @@ to ASN.1-encoded PEM files (with optional encryption).
 %perl_vendor_privlib/Convert/
 
 %changelog
+* Wed Apr 09 2025 Igor Vlasenko <viy@altlinux.org> 0.13-alt1
+- automated CPAN update
+
 * Sun May 12 2019 Vitaly Lipatov <lav@altlinux.ru> 0.08-alt2
 - fix test
 
