@@ -7,10 +7,11 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libpgf
 Version:        7.21.7
-Release:        alt1_2
+Release:        alt1_7
 Summary:        PGF (Progressive Graphics File) library
 
-License:        LGPLv2+
+# Automatically converted from old format: LGPLv2+ - review is highly recommended.
+License:        LicenseRef-Callaway-LGPLv2+
 URL:            http://www.libpgf.org
 Source0:        https://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/libpgf.zip
 
@@ -80,6 +81,9 @@ export CXXFLAGS="%{optflags} -DLIBPGF_DISABLE_OPENMP -std=c++14"
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 7.21.7-alt1_7
+- update to new release by fcimport
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 7.21.7-alt1_2
 - update to new release by fcimport
 
