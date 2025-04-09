@@ -1,12 +1,12 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install imake libXt-devel xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libICE-devel libSM-devel libX11-devel libXt-devel libopenmotif-devel xorg-cf-files
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_47
+Release:        alt5_53
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL-1.0-or-later
@@ -29,6 +29,7 @@ Patch3:         %{name}-1.1-aarch64.patch
 # Fix build failure with -Werror=format-security
 Patch4:         %{name}-1.1-format-security.patch
 Patch5:         %{name}-1.1-configure-c99.patch
+Patch6:         %{name}-finishdrawmap.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
@@ -46,12 +47,13 @@ vaguely in the style of similar games for the Commodore+4.
 
 %prep
 %setup -q
-%patch0
-%patch1
-%patch2
-%patch3
-%patch4
-%patch5
+%patch0 
+%patch1 
+%patch2 
+%patch3 
+%patch4 
+%patch5 
+%patch6 
 
 # Fix the FSF's address
 sed 's/59 Temple Place, Suite 330, Boston, MA  02111-1307/51 Franklin Street, Suite 500, Boston, MA  02110-1335/' COPYING > COPYING.new
@@ -98,6 +100,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.1-alt5_53
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.1-alt5_47
 - update to new release by fcimport
 
