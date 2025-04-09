@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: passim
-Version: 0.1.8
-Release: alt2
+Version: 0.1.9
+Release: alt1
 
 Summary: Local caching server
 License: LGPL-2.1-only
@@ -59,7 +59,7 @@ rm -v %buildroot%_localstatedir/passim/data/*-HELLO.md
 %find_lang %name
 
 %check
-%__meson_test
+%meson_test
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedesktop.Passim.metainfo.xml
 
 %files -f %name.lang
@@ -69,7 +69,8 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_libdir/girepository-1.0/Passim-1.0.typelib
 %_libexecdir/passimd
 %_localstatedir/passim
-%_iconsdir/hicolor/scalable/apps/org.freedesktop.Passim.png/
+%_iconsdir/hicolor/128x128/apps/org.freedesktop.Passim.png
+%_iconsdir/hicolor/scalable/apps/org.freedesktop.Passim.svg
 %_datadir/dbus-1/interfaces/org.freedesktop.Passim.xml
 %_datadir/dbus-1/system-services/org.freedesktop.Passim.service
 %_datadir/dbus-1/system.d/org.freedesktop.Passim.conf
@@ -90,6 +91,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_pkgconfigdir/passim.pc
 
 %changelog
+* Wed Apr 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.9-alt1
+- New version.
+- Fix FTBFS: use meson_test macro instead of __meson_test (closes: 53786).
+
 * Wed Jun 26 2024 Ajrat Makhmutov <rauty@altlinux.org> 0.1.8-alt2
 - Fix FTBFS: use new _sysusersdir macro.
 
