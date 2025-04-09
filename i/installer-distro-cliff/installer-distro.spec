@@ -1,6 +1,6 @@
 %define distro cliff
 Name: installer-distro-%distro
-Version: 10.2
+Version: 11.0
 Release: alt1
 
 License: GPL-2.0-or-later
@@ -85,6 +85,9 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1
+- Do not set noexec option on mountpoint /home
+
 * Thu Apr 04 2024 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
 - remove postinstall.d/remove 01-remove-installer-server-pkgs.sh
 - remove dependency on alterator-officer
