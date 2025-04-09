@@ -2,7 +2,7 @@ Group: System/Base
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
-%define fedora 37
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %if 0%{!?_with_xfce:1} && 0%{!?_without_xfce:1}
@@ -14,17 +14,17 @@ BuildRequires: /usr/bin/desktop-file-validate glib2-devel pkgconfig(gtk+-3.0)
 %endif
 
 Name:		im-chooser
-Version:	1.7.4
-Release:	alt1_5
+Version:	1.7.5
+Release:	alt1_3
 License:	GPL-2.0-or-later AND LGPL-2.0-or-later
 URL:		http://pagure.io/im-chooser/
 %{?_with_gtk2:BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel}
 %{!?_with_gtk2:BuildRequires:	gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel}
-BuildRequires:	libSM-devel imsettings-devel >= 1.8.3
+BuildRequires:	libSM-devel imsettings-devel >= 1.8.9
 %if 0%{?_with_xfce}
 BuildRequires:	libxfce4util-devel
 %endif
-BuildRequires:	desktop-file-utils gettext gettext-tools
+BuildRequires:	desktop-file-utils gettext-tools
 BuildRequires:	gcc
 
 Source0:	http://releases.pagure.org/%{name}/%{name}-%{version}.tar.bz2
@@ -43,7 +43,7 @@ to be used or disable Input Method usage on the desktop.
 %package	common
 Group: System/Base
 Summary:	Common files for im-chooser subpackages
-Requires:	imsettings >= 1.8.0
+Requires:	imsettings >= 1.8.9
 Obsoletes:	im-chooser < 1.5.0.1
 ## https://fedorahosted.org/fpc/ticket/174
 Provides:	bundled(egglib)
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/applications/im-chooser-panel.desktop
 %endif
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.7.5-alt1_3
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.7.4-alt1_5
 - update to new release by fcimport
 
