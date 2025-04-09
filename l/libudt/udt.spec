@@ -8,17 +8,18 @@ Group: Development/C
 %define _localstatedir %{_var}
 Name:		libudt
 Version:	4.11
-Release:	alt1_14
+Release:	alt1_28
 Summary:	UDP based Data Transfer Protocol
 
-License:	BSD
+#		BSD except for src/md5.cpp and src/md5.h that are Zlib
+License:	BSD-3-Clause AND Zlib
 URL:		http://udt.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/udt/udt/%{version}/udt.sdk.%{version}.tar.gz
-Patch:		udt.sdk.4.11-link-as-needed.patch
 
 BuildRequires:	gcc-c++
 Source44: import.info
 Provides: udt = %{version}-%{release}
+Patch33: udt.sdk.4.11-link-as-needed.patch
 
 %package devel
 Group: Development/C
@@ -38,9 +39,12 @@ control algorithms.
 %description devel
 UDT development files.
 
+# Work around %%_builddir being defined too late (#2043864)
+%global _package_note_file %{_builddir}/udt4/.package_note-%{oldname}-%{version}-%{release}.%{_arch}.ld
+
 %prep
 %setup -q -n udt4
-%patch -p1
+%patch33 -p1
 
 sed 's!-O3!%{optflags}!' -i src/Makefile app/Makefile
 sed 's!-shared!& %{?__global_ldflags} -lpthread -Wl,-soname,libudt.so.0!' \
@@ -83,6 +87,9 @@ install -p -m 644 src/*.h %{buildroot}%{_includedir}/udt
 %doc doc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 4.11-alt1_28
+- update to new release by fcimport
+
 * Sun Mar 03 2019 Igor Vlasenko <viy@altlinux.ru> 4.11-alt1_14
 - new version
 
