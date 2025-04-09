@@ -4,9 +4,10 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libst2205
 Version:        1.4.3
-Release:        alt3_25
+Release:        alt3_33
 Summary:        Library for accessing the display of hacked st2205 photo frames
-License:        GPLv3+
+# Automatically converted from old format: GPLv3+ - review is highly recommended.
+License:        GPL-3.0-or-later
 URL:            http://picframe.spritesserver.nl/wiki/index.php
 # Note the st2205tool includes tools to actually hack the pictureframe, this is
 # something which should only be done by experienced techies and which we
@@ -49,9 +50,9 @@ display a (properly sized) PNG file on a supported picture frames display.
 
 %prep
 %setup -q -n st2205tool
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch0  -p1
+%patch1  -p1
+%patch2  -p1
 
 
 %build
@@ -89,6 +90,9 @@ install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt3_33
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt3_25
 - update to new release by fcimport
 
