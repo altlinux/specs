@@ -1,18 +1,20 @@
+Group: System/Base
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           cmospwd
 Version:        5.0
-Release:        alt2_13
+Release:        alt2_30
 Summary:        BIOS password cracker utility
 
-Group:          System/Base
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://www.cgsecurity.org/wiki/CmosPwd
 Source0:        http://www.cgsecurity.org/%{name}-%{version}.tar.bz2
 
 # Fails to build on other arches and not useful there either, I think
 ExclusiveArch:  %{ix86} x86_64
 
+BuildRequires:  gcc
 BuildRequires:  dos2unix
 Source44: import.info
 
@@ -58,12 +60,16 @@ make CFLAGS="%{optflags}" %{?_smp_mflags}
 install -D -m 755 src/%{name} $RPM_BUILD_ROOT%{_sbindir}/%{name}
 
 
+
 %files
 %doc COPYING %{name}.txt
 %{_sbindir}/%{name}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 5.0-alt2_30
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 5.0-alt2_13
 - update to new release by fcimport
 
