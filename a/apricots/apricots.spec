@@ -8,8 +8,8 @@ BuildRequires: /usr/bin/desktop-file-install
 %global debug_package %{nil}
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
-Version:  0.2.7
-Release:  alt1_6
+Version:  0.2.9
+Release:  alt1_1
 Summary: 2D air combat game
 
 License: GPL-2.0-only
@@ -19,13 +19,11 @@ Source1: apricots.png
 #Icon created from screenshot on website
 Source2: apricots.desktop
 
-Patch0: noinline.patch
-
 BuildRequires: gcc gcc-c++
 BuildRequires: libSDL2-devel libSDL2-devel-static
-BuildRequires: libalut-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libopenal-devel
+BuildRequires: libalure-devel
 BuildRequires: autoconf automake
 ExcludeArch: ppc64le aarch64
 Source44: import.info
@@ -37,8 +35,6 @@ and fun.
 
 %prep
 %setup -q
-
-%patch0 -p0
 # e2k support (deprecated in 0.2.7)
 #cp -at admin -- \
 #       /usr/share/gnu-config/config.sub /usr/share/gnu-config/config.guess
@@ -52,15 +48,11 @@ and fun.
 
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-install -m 755 apricots/apricots %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_datadir}/apricots
-install -m 644 apricots/*.wav %{buildroot}%{_datadir}/apricots
+%makeinstall_std
 mkdir -p %{buildroot}%{_sysconfdir}
-install -m 644 apricots/apricots.cfg %{buildroot}%{_sysconfdir}
+install -m 644 apricots/data/apricots.cfg %{buildroot}%{_sysconfdir}
+rm %{buildroot}%{_datadir}/apricots/apricots.cfg
 ln -s ../../..%{_sysconfdir}/apricots.cfg %{buildroot}%{_datadir}/apricots/apricots.cfg
-install -m 644 apricots/*.psf %{buildroot}%{_datadir}/apricots
-install -m 644 apricots/*.shapes %{buildroot}%{_datadir}/apricots
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install            \
@@ -83,6 +75,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2.9-alt1_1
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 0.2.7-alt1_6
 - update to new release by fcimport
 
