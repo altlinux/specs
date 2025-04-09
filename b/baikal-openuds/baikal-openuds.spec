@@ -2,11 +2,12 @@
 
 Name: baikal-openuds
 Version: 0.0.3
-Release: alt1
+Release: alt2.1
 License: %gpl2plus
 Summary: Workaround for xfreerdp with OpenUDS on Baikal-M
 Group: Other
 Source0: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
@@ -30,6 +31,12 @@ install -D xfreerdp %buildroot%_bindir/xfreerdp
 %_bindir/xfreerdp
 
 %changelog
+* Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt2.1
+- Built as noarch and increase release.
+
+* Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt2
+- NMU: exclude build for armh
+
 * Wed Nov 10 2021 Igor Chudov <nir@altlinux.org> 0.0.3-alt1
 - Fixed logging errors
 
