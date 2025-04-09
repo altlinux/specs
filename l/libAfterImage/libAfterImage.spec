@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ imake libXpm-devel libXt-devel libglvnd-devel xorg-cf-files
+BuildRequires: gcc-c++ imake libICE-devel libSM-devel libXpm-devel libXt-devel libglvnd-devel libopenmotif-devel xorg-cf-files
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -7,10 +7,10 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_31
+Release:        alt1_37
 Summary:        A generic image manipulation library
 
-License:        LGPLv2+
+License:        LGPL-2.1-or-later
 URL:            http://www.afterstep.org/afterimage/index.php
 Source0:        ftp://ftp.afterstep.org/stable/%{name}/%{name}-%{version}.tar.bz2
 Source1:        %{name}-COPYING
@@ -76,10 +76,10 @@ The %{name}-apps package contains sample programs using %{name}.
 %prep
 %setup -q
 %patch0 
-%patch1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch1 
+%patch2  -p1
+%patch3  -p1
+%patch4  -p1
 
 # Delete bundled sources
 rm libjpeg/*
@@ -121,6 +121,9 @@ cp %{SOURCE1} COPYING
 %{_bindir}/as*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.20-alt1_37
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.20-alt1_31
 - update to new release by fcimport
 
