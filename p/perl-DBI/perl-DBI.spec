@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBI
 Name: perl-%dist
-Version: 1.643
-Release: alt3
+Version: 1.647
+Release: alt1
 
 Summary: Database independent interface for Perl
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
+VCS: git+https://github.com/perl5-dbi/dbi
 Source: %dist-%version.tar
-Patch: %name-%version-%release.patch
-Patch2: lib-DBD-File.pm-fix-CVE-2014-10402.patch
+Patch0: DBD-alt-rpmbuild.patch
+Patch1: DBD-alt-disable-DBD-PurePerl.patch
+Patch2: DBD-alt-Changes.pod.patch
 
 # requires Apache; not required by any package
 %add_findreq_skiplist */DBI/ProfileDumper/Apache.pm
@@ -19,7 +21,7 @@ Patch2: lib-DBD-File.pm-fix-CVE-2014-10402.patch
 %add_findreq_skiplist */DBD/Gofer/Transport/corostream.pm
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-Devel-Leak perl-JSON-XS perl-List-MoreUtils perl-MLDBM perl-PlRPC perl-SQL-Statement perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Devel-Leak perl-JSON-XS perl-List-MoreUtils perl-MLDBM perl-PlRPC perl-SQL-Statement perl-Test-Pod perl-Test-Pod-Coverage perl(autodie.pm) /usr/bin/podselect
 
 %description
 The DBI is a database access module for the Perl programming language.
@@ -121,8 +123,8 @@ using the remote driver directly.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
-%patch2 -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %perl_vendor_build
@@ -132,16 +134,22 @@ rm blib/lib/DBI/W32ODBC.pm
 rm blib/lib/Win32/DBIODBC.pm
 rm blib/lib/Bundle/DBI.pm
 rm blib/lib/dbixs_rev.pl
+rm blib/lib/changes2pm.pl
+
 #mv blib/lib/DBI/FAQ.{pm,pod}
 
 %install
 %perl_vendor_install
 
 %files
-%doc README.md Changes
+%doc README.md ChangeLog
 	%perl_vendor_archlib/DBI.pm
 %dir	%perl_vendor_archlib/DBD
 	%perl_vendor_archlib/DBD/Sponge.pm
+	%perl_vendor_archlib/DBD/Multiplex.pm
+%dir	%perl_vendor_archlib/DBD/Multiplex
+%dir	%perl_vendor_archlib/DBD/Multiplex/Logic
+	%perl_vendor_archlib/DBD/Multiplex/Logic/*.pm
 %dir	%perl_vendor_autolib/DBI
 	%perl_vendor_autolib/DBI/DBI.so
 %dir	%perl_vendor_archlib/DBI
@@ -149,7 +157,8 @@ rm blib/lib/dbixs_rev.pl
 	%perl_vendor_archlib/DBI/Const/GetInfo*
 %dir	%perl_vendor_archlib/DBI/Util
 	%perl_vendor_archlib/DBI/Util/*.pm
-%doc	%perl_vendor_archlib/DBI/Changes.pod
+#doc	%perl_vendor_archlib/DBI/Changes.pod
+%doc	%perl_vendor_archlib/DBI/Changes.pm
 
 %files devel
 	%_bindir/dbilogstrip
@@ -208,6 +217,9 @@ rm blib/lib/dbixs_rev.pl
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Wed Apr 09 2025 Igor Vlasenko <viy@altlinux.org> 1.647-alt1
+- new version
+
 * Wed Nov  2 2022 Alexander Danilov <admsasha@altlinux.org> 1.643-alt3
 - rename patch lib-DBD-File.pm-fix-CVE-2014-10401.patch
 - fixes changelog
