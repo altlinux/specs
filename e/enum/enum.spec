@@ -3,10 +3,11 @@ Group: System/Base
 %define _localstatedir %{_var}
 Name: enum
 Version: 1.1
-Release: alt1_19
+Release: alt1_30
 Summary: Seq- and jot-like enumerator
 
-License: BSD
+# Automatically converted from old format: BSD - review is highly recommended.
+License: LicenseRef-Callaway-BSD
 URL:     https://fedorahosted.org/enum
 Source0: https://fedorahosted.org/releases/e/n/enum/%{name}-%{version}.tar.bz2
 
@@ -43,6 +44,9 @@ make check
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.1-alt1_30
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_19
 - update to new release by fcimport
 
