@@ -1,7 +1,7 @@
 %define script_name winbind-dnsupdate
 
 Name: samba-winbind-dnsupdate
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Dynamic dns update for winbind backend
@@ -60,6 +60,9 @@ shellcheck %script_name
 %_datadir/glib-2.0/schemas/org.altlinux.winbind.dnsupdate.gschema.xml
 
 %changelog
+* Thu Apr 10 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7.1-alt1
+- Fix incorrect description of options (ALT #52951)
+
 * Wed Jan 22 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.7-alt1
 - Remove ini file
 
