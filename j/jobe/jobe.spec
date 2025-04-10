@@ -2,7 +2,7 @@
 
 Name:    jobe
 Version: 2.1.2
-Release: alt1
+Release: alt2
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
 License: MIT
@@ -103,6 +103,7 @@ a2ensite %name
 %attr(0770,jobe,%webserver_group) %dir %_logdir/%name
 %attr(2750,root,%webserver_group) %dir %webappdir
 %webappdir/*
+%attr(0770,jobe,%webserver_group) %dir %webappdir/writable/cache
 
 %files -n %name-apache2
 %config(noreplace) %apache2_sites_available/*.conf
@@ -110,6 +111,9 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt2
+- Made /var/www/webapps/jobe/writable/cache writeable.
+
 * Mon Feb 10 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
 - New version.
 
