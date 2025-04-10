@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Runtime
 Name: perl-%dist
-Version: 0.016
+Version: 0.017
 Release: alt1
 
 Summary: Runtime module handling
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/Z/ZE/ZEFRAM/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ modules, which are normally handled at compile time.
 %perl_vendor_privlib/Module
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.017-alt1
+- automated CPAN update
+
 * Wed Nov 01 2017 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
 - automated CPAN update
 
