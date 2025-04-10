@@ -1,19 +1,16 @@
-# for tests
-BuildRequires:  /proc
 Group: Development/Other
+# for tests
+BuildRequires: /proc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           pstreams-devel
-Version:        1.0.3
-Release:        alt1_10
+Version:        1.0.4
+Release:        alt1_2
 Summary:        POSIX Process Control in C++
 
 License:        BSL-1.0
 URL:            http://pstreams.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pstreams/pstreams-%{version}.tar.gz
-Patch0:         pstreams-make-check.patch
-Patch1:         pstreams-doxyfile.patch
-Patch2:         pstreams-test-race.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  doxygen
@@ -42,9 +39,6 @@ API documentation for the pstreams-devel package, in HTML format.
 
 %prep
 %setup -q -n pstreams-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %make_build docs
@@ -63,6 +57,9 @@ make install  DESTDIR=$RPM_BUILD_ROOT includedir=%{_includedir}
 %doc doc/html README AUTHORS ChangeLog
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_10
 - update to new release by fcimport
 
