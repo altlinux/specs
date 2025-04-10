@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -14,15 +14,16 @@ BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-
 BuildRequires: libpolkit-devel
 
 Requires: alterator-manager >= 0.1.28
-Requires: alterator-module-executor >= 0.1.19
+Requires: alterator-module-executor >= 0.1.21
 Requires: alterator-backend-packages >= 0.1.4
-Requires: alterator-interface-component >= 0.1.8
+Requires: alterator-interface-component >= 0.1.9
+Requires: alterator-backend-component >= 0.1.9
 Requires: alterator-backend-component_categories
-Requires: alterator-backend-batch-components >= 0.2
+Requires: alterator-backend-batch-components >= 0.2.2
 Requires: alterator-backend-batch-component_categories
 Requires: alterator-interface-edition >= 0.1.5
 Requires: alterator-interface-diag
-Requires: alterator-backend-systeminfo >= 0.3.0
+Requires: alterator-backend-systeminfo >= 0.3.1
 Requires: libtomlc99 polkit
 
 Source0: %name-%version.tar
@@ -45,6 +46,10 @@ A command line tool for using alterator DBus objects.
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Thu Apr 10 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.6-alt1
+- New version
+- Changed versions in the installation dependencies
+
 * Tue Apr 01 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.5-alt1
 - Add dependencies from specified required packages
 - Add LICENSE file
