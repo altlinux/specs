@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.21
+Version: 0.1.22
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -35,6 +35,12 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Apr 10 2025 Ivan Savin <svn17@altlinux.org> 0.1.22-alt1
+- Fix memory leak, after g_strconcat the g_free was not always called.
+- Remove unnecessary checks. In case of failure on g_new0 and g_thread_new
+  the program aborts.
+- Remove unnecessary field from the structure.
+
 * Tue Apr 01 2025 Ivan Savin <svn17@altlinux.org> 0.1.21-alt1
 - Add the ability to return integer exit status.
   Executor can return integer exit status from child process. Before that,
