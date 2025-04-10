@@ -9,7 +9,7 @@ BuildRequires: perl(Data/Dump.pm) perl(ExtUtils/CBuilder.pm) perl(Module/Build.p
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.808
+Version: 0.820
 Release: alt1
 Summary: a simple syntax for lexical slot-based objects
 Group: Development/Perl
@@ -43,6 +43,9 @@ rm -f "t/81async-method+dynamically.t"
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.820-alt1
+- automated CPAN update
+
 * Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 0.808-alt1
 - automated CPAN update
 
