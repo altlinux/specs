@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,18 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Thu Apr 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.2-alt1
+- Fix editions:
+  + replace lsb component with lsb-core
+  + replace ntp-utils from base to main section
+  + replace network-manager from base to main section
+- Fix components:
+  + add lsb-core component
+  + remove cpufreq-simple package from hardware-tools component
+  + remove glibc meta package from glibc component
+  + remove pam0_console from pam component
+  + added new organizations to vendors (thx Anna Ivanova)
+
 * Tue Apr 01 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.1-alt1
 - Set system browser as component in server editions
 - Add system browser component for products on different architectures
