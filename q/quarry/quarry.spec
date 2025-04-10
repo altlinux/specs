@@ -6,10 +6,11 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(gthread-2.0)
 %define _localstatedir %{_var}
 Name:           quarry
 Version:        0.2.0
-Release:        alt5_29
+Release:        alt5_40
 Summary:        A multi-purpose board game GUI
 
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://home.gna.org/quarry/
 Source0:        http://download.gna.org/quarry/quarry-%{version}.tar.gz
 Patch0:         quarry-format-security.patch
@@ -17,7 +18,7 @@ Patch0:         quarry-format-security.patch
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
 BuildRequires:  librsvg-devel librsvg-gir-devel
-BuildRequires:  libgtk+2-devel
+BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
 BuildRequires:  scrollkeeper
 Source44: import.info
 
@@ -31,7 +32,7 @@ programs.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0  -p1
 
 
 %build
@@ -63,6 +64,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.2.0-alt5_40
+- update to new release by fcimport
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_29
 - updated buildrequires
 
