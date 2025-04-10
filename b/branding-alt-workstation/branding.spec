@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -196,6 +196,7 @@ License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
 Requires: alt-gnome-desktop-wallpapers >= 1.0.1-alt1
+Requires: icon-theme-alt-workstation
 #
 %branding_add_conflicts %flavour gnome-settings
 %branding_add_conflicts %flavour graphics
@@ -345,6 +346,9 @@ fi
 %_datadir/glib-2.0/schemas/50_gnome-background.gschema.override
 %_datadir/glib-2.0/schemas/50_gnome-dash-app-list-favorites.gschema.override
 %_datadir/glib-2.0/schemas/50_alt-gnome-appearance.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-software-installation-priority.gschema.override
+%_datadir/glib-2.0/schemas/50_mutter-custom-settings.gschema.override
+%_datadir/glib-2.0/schemas/50_gnome-default-desktop-terminal-app.gschema.override
 
 %files mate-settings
 %_datadir/glib-2.0/schemas/zzz_mate-background.gschema.override
@@ -365,6 +369,13 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 10 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt3
+- spec: add requires to icon-theme-alt-workstation
+- fixed: use of gnome-software settings override
+- gnome-settings: set mutter check-alive-timeout to 30s
+- indexhtml: add User`s Guide URL to local documentation in EN page
+- gnome-settings: set kgx to org.gnome.desktop.default-applications.terminal
+
 * Wed Mar 26 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt2
 - browser-qt: replace logo_width.png with smaller size
 - gnome-settings: add software-installation-priority override
