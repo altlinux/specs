@@ -2,21 +2,23 @@ Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 30
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           tunneler
 Version:        1.1.1
-Release:        alt3_25
+Release:        alt3_38
 Summary:        Clone of legendary Tunneler game
 
-License:        GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:        GPL-2.0-or-later
 URL:            http://users.jyu.fi/~tvkalvas/code/tunneler/
 Source0:        http://users.jyu.fi/~tvkalvas/code/tunneler/%{name}-%{version}.tar.gz
 Source1:        tunneler.svg
 Source2:        tunneler.desktop
 Patch0:         tunneler-1.1.1-lm.patch
 Patch1:         tunneler-1.1.1-inline.patch
+Patch2:         tunneler-1.1.1-fix-fortify-source.patch
 
 BuildRequires:  gcc
 BuildRequires:  desktop-file-utils
@@ -36,6 +38,7 @@ actually have some searching to do.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 
 
@@ -64,6 +67,9 @@ desktop-file-install %{SOURCE2} \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt3_38
+- update to new release by fcimport
+
 * Wed Aug 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_25
 - update to new release by fcimport
 
