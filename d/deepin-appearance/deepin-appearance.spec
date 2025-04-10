@@ -3,21 +3,22 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.34
+Version: 1.1.58
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
 
 License: GPL-3.0+
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/%repo
+Url: https://github.com/linuxdeepin/dde-appearance
+Vcs: https://github.com/linuxdeepin/dde-appearance.git
 
 Provides: %repo = %EVR
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
-BuildRequires: cmake dqt5-tools-devel dtk6-common-devel dtkcore libdtkgui-devel kf5-kconfig-devel kf5-kwindowsystem-devel kf5-kglobalaccel-devel gsettings-qt-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6gui-devel kf6-kconfig-devel kf6-kwindowsystem-devel kf6-kglobalaccel-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
@@ -36,32 +37,28 @@ export CC="clang"
 export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-#
-cmake --build "%_cmake__builddir" -j%__nprocs
+%DQ6build
 
 %install
-%cmake_install
-%find_lang --with-qt %repo
+%DQ6install
+%find_lang --with-qt plugin-dde-appearance
 
-%files -f %repo.lang
+%files -f plugin-dde-appearance.lang
 %doc README.md
-%_bindir/%repo
 %_bindir/dde-fakewm
-%_userunitdir/%repo.service
+%_userunitdir/dde-fakewm.service
+%dir %_libdir/deepin-service-manager/
+%_libdir/deepin-service-manager/libplugin-dde-appearance.so
+%dir %_datadir/deepin-service-manager/
+%dir %_datadir/deepin-service-manager/user/
+%_datadir/deepin-service-manager/user/plugin-dde-appearance.json
 %dir %_datadir/%repo/
-%_datadir/%repo/custom.svg
-%dir %_datadir/%repo/translations/
-%_datadir/%repo/translations/dde-appearance_ky@Arab.qm
-%dir %_userunitdir/dde-session-initialized.target.wants/
-%_userunitdir/dde-session-initialized.target.wants/%repo.service
+%_datadir/%repo/custom.png
+# package outside find_lang
+%dir %_datadir/plugin-dde-appearance/
+%dir %_datadir/plugin-dde-appearance/translations/
+%_datadir/plugin-dde-appearance/translations/dde-appearance_ky@Arab.qm
+# ---
 %_datadir/dbus-1/services/com.deepin.wm.service
 %_datadir/dbus-1/services/org.deepin.dde.Appearance1.service
 %dir %_datadir/dsg/
@@ -70,6 +67,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 1.1.58-alt1
+- New version 1.1.58.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Wed Oct 16 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.34-alt1
 - New version 1.1.34.
 
