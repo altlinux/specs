@@ -2,7 +2,7 @@
 %define dist Crypt-Curve25519
 
 Name: perl-%dist
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Generate shared secret using elliptic-curve Diffie-Hellman function
@@ -42,6 +42,9 @@ grep -rl "fmul" ./ | xargs sed -i 's/fmul/fixedvar/g'
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.08-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
 - automated CPAN update
 
