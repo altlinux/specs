@@ -6,7 +6,7 @@
 %define optflags_debug -g0
 
 Name:    ZLEqualizer
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Dynamic Equalizer Plugin from ZL Audio
@@ -109,7 +109,11 @@ cp -a "VST3/ZL Equalizer.vst3" %buildroot%_libdir/vst3
 %doc README.md
 %_libdir/vst3/*
 
+
 %changelog
+* Thu Apr 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Mon Mar 17 2025 Ivan A. Melnikov <iv@altlinux.org> 0.6.0-alt1
 - 0.6.0
   + BREAKING: new compressor model from ZL Compressor
