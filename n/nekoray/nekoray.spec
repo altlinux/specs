@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nekoray
-Version: 4.0.1
-Release: alt2
+Version: 4.3.2
+Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
 Group: System/Servers
@@ -18,16 +18,17 @@ Patch1: nekoray-4.0.1-alt-build.patch
 BuildRequires: cmake
 BuildRequires: golang
 BuildRequires: gcc-c++
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-charts-devel
 BuildRequires: protobuf-compiler
 BuildRequires: protobuf-c-compiler
 BuildRequires: libprotobuf-devel
 BuildRequires: libprotobuf-c-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: libzxing-cpp-devel
+BuildRequires: libcpr-devel
 
 ExclusiveArch: x86_64 aarch64
 
@@ -54,11 +55,8 @@ Geoip Database for sing-box
 %setup -a 1
 %patch1 -p1
 
-rm -rf 3rdparty/QHotkey
-
-mv %name-vendors-%version/3rdparty/* 3rdparty/
-mv %name-vendors-%version/nekobox_core-vendor go/cmd/nekobox_core/vendor
-mv %name-vendors-%version/updater-vendor go/cmd/updater/vendor
+mv %name-vendors-%version/server-vendor core/server/vendor
+mv %name-vendors-%version/updater-vendor core/updater/vendor
 
 install -dm 755 sing-box/rule-set
 
@@ -74,7 +72,7 @@ rm -rf %name-vendors-%version
 mkdir build
 
 pushd build
-cmake .. -DCMAKE_INSTALL_PREFIX=%_prefix
+cmake .. -DCMAKE_INSTALL_PREFIX=%_prefix -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 %make_build
 popd
 
@@ -86,7 +84,7 @@ export GOARCH=amd64
 export GOARCH=arm64
 %endif
 
-./libs/build_go.sh
+./script/build_go.sh
 
 %install
 install -dm 755 %buildroot%_bindir
@@ -95,7 +93,7 @@ install -dm 755 %buildroot%_datadir/applications
 install -dm 755 %buildroot%_datadir/sing-box/rule-set
 
 pushd build
-install -pm 755 ./nekobox %buildroot%_libexecdir/nekobox/nekobox
+install -pm 755 ./nekoray %buildroot%_libexecdir/nekobox/nekobox
 install -pm 755 %SOURCE2 %buildroot/%_bindir/nekobox
 install -pm 644 %SOURCE3 %buildroot%_datadir/applications/nekobox.desktop
 popd
@@ -114,7 +112,7 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %files
 %_libexecdir/nekobox/nekobox
 %_libexecdir/nekobox/nekobox_core
-%_libexecdir/nekobox/launcher
+%_libexecdir/nekobox/updater
 %_bindir/nekobox
 %_datadir/applications/nekobox.desktop
 %_datadir/pixmaps/nekobox.png
@@ -128,6 +126,10 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Thu Apr 10 2025 Andrey Kovalev <ded@altlinux.org> 4.3.2-alt1
+- Updated to upstream version 4.3.2.
+- Fixed FTBFS with cmake4.
+
 * Fri Feb 14 2025 Andrey Kovalev <ded@altlinux.org> 4.0.1-alt2
 - Added sing-geoip and sing-geosite for VLess and VMess (closes: #53059).
 
