@@ -2,7 +2,7 @@
 %define llvmversion 14
 
 Name: intel-graphics-compiler
-Version: 2.9.0
+Version: 2.10.5
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -95,7 +95,8 @@ cmake ../IGC -DLLVM_DIR=/usr/lib/llvm-%llvmversion.0/lib64/cmake/llvm/ \
   -DCMAKE_BUILD_TYPE=Release \
   -DIGC_OPTION__ARCHITECTURE_TARGET='Linux64' \
   -DIGC_OPTION__SPIRV_TOOLS_MODE=Prebuilds \
-  -DIGC_OPTION__VC_INTRINSICS_MODE=Prebuilds
+  -DIGC_OPTION__VC_INTRINSICS_MODE=Prebuilds \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
 %make_build
 popd
@@ -136,6 +137,10 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Thu Apr 10 2025 Andrey Kovalev <ded@altlinux.org> 2.10.5-alt1
+- Updated to upstream version 2.10.5.
+- Fixed FTBFS with cmake4.
+
 * Tue Mar 11 2025 Andrey Kovalev <ded@altlinux.org> 2.9.0-alt1
 - Updated to upstream version 2.9.0.
 
