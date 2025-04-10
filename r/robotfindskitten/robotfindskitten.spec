@@ -6,15 +6,16 @@ BuildRequires: texinfo
 %define _localstatedir %{_var}
 Name:      robotfindskitten
 Version:   2.8284271.702
-Release:   alt1_1
+Release:   alt1_14
 Summary:   A game/zen simulation. You are robot. Your job is to find kitten.
 
-License:   GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:   GPL-2.0-or-later
 URL:       http://robotfindskitten.org
 Source0:   https://github.com/%{name}/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:    robotfindskitten-2.8284271.702-maybe-uninitialized.patch
 
-BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel makeinfo autoconf automake libtool
+BuildRequires: libncurses++-devel libncurses++w-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel glibc-devel glibc-devel-static makeinfo autoconf automake libtool
 Source44: import.info
 
 %description
@@ -52,6 +53,9 @@ rm -f $RPM_BUILD_ROOT/%{_infodir}/dir
 %{_datadir}/man/man6/robotfindskitten.6*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.8284271.702-alt1_14
+- update to new release by fcimport
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 2.8284271.702-alt1_1
 - update to new release by fcimport
 
