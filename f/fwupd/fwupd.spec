@@ -33,7 +33,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 Summary: Firmware update daemon
@@ -113,7 +113,6 @@ Obsoletes: fwupdate
 %endif
 
 %if_with check
-BuildRequires: rpm-build-vm /dev/kvm
 BuildRequires: polkit
 %endif
 
@@ -169,14 +168,6 @@ might have mobile broadband hardware. It is probably not required on servers.
 %setup
 %patch0 -p1
 
-# 1.8.8: 'lenovo-thinklmi-self-test' fails on aarch64 with:
-# "Failed to load SMBIOS: neither SMBIOS or DT found"
-# due to missing /sys/class/dmi/id in qemu-system-aarch64
-%ifarch aarch64
-sed -i -e "/get_option('tests')/ s/$/ and false/" \
-    plugins/lenovo-thinklmi/meson.build
-%endif
-
 %build
 %meson \
     -Ddocs=enabled \
@@ -200,10 +191,10 @@ sed -i -e "/get_option('tests')/ s/$/ and false/" \
     -Dbluez=enabled
 #
 
-%__meson_build
+%meson_build
 
 %install
-%__meson_install
+%meson_install
 
 # CET is available only since i686
 %ifarch i386 i486 i586
@@ -222,8 +213,7 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %find_lang %name
 
 %check
-vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
-       %__meson_test
+%meson_test
 
 %files -f %name.lang
 %doc README.md COPYING
@@ -317,6 +307,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=tmpfs:/usr/src \
 %endif
 
 %changelog
+* Thu Apr 10 2025 Egor Ignatov <egori@altlinux.org> 2.0.8-alt1
+- 2.0.8
+
 * Wed Mar 26 2025 Egor Ignatov <egori@altlinux.org> 2.0.7-alt1
 - 2.0.7
 
