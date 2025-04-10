@@ -3,15 +3,17 @@ Group: Archiving/Other
 %define _localstatedir %{_var}
 Name:		xbiso
 Version:	0.6.1
-Release:	alt2_29
+Release:	alt2_36
 Summary:	ISO extraction utility for xdvdfs images
-License:	GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 URL:		http://sourceforge.net/projects/xbiso/
 Source0:	http://downloads.sourceforge.net/xbiso/%{name}-%{version}.tar.gz
 Patch0:		xbiso-0.6.1-destdir.patch
 Patch1:		xbiso-0.6.1-ftplib4.patch
 Patch2:		xbiso-configure-c99.patch
 Patch3:		xbiso-c99.patch
+Patch4:		xbiso-c23.patch
 BuildRequires:  gcc
 BuildRequires:	ftplib-devel
 Source44: import.info
@@ -21,10 +23,11 @@ xbiso is an ISO extraction utility for xdvdfs images.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1 -b .ftplib4
-%patch2 -p1
-%patch3 -p1
+%patch0  -p1
+%patch1  -p1 -b .ftplib4
+%patch2  -p1
+%patch3  -p1
+%patch4  -p1
 
 %build
 %configure
@@ -40,6 +43,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %{_bindir}/xbiso
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt2_36
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt2_29
 - update to new release by fcimport
 
