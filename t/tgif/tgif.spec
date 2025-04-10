@@ -3,15 +3,19 @@ Group: Graphics
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
-%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_28
+Release:	alt2_33
 Summary:	2-D drawing tool
 
-License:	QPL
+# convkinput.c	HPND
+# convxim.c	HPND
+# rmcast/rmchat/rmchat.c	GPL-2.0-or-later	unused
+# Overall	QPL-1.0
+# SPDX confirmed
+License:	QPL-1.0 AND HPND
 URL:		http://bourbon.usc.edu/tgif/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-QPL-%{version}.tar.gz
 # http://tyche.pu-toyama.ac.jp/~a-urasim/tgif/
@@ -19,7 +23,8 @@ Patch10:	tgif-textcursor-a-urasim.patch
 # Check below later
 Patch101:	tgif-QPL-4.1.45-size-debug.patch
 Patch102:	tgif-QPL-4.2.5-format-security.patch
-Patch103: tgif-c99.patch
+Patch103:	tgif-c99.patch
+Patch104:	tgif-QPL-4.2.5-c23-prototype.patch
 
 BuildRequires:	gcc
 BuildRequires:	xorg-cf-files gccmakedep imake
@@ -53,7 +58,8 @@ Tgif является пакетом для двумерной графики. Он поддерживает создание иерархичес
 # Check later
 #%%patch101 -p1 -b .size
 %patch102  -p1 -b .format
-%patch103  -p1
+%patch103  -p1 -b .c99
+%patch104  -p1 -b .c23
 
 /usr/bin/perl -pi \
 	-e 's,JISX-0208-1983-0,EUC-JP,g' \
@@ -142,9 +148,6 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications/
 desktop-file-install \
 	--remove-category 'Application' \
 	--remove-category 'X-Fedora' \
-%if 0%{?fedora} < 19
-	--vendor 'fedora' \
-%endif
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications/ \
 	po/ja/tgif.desktop
 
@@ -154,9 +157,9 @@ desktop-file-install \
 %files -f %{name}.lang
 %doc AUTHORS
 %doc ChangeLog
-%doc Copyright
+%doc --no-dereference Copyright
 %doc HISTORY
-%doc LICENSE.QPL
+%doc --no-dereference LICENSE.QPL
 %doc README*
 %doc VMS_MAKE_TGIF.COM 
 %doc example.tex 
@@ -176,6 +179,9 @@ desktop-file-install \
 %{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 4.2.5-alt2_33
+- update to new release by fcimport
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 4.2.5-alt2_28
 - update to new release by fcimport
 
