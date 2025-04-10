@@ -1,8 +1,8 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.13.2
-Release: alt2
+Version: 3.14.1
+Release: alt1
 
 Summary: A framework for managing DNS information 
 License: BSD-2-Clause
@@ -145,6 +145,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Thu Apr 10 2025 Mikhail Efremov <sem@altlinux.org> 3.14.1-alt1
+- Updated to 3.14.1.
+
 * Mon Jan 13 2025 Mikhail Efremov <sem@altlinux.org> 3.13.2-alt2
 - dnsmasq: Don't pull dbus-tools.
 
