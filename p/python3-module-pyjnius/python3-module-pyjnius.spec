@@ -4,7 +4,7 @@
 
 Name: python3-module-pyjnius
 Version: 1.6.1
-Release: alt3
+Release: alt4
 
 Summary: A Python module to access Java classes as Python classes using JNI
 
@@ -33,6 +33,8 @@ using the Java Native Interface (JNI).
 %setup
 
 %build
+# gcc 14.2.1
+%add_optflags -Wno-error=incompatible-pointer-types
 %pyproject_build
 ant jar test-compile
 mv build/test-classes tests
@@ -60,6 +62,9 @@ py.test-3 -v
 %python3_sitelibdir/__pycache__/jnius_config.*
 
 %changelog
+* Thu Apr 10 2025 Anton Vyatkin <toni@altlinux.org> 1.6.1-alt4
+- Fixed FTBFS.
+
 * Thu Jan 11 2024 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt3
 - Build without check.
 
