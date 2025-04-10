@@ -2,7 +2,7 @@
 %define import_path github.com/git-lfs/git-lfs/v3
 
 Name: git-lfs
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 
 Summary: Git extension for versioning large files
@@ -59,6 +59,9 @@ done
 %_man1dir/*.1.*
 
 %changelog
+* Tue Apr 08 2025 Artem Krasovskiy <aibure@altlinux.org> 3.6.1-alt1
+- Updated to 3.6.1 (fixes CVE-2024-53263)
+
 * Fri Dec 27 2024 Artem Krasovskiy <aibure@altlinux.org> 3.6.0-alt1
 - Updated to 3.6.0
 
