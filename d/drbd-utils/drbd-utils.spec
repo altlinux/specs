@@ -1,5 +1,4 @@
-%def_without xen
-%define githash 36ea199f38b543b2da92219109c2832e122e5bf9
+%define githash 694d0e8b38f79e196ea13cf5f75485aec209afdc
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -7,7 +6,7 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.30.0
+Version: 9.31.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -46,17 +45,6 @@ via an assigned network. DRBD can be understood as network based raid-1.
 
 This packages includes the DRBD administration tools.
 
-%package xen
-Summary: Xen block device management script for DRBD
-Group: System/Kernel and hardware
-Requires: %name = %version-%release
-Requires: xen
-BuildArch: noarch
-
-%description xen
-This package contains a Xen block device helper script for DRBD, capable of
-promoting and demoting DRBD resources as necessary.
-
 %package pacemaker
 Summary: Pacemaker resource agent for DRBD
 Group: System/Kernel and hardware
@@ -93,7 +81,6 @@ sed -i 's,-Wshadow,,' user/drbdmon/Makefile*
 %build
 %autoreconf
 %configure \
-    %{subst_with xen} \
     --with-udev \
     --with-pacemaker \
     --with-rgmanager \
@@ -119,6 +106,8 @@ rm -f  %buildroot/etc/init.d/drbd	# NB: _not_ %%_initdir here
 pushd scripts
 install -pDm644 -t %buildroot%_unitdir *.service
 install -pDm644 -t %buildroot%_unitdir *.target
+mkdir -p %buildroot%_presetdir
+install -m 644 drbd.preset %buildroot%_presetdir/50-drbd.preset
 install -pDm755 -t %buildroot/usr/lib/drbd/scripts drbd drbd-service-shim.sh drbd-wait-promotable.sh ocf.ra.wrapper.sh
 install -pDm755 drbd %buildroot%_initdir/drbd
 popd
@@ -140,6 +129,7 @@ make test
 %config(noreplace) %_sysconfdir/multipath/conf.d/drbd.conf
 %_sysconfdir/ha.d/resource.d/*
 %_initdir/drbd
+%_presetdir/50-drbd.preset
 %_unitdir/drbd.service
 %_unitdir/drbd-graceful-shutdown.service
 %_unitdir/drbd-lvchange@.service
@@ -150,6 +140,7 @@ make test
 %_unitdir/drbd-wait-promotable@.service
 %_unitdir/drbd@.service
 %_unitdir/drbd@.target
+%_unitdir/drbd-configured.target
 %_unitdir/ocf.ra@.service
 %_sbindir/drbdsetup
 %_sbindir/drbdadm
@@ -177,11 +168,6 @@ make test
 %_man5dir/drbd*
 %_sysconfdir/bash_completion.d/*
 
-%if_with xen
-%files xen
-%_sysconfdir/xen/scripts/block-drbd
-%endif
-
 %files pacemaker
 %dir /usr/lib/ocf/resource.d/linbit
 /usr/lib/ocf/resource.d/linbit/drbd
@@ -197,6 +183,10 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Thu Apr 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.31.0-alt1
+- 9.31.0
+- drop xen support
+
 * Thu Jan 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.30.0-alt1
 - 9.30.0
 
