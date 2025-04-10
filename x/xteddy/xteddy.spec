@@ -1,16 +1,16 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: imake libX11-devel libXt-devel xorg-cf-files
+BuildRequires: imake libICE-devel libSM-devel libX11-devel libXt-devel libopenmotif-devel xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xteddy
 Version:        2.2
-Release:        alt1_8
+Release:        alt1_25
 Summary:        Tool to sit around silently, look cute, and make you smile
 
-Group:          Games/Other
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://fam-tille.de/debian/xteddy.html
 Source0:        http://webstaff.itn.liu.se/~stegu/xteddy/%{name}-%{version}.tar.gz
 # This is original artwork by Lubomir Rintel, distributed under same
@@ -18,7 +18,8 @@ Source0:        http://webstaff.itn.liu.se/~stegu/xteddy/%{name}-%{version}.tar.
 Source1:        kacicka.png
 Patch0:         0001-Link-against-Xext.patch
 
-BuildRequires:  imlib2-devel libpng-devel
+BuildRequires:  gcc
+BuildRequires:  imlib2-devel libpng-devel libpng17-tools
 Source44: import.info
 Patch33: xteddy-2.2-alt-link-X11.patch
 
@@ -30,7 +31,7 @@ and make you smile.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch0  -p1
 %patch33 -p1
 sed -i -e s,/usr/games/xteddy,xteddy, xtoys
 
@@ -71,6 +72,9 @@ EOF
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.2-alt1_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_8
 - update to new release by fcimport
 
