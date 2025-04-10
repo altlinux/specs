@@ -7,8 +7,9 @@ BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm)
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.43
-Release: alt2_16
-License: BSD
+Release: alt2_22
+# Automatically converted from old format: BSD - review is highly recommended.
+License: LicenseRef-Callaway-BSD
 URL: http://www.jwz.org/xdaliclock/
 Source0: http://www.jwz.org/xdaliclock/xdaliclock-%{version}.tar.gz
 Source1: xdaliclock.desktop
@@ -67,6 +68,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.43-alt2_22
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.43-alt2_16
 - update to new release by fcimport
 
