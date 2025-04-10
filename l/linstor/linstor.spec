@@ -1,5 +1,5 @@
 %define GRADLE_TASKS installdist
-%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon -Pjava11=false --exclude-task generateJava
+%define GRADLE_FLAGS --offline --gradle-user-home /tmp --no-daemon --exclude-task generateJava -PjavaHome=/usr/lib/jvm/jre-21
 %define LS_PREFIX %_datadir/linstor-server
 %define FIREWALLD_SERVICES %_usr/lib/firewalld/services
 %define NAME_VERS %name-server-%version
@@ -8,21 +8,20 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.30.4
-Release: alt4
+Version: 1.31.0
+Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
 Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
 Source1: gradle-8.2.1-bin.zip
-# Source1: gradle-6.7-bin.zip
 
 %define java_arches x86_64 aarch64 loongarch64
 ExclusiveArch: %{java_arches}
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
-BuildRequires: java-21-devel
+BuildRequires: java-21-openjdk-headless java-21-openjdk-devel python3
 BuildRequires: python3
 BuildRequires: unzip
 #BuildRequires: gradle
@@ -69,7 +68,7 @@ mkdir -p %buildroot%_sysconfdir/drbd.d/
 cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/drbd.d/
 #touch %%buildroot%%LS_PREFIX/{.server,.satellite,.controller}
 mkdir -p %buildroot%_sysconfdir/linstor
-cp %_builddir/%NAME_VERS/docs/linstor.toml-example %buildroot%_sysconfdir/linstor/
+cp %_builddir/%NAME_VERS/docs/linstor_satellite.toml-example %buildroot%_sysconfdir/linstor/
 touch %buildroot%_sysconfdir/linstor/linstor.toml
 mkdir -p %buildroot/var/lib/linstor
 
@@ -113,7 +112,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %LS_PREFIX/bin/controller.postinst.sh
 %_unitdir/linstor-controller.service
 %FIREWALLD_SERVICES/linstor-controller.xml
-%_sysconfdir/linstor/linstor.toml-example
+%_sysconfdir/linstor/linstor_satellite.toml-example
 %ghost %config(noreplace) %_sysconfdir/linstor/linstor.toml
 
 
@@ -156,6 +155,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Thu Apr 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.31.0-alt1
+- 1.31.0
+
 * Mon Mar 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.30.4-alt4
 - use java-21-openjdk for linstore-controller (ALT #53487).
 
