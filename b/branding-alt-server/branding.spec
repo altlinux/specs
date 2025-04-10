@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt16
+Release: alt17
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -391,6 +391,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 10 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt17
+- Change slides for slideshow in installer
+- Add argument for Console
+- Add extra colors for Qt6 to the palette
+
 * Wed Mar 26 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt16
 - Add settings to use Alt icons
 
