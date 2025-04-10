@@ -3,8 +3,8 @@ Group: System/Kernel and hardware
 %define _localstatedir %{_var}
 Summary:        Simple TTY terminal I/O application
 Name:           tio
-Version:        2.7
-Release:        alt1_1
+Version:        3.8
+Release:        alt1_2
 License:        GPL-2.0-or-later
 URL:            https://tio.github.io/
 Source0:        https://github.com/tio/tio/releases/download/v%{version}/%{name}-%{version}.tar.xz
@@ -13,8 +13,9 @@ Source2:        https://keys.openpgp.org/vks/v1/by-fingerprint/101BAC1C15B216DBE
 BuildRequires:  gnupg2
 BuildRequires:  gcc
 BuildRequires:  meson >= 0.53.2
-BuildRequires:  libinih-devel
-BuildRequires:  bash-completion
+BuildRequires:  glib2-devel libgio libgio-devel
+BuildRequires:  pkgconfig(bash-completion)
+BuildRequires:  lua-devel >= 5.1
 Source44: import.info
 
 %description
@@ -23,6 +24,7 @@ commandline interface to easily connect to TTY devices for basic input/output.
 
 %prep
 %setup -q
+
 
 %build
 %meson
@@ -33,12 +35,15 @@ commandline interface to easily connect to TTY devices for basic input/output.
 
 %files
 %doc --no-dereference LICENSE
-%doc AUTHORS NEWS README.md example/config
+%doc AUTHORS NEWS README.md examples/*
 %{_bindir}/%{name}
 %{_datadir}/bash-completion/completions/%{name}
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.8-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 10 2023 Igor Vlasenko <viy@altlinux.org> 2.7-alt1_1
 - update to new release by fcimport
 
