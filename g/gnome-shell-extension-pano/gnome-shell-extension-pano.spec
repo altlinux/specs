@@ -3,7 +3,7 @@
 %define _name pano
 %define __name gnome-shell-%_name
 %define ver_major 23
-%define beta .alpha4
+%define beta .alpha5
 %define uuid pano@elhan.io
 %define xdg_name org.gnome.shell.extensions.%_name
 %define gettext_domain %uuid
@@ -12,7 +12,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt0.3%beta
+Release: alt0.4%beta
 
 Summary: Next-gen Clipboard manager for Gnome Shell
 Group: Graphical desktop/GNOME
@@ -77,6 +77,9 @@ popd
 %doc README.md
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 23-alt0.4.alpha5
+- v23-alpha5-4-g5915702 
+
 * Mon Mar 03 2025 Yuri N. Sedunov <aris@altlinux.org> 23-alt0.3.alpha4
 - updated to v23-alpha4-5-g5da1eba (GNOME-48 supported)
 
