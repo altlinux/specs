@@ -12,7 +12,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 105
+Version: 106
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -41,6 +41,7 @@ BuildRequires: asciidoc xsltproc
 %endif
 
 Provides: dracut-ng = %EVR
+Requires: systemd-filesystem
 Requires: bash >= 4
 Requires: coreutils
 Requires: cpio
@@ -266,9 +267,7 @@ echo 'hostonly="no"' > %buildroot%dracutlibdir/dracut.conf.d/02-generic-image.co
 echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-rescue.conf
 
 %files
-%if_enabled documentation
-%doc README.md docs/HACKING.md AUTHORS NEWS.md dracut.html docs/dracut.png docs/dracut.svg
-%endif
+%doc README.md AUTHORS NEWS.md
 %doc COPYING
 %_bindir/dracut
 %bash_completion_dir/dracut
@@ -310,7 +309,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %endif
 
 %dracutlibdir/modules.d/00bash
-%dracutlibdir/modules.d/00shell-interpreter
 %dracutlibdir/modules.d/00systemd
 %ifnarch s390 s390x
 %dracutlibdir/modules.d/00warpclock
@@ -319,6 +317,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-ac-power
 %dracutlibdir/modules.d/01systemd-ask-password
 %dracutlibdir/modules.d/01systemd-bsod
+%dracutlibdir/modules.d/01systemd-battery-check
 %dracutlibdir/modules.d/01systemd-coredump
 %dracutlibdir/modules.d/01systemd-creds
 %dracutlibdir/modules.d/01systemd-cryptsetup
@@ -335,7 +334,6 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/01systemd-resolved
 %dracutlibdir/modules.d/01systemd-sysext
 %dracutlibdir/modules.d/01systemd-sysctl
-%dracutlibdir/modules.d/01systemd-sysusers
 %dracutlibdir/modules.d/01systemd-timedated
 %dracutlibdir/modules.d/01systemd-timesyncd
 %dracutlibdir/modules.d/01systemd-tmpfiles
@@ -351,8 +349,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/09dbus
 %dracutlibdir/modules.d/10i18n
 %dracutlibdir/modules.d/30convertfs
-%dracutlibdir/modules.d/50drm
-%dracutlibdir/modules.d/50plymouth
+%dracutlibdir/modules.d/45drm
+%dracutlibdir/modules.d/45plymouth
+%dracutlibdir/modules.d/60systemd-sysusers
 %dracutlibdir/modules.d/62bluetooth
 %dracutlibdir/modules.d/80lvmmerge
 %dracutlibdir/modules.d/80lvmthinpool-monitor
@@ -410,6 +409,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/97biosdevname
 %dracutlibdir/modules.d/98dracut-systemd
 %dracutlibdir/modules.d/98ecryptfs
+%dracutlibdir/modules.d/97systemd-emergency
 %dracutlibdir/modules.d/98pollcdrom
 %dracutlibdir/modules.d/98selinux
 %dracutlibdir/modules.d/98syslog
@@ -418,6 +418,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/99busybox
 %dracutlibdir/modules.d/99memstrack
 %dracutlibdir/modules.d/99fs-lib
+%dracutlibdir/modules.d/99shell-interpreter
 %dracutlibdir/modules.d/99shutdown
 %attr(0644,root,root) %ghost %config(missingok,noreplace) %_logdir/dracut.log
 %dir %_sharedstatedir/initramfs
@@ -513,6 +514,10 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/dracut.conf.d/ima
 
 %changelog
+* Mon Apr 07 2025 Alexey Shabalin <shaba@altlinux.org> 106-alt1
+- 106
+- Cherry-pick some commits from main branch.
+
 * Sat Nov 02 2024 Alexey Shabalin <shaba@altlinux.org> 105-alt1
 - 105
 
