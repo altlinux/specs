@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(YAML/PP.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 # not implemented, just code stub. see Source.
 %filter_from_requires /^perl.App.Ack.Repository.Tar.pm./d
@@ -18,7 +21,7 @@
 %define _enable_test 1
 
 Name: perl-ack
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -67,6 +70,9 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 3.8.2-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 3.8.1-alt1
 - automated CPAN update
 
