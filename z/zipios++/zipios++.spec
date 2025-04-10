@@ -1,3 +1,4 @@
+Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # define these if using CVS version
@@ -6,11 +7,11 @@
 
 Name:           zipios++
 Version:        0.1.5.9
-Release:        alt2_20
-License:        LGPLv2+
+Release:        alt2_35
+# Automatically converted from old format: LGPLv2+ - review is highly recommended.
+License:        LicenseRef-Callaway-LGPLv2+
 Summary:        C++ library for reading and writing Zip files
 Summary(pl.UTF-8): Biblioteka C++ do odczytu i zapisu plików Zip
-Group:          System/Libraries
 URL:            http://zipios.sourceforge.net/
 # Upstream is dead. Using updated Debian source as they are fixing FTBFS issues.
 Source0:        ftp://ftp.debian.org/debian/pool/main/z/%{name}/%{name}_%{version}%{cvs_ver}.orig.tar.gz
@@ -28,7 +29,7 @@ Patch10:        zipios++-zipheadio-size0.patch
 BuildRequires:  gcc-c++
 BuildRequires:  automake
 BuildRequires:  autoconf
-BuildRequires:  libstdc++-devel
+BuildRequires:  libstdc++13-devel
 BuildRequires:  libtool
 BuildRequires:  zlib-devel
 BuildRequires:  pkgconfig(cppunit)
@@ -53,9 +54,9 @@ również jest dostarczany.
 
 
 %package devel
+Group: Development/Other
 Summary:        Header files for zipios++
 Summary(pl.UTF-8): Pliki nagłówkowe zipios++
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description devel
@@ -75,6 +76,7 @@ programistów używających bibliotek zipios++.
 %patch3 -p1
 %patch4 -p1
 %patch10 -p1
+
 
 chmod 0644 COPYING
 
@@ -108,6 +110,9 @@ rm -f %{buildroot}%{_libdir}/*.{a,la}
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1.5.9-alt2_35
+- update to new release by fcimport
+
 * Sat May 26 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.5.9-alt2_20
 - fc update
 
