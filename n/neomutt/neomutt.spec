@@ -5,8 +5,8 @@
 
 
 Name: neomutt
-Version: 20250113
-Release: alt2
+Version: 20250404
+Release: alt1
 Summary: A version of Mutt with added features
 License: GPL-2.0-or-later
 Group: Networking/Mail
@@ -131,6 +131,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Thu Apr 10 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 20250404-alt1
+- Update to 20250404 (2025-04-04).
+
 * Thu Feb 13 2025 Constantin Sunzow <protvin@altlinux.org> 20250113-alt2
 - Rebuild against libdb-5.3.
 
