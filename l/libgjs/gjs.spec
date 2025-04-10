@@ -1,7 +1,7 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.82
+%define ver_major 1.84
 %define _name gjs
 %define api_ver 1.0
 %define mozjs_ver_major 128
@@ -19,15 +19,17 @@ Group: System/Libraries
 License: GPL-2.0-or-later and LGPL-2.0-or-later and MIT
 Url: https://wiki.gnome.org/action/show/Projects/Gjs
 
+Vcs: https://gitlab.gnome.org/GNOME/gjs.git
+
 %if_enabled snapshot
 Source: %_name-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-%define glib_ver 2.66.0
+%define glib_ver 2.68.0
 %define gir_api_ver 1.0
-%define gir_ver 1.66
+%define gir_ver 1.72
 
 Requires: gobject-introspection
 Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
@@ -111,6 +113,12 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.1-alt1
+- updated to 1.84.1-3-g1780940a
+
+* Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.0-alt1
+- 1.84.0
+
 * Mon Oct 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.82.1-alt1
 - 1.82.1
 

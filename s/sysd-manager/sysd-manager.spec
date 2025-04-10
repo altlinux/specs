@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 1.20
+%define ver_major 1.22
 %define rdn_name io.github.plrigaux.%name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -47,7 +47,11 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+%rust_build \
+%ifarch %ix86 aarch64
+    --config 'profile.release.lto=false'
+%endif
+%nil
 
 %install
 %rust_install
@@ -71,6 +75,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc CHANGELOG*  README*
 
 %changelog
+* Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.2-alt1
 - 1.20.2
 
