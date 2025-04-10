@@ -67,7 +67,6 @@
 %def_enable selinux
 %def_disable apparmor
 
-%define hierarchy unified
 %def_enable kill_user_processes
 
 %def_enable sysusers
@@ -96,11 +95,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 255
+%define ver_major 257
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.18
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -120,6 +119,7 @@ Source11: env-path-user.conf
 Source12: env-path-system.conf
 Source14: systemd-user.pam
 Source19: udevd.init
+Source20: udevd.sysconfig
 Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
@@ -201,10 +201,12 @@ BuildRequires: pkgconfig(blkid) >= 2.24
 # util-linux 2.27.1's configure.ac still claims to be 2.27.0, which breaks our version check
 BuildRequires: libmount-devel >= 2.30
 BuildRequires: pkgconfig(mount) >= 2.27
+BuildRequires: pkgconfig(libarchive) >= 3.0
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: libkeyutils-devel
 BuildRequires: pkgconfig(fdisk) >= 2.32
+BuildRequires: pkgconfig(bash-completion)
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 2.0.1}
 %{?_enable_tpm2:BuildRequires: libtpm2-tss-devel libssl-devel >= 1.1.0}
@@ -367,7 +369,7 @@ Group: System/Libraries
 Summary: nss-systemd providing UNIX user and group name resolution for dynamic users and groups
 Requires(pre): chrooted >= 0.3.5-alt1 sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
-Requires: systemd
+# Requires: systemd
 
 %description -n libnss-systemd
 nss-systemd is a plug-in module for the GNU Name Service Switch (NSS) functionality of the
@@ -649,10 +651,10 @@ Requires: %name = %EVR
 Requires: %name-utils = %EVR
 Group: Development/Other
 License: LGPLv2+
-%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-50.sh
-%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-58.sh
-%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-70.cryptsetup.sh
-%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/testsuite-81.fstab-generator.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-50-DISSECT.dissect.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-81-GENERATORS.fstab-generator.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-86-MULTI-PROFILE-UKI.sh
+%filter_from_requires /^.usr.lib.os-release/d
 
 %description tests
 "Installed tests" that are usually run as part of the build system.
@@ -744,15 +746,19 @@ Conflicts: startup < 0.9.9.14
         -Dlink-journalctl-shared=false \
         -Dlink-boot-shared=false \
         -Dlink-portabled-shared=false \
+        -Dlink-executor-shared=false \
         %{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
         %{?_enable_static_libudev:-Dstatic-libudev=pic} \
         %{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
         -Dxinitrcdir=%_sysconfdir/X11/xinit.d \
         -Dpamlibdir=/%_lib/security \
         -Dsplit-bin=true \
+        -Dconfigfiledir=/usr/lib \
         -Dsysvinit-path=%_initdir \
         -Dsysvrcnd-path=%_sysconfdir/rc.d \
         -Drc-local=%_sysconfdir/rc.d/rc.local \
+        -Dsshdconfdir=%_sysconfdir/openssh/sshd_config.d \
+        -Dsshconfdir=%_sysconfdir/openssh/ssh_config.d \
         -Dinstall-sysconfdir=true \
         -Dkernel-install=true \
         -Dpamconfdir=%_sysconfdir/pam.d \
@@ -766,7 +772,6 @@ Conflicts: startup < 0.9.9.14
         -Dumount-path=/bin/umount \
         -Dloadkeys-path=/bin/loadkeys \
         -Dsetfont-path=/bin/setfont \
-        -Dtelinit-path=/sbin/telinit \
         -Dnologin-path=/sbin/nologin \
         -Dcompat-mutable-uid-boundaries=true \
         -Dadm-gid=4 \
@@ -848,7 +853,6 @@ Conflicts: startup < 0.9.9.14
         -Ddefault-dnssec=no \
         -Ddefault-mdns=no \
         -Ddefault-llmnr=yes \
-        -Ddefault-hierarchy=%hierarchy \
 %ifnarch mipsel
         -Db_lto=true \
 %else
@@ -862,6 +866,7 @@ Conflicts: startup < 0.9.9.14
         -Dtests=unsafe \
         -Dinstall-tests=true \
         -Dversion-tag=%version-%release \
+        -Dvcs-tag=false \
         -Dcertificate-root=/etc/pki/tls \
         -Ddocdir=%_defaultdocdir/%name-%version
 
@@ -869,6 +874,25 @@ Conflicts: startup < 0.9.9.14
 
 %install
 %meson_install
+
+# Config files that were moved under /usr.
+# We need to %%ghost them so that they are not removed on upgrades.
+touch %buildroot%_sysconfdir/systemd/coredump.conf \
+      %buildroot%_sysconfdir/systemd/homed.conf \
+      %buildroot%_sysconfdir/systemd/journald.conf \
+      %buildroot%_sysconfdir/systemd/journal-remote.conf \
+      %buildroot%_sysconfdir/systemd/journal-upload.conf \
+      %buildroot%_sysconfdir/systemd/logind.conf \
+      %buildroot%_sysconfdir/systemd/networkd.conf \
+      %buildroot%_sysconfdir/systemd/oomd.conf \
+      %buildroot%_sysconfdir/systemd/pstore.conf \
+      %buildroot%_sysconfdir/systemd/resolved.conf \
+      %buildroot%_sysconfdir/systemd/sleep.conf \
+      %buildroot%_sysconfdir/systemd/system.conf \
+      %buildroot%_sysconfdir/systemd/timesyncd.conf \
+      %buildroot%_sysconfdir/systemd/user.conf \
+      %buildroot%_sysconfdir/udev/udev.conf \
+      %buildroot%_sysconfdir/udev/iocost.conf
 
 # remove .so file for the shared library, it's not supposed to be used
 rm -f %buildroot%_systemd_dir/libsystemd-shared.so
@@ -889,7 +913,7 @@ rm -vf %buildroot%_man8dir/systemd-pcrphase*
 rm -vf %buildroot%_man8dir/systemd-pcrmachine*
 rm -vf %buildroot%_man8dir/systemd-pcrextend*
 rm -vf %buildroot%_man8dir/systemd-pcrlock*
-rm -vf %buildroot%_man8dir/systemd-tpm2-setup*
+rm -vf %buildroot%_man8dir/systemd-tpm2*
 %endif
 
 %find_lang %name
@@ -942,8 +966,6 @@ ln -r -s %buildroot%_bindir/udevadm %buildroot/%_sbindir/
 # add defaults services
 ln -r -s %buildroot%_unitdir/remote-fs.target %buildroot%_unitdir/multi-user.target.wants
 ln -r -s %buildroot%_unitdir/machines.target %buildroot%_unitdir/multi-user.target.wants
-ln -r -s %buildroot%_unitdir/systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
-ln -r -s %buildroot%_unitdir/quotaon.service %buildroot%_unitdir/local-fs.target.wants
 %if_enabled pstore
 ln -r -s %buildroot%_unitdir/systemd-pstore.service %buildroot%_unitdir/sysinit.target.wants
 %endif
@@ -1118,8 +1140,9 @@ install -m 0644 %SOURCE11 %buildroot%_systemd_dir/user.conf.d/env-path.conf
 #######
 # UDEV
 #######
-mkdir -p %buildroot%_initdir
+mkdir -p %buildroot{%_initdir,%_sysconfdir/sysconfig}
 install -p -m755 %SOURCE19 %buildroot%_initdir/udevd
+install -p -m644 %SOURCE20 %buildroot%_sysconfdir/sysconfig/udevd
 
 ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
 
@@ -1128,16 +1151,6 @@ ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot%_prefix/lib/udev/udevd
 ln -r -s %buildroot%_systemd_dir/systemd-udevd %buildroot%_sbindir/udevd
 
 install -p -m644 %SOURCE22 %buildroot%_sysconfdir/scsi_id.config
-
-cat >>%buildroot%_sysconfdir/udev/udev.conf <<EOF
-# Whether to mount a tmpfs filesystem to \$udev_root
-udev_tmpfs="1"
-
-# tmpfs options. Note that size shouldn't be less than several
-# megabytes due to insane format of current udev database
-# (in /dev/.udevdb)
-tmpfs_options="size=5m"
-EOF
 
 # Install symlinks for rules which are needed in initramfs
 mkdir -p %buildroot%_prefix/lib/udev/initramfs-rules.d
@@ -1316,10 +1329,10 @@ useradd -g systemd-resolve -c 'systemd Resolver' \
     -d /var/empty -s /dev/null -r -l -M systemd-resolve >/dev/null 2>&1 ||:
 
 %post networkd
-%post_systemd_postponed systemd-networkd.service systemd-networkd-wait-online.service systemd-resolved.service
+%post_systemd_postponed systemd-networkd.service systemd-networkd.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service systemd-resolved.service
 
 %preun networkd
-%systemd_preun systemd-networkd.service systemd-networkd-wait-online.service systemd-resolved.service
+%systemd_preun systemd-networkd.service systemd-networkd.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service systemd-resolved.service
 %endif
 
 %if_enabled coredump
@@ -1504,11 +1517,20 @@ groupadd -r -f sgx >/dev/null 2>&1 ||:
 groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %post -n udev
-udevadm hwdb --update &>/dev/null
+systemd-hwdb update &>/dev/null
 %post_service udevd
 
 %preun -n udev
 %preun_service udevd
+
+%triggerpostun -n udev -- udev < 1:257.5-alt1
+src=/etc/udev/udev.conf
+dst=/etc/sysconfig/udevd
+if [ -f $src ]; then
+        if grep -q udev_tmpfs $src; then
+                mv -fv $src $dst
+        fi
+fi
 
 %pre sysctl-common
 src=/etc/sysctl.conf
@@ -1517,7 +1539,6 @@ rm -f $dst
 if [ -s $src -a ! -L $src ]; then
         cp -a $src $dst
 fi
-
 
 %post sysctl-common
 src=/etc/sysctl.conf.rpmsave
@@ -1562,6 +1583,7 @@ fi
 %dir %_sysconfdir/systemd/user.conf.d
 %dir %_sysconfdir/systemd/ntp-units.d
 %dir %_systemd_dir
+%dir %_systemd_dir/profile.d
 %dir %_systemd_dir/system.conf.d
 %dir %_systemd_dir/user.conf.d
 %dir %_systemd_dir/logind.conf.d
@@ -1605,21 +1627,38 @@ fi
 
 %_systemd_dir/user.conf.d/env-path.conf
 
-%_sysconfdir/profile.d/systemd.sh
+%config %_sysconfdir/profile.d/systemd.sh
+%_sysconfdir/profile.d/70-systemd-shell-extra.sh
+%_systemd_dir/profile.d/70-systemd-shell-extra.sh
 
 %_tmpfilesdir/systemd-nologin.conf
 %_tmpfilesdir/systemd.conf
 %_tmpfilesdir/journal-nocow.conf
 %_tmpfilesdir/provision.conf
 %_tmpfilesdir/credstore.conf
+%_tmpfilesdir/20-systemd-shell-extra.conf
+%_tmpfilesdir/20-systemd-ssh-generator.conf
+%_tmpfilesdir/20-systemd-stub.conf
+%_tmpfilesdir/20-systemd-userdb.conf
+
 
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
 
-%config(noreplace) %_sysconfdir/systemd/journald.conf
-%config(noreplace) %_sysconfdir/systemd/sleep.conf
-%config(noreplace) %_sysconfdir/systemd/system.conf
-%config(noreplace) %_sysconfdir/systemd/user.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/journald.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/sleep.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/system.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/user.conf
+%_systemd_dir/journald.conf
+%_systemd_dir/sleep.conf
+%_systemd_dir/system.conf
+%_systemd_dir/user.conf
+
+%_systemd_dir/ssh_config.d
+%_systemd_dir/sshd_config.d
+%_sysconfdir/openssh/ssh_config.d/20-systemd-ssh-proxy.conf
+%_sysconfdir/openssh/sshd_config.d/20-systemd-userdb.conf
+%config %_sysconfdir/pam.d/systemd-run0
 
 %_rpmlibdir/systemd.filetrigger
 %_rpmlibdir/systemd-user.filetrigger
@@ -1730,7 +1769,8 @@ fi
 %_bindir/systemd-tty-ask-password-agent
 
 %if_enabled pstore
-/etc/systemd/pstore.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/pstore.conf
+%_systemd_dir/pstore.conf
 %_systemd_dir/systemd-pstore
 %_man5dir/pstore.*
 %_man8dir/systemd-pstore.*
@@ -1746,13 +1786,13 @@ fi
 %_bindir/systemd-cgtop
 %_bindir/systemd-delta
 %_bindir/systemd-detect-virt
-%_bindir/systemd-dissect
-%_sbindir/mount.ddi
 %_bindir/systemd-id128
 %_bindir/systemd-mount
 %_bindir/systemd-umount
 %_bindir/systemd-path
 %_bindir/systemd-run
+%_bindir/systemd-vpick
+%_bindir/run0
 %_bindir/loginctl
 %_systemd_dir/systemd-logind
 %_bindir/userdbctl
@@ -1766,7 +1806,8 @@ fi
 %_systemd_dir/systemd-timedated
 %_bindir/oomctl
 %_systemd_dir/systemd-oomd
-%config(noreplace) %_sysconfdir/systemd/oomd.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/oomd.conf
+%_systemd_dir/oomd.conf
 %if_enabled sysusers
 %_sysusersdir/systemd-oom.conf
 %endif
@@ -1809,6 +1850,7 @@ fi
 %_systemd_dir/systemd-rfkill
 %_systemd_dir/systemd-sleep
 %_systemd_dir/systemd-socket-proxyd
+%_systemd_dir/systemd-ssh-proxy
 %_systemd_dir/systemd-update-done
 %_systemd_dir/systemd-update-helper
 %_systemd_dir/systemd-update-utmp
@@ -1824,6 +1866,10 @@ fi
 %_bindir/bootctl
 %_man1dir/bootctl.*
 %_man5dir/systemd.pcrlock*
+%_systemd_dir/systemd-sbsign
+%_man1dir/systemd-sbsign*
+%_systemd_dir/systemd-keyutil
+%_man1dir/systemd-keyutil*
 %if_enabled tpm2
 %_systemd_dir/systemd-measure
 %_systemd_dir/systemd-pcrlock
@@ -1836,7 +1882,7 @@ fi
 %_man8dir/systemd-pcrfs*
 %_man8dir/systemd-pcrphase*
 %_man8dir/systemd-pcrextend*
-%_man8dir/systemd-tpm2-setup*
+%_man8dir/systemd-tpm2*
 %endif
 %endif
 
@@ -1851,6 +1897,7 @@ fi
 %_user_presetdir/*
 %_user_gen_dir/*
 %_user_env_gen_dir/*
+%exclude %_gen_dir/systemd-import-generator
 
 %exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
 %exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
@@ -1893,18 +1940,25 @@ fi
 %exclude %_unitdir/*.import1.*
 %exclude %_unitdir/*.portable1.*
 %exclude %_unitdir/systemd-machined.service
-%exclude %_unitdir/systemd-importd.service
+%exclude %_unitdir/systemd-importd.*
+%exclude %_unitdir/sockets.target.wants/systemd-importd.socket
 %exclude %_unitdir/machine.slice
 %exclude %_unitdir/machines.target
 %exclude %_unitdir/*/machines.target
 %exclude %_unitdir/var-lib-machines.mount
 %exclude %_unitdir/*/var-lib-machines.mount
+%exclude %_unitdir/systemd-mountfsd.*
+%exclude %_unitdir/systemd-nsresourced.*
 %exclude %_unitdir/systemd-nspawn@.service
+%if_enabled vmspawn
+%exclude %_unitdir/systemd-vmspawn@.service
+%endif
 %exclude %_unitdir/*/systemd-sysusers.service
 %exclude %_unitdir/systemd-sysusers.service
 %exclude %_unitdir/systemd-portabled.service
 
 %_man1dir/busctl.*
+%_man1dir/run0.*
 %_man1dir/systemd-ac-power.*
 %_mandir/*/systemd-ask-password*
 %_man1dir/systemd-cat.*
@@ -1913,7 +1967,6 @@ fi
 %_man1dir/systemd-delta.*
 %_man1dir/systemd-detect-virt.*
 %_man1dir/systemd-dissect.*
-%_man1dir/mount.ddi.*
 %_man1dir/systemd-inhibit.*
 %_man1dir/systemd-id128.*
 %_man1dir/systemd-mount.*
@@ -1921,10 +1974,13 @@ fi
 %_man1dir/systemd-notify.*
 %_man1dir/systemd-path.*
 %_man1dir/systemd-run.*
+%_man1dir/systemd-vpick.*
 %_man1dir/systemd-socket-activate.*
+%_mandir/*/systemd-ssh*
 %_mandir/*/systemd-tty-ask-password*
 %_man1dir/systemd.*
 %_mandir/*/*journald*
+%_man5dir/capsule*
 %_man5dir/localtime*
 %_man5dir/*-release*
 %_man5dir/*sleep.conf*
@@ -2026,9 +2082,11 @@ fi
 
 %_datadir/systemd/kbd-model-map
 %_datadir/systemd/language-fallback-map
+%_datadir/mime/packages/io.systemd.xml
 
 %_datadir/dbus-1/services/*
-%config(noreplace) %_sysconfdir/systemd/logind.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/logind.conf
+%_systemd_dir/logind.conf
 %_datadir/dbus-1/system.d/*
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %exclude %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
@@ -2086,6 +2144,7 @@ fi
 %_kernel_installdir/*
 %_prefix/lib/kernel/install.conf
 %exclude %_kernel_installdir/50-depmod.install
+%exclude %_kernel_installdir/60-ukify.install
 
 %files -n libsystemd
 %_libdir/libsystemd.so.*
@@ -2136,8 +2195,10 @@ fi
 %_man8dir/pam_systemd_home.*
 
 %files homed
-%config(noreplace) %_sysconfdir/systemd/homed.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/homed.conf
+%_systemd_dir/homed.conf
 %_bindir/homectl
+%_bindir/systemd-home-fallback-shell
 %_systemd_dir/systemd-homed
 %_systemd_dir/systemd-homework
 %_unitdir/systemd-homed*
@@ -2148,7 +2209,7 @@ fi
 %endif
 %_man1dir/homectl.*
 %_man5dir/*home*
-%_man8dir/systemd-homed.*
+%_mandir/*/systemd-homed*
 %endif
 
 %files tmpfiles-common
@@ -2177,8 +2238,10 @@ fi
 %if_enabled networkd
 %files networkd
 %_bindir/networkctl
-%config(noreplace) %_sysconfdir/systemd/networkd.conf
-%config(noreplace) %_sysconfdir/systemd/resolved.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/networkd.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/resolved.conf
+%_systemd_dir/networkd.conf
+%_systemd_dir/resolved.conf
 %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
 %_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
@@ -2242,14 +2305,20 @@ fi
 %dir %_sysconfdir/systemd/nspawn
 %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.import1.conf
+%_bindir/importctl
 %_bindir/machinectl
+%_bindir/systemd-dissect
 %_bindir/systemd-nspawn
+%_sbindir/mount.ddi
 %_systemd_dir/import-pubring.gpg
 %_tmpfilesdir/systemd-nspawn.conf
 %_unitdir/*.machine1.*
 %_unitdir/*.import1.*
 %_unitdir/systemd-machined.service
-%_unitdir/systemd-importd.service
+%_unitdir/systemd-importd.*
+%_unitdir/sockets.target.wants/systemd-importd.socket
+%_unitdir/systemd-mountfsd.*
+%_unitdir/systemd-nsresourced.*
 %_unitdir/machine.slice
 %_unitdir/machines.target
 %_unitdir/*/machines.target
@@ -2258,13 +2327,18 @@ fi
 %_unitdir/systemd-nspawn@.service
 %_systemd_dir/systemd-machined
 %_systemd_dir/systemd-export
-%_systemd_dir/systemd-import
-%_systemd_dir/systemd-import-fs
-%_systemd_dir/systemd-importd
+%_systemd_dir/systemd-import*
+%_systemd_dir/systemd-mountfsd
+%_systemd_dir/systemd-mountwork
+%_systemd_dir/systemd-nsresourced
+%_systemd_dir/systemd-nsresourcework
 %_systemd_dir/systemd-pull
+%_gen_dir/systemd-import-generator
+%_systemd_dir/network/80-container-host0-tun.network
 %_systemd_dir/network/80-container-vb.network
 %_systemd_dir/network/80-container-ve.network
 %_systemd_dir/network/80-container-vz.network
+%_systemd_dir/network/80-namespace-ns.network
 %_systemd_dir/network/80-vm-vt.network
 %_datadir/dbus-1/system-services/org.freedesktop.machine1.service
 %_datadir/dbus-1/system-services/org.freedesktop.import1.service
@@ -2273,13 +2347,18 @@ fi
 %_datadir/polkit-1/actions/org.freedesktop.machine1.policy
 %endif
 %_mandir/*/*nspawn*
+%_mandir/*/*mountfsd*
+%_mandir/*/*nsresourced*
 %_mandir/*/*machine*
 %_mandir/*/*import*
+%_mandir/*/*nspawn*
+%_man1dir/mount.ddi.*
 %exclude %_man3dir/*machine*
 %exclude %_man8dir/*mymachines.*
 %exclude %_man8dir/*machine-id*
 %if_enabled vmspawn
 %_bindir/systemd-vmspawn
+%_unitdir/systemd-vmspawn@.service
 %_mandir/*/*vmspawn*
 %endif
 
@@ -2300,7 +2379,8 @@ fi
 
 %if_enabled timesyncd
 %files timesyncd
-%config(noreplace) %_sysconfdir/systemd/timesyncd.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/timesyncd.conf
+%_systemd_dir/timesyncd.conf
 %_presetdir/85-timesyncd.preset
 %_systemd_dir/systemd-timesyncd
 %_systemd_dir/systemd-time-wait-sync
@@ -2309,7 +2389,7 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.timesync1.service
 %_unitdir/systemd-timesyncd.service
 %_unitdir/systemd-time-wait-sync.service
-%_mandir/*/*timesyncd*
+%_mandir/*/*timesync*
 %_mandir/*/*time-wait-sync*
 %ghost %dir %_sharedstatedir/%name/timesync
 %ghost %_sharedstatedir/%name/timesync/clock
@@ -2325,7 +2405,8 @@ fi
 %if_enabled microhttpd
 %files journal-remote
 %dir %attr(2755,systemd-journal-remote,systemd-journal-remote) %_logdir/journal/remote
-%config(noreplace) %_sysconfdir/systemd/journal-remote.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/journal-remote.conf
+%_systemd_dir/journal-remote.conf
 %_systemd_dir/systemd-journal-gatewayd
 %_systemd_dir/systemd-journal-remote
 %_unitdir/systemd-journal-gatewayd.*
@@ -2341,7 +2422,8 @@ fi
 %endif
 
 %if_enabled libcurl
-%config(noreplace) %_sysconfdir/systemd/journal-upload.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/journal-upload.conf
+%_systemd_dir/journal-upload.conf
 %ghost %dir %_sharedstatedir/%name/journal-upload
 %ghost %dir %_sharedstatedir/private/systemd/journal-upload
 %_systemd_dir/systemd-journal-upload
@@ -2376,11 +2458,14 @@ fi
 %_bindir/ukify
 %_systemd_dir/ukify
 %_man1dir/ukify.*
+%_prefix/lib/kernel/uki.conf
+%_kernel_installdir/60-ukify.install
 %endif
 
 %if_enabled coredump
 %files coredump
-%config(noreplace) %_sysconfdir/systemd/coredump.conf
+%ghost %config(noreplace) %_sysconfdir/systemd/coredump.conf
+%_systemd_dir/coredump.conf
 %_systemd_dir/systemd-coredump
 %_bindir/*coredumpctl
 %_sysctldir/50-coredump.conf
@@ -2467,9 +2552,10 @@ fi
 %dir %_sysconfdir/udev
 %dir %_sysconfdir/udev/rules.d
 %dir %_sysconfdir/udev/hwdb.d
-%config(noreplace) %_sysconfdir/udev/*.conf
+%ghost %config(noreplace) %_sysconfdir/udev/*.conf
 %ghost %_sysconfdir/udev/hwdb.bin
 %config(noreplace) %_sysconfdir/scsi_id.config
+%config(noreplace) %_sysconfdir/sysconfig/udevd
 %_initdir/udev*
 %_unitdir/*udev*
 %_unitdir/*/*udev*
@@ -2502,6 +2588,12 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Sun Apr 06 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.5-alt1
+- 257.5
+- Moved config files to /usr/lib/systemd.
+  The files installed in /etc/systemd were "empty".
+- Moved old format sysvinit only /etc/udev/udev.conf to /etc/sysconfig/udevd.
+
 * Wed Mar 19 2025 Alexey Shabalin <shaba@altlinux.org> 1:255.18-alt1
 - 255.18
 - drop "-p" flag from agetty's login options (ALT#53483)
