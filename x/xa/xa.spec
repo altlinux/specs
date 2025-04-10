@@ -5,15 +5,15 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xa
-Version:        2.3.14
-Release:        alt1_1
+Version:        2.4.1
+Release:        alt1_3
 Summary:        6502/65816 cross-assembler
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            http://www.floodgap.com/retrotech/xa/
 Source0:        http://www.floodgap.com/retrotech/%{name}/dists/%{name}-%{version}.tar.gz
 # update the build system, reported in private email
-Patch0:         %{name}-2.3.7-make.patch
+Patch0:         %{name}-2.4.0-make.patch
 BuildRequires:  gcc
 # Perl needed for test-suite
 BuildRequires:  rpm-build-perl
@@ -43,7 +43,7 @@ Key amongst its features:
 
 
 # fix encoding
-for f in ChangeLog doc/fileformat.txt
+for f in ChangeLog
 do
     iconv -f ISO-8859-1 -t UTF-8 < $f > $f.new
     touch -r $f $f.new
@@ -60,16 +60,19 @@ make test
 
 
 %install
-%makeinstall_std PREFIX=%{_prefix}
+%makeinstall_std PREFIX=%{_prefix} CFLAGS="%{optflags}" LDFLAGS="%{build_ldflags}"
 
 
 %files
-%doc COPYING ChangeLog README.1st doc/fileformat.txt
+%doc COPYING ChangeLog README.1st
 %{_bindir}/*
 %{_mandir}/man1/*
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 2.4.1-alt1_3
+- update to new release by fcimport
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.3.14-alt1_1
 - update to new release by fcimport
 
