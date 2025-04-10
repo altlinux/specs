@@ -1,93 +1,72 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-mageia-compat
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: File tools
+%add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name unshield
-%define major	0
-%define libname	lib%{name}%{major}
-%define devname	lib%{name}-devel
+%define autorelease 1
 
-Name:		unshield
-Version:	1.4.3
-Release:	alt1_4
-Summary:	Install InstallShield applications on a Pocket PC
-Group:		File tools
-License:	MIT
-URL:		http://synce.sourceforge.net/
-Source0:	https://github.com/twogood/unshield/archive/%{version}/unshield-%{version}.tar.gz
-# Originally from openSUSE:
-Patch0100:	libconvert_utf_static.patch
-BuildRequires:	pkgconfig(zlib)
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	ccmake cmake ctest
+Name:          unshield
+Version:       1.6.2
+Release:       alt1_1
+Summary:       Extract CAB files from InstallShield installers
+License:       MIT
+URL:           https://github.com/twogood/unshield
+VCS:           git:https://github.com/twogood/unshield.git
+Source0:       https://github.com/twogood/unshield/archive/%{version}/%{name}-%{version}.tar.gz
+BuildRequires: ctest cmake
+BuildRequires: gcc
+BuildRequires: libssl-devel
+BuildRequires: zlib-devel
 Source44: import.info
 
 %description
-To install a Pocket PC application remotely, an installable
-Microsoft Cabinet File is copied to the /Windows/AppMgr/Install
-directory on the PDA and then the wceload.exe is executed to
-perform the actual install. That is a very simple procedure.
+This tool allows the extraction of InstallShield format cabinet files (which
+are different from Microsoft cabinet files). It was initially developed as a
+part of the SynCE project to aid with installing applications for Pocket PC
+devices, which were often contained in InstallShield installers, but these days
+that is rather less likely to be the primary use case.
 
-Unfortunately, many applications for Pocket PC are distributed as
-InstallShield installers for Microsoft Windows, and not as
-individual Microsoft Cabinet Files. That is very impractical for
-users of other operating systems, such as Linux or FreeBSD.
+%package devel
+Group: File tools
+Summary:       Files needed for software development with %{name}
+Requires:      %{name} = %{version}-%{release}
 
-%package -n %{libname}
-Summary:	Shared libraries for %{name}
-Group:		System/Libraries
-Provides: libunshield = %EVR
-Conflicts: libunshield < 1.4.3-alt1_3
-Obsoletes: libunshield < 1.4.3-alt1_3
-
-
-%description -n %{libname}
-This package contains the shared libraries for %{name}.
-
-%package -n %{devname}
-Summary:	Development files and headers for %{name}
-Group:		Development/Other
-Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
-
-%description -n %{devname}
-This package contains the development files and headers for %{name}.
+%description devel
+The %{name}-devel package contains the files needed for development with
+%{name}.
 
 %prep
-%setup -q
-%patch100 -p1
+%setup -q -n %{name}-%{version}
 
 
 %build
-%{mageia_cmake}
-%mageia_cmake_build
+%{fedora_v2_cmake} -DUSE_OUR_OWN_MD5=OFF
+%fedora_v2_cmake_build
 
 %install
-%mageia_cmake_install
-
-find %{buildroot} -name "*.la" -delete
+%fedora_v2_cmake_install
 
 %files
-%doc README.md
 %doc --no-dereference LICENSE
+%doc README.md
 %{_bindir}/unshield
+%{_libdir}/libunshield.so.1
+%{_libdir}/libunshield.so.1.6.2
 %{_mandir}/man1/unshield.1*
 
-%files -n %{libname}
-%{_libdir}/lib%{name}.so.%{major}
-%{_libdir}/lib%{name}.so.%{major}.*
-
-%files -n %{devname}
-%{_libdir}/lib%{name}.so
-%{_includedir}/lib%{name}.h
-%{_libdir}/pkgconfig/lib%{name}.pc
-
+%files devel
+%{_includedir}/libunshield.h
+%{_libdir}/cmake/%{name}/
+%{_libdir}/libunshield.so
+%{_libdir}/pkgconfig/libunshield.pc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.6.2-alt1_1
+- update to new release by fcimport
+
 * Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt1_4
 - mageia re-import
 - switched to shared libs policy
