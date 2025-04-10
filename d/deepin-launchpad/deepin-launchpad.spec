@@ -3,14 +3,15 @@
 %def_disable clang
 
 Name: deepin-launchpad
-Version: 0.6.12
-Release: alt2.1
+Version: 1.0.11
+Release: alt1
 
 Summary: Launcher for DDE - next generation
 
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/deepin-launchpad
+Url: https://github.com/linuxdeepin/dde-launchpad
+Vcs: https://github.com/linuxdeepin/dde-launchpad.git
 
 Provides: %repo = %EVR
 Conflicts: deepin-launcher
@@ -24,10 +25,10 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel libsystemd-devel
+BuildRequires: cmake dtk6-common-devel libappstream-qt6-devel libdtk6gui-devel libgio-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel libsystemd-devel dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel libdde-shell-devel deepin-shell
 BuildRequires: libdqt6-qmlcompiler libdqt6-quickcontrols2
 
-Requires: dqt6-declarative
+Requires: libdqt6-core = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 
 %description
 %summary.
@@ -53,18 +54,31 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %files -f %repo.lang
 %doc README.md
 %_bindir/%repo
+# package outside find_lang
 %dir %_datadir/%repo/
 %dir %_datadir/%repo/translations/
 %_datadir/%repo/translations/dde-launchpad.qm
-%_datadir/metainfo/org.deepin.dde.launchpad.appdata.xml
+# ---
+%dir %_datadir/dde-shell/
+%_datadir/dde-shell/org.deepin.ds.launchpad/
+%_datadir/metainfo/org.deepin.dde.shell.launchpad.appdata.xml
 %_userunitdir/org.deepin.dde.Launcher1.service
 %_datadir/dbus-1/services/org.deepin.dde.Launcher1.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/dde-launchpad/
 %_datadir/dsg/configs/dde-launchpad/org.deepin.dde.launchpad.appsmodel.json
+%dir %_datadir/dsg/configs/org.deepin.dde.shell/
+%_datadir/dsg/configs/org.deepin.dde.shell/org.deepin.ds.launchpad.json
+%dir %_libdir/dde-shell/
+%_libdir/dde-shell/org.deepin.ds.launchpad.so
 
 %changelog
+* Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
+- New version 1.0.11.
+- Added vcs tag and fixed url tag.
+- Enabled deepin-shell integration.
+
 * Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 0.6.12-alt2.1
 - Simplified build macros.
 - Fixed BuildRequires.

@@ -4,7 +4,7 @@
 
 Name: deepin-launcher
 Version: 6.0.19
-Release: alt2
+Release: alt3
 
 Summary: Deepin desktop-environment - Launcher module
 
@@ -19,7 +19,6 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 Conflicts: deepin-launchpad
-Obsoletes: deepin-launchpad
 
 # Requires: deepin-menu deepin-daemon startdde icon-theme-hicolor
 
@@ -97,6 +96,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dde-launcher/*.h
 
 %changelog
+* Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt3
+- Obsoleted by deepin-launchpad.
+
 * Mon Sep 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
