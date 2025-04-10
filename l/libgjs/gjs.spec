@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -34,13 +34,17 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Requires: gobject-introspection
 Requires: libmozjs%mozjs_ver_major >= %mozjs_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-macros-valgrind
 BuildRequires: meson gcc-c++ libffi-devel libcairo-devel
 BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
 BuildRequires: libgio-devel >= %glib_ver pkgconfig(gobject-introspection-%gir_api_ver) >= %gir_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
 BuildRequires: libgtk4-devel libgtk4-gir-devel
-BuildRequires: valgrind pkgconfig(sysprof-capture-4)
+BuildRequires: pkgconfig(sysprof-capture-4)
+%ifarch %valgrind_arches
+BuildRequires: valgrind
+%endif
+
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
 BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0 typelib(Gtk) = 4.0}
 
@@ -113,6 +117,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.1-alt1.1
+- fixed BR on architectures not supported by valgrind
+
 * Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.1-alt1
 - updated to 1.84.1-3-g1780940a
 
