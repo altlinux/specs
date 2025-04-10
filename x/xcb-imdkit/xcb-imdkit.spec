@@ -5,17 +5,18 @@ Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 1
+%define autorelease 4
 
 Name:       xcb-imdkit
-Version:    1.0.5
-Release:    alt1_1
+Version:    1.0.9
+Release:    alt1_4
 Summary:    Input method development support for xcb
 # source files in src/xlibi18n use the "old style" MIT license known as NTP.
-License:    LGPLv2 and MIT
+# Automatically converted from old format: LGPLv2 and MIT - review is highly recommended.
+License:    LicenseRef-Callaway-LGPLv2 AND LicenseRef-Callaway-MIT
 URL:        https://github.com/fcitx/xcb-imdkit
-Source:     https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.xz
-Source1:    https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.xz.sig
+Source:     https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.zst
+Source1:    https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}.tar.zst.sig
 Source2:    https://pgp.key-server.io/download/0x8E8B898CBF2412F9
 
 BuildRequires:  gnupg2
@@ -83,6 +84,9 @@ Devel files for xcb-imdkit
 %{_libdir}/pkgconfig/xcb-imdkit.pc
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.0.9-alt1_4
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt1_1
 - update to new release by fcimport
 
