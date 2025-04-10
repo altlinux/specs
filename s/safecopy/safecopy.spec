@@ -1,17 +1,18 @@
+Group: System/Base
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           safecopy
 Version:        1.7
-Release:        alt2_11
+Release:        alt2_27
 Summary:        Safe copying of files and partitions
 
-Group:          System/Base
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://safecopy.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+
+
+BuildRequires:  gcc
 Source44: import.info
-
-
 %description
 safecopy is a data recovery tool which tries to extract as much data
 as possible from a problematic (i.e. damaged sectors) source - like
@@ -32,6 +33,7 @@ other tools like dd would fail doe to I/O errors.
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
+
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README
 %{_mandir}/man*/%{name}*.*
@@ -39,6 +41,9 @@ make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.7-alt2_27
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_11
 - update to new release by fcimport
 
