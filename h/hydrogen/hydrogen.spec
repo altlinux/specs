@@ -3,7 +3,7 @@
 
 Name: hydrogen
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: Hydrogen Drum Machine
 License: GPLv2
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Thu Apr 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.4-alt2
+- fixed FTBFS with cmake4
+
 * Thu Mar 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
