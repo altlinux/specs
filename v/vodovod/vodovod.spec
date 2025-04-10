@@ -1,15 +1,16 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install ImageMagick-tools gcc-c++
+BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		vodovod
 Version:	1.10r22
-Release:	alt1_10
+Release:	alt1_27
 Summary:	A pipe connecting game
 
-Group:		Games/Other
-License:	GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 URL:		http://home.gna.org/vodovod/
 #Source:	http://download.gna.org/vodovod/%%{name}-%%{version}-src.tar.gz
 # svn export -r 22 svn://svn.gna.org/svn/vodovod/trunk vodovod
@@ -18,10 +19,15 @@ Source:		%{name}-%{version}-src.tar.gz
 Patch0:		vodovod-1.10r22-locales.patch
 Patch1:		vodovod-1.10r22-format-string.patch
 
+BuildRequires:  gcc-c++
 BuildRequires:	desktop-file-utils libSDL-devel libSDL_image-devel libSDL_mixer-devel
-BuildRequires:	libSDL_ttf-devel gettext gettext-tools ImageMagick
+BuildRequires:	libSDL_ttf-devel gettext-tools ImageMagick-tools
 
-Requires:	fonts-ttf-dejavu
+# Automate finding font file paths
+%global fonts font(dejavusansmono)
+Requires:	%{fonts}
+BuildRequires:  fontconfig libfontconfig1 %{fonts}
+
 Requires(post): coreutils
 Requires(postun): coreutils
 Source44: import.info
@@ -46,14 +52,9 @@ aby viedli vodu z domčeka v hornej časti obrazovky do nádrže v dolnej časti
 #%%setup -q -n %%{name}-%%{version}-src
 %setup -q -n %{name}
 # update locales
-%patch0 -p1
+%patch0  -p1
 # fix bug #1037377
-%patch1 -p1
-# replace the bundled font usage with the one provided by font package
-rm data/font1.ttf
-sed -i -e "s|data/font1.ttf|../fonts/dejavu/DejaVuSansMono.ttf|" \
-	allmenus.cpp main.cpp game.cpp
-
+%patch1  -p1
 
 %build
 make PREFIX=%{_prefix} HIGHSCOREDIR=%{_localstatedir}/games \
@@ -78,6 +79,9 @@ EOF
 
 %install
 make PREFIX=%{_prefix} DESTDIR=%{buildroot} install
+# replace the bundled font usage with the one provided by font package
+ln -f -s $(fc-match -f "%{file}" "dejavusansmono") \
+        %{buildroot}%{_datadir}/%{name}/data/font1.ttf
 # since the game sources do not come with the hiscore file, we have to create it
 # this will result in empty hiscore table, but it is not such a big deal
 mkdir -p %{buildroot}%{_localstatedir}/games
@@ -89,7 +93,6 @@ desktop-file-install  \
 	--dir=%{buildroot}%{_datadir}/applications %{name}.desktop
 %find_lang %{name}
 
-
 %files -f %{name}.lang
 %doc CHANGES COPYING html
 %attr(2711,root,games) %{_bindir}/%{name}
@@ -100,6 +103,9 @@ desktop-file-install  \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.10r22-alt1_27
+- update to new release by fcimport
+
 * Tue Nov 14 2017 Igor Vlasenko <viy@altlinux.ru> 1.10r22-alt1_10
 - update to new version by fcimport
 
