@@ -3,8 +3,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           rpm-build-gnat
-Version:        3.18
-Release:        alt1_1
+Version:        3.22
+Release:        alt1_2
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
@@ -23,7 +23,12 @@ Source44: import.info
 Patch33: macros.gnat.in.patch
 Provides: fedora-gnat-project-common = %version
 Requires: rpm-macros-gnat = %{version}-%{release}
-# setup owns /etc/profile.d and coreutils contains uname.
+# setup owns /etc/profile.d, and coreutils contains uname and realpath.
+
+# Libraries that use directories.gpr don't need redhat-rpm-config, but when RPM
+# packages are being built, then build_adaflags uses __build_flags_common,
+# which was introduced in redhat-rpm-config 259.
+
 
 %description
 The fedora-gnat-project-common package contains files that are used by the GNAT
@@ -75,6 +80,9 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 3.22-alt1_2
+- update to new release by fcimport
+
 * Thu Apr 20 2023 Igor Vlasenko <viy@altlinux.org> 3.18-alt1_1
 - update to new release by fcimport
 
