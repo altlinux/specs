@@ -1,17 +1,17 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
-%define fedora 27
+%define fedora 38
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_24
+Release: alt4_40
 Summary: A pipe connecting game
 
-License: GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License: GPL-2.0-or-later
 URL: http://www.users.waitrose.com/~thunor/pipepanic/
 Source0: http://www.users.waitrose.com/~thunor/pipepanic/dload/%{name}-%{version}-source.tar.gz
 Source1: pipepanic.desktop
@@ -39,9 +39,9 @@ different shaped pipes together as possible within the time given.
 
 %prep
 %setup -q -n %{name}-%{version}-source
-%patch0 -p0
-%patch1 -p1
-%patch2 -p1
+%patch0  -p0
+%patch1  -p1
+%patch2  -p1
 
 # Fix file encoding
 iconv --from=ISO-8859-1 --to=UTF-8 COPYING-ARTWORK > COPYING-ARTWORK.conv 
@@ -54,7 +54,7 @@ sed -i 's:/opt/QtPalmtop/share/pipepanic/:%{_datadir}/%{name}/:' main.h
 %build
 %make_build \
   CFLAGS="%{optflags}" \
-  LDFLAGS="%{__global_ldflags}"
+  
 
 
 %install
@@ -103,6 +103,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt4_40
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_24
 - update to new release by fcimport
 
