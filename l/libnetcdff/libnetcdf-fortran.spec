@@ -3,14 +3,14 @@
 %define sover 7
 
 Name: libnetcdff
-Version: 4.5.3
+Version: 4.6.1
 Release: alt1
 Summary: Libraries to use the Unidata network Common Data Form (netCDF), Fortran interface
 License: NetCDF
 Group: System/Libraries
-Url: http://www.unidata.ucar.edu/software/netcdf/
+Url: https://www.unidata.ucar.edu/software/netcdf/
 
-# https://github.com/Unidata/netcdf-fortran.git
+VCS: https://github.com/Unidata/netcdf-fortran.git
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jan 18 2009
@@ -184,6 +184,9 @@ Documentation for NetCDF library, Fortran interface.
 %doc docs/*.pdf docs/*.txt docs/*.html examples
 
 %changelog
+* Thu Apr 10 2025 Anton Farygin <rider@altlinux.com> 4.6.1-alt1
+- 4.5.3 -> 4.6.1
+
 * Fri Apr 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.5.3-alt1
 - Updated to upstream version 4.5.3.
 - Removed alternatives.
