@@ -3,7 +3,7 @@
 
 Name: musescore
 Version: %mversion.2
-Release: alt4
+Release: alt5
 
 Summary: Music notation and composition software
 
@@ -15,7 +15,9 @@ Vcs: https://github.com/musescore/MuseScore.git
 Source: %name-%version.tar
 Patch:  %name-%version-%release.patch
 
-BuildPreReq: chrpath rpm-build-xdg
+BuildRequires(pre): chrpath rpm-build-xdg
+BuildRequires(pre): rpm-macros-qt5
+BuildRequires: /proc
 
 # Automatically added by buildreq on Thu Jan 06 2011
 BuildRequires: ccmake doxygen gcc-c++ ghostscript-utils graphviz latex2html
@@ -55,6 +57,7 @@ export PATH=$PATH:%_qt5_bindir
 echo $PATH
 mkdir build.debug && cd build.debug
 cmake \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.10 \
     -DCMAKE_BUILD_TYPE=RELEASE \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
@@ -98,6 +101,9 @@ chrpath -d %buildroot%_bindir/mscore
 %_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Fri Apr 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.6.2-alt5
+- NMU: fix FTBFS with cmake 4.0
+
 * Wed Feb 05 2025 Ivan A. Melnikov <iv@altlinux.org> 3.6.2-alt4
 - drop unused BR on Qt5 WebEngine
 - add missing Qt5 Quick dependencies
