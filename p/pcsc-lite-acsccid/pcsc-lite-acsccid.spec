@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: pcsc-lite-acsccid
 Version: 1.1.11
-Release: alt1
+Release: alt2
 
 Summary: PCSC Driver for ACS CCID Based Smart Card Readers
 License: LGPLv2.1+
@@ -17,6 +19,8 @@ BuildRequires: autoconf-archive
 
 Provides: pcsc-acsccid = %version-%release
 Obsoletes: pcsc-acsccid < %version-%release
+Requires(pre): pcsc-lite
+Provides: pcsc-ifd-handler
 
 %description
 This package contains a ACS USB CCID (Chip/Smart Card Interface
@@ -38,16 +42,24 @@ cp /usr/share/gettext/config.rpath config
 
 %install
 %makeinstall_std
-mkdir -p %buildroot/lib/udev
-mkdir %buildroot/lib/udev/rules.d
-sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot/lib/udev/rules.d/92_pcscd_acsccid.rules
+mkdir -p %buildroot%_udevrulesdir
+sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot%_udevrulesdir/92_pcscd_acsccid.rules
+
+%post
+# Restart pcscd
+%post_service pcscd
 
 %files
 %doc AUTHORS COPYING README
-/lib/udev/rules.d/*.rules
+%_udevrulesdir/*.rules
 %_libdir/pcsc/drivers/*
 
 %changelog
+* Thu Apr 10 2025 Alexey Shabalin <shaba@altlinux.org> 1.1.11-alt2
+- Add Provides: pcsc-ifd-handler.
+- Fixed udev rules dir.
+- Restart pcscd after install ifd-acsccid.
+
 * Sat Mar 30 2024 Andrey Cherepanov <cas@altlinux.org> 1.1.11-alt1
 - New version.
 

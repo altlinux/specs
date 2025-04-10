@@ -1,16 +1,14 @@
 %define _unpackaged_files_terminate_build 1
-#undefine XXX__libtoolize
-#define unstable 1
 %def_disable static
 %def_enable polkit
 %def_enable systemd
 
 Name: pcsc-lite
 Version: 2.3.3
-Release: alt1
+Release: alt2
 
 Summary: PC/SC Lite smart card framework and applications
-License: %bsd
+License: BSD-3-Clause AND BSD-2-Clause AND GPL-3.0-or-later
 Group: System/Servers
 
 URL: https://pcsclite.apdu.fr/
@@ -18,21 +16,20 @@ URL: https://pcsclite.apdu.fr/
 Source: %name-%version.tar
 
 Source1: pcscd.init
-Source2: pcsc-lite-pcscd.sysconfig
 Source3: pcsc-lite.tmpfiles
-Patch0: pcsc-lite-alt-use-sysconfig-dir.patch
 
+Requires: pcsc-ifd-handler
 Requires: libpcsclite = %version-%release
 %{?_enable_polkit:Requires: polkit}
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: rpm-build-licenses perl-podlators
+BuildRequires(pre): rpm-macros-python3 rpm-macros-meson
+BuildRequires: rpm-build-python3 meson
+BuildRequires: perl-podlators
 BuildRequires: flex
 BuildRequires: pkgconfig(libudev)
-BuildRequires: autoconf-archive
 
-%{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1) >= 0.111}
-%{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
+%{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1)}
+%{?_enable_systemd:BuildRequires: pkgconfig(libsystemd) pkgconfig(systemd)}
 
 %if_enabled static
 BuildRequires: glibc-devel-static
@@ -51,7 +48,7 @@ This package contains the service for PC/SC Lite.
 %package -n libpcsclite
 Group: System/Libraries
 Summary: Libraries for pcscd
-#
+
 %description -n libpcsclite
 Libraries for pcscd. pcscd is the daemon program
 for PC/SC Lite. It is a resource manager that coorinates
@@ -65,7 +62,7 @@ PCSC Lite uses the same winscard api as used under Windows(R)
 Group: Development/C
 Summary: Haeders and other development files for libpcsclite
 Requires: libpcsclite = %EVR
-#
+
 %description -n libpcsclite-devel
 Haeders and other development files for libpcsclite
 
@@ -73,66 +70,69 @@ Haeders and other development files for libpcsclite
 Group: Development/C
 Summary: Static libraries for libpcsclite
 Requires: libpcsclite-devel = %EVR
-#
+
 %description -n libpcsclite-devel-static
 Static libraries for libpcsclite
 
 %prep
 %setup
-%patch0 -p1
-subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
-subst 's|/usr/bin/python$|%__python3|' src/spy/pcsc-spy
 
 %build
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{subst_enable polkit} \
-    --enable-debugatr \
-    --enable-ipcdir=/var/run/pcscd \
-    --enable-usbdropdir=%_libdir/pcsc/drivers \
-    --with-systemdsystemunitdir=%_unitdir
+%meson \
+    -Dlibsystemd=true \
+    -Dsystemdunit=system \
+    -Dserial=true \
+    -Dusb=true \
+    %{?_enable_polkit:-Dpolkit=true} \
+    -Dusbdropdir=%_libdir/pcsc/drivers \
+    -Dipcdir=/run/pcscd
 
-%make_build
-
-# pdf
-%make_build -C doc
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
-install -pDm755 %SOURCE1 %buildroot/%_initdir/pcscd
-install -pDm644 %SOURCE2 %buildroot/%_sysconfdir/sysconfig/pcscd
+install -pDm755 %SOURCE1 %buildroot%_initdir/pcscd
 
 mkdir -p %buildroot%_sysconfdir/reader.conf.d
-mkdir -p %buildroot/var/run/pcscd
 mkdir -p %buildroot%_libdir/pcsc/drivers
-
-# enable pcscd socket activation
-mkdir -p %buildroot%_unitdir/sockets.target.wants
-ln -s ../pcscd.socket %buildroot%_unitdir/sockets.target.wants
-mkdir -p %buildroot/lib/tmpfiles.d
-install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
+mkdir -p %buildroot%_sysconfdir/sysconfig
+mv -fv %buildroot%_sysconfdir/default/pcscd %buildroot%_sysconfdir/sysconfig/pcscd
+sed -i -e 's|/etc/default/pcscd|%_sysconfdir/sysconfig/pcscd|' %buildroot%_unitdir/pcscd.service
+mkdir -p %buildroot%_tmpfilesdir
+install -pDm644 %SOURCE3 %buildroot%_tmpfilesdir/pcsc-lite.conf
 
 # remove default installed docs
-rm -rf %buildroot/%_defaultdocdir/pcsc-lite
+rm -rf %buildroot%_defaultdocdir/pcsc-lite
+
+%if_disabled static
+# remove static archives .a
+rm -f %buildroot%_libdir/libpcsclite.a
+%endif
 
 %preun
-%preun_service pcscd
+if sd_booted; then
+    %preun_systemd pcscd.service pcscd.socket
+else
+    %preun_service pcscd
+fi
 
 %post
-%post_service pcscd
+if sd_booted; then
+    %post_systemd pcscd.service pcscd.socket
+else
+    %post_service pcscd
+fi
 
 %files
-%doc AUTHORS COPYING HELP NEWS README* SECURITY doc/README.polkit
+%doc AUTHORS COPYING HELP README* SECURITY doc/README.polkit
 %dir %_sysconfdir/reader.conf.d
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
 %if_enabled systemd
 %_unitdir/pcscd.*
-%_unitdir/sockets.target.wants/*
 %endif
-/lib/tmpfiles.d/pcsc-lite.conf
+%_tmpfilesdir/pcsc-lite.conf
 %_sbindir/pcscd
 #_bindir/make_hash_link.sh
 %_man5dir/*
@@ -140,7 +140,7 @@ rm -rf %buildroot/%_defaultdocdir/pcsc-lite
 %dir %_libdir/pcsc
 %dir %_libdir/pcsc/drivers
 %{?_enable_polkit:%_datadir/polkit-1/actions/*.policy}
-%ghost %dir /var/run/pcscd
+%_datadir/metainfo/fr.apdu.pcsclite.metainfo.xml
 
 # NB: .so belongs here, see ALT#25275
 %files -n libpcsclite
@@ -153,8 +153,8 @@ rm -rf %buildroot/%_defaultdocdir/pcsc-lite
 %doc ChangeLog
 %_bindir/pcsc-spy
 %_libdir/libpcscspy.so*
-%_includedir/PCSC/
-%_libdir/pkgconfig/libpcsclite.pc
+%_includedir/PCSC
+%_pkgconfigdir/libpcsclite.pc
 %_man1dir/pcsc-spy.*
 
 %if_enabled static
@@ -163,6 +163,12 @@ rm -rf %buildroot/%_defaultdocdir/pcsc-lite
 %endif
 
 %changelog
+* Wed Apr 09 2025 Alexey Shabalin <shaba@altlinux.org> 2.3.3-alt2
+- Use meson for build.
+- Use /etc/sysconfig/pcscd from upstream.
+- Add Requires: pcsc-ifd-handler
+- /var/run -> /run.
+
 * Thu Apr 03 2025 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt1
 - New version.
 

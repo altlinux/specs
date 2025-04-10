@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define realname rutokens-driver
-
 %define libpcsclite_usbdropdir %(pkg-config libpcsclite --variable=usbdropdir)
 
 Name: pcsc-lite-rutokens
 Version: 1.0.9
-Release: alt1
+Release: alt2
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: http://www.rutoken.ru/support/download/drivers-for-nix/
@@ -14,37 +14,42 @@ BuildRequires: pkgconfig(libpcsclite) >= 1.3.3
 BuildRequires: pkgconfig(libusb)
 
 Provides: %realname ifd-rutokens
-Requires: pcsc-lite
+Provides: pcsc-ifd-handler
+Requires(pre): pcsc-lite
 
 # https://github.com/AktivCo/rutokens-driver
 Source: %name-%version.tar
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 
 %build
-./reconf
-
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-usbdropdir=%libpcsclite_usbdropdir \
-	--enable-udevrules \
-	#
-LDFLAGS=
+	--disable-udevrules
 %make_build
 
 %install
-%makeinstall DESTDIR=%buildroot
+%makeinstall_std
+
+%post
+# Restart pcscd
+%post_service pcscd
 
 %files
 %doc AUTHORS COPYING NEWS README
-#%%config(noreplace) /etc/udev/rules.d/95-rutokens.rules
 %libpcsclite_usbdropdir/ifd-rutokens.bundle
 
 %changelog
+* Thu Apr 10 2025 Alexey Shabalin <shaba@altlinux.org> 1.0.9-alt2
+- Add Provides: pcsc-ifd-handler.
+- Restart pcscd after install ifd-rutokens.
+
 * Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt1
 - New version.
 

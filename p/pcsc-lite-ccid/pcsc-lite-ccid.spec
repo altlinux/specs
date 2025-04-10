@@ -1,56 +1,57 @@
 Name: pcsc-lite-ccid
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
-Summary: USB CCID IFD Handler
-License: LGPL-2.1
+Summary: Generic USB CCID smart card reader driver
+License: BSD-3-Clause AND GPL-2.0-or-later AND LGPL-2.1-or-later
 Group: System/Libraries
 URL: https://ccid.apdu.fr
 
 Requires: pcsc-lite
 
 Source: %name-%version.tar
-Patch1: ccid-disable-examples-build.patch
 
-BuildRequires(pre): meson
-BuildRequires: flex libpcsclite-devel libusb-devel
-BuildRequires: autoconf-archive
-BuildRequires: zlib-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: flex
+BuildRequires: pkgconfig(libpcsclite) pkgconfig(libusb-1.0) pkgconfig(zlib)
 
 Provides: ccid = %version-%release
 Obsoletes: ccid < %version-%release
 Conflicts: pcsc-lite-openct
+Requires(pre): pcsc-lite
+Provides: pcsc-ifd-handler
 
 %define ifddir %(pkg-config libpcsclite --variable=usbdropdir)
 
 %description
-This package provides generic USB CCID (Chip/Smart Card Interface
-Devices) driver for PC/SC Lite.
+Generic USB CCID (Chip/Smart Card Interface Devices) driver for use with the
+PC/SC Lite daemon.
 
 %prep
 %setup
-# Do not build examples requires contrib from external repository
-%patch1 -p1
 
 %build
-%autoreconf
-%configure --enable-twinserial
-%make_build
+%meson -Dserial=true
+%meson_build
 
 %install
-%makeinstall_std
-mkdir -p %buildroot/lib/udev/rules.d/
-cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
+%meson_install
+
+%post
+# Restart pcscd
+%post_service pcscd
 
 %files
-%doc contrib/Kobil_mIDentity_switch/README_Kobil_mIDentity_switch.txt
-%doc AUTHORS README.md NEWS SCARDGETATTRIB.md SCARDCONTOL.md
+%doc AUTHORS README.md
 %config(noreplace) %_sysconfdir/reader.conf.d/libccidtwin
 %ifddir/ifd-ccid.bundle
 %_libdir/pcsc/drivers/serial/libccidtwin.so
-/lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Wed Apr 09 2025 Alexey Shabalin <shaba@altlinux.org> 1.6.2-alt2
+- Use meson for build.
+
 * Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
 - New version.
 - Remove deprecated submodules.
