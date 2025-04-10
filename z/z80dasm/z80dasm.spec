@@ -1,11 +1,12 @@
+Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		z80dasm
 Version:	1.1.3
-Release:	alt1_6
+Release:	alt1_22
 Summary:	Z80 Disassembler
-Group:		Development/Other
-License:	GPLv2+
+# Automatically converted from old format: GPLv2+ - review is highly recommended.
+License:	GPL-2.0-or-later
 URL:		http://www.tablix.org/~avian/blog/articles/%{name}/
 Source0:	http://www.tablix.org/~avian/%{name}/%{name}-%{version}.tar.gz
 
@@ -15,6 +16,7 @@ Source0:	http://www.tablix.org/~avian/%{name}/%{name}-%{version}.tar.gz
 # on 27-Feb-2012.
 Patch0:		z80dasm-1.1.3-16-bit-addr.patch
 
+BuildRequires:  gcc
 BuildRequires:	z80asm
 Source44: import.info
 
@@ -28,10 +30,10 @@ assemblers. Compatibility with z80asm was thoroughly tested.
 
 %prep
 %setup -q
-%patch -P 0 -p1 -b .16-bit-addr
-%configure
+%patch0  -p1 -b .16-bit-addr
 
 %build
+%configure
 %make_build CFLAGS="%{optflags}"
 
 %check
@@ -41,12 +43,15 @@ make test
 make install DESTDIR="%{buildroot}"
 
 %files
-%doc COPYING
+%doc --no-dereference COPYING
 %doc AUTHORS NEWS README
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_22
+- update to new release by fcimport
+
 * Fri Nov 03 2017 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt1_6
 - update to new version by fcimport
 
