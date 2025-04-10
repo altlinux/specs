@@ -1,21 +1,24 @@
 Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global         githash     1ca80982c5a32c82bfc5e98e1fe9d8751ab44946
+%global         githash     b798a46b886f71c0c25ad2a9e78b1c3e8933970c
 %global         shorthash   %(TMP=%githash ; echo ${TMP:0:10})
-%global         gitdate     Wed, 17 Feb 2021 00:09:15 +0900
-%global         gitdate_num 20210217
+%global         gitdate     Wed Jan 31 21:19:24 2024 +0900
+%global         gitdate_num 20240131
 
 %global         githash_tools     0fe2106fbc052445c611e6c5b2a79899d740edcb
+
+%global         baserelease       4
 
 %undefine        _changelog_trimtime
 
 Summary:	Dictionaries for SKK (Simple Kana-Kanji conversion program)
 Name:		skkdic
 Version:	%{gitdate_num}
-Release:	alt1_3.git1ca80982c5
+Release:	alt1_4.gitb798a46b88
 # See Source2
-License:	GPLv2+ and CC-BY-SA and Unicode and Public Domain and MIT
+# Automatically converted from old format: GPLv2+ and CC-BY-SA and Unicode and Public Domain and MIT - review is highly recommended.
+License:	GPL-2.0-or-later AND LicenseRef-Callaway-CC-BY-SA AND Unicode-DFS-2015 AND LicenseRef-Callaway-Public-Domain AND LicenseRef-Callaway-MIT
 
 Source0:	https://github.com/skk-dev/dict/archive/%{githash}/%{name}-%{gitdate_num}.git%{githash}.tar.gz
 Source1:	https://raw.githubusercontent.com/skk-dev/skktools/%{githash_tools}/unannotation.awk
@@ -78,6 +81,9 @@ popd
 %{_datadir}/skk/
 
 %changelog
+* Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 20240131-alt1_4.gitb798a46b88
+- update to new release by fcimport
+
 * Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 20210217-alt1_3.git1ca80982c5
 - update to new release by fcimport
 
