@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: livecd-rescue
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: The systemd target and services for Live Rescue
@@ -41,6 +41,9 @@ ln -s ../live-rescue-launcher.service %buildroot%systemd_unitdir/live-rescue.tar
 %systemd_unitdir/live-rescue.target.wants/live-rescue-launcher.service
 
 %changelog
+* Thu Apr 10 2025 Anton Midyukov <antohami@altlinux.org> 0.3.3-alt1
+- live-rescue-issue.service: correct issue (thanks mike@)
+
 * Thu Mar 20 2025 Anton Midyukov <antohami@altlinux.org> 0.3.2-alt1
 - live-rescue.target: add altlinux-resolv.path to Wants
 
