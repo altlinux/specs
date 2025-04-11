@@ -1,12 +1,12 @@
 %define _name textpieces
-%define ver_major 4.1
+%define ver_major 4.2
 %define rdn_name io.gitlab.liferooter.TextPieces
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Developer's scratchpad
@@ -15,12 +15,15 @@ Group: Text tools
 Url: https://apps.gnome.org/Textpieces
 
 Vcs: https://gitlab.com/liferooter/textpieces.git
+
 Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
+%define adw_ver 1.5
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
-BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gtksourceview-5) gir(GtkSource) = 5
 %{?_enable_check:BuildRequires: /usr/bin/desktop-file-validate /usr/bin/appstreamcli /usr/bin/glib-compile-schemas}
 
@@ -67,6 +70,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
 - 4.1.1
 
