@@ -100,7 +100,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -1036,14 +1036,14 @@ mkdir -p %buildroot%_systemd_dir/system-sleep
 # Make sure the *-environment-generators dirs exist
 mkdir -p %buildroot%_user_env_gen_dir
 mkdir -p %buildroot%_env_gen_dir
-
+mkdir -p %buildroot%_sysconfdir/systemd/{system,user}-generators
 
 # fix pam.d/systemd-user for ALTLinux
 install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
 
 # Install ALTLinux default preset policy
 mkdir -p %buildroot%_presetdir
-mkdir -p %buildroot%_sysconfdir/systemd/system-preset
+mkdir -p %buildroot%_sysconfdir/systemd/{system,user}-preset
 mkdir -p %buildroot%_systemd_dir/user-preset
 mkdir -p %buildroot%_sysconfdir/systemd/user-preset
 mkdir -p %buildroot%_user_presetdir
@@ -1582,6 +1582,10 @@ fi
 %dir %_sysconfdir/systemd/user
 %dir %_sysconfdir/systemd/user.conf.d
 %dir %_sysconfdir/systemd/ntp-units.d
+%dir %_sysconfdir/systemd/system-generators
+%dir %_sysconfdir/systemd/user-generators
+%dir %_sysconfdir/systemd/system-preset
+%dir %_sysconfdir/systemd/user-preset
 %dir %_systemd_dir
 %dir %_systemd_dir/profile.d
 %dir %_systemd_dir/system.conf.d
@@ -2588,6 +2592,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Apr 11 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.5-alt2
+- system-preset, user-preset, system-generators, user-generators dirs in /etc
+  packaged to systemd-filesystem.
+
 * Sun Apr 06 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.5-alt1
 - 257.5
 - Moved config files to /usr/lib/systemd.
