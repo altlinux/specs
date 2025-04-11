@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,14 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Sat Apr 12 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.3-alt1
+- components: remove mingetty package from base component
+- Fix editions:
+  + replace kernel-modules-r8168 from base to main section
+  + replace systemd-timesyncd with chrony in base section
+  + replace cgroup from main to base section
+  + replace reiserfsprogs from main to base section
+
 * Thu Apr 10 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.2-alt1
 - Fix editions:
   + replace lsb component with lsb-core
