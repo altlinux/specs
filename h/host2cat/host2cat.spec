@@ -3,7 +3,7 @@
 
 Name: host2cat
 Version: 1.01
-Release: alt8
+Release: alt9
 
 Summary: Custom DNS resolver
 License: BSD
@@ -18,6 +18,7 @@ Source4: %name.openresolv
 Source5: README.ALT.host2cat
 Source6: %name.service
 Patch0: host2cat-alt-fix-include-config.ph.patch
+Patch1: host2cat-1.01-alt-fix_bind-addr-type.patch
 
 BuildRequires: libadns-devel libmemcache-devel
 
@@ -57,6 +58,7 @@ host2cat subscriber for openresolv
 %prep
 %setup -q
 %patch0 -p2
+%patch1
 
 %build
 aclocal --force 
@@ -142,6 +144,9 @@ htpasswd2 -b %_sysconfdir/squid/passwd netpolice netpolice
 %subscribers_dir/%name
 
 %changelog
+* Fri Apr 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.01-alt9
+- NMU: Fixed FTBFS with gcc14.
+
 * Thu Sep 19 2024 Andrey Cherepanov <cas@altlinux.org> 1.01-alt8
 - Fix include config.ph (ALT #41426).
 

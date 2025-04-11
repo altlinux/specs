@@ -1,6 +1,6 @@
 Name: fairymax
 Version: 4.8j
-Release: alt1.qa1
+Release: alt2
 
 Summary: Fairy-Max, a sub-2KB (source) micro-Max Chess program
 License: Public domain
@@ -10,6 +10,7 @@ Url: http://home.hccnet.nl/h.g.muller/
 Source0: %url/fmax4_8w.c
 Source1: %url/fmax.ini
 Source2: %name.6
+Patch: %name-%version-alt-fix-gcc14.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 %define inidir %_gamesdatadir/%name
@@ -24,6 +25,7 @@ chess, berolina chess, superchess and courier chess.
 %prep
 #mkdir -p $RPM_BUILD_DIR
 sed 's,fmax.ini",%inidir/&,' < %SOURCE0 > %name.c
+%patch
 
 %build
 %make CFLAGS="%optflags" %name
@@ -43,6 +45,9 @@ install -pDm644 %SOURCE2 %buildroot%_man6dir/%name.6
 # - consider -DSHATRANJ
 
 %changelog
+* Fri Apr 11 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.8j-alt2
+- NMU: fixed gcc14 specific compilation errors.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 4.8j-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
