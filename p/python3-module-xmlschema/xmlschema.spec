@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 %define oname xmlschema
 
 %ifnarch ppc64le
@@ -9,7 +8,7 @@
 %def_without memory_profiler
 
 Name: python3-module-%oname
-Version: 3.4.5
+Version: 4.0.0
 Release: alt1
 
 Summary: XML Schema validator and data conversion library
@@ -44,9 +43,10 @@ The xmlschema library is an implementation of XML Schema for Python.
 
 %prep
 %setup
+sed -i 's/license = "MIT"/license = {file = "LICENSE"}/' pyproject.toml
+sed -i '/license-files/d' pyproject.toml
 
 %build
-export LANG=C.UTF-8
 %pyproject_build
 
 %install
@@ -66,6 +66,9 @@ sed -i 's/unittest/unittest -v/' tox.ini
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Apr 11 2025 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Tue Mar 25 2025 Grigory Ustinov <grenka@altlinux.org> 3.4.5-alt1
 - Automatically updated to 3.4.5.
 
