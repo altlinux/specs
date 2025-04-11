@@ -1,9 +1,9 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.4.5
+Version: 0.5.0
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -19,6 +19,7 @@ Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
+%define adw_ver 1.3
 %define soup3_ver 3.4
 %define gst_api_ver 1.0
 %define webrtc_api_ver 2
@@ -29,15 +30,15 @@ Requires: lib%name = %EVR
 # VPx codecs
 Requires: gst-plugins-good%gst_api_ver
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ ninja-build vala-tools
-BuildRequires: libgtk4-devel pkgconfig(libadwaita-1)
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ vala-tools
+BuildRequires: libgtk4-devel pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: libgee0.8-devel libsoup3.0-devel >= %soup3_ver libidn2-devel
 BuildRequires: libicu-devel pkgconfig(libqrencode) >= %qrencode_ver
 BuildRequires: gst-plugins%gst_api_ver-devel libnice-devel
 BuildRequires: pkgconfig(webrtc-audio-processing-%webrtc_api_ver) >= %webrtc_ver
 BuildRequires: libgcrypt-devel libgpgme-devel libgnutls-devel
-BuildRequires: libsignal-protocol-c-devel libsqlite3-devel libsrtp2-devel
+BuildRequires: libomemo-c-devel libsqlite3-devel libsrtp2-devel
 BuildRequires: libenchant-devel
 
 %description
@@ -66,14 +67,12 @@ This package provides libraries and headers needed to develop Dino plugins.
 %setup -n %name-%version
 
 %build
-%cmake \
-    -GNinja \
-    -DSOUP_VERSION=3
+%meson
 %nil
-%cmake_build
+%meson_build
 
 %install
-%cmake_install
+%meson_install
 %find_lang --all-name --output=%name.lang %name
 
 
@@ -114,6 +113,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- updated to v0.5.0-3-g5af1b2cd
+
 * Tue Feb 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
