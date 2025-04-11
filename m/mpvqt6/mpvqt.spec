@@ -4,7 +4,7 @@
 %define libname libmpvqt%sover
 
 Name: %rname%major
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Group: System/Libraries
@@ -59,5 +59,8 @@ Requires: libmpv-devel
 %_libdir/lib*.so
 
 %changelog
+* Thu Apr 10 2025 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
+- new version
+
 * Tue Sep 03 2024 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1
 - Initial build
