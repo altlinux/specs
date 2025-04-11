@@ -1,23 +1,24 @@
 %define soversion 1
-%define llvmversion 14
+%define llvmversion 19.1
 %define oclocversion 25.09.1
+# LTO will be checked during configuration
+%define optflags_lto %nil
 
 Name: intel-compute-runtime
 Version: 25.09.32961.8
-Release: alt1
+Release: alt1.1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
-URL: https://github.com/intel/compute-runtime
+Url: https://github.com/intel/compute-runtime
 
 Source: %name-%version.tar
 
 Patch1: intel-compute-runtime-24.35.30872.18-alt-build.patch
 
-BuildRequires: cmake
-BuildRequires: gcc
-BuildRequires: gcc-c++
-BuildRequires: libintel-opencl-clang%llvmversion-devel
+BuildRequires(pre): rpm-build-cmake ninja-build
+BuildRequires: clang%llvmversion libstdc++-devel
+BuildRequires: libintel-opencl-clang-devel
 BuildRequires: libigdfcl-devel
 BuildRequires: libigc-devel
 BuildRequires: intel-gmmlib-devel
@@ -28,26 +29,23 @@ BuildRequires: ocl-icd-devel
 BuildRequires: opencl-headers
 BuildRequires: libze-devel
 
-Requires: intel-ocloc = %{version}-%{release}
-Requires: intel-opencl = %{version}-%{release}
-Requires: libze-intel-gpu%soversion = %{version}-%{release}
-
 ExclusiveArch: x86_64
 
 %description
 The Intel(R) Graphics Compute Runtime for OpenCL(TM) is a open source project to
 converge Intel's development efforts on OpenCL(TM) compute stacks supporting
 the GEN graphics hardware architecture.
- 
+
 %package -n intel-ocloc
 Summary: Tool for managing Intel Compute GPU device binary format
 Group: Development/Tools
- 
+
 %description -n intel-ocloc
-ocloc is a tool for managing Intel Compute GPU device binary format (a format used by Intel Compute GPU runtime).
-It can be used for generation (as part of 'compile' command) as well as
-manipulation (decoding/modifying - as part of 'disasm'/'asm' commands) of such binary files.
- 
+ocloc is a tool for managing Intel Compute GPU device binary format (a format
+used by Intel Compute GPU runtime).  It can be used for generation (as part of
+'compile' command) as well as manipulation (decoding/modifying - as part of
+'disasm'/'asm' commands) of such binary files.
+
 %package -n intel-ocloc-devel
 Summary: Tool for managing Intel Compute GPU device binary format - Devel Files
 Group: System/Libraries
@@ -56,7 +54,7 @@ Requires: intel-ocloc
 %description -n intel-ocloc-devel
 Devel files (headers and libraries) for developing against
 intel-ocloc (a tool for managing Intel Compute GPU device binary format).
- 
+
 %package -n intel-opencl
 Summary: OpenCL support implementation for Intel GPUs
 Group: System/Libraries
@@ -64,6 +62,7 @@ Provides: intel-opencl-icd
 Requires: libigdfcl2
 Requires: libigc2
 Requires: libigdgmm12
+Requires: opencl-filesystem
 
 %description -n intel-opencl
 Implementation for the Intel GPUs of the OpenCL specification - a generic
@@ -80,10 +79,11 @@ Requires: libigc2
 Requires: libigdgmm12
 
 %description -n libze-intel-gpu%soversion
-Implementation for the Intel GPUs of the oneAPI L0 specification -  which provides direct-to-metal
-interfaces to offload accelerator devices. Its programming interface can be tailored to any device
-needs and can be adapted to support broader set of languages features such as function pointers,
-virtual functions, unified memory, and I/O capabilities..
+Implementation for the Intel GPUs of the oneAPI L0 specification -  which
+provides direct-to-metal interfaces to offload accelerator devices. Its
+programming interface can be tailored to any device needs and can be adapted to
+support broader set of languages features such as function pointers, virtual
+functions, unified memory, and I/O capabilities..
 
 %package -n libze-intel-gpu-devel
 Summary: oneAPI L0 support implementation for Intel GPUs - Devel Files
@@ -98,46 +98,47 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %patch1 -p1
 
 %build
-mkdir -p build
-pushd build
-cmake .. \
- -DCMAKE_INSTALL_PREFIX=%_prefix \
- -DCMAKE_INSTALL_LIBDIR=%_libdir \
- -DCMAKE_BUILD_TYPE=Release \
+export ALTWRAP_LLVM_VERSION=%llvmversion
+%cmake -G Ninja \
+ -DCMAKE_C_COMPILER=/usr/bin/clang \
+ -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo \
  -DSKIP_UNIT_TESTS=1
 
-%make_build
-popd
+%cmake_build
 
 %install
-pushd build
-%makeinstall_std
-popd
+%cmake_install
 
 mv %buildroot%_bindir/ocloc-%oclocversion %buildroot%_bindir/ocloc
 
 %files -n intel-opencl
-%_libdir/intel-opencl/libigdrcl.so
+%_libdir/intel-opencl
 %_sysconfdir/OpenCL/vendors/intel.icd
- 
+
 %files -n libze-intel-gpu%soversion
 %_libdir/libze_intel_gpu.so.%soversion.*
 %_libdir/libze_intel_gpu.so.%soversion
 
 %files -n libze-intel-gpu-devel
-%_includedir/level_zero/driver_experimental/
-%_includedir/level_zero/zet_intel_gpu_debug.h
-%_includedir/level_zero/ze_intel_gpu.h
-%_includedir/level_zero/ze_stypes.h
- 
+%_includedir/level_zero
+
 %files -n intel-ocloc
 %_bindir/ocloc
 %_libdir/libocloc.so
- 
+
 %files -n intel-ocloc-devel
 %_includedir/ocloc_api.h
 
 %changelog
+* Fri Apr 11 2025 L.A. Kostis <lakostis@altlinux.ru> 25.09.32961.8-alt1.1
+- NMU:
+  - spec: cleanup.
+  - Use ninja-build.
+  - Use cmake macros (to have consistent build flags and debuginfo).
+  - Compile with clang19 (should fix luxmark segfaults).
+  - optflags: disable LTO (will be checked during configuration).
+
 * Thu Apr 10 2025 Andrey Kovalev <ded@altlinux.org> 25.09.32961.8-alt1
 - Updated to upstream version 25.09.32961.8.
 

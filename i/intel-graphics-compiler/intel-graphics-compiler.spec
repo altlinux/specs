@@ -1,9 +1,10 @@
 %define soversion 2
 %define llvmversion 14
+%define optflags_lto %nil
 
 Name: intel-graphics-compiler
 Version: 2.10.5
-Release: alt1
+Release: alt1.1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
 Group: Development/C++
@@ -12,8 +13,12 @@ URL: https://github.com/intel/intel-graphics-compiler
 Source: %name-%version.tar
 
 Patch1: %name-2.3.1-alt-build.patch
+Patch2: ffdcbc033c0ad140b898a7ccb431f2dabd5dedab.patch
+Patch3: c5c2623610f37abdd9f3b12efcc4a6d42ac55773.patch
+# our -Wall triggers -Werror for everything
+Patch4: %name-alt-disable-werror.patch
 
-BuildRequires(pre): rpm-build-cmake
+BuildRequires(pre): rpm-build-cmake ninja-build
 
 BuildRequires: flex
 BuildRequires: cmake
@@ -47,7 +52,8 @@ Summary: Library for Intel Graphics Compiler
 Group: System/Libraries
 
 %description -n libigc%soversion
-An LLVM based compiler for OpenCL targeting Intel Gen graphics hardware architecture.
+An LLVM based compiler for OpenCL targeting Intel Gen graphics hardware
+architecture.
 
 %package -n libigc-devel
 Summary: Headers for the Intel Graphics Compiler library
@@ -82,29 +88,24 @@ This package contains development files for libigdfcl.
 
 %prep
 %setup
-%patch1 -p1
-
+%autopatch1 -p1
 
 %build
-mkdir -p build
-pushd build
-cmake ../IGC -DLLVM_DIR=/usr/lib/llvm-%llvmversion.0/lib64/cmake/llvm/ \
-  -DCMAKE_INSTALL_PREFIX=%_prefix \
-  -DIGC_OPTION__LLDELF_LIB_DIR=/usr/lib/llvm-%llvmversion.0/lib64/ \
-  -DIGC_OPTION__LLD_BIN_DIR=/usr/bin/llvm-%llvmversion.0/bin/ \
+export ALTWRAP_LLVM_VERSION=%llvmversion.0
+%cmake -GNinja \
+  -DLLVM_DIR=%_prefix/lib/llvm-%llvmversion.0/%_lib/cmake/llvm \
+  -DIGC_OPTION__LLDELF_LIB_DIR=%_prefix/lib/llvm-%llvmversion.0/%_lib/ \
+  -DLLD_INCLUDE_DIR=%_prefix/lib/llvm-%llvmversion.0/include/lld \
   -DCMAKE_BUILD_TYPE=Release \
+  -Wno-dev \
   -DIGC_OPTION__ARCHITECTURE_TARGET='Linux64' \
   -DIGC_OPTION__SPIRV_TOOLS_MODE=Prebuilds \
-  -DIGC_OPTION__VC_INTRINSICS_MODE=Prebuilds \
-  -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-
-%make_build
-popd
+  -DIGC_OPTION__VC_INTRINSICS_MODE=Prebuilds
+%cmake_build
 
 %install
-pushd build
-%makeinstall_std
-popd
+%cmake_install
+
 pushd %buildroot%_libdir
 ln -sf libigc.so.%soversion libigc.so
 ln -sf libiga64.so.%soversion libiga64.so
@@ -137,6 +138,18 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Fri Apr 11 2025 L.A. Kostis <lakostis@altlinux.ru> 2.10.5-alt1.1
+- NMU:
+  - Explicitly disable LTO (not supported).
+  - Use cmake macros. This also makes build flags consistent.
+  - Use ninja-build.
+  - Disable -Werror (due enabled -Wall).
+  - Apply some fixes from master:
+    + Fix crashes encountered during the compilation of Blender
+      kernels utilizing the `SPV_INTEL_bindless_images` extension
+    + Fix crash in `ProgramScopeConstantAnalysis` during
+      recompilation
+
 * Thu Apr 10 2025 Andrey Kovalev <ded@altlinux.org> 2.10.5-alt1
 - Updated to upstream version 2.10.5.
 - Fixed FTBFS with cmake4.
