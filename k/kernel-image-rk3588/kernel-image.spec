@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.22
+%define kernel_sublevel	.23
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -366,6 +366,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Fri Apr 11 2025 Alexei Takaseev <taf@altlinux.org> 6.12.23-alt1
+- v6.12.23 (2025-04-10).
+
 * Mon Apr 07 2025 Alexei Takaseev <taf@altlinux.org> 6.12.22-alt1
 - v6.12.22 (2025-04-07).
 - config: add prefix DISPLAY for CONFIG_DRM_DP_CEC, DRM_DP_AUX_CHARDEV.
