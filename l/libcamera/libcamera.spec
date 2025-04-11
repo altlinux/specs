@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.4.0
-Release: alt2
+Version: 0.5.0
+Release: alt1.1
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -36,6 +36,9 @@ BuildRequires: pkgconfig(libyuv)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
+%ifarch aarch64
+BuildRequires: pkgconfig(libpisp)
+%endif
 %if_enabled qcam
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(Qt6Core)
@@ -146,6 +149,12 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.0-alt1.1
+- libpisp-devel required to build for aarch64
+
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.0-alt1
+- 0.5.0
+
 * Mon Feb 24 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:0.4.0-alt2
 - fix e2k build
 

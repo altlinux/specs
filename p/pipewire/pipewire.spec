@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -49,7 +49,7 @@
 
 Name: pipewire
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -83,7 +83,6 @@ BuildRequires: libalsa-devel libpulseaudio-devel
 BuildRequires: libv4l-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
-BuildRequires: libmysofa-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 BuildRequires: libfreeaptx-devel libopus-devel
@@ -102,6 +101,10 @@ BuildRequires: pkgconfig(gstreamer-plugins-base-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-net-%gst_api_ver)
 BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %endif
+# filter-graphs
+BuildRequires: libmysofa-devel
+BuildRequires: libebur128-devel
+%{?_enable_lv2:BuildRequires: liblilv-devel}
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
@@ -111,7 +114,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing-2)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
-%{?_enable_lv2:BuildRequires: liblilv-devel}
+
 %{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_snap:BuildRequires: pkgconfig(snapd-glib-2) pkgconfig(libapparmor)}
@@ -431,6 +434,10 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_pkgconfigdir/jackserver.pc
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt2
+- updated to 1.4.1-16-gcf5db17aa
+- built with libcamera-0.5.0
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
