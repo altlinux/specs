@@ -4,8 +4,8 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.34.0
-Release: alt2
+Version: 1.36.0
+Release: alt1
 
 Summary: QMI modem protocol helper library
 License: LGPLv2+
@@ -24,6 +24,8 @@ BuildRequires: libqrtr-glib-devel
 BuildRequires: python3
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libqrtr-glib-gir-devel}
 BuildRequires: gtk-doc help2man bash-completion
+
+%define soname 5
 
 %define _unpackaged_files_terminate_build 1
 
@@ -101,7 +103,8 @@ touch README ChangeLog
 
 %files
 %doc NEWS README.md AUTHORS
-%_libdir/*.so.*
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%soname.*
 %_libexecdir/qmi-proxy
 
 %files utils
@@ -126,6 +129,11 @@ touch README ChangeLog
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Apr 11 2025 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt1
+- Added soname check.
+- Dropped obsoleted patch.
+- Updated to 1.36.0.
+
 * Mon Apr 07 2025 Mikhail Efremov <sem@altlinux.org> 1.34.0-alt2
 - Fixed build with meson >= 1.7.0.
 - Used macros from rpm-macros-meson.

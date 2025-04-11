@@ -1,24 +1,17 @@
-# Some tests can fail in girar (due to timeout for service start),
-# but they work well in a local hasher.
-# Just don't forget to enable them for local build when new version
-# is released,
-%def_enable check
-
-#define git_date .git20160601
-%define git_date %nil
-
 %define dbus_version 1.1
 %define libgudev_version 232
 
-%def_with qrtr
-%def_with qmi
-%def_with mbim
+%define soname 0
+
+%def_enable qrtr
+%def_enable qmi
+%def_enable mbim
 %def_enable introspection
 %def_disable vala
 
 Name: ModemManager
-Version: 1.22.0
-Release: alt1%git_date
+Version: 1.24.0
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -29,13 +22,14 @@ Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires(pre): rpm-macros-systemd >= 6
 
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
-%{?_with_qrtr:BuildRequires: libqrtr-glib-devel >= 1.0.0}
-%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.32.0}
-%{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.28.0}
+%{?_enable_qrtr:BuildRequires: libqrtr-glib-devel >= 1.0.0}
+%{?_enable_qmi:BuildRequires: libqmi-glib-devel >= 1.36.0}
+%{?_enable_mbim:BuildRequires: libmbim-glib-devel >= 1.32.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: ppp-devel
@@ -137,37 +131,17 @@ Requires: libmm-glib-devel = %version-%release
 
 %build
 %meson \
-	-Dudevdir=/lib/udev \
+	-Dudevdir=%_udevdir \
 	-Dpolkit=strict \
 	-Dsystemdsystemunitdir=%_unitdir \
 	-Dsystemd_suspend_resume=true \
 	-Dsystemd_journal=true \
 	-Dudev=true \
-%if_with qrtr
-	-Dqrtr=true \
-%else
-	-Dqrtr=false \
-%endif
-%if_with qmi
-	-Dqmi=true \
-%else
-	-Dqmi=false \
-%endif
-%if_with mbim
-	-Dmbim=true \
-%else
-	-Dmbim=false \
-%endif
-%if_enabled introspection
-	-Dintrospection=true \
-%else
-	-Dintrospection=false \
-%endif
-%if_enabled vala
-	-Dvapi=true \
-%else
-	-Dvapi=false \
-%endif
+	%{subst_enable_meson_bool qrtr qrtr} \
+	%{subst_enable_meson_bool qmi qmi} \
+	%{subst_enable_meson_bool mbim mbim} \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_bool vala vapi} \
 	-Dgtk_doc=true
 
 %meson_build -v
@@ -197,7 +171,7 @@ if [ "$1" -eq 0 ]; then
 fi
 
 %files -f %name.lang
-%doc NEWS AUTHORS README
+%doc NEWS AUTHORS README.md
 %_datadir/dbus-1/system-services/*.service
 %_sysconfdir/ModemManager/
 %dir %_libdir/ModemManager/
@@ -210,7 +184,7 @@ fi
 %_datadir/%name/
 %_datadir/bash-completion/completions/mmcli
 %_sysconfdir/dbus-1/system.d/*.conf
-/lib/udev/rules.d/*
+%_udev_rulesdir/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
 %_unitdir/*.service
@@ -226,7 +200,8 @@ fi
 %doc %_datadir/gtk-doc/html/%name
 
 %files -n libmm-glib
-%_libdir/libmm-glib.so.*
+%_libdir/libmm-glib.so.%soname
+%_libdir/libmm-glib.so.%soname.*
 
 %files -n libmm-glib-devel
 %_libdir/libmm-glib.so
@@ -250,6 +225,14 @@ fi
 %endif
 
 %changelog
+* Fri Apr 11 2025 Mikhail Efremov <sem@altlinux.org> 1.24.0-alt1
+- Minor spec cleanup.
+- Added libmm-glib soname check.
+- Used macros from rpm-macros-meson.
+- BR: Fixed rpm-macros-systemd requirement.
+- Used _udev* macros.
+- Updated to 1.24.0.
+
 * Mon Oct 16 2023 Mikhail Efremov <sem@altlinux.org> 1.22.0-alt1
 - Updated to 1.22.0.
 
