@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt17
+Release: alt18
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -391,6 +391,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Apr 11 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt18
+- Add chromium and firefox to favorite-apps
+
 * Thu Apr 10 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt17
 - Change slides for slideshow in installer
 - Add argument for Console
