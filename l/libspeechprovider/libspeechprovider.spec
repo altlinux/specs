@@ -12,7 +12,7 @@
 
 Name: libspeechprovider
 Version: %ver_major.3
-Release: alt0.1
+Release: alt0.2
 
 Summary: Speech Provider Resources
 Group: System/Libraries
@@ -95,13 +95,13 @@ This package contains development documentation for Dex library.
 %__meson_test
 
 %files -f %name.lang
-%_libdir/lib%_name-%api_ver.so
+%_libdir/lib%_name-%api_ver.so.*
 %_datadir/speech-provider/%xdg_name.xml
 %doc README*
 
 %files devel
 %_includedir/%_name/
-#%_libdir/lib%_name-%api_ver.so
+%_libdir/lib%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %if_enabled introspection
@@ -112,12 +112,15 @@ This package contains development documentation for Dex library.
 %_girdir/%namespace-%api_ver.gir
 %endif
 
-#%if_enabled docs
-#%files devel-doc
-#%_datadir/doc/%name/
-#%endif
+%if_enabled docs
+%files devel-doc
+%_datadir/doc/%name/
+%endif
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt0.2
+- updated to SPEECHPROVIDER_1_0_3-8-gb45a806
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt0.1
 - first build for Sisyphus
 

@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
-Release: alt0.1
+Version: %ver_major.4
+Release: alt0.2
 
 Summary: A library for speech synthesis clients
 Group: System/Libraries
@@ -104,13 +104,13 @@ mv libspeechprovider-%version subprojects/libspeechprovider}
 
 %files -f %name.lang
 %_bindir/%_name
-%_libdir/lib%_name-%api_ver.so
+%_libdir/lib%_name-%api_ver.so.*
 %_datadir/glib-2.0/schemas/org.monotonous.libspiel.gschema.xml
 %doc README*
 
 %files devel
 %_includedir/%_name/
-#%_libdir/lib%_name-%api_ver.so
+%_libdir/lib%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %if_enabled introspection
@@ -121,12 +121,15 @@ mv libspeechprovider-%version subprojects/libspeechprovider}
 %_girdir/%namespace-%api_ver.gir
 %endif
 
-#%if_enabled docs
-#%files devel-doc
-#%_datadir/doc/%name/
-#%endif
+%if_enabled docs
+%files devel-doc
+%_datadir/doc/%name/
+%endif
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt0.2
+- updated to SPIEL_1_0_4-3-g8598103
+
 * Tue Dec 10 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt0.1
 - first build for Sisyphus
 
