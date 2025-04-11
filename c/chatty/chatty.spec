@@ -3,8 +3,9 @@
 %define _name Chatty
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.8
-%define tag_ver a315b718b7a263362b8501c7e9c20371b75a0f29
+%define tag_ver 588a14c595e5a221fb68536c47a12df2336c4e77
 %define rdn_name sm.puri.%_name
+%define rdn_name1 sm.puri.%name
 %define cmatrix_ver 0.0.3
 
 %def_enable purple
@@ -17,7 +18,7 @@
 %endif
 
 Name: chatty
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
@@ -92,10 +93,10 @@ mv libcmatrix-%cmatrix_ver subprojects/libcmatrix
 xvfb-run %__meson_test
 
 %files -f %name.lang
-%_sysconfdir/xdg/autostart/%rdn_name-daemon.desktop
+%_sysconfdir/xdg/autostart/%rdn_name1-daemon.desktop
 %_bindir/%name
-%_desktopdir/%rdn_name.desktop
-%_datadir/metainfo/%rdn_name.metainfo.xml
+%_desktopdir/%rdn_name1.desktop
+%_datadir/metainfo/%rdn_name1.metainfo.xml
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/*/*.svg
@@ -103,11 +104,14 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
+- 0.8.7
+
 * Tue Feb 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.6-alt1
 - 0.8.6
 
 * Tue Sep 17 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1.1
-rebuilt against libspelling-0.4.0
+- rebuilt against libspelling-0.4.0
 
 * Fri Aug 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1
 - 0.8.5
