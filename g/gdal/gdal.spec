@@ -9,8 +9,8 @@
 %define sover 36
 
 Name: gdal
-Version: 3.10.2
-Release: alt2
+Version: 3.10.3
+Release: alt1
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 License: MIT
@@ -248,6 +248,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Fri Apr 11 2025 Andrey Cherepanov <cas@altlinux.org> 3.10.3-alt1
+- New version.
+
 * Tue Mar 04 2025 Michael Shigorin <mike@altlinux.org> 3.10.2-alt2
 - E2K: lcc 1.29 ftbfs workaround (mcst#9339).
 - Minor spec cleanup (use recommended tag order).
