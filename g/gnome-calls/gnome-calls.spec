@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name calls
 %define ver_major 48
@@ -10,13 +10,15 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://gitlab.gnome.org/GNOME/calls
+
+Vcs: https://gitlab.gnome.org/GNOME/calls.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
@@ -37,7 +39,6 @@ Requires: feedbackd callaudiod
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
-BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libpeas-2)
 BuildRequires: pkgconfig(gom-1.0)
@@ -96,6 +97,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Thu Mar 27 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
