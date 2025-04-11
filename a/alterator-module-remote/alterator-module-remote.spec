@@ -1,6 +1,6 @@
 Name: alterator-module-remote
-Version: 0.1.2
-Release: alt2
+Version: 0.1.3
+Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
 License: %gpl2only
@@ -10,9 +10,9 @@ URL: https://gitlab.basealt.space/alt/alterator-module-remote
 BuildRequires: cmake gcc rpm-build-licenses
 BuildRequires: libgio-devel libpolkit-devel
 # libsystemd-devel
-BuildRequires: alterator-manager-devel >= 0.1.27
+BuildRequires: alterator-manager-devel >= 0.1.28
 
-Requires: alterator-manager >= 0.1.27-alt2
+Requires: alterator-manager >= 0.1.28-alt1
 
 Source: %name-%version.tar
 
@@ -34,6 +34,11 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Fri Apr 11 2025 Ivan Savin <svn17@altlinux.org> 0.1.3-alt1
+- Add functionality allowing the manager to track whether the module is busy.
+- Remove unnecessary checks. In case of failure on g_new0 and g_thread_new
+  the program aborts.
+
 * Wed Feb 26 2025 Ivan Savin <svn17@altlinux.org> 0.1.2-alt2
 - Requirements update.
 
