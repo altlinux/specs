@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.1.3
-Release: alt3
+Version: 2.1.4
+Release: alt1
 
 Summary: URL parsing and manipulation made easy
 
@@ -55,6 +55,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc *.md
 
 %changelog
+* Fri Apr 11 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.4-alt1
+- Automatically updated to 2.1.4.
+
 * Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt3
 - Moved to modern pyproject macros.
 - Disabled failing test.
