@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name manette
 %define ver_major 0.2
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: A simple GObject game controller library
@@ -116,6 +116,9 @@ This package contains commandline tools from %name package.
 %_bindir/%_name-test
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.12-alt1
+- 0.2.12
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.11-alt1
 - 0.2.11-2-g5fc5fd2
 

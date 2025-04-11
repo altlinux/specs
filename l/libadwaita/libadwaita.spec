@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 Epoch: 1
 
@@ -32,6 +32,7 @@ Source: %name-%version%beta.tar
 %define meson_ver 0.59
 %define glib_ver 2.80.0
 %define gtk_ver 4.17.5
+%define gi_ver 1.84
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver sassc
@@ -40,7 +41,7 @@ BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: libfribidi-devel
 BuildRequires: libappstream-devel
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
-BuildRequires: pkgconfig(gobject-introspection-1.0) gir(Gtk) = 4.0}
+BuildRequires: gobject-introspection-devel >= %gi_ver gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
@@ -108,7 +109,6 @@ demonstrates %name variety of all its widgets.
 
 %install
 %meson_install
-rm -f %buildroot%_libdir/%name-%api_ver-internal.a
 %find_lang %name
 
 %check
@@ -148,6 +148,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.1-alt1
+- 1.7.1
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.0-alt1
 - 1.7.0
 

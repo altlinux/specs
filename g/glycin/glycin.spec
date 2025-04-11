@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: glycin
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -139,7 +139,7 @@ GObject introspection devel data for the Glycin-Gtk4 library.
 %setup -n %name-%version%beta %{?_enable_snapshot:%{?_disable_bootstrap:-a1}}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -196,6 +196,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
