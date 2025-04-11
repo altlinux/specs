@@ -1,5 +1,5 @@
 Name: alterator-interface-service
-Version: 0.1.3
+Version: 0.2
 Release: alt1
 
 Summary: XML files for org.altlinux.alterator.service interface
@@ -28,6 +28,14 @@ install -p -m 644 -D org.altlinux.alterator.service1.policy %buildroot%_datadir/
 %_datadir/polkit-1/actions/org.altlinux.alterator.service1.policy
 
 %changelog
+* Fri Apr 11 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.2-alt1
+- Supplemented the description of methods
+- Add Configure method
+- Add Stop method
+- Add Start method
+- Add signals
+- Add interface description
+
 * Tue Mar 24 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.3-alt1
 - fix CHANGELOG.md
 - fix policy (thx Andrey Alekseev)
