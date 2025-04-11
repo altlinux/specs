@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt3
+Release: alt4
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -19,12 +19,21 @@ Source5: %name-32x32.png
 Source6: %name-48x48.png
 Patch1: %name-1.2.0-no_werror.patch
 Patch2: %name-1.2.0-vst-nowine.patch
+Patch3: %name-1.2.0-cmake.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-lmms libfltk-devel 
 BuildRequires: gcc-c++ cmake
+BuildRequires: git-core
+BuildRequires: bash-completion
+BuildRequires: bzip2-devel
+BuildRequires: libexpat-devel
+BuildRequires: libffi-devel
+BuildRequires: libinstpatch-devel
+BuildRequires: libsystemd-devel
 
 BuildRequires: desktop-file-utils
+BuildRequires: doxygen
 BuildRequires: libfluidsynth-devel
 %ifnarch %e2k riscv64
 BuildRequires: libsoundio-devel
@@ -38,16 +47,23 @@ BuildRequires: pkgconfig(Qt5Test)
 BuildRequires: pkgconfig(Qt5UiTools)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(fftw3f) >= 3.0.0
 BuildRequires: pkgconfig(fluidsynth) >= 1.0.7
 BuildRequires: pkgconfig(jack) >= 0.77
+BuildRequires: pkgconfig(libbrotlidec)
+BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(portaudio-2.0)
+BuildRequires: pkgconfig(readline)
 BuildRequires: pkgconfig(samplerate) >= 0.1.8
 BuildRequires: pkgconfig(sdl)
+BuildRequires: pkgconfig(sdl2)
 BuildRequires: pkgconfig(shared-mime-info)
+BuildRequires: pkgconfig(sndio)
 BuildRequires: pkgconfig(sndfile) >= 1.0.11
+BuildRequires: pkgconfig(tinfo)
 BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(vorbisfile)
@@ -74,6 +90,7 @@ Development files and headers for %name
 %prep
 %setup
 %patch1 -p1
+%patch3 -p1
 mv qt5-x11embed/* src/3rdparty/qt5-x11embed
 mv rpmalloc/* src/3rdparty/rpmalloc/rpmalloc/
 %ifarch %e2k
@@ -85,10 +102,12 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
 %cmake \
     -DWANT_QT5=ON \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
-%ifarch %ix86
-    -DWANT_VST:BOOL=ON \
-%else
+%ifarch x86_64
+    -DWANT_VST_NOWINE:BOOL=ON \
     -DWANT_VST:BOOL=OFF \
+%else
+    -DWANT_VST_NOWINE:BOOL=OFF \
+    -DWANT_VST:BOOL=ON \
 %endif
     -DWANT_SDL:BOOL=ON \
     -DWANT_PORTAUDIO:BOOL=ON \
@@ -96,9 +115,10 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
     -DWANT_TAP:BOOL=ON \
     -DWANT_SWH:BOOL=ON \
     -DWANT_CALF:BOOL=ON \
-    -DWANT_VST_NOWINE:BOOL=ON \
     -DWANT_CARLA:BOOL=OFF \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DWANT_GIG:BOOL=OFF \
+    -Wno-dev
 
 %cmake_build
 
@@ -127,6 +147,10 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Fri Apr 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.2.2-alt4
+- NMU: fix FTBFS with cmake 4.0
+- add missing BR
+
 * Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 1.2.2-alt3
 - enable RPATH (fix FTBFS)
 
