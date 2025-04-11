@@ -2,8 +2,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.3
-Release: alt1.1
+Version: 2.4
+Release: alt1
 
 Summary: Full featured consistent hashing python library compatible with ketama
 
@@ -71,6 +71,9 @@ ring.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Apr 11 2025 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
+- Automatically updated to 2.4.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 2.3-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
