@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt3
+Release: alt4
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -369,6 +369,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Apr 11 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt4
+- gnome-settings: fix incorrect setting of dconf parameters
+
 * Thu Apr 10 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt3
 - spec: add requires to icon-theme-alt-workstation
 - fixed: use of gnome-software settings override
@@ -384,7 +387,7 @@ fi
 * Fri Mar 07 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt1
 - Use substitution @BRANCH@ (thx antohami@alt)
 - Revert mate-settings subpackage (thx antohami@alt)
-- gnome-settings, mate-settings: use jpeg image
+- gnome-settings, mate-settings: use jpeg imag
   for background (thx antohami@alt)
 - add Qt6 support
 - browser-qt: add width distr logo
