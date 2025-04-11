@@ -7,7 +7,7 @@
 %add_python3_req_skip gpresult.Preferences.Preferences.Shortcut
 
 Name: gpresult
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Display applied policies
@@ -46,6 +46,9 @@ install -Dm0644 completions/%name %buildroot/%_datadir/bash-completion/completio
 %exclude %python3_sitelibdir/%name/locales/ru_RU/LC_MESSAGES/*.po
 
 %changelog
+* Fri Apr 11 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.5-alt1
+- Fix display of policy version (Closes: #53798)
+
 * Fri Jan 31 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.4-alt1
 - Added translations for argparse and fixed typos (Closes: #52282)
 - Removed repetitions when using the -l and -lr options (Closes: #52878)
