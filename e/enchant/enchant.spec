@@ -1,6 +1,6 @@
 Name: enchant
 Version: 1.6.0
-Release: alt3.qa2
+Release: alt3.qa3
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
 License: LGPL
@@ -13,6 +13,7 @@ Requires:  lib%name = %version-%release
 Source: http://www.abisource.com/downloads/enchant/%version/%name-%version.tar.gz
 Source1: %name-spell
 
+BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel libhunspell-devel
 
 %description
@@ -81,6 +82,10 @@ EOF
 %_pkgconfigdir/*
 
 %changelog
+* Fri Apr 11 2025 Ivan A. Melnikov <iv@altlinux.org> 1.6.0-alt3.qa3
+- Added BR rpm-macros-alternatives (fixes FTBFS on
+  loongarch64 during bootstrap) (by asheplyakov@).
+
 * Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.6.0-alt3.qa2
 - fix FTBFS with gcc14
 
