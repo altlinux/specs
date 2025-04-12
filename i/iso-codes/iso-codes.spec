@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: iso-codes
-Version: 4.17.0
+Version: 4.18.0
 Release: alt1
 
 Group: System/Internationalization
@@ -10,6 +10,7 @@ License: LGPL-2.1
 Url: https://salsa.debian.org/iso-codes-team/iso-codes
 
 Vcs: https://salsa.debian.org/iso-codes-team/iso-codes.git
+
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -58,6 +59,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.0-alt1
+- 4.18.0
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 4.17.0-alt1
 - 4.17.0
 
