@@ -19,7 +19,7 @@
 %endif
 
 Name:		bcc
-Version: 0.33.0
+Version: 0.34.0
 Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -309,6 +309,11 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Sat Apr 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.34.0-alt1
+- Update to v0.34.0 (2025-04-11).
+  + Support for kernel up to 6.13.
+  + Bump cmake minimum version to 3.12.
+
 * Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 0.33.0-alt1
 - Update to v0.33.0 (2025-01-18).
 
