@@ -1,14 +1,16 @@
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: General GNOME User Documentation
 License: CC-BY-SA-3.0
 Group: Graphical desktop/GNOME
 Url: ftp://ftp.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-user-docs.git
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
@@ -44,6 +46,9 @@ directly associated with any particular GNOME application or package.
 %doc README* NEWS
 
 %changelog
+* Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 47.5-alt1
 - 47.5
 
