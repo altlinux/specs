@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Classic find the mines in the minefield game
@@ -63,12 +63,17 @@ NOME Mines is a variation of the popular logic puzzle minesweeper.
 %_bindir/%__name
 %_desktopdir/%xdg_name.desktop
 %_datadir/%__name/
+%_datadir/dbus-1/services/%xdg_name.service
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/*.svg
 %_man6dir/%__name.*
-%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.metainfo.xml
+%doc README*
 
 %changelog
+* Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Tue Apr 01 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

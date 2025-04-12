@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Lights Off is a puzzle game
@@ -63,6 +63,9 @@ and its non-diagonal neighbors.
 %_man6dir/%_name.6*
 
 %changelog
+* Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
