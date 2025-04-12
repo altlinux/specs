@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -39,6 +39,8 @@ Source25: scheduler
 Source26: kubernetes.tmpfiles
 Source27: crio.conf
 Source28: 99-kubernetes-cri.conf
+
+Patch0: kubernetes-1.25.16-alt-fix-build-with-go-1.24.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -180,6 +182,7 @@ Packege contains files specific for using crio.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -385,6 +388,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Thu Apr 10 2025 Alexander Stepchenko <geochip@altlinux.org> 1.25.16-alt2
+- Fix build with golang 1.24
+
 * Fri Dec 01 2023 Alexander Stepchenko <geochip@altlinux.org> 1.25.16-alt1
 - 1.25.15 -> 1.25.16 (Fixes: CVE-2023-5528)
 

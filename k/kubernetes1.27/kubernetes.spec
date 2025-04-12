@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -45,6 +45,7 @@ Source28: 99-kubernetes-cri.conf
 Patch1: runc-alt-loongarch64-support.patch
 Patch2: bbolt-alt-loongarch-support.patch
 Patch3: kubernets-alt-loongarch64-support.patch
+Patch4: kubernetes-1.27.16-alt-fix-build-with-go-1.24.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -393,6 +394,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Sat Apr 12 2025 Alexander Stepchenko <geochip@altlinux.org> 1.27.16-alt2
+- Fix build with golang 1.24
+
 * Fri Jul 19 2024 Alexander Stepchenko <geochip@altlinux.org> 1.27.16-alt1
 - 1.27.15 -> 1.27.16 (Fixes: CVE-2024-5321)
 
