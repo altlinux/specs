@@ -1,5 +1,5 @@
 Name:    keycloak
-Version: 26.1.4
+Version: 26.2.0
 Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
@@ -36,6 +36,7 @@ fine-grained authorization, and more.
 %setup
 %autopatch -p1
 test -d ~/.m2 && rm -rf ~/.m2
+test -d js/node_modules && rm -rf js/{node,node_modules}
 tar xf %SOURCE2 -C ~
 tar xf %SOURCE3
 %pom_disable_module test-framework
@@ -75,6 +76,11 @@ test -f /usr/share/keycloak/conf/keycloak.conf && cp -f /usr/share/keycloak/conf
 %_libexecdir/%name
 
 %changelog
+* Sat Apr 12 2025 Andrey Cherepanov <cas@altlinux.org> 26.2.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2024-12397 - HTTP Request Smuggling in io.quarkus.http:quarkus-http-core dist/quarkus
+
 * Wed Mar 19 2025 Andrey Cherepanov <cas@altlinux.org> 26.1.4-alt1
 - New version.
 
