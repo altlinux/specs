@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-a11y
-Version: 24.4.2
+Version: 25.4.0
 Release: alt1
 
 Summary: Ayatana Indicator for Accessibility Settings
@@ -81,6 +81,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_iconsdir/hicolor/scalable/status/*
 
 %changelog
+* Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 25.4.0-alt1
+- New version 25.4.0.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.4.2-alt1
 - New version 24.4.2.
 

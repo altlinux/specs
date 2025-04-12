@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qman
-Version: 1.3.1
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: A more modern man page viewer for our terminals
 License: BSD-2-Clause
@@ -11,12 +11,11 @@ Url:     https://github.com/plp13/qman
 
 Source: %name-%version.tar
 
-Patch: %name-%version-%release.patch
-
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: python3-module-cogapp
 BuildRequires: cmake
+BuildRequires: pkgconfig(cunit)
 BuildRequires: pkgconfig(ncursesw)
 BuildRequires: pkgconfig(inih)
 BuildRequires: pkgconfig(zlib)
@@ -37,7 +36,7 @@ dependencies.
 
 %prep
 %setup
-%patch -p1
+sed -i "s|/screenshots/|screenshots/|g" README.md
 
 %build
 %meson
@@ -52,8 +51,13 @@ rm -vfr %{buildroot}%_datadir/doc/qman
 %doc README.md PACKAGING.md TESTING.md screenshots config
 %_bindir/*
 %_man1dir/*
+%dir %_sysconfdir/xdg/%name
+%_sysconfdir/xdg/%name/*
 
 %changelog
+* Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1
+- New version 1.4.1.
+
 * Wed Feb 26 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.1-alt2
 - Added XZ-support from devel-branch (commit hash 2a23f6c)
 

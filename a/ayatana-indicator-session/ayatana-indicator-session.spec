@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-session
-Version: 24.5.0
+Version: 24.5.1
 Release: alt1
 
 Summary: Ayatana Indicator showing session management, status and user switching
@@ -71,12 +71,15 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %config %_sysconfdir/xdg/autostart/%name.desktop
 %dir %_libexecdir/%name/
 %_libexecdir/%name/%{name}-service
-%_iconsdir/hicolor/*/*/*
+%_iconsdir/*/*/*/*
 %_datadir/glib-2.0/schemas/org.ayatana.indicator.session.gschema.xml
 %_datadir/ayatana/indicators/org.ayatana.indicator.session
 %_userunitdir/%name.service
 
 %changelog
+* Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
+- New version 24.5.1.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 24.5.0-alt1
 - New version 24.5.0.
 

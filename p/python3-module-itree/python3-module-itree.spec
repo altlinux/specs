@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.0.21
-Release: alt1
+Release: alt2
 
 Summary: An Interval Tree Library
 License: Apache-2.0
@@ -13,7 +13,10 @@ Url: https://github.com/juncongmoo/itree
 
 Source: %pypi_name-%version.tar
 
+Patch: %name-%version-%release.patch
+
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -27,6 +30,7 @@ intervals. Every node in itree has a start and an end value.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %python3_build
@@ -43,5 +47,8 @@ intervals. Every node in itree has a start and an end value.
 %python3_sitelibdir/py_%{pypi_name}*info/*
 
 %changelog
+* Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 0.0.21-alt2
+- Fixed FTBFS which was caused by CMake upgrade
+
 * Sun Mar 16 2025 Nikolay Strelkov <snk@altlinux.org> 0.0.21-alt1
 - Initial build for Sisyphus
