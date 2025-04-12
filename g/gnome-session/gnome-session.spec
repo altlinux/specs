@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable session_selector
@@ -10,7 +10,7 @@
 %def_enable x11
 
 Name: gnome-session
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -18,8 +18,10 @@ Group: Graphical desktop/GNOME
 License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/SessionManagement
 
+Vcs: https://gitlab.gnome.org/GNOME/gnome-session.git
+
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version%beta.tar
 %endif
@@ -144,7 +146,7 @@ export PATH=$PATH:/sbin
 %_man1dir/%name-inhibit.*
 %_man1dir/%name-quit.*
 %_man1dir/%name.*}
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README*
 
 %dir %_userunitdir/gnome-launched-.scope.d
 %_userunitdir/gnome-launched-.scope.d/override.conf
@@ -191,6 +193,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Sat Apr 12 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Thu Sep 19 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
 - 47.0.1
 
