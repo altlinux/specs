@@ -1,5 +1,5 @@
 Name: kernel-image-6.15
-Release: alt0.rc1
+Release: alt0.rc2
 %define kernel_src_version	6.14
 %define kernel_base_version	6.15
 %define kernel_sublevel	.0
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Apr 13 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc2
+- Update to v6.15-rc2 (2025-04-13).
+
 * Mon Apr 07 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc1
 - Rebase to v6.15-rc1 (2025-04-06).
 
@@ -617,7 +620,7 @@ check-pesign-helper
 - v6.14.1 (2025-04-07).
 - config: add prefix DISPLAY for CONFIG_DRM_DP_CEC, DRM_DP_AUX_CHARDEV.
 - config: Enable more Intel hardware.
-- config: Enable CONFIG_SND_SOC_INTEL_AVS=n.
+- config: Enable CONFIG_SND_SOC_INTEL_AVS=m.
 - config: Enable CONFIG_NTSYNC=m (ALT#53603).
 - config: Disable obsolete input tablet drivers.
 
