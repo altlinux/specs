@@ -1,9 +1,9 @@
-%define git_commit 43b26ae
+%define git_commit 2d1e692
 
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
-%define vendor_version 2024.10.24
+%define vendor_version 2025.02.22
 
 Name: basilisk
 Version:  %vendor_version
@@ -87,7 +87,7 @@ The %name project is a redesign of Mozilla's  Firefox browser component,
 written using the XUL user interface language and designed to be
 cross-platform.
 
-%description -l ru_RU.UTF8
+%description -l ru_RU.UTF-8
 Интернет-браузер %name - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
@@ -351,6 +351,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Sun Apr 13 2025 Hihin Ruslan <ruslandh@altlinux.ru> 1:2025.02.22-alt1
+- Update to v2025.02.22
+
 * Tue Nov 19 2024 Hihin Ruslan <ruslandh@altlinux.ru> 1:2024.10.24-alt1
 - Update to v2024.10.24
 
