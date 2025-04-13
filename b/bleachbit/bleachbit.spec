@@ -1,5 +1,5 @@
 Name:     bleachbit
-Version:  4.6.2
+Version:  4.9.2
 Release:  alt1
 
 Summary:  Remove unnecessary files, free space, and maintain privacy
@@ -27,6 +27,8 @@ Requires: typelib(Gtk) = 3.0
 %add_python3_req_skip win32api win32con win32file winioctlcon
 %add_python3_path %_datadir/%name
 %filter_from_provides /^python3(/d
+%add_typelib_req_skiplist typelib(AppIndicator)
+%add_typelib_req_skiplist typelib(AppIndicator3)
 
 %description
 BleachBit deletes unnecessary files to free valuable disk space,
@@ -65,11 +67,20 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_bindir/%name
 %_desktopdir/*.desktop
 %_datadir/%name/
-%_pixmapsdir/%name.png
+%_pixmapsdir/*.png
 %_datadir/metainfo/*.metainfo.xml
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Sun Apr 13 2025 Andrey Cherepanov <cas@altlinux.org> 4.9.2-alt1
+- New version.
+
+* Thu Mar 20 2025 Andrey Cherepanov <cas@altlinux.org> 4.9.1-alt1
+- New version.
+
+* Sun Jan 26 2025 Andrey Cherepanov <cas@altlinux.org> 4.9.0-alt1
+- New version.
+
 * Tue Oct 08 2024 Andrey Cherepanov <cas@altlinux.org> 4.6.2-alt1
 - New version.
 
