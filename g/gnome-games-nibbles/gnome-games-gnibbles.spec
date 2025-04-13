@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Guide a worm around a maze
@@ -42,6 +42,7 @@ BuildRequires: desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(libgnome-games-support-2)
+BuildRequires: pkgconfig(gsound)
 
 %description
 Control a worm in its quest to eat bonuses and become longer.
@@ -78,6 +79,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 

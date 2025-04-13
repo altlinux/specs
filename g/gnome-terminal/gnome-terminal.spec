@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Terminal
@@ -113,6 +113,9 @@ EOF
 %endif
 
 %changelog
+* Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.1-alt1
+- 3.56.1
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
 - 3.56.0
 
