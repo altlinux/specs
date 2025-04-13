@@ -1,5 +1,5 @@
 Name: myMPD
-Version: 19.0.3 
+Version: 20.1.2 
 Release: alt1
 
 Summary: myMPD is a standalone and mobile friendly web mpd client with a tiny footprint and advanced features
@@ -66,6 +66,9 @@ fi
 %_man1dir/mympd-script.1.xz
 
 %changelog
+* Sun Apr 13 2025 Nikolay Burykin <bne@altlinux.org> 20.1.2-alt1
+- 20.1.2
+
 * Sun Jan 26 2025 Nikolay Burykin <bne@altlinux.org> 19.0.3-alt1
 - 19.0.3
 
