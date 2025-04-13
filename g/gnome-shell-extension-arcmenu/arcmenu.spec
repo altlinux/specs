@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-arcmenu
 Version: 65
-Release: alt2
+Release: alt3
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -47,6 +47,9 @@ install -Dm644 %SOURCE1 \
 %doc README.md
 
 %changelog
+* Sun Apr 13 2025 Anton Midyukov <antohami@altlinux.org> 65-alt3
+- extension.js: drop UpdateNotifications for fix extension disabling
+
 * Sun Mar 16 2025 Anton Midyukov <antohami@altlinux.org> 65-alt2
 - prefs.js: Remove donate page
 - add gsettings override for disable update notification
