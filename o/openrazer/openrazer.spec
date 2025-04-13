@@ -1,9 +1,9 @@
 %def_with check
 %define dkms_name openrazer-driver
-%define dkms_version 3.10.1
+%define dkms_version 3.10.2
 
 Name: openrazer
-Version: 3.10.1
+Version: 3.10.2
 Release: alt1
 
 Summary: Open source driver and user-space daemon for managing Razer devices
@@ -121,6 +121,9 @@ fi
 %python3_sitelibdir/%name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Apr 13 2025 Anton Kurachenko <srebrov@altlinux.org> 3.10.2-alt1
+- New version 3.10.2.
+
 * Sun Mar 16 2025 Anton Kurachenko <srebrov@altlinux.org> 3.10.1-alt1
 - New version 3.10.1.
 
