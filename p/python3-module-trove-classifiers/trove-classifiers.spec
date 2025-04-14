@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2025.3.19.19
+Version: 2025.4.11.15
 Release: alt1
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
@@ -21,9 +21,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
-# unused
-%add_pyproject_deps_check_filter jinja2 natsort
-
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -65,6 +62,9 @@ echo '%version' > ./calver_version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 14 2025 Stanislav Levin <slev@altlinux.org> 2025.4.11.15-alt1
+- 2025.3.19.19 -> 2025.4.11.15.
+
 * Thu Mar 20 2025 Stanislav Levin <slev@altlinux.org> 2025.3.19.19-alt1
 - 2025.3.13.13 -> 2025.3.19.19.
 
