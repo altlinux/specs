@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -18,7 +18,7 @@
 %def_enable jack_devel
 %define jackit_ver 1:1.9.22-alt1
 %define jack_ver 1.9.17
-%def_disable wireplumber
+%def_disable media_session
 %def_enable libusb
 %def_enable libffado
 %def_enable libcamera
@@ -36,6 +36,7 @@
 %def_enable selinux
 # disabled by default
 %def_disable vulkan
+%def_enable xfixes
 # libapparmor required
 %def_disable snap
 %ifarch %e2k
@@ -48,8 +49,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -69,7 +70,7 @@ Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
 
 Requires: %name-libs = %EVR
-%{?_enable_wireplumber:Requires: wireplumber}
+#Requires: wireplumber
 Requires: rtkit
 %{?_enable_gstreamer:%{?_enable_libcamera:Requires: gst-plugins-libcamera1.0}}
 
@@ -105,9 +106,12 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 BuildRequires: libmysofa-devel
 BuildRequires: libebur128-devel
 %{?_enable_lv2:BuildRequires: liblilv-devel}
+# fftw3f (filter-chain convolver)
+BuildRequires: pkgconfig(fftw3f)
 %{?_enable_systemd:BuildRequires: pkgconfig(systemd)}
 %{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
+%{?_enable_xfixes:BuildRequires: pkgconfig(xfixes)}
 %{?_enable_libusb:BuildRequires: pkgconfig(libusb-1.0)}
 %{?_enable_libffado:BuildRequires: pkgconfig(libffado)}
 %{?_enable_libcamera:BuildRequires: libcamera-devel >= %libcamera_ver libdrm-devel}
@@ -198,7 +202,7 @@ Provides: libjack-devel = %jack_ver
 This package provides development files for PipeWire JACK.
 
 %prep
-%setup -a1
+%setup %{?_enable_media_session:-a1}
 
 %ifarch %e2k
 # no attribute cleanup in C++ mode, but it's only used in C sources
@@ -207,7 +211,7 @@ sed -i -E 's/static const char \*const (.*) =/#define \1 /;T;:a;s/;$//;t;s/$/\\/
     src/modules/module-protocol-pulse/modules/module-*.c
 %endif
 
-mv media-session-%ms_ver subprojects/media-session
+%{?_enable_media_session:mv media-session-%ms_ver subprojects/media-session}
 
 %build
 export LIB=%_lib
@@ -232,7 +236,8 @@ export LIB=%_lib
 	%{subst_enable_meson_feature snap snap} \
 	%{subst_enable_meson_feature systemd_system_service systemd-system-service} \
 	%{subst_enable_meson_feature examples examples} \
-	-Dsession-managers='media-session' \
+	%{?_enable_media_session:-Dsession-managers='media-session'} \
+	%{?_disable_media_session:-Dsession-managers='[]'} \
 	-Dudevrulesdir='%_udevrulesdir' \
 	-Dsystemd-system-unit-dir='%_unitdir' \
 	-Dsystemd-user-unit-dir='%_userunitdir'
@@ -262,7 +267,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_bindir/%name-avb
 %_bindir/%name-pulse
 %{?_enable_vulkan:%_bindir/%name-vulkan}
-%_bindir/%name-media-session
+%{?_enable_media_session:%_bindir/%name-media-session}
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
 %_sysconfdir/security/limits.d/25-pw-rlimits.conf
 %dir %_sysconfdir/%name/
@@ -289,13 +294,14 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_datadir/%name/%name.conf.avail/10-rates.conf
 %_datadir/%name/%name.conf.avail/20-upmix.conf
 
+%{?_enable_media_session:
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
 %_datadir/%name/media-session.d/media-session.conf
 %_datadir/%name/media-session.d/v4l2-monitor.conf
-
 %_datadir/%name/media-session.d/with-pulseaudio
+}
 %dir %_datadir/%name/filter-chain
 %_datadir/%name/filter-chain/demonic.conf
 %_datadir/%name/filter-chain/sink-dolby-surround.conf
@@ -321,7 +327,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_userunitdir/%name.socket
 %_userunitdir/%name-pulse.service
 %_userunitdir/%name-pulse.socket
-%_userunitdir/%name-media-session.service
+%{?_enable_media_session:%_userunitdir/%name-media-session.service}
 %_userunitdir/filter-chain.service
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
@@ -420,7 +426,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %files jack
 %_bindir/pw-jack
 %_datadir/%name/jack.conf
-%_datadir/%name/media-session.d/with-jack
+%{?_enable_media_session:%_datadir/%name/media-session.d/with-jack}
 %{?_enable_man:%_man1dir/pw-jack.1*}
 
 %files jack-libs
@@ -434,6 +440,11 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_pkgconfigdir/jackserver.pc
 
 %changelog
+* Mon Apr 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+- made media-session build optional and disabled by default,
+  Wireplumber is our everything
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt2
 - updated to 1.4.1-16-gcf5db17aa
 - built with libcamera-0.5.0
