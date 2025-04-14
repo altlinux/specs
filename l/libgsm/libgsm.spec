@@ -1,16 +1,14 @@
 Name: libgsm
-Version: 1.0.17
+Version: 1.0.22
 Release: alt1
 
 Summary: GSM audio encoding/decoding library
-License: Free/Copyright Technische Universitaet Berlin
+License: TU-Berlin-2.0
 Group: System/Libraries
-Url: http://www.quut.com/gsm/
-Packager: Denis Smirnov <mithraen@altlinux.ru>
-
+Url: https://www.quut.com/gsm/
 # http://www.quut.com/gsm/gsm-%version.tar.gz
 Source: gsm-%version.tar
-Patch1: gsm-pld-alt-makefile.patch
+Patch1: gsm-makefile.patch
 Patch2: gsm-rh-warnings.patch
 
 %description
@@ -45,20 +43,17 @@ GSM Audio Encoding/decoding static library.
 
 %prep
 %setup -n gsm-1.0-pl13
-sed -i 's/^\(CCFLAGS[[:space:]]*=[[:space:]]*\)-c -O2\(.*\)/\1 $(OPTFLAGS) \2/' Makefile
 %patch1 -p1
-#patch2 -p1
 
 %build
-%make_build SLIB=%_lib OPTFLAGS='%optflags -D_REENTRANT'
+%make_build SLIB=%_lib OPTFLAGS='%optflags -D_REENTRANT -fPIC'
 
 %install
 mkdir -p %buildroot{%_bindir,%_mandir/man{1,3},%_includedir/gsm,%_libdir}
-%makeinstall_std SLIB=%_lib INSTALL_ROOT=%buildroot
+%makeinstall_std GSM_INSTALL_LIB=%buildroot%_libdir \
+		GSM_INSTALL_INC=%buildroot%_includedir/gsm \
+		INSTALL_ROOT=%buildroot/%prefix
 ln -s gsm/gsm.h %buildroot%_includedir/
-
-echo .so toast.1 >%buildroot%_man1dir/tcat.1
-echo .so toast.1 >%buildroot%_man1dir/untoast.1
 
 %check
 LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
@@ -77,6 +72,10 @@ LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 %_man3dir/*
 
 %changelog
+* Thu Apr 10 2025 Anton Farygin <rider@altlinux.com> 1.0.22-alt1
+- 1.0.17 -> 1.0.22
+- updated license tag according SPDX
+
 * Tue Apr 10 2018 Denis Smirnov <mithraen@altlinux.ru> 1.0.17-alt1
 - 1.0.17
 
@@ -110,7 +109,7 @@ LD_LIBRARY_PATH=%buildroot%_libdir make tst addtst SLIB=%_lib
 - update to 1.0pl13
 
 * Mon Dec 08 2008 Denis Smirnov <mithraen@altlinux.ru> 1.0.10-alt8
-- cleanup spec 
+- cleanup spec
 
 * Wed May 10 2006 Denis Smirnov <mithraen@altlinux.ru> 1.0.10-alt7
 - x86_64 build fixed
