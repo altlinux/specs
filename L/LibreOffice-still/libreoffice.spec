@@ -32,8 +32,16 @@
 %else
 %def_disable qt6
 %endif
-%def_disable mergelibs
+%def_enable mergelibs
 %def_disable gtk4
+
+# build scripts don't need any help in enabling LTO
+%define optflags_lto %nil
+
+# with the default -g2 %%name-common-debuginfo
+# doesn't fit into 4Gb limit of the payload
+%define optflags_debug -g1
+
 
 Name: LibreOffice-still
 %define hversion 24.8
@@ -43,7 +51,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -504,17 +512,19 @@ rm -f sysui/desktop/mimetypes/ms-word-document2.desktop
 %build
 export CC=%_target_platform-gcc
 export CXX=%_target_platform-g++
+
 %ifarch mipsel
 export CFLAGS="-Os --param ggc-min-expand=20 --param ggc-min-heapsize=32768 -g1"
-export CXXFLAGS="$CFLAGS"
 %else
-export CFLAGS="-fPIC"
-export CXXFLAGS="$CFLAGS"
+export CFLAGS="-fPIC %optflags"
+%endif
+%if_disabled gtk4
+export CFLAGS="$CFLAGS -I%_includedir/gtk-3.0"
 %endif
 
-%if_disabled gtk4
-%add_optflags -I%_includedir/gtk-3.0
-%endif
+export CXXFLAGS="$CFLAGS"
+export LDFLAGS="$CFLAGS"
+
 
 # XXX no "thin" LTO option in GCC!
 sed -i 's/-flto=thin/-flto=jobserver/g' solenv/gbuild/platform/com_GCC_defs.mk
@@ -522,7 +532,7 @@ sed -i 's/-flto=thin/-flto=jobserver/g' solenv/gbuild/platform/com_GCC_defs.mk
 # new libcmis
 sed -i "s@libcmis-0.5@libcmis-0.6@g" configure.ac
 
-PARALLEL=$(nproc)
+PARALLEL=${NPROCS:-%__nprocs}
 %ifarch ppc64le
 # reduce excessive resource use
 if [ "$PARALLEL" -gt 24 ] ; then
@@ -847,6 +857,13 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Apr 10 2025 Ivan A. Melnikov <iv@altlinux.org> 24.8.5.2-alt3
+- Generate more full debuginfo
+  + reduce optflags_debug to -g1 to fit into 4Gb payload limit.
+- Enable mergelibs (gives measurable performance improvements
+  on certain tests).
+- Respect %%__nprocs.
+
 * Sat Mar 08 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.5.2-alt2
 - Mention security fix in 24.8.5:
   + CVE-2025-1080 Macro URL arbitrary script execution
