@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -101,7 +101,7 @@ Remote desktop daemon for GNOME using pipewire.
 %_datadir/%name/grd-cuda-avc-utils_30.ptx
 %_datadir/%name/grd.conf
 %dir %_datadir/%name/shaders
-%_datadir/%name/shaders/grd-avc-stereo-view_opt.spv
+%_datadir/%name/shaders/grd-avc-dual-view_opt.spv
 %_datadir/dbus-1/system-services/%xdg_name.Configuration.service
 %_datadir/dbus-1/system.d/%xdg_name.conf
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.configure-system-daemon.policy
@@ -110,6 +110,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README*
 
 %changelog
+* Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
