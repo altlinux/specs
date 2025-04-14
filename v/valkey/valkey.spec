@@ -3,7 +3,7 @@
 %define valkey_group     _valkey
 
 Name: valkey
-Version: 8.0.2
+Version: 8.1.0
 Release: alt1
 
 Summary: A persistent key-value database
@@ -178,7 +178,6 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %dir %attr(0750,%valkey_user,%valkey_group) %_logdir/%name
 %dir %attr(0750,%valkey_user,%valkey_group) %_sharedstatedir/%name
 
-
 %files compat-redis
 %_bindir/redis-*
 %_unitdir/redis.service
@@ -191,6 +190,9 @@ useradd  -r -g %valkey_group -c 'Valkey Database Server' \
 %_includedir/redismodule.h
 
 %changelog
+* Mon Apr 14 2025 Alexey Shabalin <shaba@altlinux.org> 8.1.0-alt1
+- New version 8.1.0.
+
 * Thu Jan 23 2025 Alexey Shabalin <shaba@altlinux.org> 8.0.2-alt1
 - New version 8.0.2 (Fixes: CVE-2024-51741, CVE-2024-46981).
 
