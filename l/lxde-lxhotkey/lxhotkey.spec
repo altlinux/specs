@@ -1,13 +1,14 @@
 %define upstreamname lxhotkey
-%define gtkver 2
+%define gtkver 3
 Name: lxde-%upstreamname
-Version: 0.1.0
-Release: alt1.20160215.1
+Version: 0.1.2
+Release: alt1
 
 Summary: Setup hot keys for LXDE
-License: GPL
+License: GPL-2.0-or-later
 Group: Graphical desktop/Other
-Url: https://git.lxde.org/gitweb/?p=lxde/lxhotkey.git
+Url: https://github.com/lxde/lxhotkey
+Vcs: https://github.com/lxde/lxhotkey.git
 
 Source: %name-%version.tar
 Source1: %upstreamname-gtk.desktop 
@@ -15,14 +16,14 @@ Source1: %upstreamname-gtk.desktop
 BuildPreReq: libgtk+%gtkver-devel libfm-devel libunistring-devel intltool
 
 %description
-Setup hot keys for LXDE
+%summary.
 
 %package devel
 Summary: devel files for %upstreamname
 Group: Development/Other
 
 %description devel
-devel files for %upstreamname
+devel files for %upstreamname.
 
 %prep
 %setup -n %name-%version
@@ -55,5 +56,11 @@ install -m644 %SOURCE1 %buildroot%_desktopdir
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 11 2025 Anton Midyukov <antohami@altlinux.org> 0.1.2-alt1
+- nev version
+- build with gtk+3
+- update Url tag
+- add Vcs tag
+
 * Wed Feb 15 2017 Anton Midyukov <antohami@altlinux.org> 0.1.0-alt1.20160215.1
 - Initial build for ALT Linux Sisyphus.

@@ -2,8 +2,8 @@
 %define origname lxpanel
 
 Name: lxde-%origname
-Version: 0.10.1
-Release: alt3.20250321
+Version: 0.11.1
+Release: alt1
 
 Summary: LXPanel is a lightweight X11 desktop panel
 License: GPL-2.0-or-later
@@ -72,6 +72,9 @@ for %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 11 2025 Anton Midyukov <antohami@altlinux.org> 0.11.1-alt1
+- new version (0.11.1) with rpmgs script
+
 * Tue Mar 25 2025 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt3.20250321
 - new snapshot
 - build with gtk+3
