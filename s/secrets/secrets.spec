@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: secrets
-Version: %ver_major.0
+Version: %ver_major.1.1
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 %define glib_ver 2.80
 %define gtk_ver 4.18
 %define adwaita_ver 1.7
-%define pygobject_ver 3.50
+%define pygobject_ver 3.52
 %define gtksource_api_ver 5
 
 Requires: python3-module-pygobject3 >= %pygobject_ver
@@ -83,6 +83,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README*
 
 %changelog
+* Mon Apr 14 2025 Yuri N. Sedunov <aris@altlinux.org> 11.1.1-alt1
+- 11.1.1
+
 * Sun Apr 06 2025 Yuri N. Sedunov <aris@altlinux.org> 11.0-alt1
 - 11.0
 
