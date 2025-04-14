@@ -1,6 +1,6 @@
 %global import_path github.com/cue-lang/cue
 Name:    cue
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Validate and define text-based and dynamic configuration
@@ -32,6 +32,8 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
+export LDFLAGS="${LDFLAGS:-} -X cuelang.org/go/cmd/cue/cmd.version=%version"
+
 %golang_prepare
 
 cd .build/src/%import_path
@@ -61,6 +63,9 @@ go test -v -run='!(^TestGenerate$)' ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Apr 14 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.1-alt1
+- new version 0.12.1
+
 * Thu Jan 30 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.12.0-alt1
 - new version 0.12.0
 
