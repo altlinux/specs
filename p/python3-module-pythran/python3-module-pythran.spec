@@ -14,7 +14,7 @@
 
 Name: python3-module-%pyname
 Version: 0.17.0
-Release: alt1
+Release: alt2
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -116,6 +116,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Mon Apr 14 2025 Anton Vyatkin <toni@altlinux.org> 0.17.0-alt2
+- Fixed FTBFS.
+
 * Wed Nov 27 2024 Anton Farygin <rider@altlinux.ru> 0.17.0-alt1
 - 0.16.1 -> 0.17.0
 
