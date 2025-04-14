@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define APP_ID xyz.tytanium.DoorKnocker
 %def_enable check
 
 Name: door-knocker
-Version: 0.6.0
-Release: alt2
+Version: 0.7.0
+Release: alt1
 
 Summary: Check the availability of portals
 License: GPL-3.0-or-later
@@ -49,6 +50,10 @@ by xdg-desktop-portal.
 %_datadir/metainfo/%APP_ID.metainfo.xml
 
 %changelog
+* Sun Dec 08 2024 Oleg Shchavelev <oleg@altlinux.org> 0.7.0-alt1
+- New version 0.7.0
+- Enable strict mode for unpackaged files
+
 * Sun Dec 08 2024 Oleg Shchavelev <oleg@altlinux.org> 0.6.0-alt2
 - Fix url and vcs values (ALT #52371)
 
