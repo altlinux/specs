@@ -7,7 +7,7 @@
 
 Name: sudo
 Version: 1.9.16p2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -266,6 +266,10 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Tue Apr 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16p2-alt2
+- Fixed segmentation fault in pty_cleanup() under low memory
+  conditions (closes: 53841).
+
 * Fri Dec 27 2024 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.16p2-alt1
 - Update to latest stable bugfix release:
  + Sudo now passes the terminal device number to the policy plugin even if it
