@@ -4,7 +4,7 @@
 %define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
 Name: %rname
-Version: 24.12.2
+Version: 24.12.3
 Release: alt1
 %K5init
 
@@ -69,6 +69,9 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
