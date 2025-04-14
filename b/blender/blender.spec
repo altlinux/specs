@@ -3,7 +3,11 @@
 %set_verify_elf_method strict,lint=relaxed
 %define git %nil
 %define kern_dir scripts/addons_core/cycles/lib
+%ifarch %e2k
+%define gcc_ver %nil
+%else
 %define gcc_ver 13
+%endif
 
 %def_with docs
 
@@ -57,7 +61,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt6
+Release: alt7
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -343,6 +347,7 @@ EOF
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
 sed -i "/-Werror=return-type/d" CMakeLists.txt
 sed -i 's/"${CMAKE_C_COMPILER_VERSION}" VERSION_LESS/"100" VERSION_LESS/' CMakeLists.txt
+sed -i 's/-freciprocal-math//' intern/cycles{,/kernel}/CMakeLists.txt
 %endif
 
 # Delete the bundled FindOpenJPEG to make find_package use the system version
@@ -493,6 +498,12 @@ popd
 %endif
 
 %changelog
+* Mon Apr 14 2025 Michael Shigorin <mike@altlinux.org> 4.3.0-alt7
+- Build for Sisyphus.
+
+* Fri Apr 04 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.3.0-alt6.1
+- Fixed build for Elbrus.
+
 * Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt6
 - Rebuild with new rocm-6.3.2 and HIPRT 2.5:
   + cycles/hiprt: simplify hiprt kernel compilation (use system
