@@ -18,7 +18,7 @@
 %define prog_name            postgresql
 %define postgresql_major     14
 %define postgresql_minor     17
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -89,12 +89,22 @@ server, you need this package. You also need to install this package
 if you're installing the postgresql-server package.
 
 %if_with devel
-%package -n %libpq_name-%postgresql_major
+%package -n %libpq_name
 Summary: The shared libraries required for any PostgreSQL clients
 Group: Databases
+Requires: %libpq_name-%postgresql_major = %EVR
 Provides: libpq = %EVR
 Obsoletes: libpq < %EVR
 Provides: %libpq_name = %EVR
+
+%description -n %libpq_name
+C and C++ libraries to enable user programs to communicate with the
+PostgreSQL database backend. The backend can be on another machine and
+accessed through TCP/IP.
+
+%package -n %libpq_name-%postgresql_major
+Summary: The shared libraries required for any PostgreSQL clients
+Group: Databases
 Conflicts: %libpq_name < %EVR
 Conflicts: %libpq_name > %EVR
 
@@ -1028,6 +1038,8 @@ fi
 %files -f libpq%libpq_major-%postgresql_major.lang -n %libpq_name-%postgresql_major
 %_libdir/libpq.so.%libpq_major
 %_libdir/libpq.so.%libpq_major.*
+
+%files -n %libpq_name
 %endif
 
 %files -f devel.lang -n %libpq_name-%postgresql_major-devel
@@ -1061,6 +1073,9 @@ fi
 %endif
 
 %changelog
+* Sat Apr 12 2025 Alexei Takaseev <taf@altlinux.org> 14.17-alt4
+- Add libpq5 subpackage (ALT #53800)
+
 * Tue Apr 08 2025 Alexei Takaseev <taf@altlinux.org> 14.17-alt3
 - Rollback change log_directory from 14.17-alt2
 
