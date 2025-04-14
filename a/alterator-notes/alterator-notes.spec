@@ -1,18 +1,23 @@
-%define _altdata_dir %_datadir/alterator
+%define _unpackaged_files_terminate_build 1
+%def_with noarch
 
 Name: alterator-notes
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
 
-BuildArch:	noarch
+%if_with noarch
+BuildArch: noarch
+%endif
 
 Source:%name-%version.tar
 
+BuildRequires(pre): rpm-macros-alterator
+
 Summary: alterator module for view license and release notes
-License: GPL
+License: GPL-2.0+
 Group: System/Configuration/Other
 Requires: alterator >= 3.1-alt4, alterator-sh-functions
 Conflicts: alterator-browser-qt < 2.9.70
@@ -33,13 +38,22 @@ alterator module for view license and release notes
 
 %install
 %makeinstall
+%if_with noarch
+rm -rf %buildroot%_alterator_libdir/ui/notes/*.go
+%endif
 
 %files
-%_datadir/alterator/applications/*
-%_datadir/alterator/ui/*/
+%_alterator_datadir/applications/*
+%_alterator_datadir/ui/*/
+%if_without noarch
+%_alterator_libdir/ui/notes/*.go
+%endif
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.4-alt1
+- Add final-notes hidden module for installation process
+
 * Mon Mar 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3-alt1
 - Add support of license calculation from edition entry
 
