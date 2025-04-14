@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2024.6.6
+Version: 2025.4.14
 Release: alt1
 Summary: Generate a dot graph from the output of several profilers
 License: LGPL-3
@@ -56,6 +56,9 @@ graph.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 14 2025 Stanislav Levin <slev@altlinux.org> 2025.4.14-alt1
+- 2024.6.6 -> 2025.4.14.
+
 * Thu Jun 06 2024 Stanislav Levin <slev@altlinux.org> 2024.6.6-alt1
 - 2022.7.29 -> 2024.6.6.
 
