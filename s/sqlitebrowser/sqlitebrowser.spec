@@ -1,21 +1,18 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-# build errors
-%def_without external_json
 
 Name: sqlitebrowser
-Version: 3.12.2
+Version: 3.13.1
 Release: alt1
 
 Summary: Official home of the DB Browser for SQLite (DB4S) project
-License: GPLv3+ or MPLv2.0
+License: GPL-3.0-or-later OR MPL-2.0
 Group: Other
 Url: https://github.com/sqlitebrowser/sqlitebrowser
-
-Packager: Anton Midyukov <antohami@altlinux.org>
+Vcs: https://github.com/sqlitebrowser/sqlitebrowser.git
 
 Source: %name-%version.tar
-Patch: sqlitebrowser_unbundle.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -28,9 +25,7 @@ BuildRequires: qcustomplot-qt5-devel
 BuildRequires: qhexedit2-qt5-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libqscintilla2-qt5-devel
-%if_with external_json
-BuildRequires: nlohmann-json-devel
-%endif
+BuildRequires: libsqlcipher-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 
@@ -59,23 +54,20 @@ Controls and wizards are available for users to:
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # Unbundle
 rm -rfv libs/{qcustomplot-source,qhexedit,qscintilla}/
-%if_with external_json
-rm -rfv libs/json/
-%endif
-
-%if_with external_json
-%__subst 's|add_subdirectory(${JSON_DIR})|set(JSON_DIR /usr/include/nlohmann)|' CMakeLists.txt
-%endif
 
 %build
-%cmake -DUSE_QT5=1 -DENABLE_TESTING=1 \
-       -DFORCE_INTERNAL_QSCINTILLA=OFF \
-       -DFORCE_INTERNAL_QCUSTOMPLOT=OFF \
-       -DFORCE_INTERNAL_QHEXEDIT=OFF
+%cmake \
+	-DENABLE_TESTING=1 \
+	-DFORCE_INTERNAL_QSCINTILLA=OFF \
+	-DFORCE_INTERNAL_QCUSTOMPLOT=OFF \
+	-DFORCE_INTERNAL_QHEXEDIT=OFF \
+	-DQSCINTILLA_INCLUDE_DIR=%_qt5_headerdir \
+	-DQSCINTILLA_LIBRARY=%_libdir/libqscintilla2_qt5.so \
+	-Dsqlcipher=ON
 
 %cmake_build
 
@@ -94,8 +86,14 @@ desktop-file-validate %buildroot%_datadir/applications/%name.desktop
 %_datadir/metainfo/%name.desktop.appdata.xml
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/256x256/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Apr 13 2025 Anton Midyukov <antohami@altlinux.org> 3.13.1-alt1
+- new version 3.13.1
+- convert License tag to SPDX format
+- add Vcs tag
+
 * Thu Dec 23 2021 Anton Midyukov <antohami@altlinux.org> 3.12.2-alt1
 - new version 3.12.2
 
