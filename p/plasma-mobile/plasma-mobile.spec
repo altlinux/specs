@@ -11,7 +11,7 @@
 
 Name: %rname
 Version: 6.3.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,14 @@ Obsoletes: kde5-plasma-settings-common  < 24
 sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 %endif
 
+for f in po/*/*.po ; do
+    fname=`basename "$f"`
+    dir=`dirname "$f"`
+    if [ "$fname" == "kcm_mobile_virtualkeyboard.po" ] ; then
+	cp -ar "$f" "$dir/kcm_mobile_onscreenkeyboard.po"
+    fi
+done
+
 %build
 %K6build \
     -DLIBEXEC_INSTALL_DIR:PATH=%_K6exec \
@@ -144,6 +152,9 @@ sed -i 's|\(.*add_subdirectory.*dialer.*\)|#\1|' CMakeLists.txt
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt2
+- fix translations
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
 - new version
 
