@@ -27,14 +27,13 @@
 %def_disable gtk_doc
 %def_enable check
 
-%set_automake_version 1.11
 
 %define ver_major 2.24
 %define oldname gnome-vfs2
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt13
+Release: alt14
 Epoch: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -44,7 +43,7 @@ Url: ftp://ftp.gnome.org
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
 Patch: gnome-vfs-2.24.4-enable-deprecated.patch
 # https://bugzilla.suse.com/show_bug.cgi?id=1042650
 Patch1: gnome-vfs-2.24-openssl11.patch
@@ -90,7 +89,7 @@ Patch300: gnome-vfs-2.20.0-ignore-certain-mountpoints.patch
 # gnome-vfs-daemon exits on dbus, and constantly restarted causing dbus/hal to hog CPU
 # https://bugzilla.redhat.com/show_bug.cgi?id=486286
 Patch404: gnome-vfs-2.24.xx-utf8-mounts.patch
-
+Patch500: gnome-vfs-2.24.4-alt-automake.patch
 
 Obsoletes: %oldname-extras < 2.14.2
 Provides: %oldname-extras = %version-%release
@@ -262,6 +261,7 @@ This package contains command line tools for GNOME VFS.
 # send to upstream
 %patch300 -p1 -b .ignore-certain-mount-points
 %patch404 -p1 -b .utf8-mounts
+%patch500 -p1 -b .automake
 
 %build
 mkdir -p %buildroot%_datadir/dbus-1/services/
@@ -269,22 +269,22 @@ gtkdocize --copy
 %autoreconf
 export LIBS="$LIBS `%_bindir/libgcrypt-config --libs`"
 %configure \
-        %{subst_enable static} \
-        %{subst_enable howl} \
-        %{subst_enable avahi} \
-        %{subst_enable hal} \
-        %{subst_enable cdda} \
-        %{subst_enable samba} \
-        --with-samba-includes=$(pkg-config --variable=includedir smbclient) \
-        %{subst_enable openssl} \
-        %{subst_enable gnutls} \
-        %{subst_enable fam} \
-        %{?_enable_gamin:--enable-fam} \
-        %{subst_enable daemon} \
-        --enable-ipv6 \
-	--disable-selinux \
-        --disable-schemas-install \
-        %{?_enable_gtk_doc:--enable-gtk-doc}
+    %{subst_enable static} \
+    %{subst_enable howl} \
+    %{subst_enable avahi} \
+    %{subst_enable hal} \
+    %{subst_enable cdda} \
+    %{subst_enable samba} \
+    --with-samba-includes=$(pkg-config --variable=includedir smbclient) \
+    %{subst_enable openssl} \
+    %{subst_enable gnutls} \
+    %{subst_enable fam} \
+    %{?_enable_gamin:--enable-fam} \
+    %{subst_enable daemon} \
+    --enable-ipv6 \
+    --disable-selinux \
+    --disable-schemas-install \
+    %{?_enable_gtk_doc:--enable-gtk-doc}
 %make_build
 
 %install
@@ -379,6 +379,9 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt14
+- fixed build with newer automake
+
 * Tue Nov 05 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt13
 - fixed build with gcc-14
 - enabled %%check
