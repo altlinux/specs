@@ -1,5 +1,5 @@
 Name: jc303
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 
 Summary: Roland TB-303 clone plugin
@@ -47,12 +47,11 @@ in form of LV2 plugin.
 in form of VST3 plugin.
 
 %prep
-%setup
+%setup -a1
 %ifdef bootstrap
 %cmake
-tar cf %SOURCE1 lib/JUCE
-%else
-tar xf %SOURCE1
+sed -ri '/cmake\/(CPM|Testing)/d' lib/rtneural-src/CMakeLists.txt
+tar cf %SOURCE1 --exclude '*/.git' lib/JUCE lib/*-src
 %endif
 
 %build
@@ -61,8 +60,8 @@ tar xf %SOURCE1
 
 %install
 mkdir -p %buildroot%_libdir/{lv2,vst3}
-cp -av %_cmake__builddir/*_artefacts/LV2/* %buildroot%_libdir/lv2                                                                                                   
-cp -av %_cmake__builddir/*_artefacts/VST3/* %buildroot%_libdir/vst3
+cp -av %_cmake__builddir/*_artefacts/*/LV2/* %buildroot%_libdir/lv2
+cp -av %_cmake__builddir/*_artefacts/*/VST3/* %buildroot%_libdir/vst3
 
 %files -n lv2-jc303-plugin
 %doc LICENSE README*
@@ -73,5 +72,8 @@ cp -av %_cmake__builddir/*_artefacts/VST3/* %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Mon Apr 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt1
+- 0.12.0 released
+
 * Tue Feb 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.11.1-alt1
 - initial
