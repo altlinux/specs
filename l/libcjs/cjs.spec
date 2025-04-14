@@ -1,4 +1,4 @@
-%define ver_major 6.4
+%define ver_major 128
 %define _name cjs
 %define api_ver 1.0
 
@@ -33,7 +33,7 @@ BuildRequires: gcc-c++ libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libdbus-glib-devel libreadline-devel libcairo-gobject-devel
 BuildRequires: gnome-common
-BuildRequires: libmozjs115-devel
+BuildRequires: libmozjs128-devel
 BuildRequires: meson
 BuildRequires: pkgconfig(sysprof-capture-4)
 %if_with valgrind
@@ -98,6 +98,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Fri Apr 11 2025 Anton Midyukov <antohami@altlinux.org> 128.0-alt1
+- 128.0
+
 * Tue Dec 03 2024 Anton Midyukov <antohami@altlinux.org> 6.4.0-alt1
 - 6.4.0
 - build from git tag
