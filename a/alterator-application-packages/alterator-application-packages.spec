@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-packages
-Version: 0.1.5
+Version: 0.2.0
 Release: alt1
 
-Summary: Alterator application for managing system packages and package repositories
+Summary: ALT Packages - Alterator application for managing system packages and package repositories
 License: GPLv2+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alterator-application-packages
@@ -21,13 +21,13 @@ BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: xorg-xvfb xvfb-run
 
-Requires: alterator-backend-packages >= 0.1.3
+Requires: alterator-backend-packages >= 0.2.1
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
 %description
-Alterator application for managing system packages and package repositories
-through apt and rpm.
+ALT - Packages - Alterator application for managing system packages
+and package repositories through apt and rpm.
 
 %prep
 %setup
@@ -39,27 +39,25 @@ through apt and rpm.
 %install
 %cmakeinstall_std
 
-mkdir -p %buildroot%_alterator_datadir/backends
-mkdir -p %buildroot%_alterator_datadir/applications
-
-install -v -p -m 644 -D alterator/amp-apt.backend %buildroot%_alterator_datadir/backends
-install -v -p -m 644 -D alterator/amp-apt.application %buildroot%_alterator_datadir/applications
-
-install -v -p -m 644 -D alterator/amp-rpm.backend %buildroot%_datadir/alterator/backends
-install -v -p -m 644 -D alterator/amp-rpm.application %buildroot%_alterator_datadir/applications
-
-install -v -p -m 644 -D alterator/amp-repo.backend %buildroot%_datadir/alterator/backends
-install -v -p -m 644 -D alterator/amp-repo.application %buildroot%_alterator_datadir/applications
-
 %files
-%doc LICENSE
-%_bindir/%name
+%doc LICENSE CHANGELOG.md
+%_bindir/*
 %dir %_alterator_datadir/backends
 %dir %_alterator_datadir/applications
 %_alterator_datadir/backends/*.backend
 %_alterator_datadir/applications/*.application
+%_desktopdir/*.desktop
 
 %changelog
+* Mon Apr 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
+- Add APT transaction progress.
+- Add suggestion to update if last update date is not found.
+- Add displaying an actual packages list of APT transaction.
+- Add Upgrade All button for upgrading an all obsoleted packages.
+- Change application name to ALT Packages.
+- Fix broken Update.
+- Fix selection resetting if filter is changed.
+
 * Tue Feb 25 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.5-alt1
 - New version.
 
