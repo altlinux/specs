@@ -8,7 +8,7 @@
 
 Name: xdg-desktop-portal
 Version: 1.20.0
-Release: alt1
+Release: alt1.1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -51,6 +51,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libportal) >= %portal_ver
 # since 1.9.1
 BuildRequires: pkgconfig(gstreamer-pbutils-1.0) pkgconfig(umockdev-1.0)
+BuildRequires: pkgconfig(gudev-1.0)
 %{?_enable_docs:BuildRequires: python3(sphinx) xmlto docbook-dtds docbook-style-xsl}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
@@ -143,6 +144,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1.1
+- enabled udev support needed for the USB portal
+
 * Thu Feb 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1
 - 1.20.0
 
