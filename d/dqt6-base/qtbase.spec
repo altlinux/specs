@@ -34,7 +34,7 @@
 Name: dqt6-base
 %define major  6
 Version: 6.8.2
-Release: alt2.dde.1
+Release: alt2.dde.2
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -657,6 +657,8 @@ done
 %files common
 %doc LICENSES/*
 %dir %_sysconfdir/dqt6/
+%dir %_dqt6_bindir/
+%dir %_dqt6_libdir/
 %dir %_dqt6_docdir/
 %dir %_dqt6_archdatadir/
 %dir %_dqt6_examplesdir/
@@ -707,7 +709,9 @@ done
 %files devel
 %_dqt6_docdir/config/
 %_dqt6_docdir/global/
-%dir %_dqt6_bindir
+%dir %_dqt6_bindir/
+%dir %_dqt6_libdir/cmake/
+%dir %_dqt6_libdir/pkgconfig/
 #
 %_bindir/androiddeployqt*
 %_dqt6_bindir/androiddeployqt*
@@ -858,6 +862,10 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Apr 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt2.dde.2
+- fix build with cmake 4.0.0
+- fix some post-install files
+
 * Mon Feb 24 2025 Leontiy Volodin <lvol@altlinux.org> 6.8.2-alt2.dde.1
 - merge with new version
 - prevent locale warnings
