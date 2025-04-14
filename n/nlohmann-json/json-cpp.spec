@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nlohmann-json
-Version: 3.11.3
-Release: alt2
+Version: 3.12.0
+Release: alt1
 
 Summary: JSON for Modern C++ (c++11) ("single header file")
 
@@ -79,6 +79,9 @@ ln -sf ../json_test_data %_cmake__builddir/json_test_data
 #_pkgconfigdir/nlohmann_json.pc
 
 %changelog
+* Mon Apr 14 2025 Cronbuild Service <cronbuild@altlinux.org> 3.12.0-alt1
+- New version 3.12.0.
+
 * Mon Feb 12 2024 Paul Wolneykien <manowar@altlinux.org> 3.11.3-alt2
 - Saved upstream URL to the package repo.
 
