@@ -1,6 +1,6 @@
 Name: waypipe
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: Network transparency agent for Wayland
 
@@ -53,6 +53,9 @@ enable Wayland-based workflows similar to those using `ssh -X'.
 %prep
 %setup -n %name-%version-%release
 #patch -p1
+%ifarch %e2k
+sed -i '1i #define __builtin_cpu_supports(x) 1' src/kernel.c
+%endif
 
 %build
 %meson \
@@ -83,6 +86,9 @@ export LC_CTYPE=en_US.UTF-8
 %_man1dir/waypipe.1*
 
 %changelog
+* Mon Apr 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.1-alt2
+- Fixed build for Elbrus.
+
 * Fri Aug 02 2024 Arseny Maslennikov <arseny@altlinux.org> 0.9.1-alt1
 - 0.9.0 -> 0.9.1.
 
