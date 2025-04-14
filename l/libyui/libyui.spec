@@ -1,12 +1,13 @@
 Name:     libyui
 Version:  4.6.2
-Release:  alt1
+Release:  alt2
 Summary:  GUI abstraction library
 Group:    System/Libraries
 
 License:  LGPL-2.1-only OR LGPL-3.0-only
 URL:      https://github.com/libyui/libyui
 Source:   %{name}-%{version}.tar
+Patch: %name-%version.patch
 
 BuildRequires(pre):  rpm-macros-cmake
 
@@ -244,6 +245,7 @@ interfaces (Qt, Gtk) and text based user interfaces (ncurses).
 
 %prep
 %setup
+%patch -p1
 
 # Upstream's testing-targets expect compiled libs at .../build/src, not .../src
 # So, we need to redefine builddir
@@ -384,6 +386,9 @@ done
 %{perl_vendorlib}/*
 
 %changelog
+* Sun Apr 13 2025 Sergey Konev <darisishe@altlinux.org> 4.6.2-alt2
+- Fixed build with CMake 4.0.0
+
 * Mon Mar 03 2025 Sergey Konev <darisishe@altlinux.org> 4.6.2-alt1
 - Initial package (re-packaged after deletion in 2017)
 
