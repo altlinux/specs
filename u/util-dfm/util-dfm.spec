@@ -1,10 +1,12 @@
 %def_without clang
 
+%define sover 1
+
 Name: util-dfm
-Version: 1.3.10
+Version: 1.3.15
 Release: alt1
 
-Summary: A Toolkits of libdfm-io, libdfm-mount and libdfm-burn
+Summary: A Toolkits of libdfm-io, libdfm-mount, libdfm-burn and libdfm-search
 
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -12,10 +14,10 @@ Url: https://github.com/linuxdeepin/util-dfm
 Vcs: https://github.com/linuxdeepin/util-dfm.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: util-dfm-1.3.10-alt-pkgconfig-dqt6.patch
+Patch: util-dfm-1.3.15-alt-pkgconfig-dqt6.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt6-base-devel
+BuildRequires: cmake libisoburn-devel libmediainfo-devel libmount-devel libsecret-devel libudisks2-devel dqt6-base-devel dtk6-common-devel libdtk6core-devel liblucene++-devel
 %if_enabled clang
 BuildRequires: clang-devel
 BuildRequires: lld-devel
@@ -35,11 +37,11 @@ BuildArch: noarch
 %description doc
 This package provides documentation for %name.
 
-%package -n libdfm6-io1
+%package -n libdfm6-io%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n libdfm6-io1
+%description -n libdfm6-io%sover
 This package provides libdfm-io1 library for %name.
 
 %package -n libdfm6-io-devel
@@ -49,11 +51,11 @@ Group: Development/Other
 %description -n libdfm6-io-devel
 This package provides development files for libdfm-io.
 
-%package -n libdfm6-mount1
+%package -n libdfm6-mount%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n libdfm6-mount1
+%description -n libdfm6-mount%sover
 This package provides libdfm-mount1 library for %name.
 
 %package -n libdfm6-mount-devel
@@ -63,11 +65,11 @@ Group: Development/Other
 %description -n libdfm6-mount-devel
 This package provides development files for libdfm-mount.
 
-%package -n libdfm6-burn1
+%package -n libdfm6-burn%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n libdfm6-burn1
+%description -n libdfm6-burn%sover
 This package provides libdfm-burn1 library for %name.
 
 %package -n libdfm6-burn-devel
@@ -76,6 +78,20 @@ Group: Development/Other
 
 %description -n libdfm6-burn-devel
 This package provides development files for libdfm-burn.
+
+%package -n libdfm6-search%sover
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libdfm6-search%sover
+This package provides libdfm-search1 library for %name.
+
+%package -n libdfm6-search-devel
+Summary: Development files for %name
+Group: Development/Other
+
+%description -n libdfm6-search-devel
+This package provides development files for libdfm-search.
 
 %prep
 %setup
@@ -91,6 +107,7 @@ export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 %DQ6build \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DPROJECT_VERSION=%version \
   -DVERSION=%version \
 #
@@ -101,8 +118,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %files doc
 %doc README.md LICENSE
 
-%files -n libdfm6-io1
-%_libdir/libdfm6-io.so.1*
+%files -n libdfm6-io%sover
+%_libdir/libdfm6-io.so.%sover
+%_libdir/libdfm6-io.so.%version
 
 %files -n libdfm6-io-devel
 %_libdir/libdfm6-io.so
@@ -112,8 +130,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_libdir/cmake/dfm6-io/
 %_libdir/cmake/dfm6-io/dfm6-ioConfig.cmake
 
-%files -n libdfm6-mount1
-%_libdir/libdfm6-mount.so.1*
+%files -n libdfm6-mount%sover
+%_libdir/libdfm6-mount.so.%sover
+%_libdir/libdfm6-mount.so.%version
 
 %files -n libdfm6-mount-devel
 %_libdir/libdfm6-mount.so
@@ -123,8 +142,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_libdir/cmake/dfm6-mount/
 %_libdir/cmake/dfm6-mount/dfm6-mountConfig.cmake
 
-%files -n libdfm6-burn1
-%_libdir/libdfm6-burn.so.1*
+%files -n libdfm6-burn%sover
+%_libdir/libdfm6-burn.so.%sover
+%_libdir/libdfm6-burn.so.%version
 
 %files -n libdfm6-burn-devel
 %_libdir/libdfm6-burn.so
@@ -134,7 +154,23 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %dir %_libdir/cmake/dfm6-burn/
 %_libdir/cmake/dfm6-burn/dfm6-burnConfig.cmake
 
+%files -n libdfm6-search%sover
+%_libdir/libdfm6-search.so.%sover
+%_libdir/libdfm6-search.so.%version
+
+%files -n libdfm6-search-devel
+%_libdir/libdfm6-search.so
+%dir %_includedir/dfm6-search/
+%_includedir/dfm6-search/dfm-search/
+%_pkgconfigdir/dfm6-search.pc
+%dir %_libdir/cmake/dfm6-search/
+%_libdir/cmake/dfm6-search/dfm6-searchConfig.cmake
+
 %changelog
+* Mon Apr 14 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.15-alt1
+- New version 1.3.15.
+- Fixed build with cmake 4.0.0.
+
 * Tue Mar 11 2025 Leontiy Volodin <lvol@altlinux.org> 1.3.10-alt1
 - New version 1.3.10.
 - Added vcs tag.
