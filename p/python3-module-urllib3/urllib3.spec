@@ -22,7 +22,7 @@ Extra "%1" for %%pypi_name. \
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
@@ -39,7 +39,6 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter memray
 %add_pyproject_deps_check_filter pytest-memray
 %add_pyproject_deps_check_filter towncrier
 %pyproject_builddeps_metadata_extra socks
@@ -64,7 +63,7 @@ urllib3 is a powerful, user-friendly HTTP client for Python.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile dev-requirements.txt
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -85,6 +84,9 @@ export NO_VENDORED_HYPERCORN=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 11 2025 Stanislav Levin <slev@altlinux.org> 2:2.4.0-alt1
+- 2.3.0 -> 2.4.0.
+
 * Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 2:2.3.0-alt1
 - 2.2.3 -> 2.3.0.
 
