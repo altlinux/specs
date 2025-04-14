@@ -5,7 +5,7 @@
 
 Name: lmms
 Version: 1.2.2
-Release: alt4
+Release: alt5
 
 Summary: Linux MultiMedia Studio
 License: GPL-2.0-or-later
@@ -20,6 +20,8 @@ Source6: %name-48x48.png
 Patch1: %name-1.2.0-no_werror.patch
 Patch2: %name-1.2.0-vst-nowine.patch
 Patch3: %name-1.2.0-cmake.patch
+
+Requires: icon-theme-hicolor
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-lmms libfltk-devel 
@@ -50,6 +52,7 @@ BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(fftw3f) >= 3.0.0
 BuildRequires: pkgconfig(fluidsynth) >= 1.0.7
+BuildRequires: pkgconfig(gig)
 BuildRequires: pkgconfig(jack) >= 0.77
 BuildRequires: pkgconfig(libbrotlidec)
 BuildRequires: pkgconfig(libpcre2-8)
@@ -117,7 +120,7 @@ find -type f -name '*.cpp' | xargs -r sed -ri 's,^\xEF\xBB\xBF,,'
     -DWANT_CALF:BOOL=ON \
     -DWANT_CARLA:BOOL=OFF \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DWANT_GIG:BOOL=OFF \
+    -DBUNDLE_QT_TRANSLATIONS:BOOL=ON \
     -Wno-dev
 
 %cmake_build
@@ -147,6 +150,9 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Mon Apr 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.2.2-alt5
+- build with libgig
+
 * Fri Apr 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.2.2-alt4
 - NMU: fix FTBFS with cmake 4.0
 - add missing BR
