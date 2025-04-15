@@ -4,8 +4,8 @@
 %define libname libespeak-ng%sover
 
 Name: espeak-ng
-Version: 1.51.1
-Release: alt4
+Version: 1.52.0
+Release: alt1
 
 Summary: eSpeak NG Text-to-Speech
 
@@ -27,10 +27,6 @@ BuildRequires: pkg-config
 BuildRequires: gem-ronn-ng
 BuildRequires: gem-kramdown
 BuildRequires: pcaudiolib-devel
-
-# Backported from:
-# https://github.com/espeak-ng/espeak-ng/commit/58f1e0b6a4e6aa55621c6f01118994d01fd6f68c
-Patch: %name-%version-CVE-2023-49990-4.patch
 
 %description
 The eSpeak NG (Next Generation) Text-to-Speech program is an open source speech
@@ -71,7 +67,6 @@ Requires: %name
 
 %prep
 %setup
-%patch0 -p1
 # Remove unused files to make sure we've got the License tag right
 rm -rf src/include/compat/endian.h src/compat/getopt.c android/
 
@@ -92,8 +87,11 @@ rm -vr %buildroot%_datadir/vim/registry
 ln -s libespeak-ng.so %buildroot%_libdir/libespeak.so
 ln -s espeak-ng.pc %buildroot%_pkgconfigdir/espeak.pc
 
+%check
+ESPEAK_DATA_PATH=`pwd` LD_LIBRARY_PATH=src:${LD_LIBRARY_PATH} src/espeak-ng ...
+
 %files
-%doc COPYING COPYING.* README.md CHANGELOG.md
+%doc COPYING COPYING.* README.md ChangeLog.md
 %_bindir/speak-ng
 %_bindir/espeak-ng
 %_bindir/speak
@@ -120,6 +118,9 @@ ln -s espeak-ng.pc %buildroot%_pkgconfigdir/espeak.pc
 %_datadir/vim/vimfiles/syntax/espeakrules.vim
 
 %changelog
+* Tue Apr 15 2025 Artem Semenov <savoptik@altlinux.org> 1.52.0-alt1
+- New version 1.52.0
+
 * Tue Jun 11 2024 Artem Semenov <savoptik@altlinux.org> 1.51.1-alt4
 - Fixed symlink espeak to espeak-ng
 
