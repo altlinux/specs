@@ -1,7 +1,7 @@
 %def_enable snapshot
 %define optflags_lto %nil
 
-%define ver_major 0.5
+%define ver_major 1.0
 %define rdn_name com.rafaelmardojai.SharePreview
 
 %def_disable bootstrap
@@ -46,7 +46,7 @@ Preview and debug websites metadata tags for social media share.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -65,12 +65,16 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- updated to 1.0.0-3-g519d15f
+
 * Sat May 18 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - updated to 0.5.0-9-g66a8aa4
 

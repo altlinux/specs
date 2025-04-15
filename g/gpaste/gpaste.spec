@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 45
 %define beta %nil
@@ -10,8 +10,8 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
 Group: Text tools
@@ -194,6 +194,9 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 45.3-alt1
+- 45.3
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt2
 - updated to v45.2-14-g0f111a7b (GNOME 48 supported)
 
