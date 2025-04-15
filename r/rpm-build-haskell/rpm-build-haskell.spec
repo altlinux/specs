@@ -12,7 +12,7 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -79,6 +79,10 @@ install -D -m0755 %SOURCE4 \
 %_rpmmacrosdir/ghc-extra
 
 %changelog
+* Wed Mar 19 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.5-alt1
+- Disabled library stripping
+- Hardcoded enabling of shared objects and split sections in macros
+
 * Tue Mar 18 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.4-alt1
 - Enabled building of executables without stripping in ghc_* macros
 
