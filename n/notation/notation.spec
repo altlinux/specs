@@ -1,6 +1,6 @@
 %global import_path github.com/notaryproject/notation
 Name:    notation
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A CLI tool to sign and verify artifacts
@@ -11,6 +11,8 @@ Url:     https://github.com/notaryproject/notation
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source: %name-%version.tar
+
+Patch1: notation-1.3.1-alt-fix-example-function-naming.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -24,6 +26,7 @@ used for additional purposes.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -60,6 +63,9 @@ go test -v -coverprofile=coverage.txt -covermode=atomic ./...
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Feb 24 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Tue Jan 21 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
