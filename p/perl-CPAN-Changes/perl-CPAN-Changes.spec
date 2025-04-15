@@ -2,14 +2,14 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Module/Runtime.pm) perl(Types/Standard.pm) perl-podlators
+BuildRequires: perl(Module/Runtime.pm) perl(Test/Pod/Coverage/TrustMe.pm) perl(Types/Standard.pm) perl-podlators
 # END SourceDeps(oneline)
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
-Version:	0.500002
+Version:	0.500004
 Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/CPAN-Changes
@@ -81,6 +81,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.500004-alt1
+- automated CPAN update
+
 * Fri Oct 27 2023 Igor Vlasenko <viy@altlinux.org> 0.500002-alt1
 - automated CPAN update
 
