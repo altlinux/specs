@@ -1,11 +1,12 @@
 Name: make-initrd
-Version: 2.51.0
-Release: alt1.1
+Version: 2.52.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
 Group: System/Base
 Url: https://github.com/osboot/make-initrd
+Vcs: https://github.com/osboot/make-initrd.git
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
@@ -67,7 +68,6 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch: 0001-guess-touchscreen-Fix-the-interpretation-of-the-valu.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -400,6 +400,20 @@ fi
 %endif
 
 %changelog
+* Tue Apr 15 2025 Anton Midyukov <antohami@altlinux.org> 2.52.0-alt1
+- Feature add-udev-rules:
+  + Handle special case of module loading from udev rules.
+  + Handle the situation of calling insmod from the rules.
+- Guess touchscreen:
+  + Fix the interpretation of the value in properties.
+- Guess loaded-modules:
+  + This feature tries to take into account loaded modules for some
+    architectures (arm*, riscv*, aarch64).
+- Misc:
+  + Generate ld.so.conf config for initrd.
+  + Changes related to preparation for porting to musl.
+  + Workaround for findmnt from util-linux 2.41.
+
 * Sun Feb 23 2025 Anton Midyukov <antohami@altlinux.org> 2.51.0-alt1.1
 - add upstream patch:
   "guess/touchscreen: Fix the interpretation of the value in properties"
