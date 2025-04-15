@@ -1,14 +1,11 @@
 %define optflags_lto %nil
 %define pypi_name cramjam
 
-# Full tests set running (on basealt) on hsh-shell at 23.12.2025
-# $ PYTHONPATH=%%buildroot%%python3_sitelibdir python3 -m pytest --ignore benchmarks -v
-# === 1524 passed, 6 skipped in 75.64s (0:01:15) ===
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
-Release: alt2
+Version: 2.10.0
+Release: alt1
 
 Summary: A collection of compression algorithms
 License: MIT
@@ -25,10 +22,14 @@ BuildRequires: python3-module-maturin
 # use-system-isal-shared and use-system-blosc2-shared config opts did not
 # produced any result
 BuildRequires: gcc-c++ glibc-devel-static cmake nasm
-# BuildRequires: pkgconfig(blosc2)
-# BuildRequires: pkgconfig(libisal)
+BuildRequires: pkgconfig(blosc2)
+BuildRequires: pkgconfig(libisal)
+BuildRequires: pkgconfig(liblz4)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(python3)
 BuildRequires: /proc
 BuildRequires: rust-cargo
+# BuildRequires: cargo-vendor-filterer
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-numpy-testing
@@ -64,17 +65,20 @@ strip = false
 EOF
 
 %build
+# enable system libraries where supported
+export ZSTD_SYS_USE_PKG_CONFIG=1
+export PKG_CONFIG_PATH=%_pkgconfigdir
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-# XXX: Switched off whole tests cause it fails on different cases
-# running on both shell and gyle.
+# XXX: Switched off test_variants cause it fails on different cases
 # https://github.com/milesgranger/cramjam/issues/190
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%pyproject_run_pytest --ignore benchmarks -v
+%pyproject_run_pytest --ignore benchmarks -v \
+-k 'not test_variants'
 
 %files
 %doc README.* LICENSE
@@ -82,6 +86,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Apr 15 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.10.0-alt1
+- 2.9.0 -> 2.10.0
+
 * Mon Dec 23 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.9.0-alt2
 - fix FTBFS: disable broken tests
 
