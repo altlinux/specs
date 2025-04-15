@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -33,6 +33,9 @@ echo "pg_ver: %pg_ver" > modules/vars/postgresql
 %_datadir/%name
 
 %changelog
+* Tue Apr 15 2025 Andrey Cherepanov <cas@altlinux.org> 0.4.4-alt1
+- Used default {{ php_version }} for apache and icinga2.
+
 * Mon Mar 31 2025 Alexei Takaseev <taf@altlinux.org> 0.4.3-alt1
 - Used last PostgreSQL version in repository.
 
