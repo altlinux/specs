@@ -1,5 +1,5 @@
 Name:    pgbackrest
-Version: 2.45
+Version: 2.54.2
 Release: alt1
 
 Summary: Reliable PostgreSQL Backup & Restore
@@ -56,5 +56,8 @@ popd
 %_bindir/*
 
 %changelog
+* Thu Apr 10 2025 Kirill Izmestev <felixz@altlinux.org> 2.54.2-alt1
+- new version 2.54.2
+
 * Fri Apr 07 2023 Nikolay Burykin <bne@altlinux.org> 2.45-alt1
 - Initial build for Sisyphus
