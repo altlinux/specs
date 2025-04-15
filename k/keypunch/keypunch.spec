@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Keypunch
-%define ver_major 6.1
+%define ver_major 6.2
 %define rdn_name dev.bragefuglseth.%_name
 
 %def_enable check
@@ -61,6 +61,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 6.2-alt1
+- 6.2
+
 * Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 6.1-alt1
 - 6.1
 
