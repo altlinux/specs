@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test2/Plugin/IOEvents.pm) perl(Test2/Plugin/NoWarnings.pm) perl(Test2/V0.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define oname App-perlbrew
 Name: perl-App-perlbrew
-Version: 0.98
+Version: 1.01
 Release: alt1
 
 Summary: Manage perl installations in your $HOME
@@ -38,6 +41,9 @@ export SHELL
 %doc Changes README
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 1.01-alt1
+- automated CPAN update
+
 * Sun Aug 13 2023 Igor Vlasenko <viy@altlinux.org> 0.98-alt1
 - automated CPAN update
 
