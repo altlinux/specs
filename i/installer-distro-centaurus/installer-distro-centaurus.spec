@@ -1,6 +1,6 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 10.4
+Version: 11.0
 Release: alt1
 
 Summary: Installer files for Centaurus distro
@@ -22,7 +22,7 @@ Requires: alterator-sysconfig
 Requires: alterator-datetime
 Requires: installer-alterator-pkg
 Requires: alterator-vm
-Requires: alterator-notes
+Requires: alterator-notes >= 1.4
 Requires: x-cursor-theme-jimmac
 
 %description stage2
@@ -68,6 +68,10 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Tue Apr 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 11.0-alt1
+- 35-disable-systemd-networkd.sh: by default in alt-server
+- installer-steps: change final step from release-notes to final-notes
+
 * Thu Oct 17 2024 Dmitry Terekhin <jqt4@altlinux.org> 10.4-alt1
 - 66-setup-net-services.sh: systemd-resolved configuration
 
