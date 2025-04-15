@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -35,6 +35,12 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Apr 15 2025 Ivan Savin <svn17@altlinux.org> 0.1.23-alt1
+- Fix broken stdout_byte_arrays. The stdout_byte_arrays_enabled condition
+  was missed when the process was spawned.
+- Fix a bag when all stdout output from the child process is turned off, its
+  output goes to the parent process's stdout.
+
 * Thu Apr 10 2025 Ivan Savin <svn17@altlinux.org> 0.1.22-alt1
 - Fix memory leak, after g_strconcat the g_free was not always called.
 - Remove unnecessary checks. In case of failure on g_new0 and g_thread_new
