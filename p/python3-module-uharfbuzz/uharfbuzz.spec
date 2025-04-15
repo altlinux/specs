@@ -3,7 +3,7 @@
 %def_with check
 
 Name:     python3-module-%oname
-Version:  0.46.0
+Version:  0.49.0
 Release:  alt1
 
 Summary:  An opinionated HarfBuzz Python binding
@@ -24,6 +24,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pkgconfig
+BuildRequires: libharfbuzz-devel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -36,6 +37,7 @@ BuildRequires: python3-module-pytest
 %setup
 
 %build
+export USE_SYSTEM_LIBS=1
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
@@ -52,6 +54,10 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Apr 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.49.0-alt1
+- Build new version.
+- Build with system harfbuzz.
+
 * Wed Mar 12 2025 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
 - Build new version.
 
