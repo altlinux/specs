@@ -1,7 +1,7 @@
 %define oname pycurl
 
 Name: python3-module-pycurl
-Version: 7.45.4
+Version: 7.45.6
 Release: alt1
 
 Summary: Python bindings to libcurl
@@ -36,6 +36,9 @@ This module provides the Python bindings to libcurl.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 15 2025 Anton Farygin <rider@altlinux.com> 7.45.6-alt1
+- 7.45.4 -> 7.45.6
+
 * Sat Jan 18 2025 Anton Farygin <rider@altlinux.ru> 7.45.4-alt1
 - 7.45.3 -> 7.45.4
 
