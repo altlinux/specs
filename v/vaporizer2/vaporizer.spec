@@ -1,6 +1,6 @@
 Name: vaporizer2
 Version: 3.5.0
-Release: alt1
+Release: alt2
 
 Summary: Hybrid wavetable additive/subtractive synthesizer
 License: GPLv3
@@ -54,8 +54,7 @@ Vaporizer2 synthesizer as LV2 plugin.
 Vaporizer2 synthesizer as VST3 plugin.
 
 %prep
-%setup
-tar ixf %SOURCE1
+%setup -a1
 
 %build
 %cmake -DCMAKE_INSTALL_LIBDIR=%_libdir
@@ -97,6 +96,9 @@ done
 %_libdir/vst3/*
 
 %changelog
+* Tue Apr 15 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.0-alt2
+- v3.5.0-11-g1c56c4b
+
 * Tue Sep 17 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.0-alt1
 - 3.5.0 released
 
