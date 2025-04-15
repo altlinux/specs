@@ -1,98 +1,65 @@
-%define _unpackaged_files_terminate_build 1
-Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:		perl-Test-Vars
-Version:	0.015
-Release:	alt2
-Summary:	Detects unused variables
-License:	GPL+ or Artistic
-URL:		https://metacpan.org/release/Test-Vars
-Source0:	http://www.cpan.org/authors/id/G/GF/GFUJI/Test-Vars-%{version}.tar.gz
-BuildArch:	noarch
-# ===================================================================
-# Build requirements
-# ===================================================================
-BuildRequires:	coreutils
-BuildRequires:	perl-devel >= 5.10.0
-BuildRequires:	rpm-build-perl
-BuildRequires:	perl(Module/Build/Tiny.pm)
-BuildRequires:	sed
-# ===================================================================
-# Module requirements
-# ===================================================================
-BuildRequires:	perl(B.pm)
-BuildRequires:	perl(constant.pm)
-BuildRequires:	perl(ExtUtils/Manifest.pm)
-BuildRequires:	perl(IO/Pipe.pm)
-BuildRequires:	perl(List/Util.pm)
-BuildRequires:	perl(parent.pm)
-BuildRequires:	perl(Storable.pm)
-BuildRequires:	perl(strict.pm)
-BuildRequires:	perl(Symbol.pm)
-BuildRequires:	perl(Test/Builder/Module.pm)
-BuildRequires:	perl(warnings.pm)
-# ===================================================================
-# Test suite requirements
-# ===================================================================
-BuildRequires:	perl(File/Spec/Functions.pm)
-BuildRequires:	perl(Test/More.pm)
-BuildRequires:	perl(Test/Tester.pm)
-# ===================================================================
-# Optional test requirements
-# ===================================================================
-%if !0%{?rhel:1} && !0%{?perl_bootstrap:1}
-BuildRequires:	perl(Moose/Role.pm)
-%endif
-BuildRequires:	perl(Test/Output.pm)
-# ===================================================================
-# Author/Release test requirements
-# ===================================================================
-BuildRequires:	perl(Test/Pod/Coverage.pm)
-BuildRequires:	perl(Test/Pod.pm)
-BuildRequires:	perl(Test/Synopsis.pm)
+%define upstream_name    Test-Vars
+%define upstream_version 0.017
+
+%{?perl_default_filter}
+
+Name:       perl-%{upstream_name}
+Version:    %{upstream_version}
+Release:    alt1_1
+
+Summary:    Detects unused variables
+License:    GPL+ or Artistic
+Group:      Development/Perl
+Url:        https://metacpan.org/release/%{upstream_name}
+Source0:    https://cpan.metacpan.org/modules/by-module/Test/%{upstream_name}-%{upstream_version}.tar.gz
+
+BuildRequires: perl(B.pm)
+BuildRequires: perl(ExtUtils/MakeMaker.pm)
+BuildRequires: perl(ExtUtils/Manifest.pm)
+BuildRequires: perl(File/Spec/Functions.pm)
+BuildRequires: perl(IO/Pipe.pm)
+BuildRequires: perl(List/Util.pm)
+BuildRequires: perl(Moose/Role.pm)
+BuildRequires: perl(Storable.pm)
+BuildRequires: perl(Symbol.pm)
+BuildRequires: perl(Test/More.pm)
+BuildRequires: perl(Test/Output.pm)
+BuildRequires: perl(Test/Tester.pm)
+BuildRequires: perl(parent.pm)
+BuildArch:  noarch
 Source44: import.info
-# ===================================================================
-# Runtime requirements
-# ===================================================================
 
 %description
 Test::Vars finds unused variables in order to keep the source code tidy.
 
 %prep
-%setup -q -n Test-Vars-%{version}
-
-# Placate rpmlint about script interpreters in examples
-sed -i -e '1s|^#!perl|#!/usr/bin/perl|' example/*.t
-
-# perl 5.38
-[ %version == 0.015 ] && rm t/07_stub_sub_bug.t
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-perl Build.PL --installdirs=vendor
-./Build
+/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
 
-%install
-./Build install --destdir=%{buildroot} --create_packlist=0
-# %{_fixperms} -c %{buildroot}
+%make_build
 
 %check
-./Build test
-prove -Ilib $(echo $(find xt/ -name '*.t'))
+%make_build test
+
+%install
+%makeinstall_std
 
 %files
-%doc LICENSE Changes README.md example
-%if 0%{?_licensedir:1}
-%else
-%endif
-%doc Changes README.md example/
-%{perl_vendor_privlib}/Test/
+%doc Changes LICENSE META.json META.yml example
+%{perl_vendor_privlib}/*
 
 %changelog
+* Tue Apr 15 2025 Igor Vlasenko <viy@altlinux.org> 0.017-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.015-alt2
 - fixed build with perl 5.38
 
