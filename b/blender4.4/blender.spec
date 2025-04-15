@@ -57,8 +57,8 @@
 %def_with jemalloc
 
 Name: %{project}4.4
-Version: 4.4.0
-Release: alt4
+Version: 4.4.1
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -525,6 +525,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Tue Apr 15 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.1-alt1
+- 4.4.1.
+
 * Wed Mar 19 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt4
 - Drop dependency to OpenCOLLADA:
   + see https://github.com/KhronosGroup/OpenCOLLADA/issues/655#issuecomment-2020333875
