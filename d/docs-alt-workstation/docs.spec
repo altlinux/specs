@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Apr 15 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt3
+- update to ALT Workstation 11.0RC2
+- add gtkhash, foldy
+- whatis-alt: updated text about platform p11 (thx Anton Abramov)
+
 * Sun Mar 30 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt2
 - fix some typos
 - add remote-desktop
