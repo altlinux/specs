@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Array-Iterator
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(blib.pm) perl-devel
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test/DescribeMe.pm) perl(Test/More.pm) perl(Test/Most.pm) perl(Test/Needs.pm) perl(blib.pm) perl-devel
 # END SourceDeps(oneline)
 %define upstream_name    Array-Iterator
 %define upstream_version 0.11
 
 Name:       perl-%{upstream_name}
-Version:    0.132
+Version:    0.135
 Release:    alt1
 
 Summary:    A subclass of Array::Iterator to allow forwards and backwards iteration
 License:    perl
 Group:      Development/Perl
 URL:        http://search.cpan.org/dist/Array-Iterator/
-Source0:    http://www.cpan.org/authors/id/P/PE/PERLANCAR/%{module_name}-%{version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/N/NH/NHORNE/%{module_name}-%{version}.tar.gz
 
 BuildRequires: perl(Capture/Tiny.pm)
 BuildRequires: perl(Module/Build.pm)
@@ -50,11 +50,14 @@ make test
 %makeinstall_std
 
 %files
-%doc README Changes
+%doc Changes README.md
 %perl_vendor_privlib/*
 
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.135-alt1
+- automated CPAN update
+
 * Tue Dec 05 2023 Igor Vlasenko <viy@altlinux.org> 0.132-alt1
 - automated CPAN update
 
