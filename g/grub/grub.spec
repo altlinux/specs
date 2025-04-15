@@ -3,7 +3,7 @@
 
 # SBAT generation number for ALT
 # Refer to https://github.com/rhboot/shim/blob/main/SBAT.md
-%global grub_gen_number 4
+%global grub_gen_number 5
 %global alt_gen_number 1
 
 # grub modules' architecture is heavily dependent on custom ELF sections.
@@ -20,15 +20,9 @@
 %add_python3_compile_exclude %_libdir/grub
 %add_python3_req_skip %_libdir/grub/*/gdb_helper.py
 
-# NB: not a fashion but the critical need to fit into 62 sectors.
-# Irrelevant on EFI-only architectures.
-%ifarch %ix86 x86_64
-%define _optlevel s
-%endif
-
 Name: grub
 Version: 2.12
-Release: alt10
+Release: alt11
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -211,10 +205,12 @@ This package enables EFI signature verification.
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version[^]]\+/%version-%release/" configure.ac
 
-# Create ALT data to SBAT section
-echo "sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md" > sbat.csv
-echo "grub,%grub_gen_number,Free Software Foundation,grub,%version,https://www.gnu.org/software/grub/" >> sbat.csv
-echo "grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,https://git.altlinux.org/gears/g/grub.git" >> sbat.csv
+# Create sbat.csv file for ALT Linux grub image
+cat > sbat.csv <<EOF
+sbat,1,SBAT Version,sbat,1,https://github.com/rhboot/shim/blob/main/SBAT.md
+grub,%grub_gen_number,Free Software Foundation,grub,%version,https://www.gnu.org/software/grub/
+grub.altlinux,%alt_gen_number,ALT Linux,grub,%version-%release,https://git.altlinux.org/gears/g/grub.git
+EOF
 
 # Check gnulib version
 grep '^GNULIB_REVISION=%gnulib_version$' bootstrap.conf || exit 1
@@ -256,14 +252,21 @@ build_efi_image() {
 		extcmd keystatus procfs cryptodisk gcry_rijndael gcry_sha1 \
 		gcry_sha256 luks luks2 gcry_sha512 gcry_serpent gcry_twofish \
 		crypto pbkdf2 password_pbkdf2 echo regexp tftp \
-		f2fs exfat ntfs ntfscomp memdisk \
+		f2fs exfat ntfs ntfscomp memdisk raid5rec \
 		"$@"
 }
 
 %ifarch %ix86 x86_64
+# NB: not a fashion but the critical need to fit into 62 sectors.
+export CFLAGS="%optflags -Os"
+export CXXFLAGS="%optflags -Os"
+
 build_grub build-pc \
 	--with-platform=pc \
 #
+
+unset CFLAGS
+unset CXXFLAGS
 %endif
 
 %ifarch ppc64le
@@ -512,6 +515,19 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Mar 31 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt11
+- bump grub SBAT level to 5
+- cmd/search: Fix a possible NULL ptr dereference (closes: #53541)
+- efi: add raid5rec module to efi image
+- legacy: include raid5rec in core.img for RAID 4
+- add upstream security patch set 2025-02-18:
+  (fixes: CVE-2024-45774, CVE-2024-45775, CVE-2024-45776, CVE-2024-45777)
+  (fixes: CVE-2024-45778, CVE-2024-45779, CVE-2024-45780, CVE-2024-45781)
+  (fixes: CVE-2024-45782, CVE-2024-45783, CVE-2024-56737, CVE-2025-0622)
+  (fixes: CVE-2025-0624, CVE-2025-0677 CVE-2025-0678, CVE-2025-0684)
+  (fixes: CVE-2025-0685, CVE-2025-0686, CVE-2025-0689, CVE-2025-0690)
+  (fixes: CVE-2025-1118, CVE-2025-1125)
+
 * Wed Mar 12 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt10
 - enable ru.po file rebuild with translations for gnulib
 
