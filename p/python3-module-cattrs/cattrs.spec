@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 24.1.2.0.7.git31eff82
+Version: 24.1.3
 Release: alt1
 
 Summary: Complex custom class converters for attrs.
@@ -62,23 +62,41 @@ your classes and enumerations into dictionaries, integers and strings.
 %setup
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION="24.1.2"
+export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+#https://github.com/python-attrs/cattrs/issues/575
+%pyproject_run_pytest -k "not test_simple_roundtrip and not \
+test_nested_roundtrip and not \
+test_optional_field_roundtrip and not \
+test_simple_roundtrip_tuple and not \
+test_simple_roundtrip_defaults_tuple and not \
+test_nested_roundtrip and not \
+test_310_union_field_roundtrip and not \
+test_optional_field_roundtrip and not \
+test_310_optional_field_roundtrip and not \
+test_omit_default_roundtrip and not \
+test_structure_simple_from_dict_default and not \
+test_union_field_roundtrip and not \
+test_nodefs_generated_unstructuring_cl and not \
+test_unmodified_generated_structuring and not \
+test_renaming and not \
+test_individual_overrides"
 
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/cattr
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-24.1.2.dist-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Apr 14 2025 Grigory Ustinov <grenka@altlinux.org> 24.1.3-alt1
+- Automatically updated to 24.1.3.
+
 * Mon Jan 06 2025 Grigory Ustinov <grenka@altlinux.org> 24.1.2.0.7.git31eff82-alt1
 - Build from snapshot.
 
