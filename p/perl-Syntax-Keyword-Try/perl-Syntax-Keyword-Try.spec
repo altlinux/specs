@@ -2,7 +2,7 @@
 %define module_name Syntax-Keyword-Try
 #BuildRequires: perl(Future/AsyncAwait.pm) perl(Syntax/Keyword/Defer.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(threads.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(File/ShareDir.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(threads.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
@@ -12,7 +12,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.30
-Release: alt1
+Release: alt2
 Summary: a C<try/catch/finally> syntax for perl
 Group: Development/Perl
 License: perl
@@ -45,6 +45,9 @@ code.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.30-alt2
+- NMU: fixed build
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
 - automated CPAN update
 
