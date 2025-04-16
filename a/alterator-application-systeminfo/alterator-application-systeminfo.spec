@@ -24,7 +24,7 @@
 
 Name: alterator-application-systeminfo
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
 License: GPLv2+
@@ -46,60 +46,24 @@ BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: libtomlplusplus-devel
 
+Provides: alterator-interface-release_notes = %version-%release
+Provides: alterator-backend-release_notes = %version-%release
+Provides: alterator-application-release_notes = %version-%release
+Provides: alterator-interface-license = %version-%release
+Provides: alterator-backend-license = %version-%release
+Provides: alterator-application-license = %version-%release
+
+Obsoletes: alterator-interface-release_notes < 0.4.4-alt2
+Obsoletes: alterator-backend-release_notes < 0.4.4-alt2
+Obsoletes: alterator-application-release_notes < 0.4.4-alt2
+Obsoletes: alterator-interface-license < 0.4.4-alt2
+Obsoletes: alterator-backend-license < 0.4.4-alt2
+Obsoletes: alterator-application-license < 0.4.4-alt2
+
+Requires: alterator-module-executor >= 0.1.19
+
 %description
 ALT Systeminfo - Alterator application that shows information about system.
-
-%package -n alterator-interface-release_notes
-Summary: Alterator interface for release notes
-Group: System/Configuration/Other
-
-%description -n alterator-interface-release_notes
-%summary
-
-%package -n alterator-backend-release_notes
-Summary: Alterator backend for release notes
-Group: System/Configuration/Other
-Requires: alterator-interface-release_notes
-Requires: alterator-module-executor >= 0.1.19
-
-%description -n alterator-backend-release_notes
-%summary
-
-%package -n alterator-application-release_notes
-Summary: Alterator application for release notes
-Group: System/Configuration/Other
-Requires: alterator-interface-application >= 0.1.1
-Requires: alterator-backend-release_notes
-Requires: alterator-application-systeminfo >= 0.4.3
-
-%description -n alterator-application-release_notes
-%summary
-
-%package -n alterator-interface-license
-Summary: Alterator interface for license
-Group: System/Configuration/Other
-
-%description -n alterator-interface-license
-%summary
-
-%package -n alterator-backend-license
-Summary: Alterator backend for license
-Group: System/Configuration/Other
-Requires: alterator-interface-license
-Requires: alterator-module-executor >= 0.1.19
-
-%description -n alterator-backend-license
-%summary
-
-%package -n alterator-application-license
-Summary: Alterator application for showing license
-Group: System/Configuration/Other
-Requires: alterator-interface-application >= 0.1.1
-Requires: alterator-backend-license
-Requires: alterator-application-systeminfo >= 0.4.4
-
-%description -n alterator-application-license
-%summary
 
 %prep
 %setup
@@ -117,25 +81,17 @@ Requires: alterator-application-systeminfo >= 0.4.4
 %_bindir/*
 %doc LICENSE CHANGELOG.md
 
-%files -n alterator-interface-release_notes
 %files_alterator_interface release_notes1
-
-%files -n alterator-backend-release_notes
 %files_alterator_backend release-notes
-
-%files -n alterator-application-release_notes
 %files_alterator_application release-notes
-
-%files -n alterator-interface-license
 %files_alterator_interface license1
-
-%files -n alterator-backend-license
 %files_alterator_backend license
-
-%files -n alterator-application-license
 %files_alterator_application license
 
 %changelog
+* Wed Apr 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt2
+- Split unused subpackages with internal applications, interfaces and backends.
+
 * Wed Apr 09 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.4-alt1
 - Changed an incorrect display names of branches (closes: #53758).
 - Added support Cinnamon DE settings.
@@ -167,7 +123,7 @@ Requires: alterator-application-systeminfo >= 0.4.4
 * Sun Mar 09 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.1-alt1
 - New version.
 
-* Tue Mar 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
+* Fri Mar 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
 - New version.
 
 * Tue Mar 04 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.3-alt1
@@ -179,5 +135,5 @@ Requires: alterator-application-systeminfo >= 0.4.4
 * Thu Feb 20 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.1-alt1
 - New version.
 
-* Thu Oct 18 2024 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.0-alt1
+* Fri Oct 18 2024 Kirill Sharov <sheriffkorov@altlinux.org> 0.1.0-alt1
 - Initial build.
