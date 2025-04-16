@@ -3,8 +3,8 @@
 %define sover 20
 
 Name: liblouis
-Version: 3.28.0
-Release: alt2
+Version: 3.33.0
+Release: alt1
 Summary: Braille translation and back-translation library
 
 # LGPL-2.1-or-later: the project as a whole
@@ -16,15 +16,15 @@ Summary: Braille translation and back-translation library
 License: LGPL-2.1-or-later AND LGPL-2.0-or-later
 Group: Accessibility
 Url: http://liblouis.org
+VCS: https://github.com/liblouis/liblouis
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: hardlink
 BuildRequires: help2man
 BuildRequires: libyaml-devel
-BuildRequires: make
 BuildRequires: texinfo
 BuildRequires: texlive
 BuildRequires: texlive-collection-basic
@@ -191,6 +191,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %doc doc/%name.{html,txt,pdf}
 
 %changelog
+* Wed Apr 16 2025 Artem Semenov <savoptik@altlinux.org> 3.33.0-alt1
+- Build new version 3.33.0
+
 * Wed Jul 17 2024 Artem Semenov <savoptik@altlinux.org> 3.28.0-alt2
 - Renamed to data for the tables package
 
