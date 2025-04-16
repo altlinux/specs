@@ -5,7 +5,7 @@
 
 Name:       hedgewars
 Version:    1.0.2
-Release:    alt2
+Release:    alt3
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -20,6 +20,8 @@ Source:     %name-%version.tar
 Patch:      fix_non_inline_ShiftWorld.patch
 # https://github.com/hedgewars/hw/pull/74
 Patch2:     ffmpeg6.0-support.patch
+
+Patch3:     hedgewars-1.0.2-fix_build_with_cmake_4.0.patch
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
@@ -99,6 +101,7 @@ This package contains all the data files for %name.
 %setup
 %patch -p2
 %patch2 -p1
+%patch3 -p2
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
@@ -150,8 +153,11 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Apr 16 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt3
+- Fixed FTBFS with cmake 4.0.
+
 * Fri Sep 22 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.2-alt2
-- Add ffmpeg 6.0 support
+- Add ffmpeg 6.0 support.
 
 * Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Automatically updated to 1.0.2.
