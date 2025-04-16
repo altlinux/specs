@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 137.0
+Version: 137.0.2
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -386,6 +386,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Apr 15 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0.2-alt1
+- New version (137.0.2).
+- Security fixes:
+  + CVE-2025-3608: Race condition in nsHttpTransaction could lead to memory corruption
+
 * Tue Apr 01 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0-alt1
 - New version (137.0).
 - Security fixes:
