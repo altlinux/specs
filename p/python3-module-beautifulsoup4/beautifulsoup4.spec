@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.13.3
+Version: 4.13.4
 Release: alt1
 Summary: Screen-scraping library
 License: MIT
@@ -64,6 +64,9 @@ rm -rv %buildroot%python3_sitelibdir/%mod_name/tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 16 2025 Stanislav Levin <slev@altlinux.org> 4.13.4-alt1
+- 4.13.3 -> 4.13.4.
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 4.13.3-alt1
 - 4.13.1 -> 4.13.3.
 
