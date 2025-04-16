@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.1.13
+Version: 3.1.14
 Release: alt1.1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Apr 16 2025 Anton Midyukov <antohami@altlinux.org> 3.1.14-alt1.1
+- initinstall.d/90-pkg.sh: dedup components in source.list (Closes: 53762)
+
 * Fri Mar 21 2025 Ivan A. Melnikov <iv@altlinux.org> 3.1.13-alt1.1
 - NMU: drop missing function call from backned3/pkg-size
 
