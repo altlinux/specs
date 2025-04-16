@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-pine
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_need_version	6.12
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Apr 16 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.23-alt2
+- config-aarch64: CONFIG_AXP20X_POWER=y
+
 * Fri Apr 11 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.23-alt1
 - 6.12.23
 
