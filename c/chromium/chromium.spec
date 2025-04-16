@@ -4,6 +4,7 @@
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
+%global max_jobs 40
 
 %global llvm_version 19.1
 
@@ -23,7 +24,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        135.0.7049.84
+Version:        135.0.7049.95
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -81,6 +82,7 @@ Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-135-add-cfi-suppressions-for-pipewire-functions.patch
+Patch033: 0033-FEDORA-chromium-135-gperf.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
@@ -448,7 +450,7 @@ tools/gn/bootstrap/bootstrap.py --gn-gen-args="${gn_arg[*]}" --build-path=%targe
 %target/gn --script-executable=%__python3 gen --args="${gn_arg[*]}" %target
 
 n=%build_parallel_jobs
-[ "$n" -lt 32 ] || n=32
+[ "$n" -lt %max_jobs ] || n=%max_jobs
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
@@ -567,6 +569,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Apr 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.95-alt1
+- New version (135.0.7049.95).
+- Security fixes:
+  + CVE-2025-3619: Heap buffer overflow in Codecs.
+  + CVE-2025-3620: Use after free in USB.
+
 * Wed Apr 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.84-alt1
 - New version (135.0.7049.84).
 - Security fixes:
