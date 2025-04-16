@@ -8,7 +8,7 @@
 
 Name: 	  fpc
 Version:  3.2.3
-Release:  alt1
+Release:  alt2
 Epoch:    3
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -87,6 +87,13 @@ Patch36: fpc-alt-unlocalized-fpc-usage-in-fpcdocs.patch
 Patch37: fpc-alt-remove-Using-help.patch
 Patch38: hyperref-2022.patch
 Patch39: latex-docs-cyrillic-alt-fix.patch
+# https://gitlab.com/freepascal.org/fpc/source/-/merge_requests/593/diffs?commit_id=b3e8d88f681879522c29a4b80e36a982b1d050e1
+Patch100: 0001-GetMutableValue-and-TryGetMutableValue-for-fcl-stl.T.patch
+# https://gitlab.com/freepascal.org/fpc/source/-/merge_requests/583/commits
+Patch101: 0001-FT_Get_Sfnt_Name-and-related.patch
+Patch102: 0002-FT_Get_Sfnt_Table-and-related.patch
+Patch103: 0003-Make-FontID-public.patch
+Patch104: 0004-Add-TTT_HoriHeader.patch
 
 Requires: fpc-units-rtl
 Requires: fpc-compiler
@@ -178,6 +185,13 @@ popd
 %patch37 -p2
 %patch38 -p0
 %patch39 -p1
+pushd fpcsrc
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+popd
 
 %if_with sources
 cp -a fpcsrc{,.orig}
@@ -1046,6 +1060,15 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 3:3.2.3-alt2
+- NMU: Add upstream patches:
+  + GetMutableValue and TryGetMutableValue for
+    fcl-stl.TMap and rtl-generics.generics.TDictionary
+  + FT_Get_Sfnt_Name and related
+  + FT_Get_Sfnt_Table and related
+  + Make FontID public
+  + Add TTT_HoriHeader
+
 * Sat Dec 14 2024 Artem Kurashov <saahriktu@altlinux.org> 3:3.2.3-alt1
 - New version.
 - Add patches for documentation.
