@@ -1,12 +1,12 @@
 %def_enable snapshot
 %define _name g4music
-%define ver_major 4.3
+%define ver_major 4.4
 %define rdn_name com.github.neithern.%_name
 
 %def_disable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: Play your music elegantly
@@ -69,6 +69,9 @@ appstreamcli metainfo-to-news --format text data/app.metainfo.xml.in NEWS
 
 
 %changelog
+* Thu Apr 17 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
+- 4.4
+
 * Sun Feb 16 2025 Yuri N. Sedunov <aris@altlinux.org> 4.3.1-alt1
 - 4.3.1
 
