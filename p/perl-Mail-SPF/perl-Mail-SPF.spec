@@ -5,7 +5,7 @@
 %define module Mail-SPF
 
 Name: perl-%module
-Version: 3.20240206
+Version: 3.20240923
 Release: alt1
 
 Summary: Perl module that implements Sender Policy Framework
@@ -14,11 +14,6 @@ Group: Development/Perl
 
 URL: %CPAN %module
 Source0: http://www.cpan.org/authors/id/M/MB/MBRADSHAW/%{module}-%{version}.tar.gz
-
-# https://rt.cpan.org/Public/Bug/Display.html?id=78214
-Patch1:         Mail-SPF-v2.8.0-testsuite.patch
-
-
 
 BuildArch: noarch
 
@@ -32,7 +27,6 @@ Framework (SPF) e-mail sender authentication system.
 %prep
 %setup -q -n %{module}-%{version}
 # Work around test suite failures with Net::DNS ≥ 0.68 (CPAN RT#78214)
-%patch1
 rm t/90-author-pod-validation.t
 
 %build
@@ -45,13 +39,16 @@ rm t/90-author-pod-validation.t
 # Will change this later?
 
 %files
-%doc README LICENSE TODO Changes
+%doc README Changes
 %exclude %_bindir/spfquery
 %exclude %_bindir/spfd
 %exclude %_man1dir/spf*
 %perl_vendor_privlib/Mail/SPF*
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 3.20240923-alt1
+- automated CPAN update
+
 * Sat Feb 17 2024 Igor Vlasenko <viy@altlinux.org> 3.20240206-alt1
 - automated CPAN update
 
