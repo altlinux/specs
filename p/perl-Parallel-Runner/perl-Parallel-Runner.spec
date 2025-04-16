@@ -1,30 +1,37 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/Exception/LessClever.pm) perl-podlators
+BuildRequires: perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Parallel-Runner
-Version:	0.013
-Release:	alt3_27
+Version:	0.014
+Release:	alt1_3
 Summary:	An object to manage running things in parallel processes
-License:	GPL+ or Artistic
+License:	GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:		https://metacpan.org/release/Parallel-Runner
 Source0:	https://cpan.metacpan.org/authors/id/E/EX/EXODIST/Parallel-Runner-%{version}.tar.gz
-Patch0:		Parallel-Runner-0.013-T::E.patch
 BuildArch:	noarch
+# Module Build
+BuildRequires:	coreutils
+BuildRequires:	findutils
 BuildRequires:	rpm-build-perl
+BuildRequires:	perl-devel
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+# Module Runtime
 BuildRequires:	perl(Carp.pm)
 BuildRequires:	perl(Child.pm)
 BuildRequires:	perl(POSIX.pm)
-BuildRequires:	perl(Module/Build.pm)
 BuildRequires:	perl(strict.pm)
-BuildRequires:	perl(warnings.pm)
-BuildRequires:	perl(Test/Exception.pm)
-BuildRequires:	perl(Test/More.pm)
 BuildRequires:	perl(Time/HiRes.pm)
+BuildRequires:	perl(warnings.pm)
+# Test Suite
+BuildRequires:	perl(Test2/IPC.pm)
+BuildRequires:	perl(Test2/V0.pm)
 Source44: import.info
+# Dependencies
+# (none)
 
 %description
 There are several other modules to do this, you probably want one of them. This
@@ -46,25 +53,27 @@ exits.
 %prep
 %setup -q -n Parallel-Runner-%{version}
 
-# Use Test::Exception rather than Text::Exception::LessClever
-%patch0
-
 %build
-perl Build.PL installdirs=vendor
-./Build
+perl Makefile.PL INSTALLDIRS=vendor
+%make_build
 
 %install
-./Build install destdir=%{buildroot} create_packlist=0
-# %{_fixperms} $R%{buildroot}
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -delete
+# %{_fixperms} -c %{buildroot}
 
 %check
-./Build test
+RUN_KILL_TESTS=1 make test
 
 %files
-%doc CHANGES README
+%doc --no-dereference LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/Parallel/
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.014-alt1_3
+- converted for ALT Linux by srpmconvert tools
+
 * Wed Jul 13 2022 Igor Vlasenko <viy@altlinux.org> 0.013-alt3_27
 - to Sisyphus as perl-Sub-HandlesVia build dep
 
