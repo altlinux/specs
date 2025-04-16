@@ -2,7 +2,7 @@
 
 Name: libdatachannel
 Version: 0.22.3
-Release: alt1
+Release: alt2
 Summary: WebRTC network library featuring Data Channels, Media Transport, and WebSockets
 
 License: MPL-2.0
@@ -42,6 +42,9 @@ developing applications that use %name.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i -E 's/(std::.*<.*> .*)\{\};/\1={};/' examples/streamer/ArgParser.hpp
+%endif
 
 %build
 %cmake -DPREFER_SYSTEM_LIB=ON -DUSE_GNUTLS=ON -DUSE_NICE=ON
@@ -61,6 +64,9 @@ developing applications that use %name.
 %_libdir/%name.so
 
 %changelog
+* Wed Apr 16 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.22.3-alt2
+- e2k build fix
+
 * Sun Dec 08 2024 Anton Midyukov <antohami@altlinux.org> 0.22.3-alt1
 - new version (0.22.3) with rpmgs script
 
