@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-Epoch: 1
+Epoch: 2
 %define dist Time-Piece
 Name: perl-%dist
-Version: 1.3401
+Version: 1.36
 Release: alt1
 
 Summary: Object Oriented time objects
@@ -13,7 +13,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/E/ES/ESAYM/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Math/BigInt.pm)
 
 %description
 This module replaces the standard localtime and gmtime functions with
@@ -40,6 +40,9 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_autolib/Time
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 2:1.36-alt1
+- automated CPAN update
+
 * Tue Apr 14 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.3401-alt1
 - automated CPAN update
 
