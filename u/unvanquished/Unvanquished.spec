@@ -1,6 +1,6 @@
 Name: unvanquished
-Version: 0.55.2
-Release: alt2
+Version: 0.55.3
+Release: alt1
 
 Summary: An FPS/RTS hybrid game powered by the Daemon engine (a combination of ioq3 and XreaL)
 License: BSD-3-Clause and CC-BY-SA-4.0 and Zlib and MIT and GPL-2.0-or-later and GPL-3.0-or-later and FTL and CC-BY-SA-2.5
@@ -38,9 +38,7 @@ BuildRequires: libngtcp2-devel libnghttp3-devel
 Unvanquished is an arena game with RTS elements (you can build) in which two very different factions fight.
 
 %prep
-%setup
-tar -xf %SOURCE1 -C %_builddir/%name-%version/
-tar -xf %SOURCE2 -C %_builddir/%name-%version/
+%setup -a1 -a2
 
 %ifarch x86_64
  tar -xf %SOURCE3 -C daemon/external_deps/
@@ -150,6 +148,9 @@ install -Dm 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %doc *.md *.txt
 
 %changelog
+* Wed Apr 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.55.3-alt1
+- 0.55.2 -> 0.55.3
+
 * Mon Feb 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.55.2-alt2
 - rebuilt for x86_64, i586, aarch64 architectures
 
