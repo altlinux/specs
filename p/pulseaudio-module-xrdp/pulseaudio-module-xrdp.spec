@@ -1,8 +1,8 @@
 %define pulseaudio_version 17.0
 
 Name:     pulseaudio-module-xrdp
-Version:  0.7
-Release:  alt3
+Version:  0.8
+Release:  alt1
 
 Summary:  xrdp sink / source pulseaudio modules
 License:  Apache-2.0
@@ -76,6 +76,9 @@ rm -f %buildroot%_libdir/pulseaudio/modules/*.la
 %_libexecdir/pulseaudio-module-xrdp/load_pa_modules.sh
 
 %changelog
+* Wed Apr 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1
+- New version.
+
 * Wed Feb 14 2024 Andrey Cherepanov <cas@altlinux.org> 0.7-alt3
 - Use correct tag for Pulseaudio 17.0 (ALT #49328).
 
