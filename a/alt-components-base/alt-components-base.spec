@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed Apr 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.4-alt1
+- Add samba-ad-client-support to base and main sections of alt-domain and
+  alt-server editions respectively.
+
 * Sat Apr 12 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.3-alt1
 - components: remove mingetty package from base component
 - Fix editions:
