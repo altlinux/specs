@@ -1,7 +1,7 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(XS/Parse/Sublike.pm) perl-podlators
 # END SourceDeps(oneline)
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -18,7 +18,7 @@ BuildRequires: perl-podlators
 
 Name:           perl-Syntax-Keyword-Dynamically
 Version:        0.14
-Release:        alt1
+Release:        alt2
 Summary:        Dynamically change the value of a variable
 License:        GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:            https://metacpan.org/release/Syntax-Keyword-Dynamically
@@ -153,6 +153,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.14-alt2
+- NMU: fixed build
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
 - automated CPAN update
 
