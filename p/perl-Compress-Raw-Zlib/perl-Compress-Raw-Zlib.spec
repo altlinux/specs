@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Zlib
 Name: perl-%dist
-Version: 2.206
+Version: 2.213
 Release: alt1
 
 Summary: Low-level interface to the zlib compression library
@@ -26,16 +26,23 @@ rm -rv t/Test/
 # disable build dependency on IO-Compress
 sed -i- 's/^BEGIN$/if (0)/' t/compress/CompTestUtils.pm
 
+%if 0
+# old format; changed
 cat >config.in <<EOF
-BUILD_ZLIB = False
-INCLUDE = %_includedir
-LIB = %_libdir
-OLD_ZLIB = False
+OLD_ZLIB=False
+BUILD_ZLIB=False
+ZLIB_LIB=%{_libdir}
+ZLIB_INCLUDE=%{_includedir}
 GZIP_OS_CODE = 3
 USE_ZLIB_NG = False
 EOF
+%endif
 
 %build
+export OLD_ZLIB=False
+export BUILD_ZLIB=False
+export ZLIB_LIB=%{_libdir}
+export ZLIB_INCLUDE=%{_includedir}
 %perl_vendor_build
 
 %install
@@ -47,6 +54,9 @@ EOF
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 2.213-alt1
+- automated CPAN update
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 2.206-alt1
 - automated CPAN update
 
