@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -46,6 +46,9 @@ A command line tool for using alterator DBus objects.
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Wed Apr 16 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.7-alt1
+- New version
+
 * Thu Apr 10 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.6-alt1
 - New version
 - Changed versions in the installation dependencies
