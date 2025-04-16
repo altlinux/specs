@@ -1,4 +1,3 @@
-#define perl_bootstrap 0
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,14 +6,12 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(URI.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-TreeBuilder-LibXML
-Version:        0.26
-Release:        alt4_22
+Version:        0.28
+Release:        alt1_3
 Summary:        HTML::TreeBuilder and XPath compatible interface with libxml
-License:        GPL+ or Artistic
+License:        GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:            https://metacpan.org/release/HTML-TreeBuilder-LibXML
 Source0:        https://cpan.metacpan.org/authors/id/T/TO/TOKUHIROM/HTML-TreeBuilder-LibXML-%{version}.tar.gz
-Patch0:         HTML-TreeBuilder-LibXML-0.26-empty-string-test.patch
-
 BuildArch:      noarch
 BuildRequires:  rpm-build-perl
 BuildRequires:  perl(base.pm)
@@ -49,7 +46,6 @@ HTML::TreeBuilder::LibXML is drop-in-replacement for HTML::TreeBuilder::XPath.
 
 %prep
 %setup -q -n HTML-TreeBuilder-LibXML-%{version}
-%patch0
 
 %build
 /usr/bin/perl Build.PL --installdirs=vendor
@@ -69,6 +65,9 @@ HTML::TreeBuilder::LibXML is drop-in-replacement for HTML::TreeBuilder::XPath.
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.28-alt1_3
+- converted for ALT Linux by srpmconvert tools
+
 * Mon Jul 12 2021 Igor Vlasenko <viy@altlinux.org> 0.26-alt4_22
 - non-bootstrap build
 
