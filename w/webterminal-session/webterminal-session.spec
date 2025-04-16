@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 %K6init no_altplace
 
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Wed Apr 16 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.3-alt1
+- add chromium
+
 * Fri Mar 21 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.2-alt1
 - add --no-first-run startup option
 
