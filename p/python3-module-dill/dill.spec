@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.9
+Version: 0.4.0
 Release: alt1
 Summary: Serialize all of Python
 License: BSD
@@ -80,6 +80,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %_bindir/get_gprof
 
 %changelog
+* Wed Apr 16 2025 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.9 -> 0.4.0.
+
 * Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.3.9-alt1
 - 0.3.8 -> 0.3.9.
 
