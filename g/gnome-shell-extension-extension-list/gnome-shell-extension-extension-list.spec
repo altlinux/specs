@@ -1,20 +1,20 @@
 %def_enable snapshot
 
 %define _name extension-list
-%define ver_major 47
-%define beta .beta
+%define ver_major 48
+%define beta %nil
 %define uuid %_name@tu.berry
 %define xdg_name org.gnome.shell.extensions.%_name
 
 %define ego 3088/%_name
 # EGO=3088/extension-list sh cli/get-version.sh
-%define ego_ver 41
+%define ego_ver 42
 
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major
-Release: alt0.6%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 %define gettext_domain %name
 
@@ -44,7 +44,6 @@ Simple GNOME Shell extension manager in the top panel.
 
 %prep
 %setup -n %_name-%version%beta
-subst 's/@shell@/47", "48/' res/metadata.json.in
 
 %build
 %meson \
@@ -66,6 +65,9 @@ subst 's/@shell@/47", "48/' res/metadata.json.in
 %doc README.md
 
 %changelog
+* Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 47-alt0.6.beta
 - updated to 47.beta-7-g4f33257
 - added 48 to shell-version
