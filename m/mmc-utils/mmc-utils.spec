@@ -1,6 +1,6 @@
 Name: mmc-utils
-Version: 0.0.20240329
-Release: alt2
+Version: 0.0.20250310
+Release: alt1
 
 Summary: Tool for configuring MMC storage devices from userspace
 License: GPLv2
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 
 %build
 %add_optflags -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
-%make_build prefix=%_prefix
+%make_build C=0 prefix=%_prefix
 
 %install
 %make_install DESTDIR=%buildroot prefix=%_prefix install
@@ -28,6 +28,9 @@ Source: %name-%version.tar
 %_man1dir/mmc.1*
 
 %changelog
+* Wed Apr 16 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20250310-alt1
+- updated from git.2aef4cd
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20240329-alt2
 - rebuilt with gcc14
 
