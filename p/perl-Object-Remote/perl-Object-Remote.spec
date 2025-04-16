@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(Class/C3.pm) perl(Config.pm) perl(Eval/WithLexica
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.004001
+Version: 0.004004
 Release: alt1
 Summary: Call methods on objects in other processes or on other hosts
 Group: Development/Perl
@@ -15,6 +15,10 @@ Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
+
+# Log::Contextual does not have a default import list
+%add_findreq_skiplist */Object/Remote/Logging/LogAnyInjector.pm
+Requires: perl(Log/Contextual.pm)
 
 %description
 Object::Remote allows you to create an object in another process - usually
@@ -49,6 +53,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.004004-alt1
+- automated CPAN update
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.004001-alt1
 - automated CPAN update
 
