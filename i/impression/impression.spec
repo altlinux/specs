@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 3.3
+%define ver_major 3.4
 %define rdn_name io.gitlab.adhami3310.Impression
 
 %def_disable bootstrap
@@ -10,7 +10,7 @@
 
 Name: impression
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: Impression is a tool to create bootable drives
 License: GPL-3.0-or-later
@@ -19,7 +19,9 @@ Url: https://gitlab.com/adhami3310/Impression
 
 Vcs: https://gitlab.com/adhami3310/Impression.git
 
+# https://gitlab.com/adhami3310/Impression/-/merge_requests/88 (merged)
 Patch1: %name-3.3.0-alt-collect-distro-information.patch
+# hardcode ALT
 Patch2: %name-3.3.0-alt-add-alt-to-list.patch
 
 %if_disabled snapshot
@@ -53,7 +55,6 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %{?_enable_alt_patches:
-%patch1 -p1
 %patch2 -p1}
 
 %build
@@ -78,6 +79,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Tue Jan 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt2
 - qualimock@:
   rewrite osinfo-db parser to support multiple distro variants for one OS version
