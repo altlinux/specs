@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(diagnostics.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist IO-All
 Name: perl-%dist
 Version: 0.87
-Release: alt1
+Release: alt2
 
 Summary: IO::All of it to Graham and Damian!
 License: GPL or Artistic
@@ -42,6 +45,9 @@ rm t/os.t
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.87-alt2
+- NMU: fixed build
+
 * Wed Aug 02 2017 Igor Vlasenko <viy@altlinux.ru> 0.87-alt1
 - automated CPAN update
 
