@@ -16,9 +16,9 @@ BuildRequires: jpackage-default
 
 Name:           maven-resolver
 Epoch:          1
-Version:        1.6.1
-Release:        alt2_5jpp11
-License:        ASL 2.0
+Version:        1.6.2
+Release:        alt1jpp11
+License:        Apache-2.0
 Summary:        Apache Maven Artifact Resolver library
 URL:            https://maven.apache.org/resolver/
 Source0:        https://archive.apache.org/dist/maven/resolver/%{name}-%{version}-source-release.zip
@@ -138,6 +138,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Apr 16 2025 Anton Meleshnikov <alton@altlinux.org> 1:1.6.2-alt1jpp11
+- new version
+
 * Sun Jul 10 2022 Igor Vlasenko <viy@altlinux.org> 1:1.6.1-alt2_5jpp11
 - added proper Obsoletes/Confilcts:
 

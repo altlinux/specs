@@ -22,12 +22,12 @@ BuildRequires: jpackage-default
 
 Name:           maven
 Epoch:          1
-Version:        3.6.3
-Release:        alt5_10jpp11
+Version:        3.8.1
+Release:        alt1jpp11
 Summary:        Java project management and project comprehension tool
-# maven itself is ASL 2.0
+# maven itself is Apache-2.0
 # bundled slf4j is MIT
-License:        ASL 2.0 and MIT
+License:        Apache-2.0 and MIT
 URL:            https://maven.apache.org/
 BuildArch:      noarch
 
@@ -259,6 +259,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Mon Apr 14 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.1-alt1jpp11
+- new version
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt5_10jpp11
 - maven-openjdkXX support
 
