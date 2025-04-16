@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst/Runtime.pm) perl(Data/DPath.pm) perl(DateTime.pm) perl(DateTime/Format/DateParse.pm) perl(File/Find/Rule.pm) perl(File/stat.pm) perl(FindBin.pm) perl(Hash/Merge.pm) perl(Moose/Role.pm) perl(Perl6/Junction.pm) perl(Pod/Usage.pm) perl(Test/WWW/Mechanize/Catalyst.pm) perl(XML/Feed.pm) perl(YAML.pm) perl(common/sense.pm) perl(namespace/autoclean.pm) perl-devel perl-podlators
+BuildRequires: perl(Catalyst/Runtime.pm) perl(Data/DPath.pm) perl(DateTime.pm) perl(DateTime/Format/DateParse.pm) perl(File/Find/Rule.pm) perl(File/stat.pm) perl(FindBin.pm) perl(Hash/Merge.pm) perl(Moose/Role.pm) perl(Perl6/Junction.pm) perl(Pod/Usage.pm) perl(Test/WWW/Mechanize/Catalyst.pm) perl(XML/Feed.pm) perl(YAML.pm) perl(common/sense.pm) perl(namespace/autoclean.pm) perl-devel perl-podlators perl(Text/Table.pm)
 # END SourceDeps(oneline)
 BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Simple.pm) perl(DBIx/Class/TimeStamp.pm) perl(DBD/SQLite.pm) perl(Tapper/Cmd/Init.pm) perl(Tapper/Base.pm)
 %define upstream_name    Tapper-CLI
 %define upstream_version 5.0.4
 
 Name:       perl-%{upstream_name}
-Version:    5.0.7
-Release:    alt2
+Version:    5.0.8
+Release:    alt1
 %if %release == alt3nt
 %define _without_test 1
 %endif
@@ -18,7 +18,6 @@ License:    BSD
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
 Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
-Patch: Tapper-CLI-5.0.7-no-given.patch
 
 BuildRequires: perl(App/Cmd.pm)
 BuildRequires: perl(App/Cmd/Command.pm)
@@ -71,7 +70,6 @@ Command line tools for Tapper.
 
 %prep
 %setup -q -n %{upstream_name}-%{version}
-%patch -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -91,6 +89,9 @@ Command line tools for Tapper.
 %_man1dir/tapper*
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 5.0.8-alt1
+- automated CPAN update
+
 * Wed Dec 06 2023 Igor Vlasenko <viy@altlinux.org> 5.0.7-alt2
 - perl 5.38: Tapper-CLI-5.0.7-no-given.patch
 
