@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(diagnostics.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module SOAP-WSDL
 
 Name: perl-%module
 Version: 3.004
-Release: alt2
+Release: alt3
 
 Summary: SOAP-WSDL provides a SOAP client with WSDL support
 License: Perl
@@ -44,6 +47,9 @@ SOAP-WSDL provides a SOAP client with WSDL support.
 %perl_vendor_privlib/SOAP/*
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 3.004-alt3
+- NMU: fixed build
+
 * Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 3.004-alt2
 - fixed build
 
