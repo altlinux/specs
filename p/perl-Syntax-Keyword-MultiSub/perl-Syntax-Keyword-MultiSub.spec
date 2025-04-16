@@ -2,13 +2,13 @@
 %define module_name Syntax-Keyword-MultiSub
 #BuildRequires: perl(Future/AsyncAwait.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(File/ShareDir.pm) perl(Module/Build.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.04
-Release: alt1
+Release: alt2
 Summary: multiple dispatch on subroutines
 Group: Development/Perl
 License: perl
@@ -47,6 +47,9 @@ rm -f t/01multi.t
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 0.04-alt2
+- NMU: fixed build
+
 * Fri Jul 28 2023 Igor Vlasenko <viy@altlinux.org> 0.04-alt1
 - automated CPAN update
 
