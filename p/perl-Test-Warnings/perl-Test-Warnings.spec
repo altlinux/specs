@@ -21,7 +21,7 @@ BuildRequires: perl-podlators
 %endif
 
 Name:		perl-Test-Warnings
-Version:	0.033
+Version:	0.038
 Release:	alt1
 Summary:	Test for warnings and the lack of them
 License:	GPL+ or Artistic
@@ -103,8 +103,12 @@ make test
 %doc LICENCE examples
 %doc Changes CONTRIBUTING README examples/
 %{perl_vendor_privlib}/Test/
+%{perl_vendor_privlib}/Test2/
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.038-alt1
+- automated CPAN update
+
 * Fri Jan 26 2024 Igor Vlasenko <viy@altlinux.org> 0.033-alt1
 - automated CPAN update
 
