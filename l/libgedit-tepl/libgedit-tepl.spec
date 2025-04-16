@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 6.12
+%define ver_major 6.13
 %define api_ver 6
 %define namespace Tepl
 
@@ -29,13 +29,13 @@ Source: %name-%version.tar
 #Provides: libtepl = %EVR
 
 %define meson_ver 0.64
-%define glib_ver 2.64
+%define glib_ver 2.80
 %define gtk_doc_ver 1.0
 %define gtk_ver 3.24
 %define handy_ver 1.6
-%define gtksource_ver 299.4.0
-%define amtk_ver 5.9.0
-%define gfls_ver 0.2.0
+%define gtksource_ver 299.5
+%define amtk_ver 5.9.1
+%define gfls_ver 0.3.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson >= %meson_ver
@@ -170,6 +170,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 6.13.0-alt1
+- 6.13.0
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 6.12.0-alt1
 - 6.12.0
 

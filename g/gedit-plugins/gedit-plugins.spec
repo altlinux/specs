@@ -1,15 +1,16 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 48
 %define beta %nil
-%def_enable python
+# removed python plugins since 48.2
+%def_disable python
 # removed since 3.36
 %def_disable zeitgeist
 %define gedit_pluginsdir %_libdir/gedit/plugins
-%add_python3_path %gedit_pluginsdir
+%{?_enable_python:%add_python3_path %gedit_pluginsdir}
 
 Name: gedit-plugins
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Plugins for GEdit
@@ -32,8 +33,8 @@ Source: %name-%version.tar
 %define vte_ver 0.38
 
 Requires: gedit >= %ver_major
-Requires: libpeas-python3-loader
-Requires: libvte3-gir >= %vte_ver
+%{?_enable_python:Requires: libpeas-python3-loader
+Requires: libvte3-gir >= %vte_ver}
 %{?_enable_zeitgeist:Requires: zeitgeist}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-gnome
@@ -63,7 +64,7 @@ allows gEdit to be extended to support many features while remaining
 small at its core, multiple document editing through the use of a
 'tabbed' notebook and many more functions.
 
-This package contains various plugins for gEdit, including Charmap, Terminal, and others.
+This package contains various plugins for gEdit.
 
 %prep
 %setup -n %name-%version%beta
@@ -77,17 +78,20 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %find_lang --with-gnome --output=%name.lang gedit %name
 
 %files -f %name.lang
-%dir %_datadir/gedit/plugins
-%_datadir/gedit/plugins/*
+%{?_enable_python:%dir %_datadir/gedit/plugins
+%_datadir/gedit/plugins/*}
 %gedit_pluginsdir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.drawspaces.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.terminal.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.wordcompletion.gschema.xml
+%{?_enable_python:%config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.terminal.gschema.xml}
 #%config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.translate.gschema.xml
 %_datadir/metainfo/gedit-*.metainfo.xml
 
 
 %changelog
+* Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2 (removed python plugins)
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

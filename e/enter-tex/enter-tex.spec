@@ -1,5 +1,5 @@
-%def_disable snapshot
-%define ver_major 3.47
+%def_enable snapshot
+%define ver_major 3.48
 %define oldname gnome-latex
 %define xdg_name org.gnome.enter_tex
 
@@ -30,7 +30,7 @@ Requires: %_bindir/latexmk dconf
 
 %define gtk_ver 3.24
 %define gtksource_ver 299.3.0
-%define tepl_ver 6.11.0
+%define tepl_ver 6.13
 %define amtk_ver 5.9.0
 %define vala_ver 0.46.5
 
@@ -110,6 +110,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 3.48.0-alt1
+- 3.48.0
+
 * Mon Sep 16 2024 Yuri N. Sedunov <aris@altlinux.org> 3.47.0-alt1
 - 3.47.0
 

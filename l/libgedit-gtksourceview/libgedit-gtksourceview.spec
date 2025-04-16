@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 299
 %define api_ver 300
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-gtksourceview
-Version: %ver_major.4.0
+Version: %ver_major.5.0
 Release: alt1
 
 Summary: Gedit Technology - Source code editing widget
@@ -157,6 +157,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Apr 08 2025 Yuri N. Sedunov <aris@altlinux.org> 299.5.0-alt1
+- 299.5.0
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 299.4.0-alt1
 - 299.4.0
 

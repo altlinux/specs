@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 %set_verify_elf_method unresolved=relaxed
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 48
 %define beta %nil
-%define lib_ver 48.1
+%define lib_ver 48.2
 %define api_ver 3.0
 %define namespace Gedit
 %def_enable plugins
@@ -13,23 +13,19 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPL-2.0-or-later and GPL-3.0-or-later and LGPL-3.0-or-later
 Group: Editors
-Url: https://gedit-technology.github.io/apps/gedit
+Url: https://gedit-text-editor.org
 
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
-
-%{?_enable_python:%py3_provides gedit}
-%define  gedit_pluginsdir %_libdir/gedit/plugins
-%add_python3_path %gedit_pluginsdir
 
 %define pkglibdir %_libdir/%name
 %define pkgdatadir %_datadir/%name
@@ -44,13 +40,15 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define gspell_ver 1.0.0
 %define soup_ver 2.60.0
 
+#Obsoletes: %name-plugins < 48.2
+#Provides: %name-plugins = %EVR
+
 Requires: %name-data = %EVR
 Requires: %name-gir = %EVR
 Requires: typelib(Peas) = 1.0 typelib(Gdk) = 3.0
-Requires: libpeas-python3-loader
 Requires: dconf gnome-icon-theme gvfs zenity
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson yelp-tools %_bindir/appstream-util
 BuildRequires: desktop-file-utils >= 0.22
 BuildRequires: gtk-doc >= 1.0
@@ -64,10 +62,6 @@ BuildRequires: libgedit-gtksourceview-devel >= %gtksourceview_ver
 BuildRequires: libgspell-devel >= %gspell_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libattr-devel libxml2-devel gsettings-desktop-schemas-devel
-%if_enabled plugins
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-pygobject3-devel
-%endif
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel
 BuildRequires: libgedit-gtksourceview-gir-devel libgedit-tepl-gir-devel}
 
@@ -183,8 +177,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_libdir/lib%name-%lib_ver.so
 %dir %gedit_pluginsdir
 %gedit_pluginsdir/*
-%{?_enable_plugins:%python3_sitelibdir_noarch/gi/overrides/Gedit.py*}
-%{?_enable_plugins:%python3_sitelibdir_noarch/gi/overrides/__pycache__/}
 
 %files data -f %name.lang
 %pkgdatadir/
@@ -216,6 +208,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Wed Apr 16 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2 (no more python plugins)
+
 * Sun Dec 08 2024 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
