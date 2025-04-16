@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Alien-Libxml2
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Alien/Base.pm) perl(Alien/Build.pm) perl(Alien/Build/MM.pm) perl(Alien/Build/Plugin/Build/SearchDep.pm) perl(Alien/Build/Plugin/Prefer/BadVersion.pm) perl(Config.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/Alien.pm) perl(Test2/V0.pm) perl(base.pm) pkgconfig(libxml-2.0) perl(Alien/Build/Plugin/Download/GitLab.pm)
+BuildRequires: perl(Alien/Base.pm) perl(Alien/Build.pm) perl(Alien/Build/MM.pm) perl(Alien/Build/Plugin/Build/SearchDep.pm) perl(Alien/Build/Plugin/Download/GitLab.pm) perl(Alien/Build/Plugin/Prefer/BadVersion.pm) perl(Config.pm) perl(ExtUtils/CBuilder.pm) perl(ExtUtils/MakeMaker.pm) perl(HTTP/Tiny.pm) perl(IO/Socket/SSL.pm) perl(Mozilla/CA.pm) perl(Net/SSLeay.pm) perl(Test/Alien.pm) perl(Test2/V0.pm) perl(base.pm) pkgconfig(libxml-2.0)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.19
+Version: 0.20
 Release: alt1
 Summary: Install the C libxml2 library on your system
 Group: Development/Perl
@@ -25,6 +25,10 @@ while.
 %prep
 %setup -q -n %{module_name}-%{version}
 
+%if "%{version}" == "0.20"
+sed -i /2\.12\./d alienfile
+%endif
+
 %build
 %perl_vendor_build
 
@@ -37,6 +41,9 @@ while.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
+- automated CPAN update
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
 - automated CPAN update
 
