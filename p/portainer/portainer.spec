@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.28.1
+Version: 2.29.0
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -59,7 +59,7 @@ go build \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=c4ca049ab8f11b4966dbb077bc1875971a16cadf' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=730e05f40c874b1eeb9e7d9454f1cad1691386c6' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %endif
@@ -106,6 +106,14 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Wed Apr 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.29.0-alt1
+- New version 2.29.0.
+- Fixes:
+  + CVE-2025-22868.
+  + CVE-2025-30204.
+  + CVE-2025-32386.
+  + CVE-2025-32387.
+
 * Thu Mar 20 2025 Leontiy Volodin <lvol@altlinux.org> 2.28.1-alt1
 - New version 2.28.1.
 - Prevented install conflict between docker-cli and podman-docker.
