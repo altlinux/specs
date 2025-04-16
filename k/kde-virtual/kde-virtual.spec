@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.5
+Version: 6.0.6
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -82,19 +82,6 @@ Provides: kde-video-player-dragon = %EVR
 Requires: kde-common
 Requires: dragon
 %description -n kde-video-player-2-dragon
-%summary
-
-%package -n kde-video-player-3-kaffeine
-Group: Graphical desktop/KDE
-Summary: Kaffeine video player
-Provides: kde5-video-player-3-kaffeine = %EVR
-Obsoletes: kde5-video-player-3-kaffeine < %EVR
-#
-Provides: kde-video-player = %EVR
-Provides: kde-video-player-kaffeine = %EVR
-Requires: kde-common
-Requires: kde5-kaffeine
-%description -n kde-video-player-3-kaffeine
 %summary
 
 %package -n kde-video-player-4-smplayer
@@ -334,7 +321,6 @@ Requires: lightdm-kde-greeter dm-tool
 
 %files -n kde-video-player-0-dummy
 %files -n kde-video-player-2-dragon
-%files -n kde-video-player-3-kaffeine
 %files -n kde-video-player-4-smplayer
 %files -n kde-video-player-5-haruna
 
@@ -363,6 +349,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Wed Apr 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.6-alt1
+- clean requires
+
 * Thu Oct 24 2024 Sergey V Turchin <zerg@altlinux.org> 6.0.5-alt1
 - update requires for Apps
 
