@@ -4,7 +4,7 @@
 
 Name: calligra
 Version: 4.0.1
-Release: alt2
+Release: alt2.1
 #Epoch: 0
 %K6init no_altplace
 %define libname lib%name
@@ -61,6 +61,7 @@ BuildRequires: kde6-kdiagram-devel
 BuildRequires: kf6-kcalendarcore-devel akonadi-devel akonadi-contacts-devel
 BuildRequires: okular-devel
 #BuildRequires: LibreOffice-still-sdk
+BuildRequires: fontconfig-devel libfreetype-devel
 
 %description
 %summary.
@@ -187,6 +188,9 @@ pushd words/templates/Wordprocessing >/dev/null
 ls | grep -E ".A4" | xargs -I {} \
     echo 'sed -i "s|{}||" CMakeLists.txt; rm -f {}' | sh
 popd >/dev/null
+
+subst "s|VERSION 3.16|VERSION 3.5|" CMakeLists.txt
+subst "s|cmake_policy(SET CMP0022 OLD)||" CMakeLists.txt
 
 %build
 %K6cmake \
@@ -397,6 +401,10 @@ done
 %exclude %_K6lib/libkookularGenerator_odt.so*
 
 %changelog
+* Thu Apr 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt2.1
+- NMU:
+  + fixed FTBFS
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 4.0.1-alt2
 - update build requires
 
