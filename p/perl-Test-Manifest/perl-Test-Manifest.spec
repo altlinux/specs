@@ -4,7 +4,7 @@
 %define m_name		Test::Manifest
 %define m_author_id	BDFOY
 Name: perl-%module
-Version: 2.025
+Version: 2.026
 Release: alt1
 
 Summary: Interact with a t/test_manifest file
@@ -40,6 +40,9 @@ right value for MakeMaker to do the right thing.
 %doc Changes
 
 %changelog
+* Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 2.026-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.025-alt1
 - automated CPAN update
 
