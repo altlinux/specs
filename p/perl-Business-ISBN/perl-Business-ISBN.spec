@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Business-ISBN
 Name: perl-%dist
-Version: 3.011
+Version: 3.012
 Release: alt1
 
 Summary: work with International Standard Book Numbers
@@ -35,6 +35,9 @@ None.
 %perl_vendor_privlib/Business*
 
 %changelog
+* Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 3.012-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 3.011-alt1
 - automated CPAN update
 
