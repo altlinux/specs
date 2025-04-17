@@ -3,8 +3,8 @@
 %define nameU com.vixalien.sticky
 
 Name:    sticky
-Version: 0.2.6
-Release: alt3
+Version: 0.2.7
+Release: alt1
 
 Summary: A simple sticky notes app for GNOME
 License: MIT
@@ -29,10 +29,7 @@ BuildRequires: libgjs-devel yarn meson
 Sticky Notes is a simple note taking application for the GNOME desktop. It is written in GJS and uses GTK4.
 
 %prep
-%setup
-
-tar -xf %SOURCE1 -C %_builddir/%name-%version/
-tar -xf %SOURCE2 -C %_builddir/%name-%version/
+%setup -a1 -a2
 
 %ifarch aarch64
  rm node_modules/.yarn-integrity
@@ -61,6 +58,9 @@ tar -xf %SOURCE2 -C %_builddir/%name-%version/
 %doc *.md
 
 %changelog
+* Thu Apr 17 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.7-alt1
+- 0.2.6 -> 0.2.7
+
 * Tue Feb 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.2.6-alt3
 - rebuilt for x86_64 and aarch64 architectures
 
