@@ -7,8 +7,8 @@
 %define realname DevIL
 
 Name: devil
-Version: 1.7.8
-Release: alt6
+Version: 1.8.0
+Release: alt1
 Summary: Cross-platform image loading and manipulation toolkit
 Group: System/Libraries
 License: LGPLv2+
@@ -16,29 +16,29 @@ Url: http://openil.sourceforge.net
 
 Source: %name-%version.tar
 
-Patch0: devil-1.7.8-alt-png_set_expand_gray.patch
-Patch1: devil-1.7.8-deb-CVE-2009-3994.patch
-Patch2: devil-deb-FTBFS-il.h.patch
-Patch3: devil-1.7.8-fedora-jasper2.patch
-Patch4: devil-1.7.8-alt-fix-missing-include.patch
+Patch0: devil-1.8.0-rosa-e2k-fix-lcc-with-lcc-confusion.patch
+Patch1: devil-1.8.0-rosa-jasper.patch
+Patch2: devil-1.8.0-rosa-devel-jasper3.patch
+Patch3: devil-1.8.0-openmandriva-sonames.patch
 
-BuildRequires: gcc-c++ libSDL-devel liballegro-devel libjpeg-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
+BuildRequires: libSDL-devel liballegro-devel libjpeg-devel
 BuildRequires: liblcms2-devel libmng-devel libpng-devel libtiff-devel zlib-devel
 BuildRequires: libGL-devel libGLU-devel libGLUT-devel libX11-devel
 BuildRequires: openexr-devel libjasper-devel libICE-devel libXext-devel
 BuildRequires: libXrender-devel libSM-devel libXmu-devel libXi-devel
+BuildRequires: libsquish-devel
 
 %description
-Developer's Image Library (DevIL) is a programmer's library to develop
-applications with very powerful image loading capabilities, yet is easy
-for a developer to learn and use. Ultimate control of images is left
-to the developer, so unnecessary conversions, etc. are not performed.
-DevIL utilizes a simple, yet powerful, syntax.
-DevIL can load, save, convert, manipulate, filter and display a wide
-variety of image formats.
+Developer's Image Library (DevIL) is an Open Source image library
+whose distribution is done under the terms of the GNU LGPL license.
+DevIL offers you a simple way to implement loading, manipulating, filtering,
+converting, displaying, saving from/to several different image formats in your
+own project.
 
 %package -n lib%name
-Summary: Cross-platform image loading and manipulation toolkit.
+Summary: Libraries needed for programs using DevIL.
 Group: System/Libraries
 
 %description -n lib%name
@@ -60,14 +60,6 @@ Developer's Image Library (DevIL) is a programmer's library to develop
 applications with very powerful image loading capabilities, yet is easy
 for a developer to learn and use. This package contains development files.
 
-%package -n lib%name-devel-static
-Summary: DevIL development static files.
-Group: Development/C++
-Requires: lib%name-devel = %EVR
-
-%description -n lib%name-devel-static
-DevIL development static files.
-
 %package -n lib%name-doc
 Summary: DevIL documentation
 Group: Development/Documentation
@@ -77,30 +69,42 @@ Developer's Image Library (DevIL) is a programmer's library to develop
 applications with very powerful image loading capabilities, yet is easy
 for a developer to learn and use. This package contains documentation
 
+%package utils
+# version 1.8.0 use cmake for build, ilur not builded (ilur source presents in src)
+# pkg reserved for next release!
+Summary:	Tools provided by DevIL
+Group:		System/Libraries
+Provides:	%name = %EVR
+
+%description utils
+This package contains tools provided by DevIL.
+
 %prep
 %setup
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p2
+%ifarch %ix86
+%patch2 -R -p2
+%endif
+
+sed -i \
+    -e 's|lib$|%_libdir|g' \
+    src-IL/CMakeLists.txt src-ILU/CMakeLists.txt src-ILUT/CMakeLists.txt
+sed -i \
+    -e 's|lib\/|%_libdir\/|g' \
+    src-IL/CMakeLists.txt src-ILU/CMakeLists.txt src-ILUT/CMakeLists.txt
+sed -i \
+    -e 's/@VERSION@/%version/' -e 's!/lib$!%_libdir!' \
+    src-IL/pkgconfig/IL.pc.cmake.in src-ILU/pkgconfig/ILU.pc.cmake.in src-ILUT/pkgconfig/ILUT.pc.cmake.in
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64 -Wno-error=incompatible-pointer-types
 
-%configure \
-	--disable-win32 \
-	--disable-directx \
-	--with-pic \
-	--enable-ILU \
-	--enable-ILUT
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall devildir=%buildroot%_datadir/%name
-rm -rf %buildroot%_infodir/*
+%cmake_install
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -109,15 +113,17 @@ rm -rf %buildroot%_infodir/*
 %_libdir/*.so
 %_includedir/IL
 %_pkgconfigdir/*
-%_bindir/*
-
-%files -n lib%name-devel-static
-%_libdir/*.a
 
 %files -n lib%name-doc
-%doc README Libraries.txt TODO CREDITS AUTHORS
+%doc README.md Libraries.txt CREDITS AUTHORS
+
+%files utils
+%_bindir/ilur
 
 %changelog
+* Mon Apr 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Fri Apr 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.7.8-alt6
 - NMU: fix FTBFS
 
