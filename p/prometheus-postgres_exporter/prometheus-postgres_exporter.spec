@@ -1,7 +1,7 @@
 %global import_path github.com/prometheus-community/prometheus-postgres_exporter
 Name:    prometheus-postgres_exporter
 Version: 0.17.1
-Release: alt1
+Release: alt2
 
 Summary: A PostgreSQL metric exporter for Prometheus
 License: Apache-2.0
@@ -13,28 +13,68 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
-BuildRequires: promu
+Source2: postgres_exporter.yml
+Source3: %name.sysconfig
+Source4: %name.service
+Source5: %name.socket
+
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang
+
+Requires(pre): prometheus-common
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 tar xf %SOURCE1
 
 %build
-make common-build PROMU=/usr/bin/promu
+export BUILDDIR="$PWD/.gopath"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+export GOFLAGS="-mod=vendor"
+%golang_prepare
+#promu build
+export BUILDTAGS="netgo"
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+
+%golang_build cmd/postgres_exporter
 
 %install
-install -Dpm 0755 postgres_exporter %buildroot%_bindir/postgres_exporter
+export BUILDDIR="$PWD/.gopath"
+#export GOPATH="%go_path"
+export IGNORE_SOURCES=1
+
+%golang_install
+
+mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus}}
+install -m0644 %SOURCE2 %buildroot%_sysconfdir/prometheus/postgres_exporter.yml
+install -m0644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
+install -m0644 %SOURCE5 %buildroot%_unitdir/%name.socket
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
 %doc README.md
 %_bindir/postgres_exporter
+%_unitdir/%name.*
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/prometheus/postgres_exporter.yml
 
 %changelog
+* Thu Apr 17 2025 Alexey Shabalin <shaba@altlinux.org> 0.17.1-alt2
+- Add default configs and systemd units.
+
 * Thu Feb 27 2025 Andrey Cherepanov <cas@altlinux.org> 0.17.1-alt1
 - New version.
 
