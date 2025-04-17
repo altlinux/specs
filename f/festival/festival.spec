@@ -14,7 +14,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt0.5
+Release:	alt0.6
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs el file is GPL+, there is one TCL licensed source file, and
@@ -173,6 +173,7 @@ Patch112:        speech_tools-1.2.95-config-warn-on-suse.patch
 
 %if_without bootstrap
 Requires:	festvox
+Requires:	mbrola
 %endif
 
 # Automatically added by buildreq on Mon Sep 25 2006
@@ -741,6 +742,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Thu Apr 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.5-alt0.6
+- add R: mbrola (ALT #33495, #40140, #45257)
+
 * Thu Mar 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.5-alt0.5
 - NMU: fix FTBFS with gcc14
 
