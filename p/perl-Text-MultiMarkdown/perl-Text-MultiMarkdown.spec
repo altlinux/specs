@@ -19,7 +19,7 @@ Epoch: 1
 %define _enable_test 1
 
 Name: perl-Text-MultiMarkdown
-Version: 1.004
+Version: 1.005
 Release: alt1
 
 Summary: Convert MultiMarkdown syntax to (X)HTML
@@ -71,6 +71,9 @@ export TEST_POD=1
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 1:1.005-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1:1.004-alt1
 - automated CPAN update
 
