@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.8
+Version: 6.5.10
 Release: alt1
 
 Summary: A more user-friendly system monitor
@@ -15,9 +15,10 @@ Url: https://github.com/linuxdeepin/deepin-system-monitor
 Vcs: git://github.com/linuxdeepin/deepin-system-monitor.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch0: deepin-system-monitor-6.5.8-alt-fix-GNUInstallDirs.patch
-Patch1: deepin-system-monitor-6.0.12-alt-fix-build-gcc13.patch
-Patch2: deepin-system-monitor-6.0.12-alt-fix-build-ppc64le.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-system-monitor-6.5.8-alt-fix-GNUInstallDirs.patch
+Patch2: deepin-system-monitor-6.0.12-alt-fix-build-gcc13.patch
+Patch3: deepin-system-monitor-6.0.12-alt-fix-build-ppc64le.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-build-xdg desktop-file-utils rpm-macros-dqt6
 # Automatically added by buildreq on Thu Mar 13 2025
@@ -122,6 +123,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.10-alt1
+- New version 6.5.10.
+
 * Thu Mar 13 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.8-alt1
 - New version 6.5.8.
 - Switched to dqt6.
