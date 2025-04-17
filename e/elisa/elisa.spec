@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 24.12.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -23,6 +23,8 @@ Patch1: alt-install.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
+BuildRequires: libvlc-devel
+#BuildRequires: https://gitlab.com/homeautomationqt/upnp-player-qt
 BuildRequires: qt6-declarative-devel qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: kf6-kcmutils-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel
 BuildRequires: kf6-kdoctools-devel kf6-kfilemetadata-devel kf6-ki18n-devel kf6-kio-devel
@@ -62,8 +64,8 @@ Requires: %name-common
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-sed -i '/find_package.*LIBVLC/s|LIBVLC|LIBVLC_disabled|' CMakeLists.txt
-sed -i '/find_package.*KF6Baloo/s|KF6Baloo|KF6Baloo_disabled|' CMakeLists.txt
+#sed -i '/find_package.*LIBVLC/s|LIBVLC|LIBVLC_disabled|' CMakeLists.txt
+#sed -i '/find_package.*KF6Baloo/s|KF6Baloo|KF6Baloo_disabled|' CMakeLists.txt
 sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 
 %build
@@ -97,6 +99,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 
 
 %changelog
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
+- update build requires
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
