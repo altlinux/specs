@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt6
+Release: alt7
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -136,8 +136,8 @@ sed -i 's@MCAD/__init__.py@MCAD/gears.scad@' tests/CMakeLists.txt
 
 # tests
 pushd tests
-cmake -DPYTHON_EXECUTABLE:STRING=%__python3
-%make_build
+%cmake -DPYTHON_EXECUTABLE:STRING=%__python3
+%cmake_build
 popd
 
 %install
@@ -180,6 +180,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2021.01-alt7
+- fix build with cmake >= 4.0 (use macros %%cmake)
+
 * Tue Feb 25 2025 Anton Midyukov <antohami@altlinux.org> 2021.01-alt6
 - Fix build with CGAL >= 6.0
 
