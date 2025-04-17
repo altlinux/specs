@@ -3,12 +3,13 @@
 
 Name: lib3mf
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: lib3mf is an implementation of the 3D Manufacturing Format file standard
 License: BSD-2-Clause
 Group: Graphics
 Url: https://github.com/3MFConsortium/lib3mf
+Vcs: https://github.com/3MFConsortium/lib3mf.git
 
 # Source-url: https://github.com/3MFConsortium/lib3mf/archive/v%version/lib3mf-%version.tar.gz
 Source: %name-%version.tar
@@ -21,8 +22,8 @@ BuildRequires: zlib-devel
 BuildRequires: libssl-devel
 
 # fot tests
-BuildRequires: libgtest-devel
-BuildRequires: ctest
+#BuildRequires: libgtest-devel
+#BuildRequires: ctest
 
 %description
 lib3mf is a C++ implementation of the 3D Manufacturing Format standard.
@@ -57,7 +58,7 @@ sed -i 's/ -std=c++11//' CMakeLists.txt
 
 %build
 %cmake \
-	-DLIB3MF_TESTS=ON \
+	-DLIB3MF_TESTS=OFF \
 	-DUSE_INCLUDED_ZLIB=OFF \
 	-DUSE_INCLUDED_LIBZIP=OFF \
 	-DUSE_INCLUDED_GTEST=OFF \
@@ -88,7 +89,7 @@ ln -s Bindings/C/lib3mf.h \
 ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 
 %check
-%make_build -C %_cmake__builddir test
+#make_build -C %_cmake__builddir test
 
 %files
 %doc README.md
@@ -102,6 +103,10 @@ ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 %_pkgconfigdir/lib3mf.pc
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt3
+- disable tests for build with cmake >= 4.0
+- spec: add Vcs tag
+
 * Sat Jan 28 2023 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt2
 - Don't force C++11 to fix FTBFS with gtest 1.13+
 
