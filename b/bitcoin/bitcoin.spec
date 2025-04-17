@@ -1,5 +1,5 @@
 Name: bitcoin
-Version: 28.1
+Version: 29.0
 Release: alt1
 
 Summary: peer-to-peer network based anonymous digital currency
@@ -10,11 +10,10 @@ Url: http://www.bitcoin.org/
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-# Automatically added by buildreq on Thu Sep 14 2017
-# optimized out: boost-devel boost-devel-headers gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libdb4-devel libgpg-error libkrb5-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-xml libstdc++-devel llvm perl pkg-config python-base python-modules qt5-base-common
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel boost-signals-devel boost-asio-devel
-BuildRequires: clang libevent-devel libminiupnpc-devel libprotobuf-devel libqrencode-devel
-BuildRequires: libssl-devel protobuf-compiler python3-dev qt5-base-devel qt5-tools libdb6_cxx-devel
+BuildRequires: gcc-c++ libevent-devel libprotobuf-devel libqrencode-devel libsqlite3-devel
+BuildRequires: libssl-devel protobuf-compiler python3-dev qt5-base-devel qt5-tools-devel
+BuildRequires: cmake
 
 %description
 Q. What is Bitcoin?
@@ -38,16 +37,18 @@ Before each transaction the coin's validity will be checked.
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-./autogen.sh
-export OBJC=clang
-export OBJCXX=clang++
-%configure \
-	--enable-upnp-default \
-	--with-gui=qt5
-%make_build V=1
+%cmake \
+	-DBUILD_GUI=ON \
+	-DBUILD_DAEMON=ON \
+	-DBUILD_CLI=ON \
+	-DBUILD_TESTS=OFF \
+	-DWITH_BDB=OFF
+
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
+
 ln -s %name-qt %buildroot%_bindir/%name
 
 %pre
@@ -59,6 +60,12 @@ rm -f %_bindir/%name
 %doc doc/*
 
 %changelog
+* Sat Apr 12 2025 Alexei Takaseev <taf@altlinux.org> 29.0-alt1
+- 29.0
+- Use cmake for build
+- Add BR libsqlite3-devel and qt5-tools-devel
+- Disable build tests
+
 * Wed Jan 08 2025 Alexei Takaseev <taf@altlinux.org> 28.1-alt1
 - 28.1
 
