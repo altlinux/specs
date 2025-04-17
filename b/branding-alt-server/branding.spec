@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt18
+Release: alt19
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -302,6 +302,8 @@ install systemd/99-edition %buildroot/%_sysconfdir/dconf/db/default.d/
 #graphics
 mkdir -p %buildroot/%_datadir/design/%theme
 cp -a images/product-logo.png %buildroot/%_datadir/design/%theme/icons/system-logo.png
+mkdir -p %buildroot/%_iconsdir/hicolor/scalable/apps/
+install -m644 images/alt-server-logo.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 
 #bootloader
 %ifarch %ix86 x86_64
@@ -350,6 +352,7 @@ fi
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
+%_iconsdir/hicolor/scalable/apps/*
 #_iconsdir/hicolor/*/apps/alt-%theme.png
 
 %files bootsplash
@@ -367,6 +370,7 @@ fi
 %data_cur_dir/alt-notes
 %_datadir/alt-notes/livecd-*
 %_datadir/alt-notes/release-notes.*
+%_datadir/alt-notes/final-notes.*
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
 %files mate-settings
@@ -391,6 +395,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 17 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt19
+- Add release-notes for ALT Systeminfo
+- Add final-notes for final installer step
+- Add ALT Server logo for gnome-control-center
+- Add ALT Server logo to os-release
+
 * Fri Apr 11 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt18
 - Add chromium and firefox to favorite-apps
 
