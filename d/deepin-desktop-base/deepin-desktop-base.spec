@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2024.01.03
+Version: 2024.07.26
 Release: alt1
 
 Summary: Base component for Deepin
@@ -7,17 +7,18 @@ Summary: Base component for Deepin
 License: GPL-3.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-base
+Vcs: https://github.com/linuxdeepin/deepin-desktop-base.git
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Source1: distribution.info
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 #Recommends:     deepin-wallpapers
 #Recommends:     deepin-screensaver
 #Recommends:     plymouth-theme-deepin
+Requires: menu-icons-default
 
 %description
 This package provides some components for Deepin desktop environment.
@@ -37,7 +38,7 @@ This package provides some components for Deepin desktop environment.
 %install
 %makeinstall_std
 
-install -Dm644 %SOURCE1 -t %buildroot%_datadir/deepin/
+install -Dm644 distribution.info -t %buildroot%_datadir/deepin/
 # Remove Deepin distro's lsb-release
 rm %buildroot/etc/lsb-release
 # Don't override systemd timeouts
@@ -66,6 +67,11 @@ rm -r %buildroot%_datadir/distro-info
 %exclude %_datadir/plymouth/deepin-logo.png
 
 %changelog
+* Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 2024.07.26-alt1
+- New version 2024.07.26.
+- Added vcs tag.
+- Used distribution.info for ALT.
+
 * Tue Feb 06 2024 Leontiy Volodin <lvol@altlinux.org> 2024.01.03-alt1
 - New version 2024.01.03.
 
