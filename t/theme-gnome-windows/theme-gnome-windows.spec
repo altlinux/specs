@@ -2,7 +2,7 @@
 
 Name:     theme-gnome-windows
 Version:  1.0
-Release:  alt4
+Release:  alt5
 
 Summary:  GNOME theme for Windows-like layout
 License:  GPL-3.0-or-later
@@ -42,6 +42,9 @@ install -pm644 *.gschema.override \
 %_datadir/glib-2.0/schemas/*.gschema.override
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt5
+- Remove 40-alt-specyfic.gschema.override
+
 * Mon Mar 17 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt4
 - 60-windows-like.gschema.override: revert 'primary-monitor=0'
 - update URL tag
