@@ -2,7 +2,7 @@
 %define module Net-EPP
 
 Name: perl-%module
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: Perl interface to EPP
@@ -32,10 +32,13 @@ find lib/Net/EPP -type f -name '*.pm' -print0 |xargs -r0 chmod -x
 %perl_vendor_install
 
 %files
-%doc README.md
+%doc README.md Changes
 %perl_vendor_privlib/Net
 
 %changelog
+* Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 0.28-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.27-alt1
 - automated CPAN update
 
