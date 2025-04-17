@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: barrier
-Version: 2.3.3
-Release: alt2.2
+Version: 2.3.4
+Release: alt1
 
 Summary: Keyboard and mouse sharing solution
 License: GPLv2
@@ -97,6 +97,9 @@ xvfb-run --server-args='-extension GLX -screen 0 1280x1024x24 -noreset' ./bin/in
 %_man1dir/barriers.1*
 
 %changelog
+* Thu Apr 17 2025 Alexander Danilov <admsasha@altlinux.org> 2.3.4-alt1
+- new version 2.3.4.
+
 * Sun Mar 17 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 2.3.3-alt2.2
 - NMU: fixed FTBFS with GCC 13 (on LoongArch and possibly riscv).
 
