@@ -2,7 +2,7 @@
 %define module Test-Output
 
 Name: perl-%module
-Version: 1.035
+Version: 1.036
 Release: alt1
 
 Summary: Utilities to test STDOUT and STDERR messages
@@ -36,6 +36,9 @@ as possible to the tester.
 %perl_vendor_privlib/Test/
 
 %changelog
+* Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 1.036-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.035-alt1
 - automated CPAN update
 
