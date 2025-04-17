@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 2025.04
-Release: alt1
+Release: alt2
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -196,10 +196,8 @@ pushd notes
 popd
 ln -s /usr/share/license/GPL-3.0-or-later %buildroot/%_datadir/alt-notes/LICENSE
 
-# phosh settings
-cp -ar phosh/* %buildroot/
-
 install -Dm644 phosh-settings/50-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override;
+install -Dm644 phosh-settings/50-lockscreen.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-lockscreen.gschema.override;
 install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override;
 install -Dm644 phosh-settings/50-interface.gschema.override %buildroot/%_datadir/glib-2.0/schemas/
 
@@ -230,12 +228,15 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/*
 
 %files phosh-settings
-%_sysconfdir/skel/.config/gtk-3.0/gtk.css
 %_datadir/glib-2.0/schemas/50-background.gschema.override
+%_datadir/glib-2.0/schemas/50-lockscreen.gschema.override
 %_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2025.04-alt2
+- phosh-settings: replace gtk.css with gsettings override
+
 * Wed Apr 02 2025 Anton Midyukov <antohami@altlinux.org> 2025.04-alt1
 - phosh-settings: fix override settings for phosh >= 0.46.0
 
