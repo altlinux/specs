@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Thu Apr 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.5-alt1
+- editions: update descriptions for server and domain.
+
 * Wed Apr 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.4-alt1
 - Add samba-ad-client-support to base and main sections of alt-domain and
   alt-server editions respectively.
