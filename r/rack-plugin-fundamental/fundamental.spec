@@ -1,5 +1,5 @@
 Name: rack-plugin-fundamental
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: VCV Free modules
@@ -32,6 +32,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Thu Apr 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.2-alt1
+- 2.6.2 released
+
 * Fri Nov 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.1-alt1
 - 2.6.1 released
 
