@@ -1,6 +1,6 @@
 Name: apt-aliases
 Version: 0.0.20230829
-Release: alt3
+Release: alt4
 
 Summary: "apt" command in addition to "apt-get" and friends
 License: MIT
@@ -72,6 +72,10 @@ install -pDm755 apt_aliases.sh %buildroot%bashrcdir/apt_aliases.sh
 %doc LICENSE README.md
 
 %changelog
+* Wed Apr 09 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.0.20230829-alt4
+- show lists in columns (like original "apt") even if it's off by default
+- changelog: new subcommand (since 0.5.15lorg2-alt89)
+
 * Wed Aug 30 2023 Michael Shigorin <mike@altlinux.org> 0.0.20230829-alt3
 - move to /etc/profile.d so zsh gets this too
 - ah! (closes: #41660)
