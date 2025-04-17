@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: startdde
-Version: 6.1.2
+Version: 6.1.6
 Release: alt1
 Epoch: 1
 
@@ -68,11 +68,15 @@ export GOPATH="%go_path"
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.startdde/
 %dir %_datadir/dsg/configs/org.deepin.startdde/org.deepin.XSettings.json
+%dir %_datadir/dsg/configs/org.deepin.startdde/org.deepin.Display.json
 
 %files -n lightdm-deepin-greeter-settings
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.6-alt1
+- New version 6.1.6.
+
 * Tue Feb 18 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.1.2-alt1
 - New version 6.1.2.
 - Added vcs tag.
