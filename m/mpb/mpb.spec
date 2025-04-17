@@ -1,5 +1,5 @@
 Name: mpb
-Version: 1.11.1
+Version: 1.12.0
 Release: alt1
 Summary: MIT Photonic Bands
 License: GPLv2+
@@ -78,6 +78,7 @@ export ac_cv_path_SH_JOB=/bin/bash
 export CPPFLAGS="%optflags"
 
 %configure \
+	--enable-maintainer-mode \
 	--enable-shared \
 	--enable-static=no \
 	--with-blas=-lopenblas \
@@ -104,6 +105,9 @@ export CPPFLAGS="%optflags"
 %_libdir/*.so
 
 %changelog
+* Thu Apr 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Mon Jan 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.11.1-alt1
 - 1.11.1
 
