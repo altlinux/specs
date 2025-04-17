@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-archiver
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: A simple & lightweight desktop-agnostic Qt file archiver
@@ -20,6 +20,7 @@ BuildRequires: libfm-qt6-devel
 BuildRequires: lxqt2-build-tools
 BuildRequires: libgio-devel
 BuildRequires: libjson-glib-devel
+BuildRequires: lib7zip-devel
 
 %description
 %summary.
@@ -43,6 +44,9 @@ BuildRequires: libjson-glib-devel
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- new version (1.2.0) with rpmgs script
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - New version 1.1.0
 

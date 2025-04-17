@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-qtplugin-qt6
-Version: 2.1.0
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL-2.1
@@ -43,6 +43,9 @@ Provides: lxqt-qtplugin = %EVR
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Tue Feb 25 2025 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt3
 - Add dependency on libqt6-core = %%_qt6_version
 

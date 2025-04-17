@@ -4,8 +4,8 @@
 %define sover 2
 
 Name: qtermwidget6
-Version: 2.1.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: Unicode-enabled, embeddable Qt6 terminal widget
 License: GPL-2.0-or-later
@@ -88,6 +88,9 @@ This package contains the development headers for %name library.
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Sat Jan 18 2025 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2
 - lib/Pty.cpp: do not set LANGUAGE to a null string (See ALT bug 52728)
 

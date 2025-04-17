@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-about
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: About dialog of LXQt
@@ -42,6 +42,9 @@ BuildRequires: kf6-kwindowsystem-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - New version 2.1.0
 

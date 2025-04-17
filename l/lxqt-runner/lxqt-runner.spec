@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-runner
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Summary: Tool used to launch programs quickly by typing their names
@@ -52,6 +52,9 @@ Obsoletes: razorqt-runner < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 2.1.2-alt1
 - New version 2.1.2.
 

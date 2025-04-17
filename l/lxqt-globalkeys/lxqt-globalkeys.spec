@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-globalkeys
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -64,6 +64,9 @@ This package provides the development files for %name.
 %_datadir/cmake/*/
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - New version 2.1.0
 - drop lxqt-globalkeys-conf-alt.patch

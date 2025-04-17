@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.10.0
+Version: 2.11.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPL-2.0-or-later
@@ -70,6 +70,9 @@ convert -resize 16x16 icon/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.11.0-alt1
+- New version 2.11.0.
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.10.0-alt1
 - New version 2.10.0
 - use upstream desktop file

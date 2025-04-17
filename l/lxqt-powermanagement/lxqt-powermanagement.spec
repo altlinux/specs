@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-powermanagement
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Powermanagement module for LXQt
@@ -52,6 +52,9 @@ Obsoletes: razorqt-power < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - New version 2.1.0
 

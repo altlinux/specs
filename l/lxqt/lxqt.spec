@@ -1,6 +1,6 @@
 Name: lxqt
-Version: 2.1.0
-Release: alt2
+Version: 2.2.0
+Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
@@ -85,6 +85,9 @@ Requires: lxqt-wallet >= 4.0.0
 %files regular
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Wed Nov 13 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2
 - mini: add dependency on lxqt-qtplugin-qt5 (Closes: 51971)
 - mini: replace dependency on lxqt-qtplugin with lxqt-qtplugin-qt6

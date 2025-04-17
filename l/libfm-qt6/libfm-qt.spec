@@ -1,9 +1,9 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%define sover 15
+%define sover 16
 
 Name: libfm-qt6
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
@@ -72,6 +72,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Tue Nov 05 2024 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - New version 2.1.0
 - clean old "Obsoletes: libfm-qt3"

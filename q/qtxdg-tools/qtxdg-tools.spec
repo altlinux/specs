@@ -1,5 +1,5 @@
 Name:     qtxdg-tools
-Version:  4.1.0
+Version:  4.2.0
 Release:  alt1
 
 Summary:  libqtxdg user tools
@@ -49,6 +49,9 @@ cmake modules for %name.
 %_datadir/cmake/%name
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 4.2.0-alt1
+- New version 4.2.0.
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 4.1.0-alt1
 - New version 4.1.0
 

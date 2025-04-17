@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 2.1.4
+Version: 2.2.0
 Release: alt1
 
 Summary: Desktop panel
@@ -32,7 +32,6 @@ BuildRequires: libXcomposite-devel
 BuildRequires: libXrender-devel
 BuildRequires: libxcbutil-devel
 BuildRequires: libxcbutil-image-devel
-BuildRequires: libmenu-cache-devel
 BuildRequires: libstatgrab-devel
 BuildRequires: libsensors3-devel
 BuildRequires: libxkbcommon-devel
@@ -99,6 +98,9 @@ QtWayland::org_kde_plasma_window_management::show_desktop/" \
 %_includedir/*/*.h
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Sun Jan 12 2025 Anton Midyukov <antohami@altlinux.org> 2.1.4-alt1
 - New version 2.1.4.
 

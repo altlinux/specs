@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    pcmanfm-qt
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Epoch: 1
 
@@ -51,6 +51,9 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 1:2.2.0-alt1
+- New version 2.2.0.
+
 * Fri Nov 08 2024 Anton Midyukov <antohami@altlinux.org> 1:2.1.0-alt1
 - New version 2.1.0
 - use upstream desktop file
