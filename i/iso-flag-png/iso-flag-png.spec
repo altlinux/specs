@@ -1,6 +1,6 @@
 Summary: A collection of flags
 Name: iso-flag-png
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 License: Public Domain
 Group: Graphical desktop/GNOME
@@ -29,6 +29,9 @@ cp -Rp usr/share/%name %buildroot%_datadir
 %doc debian/copyright debian/changelog
 
 %changelog
+* Thu Apr 17 2025 Vladimir Didenko <cow@altlinux.org> 1.0.3-alt1
+- new version
+
 * Tue Aug 2 2022 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
 - new version
 
