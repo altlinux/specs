@@ -10,7 +10,7 @@ BuildRequires: perl-podlators
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    1.297
+Version:    1.298
 Release:    alt1
 
 License:    GPL+ or Artistic
@@ -68,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 1.298-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.297-alt1
 - automated CPAN update
 
