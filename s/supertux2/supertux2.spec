@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.6.3
-Release: alt2
+Release: alt3
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
@@ -62,6 +62,9 @@ sed -i 's/LINKER_LANGUAGE C/&XX/' external/squirrel/sq/CMakeLists.txt
 %endif
 
 %build
+# cmake 4
+# EMSCRIPTEN and VCPKG_BUILD do not used by the project
+export CMAKE_POLICY_VERSION_MINIMUM=3.5
 %cmake_insource \
         -GNinja \
         -DINSTALL_SUBDIR_BIN=bin \
@@ -102,6 +105,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Thu Apr 17 2025 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt3
+- Fixed build with cmake 4.
+
 * Thu Jun 02 2022 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt2
 - Fixed build with gcc12.
 
