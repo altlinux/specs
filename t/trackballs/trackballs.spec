@@ -1,5 +1,5 @@
 Name: trackballs
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: Steer a marble ball through a labyrinth
@@ -12,7 +12,8 @@ Source: %name-%version.tar.gz
 Requires: %name-game = %version-%release
 Requires: %name-music >= 2:1.4
 
-BuildRequires: cmake gcc-c++ guile-devel libGL-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel zlib-devel
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: gcc-c++ guile-devel libGL-devel libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel zlib-devel
 
 %description
 Trackballs is a game in which you steer a marble ball through tracks
@@ -45,6 +46,7 @@ level editor and high quality soundeffects and background music.
 
 %prep
 %setup
+subst 's/_TTF_Font/TTF_Font/g' ./src/glHelp.h
 
 %build
 %cmake
@@ -67,8 +69,12 @@ level editor and high quality soundeffects and background music.
 %_iconsdir/hicolor/*/apps/*
 %doc AUTHORS.md FAQ.md NEWS.md README.md TODO.md
 %_datadir/doc/%name/*
+%_datadir/metainfo/*.xml
 
 %changelog
+* Thu Apr 17 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3.4-alt1
+- NMU: 1.3.4
+
 * Tue Oct 04 2022 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt1
 - 1.3.3
 
