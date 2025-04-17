@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: gnome-%__name
-Version: %ver_major.6
-Release: alt1.1%beta
+Version: %ver_major.7
+Release: alt1%beta
 
 Summary: Tweak various aspects of GNOME
 License: GPL-3.0-or-later
@@ -48,8 +48,6 @@ Refine helps discover advanced and experimental features in GNOME.
 
 %prep
 %setup -n %_name-%version
-# increase required blueprint version
-sed -i 's|\(0\.14\.0\)|>=\1|' %__name/meson.build
 
 %build
 %meson -Dprofile=default
@@ -78,6 +76,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Thu Apr 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.7-alt1
+- 0.5.7
+
 * Thu Apr 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1.1
 - 0.5.6
 
