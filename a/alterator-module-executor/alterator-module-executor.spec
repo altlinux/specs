@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.23
+Version: 0.1.24
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -35,6 +35,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Apr 17 2025 Ivan Savin <svn17@altlinux.org> 0.1.24-alt1
+- Add the ability to return an array of byte arrays as string array.
+
 * Tue Apr 15 2025 Ivan Savin <svn17@altlinux.org> 0.1.23-alt1
 - Fix broken stdout_byte_arrays. The stdout_byte_arrays_enabled condition
   was missed when the process was spawned.
