@@ -1,7 +1,7 @@
 %define rname kcontacts
 
 Name: kf6-%rname
-Version: 6.12.0
+Version: 6.13.0
 Release: alt1
 %K6init altplace
 
@@ -73,6 +73,9 @@ mkdir -p %buildroot/%_K6data/kcontacts/
 %_K6qml/org/kde/contacts/
 
 %changelog
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
+- new version
+
 * Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
 - new version
 

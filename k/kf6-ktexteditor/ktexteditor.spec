@@ -1,7 +1,7 @@
 %define rname ktexteditor
 
 Name: kf6-%rname
-Version: 6.12.0
+Version: 6.13.0
 Release: alt1
 %K6init no_altplace
 
@@ -15,6 +15,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-speech-devel
 BuildRequires: libgit2-devel
+BuildRequires: libcups-devel
 BuildRequires: libeditorconfig-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel
@@ -94,6 +95,9 @@ mkdir -p %buildroot/%_datadir/katepart6/syntax/
 
 
 %changelog
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
+- new version
+
 * Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
 - new version
 

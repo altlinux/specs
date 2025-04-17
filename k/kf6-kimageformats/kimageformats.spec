@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf6-%rname
-Version: 6.12.0
+Version: 6.13.0
 Release: alt1
 %K6init altplace
 
@@ -14,11 +14,13 @@ License: LGPL-2.1-or-later
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules openexr-devel qt6-base-devel
+BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: zlib-devel
+BuildRequires: openexr-devel
 BuildRequires: libavif-devel
 BuildRequires: libraw-devel
 BuildRequires: libheif-devel
+BuildRequires: libjasper-devel
 %ifnarch %arm
 BuildRequires: libjxl-devel
 %endif
@@ -47,7 +49,6 @@ Requires: kde-common
 %build
 %K6build \
     -DKIMAGEFORMATS_HEIF=ON \
-    -DBUILD_TESTING=ON \
     #
 
 %install
@@ -61,6 +62,9 @@ Requires: kde-common
 #%_K6srv/qimageioplugins/
 
 %changelog
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
+- new version
+
 * Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
 - new version
 

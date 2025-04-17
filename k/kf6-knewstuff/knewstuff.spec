@@ -1,8 +1,8 @@
 %define rname knewstuff
 
 Name: kf6-%rname
-Version: 6.12.0
-Release: alt2
+Version: 6.13.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -105,6 +105,9 @@ KF6 library
 
 
 %changelog
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
+- new version
+
 * Fri Mar 28 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt2
 - more serious warning about downloadable content
 
