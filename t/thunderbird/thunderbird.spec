@@ -1,42 +1,28 @@
-%define r_name thunderbird
-%def_with mach_build
-%ifndef build_parallel_jobs
-%define build_parallel_jobs 32
-%endif
+%define _unpackaged_files_terminate_build 1
 
-%define gst_version   1.0
-%define nspr_version  4.35
-%define nss_version   3.86
-%define rust_version  1.65.0
-%define cargo_version 1.65.0
-%ifarch loongarch64
-%define llvm_version  16.0
-%else
-%define llvm_version  15.0
-%endif
+%define tbird_cid        \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
+%define tbird_prefix     %_libdir/thunderbird
+%define tbird_datadir    %_datadir/thunderbird
+%define tbird_idldir     %_datadir/idl/thunderbird
+%define tbird_includedir %_includedir/thunderbird
+%define tbird_develdir   %tbird_prefix-devel
 
-Name: 	 thunderbird
-Version: 137.0.1
+Name: thunderbird
+Version: 137.0.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
-Group: 	 Networking/Mail
-URL: 	 https://www.thunderbird.net
+Group: Networking/Mail
+URL: https://www.thunderbird.net
+ExcludeArch: armh
 
 Source0: %name-%version.tar
 Source1: thunderbird.cpp
-Source2: rpm.macros
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
 Source5: thunderbird-default-prefs.js
 Source6: l10n.tar
-# Solution for ftbfs with python3.12 based on idea from
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1857492
-# but with exception, that we dont want to update urllib3
-# just update bundled inside it six.py to 1.16
-# https://raw.githubusercontent.com/benjaminp/six/1.16.0/six.py
-Source9: six.py
 
 ### Start Patches
 Patch001: 0001-thunderbird-115-add-loongarch-support.patch
@@ -48,22 +34,24 @@ Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch007: 0007-Correction-of-the-Russian-translation.patch
 ### End Patches
 
-ExcludeArch: armh
-
-# Hang up on build browser/components/about
-#ExcludeArch: ppc64le
+Provides: mailclient
+Requires: hunspell-en
+# ALT #40907
+Requires: libotr5
 
 BuildRequires(pre): mozilla-common-devel
-BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
-
-BuildRequires: clang%llvm_version
-BuildRequires: clang%llvm_version-devel
-BuildRequires: llvm%llvm_version-devel
+# Python requires
+BuildRequires: /dev/shm
+# Rust requires
+BuildRequires: /proc
+BuildRequires: clang
+BuildRequires: clang-devel
+BuildRequires: llvm-devel
 %ifarch loongarch64
 BuildRequires: binutils
 %else
-BuildRequires: lld%llvm_version-devel
+BuildRequires: lld-devel
 %endif
 %ifarch armh %{ix86}
 %filter_from_requires /libc.so.6(GLIBC_PRIVATE)/d
@@ -71,9 +59,7 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 %endif
 BuildRequires: libstdc++-devel
-BuildRequires: rpm-macros-alternatives
-BuildRequires: rust >= %rust_version
-BuildRequires: rust-cargo >= %cargo_version
+BuildRequires: rust-cargo
 BuildRequires: cbindgen
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libXcursor-devel
@@ -97,16 +83,14 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
+BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
-#BuildRequires: libicu-devel
 BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
 BuildRequires: nasm
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
-# 91.0
 BuildRequires: libaom-devel
 BuildRequires: libdav1d-devel
 
@@ -152,10 +136,6 @@ BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xt)
 BuildRequires: pkgconfig(xtst)
 BuildRequires: pkgconfig(zlib)
-
-# Python requires
-BuildRequires: /dev/shm
-
 BuildRequires: python3-base
 BuildRequires: python3(click)
 BuildRequires: python3(curses)
@@ -166,57 +146,10 @@ BuildRequires: python3(sqlite3)
 # A copy of the imp module that was removed in python3.12
 # It shouldn't be used, should use `importlib.metadata` instead
 BuildRequires: python3(imp)
-
-# Rust requires
-BuildRequires: /proc
-
-# Mozilla requires
-BuildRequires: pkgconfig(nspr) >= %nspr_version
-BuildRequires: pkgconfig(nss) >= %nss_version
-BuildRequires: libnss-devel-static
-
+BuildRequires: libnspr-devel
+BuildRequires: libnss-devel
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
-
-Provides: mailclient
-Obsoletes: thunderbird-calendar
-Obsoletes: thunderbird-calendar-timezones
-
-Provides: thunderbird-gnome-support = %EVR
-Obsoletes: thunderbird-gnome-support
-
-Requires: hunspell-en
-Requires: browser-plugins-npapi
-
-Provides: %name-esr = %EVR
-Obsoletes: %name-esr < %EVR
-Provides:  %name-lightning = %EVR
-Obsoletes: %name-lightning < %EVR
-Provides:  %name-lightning-ru = %EVR
-Obsoletes: %name-lightning-ru < %EVR
-Provides:  %name-esr-lightning = %EVR
-Obsoletes: %name-esr-lightning < %EVR
-Provides:  %name-esr-lightning-ru = %EVR
-Obsoletes: %name-esr-lightning-ru < %EVR
-Provides:  %name-ru = %EVR
-Obsoletes: %name-ru < %EVR
-Provides: %name-enigmail = %EVR
-Obsoletes: %name-enigmail < %EVR
-Provides: thunderbird-wayland = %EVR
-Obsoletes: thunderbird-wayland < %EVR
-
-# Protection against fraudulent DigiNotar certificates
-Requires: libnss >= 3.13.1-alt1
-
-# ALT #40907
-Requires: libotr5
-
-%define tbird_cid        \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
-%define tbird_prefix     %_libdir/%r_name
-%define tbird_datadir    %_datadir/%r_name
-%define tbird_idldir     %_datadir/idl/%r_name
-%define tbird_includedir %_includedir/%r_name
-%define tbird_develdir   %tbird_prefix-devel
 
 %description
 Thunderbird is Mozilla's next generation e-mail client. Thunderbird makes
@@ -225,21 +158,8 @@ the most sophisticated organizational needs.
 
 The package contains Lightning - an integrated calendar for Thunderbird.
 
-%package -n rpm-build-%name
-Summary:  RPM helper macros to rebuild thunderbird packages
-Group: Development/Other
-#BuildArch: noarch
-
-Requires: mozilla-common-devel
-Requires: rpm-build-mozilla.org
-
-%description -n rpm-build-%name
-These helper macros provide possibility to rebuild
-thunderbird packages by some Alt Linux Team Policy compatible way.
-
 %prep
-%setup -q
-tar -xf %SOURCE6
+%setup -a6
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
@@ -248,13 +168,7 @@ tar -xf %SOURCE6
 %patch6 -p2
 %patch7 -p1
 
-# Update bundled six.py for 1.16
-cp -fv %SOURCE9 third_party/python/six/six.py
-cp -fv %SOURCE9 third_party/python/urllib3/urllib3/packages/six.py
-
-#echo %version > mail/config/version.txt
-
-cp -f %SOURCE4 .mozconfig
+cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
@@ -285,112 +199,25 @@ ENDL.
 chmod +x /tmp/node-stdout-nonblocking-wrapper
 echo 'export NODEJS="/tmp/node-stdout-nonblocking-wrapper"' >> .mozconfig
 
-sed -i -e '\,hyphenation/,d' comm/mail/installer/removed-files.in
-
 rm -rf -- third_party/python/setuptools/setuptools*
 rm -rf -- third_party/python/setuptools/pkg_resources
 rm -rf -- third_party/python/click/click*
 rm -rf -- third_party/python/pip/pip*
 
 %build
-%define optflags_lto %nil
 %add_optflags %optflags_shared
 %add_findprov_lib_path %tbird_prefix
 
 # Add fake RPATH
 rpath="/$(printf %%s '%tbird_prefix' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 
-export MOZ_BUILD_APP=mail
-
-# -fpermissive is needed to build with gcc 4.6+ which has become stricter
-#
-# Mozilla builds with -Wall with exception of a few warnings which show up
-# everywhere in the code; so, don't override that.
-#
-# Disable C++ exceptions since Mozilla code is not exception-safe
-#
-MOZ_OPT_FLAGS=$(echo "%optflags -g0 -fpermissive" | \
-               sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g' \
-               -e 's/-frecord-gcc-switches/-grecord-gcc-switches/')
-# Disable null pointer gcc6 optimization - workaround for
-# https://bugzilla.mozilla.org/show_bug.cgi?id=1278795
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks"
-export MOZ_DEBUG_FLAGS=" "
-export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS"
-
-%ifarch aarch64 x86_64 loongarch64
-export CFLAGS="$CFLAGS -DHAVE_USR_LIB64_DIR=1"
-%endif
-
-%ifarch %{arm} %{ix86}
-export RUSTFLAGS="-Cdebuginfo=0"
-export LLVM_PARALLEL_LINK_JOBS=1
-# See https://lwn.net/Articles/797303/ for linker flags
-# For bfd on i586
-export CXXFLAGS="$CXXFLAGS -Wl,--no-keep-memory -Wl,--reduce-memory-overheads -Wl,--hash-size=1021"
-# For gold on i586
-#export CXXFLAGS="$CXXFLAGS -Wl,--no-threads -Wl,--no-keep-files-mapped -Wl,--no-map-whole-files -Wl,--no-mmap-output-file -Wl,--stats"
-%endif
-
-%ifarch armh
-export CC="gcc"
-export CXX="g++"
-%else
-export CC="clang"
-export CXX="clang++"
-%ifnarch loongarch64
-export AR="llvm-ar"
-export NM="llvm-nm"
-export RANLIB="llvm-ranlib"
-export LLVM_PROFDATA="llvm-profdata"
-%endif
-%endif
-export PREFIX='%_prefix'
-export LIBDIR='%_libdir'
-export INCLUDEDIR='%_includedir'
-export LIBIDL_CONFIG='/usr/bin/libIDL-config-2'
-export srcdir="$PWD"
-export SHELL=/bin/sh
-export MOZILLA_OBJDIR="$PWD"
-
-# Do not use desktop notify during build process
-export MOZ_NOSPAM=1
-
-# Don't throw "old profile" dialog box
-export MOZ_ALLOW_DOWNGRADE=1
-
-export NPROCS=%build_parallel_jobs
-# Decrease NPROCS prevents oomkill terror on x86_64
-%ifarch x86_64
-export NPROCS=16
-%endif
-# Build for i586 in one thread
-%ifarch armh %ix86
-export NPROCS=8
-%endif
-
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 export MOZ_APP_REMOTINGNAME="thunderbird"
 
-#python3 ./mach python --exec-file /dev/null
-export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 ./mach configure
-
-%if_with mach_build
-./mach build -j $NPROCS
+./mach build
 ./mach buildsymbols
-%else
-make -f client.mk \
-	STRIP="/bin/true" \
-	mozappdir=%buildroot%tbird_prefix \
-	OBJDIR=objdir \
-	TOPSRCDIR=$srcdir \
-	MOZ_PARALLEL_BUILD=$NPROCS
-	MACH=1 \
-	build
-%endif
 
 MOZ_LANGPACK_ID="$(grep MOZ_LANGPACK_EID comm/mail/locales/Makefile.in | cut -f2 -d @)"
 pushd l10n
@@ -406,7 +233,7 @@ popd
 
 # This is necessary to configure the environment variables.
 # It is written in C so that the process in the ps has the right name.
-$CXX $CXXFLAGS \
+clang++ \
 	-Wall -Wextra \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%tbird_prefix/thunderbird-bin\" \
@@ -422,11 +249,7 @@ mkdir -p \
 	%buildroot/%_datadir/applications \
 	#
 
-%makeinstall -C objdir \
-	idldir=%buildroot/%tbird_idldir \
-	includedir=%buildroot/%tbird_includedir \
-	mozappdir=%buildroot/%tbird_prefix \
-	#
+DESTDIR=%buildroot ./mach install
 
 MOZ_LANGPACK_ID="$(grep MOZ_LANGPACK_EID comm/mail/locales/Makefile.in | cut -f2 -d @)"
 pushd l10n
@@ -488,13 +311,6 @@ done
 install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
         %buildroot%_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
-# rpm-build-thunderbird files
-mkdir -p %buildroot%_rpmmacrosdir
-cat %SOURCE2 | \
-  sed -e 's,@tbird_version@,%version,' \
-      -e 's,@tbird_release@,%release,' \
-    > %buildroot%_rpmmacrosdir/%r_name
-
 # Add real RPATH
 (set +x
 	rpath="/$(printf %%s '%tbird_prefix' |tr '[:print:]' '_')"
@@ -521,14 +337,19 @@ cat %SOURCE2 | \
 %mozilla_arch_extdir/%tbird_cid
 %mozilla_noarch_extdir/%tbird_cid
 %defattr(0644,root,root,0755)
-%_datadir/applications/%r_name.desktop
+%_datadir/applications/thunderbird.desktop
 %_iconsdir/hicolor/*/apps/thunderbird.png
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
-%files -n rpm-build-%name
-%_rpmmacrosdir/%r_name
-
 %changelog
+* Wed Apr 16 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0.2-alt1
+- New version.
+- Remove duplication in the desktop file (closes: 52475).
+- Security fixes:
+  + CVE-2025-3522: Leak of hashed Window credentials via crafted attachment URL
+  + CVE-2025-2830: Information Disclosure of /tmp directory listing
+  + CVE-2025-3523: User Interface (UI) Misrepresentation of attachment URL
+
 * Sat Apr 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0.1-alt1
 - New version.
 
