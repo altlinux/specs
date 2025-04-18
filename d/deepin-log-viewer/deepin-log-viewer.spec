@@ -1,10 +1,10 @@
-%define soverlvp 0
+%define soverlvp 0.1
 
 %def_disable clang
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.5.6
+Version: 6.5.10
 Release: alt1
 
 Summary: System log viewer for Deepin
@@ -17,19 +17,18 @@ License: GPL-3.0-or-later
 # 3rdparty/DocxFactory/: GPL-3.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-log-viewer
+Vcs: https://github.com/linuxdeepin/deepin-log-viewer.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-#Patch1: deepin-log-viewer-6.1.17-opensuse-use-system-xlsxwriter.patch
-#Patch2: deepin-log-viewer-6.1.17-alt-use-system-minizip.patch
-Patch3: deepin-log-viewer-6.1.17-alt-fix-pkgconfig.patch
+Patch: deepin-log-viewer-6.1.17-alt-fix-pkgconfig.patch
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 %if_enabled clang
 BuildRequires(pre): clang-devel lld-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires: boost-devel-headers cmake deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libminizip-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools dqt6-svg-devel dqt6-tools-devel dqt6-5compat-devel rapidjson-devel libpolkitqt6-qt6-devel
+BuildRequires: boost-devel-headers cmake deepin-gettext-tools dtk6-common-devel libdtk6widget-devel libminizip-devel libsystemd-devel libxerces-c-devel libxlsxwriter-devel python3-module-setuptools dqt6-svg-devel dqt6-tools-devel dqt6-5compat-devel rapidjson-devel libpolkitqt6-qt6-devel libcups-devel libgio-qt6-devel
 
 %description
 %summary.
@@ -63,13 +62,11 @@ export CXX="clang++"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:%_includedir/qt6
-export LC_ALL=C.UTF-8
 %DQ6build \
   -DQT_LRELEASE=%_dqt6_bindir/lrelease \
-  -DCMAKE_SAFETYTEST_ARG="CMAKE_SAFETYTEST_ARG_OFF" \
-  -DAPP_VERSION=%version \
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
+  -DLIB_DESTINATION=%_lib \
 #
 
 %install
@@ -81,6 +78,8 @@ chmod +x %buildroot%_bindir/deepin-logger
 rm -rf %buildroot%_libdir/liblogviewerplugin.so*
 rm -rf %buildroot%_includedir/liblogviewerplugin/
 rm -rf %buildroot%_pkgconfigdir/liblogviewerplugin.pc
+%else
+patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsxwriter.so
 %endif
 
 %files -f %name.lang
@@ -131,6 +130,10 @@ rm -rf %buildroot%_pkgconfigdir/liblogviewerplugin.pc
 %endif
 
 %changelog
+* Fri Apr 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.10-alt1
+- New version 6.5.10.
+- Added vcs tag.
+
 * Mon Jan 20 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.6-alt1
 - New version 6.5.6.
 - Switched to dqt6.
