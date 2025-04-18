@@ -1,10 +1,11 @@
-%def_without kde5
+# Disable because binary with same name
+%def_without kde
 
 Name:    systray-x
 Version: 0.9.11
-Release: alt1
+Release: alt2
 
-Summary: A system tray extension for Thunderbird 68+
+Summary: A system tray extension for Thunderbird
 License: MPL-2.0
 Group:   Other
 Url:     https://github.com/Ximi1970/systray-x
@@ -13,22 +14,23 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: %name-version.patch
+Patch1: tb_137_compat.patch
 
 ExcludeArch: armh ppc64le
 
 BuildRequires(pre): rpm-build-thunderbird
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-base-devel
 BuildRequires: zip
 BuildRequires: unzip
-%if_with kde5
-BuildRequires: kf5-knotifications-devel
+%if_with kde
+BuildRequires: kf6-knotifications-devel
+BuildRequires: kf6-kstatusnotifieritem-devel
 %endif
 
 Requires: thunderbird
 
 %description
-SysTray-X is a system tray extension for Thunderbird 68+. The addon uses the
+SysTray-X is a system tray extension for Thunderbird. The addon uses the
 WebExtension API's to control an external system dependent system tray
 application.
 
@@ -40,16 +42,30 @@ The addon and system tray application can do:
 * minimize on startup
 * minimize on close
 
+%if_with kde
+%package kde
+Summary: System tray extension for Thunderbird for KDE
+Group: Other
+Requires: %name = %EVR
+
+%description kde
+%summary
+%endif
+
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
-export PATH=$PATH:%_qt5_bindir
+export PATH=$PATH:%_qt6_bindir
+%if_with kde
+%add_optflags -L%_libdir/kf6/devel
+%endif
 %make_build \
-%if_without kde5
+%if_without kde
 	OPTIONS="DEFINES+=NO_KDE_INTEGRATION"
 %endif
+
 sed < app/config/linux/SysTray_X.json.template -e 's|SYSTRAY_X_PATH|%{_bindir}/SysTray-X|' > SysTray_X.json
 
 %install
@@ -65,6 +81,10 @@ unzip -d %buildroot%tbird_arch_extensionsdir/systray-x@Ximi1970 systray-x@Ximi19
 %tbird_arch_extensionsdir/systray-x@Ximi1970
 
 %changelog
+* Fri Apr 18 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt2
+- Adapted to Thunderbird 137.x (ALT #53895).
+- Built with Qt6.
+
 * Thu Mar 13 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt1
 - New version.
 
