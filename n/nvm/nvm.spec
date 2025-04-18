@@ -2,14 +2,16 @@
 
 Name:          nvm
 Version:       0.40.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Node Version Manager
+Summary(ru_RU.UTF-8): Справный урядник для ноды
 License:       MIT
 Group:         Development/Other
 Url:           https://github.com/nvm-sh/nvm
 Vcs:           https://github.com/nvm-sh/nvm.git
 BuildArch:     noarch
 
+Autoreq:       yes,noshell
 Source:        %name-%version.tar
 Source1:       nvm.profile
 Source2:       nvm.fish
@@ -38,6 +40,28 @@ node.js versions.
 nvm allows you to quickly install and use different versions of node via the
 command line.
 
+%description   -l ru_RU.UTF-8
+Справный урядник для ноды - POSIX-совместимый башев скрипт для управления
+множествном установленных справ ноды.
+
+сун (nvm) позволяет вам быстро установить и использовать различные справы ноды
+в коммандной строке.
+
+
+%package       tests
+Summary:       Node Version Manager unit test modules
+Summary(ru_RU.UTF-8): Проверочные звенья справного урядник для ноды
+Group:         Development/Other
+BuildArch:     noarch
+
+Requires:      %name = %EVR
+
+%description   tests
+Node Version Manager unit test modules.
+
+%description   tests -l ru_RU.UTF-8
+Проверочные звенья справного урядника для ноды.
+
 
 %prep
 %setup
@@ -64,6 +88,8 @@ nvm alias default system
 %files
 %doc README.md CODE_OF_CONDUCT.md CONTRIBUTING.md GOVERNANCE.md LICENSE.md PROJECT_CHARTER.md ROADMAP.md
 %_libexecdir/nvm
+%exclude %_libexecdir/nvm/test
+%exclude %_libexecdir/nvm/Dockerfile
 %config(noreplace) %_sysconfdir/profile.d/nvm.sh
 %_sysconfdir/fish/nvm
 %_sysconfdir/bashrc.d/nvm.sh
@@ -74,8 +100,14 @@ nvm alias default system
 %dir %attr(775,root,root) %_localstatedir/nvm/versions
 %dir %attr(775,root,root) %_localstatedir/nvm/alias
 
+%files         tests
+%_libexecdir/nvm/test
+%_libexecdir/nvm/Dockerfile
 
 %changelog
+* Fri Apr 18 2025 Pavel Skrylev <majioa@altlinux.org> 0.40.2-alt1.1
+- ! fixed deps by splitting the packages and disabling some autos (ALT #53892)
+
 * Mon Aug 12 2024 Pavel Skrylev <majioa@altlinux.org> 0.40.2-alt1
 - ^ 0.39.3 -> 0.40.2
 - ! use nvm with just users (closes #49588)
