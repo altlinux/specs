@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt232
+%define pkg_rel alt233
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -116,6 +116,7 @@ Patch15: gcc14-2.patch
 Patch16: kernel-6.8.patch
 Patch17: kernel-6.10.patch
 Patch18: kernel-6.12.patch
+Patch19: disable_fstack-clash-protection_fcf-protection.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -206,6 +207,7 @@ pwd
 %patch16 -p2
 %patch17 -p2
 %patch18 -p2
+%patch19 -p1
 rm -rf precompiled
 popd
 
@@ -393,6 +395,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 390.157-alt233
+- disable kernel module stack-clash-protection
+
 * Thu Nov 21 2024 Sergey V Turchin <zerg@altlinux.org> 390.157-alt232
 - add fix against 6.12 kernel
 

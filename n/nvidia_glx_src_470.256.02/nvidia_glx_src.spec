@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt256
+%define pkg_rel alt257
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -111,6 +111,7 @@ Patch7: gcc14.patch
 Patch8: nv-vtophys-explicit-void-cast.patch
 Patch9: kernel-6.10.patch
 Patch10: kernel-6.12.patch
+Patch11: disable_fstack-clash-protection_fcf-protection.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -197,6 +198,7 @@ pushd kernel
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 rm -rf precompiled
 %ifarch aarch64
 fgrep -rl MT_DEVICE_GRE | \
@@ -421,6 +423,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt257
+- disable kernel module stack-clash-protection
+
 * Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt256
 - enable nvidia-drm.modeset by default
 
