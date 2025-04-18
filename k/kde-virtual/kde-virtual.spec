@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.6
+Version: 6.0.7
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -189,7 +189,7 @@ Obsoletes: kde5-email-client-4-thunderbird < %EVR
 Provides: kde-email-client = %EVR
 Provides: kde-email-client-thunderbird = %EVR
 Requires: kde-common
-Requires: thunderbird thunderbird-ru thunderbird-lightning-ru
+Requires: thunderbird
 %description -n kde-email-client-4-thunderbird
 %summary
 
@@ -349,6 +349,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.7-alt1
+- clean requires
+
 * Wed Apr 16 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.6-alt1
 - clean requires
 
