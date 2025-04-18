@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.13
+Version: 7.14
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,15 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Fri Apr 18 2025 Vitaly Lipatov <lav@altlinux.ru> 7.14-alt1
+- eget: fix bug with IPFS handling
+- eget: add support for EGET_OPTIONS
+- eget: add --no-content-disposition
+- eget: fix user agent string quoting
+- eget: fix left args
+- eget: fix get real filename for redirects with tags
+- eget: add --no-glob support
+
 * Tue Dec 10 2024 Vitaly Lipatov <lav@altlinux.ru> 7.13-alt1
 - added --trust-server-names to wget and curl (eterbug #17842)
 - have_end_slash added support to php? url style
