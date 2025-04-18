@@ -1,6 +1,6 @@
 Name:		xmr-stak
 Version:	2.10.8
-Release:	alt2
+Release:	alt3
 Summary:	XMR-Stak - Cryptonight Mining Software
 Url:		https://github.com/fireice-uk/xmr-stak
 Group:		Office
@@ -10,10 +10,11 @@ Patch0:	%name-libmicrohttpd.patch
 
 ExclusiveArch:	x86_64
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libhwloc-devel libmicrohttpd-devel libssl-devel-static
 
-Provides:	%name-cpu
-Obsoletes:	%name-cpu
+Provides:	%name-cpu = %EVR
+Obsoletes:	%name-cpu < %EVR
 
 %description
 XMR-Stak is a universal Stratum pool miner. This miner supports CPUs, AMD and NVIDIA gpus
@@ -26,24 +27,25 @@ and many more Cryptonight coins.
 
 %build
 subst 's|2.0|0.1|g' ./xmrstak/donate-level.hpp
-mkdir ./build && cd ./build
-cmake		../. \
+%cmake		 \
 		-DCMAKE_BUILD_TYPE=STATIC \
 		-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 		-DCMAKE_C_FLAGS:STRING="%optflags" \
 		-DCUDA_ENABLE=OFF \
 		-DOpenCL_ENABLE=OFF
-%make_build
+%cmake_build
 
 %install
-cd ./build
-install -Dp -m 0755 ./bin/%name %buildroot%_bindir/%name
+%cmake_install
 
 %files
 %doc doc/{FAQ.md,pgp_keys.md,tuning.md,usage.md}
 %_bindir/*
 
 %changelog
+* Fri Apr 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.10.8-alt3
+- NMU: fix FTBFS with cmake 4.0
+
 * Thu Jul  6 2023 Artyom Bystrov <arbars@altlinux.org> 2.10.8-alt2
 - Fix build on GCC13
 
