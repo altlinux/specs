@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.28
+Version: 0.1.29
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -86,6 +86,11 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Fri Apr 18 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt1
+- Use g_dbus_is_member_name instead of is_correct_name for method name.
+- Fix segmentation fault in GetSignals method.
+- Update docs/README-ru.md.
+
 * Thu Mar 27 2025 Ivan Savin <svn17@altlinux.org> 0.1.28-alt1
 - Add functionality that restarts the service when there are changes in
   directories with backend files. The corresponding filetrigger has been
