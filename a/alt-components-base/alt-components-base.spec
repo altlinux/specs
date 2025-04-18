@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.5
+Version: 0.6.6
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,11 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Fri Apr 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.6-alt1
+- components: remove alterator-application-license package from
+  alterator-explorer component.
+- editions: corrected description for server and domain (thx Olga Kamaeva).
+
 * Thu Apr 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.5-alt1
 - editions: update descriptions for server and domain.
 
