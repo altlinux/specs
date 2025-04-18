@@ -2,7 +2,7 @@
 %def_with noarch
 
 Name: alterator-notes
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Provides: alterator-license = %version
@@ -51,6 +51,9 @@ rm -rf %buildroot%_alterator_libdir/ui/notes/*.go
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Apr 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.5-alt1
+- final-notes: remove header with module name in ui
+
 * Tue Apr 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.4-alt1
 - Add final-notes hidden module for installation process
 
