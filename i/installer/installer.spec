@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.18
+Version: 1.16.19
 Release: alt1
 
 Summary: Installer common parts
@@ -144,6 +144,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Fri Apr 18 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.16.19-alt1
+- steps: add final-notes.desktop
+
 * Thu Apr 03 2025 Anton Midyukov <antohami@altlinux.org> 1.16.18-alt1
 - install2-desktop.sh: do not use $XDG_RUNTIME_DIR
 - use two additional steps in install2-desktop (Closes: 53674)
