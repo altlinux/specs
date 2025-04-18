@@ -2,7 +2,7 @@
 %define config_dir gitlab-runner.d
 
 Name:    gitlab-runner
-Version: 17.10.1
+Version: 17.11.0
 Release: alt1
 
 Summary: GitLab Runner is the open source project that is used to run your CI/CD jobs and send the results back to GitLab
@@ -15,6 +15,7 @@ Source1: %name.service
 Source2: %name.init
 Source3: %name.tmpfiles
 Source4: %name.sysconfig
+
 Patch0: %name-16.9.1-alt-fix-for-su-command.patch
 Patch1: vendored-cilium-ebpf-alt-loongarch64-support.patch
 
@@ -71,6 +72,9 @@ fi
 %attr(0770,root,gitlab-runner) %dir %_localstatedir/gitlab-runner
 
 %changelog
+* Fri Apr 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 17.11.0-alt1
+- New version 17.11.0
+
 * Thu Apr 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 17.10.1-alt1
 - New version 17.10.1
 
