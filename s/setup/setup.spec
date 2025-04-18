@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.21
+Version: 2.2.22
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -73,6 +73,9 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Fri Apr 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 2.2.22-alt1
+- /etc/shells: add xonsh (closes: 51278)
+
 * Mon Apr 01 2024 Arseny Maslennikov <arseny@altlinux.org> 2.2.21-alt1
 - /etc/profile: put /bin after /usr/bin. This makes much more sense in
   merged-usr environments.
