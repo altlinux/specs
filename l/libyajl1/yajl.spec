@@ -3,7 +3,7 @@
 
 Name: libyajl1
 Version: 1.0.11
-Release: alt3.2
+Release: alt3.3
 
 Summary: Yet Another JSON Library
 Group: System/Legacy libraries
@@ -39,6 +39,7 @@ Development headers for Yet Another JSON Library (YAJL).
 
 %install
 %cmake_install
+rm %buildroot%_bindir/* %buildroot%_libdir/*.a
 
 %files
 %_libdir/libyajl.so.*
@@ -48,6 +49,9 @@ Development headers for Yet Another JSON Library (YAJL).
 %_libdir/libyajl.so
 
 %changelog
+* Fri Apr 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.11-alt3.3
+- FTBFS: fix build with cmake 4.0
+
 * Fri Oct 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0.11-alt3.2
 - FTBFS: fix build with LTO
 
