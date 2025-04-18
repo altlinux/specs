@@ -4,21 +4,21 @@
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt3
+Release: alt4
 Summary: Braille transcription library for UTDML documents
 License: LGPL-3.0-or-later
 Group: Accessibility
 Url: http://liblouis.org
+VCS: https://github.com/liblouis/liblouisutdml
 Source: %name-%version.tar
 # upstream patch to fix failing testsuite
 # https://github.com/liblouis/liblouisutdml/pull/101/commits/10254fc8216fba30e03c2bb3650d1699bfcb3716
 Patch1: %name-%version-failing-testsuite.patch
 Patch2: 0001-fix-Wimplicit-function-declaration-warnings.patch
 Patch3: 0002-Fix-callback-type.patch
-Patch4: .gear/patches/0003-Fixed-segmentation-fault-in-the-file2brl-ALT-bug-513.patch
+Patch4: 0003-Fixed-segmentation-fault-in-the-file2brl-ALT-bug-513.patch
+Patch5: exclude-louis-3.33.0-failed-tests.patch
 
-BuildRequires: autoconf
-BuildRequires: automake
 BuildRequires: libtool
 BuildRequires: help2man
 BuildRequires: liblouis-devel  
@@ -83,6 +83,7 @@ provided by %name-utils.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %autoreconf
@@ -121,6 +122,9 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_infodir/%name.info.*
 
 %changelog
+* Fri Apr 18 2025 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt4
+- Fixed build with liblouis 3.33.0
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt3
 - Fixed license
 
