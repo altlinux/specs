@@ -2,8 +2,8 @@
 %define diagnostic_tool domain-client
 
 Name: diag-%diagnostic_tool
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: Active Directory domain environment diagnostic tool
 License: GPLv3
@@ -52,6 +52,9 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Apr 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4-alt1
+- fix: diag: add category adtCategory
+
 * Wed Apr 09 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt2
 - spec: switch to new alterator-entry
 
