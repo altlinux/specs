@@ -16,7 +16,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.77
+Version: 1.4.79
 Release: alt1
 
 Summary: A fast webserver with minimal memory-footprint
@@ -171,7 +171,10 @@ mkdir -p %buildroot{%_spooldir/%name/tmp,%_var/log/%name,%_var/lib/%name}
 install -m755 %name.init %buildroot%_initdir/%name
 #install -m644 doc/initscripts/sysconfig.lighttpd %buildroot%_sysconfdir/sysconfig/lighttpd
 install -m644 doc/systemd/lighttpd.service %buildroot%_unitdir/lighttpd.service
-install -m644 doc/systemd/lighttpd.socket %buildroot%_unitdir/lighttpd.socket
+install -m644 doc/systemd/lighttpd-http-ipv4.socket %buildroot%_unitdir/lighttpd-http-ipv4.socket
+install -m644 doc/systemd/lighttpd-http-ipv6.socket %buildroot%_unitdir/lighttpd-http-ipv6.socket
+install -m644 doc/systemd/lighttpd-https-ipv4.socket %buildroot%_unitdir/lighttpd-https-ipv4.socket
+install -m644 doc/systemd/lighttpd-https-ipv6.socket %buildroot%_unitdir/lighttpd-https-ipv6.socket
 
 # configs
 cp -rp doc/config %buildroot%_sysconfdir/%name
@@ -282,6 +285,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Fri Apr 18 2025 Alexei Takaseev <taf@altlinux.org> 1.4.79-alt1
+- 1.4.79
+
 * Mon Jan 13 2025 Alexei Takaseev <taf@altlinux.org> 1.4.77-alt1
 - 1.4.77
 
