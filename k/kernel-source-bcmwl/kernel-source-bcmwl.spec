@@ -8,10 +8,10 @@
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt9.g%{git}
+Release: alt10.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Broadcom WiFi chipset series module sources
-License: Propreitary
+License: Proprietary
 Group: Development/Kernel
 Url: https://github.com/antoineco/broadcom-wl
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
@@ -69,6 +69,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version/bcmwl
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm2.conf
 
 %changelog
+* Fri Apr 18 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt10.g6adc981
+- Added fix for kernels 6.13+.
+
 * Fri Jan 17 2025 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt9.g6adc981
 - Apply some fixes from debian:
   + wl: Avoid disconnecting invalid interface
