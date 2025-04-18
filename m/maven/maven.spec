@@ -16,14 +16,14 @@ BuildRequires: jpackage-default
 %define name maven
 %bcond_with bootstrap
 
-%global bundled_slf4j_version 1.7.30
+%global bundled_slf4j_version 1.7.32
 %global apphomedir %{_datadir}/%{name}%{?maven_version_suffix}
 %global confdir %{_sysconfdir}/%{name}%{?maven_version_suffix}
 
 Name:           maven
 Epoch:          1
-Version:        3.8.1
-Release:        alt1jpp11
+Version:        3.8.2
+Release:        alt1
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
 # bundled slf4j is MIT
@@ -41,6 +41,7 @@ Patch1:         0001-Adapt-mvn-script.patch
 Patch2:         0002-Invoke-logback-via-reflection.patch
 Patch3:         0003-Use-non-shaded-HTTP-wagon.patch
 Patch4:         0004-Remove-dependency-on-powermock.patch
+Patch5:         maven-3.8.2-alt-fix-config-mavenrc.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -134,6 +135,7 @@ find -name 'pom.xml' -exec sed -i 's/\r//' {} +
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 # not really used during build, but a precaution
 find -name '*.jar' -not -path '*/test/*' -delete
@@ -259,6 +261,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Fri Apr 18 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.2-alt1
+- new version
+
 * Mon Apr 14 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.1-alt1jpp11
 - new version
 
