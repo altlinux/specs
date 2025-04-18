@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 8.5.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 %define sover %version
@@ -72,7 +72,7 @@ BuildRequires: libXres-devel libexiv2-devel libexpat-devel libgomp-devel libgpho
 %{?_enable_jasper:BuildRequires: libjasper-devel}
 BuildRequires: libavcodec-devel libavfilter-devel libavformat-devel libavdevice-devel libavutil-devel
 BuildRequires: libswscale-devel libpostproc-devel libswresample-devel
-BuildRequires: liblcms2-devel liblensfun-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
+BuildRequires: liblcms2-devel liblensfun1-devel liblqr-devel libtiff-devel libusb-devel libtbb-devel libxml2-devel libxslt-devel
 BuildRequires: libEGL-devel libGL-devel libGLU-devel
 BuildRequires: libraw-devel
 BuildRequires: libImageMagick-devel
@@ -288,6 +288,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 8.5.0-alt2
+- build with proper lensfun
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 8.5.0-alt1
 - new version
 
