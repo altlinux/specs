@@ -1,6 +1,6 @@
 Name:    simbody
 Version: 3.7
-Release: alt1.2
+Release: alt1.3
 
 Summary: High-performance C++ multibody dynamics/physics library for simulating articulated biomechanical and mechanical systems
 License: Apache-2.0
@@ -12,12 +12,17 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch: simbody-e2k.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libfreeglut-devel
 BuildRequires: liblapack-devel
 BuildRequires: libGL-devel
+BuildRequires: libXi-devel
+BuildRequires: libXmu-devel
+BuildRequires: doxygen
+BuildRequires: /proc
 
 %description
 Simbody is a high-performance, open-source toolkit for science- and
@@ -88,6 +93,9 @@ Group: Development/Documentation
 %_defaultdocdir/%name/*.*
 
 %changelog
+* Fri Apr 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.7-alt1.3
+- NMU: fix FTBFS with cmake 4.0
+
 * Sun Aug 27 2023 Michael Shigorin <mike@altlinux.org> 3.7-alt1.2
 - E2K: fix simbody-e2k.patch (ilyakurdyukov@)
 
