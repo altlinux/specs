@@ -2,7 +2,7 @@
 
 Name: baikal-openuds
 Version: 0.0.3
-Release: alt2.1
+Release: alt2.2
 License: %gpl2plus
 Summary: Workaround for xfreerdp with OpenUDS on Baikal-M
 Group: Other
@@ -15,6 +15,7 @@ BuildRequires: rpm-build-python3
 Requires: remmina
 Requires: remmina-plugins-rdp
 Conflicts: xfreerdp
+Conflicts: xfreerdp3
 Provides: freerdp
 
 %description
@@ -31,6 +32,9 @@ install -D xfreerdp %buildroot%_bindir/xfreerdp
 %_bindir/xfreerdp
 
 %changelog
+* Fri Apr 18 2025 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt2.2
+- Conflicted with xfreerdp3 too (ALT #53894).
+
 * Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt2.1
 - Built as noarch and increase release.
 
