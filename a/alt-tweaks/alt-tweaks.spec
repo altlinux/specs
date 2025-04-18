@@ -2,7 +2,7 @@
 
 Name: alt-tweaks
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
 Summary: A tool to customize advanced phosh options of ALT Mobile OS
 Group: Graphical desktop/GNOME
@@ -65,6 +65,9 @@ rm -f %buildroot%_datadir/postmarketos-tweaks/postmarketos-tweakd.initd.in
 %doc README*
 
 %changelog
+* Thu Apr 17 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.2-alt2
+- Remove lockscreen wallpaper option
+
 * Tue Feb  4 2025 Artyom Bystrov <arbars@altlinux.org> 0.2.2-alt1
 - Remove wallpaper option
 - Replace lockscreen background into appearance tab
