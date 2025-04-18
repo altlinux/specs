@@ -1,6 +1,6 @@
 Name:    libzim
-Version: 9.2.3
-Release: alt2
+Version: 9.3.0
+Release: alt1
 Summary: Library for reading/writing ZIM files
 
 License: GPLv2+
@@ -9,6 +9,7 @@ URL:     http://openzim.org/wiki/Main_Page
 # VCS:   https://github.com/openzim/libzim
 
 Source0: %name-%version.tar
+Patch0: libzim-icu76.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -45,12 +46,10 @@ developing applications that use %{name}.
 
 %prep
 %setup
+%patch0 -p1
 %ifarch %e2k
 sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %endif
-
-# compat with icu 76
-sed -i "/icu/ s/'icu/'icu-uc, icu/" meson.build
 
 %build
 %meson -Dwerror=false
@@ -70,6 +69,9 @@ sed -i "/icu/ s/'icu/'icu-uc, icu/" meson.build
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Apr 17 2025 Andrey Cherepanov <cas@altlinux.org> 9.3.0-alt1
+- New version.
+
 * Tue Feb 25 2025 Constantin Sunzow <protvin@altlinux.org> 9.2.3-alt2
 - Rebuild with icu 76.
 
