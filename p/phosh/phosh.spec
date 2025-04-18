@@ -26,7 +26,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -54,7 +54,7 @@ Patch2: %name-0.43.0-alt-service.patch
 Patch3: %name-0.29.0-alt-service-dm.patch
 
 %define gmobile_ver 0.1.0
-%define feedback_ver 0.4.0
+%define feedback_ver 0.7.0
 %define appstream_ver 1.0.0
 
 Requires: %name-data = %EVR
@@ -76,10 +76,11 @@ Requires: gnome-menus-x-gnome
 Requires: sound-theme-phosh
 # since 0.45 to uninstall apps from app-grid
 Requires: gnome-software
+# since 0.46 (ALT #53890)
+Requires: xdg-desktop-portal-phosh
 
 # squeekboard provides osk-wayland
 Requires: /usr/bin/osk-wayland
-
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
@@ -296,6 +297,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Fri Apr 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1.1
+- added x-d-p-phosh to runtime dependencies (ALT #53890)
+
 * Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - 0.46.0
 

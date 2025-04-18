@@ -2,7 +2,7 @@
 %define themename adw-gtk3
 
 Name: gtk3-theme-%themename
-Version: 5.9
+Version: 5.10
 Release: alt1
 
 Summary: The theme from libadwaita ported to GTK+3
@@ -10,10 +10,11 @@ License: LGPL-2.1
 Group: Graphical desktop/GNOME
 Url: https://github.com/lassekongo83/adw-gtk3
 
+Vcs: https://github.com/lassekongo83/adw-gtk3.git
+
 %if_disabled snapshot
 Source: https://github.com/lassekongo83/adw-gtk3/archive/v%version/%themename-%version.tar.gz
 %else
-Vcs: https://github.com/lassekongo83/adw-gtk3.git
 Source: %themename-%version.tar
 %endif
 
@@ -41,6 +42,9 @@ BuildRequires: meson sassc
 %doc README*
 
 %changelog
+* Fri Apr 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.10-alt1
+- 5.10
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 5.9-alt1
 - 5.9
 
