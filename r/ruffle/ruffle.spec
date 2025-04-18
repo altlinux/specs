@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name ruffle
-%define ver_major 2025.03
+%define ver_major 2025.04
 %define rdn_name rs.ruffle.Ruffle
 
 %def_disable bootstrap
 %def_enable check
 
 Name: %_name
-Version: %ver_major.23
+Version: %ver_major.18
 Release: alt1
 
 Summary: A Flash Player emulator written in Rust
@@ -103,6 +103,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Fri Apr 18 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.04.18-alt1
+- 2025.04.18
+
 * Sun Mar 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.03.23-alt1
 - 2025.03.23
 
