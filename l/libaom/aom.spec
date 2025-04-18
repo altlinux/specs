@@ -16,7 +16,7 @@
 
 Name: lib%oname
 Version: 3.12.0
-Release: alt1.1
+Release: alt2
 Summary: AV1 Codec Library
 Group: System/Libraries
 License: BSD-2-Clause
@@ -155,6 +155,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %endif
 
 %changelog
+* Fri Apr 18 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.12.0-alt2
+- e2k: simd patch update
+
 * Thu Feb 27 2025 Ivan A. Melnikov <iv@altlinux.org> 3.12.0-alt1.1
 - NMU: build v/o RVV on riscv64 (fixes FTBFS)
 
