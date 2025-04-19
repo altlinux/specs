@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xapian-core
-Version: 1.4.27
+Version: 1.4.29
 Release: alt1
 %define sover 30
 Summary: Xapian is an open source search engine library
@@ -144,6 +144,9 @@ time %make_build check
 %doc HACKING
 
 %changelog
+* Sat Apr 19 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.29-alt1
+- Update to 1.4.29 (2025-04-18).
+
 * Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.27-alt1
 - Update to 1.4.27 (2024-12-06).
 
