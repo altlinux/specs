@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.1
+Version: 2.9.1
 Release: alt1
 
 Summary: Settings management using pydantic
@@ -43,7 +43,7 @@ for discussion.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/testing.txt
+%pyproject_deps_resync_check_depgroup testing
 %endif
 
 %build
@@ -57,9 +57,12 @@ for discussion.
 # tests/test_source_azure_key_vault.py: there's error with new
 # python3-module-azure-keyvault-secrets==4.9.0 and we don't need to check
 # azure functional.
+# tests/test_source_gcp_secret_manager.py: there's no sense testing
+# google-cloud-secret-manager since that package is no in Sisyphus
 %pyproject_run_pytest \
     --ignore='tests/test_docs.py' \
-    --ignore='tests/test_source_azure_key_vault.py'
+    --ignore='tests/test_source_azure_key_vault.py' \
+    --ignore='tests/test_source_gcp_secret_manager.py'
 
 %files
 %doc README.md docs
@@ -67,6 +70,9 @@ for discussion.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Apr 19 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.9.1-alt1
+- Updated to 2.9.1.
+
 * Thu Feb 27 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.8.1-alt1
 - Updated to 2.8.1.
 
