@@ -1,5 +1,5 @@
 Name: clinfo
-Version: 3.0.23.01.25
+Version: 3.0.25.02.14
 Release: alt1
 
 Summary: Enumerate OpenCL platforms and devices
@@ -8,9 +8,7 @@ License: CC0
 Group: File tools
 Url: https://github.com/Oblomov/clinfo
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://github.com/Oblomov/clinfo/archive/%version/%name-%version.tar.gz
+Vcs: https://github.com/Oblomov/clinfo/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: ocl-icd-devel
@@ -42,6 +40,9 @@ install -Dpm0644 man1/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 3.0.25.02.14-alt1
+- new version 3.0.25.02.14.
+
 * Thu Mar 02 2023 L.A. Kostis <lakostis@altlinux.ru> 3.0.23.01.25-alt1
 - NMU:
   + Updated to 3.0.23.01.25.
