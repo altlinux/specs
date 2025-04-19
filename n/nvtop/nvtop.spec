@@ -4,7 +4,7 @@
 %define git %nil
 
 Name: nvtop
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: (h)top like task monitor for AMD, Intel and Nvidia GPUs
@@ -55,6 +55,9 @@ a htop familiar way.
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 3.2.0-alt1
+- 3.2.0.
+
 * Tue Mar 05 2024 L.A. Kostis <lakostis@altlinux.ru> 3.1.0-alt1
 - 3.1.0.
 
