@@ -1,18 +1,18 @@
 Name: rcs
-Version: 5.7
-Release: alt1.qa1
+Version: 5.10.1
+Release: alt1
 Serial: 1
 
-Summary: Revision Control System (RCS) file version management tools.
-Summary(ru_RU.KOI8-R): Revision Control System (RCS) - утилиты отслеживания версий файлов.
-License: GPL
+Summary: Revision Control System (RCS) file version management tools
+Summary(ru_RU.UTF8): Revision Control System (RCS) - я┐я┌п╦п╩п╦я┌я▀ п╬я┌я│п╩п╣п╤п╦п╡п╟п╫п╦я▐ п╡п╣я─я│п╦п╧ я└п╟п╧п╩п╬п╡.
+License: %gpl3plus
 Group: Development/Other
 Url: http://www.gnu.org/software/rcs/
+Source: ftp://ftp.gnu.org/pub/gnu/rcs/%name-%version.tar
+Patch1: rcs-rh-configure-c99.patch
 
-Source: ftp://ftp.gnu.org/pub/gnu/rcs/%name-%version.tar.bz2
-Patch1: rcs-5.7-rh-tmp.patch
-Patch2: rcs-5.7-rh-sameuserlocks.patch
-Patch3: rcs-5.7-rh-rcsdiff-option.patch
+BuildRequires(pre): rpm-build-licenses
+BuildRequires: lzip diffutils ed groff-base texinfo
 
 %description
 The Revision Control System (RCS) manages multiple revisions of files.
@@ -21,29 +21,36 @@ merging of revisions. RCS is useful for text that is revised frequently,
 for example programs, documentation, graphics, papers, and form letters.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
-autoconf
+%autoreconf
 export \
-	ac_cv_path_SENDMAIL=%_sbindir/sendmail \
-	ac_cv_path_ED=/bin/ed \
-	ac_cv_prog_PIC="pic -n"
+       ac_cv_path_SENDMAIL=%_sbindir/sendmail
 %configure --with-diffutils
 %make_build
 
 %install
 %makeinstall man1dir=%buildroot%_man1dir man5dir=%buildroot%_man5dir
 
+install -m 755 src/rcsfreeze %buildroot%_bindir
+
+%check
+make check XFAIL_TESTS="`tests/known-failures %{version}`"
+
 %files
+%doc ChangeLog COPYING THANKS NEWS README
 %_bindir/*
 %_mandir/man?/*
-%doc CREDITS NEWS REFS
+%_infodir/*
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1:5.10.1-alt1
+- 5.10.1.
+- Modernize .spec and build.
+- Update -rh patches.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:5.7-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
