@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.2
-Release: alt3
+Release: alt4
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -179,7 +179,7 @@ mkdir %buildroot%_libdir/kodi/addons
 %files
 %docdir
 %_desktopdir/kodi.desktop
-%_iconsdir/hicolor/*/apps/kodi.png
+%_iconsdir/hicolor/*/apps/kodi.*
 %_datadir/metainfo/*.xml
 
 %files bin
@@ -211,6 +211,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Sat Apr 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt4
+- fixed excessive pipewire-related logs
+
 * Tue Mar 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt3
 - fixed build with pipewire
 
