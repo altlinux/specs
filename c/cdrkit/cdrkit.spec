@@ -1,7 +1,7 @@
 %define svn_rev 852
 Name: cdrkit
 Version: 1.1.11
-Release: alt3
+Release: alt3.1
 Epoch: 1
 
 Summary: A collection of command-line CD/DVD recording utilities
@@ -22,6 +22,7 @@ Patch7: cdrkit-1.1.9-alt-bound.patch
 Patch8: cdrkit-1.1.9-alt-format.patch
 Patch9: cdrkit-1.1.11-alt-no_common.patch
 Patch10: cdrkit-1.1.11-alt-memset.patch
+Patch11: cdrkit-cmake-version.patch
 
 Requires: wodim = %epoch:%version-%release
 Requires: readom = %epoch:%version-%release
@@ -31,9 +32,11 @@ Requires: dirsplit = %epoch:%version-%release
 Requires: %name-doc = %epoch:%version-%release
 Requires: %name-utils = %epoch:%version-%release
 
-BuildRequires(pre): alternatives
+BuildRequires(pre): alternatives cmake
 %define weight 5
-BuildRequires: bzlib-devel cmake libcap-devel libmagic-devel zlib-devel
+BuildRequires: bzlib-devel libcap-devel libmagic-devel zlib-devel
+# for new cmake
+BuildRequires: /proc
 
 %description
 cdrkit is a suite of programs for recording CDs and DVDs, blanking CD-RW
@@ -133,6 +136,7 @@ netscsid is a NET SCSI Daemon.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 sed -i '/^require v5\.8\.1;$/d' 3rd-party/dirsplit/dirsplit
 find -type f -print0 |
@@ -142,10 +146,11 @@ find doc -type f -print0 |
 
 %build
 %add_optflags -fno-strict-aliasing -Wno-unused
-%make_build CFLAGS='%optflags' VERBOSE=1
+%cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+%cmake_build
 
 %install
-make install PREFIX=%buildroot%prefix VERBOSE=1
+%cmakeinstall_std
 
 %define docdir %_docdir/%name
 mkdir -p %buildroot%docdir
@@ -252,6 +257,9 @@ __EOF__
 %exclude %_man1dir/dirsplit.*
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1:1.1.11-alt3.1
+- Fix build with cmake 4.0.
+
 * Wed Oct 02 2024 L.A. Kostis <lakostis@altlinux.ru> 1:1.1.11-alt3
 - Return alternatives to coexist with cdrecord-classic.
 - icedax: added conflict with cdda2wav from schilytools.
