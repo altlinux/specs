@@ -5,21 +5,23 @@
 # LTO causes errors, disable it
 #%%global optflags_lto %%nil
 
-%define soname 23
+%define soname 24
 
 Name: libtorrent
 Epoch: 3
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
-License: GPLv2+
+# "libtorrent/src/utils/sha_fast.{cc,h}" is originally from the
+# Mozilla NSS and is under a triple license; MPL, LGPL and GPL
+License: GPLv2+ AND LGPL-2.1 AND MPL-1.1
 Url: https://github.com/rakshasa/libtorrent
-
-# https://github.com/rakshasa/libtorrent.git
+Vcs: https://github.com/rakshasa/libtorrent.git
 Source: %name-%version.tar
 
-Patch: %name-alt-skip-tests.patch
+Patch0: %name-alt-skip-tests.patch
+Patch1: %name-utils-add-missing-inc.patch
 
 BuildRequires: gcc-c++ libsigc++2.0-devel libssl-devel
 BuildRequires: cppunit-devel
@@ -90,7 +92,7 @@ to develop applications using libTorrent.
 %ifarch %e2k
 sed -i "/private:/{N;s|private:||;s|$|private:|}" src/torrent/poll_select.h
 %endif
-%patch -p1
+%autopatch -p1
 
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -112,8 +114,8 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %files -n %name%soname
 %doc AUTHORS ChangeLog NEWS README
 %doc --no-dereference COPYING
-%_libdir/*.so.%{soname}
-%_libdir/*.so.%{soname}.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files devel
 %_includedir/*
@@ -121,6 +123,12 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.15.2-alt1
+- 0.15.2.
+- Bump soname.
+- Update licences.
+- torrent/utils: add missing <algorithm>.
+
 * Thu Feb 20 2025 L.A. Kostis <lakostis@altlinux.ru> 3:0.15.1-alt1
 - 0.15.1.
 

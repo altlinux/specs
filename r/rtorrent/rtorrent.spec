@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtorrent
-Version: 0.15.1
+Version: 0.15.2
 Release: alt1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
@@ -12,7 +12,7 @@ Url: https://github.com/rakshasa/rtorrent/wiki
 # https://github.com/rakshasa/rtorrent.git
 Source: %name-%version.tar
 
-Patch: %name-fix-ax-define.patch
+Patch: %name-alt-fix-ub.patch
 
 BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel
 BuildRequires: cppunit-devel
@@ -36,7 +36,7 @@ screen. rTorrent features:
 %setup
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
-#%%patch -p1
+%autopatch -p1
 
 %build
 %autoreconf
@@ -51,6 +51,10 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_bindir/%name
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.15.2-alt1
+- 0.15.2.
+- rpc_manager: fix UB.
+
 * Thu Feb 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.15.1-alt1
 - 0.15.1.
 
