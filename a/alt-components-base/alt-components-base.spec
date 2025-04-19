@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,22 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Sat Apr 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.7-alt1
+- Fix editions:
+  + change alterator-legacy-shares category to alterator-legacy-services
+  + apply splited alterator-legacy-network-services
+  + remove alterator-legacy-base component
+- Fix components:
+  + split alterator-legacy-network-services component for separate services
+  + fix displayname and category of alterator-browser component
+  + add alterator-net-eth package to alterator-legacy-lan component
+  + split alterator-legacy-lan to ethernet, wifi and bondging
+  + fix alterator-legacy-control component displayname and description
+  + remove alterator-legacy-base component
+  + replace alterator-legacy module to specific categories
+  + add base alterator legacy modules to alterator-legacy-web
+  + create new alterator-legacy components from alterator-legacy-base
+
 * Fri Apr 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.6-alt1
 - components: remove alterator-application-license package from
   alterator-explorer component.
