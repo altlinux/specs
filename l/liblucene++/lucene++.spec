@@ -3,7 +3,7 @@
 
 Name: lib%_name
 Version: 3.0.9
-Release: alt2
+Release: alt3
 
 Summary: A high-performance, full-featured text search engine written in C++
 Group: System/Libraries
@@ -13,6 +13,7 @@ Url: https://github.com/luceneplusplus/LucenePlusPlus
 Source: https://github.com/luceneplusplus/LucenePlusPlus/archive/rel_%version.tar.gz#/%name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ zlib-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-asio-devel boost-interprocess-devel
 %{?_enable_check:BuildRequires: libgmock-devel}
@@ -33,6 +34,8 @@ search engine written in C++
 %prep
 %setup
 %patch -p1
+# increase cmake_minimum_required(VERSION)
+sed -i 's|2\.8\.12|3.5|' cmake/cotire.cmake
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -64,6 +67,10 @@ search engine written in C++
 %_libdir/cmake/%{name}*
 
 %changelog
+* Sat Apr 19 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt3
+- updated to rel_3.0.9-6-gc73fab5 (fixed build with boost-1.87)
+- fixed build with CMake-4.0.0
+
 * Mon Apr 29 2024 Yuri N. Sedunov <aris@altlinux.org> 3.0.9-alt2
 - updated to rel_3.0.9-4-g76dc90f (fixed build with boost-1.85)
 
