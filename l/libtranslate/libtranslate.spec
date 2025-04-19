@@ -1,6 +1,8 @@
+%global optflags_lto %nil
+
 Name: libtranslate
 Version: 0.99
-Release: alt3.qa2
+Release: alt4
 
 Summary: library for translating text
 
@@ -20,9 +22,12 @@ Patch4: libtranslate-ds-empty.patch
 Patch5: libtranslate-ds-promt.patch
 Patch6: libtranslate-ds-fixcharset.patch
 Patch7: libtranslate-ds-timed.patch
+Patch8: libtranslate-talkfilter-stdlib.patch
+Patch9: libtranslate-cli-unresolved.patch
 
-BuildRequires: gcc-c++ glib2-devel libgcrypt-devel libgnutls-devel libgpg-error-devel libsoup-devel
+BuildRequires: gcc-c++ glib2-devel libgcrypt-devel libgnutls-devel libgpg-error-devel libsoup22-devel
 BuildRequires: libtalkfilters-devel libtasn1-devel libxml2-devel perl-XML-Parser zlib-devel
+BuildRequires: intltool gtk-doc
 
 %description
 libtranslate is a library for translating text and web pages
@@ -48,8 +53,11 @@ This package contain header files for libtranslate.
 %patch5 -p1
 %patch7 -p1
 %patch6 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
+%autoreconf -I m4
 %configure \
 	--disable-static \
 	--enable-generic \
@@ -71,6 +79,7 @@ install -m 644 %SOURCE1 %buildroot%_datadir/%name/services.xml
 %_libdir/%name
 %_datadir/%name
 %_man1dir/*
+%_man5dir/*
 
 %files devel
 %_includedir/*
@@ -79,6 +88,13 @@ install -m 644 %SOURCE1 %buildroot%_datadir/%name/services.xml
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.99-alt4
+- Fix FTBFS:
+  + disable LTO
+  + update BR
+  + talkfilter: fix detection.
+  + cli: fix unresolved symbols.
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99-alt3.qa2
 - Removed bad RPATH
 
