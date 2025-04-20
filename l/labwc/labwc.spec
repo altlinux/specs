@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labwc
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -71,6 +71,9 @@ Conflicts: labwc < 0.8.1
 %_datadir/wayland-sessions/%name.desktop
 
 %changelog
+* Sun Apr 20 2025 Anton Midyukov <antohami@altlinux.org> 0.8.3-alt1
+- new version (0.8.3) with rpmgs script
+
 * Wed Jan 22 2025 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt1
 - new version (0.8.2) with rpmgs script
 
