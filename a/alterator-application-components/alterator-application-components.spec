@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -15,7 +15,10 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
-BuildRequires: qt6-base-common qt6-base-devel qt6-declarative-devel qt6-tools-devel
+BuildRequires: qt6-base-common
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: boost-devel-headers
 BuildRequires: libqbase-devel >= 0.1.0-alt3
 BuildRequires: libtomlplusplus-devel
@@ -67,6 +70,11 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Sun Apr 20 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.7-alt1
+- Remove and install packages in a single apt transaciton.
+- Show apt logs from backend on apply.
+- Don't allow to close wait dialog mid apply.
+
 * Mon Apr 07 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.6-alt1
 - Filter by DE, language and arch from systeminfo backend.
 
