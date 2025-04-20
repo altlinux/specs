@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.85.1
+Version: 1.86.0
 Release: alt1
 Epoch: 1
 
@@ -296,6 +296,7 @@ codegen-units = 2
 debuginfo-level = 1
 codegen-units = 0
 %endif
+lld = false
 
 [llvm]
 ninja = true
@@ -440,6 +441,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Fri Apr 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.86.0-alt1
+- New version (1.86.0).
+
 * Wed Mar 19 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.85.1-alt1
 - New version (1.85.1).
 
@@ -826,3 +830,4 @@ rm -rf %rustdir
 * Fri Jan 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.5.0-alt1
 - initial build
 
+Patch001: 0001-Move-is_builder_target-is_system_llvm-and-is_rust_ll.patch
