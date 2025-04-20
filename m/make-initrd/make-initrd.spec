@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.52.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -68,6 +68,12 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+
+Patch0: 0001-modules-sbc-add-clk-power-supply-directories.patch
+Patch1: 0002-guess-loaded-modules-add-more-directories-with-kerne.patch
+Patch3: 0003-modules-sbc-Specify-more-precisely-the-location.patch
+Patch4: 0004-guess-loaded-modules-Consider-modules-as-optional.patch
+Patch5: 0005-guess-Add-the-ability-to-add-optional-modules.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -400,6 +406,14 @@ fi
 %endif
 
 %changelog
+* Fri Apr 18 2025 Anton Midyukov <antohami@altlinux.org> 2.52.0-alt2
+- add upstream patches:
+  + modules-sbc: add clk, power/supply directories
+  + guess/loaded-modules: add more directories with kernel modules
+  + modules-sbc: Specify more precisely the location
+  + guess/loaded-modules: Consider modules as optional
+  + guess: Add the ability to add optional modules
+
 * Tue Apr 15 2025 Anton Midyukov <antohami@altlinux.org> 2.52.0-alt1
 - Feature add-udev-rules:
   + Handle special case of module loading from udev rules.
