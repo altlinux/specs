@@ -1,5 +1,5 @@
 Name:		nitroshare
-Release:	alt2
+Release:	alt3
 Version:	0.3.4
 Summary:	Transfer files from one device to another made extremely simple
 License:	MIT
@@ -36,16 +36,14 @@ Features
 
 %build
 cp -a %SOURCE1 src/data/ts/uk_UA.ts
-mkdir build && cd build
-cmake ../. \
+%cmake \
 		-DCMAKE_INSTALL_PREFIX=%prefix \
 		-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 		-DCMAKE_C_FLAGS:STRING="%optflags"
-%make_build
+%cmake_build
 
 %install
-cd build
-%make_install DESTDIR=%buildroot install
+%cmake_install
 
 %files
 %doc README.md LICENSE.txt
@@ -74,6 +72,9 @@ cd build
 %_datadir/kservices5/%{name}_addtoservicemenu.desktop
 
 %changelog
+* Sun Apr 20 2025 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt3
+- use %%cmake macros
+
 * Mon Nov 23 2020 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt2
 - rebuild without libappindicator
 - switch to python3
