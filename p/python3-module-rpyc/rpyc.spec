@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0.1
+Version: 6.0.2
 Release: alt1
 
 Summary: Remote Python Call (RPyC), a transparent and symmetric RPC library
@@ -110,6 +110,9 @@ and not test_listing"
 
 
 %changelog
+* Sun Apr 20 2025 Anton Vyatkin <toni@altlinux.org> 6.0.2-alt1
+- New version 6.0.2.
+
 * Wed Sep 25 2024 Anton Vyatkin <toni@altlinux.org> 6.0.1-alt1
 - New version 6.0.1.
 
