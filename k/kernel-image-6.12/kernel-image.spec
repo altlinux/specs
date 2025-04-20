@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.23
+%define kernel_sublevel	.24
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Apr 20 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.24-alt1
+- v6.12.24 (2025-04-20).
+- config-aarch64: CONFIG_VIDEO_RASPBERRYPI_PISP_BE=m.
+- config-aarch64: enable more configs for qualcomm SoC's support.
+
 * Thu Apr 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.23-alt1
 - v6.12.23 (2025-04-10).
 
