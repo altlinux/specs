@@ -1,5 +1,5 @@
 Name: kernel-image-6.15
-Release: alt0.rc2
+Release: alt0.rc3
 %define kernel_src_version	6.14
 %define kernel_base_version	6.15
 %define kernel_sublevel	.0
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Apr 20 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc3
+- Update to v6.15-rc3 (2025-04-20).
+- config-aarch64: CONFIG_VIDEO_RASPBERRYPI_PISP_BE=m.
+- config-aarch64: enable more configs for qualcomm SoC's support.
+
 * Sun Apr 13 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc2
 - Update to v6.15-rc2 (2025-04-13).
 
