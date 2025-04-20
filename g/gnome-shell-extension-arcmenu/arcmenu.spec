@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-arcmenu
 Version: 65
-Release: alt4
+Release: alt5
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -47,6 +47,11 @@ install -Dm644 %SOURCE1 \
 %doc README.md
 
 %changelog
+* Sun Apr 20 2025 Anton Midyukov <antohami@altlinux.org> 65-alt5
+- Hide category menu item if it contains no apps
+- Fix bug where apps assigned to multiple categories only appeared
+  in the first category loaded
+
 * Fri Apr 18 2025 Anton Midyukov <antohami@altlinux.org> 65-alt4
 - Set 'metadata::trusted: true' when creating desktop shortcuts
 
