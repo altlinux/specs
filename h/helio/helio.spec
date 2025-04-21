@@ -1,5 +1,5 @@
 Name: helio
-Version: 3.14
+Version: 3.15
 Release: alt1
 
 Summary: Music sequencer for desktop and mobile platforms
@@ -32,8 +32,7 @@ support, small portable builds and more; mainly targeted at hobbyist composers,
 game developers and indie artists.
 
 %prep
-%setup
-tar ixf %SOURCE1
+%setup -a1
 sed -i '/globalApplicationsDirectory/ s,"/usr","%_libdir",' \
 	ThirdParty/JUCE/modules/juce_core/native/juce_linux_Files.cpp
 
@@ -51,6 +50,9 @@ cp -av Projects/Deployment/Linux/Debian/x64/usr/share %buildroot%_prefix
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Apr 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.15-alt1
+- 3.15 released
+
 * Thu Sep 19 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 3.14-alt1
 - 3.14 released
 
