@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name words
-%define ver_major 0.4
+%define ver_major 0.5
 %define rdn_name page.codeberg.petsoi.%_name
 
 %def_enable check
@@ -9,7 +9,7 @@
 
 # conflicts with words-2-alt1
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.7
 Release: alt1
 
 Summary: Words!
@@ -25,7 +25,6 @@ Source: https://codeberg.org/petsoi/words/archive/v%version/%name-%version.tar.g
 Source: %_name-%version.tar
 %endif
 Source1: %_name-%version-cargo.tar
-Patch1: %_name-0.4.1-alt-no-flatpak.patch
 
 %define glib_ver 2.76
 %define adwaita_ver 1.6
@@ -48,8 +47,6 @@ combining logic, vocabulary, and deduction.
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
-
-%patch1
 
 %build
 %meson \
@@ -76,6 +73,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Apr 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.7-alt1
+- 0.5.7
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - updated to v0.4.1-3-gb6085cf
 

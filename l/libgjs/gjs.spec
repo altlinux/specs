@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %prefix/libexec
 %define ver_major 1.84
@@ -11,8 +11,8 @@
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: Javascript Bindings for GNOME
 Group: System/Libraries
@@ -117,6 +117,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Apr 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.2-alt1
+- 1.84.2
+
 * Thu Apr 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.84.1-alt1.1
 - fixed BR on architectures not supported by valgrind
 

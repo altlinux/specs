@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.8
+Version: %ver_major.10
 Release: alt1
 
 Summary: Install websites as apps
@@ -22,6 +22,7 @@ Source: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: typelib(WebKit) = 6.0
 Requires: typelib(Xdp) = 1.0
@@ -66,6 +67,9 @@ than the one installed open in a new browser window.
 %doc README.*
 
 %changelog
+* Mon Apr 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.10-alt1
+- updated to 0.5.10-6-gca30b5e
+
 * Fri Feb 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.8-alt1
 - updated to 0.5.8-21-gdfa1eb1
 
