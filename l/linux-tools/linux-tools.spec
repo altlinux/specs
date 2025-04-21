@@ -2,12 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.11
+%define kernel_base_version 6.14
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
-%add_findreq_skiplist %_prefix/libexec/perf-core/tests/*.py
-%add_findreq_skiplist %_prefix/libexec/perf-core/tests/shell/lib/setup_python.sh
+%add_findreq_skiplist %_prefix/libexec/perf-core/tests/*
 %add_debuginfo_skiplist %_prefix/libexec/perf-core/dlfilters/dlfilter-test-api-v0.so
 %add_debuginfo_skiplist %_libexecdir/kselftests/sgx/test_encl.elf
 %filter_from_requires /intel_pstate_tracer/d
@@ -43,6 +42,7 @@ BuildRequires: elfutils-devel
 BuildRequires: flex
 BuildRequires: libalsa-devel
 BuildRequires: libaudit-devel
+BuildRequires: libbabeltrace-devel
 BuildRequires: libbpf-devel
 BuildRequires: libcap-devel
 BuildRequires: libcap-ng-devel
@@ -67,6 +67,7 @@ BuildRequires: libuuid-devel
 BuildRequires: libzstd-devel
 BuildRequires: perl-devel
 BuildRequires: rsync
+BuildRequires: systemtap-sdt-devel
 BuildRequires: xmlto
 
 BuildRequires: %kernel_source
@@ -94,7 +95,7 @@ Source33: hypervfcopyd.rules
 
 Patch1: 0002-rtla-basic-loongarch-support.patch
 Patch3: 0001-selftests-lsm-lsm_list_modules_test-List-ALT-specifi.patch
-Patch4: 0001-perf-tools-Build-x86-32-bit-syscall-table-from-arch-.patch
+Patch5: 0001-ALT-Run-libslang-include-subdir-test.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -337,6 +338,7 @@ sed -i 's/-s\b/-g/' testing/selftests/arm64/abi/Makefile testing/selftests/arm64
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 sed -Ei 's/(-static-libasan|-fsanitize\S+)//g' testing/selftests/{openat2,fchmodat2}/Makefile
 grep -lrZ -e '-nostdlib' testing/selftests/arm64 | xargs -0 sed -i 's/-nostdlib/-g &/'
+sed -i 's/ -s //' testing/selftests/arm64/gcs/Makefile
 
 # pathfix
 grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
@@ -701,7 +703,6 @@ fi
 %_man1dir/perf*
 %_sysconfdir/bash_completion.d/perf
 %_prefix/libexec/perf-core
-%_datadir/perf-core
 %doc %_docdir/perf
 
 %files -n libperf
@@ -814,6 +815,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Mon Apr 21 2025 Vitaly Chikunov <vt@altlinux.org> 6.14-alt1
+- Update to v6.14 (2025-03-24).
+
 * Mon Sep 16 2024 Vitaly Chikunov <vt@altlinux.org> 6.11-alt1
 - Update to v6.11 (2024-09-15).
 
