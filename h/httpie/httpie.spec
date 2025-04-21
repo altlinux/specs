@@ -5,7 +5,7 @@
 
 Name: httpie
 Version: 3.2.4
-Release: alt4
+Release: alt5
 
 Summary: HTTPie: modern, user-friendly command-line HTTP client for the API era
 Group: Networking/WWW
@@ -18,6 +18,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+%add_pyproject_deps_runtime_filter pip
+%add_pyproject_deps_runtime_filter setuptools
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -62,6 +64,9 @@ responses.
 %doc LICENSE README.md
 
 %changelog
+* Fri Apr 18 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.2.4-alt5
+- Dropped dependency on pip and setuptools.
+
 * Fri Apr 04 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.2.4-alt4
 - Update dependencies managment.
 - Enable previously skipped tests.
