@@ -1,6 +1,6 @@
 Name:    cttesta
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: CT test trainer
 License: GPL-3.0+
@@ -30,6 +30,9 @@ install -Dm 0644 cttestA.png %buildroot%_pixmapsdir/cttestA.png
 %_pixmapsdir/cttestA.png
 
 %changelog
+* Mon Apr 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt2
+- Fix path to executable in desktop file.
+
 * Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial import to Sisyphus (thanks Gregory Dashko <freedoreme@gmail.com> for
   code).
