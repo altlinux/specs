@@ -14,7 +14,7 @@
 %endif
 
 Name: zed
-Version: 0.181.5
+Version: 0.182.9
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -48,6 +48,7 @@ BuildRequires: libalsa-devel
 BuildRequires: libxcb-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libxkbcommon-x11-devel
+BuildRequires: libX11-devel
 BuildRequires: python3
 BuildRequires: unzip
 
@@ -105,6 +106,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Apr 17 2025 Anton Zhukharev <ancieg@altlinux.org> 0.182.9-alt1
+- Updated to 0.182.9.
+
 * Thu Apr 10 2025 Anton Zhukharev <ancieg@altlinux.org> 0.181.5-alt1
 - Updated to 0.181.5.
 
