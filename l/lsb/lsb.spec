@@ -38,7 +38,7 @@
 
 Name: lsb
 Version: 5.0
-Release: alt5
+Release: alt6
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -351,7 +351,7 @@ Requires: libpng12.so.0%lib_suffix
 Requires: libjpeg.so.62%lib_suffix
 Requires: libXrender.so.1%lib_suffix
 Requires: libfreetype.so.6%lib_suffix
-Requires: libtiff.so.5%lib_suffix
+Requires: libtiff.so.6%lib_suffix
 Requires: libxcb.so.1%lib_suffix
 
 # GTK
@@ -674,6 +674,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Mon Apr 14 2025 Constantin Sunzow <protvin@altlinux.org> 5.0-alt6
+- Bump libtiff soname to 6.
+
 * Mon Mar 10 2025 Constantin Sunzow <protvin@altlinux.org> 5.0-alt5
 - Exclude usr path for ld-linux from requires.
 - Removed obsolescent dependencies on Qt 4.

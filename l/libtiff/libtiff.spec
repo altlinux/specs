@@ -1,22 +1,34 @@
+%define _unpackaged_files_terminate_build 1
+
 %def_without jbig
+%define soname 6
 
 Name: libtiff
-Version: 4.4.0
-Release: alt4
+Version: 4.7.0
+Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
 Group: System/Libraries
-Url: http://www.libtiff.org/
+Url: https://libtiff.gitlab.io/libtiff/
+VCS: https://gitlab.com/libtiff/libtiff.git
 
-# git://git.altlinux.org/gears/l/%name
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
-%def_disable static
 %def_enable cxx
 
-BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel liblzma-devel libwebp-devel libzstd-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: libSM-devel
+BuildRequires: libXi-devel
+BuildRequires: libXmu-devel
 BuildRequires: libdeflate-devel
+BuildRequires: libfreeglut-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblzma-devel
+BuildRequires: libwebp-devel
+BuildRequires: libzstd-devel
+BuildRequires: zlib-devel
+BuildRequires: python3-module-sphinx
 
 %if_with jbig
 BuildRequires: libjbig-devel
@@ -30,43 +42,43 @@ TIFF (Tagged Image File Format) image format files.  TIFF is a widely
 used file format for bitmapped images.  TIFF files usually end in the
 .tif extension and they are often quite large.
 
-%package -n libtiff5
+%package -n libtiff%soname
 Summary: Library of functions for manipulating TIFF format image files
 Group: System/Libraries
 
 %package utils
 Summary: Programs for manipulating TIFF format image files
 Group: Graphics
-Requires: libtiff5 = %version-%release
+Requires: libtiff%soname = %version-%release
 
 %package -n tiffgt
 Summary: Program for viewing TIFF format image files
 Group: Graphics
-Requires: libtiff5 = %version-%release
+Requires: libtiff%soname = %version-%release
 
 %package devel
 Summary: Development files for programs which will use the tiff library
 Group: Development/C
-Requires: libtiff5 = %version-%release
-Provides: libtiff5-devel
-Obsoletes: libtiff5-devel
+Requires: libtiff%soname = %version-%release
+Provides: libtiff%soname-devel
+Obsoletes: libtiff%soname-devel
 
-%package devel-static
-Summary: Static tiff library
+%package doc
+Summary: Documentation files for programs which will use the tiff library
 Group: Development/C
-Requires: %name-devel = %version-%release
+BuildArch: noarch
 
-%package -n libtiffxx5
+%package -n libtiffxx%soname
 Summary: TIFF I/O C++ shared library
 Group: System/Libraries
-Requires: libtiff5 = %version-%release
+Requires: libtiff%soname = %version-%release
 
 %package -n libtiffxx-devel
 Summary: TIFF I/O C++ development library and header files
 Group: Development/C
-Requires: libtiffxx5 = %version-%release
+Requires: libtiffxx%soname = %version-%release
 
-%description -n libtiff5
+%description -n libtiff%soname
 This package contains a library of functions for manipulating
 TIFF (Tagged Image File Format) image format files.  TIFF is a widely
 used file format for bitmapped images.  TIFF files usually end in the
@@ -76,6 +88,10 @@ used file format for bitmapped images.  TIFF files usually end in the
 This package contains simple client programs for accessing
 the tiff functions.
 
+%description doc
+This package contains documentation files for developing programs which
+will manipulate TIFF format image files using the tiff library.
+
 %description -n tiffgt
 This package contains tiffgt - a TIFF file display program.
 
@@ -83,74 +99,48 @@ This package contains tiffgt - a TIFF file display program.
 This package contains the header files for developing programs which
 will manipulate TIFF format image files using the tiff library.
 
-%description devel-static
-This package contains static %name library.
-
-%description -n libtiffxx5
+%description -n libtiffxx%soname
 This package contains TIFF I/O C++ shared library
 
 %description -n libtiffxx-devel
 This package contains TIFF I/O C++ development library and header files.
 
 %prep
-%setup -n %name-%version-%release
-:>port/dummy.c
+%setup
+rm -f libtool.m4
 
-cd libtiff
-cat > libtiff.sym << EOF
-TIFFFaxBlackCodes
-TIFFFaxBlackTable
-TIFFFaxMainTable
-TIFFFaxWhiteCodes
-TIFFFaxWhiteTable
-_TIFFCheckMalloc
-_TIFFFax3fillruns
-_TIFFMultiply32
-_TIFFRewriteField
-_TIFFGetExifFields
-_TIFFClampDoubleToFloat
-_TIFFFillStriles
-TIFFFlushData1
-_TIFFGetFields
-_TIFFMergeFields
-_TIFFSeekOK
-_TIFFClampDoubleToUInt32
-TIFFSetCompressionScheme
-_TIFFgetMode
-display_sRGB
-EOF
-sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
-	tiffio.h >> libtiff.sym
-sort -u -o libtiff.sym{,}
-cat > libtiff.map << EOF
-{
- global:
-$(sed 's/.*/  &;/' libtiff.sym)
- local:
-  *;
-};
-EOF
-rm libtiff.sym
+libtoolize --force --copy
+aclocal -I . -I m4
+touch config/config.h.in
+automake --add-missing --copy
+autoconf
+autoheader
 
 %build
+%add_optflags -Wl,--no-undefined
 %autoreconf
-%define docdir %_docdir/%name-%version
-%configure --with-docdir=%docdir --enable-ld-version-script \
-	%{subst_enable static} %{subst_enable cxx}
+%configure \
+  --prefix=%_prefix \
+  --enable-ld-version-script \
+  --enable-static=no \
+  %{subst_enable cxx} \
+  #
+
 %make_build X_PRE_LIBS= GLUT_CFLAGS= GLUT_CFLAGS= GLUT_LIBS='-lglut -lGL' \
 	GLU_CFLAGS= GLU_LIBS= GL_CFLAGS= GL_LIBS=
 
 %install
 %makeinstall_std
-xz -9 %buildroot%docdir/ChangeLog
 
 %check
 %make_build -k check
 
-%files -n libtiff5
-%_libdir/%name.so.?*
-%dir %docdir
-%docdir/[A-Z]*
+%files doc
+%dir %_datadir/doc/tiff-%version
+%_datadir/doc/tiff-%version/
+
+%files -n libtiff%soname
+%_libdir/libtiff.so.%{soname}*
 
 %files utils
 %_bindir/*
@@ -164,20 +154,13 @@ xz -9 %buildroot%docdir/ChangeLog
 
 %files devel
 %_pkgconfigdir/*.pc
-%_libdir/%name.so
+%_libdir/libtiff.so
 %_includedir/*.h
 %_man3dir/*.*
-%dir %docdir
-%docdir/html
-
-%if_enabled static
-%files devel-static
-%_libdir/%name.a
-%endif
 
 %if_enabled cxx
-%files -n libtiffxx5
-%_libdir/libtiffxx.so.*
+%files -n libtiffxx%soname
+%_libdir/libtiffxx.so.%{soname}*
 
 %files -n libtiffxx-devel
 %_libdir/libtiffxx.so
@@ -185,6 +168,9 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.0-alt1
+- New version.
+
 * Wed Jun 07 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt4
 - Built without libjbig support (closes: #46425).
 - spec: fixed url (closes: #43644).

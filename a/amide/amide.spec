@@ -1,6 +1,6 @@
 Name: amide
 Version: 1.0.6
-Release: alt1.git.c02babd
+Release: alt2.git.c02babd
 
 Summary: amide is a program for viewing and analyzing medical image data sets
 License: GPLv2+
@@ -13,7 +13,6 @@ Patch0: amide-1.0.6-alt-DSO.patch
 
 Requires: xmedcon, dcmtk, volpack
 Requires: libgtkmm2, gnome-vfs, gsl
-Requires: libtiff5
 
 BuildPreReq: gcc-c++, gettext, intltool
 BuildPreReq: xmedcon-devel, volpack-devel
@@ -60,6 +59,9 @@ touch gnome-doc-utils.make
 %_man1dir/*
 
 %changelog
+* Mon Apr 14 2025 Constantin Sunzow <protvin@altlinux.org> 1.0.6-alt2.git.c02babd
+- NMU: remove Requires for libtiff5.
+
 * Wed Apr 03 2024 Elizaveta Morozova <morozovaes@altlinux.org> 1.0.6-alt1.git.c02babd
 - Updated version.
 - Updated VCS.
