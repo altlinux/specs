@@ -360,7 +360,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1490,7 +1490,7 @@ mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 install -m644 java-javadoc-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-javadoc
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/%altname-javadoc<<EOF
-%{_javadocdir}/java     %{_javadocdir}/%{uniquejavadocdir}/api  %{priority}
+%{_javadocdir}/java	%{_javadocdir}/%{uniquejavadocdir}/api	%{priority}
 EOF
 
 
@@ -1559,39 +1559,39 @@ install -d %buildroot%_altdir
 
 # J2SE alternative
 cat <<EOF >%buildroot%_altdir/%name-java-headless
-%{_bindir}/java %{_jvmdir}/%{sdkdir}/bin/java   %priority
-%_man1dir/java.1.gz     %_man1dir/java%{label}.1.gz     %{_jvmdir}/%{sdkdir}/bin/java
+%{_bindir}/java	%{_jvmdir}/%{sdkdir}/bin/java	%priority
+%_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
 # binaries and manuals
 for i in keytool policytool servertool orbd rmiregistry tnameserv
 do
   if [ -e %buildroot%{_jvmdir}/%{sdkdir}/bin/$i ]; then
     cat <<EOF >>%buildroot%_altdir/%name-java-headless
-%_bindir/$i     %{_jvmdir}/%{sdkdir}/bin/$i     %{_jvmdir}/%{sdkdir}/bin/java
-%_man1dir/$i.1.gz       %_man1dir/${i}%{label}.1.gz     %{_jvmdir}/%{sdkdir}/bin/java
+%_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/java
+%_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
   fi
 done
 
 %if_enabled control_panel
 cat <<EOF >>%buildroot%_altdir/%name-java
-%{_bindir}/ControlPanel %{_jvmdir}/%{sdkdir}/bin/ControlPanel   %{_jvmdir}/%{sdkdir}/bin/java
-%{_bindir}/jcontrol     %{_jvmdir}/%{sdkdir}/bin/jcontrol       %{_jvmdir}/%{sdkdir}/bin/java
+%{_bindir}/ControlPanel	%{_jvmdir}/%{sdkdir}/bin/ControlPanel	%{_jvmdir}/%{sdkdir}/bin/java
+%{_bindir}/jcontrol	%{_jvmdir}/%{sdkdir}/bin/jcontrol	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
 %endif
 # ----- JPackage compatibility alternatives ------
 cat <<EOF >>%buildroot%_altdir/%name-java-headless
-%{_jvmdir}/jre  %{_jvmdir}/%{sdkdir}    %{_jvmdir}/%{sdkdir}/bin/java
-%{_jvmdir}/jre-%{origin}        %{_jvmdir}/%{sdkdir}    %{_jvmdir}/%{sdkdir}/bin/java
-%{_jvmdir}/jre-%{javaver}       %{_jvmdir}/%{sdkdir}    %{_jvmdir}/%{sdkdir}/bin/java
-%{_jvmdir}/jre-%{javaver}-%{origin}     %{_jvmdir}/%{sdkdir}    %{_jvmdir}/%{sdkdir}/bin/java
+%{_jvmdir}/jre	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/java
+%{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/java
+%{_jvmdir}/jre-%{javaver}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/java
+%{_jvmdir}/jre-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/java
 EOF
 # ----- end: JPackage compatibility alternatives ------
 
 # Javac alternative
 cat <<EOF >%buildroot%_altdir/%name-javac
-%_bindir/javac  %{_jvmdir}/%{sdkdir}/bin/javac  %priority
-%_man1dir/javac.1.gz    %_man1dir/javac%{label}.1.gz    %{_jvmdir}/%{sdkdir}/bin/javac
+%_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
+%_man1dir/javac.1.gz	%_man1dir/javac%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 
 # binaries and manuals
@@ -1600,8 +1600,8 @@ jhat jrunscript jvisualvm schemagen wsgen wsimport xjc
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
   cat <<EOF >>%buildroot%_altdir/%name-javac
-%_bindir/$i     %{_jvmdir}/%{sdkdir}/bin/$i     %{_jvmdir}/%{sdkdir}/bin/javac
-%_man1dir/$i.1.gz       %_man1dir/${i}%{label}.1.gz     %{_jvmdir}/%{sdkdir}/bin/javac
+%_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
+%_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
   fi
 done
@@ -1609,18 +1609,18 @@ done
 for i in HtmlConverter
 do
   cat <<EOF >>%buildroot%_altdir/%name-javac
-%_bindir/$i     %{_jvmdir}/%{sdkdir}/bin/$i     %{_jvmdir}/%{sdkdir}/bin/javac
+%_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
 cat <<EOF >>%buildroot%_altdir/%name-javac
-%{_jvmdir}/java %{_jvmdir}/%{sdkdir}    %{_jvmdir}/%{sdkdir}/bin/javac
-%{_jvmdir}/java-%{origin}       %{_jvmdir}/%{sdkdir}    %{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmdir}/java	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
+%{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 cat <<EOF >>%buildroot%_altdir/%name-javac-versioned
-%{_jvmdir}/java-%{javaver}      %{_jvmdir}/%{sdkdir}    %priority
-%{_jvmdir}/java-%{javaver}-%{origin}    %{_jvmdir}/%{sdkdir}    %priority
+%{_jvmdir}/java-%{javaver}	%{_jvmdir}/%{sdkdir}	%priority
+%{_jvmdir}/java-%{javaver}-%{origin}	%{_jvmdir}/%{sdkdir}	%priority
 EOF
 
 # ----- end: JPackage compatibility alternatives ------
@@ -2016,6 +2016,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 18 2025 Andrey Cherepanov <cas@altlinux.org> 0:17.0.14.0.7-alt2
+- Used tabs in alternative files (ALT #53878).
+
 * Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 0:17.0.14.0.7-alt1
 - New version.
 - Security fixes:
