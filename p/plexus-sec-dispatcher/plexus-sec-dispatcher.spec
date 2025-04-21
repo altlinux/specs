@@ -12,20 +12,15 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           plexus-sec-dispatcher
-Version:        1.4
-Release:        alt4_34jpp11
+Version:        2.0
+Release:        alt1
 Summary:        Plexus Security Dispatcher Component
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/codehaus-plexus/plexus-sec-dispatcher
 BuildArch:      noarch
 
-# svn export http://svn.sonatype.org/spice/tags/plexus-sec-dispatcher-1.4/
-# tar jcf plexus-sec-dispatcher-1.4.tar.bz2 plexus-sec-dispatcher-1.4/
-Source0:        %{name}-%{version}.tar.bz2
+Source0:        %url/archive/%name-%version/%name-%version.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-
-# Removed maven-compiler-plugin configuration version in the pom as annotations isn't available in version 1.4.
-Patch0:         %{name}-pom.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -33,29 +28,25 @@ BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
-BuildRequires:  %{?module_prefix}mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  %{?module_prefix}mvn(org.sonatype.plexus:plexus-cipher)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.sonatype.plexus:plexus-cipher)
 %endif
 Source44: import.info
 
 %description
 Plexus Security Dispatcher Component
 
-%{?module_package}
 %{?javadoc_package}
 
 %prep
 %setup -q
-%patch0 -p1
-
 cp %{SOURCE1} .
 
 %pom_remove_parent
-%pom_xpath_inject "pom:dependency[pom:artifactId='junit']" "<scope>test</scope>"
-
+%pom_xpath_inject 'pom:project' '<groupId>org.codehaus.plexus</groupId>'
 %mvn_file : plexus/%{name}
+%mvn_alias org.codehaus.plexus: org.sonatype.plexus:
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -67,6 +58,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Thu Apr 17 2025 Anton Meleshnikov <alton@altlinux.org> 2.0-alt1
+- New version 2.0.
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt4_34jpp11
 - update
 

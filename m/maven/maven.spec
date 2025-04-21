@@ -22,7 +22,7 @@ BuildRequires: jpackage-default
 
 Name:           maven
 Epoch:          1
-Version:        3.8.2
+Version:        3.8.4
 Release:        alt1
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
@@ -199,6 +199,9 @@ cp -a $M2_HOME/{bin,lib,boot} %{buildroot}%{apphomedir}/
 xmvn-subst -s -R %{buildroot} -s %{buildroot}%{apphomedir}
 %endif
 
+# maven uses this hardcoded path in its launcher to locate jansi so we symlink it
+ln -s %{_prefix}/lib/jansi/libjansi.so %{buildroot}%{apphomedir}/lib/jansi-native/
+
 install -p -m 644 %{SOURCE2} %{buildroot}%{apphomedir}/bin/
 gzip -9 %{buildroot}%{apphomedir}/bin/mvn.1
 install -p -m 644 %{SOURCE1} %{buildroot}%{_datadir}/bash-completion/completions/mvn%{?maven_version_suffix}
@@ -228,6 +231,7 @@ ln -s %{apphomedir}/bin/mvnDebug.1.gz %{buildroot}%{_mandir}/man1/mvnDebug%{mave
 install -d -m 755 %{buildroot}%{_javaconfdir}/
 echo JAVA_HOME=%{_jvmlibdir}/java-1.8.0-openjdk >%{buildroot}%{_javaconfdir}/maven.conf-openjdk8
 echo JAVA_HOME=%{_jvmlibdir}/java-11-openjdk >%{buildroot}%{_javaconfdir}/maven.conf-openjdk11
+echo JAVA_HOME=%{_jvmlibdir}/java-17-openjdk >%{buildroot}%{_javaconfdir}/maven.conf-openjdk17
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mavenrc`
 touch $RPM_BUILD_ROOT/etc/mavenrc
@@ -261,6 +265,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Sat Apr 19 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.4-alt1
+- New version 3.8.4.
+
 * Fri Apr 18 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.2-alt1
 - new version
 
