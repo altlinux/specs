@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: deepin-service-manager
-Version: 1.0.8
+Version: 1.0.11
 Release: alt1
 
 Summary: Manage DBus service on Deepin
@@ -16,9 +16,9 @@ Vcs: git://github.com/linuxdeepin/deepin-service-manager.git
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake dqt5-base-devel dqt5-tools-devel libsystemd-devel
+BuildRequires: cmake dqt6-base-devel dqt6-tools-devel libsystemd-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -57,20 +57,13 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
   -DCMAKE_PROJECT_HOMEPAGE_URL=%url \
   -DPROJECT_VERSION=%version \
 #
-cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 # Fix library naming.
 #mv -f %%buildroot%%_libdir/libdeepin-qdbus-service.so %%buildroot%%_libdir/libdeepin-qdbus-service.so.%%sover
 #ln -s %%_libdir/libdeepin-qdbus-service.so.%%sover %%buildroot%%_libdir/libdeepin-qdbus-service.so
@@ -94,11 +87,16 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %files -n libdeepin-qdbus-service-devel
 %dir %_includedir/deepin-qdbus-service/
 %_includedir/deepin-qdbus-service/qdbusservice.h
+%dir %_libdir/cmake/deepin-qdbus-service/
 %_libdir/cmake/deepin-qdbus-service/deepin-qdbus-serviceConfig.cmake
 #%%_libdir/libdeepin-qdbus-service.so
 %_pkgconfigdir/deepin-qdbus-service.pc
 
 %changelog
+* Mon Apr 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.11-alt1
+- New version 1.0.11.
+- Switched to dqt6.
+
 * Mon Dec 23 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt1
 - New version 1.0.8.
 - Added vcs tag.
