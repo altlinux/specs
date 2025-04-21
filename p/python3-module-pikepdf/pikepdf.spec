@@ -5,7 +5,7 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-pikepdf
-Version: 9.7.0
+Version: 9.7.1
 Release: alt1
 License: MPL-2.0
 Summary: A Python library for reading and writing PDF files
@@ -93,6 +93,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Mon Apr 21 2025 Grigory Ustinov <grenka@altlinux.org> 9.7.1-alt1
+- Automatically updated to 9.7.1.
+
 * Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 9.7.0-alt1
 - Automatically updated to 9.7.0.
 
