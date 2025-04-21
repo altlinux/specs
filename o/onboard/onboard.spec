@@ -2,7 +2,7 @@
 
 Name: onboard
 Version: 1.4.2.2
-Release: alt1
+Release: alt2
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+ and BSD
@@ -35,6 +35,8 @@ BuildRequires: python3(wheel)
 Requires: python3-module-dbus
 # see ALT bug #35174
 Requires: iso-codes
+# see ALT bug #53881
+Requires: python3-module-pygobject3
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/Onboard/pypredict
 
@@ -107,6 +109,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Mon Apr 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.2.2-alt2
+- Required python3-module-pygobject3 (ALT #53881).
+
 * Wed Mar 26 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.2.2-alt1
 - New version.
 
