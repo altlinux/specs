@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 Summary: A fast and thorough lazy object proxy
 License: BSD-2-Clause
@@ -52,11 +52,14 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc AUTHORS.rst README.rst CHANGELOG.rst
+%doc README.*
 %python3_sitelibdir/lazy_object_proxy/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Apr 17 2025 Stanislav Levin <slev@altlinux.org> 1.11.0-alt1
+- 1.10.0 -> 1.11.0.
+
 * Fri Feb 02 2024 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
 - 1.9.0 -> 1.10.0.
 
