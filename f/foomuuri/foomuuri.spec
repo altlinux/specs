@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: foomuuri
-Version: 0.27
+Version: 0.28
 Release: alt1
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
@@ -69,10 +69,10 @@ SYSTEMD_SYSTEM_LOCATION=%_unitdir BINDIR=%_sbindir %makeinstall_std
 
 %post
 %tmpfiles_create %name.conf
-%post_systemd_postponed foomuuri.service foomuuri-boot.service foomuuri-dbus.service foomuuri-iplist.timer foomuuri-iplist.service foomuuri-monitor.service foomuuri-resolve.timer foomuuri-resolve.service
+%post_systemd_postponed foomuuri.service foomuuri-boot.service foomuuri-dbus.service foomuuri-iplist.timer foomuuri-iplist.service foomuuri-monitor.service
 
 %preun
-%preun_systemd foomuuri.service foomuuri-boot.service foomuuri-dbus.service foomuuri-iplist.timer foomuuri-iplist.service foomuuri-monitor.service foomuuri-resolve.timer foomuuri-resolve.service
+%preun_systemd foomuuri.service foomuuri-boot.service foomuuri-dbus.service foomuuri-iplist.timer foomuuri-iplist.service foomuuri-monitor.service
 
 %files
 %doc README.md CHANGELOG.md COPYING
@@ -92,6 +92,9 @@ SYSTEMD_SYSTEM_LOCATION=%_unitdir BINDIR=%_sbindir %makeinstall_std
 %_datadir/%name/dbus-firewalld.conf
 
 %changelog
+* Mon Apr 21 2025 Alexey Shabalin <shaba@altlinux.org> 0.28-alt1
+- New version 0.28.
+
 * Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 0.27-alt1
 - New version 0.27.
 
