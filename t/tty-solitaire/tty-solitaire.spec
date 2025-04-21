@@ -1,7 +1,7 @@
 %def_enable Werror
 
 Name:     tty-solitaire
-Version:  1.3.1
+Version:  1.4.1
 Release:  alt1
 
 Summary:  Play solitaire in your terminal!
@@ -13,7 +13,6 @@ Url:      https://github.com/mpereira/tty-solitaire
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
-Patch: make-gcc10-happy.patch
 
 Buildrequires: libncursesw-devel
 
@@ -22,7 +21,6 @@ Buildrequires: libncursesw-devel
 
 %prep
 %setup
-%patch -p1
 
 %build
 %make_build CFLAGS='%optflags -std=gnu11'
@@ -38,6 +36,9 @@ make test
 %doc LICENSE README CHANGELOG TODO.md
 
 %changelog
+* Mon Apr 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Automatically updated to 1.4.1.
+
 * Wed Sep 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
 - Automatically updated to 1.3.1.
 
