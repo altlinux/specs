@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 24.8.1
+Version: 25.4.16
 Release: alt1
 Summary: Self-service finite-state machines for the programmer on the go
 License: MIT
@@ -34,7 +34,7 @@ automata (particularly deterministic finite-state transducers).
 Summary: %summary
 Group: Development/Python3
 Requires: %name
-%pyproject_runtimedeps_metadata -- --extra visualize
+%pyproject_runtimedeps_metadata_extra visualize
 Provides: %name+visualize = %EVR
 
 %description visualize
@@ -73,6 +73,9 @@ rm -r %buildroot%python3_sitelibdir/automat/_test/
 %python3_sitelibdir/%mod_name/__pycache__/_visualize.*
 
 %changelog
+* Thu Apr 17 2025 Stanislav Levin <slev@altlinux.org> 25.4.16-alt1
+- 24.8.1 -> 25.4.16.
+
 * Thu Aug 22 2024 Stanislav Levin <slev@altlinux.org> 24.8.1-alt1
 - 22.10.0 -> 24.8.1.
 
