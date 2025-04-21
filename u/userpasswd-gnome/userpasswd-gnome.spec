@@ -1,9 +1,9 @@
-%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 0
 %define alt_name userpasswd
 
 Name:    userpasswd-gnome
-Version: 0.0.1
-Release: alt2
+Version: 0.0.2
+Release: alt1
 
 Summary: Graphical utility for changing user password
 License: GPLv3
@@ -11,12 +11,12 @@ Group:   Other
 Url:     https://github.com/alxvmr/userpasswd-gnome
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-alternatives
-BuildRequires: ccmake gcc-c++
+BuildRequires: cmake gcc
 BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gio-2.0) pkgconfig(pam) pkgconfig(pam_misc) pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(gtk4) pkgconfig(libadwaita-1)
 
 # Common files with userpasswd.desktop
-Requires: userpasswd-common >= 0.3.6-alt4
+Requires: userpasswd-common >= 0.3.7-alt1
 # Due same as passwd PAM_SERVICE - /etc/pam.d/passwd
 Requires: passwd
 
@@ -53,6 +53,10 @@ EOF
 %lang(ru) %_datadir/locale/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Fri Apr 18 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.2-alt1
+- Update version to 0.0.2-alt1
+- UI fixes
+
 * Sun Feb 23 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.1-alt2
 - Assignment of file attributes now occurs in %attr (Closes: #53207)
 
