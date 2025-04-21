@@ -1,9 +1,9 @@
 Name:    alterator-groups
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for system groups administration
-License: GPL
+License: GPL-2.0+
 Group:   System/Configuration/Other
 
 Source:  %name-%version.tar
@@ -38,6 +38,10 @@ Conflicts: alterator-lookout < 1.0
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Apr 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6-alt3
+- Update license name by SPDX.
+- Don't show in web-interface due #50239.
+
 * Tue Jun 13 2017 Paul Wolneykien <manowar@altlinux.org> 0.6-alt2
 - Fix: removed unused empty group filter flag (closes: #33514).
 
