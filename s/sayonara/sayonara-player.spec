@@ -1,6 +1,6 @@
 Name: sayonara
-Version: 1.11.0
-Release: alt0.beta1
+Version: 1.11.0.1
+Release: alt1
 
 Summary: A lightweight Qt Audio player
 License: GPL-3.0+
@@ -74,6 +74,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Apr 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.11.0.1-alt1
+- 1.11.0-stable1
+
 * Thu Feb 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.11.0-alt0.beta1
 - 1.11.0-beta1
 
