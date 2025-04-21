@@ -1,21 +1,28 @@
 %define oname jsbeautifier
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.5.4
-Release: alt2
+Version: 1.15.4
+Release: alt1
 
 Summary: JavaScript unobfuscator and beautifier
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/jsbeautifier/
+Url: https://pypi.org/project/jsbeautifier
+VCS: https://github.com/beautifier/js-beautify
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
+%endif
 
 %py3_provides %oname
 
@@ -38,22 +45,23 @@ This package contains tests for %oname.
 %prep
 %setup
 
-sed -i 's|#!.*/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ \( -name '*.py' -o -name 'js-beautify' \))
-
 %build
-%python3_build_debug
+cd python
+mv setup-js.py setup.py
+%pyproject_build
 
 %install
-%python3_install
+cd python
+%pyproject_install
 
 %check
-py.test-%_python3_version
+cd python
+%pyproject_run_pytest
 
 %files
-%doc PKG-INFO
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/js-beautify
+%python3_sitelibdir_noarch/%oname
+%python3_sitelibdir_noarch/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -61,8 +69,11 @@ py.test-%_python3_version
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/tests
 
-
 %changelog
+* Mon Apr 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.15.4-alt1
+- Build new version (Closes: #53911).
+- Build with check.
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.5.4-alt2
 - python2 disabled
 
