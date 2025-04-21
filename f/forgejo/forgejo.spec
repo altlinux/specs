@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
-Version: 10.0.1
-Release: alt2
+Version: 11.0.0
+Release: alt1
 
 Summary: Self-hosted lightweight software forge
 
@@ -16,17 +16,11 @@ Source: %name-%version.tar
 Source2: %name.service
 Source3: %name.service.d.conf
 
-Patch3: disable-strip.patch
-
-Patch100: 0001-v100forgejo-fix-disable-forgotten-password-for-external-signin-only-6930.patch
-Patch101: 6232.patch
-
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: golang >= 1.23 rpm-build-golang
 BuildRequires: libpam-devel
 #BuildRequires: npm node >= 18.0.0
 BuildRequires: /proc
-
 Requires: git-core
 
 %description
@@ -41,9 +35,6 @@ and privacy.
 
 %prep
 %setup
-%patch3 -p1
-%patch100 -p1
-%patch101 -p1
 
 sed -i \
     -e "s|^APP_NAME = ; Gitea: Git with a cup of tea|APP_NAME = Forgejo: Beyond coding. We Forge.|" \
@@ -69,6 +60,7 @@ export LDFLAGS="-X code.gitea.io/gitea/modules/setting.CustomConf=%_sysconfdir/%
                 -X code.gitea.io/gitea/modules/setting.CustomPath=%_localstatedir/%name/custom \
                 -X code.gitea.io/gitea/modules/setting.AppWorkPath=%_localstatedir/%name"
 export TAGS="bindata timetzdata sqlite sqlite_unlock_notify pam"
+export STRIP=0
 #%%make all
 %make backend
 %gobuild -o %name-environment-to-ini contrib/environment-to-ini/environment-to-ini.go
@@ -118,6 +110,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Apr 21 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt1
+- 11.0.0.
+
 * Tue Feb 18 2025 Alexey Shabalin <shaba@altlinux.org> 10.0.1-alt2
 - Add synchronization for SSH keys with OpenID Connect.
 - Disable forgotten password for external signin only.
