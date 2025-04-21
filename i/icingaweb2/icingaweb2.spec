@@ -20,7 +20,7 @@
 
 Name:           icingaweb2
 Version:        2.12.1
-Release:        alt4
+Release:        alt5
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -30,6 +30,7 @@ URL:            https://icinga.com
 
 Source0:        https://github.com/Icinga/icingaweb2/archive/v%version/%name-%version.tar
 Patch0:         icingaweb2-skip-etc-open.patch
+Patch1:         icingaweb2-cli-stderr.patch
 
 Requires:       icinga-l10n >= 1.1.0
 Requires:       icinga2-common
@@ -138,6 +139,7 @@ Classic styles (branding) for Icinga Web 2.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 
 %build
 cat <<EOF >%name-php-fpm.conf
@@ -293,6 +295,9 @@ fi
 %_datadir/%name/public/css
 
 %changelog
+* Mon Apr 21 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt5
+- Fix: Don't send error messages and warnings to STDOUT (closes: 53897).
+
 * Tue Jun 18 2024 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt4
 - Extract CSS and fonts to "icingaweb2-style-classic".
 - Extract images to the separate "icingaweb2-style-classic" package.
