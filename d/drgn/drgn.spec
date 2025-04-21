@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.30
-Release: alt2
+Version: 0.0.31
+Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
 Group:   Development/Debuggers
@@ -109,6 +109,7 @@ vm-run --heredoc <<-EOF
 	drgn %_datadir/drgn/contrib/platform_drivers.py
 %endif
 EOF
+rm -f /tmp/initramfs-*.img /tmp/vm.*
 %endif
 
 %files
@@ -123,6 +124,11 @@ EOF
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Sat Apr 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.31-alt1
+- Update to v0.0.31-1-g3977bdc7 (2025-04-19).
+- Linux 6.14 and 6.15 are now supported. Kernel module support was updated for
+  Linux 6.14.
+
 * Tue Feb 25 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.30-alt2
 - spec: Remove dependence on kernel-image-6.6.
 
