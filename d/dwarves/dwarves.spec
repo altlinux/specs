@@ -7,7 +7,7 @@
 %define libver 1
 
 Name: dwarves
-Version: 1.29
+Version: 1.30
 Release: alt1
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
@@ -78,6 +78,7 @@ Debugging information processing library development files.
 tar xf %SOURCE1 -C lib
 
 %build
+%define optflags_lto %nil
 # Explicitly use vendored libbpf (updated using gear-submodule-update).
 # By default is DEBUG build that adds -O0 which we don't want.
 %cmake	-DLIBBPF_EMBEDDED=ON \
@@ -93,7 +94,7 @@ ldd %buildroot%_bindir/pahole
 cd %_cmake__builddir
 export LD_LIBRARY_PATH=$PWD PATH=$PWD:$PATH
 # Pahole examples @ https://lwn.net/Articles/335942/
-pahole -C tag pahole
+pahole -C tag pahole | grep -zP '^struct tag {\n.*struct list_head\s+node;'
 pahole --packable pahole
 
 %files
@@ -112,6 +113,10 @@ pahole --packable pahole
 %_libdir/%{libname}*.so
 
 %changelog
+* Wed Apr 16 2025 Vitaly Chikunov <vt@altlinux.org> 1.30-alt1
+- Update to v1.30 (2025-04-10).
+- spec: Disable LTO and improve smoke tests that was not very good since v1.26.
+
 * Thu Jan 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.29-alt1
 - Update to v1.29 (2025-01-15).
 
