@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: aichat
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 Summary: All-in-one LLM CLI tool
 License: Apache-2.0 or MIT
@@ -74,6 +74,9 @@ cargo test --release --workspace
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sun Apr 06 2025 Vitaly Chikunov <vt@altlinux.org> 0.29.0-alt1
+- Update to v0.29.0 (2025-03-28).
+
 * Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 0.28.0-alt1
 - Update to v0.28.0 (2025-02-18).
 
