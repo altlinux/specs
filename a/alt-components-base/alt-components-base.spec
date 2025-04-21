@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.7
+Version: 0.6.8
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Mon Apr 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.8-alt1
+- components: fix alterator-legacy-web (set alterator-net-eth)
+
 * Sat Apr 19 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.7-alt1
 - Fix editions:
   + change alterator-legacy-shares category to alterator-legacy-services
