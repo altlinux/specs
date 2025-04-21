@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -498,6 +498,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Apr 21 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt2
+- update product logo
+
 * Tue Apr 08 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt1
 - clear status
 
