@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.6.8
+Version: 0.7.0
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -20,6 +20,15 @@ employing EVMS to partition and mkfs them
 so that preinstall/postinstall scripts would
 work in block device and devmapper environment
 that's close to the target system's one.
+
+%package -n installer-feature-stop-md-dm-stage2
+Summary: Installer feature for stop md raid's in initinstall
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description -n installer-feature-stop-md-dm-stage2
+Installer feature for stop md raid's in initinstall.
 
 %prep
 %setup
@@ -44,10 +53,15 @@ __EOF__
 
 %files
 %_sbindir/*
-%_datadir/install2/initinstall.d/80-stop-md-dm.sh
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
+%files -n installer-feature-stop-md-dm-stage2
+%_datadir/install2/initinstall.d/80-stop-md-dm.sh
+
 %changelog
+* Mon Apr 21 2025 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- separate installer-feature-stop-md-dm-stage2
+
 * Sun Apr 06 2025 Anton Midyukov <antohami@altlinux.org> 0.6.8-alt1
 - mount --bind /tmp $destdir/tmp
 - convert License tag to SPDX format

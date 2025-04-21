@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.45
-Release: alt1
+Release: alt2
 
 Summary: Alterator module for volume management
 License: GPL
@@ -13,6 +13,7 @@ BuildRequires: alterator >= 5.0 guile-devel >= 2.0 guile-evms >= 0.5
 Requires: alterator >= 4.10-alt6
 Requires: alterator-l10n >= 2.2-alt1
 Requires: guile-evms >= 0.5-alt1
+Requires: installer-feature-stop-md-dm-stage2 >= 0.7.0
 Conflicts: alterator-lookout < 1.5-alt1
 
 %description
@@ -37,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Mon Apr 21 2025 Anton Midyukov <antohami@altlinux.org> 0.4.45-alt2
+- NMU: add dependency on installer-feature-stop-md-dm-stage2
+
 * Tue Dec 10 2024 Oleg Solovyov <mcpain@altlinux.org> 0.4.45-alt1
 - handle installing on multipath
 
