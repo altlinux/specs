@@ -22,7 +22,7 @@
 %def_enable flashrom
 
 # fwupd-efi is only available on these arches
-%ifarch x86_64 aarch64
+%ifarch x86_64 aarch64 loongarch64 riscv64
 %def_enable uefi
 %endif
 
@@ -34,12 +34,14 @@
 
 Name: fwupd
 Version: 2.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: Firmware update daemon
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
+
+Packager: Egor Ignatov <egori@altlinux.org>
 
 Source0: %name-%version.tar
 Source2: fwupd.watch
@@ -307,6 +309,11 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Wed Apr 16 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.8-alt1.1
+- NMU: fix FTBFS on loongarch64, riscv64 and i586
+  - enable uefi on loongarch64 and riscv64;
+  - backport patch from upstream to fix x86 build.
+
 * Thu Apr 10 2025 Egor Ignatov <egori@altlinux.org> 2.0.8-alt1
 - 2.0.8
 

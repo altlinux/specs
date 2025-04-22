@@ -3,7 +3,7 @@
 
 Name: gnu-efi
 Version: 3.0.18
-Release: alt2
+Release: alt2.1
 Epoch: 1
 
 Summary: Building EFI applications using the GNU toolchain
@@ -14,7 +14,7 @@ Url: http://gnu-efi.sourceforge.net/
 VCS: https://git.code.sf.net/p/gnu-efi/code
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-ExclusiveArch: %ix86 x86_64 armh aarch64
+ExclusiveArch: %ix86 x86_64 armh aarch64 loongarch64 riscv64
 Conflicts: gnu-efi-3.0r gnu-efi-3.0u gnu-efi-3.0.5
 
 BuildRequires: gcc-c++
@@ -45,6 +45,9 @@ for IA-64 and x86 platforms using the GNU toolchain.
 %_pkgconfigdir/gnu-efi.pc
 
 %changelog
+* Wed Apr 16 2025 Ivan A. Melnikov <iv@altlinux.org> 1:3.0.18-alt2.1
+- NMU: build on loongarch64 and riscv64
+
 * Wed Jul 24 2024 Egor Ignatov <egori@altlinux.org> 1:3.0.18-alt2
 - disable 32-bit gni-efi toolchain on x86_64
 

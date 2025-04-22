@@ -2,16 +2,18 @@
 
 Name: fwupd-efi
 Version: 1.7
-Release: alt1
+Release: alt1.1
 License: LGPLv2+
 
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd-efi
 Summary: EFI Application used by uefi-capsule plugin in fwupd
 
+Packager: Egor Ignatov <egori@altlinux.org>
+
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 BuildRequires: meson
 BuildRequires: gnu-efi
@@ -55,9 +57,14 @@ This package enables EFI signature verification.
 %attr(644, root, root) %_libdir/efi/fwupd*.efi
 %_libdir/pkgconfig/fwupd-efi.pc
 
+%ifnarch loongarch64 riscv64
 %files checkinstall
+%endif
 
 %changelog
+* Wed Apr 16 2025 Ivan A. Melnikov <iv@altlinux.org> 1.7-alt1.1
+- NMU: build on loongarch64 and riscv64
+
 * Wed Sep 25 2024 Egor Ignatov <egori@altlinux.org> 1.7-alt1
 - 1.7
 
