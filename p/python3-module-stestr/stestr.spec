@@ -4,8 +4,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt3
+Version: 4.2.0
+Release: alt1
 
 Summary: stestr is parallel Python test runner
 
@@ -20,8 +20,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+#BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-flit
 BuildRequires: python3-module-pbr
 
 %if_with docs
@@ -111,6 +111,9 @@ rm -rf html/.{doctrees,buildinfo}
 %doc LICENSE html
 
 %changelog
+* Tue Apr 22 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Sat Oct 26 2024 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt3
 - Removed extra build dependency on future module.
 
