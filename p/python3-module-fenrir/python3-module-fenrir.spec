@@ -4,8 +4,8 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.9.8
-Release: alt3
+Version: 1.9.9
+Release: alt1
 
 Summary: Python3 module for %pypi_name
 License: LGPL-3.0
@@ -76,6 +76,9 @@ install -m 644 config/settings/settings.conf %buildroot%_sysconfdir/fenrirscreen
 %_man1dir/%pypi_name.1.xz
 
 %changelog
+* Tue Apr 22 2025 Artem Semenov <savoptik@altlinux.org> 1.9.9-alt1
+- Update to 1.9.9
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 1.9.8-alt3
 - Cleaned-up the spec
 
