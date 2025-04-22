@@ -1,9 +1,9 @@
 Name: telnet
 Version: 3.0
-Release: alt10
+Release: alt11
 
 Summary: The client program for the telnet remote login protocol
-License: BSD-style
+License: BSD-4-Clause-UC
 Group: Networking/Remote access
 Url: http://git.altlinux.org/people/ldv/packages/telnet.git
 
@@ -51,7 +51,7 @@ support remote logins into the host machine.
 install -pm644 %_sourcedir/telnetd.eps .
 
 %build
-export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
+export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS) -Wno-error=implicit-int"
 %make_build
 
 %install
@@ -83,6 +83,10 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 %doc telnetd.eps
 
 %changelog
+* Tue Apr 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.0-alt11
+- NMU: fixed FTBFS with gcc14.
+- spec: fixed License tag.
+
 * Mon Jul 19 2021 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt10
 - Fixed lfs=strict build on 32-bit systems.
 - Enabled debuginfo.
