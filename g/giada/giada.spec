@@ -1,5 +1,5 @@
 Name: giada
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: Giada - Your Hardcore Loop Machine
@@ -31,6 +31,7 @@ BuildRequires: pkgconfig(xpm)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xrender)
 BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(libjpeg)
 
 %description
 Giada is an open source, minimalistic and hardcore music production tool.
@@ -60,6 +61,9 @@ rm -vf %buildroot{%_bindir/fltk*,%_libdir/libfltk*,%_mandir/man?/fltk*}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Apr 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
+- 1.2.0 released
+
 * Mon Feb 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
 - 1.1.1 released
 
