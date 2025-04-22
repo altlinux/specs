@@ -3,7 +3,7 @@
 
 Name: alterator-notes
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
@@ -57,10 +57,13 @@ for n in license release-notes ; do
 	--set-value="alterator-notes-show $n" \
 	%buildroot/%_desktopdir/%name-$n.desktop
 done
+mkdir -p %buildroot/%_datadir/kio_desktop/DesktopLinks/
+install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datadir/kio_desktop/DesktopLinks/
 
 %files
 %_bindir/alterator-notes-show
 %_desktopdir/%name-*.desktop
+%_datadir/kio_desktop/DesktopLinks/%name-*.desktop
 %_alterator_datadir/applications/*
 %_alterator_datadir/ui/*/
 %if_without noarch
@@ -69,6 +72,9 @@ done
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt2
+- put license to KDE desktop
+
 * Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
 - allow user to view license and release notes
 
