@@ -8,8 +8,8 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 24.6.0
-Release: alt2
+Version: 24.12.0
+Release: alt1
 
 Summary: Accelerate your web app development | Build fast, run fast
 License: MIT
@@ -54,7 +54,9 @@ webserver.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k "not test_websocket_route_with_subprotocols and not test_keep_alive_client_timeout"
+# Separate test_multiprocessing to workaround its instability on our riscv64 build nodes
+%pyproject_run_pytest -k "not test_websocket_route_with_subprotocols and not test_keep_alive_client_timeout and not test_multiprocessing"
+%pyproject_run_pytest -k "test_multiprocessing"
 
 %files
 %doc *.rst
@@ -63,6 +65,9 @@ webserver.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Mar 27 2025 Ilya Sorochan <k0tran@altlinux.org> 24.12.0-alt1
+- 24.6.0 -> 24.12.0
+
 * Thu Aug 08 2024 Alexander Burmatov <thatman@altlinux.org> 24.6.0-alt2
 - Enable tests.
 
