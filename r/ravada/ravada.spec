@@ -11,7 +11,7 @@
 %endif
 
 Name: ravada
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -26,6 +26,7 @@ Source1: %name-sysusers.conf
 Requires: perl-DBD-mysql perl-DBD-SQLite perl-Mojolicious-Plugin-I18N
 Requires: /sbin/brctl iproute2 iptables iptstate net-tools
 Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core rrdtool
+Requires: wget
 # spice-vdagent @ VM
 
 BuildRequires(pre): rpm-build-perl
@@ -207,6 +208,10 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Tue Apr 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.4-alt1
+- 2.3.4
+- add R: wget (ALT #53746)
+
 * Mon Mar 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.3.3-alt1
 - 2.3.3
 
