@@ -1,6 +1,6 @@
 Name: telnet
 Version: 3.0
-Release: alt11
+Release: alt12
 
 Summary: The client program for the telnet remote login protocol
 License: BSD-4-Clause-UC
@@ -19,6 +19,7 @@ Patch5: telnet-3.0-owl-env-export.patch
 Patch6: telnet-3.0-owl-env-DISPLAY.patch
 Patch7: telnet-3.0-owl-drop-root.patch
 Patch8: telnet-3.0-alt-tinfo.patch
+Patch9: telnet-3.0-alt-implicit-int.patch
 
 BuildRequires: libtinfo-devel
 
@@ -48,10 +49,11 @@ support remote logins into the host machine.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 install -pm644 %_sourcedir/telnetd.eps .
 
 %build
-export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS) -Wno-error=implicit-int"
+export CFLAGS="-c $RPM_OPT_FLAGS $(getconf LFS_CFLAGS)"
 %make_build
 
 %install
@@ -83,6 +85,9 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 %doc telnetd.eps
 
 %changelog
+* Tue Apr 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.0-alt12
+- Real fix for implicit-int.
+
 * Tue Apr 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 3.0-alt11
 - NMU: fixed FTBFS with gcc14.
 - spec: fixed License tag.
