@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.4
+Version: 0.11.5
 Release: alt1
 
 Summary: An Amazon S3 Transfer Manager
@@ -62,6 +62,9 @@ try the interfaces exposed in boto3.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Apr 21 2025 Stanislav Levin <slev@altlinux.org> 0.11.5-alt1
+- 0.11.4 -> 0.11.5.
+
 * Wed Mar 05 2025 Stanislav Levin <slev@altlinux.org> 0.11.4-alt1
 - 0.11.3 -> 0.11.4.
 
