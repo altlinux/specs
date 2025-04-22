@@ -1,7 +1,7 @@
 %define xdg_name io.github.cleomenezesjr.aurea
 
 Name: aurea
-Version: 1.6
+Version: 1.6.1
 Release: alt1
 
 Summary: Simple preview banner made to read metainfo files from Flatpak apps and represent them as they would on Flathub
@@ -52,6 +52,9 @@ BuildRequires: libadwaita-gir-devel >= %adwaita_ver
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Apr 21 2025 Boris Yumankulov <boria138@altlinux.org> 1.6.1-alt1
+- new version 1.6.1
+
 * Thu Apr 03 2025 Boris Yumankulov <boria138@altlinux.org> 1.6-alt1
 - new version 1.6
 
