@@ -1,7 +1,7 @@
 %define app_id com.vscodium.codium
 
 Name:    codium
-Version: 1.97.2.25045
+Version: 1.99.32562
 Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
@@ -109,6 +109,9 @@ install -m644 -D %SOURCE4 %buildroot%_datadir/appdata/%app_id.metainfo.xml
 %_datadir/appdata/%app_id.metainfo.xml
 
 %changelog
+* Tue Apr 22 2025 Semen Fomchenkov <armatik@altlinux.org> 1.99.32562-alt1
+- 1.99.32562
+
 * Fri Feb 14 2025 Semen Fomchenkov <armatik@altlinux.org> 1.97.2.25045-alt1
 - 1.97.2.25045
 - add url-handler .desktop file
