@@ -1,7 +1,7 @@
 %define soversion 3.0
 
 Name: SFML
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Simple and Fast Multimedia Library
@@ -62,7 +62,11 @@ developing applications that use SFML.
 %setup
 
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=TRUE -Wno-dev
+%cmake \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DSFML_INSTALL_PKGCONFIG_FILES:BOOL=ON \
+	-DSFML_PKGCONFIG_INSTALL_DIR:PATH=%_pkgconfigdir \
+	-Wno-dev
 %cmake_build
 
 %install
@@ -80,6 +84,9 @@ developing applications that use SFML.
 %_libdir/cmake/%name/*.cmake
 
 %changelog
+* Tue Apr 22 2025 Nazarov Denis <nenderus@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Sun Dec 22 2024 Nazarov Denis <nenderus@altlinux.org> 3.0.0-alt1
 - New version 3.0.0.
 
