@@ -1,5 +1,5 @@
 Name:	 packageinstall
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 Summary: GUI frontend for install packages using apt-get
 
@@ -9,11 +9,10 @@ URL:     http://www.altlinux.org/Install
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Requires: apt consolehelper
+Requires: apt
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): libpam-devel
 BuildRequires: qt6-base-devel qt6-tools
 
 %description
@@ -31,10 +30,7 @@ lrelease-qt6 %name.pro
 %install_qt6
 mkdir -p %buildroot%_sbindir/
 mv %buildroot%_bindir/%name %buildroot%_sbindir
-ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/%name
-install -pD -m640 %name.pamd %buildroot%_sysconfdir/pam.d/%name
-install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%name
-for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
+install -m 0755 packageinstall-user %buildroot/%_bindir/packageinstall
 
 %files
 %doc AUTHORS README.md
@@ -42,10 +38,11 @@ for f in *.qm; do install -m 0644 $f %buildroot/%_datadir/apps/%name/ ||: ; done
 %_sbindir/%name
 %dir %_datadir/apps/%name/
 %_datadir/apps/%name/
-%config(noreplace) %_sysconfdir/pam.d/%name
-%config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Tue Apr 22 2025 Sergey V Turchin <zerg at altlinux dot org> 1.4.2-alt1
+- drop consolehelper
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg at altlinux dot org> 1.4.1-alt1
 - port to Qt6
 
