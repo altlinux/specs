@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: morphosis
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Documents converter for the Gnome Desktop
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 
 %add_python3_path %_datadir/%name
 
+Requires: python3-module-pygobject3
 Requires: /usr/bin/pandoc dconf
 Requires: typelib(Adw) = 1 typelib(WebKit) = 6.0
 
@@ -53,10 +54,14 @@ Libadwaita. Conversions are done with Pandoc.
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README.*
 
 %changelog
+* Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
