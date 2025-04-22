@@ -3,12 +3,13 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 
 Summary: Another ISO 8601 parser for Python
 
-Url: https://bitbucket.org/nielsenb/aniso8601
+URL: https://pypi.org/project/aniso8601
+VCS: https://codeberg.org/nielsenb-jf/aniso8601
 License: BSD
 Group: Development/Python3
 
@@ -44,6 +45,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Apr 22 2025 Grigory Ustinov <grenka@altlinux.org> 10.0.1-alt1
+- Automatically updated to 10.0.1.
+
 * Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt1
 - Automatically updated to 10.0.0.
 
