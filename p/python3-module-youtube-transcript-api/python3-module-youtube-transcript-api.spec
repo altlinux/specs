@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.6.3
+Version: 1.0.3
 Release: alt1
 
 Summary: Python API which allows you to retrieve the transcript/subtitles for a given YouTube video
@@ -22,6 +22,7 @@ BuildRequires: python3-module-poetry
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-httpretty
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -51,5 +52,8 @@ like other selenium based solutions do!
 %python3_sitelibdir/%{pyproject_distinfo %internal_name}
 
 %changelog
+* Tue Apr 22 2025 Semen Fomchenkov <armatik@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Sun Jan 12 2025 Semen Fomchenkov <armatik@altlinux.org> 0.6.3-alt1
 - Initial build.
