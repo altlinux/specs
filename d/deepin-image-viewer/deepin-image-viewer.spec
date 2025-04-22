@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-image-viewer
-Version: 6.0.15
+Version: 6.0.19
 Release: alt1
 
 Summary: Image viewer for Deepin
@@ -79,6 +79,9 @@ export READELF="llvm-readelf"
 %_dqt6_plugindir/imageformats/libxraw.so
 
 %changelog
+* Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.19-alt1
+- New version 6.0.19.
+
 * Wed Mar 26 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.15-alt1
 - New version 6.0.15.
 - Added vcs tag.
