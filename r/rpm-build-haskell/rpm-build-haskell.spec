@@ -12,7 +12,7 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 1.5.5
+Version: 1.6.0
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -24,6 +24,7 @@ Source1: macros
 Source2: buildreq-ignore
 Source3: haskell.env
 Source4: extra
+Source5: vendored
 Source10: LICENSE
 
 # Uses the modular reqprov subsystem
@@ -45,6 +46,19 @@ Requires: %name = %EVR
 %description extra
 %summary
 
+%package vendored
+Summary: RPM helpers for building of static linked Haskell programms with vendored deps
+Group: Development/Haskell
+
+BuildArch: noarch
+
+Requires: %name = %EVR
+Requires: cabal-install
+
+%description vendored
+Macros for building Haskell programs with vendored dependencies
+Designed for use in conjunction with the cabal-vendor utility from Sisyphus
+
 %prep
 %setup -n scripts-%version
 cp %SOURCE10 .
@@ -65,8 +79,10 @@ install -D -m0755 %SOURCE3 \
 	%buildroot%_rpmmacrosdir/haskell.env
 install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
 install -D -m0755 ghc_gen_filelist.sh %buildroot%_libexecdir/%name/ghc_gen_filelist.sh
-install -D -m0755 %SOURCE4 \
+install -D -m0644 %SOURCE4 \
 	%buildroot%_rpmmacrosdir/ghc-extra
+install -D -m0644 %SOURCE5 \
+	%buildroot%_rpmmacrosdir/ghc-vendored
 
 %files
 %doc LICENSE
@@ -78,7 +94,14 @@ install -D -m0755 %SOURCE4 \
 %files extra
 %_rpmmacrosdir/ghc-extra
 
+%files vendored
+%_rpmmacrosdir/ghc-vendored
+
 %changelog
+* Tue Apr 22 2025 Leonid Znamenok <respublica@altlinux.org> 1.6.0-alt1
+- Fixed permissions on ghc-extra file
+- Added 'vendored' macros for building statically linked programs
+
 * Wed Mar 19 2025 Leonid Znamenok <respublica@altlinux.org> 1.5.5-alt1
 - Disabled library stripping
 - Hardcoded enabling of shared objects and split sections in macros
