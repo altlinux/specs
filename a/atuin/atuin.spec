@@ -1,8 +1,7 @@
-# tests require running PGSQL
-%def_without check
+%def_with check
 
 Name: atuin
-Version: 18.4.0
+Version: 18.5.0
 Release: alt1
 
 Summary: Magical shell history
@@ -18,6 +17,12 @@ Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+
+%if_with check
+BuildRequires: postgresql15
+BuildRequires: postgresql15-server
+BuildRequires: postgresql15-contrib
+%endif
 
 %description
 Atuin replaces your existing shell history with a SQLite database, and records
@@ -48,6 +53,65 @@ install -Dm 644 completions/atuin.bash %buildroot%_datadir/bash-completion/compl
 install -Dm 644 completions/_atuin %buildroot%_datadir/zsh/site-functions/_atuin
 install -Dm 644 completions/atuin.fish %buildroot%_datadir/fish/vendor_completions.d/atuin.fish
 
+%check
+export PG_BIN="/usr/bin"
+export PG_DATA="$TMPDIR/pgdata"
+export PG_PORT=54321
+
+rm -rf "${PG_DATA}"
+mkdir -p "${PG_DATA}"
+chmod 700 "${PG_DATA}"
+
+#Initiate the DB, log outside the data directory
+mkdir -p logs
+
+#Important: pipe and line break are combined in one command
+"${PG_BIN}/initdb" -D "${PG_DATA}" -U "$(whoami)" --no-locale 2>&1 | tee logs/initdb.log
+if [ $? -ne 0 ]; then
+    echo "Ошибка initdb."
+    cat logs/initdb.log
+    exit 1
+fi
+
+#Setting up configs
+cat <<EOF > "${PG_DATA}/postgresql.conf"
+listen_addresses = 'localhost'
+port = ${PG_PORT}
+unix_socket_directories = '${PG_DATA}'
+EOF
+
+echo "host all all 127.0.0.1/32 trust" >> "${PG_DATA}/pg_hba.conf"
+
+#Launch Pg
+if ! "${PG_BIN}/pg_ctl" -D "${PG_DATA}" -l logs/start.log start; then
+    echo "=== ОШИБКА ЗАПУСКА POSTGRESQL ==="
+    [ -f logs/start.log ] && cat logs/start.log || echo "(Лог-файл не создан.)"
+    echo "=== Проверка порта ${PG_PORT} ==="
+    ss -tulpn | grep ":${PG_PORT}" || true
+    ls -lad "${PG_DATA}"
+    exit 1
+fi
+
+#Waiting for readiness
+for i in {1..10}; do
+    if "${PG_BIN}/pg_isready" -h localhost -p "${PG_PORT}"; then
+        break
+    fi
+    sleep 2
+done
+
+#Create a test database
+"${PG_BIN}/createdb" -h localhost -p "${PG_PORT}" atuin
+
+#Exporting environment variable for tests
+export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
+
+#Launch tests
+%rust_test || ( "${PG_BIN}/pg_ctl" -D "${PG_DATA}" stop && exit 1 )
+
+#Stop Pg
+"${PG_BIN}/pg_ctl" -D "${PG_DATA}" stop
+
 %files
 %_bindir/atuin
 %_datadir/bash-completion/completions/atuin
@@ -56,6 +120,10 @@ install -Dm 644 completions/atuin.fish %buildroot%_datadir/fish/vendor_completio
 %doc LICENSE
 
 %changelog
+* Mon Apr 21 2025 Boris Yumankulov <boria138@altlinux.org> 18.5.0-alt1
+- new version 18.5.0
+- enable check thanks @xeno for code
+
 * Sat Apr 12 2025 Boris Yumankulov <boria138@altlinux.org> 18.4.0-alt1
 - initial build for ALT Sisyphus
 
