@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		7b462dfe68e
+%define svnrev		ada4cd46eae
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.11
+Version: 7.0.12
 Release: alt1
 Epoch: 1
 
@@ -247,6 +247,7 @@ Group: Monitoring
 Requires: %name-phpfrontend-nginx
 Requires: %name-phpfrontend-php8.3
 Requires: php8.3-fpm-fcgi
+BuildArch: noarch
 
 %package phpfrontend-nginx-php8.4-fpm-fcgi
 Summary: Requirements for the use of php8.4-fpm-fcgi
@@ -254,7 +255,6 @@ Group: Monitoring
 Requires: %name-phpfrontend-nginx
 Requires: %name-phpfrontend-php8.4
 Requires: php8.4-fpm-fcgi
-
 BuildArch: noarch
 
 %package doc
@@ -865,6 +865,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Apr 22 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.12-alt1
+- 7.0.12
+
 * Fri Mar 28 2025 Alexei Takaseev <taf@altlinux.org> 1:7.0.11-alt1
 - 7.0.11
 
