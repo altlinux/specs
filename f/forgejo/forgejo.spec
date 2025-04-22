@@ -1,9 +1,9 @@
-%global import_path code.gitea.io/gitea
+%global import_path forgejo.org
 %global _unpackaged_files_terminate_build 1
 
 Name: forgejo
 Version: 11.0.0
-Release: alt1
+Release: alt2
 
 Summary: Self-hosted lightweight software forge
 
@@ -56,9 +56,9 @@ sed -i -e "s|gitea|%name|g" contrib/autocompletion/*_autocomplete
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export LDFLAGS="-X code.gitea.io/gitea/modules/setting.CustomConf=%_sysconfdir/%name/app.ini \
-                -X code.gitea.io/gitea/modules/setting.CustomPath=%_localstatedir/%name/custom \
-                -X code.gitea.io/gitea/modules/setting.AppWorkPath=%_localstatedir/%name"
+export LDFLAGS="-X %import_path/modules/setting.CustomConf=%_sysconfdir/%name/app.ini \
+                -X %import_path/modules/setting.CustomPath=%_localstatedir/%name/custom \
+                -X %import_path/modules/setting.AppWorkPath=%_localstatedir/%name"
 export TAGS="bindata timetzdata sqlite sqlite_unlock_notify pam"
 export STRIP=0
 #%%make all
@@ -110,6 +110,9 @@ useradd -r -g %name -c 'Forgejo daemon' \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Apr 22 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt2
+- Fixed %%import_path
+
 * Mon Apr 21 2025 Alexey Shabalin <shaba@altlinux.org> 11.0.0-alt1
 - 11.0.0.
 
