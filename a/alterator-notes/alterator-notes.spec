@@ -2,7 +2,7 @@
 %def_with noarch
 
 Name: alterator-notes
-Version: 1.5
+Version: 1.5.1
 Release: alt1
 
 Provides: alterator-license = %version
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source:%name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
+BuildRequires: desktop-file-utils
 
 Summary: alterator module for view license and release notes
 License: GPL-2.0+
@@ -42,7 +43,24 @@ alterator module for view license and release notes
 rm -rf %buildroot%_alterator_libdir/ui/notes/*.go
 %endif
 
+mkdir -p %buildroot/%_bindir
+install alterator-notes-show %buildroot/%_bindir/
+mkdir -p %buildroot/%_desktopdir
+for n in license release-notes ; do
+    install -m 0644 \
+	%buildroot/%_datadir/alterator/applications/$n.desktop \
+	%buildroot/%_desktopdir/%name-$n.desktop
+    desktop-file-install --mode=0644 --dir %buildroot/%_desktopdir \
+	--add-category=System \
+	--set-icon=alt-distro-logo \
+	--set-key=Exec \
+	--set-value="alterator-notes-show $n" \
+	%buildroot/%_desktopdir/%name-$n.desktop
+done
+
 %files
+%_bindir/alterator-notes-show
+%_desktopdir/%name-*.desktop
 %_alterator_datadir/applications/*
 %_alterator_datadir/ui/*/
 %if_without noarch
@@ -51,6 +69,9 @@ rm -rf %buildroot%_alterator_libdir/ui/notes/*.go
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt1
+- allow user to view license and release notes
+
 * Fri Apr 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.5-alt1
 - final-notes: remove header with module name in ui
 
