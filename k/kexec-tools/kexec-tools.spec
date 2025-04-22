@@ -1,12 +1,15 @@
 Name: kexec-tools
-Version: 2.0.30
+Version: 2.0.31
 Release: alt1
 
 Summary: Load one kernel from another
 License: GPLv2
 Group: System/Kernel and hardware
+Provides: /sbin/kexec
 
-Source: kexec-tools-%version.tar
+Source: %name-%version.tar
+
+BuildRequires: libzstd-devel zlib-devel
 
 %description
 /sbin/kexec is a user space utiltity for loading another kernel
@@ -17,18 +20,6 @@ kernel on reboot, or to start the loaded kernel after it panics.
 The panic case is useful for having an intact kernel for writing
 crash dumps.  But other uses may be imagined.
 
-%package -n kexec-static
-Summary: Statically linked kexec binary
-Group: System/Kernel and hardware
-
-%description -n kexec-static
-/sbin/kexec is a user space utiltity for loading another kernel
-and asking the currently running kernel to do something with it.
-A currently running kernel may be asked to start the loaded
-kernel on reboot, or to start the loaded kernel after it panics.
-
-This package contains statically linked kexec binary only.
-
 %prep
 %setup
 
@@ -38,22 +29,20 @@ This package contains statically linked kexec binary only.
 %make_build
 
 %install
-%make_install sbindir=/sbin DESTDIR=%buildroot install
-install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
+%make_install DESTDIR=%buildroot install
+rm -vf %buildroot%_libdir/kexec-tools/kexec_test
 
 %files
-%doc AUTHORS COPYING TODO News
-/sbin/kexec
-/sbin/vmcore-dmesg
+%doc AUTHORS COPYING
+%_sbindir/kexec
+%_sbindir/vmcore-dmesg
 %_man8dir/kexec.8*
 %_man8dir/vmcore-dmesg.8*
 
-%if 0
-%files -n kexec-static
-/sbin/kexec.static
-%endif
-
 %changelog
+* Tue Apr 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.31-alt1
+- 2.0.31 released
+
 * Mon Dec 02 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.30-alt1
 - 2.0.30 released
 
