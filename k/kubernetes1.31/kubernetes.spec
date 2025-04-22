@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     31
-%define kubernetes_patch     6
+%define kubernetes_patch     7
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -394,6 +394,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Sat Apr 12 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.7-alt1
+- 1.31.6 -> 1.31.7
+
 * Thu Feb 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.6-alt1
 - 1.31.5 -> 1.31.6 (Fixes: CVE-2025-0426)
 
