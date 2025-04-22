@@ -6,7 +6,7 @@
 
 Name: dtkmultimedia
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit multimedia modules
 
@@ -157,7 +157,6 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %doc README.md LICENSES/*
 %_libdir/libdtk6ocr.so.%sover
 %_libdir/libdtk6ocr.so.%version
-%_dqt6_mkspecsdir/modules/qt_lib_dtk6ocr.pri
 
 %files -n libdtk6ocr-data
 %dir %_datadir/libdtk6ocr/
@@ -168,6 +167,7 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %_includedir/dtk6ocr/
 %_libdir/cmake/dtk6ocr/
 %_libdir/pkgconfig/dtk6ocr.pc
+%_dqt6_mkspecsdir/modules/qt_lib_dtk6ocr.pri
 
 %if_with docs
 %files -n libdtk6multimedia-doc
@@ -175,5 +175,8 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %endif
 
 %changelog
+* Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt2
+- Moved mkspecs module to devel subpackage.
+
 * Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
 - Initial build for ALT Sisyphus.
