@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 128.8.1
+Version: 128.9.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -389,6 +389,13 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Apr 22 2025 Pavel Vasenkov <pav@altlinux.org> 128.9.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2025-3028 Use-after-free triggered by XSLTProcessor
+  + CVE-2025-3029 URL Bar Spoofing via non-BMP Unicode characters
+  + CVE-2025-3030 Memory safety bugs fixed in Firefox 137, Thunderbird 137, Firefox ESR 128.9, and Thunderbird 128.9
+
 * Sat Mar 29 2025 Pavel Vasenkov <pav@altlinux.org> 128.8.1-alt1
 - New ESR version.
 - Security fixes:
