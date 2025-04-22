@@ -2,8 +2,8 @@
 %def_without check
 
 Name:    ocrdesktop
-Version: 3.0
-Release: alt3
+Version: 4.0
+Release: alt1
 
 Summary: Accessiblity tool for use the current window with OCR technique
 License: GPL
@@ -52,6 +52,9 @@ install -m 644 ./%name.1.gz %buildroot%_man1dir/
  %_datadir/doc/%name/*
 
 %changelog
+* Tue Apr 22 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt1
+- Updated to new version 4.0
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 3.0-alt3
 - Cleaned-up the spec
 
