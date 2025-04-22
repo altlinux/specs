@@ -28,7 +28,7 @@
 
 Name: cockpit
 Version: 336.2
-Release: alt2
+Release: alt3
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
@@ -482,7 +482,7 @@ touch %buildroot%_sysconfdir/cockpit/disallowed-users
 %post ws
 if [ "$1" -eq 1 ]; then
     # in ALT nothing provides these dirs yet
-    mkdir -p %_sysconfdir{motd.d,issue.d}
+    mkdir -p %_sysconfdir/{motd.d,issue.d}
 
     ln -s ../../run/cockpit/issue %_sysconfdir/motd.d/cockpit
     ln -s ../../run/cockpit/issue %_sysconfdir/issue.d/cockpit.issue
@@ -529,6 +529,10 @@ systemd-tmpfiles --create cockpit-ws.conf >/dev/null 2>&1 ||:
 %endif # build optional extension packages
 
 %changelog
+* Tue Apr 22 2025 Andrey Limachko <liannnix@altlinux.org> 336.2-alt3
+- spec: add missed slash in /etc/{issue.d,motd.d} path in %post
+  script
+
 * Mon Apr 21 2025 Andrey Limachko <liannnix@altlinux.org> 336.2-alt2
 - Move missed .service files from cockpit-tests to cockpit-ws
 
