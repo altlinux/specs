@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.130.8
+Version: 6.131.6
 Release: alt1
 
 Summary: A library for property based testing
@@ -74,12 +74,8 @@ cp %SOURCE1 ./
 #
 # tests/crosshair: skipping this directory because there's no crosshair backend
 # in Sisyphus yet
-#
-# tests/watchdog: skipping it because there is flaky failure on ALT Linux
-# occasionally.
 %pyproject_run_pytest -ra -nauto -Wignore::UserWarning:dateutil.zoneinfo \
     --ignore="tests/crosshair" \
-    --ignore="tests/watchdog" \
     tests
 
 %files
@@ -95,6 +91,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Tue Apr 22 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.131.6-alt1
+- Updated to 6.131.6.
+
 * Fri Apr 04 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.130.8-alt1
 - Updated to 6.130.8.
 
