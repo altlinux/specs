@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name Curtail
-%define ver_major 1.12
+%define ver_major 1.13
 %define xdg_name com.github.huluti.%_name
 
 %def_enable check
@@ -28,6 +28,7 @@ BuildArch: noarch
 
 %define adwaita_ver 1.6
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: yelp
 Requires: jpegoptim
@@ -72,6 +73,9 @@ whether keep or not metadata of images.
 %doc README*
 
 %changelog
+* Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 

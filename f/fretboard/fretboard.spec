@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name Fretboard
-%define ver_major 8.0
+%define ver_major 9.1
 %define xdg_name dev.bragefuglseth.%_name
 
 %def_enable check
@@ -15,17 +15,18 @@ License: GPL-3.0-or-later
 Group: Sound
 Url: https://apps.gnome.org/Fretboard
 
+Vcs: https://github.com/bragefuglseth/fretboard.git
+
 %if_disabled snapshot
 Source: https://github.com/bragefuglseth/fretboard/releases/download/v%version/%name-%version.tar.xz
 %else
-Vcs: https://github.com/bragefuglseth/fretboard.git
 Source: %name-%version.tar
 %endif
 # tarball provides vendored sources
 %{?_enable_snapshot:Source1: %name-%version-cargo.tar}
 
-%define gtk_ver 4.10.1
-%define adwaita_ver 1.5
+%define gtk_ver 4.16
+%define adwaita_ver 1.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo blueprint-compiler
@@ -68,6 +69,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 9.1-alt1
+- updated to v9.1-5-gbf45933
+
 * Tue Oct 01 2024 Yuri N. Sedunov <aris@altlinux.org> 8.0-alt1
 - updated to v8.0-7-gcf9e72b
 

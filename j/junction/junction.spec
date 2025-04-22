@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Junction
-%define ver_major 1.8
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name re.sonny.Junction
 
@@ -15,16 +15,15 @@ License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://apps.gnome.org/Junction
 
-%if_disabled snapshot
 Vcs: https://github.com/sonnyp/Junction.git
+
+%if_disabled snapshot
 Source: https://github.com/sonnyp/%_name/archive/v%version/%name-%version%beta.tar.gz
 %else
 Source: %name-%version.tar
 %endif
 
 BuildArch: noarch
-##!/usr/bin/env -S XDG_DATA_DIRS=${XDG_DATA_DIRS}:/run/host/usr/share:/var/lib/snapd/desktop:/var/lib/flatpak/exports/share:${HOME}/.local/share/flatpak/exports/share gjs -m
-AutoReq: noshebang
 
 %define gjs_ver 1.76
 Requires: libgjs >= %gjs_ver /usr/bin/gjs
@@ -45,7 +44,6 @@ Junction lets you choose the application to open files and links.
 
 %prep
 %setup -n %{?_enable_snapshot:%name}%{?_disable_snapshot:%_name}-%version%beta
-#sed -i 's|\(^#!/usr/bin/\)env -S  \(gjs -m\)|\1\2|' src/bin.js
 
 %build
 %meson
@@ -68,6 +66,9 @@ Junction lets you choose the application to open files and links.
 
 
 %changelog
+* Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Sun Jan 21 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt1
 - 1.8
 

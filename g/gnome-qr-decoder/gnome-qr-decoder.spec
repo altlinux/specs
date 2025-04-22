@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name decoder
-%define ver_major 0.6
+%define ver_major 0.7
 %define xdg_name com.belmoussaoui.Decoder
 
 %define optflags_lto %nil
@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: gnome-qr-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Scan and Generate QR Codes
@@ -22,10 +22,9 @@ Vcs: https://gitlab.gnome.org/World/decoder.git
 Source: %_name-%version.tar
 Source1: %_name-%version-cargo.tar
 
-%define glib_ver 2.76
+%define glib_ver 2.80
 %define gtk_ver 4.16.0
-%define adwaita_ver 1.6
-%define zbar_ver 0.20
+%define adwaita_ver 1.7
 %define gst_api_ver 1.0
 %define gst_ver 1.20
 %define pipewire_ver 0.3
@@ -37,7 +36,6 @@ BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
-BuildRequires: pkgconfig(zbar) >= %zbar_ver
 BuildRequires: pkgconfig(gstreamer-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-%gst_api_ver) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-plugins-base-%gst_api_ver) >= %gst_ver
@@ -55,15 +53,8 @@ Decoder is a program for scan and generate QR codes.
 %setup -n %_name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo update -p zbar-rust && cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
-
-# remove broken build.rs from zbar-rust
-rm -f vendor/zbar-rust/build.rs
-sed -i '/build.rs/d' vendor/zbar-rust/Cargo.toml
-sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf1342672c2",||
-        s/"files":{[^}]*}/"files":{}/' \
-    vendor/zbar-rust/.cargo-checksum.json
 
 %build
 %meson
@@ -84,6 +75,9 @@ sed -i 's|"build.rs":"894b33392971ba9dad1dd4e45869478198f86e911e0b29f7e0d9fbf134
 
 
 %changelog
+* Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Mon Sep 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0-5-g3732c7d
 
