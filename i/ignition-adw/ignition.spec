@@ -4,7 +4,7 @@
 %define real_name ignition
 
 Name: ignition-adw
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Manage startup apps and scripts
@@ -72,6 +72,9 @@ rm -r %buildroot%_datadir/locale/zh_Hans
 %doc README.md
 
 %changelog
+* Tue Apr 22 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.3-alt1
+- 1.1.3
+
 * Tue Mar 04 2025 Semen Fomchenkov <armatik@altlinux.org> 1.1.2-alt1
 - 1.1.2
 
