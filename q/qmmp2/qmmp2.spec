@@ -8,7 +8,7 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
@@ -23,11 +23,10 @@ Patch2: alt-def-plugins.patch
 Patch3: alt-def-statusicon.patch
 Patch4: alt-hide-on-close.patch
 Patch5: alt-def-id3v1-encoding.patch
-Patch6: alt-ftbfs.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-wlskins
 BuildRequires: cmake doxygen qt6-tools-devel qt6-multimedia-devel
-BuildRequires: libmms-devel libtag-devel
+BuildRequires: libmms-devel taglib-devel
 %ifnarch %arm
 BuildRequires: projectm-devel
 %endif
@@ -206,7 +205,6 @@ Qmmp Shared library
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 %K6build \
@@ -251,6 +249,9 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 1:2.2.4-alt1
+- new version
+
 * Fri Jan 31 2025 Sergey V Turchin <zerg@altlinux.org> 1:2.2.3-alt1
 - new version
 
