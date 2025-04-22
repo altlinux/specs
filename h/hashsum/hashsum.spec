@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: hashsum
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: Check hashes for your files
@@ -67,5 +67,8 @@ install -m644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas
 %nautilus_extdir/%name-extension.py
 
 %changelog
+* Tue Apr 22 2025 Alexander Davydzik <paladindev@altlinux.org> 4.0.5-alt1
+- updated app icon
+
 * Fri Mar 21 2025 Alexander Davydzik <paladindev@altlinux.org> 4.0.4-alt1
 - initial build
