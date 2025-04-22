@@ -1,6 +1,6 @@
 Name: installer-feature-vmservices
-Version: 0.3.0
-Release: alt2
+Version: 0.3.1
+Release: alt1
 
 Summary: Setup virtual machine services
 License: GPL
@@ -8,7 +8,6 @@ Group: System/Configuration/Other
 Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 Source: %name-%version.tar
-
 
 %description
 Setup services for start/not start in/out of virtual machine.
@@ -27,29 +26,32 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
+- add virtualbox-vmsvga.service
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.3.0-alt2
 - NMU: remove rpm-build-ubt from BR:
 
 * Mon Oct 08 2018 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - using systemd-detect-virt
 
-* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1%ubt
+* Fri Apr 13 2018 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
 - simplify script
 
-* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1%ubt
+* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
 - detect Hyper-V
 
-* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.4-alt1%ubt
+* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.4-alt1
 - force switch services
 
-* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt1%ubt
+* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt1
 - update services list
 
-* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt1%ubt
+* Wed Apr 11 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt1
 - fix path to chkconfig
 
-* Tue Apr 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1%ubt
+* Tue Apr 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
 - fix setup services
 
-* Tue Apr 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1%ubt
+* Tue Apr 10 2018 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt1
 - initial build
