@@ -1,13 +1,15 @@
-Summary: FUSE implementation for overlayfs.
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: fuse-overlayfs
-
-Version: 1.10
+Version: 1.14
 Release: alt1
-License: GPLv3+
 
+Summary: An implementation of overlay+shiftfs in FUSE for rootless containers
+License: GPLv2+
 Group: System/Kernel and hardware
-
-URL: https://github.com/containers/fuse-overlayfs
+Url: https://github.com/containers/fuse-overlayfs
+Vcs: https://github.com/containers/fuse-overlayfs
 
 Source0: %name-%version.tar
 
@@ -22,7 +24,7 @@ Requires: fuse3
 %summary.
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
 ./autogen.sh
@@ -42,6 +44,9 @@ echo fuse > %buildroot%_modulesloaddir/fuse-overlayfs.conf
 %_modulesloaddir/fuse-overlayfs.conf
 
 %changelog
+* Tue Apr 22 2025 Denis Rastyogin <gerben@altlinux.org> 1.14-alt1
+- Updated to 1.14.
+
 * Mon Feb 20 2023 Stepan Paksashvili <paksa@altlinux.org> 1.10-alt1
 - 1.10
 
