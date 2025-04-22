@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 6.0.8
+Version: 6.0.10
 Release: alt1
 
 Summary: GSettings deepin desktop-wide schemas
@@ -9,9 +9,10 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-desktop-schemas
 Vcs: https://github.com/linuxdeepin/deepin-desktop-schemas.git
 
-Source: %url/archive/%version/%name-%version.tar.gz
+Source0: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
-Patch: deepin-desktop-schemas-5.9.16-default-value-for-timeout-lockscreen.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-desktop-schemas-5.9.16-default-value-for-timeout-lockscreen.patch
 
 BuildArch: noarch
 
@@ -25,16 +26,14 @@ BuildRequires: python3 glib2 libgio
 %summary.
 
 %prep
-%setup
-%patch -p1
+%setup -a1
+%autopatch -p1
 
 sed -i 's|adwaita-lock.jpg|adwaita-l.webp|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
 # fix network checker url
 sed -i "s|'http://detect.uniontech.com', 'http://detectportal.deepin.com'|'https://en.altlinux.org'|" \
     schemas/com.deepin.dde.network-utils.gschema.xml
-# Unpacked vendor/ into the source (used .gear/tags).
-tar -xf %SOURCE1
 # Fix paths in golang submodules.
 sed -i 's|/usr/share/locale/locale.alias|%_datadir/X11/locale/locale.alias|' \
     vendor/github.com/linuxdeepin/go-lib/locale/locale.go
@@ -68,6 +67,9 @@ dconf update
 %_datadir/%name/
 
 %changelog
+* Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.10-alt1
+- New version 6.0.10.
+
 * Mon Feb 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.8-alt1
 - New version 6.0.8.
 - Added vcs tag.
