@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2019.1.0
-Release: alt2
+Release: alt3
 Summary: Compiler for finite element variational forms
 Group: Development/Tools
 License: LGPLv3+
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 # http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
 Source1: ffc-user-manual.pdf
 Patch0: 0001-Add-compatibility-against-Pytest-6.0.patch
+Patch1: cmake-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -92,6 +93,9 @@ python3 -m pytest -v test/ --ignore=test/unit/ufc/finite_element/test_evaluate.p
 %doc demo
 
 %changelog
+* Tue Apr 22 2025 Anton Vyatkin <toni@altlinux.org> 1:2019.1.0-alt3
+- Fixed FTBFS.
+
 * Wed Aug 05 2020 Stanislav Levin <slev@altlinux.org> 1:2019.1.0-alt2
 - Fixed FTBFS(new Pytest 6).
 
