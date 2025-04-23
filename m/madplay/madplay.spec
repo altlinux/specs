@@ -1,6 +1,6 @@
 Name: madplay
 Version: 0.15.2b
-Release: alt2.qa1
+Release: alt3
 
 Summary: High quality MPEG audio decoder
 Summary(ru_RU.CP1251): Декодер аудиофайлов формата MPEG
@@ -20,9 +20,8 @@ PreReq: libid3tag >= 0.15.1
 BuildPreReq: libid3tag-devel >= 0.15.1
 BuildPreReq: libmad-devel >= 0.15.1
 
-# Automatically added by buildreq on Thu Mar 04 2004
-BuildRequires: esound-devel gcc-c++ hostinfo libaudiofile-devel libid3tag-devel
-BuildRequires: libmad-devel libstdc++-devel zlib-devel
+BuildRequires: gcc-c++
+BuildRequires: libalsa-devel libaudiofile-devel libid3tag-devel
 
 %description
 MAD is a high-quality MPEG audio decoder. It currently supports MPEG-1
@@ -37,10 +36,11 @@ MAD - это высокачественный декодер аудиофайлов формата MPEG.
 уровня сжатия звука (Layer I, Layer II и Layer III, известный как MP3).
 
 %prep
-%setup -q
+%setup
+sed -ri '/^char\s\*defaultdev/ s!plughw:0,0!default!' audio_alsa.c
 
 %build
-%configure
+%configure --with-alsa
 %make_build
 
 %install
@@ -54,6 +54,9 @@ MAD - это высокачественный декодер аудиофайлов формата MPEG.
 %doc CHANGES README INSTALL CREDITS COPYRIGHT TODO VERSION
 
 %changelog
+* Wed Apr 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.15.2b-alt3
+- dropped esound support
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.15.2b-alt2.qa1
 - NMU: rebuilt for debuginfo.
 
