@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
 Version: 0.6.3
-Release: alt2
+Release: alt3
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -40,6 +40,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Wed Apr 23 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt3
+- Rockchips-aarch64.sh: set serial tty rate to 1500000
+
 * Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt2
 - socs-utils: fix conditions for add boot part (Closes: 53651)
 
