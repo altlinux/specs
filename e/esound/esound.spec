@@ -8,7 +8,7 @@
 
 Name: esound
 Version: %ver_major.41
-Release: alt10
+Release: alt11
 
 Summary: The Enlightened Sound Daemon
 License: GPL
@@ -21,6 +21,7 @@ Patch3: %name-0.2.37-alt-esd_spawn_options.patch
 Patch4: esound-0.2.37-alt-esd_no_spawn.patch
 Patch7: %name-0.2.39-alt-shut_up.patch
 Patch8: %name-0.2.41-link.patch
+Patch9: %name-0.2.41-alt-implicit-declaration-fix.patch
 
 %define audiofile_ver 0.2.3
 
@@ -113,6 +114,7 @@ applications.
 %patch4 -p1
 %patch7
 %patch8
+%patch9 -p1
 
 %build
 %autoreconf
@@ -173,6 +175,9 @@ subst 's,/etc/esound,/etc,g' docs/esd.1
 %{?_enable_doc:%exclude %_datadir/doc/esound}
 
 %changelog
+* Wed Apr 23 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.2.41-alt11
+- NMU: Fixed FTBFS (thx lesyafox@)
+
 * Thu Aug 30 2018 Yuri N. Sedunov <aris@altlinux.org> 0.2.41-alt10
 - rebuilt without tcp_wrappers support
 
