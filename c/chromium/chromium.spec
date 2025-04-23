@@ -24,7 +24,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        135.0.7049.95
+Version:        135.0.7049.114
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -54,7 +54,7 @@ Obsoletes:      chromium-gnome
 Obsoletes:      chromium-desktop-kde
 Obsoletes:      chromium-desktop-gnome
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 ### Start Patches
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
@@ -66,12 +66,14 @@ Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
 Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch008: 0008-FEDORA-bootstrap-with-python3.patch
 Patch009: 0009-ALT-use-system-zlib.patch
+
 Patch011: 0011-DEBIAN-allow-building-against-system-libraries-even-.patch
 Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
+
 Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
@@ -80,11 +82,14 @@ Patch024: 0024-Disable-unsupported-compiler-flags.patch
 Patch025: 0025-Fix-rust-clang-path.patch
 Patch026: 0026-DEBIAN-remove-dependencies-on-third_party-catapult.patch
 Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
+
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-135-add-cfi-suppressions-for-pipewire-functions.patch
 Patch033: 0033-FEDORA-chromium-135-gperf.patch
+Patch034: 0034-FEDORA-chromium-135-print-review-fail.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
+
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
@@ -248,6 +253,10 @@ faster, and more stable way for all Internet users to experience the web.
 %prep
 %setup -q -n chromium
 %autopatch -p1
+# for rust after 1.86 revert adler2 patch:
+%if "%(rpmquery --qf '%%{VERSION}' rust)" >= "1.86"
+%patch068 -R -p1
+%endif
 
 sed -i \
         -e 's/"-ffile-compilation-dir=."//g' \
@@ -569,6 +578,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Apr 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.114-alt1
+- New version (135.0.7049.114).
+
 * Wed Apr 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.95-alt1
 - New version (135.0.7049.95).
 - Security fixes:
