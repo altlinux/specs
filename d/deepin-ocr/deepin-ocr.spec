@@ -1,50 +1,34 @@
 %def_disable clang
 
 Name: deepin-ocr
-Version: 1.0.7
-Release: alt2
+Version: 6.5.0
+Release: alt1
 
 Summary: Base character recognition ability on DDE
 
 License: GPL-3.0+
 Group: Graphics
 Url: https://github.com/linuxdeepin/deepin-ocr
+Vcs: https://github.com/linuxdeepin/deepin-ocr.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
+# Automatically added by buildreq on Wed Apr 23 2025
+# optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libclang-cpp19 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-qml libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libjson-c5 libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel llvm19.1-libs ninja-build pkg-config python3 python3-base sh5 vulkan-headers
+BuildRequires: dqt6-tools-devel dtk6-common-devel libGLU-devel libdtk6ocr-devel libdtk6widget-devel python3-devel
+BuildRequires: libcups-devel
 %if_enabled clang
-BuildRequires: clang-devel lld-devel
+BuildRequires: rpm-macros-llvm-common
+BuildRequires: clang-devel lld-devel libomp%_llvm_version-devel
 %else
 BuildRequires: gcc-c++ libgomp-devel
 %endif
-BuildRequires: cmake dqt5-base-devel dqt5-tools-devel
-BuildRequires: python3-devel python3-module-opencv
-BuildRequires: libopenblas-devel liblapack-devel
-BuildRequires: libva-devel libvtk-devel libopencv-devel libdc1394-devel
-BuildRequires: libdtkcore-devel libdtkwidget-devel
-Requires: %name-models
 
 %description
 Deepin OCR provides the base character recognition ability on DDE.
 
-%package models
-Summary: Models for %name
-Group: Graphics
-BuildArch: noarch
-
-%description models
-The package provides models for %name.
-
 %prep
 %setup
-# use system opencv
-sed -i 's|../3rdparty/opencv-4.5.4/build/install/include/opencv4|%_includedir/opencv4|' \
-  src/CMakeLists.txt
-sed -i 's|/build/install/lib/libopencv_world.a|/build/install/%_lib/libopencv_world.a|' \
-  src/CMakeLists.txt \
-  build3rdparty.sh
-sed -i 's|-mcpu=power8|-mcpu=power9 -mvsx|' \
-  3rdparty/opencv-4.5.4/cmake/OpenCVCompilerOptimizations.cmake
 
 %build
 %if_enabled clang
@@ -53,20 +37,13 @@ export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
+%DQ6build \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-    -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_libdir \
-    -DDEFINES+="VERSION=%version" \
-%nil
-cmake --build "%_cmake__builddir" -j%__nprocs
+#
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %name
 
 %files -f %name.lang
@@ -77,12 +54,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations/
 %_datadir/%name/translations/deepin-ocr_es_419.qm
-
-%files models
-%dir %_datadir/%name/
-%_datadir/%name/model/
+%_datadir/%name/translations/deepin-ocr_ky@Arab.qm
 
 %changelog
+* Wed Apr 23 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.0-alt1
+- New version 6.5.0.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Tue Sep 10 2024 Leontiy Volodin <lvol@altlinux.org> 1.0.7-alt2
 - Built via separate qt5 instead system (ALT #48138).
 
