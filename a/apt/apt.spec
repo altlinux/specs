@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt91
+Release: alt92
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -375,10 +375,10 @@ export APT_TEST_INTERMEDIATES
 		./run-tests -v
 
 # A quick test with just one method for the case without APT_TEST_GPGPUBKEY.
-APT_TEST_METHODS='file' %runtests
+APT_TEST_METHODS='file' APT_TEST_http_METHODS= %runtests
 
 # The same tests, but just via cdrom with a missing release:
-#APT_TEST_METHODS=cdrom_missing_release %%runtests
+#APT_TEST_METHODS=cdrom_missing_release APT_TEST_http_METHODS= %%runtests
 
 %package checkinstall
 Summary: Immediately test %name when installing this package (complete set of tests)
@@ -501,7 +501,7 @@ fi
 
 already_once=0
 for (( try = 0; try < TRIES; )); do
-    # all methods (you might want to update the list if there are new ones)
+    # FIXME: APT_TEST_ALL_http_METHODS are repeated too many times.
     for method in "${APT_TEST_ALL_METHODS[@]}"; do
 	# do the same method several times in parallel (to provoke races)
 	for (( repeat = 0; repeat < 2; ++repeat )); do
@@ -613,6 +613,23 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Wed Apr 16 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt92
+- Support encoded usernames and passwords in URIs (incl. http_proxy); it was
+  impossible to have @ there; now one should write %%40 (ALT#38277).
+- Get config values with percent (%%) correct in methods (e.g., a password as
+  above in Acquire::http::Proxy). More generally: for correct decoding,
+  do always encode percent (%%) when %%-encoding strings (in any URIs etc).
+- Backported the fixes from Debian 0.9.8~3 (IPv6 literals; encode passwords):
+  + properly escape IP-literals (e.g. IPv6 address) in HTTP requests
+    (allows using IPv6 numeric addresses in sources.list) (ALT#34000);
+  + %%-encode username and password when writing URIs (doesn't help alone with
+    reading URIs as in the case of http_proxy above, but normalizes output);
+  + include port in shortened URIs (e.g. with apt-cache policy).
+- testcases: Multiplied http-related ones to test these kinds of connections.
+- Some HTTP tweaks from Debian:
+  + quote spaces ( ) and plus (+) in filenames (0.9.8~48);
+  + do not send keep-alive (HTTP/1.1 default) (0.9.9.3~4^2).
+
 * Tue Apr  8 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt91
 - Fixes for ShowEssential output (showing the essential to-be-removed packages):
   + Applied a trick to fix a bad case of columnar output (thx iv@). (ALT#51546)
