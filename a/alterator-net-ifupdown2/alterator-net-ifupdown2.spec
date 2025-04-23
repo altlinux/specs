@@ -2,8 +2,8 @@
 
 
 Name: alterator-net-ifupdown2
-Version: 1.0.2
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -18,6 +18,8 @@ Requires: alterator-sh-functions >= 0.12-alt1
 Requires: alterator-hw-functions >= 0.7-alt2
 Requires: libshell >= 0.1.3
 Requires: ifupdown2
+# ifupdown2 openresolv hooks
+Requires: resolvconf-ifupdown2
 
 BuildRequires(pre): alterator >= 5.0
 BuildRequires: alterator-fbi
@@ -42,6 +44,9 @@ Alterator module for PVE network setup
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Apr 15 2025 Sergey Konev <darisishe@altlinux.org> 1.0.3-alt1
+- Switch to using openresolv (via ifupdown2 hooks) DNS managment
+
 * Tue Mar 04 2025 Sergey Konev <darisishe@altlinux.org> 1.0.2-alt3
 - More intuitive UI
 - Better FQDN correctness checks

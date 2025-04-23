@@ -1,6 +1,6 @@
 Name: ifupdown2
 Version: 3.2.0.11
-Release: alt2
+Release: alt3
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
 Group: System/Base
@@ -9,6 +9,10 @@ Vcs: https://github.com/CumulusNetworks/ifupdown2.git
 
 Source0: %name-%version.tar
 Source1: %name.tar
+
+Source2: resolvconf.if-up
+Source3: resolvconf.if-down
+
 Patch2: 0002-ALT-python-3.12-compatibility.patch
 Patch3: ALT-do-not-run-scripts-rpmnew-rpmsave.patch
 
@@ -45,6 +49,20 @@ supports newer simplified format. It also supports interface templates with
 python-mako for large scale interface deployments. See
 /usr/share/doc/ifupdown2/README.rst for details about ifupdown2. Examples
 are available under /usr/share/doc/ifupdown2/examples.
+
+
+%package -n resolvconf-ifupdown2
+
+Summary: Hooks for setting up /etc/resolv.conf options via ifupdown2
+Group: System/Base
+
+Requires: %name
+Requires: /sbin/resolvconf
+
+%description -n resolvconf-ifupdown2
+Hooks for setting up DNS-related options via ifupdown2,
+using resolvconf utility
+
 
 %prep
 %setup
@@ -101,6 +119,10 @@ mv %name/%name/man/*.8 %buildroot%_man8dir
 rm -rf %buildroot%python3_sitelibdir_noarch/*.egg-info
 rm -f %buildroot%_bindir/if*
 
+# Hooks for resolvconf
+install -D -m755 %SOURCE2 %buildroot%_sysconfdir/network/if-up.d/resolvconf
+install -D -m755 %SOURCE3 %buildroot%_sysconfdir/network/if-down.d/resolvconf
+
 %post
 if [ "$1" -eq 1 ]; then
     mkdir -p %_sysconfdir/iproute2/rt_tables.d/
@@ -134,8 +156,19 @@ fi
 %_man5dir/*
 %_man8dir/*
 %python3_sitelibdir_noarch/*
+%dir %_sysconfdir/network/if-up.d
+%dir %_sysconfdir/network/if-down.d
+%exclude %_sysconfdir/network/if-up.d/*
+%exclude %_sysconfdir/network/if-down.d/*
+
+%files -n resolvconf-ifupdown2
+%_sysconfdir/network/if-up.d/*
+%_sysconfdir/network/if-down.d/*
 
 %changelog
+* Mon Apr 14 2025 Sergey Konev <darisishe@altlinux.org> 3.2.0.11-alt3
+- New subpackage with hooks for /etc/resolv.conf managment
+
 * Fri Dec 13 2024 Alexey Shabalin <shaba@altlinux.org> 3.2.0.11-alt2
 - Fix utils path
 - Update requires
