@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: varia
-Version: %ver_major.3
+Version: %ver_major.22
 Release: alt1
 
 Summary: Quick and efficient download manager
@@ -25,6 +25,7 @@ Source: %name-%version.tar
 %define adw_ver 1.6
 
 Requires: /usr/bin/aria2p /usr/bin/aria2c
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1 libadwaita >= %adw_ver
 Requires: yt-dlp
 Requires: dconf yelp
@@ -71,6 +72,9 @@ stream downloads.
 %doc README*
 
 %changelog
+* Wed Apr 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.4.22-alt1
+- 2025.4.22
+
 * Fri Apr 04 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.4.3-alt1
 - 2025.4.3
 
