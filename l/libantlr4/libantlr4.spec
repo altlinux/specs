@@ -1,6 +1,6 @@
 Name: libantlr4
 Version: 4.13.2
-Release: alt1
+Release: alt2
 
 Summary: ANTLR C++ runtime
 License: BSD
@@ -40,12 +40,12 @@ rm -f *.* && mv runtime runtime-t && mv runtime-t/Cpp/* .
 %build
 %cmake_insource -DANTLR4_INSTALL=ON -DWITH_DEMO=False -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DANTLR_BUILD_CPP_TESTS=OFF
+    -DANTLR_BUILD_CPP_TESTS=OFF \
+    -DANTLR_BUILD_STATIC=OFF
 %make_build
 
 %install
 %makeinstall_std
-rm -fv %buildroot%_libdir/libantlr4-runtime.a
 rm -fv %buildroot%_docdir/%name/README.md
 
 %files
@@ -59,6 +59,9 @@ rm -fv %buildroot%_docdir/%name/README.md
 %_libdir/cmake/antlr4-generator/
 
 %changelog
+* Wed Apr 23 2025 Leontiy Volodin <lvol@altlinux.org> 4.13.2-alt2
+- remove libantlr4-runtime.a from cmake (ALT #53958)
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 4.13.2-alt1
 - new version 4.13.2 (with rpmrb script)
 

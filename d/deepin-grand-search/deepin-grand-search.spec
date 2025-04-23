@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 6.0.7
+Version: 6.0.9.1
 Release: alt1
 
 Summary: Basic search tool for DDE
@@ -14,7 +14,7 @@ Url: https://github.com/linuxdeepin/dde-grand-search
 Vcs: git://github.com/linuxdeepin/dde-grand-search.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-grand-search-5.4.5-alt-fix-GNUInstallDirs.patch
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -24,7 +24,7 @@ BuildRequires(pre): gcc-c++
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Thu Apr 03 2025
 # optimized out: bash5 bashrc boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libavcodec-devel libavformat-devel libavutil-devel libdeepin-pdfium1 libdeepin-qdbus-service0 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
-BuildRequires: dde-dock-devel dqt6-5compat-devel dqt6-tools dtk6-common-devel libcups-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtk6widget-devel libffmpegthumbnailer-devel libgio-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel
+BuildRequires: dde-dock-devel dqt6-5compat-devel dqt6-tools dtk6-common-devel libcups-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdtk6widget-devel libdfm6-search-devel libffmpegthumbnailer-devel libgio-devel libicu-devel libjpeg-devel liblucene++-devel libtag-devel libuuid-devel deepin-desktop-base libantlr4-devel
 # aarch64
 BuildRequires: libpcre-devel
 
@@ -38,6 +38,7 @@ a series of files,applications or documents, etc.
 %autopatch -p1
 
 %build
+export CPLUS_INCLUDE_PATH=%_includedir/antlr4-runtime:$CPLUS_INCLUDE_PATH
 %define optflags_lto %nil
 %if_enabled clang
 export CC="clang"
@@ -84,6 +85,9 @@ export READELF="llvm-readelf"
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.grand-search.gschema.xml
 
 %changelog
+* Wed Apr 23 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.9.1-alt1
+- New version 6.0.9.1.
+
 * Thu Apr 03 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
 - New version 6.0.7.
 - Switched to dqt6.
