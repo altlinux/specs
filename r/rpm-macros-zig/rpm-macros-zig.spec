@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-macros-zig
-Version: 3
+Version: 4
 Release: alt1
 Summary: RPM macros for Zig
 License: GPL-2.0-only
@@ -40,6 +40,9 @@ done
 %_rpmmacrosdir/zig
 
 %changelog
+* Thu Mar 13 2025 Ilya Sorochan <k0tran@altlinux.org> 4-alt1
+- Add loongarch64 and riscv64 to %zig_arches.
+
 * Fri Sep 06 2024 Vitaly Chikunov <vt@altlinux.org> 3-alt1
 - Parametrize cache-dir and release/optimize modes.
 - spec: Add %%check with basic rpm macros linting.

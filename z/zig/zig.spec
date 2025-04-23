@@ -4,7 +4,7 @@
 %set_verify_elf_method rpath=relaxed
 
 Name: zig
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
@@ -14,17 +14,11 @@ Url: https://ziglang.org/
 Vcs: https://github.com/ziglang/zig/
 Requires: /proc
 
-# https://ziglang.org/download/0.10.0/release-notes.html#Support-Table
-# aarch64: OK  1:03:53
-#    armh: -
-#    i586: LLVM ERROR: out of memory
-# ppc64le: zig2: Segmentation fault
-#  x86-64: OK    31:37
 ExclusiveArch: %zig_arches
 
 Source: %name-%version.tar
 
-%define llvm_ver 18
+%define llvm_ver 19
 %define llvm_pkgver %llvm_ver.1
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-zig
@@ -46,6 +40,10 @@ BuildRequires: zlib-devel
 
 %prep
 %setup
+
+# Remove after this issue is resolved:
+# https://github.com/ziglang/zig/issues/23347
+sed -i '/max_rss = 7_800_000_000/d' build.zig
 
 %package checkinstall
 Summary: CI test for zig
@@ -109,6 +107,11 @@ rm -rf -- "$t" "$HOME/.cache/zig"
 %files checkinstall
 
 %changelog
+* Tue Apr 22 2025 Ilya Sorochan <k0tran@altlinux.org> 0.14.0-alt1
+- Update to 0.14.0 (2025-03-03).
+- Switch to LLVM 19.
+- Remove RSS limit for zig.
+
 * Thu Aug 01 2024 Vitaly Chikunov <vt@altlinux.org> 0.13.0-alt1
 - Update to 0.13.0 (2024-06-06), (ALT#50967).
 - Switch to LLVM 18.
