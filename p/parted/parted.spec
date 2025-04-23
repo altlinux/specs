@@ -25,7 +25,7 @@
 Name: parted
 %define lname lib%name
 Version: 3.6
-Release: alt2
+Release: alt3
 
 Summary: Flexible partitioning tool
 Summary(uk_UA.UTF-8): Универсальний інструмент для роботи з разділами диску
@@ -39,6 +39,9 @@ Source1: %name-pam
 Source2: %name-security
 Patch0: parted-3.4-fix-segfault-on-exit.patch
 Patch1: %name-%version-%release.patch
+Patch2: libparted-partition-naming.patch
+Patch3: libparted-fix-nvme-partition-naming.patch
+Patch4: libparted-fix-NVDIMM-partition-naming.patch 
 
 Requires: %lname = %version-%release
 
@@ -135,6 +138,9 @@ with %lname.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 echo "%version" >.version
@@ -232,6 +238,11 @@ __MENU__
 
 
 %changelog
+* Thu Apr 17 2025 Sergey Konev <darisishe@altlinux.org> 3.6-alt3
+- Fixed libparted partitions naming.
+  i.e. libparted treated multipath device partition
+  as /dev/mapper/mpatha1 instead of /dev/mapper/mpatha-part1
+
 * Thu Nov 09 2023 Anton Farygin <rider@altlinux.ru> 3.6-alt2
 - build from upsream git again
 

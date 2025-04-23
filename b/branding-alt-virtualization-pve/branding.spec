@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.2
+Release: alt0.3
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -290,6 +290,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Apr 14 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.3
+- indexhtml: proper product feedback and repository links
+
 * Mon Feb 10 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.2
 - Added VARIANT and VARIANT_ID fields in os-release
 - Provided links to docs and support in os-release

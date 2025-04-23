@@ -1,7 +1,7 @@
 Name: alterator-python-functions
 
 Version: 1.0.0
-Release: alt3
+Release: alt4
 
 BuildRequires(pre): rpm-build-python3
 
@@ -39,6 +39,11 @@ Note that the module is `alterator_bindings.backend3`
 %doc README.md
 
 %changelog
+* Fri Apr 11 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt4
+- Easier restrictions for write_enum_item argument
+  (similar to alterator-sh-functions)
+- Switch to 'raise Exception' instead of 'sys.exit'
+
 * Sat Feb 22 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt3
 - Explicit build dependency on python3-module-wheel
 

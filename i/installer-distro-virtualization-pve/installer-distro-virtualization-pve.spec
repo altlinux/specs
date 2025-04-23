@@ -2,7 +2,7 @@
 
 Name: installer-distro-%distro
 Version: 11.0.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: Installer configuration (Virtualization PVE)
 License: GPLv2
@@ -45,8 +45,8 @@ Provides: installer-%distro-stage3 = %version
 # modules
 Requires: alterator-users
 Requires: alterator-root
-Requires: alterator-luks
 Requires: alterator-net-ifupdown2
+Requires: alterator-notes
 Requires: installer-feature-online-repo
 Requires: installer-feature-powerbutton-stage3
 
@@ -74,6 +74,16 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Thu Apr 17 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.3
+- initinstall script to assemble MD RAIDs
+  (required for Volume Managment step)
+- Removed redundant LUKS installer step
+  alterator-blivet can't create LUKS devices for now
+  (Encryption can be provided by Ceph)
+- Fixed 85-create-pve-cluster-fs failure
+- Fixed empty Release Notes page in the end of installation
+- Restored setup-dhcp script
+
 * Wed Jan 29 2025 Sergey Konev <darisishe@altlinux.org> 11.0.0-alt0.2
 - Usage of 'tuned' daemon for better system settings fitting
 - New volume managment module

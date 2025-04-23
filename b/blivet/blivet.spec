@@ -5,7 +5,7 @@ Summary: A python module for system storage configuration
 Name: blivet
 Group: System/Configuration/Other
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.11.0
+Version: 3.12.1
 Release: alt1
 License: GPLv2+
 
@@ -17,7 +17,7 @@ BuildArch: noarch
 %global partedver 1.8.1
 %global pypartedver 3.10.4
 %global utillinuxver 2.15.1
-%global libblockdevver 3.2.0
+%global libblockdevver 3.3.0
 %global libbytesizever 0.3
 %global pyudevver 0.18
 
@@ -90,6 +90,9 @@ make PYTHON=%__python3 DESTDIR=%buildroot install
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 09 2025 Sergey Konev <darisishe@altlinux.org> 3.12.1-alt1
+- 3.12.1
+
 * Mon Dec 30 2024 Sergey Konev <darisishe@altlinux.org> 3.11.0-alt1
 - 3.11.0
 - Updated Requires for python module

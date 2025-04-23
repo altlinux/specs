@@ -7,7 +7,7 @@
 
 Name: multipath-tools
 Version: 0.11.1
-Release: alt1
+Release: alt2
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -22,7 +22,7 @@ Source5: multipath.conf
 Patch1: %name-%version.patch
 
 Provides: device-mapper-multipath = %EVR
-Provides: /sbin/multipath /sbin/multipathd /sbin/mpathpersist /sbin/multipathc
+Provides: /sbin/multipath /sbin/multipathd /sbin/mpathpersist /sbin/multipathc /sbin/mpathconf
 Conflicts: filesystem < 3
 
 Requires: libmultipath = %EVR
@@ -157,7 +157,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %doc README.md
 %bindir/multipath
 %bindir/multipathd
-#%%bindir/mpathconf
+%bindir/mpathconf
 %bindir/mpathpersist
 %bindir/multipathc
 %_udevrulesdir/*
@@ -210,6 +210,10 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Fri Apr 11 2025 Sergey Konev <darisishe@altlinux.org> 0.11.1-alt2
+- Added mpathconf utility
+- Patch: don't start multipathd without a config file
+
 * Fri Feb 14 2025 Alexey Shabalin <shaba@altlinux.org> 0.11.1-alt1
 - 0.11.1
 
