@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define appdir  %_datadir/gambas3
-%ifnarch %qt5_qtwebengine_arches
+%ifnarch %qt6_qtwebengine_arches
 %def_disable qtwebengine
-%def_disable qtwebkit
 %else
 %def_enable qtwebengine
-%def_enable qtwebkit
 %endif
 %def_enable     opengl
 # jit.h is only available prior to llvm 3.6 and gb.jit can only be compiled with those versions.
@@ -18,7 +16,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:    gambas
-Version: 3.20.2
+Version: 3.20.3
 Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
@@ -32,7 +30,7 @@ Source1: %name.desktop
 # Unable to build gb.form
 ExcludeArch: armh
 
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: rpm-build-xdg
 BuildRequires: autoconf
 BuildRequires: automake
@@ -70,7 +68,6 @@ BuildRequires: libopenal-devel
 BuildRequires: libpcre-devel
 BuildRequires: libpng-devel
 BuildRequires: libpoppler-devel
-#BuildRequires: libqt4-webkit-devel
 BuildRequires: librsvg-devel
 BuildRequires: libSDL-devel
 BuildRequires: libSDL_image-devel
@@ -95,15 +92,10 @@ BuildRequires: libXtst-devel
 %endif
 BuildRequires: pkg-config
 BuildRequires: postgresql-devel
-#BuildRequires: qt4-devel
-BuildRequires: qt5-base-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
-%if_enabled qtwebkit
-BuildRequires: qt5-webkit-devel
-%endif
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt6-webengine-devel
 %endif
 BuildRequires: xdg-utils
 BuildRequires: zlib-devel
@@ -204,10 +196,6 @@ Requires: %name-gb-openssl = %EVR
 Requires: %name-gb-option = %EVR
 Requires: %name-gb-pcre = %EVR
 Requires: %name-gb-pdf = %EVR
-#Requires: %name-gb-qt4 = %EVR
-#Requires: %name-gb-qt4-ext = %EVR
-#Requires: %name-gb-qt4-webkit = %EVR
-#Requires: %name-gb-qt4-opengl = %EVR
 Requires: %name-gb-report = %EVR
 Requires: %name-gb-report2 = %EVR
 Requires: %name-gb-scanner = %EVR
@@ -229,11 +217,10 @@ Requires: %name-gb-xml-xslt = %EVR
 Requires: %name-gb-web = %EVR
 # New components
 Requires: %name-gb-form-editor = %EVR
-Requires: %name-gb-qt5 = %EVR
-Requires: %name-gb-qt5-wayland = %EVR
-Requires: %name-gb-qt5-opengl = %EVR
-Requires: %name-gb-qt5-webkit = %EVR
-Requires: %name-gb-qt5-ext = %EVR
+Requires: %name-gb-qt6 = %EVR
+Requires: %name-gb-qt6-wayland = %EVR
+Requires: %name-gb-qt6-opengl = %EVR
+Requires: %name-gb-qt6-ext = %EVR
 Requires: %name-gb-form-terminal = %EVR
 Requires: %name-gb-term = %EVR
 Requires: %name-gb-test = %EVR
@@ -320,11 +307,10 @@ Requires: %name-gb-gui = %EVR
 Requires: %name-gb-image = %EVR
 Requires: %name-gb-image-effect = %EVR
 Requires: %name-gb-markdown = %EVR
-Requires: %name-gb-qt5 = %EVR
-Requires: %name-gb-qt5-x11 = %EVR
-Requires: %name-gb-qt5-wayland = %EVR
-Requires: %name-gb-qt5-webkit = %EVR
-Requires: %name-gb-qt5-webview = %EVR
+Requires: %name-gb-qt6 = %EVR
+Requires: %name-gb-qt6-x11 = %EVR
+Requires: %name-gb-qt6-wayland = %EVR
+Requires: %name-gb-qt6-webview = %EVR
 Requires: %name-gb-settings = %EVR
 Requires: %name-gb-signal = %EVR
 Requires: %name-gb-util = %EVR
@@ -987,15 +973,6 @@ Requires:	%name-runtime = %EVR
 %description gb-qt4-opengl
 This package contains the Gambas3 qt-opengl components.
 
-%package gb-qt4-webkit
-Summary:	Gambas3 component package for qt4-webkit
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
-%prov3 gb-qt4-webkit
-
-%description gb-qt4-webkit
-This package contains the Gambas3 qt-webkit components.
-
 %package gb-report
 Summary:	Gambas3 component package for report
 Group:		Development/Tools
@@ -1192,68 +1169,59 @@ Requires:	%name-runtime = %EVR
 %description gb-form-editor
 This package contains form.editor component.
 
-%package gb-qt5
-Summary:	Gambas3 component package for qt5
+%package gb-qt6
+Summary:	Gambas3 component package for qt6
 Group:		Development/Tools
 Requires:	%name-runtime = %EVR
-%prov3 gb-qt5
+%prov3 gb-qt6
 
-%description gb-qt5
+%description gb-qt6
 This package includes Gambas3 QT5 GUI component.
 
-%package gb-qt5-opengl
-Summary:	Gambas3 component package for qt5-opengl
+%package gb-qt6-opengl
+Summary:	Gambas3 component package for qt6-opengl
 Group:		Development/Tools
 Requires:	%name-runtime = %EVR
-%prov3 gb-qt5-opengl
+%prov3 gb-qt6-opengl
 
-%package gb-qt5-wayland
-Summary: Gambas3 component package for qt5-wayland
+%package gb-qt6-wayland
+Summary: Gambas3 component package for qt6-wayland
 Group: Development/Tools
 Requires: %name-runtime = %EVR
-Requires: %name-gb-qt5 = %EVR
+Requires: %name-gb-qt6 = %EVR
 
-%description gb-qt5-wayland
+%description gb-qt6-wayland
 %summary.
 
-%package gb-qt5-webview
-Summary: Gambas3 component package for qt5-webview
+%package gb-qt6-webview
+Summary: Gambas3 component package for qt6-webview
 Group: Development/Tools
 Requires: %name-runtime = %EVR
-Requires: %name-gb-qt5 = %EVR
+Requires: %name-gb-qt6 = %EVR
 
-%description gb-qt5-webview
+%description gb-qt6-webview
 %summary.
 
-%package gb-qt5-x11
-Summary: Gambas3 component package for qt5-x11
+%package gb-qt6-x11
+Summary: Gambas3 component package for qt6-x11
 Group: Development/Tools
 Requires: %name-runtime = %EVR
-Requires: %name-gb-qt5 = %EVR
+Requires: %name-gb-qt6 = %EVR
 
-%description gb-qt5-x11
+%description gb-qt6-x11
 %summary.
 
-%description gb-qt5-opengl
-This package contains the Gambas3 qt5-opengl components.
+%description gb-qt6-opengl
+This package contains the Gambas3 qt6-opengl components.
 
-%package gb-qt5-webkit
-Summary:	Gambas3 component package for qt5-webkit
+%package gb-qt6-ext
+Summary:	Gambas3 component package for qt6 (additional)
 Group:		Development/Tools
 Requires:	%name-runtime = %EVR
-%prov3 gb-qt5-webkit
+%prov3 gb-qt6-ext
 
-%description gb-qt5-webkit
-This package contains the Gambas3 qt5-webkit components.
-
-%package gb-qt5-ext
-Summary:	Gambas3 component package for qt5 (additional)
-Group:		Development/Tools
-Requires:	%name-runtime = %EVR
-%prov3 gb-qt5-ext
-
-%description gb-qt5-ext
-This package contains the Gambas3 qt5 component with additional stuff.
+%description gb-qt6-ext
+This package contains the Gambas3 qt6 component with additional stuff.
 
 %package gb-form-terminal
 Summary:	Gambas3 component package for terminal in forms
@@ -1375,7 +1343,8 @@ MY_CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
 	--enable-intl \
 	--enable-conv \
 	--disable-qt4 \
-	--enable-qt5 \
+	--disable-qt5 \
+	--enable-qt6 \
 	--enable-kde \
 	--enable-net \
 	--enable-curl \
@@ -1400,9 +1369,9 @@ for i in main; do
 	sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' $i/libtool
 done
 # for some unholy reason, using system libtool breaks on qt5. so we don't.
-pushd gb.qt5
-make %{?_smp_mflags}
-popd
+#pushd gb.qt5
+#make %{?_smp_mflags}
+#popd
 make LIBTOOL=%_bindir/libtool %{?_smp_mflags}
 
 %install
@@ -1815,26 +1784,6 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.pdf.info
 %appdir/info/gb.pdf.list
 
-#files gb-qt4
-#_libdir/gambas3/gb.qt4.component
-#_libdir/gambas3/gb.qt4.so*
-#_libdir/gambas3/gb.qt4.la
-#appdir/info/gb.qt4.info
-#appdir/info/gb.qt4.list
-
-#files gb-qt4-ext
-#_libdir/gambas3/gb.qt4.ext.*
-#appdir/info/gb.qt4.ext.*
-
-#files gb-qt4-opengl
-#_libdir/gambas3/gb.qt4.opengl.*
-#appdir/info/gb.qt4.opengl.*
-
-#files gb-qt4-webkit
-#_libdir/gambas3/gb.qt4.webkit.*
-#appdir/info/gb.qt4.webkit.*
-#appdir/control/gb.qt4.webkit/webview.png
-
 %files gb-report
 %_libdir/gambas3/gb.report.*
 %appdir/control/gb.report/
@@ -1938,50 +1887,43 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.form.editor.*
 %appdir/control/gb.form.editor/
 
-%files gb-qt5
-%_libdir/gambas3/gb.qt5.component
-%_libdir/gambas3/gb.qt5.so*
-%_libdir/gambas3/gb.qt5.la
-%appdir/info/gb.qt5.info
-%appdir/info/gb.qt5.list
+%files gb-qt6
+%_libdir/gambas3/gb.qt6.component
+%_libdir/gambas3/gb.qt6.so*
+%_libdir/gambas3/gb.qt6.la
+%appdir/info/gb.qt6.info
+%appdir/info/gb.qt6.list
 
-%files gb-qt5-wayland
-%_libdir/gambas3/gb.qt5.wayland.component
-%_libdir/gambas3/gb.qt5.wayland.so*
-%_libdir/gambas3/gb.qt5.wayland.la
-%appdir/info/gb.qt5.wayland.info
-%appdir/info/gb.qt5.wayland.list
+%files gb-qt6-wayland
+%_libdir/gambas3/gb.qt6.wayland.component
+%_libdir/gambas3/gb.qt6.wayland.so*
+%_libdir/gambas3/gb.qt6.wayland.la
+%appdir/info/gb.qt6.wayland.info
+%appdir/info/gb.qt6.wayland.list
 
-%files gb-qt5-webview
+%files gb-qt6-webview
 %if_enabled qtwebengine
-%_libdir/gambas3/gb.qt5.webview.component
-%_libdir/gambas3/gb.qt5.webview.so*
-%_libdir/gambas3/gb.qt5.webview.la
-%appdir/info/gb.qt5.webview.info
-%appdir/info/gb.qt5.webview.list
+%_libdir/gambas3/gb.qt6.webview.component
+%_libdir/gambas3/gb.qt6.webview.so*
+%_libdir/gambas3/gb.qt6.webview.la
+%appdir/info/gb.qt6.webview.info
+%appdir/info/gb.qt6.webview.list
 %endif
 
-%files gb-qt5-x11
-%_libdir/gambas3/gb.qt5.x11.component
-%_libdir/gambas3/gb.qt5.x11.so*
-%_libdir/gambas3/gb.qt5.x11.la
-%appdir/info/gb.qt5.x11.info
-%appdir/info/gb.qt5.x11.list
+%files gb-qt6-x11
+%_libdir/gambas3/gb.qt6.x11.component
+%_libdir/gambas3/gb.qt6.x11.so*
+%_libdir/gambas3/gb.qt6.x11.la
+%appdir/info/gb.qt6.x11.info
+%appdir/info/gb.qt6.x11.list
 
-%files gb-qt5-opengl
-%_libdir/gambas3/gb.qt5.opengl.*
-%appdir/info/gb.qt5.opengl.*
+%files gb-qt6-opengl
+%_libdir/gambas3/gb.qt6.opengl.*
+%appdir/info/gb.qt6.opengl.*
 
-%files gb-qt5-webkit
-%if_enabled qtwebkit
-%_libdir/gambas3/gb.qt5.webkit.*
-%appdir/info/gb.qt5.webkit.*
-%appdir/control/gb.qt5.webkit/webview.png
-%endif
-
-%files gb-qt5-ext
-%_libdir/gambas3/gb.qt5.ext.*
-%appdir/info/gb.qt5.ext.*
+%files gb-qt6-ext
+%_libdir/gambas3/gb.qt6.ext.*
+%appdir/info/gb.qt6.ext.*
 
 %files gb-form-terminal
 %_libdir/gambas3/gb.form.terminal.*
@@ -2032,6 +1974,10 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.3-alt1
+- New version.
+- Built with qt6 instead of qt5.
+
 * Sat Mar 08 2025 Andrey Cherepanov <cas@altlinux.org> 3.20.2-alt1
 - New version.
 
