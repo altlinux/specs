@@ -16,9 +16,9 @@ BuildRequires: jpackage-default
 
 Name:           maven-plugin-testing
 Version:        3.3.0
-Release:        alt1_21jpp11
+Release:        alt2
 Summary:        Maven Plugin Testing
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            http://maven.apache.org/plugin-testing/
 BuildArch:      noarch
 
@@ -26,6 +26,7 @@ Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugin-testing/%{
 
 Patch0:         0001-Port-to-plexus-utils-3.0.21.patch
 Patch1:         0002-Port-to-current-maven-artifact.patch
+Patch2:         0003-Port-to-maven-3.8.1.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -68,6 +69,7 @@ The Maven Plugin Testing Harness provides mechanisms to manage tests on Mojo.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-site-plugin
@@ -91,6 +93,9 @@ The Maven Plugin Testing Harness provides mechanisms to manage tests on Mojo.
 %doc LICENSE NOTICE
 
 %changelog
+* Tue Apr 22 2025 Anton Meleshnikov <alton@altlinux.org> 3.3.0-alt2
+- fixed FTBFS (with update to maven 3.8.1)
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_21jpp11
 - update
 

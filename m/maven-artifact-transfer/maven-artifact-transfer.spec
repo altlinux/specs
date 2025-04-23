@@ -16,10 +16,10 @@ BuildRequires: jpackage-default
 
 Name:           maven-artifact-transfer
 Version:        0.13.1
-Release:        alt1_3jpp11
+Release:        alt2
 Epoch:          1
 Summary:        Apache Maven Artifact Transfer
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://maven.apache.org/shared/maven-artifact-transfer
 BuildArch:      noarch
 
@@ -27,6 +27,7 @@ Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%
 
 Patch0:         0001-Compatibility-with-Maven-3.0.3-and-later.patch
 Patch1:         0002-Remove-support-for-maven-3.0.X.patch
+Patch2:         0003-Port-to-maven-3.8.1.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -65,6 +66,7 @@ This package provides %{summary}.
 find -name '*.java' -exec sed -i 's/\r//' {} +
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %pom_remove_plugin :apache-rat-plugin
 %pom_remove_plugin :maven-shade-plugin
@@ -87,6 +89,9 @@ find -name Maven30\*.java -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Apr 22 2025 Anton Meleshnikov <alton@altlinux.org> 1:0.13.1-alt2
+- fixed FTBFS (with update to maven 3.8.1)
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 1:0.13.1-alt1_3jpp11
 - new version
 
