@@ -5,7 +5,7 @@
 %define RBS_VER 3
 
 Name: kernel-image-repka4
-Release: alt1_%RBS_VER.git4bdc0a7
+Release: alt2_%RBS_VER.git4bdc0a7
 
 %define kernel_base_version	6.6
 %define kernel_sublevel	.44
@@ -222,11 +222,6 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
 
-pushd %buildroot/boot/devicetree/$KernelVer
-find . -mindepth 2 -name "*.dtb" | \
-       while read f; do ln -srv "$f" "$(basename $f)"; done
-popd
-
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
@@ -411,5 +406,8 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Apr 23 2025 Anton Kurachenko <srebrov@altlinux.org> 6.6.44-alt2_3.git4bdc0a7
+- Removed unnecessary symlinks to dtbs (Closes: #53960).
+
 * Thu Apr 10 2025 Anton Kurachenko <srebrov@altlinux.org> 6.6.44-alt1_3.git4bdc0a7
 - Initial build for ALT Linux.
