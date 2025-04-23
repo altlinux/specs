@@ -1,7 +1,7 @@
 Name: cabal-install
 
 Version: 3.14.2.0
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Group: Development/Haskell
@@ -50,5 +50,9 @@ install -pm 644 -D -t %buildroot/%_datadir/bash-completion/completions \
 %_datadir/bash-completion/completions/cabal
 
 %changelog
+* Wed Apr 23 2025 Leonid Znamenok <respublica@altlinux.org> 3.14.2.0-alt2
+- Rebuild with -no-fdlocking flag for lukko
+  + See: (https://github.com/haskellari/lukko/issues/15)
+
 * Tue Apr 15 2025 Leonid Znamenok <respublica@altlinux.org> 3.14.2.0-alt1
 - Initial build for Sisyphus
