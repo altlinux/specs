@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: box64
-Version: 0.3.0
-Release: alt2
+Version: 0.3.4
+Release: alt1
 
 Summary: Linux Userspace x86_64 Emulator with a twist
 
@@ -74,6 +74,12 @@ tar -xvf %SOURCE2 -C %buildroot%sysroot --strip-components=1
 %sysroot
 
 %changelog
+* Mon Mar 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
+* Wed Feb 12 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Fri Jul 12 2024 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt2
 - fix undefined symbol in box64 on riscv64
 - bundle libraries from ALT archives in place of binaries
