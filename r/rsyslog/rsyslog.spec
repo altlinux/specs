@@ -29,7 +29,7 @@
 
 Name: rsyslog
 Version: 8.2502.0
-Release: alt1
+Release: alt2
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -37,7 +37,8 @@ Group: System/Kernel and hardware
 Url: http://www.rsyslog.com
 # https://github.com/rsyslog/rsyslog.git
 Source: %name-%version.tar
-Patch: %name-%version.patch
+Patch0: %name-%version.patch
+Patch1: rsyslog-8.2502.0-alt-config-fix.patch
 
 BuildRequires: flex
 BuildRequires: zlib-devel
@@ -388,7 +389,8 @@ all other functions:
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -687,6 +689,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Wed Apr 16 2025 Anton Meleshnikov <alton@altlinux.org> 8.2502.0-alt2
+- Set access rights for log files by default in config.
+
 * Thu Mar 06 2025 Alexey Shabalin <shaba@altlinux.org> 8.2502.0-alt1
 - New version 8.2502.0.
 
