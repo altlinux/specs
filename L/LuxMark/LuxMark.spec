@@ -2,7 +2,7 @@
 
 Name: LuxMark
 Version: 4.0
-Release: alt1.alpha1
+Release: alt2.alpha1
 License: GPLv3
 Group: Graphics
 Summary: LuxMark is OpenCL benchmark based on LuxCoreRender
@@ -17,6 +17,7 @@ Patch3: luxcorerender-oiio-2.3.patch
 Patch4: LuxCore-extra-deps.patch
 Patch5: LuxMark-alt-scenes-dir.patch
 Patch6: LuxMark-use-cxx-standard-17.patch
+Patch7: LuxMark-alt-unbundle-libcpuid.patch
 
 BuildRequires(pre): cmake ninja-build /proc
 BuildRequires: gcc-c++ libopenimageio-devel libjpeg-devel openexr-devel libblosc-devel
@@ -24,6 +25,9 @@ BuildRequires: zlib-devel libpng-devel qt5-base-devel libgomp-devel libfmt-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: boost-python3-devel bcd-devel libspdlog-devel LuxCore-devel LuxCore-static
 BuildRequires: openvdb-devel opensubdiv-devel embree-devel openimagedenoise-devel
+%ifarch x86_64
+BuildRequires: libcpuid-devel
+%endif
 
 ExclusiveArch: x86_64 aarch64
 
@@ -45,6 +49,9 @@ BuildArch: noarch
 %prep
 %setup
 %autopatch -p1
+%ifarch aarch64
+%patch7 -p1 -R
+%endif
 
 %build
 sed -i -e 's/bcd/bcdcore/' cmake/Dependencies.cmake
@@ -68,5 +75,8 @@ cp -pr scenes-dist/* %buildroot%_datadir/%name/scenes/
 %_datadir/%name
 
 %changelog
+* Wed Apr 23 2025 L.A. Kostis <lakostis@altlinux.ru> 4.0-alt2.alpha1
+- Use system libcpuid.
+
 * Sat Apr 12 2025 L.A. Kostis <lakostis@altlinux.ru> 4.0-alt1.alpha1
 - Initial build for ALTLinux.

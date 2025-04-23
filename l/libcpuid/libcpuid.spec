@@ -1,13 +1,15 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%define git 9dc52f8
 
 Name: libcpuid
 Version: 0.7.1
-Release: alt1
-Summary: libcpuid provides CPU identification for the x86 (and x86_64)
+Release: alt28.g%git
+Summary: libcpuid provides CPU identification
 License: BSD-2-Clause
 Group: Development/C
 Url: https://github.com/anrieff/libcpuid
+Vcs: https://github.com/anrieff/libcpuid.git
 Source: libcpuid-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -42,6 +44,7 @@ cpuid kernel driver for arm64.
 %prep
 %setup
 %autopatch -p1
+subst 's,lib\/cmake\/,${LIB_DESTINATION}/cmake/,' libcpuid/CMakeLists.txt
 
 %build
 %cmake -DCMAKE_INSTALL_LIBDIR=%_libdir
@@ -65,9 +68,9 @@ cpuid kernel driver for arm64.
 %_bindir/cpuid_tool
 %_includedir/%name
 %_man3dir/*
+%_libdir/cmake/cpuid
 %_libdir/%name.so
 %_libdir/pkgconfig/%name.pc
-%_prefix/lib/cmake/cpuid
 
 #%%ifarch aarch64
 #%%files -n kernel-source-cpuid
@@ -75,6 +78,9 @@ cpuid kernel driver for arm64.
 #%%endif
 
 %changelog
+* Wed Apr 23 2025 L.A. Kostis <lakostis@altlinux.ru> 0.7.1-alt28.g9dc52f8
+- v0.7.1-28-g9dc52f8 (to detect new Intel CPUs).
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt1
 - New version 0.7.1
 
