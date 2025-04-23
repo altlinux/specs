@@ -45,13 +45,13 @@
 
 Name: LibreOffice-still
 %define hversion 24.8
-%define urelease 5.2
+%define urelease 6.2
 Version: %hversion.%urelease
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -857,6 +857,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.6.2-alt1
+- New version.
+
 * Thu Apr 10 2025 Ivan A. Melnikov <iv@altlinux.org> 24.8.5.2-alt3
 - Generate more full debuginfo
   + reduce optflags_debug to -g1 to fit into 4Gb payload limit.
