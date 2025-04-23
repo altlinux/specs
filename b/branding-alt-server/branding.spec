@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt19
+Release: alt20
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -395,6 +395,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Apr 23 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt20
+- Reduce logo size in final-notes
+
 * Thu Apr 17 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt19
 - Add release-notes for ALT Systeminfo
 - Add final-notes for final installer step
