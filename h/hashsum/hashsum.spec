@@ -5,7 +5,7 @@
 
 Name: hashsum
 Version: 4.0.5
-Release: alt1
+Release: alt2
 
 Summary: Check hashes for your files
 License: GPL-3.0-or-later
@@ -67,6 +67,9 @@ install -m644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas
 %nautilus_extdir/%name-extension.py
 
 %changelog
+* Wed Apr 23 2025 Alexander Davydzik <paladindev@altlinux.org> 4.0.5-alt2
+- changed gschema override id
+
 * Tue Apr 22 2025 Alexander Davydzik <paladindev@altlinux.org> 4.0.5-alt1
 - updated app icon
 
