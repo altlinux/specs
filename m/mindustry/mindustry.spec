@@ -1,7 +1,7 @@
 %define gradle_version 8.10
 
 Name: mindustry
-Version: 147.1
+Version: 148
 Release: alt1
 License: GPL-3.0
 
@@ -89,5 +89,8 @@ done
 %_javadir/%name/%name-server.jar
 
 %changelog
+* Wed Apr 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 148-alt1
+- new version (148) with rpmgs script
+
 * Sun Apr 20 2025 Kirill Unitsaev <fiersik@altlinux.org> 147.1-alt1
 - Initial build
