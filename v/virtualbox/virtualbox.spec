@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.1.6
+Version: 7.1.8
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -113,7 +113,7 @@ Source99:	%vboxdbg.in
 
 Patch:		%name-%version-alt.patch
 
-BuildPreReq: dev86 iasl gcc-c++ libstdc++-devel-static
+BuildPreReq: iasl gcc-c++ libstdc++-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel libSDL2-devel-static
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
@@ -503,8 +503,16 @@ install -Dp -m644 %SOURCE3 %buildroot%_udevrulesdir/60-vboxadd.rules
 #install -d %buildroot%_sysconfdir/hal/fdi/policy
 #install -m644 src/VBox/Additions/linux/installer/90-vboxguest.fdi %buildroot%_sysconfdir/hal/fdi/policy/90-vboxguest.fdi
 
-install -d %buildroot%_sysconfdir/X11/xinit.d
-install -m755 src/VBox/Additions/x11/Installer/98vboxadd-xclient %buildroot%_sysconfdir/X11/xinit.d
+# Install VBoxClient-all in /usr/bin/
+install -d %buildroot%_bindir
+install -m755 src/VBox/Additions/x11/Installer/98vboxadd-xclient %buildroot%_bindir/VBoxClient-all
+install -Dp -m644  src/VBox/Additions/x11/Installer/vboxclient.desktop %buildroot%_sysconfdir/xdg/autostart/vboxclient.desktop
+
+
+# Creating a symlink 98vboxadd-xclient -> VBoxClient-all in /etc/X11/xinit.d/
+#install -d %buildroot%_sysconfdir/X11/xinit.d
+#ln -s %_bindir/VBoxClient-all %buildroot%_sysconfdir/X11/xinit.d/98vboxadd-xclient
+
 %endif
 
 # install application
@@ -866,8 +874,9 @@ mountpoint -q /dev || {
 %_sysconfdir/security/console.perms.d/60-vboxadd.perms
 
 %files guest-additions
+%_sysconfdir/xdg/autostart/vboxclient.desktop
 %_unitdir/virtualbox-vmsvga.service
-%_sysconfdir/X11/xinit.d/98vboxadd-xclient
+%_bindir/VBoxClient-all
 %_bindir/VBoxClient
 %_bindir/VBoxDRMClient
 %_bindir/vboxwl
@@ -919,6 +928,15 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Apr 21 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.8-alt1
+- Update to newest version 7.1.8
+- Fixed an issue where the notification
+  "VBoxClient: the VirtualBox kernel service is not running"
+  appeared upon session login (closes:52658)
+- Resolved an issue where VBoxClient --wayland failed to start under Wayland.
+  The service has been moved from /etc/X11/xinit.d/ to the correct autostart
+  location /etc/xdg/autostart/ (closes:53882)
+
 * Thu Jan 23 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.6-alt1
 - Update to newest version 7.1.6
 
