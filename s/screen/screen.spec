@@ -1,6 +1,6 @@
 Name: screen
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
@@ -9,6 +9,7 @@ Url: http://www.gnu.org/software/screen
 Vcs: git://git.savannah.gnu.org/screen.git
 
 Source0: %name-%version.tar
+Patch: screen-X.patch
 
 # ALT configuration files for GNU Screen
 Source1: %name.pamd
@@ -43,6 +44,7 @@ cp %SOURCE1 .
 cp %SOURCE2 .
 cp %SOURCE3 .
 cp %SOURCE4 .
+%patch -p1
 
 %build
 pushd src
@@ -112,6 +114,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/%name
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Thu Apr 24 2025 Fr. Br. George <george@altlinux.org> 5.0.0-alt2
+- Fix fortify-source issue (Closes: #53933)
+
 * Fri Apr 04 2025 Ulysses Apokin <ulysses@altlinux.org> 5.0.0-alt1
 - Updated to v.5.0.0.
 
