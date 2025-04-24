@@ -3,7 +3,7 @@
 Name: perl-OpenGL
 Epoch: 1
 Version: 0.7004
-Release: alt1
+Release: alt2
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -12,7 +12,7 @@ License: Perl
 Url: %CPAN OpenGL
 VCS: git+https://github.com/Perl-GPU/pogl.git
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: OpenGL-0.7004-alt-makefile.PL.patch
 
 BuildRequires: perl-devel libGLUT-devel libXi-devel libXmu-devel libXext-devel libstdc++-devel gcc-c++
 # for tests to run
@@ -44,6 +44,9 @@ rm -f t/shader.t
 %doc Changes TODO README COPYRIGHT KNOWN_PROBLEMS SUPPORTS
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 1:0.7004-alt2
+- added future patch for 0.700{5,6}
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 1:0.7004-alt1
 - New version 0.7004.
 
