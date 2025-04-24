@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.3
+Release: alt0.4
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -63,6 +63,7 @@ Provides: design-bootloader-livecd-%theme = %EVR
 Provides: design-bootloader-livecd-%theme = %EVR
 Provides: design-bootloader-%theme = %EVR
 %branding_add_conflicts %flavour bootloader
+Obsoletes: branding-alt-server-v-bootloader
 
 %define grub_normal white/light-blue
 %define grub_high black/light-gray
@@ -85,6 +86,7 @@ Requires: plymouth-plugin-script
 Requires(pre):   plymouth
 
 %branding_add_conflicts %flavour bootsplash
+Obsoletes: branding-alt-server-v-bootsplash
 
 %description bootsplash
 This package contains graphics for boot process for %distro_name
@@ -109,6 +111,7 @@ Provides: design-alterator-%theme = %EVR
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop design-altertor-browser-server branding-altlinux-backup-server-alterator
 Requires(post,preun): alternatives >= 0.2 alterator
+Obsoletes: branding-alt-server-v-alterator
 
 %description alterator
 Design for QT and web alterator for %distro_name.
@@ -128,6 +131,7 @@ Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_mino
 
 Requires(post,preun): alternatives >= 0.2
 %branding_add_conflicts %flavour graphics
+Obsoletes: branding-alt-server-v-graphics
 
 %description graphics
 This package contains some graphics for %distro_name design.
@@ -148,6 +152,7 @@ Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme = %EVR
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
+Obsoletes: branding-alt-server-v-release
 Requires: alt-os-release
 
 %description release
@@ -164,6 +169,7 @@ Summary(ru_RU.UTF-8): Лицензия и дополнительные свед�
 License:   Distributable
 Group:     Documentation
 %branding_add_conflicts %flavour notes
+Obsoletes: branding-alt-server-v-notes
 
 %description notes
 Distribution license and release notes
@@ -179,6 +185,7 @@ License: Distributable
 Group: System/Configuration/Other
 BuildArch: noarch
 %branding_add_conflicts %flavour slideshow
+Obsoletes: branding-alt-server-v-slideshow
 
 %description slideshow
 Slideshow for %distro_name installer.
@@ -195,6 +202,7 @@ License:  distributable
 Group:    System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 %branding_add_conflicts %flavour indexhtml
+Obsoletes: branding-alt-server-v-indexhtml
 
 Requires: docs-alt-%theme
 Requires(post): indexhtml-common
@@ -290,6 +298,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Apr 24 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.4
+- Updated installer styling
+- Proper branding update from server-v (thx geochip@)
+
 * Mon Apr 14 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.3
 - indexhtml: proper product feedback and repository links
 
