@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name hypothesis
-%define mod_name %pypi_name
+%define module_name %pypi_name
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.131.6
+Version: 6.131.8
 Release: alt1
 
 Summary: A library for property based testing
@@ -81,7 +81,7 @@ cp %SOURCE1 ./
 %files
 %doc README.md
 %_bindir/hypothesis
-%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%module_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/__pycache__/_hypothesis_pytestplugin.*
 %python3_sitelibdir/_hypothesis_pytestplugin.py
@@ -91,6 +91,9 @@ cp %SOURCE1 ./
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Thu Apr 24 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.131.8-alt1
+- Updated to 6.131.8.
+
 * Tue Apr 22 2025 Alexandr Shashkin <dutyrok@altlinux.org> 6.131.6-alt1
 - Updated to 6.131.6.
 
