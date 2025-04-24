@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.8
+Version: 0.6.9
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,14 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Thu Apr 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.9-alt1
+- editions: replace postfix-server from main to base section
+- components: remove by comment xdg and menu packages from
+  base-special component
+- components: remove by comment scanssh package from
+  network-diag-tools component
+- components: fixing typos (thx Alena Belaya) (closes: #53967)
+
 * Mon Apr 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.8-alt1
 - components: fix alterator-legacy-web (set alterator-net-eth)
 
