@@ -9,7 +9,7 @@ BuildRequires: perl(Module/Runtime.pm) perl(Test/Pod/Coverage/TrustMe.pm) perl(T
 %define _localstatedir %{_var}
 Name:		perl-CPAN-Changes
 Summary:	Read and write Changes files
-Version:	0.500004
+Version:	0.500005
 Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/CPAN-Changes
@@ -81,6 +81,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man1/tidy_changelog.1*
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.500005-alt1
+- automated CPAN update
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.500004-alt1
 - automated CPAN update
 
