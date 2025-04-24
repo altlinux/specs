@@ -2,7 +2,7 @@
 %add_optflags -Wno-deprecated-declarations -Wno-address
 %global soversion 2
 Name: libvpl
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 Summary: Intel Video Processing Library
 License: MIT
@@ -91,6 +91,9 @@ the Intel Video Processing Library.
 %_datadir/vpl/
 
 %changelog
+* Thu Apr 24 2025 Anton Farygin <rider@altlinux.com> 2.15.0-alt1
+- 2.14.0 -> 2.15.0
+
 * Wed Jan 15 2025 Anton Farygin <rider@altlinux.ru> 2.14.0-alt1
 - 2.13.0 -> 2.14.0
 
