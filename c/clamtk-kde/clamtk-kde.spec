@@ -1,12 +1,14 @@
 Name: clamtk-kde
-Version: 0.18
+Version: 0.20
 Release: alt1
 Summary: Simple virus scanning extension for Dolphin and Konqueror
-License: GPL+ or Artistic 2.0
+License: Artistic-1.0 or GPL-1.0-or-later
 Group: Graphical desktop/KDE
-Url: https://bitbucket.org/davem_/clamtk-kde
+Url: https://github.com/dave-theunsub/clamtk-kde
+Vcs: https://github.com/dave-theunsub/clamtk-kde.git
 
-Source: https://bitbucket.org/davem_/clamtk-kde/downloads/clamtk-kde-%version.tar.xz
+Source: %url/archive/v%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 BuildArch: noarch
 
 Requires: kf5-filesystem, clamtk >= 5.00
@@ -19,6 +21,7 @@ It is meant to be lightweight and easy to use.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %install
@@ -30,6 +33,10 @@ cp -a clamtk-kde.desktop %buildroot%_datadir/kservices5/ServiceMenus/
 %_datadir/kservices5/ServiceMenus/%name.desktop
 
 %changelog
+* Thu Apr 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.20-alt1
+- New version 0.20.
+- Updated url, source and vcs tags.
+
 * Wed Sep 18 2019 Leontiy Volodin <lvol@altlinux.org> 0.18-alt1
 - Initial build for ALT Sisyphus.
 
