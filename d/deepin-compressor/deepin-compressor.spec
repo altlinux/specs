@@ -1,15 +1,13 @@
-%define _cmake__builddir BUILD
-
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.0.4
+Version: 6.5.4
 Release: alt1
 Epoch: 1
 
 Summary: Archive Manager for Deepin Desktop Environment
 
-License: GPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.1-or-later and MPL-1.1 and BSD-2-Clause
+License: GPL-3.0-or-later and GPL-2.0-or-later and LGPL-2.0-or-later and BSD-2-Clause
 Group: Archiving/Compression
 Url: https://github.com/linuxdeepin/deepin-compressor
 Vcs: git://github.com/linuxdeepin/deepin-compressor.git
@@ -18,6 +16,7 @@ Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 Requires: p7zip
 # Requires: icon-theme-hicolor
@@ -27,18 +26,20 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): desktop-file-utils rpm-build-kf5 rpm-build-ninja rpm-macros-dqt5
-# Automatically added by buildreq on Sat Dec 30 2023
-# optimized out: bash5 bashrc cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdtkcore-devel libdtkgui-devel libglvnd-devel libgpg-error libgsettings-qt libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-network libdqt5-printsupport libdqt5-svg libdqt5-widgets libdqt5-x11extras libdqt5-xml libsasl2-3 libssl-devel libstartup-notification libstdc++-devel pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel dqt5-tools sh5 zlib-devel
-BuildRequires: cmake kf5-karchive-devel kf5-kcodecs-devel libarchive-devel libdtkwidget-devel libgio-devel libminizip-devel libmount-devel libzip-devel dqt5-svg-devel dqt5-tools-devel
+BuildRequires(pre): desktop-file-utils rpm-macros-dqt6
+# Automatically added by buildreq on Thu Apr 24 2025
+# optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
+BuildRequires: dqt6-5compat-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel kf6-karchive-devel kf6-kcodecs-devel libarchive-devel libcups-devel libdtk6widget-devel libgio-devel libminizip-devel libmount-devel libzip-devel
 
 %description
 %summary.
 
 %prep
 %setup
+%autopatch -p1
 sed -i 's|/usr/lib|%_libdir|' \
-    src/source/common/pluginmanager.cpp
+    src/source/common/pluginmanager.cpp \
+    tests/UnitTest/CMakeLists.txt
 sed -i 's|include <zip.h>|include <libzip/zip.h>|' \
     3rdparty/libzipplugin/libzipplugin.h
 
@@ -50,24 +51,15 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%K5cmake \
-    -GNinja \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%DQ6build \
     -DVERSION=%version \
-    -DCMAKE_SKIP_RPATH:BOOL=OFF \
-    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-    -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCOMPRESSOR_PLUGIN_PATH=%_libdir/%name/plugins \
-    %nil
-cmake --build "%_cmake__builddir" -j%__nprocs
+#
 
 %install
-%cmake_install
+%DQ6install
 %find_lang --with-qt %name
 
 %check
@@ -93,8 +85,16 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.compressor/
+%_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Thu Apr 24 2025 Leontiy Volodin <lvol@altlinux.org> 1:6.5.4-alt1
+- New version 6.5.4.
+- Switched to dqt6.
+
 * Thu Dec 05 2024 Leontiy Volodin <lvol@altlinux.org> 1:6.0.4-alt1
 - New version 6.0.4.
 - Added vcs tag.
