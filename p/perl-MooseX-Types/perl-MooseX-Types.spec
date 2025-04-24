@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/Needs.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm) perl(namespace/autoclean.pm) perl(Sub/Exporter/ForMethods.pm) perl(Sub/Defer.pm)
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types
 Name: perl-%dist
-Version: 0.50
-Release: alt2
+Version: 0.51
+Release: alt1
 
 Summary: Organise your Moose types in libraries
 License: GPL or Artistic
@@ -33,10 +36,13 @@ libraries. As a nice side effect, it catches typos at compile-time too.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.51-alt1
+- automated CPAN update
+
 * Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 0.50-alt2
 - fixed build
 
