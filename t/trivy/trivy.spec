@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.60.0
+Version: 0.61.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -114,6 +114,10 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Apr 08 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.61.0-alt1
+- 0.61.0
+- Change name 'scanner' to 'scan' in alt as in upstream
+
 * Mon Mar 17 2025 Aleksandr Gamzin <gamzin@altlinux.org> 0.60.0-alt1
 - 0.60.0
 - Change ALT Linux Container Registry to altlinux.space Container Registry
