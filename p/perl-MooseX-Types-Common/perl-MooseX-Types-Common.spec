@@ -2,8 +2,8 @@
 BuildRequires: perl(Module/Build/Tiny.pm)
 %define dist MooseX-Types-Common
 Name: perl-%dist
-Version: 0.001014
-Release: alt1.1
+Version: 0.001015
+Release: alt1
 
 Summary: A library of commonly used type constraints
 License: GPL or Artistic
@@ -30,10 +30,13 @@ A set of commonly-used type constraints that do not ship with Moose by default.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README CONTRIBUTING
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.001015-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.001014-alt1.1
 - dropped deprecated BR: perl-Module-Install
 
