@@ -15,12 +15,12 @@ BuildRequires: perl-podlators
 %bcond_without perl_meta_enables_optional_test
 
 Name:           perl-meta
-Version:        0.012
-Release:        alt1_2
+Version:        0.013
+Release:        alt1
 Summary:        Meta-programming API
 License:        GPL-1.0-or-later OR Artistic-1.0-Perl
 URL:            https://metacpan.org/dist/meta
-Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/meta-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/meta-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  perl-devel
@@ -96,7 +96,6 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 ./Build test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_archlib}/auto/meta
 %{perl_vendor_archlib}/meta.pm
@@ -105,6 +104,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.013-alt1
+- automated CPAN update
+
 * Wed Apr 09 2025 Igor Vlasenko <viy@altlinux.org> 0.012-alt1_2
 - converted for ALT Linux by srpmconvert tools
 
