@@ -5,8 +5,8 @@
 %def_disable spamassasin
 
 Name: perl-%dist
-Version: 3.010
-Release: alt2
+Version: 3.011
+Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
 License: Artistic-2.0
@@ -68,6 +68,9 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %endif
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 3.011-alt1
+- automated CPAN update
+
 * Mon Oct 23 2023 Igor Vlasenko <viy@altlinux.org> 3.010-alt2
 - fixed build
 - updated license
