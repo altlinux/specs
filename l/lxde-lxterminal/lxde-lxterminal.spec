@@ -1,18 +1,16 @@
 %define upstreamname lxterminal
 %define gtkver 3
 Name: lxde-lxterminal
-Version: 0.4.0
-Release: alt2.20240821
+Version: 0.4.1
+Release: alt2
 
 Summary: Desktop-independent VTE-based terminal emulator for LXDE
 License: GPL-2.0-or-later
 Group: Graphical desktop/Other
 Url: https://github.com/lxde/lxterminal.git
 
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
-
 Source: %name-%version.tar
-Patch: lxterminal-0-1-11-f10-true.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires: libgtk+%gtkver-devel docbook-dtds docbook-style-xsl xsltproc intltool desktop-file-utils pkgconfig(glib-2.0) pkgconfig(x11) ImageMagick-tools
 BuildRequires: libpcre2-devel
@@ -24,11 +22,11 @@ BuildRequires: libvte-devel
 
 %description
 %summary  without any unnecessary dependency (All instances share the same
-process to reduce memory usage)
+process to reduce memory usage).
 
 %prep
 %setup -n %name-%version
-%patch -p2
+%autopatch -p1
 
 %build
 %autoreconf
@@ -63,6 +61,14 @@ done
 %_iconsdir/hicolor/*/apps/%upstreamname.png
 
 %changelog
+* Thu Apr 24 2025 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt2
+- add upstream commit:
+  + Prevent access to terminal data after it has been freed
+
+* Thu Apr 24 2025 Anton Midyukov <antohami@altlinux.org> 0.4.1-alt1
+- new version
+- remove Packager tag
+
 * Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt2.20240821
 - new snapshot
 
