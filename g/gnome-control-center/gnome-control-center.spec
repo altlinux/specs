@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define optflags_lto %nil
 
 %define _libexecdir %_prefix/libexec
@@ -19,7 +19,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -34,7 +34,7 @@ Source: %name-%version%beta.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
-#Source10: libgxdp-%gxdp_ver.tar
+%{?_enable_snapshot:Source10: libgxdp-%gxdp_ver.tar}
 
 %define glib_ver 2.76.6
 %define gtk4_ver 4.17.5
@@ -160,9 +160,8 @@ you'll want to install this package.
 %name-devel helps you create the panels for the control center.
 
 %prep
-%setup -n %name-%version%beta 
-#-a10
-#mv libgxdp-%gxdp_ver subprojects/libgxdp
+%setup -n %name-%version%beta %{?_enable_snapshot:-a10
+mv libgxdp-%gxdp_ver subprojects/libgxdp}
 
 # define TZ_DATA_FILE "/usr/share/zoneinfo/zone.tab"
 #sed -i 's|zone\.tab|zone1970.tab|' panels/system/datetime/tz.h
@@ -225,6 +224,10 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt2
+- updated to 48.1-10-gf09206b44
+- fixed broken zone.tab (ALT #52217)
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
