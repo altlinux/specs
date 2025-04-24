@@ -2,7 +2,7 @@
 %global oname IO-Async
 
 Name: perl-%oname
-Version: 0.803
+Version: 0.804
 Release: alt1
 
 Summary: Asynchronous event-driven programming
@@ -70,6 +70,9 @@ esac
 %perl_vendor_privlib/IO/Async/Test.pm
 
 %changelog
+* Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 0.804-alt1
+- automated CPAN update
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.803-alt1
 - automated CPAN update
 
