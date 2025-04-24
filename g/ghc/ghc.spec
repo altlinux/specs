@@ -7,7 +7,7 @@
 
 Name: ghc
 Version: %ghc_version
-Release: alt1
+Release: alt2
 
 Summary: Metapackage for current stable GHC
 License: BSD-3-Clause and HaskellReport
@@ -19,6 +19,8 @@ BuildArch: noarch
 
 Requires: ghc%ghc_major = %version
 Requires: ghc%ghc_major-common = %version
+
+Requires: ghc-devel = %EVR
 
 Conflicts: ghc%ghc_major > %version
 Conflicts: ghc%ghc_major < %version
@@ -120,6 +122,9 @@ This is a meta-package for all the development library packages in GHC
 %files devel
 
 %changelog
+* Thu Apr 24 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt2
+- Rebuild with dependency on ghc-devel (Closes: #53978)
+
 * Tue Mar 18 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt1
 - Bumped to GHC 9.6.6
 
