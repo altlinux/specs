@@ -13,8 +13,8 @@
 %endif
 
 Name: pve-%rname
-Version: 9.1.2
-Release: alt3
+Version: 9.2.0
+Release: alt5
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -316,8 +316,6 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 #%%_unitdir/qemu-pr-helper.service
 #%%_unitdir/qemu-pr-helper.socket
 %_libexecdir/vhost-user-gpu
-%_libexecdir/virtfs-proxy-helper
-%_man1dir/virtfs-proxy-helper.*
 %_man1dir/qemu-storage-daemon.1*
 %_man7dir/qemu-storage-daemon-qmp-ref.*
 %_man8dir/qemu-pr-helper.8*
@@ -330,6 +328,9 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Apr 23 2025 Alexey Shabalin <shaba@altlinux.org> 1:9.2.0-alt5
+- 9.2.0-5
+
 * Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 1:9.1.2-alt3
 - 9.1.2-3
 
