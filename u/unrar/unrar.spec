@@ -1,5 +1,5 @@
 Name: unrar
-Version: 6.1.7
+Version: 6.2.3
 Release: alt1
 
 Summary: RAR unarchiver
@@ -61,6 +61,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Fri Apr 25 2025 Alexander Danilov <admsasha@altlinux.org> 6.2.3-alt1
+- Update version to 6.2.3 (Fixes: CVE-2022-48579).
+
 * Sun May 15 2022 Fr. Br. George <george@altlinux.ru> 6.1.7-alt1
 - Autobuild version bump to 6.1.7
 - Fixes: CVE-2022-30333
