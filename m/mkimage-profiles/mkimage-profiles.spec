@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -134,6 +134,23 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Apr 25 2025 Anton Midyukov <antohami@altlinux.org> 1.7.7-alt1
+- grub: fix init bootargs in netinstall configs
+- grub: change console=ttyS0 and console=tty0 places
+- live-install: update use/live-install/desktop
+- 50-e2k-write.sh: use bash (thanks mike@)
+- remove use/stage2/net-eth, +net-eth everything
+- features.in: remove feature memclean
+- create /etc/ld.so.cache and update mtime instead adding livecd-no-ldconfig
+- e2k: use RESCUE_BOOTARGS for rescue instead of STAGE2_BOOTARGS
+- repo: proxy variables for main repo
+- lib/profile.mk: set BRANCH in distcfg
+- kernel, stage2: add drivers/power/supply directory to initrd (for SBC)
+- uboot: do not set console=tty0, when is not set in BASE_BOOTARGS
+- tar2fs: copying dtb in chroots
+- arm-rpi4: do not copy missing dtb's from raspberrypi-firmware
+- plymouth: add SPLASH_ARGS to be able to override
+
 * Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 1.7.6-alt1
 - kernel: Switch to kernel-image-6.12 for loongarch64
 - plymouth: Enable on loongarch64
