@@ -3,7 +3,7 @@
 
 Name: alterator-notes
 Version: 1.5.1
-Release: alt2
+Release: alt3
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
@@ -55,6 +55,8 @@ for n in license release-notes ; do
 	--set-icon=alt-distro-logo \
 	--set-key=Exec \
 	--set-value="alterator-notes-show $n" \
+	--set-key=NotShowIn \
+	--set-value="GNOME;" \
 	%buildroot/%_desktopdir/%name-$n.desktop
 done
 mkdir -p %buildroot/%_datadir/kio_desktop/DesktopLinks/
@@ -72,6 +74,9 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Apr 25 2025 Semen Fomchenkov <armatik@altlinux.org> 1.5.1-alt3
+- Not show license and release notes icons in GNOME apps menu
+
 * Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt2
 - put license to KDE desktop
 
