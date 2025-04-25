@@ -5,13 +5,14 @@
 %endif
 
 Name:    python3-module-%modulename
-Version: 4.5.3
-Release: alt1.1
+Version: 4.6.8
+Release: alt1
 
 Summary: Python library for loading and using triangular meshes
 License: MIT
 Group:   Development/Python3
 URL:     https://github.com/mikedh/trimesh
+VCS:     https://github.com/mikedh/trimesh.git
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -31,6 +32,8 @@ BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-svg-path
 BuildRequires: python3-module-msgpack
 BuildRequires: python3-module-mapbox-earcut
+BuildRequires: python3-module-matplotlib-tk
+BuildRequires: python3-modules-tkinter
 
 BuildArch: noarch
 
@@ -142,6 +145,10 @@ pytest3 -v -k "not ( DAETest and test_material_round ) and \
 %doc *.md
 
 %changelog
+* Fri Apr 25 2025 Anton Midyukov <antohami@altlinux.org> 4.6.8-alt1
+- new version (4.6.8) with rpmgs script
+- spec: add VCS tag
+
 * Wed Feb 26 2025 Stanislav Levin <slev@altlinux.org> 4.5.3-alt1.1
 - NMU: dropped dependency on removed svg.
 
