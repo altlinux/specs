@@ -1,6 +1,6 @@
 %define module_name             ixgbe
 %define module_version          6.0.6
-%define module_release          alt1
+%define module_release          alt2
 
 %define flavour 6.12
 %define karch x86_64 aarch64 ppc64le
@@ -81,6 +81,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Apr 25 2025 Alexei Takaseev <taf@altlinux.org> 6.0.6-alt2
+- Fixed building intel-ixgbe driver for Linux kernel 6.12 and older
 
 * Mon Apr 07 2025 Alexei Takaseev <taf@altlinux.org> 6.0.6-alt1
 - 6.0.6
