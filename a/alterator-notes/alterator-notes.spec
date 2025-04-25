@@ -3,7 +3,7 @@
 
 Name: alterator-notes
 Version: 1.5.1
-Release: alt3
+Release: alt4
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
@@ -46,7 +46,8 @@ rm -rf %buildroot%_alterator_libdir/ui/notes/*.go
 mkdir -p %buildroot/%_bindir
 install alterator-notes-show %buildroot/%_bindir/
 mkdir -p %buildroot/%_desktopdir
-for n in license release-notes ; do
+#for n in license release-notes ; do
+for n in license ; do
     install -m 0644 \
 	%buildroot/%_datadir/alterator/applications/$n.desktop \
 	%buildroot/%_desktopdir/%name-$n.desktop
@@ -74,6 +75,9 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Apr 25 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt4
+- don't package release notes menu entry
+
 * Fri Apr 25 2025 Semen Fomchenkov <armatik@altlinux.org> 1.5.1-alt3
 - Not show license and release notes icons in GNOME apps menu
 
