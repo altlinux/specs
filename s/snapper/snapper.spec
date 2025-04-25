@@ -4,7 +4,7 @@
 %define soname 7
 
 Name: snapper
-Version: 0.12.1
+Version: 0.12.2
 Group: System/Base
 Release: alt1
 Summary: Tool for filesystem snapshot management
@@ -199,6 +199,9 @@ make check
 %_mandir/man8/pam_snapper.8*
 
 %changelog
+* Fri Apr 25 2025 Anton Farygin <rider@altlinux.com> 0.12.2-alt1
+- 0.12.1 -> 0.12.2
+
 * Wed Jan 15 2025 Anton Farygin <rider@altlinux.ru> 0.12.1-alt1
 - 0.12.0 -> 0.12.1
 
