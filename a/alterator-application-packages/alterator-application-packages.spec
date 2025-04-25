@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-packages
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -19,7 +19,7 @@ BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: desktop-file-utils ImageMagick-tools
 
-Requires: alterator-backend-packages >= 0.2.2
+Requires: alterator-backend-packages >= 0.2.5
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
@@ -47,6 +47,12 @@ and package repositories through apt and rpm.
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Apr 25 2025 Aleksey Saprunov <sav@altlinux.org> 0.3.2-alt1
+- Fix deletion of update sources
+- Fix dialog closing after package list update
+- Bump required backend version
+- Add rpm action messages
+
 * Fri Apr 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.1-alt1
 - Clean not needed BuildRequires.
 - Fix APT check for last update from /var/log/alterator/apt/updates.log
