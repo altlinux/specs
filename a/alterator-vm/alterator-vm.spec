@@ -1,6 +1,6 @@
 Name: alterator-vm
-Version: 0.4.45
-Release: alt2
+Version: 0.4.46
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -38,6 +38,10 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Apr 23 2025 Oleg Solovyov <mcpain@altlinux.org> 0.4.46-alt1
+- show usedsize instead of minfssize
+- drop FAT16
+
 * Mon Apr 21 2025 Anton Midyukov <antohami@altlinux.org> 0.4.45-alt2
 - NMU: add dependency on installer-feature-stop-md-dm-stage2
 

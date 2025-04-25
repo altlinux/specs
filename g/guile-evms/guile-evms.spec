@@ -1,5 +1,5 @@
 Name: guile-evms
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: Guile bindings for EVMS
@@ -41,6 +41,11 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Wed Apr 23 2025 Oleg Solovyov <mcpain@altlinux.org> 0.6.7-alt1
+- filter suggested mountpoints (Closes: #51884)
+- dev: pass 'usedsize' volume property
+- drop FAT16 fsim
+
 * Mon May 27 2024 Oleg Solovyov <mcpain@altlinux.org> 0.6.6-alt1
 - remove /usr from mountpoints
 
