@@ -1,7 +1,7 @@
 AutoProv: no
 
 Name: pyfetch
-Version: 1.2.0
+Version: 1.3.5
 Release: alt1
 
 Summary: a python system fetch tool
@@ -16,7 +16,7 @@ Vcs: https://github.com/binarylinuxx/pyfetch
 
 Source: %name-%version.tar
 
-Patch: Makefile-1.2.0-alt-build.patch
+Patch: Makefile-1.3.5-alt-build.patch
 
 BuildRequires: rpm-build-python3
 
@@ -42,5 +42,8 @@ subst "s|/etc/pyfetch|%buildroot%_sysconfdir/pyfetch|" Makefile
 %doc *.md LICENSE
 
 %changelog
+* Fri Apr 25 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.3.5-alt1
+- 1.2.0 -> 1.3.5
+
 * Mon Apr 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
 - Initial build for ALT Linux.
