@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %def_with server
 
 %def_with builtin_bullet # need version >=2.88 to build against system library
@@ -19,25 +20,20 @@
 %def_without builtin_zstd
 
 Name: godot
-Version: 3.1
-Release: alt4.2
+Version: 3.6
+Release: alt1
 
 Summary: Godot Engine - Multi-platform 2D and 3D game engine
 License: %mit
 Group: Development/Tools
 Url: https://godotengine.org/
+# embree 3 build failed
+ExcludeArch: aarch64
 
 Source0: godot-%version.tar
 Source1: %name.desktop
 Source2: %name-icon-48.png
 Source3: %name.svg
-# Workaround for GCC < 8.1 ICE on armv7hl
-# https://github.com/godotengine/godot/issues/16100
-# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=79085
-Patch0: godot-3.0.2-workaround-gcc-ice-armv7hl.patch
-Patch1: fix-zstd-linking.patch
-Patch2: fix-zstd-1.3.8.patch
-#ExclusiveArch: x86_64 %ix86
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ ccache scons
@@ -49,7 +45,7 @@ BuildRequires: libudev-devel
 # It shouldn't be used, should use `importlib.metadata` instead.
 BuildRequires: python3-module-zombie-imp python3-module-distutils-extra
 
-%{!?_with_builtin_bullet:BuildRequires: libbullet-devel}
+%{!?_with_builtin_bullet:BuildRequires: libbullet3-devel}
 %{!?_with_builtin_enet:BuildRequires: libenet-devel}
 %{!?_with_builtin_freetype:BuildRequires: libfreetype-devel}
 %{!?_with_builtin_libogg:BuildRequires: libogg-devel}
@@ -102,8 +98,6 @@ by pointing to the location of the game's data package.
 
 %prep
 %setup
-%patch0 -p1
-%{!?_with_builtin_zstd:%patch1 -p2}
 cp %SOURCE1 .
 cp %SOURCE2 .
 cp %SOURCE3 .
@@ -113,6 +107,28 @@ sed -i  -e 's,-fno-tree-copy-prop,,' -e 's,-fno-tree-ccp,,' \
 	-e 's,-fno-code-hoisting,,' modules/gdnative/SCsub
 sed -i "s/'-Werror=return-type'/&, '-fno-error-always-inline'/" SConstruct
 %endif
+sed -i version.py \
+  -e '/short_name/ s/godot/godot3/' \
+  -e '/name/ s/Godot Engine/Godot Engine 3/' \
+  #
+rm -rf \
+  enet \
+  freetype \
+  libogg \
+  libpng \
+  libtheora \
+  libvorbis \
+  libvpx \
+  libwebp \
+  mbedtls \
+  opus \
+  pcre2 \
+  recast \
+  squish \
+  thekla_atlas \
+  zlib \
+  zstd \
+  #
 
 %build
 %define subst_builtin() %{expand:%{1}=%%{?_with_%{1}:yes}}%{expand:%%{?_without_%{1}:no}}
@@ -138,6 +154,7 @@ sed -i "s/'-Werror=return-type'/&, '-fno-error-always-inline'/" SConstruct
 %nil
 
 export GCC_USE_CCACHE=1
+export BUILD_NAME="%release"
 # Verbose build to see what exactly breaks next time
 scons \
 	%godot_common_builtin_options \
@@ -145,6 +162,7 @@ scons \
 	tools=yes \
 	verbose=yes \
 	target=release_debug \
+	use_static_cpp=no \
     -j %__nprocs
 
 # Build game runner (without tools)
@@ -154,6 +172,7 @@ scons \
 	tools=no \
 	verbose=yes \
 	target=release \
+	use_static_cpp=no \
     -j %__nprocs
 
 %if_with server
@@ -164,6 +183,7 @@ scons \
 	tools=yes \
 	verbose=yes \
 	target=release_debug \
+	use_static_cpp=no \
     -j %__nprocs
 %endif
 
@@ -197,6 +217,11 @@ install -m 644 -D %name.desktop %buildroot%_desktopdir/
 %endif
 
 %changelog
+* Fri Apr 25 2025 Constantin Sunzow <protvin@altlinux.org> 3.6-alt1
+- Security fix: CVE-2021-26826.
+- Security fix: CVE-2021-26825.
+- NMU: new version (ALT 49110).
+
 * Wed Sep 25 2024 Artyom Bystrov <arbars@altlinux.ru> 3.1-alt4.2
 - NMU: Added distutils-extra to BuildRequires.
 
