@@ -1,6 +1,6 @@
 Name: clamtk-kde
 Version: 0.20
-Release: alt1
+Release: alt2
 Summary: Simple virus scanning extension for Dolphin and Konqueror
 License: Artistic-1.0 or GPL-1.0-or-later
 Group: Graphical desktop/KDE
@@ -11,13 +11,15 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 Patch: %name-%version-%release.patch
 BuildArch: noarch
 
-Requires: kf5-filesystem, clamtk >= 5.00
+Requires: clamtk >= 5.00
+# Requires: kf6-filesystem
 
 %description
-It allows for right-click virus scanning within the Konqueror or Dolphin file browsers.
-
+It allows for right-click virus scanning within the Konqueror
+or Dolphin file browsers.
 ClamTk is a front-end for ClamAV.
 It is meant to be lightweight and easy to use.
+Recommends for install: kf5-filesystem or kf6-filesystem.
 
 %prep
 %setup
@@ -25,14 +27,17 @@ It is meant to be lightweight and easy to use.
 
 %build
 %install
-mkdir -p %buildroot%_datadir/kservices5/ServiceMenus
-cp -a clamtk-kde.desktop %buildroot%_datadir/kservices5/ServiceMenus/
+mkdir -p %buildroot%_datadir/kio/servicemenus/
+cp -a clamtk-kde.desktop %buildroot%_datadir/kio/servicemenus/
 
 %files
 %doc CHANGES LICENSE README.md
-%_datadir/kservices5/ServiceMenus/%name.desktop
+%_datadir/kio/servicemenus/%name.desktop
 
 %changelog
+* Fri Apr 25 2025 Leontiy Volodin <lvol@altlinux.org> 0.20-alt2
+- Added support for any KDE (ALT #53981).
+
 * Thu Apr 24 2025 Leontiy Volodin <lvol@altlinux.org> 0.20-alt1
 - New version 0.20.
 - Updated url, source and vcs tags.
