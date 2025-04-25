@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: flatseal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Manage Flatpak permissions
@@ -74,6 +74,9 @@ xvfb-run %__meson_test -v
 %doc README* DOCUMENTATION* CHANGELOG*
 
 %changelog
+* Fri Apr 25 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1
+
 * Wed Oct 02 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 
