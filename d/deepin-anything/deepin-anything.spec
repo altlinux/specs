@@ -1,7 +1,7 @@
 %define _sysusersdir %_prefix/lib/sysusers.d
 
 Name: deepin-anything
-Version: 7.0.6
+Version: 7.0.11
 Release: alt1
 
 Summary: The lightning-fast filename search for Deepin
@@ -12,9 +12,12 @@ Url: https://github.com/linuxdeepin/deepin-anything
 Vcs: git://github.com/linuxdeepin/deepin-anything.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-dqt5 rpm-build-ninja rpm-build-kernel
-BuildRequires: cmake glib2-devel libdtkcore-devel libmount-devel libnl-devel libpcre-devel udisks2-qt5-devel boost-devel libspdlog-devel liblucene++-devel
+ExcludeArch: i586
+
+BuildRequires(pre): rpm-macros-dqt6 rpm-build-kernel
+BuildRequires: cmake glib2-devel libdtk6core-devel libmount-devel libnl-devel libpcre-devel libudisks2-qt6-devel boost-devel libspdlog-devel liblucene++-devel dqt6-base-devel
 
 %description
 %summary.
@@ -30,33 +33,15 @@ This is the source of the kernel %name module.
 
 %prep
 %setup
-# cmake
-sed -i 's|stdc++fs|stdc++|' \
-  src/server/CMakeLists.txt
-sed -i 's|/usr/src/${package_name}|/usr/src/kernel/sources/${package_name}|' \
-  src/kernelmod/CMakeLists.txt
-sed -i 's|/usr/lib/modules-load.d|%_sysconfdir/modules-load.d|' \
-  src/kernelmod/CMakeLists.txt
-sed -i 's|/lib|/%_lib|' \
-  examples/deepin-anything-monitor/src/CMakeLists.txt
-# fix pkgconfig files
-sed -i -e 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|; s|libnl-genl-3|libnl-genl-3.0|;' \
-  src/server/deepin-anything-server.pc.in
+%autopatch -p1
 
 %build
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
-export PKG_CONFIG_PATH=%_dqt5_libdir/pkgconfig:$PKG_CONFIG_PATH
-export PATH=%_dqt5_bindir:$PATH
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
+%DQ6build \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
 #
-cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%cmake_install
+%DQ6install
 install -Dm644 archlinux/deepin-anything-server.sysusers %buildroot%_sysusersdir/deepin-anything-server.conf
 cd %kernel_srcdir
 tar -cJhf %name-0.0.tar.xz %name-0.0/
@@ -64,14 +49,23 @@ rm -rf %name-0.0/
 
 %files
 %doc README.md LICENSE CHANGELOG.md
+%_bindir/deepin-anything-daemon
 %_bindir/deepin-anything-server
+%_unitdir/deepin-anything-server.service
+%_userunitdir/deepin-anything-daemon.service
 %_sysusersdir/*.conf
 %_sysconfdir/modules-load.d/anything.conf
+%dir %_datadir/deepin-anything-server/
+%_datadir/deepin-anything-server/pinyin.txt
 
 %files -n kernel-source-%name
 %_usrsrc/kernel
 
 %changelog
+* Fri Apr 25 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.11-alt1
+- New version 7.0.11.
+- Switched to dqt6.
+
 * Fri Feb 07 2025 Leontiy Volodin <lvol@altlinux.org> 7.0.6-alt1
 - New version 7.0.6.
 
