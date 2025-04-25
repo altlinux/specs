@@ -1,28 +1,47 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: R-base
-Version: 4.2.2
-Release: alt2
+Version: 4.5.0
+Release: alt1
 
 Summary: A language for data analysis and graphics
 License: GPLv2
 Group: Sciences/Mathematics
-Packager: Kirill Maslinsky <kirill@altlinux.org>
 
-URL: http://www.r-project.org
+Url: https://www.r-project.org
 Source: R-%version.tar
-Patch: R-%version-%release.patch
-Patch1: R-base-4.1.3-alt-fix-build-libcurl8.patch
 ExcludeArch: i586
 
-# Automatically added by buildreq on Thu Jan 19 2023
-# optimized out: alt-os-release fontconfig ghostscript-classic glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel libcairo-devel libgfortran-devel libgpg-error libharfbuzz-devel libicu-devel libopenblas-devel libpng-devel libquadmath-devel libsasl2-3 libstdc++-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python3 python3-base sh4 tcl-devel tex-common texlive texlive-collection-basic texlive-dist tzdata xorg-proto-devel zlib-devel
-BuildRequires: bzlib-devel gcc-c++ gcc-fortran ghostscript-common java-headless libXmu-devel libcurl-devel libgomp-devel libjpeg-devel liblapack-devel liblzma-devel libpango-devel libpcre2-devel libreadline-devel libtiff-devel libtre-devel makeinfo texi2dvi tk-devel tex-common texlive texlive-collection-basic texlive-dist
-
+BuildRequires: bzlib-devel
+BuildRequires: gcc-c++
+BuildRequires: gcc-fortran
+BuildRequires: ghostscript-common
+BuildRequires: java-headless
+BuildRequires: libXmu-devel
+BuildRequires: libcurl-devel
+BuildRequires: libgomp-devel
+BuildRequires: libgomp-devel
+BuildRequires: libicu-devel
+BuildRequires: libjpeg-devel
+BuildRequires: liblapack-devel
+BuildRequires: liblapack-devel
+BuildRequires: liblzma-devel
 BuildRequires: libopenblas-devel
-
-BuildPreReq: liblapack-devel libicu-devel libgomp-devel
+BuildRequires: libpango-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libreadline-devel
+BuildRequires: libtiff-devel
+BuildRequires: libtre-devel
+BuildRequires: makeinfo
+BuildRequires: tex-common
+BuildRequires: texi2dvi
+BuildRequires: texlive
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-dist
+BuildRequires: tk-devel
 
 %description
-R is `GNU S' - A language and environment for statistical computing
+R is 'GNU S' - A language and environment for statistical computing
 and graphics. R is similar to the award-winning S system, which was
 developed at Bell Laboratories by John Chambers et al. It provides a
 wide variety of statistical and graphical techniques (linear and
@@ -38,9 +57,7 @@ linked and called at run time.
 S is the statistician's Matlab and R is to S what Octave is to Matlab.
 
 %prep
-%setup -q -n R-%version
-%patch -p1
-%patch1 -p1
+%setup -n R-%version
 rm src/extra/blas/*.f src/modules/lapack/*.f
 %ifarch %e2k
 tar -xzf src/library/Recommended/mgcv.tgz
@@ -59,11 +76,7 @@ export	lt_cv_prog_cc_static_works=no \
 	ac_cv_path_R_BROWSER=xdg-open ac_cv_path_R_PDFVIEWER=xdg-open \
 	ac_cv_path_PAGER='less -isR' ac_cv_prog_R_PRINTCMD=lpr
 %add_optflags -fno-strict-aliasing
-%ifarch ppc64le
-%define longdouble --disable-long-double
-%else
-%define longdouble --enable-long-double
-%endif
+
 %configure \
 	--enable-prebuilt-html \
 	--enable-R-shlib --with-x \
@@ -74,7 +87,7 @@ export	lt_cv_prog_cc_static_works=no \
 	--with-blas=openblas --with-lapack=lapack \
 	--with-tcl-config=%_libdir/tclConfig.sh --with-tk-config=%_libdir/tkConfig.sh \
 	--libdir='${prefix}/%_lib' rincludedir='${prefix}/include/R' \
-	rdocdir='${prefix}/share/doc/R-%verid' 
+	rdocdir='${prefix}/share/doc/R-%verid'
 
 %make_build
 %make_build pdf info
@@ -86,10 +99,6 @@ mv %buildroot{%Rhome/lib,%_libdir}/libR.so
 
 # this symlink is needed for R-studio
 ln -s $(relative %_libdir/libR.so %Rhome/lib/libR.so) %buildroot%Rhome/lib/libR.so
-
-# make compatibility symlink and provides
-ln -s libR.so %buildroot%_libdir/libR-2.11.so
-%filter_from_provides /^libR\.so/{p;s/R/R-2.11/}
 
 ln -s `relative %Rdocdir %Rhome/doc` %buildroot%Rhome/doc
 ln -s `relative %_includedir/R %Rhome/include` %buildroot%Rhome/include
@@ -107,7 +116,7 @@ rmdir %buildroot%Rhome/etc
 ln -s `relative /etc/R %Rhome/etc` %buildroot%Rhome/etc
 
 mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -126,20 +135,29 @@ ln -snfv `relative %_bindir/libtool %Rhome/bin/libtool` %buildroot%Rhome/bin/lib
 %define _perl_lib_path %Rhome/share/perl
 %add_findprov_skiplist %Rhome/share/perl/*.pl
 
-rm -fv %buildroot%_infodir/dir*
+rm -fv \
+  %buildroot%_infodir/dir* \
+  %buildroot%Rhome/COPYING \
+  %buildroot%Rhome/SVN-REVISION \
+  #
 
 %check
 export TZ="UTC"
-make check
+make \
+  check \
+%ifnarch aarch64
+  check-recommended \
+# FIXME: [aarch64] 'tests/anova.gls.R' failed.
+%endif
+  #
 
-%files 
+%files
 	%doc doc/NEWS README
 	%_bindir/R
 	%_bindir/Rscript
 	%_man1dir/R.*
 	%_man1dir/Rscript.*
 	%_libdir/libR.so
-	%_libdir/libR-2.11.so
 	%_desktopdir/%name.desktop
 
 %dir	%Rhome
@@ -174,7 +192,8 @@ make check
 %define R_library() \
 %dir	%R_library_path/%1 \
 	%R_library_path/%1/* \
-%doc	%R_library_path/%1/html 
+%exclude %R_library_path/%1/html \
+%doc	%R_library_path/%1/html
 
 # avoid dependency on R-devel
 %add_findreq_skiplist %R_library_path/*/include/*.h
@@ -230,20 +249,21 @@ Requires: R-devel = %version-%release R-tcltk = %version-%release R-doc-html = %
 %description -n R-full
 Meta-package that installs all components of R Statitical Environment
 
-%files -n R-full
-
 %package -n R-devel
 Summary: Development files for the R Statistical Environment
 Group: Development/Other
 Requires(pre,postun): R-base = %version-%release
 
 %description -n R-devel
-R is `GNU S' - A language and environment for statistical computing
+R is 'GNU S' - A language and environment for statistical computing
 and graphics. R is similar to the award-winning S system, which was
 developed at Bell Laboratories by John Chambers et al. It provides a
 wide variety of statistical and graphical techniques (linear and
 nonlinear modelling, statistical tests, time series analysis,
 classification, clustering, ...).
+
+%files -n R-full
+%nil
 
 %files -n R-devel
 %dir	%Rbindir
@@ -275,7 +295,7 @@ Group: Sciences/Mathematics
 Requires: R-base = %version-%release
 
 %description -n R-tcltk
-R is `GNU S' - A language and environment for statistical computing
+R is 'GNU S' - A language and environment for statistical computing
 and graphics. R is similar to the award-winning S system, which was
 developed at Bell Laboratories by John Chambers et al. It provides a
 wide variety of statistical and graphical techniques (linear and
@@ -297,7 +317,7 @@ Requires: R-base = %version-%release
 Requires: xdg-utils
 
 %description -n R-doc-html
-R is `GNU S' - A language and environment for statistical computing
+R is 'GNU S' - A language and environment for statistical computing
 and graphics. R is similar to the award-winning S system, which was
 developed at Bell Laboratories by John Chambers et al. It provides a
 wide variety of statistical and graphical techniques (linear and
@@ -313,7 +333,6 @@ classification, clustering, ...).
 %dir    %Rdocdir/manual/images/
 %doc    %Rdocdir/manual/images/*.png
 
-
 %package -n R-doc-pdf
 Summary: PDF manuals for the R Statistical Environment
 Group: Sciences/Mathematics
@@ -321,7 +340,7 @@ Conflicts: R-base > %version, R-base < %version
 Requires: xdg-utils
 
 %description -n R-doc-pdf
-R is `GNU S' - A language and environment for statistical computing
+R is 'GNU S' - A language and environment for statistical computing
 and graphics. R is similar to the award-winning S system, which was
 developed at Bell Laboratories by John Chambers et al. It provides a
 wide variety of statistical and graphical techniques (linear and
@@ -339,7 +358,7 @@ Group: Sciences/Mathematics
 Conflicts: R-base > %version, R-base < %version
 
 %description -n R-doc-info
-R is `GNU S' - A language and environment for statistical computing
+R is 'GNU S' - A language and environment for statistical computing
 and graphics. R is similar to the award-winning S system, which was
 developed at Bell Laboratories by John Chambers et al. It provides a
 wide variety of statistical and graphical techniques (linear and
@@ -350,6 +369,10 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Fri Apr 25 2025 Constantin Sunzow <protvin@altlinux.org> 4.5.0-alt1
+- Security fix: CVE-2024-27322.
+- New version (closes: 49021, 48401, 51756, 51757, 53315).
+
 * Tue Dec 19 2023 Michael Shigorin <mike@altlinux.org> 4.2.2-alt2
 - E2K: openmp-related ftbfs workaround (ilyakurdyukov@)
 
