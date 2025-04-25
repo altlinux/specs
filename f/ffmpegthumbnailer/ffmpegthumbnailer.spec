@@ -1,16 +1,29 @@
+%define sover 4
+
 Name: ffmpegthumbnailer
-Version: 2.2.2
-Release: alt1.20221021
+Version: 2.2.3
+Release: alt1
 
 Summary: Lightweight video thumbnailer that can be used by file managers
 License: GPL-2.0
 Group: Graphics
 
-Url: https://github.com/dirkvdb/ffmpegthumbnailer
+URL: https://github.com/dirkvdb/ffmpegthumbnailer
+VCS: https://github.com/dirkvdb/ffmpegthumbnailer.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel cmake libswresample-devel libavfilter-devel libpostproc-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: libavformat-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libpng-devel
+BuildRequires: libswscale-devel
+BuildRequires: libswresample-devel
+BuildRequires: libavfilter-devel
+BuildRequires: libpostproc-devel
 
 %description
 Lightweight video thumbnailer that can be used by file managers.
@@ -26,23 +39,26 @@ possible. The only dependencies are ffmpeg, libpng and libjpeg.
 The project also includes a C/C++ library that can be used by
 developers to generate thumbnails in their projects.
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Shared libraries for ffmpegthumbnailer
 Group: System/Libraries
-Obsoletes: lib%{name}3 < %version
+Obsoletes: lib%name < 2.2.3
 
-%description -n lib%name
+%description -n lib%name%sover
 This package includes a shared libraries for ffmpegthumbnailer
 
 %package -n lib%name-devel
 Summary: Include Files and Libraries mandatory for Development
 Group: Development/C++
-Requires: libffmpegthumbnailer = %version-%release
-Requires: libavutil-devel libavformat-devel libavcodec-devel libswscale-devel cmake
+Requires: lib%name%sover = %EVR
+Requires: libavutil-devel
+Requires: libavformat-devel
+Requires: libavcodec-devel
+Requires: libswscale-devel
 
 %description -n lib%name-devel
 This package includes C/C++ libraries that can be used by
-developers to generate thumbnails in their projects
+developers to generate thumbnails in their projects.
 
 %prep
 %setup
@@ -61,8 +77,9 @@ developers to generate thumbnails in their projects
 %_datadir/thumbnailers
 %_man1dir/*
 
-%files -n lib%name
-%_libdir/lib%name.so.*
+%files -n lib%name%sover
+%_libdir/lib%name.so.%sover
+%_libdir/lib%name.so.%sover.*
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
@@ -70,6 +87,12 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 25 2025 Anton Midyukov <antohami@altlinux.org> 2.2.3-alt1
+- new version 2.2.3
+- use Shared Libs Policy
+- spec: add VCS tag
+- devel: drop runtime dependency on cmake
+
 * Sat Oct 14 2023 Anton Midyukov <antohami@altlinux.org> 2.2.2-alt1.20221021
 - update source from git
 - clean BR: libavresample-devel
