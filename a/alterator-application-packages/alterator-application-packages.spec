@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-packages
-Version: 0.2.0
+Version: 0.3.1
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-application-packages
+URL: https://altlinux.space/alterator/alt-packages
 
 Source0: %name-%version.tar
 
@@ -15,13 +15,11 @@ BuildRequires(pre): rpm-macros-alterator
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
-BuildRequires: cmake-modules
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-common qt6-base-devel qt6-tools-devel
 BuildRequires: desktop-file-utils ImageMagick-tools
-BuildRequires: xorg-xvfb xvfb-run
 
-Requires: alterator-backend-packages >= 0.2.1
+Requires: alterator-backend-packages >= 0.2.2
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 
@@ -49,6 +47,24 @@ and package repositories through apt and rpm.
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Apr 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.3.1-alt1
+- Clean not needed BuildRequires.
+- Fix APT check for last update from /var/log/alterator/apt/updates.log
+  (got from LastUpdate method on org.altlinux.alterator.apt1 interface)
+
+* Fri Apr 18 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.3.0-alt1
+- Added:
+  + Filter by Group (RPM).
+  + Filter by Arch (RPM).
+- Changed:
+  + Version & Release columns has been merged to Version-Release
+    single column (RPM).
+  + Repo Type column has been renamed to Type (Repo).
+  + Branch column has been renamed to Sign (Repo).
+  + Upgrade All button has been retranslated (APT).
+- Fixed:
+  + Alignment of packages list on applying transaction (APT).
+
 * Mon Apr 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.0-alt1
 - Add APT transaction progress.
 - Add suggestion to update if last update date is not found.

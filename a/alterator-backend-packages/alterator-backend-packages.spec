@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.1
+Version: 0.2.5
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -15,15 +15,13 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-alterator
 
-Requires: alterator-interface-packages
+Requires: alterator-interface-packages = %version-%release
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.21
 
 %package -n alterator-interface-packages
 Summary: Alterator interfaces for managing system packages
 Group: System/Configuration/Other
-Version: 0.2.0
-Release: alt2
 
 %description
 Alterator backends for managing system packages and package repositories
@@ -55,6 +53,7 @@ install -v -p -m 644 -D rpm/org.altlinux.alterator.rpm1.xml %buildroot%_datadir/
 install -v -p -m 644 -D rpm/org.altlinux.alterator.rpm1.policy %buildroot%_datadir/polkit-1/actions
 install -v -p -m 644 -D rpm/rpm.backend %buildroot%_alterator_datadir/backends
 install -v -p -m 644 -D rpm/rpm.object %buildroot%_alterator_datadir/objects
+install -v -p -m 755 -D rpm/rpm-wrapper %buildroot%_libexecdir/%name/rpm-wrapper
 
 install -v -p -m 644 -D repo/org.altlinux.alterator.repo1.xml %buildroot%_datadir/dbus-1/interfaces
 install -v -p -m 644 -D repo/org.altlinux.alterator.repo1.policy %buildroot%_datadir/polkit-1/actions
@@ -73,7 +72,7 @@ chmod 644 %buildroot%_logdir/alterator/apt/updates.log
 %ghost %_logdir/alterator/apt/*.log
 %_datadir/apt/scripts/*.lua
 %config %_sysconfdir/apt/apt.conf.d/*.conf
-%_libexecdir/%name/apt-wrapper
+%_libexecdir/%name/*
 %dir %_alterator_datadir/backends
 %_alterator_datadir/backends/*.backend
 %dir %_alterator_datadir/objects
@@ -89,6 +88,25 @@ chmod 644 %buildroot%_logdir/alterator/apt/updates.log
 %doc LICENSE CHANGELOG.md
 
 %changelog
+* Fri Apr 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.5-alt1
+- Set same polkit action_id org.altlinux.alterator.apt1.InstallOrRemove
+  for Update, Install, Reinstall, Remove and DistUpgrade (already same) methods.
+- Set same polkit action_id org.altlinux.alterator.apt1.Search policy for
+  ListAllPackages and other search methods.
+- Set same polkit action_id org.altlinux.alterator.apt1.Info for LastUpdate,
+  LastDistUpgrade and other info methods.
+
+* Fri Apr 25 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.2.4-alt1
+- Fix newest installation package with same EVR in Install apt method.
+- Set interface subpackage version same as backend package version.
+
+* Tue Apr 22 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.3-alt1
+- Fix reply type of CheckReinstall apt method.
+
+* Fri Apr 18 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.2-alt1
+- Split rpm1.List output.
+- Add group to rpm1.List output.
+
 * Thu Apr 04 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.2.1-alt1
 - New version (see CHANGELOG.md).
 
