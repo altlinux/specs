@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.6
+%define beta .alpha.7
 %define rdn_name com.system76.CosmicSettingsDaemon
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-settings-daemon
 Version: %ver_major.0
-Release: alt0.60%beta
+Release: alt0.70%beta
 
 Summary: COSMIC Settings Daemon
 License: GPL-2.0
@@ -30,12 +30,14 @@ ExcludeArch: %ix86 armh ppc64le
 Requires: cosmic-settings
 Requires: accountsservice
 Requires: cosmic-randr
+#Requires: pop-sound-theme
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: make
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(libpulse)
 
 %description
 %summary
@@ -62,6 +64,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/polkit-1/rules.d/%name.rules
 
 %changelog
+* Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
+- 1.0.0-alpha.7
+
 * Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.60.alpha.6
 - 1.0.0-alpha.6
 

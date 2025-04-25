@@ -1,7 +1,6 @@
-# git-lfs used
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.6
+%define beta .alpha.7
 %define rdn_name com.system76.CosmicEdit
 
 %def_disable bootstrap
@@ -9,7 +8,7 @@
 
 Name: cosmic-edit
 Version: %ver_major.0
-Release: alt0.60%beta
+Release: alt0.70%beta
 
 Summary: COSMIC Text Editor
 License: GPL-3.0
@@ -31,7 +30,7 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
 
-#ExcludeArch: %ix86 armh
+ExcludeArch: %ix86 armh
 
 %description
 Text editor for the COSMIC desktop.
@@ -70,6 +69,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
+- 1.0.0-alpha.7
+
 * Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.60.alpha.6
 - 1.0.0-alpha.6
 

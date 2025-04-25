@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define ver_major 1.0
-%define beta .alpha.6
+%define beta .alpha.7
 %define rdn_name com.system76.CosmicGreeter
 
 %def_disable bootstrap
@@ -8,7 +8,7 @@
 
 Name: cosmic-greeter
 Version: %ver_major.0
-Release: alt0.60%beta
+Release: alt0.70%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -24,9 +24,9 @@ Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
-Patch10: cosmic-term-1.0.0-alt-linux-raw-sys-char-loongarch64.patch
 
 Requires: greetd cosmic-comp
+Provides: greetd-greeter
 
 BuildRequires(pre): rpm-build-rust rpm-macros-pam0
 BuildRequires: just clang-devel
@@ -48,19 +48,21 @@ COSMIC greeter for greetd, which can be run inside cosmic-comp.
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
-%patch10 -p1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    vendor/linux-raw-sys/.cargo-checksum.json
-
 %build
+export VERGEN_GIT_SHA=%version
+export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 export RUSTFLAGS="${RUSTFLAGS} -g"
 just build-release
 #%rust_build
 
 %install
+export VERGEN_GIT_SHA=%version
+export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 just rootdir=%buildroot install
 
 %check
+export VERGEN_GIT_SHA=%version
+export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %rust_test
 
 %files
@@ -72,6 +74,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.70.alpha.7
+- 1.0.0-alpha.7
+
 * Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.60.alpha.6
 - 1.0.0-alpha.6
 
