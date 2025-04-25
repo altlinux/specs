@@ -4,7 +4,7 @@
 
 %define soname 0
 # endless sigh
-%define lversion 25.2
+%define lversion 25.5
 %define qt_ver 6
 
 %def_enable alembic
@@ -19,10 +19,11 @@
 %def_enable pyside6
 %def_enable usdview
 %def_enable hdf5
+%def_enable materialx
 
 Name: OpenUSD
-Version: 25.02
-Release: alt0.2
+Version: 25.05
+Release: alt0.1.rc1
 Summary: Universal Scene Description library
 Group: Development/Other
 License: Apache-2.0
@@ -44,13 +45,11 @@ Patch0: openusd-alt-tbb-disable-debug-relwithdebinfo.patch
 Patch1: embree4.patch
 # SONAME patch from Fedora/RH
 Patch2: 0001-Downstream-only-add-an-SONAME-version.patch
-Patch3: remove-distutils.patch
 # Fix blender GL errors when using Hydra
 # https://github.com/PixarAnimationStudios/OpenUSD/pull/2550
 Patch4: 2550.patch
-Patch5: OpenUSD-25.02-tbb-2022.0-upstream-fix.patch
 
-BuildRequires(pre): cmake rpm-build-python3 ninja-build
+BuildRequires(pre): cmake rpm-build-python3 ninja-build /proc
 BuildRequires: gcc-c++
 # tbb and embree still need boost
 BuildRequires: boost-devel boost-python3-devel
@@ -70,6 +69,7 @@ BuildRequires: dos2unix help2man libstb-devel
 %{?_enable_ptex:BuildRequires: libPtex-devel}
 %{?_enable_hdf5:BuildRequires: libhdf5-devel}
 %{?_enable_usdview:BuildRequires: desktop-file-utils}
+%{?_enable_materialx:BuildRequires: MaterialX-devel libXt-devel}
 %if_enabled pyside6
 BuildRequires: python3-module-pyside6-devel
 %else
@@ -99,6 +99,9 @@ interchange between graphics applications.
 %package -n lib%name%soname
 Summary: Universal Scene Description library
 Group: System/Libraries
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n lib%name%soname
 Universal Scene Description (USD) is an efficient, scalable system for
@@ -110,6 +113,9 @@ Summary: Universal Scene Description library development headers
 Group: Development/C++
 Requires: %name = %EVR
 Requires: lib%name%soname = %EVR
+# cpp.req only uses pkgconfig for cflags and we have only cmake
+# so it's useless to run
+AutoReq: yes, nocpp
 
 %description devel
 Universal Scene Description library development headers
@@ -264,6 +270,12 @@ chmod +x uic-wrapper
 	%else
 	-DPXR_ENABLE_OSL_SUPPORT=OFF \
 	%endif
+	%if_enabled materialx
+	-DPXR_ENABLE_MATERIALX_SUPPORT=ON \
+	-DMaterialX_DIR=%prefix \
+	%else
+	-DPXR_ENABLE_MATERIALX_SUPPORT=OFF \
+	%endif
      	-DPXR_ENABLE_PYTHON_SUPPORT=ON \
      	\
      	-DPXR_INSTALL_LOCATION="%_libdir/usd/plugin" \
@@ -280,9 +292,9 @@ chmod +x uic-wrapper
 
 %if_enabled usdview
 # Install a desktop icon for usdview
-desktop-file-install                                    \
---dir=%buildroot%_desktopdir              \
-%SOURCE1
+#desktop-file-install                                    \
+#--dir=%%buildroot%%_desktopdir              \
+#%%SOURCE1
 %endif
 
 # Remove examples that were built and installed even though we set
@@ -320,12 +332,12 @@ done
 
 %check
 %if_enabled usdview
-desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
+#desktop-file-validate %%buildroot%%_desktopdir/org.openusd.usdview.desktop
 %endif
 %{?_enable_test:%ctest}
 
 %files
-%doc NOTICE.txt README.md
+%doc NOTICE.txt README.md CHANGELOG.md SECURITY.md
 %_bindir/sdfdump
 %_bindir/sdffilter
 %_bindir/usdGenSchema
@@ -347,10 +359,15 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %_bindir/usdtree
 %_bindir/usdzip
 %_bindir/usdmeasureperformance
+%_bindir/usdInitSchema
 %if_enabled usdview
-%_desktopdir/org.openusd.usdview.desktop
+#%%_desktopdir/org.openusd.usdview.desktop
 %_bindir/testusdview
 %_bindir/usdview
+%endif
+%if_enabled materialx
+%_bindir/usdBakeMaterialX
+%_man1dir/usdBakeMaterialX.1*
 %endif
 
 %_man1dir/sdfdump.1*
@@ -374,6 +391,7 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %_man1dir/usdtree.1*
 %_man1dir/usdzip.1*
 %_man1dir/usdmeasureperformance.1*
+%_man1dir/usdInitSchema.1*
 %if_enabled usdview
 %_man1dir/testusdview.1*
 %_man1dir/usdview.1*
@@ -393,6 +411,20 @@ desktop-file-validate %buildroot%_desktopdir/org.openusd.usdview.desktop
 %python3_sitelibdir/pxr
 
 %changelog
+* Thu Apr 24 2025 L.A. Kostis <lakostis@altlinux.ru> 25.05-alt0.1.rc1
+- 25.05-rc1.
+- embree4: rebase patch.
+- spec: update files.
+- spec: skip cpp.req on -devel headers (because we have only cmake
+        but cpp.req relies on pkgconfig).
+
+* Tue Apr 22 2025 L.A. Kostis <lakostis@altlinux.ru> 25.02-alt0.4.a
+- Enable MaterialX.
+
+* Tue Apr 15 2025 L.A. Kostis <lakostis@altlinux.ru> 25.02-alt0.3.a
+- Update to 25.02a.
+- usdview: remove .desktop file (as usdview doesn't work without args).
+
 * Mon Mar 03 2025 Anton Farygin <rider@altlinux.ru> 25.02-alt0.2
 - NMU: fixed build with TBB 2022.0.0.
 - Added VCS tag.

@@ -16,7 +16,7 @@
 
 Name: opensubdiv
 Version: %soname
-Release: alt3.1
+Release: alt4
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: Apache-2.0
@@ -67,6 +67,7 @@ Group: System/Libraries
 %if_with cuda
 Requires: libcudart
 %endif
+Provides: lib%name = %EVR
 
 %description -n lib%name%soname
 OpenSubdiv is a set of open source libraries that implement
@@ -87,8 +88,9 @@ Feel free to use it and let us know what you think.
 %package devel
 Summary: An Open-Source subdivision surface library
 Group: Development/C++
-Requires: %name = %EVR
-Requires: lib%name%soname = %EVR
+Requires: lib%name = %EVR
+# ugly workaround until cpp.req support cmake
+Requires: ocl-icd-devel libgomp-devel
 
 %description devel
 OpenSubdiv is a set of open source libraries that implement
@@ -164,6 +166,10 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Apr 24 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt4
+- Improve -no-static patch.
+- devel: update requires.
+
 * Tue Nov 12 2024 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3.1
 - Fix FTBFS with gcc14 (compile with gcc13 for cuda).
 

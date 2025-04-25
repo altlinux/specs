@@ -58,7 +58,7 @@
 
 Name: %{project}4.4
 Version: 4.4.1
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -134,6 +134,7 @@ BuildRequires: libvulkan-devel libshaderc-devel
 BuildRequires: libspnav-devel
 BuildRequires: libwebp-devel
 BuildRequires: pipewire-libs-devel
+BuildRequires: MaterialX-devel
 %ifarch aarch64
 BuildRequires: sse2neon-devel
 %endif
@@ -456,6 +457,7 @@ export GCC_VERSION=%gcc_ver
 	-DWITH_ASSERT_ABORT:BOOL=OFF \
 	-DWITH_LINKER_GOLD:BOOL=OFF \
 	-DWITH_OPENSUBDIV:BOOL=ON \
+	-DWITH_MATERIALX:BOOL=ON \
 	-DOPENEXR_INCLUDE_DIRS=%_includedir/OpenEXR \
 	%nil
 
@@ -525,6 +527,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Fri Apr 25 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.1-alt2
+- enable MaterialX support.
+
 * Tue Apr 15 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.1-alt1
 - 4.4.1.
 
