@@ -7,7 +7,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: %pypi_name
-Version: 0.11.6
+Version: 0.11.7
 Release: alt1
 
 Summary: An extremely fast Python linter, written in Rust
@@ -99,6 +99,9 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 25 2025 Anton Zhukharev <ancieg@altlinux.org> 0.11.7-alt1
+- Updated to 0.11.7.
+
 * Fri Apr 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.11.6-alt1
 - Updated to 0.11.6.
 
