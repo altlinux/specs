@@ -1,6 +1,6 @@
 Name: xdelta1
 Version: 1.1.4
-Release: alt4
+Release: alt5
 
 %define _includedir %_usr/include/%name
 %define srcname xdelta-%version
@@ -8,7 +8,7 @@ Release: alt4
 %define lib_major 2
 
 Summary: A binary delta generator
-License: GPL
+License: GPL-1.0
 Group: File tools
 Url: http://www.xdelta.org/
 Packager: Dmitry V. Levin <ldv@altlinux.org>
@@ -21,6 +21,7 @@ Patch3: xdelta-1.1.3-rh-aclocal.patch
 Patch4: xdelta-1.1.4-rh-glib2.patch
 Patch5: xdelta-1.1.3-rh-alt-pkgconfig.patch
 Patch6: xdelta-1.1.4-alt-oom.patch
+Patch7: xdelta-1.1.4-alt-pointer-types.patch
 
 Requires: %lib_name%lib_major = %version-%release
 Provides: xdelta = %version
@@ -73,12 +74,7 @@ applications using Xdelta.
 
 %prep
 %setup -q -n %srcname
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%autopatch -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -110,6 +106,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Sat Apr 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.1.4-alt5
+- NMU: fix FTBFS with gcc14.
+
 * Mon May 21 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.4-alt4
 - Fixed build with ld --no-copy-dt-needed-entries.
 
