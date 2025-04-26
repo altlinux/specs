@@ -5,7 +5,7 @@
 
 Name:          %{_gname}-%{_name}
 Version:       1.3.2
-Release:       alt0.1
+Release:       alt0.2
 Summary:       COIN-OR Library for Efficient Modeling and Optimization in Networks
 License:       BSL-1.0
 Group:         Sciences/Mathematics
@@ -13,17 +13,22 @@ Url:           https://lemon.cs.elte.hu/trac/lemon
 Vcs:           https://github.com/amessing/lemon-copy.git
 
 Source:        %name-%version.tar
-Patch:         config.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: ghostscript
+BuildRequires: wget
+BuildRequires: python3-dev
+BuildRequires: libcoinor-clp-devel
+BuildRequires: libcoinor-osi-clp-devel
+BuildRequires: libcoinor-osi-devel
 BuildRequires: pkgconfig(coinutils)
 BuildRequires: pkgconfig(osi)
 BuildRequires: pkgconfig(clp)
 # TODO add support for ilog and soplex libs
 BuildRequires: libglpk-devel
+BuildRequires: /proc
 
 %description
 LEMON stands for Library for Efficient Modeling and Optimization in Networks.
@@ -98,14 +103,13 @@ University of Technology and Economics.
 
 %prep
 %setup
-%patch
 
 %build
 %cmake -DCMAKE_INSTALL_DIR:STRING=%{_datadir}/cmake/%{_name}/ \
        -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
        -DTARGET_LIBRARY_NAME:STRING=%{_Gname}%{_Name} \
        -DBUILD_SHARED_LIBS:BOOL=ON \
-       -DCMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX:STRING="%_libsuff"
+       -DCMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX:STRING="%_libsuff" \
 
 %cmake_build
 
@@ -127,5 +131,8 @@ University of Technology and Economics.
 
 
 %changelog
+* Fri Apr 25 2025 Pavel Skrylev <majioa@altlinux.org> 1.3.2-alt0.2
+- ![NMU]: fixed FTBS for newer cmake
+
 * Mon Jun 26 2023 Pavel Skrylev <majioa@altlinux.org> 1.3.2-alt0.1
 - initial build for Sisyphus
