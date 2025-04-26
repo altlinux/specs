@@ -2,7 +2,7 @@ Name: kernel-image-6.14
 Release: alt1
 %define kernel_src_version	6.14
 %define kernel_base_version	6.14
-%define kernel_sublevel	.3
+%define kernel_sublevel	.4
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest1
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Apr 25 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.4-alt1
+- v6.14.4 (2025-04-25).
+
 * Sun Apr 20 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.3-alt1
 - v6.14.3 (2025-04-20).
 - config-aarch64: CONFIG_VIDEO_RASPBERRYPI_PISP_BE=m.
