@@ -23,7 +23,7 @@
 %def_enable v4l2codecs
 %def_enable gpl
 
-%ifnarch aarch64
+%ifnarch aarch64 loongarch64 riscv64
 %def_enable svtjpegxs
 %endif
 
@@ -46,7 +46,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -236,6 +236,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Fri Apr 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
+- 1.26.1
+
 * Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.0-alt1
 - 1.26.0
 
