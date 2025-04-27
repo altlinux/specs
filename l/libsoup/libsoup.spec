@@ -1,7 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define api_ver 2.4
 %define ver_major 2.74
+%define api_ver 2.4
+%define namespace Soup
 %def_disable static
 %def_enable gtk_doc
 %def_with gnome
@@ -16,12 +17,14 @@
 
 Name: libsoup
 Version: %ver_major.3
-Release: alt1.1
+Release: alt2
 
 Summary: HTTP client/server library for GNOME
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/libsoup
+
+Vcs: https://gitlab.gnome.org/GNOME/libsoup.git
 
 %if_enabled snapshot
 Source: %name-%version.tar
@@ -225,19 +228,24 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Soup-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Soup-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %files gnome-gir
-%_typelibdir/SoupGNOME-%api_ver.typelib
+%_typelibdir/%{namespace}GNOME-%api_ver.typelib
 
 %files gnome-gir-devel
-%_girdir/SoupGNOME-%api_ver.gir
+%_girdir/%{namespace}GNOME-%api_ver.gir
 %endif
 
 %changelog
+* Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt2
+- updated to 2.74.3-17-g5739a090 (fixed CVE-2024-52530, CVE-2024-52531,
+  CVE-2024-52532, CVE-2025-2784, CVE-2025-32050,
+  CVE-2025-32052, CVE-2025-32053)
+
 * Sat Apr 08 2023 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt1.1
 - rebuilt
 

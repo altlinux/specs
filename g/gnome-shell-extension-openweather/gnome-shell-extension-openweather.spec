@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name openweather
 %define git_name gnome-%_name
@@ -12,21 +12,27 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Weather extension for the GNOME Shell
 Group: Graphical desktop/GNOME
 License: GPL-3.0-or-later
 Url: https://github.com/penguin-teal/gnome-openweather
 
+Vcs: https://github.com/penguin-teal/gnome-openweather.git
+
 BuildArch: noarch
 
 %if_disabled snapshot
 Source: %url/archive/v%version%beta/%git_name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/penguin-teal/gnome-openweather.git
 Source: %git_name-%version%beta.tar
 %endif
+# https://github.com/penguin-teal/gnome-openweather/pull/92
+Patch10: %git_name-139-up-formatKey.patch
+Patch11: %git_name-139-alt-gnome-48.patch
+# https://github.com/penguin-teal/gnome-openweather/pull/97
+Patch12: %git_name-139-up-ru.po.patch
 
 Requires: gnome-shell >= 45
 Requires: typelib(Adw) = 1
@@ -46,6 +52,9 @@ including 3 hour forecasts for up to 5 days.
 
 %prep
 %setup -n %git_name-%version%beta
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 %make VERSION=%version
@@ -61,6 +70,11 @@ including 3 hour forecasts for up to 5 days.
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 139-alt2
+- updated to v139-25-g30efb32
+- fixed for shell-48
+- updated russian translation
+
 * Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 139-alt1
 - 139 (shell-47 supported)
 

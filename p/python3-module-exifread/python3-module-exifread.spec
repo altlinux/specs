@@ -1,10 +1,10 @@
 %define modname ExifRead
-%define _modname exifread
+%define pypi_name exifread
 
 %def_disable check
 
-Name: python3-module-%_modname
-Version: 3.0.0
+Name: python3-module-%pypi_name
+Version: 3.1.0
 Release: alt1
 
 Summary: Python3 library to extract Exif metadata
@@ -13,38 +13,41 @@ License: BSD-3-Clause
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/ianare/exif-py
-Source: https://pypi.io/packages/source/E/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/e/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-pytest}
+BuildRequires: python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest)}
 
 %description
 Easy to use Python3 module to extract Exif metadata from digital image files.
 Supported formats: TIFF, JPEG, PNG, Webp, HEIC.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 py.test3
 
 %files
 %_bindir/EXIF.py
-%python3_sitelibdir_noarch/%_modname/
-%python3_sitelibdir_noarch/%modname-*.egg-info/
+%python3_sitelibdir_noarch/%pypi_name/
+#%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir_noarch/%modname-%version.dist-info
 %doc README* ChangeLog*
 
-
 %changelog
+* Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Wed May 11 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
 - 3.0.0
 

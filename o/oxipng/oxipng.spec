@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: oxipng
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: PNG compression optimizer
@@ -49,6 +49,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* CHANGELOG* MANUAL*
 
 %changelog
+* Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 9.1.5-alt1
+- 9.1.5
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 9.1.4-alt1
 - 9.1.4
 

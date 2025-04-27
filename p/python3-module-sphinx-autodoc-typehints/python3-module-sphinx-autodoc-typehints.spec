@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
@@ -12,6 +12,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/tox-dev/sphinx-autodoc-typehints.git
+
 #Source: https://github.com/tox-dev/%modname/archive/%version/%modname-%version.tar.gz
 Source: https://pypi.io/packages/source/s/%modname/%pypi_name-%version.tar.gz
 
@@ -51,6 +52,9 @@ functions.
 
 
 %changelog
+* Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Sat Feb 22 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 

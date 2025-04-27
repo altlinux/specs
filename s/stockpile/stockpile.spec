@@ -2,8 +2,10 @@
 
 %define old_name jellybean
 %define _name stockpile
-%define ver_major 0.3
+%define ver_major 0.5
 %define rdn_name garden.turtle.Jellybean
+
+%def_disable check
 
 Name: %_name
 Version: %ver_major.0
@@ -14,19 +16,20 @@ License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://codeberg.org/turtle/stockpile
 
+Vcs: https://codeberg.org/turtle/stockpile.git
+
 %if_disabled snapshot
 Source: %url/-/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://codeberg.org/turtle/stockpile.git
 Source: %_name-%version.tar
 %endif
 
 Provides: %old_name = %EVR
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools blueprint-compiler
-BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: meson vala-tools blueprint-compiler git
 BuildRequires: pkgconfig(libadwaita-1) typelib(Adw)
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
 
 %description
 Stockpile is an app that allows you to manage your inventory of various
@@ -39,15 +42,20 @@ stock of an item is running low.
 %setup -n %_name-%version
 
 %build
-%meson
+%meson \
+    -Dprofile=default
+%nil
 %meson_build
 
 %install
 %meson_install
-%find_lang --output %name.lang %old_name
+%find_lang --output %name.lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
-%_bindir/%old_name
+%_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
@@ -56,6 +64,9 @@ stock of an item is running low.
 
 
 %changelog
+* Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
+- updated to 0.5.0-3-gc317359
+
 * Sat Nov 25 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - first build for Sisyphus
 
