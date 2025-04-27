@@ -8,8 +8,8 @@
 %endif
 
 Name: ngtcp2
-Version: 1.11.0
-Release: alt2
+Version: 1.12.0
+Release: alt1
 Summary: An implementation of the RFC9000 QUIC protocol
 
 License: MIT
@@ -91,6 +91,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_libdir/*.so
 
 %changelog
+* Sun Apr 27 2025 Anton Farygin <rider@altlinux.com> 1.12.0-alt1
+- 1.11.0 -> 1.12.0
+
 * Thu Feb 27 2025 Anton Farygin <rider@altlinux.ru> 1.11.0-alt2
 - ignored test results in %%check section for i586 architecture.
 
