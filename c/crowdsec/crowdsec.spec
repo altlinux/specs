@@ -1,9 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/crowdsecurity/crowdsec
-%global commit_hash 523164f6 # git rev-parse --short v%version
+# git rev-parse --short v%version
+%global commit_hash f209766e
 
 Name: crowdsec
-Version: 1.6.4
+Version: 1.6.8
 Release: alt1
 Summary: Security solution offering crowdsourced protection against malicious IPs
 License: MIT
@@ -138,5 +139,8 @@ echo "{}" > %buildroot%_sysconfdir/%name/hub/.index.json
 %_sysconfdir/cron.daily/%name
 
 %changelog
+* Fri Apr 25 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.8-alt1
+- Updated to version 1.6.8.
+
 * Thu Dec 05 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.4-alt1
 - Initial build for ALT.
