@@ -4,7 +4,7 @@
 %def_enable pam
 
 Name: oath-toolkit
-Version: 2.6.9
+Version: 2.6.12
 Release: alt1
 Summary: Toolkit for one-time password authentication systems
 License: GPLv3+
@@ -187,6 +187,9 @@ find %buildroot -name "*.la" -exec rm -f {} \;
 %endif
 
 %changelog
+* Sun Apr 27 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.6.12-alt1
+- 2.6.12
+
 * Wed Dec 13 2023 Evgeny Sinelnikov <sin@altlinux.org> 2.6.9-alt1
 - Update to release 2.6.9 with mutliple fixes and improved libxmlsec compatibility.
 - Enable build check tests.
