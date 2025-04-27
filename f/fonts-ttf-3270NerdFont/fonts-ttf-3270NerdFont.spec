@@ -1,7 +1,7 @@
 %define fname 3270NerdFont
 
 Name: fonts-ttf-%fname
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 
 Summary: Nerd Fonts patched IBM 3270 font
@@ -31,6 +31,9 @@ cp -a %SOURCE1 %SOURCE2 .
 %doc LICENSE.* README.*
 
 %changelog
+* Sat Apr 26 2025 Anton Kurachenko <srebrov@altlinux.org> 3.4.0-alt1
+- New version 3.4.0.
+
 * Sat Nov 23 2024 Anton Kurachenko <srebrov@altlinux.org> 3.3.0-alt1
 - New version 3.3.0.
 
