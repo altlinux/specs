@@ -1,33 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-
+%define pypi_name eyeD3
 %define oname eyed3
 
 %def_with check
 
 Name: eyeD3
-Version: 0.9.7
-Release: alt2
+Version: 0.9.8
+Release: alt1
 
 Summary: Console tool that displays and manipulates id3-tags on mp3 files
-License: GPLv3.0
+License: GPL-3.0
 Group: Sound
 URL: https://pypi.org/project/eyed3
-
 VCS: https://github.com/nicfit/eyeD3
+
 Source0: %name-%version.tar
 Source1: http://eyed3.nicfit.net/releases/eyeD3-test-data.tgz
-
-Patch: eyeD3-alt-fix-packaging.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-deprecation
 BuildRequires: python3-module-filetype
 BuildRequires: python3-module-factory_boy
+BuildRequires: python3-module-pyaml
 %endif
 Requires: python3-module-%name = %EVR
 
@@ -51,7 +51,6 @@ This module is built for python %_python_version
 
 %prep
 %setup
-%patch -p1
 tar xvf %SOURCE1 -C tests
 # If you know more beautiful way to do it, FIXME
 mv tests/eyeD3-test-data tests/data
@@ -64,8 +63,7 @@ mv tests/eyeD3-test-data tests/data
 
 %check
 # Seems that it wants some color output in hasher, that we dont have
-# https://github.com/nicfit/eyeD3/issues/601
-%pyproject_run_pytest -k 'not test_init_color_enabled and not testYamlPlugin'
+%pyproject_run_pytest -k 'not test_init_color_enabled'
 
 %files
 %doc LICENSE *.rst docs/ examples/
@@ -73,9 +71,12 @@ mv tests/eyeD3-test-data tests/data
 
 %files -n python3-module-%name
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%{pyproject_distinfo %oname}
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Sun Apr 27 2025 Anton Vyatkin <toni@altlinux.org> 0.9.8-alt1
+- New version 0.9.8.
+
 * Mon Mar 11 2024 Anton Vyatkin <toni@altlinux.org> 0.9.7-alt2
 - Fixed FTBFS.
 
