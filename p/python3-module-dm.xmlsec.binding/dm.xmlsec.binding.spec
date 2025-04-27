@@ -1,11 +1,9 @@
 %define mname dm.xmlsec
 %define oname %mname.binding
 
-%def_disable check
-
 Name: python3-module-%oname
-Version: 2.0
-Release: alt2
+Version: 3.0
+Release: alt1
 
 Summary: Cython/lxml based binding for the XML security library -- for lxml 3.x
 License: BSD
@@ -66,23 +64,20 @@ sed -i '/transformByHref/s/^/#/' dm/xmlsec/binding/__init__.py
 rm -f src/*.c
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 install -p -m644 dm/__init__.py \
 	%buildroot%python3_sitelibdir/dm/
 install -p -m644 dm/xmlsec/__init__.py \
 	%buildroot%python3_sitelibdir/dm/xmlsec/
 
-%check
-%__python3 setup.py test
-
 %files
 %doc PKG-INFO
 %python3_sitelibdir/dm/xmlsec/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*-%version.dist-info
 %exclude %python3_sitelibdir/dm/xmlsec/*/tests.*
 %exclude %python3_sitelibdir/dm/xmlsec/__init__.py*
 
@@ -99,6 +94,9 @@ install -p -m644 dm/xmlsec/__init__.py \
 
 
 %changelog
+* Sun Apr 27 2025 Grigory Ustinov <grenka@altlinux.org> 3.0-alt1
+- Build new version.
+
 * Wed Dec 02 2020 Grigory Ustinov <grenka@altlinux.org> 2.0-alt2
 - Fix provides.
 
