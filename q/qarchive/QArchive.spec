@@ -1,9 +1,9 @@
-%define soversion 2
+%define qtversion 6
 %define nameB QArchive
 
 Name: qarchive
 Version: 2.2.9
-Release: alt1
+Release: alt2
 
 Summary: Async C++ Cross-Platform library that modernizes libarchive using Qt.
 License: BSD-3-Clause
@@ -14,8 +14,8 @@ Vcs: https://github.com/antony-jr/QArchive
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-meson
-BuildRequires: clang cmake meson
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++ cmake
 BuildRequires: qt6-base-devel libarchive-devel
 
 %description
@@ -26,43 +26,32 @@ and thus its a perfect fit for your Qt projects.
 
 %package devel
 Group:Development/C++
-Requires: lib%name%soversion = %EVR
 Summary: Development files for %nameB
 
 %description devel
 This package contains libraries and header files for
 developing applications that use %nameB.
 
-%package -n lib%name%soversion
-Group: System/Libraries
-Summary: %nameB library
-
-%description -n lib%name%soversion
-Async C++ Cross-Platform library that modernizes libarchive using Qt.
-
 %prep
 %setup
 
 %build
-%meson
-%meson_build
+%cmake -DQARCHIVE_QT_VERSION_MAJOR=%qtversion
+%cmake_build
 
 %install
-%meson_install
-cd %buildroot%_libdir/
-mv lib%nameB.so lib%nameB.so.%version
-ln -s lib%nameB.so.%version lib%nameB.so.%soversion
-ln -s lib%nameB.so.%soversion lib%nameB.so
+%cmake_install
+rm %buildroot%_libdir/lib%nameB.a
 
 %files -n %name-devel
-%_libdir/lib%nameB.so
+%_libdir/cmake/%nameB
 %_pkgconfigdir/%nameB.pc
 %_includedir/%nameB
 
-%files -n lib%name%soversion
-%_libdir/lib%nameB.so.%soversion
-%_libdir/lib%nameB.so.%soversion.*
-
 %changelog
+* Sat Apr 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.9-alt2
+- rebuilt with %%cmake
+- removed libQArchive2 subpackage
+
 * Tue Apr 22 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.9-alt1
 - Initial build for ALT Linux (git.1467a3ed).
