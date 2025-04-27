@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: auto-cpufreq
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Automatic CPU speed & power optimizer
@@ -9,6 +9,7 @@ License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/AdnanHodzic/auto-cpufreq
 Vcs: https://github.com/AdnanHodzic/auto-cpufreq.git
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -66,6 +67,9 @@ install -D -m 0755 images/icon.png %buildroot%_datadir/pixmaps/%name.png
 %python3_sitelibdir/%{pyproject_distinfo auto_cpufreq}
 
 %changelog
+* Sun Apr 27 2025 Anton Kurachenko <srebrov@altlinux.org> 2.6.0-alt1
+- New version 2.6.0.
+
 * Wed Jan 15 2025 Anton Kurachenko <srebrov@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 
