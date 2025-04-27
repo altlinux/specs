@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.54
+%define ver_major 3.56
 %define api_ver 3.0
 %define applet_api_ver 6.0
 %define xdg_name org.gnome.gnome-panel
@@ -16,6 +16,8 @@ Summary: The core programs for the GNOME GUI desktop environment
 License: GPL-2.0-or-later and LGPL-2.0-or-later and GFDL-1.1-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomePanel
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-panel.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -194,6 +196,9 @@ GObject introspection devel data for the GNOME Panel shared library.
 %endif
 
 %changelog
+* Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sun Oct 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
 - 3.54.0
 

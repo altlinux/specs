@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.54
+%define ver_major 3.56
 %define _libexecdir %_prefix/libexec
 %def_with compiz
 
@@ -12,6 +12,8 @@ Summary: GNOME Flashback session
 License: GPL-3.0
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeFlashback
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-flashback.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -50,6 +52,7 @@ Requires: bluez gnome-bluetooth%bt_api_ver
 Requires: NetworkManager-applet-gtk
 Requires: ibus xkeyboard-config
 Requires: alacarte
+Requires: tecla
 # since 3.20
 Conflicts: notification-daemon < 3.20
 
@@ -169,6 +172,9 @@ ln -sf gnome-applications.menu %buildroot/%_xdgmenusdir/%name-applications.menu
 
 
 %changelog
+* Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
 - 3.54.0
 

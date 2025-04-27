@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name metacity
-%define ver_major 3.54
+%define ver_major 3.56
 %define api_ver 3.0
 %def_disable static
 %def_enable vulkan
@@ -13,6 +13,8 @@ Summary: Metacity window manager
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/Metacity
+
+Vcs: https://gitlab.gnome.org/GNOME/metacity.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
@@ -135,6 +137,9 @@ This package contains the lib%name static library.
 %endif
 
 %changelog
+* Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sat Oct 05 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
 - 3.54.0
 

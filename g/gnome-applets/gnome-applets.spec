@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 3.54
+%define ver_major 3.56
 %define xdg_name org.gnome.gnome-applets
 
 %def_enable frequency_selector
@@ -18,6 +18,8 @@ Summary: Small applications for the GNOME panel
 License: GPL-2.0 and GFDL-1.1
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Projects/GnomeApplets
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-applets.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -199,6 +201,9 @@ install -pD -m 644 %SOURCE1 %buildroot%_sysconfdir/polkit-1/localauthority/50-lo
 %exclude %_libdir/gnome-panel/modules/*.la
 
 %changelog
+* Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Sun Oct 06 2024 Yuri N. Sedunov <aris@altlinux.org> 3.54.0-alt1
 - 3.54.0
 
