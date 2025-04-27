@@ -1,11 +1,11 @@
-%define ver_major 3.54
+%define ver_major 3.56
 %define xdg_name org.gnome.alacarte
 
 %def_enable documentation
 %def_enable check
 
 Name: alacarte
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -13,12 +13,15 @@ License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
 
+Vcs: https://gitlab.gnome.org/GNOME/alacarte.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildArch: noarch
 
 %define menus_ver 3.5.3
 
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 3.0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
@@ -59,6 +62,9 @@ specification.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Sun Apr 27 2025 Yuri N. Sedunov <aris@altlinux.org> 3.56.0-alt1
+- 3.56.0
+
 * Tue Jan 14 2025 Yuri N. Sedunov <aris@altlinux.org> 3.54.1-alt1
 - 3.54.1
 
