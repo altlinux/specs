@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 7.4.9
+Version: 7.4.10
 Release: alt1
 
 Summary: Tryton server
@@ -77,6 +77,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Sun Apr 27 2025 Anton Vyatkin <toni@altlinux.org> 7.4.10-alt1
+- new version 7.4.10
+
 * Thu Apr 03 2025 Anton Vyatkin <toni@altlinux.org> 7.4.9-alt1
 - new version 7.4.9
 
