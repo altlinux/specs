@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 2.2.12
+Version: 2.4.7
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -27,7 +27,7 @@ BuildArchitectures: noarch
 #BuildPreReq: altlinux-release
 %else
 # Provide included macros (see macros.rpm-build dir)
-Provides: rpm-build-python rpm-build-perl rpm-macros-ttf rpm-build-licenses rpm-macros-cmake
+Provides: rpm-build-python rpm-build-python3 rpm-build-perl rpm-macros-ttf rpm-build-licenses rpm-macros-cmake
 # FreeBSD
 %if "%_vendor" == "portbld" || "%_vendor" == "any"
 %define _rpmmacrosdir /usr/local/etc/rpm
@@ -36,10 +36,10 @@ Provides: rpm-build-python rpm-build-perl rpm-macros-ttf rpm-build-licenses rpm-
 # in Mandriva for example
 %if %{expand:%%{?_sys_macros_dir:1}%%{!?_sys_macros_dir:0}}
 %define _rpmmacrosdir %_sys_macros_dir
-%define macrofilename altlinux-compat.macros
+%define macrofilename macros.alt-compat
 %elif %{expand:%%{?rpmmacrodir:1}%%{!?rpmmacrodir:0}} && %{expand:%%{?_rpmmacrosdir:0}%%{!?_rpmmacrosdir:1}}
 %define _rpmmacrosdir %rpmmacrodir
-%define macrofilename altlinux-compat.macros
+%define macrofilename macros.alt-compat
 %else
 # all scanned dirs listed in /usr/lib/rpm/macrofiles
 %define _rpmmacrosdir /etc/rpm
@@ -129,11 +129,81 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %_bindir/add_changelog
 %_bindir/stamp_spec
 %_bindir/subst
+%_bindir/rpmvercmp
 %_bindir/distr_vendor
 
 %endif
 
 %changelog
+* Sat Apr 19 2025 Vitaly Lipatov <lav@altlinux.ru> 2.4.7-alt1
+- distr_vendor: sync with eepm-3.64.26
+
+* Mon Feb 10 2025 Vitaly Lipatov <lav@altlinux.ru> 2.4.6-alt1
+- distr_vendor: sync with eepm 3.64.8
+- add ffmpeg and wayland features
+- macros.compat: don't use rpmvercmp with empty args
+- macros.compat: add if_not_feature
+- macros.compat: improve if_feature/if_notfeature (fix bug with 0 value)
+
+* Fri Dec 20 2024 Vitaly Lipatov <lav@altlinux.ru> 2.4.5-alt1
+- distr_vendor: sync with eepm 3.64.5
+- add macros.uncom
+
+* Wed Dec 04 2024 Vitaly Lipatov <lav@altlinux.ru> 2.4.4-alt1
+- add rpmvercmp for non ALT distro
+- add features_llvm
+- distr_vendor: sync with eepm 3.64.1
+- updated macros.distro
+
+* Tue Apr 23 2024 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
+- distr_vendor: update from eepm 3.62.5
+- use sudoers.d for CentOS/RedOS 7 and newer (eterbug #17252)
+
+* Tue Feb 06 2024 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- macros.intro.backport: add _cachedir
+- macros.intro.backport: add _rpmlibdir
+
+* Wed Jan 31 2024 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
+- add filter_from_requires
+- improve __nprocs
+- add_changelog/stamp_spec: use EPOCH instead of obsoleted SERIAL
+
+* Wed Apr 19 2023 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- macros.intro.backport: update systemd macro
+- remove unneeded duplicates in x86_64 part
+- return __nprocs implemented via epm print info
+- macros.distro: cleanup
+
+* Tue Apr 04 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.5-alt1
+- macros.distro: restore make/make_build for AstraLinux
+- macros.distro: restore make/__make for Debian/Ubuntu
+- rpm-build: update cmake macro
+
+* Fri Dec 23 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.4-alt1
+- add make_build, _make_bin, __nprocs for Ubuntu/12.04 and Ubuntu/14.04
+
+* Wed Sep 07 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
+- add systemd_unitdir macro
+- add macros.rocky.*
+
+* Tue Aug 16 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
+- don't use _make_bin in makeinstall_std
+
+* Sat Jul 30 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
+- macros.compat: comment out make* macros (they already in upstream)
+- update macros
+
+* Tue Jun 14 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
+- distr_vendor: update to 3.0 version
+
+* Wed Apr 13 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.14-alt1
+- drop configure32, _lib32dir
+- drop _lib, _libdir, _libexecdir overrides
+- fix macros filename for rpm based platforms
+
+* Wed Apr 13 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.13-alt1
+- remove macros python*.env make errors
+
 * Sun Mar 20 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
 - distr_vendor: update to 2.7 version
 
