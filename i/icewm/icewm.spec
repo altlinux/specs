@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: icewm
-Version: 3.7.3
+Version: 3.7.4
 Release: alt1
 Epoch:3
 
@@ -37,11 +37,11 @@ Patch0: %realname-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Thu Nov 30 2023
+# Automatically added by buildreq on Sat Apr 26 2025
 BuildRequires: cmake gcc-c++ imlib2-devel libSM-devel libXcomposite-devel
 BuildRequires: libXdamage-devel libXft-devel libXinerama-devel libXpm-devel
-BuildRequires: libXrandr-devel libalsa-devel libao-devel libfribidi-devel
-BuildRequires: librsvg-devel libsndfile-devel
+BuildRequires: libXrandr-devel libXres-devel libalsa-devel libao-devel
+BuildRequires: libfribidi-devel librsvg-devel libsndfile-devel
 BuildRequires: perl-Pod-Usage /usr/bin/pod2html
 %if_with markdown
 BuildRequires: discount
@@ -181,6 +181,9 @@ fi
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sat Apr 26 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.4-alt1
+- 3.7.4
+
 * Sun Apr 06 2025 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.7.3-alt1
 - 3.7.3
 

@@ -2,10 +2,10 @@
 %def_without desklaunch
 %def_without ivman
 %def_without blueberry
-%def_without spacefm
+%def_with spacefm
 Name: icewm-startup
-Version: 0.216
-Release: alt2
+Version: 0.217
+Release: alt1
 
 Summary: simple pluggable IceWM autostart manager
 
@@ -21,7 +21,7 @@ Source1: XXkb.conf
 BuildArch: noarch
 AutoReq: no
 
-%define icewmconfdir %_sysconfdir/X11/icewm
+%define icewmconfdir %_x11sysconfdir/icewm
 #due to new icewmconfdir in /etc/X11
 Requires: icewm >= 1.2.25
 
@@ -39,6 +39,7 @@ which allows one to configure IceWM default autostart via installing correspondi
 (если у него оно есть), запускать ivman, gkrellm, xxkb, mount-tray, WiFi manager,
 запускать рабочий стол (idesk, kdesktop) и т. д.
 
+
 %package apt-indicator
 Group: Graphical desktop/Icewm
 Summary: apt-indicator autostart at IceWM startup
@@ -51,6 +52,7 @@ apt-indicator plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 apt-indicator
 запуск apt-indicator при старте IceWM
 (Требует менеджер автозапуска программ IceWM).
+
 
 %package at-spi-dbus-bus
 Group: Graphical desktop/Icewm
@@ -66,6 +68,7 @@ at-spi bus is required for accessibility services.
 запуск сервиса вспомогатальных технологий поддержки доступности
 компьютерного интерфейса для людей с ограниченными возможностями
 при старте IceWM (Требует менеджер автозапуска программ IceWM).
+
 
 %if_with blueberry
 %package blueberry-tray
@@ -83,6 +86,7 @@ blueberry является графической утилитой для нас
 Установите этот пакет, если вы хотите запускать blueberry-tray при старте IceWM.
 %endif
 
+
 %package delay
 Group: Graphical desktop/Icewm
 Summary: delay before starting programs
@@ -96,6 +100,7 @@ typically used to have time to start icewmtray.
 %description -l ru_RU.UTF-8 delay
 задержка перед запуском программ, чтобы устранить возможные артефакты,
 обычно используется, чтобы успел стартовать icewmtray.
+
 
 %if_with desklaunch
 %package desklaunch
@@ -113,6 +118,20 @@ desklaunch plug-in для менеджера автозапуска програ
 Плагин запускает desklaunch только при наличии ~/.desklaunchrc.
 %endif #desklaunch
 
+
+%package fbxkb
+Group: Graphical desktop/Icewm
+Summary: fbxkb autostart at IceWM startup
+Summary(ru_RU.UTF-8): автозапуск fbxkb при старте IceWM
+Requires: %name fbxkb
+AutoReq: no
+
+%description fbxkb
+fbxkb plug-in for simple pluggable IceWM autostart manager.
+%description -l ru_RU.UTF-8 fbxkb
+fbxkb plug-in для менеджера автозапуска программ при старте IceWM.
+
+
 %package gkrellm
 Group: Graphical desktop/Icewm
 Summary: gkrellm autostart at IceWM startup
@@ -127,6 +146,7 @@ gkrellm plug-in for simple pluggable IceWM autostart manager.
 запуск gkrellm при старте IceWM
 (Требует менеджер автозапуска программ IceWM).
 
+
 %package grun
 Group: Graphical desktop/Icewm
 Summary: setup Run dialog
@@ -139,6 +159,7 @@ menu item in the root menu.
 %description -l ru_RU.UTF-8 grun
 запуск grun для обеспечения возможности запуска программ с помощью
 пункта «Выполнить...» в главном меню.
+
 
 %package idesk
 Group: Graphical desktop/Icewm
@@ -153,6 +174,7 @@ idesk plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 idesk
 idesk plug-in для менеджера автозапуска программ при старте IceWM.
 
+
 %if_with ivman
 %package ivman
 Group: Graphical desktop/Icewm
@@ -166,6 +188,7 @@ ivman plug-in for simple pluggable IceWM autostart manager.
 %description -l ru_RU.UTF-8 ivman
 ivman plug-in для менеджера автозапуска программ IceWM.
 %endif
+
 
 %package mount-tray
 Group: Graphical desktop/Icewm
@@ -187,6 +210,7 @@ mount-tray - это небольшой аплет для монтировани�
 
 Установите этот пакет, если вы хотите запускать mount-tray при старте IceWM.
 
+
 %package networkmanager
 Group: Graphical desktop/Icewm
 Summary: start gnome networkmanager applet
@@ -200,6 +224,7 @@ NetworkManager plug-in for simplify network configuration.
 Start the NetworkManager applet in tray.
 %description -l ru_RU.UTF-8 networkmanager
 Запуск NetworkManager applet для упрощения настройки сетевых подключений
+
 
 %package notification-daemon
 Group: Graphical desktop/Icewm
@@ -218,6 +243,7 @@ This package provides notification-daemon plug-in for IceWM autostart manager.
 notification-daemon используется для отображения уведомлений от других программ.
 Установите этот пакет, если вы хотите запускать notification-daemon при старте IceWM.
 
+
 %package pnmixer
 Group: Graphical desktop/Icewm
 Summary: pnmixer autostart at IceWM startup
@@ -228,6 +254,7 @@ AutoReq: no
 %description pnmixer
 pnmixer plug-in for simple sound volume control.
 
+
 %package polkit-gnome
 Group: Graphical desktop/Icewm
 Summary: polkit-gnome autostart at IceWM startup
@@ -237,6 +264,7 @@ AutoReq: no
 
 %description polkit-gnome
 polkit-gnome plug-in for polkit authentication agent autostart.
+
 
 %package redshift-gtk
 Group: Graphical desktop/Icewm
@@ -249,6 +277,7 @@ AutoReq: no
 redshift-gtk plug-in for screen brightness control.
 Redshift should be configured first in ~/.config/redshift.conf.
 
+
 %package simple-sound
 Group: Graphical desktop/Icewm
 Summary: Startup and shutdown simple sound for IceWM
@@ -260,6 +289,7 @@ AutoReq: no
 Startup and shutdown simple sound for IceWM.
 %description -l ru_RU.UTF-8 simple-sound
 Простейшие звуки при старте и выключении IceWM.
+
 
 %if_with spacefm
 %package spacefm
@@ -275,6 +305,7 @@ spacefm plug-in for simple pluggable IceWM autostart manager.
 spacefm plug-in для менеджера автозапуска программ IceWM.
 %endif
 
+
 %package tray_mixer_plus
 Group: Graphical desktop/Icewm
 Summary: start simple tray sound volume control
@@ -283,6 +314,7 @@ AutoReq: no
 
 %description tray_mixer_plus
 tray_mixer_plus plug-in for simple sound volume control.
+
 
 %package update-menus
 Group: Graphical desktop/Icewm
@@ -301,6 +333,7 @@ update-menus plug-in для менеджера автозапуска прогр
 не пользуется общесистемным меню, а предпочитает
 локальное меню из ~/.icewm/menu.
 
+
 %if_with xtdesktop
 %package xtdesktop
 Group: Graphical desktop/Icewm
@@ -317,6 +350,7 @@ xtdesktop plug-in для менеджера автозапуска програ�
 Плагин запускает xtdesktop только при наличии ~/.xtdeskrc.
 %endif #xtdesktop
 
+
 %package xscreensaver
 Group: Graphical desktop/Icewm
 Summary: add xscreensaver to icewm session
@@ -328,6 +362,7 @@ AutoReq: no
 xscreensaver plug-in for icewm startup.
 %description -l ru_RU.UTF-8 xscreensaver
 Включение хранителя экрана xscreensaver для IceWM.
+
 
 %package xxkb
 Group: Graphical desktop/Icewm
@@ -344,6 +379,7 @@ xxkb plug-in for simple pluggable IceWM autostart manager.
 xxkb plug-in для менеджера автозапуска программ при старте IceWM.
 Плагин запускает xxkb только при наличии ~/.xxkbrc или
 /etc/X11/app-defaults/XXkb.
+
 
 %package xxkb-tray
 Group: Graphical desktop/Icewm
@@ -544,23 +580,35 @@ EOF
 cp %buildroot/%icewmconfdir/startup.d/060-xxkb %buildroot/%icewmconfdir/startup.d/060-xxkb-tray
 
 echo 'tray_mixer_plus&' > %buildroot/%icewmconfdir/startup.d/070-tray_mixer_plus
+
 echo '/usr/bin/nm-applet&' > %buildroot/%icewmconfdir/startup.d/080-networkmanager
 
-echo 'apt-indicator&'> %buildroot/%icewmconfdir/startup.d/apt-indicator
+echo 'apt-indicator&' > %buildroot/%icewmconfdir/startup.d/apt-indicator
+
 %if_with blueberry
-echo 'blueberry-tray&'> %buildroot/%icewmconfdir/startup.d/blueberry-tray
+echo 'blueberry-tray&' > %buildroot/%icewmconfdir/startup.d/blueberry-tray
 %endif
-echo 'xtoolwait gkrellm'> %buildroot/%icewmconfdir/startup.d/gkrellm
-echo 'mount-tray&'> %buildroot/%icewmconfdir/startup.d/mount-tray
+
+echo 'fbxkb&' > %buildroot/%icewmconfdir/startup.d/fbxkb
+
+echo 'xtoolwait gkrellm' > %buildroot/%icewmconfdir/startup.d/gkrellm
+
 %if_with ivman
-echo 'ivman&'> %buildroot/%icewmconfdir/startup.d/ivman
+echo 'ivman&' > %buildroot/%icewmconfdir/startup.d/ivman
 %endif
-echo "/usr/libexec/notification-daemon&" > %buildroot/%icewmconfdir/startup.d/notification-daemon
-echo "pnmixer&" > %buildroot/%icewmconfdir/startup.d/pnmixer
-echo "/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&" > %buildroot/%icewmconfdir/startup.d/polkit-gnome
+
+echo 'mount-tray&' > %buildroot/%icewmconfdir/startup.d/mount-tray
+
+echo '/usr/libexec/notification-daemon&' > %buildroot/%icewmconfdir/startup.d/notification-daemon
+
+echo 'pnmixer&' > %buildroot/%icewmconfdir/startup.d/pnmixer
+
+echo '/usr/libexec/polkit-1/polkit-gnome-authentication-agent-1&' > %buildroot/%icewmconfdir/startup.d/polkit-gnome
+
 %if_with spacefm
-echo "spacefm --desktop&" > %buildroot/%icewmconfdir/startup.d/spacefm
+echo 'spacefm --desktop&' > %buildroot/%icewmconfdir/startup.d/spacefm
 %endif
+
 echo 'xscreensaver -nosplash&'> %buildroot/%icewmconfdir/startup.d/xscreensaver
 
 %define startup_if_config() \
@@ -647,6 +695,9 @@ fi
 %config %icewmconfdir/startup.d/desklaunch
 %endif #desklaunch
 
+%files fbxkb
+%config %icewmconfdir/startup.d/fbxkb
+
 %files gkrellm
 %config %icewmconfdir/startup.d/gkrellm
 
@@ -709,6 +760,10 @@ fi
 %icewmconfdir/XXkb.conf
 
 %changelog
+* Wed Apr 16 2025 Dmitriy Khanzhin <jinn@altlinux.org> 0.217-alt1
+- added fbxkb
+- enabled build spacefm again
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 0.216-alt2
 - NMU: disable build icewm-startup-spacefm
 
