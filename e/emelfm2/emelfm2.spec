@@ -1,29 +1,31 @@
 Name: emelfm2
 Version: 0.9.0
-Release: alt2
+Release: alt3
 
 Summary: file manager for UNIX-like operating systems
 License: GPLv3+
 Group: File tools
-Url: http://emelfm2.net
 
+Url: http://emelfm2.net
 Source: %name-%version.tar
 
 BuildRequires: libgimp-devel libacl-devel libgtk+2-devel libgtkspell-devel libudisks2-devel libdbus-glib-devel libmagic-devel
 
 %description
-emelFM2 is a file manager for UNIX-like operating systems. It uses a
-simple and efficient interface pioneered by Norton Commander, in the
+emelFM2 is a file manager for UNIX-like operating systems. It uses
+a simple and efficient interface pioneered by Norton Commander in the
 1980s. The main window is divided into three parts, described as "panes"
 or "panels". Two of those (side-by-side or top-to-bottom) show the
-contents of selected filesystem directories. The third pane, at the
-bottom of the window, shows the output of commands executed within the
-program. Those panes can be resized, and any one or two of them can be
-hidden and unhidden, on request. A built-in command-line, toolbar
+contents of selected filesystem directories. The third pane at the
+bottom of the window shows the output of commands executed within the
+program. Those panes can be resized, and any one or two of them can
+be hidden and unhidden, on request. A built-in command-line, toolbar
 buttons or assigned keys can be used to initiate commands.
 
 %prep
-%setup -q
+%setup
+# lcc 1.29/e2k fixup (remove when updating to 0.9.1)
+sed -i 's/GTK_STOCK_DISCARD "/"gtk-discard" "/' src/e2_main.c
 
 %build
 %add_optflags -fcommon
@@ -39,9 +41,9 @@ make install install_i18n \
              PREFIX=%buildroot%_prefix \
              PLUGINS_DIR=%buildroot%_libdir/%name/plugins
 for size in 24 32 48; do
-    mkdir -p %buildroot/%_iconsdir/hicolor/${size}x$size/apps
+    mkdir -p %buildroot%_iconsdir/hicolor/${size}x$size/apps
     cp  %buildroot%_pixmapsdir/%name/%{name}_$size.png \
-        %buildroot/%_iconsdir/hicolor/${size}x$size/apps/%name.png
+        %buildroot%_iconsdir/hicolor/${size}x$size/apps/%name.png
 done
 
 %find_lang %name
@@ -58,7 +60,15 @@ done
 %_liconsdir/%name.png
 %_datadir/doc/%name-%version
 
+# TODO: update to 0.9.1 after review; cf. ALT#54033
+# (trac instance at emelfm2.net looks compromised
+# as of 2024-04-28 with shady links added there)
+
 %changelog
+* Mon Apr 28 2025 Michael Shigorin <mike@altlinux.org> 0.9.0-alt3
+- minor spec cleanup
+- E2K: fix build with lcc 1.29.09 (ilyakurdyukov@)
+
 * Thu Dec 17 2020 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.9.0-alt2
 - Added -fcommon to %%optflags to fix FTBFS with gcc10.
 
