@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.4
+Version: 1.4.0
 Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
@@ -53,6 +53,8 @@ heap.
 
 %prep
 %setup
+sed -i 's/license = "MIT"/license = {file = "LICENSE"}/' pyproject.toml
+sed -i '/license-files/d' pyproject.toml
 
 %build
 %pyproject_build
@@ -73,6 +75,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Apr 28 2025 Anton Vyatkin <toni@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
 - Automatically updated to 1.3.4.
 
