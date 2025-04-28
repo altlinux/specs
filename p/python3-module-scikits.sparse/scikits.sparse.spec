@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.15
+Version: 0.4.16
 Release: alt1
 
 Summary: Sparse matrix tools extending scipy.sparse, but with incompatible licenses
@@ -106,6 +106,9 @@ py.test-3 -ra --pyargs sksparse
 
 
 %changelog
+* Mon Apr 28 2025 Anton Vyatkin <toni@altlinux.org> 0.4.16-alt1
+- New version 0.4.16.
+
 * Sun Aug 04 2024 Anton Vyatkin <toni@altlinux.org> 0.4.15-alt1
 - New version 0.4.15.
 
