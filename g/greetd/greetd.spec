@@ -6,7 +6,7 @@
 %define _pseudouser_home     %_var/empty
 
 Name: greetd
-Version: 0.10.0
+Version: 0.10.3
 Release: alt1
 Summary: Generic greeter daemon
 License: GPL-3.0
@@ -27,9 +27,27 @@ BuildRequires: rust-cargo
 BuildRequires: libpam-devel
 BuildRequires: scdoc
 
+Requires: greetd-greeter
+
 %description
 greetd is a minimal and flexible login manager daemon
 that makes no assumptions about what you want to launch.
+
+%package agreety
+Summary: A text-based greeter for greetd
+Group: Graphical desktop/Other
+Requires: greetd
+Provides: greetd-greeter
+
+%description agreety
+%summary.
+
+%package fakegreet
+Summary: Test utility for greeter development
+Group: Development/Tools
+
+%description fakegreet
+%summary.
 
 %prep
 %setup -a1
@@ -77,6 +95,7 @@ popd
 %install
 install -Dm755 target/release/greetd %buildroot%_bindir/greetd
 install -Dm755 target/release/agreety %buildroot%_bindir/agreety
+install -Dm755 target/release/fakegreet %buildroot%_bindir/fakegreet
 
 pushd man
 for s in 1 5 7
@@ -94,8 +113,14 @@ install -Dm644 greetd.service %buildroot%_unitdir/greetd.service
 echo 'u _greeter - "greetd greeter user" - /bin/bash' |
 	install -Dm644 /dev/stdin %buildroot/lib/sysusers.d/greetd.conf
 
+mkdir -p %buildroot%_sysconfdir/greetd/greeters
+
 install -Dm644 %SOURCE2 %buildroot%_sysconfdir/pam.d/greetd
-install -Dm644 config.toml %buildroot%_sysconfdir/greetd/config.toml
+install -Dm644 config.toml %buildroot%_sysconfdir/greetd/greeters/agreety.toml
+
+mkdir -p %buildroot%_altdir
+echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/agreety.toml 100" \
+	> %buildroot%_altdir/greetd-agreety
 
 %pre
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
@@ -105,17 +130,31 @@ install -Dm644 config.toml %buildroot%_sysconfdir/greetd/config.toml
 %files
 %doc LICENSE
 %doc README.md
+%_bindir/greetd
 %dir %_sysconfdir/greetd
-%config(noreplace) %_sysconfdir/greetd/config.toml
 %config(noreplace) %_sysconfdir/pam.d/greetd
 %_unitdir/greetd.service
 /lib/sysusers.d/greetd.conf
-%_bindir/*
-%_man1dir/*.1*
-%_man5dir/*.5*
-%_man7dir/*.7*
+%_man1dir/greetd-*.1*
+%_man5dir/greetd-*.5*
+%_man7dir/greetd-*.7*
+
+%files agreety
+%_bindir/agreety
+%_altdir/greetd-agreety
+%config(noreplace) %_sysconfdir/greetd/greeters/agreety.toml
+%_man1dir/agreety-*.1*
+
+%files fakegreet
+%_bindir/fakegreet
 
 %changelog
+* Mon Mar 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.10.3-alt1
+- NMU:
+  + new version 0.10.3
+  + add agreety and fakegreet subpackages
+  + add alternatives for the config
+
 * Fri Apr 26 2024 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - NMU:
   + update to upstream version 0.10.0

@@ -3,7 +3,7 @@
 
 Name: wlgreet
 Version: 0.5.0
-Release: alt2
+Release: alt3
 Summary: Wayland greeter for greetd
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -11,6 +11,8 @@ Url: https://git.sr.ht/~kennylevinsen/wlgreet
 VCS: https://git.sr.ht/~kennylevinsen/wlgreet
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Source2: %name-conf-sway
+Source3: %name-conf-hyprland
 
 #Support loongarch64 fix
 Patch3500: wlgreet-0.5.0-alt-loongarch64_nix_vendor_fix.patch
@@ -20,11 +22,32 @@ BuildRequires: rust
 BuildRequires: rust-cargo
 BuildRequires: cargo-vendor-checksum
 
+Requires: greetd
+Provides: greetd-greeter
+
 %description
 Raw wayland greeter for greetd, to be run under sway or similar.
 
 Note that cage is currently not supported
 due to it lacking wlr-layer-shell-unstable support.
+
+%package config-sway
+Summary: Configuration for launching wlgreet with Sway
+Group: Graphical desktop/Other
+BuildArch: noarch
+Requires: wlgreet
+
+%description config-sway
+%summary.
+
+%package config-hyprland
+Summary: Configuration for launching wlgreet with Hyprland.
+Group: Graphical desktop/Other
+BuildArch: noarch
+Requires: wlgreet
+
+%description config-hyprland
+%summary.
 
 %prep
 %setup -a1
@@ -62,6 +85,31 @@ cargo build \
 %install
 install -Dm755 target/release/wlgreet %buildroot%_bindir/wlgreet
 
+# configs
+install -vD %SOURCE2 %buildroot%_sysconfdir/greetd/wlgreet-conf-sway
+install -vD %SOURCE3 %buildroot%_sysconfdir/greetd/wlgreet-conf-hyprland
+
+mkdir -p %buildroot%_altdir
+mkdir -p %buildroot%_sysconfdir/greetd/greeters
+
+for i in sway hyprland; do
+cat > %buildroot%_sysconfdir/greetd/greeters/wlgreet-$i.toml <<EOF
+[terminal]
+vt = 1
+
+[default_session]
+command = "$i -c %_sysconfdir/greetd/wlgreet-conf-$i"
+user = "_greeter"
+EOF
+done
+
+# sway
+echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/wlgreet-sway.toml 15" \
+	> %buildroot%_altdir/greetd-wlgreet-sway
+# hyprland
+echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/wlgreet-hyprland.toml 20" \
+	> %buildroot%_altdir/greetd-wlgreet-hyprland
+
 %check
 cargo test --release
 
@@ -70,7 +118,22 @@ cargo test --release
 %doc README.md
 %_bindir/*
 
+%files config-sway
+%_altdir/greetd-wlgreet-sway
+%config(noreplace) %_sysconfdir/greetd/greeters/wlgreet-sway.toml
+%config(noreplace) %_sysconfdir/greetd/wlgreet-conf-sway
+
+%files config-hyprland
+%_altdir/greetd-wlgreet-hyprland
+%config(noreplace) %_sysconfdir/greetd/greeters/wlgreet-hyprland.toml
+%config(noreplace) %_sysconfdir/greetd/wlgreet-conf-hyprland
+
 %changelog
+* Sun Mar 09 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.5.0-alt3
+- NMU:
+  + add hyprland and sway configs
+  + add greetd-greeter provides
+
 * Sat Jun 22 2024 Aleksei Kalinin <kaa@altlinux.org> 0.5.0-alt2
 - NMU: Patched vendor nix for loongarch64 support
 
