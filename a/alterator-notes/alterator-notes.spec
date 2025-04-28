@@ -3,7 +3,7 @@
 
 Name: alterator-notes
 Version: 1.5.1
-Release: alt4
+Release: alt5
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
@@ -53,6 +53,7 @@ for n in license ; do
 	%buildroot/%_desktopdir/%name-$n.desktop
     desktop-file-install --mode=0644 --dir %buildroot/%_desktopdir \
 	--add-category=System \
+	--add-category=Documentation \
 	--set-icon=alt-distro-logo \
 	--set-key=Exec \
 	--set-value="alterator-notes-show $n" \
@@ -75,6 +76,9 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt5
+- correct dekstop-file category
+
 * Fri Apr 25 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt4
 - don't package release notes menu entry
 
