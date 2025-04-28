@@ -2,8 +2,8 @@
 
 Name: %srcname
 Version: 3.5.0
-Release: alt1
-Summary: A keyboard-driven, vim-like browser based on PyQt5 and QtWebEngine
+Release: alt2
+Summary: A keyboard-driven, vim-like browser based on PyQt6 and QtWebEngine
 License: GPLv3
 Group: Networking/WWW
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
 BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
-BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt5
+BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt6
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -37,7 +37,7 @@ Provides: python3(qutebrowser.components.utils)
 
 %description
 qutebrowser is a keyboard-focused browser with a minimal GUI. It's based on
-Python, PyQt5 and QtWebEngine and free software, licensed under the GPL.
+Python, PyQt6 and QtWebEngine and free software, licensed under the GPL.
 It was inspired by other browsers/addons like dwb and Vimperator/Pentadactyl.
 
 %prep
@@ -102,6 +102,9 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Fri Apr 25 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt2
+- Update BuildRequires: to python3-module-PyQt6 (Closes: #53975)
+
 * Wed Apr 23 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt1
 - 3.5.0
 
