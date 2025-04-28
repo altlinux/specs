@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.8
+Version: 1.4.0
 Release: alt1
 Summary: ASCII transliterations of Unicode text
 License: GPLv2
@@ -53,6 +53,9 @@ an article title).
 %python3_sitelibdir/Unidecode-%version.dist-info
 
 %changelog
+* Mon Apr 28 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Mon Jun 03 2024 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1
 - Automatically updated to 1.3.8.
 
