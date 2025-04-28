@@ -5,7 +5,7 @@
 
 Name: liblief
 Version: 0.12.3
-Release: alt2
+Release: alt3
 
 Summary: Library to instrument executable formats
 License: Apache-2.0
@@ -69,6 +69,8 @@ Requires: %name
 %build
 # debug and parallel jobs
 sed -i "s|inplace=1|inplace=1\ndebug=1\nparallel=%_smp_build_ncpus|" setup.cfg
+# fix FTBFS with cmake4
+sed -i 's|cmake_args = \[|cmake_args = ["-DCMAKE_POLICY_VERSION_MINIMUM=3.5", |' setup.py
 %pyproject_build
 
 %check
@@ -130,6 +132,9 @@ find build/*/include/ -name leaf.hpp -exec cp "{}" %LIEF_DIR_internal \;
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 28 2025 Vasiliy Kovalev <kovalev@altlinux.org> 0.12.3-alt3
+- Fix FTBFS with cmake4
+
 * Mon Sep 23 2024 Vasiliy Kovalev <kovalev@altlinux.org> 0.12.3-alt2
 - tests/pe/test_authenticode.py: Fix expired certificate
 
