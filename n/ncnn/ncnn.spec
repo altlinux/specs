@@ -13,7 +13,7 @@
 %endif
 
 Name: ncnn
-Version: 20241226
+Version: 20250427
 Release: alt1
 
 Summary: Mobile neural network inference framework
@@ -21,6 +21,7 @@ Summary: Mobile neural network inference framework
 License: BSD-3-Clause
 Group: Engineering
 Url: https://github.com/Tencent/ncnn
+Vcs: https://github.com/Tencent/ncnn.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
@@ -28,7 +29,7 @@ Source1: vendor.tar
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Tue Oct 31 2023
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 glslang libgpg-error libp11-kit libsasl2-3 libspirv-tools0 libstdc++-devel python3 python3-base sh5
-BuildRequires: cmake glslang-devel libgomp-devel libprotobuf-devel libvulkan-devel protobuf-compiler python3-devel
+BuildRequires: cmake glslang-devel libgomp-devel libprotobuf-devel libvulkan-devel protobuf-compiler python3-devel libopencv-devel
 
 %if_enabled clang
 BuildRequires: clang-devel
@@ -150,6 +151,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Mon Apr 28 2025 Leontiy Volodin <lvol@altlinux.org> 20250427-alt1
+- New version 20250427.
+- Added vcs tag.
+
 * Thu Dec 26 2024 Leontiy Volodin <lvol@altlinux.org> 20241226-alt1
 - New version 20241226.
 
