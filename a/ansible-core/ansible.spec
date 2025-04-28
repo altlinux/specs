@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.18.4
+Version: 2.18.5
 Release: alt1
 
 License: GPL-3.0
@@ -87,6 +87,10 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Mon Apr 28 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.5-alt1
+- New version.
+- Added security fix information for ansible 2.18.x.
+
 * Fri Mar 28 2025 Andrey Cherepanov <cas@altlinux.org> 2.18.4-alt1
 - New version.
 
@@ -101,9 +105,14 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 
 * Sat Dec 07 2024 Andrey Cherepanov <cas@altlinux.org> 2.18.1-alt1
 - New version.
+- Security fixes:
+  + CVE-2024-11079: Templating will not prefer AnsibleUnsafe when a variable is referenced via hostvars
 
 * Sun Nov 17 2024 Andrey Cherepanov <cas@altlinux.org> 2.18.0-alt1
 - New version.
+- Security fixes:
+  + CVE-2024-8775 include_vars action - Ensure that result masking is correctly requested when vault-encrypted files are read
+  + CVE-2024-9902 user action won't allow ssh-keygen, chown and chmod to run on existing ssh public key file, avoiding traversal on existing symlinks
 
 * Sun Oct 13 2024 Andrey Cherepanov <cas@altlinux.org> 2.17.5-alt1
 - New version.
