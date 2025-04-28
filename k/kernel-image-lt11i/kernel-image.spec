@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: kernel-image-lt11i
-Release: alt13
+Release: alt14
 epoch:1
 %define kernel_need_version	6.1
 # Used when kernel-source-x.y does not currently exist in repository.
@@ -424,6 +424,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Apr 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt14
+- MIG-LT11i_defconfig: CONFIG_CIFS=m
+
 * Wed Oct 23 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.1.55-alt13
 - MIG-LT11i_defconfig: CONFIG_FW_LOADER_COMPRESS_XZ=y
 
