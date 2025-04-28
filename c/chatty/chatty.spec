@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name Chatty
 %define _libexecdir %_prefix/libexec
@@ -19,7 +19,7 @@
 
 Name: chatty
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
 Group: Networking/Instant messaging
@@ -34,6 +34,10 @@ Source: https://gitlab.gnome.org/World/Chatty/-/archive/v%version/%name-v%versio
 Source: %name-%version.tar
 %endif
 Source1: libcmatrix-%cmatrix_ver.tar
+# https://bugzilla.altlinux.org/54030
+# https://gitlab.gnome.org/World/Chatty/-/merge_requests/1473
+# revert this
+Patch10: chatty-0.8.7-up-70d1ba4ebaa43937dd304b733ceed9c8c0296900.diff
 
 %define glib_ver 2.78
 %define gtk4_ver 4.12
@@ -79,6 +83,7 @@ supporting SMS, MMS, XMPP and matrix.
 %prep
 %setup -n %{?_enable_snapshot:%name-%version}%{?_disable_snapshot:%_name-v%version-%tag_ver} -a1
 mv libcmatrix-%cmatrix_ver subprojects/libcmatrix
+%patch10 -p1 -R
 
 %build
 %meson
@@ -87,16 +92,18 @@ mv libcmatrix-%cmatrix_ver subprojects/libcmatrix
 
 %install
 %meson_install
+
+
 %find_lang --with-gnome --output=%name.lang purism-%name %name
 
 %check
 xvfb-run %__meson_test
 
 %files -f %name.lang
-%_sysconfdir/xdg/autostart/%rdn_name1-daemon.desktop
+%_sysconfdir/xdg/autostart/%rdn_name-daemon.desktop
 %_bindir/%name
-%_desktopdir/%rdn_name1.desktop
-%_datadir/metainfo/%rdn_name1.metainfo.xml
+%_desktopdir/%rdn_name.desktop
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/*/*.svg
@@ -104,6 +111,11 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Apr 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt2
+- v0.8.7-1-gd17ad8e (updated russian translation)
+- restored desktop/metainfo file names
+  accidentally changed in previous version (ALT #54030)
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt1
 - 0.8.7
 
