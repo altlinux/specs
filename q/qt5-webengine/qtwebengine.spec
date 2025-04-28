@@ -32,8 +32,8 @@
 #endif
 
 Name: qt5-webengine
-Version: 5.15.17
-Release: alt2
+Version: 5.15.18
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtWebEngine components
@@ -52,6 +52,7 @@ Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 Patch8: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
 Patch9: qtwebengine-opensource-src-5.15.5-webrtc-neon-detect.patch
 Patch10: qtwebengine-skia-missing-includes.patch
+Patch11: qtwebengine-icu75.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
@@ -206,6 +207,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 #
 #%patch30 -p1
 %patch31 -p1
@@ -465,6 +467,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt1
+- new version
+
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt3
+- fix compile with new icu
+
 * Mon Sep 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt2
 - fix find python3
 

@@ -6,7 +6,7 @@
 
 Name: qt5-location
 Version: 5.15.16
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtLocation component
@@ -14,8 +14,16 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-everywhere-src-%version.tar
-Patch1: gcc13-compilefix.patch
-Patch2: gcc14-compilefix.patch
+Patch100: 0001-Fix-appendChildNode-call.patch
+Patch101: 0005-Fix-build-of-Qt.labs.location-QML-plugin.patch
+Patch102: 0006-Fix-HereMap-plugin-not-supporting-authentication-via.patch
+Patch103: 0100-Add-some-missing-cstdint-inclusions-872.patch
+Patch104: 0101-Add-missing-include.patch
+Patch105: 0102-Removed-non-compiling-assignment-operator.-Fixed-718.patch
+Patch106: 0103-Explicitly-disable-copy-assignment-operator.patch
+Patch107: 0104-Fix-build-with-ICU-75.patch
+Patch108: 0200-Bump-mapbox-gl-native-deps.patch
+Patch109: 0201-mapbox-gl-fix-smart-ptr.patch
 
 # Automatically added by buildreq on Wed Aug 23 2017 (-bi)
 # optimized out: elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGL-devel libdbus-devel libdbus-glib libdbus-glib-devel libgpg-error libqt5-clucene libqt5-core libqt5-dbus libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-widgets libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 ruby ruby-stdlibs
@@ -28,7 +36,7 @@ BuildRequires: libicu-devel zlib-devel libssl-devel
 BuildRequires(pre): qt5-tools
 %endif
 # 3rdparty
-BuildRequires: boost-geometry-devel
+BuildRequires: boost-geometry-devel rapidjson-devel
 
 %description
 The Qt Positioning API gives developers the ability to determine a position
@@ -103,8 +111,16 @@ Requires: qt5-quickcontrols
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
-%patch2 -p1
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+#%patch108 -p1
+#%patch109 -p1
 syncqt.pl-qt5 -version %version
 
 %build
@@ -161,6 +177,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt2
+- add upstream fixes
+
 * Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
 - new version
 
