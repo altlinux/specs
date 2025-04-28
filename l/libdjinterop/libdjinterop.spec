@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: libdjinterop
-Version: 0.22.1
+Version: 0.24.3
 Release: alt1
 
 Summary: C++ library for access to DJ record libraries
@@ -72,15 +72,21 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_includedir/djinterop/
 %dir %_includedir/djinterop/engine/
 %dir %_includedir/djinterop/engine/v2/
+%dir %_includedir/djinterop/engine/v3/
 %_includedir/djinterop/*.hpp
 %_includedir/djinterop/engine/*.hpp
 %_includedir/djinterop/engine/v2/*.hpp
+%_includedir/djinterop/engine/v3/*.hpp
 %dir %_libdir/cmake/DjInterop/
 %_libdir/cmake/DjInterop/*.cmake
 %_pkgconfigdir/djinterop.pc
 %_libdir/%name.so
 
 %changelog
+* Mon Apr 28 2025 Leontiy Volodin <lvol@altlinux.org> 0.24.3-alt1
+- New version 0.24.3.
+- Added vcs tag.
+
 * Fri Nov 29 2024 Leontiy Volodin <lvol@altlinux.org> 0.22.1-alt1
 - New version 0.22.1.
 
