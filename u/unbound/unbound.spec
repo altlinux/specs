@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: unbound
-Version: 1.22.0
+Version: 1.23.0
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -122,7 +122,7 @@ Python3 modules and extensions for unbound
 	    --with-pythonmodule --with-pyunbound \
 %endif
 	    --enable-sha2
-%make
+%make_build
 
 subst 's|# auto-trust-anchor-file:|auto-trust-anchor-file:|g' doc/example.conf
 
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Mon Apr 28 2025 Alexei Takaseev <taf@altlinux.org> 1.23.0-alt1
+- 1.23.0
+
 * Thu Oct 17 2024 Alexei Takaseev <taf@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
