@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt4
+Release: alt5
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -267,6 +267,7 @@ Obsoletes: indexhtml-desktop indexhtml-Desktop
 
 Requires: xdg-utils
 Requires: docs-alt-%theme
+Requires: shared-desktop-icons
 Requires: menu-icons-default
 Requires(post): indexhtml-common
 
@@ -366,9 +367,15 @@ fi
 %_defaultdocdir/indexhtml/*
 %_desktopdir/*
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
+%attr(0755,root,root) %_datadir/Desktop/indexhtml.desktop
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Apr 28 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
+- indexhtml: add runtime dependency on shared-desktop-icons again
+- indexhtml: replace absolute links with relative links
+- gnome-settings: do not hide trash icon on Desktop
+
 * Fri Apr 11 2025 Semen Fomchenkov <armatik@altlinux.org> 11.0-alt4
 - gnome-settings: fix incorrect setting of dconf parameters
 
