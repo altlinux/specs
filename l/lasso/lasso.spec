@@ -10,7 +10,7 @@
 
 Name:    lasso
 Version: 2.8.2
-Release: alt4
+Release: alt5
 
 Summary: Liberty Alliance Single Sign On
 
@@ -30,6 +30,9 @@ Patch6:  lasso-web-update-visit-tracking-to-matomo.patch
 Patch7:  lasso-web-update-URLs-to-https.patch
 Patch8:  lasso-web-remove-mention-of-subversion-commits.patch
 Patch9:  lasso-web-update-mod_auth_mellon-to-new-namehome.patch
+Patch10: lasso-fedora-fix-openssl-implicit-declarations.patch
+Patch11: lasso-fedora-fix-removed-xmlsec-deprecations.patch
+Patch12: lasso-fedora-lasso-libxml2.patch
 
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel swig
@@ -256,6 +259,9 @@ make check
 %endif
 
 %changelog
+* Mon Apr 28 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.8.2-alt5
+- Fix build with libxmlsec1 and gcc14.
+
 * Fri Nov 15 2024 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt4
 - Fixed build with gcc14.
 
