@@ -1,5 +1,5 @@
 Name:    catkin
-Version: 0.8.11
+Version: 0.8.12
 Release: alt1
 
 Summary: A CMake-based build system that is used to build all packages in ROS.
@@ -46,6 +46,9 @@ some parts of ROS.
 %_datadir/%name
 
 %changelog
+* Mon Apr 28 2025 Andrey Cherepanov <cas@altlinux.org> 0.8.12-alt1
+- New version.
+
 * Fri Apr 11 2025 Andrey Cherepanov <cas@altlinux.org> 0.8.11-alt1
 - New version.
 
