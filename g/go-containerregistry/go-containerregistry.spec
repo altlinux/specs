@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    go-containerregistry
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: This is a golang library for working with container registries
@@ -90,5 +90,8 @@ install -Dm 644 gcrane.fish %buildroot%_datadir/fish/vendor_completions.d/gcrane
 %_datadir/fish/vendor_completions.d/gcrane.fish
 
 %changelog
+* Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.20.3-alt1
+- 0.20.2 -> 0.20.3
+
 * Tue Dec 17 2024 Nadezhda Fedorova <fedor@altlinux.org> 0.20.2-alt1
 - Initial build for ALTLinux.
