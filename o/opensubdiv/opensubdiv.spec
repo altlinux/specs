@@ -16,7 +16,7 @@
 
 Name: opensubdiv
 Version: %soname
-Release: alt4
+Release: alt4.1
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: Apache-2.0
@@ -42,7 +42,7 @@ BuildRequires: python3-module-docutils doxygen graphviz
 # examples
 BuildRequires: libglfw3-devel libXrandr-devel libXxf86vm-devel libXcursor-devel libXinerama-devel libXi-devel libPtex-devel
 %if_with cuda
-BuildRequires: gcc%{gcc_ver}-c++ nvidia-cuda-devel
+BuildRequires: gcc%{gcc_ver}-c++ nvidia-cuda-devel libgomp%{gcc_ver}-devel
 %endif
 
 %description
@@ -166,6 +166,9 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Apr 28 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt4.1
+- Fix OMP compilation for CUDA case.
+
 * Thu Apr 24 2025 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt4
 - Improve -no-static patch.
 - devel: update requires.
