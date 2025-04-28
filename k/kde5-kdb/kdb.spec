@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.2.0
-Release: alt5
+Release: alt6
 %K5init altplace
 
 Group: System/Libraries
@@ -14,6 +14,8 @@ Url: http://www.kde.org
 License: LGPL-2.0-only
 
 Source: %rname-%version.tar
+Patch1: icu-7.6.patch
+Patch2: alt-cmake.patch
 
 # Automatically added by buildreq on Wed Nov 01 2017 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libpq-devel libqt5-core libqt5-gui libqt5-network libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel mariadb-client perl pkg-config python-base python-modules python-modules-compiler python3 python3-base python3-module-yieldfrom qt5-base-devel rpm-build-python3 ruby ruby-stdlibs
@@ -79,12 +81,15 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
+%patch2 -p1
 %ifarch %e2k
 # EDG frontend throws error for every "override [[nodiscard]]"
 sed -i '$a #undef Q_REQUIRED_RESULT\n#define Q_REQUIRED_RESULT' src/KDbConnection.h
 %endif
 
 %build
+%add_optflags -std=c++17
 export PATH=$PWD/bin:$PATH
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
@@ -125,6 +130,9 @@ sed -i 's|[[:space:]]KF5CoreAddons||' %buildroot/%_pkgconfigdir/KDb3.pc
 %_K5lib/libKDb3.so.*
 
 %changelog
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt6
+- fix build with new icu
+
 * Wed Apr 10 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.2.0-alt5
 - fix build for Elbrus
 
