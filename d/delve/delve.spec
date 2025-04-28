@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:           delve
-Version:        1.23.0
+Version:        1.24.2
 Release:        alt1
 
 Summary:        Delve is a debugger for the Go programming language
@@ -57,5 +57,8 @@ install -Dm 644 dlv.fish %buildroot%_datadir/fish/vendor_completions.d/dlv.fish
 %_datadir/fish/vendor_completions.d/*.fish
 
 %changelog
+* Tue Apr 15 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.24.2-alt1
+- 1.23.0 -> 1.24.2
+
 * Tue Aug 06 2024 Nadezhda Fedorova <fedor@altlinux.org> 1.23.0-alt1
 - Initial build for ALTLinux.
