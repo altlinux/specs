@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -324,6 +324,9 @@ popd
 
 
 %changelog
+* Sat Apr 26 2025 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- new version 4.0.1 (with rpmrb script)
+
 * Fri Apr 04 2025 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version 4.0.0 (with rpmrb script)
 
