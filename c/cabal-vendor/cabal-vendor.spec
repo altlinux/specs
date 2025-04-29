@@ -1,6 +1,6 @@
 Name: cabal-vendor
 
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: tool for vendoring dependencies of cabal package
@@ -28,13 +28,16 @@ Useful for vendoring and local builds (with rpm-build-haskell-vendored)
 %setup
 
 %install
-install -pm 755 -D -t %buildroot/%_bindir cabal-vendor
+install -pm 755 -D -t %buildroot/%_bindir cabal-vendor*
 cp -t . %SOURCE9 %SOURCE10
 
 %files
 %doc README LICENSE
-%_bindir/cabal-vendor
+%_bindir/cabal-vendor*
 
 %changelog
+* Tue Apr 29 2025 Leonid Znamenok <respublica@altlinux.org> 1.1.0-alt1
+- New version 1.1.0
+
 * Mon Apr 21 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus

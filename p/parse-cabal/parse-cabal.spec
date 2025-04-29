@@ -1,14 +1,14 @@
 Name: parse-cabal
 
 Version: 1.0.0
-Release: alt1
+Release: alt2
 License: BSD-3-Clause
 
 Group: Development/Haskell
 Url: https://hackage.haskell.org/package/parse-cabal
 
 Source: %name-%version.tar
-Source1: local-repo.tar
+Source1: vendor.tar
 
 Summary: A simple utility for retrieving information from a .cabal file
 
@@ -55,6 +55,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Apr 29 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.0-alt2
+- Rebuild with rpm-build-haskell 1.6.1
+
 * Tue Apr 22 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
 
