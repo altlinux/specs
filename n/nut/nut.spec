@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nut
-Version: 2.8.2
-Release: alt6
+Version: 2.8.3
+Release: alt1
 
 Summary: Network UPS Tools
 License:  GPLv2+ and GPLv3+
@@ -22,7 +22,7 @@ Source4: upsd.sysconfig
 Source104: libs.sh
 
 Patch0: nut-2.6.0-alt-upsstats.patch
-Patch1: nut-2.8.0-alt-usb.patch
+Patch1: nut-2.8.3-alt-usb.patch
 Patch2: nut-2.8.0-snmp-noAES.patch
 Patch3: nut-2.8.0-usb_submit_urb.patch
 Patch4: nut-2.8.0-alt-gdlib.patch
@@ -30,10 +30,8 @@ Patch5: nut-2.8.0-alt-fix-strip.patch
 Patch6: nut-2.8.0-alt-upssched-cmd.patch
 Patch7: nut-2.8.2-upsd-listen.patch
 Patch8: nut-2.8.2-alt-chroot.patch
-Patch9: nut-2.8.2-alt-upsdrvctl-list.patch
-Patch10: nut-2.8.2-alt-drivers.patch
-Patch11: nut-2.8.2-alt-systemd.patch
-Patch12: nut-2.8.2-upstream-deps-linking.patch
+Patch9: nut-2.8.3-alt-systemd.patch
+Patch10: nut-2.8.2-upstream-deps-linking.patch
 
 %def_with ssl
 %def_with cgi
@@ -365,9 +363,6 @@ ln -s nut-monitor.service %buildroot%_unitdir/upsmon.service
 ln -s nut-server.service %buildroot%_unitdir/upsd.service
 %endif
 
-# install PyNUT
-install -p -D -m 644 scripts/python/module/PyNUT.py %buildroot%python3_sitelibdir/PyNUT.py
-
 # remove unpackaged files
 rm -f %buildroot%_libdir/*.a
 
@@ -461,6 +456,9 @@ fi
 %_initdir/upsd
 %_initdir/upsdrv
 %if_with systemd
+%_presetdir/nut-systemd.preset
+%_unitdir/nut-logger.service
+%_unitdir/nut-udev-settle.service
 %_unitdir/nut-server.service
 %_unitdir/upsd.service
 %_unitdir/nut-driver@.service
@@ -592,13 +590,16 @@ fi
 %_man3dir/*
 
 %files -n python3-module-%name
-%python3_sitelibdir/PyNUT.py
-%python3_sitelibdir/__pycache__/PyNUT.*
-%python3_sitelibdir/test_nutclient.py
+%python3_sitelibdir_noarch/PyNUT.py
+%python3_sitelibdir_noarch/__pycache__/PyNUT.*
+%python3_sitelibdir_noarch/test_nutclient.py
 
 %changelog
+* Tue Apr 29 2025 Andrey Kovalev <ded@altlinux.org> 2.8.3-alt1
+- Updated to upstream version 2.8.3.
+
 * Tue Mar 25 2025 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt6
-- Fixed an error with the nut-driver and deps linking (closed: #51704)
+- Fixed an error with the nut-driver and deps linking (closes: #51704)
 
 * Thu Jan 21 2025 Andrey Kovalev <ded@altlinux.org> 2.8.2-alt5
 - Removed upsdrv.service (closes: #51566)
