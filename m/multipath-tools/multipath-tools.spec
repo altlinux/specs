@@ -5,9 +5,12 @@
 %define libmpathdir %syslibdir/multipath
 %define bindir %_sbindir
 
+# filter runtime dependency on systemctl (ALT bug 54047)
+%filter_from_requires /systemctl/d
+
 Name: multipath-tools
 Version: 0.11.1
-Release: alt2
+Release: alt3
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPL-2.0-only
@@ -210,6 +213,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Tue Apr 29 2025 Anton Midyukov <antohami@altlinux.org> 0.11.1-alt3
+- NMU: filter runtime dependency on systemctl (Closes: 54047)
+
 * Fri Apr 11 2025 Sergey Konev <darisishe@altlinux.org> 0.11.1-alt2
 - Added mpathconf utility
 - Patch: don't start multipathd without a config file
