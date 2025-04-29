@@ -2,7 +2,7 @@
 %define rdn_name dog.unix.cantata.Cantata
 
 Name: cantata
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 Summary: Qt Graphical MPD Client
 License: GPL-3.0
@@ -46,6 +46,9 @@ export PATH="%_qt6_bindir:$PATH"
 %doc README*
 
 %changelog
+* Tue Apr 29 2025 Andrey Kovalev <ded@altlinux.org> 3.3.1-alt1
+- Updated to upstream version 3.3.1.
+
 * Tue Jan 28 2025 Andrey Kovalev <ded@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0.
 - Added Vcs tag and other minor improvements.
