@@ -3,17 +3,21 @@
 
 Summary: A cross-platform graphical front-end for emulators
 Name: emulationstation-batocera
+Epoch: 1
 Version: 39
-Release: alt1.gitde2cc99
+Release: alt1.git07e87f4
 License: MIT
 Group: Emulators
-Url: https://github.com/batocera-linux/batocera-emulationstation
+Url: https://github.com/Maks1mS/batocera-emulationstation
 
-Source0: %{oname}-%{version}.tar.gz
+Source0: %{name}-%{version}.tar.gz
 Source1: es_icon.png
 # Sample config file
 Source2: es_systems.cfg
 Source3: themes.tar.gz
+Source4: run_emulationstation.sh
+
+Patch0: 0001-Switch-to-system-version-of-Pugixml.patch
 
 BuildRequires(Pre):  rpm-macros-cmake rpm-build-python3
 BuildRequires:  libalsa-devel
@@ -30,8 +34,10 @@ BuildRequires:  libpugixml-devel
 BuildRequires:  libcec-devel libudev-devel
 BuildRequires:  libSDL2-devel libSDL2_mixer-devel
 BuildRequires:  libglvnd-devel
+BuildRequires:  pkgconfig(sdbus-c++)
 
 Conflicts: emulationstation
+Obsoletes: emulationstation
 
 %description
 A graphical and themeable front-end for emulators with controller navigation:
@@ -44,7 +50,9 @@ forget to do this, the program will not run at all or will crash.
 This is version of original ES from Batocera project.
 
 %prep
-%setup -qn %{oname}-%{version} -a 3
+%setup -qn %{name}-%{version} -a 3
+
+%patch0 -p1
 
 # Fix perms
 chmod 0755 resources/help
@@ -55,9 +63,10 @@ cmake . \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DDISABLE_KODI=1 \
     -DENABLE_FILEMANAGER=0 \
+    -DEXPERIMENTAL_COMMON_LINUX=1 \
     -DUSE_SYSTEM_PUGIXML=1 -DCEC=0 \
 %ifarch aarch64
-    -DUSE_GLES2=1 
+    -DUSE_GLES2=1
 %else
     -DUSE_GL=1
 %endif
@@ -74,9 +83,10 @@ cp -r resources/* %{buildroot}%{_datadir}/%{name}/resources/
 mkdir -p %{buildroot}%{_sysconfdir}/%{name}/gamelists
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_datadir}/pixmaps/es_icon.png
 install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/%{name}/es_systems.cfg
+install -m 0775 %{SOURCE4} %{buildroot}%{_bindir}/run_emulationstation
 
 # Install themes
-mkdir -p %{buildroot}%{_sysconfdir}/%{name}/themes/simple
+mkdir -p %{buildroot}%{_sysconfdir}/%{name}/themes/
 cp -R ./themes %{buildroot}%{_sysconfdir}/%{name}/
 
 # Provide a .desktop file
@@ -88,7 +98,7 @@ GenericName=%{oname}
 Comment= A cross-platform graphical front-end for emulators
 Comment[it]= Un front-end grafico per emulatori multi-piattaforma
 Comment[ru]= Кросс-плаформенная графическая оболочка для эмуляторов
-Exec=%{oname}
+Exec=run_emulationstation
 Icon=es_icon
 StartupNotify=true
 Terminal=false
@@ -109,11 +119,21 @@ rm -rf %{buildroot}%{_includedir}
 %config(noreplace) %{_sysconfdir}/%{name}/themes/simple/*
 %config(noreplace) %{_sysconfdir}/%{name}/es_systems.cfg
 %{_bindir}/%oname
+%{_bindir}/run_emulationstation
 %{_datadir}/%{name}/
 %{_datadir}/pixmaps/es_icon.png
 %{_datadir}/applications/%{name}.desktop
 %_libexecdir/libid3v2.a
 
 %changelog
+* Fri Mar 21 2025 Artyom Bystrov <arbars@altlinux.org> 1:39-alt1.git07e87f4
+- Switch to fork of Maks1mS@ with next improvements:
+- Add basic common linux API system
+- Fixed query battery information for gaming handhelds
+- Switch power options on systemctl base
+- Basic bluetooth control support
+- Add TIMEZONES support
+- Update pugixml patch
+
 * Mon Sep 2 2024 Artyom Bystrov <arbars@altlinux.org> 39-alt1.gitde2cc99
 - Initial release
