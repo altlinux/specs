@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 7.4.10
+Version: 7.6.0
 Release: alt1
 
 Summary: Tryton server
@@ -28,6 +28,9 @@ BuildRequires: python3-module-polib
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-relatorio
 BuildRequires: python3-module-passlib
+BuildRequires: python3-module-simpleeval
+BuildRequires: python3-module-pwdlib
+BuildRequires: python3-module-argon2-cffi
 %endif
 
 %py_provides %oname
@@ -77,6 +80,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Tue Apr 29 2025 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
+- new version 7.6.0
+
 * Sun Apr 27 2025 Anton Vyatkin <toni@altlinux.org> 7.4.10-alt1
 - new version 7.4.10
 
