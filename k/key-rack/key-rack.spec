@@ -8,7 +8,7 @@
 
 Name: key-rack
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Key Rack
 License: GPL-3.0
@@ -26,7 +26,7 @@ Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
 %define gtk_ver 4.6
-%define adw_ver 1.3
+%define adw_ver 1.5
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
@@ -64,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
+- updated to 0.4.0-39-g689c6fd
+
 * Tue Jul 02 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - updated to 0.4.0-2-g0fbde30
 
