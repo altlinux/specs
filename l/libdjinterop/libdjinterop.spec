@@ -4,7 +4,7 @@
 
 Name: libdjinterop
 Version: 0.24.3
-Release: alt1
+Release: alt2
 
 Summary: C++ library for access to DJ record libraries
 
@@ -13,7 +13,8 @@ Group: System/Libraries
 Url: https://github.com/xsco/libdjinterop
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: libdjinterop-0.20.2-alt-fix-GNUInstallDirs.patch
+Patch0: %name-%version-%release.patch
+Patch1: libdjinterop-0.20.2-alt-fix-GNUInstallDirs.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake zlib-devel libsqlite3-devel
@@ -46,7 +47,7 @@ This package provides development files for %name.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -83,6 +84,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/%name.so
 
 %changelog
+* Tue Apr 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.24.3-alt2
+- Fixed c++ version check for gcc above 10 or clang above 12.
+
 * Mon Apr 28 2025 Leontiy Volodin <lvol@altlinux.org> 0.24.3-alt1
 - New version 0.24.3.
 - Added vcs tag.
