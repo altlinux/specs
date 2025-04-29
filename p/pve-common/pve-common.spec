@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 8.3.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -71,6 +71,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Tue Apr 29 2025 Sergey Konev <darisishe@altlinux.org> 8.3.1-alt2
+- Suppress harmless warnings during user.cfg access (Closes: 54052)
+
 * Tue Apr 15 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.1-alt1
 - 8.3.1 
 
