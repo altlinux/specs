@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.03.1
+Version: 25.04.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -28,13 +28,15 @@ Requires: plasma5-breeze plasma5-integration kwayland-integration
 %description -n kde5-runtime
 %summary
 
-%package -n kde-runtime
+%package -n kde6-runtime
 Summary: %summary
 Group: Graphical desktop/KDE
+Provides: kde-runtime = %version
+Obsoletes: kde-runtime < 30
 Requires: qt6-phonon-backend qt6-5compat qt6-declarative qt6-svg qt6-imageformats qt6-translations qt6-wayland
 Requires: kf6-kio kf6-kded kf6-qqc2-desktop-style
 Requires: plasma6-breeze plasma6-integration
-%description -n kde-runtime
+%description -n kde6-runtime
 %summary
 
 %package -n kde-mini
@@ -42,7 +44,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Provides: kde5-mini = %EVR
 Obsoletes: kde5-mini < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 #
 Requires: qt6-dbus kde-cli-tools kwin plasma-desktop kf6-kdeclarative
 Requires: dolphin kdialog
@@ -164,7 +166,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Provides: kde5-somedevel = %EVR
 Obsoletes: kde5-somedevel < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 #
 Requires: kate
 Requires: dolphin-plugins
@@ -182,7 +184,7 @@ Summary: Educational software based on the KDE technologies
 Group: Graphical desktop/KDE
 Provides: kde5-edu = %EVR
 Obsoletes: kde5-edu < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 #
 %if_enabled qtwebengine
 Requires: parley
@@ -204,7 +206,7 @@ Summary: Set of KDE-based games
 Group: Graphical desktop/KDE
 Provides: kde5-games = %EVR
 Obsoletes: kde5-games < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 #
 Requires: lskat kmines kshisen ktuberling bovo knetwalk
 Requires: katomic knavalbattle kpat kmahjongg
@@ -218,7 +220,7 @@ Summary: Set of printing support applications
 Group: Graphics
 Provides: kde5-printing = %EVR
 Obsoletes: kde5-printing < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 #
 Requires: print-manager cups printer-drivers-X11
 %description -n kde-printing
@@ -229,7 +231,7 @@ Summary: Set of image scanning support applications
 Group: Graphics
 Provides: kde5-scanning = %EVR
 Obsoletes: kde5-scanning < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 #
 %if_enabled qtwebengine
 Requires: skanpage
@@ -245,7 +247,7 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Provides: kde5-pim = %EVR
 Obsoletes: kde5-pim < %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 Requires: kde-email-client
 #
 %if_enabled qtwebengine
@@ -264,7 +266,7 @@ Requires: kaddressbook
 
 
 %files -n kde5-runtime
-%files -n kde-runtime
+%files -n kde6-runtime
 %files -n kde-mini
 %files -n kde-small
 %files -n kde
@@ -279,6 +281,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Tue Apr 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- rename kde-runtime to kde6-runtime
+
 * Thu Mar 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.03.1-alt1
 - relax deps on kwrited because we have kbroadcastnotification
 
