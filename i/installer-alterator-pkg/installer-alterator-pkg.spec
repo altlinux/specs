@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
-Version: 3.1.14
-Release: alt1.1
+Version: 3.2.0
+Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -58,6 +58,13 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Apr 28 2025 Mikhail Efremov <sem@altlinux.org> 3.2.0-alt1
+- pkg-size: Add live size to pakages size.
+- alterator-pkg-functions: Write pkg size to a custom file.
+- alterator-pkg-functions: Use numfmt for size calculation.
+- alterator-pkg-functions: Add shebang.
+- pkg-groups-init: Copy apt cache and rpm db from live.
+
 * Wed Apr 16 2025 Anton Midyukov <antohami@altlinux.org> 3.1.14-alt1.1
 - initinstall.d/90-pkg.sh: dedup components in source.list (Closes: 53762)
 
