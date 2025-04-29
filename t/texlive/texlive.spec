@@ -67,7 +67,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt0_11
+Release:	alt0_12
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -158,6 +158,7 @@ Patch8: mga-fix-build-with-gs10.patch
 Patch9: texlive-use-grep-E-and-grep-F-instead-of-deprecated-egrep-fgrep.patch
 Patch10: CVE-2023-32700.patch
 Patch11: texlive-2022-alt-pngout-mpmath-concurrency.patch
+Patch12: texlive-fix-implicit-int.patch
 Source44: import.info
 Provides: dvipng = %{tl_version}
 Provides: lcdf-typetools = %{tl_version}
@@ -385,6 +386,7 @@ perl -pi -e 's%%^(TEXMFMAIN\s+= ).*%%$1%{texmfdistdir}%%;'			  \
 	 -e 's%%^(TEXMFCONFIG\s+= ).*%%$1\$HOME/.texlive%{relYear}/texmf-config%%;'\
 	 -e 's%%^(OSFONTDIR\s+= ).*%%$1%{_datadir}/fonts%%;'		  \
 	texk/kpathsea/texmf.cnf
+%patch12 -p1
 %patch33 -p0
 %patch34 -p1
 %patch35 -p1
@@ -400,7 +402,8 @@ rm -rf libs/luajit
 
 #-----------------------------------------------------------------------
 %build
-export CXXFLAGS="%{optflags} -std=c++14"
+export CXXFLAGS="%{optflags} -std=c++17 -fpermissive"
+export CFLAGS="%{optflags}"
 
 #for dvisvgm system libs patches
 ./reautoconf
@@ -598,6 +601,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Fri Apr 18 2025 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_12
+- NMU: fix FTBFS with gcc14.
+
 * Tue Jun 04 2024 Ivan A. Melnikov <iv@altlinux.org> 2022-alt0_11
 - NMU: fix FTBFS on riscv64 (no clisp here either).
 
