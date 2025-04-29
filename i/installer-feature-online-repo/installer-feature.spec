@@ -1,5 +1,5 @@
 Name:    installer-feature-online-repo
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Make online repositories available
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Apr 28 2025 Michael Shigorin <mike@altlinux.org> 0.21-alt1
+- Add e2k repo support
+
 * Sat Dec 21 2024 Anton Midyukov <antohami@altlinux.org> 0.20-alt1
 - Revert "no public repos for e2k for now, unfortunately"
 
