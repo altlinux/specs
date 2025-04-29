@@ -3,7 +3,7 @@
 
 Name: rustlings
 Version: 6.4.0
-Release: alt1
+Release: alt2
 
 Summary: Small exercises to get you used to reading and writing Rust code
 License: MIT
@@ -16,7 +16,7 @@ Source1: %name-%version-vendor.tar
 Source2: config.toml
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-rust
+Requires: clippy
 BuildRequires: /proc
 BuildRequires: rust-cargo
 
@@ -45,6 +45,9 @@ install -Dvm0755 target/release/rustlings %buildroot%_bindir/rustlings
 %_bindir/rustlings
 
 %changelog
+* Mon Apr 28 2025 Anton Zhukharev <ancieg@altlinux.org> 6.4.0-alt2
+- Added dependency on clippy.
+
 * Fri Apr 25 2025 Anton Zhukharev <ancieg@altlinux.org> 6.4.0-alt1
 - Built for ALT Sisyphus.
 
