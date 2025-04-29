@@ -1,10 +1,11 @@
 %define modname ExifRead
 %define pypi_name exifread
 
+# no test resources in tarball
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Python3 library to extract Exif metadata
@@ -13,6 +14,7 @@ License: BSD-3-Clause
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/ianare/exif-py
+
 Source: https://pypi.io/packages/source/e/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
@@ -45,6 +47,9 @@ py.test3
 %doc README* ChangeLog*
 
 %changelog
+* Mon Apr 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
