@@ -1,6 +1,6 @@
 Name: an-anime-game-launcher
 Version: 3.13.1
-Release: alt1
+Release: alt2
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
 License: GPL-3.0
@@ -16,6 +16,9 @@ BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: libgtk4-devel
 BuildRequires: libadwaita-devel
+Requires: git-core
+Requires: p7zip
+Requires: libwebp-tools
 
 %description
 %summary.
@@ -80,6 +83,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Tue Apr 29 2025 Anton Kurachenko <srebrov@altlinux.org> 3.13.1-alt2
+- Added git-core, p7zip and libwebp-tools to Requires (Closes: #54029).
+
 * Sun Apr 27 2025 Anton Kurachenko <srebrov@altlinux.org> 3.13.1-alt1
 - New version 3.13.1.
 
