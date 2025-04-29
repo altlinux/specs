@@ -1,21 +1,21 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: libxmlsec1
-Version: 1.2.38
-Release: alt2
+Version: 1.3.7
+Release: alt1
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
 Group: System/Libraries
 Source: %name-%version.tar
 Url: https://www.aleksey.com/xmlsec/
-Patch0: libxmlsec1-atoi.patch
 
 BuildRequires: help2man libltdl7-devel man
-BuildRequires: libxml2-devel >= 2.8.0 libxslt-devel >= 1.0.20
+BuildRequires: libxml2-devel >= 2.10.0 libxslt-devel >= 1.0.20
 BuildRequires: libssl-devel >= 1.0.0
 BuildRequires: libnss-devel >= 3.50.1 libnspr-devel >= 4.25.1
 BuildRequires: libgcrypt-devel >= 1.4.0
 BuildRequires: libgnutls-devel >= 2.8.0
+BuildRequires: openssl-devel
 
 %description
 XML Security Library is a C library based on LibXML2  and OpenSSL.
@@ -101,11 +101,10 @@ Libraries, includes, etc. for developing XML Security applications with NSS.
 
 %prep
 %setup
-%patch0
 
 %build
 %autoreconf
-%configure --disable-static --enable-gost2012
+%configure --disable-static --enable-gost2012 --with-gcrypt
 %make_build
 
 ## positively ugly but only sane way to get around #192756
@@ -176,6 +175,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Sat Apr 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.3.7-alt1
+- new version 1.3.7
+
 * Sat Dec 28 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.2.38-alt2
 - NMU: fix FTBFS: implicit declaration of function 'atoi'
 
