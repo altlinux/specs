@@ -21,8 +21,8 @@
 %def_disable	unit_tests
 
 Name: syslog-ng
-Version: 3.34.1
-Release: alt2
+Version: 4.8.1
+Release: alt1
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -37,23 +37,34 @@ Provides: libeventlog = %EVR
 Obsoletes: libeventlog < %EVR
 
 Source: %name-%version.tar.gz
+Source1: %name-%version-conf-examples.tar
+Source2: syslog-ng.conf
+Source3: syslog-ng.init
+Source4: syslog-ng.service
+Source5: syslog-ng.sysconfig
+Patch: syslog-ng-3.19.1-README-build-config.patch
 # VCS git
 #https://github.com/balabit/syslog-ng.git
 
 Patch1: %name-%version-%release.patch
 
-# Automatically added by buildreq on Fri Apr 19 2013 (-bi)
-# optimized out: elfutils libcom_err-devel libkrb5-devel pkg-config python-base python-modules
 # base config:
 # + SSL/TLS
 # + PCRE
 # + SQL
 BuildRequires: flex autoconf-archive glib2-devel libcap-devel libdbi-devel
-BuildRequires: libnet2-devel libpcre-devel libpopt-devel
+BuildRequires: libnet2-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libpopt-devel
 BuildRequires: libssl-devel libuuid-devel libivykis-devel
 BuildRequires: xsltproc docbook-style-xsl
+BuildRequires: gperf
+BuildRequires: zlib-devel
 
 BuildRequires: python3-dev
+BuildRequires: python3-module-boto3
+BuildRequires: python3-module-kubernetes-client
+BuildRequires: python3-module-pip
 BuildRequires: python3-module-setuptools
 %add_python3_path %_libdir/syslog-ng/python/syslogng
 %add_python3_path %_libdir/syslog-ng/python/syslogng/debuggercli
@@ -75,6 +86,8 @@ BuildRequires(pre): rpm-macros-python3
 %if_enabled unit_tests
 BuildRequires: libcriterion-devel
 BuildRequires: CUnit-devel
+BuildRequires: python3-module-ply
+BuildRequires: python3-module-pytest-mock
 BuildRequires: valgrind-devel
 %endif
 
@@ -219,9 +232,14 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -q
-%patch1 -p1
-patch -p1 < altlinux/syslog-ng-3.19.1-README-build-config.patch
+%setup -q -a1
+%autopatch -p1
+
+rm -rf \
+  lib/ivykis \
+  modules/afamqp/rabbitmq-c \
+  modules/afmongodb/mongo-c-driver \
+  #
 
 %if_enabled amqp
 pushd modules/afamqp/rabbitmq-c
@@ -244,6 +262,7 @@ autoconf
 find -type f -name "*.py" -exec sed -i 's|/usr/bin/env python.*|%__python3|' {} \;
 
 %build
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 skip_submodules=1 ./autogen.sh
 #add_optflags -levtlog -livykis -lgmodule-2.0 -lglib-2.0 -lpcre
 
@@ -271,7 +290,10 @@ skip_submodules=1 ./autogen.sh
  --enable-dynamic-linking \
  --enable-spoof-source \
  --with-embedded-crypto \
+ --with-python-packages=system \
  --enable-manpages \
+ --enable-sql \
+ --disable-example-modules \
  --disable-java \
  --disable-java-modules \
  --with-python=3 \
@@ -308,20 +330,22 @@ mkdir -p %buildroot%_initdir
 make DESTDIR=%buildroot sbindir=/sbin sysconfdir=%_sysconfdir/%name \
   mandir=%_mandir prefix=%prefix install
 
-install -m755 -D -p altlinux/%name.init %buildroot%_initdir/%name
+install -m755 -D -p %SOURCE3 %buildroot%_initdir/syslog-ng
 
-#install -m640 -D -p altlinux/%name.conf %buildroot%_sysconfdir/%name/%name.conf
 mkdir -p %buildroot%_sysconfdir/%name
 VER=`echo %version | sed "s/^\([0-9]\+\.[0-9]\+\).*/\1/"`
-sed "s/@ver@/$VER/" < altlinux/%name.conf > %buildroot%_sysconfdir/%name/%name.conf
-sed "s/@ver@/$VER/" -i altlinux/conf.d.example/*.conf
+sed "s/@ver@/$VER/" < %SOURCE2 > %buildroot%_sysconfdir/syslog-ng/syslog-ng.conf
+sed "s/@ver@/$VER/" -i %name-%version-conf-examples/*.conf
 
 # exit with 1 if "scl/*/*.conf" not found
-sed '/scl\/\*\/\*.conf/{s||%_datadir/%name/include/scl/*/*.conf|;h};${x;/./{x;q0};x;q1}' -i %buildroot%_sysconfdir/%name/scl.conf
+sed \
+  -i '/scl\/\*\/\*.conf/{s||%_datadir/%name/include/scl/*/*.conf|;h};${x;/./{x;q0};x;q1}' \
+  %buildroot%_datadir/syslog-ng/include/scl.conf \
+  #
 
-install -m640 -D -p altlinux/%name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
+install -m640 -D -p %SOURCE5 %buildroot%_sysconfdir/sysconfig/syslog-ng
 %if_enabled systemd
-install -m644 -D -p altlinux/%name.service %buildroot%_unitdir/%name.service
+install -m644 -D -p %SOURCE4 %buildroot%_unitdir/syslog-ng.service
 %endif
 rm -f %buildroot%_unitdir/%{name}@.service
 
@@ -335,6 +359,8 @@ install -c -m 644 doc/xsd/patterndb-1.xsd doc/xsd/patterndb-2.xsd doc/xsd/patter
     %buildroot%_datadir/%name/xsd
 
 find %buildroot -name "*.la" -exec rm -f {} +
+# FIXME unpackaged
+rm -f %buildroot%_sysconfdir/syslog-ng/python/README.md
 
 %if_disabled native_connector
 rm -f %buildroot%_pkgconfigdir/%name-native-connector.pc
@@ -364,8 +390,8 @@ fi
 %files
 %doc AUTHORS COPYING NEWS.md README.md README-build-config
 %doc doc/security/*.txt
-%doc contrib/{syslog2ng,syslog-ng.vim,relogger.pl,syslog-ng.conf.doc,README.syslog-ng-debun}
-%doc altlinux/conf.d.example
+%doc contrib/{syslog2ng,relogger.pl,syslog-ng.conf.doc,README.syslog-ng-debun}
+%doc %name-%version-conf-examples/*.conf
 
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/patterndb.d
@@ -384,6 +410,7 @@ fi
 %_bindir/pdbtool
 %_bindir/update-patterndb
 %_bindir/dqtool
+%_bindir/syslog-ng-update-virtualenv
 %_bindir/persist-tool
 
 %_bindir/slogencrypt
@@ -399,9 +426,9 @@ fi
 %_libdir/%name/libafuser.so
 %_libdir/%name/libbasicfuncs.so
 %_libdir/%name/libconfgen.so
+%_libdir/syslog-ng/libcorrelation.so
 %_libdir/%name/libcryptofuncs.so
 %_libdir/%name/libcsvparser.so
-%_libdir/%name/libdbparser.so
 %_libdir/%name/libgraphite.so
 %_libdir/%name/liblinux-kmsg-format.so
 %_libdir/%name/libpseudofile.so
@@ -422,7 +449,6 @@ fi
 # added in 3.13.1-alt1
 %_libdir/%name/libappmodel.so
 # added in 3.18.1-alt1
-%_libdir/%name/libexamples.so
 %_libdir/%name/libhook-commands.so
 %dir %_libdir/%name/loggen
 %_libdir/%name/loggen/libloggen_socket_plugin.so
@@ -434,6 +460,9 @@ fi
 %_libdir/%name/libsecure-logging.so
 # added in 3.34.1-alt1
 %_libdir/%name/libregexp-parser.so
+# added in 4.8.1-alt1
+%_libdir/syslog-ng/libmetrics-probe.so
+%_libdir/syslog-ng/librate-limit-filter.so
 
 %_libdir/lib%name-*.so.*
 %_libdir/libevtlog-*.so.*
@@ -445,6 +474,7 @@ fi
 %dir %_datadir/%name/include
 %dir %_datadir/%name/xsd
 %_datadir/%name/xsd/*
+%_datadir/syslog-ng/smart-multi-line.fsm
 
 %exclude %_man1dir/%name-debun*
 %_man1dir/*
@@ -455,7 +485,7 @@ fi
 %dir %_localstatedir/%name
 
 %files scl
-%config(noreplace) %_sysconfdir/%name/scl.conf
+%config(noreplace) %_datadir/syslog-ng/include/scl.conf
 %_datadir/%name/include/scl
 
 %files debun
@@ -545,6 +575,12 @@ fi
 %endif
 
 %changelog
+* Tue Apr 29 2025 Constantin Sunzow <protvin@altlinux.org> 4.8.1-alt1
+- scl.conf file has been moved to /usr/share/syslog-ng/include/scl.conf.
+- libdbparser.so has been renamed to libcorrelation.so.
+- vim plugin removed.
+- NMU: new version (ALT 52407).
+
 * Tue May 07 2024 Stanislav Levin <slev@altlinux.org> 3.34.1-alt2
 - relaxed runtime dependency on pkginfo.
 

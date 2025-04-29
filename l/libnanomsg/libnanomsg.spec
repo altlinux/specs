@@ -1,6 +1,6 @@
 Name:           libnanomsg
 Version:        1.2.1
-Release:        alt1
+Release: alt2
 
 Summary:        nanomsg is a socket library that provides several common communication patterns
 Group:          System/Libraries
@@ -9,10 +9,15 @@ URL:            http://nanomsg.org/
 # VCS:		https://github.com/nanomsg/nanomsg
 
 Source0:        %name-%version.tar
+# https://github.com/nanomsg/nanomsg/issues/1111#issuecomment-2113151297
+Patch: libnanomsg-1.2.1-upstream-fix-chunkref.patch
 
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: /proc
 
 %description
 nanomsg is a socket library that provides several common communication
@@ -45,6 +50,7 @@ that provides several common communication patterns.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake
@@ -52,6 +58,9 @@ that provides several common communication patterns.
 
 %install
 %cmakeinstall_std
+
+%check
+%ctest
 
 %files
 %doc AUTHORS README.md COPYING
@@ -66,6 +75,10 @@ that provides several common communication patterns.
 %_pkgconfigdir/nanomsg.pc
 
 %changelog
+* Tue Apr 29 2025 Constantin Sunzow <protvin@altlinux.org> 1.2.1-alt2
+- NMU: apply patch for fix bug.
+- Enable tests.
+
 * Wed Feb 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.2.1-alt1
 - New version.
 
