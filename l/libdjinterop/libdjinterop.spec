@@ -4,7 +4,7 @@
 
 Name: libdjinterop
 Version: 0.24.3
-Release: alt2
+Release: alt3
 
 Summary: C++ library for access to DJ record libraries
 
@@ -84,6 +84,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/%name.so
 
 %changelog
+* Tue Apr 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.24.3-alt3
+- Added missing headers for install.
+
 * Tue Apr 29 2025 Leontiy Volodin <lvol@altlinux.org> 0.24.3-alt2
 - Fixed c++ version check for gcc above 10 or clang above 12.
 
