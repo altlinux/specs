@@ -2,13 +2,14 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 8.3.3
+Version: 8.3.6
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
 Source: %name-%version.tar
 Patch: %name-%version.patch
+Patch1: %name-%version-alt-group-fix.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -45,6 +46,7 @@ This package contains the storage management library used by PVE
 %prep
 %setup
 %patch -p1
+%patch1
 
 %install
 pushd src
@@ -67,6 +69,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Tue Apr 15 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.6-alt1
+- 8.3.6 
+
 * Tue Feb 11 2025 Alexey Shabalin <shaba@altlinux.org> 8.3.3-alt1
 - 8.3.3
 

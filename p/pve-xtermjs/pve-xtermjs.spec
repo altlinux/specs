@@ -3,8 +3,8 @@
 
 Name: pve-xtermjs
 Summary: HTML/JS Shell client
-Version: 5.3.0.3
-Release: alt3
+Version: 5.5.0.2
+Release: alt1
 License: AGPL-3.0+
 Group: Networking/WWW
 Url: https://git.proxmox.com/
@@ -63,6 +63,9 @@ cp xterm.js/src/* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Tue Apr 15 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 5.5.0.2-alt1
+- 5.5.0-2 
+
 * Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 5.3.0.3-alt3
 - Merged upstream fixes
 

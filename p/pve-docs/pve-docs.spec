@@ -1,7 +1,7 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 8.3.1
-Release: alt2
+Version: 8.4.0
+Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
 Url: https://git.proxmox.com/
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Mon Apr 14 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.4.0-alt1
+- 8.4.0 
+
 * Wed Dec 18 2024 Sergey Konev <darisishe@altlinux.org> 8.3.1-alt2
 - Merged upstream changes
 

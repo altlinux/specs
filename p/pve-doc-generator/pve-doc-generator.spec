@@ -3,7 +3,7 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 8.3.1
+Version: 8.4.0
 Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
@@ -49,6 +49,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Tue Apr 15 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.4.0-alt1
+- 8.4.0 
+
 * Mon Dec 02 2024 Alexey Shabalin <shaba@altlinux.org> 8.3.1-alt1
 - 8.3.1
 

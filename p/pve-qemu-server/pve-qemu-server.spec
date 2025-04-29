@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 8.3.3
+Version: 8.3.12
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -21,7 +21,7 @@ Obsoletes: qemu-server < %EVR
 Requires: socat genisoimage pve-qemu-system >= 7.1 swtpm swtpm-tools proxmox-websocket-tunnel
 Conflicts: pve-ha-manager < 4.0.1 pve-manager < 6.0.13
 BuildRequires: glib2-devel libjson-c-devel
-BuildRequires: pve-common >= 8.0.2 pve-guest-common >= 5.1.0 pve-firewall pve-ha-manager
+BuildRequires: pve-common >= 8.0.2 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager
 BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 8.2.10 pve-qemu-system >= 7.1
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
@@ -73,8 +73,12 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/QemuServer
 %perl_vendor_privlib/PVE/VZDump
 %perl_vendor_privlib/PVE/*.pm
+%perl_vendor_privlib/PVE/QemuConfig/NoWrite.pm
 
 %changelog
+* Tue Apr 22 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.12-alt1
+- 8.3.12 
+
 * Mon Dec 16 2024 Sergey Konev <darisishe@altlinux.org> 8.3.3-alt1
 - 8.3.3
 
