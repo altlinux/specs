@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name Paper-Clip
 %define binary_name pdf-metadata-editor
 %define ver_major 5.5
@@ -7,8 +7,8 @@
 %def_enable check
 
 Name: paper-clip
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: PDF metadata editor for GNOME
 License: GPL-3.0-or-later
@@ -55,12 +55,16 @@ BuildRequires: pkgconfig(exempi-2.0)
 %_bindir/%binary_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
-%_datadir/appdata/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 
 %changelog
+* Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 5.5.2-alt1
+- 5.5.2
+
 * Sat Nov 30 2024 Yuri N. Sedunov <aris@altlinux.org> 5.5.1-alt2
 - updated to v5.5.1-33-g7777db7
 
