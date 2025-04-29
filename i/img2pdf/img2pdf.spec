@@ -3,7 +3,7 @@
 %def_with check
 
 Name: img2pdf
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Losslessly convert raster images to PDF
@@ -11,6 +11,7 @@ Group: Publishing
 License: LGPLv3
 Url: https://gitlab.mister-muffin.de/josch/img2pdf
 Vcs: https://gitlab.mister-muffin.de/josch/img2pdf.git
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -61,6 +62,9 @@ complements the pdfimages command.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Apr 29 2025 Anton Kurachenko <srebrov@altlinux.org> 0.6.1-alt1
+- New version 0.6.1.
+
 * Tue Feb 18 2025 Anton Kurachenko <srebrov@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 
