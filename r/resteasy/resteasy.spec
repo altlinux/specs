@@ -10,9 +10,9 @@ BuildRequires: jpackage-default
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt1_17jpp11
+Release:        alt2_17jpp11
 Summary:        Framework for RESTful Web services and Java applications
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            http://resteasy.jboss.org/
 Source0:        https://github.com/resteasy/Resteasy/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 Patch1:         0001-RESTEASY-2559-Improper-validation-of-response-header.patch
@@ -63,6 +63,7 @@ Provides:       %{name} = %{version}-%{release}
 Requires:       resteasy-client = %{version}-%{release}
 Requires:       resteasy-core = %{version}-%{release}
 Requires:       resteasy-jackson2-provider = %{version}-%{release}
+Requires:       pki-%name-servlet-initializer
 
 # subpackages removed in fedora 32
 Obsoletes:      %{name}-fastinfoset-provider < 3.0.26-1
@@ -110,6 +111,13 @@ Provides:       %{name}-client = %{version}-%{release}
 %description -n pki-%{name}-client
 %{extdesc} %{summary}.
 
+%package -n pki-%name-servlet-initializer
+Group: Development/Java
+Summary: %name Servlet Initializer
+
+%description -n pki-%name-servlet-initializer
+%extdesc %summary.
+
 %prep
 %setup -q -n Resteasy-%{namedversion}
 %patch1 -p1
@@ -129,7 +137,6 @@ Provides:       %{name}-client = %{version}-%{release}
 %pom_disable_module resteasy-jsapi
 %pom_disable_module resteasy-jsapi-testing
 %pom_disable_module resteasy-links
-%pom_disable_module resteasy-servlet-initializer
 %pom_disable_module resteasy-spring
 %pom_disable_module resteasy-wadl
 %pom_disable_module resteasy-wadl-undertow-connector
@@ -185,18 +192,21 @@ find -name '*.jar' -print -delete
 %pom_remove_dep junit:junit providers/resteasy-atom
 %pom_remove_dep junit:junit providers/jaxb
 %pom_remove_dep junit:junit resteasy-jaxrs
+%pom_remove_dep junit:junit resteasy-servlet-initializer
 
 # remove log4j dependency
 %pom_remove_dep log4j:log4j resteasy-jaxrs
 
 # depend on servlet-api from pki-servlet-4.0-api
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api resteasy-jaxrs
+%pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api resteasy-servlet-initializer
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/abdera-atom
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/jaxb
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api providers/jackson2
 
 # add dependencies for EE APIs that were removed in Java 11
 %pom_add_dep javax.xml.bind:jaxb-api resteasy-jaxrs
+%pom_add_dep javax.xml.bind:jaxb-api resteasy-servlet-initializer
 
 %pom_remove_plugin :maven-clean-plugin
 
@@ -206,6 +216,7 @@ find -name '*.jar' -print -delete
 %mvn_package ":resteasy-pom" core
 %mvn_package ":resteasy-jackson2-provider" jackson2-provider
 %mvn_package ":resteasy-client" client
+%mvn_package ":resteasy-servlet-initializer" servlet-initializer
 
 # Disable useless artifacts generation, package __noinstall do not work
 %pom_add_plugin org.apache.maven.plugins:maven-source-plugin . '
@@ -232,7 +243,12 @@ find -name '*.jar' -print -delete
 %files -n pki-%{name}-client -f .mfiles-client
 %doc --no-dereference License.html
 
+%files -n pki-%{name}-servlet-initializer -f .mfiles-servlet-initializer
+
 %changelog
+* Fri Mar 07 2025 Stanislav Levin <slev@altlinux.org> 3.0.26-alt2_17jpp11
+- Packaged servlet-initializer.
+
 * Tue Apr 18 2023 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_17jpp11
 - update
 
