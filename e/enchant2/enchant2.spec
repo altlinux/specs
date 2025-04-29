@@ -1,3 +1,4 @@
+# gnulib as submodule
 %def_disable snapshot
 %define _name enchant
 %define ver_major 2.8
@@ -10,19 +11,19 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
 License: LGPL-2.1
-Url: https://abiword.github.io/%_name/
+Url: https://rrthomas.github.io/enchant
 
-Vcs: https://github.com/AbiWord/enchant.git
+Vcs: https://github.com/rrthomas/enchant.git
 
 %if_disabled snapshot
-Source: https://github.com/AbiWord/%_name/releases/download/v%version/%_name-%version.tar.gz
+Source: https://github.com/rrthomas/enchant/releases/download/v%version/%_name-%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -100,6 +101,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.3-alt1
+- v2.8.3-5-g0be6595
+
 * Thu Aug 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.2-alt1
 - 2.8.2
 
