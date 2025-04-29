@@ -1,11 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with python
+
 Name: f3d
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: Fast and minimalist 3D viewer
-License: BSD-3-Clause 
+License: BSD-3-Clause
 Group: Graphics
 Url: https://github.com/f3d-app/f3d
 VCS: https://f3d.app/
@@ -33,7 +35,12 @@ BuildRequires: libfmt-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libglvnd-devel
 BuildRequires: help2man
-#BuildRequires: libdraco-devel - https://bugzilla.altlinux.org/51076
+
+
+%if_with python
+BuildRequires: python3-dev
+BuildRequires(pre): rpm-build-python3
+%endif
 
 %description
 F3D is a fast and minimalist 3D viewer desktop application. It supports
@@ -41,6 +48,24 @@ many file formats, from digital content to scientific datasets
 (including glTF, STL, STEP, PLY, OBJ, FBX, Alembic), can show animations
 and support thumbnails and many rendering and texturing options including
 real time physically based rendering and raytracing.
+
+%package devel
+Summary: Development files for f3d
+Group: Development/C
+Requires: %name = %EVR
+
+%description devel
+This package contains development files for f3d.
+
+%if_with python
+%package -n python3-module-f3d
+Summary: Python 3 bindings for f3d
+Group: Development/Python
+Requires: %name = %EVR
+
+%description -n python3-module-f3d
+This package contains Python 3 bindings for f3d.
+%endif
 
 %prep
 %setup
@@ -50,15 +75,18 @@ real time physically based rendering and raytracing.
 
 %cmake \
     -DCMAKE_INSTALL_DOCDIR:PATH=%{_docdir}/%{name} \
-    -DCMAKE_BUILD_WITH_INSTALL_RPATH=ON \
-    -DBUILD_SHARED_LIBS=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH=ON \
+    -DBUILD_SHARED_LIBS=ON \
     -DBUILD_TESTING=OFF \
     -DF3D_LINUX_APPLICATION_LINK_FILESYSTEM=ON \
     -DF3D_LINUX_GENERATE_MAN=ON \
     -DF3D_LINUX_INSTALL_DEFAULT_CONFIGURATION_FILE_IN_PREFIX=ON \
     -DF3D_MODULE_EXTERNAL_RENDERING=OFF \
     -DF3D_MODULE_RAYTRACING=OFF \
-    -DF3D_LINUX_LIBRARY_LINK_ATOMIC=ON
+    -DF3D_LINUX_LIBRARY_LINK_ATOMIC=ON \
+%if_with python
+    -DF3D_BINDINGS_PYTHON=ON \
+%endif
 
 %cmake_build
 
@@ -75,6 +103,10 @@ install -Dm 644 \
   %_cmake__builddir/%_lib/vtk/hierarchy/f3d_vtkext/vtkext-hierarchy.txt \
   -t %buildroot/%_libdir/vtk/hierarchy/f3d_vtkext/
 
+install -Dm 644 \
+  %_cmake__builddir/%_lib/cmake/f3d_vtkext/* \
+  -t %buildroot/%_libdir/cmake/f3d_vtkext/
+
 %files
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
@@ -86,14 +118,30 @@ install -Dm 644 \
 %_datadir/metainfo/*
 %_datadir/zsh/*
 %_iconsdir/hicolor/*/apps/%name.*
-%_libdir/cmake/%name/*
-%_libdir/vtk/hierarchy/f3d_vtkext/vtkext-hierarchy.txt
 %_iconsdir/HighContrast/scalable/apps/%name.svg
 %_man1dir/%name.1.xz
+%_libdir/libf3d.so*
+%_libdir/libvtkext.so
+
 
 %doc README.md LICENSE.md
 
+%files devel
+%_libdir/cmake/f3d_vtkext
+%_includedir/%name
+%_libdir/cmake/%name/*
+%dir %_libdir/vtk/hierarchy/f3d_vtkext
+%_libdir/vtk/hierarchy/f3d_vtkext/vtkext-hierarchy.txt
+
+%if_with python
+%files -n python3-module-f3d
+%python3_sitelibdir/%name
+%endif
+
 %changelog
+* Fri Apr 29 2025 Valentin Sokolov <sova@altlinux.org> 3.0.0-alt3
+- Rebuild with libraries and bindings for python3
+
 * Mon Feb 17 2025 Constantin Sunzow <protvin@altlinux.org> 3.0.0-alt2
 - Rebuild against vtk 9.4.
 
