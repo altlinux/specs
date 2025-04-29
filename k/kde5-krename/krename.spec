@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 5.0.2
-Release: alt2
+Release: alt3
 %K5init
 
 Summary: A powerful batch renamer for KDE5
@@ -18,6 +18,7 @@ Patch2: podofo-0.10.patch
 #
 Patch10: alt-startupinfo-labels-color.patch
 Patch11: alt-cmake.patch
+Patch12: alt-servicemenus.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
@@ -26,7 +27,8 @@ BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kj
 BuildRequires: kf5-kjs-devel kf5-kio-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kxmlgui-devel
 BuildRequires: libexiv2-devel
-BuildRequires: fontconfig-devel libfreetype-devel libpodofo-devel libtag-devel
+BuildRequires: fontconfig-devel libfreetype-devel libpodofo-devel
+BuildRequires: libtag-devel
 BuildRequires: qt5-base-devel
 
 %description
@@ -45,6 +47,7 @@ It can also change access and modification dates, permissions, and file ownershi
 #
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 #cat %SOURCE10 >po/ru/krename.po
 
 %build
@@ -59,10 +62,13 @@ It can also change access and modification dates, permissions, and file ownershi
 %_K5bin/%rname
 %_K5xdgapp/*.desktop
 %_K5icon/*/*/apps/*.*
-%_K5srv/ServiceMenus/*.desktop
+%_K5data/kio/servicemenus/*.desktop
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Apr 29 2025 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt3
+- move service menus to standard place
+
 * Mon Mar 04 2024 Sergey V Turchin <zerg@altlinux.org> 5.0.2-alt2
 - add upstream fixes for new podofo and exiv2
 
