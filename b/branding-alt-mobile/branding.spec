@@ -10,7 +10,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1.1.beta1
+Release: alt1.2.beta1
 
 Url: https://www.altlinux.org/ALT_Mobile
 
@@ -202,7 +202,8 @@ pushd notes
 popd
 
 # phosh settings
-cp -r phosh-settings/etc %buildroot/
+install -Dm644 phosh-settings/50-lockscreen.gschema.override \
+	%buildroot/%_datadir/glib-2.0/schemas/50-lockscreen.gschema.override;
 install -Dm644 phosh-settings/50-background.gschema.override \
 	%buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override
 install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override \
@@ -239,11 +240,15 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %files phosh-settings
 %_datadir/glib-2.0/schemas/50-background.gschema.override
+%_datadir/glib-2.0/schemas/50-lockscreen.gschema.override
 %_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
-%_sysconfdir/skel/.config/gtk-3.0/gtk.css
 
 %changelog
+* Tue Apr 29 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1.2.beta1
+- phosh-settings: fix for phosh 0.46
+- phosh-settings: replace gtk.css with gsettings override
+
 * Tue Mar 04 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt1.1.beta1
 - Fix status (beta3 -> beta1)
 
