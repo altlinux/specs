@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 Summary: Jupyter Notebook as a Jupyter Server extension
 License: BSD-3-Clause
@@ -13,6 +13,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/nbclassic
 BuildArch: noarch
 Source: %pypi_name-%version.tar
+Patch: nbclassic-1.3.0-remove-distutils.patch
 
 Requires: python3-module-nbconvert
 Requires: python3-module-jupyter-server-terminals
@@ -21,9 +22,7 @@ Requires: python3-module-jupyter_client
 Requires: python3-module-jupyter_core
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-jupyter-packaging
-BuildRequires: python3-module-jupyter_server
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-jupyter
@@ -55,6 +54,11 @@ This package contains tests for %pypi_name.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p2
+sed -i 's:^\[tool.hatch.build.hooks.jupyter-builder\]$:[ignoreme]:' pyproject.toml
+rm -rf node_modules
+rm nbclassic/static/components/jquery-typeahead/node_modules/.bin/lz-string
+rm nbclassic/static/components/moment/meteor/moment.js
 
 %build
 %pyproject_build
@@ -89,6 +93,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/nbclassic.json \
 %python3_sitelibdir/%pypi_name/*/tests
 
 %changelog
+* Fri Apr 25 2025 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
