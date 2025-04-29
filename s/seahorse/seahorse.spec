@@ -1,10 +1,10 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define ver_major 47
 %define beta %nil
-%define xdg_name org.gnome.seahorse
+%define xdg_name org.gnome.Seahorse
 
 %def_disable debug
 %def_enable ldap
@@ -14,6 +14,7 @@
 %def_enable ssh
 %def_enable introspection
 %def_enable man
+%def_enable check
 
 %if_enabled hkp
 # disabled by default and will possibly be removed in the future
@@ -22,7 +23,7 @@
 
 Name: seahorse
 Version: %ver_major.0.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A password and encryption key manager
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -37,40 +38,43 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.66
+%define glib_ver 2.82
 %define gtk_ver 3.24
 %define soup3_ver 3.0.0
 %define secret_ver 0.16
 %define avahi_ver 0.6
-%define gcr_ver 3.38
-%define gpgme_ver 1.14
-%define handy_ver 1.5.0
+%define gcr_ver 4.3.90
+%define gpgme_ver 1.16
+%define adw_ver 1.5
 %define gnupg_ver 2.4.0
+%define qrencode_ver 4.1.1
 
 Requires: dconf
-Requires: gnupg2 > %gnupg_ver gcr >= %gcr_ver
+Requires: gnupg2 > %gnupg_ver gcr4 >= %gcr_ver
 Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson yelp-tools libappstream-glib-devel
-BuildRequires: gtk-doc desktop-file-utils
-BuildRequires: gcc-c++ glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: meson gcc-c++ vala-tools yelp-tools
+BuildRequires: gtk-doc
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: gnupg2 >= %gnupg_ver
 BuildRequires: libgpgme-devel >= %gpgme_ver
 BuildRequires: libgpg-error-devel
-BuildRequires: vala-tools
+BuildRequires: pkgconfig(libqrencode) >= %qrencode_ver
 BuildRequires: pkgconfig(pwquality)
 %{?_enable_ldap:BuildRequires: libldap-devel}
 %{?_enable_hkp:BuildRequires: libsoup3.0-devel >= %soup3_ver}
 %{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= %secret_ver}
-%{?_enable_pkcs11:BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala}
+%{?_enable_pkcs11:BuildRequires: gcr4-libs-devel >= %gcr_ver vapi(gcr-4)}
 %{?_enable_sharing:BuildRequires:libsoup3.0-devel >= %soup3_ver libavahi-glib-devel >= %avahi_ver libavahi-devel}
 %{?_enable_ssh:BuildRequires: openssh openssh-clients}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
+%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils gcr}
 
 %description
 Seahorse is a password and encryption key manager for GNOME desktop.
@@ -80,6 +84,7 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 
 %build
 %meson \
+    -Dprofile=default \
     %{subst_enable_meson_bool ldap ldap-support} \
     %{subst_enable_meson_bool pkcs11 pkcs11-support} \
     %{subst_enable_meson_bool hkp hkp-support} \
@@ -92,6 +97,9 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %meson_install
 %find_lang %name --with-gnome
 
+%check
+%__meson_test
+
 %files -f %name.lang
 %_bindir/%name
 %dir %_libexecdir/%name
@@ -100,17 +108,20 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %dir %_datadir/%name
 %_datadir/%name/*
 %_iconsdir/hicolor/*/*/*.*
-%_desktopdir/*.desktop
+%_desktopdir/%xdg_name.desktop
 %{?_enable_man:%_man1dir/*}
-%_datadir/dbus-1/services/org.gnome.seahorse.Application.service
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/gnome-shell/search-providers/seahorse-search-provider.ini
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.manager.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.window.gschema.xml
-%_datadir/metainfo/%{xdg_name}*.appdata.xml
+%_datadir/metainfo/%{xdg_name}.metainfo.xml
 %doc NEWS README* THANKS
 
 %changelog
+* Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt2
+- updated to 47.0.1-66-g2e47359c (ported to GTK4/Libadwaita/GCR-4)
+
 * Wed Sep 18 2024 Yuri N. Sedunov <aris@altlinux.org> 47.0.1-alt1
 - 47.0.1
 
