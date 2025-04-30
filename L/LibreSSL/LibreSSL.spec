@@ -1,7 +1,7 @@
 %define oname libressl
-%define libcrypto_sover 55
-%define libssl_sover 58
-%define libtls_sover 31
+%define libcrypto_sover 56
+%define libssl_sover 59
+%define libtls_sover 32
 
 %def_enable check
 
@@ -13,7 +13,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -36,8 +36,6 @@ Patch5: 0005-ALT-OPENSSLDIR.patch
 Patch6: 0006-SUSE-des-fcrypt.patch
 Patch7: 0007-SUSE-extra-symver.patch
 Patch9: 0008-ALT-TLS_DEFAULT_CA_FILE-and-cert.pem.patch
-
-Patch100: 0100-ALT-basic-loongarch64-support.patch
 
 %define common_descr \
 LibreSSL is a version of the TLS/crypto stack forked from OpenSSL in\
@@ -248,6 +246,13 @@ xz %buildroot%docdir/ChangeLog
 %check
 %make_build check V=1
 
+# check that /etc/libressl used as OPENSSLDIR consistently
+find %buildroot -name '*.so*' | while read filepath; do
+  if strings "$filepath" | grep '^/etc/ssl'; then
+    echo >&2 "Found /etc/ssl mentioned in $filepath; check your OPENSSLDIR patch"
+  fi
+done
+
 %files common
 %dir %docdir
 %doc %docdir/*
@@ -308,6 +313,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Wed Apr 30 2025 Ivan A. Melnikov <iv@altlinux.org> 4.1.0-alt1
+- Updated to 4.1.0.
+
 * Tue Apr 01 2025 Ivan A. Melnikov <iv@altlinux.org> 4.0.0-alt1
 - Updated to 4.0.0.
 - Basic loongarch64 support.
