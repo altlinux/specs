@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -124,6 +124,9 @@ ln -s %_libdir/libtree-sitter-vimdoc.so %buildroot/%neovim_ts_parsers_dir/vimdoc
 %neovim_ts_parsers_dir/*
 
 %changelog
+* Wed Apr 30 2025 Vladimir Didenko <cow@altlinux.org> 0.11.1-alt1
+- new version
+
 * Thu Mar 27 2025 Vladimir Didenko <cow@altlinux.org> 0.11.0-alt1
 - new version
 
