@@ -2,7 +2,7 @@
 
 Name: lact
 Version: 0.7.3
-Release: alt1
+Release: alt2
 
 Summary: Linux GPU Control Application
 License: MIT
@@ -19,6 +19,8 @@ Source0: LACT-%version.tar
 Source1: crates.tar
 
 Source2: config
+
+Patch1: lact-0.7.3-alt-loongarch-define.patch
 
 BuildRequires(pre): clang-devel
 
@@ -50,6 +52,8 @@ tar xf %SOURCE1
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/libc/.cargo-checksum.json
 
+%autopatch -p1
+
 %build
 export CARGO_HOME=${PWD}/cargo
 cargo build --release --offline
@@ -73,6 +77,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Tue Apr 29 2025 Andrew Guschin <guschin@altlinux.org> 0.7.3-alt2
+- NMU: fix FTBFS on loongarch64
+
 * Sun Apr 06 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.3-alt1
 - New version 0.7.3.
 
