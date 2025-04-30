@@ -1,10 +1,7 @@
-# For offline build
-%global _zig_project_options %_zig_project_options -Dversion_data_path=%_docdir/zig/langref.html.in
-
 %global _zig_cache_dir %_builddir/zig-cache
 
 Name:     zls
-Version:  0.13.0
+Version:  0.14.0
 Release:  alt1
 Summary:  A Zig language server supporting Zig developers with features like autocomplete and goto definition
 
@@ -43,5 +40,8 @@ mv ./vendor %_zig_cache_dir
 %_bindir/zls
 
 %changelog
+* Fri Apr 25 2025 Ilya Sorochan <k0tran@altlinux.org> 0.14.0-alt1
+- 0.13.0 -> 0.14.0
+
 * Fri Oct 04 2024 Ilya Sorochan <k0tran@altlinux.org> 0.13.0-alt1
 - Initial build for ALT Linux.
