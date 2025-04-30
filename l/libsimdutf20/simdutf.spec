@@ -2,8 +2,8 @@
 
 %def_with check
 
-Name:      libsimdutf10
-Version:   5.5.0
+Name:      libsimdutf20
+Version:   6.5.0
 Release:   alt1
 
 Summary:   Unicode validation and transcoding at billions of characters per second
@@ -64,5 +64,8 @@ Part of Node.js, WebKit/Safari and Bun.
 %_libdir/libsimdutf.so
 
 %changelog
+* Wed Apr 30 2025 Ilya Sorochan <k0tran@altlinux.org> 6.5.0-alt1
+- 5.5.0 -> 6.5.0 (libsimdutf10 -> libsimdutf20)
+
 * Fri Oct 04 2024 Ilya Sorochan <k0tran@altlinux.org> 5.5.0-alt1
 - Initial build.
