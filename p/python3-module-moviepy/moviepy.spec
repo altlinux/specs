@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.2
-Release: alt2
+Release: alt2.1
 
 Summary: Video editing with Python
 
@@ -102,6 +102,9 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Wed Apr 23 2025 Alexander Kovalev <alexvk@altlinux.org> 2.1.2-alt2.1
+- Merge pull request #2417 to fix FTBFS.
+
 * Sat Mar 29 2025 Alexander Kovalev <alexvk@altlinux.org> 2.1.2-alt2
 - Merge upstream commit 4dd5fe4.
 - Spec: return test_setup to check.
