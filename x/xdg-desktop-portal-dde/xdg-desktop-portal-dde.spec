@@ -4,7 +4,7 @@
 
 Name: xdg-desktop-portal-dde
 Version: 1.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: A backend implement for xdg-desktop-portal on Deepin
 
@@ -18,7 +18,9 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: dwayland-devel extra-cmake-modules libwayland-cursor-devel libwayland-egl-devel dqt6-tools dqt6-wayland-devel dtk6-common-devel libdtk6core-devel libdtk6widget-devel treeland-protocols wlr-protocols
+# Automatically added by buildreq on Wed Apr 30 2025
+# optimized out: bash5 bashrc cmake cmake-modules dqt6-base-common dqt6-base-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers wayland-devel xorg-proto-devel
+BuildRequires: dqt6-tools dqt6-wayland-devel dtk6-common-devel libdtk6widget-devel libwayland-egl-devel treeland-protocols wlr-protocols libcups-devel
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -41,7 +43,6 @@ The package provides lib%{name}-wayland for %name.
 %setup
 
 %build
-export LC_ALL=C.UTF-8
 %if_with clang
 export CC="clang"
 export CXX="clang++"
@@ -71,6 +72,9 @@ export READELF="llvm-readelf"
 %_libdir/libxdg-desktop-portal-dde-wayland.so
 
 %changelog
+* Wed Apr 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt1.1
+- Cleanup buildrequires.
+
 * Fri Jan 17 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.8-alt1
 - New version 1.0.8.
 - Added vcs tag.
