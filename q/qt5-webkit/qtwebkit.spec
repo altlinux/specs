@@ -8,7 +8,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt27
+Release: alt28
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -21,8 +21,8 @@ Patch1: webkit-offlineasm-warnings-ruby27.patch
 Patch2: qtwebkit-5.212.0_cmake_cmp0071.patch
 Patch3: qtwebkit-5.212.0-add-riscv64.patch
 Patch4: qtwebkit-fix-build-gcc14.patch
-# Gentoo
-Patch7: qtwebkit-5.212.0_pre20200309-icu-68.patch
+Patch5: qtwebkit-icu68.patch
+Patch6: qtwebkit-icu76.patch
 # ALT
 Patch10: alt-flags.patch
 # Elbrus
@@ -106,8 +106,8 @@ Requires: libqt5-core = %_qt5_version
 %patch3 -p1
 %endif
 %patch4 -p1
-#
-%patch7 -p1
+%patch5 -p1
+%patch6 -p1
 #
 %patch10 -p1
 %ifarch %e2k
@@ -148,6 +148,7 @@ export QT_INSTALL_DOCS="%_qt5_docdir"
 export QT_VER="%_qt5_version" QT_VERSION="%_qt5_version"
 export QT_VERSION_TAG=`echo "%_qt5_version" | sed 's|\.||g'`
 export BUILDDIR="$PWD"
+export CMAKE_POLICY_VERSION_MINIMUM="3.5"
 #    -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 cmake \
     -DCMAKE_INSTALL_PREFIX=%_qt5_prefix \
@@ -231,6 +232,10 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Wed Apr 30 2025 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt28
+- fix to build with new cmake
+- fix to build with new icu
+
 * Thu Dec 19 2024 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt27
 - fix compile with gcc14
 
