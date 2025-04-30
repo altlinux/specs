@@ -1,6 +1,6 @@
 Name: samurai
-Version: 1.2
-Release: alt1
+Version: 1.3
+Release: alt0.1.git737f702
 
 Summary: ninja-compatible build tool written in C
 License: Apache-2.0
@@ -20,6 +20,7 @@ samurai is a ninja-compatible build tool written in C99 with a focus on simplici
 
 %build
 export CC=gcc
+export CFLAGS="%optflags"
 %make_build
 
 %install
@@ -31,5 +32,8 @@ export CC=gcc
 %_man1dir/*
 
 %changelog
+* Thu May 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.3-alt0.1.git737f702
+- update from upstream/master
+
 * Wed Apr 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.2-alt1
 - Initial build for ALT.
