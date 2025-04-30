@@ -3,7 +3,7 @@
 %def_with docs
 
 Name:           ninja-build
-Version:        1.12.1
+Version:        1.12.2
 Release:        alt1
 Epoch:          1
 
@@ -112,6 +112,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.12.2-alt1
+- New version.
+
 * Fri Feb 07 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.12.1-alt1
 - New version.
 
