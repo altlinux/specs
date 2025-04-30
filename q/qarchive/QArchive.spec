@@ -1,9 +1,11 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 %define qtversion 6
 %define nameB QArchive
 
 Name: qarchive
 Version: 2.2.9
-Release: alt2
+Release: alt3
 
 Summary: Async C++ Cross-Platform library that modernizes libarchive using Qt.
 License: BSD-3-Clause
@@ -41,14 +43,17 @@ developing applications that use %nameB.
 
 %install
 %cmake_install
-rm %buildroot%_libdir/lib%nameB.a
 
 %files -n %name-devel
 %_libdir/cmake/%nameB
 %_pkgconfigdir/%nameB.pc
 %_includedir/%nameB
+%_libdir/lib%nameB.a
 
 %changelog
+* Wed Apr 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.9-alt3
+- added static library
+
 * Sat Apr 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.2.9-alt2
 - rebuilt with %%cmake
 - removed libQArchive2 subpackage
