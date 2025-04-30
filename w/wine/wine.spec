@@ -9,17 +9,17 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 8.1.0
-%define winetricks_version 20240105
+%define mono_version 9.4.0
+%define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
-%define basemajor 9.0
-%define major 9.0
+%define basemajor 10.x
+%define major 10.3
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
 %define conflictlist wine-vanilla wine-stable wine-tkg wine-proton-tkg wine-etersoft
-%define wow64conflict i586-%name
+%define wow64conflict i586-wine-vanilla i586-wine-stable i586-wine-tkg i586-wine-proton-tkg
 
 %define __add_conflict() \
 for mod in %{conflictlist}; do \
@@ -38,7 +38,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %def_with set_cap_net_raw
 
 # build wow64 package (both 32/64 PE in the one package)
-%def_without wow64
+%def_with wow64
 
 %ifarch aarch64
 # old clang have some troubles with .seh on aarch64
@@ -71,15 +71,29 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 # use rpm-macros-features
 %if_feature vulkan
-%def_with vulkan
+    %def_with vulkan
+%else
+    %def_without vulkan
 %endif
 
-%def_without wayland
+%if_feature wayland
+    %def_with wayland
+%else
+    %def_without wayland
+%endif
 
-# use rpm-macros-features
+%if_feature ffmpeg
+    %def_with ffmpeg
+%else
+    %def_without ffmpeg
+%endif
+
+%def_with sdl
 
 %if_feature opencl
     %def_with opencl
+%else
+    %def_without opencl
 %endif
 
 %if_feature pcap 1.10.3
@@ -113,7 +127,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.14
+Version: %major.0
 Release: alt1
 Epoch: 1
 
@@ -140,7 +154,7 @@ Source6: %name-%version-bin-scripts.tar
 # local patches
 Source10: %name-patches-%version.tar
 
-AutoReq: yes, noperl, nomingw32
+AutoReq: yes, noperl, nomingw32, nocpp
 
 # set compilers
 %ifarch aarch64
@@ -171,27 +185,29 @@ ExclusiveArch: %ix86 x86_64
 #ld: <artificial>:(.text+0x2a): undefined reference to `wld_start'
 %define optflags_lto %nil
 
+# used in paths
+%define wineproduct wine
 %define libdir %_libdir
-%define libwinedir %libdir/wine
-%define winebindir %_libexecdir/wine
+%define libwinedir %libdir/%wineproduct
+%define winebindir %_libexecdir/%wineproduct
 %if_with build64
     %define wineserver wineserver64
-    %define winepreloader wine64-preloader
+    %define winebin wine64
 %endif
 %if_with buildwow64
-    %define wineserver wineserver
-    %define winepreloader wine-preloader
+    %define wineserver wineserver64
+    %define winebin wine64
 %endif
 %if_without build64
     %define wineserver wineserver32
-    %define winepreloader wine-preloader
+    %define winebin wine32
 %endif
-
-%define winepe32dir i386-windows
-%define winepe64dir %_arch-windows
 
 %define winepedir unsupported-windows
 %define winesodir unsupported-unix
+
+%define winepe32dir i386-windows
+%define winepe64dir %_arch-windows
 
 # set arch dependent dirs
 %ifarch %{ix86}
@@ -201,6 +217,7 @@ ExclusiveArch: %ix86 x86_64
 %ifarch x86_64
 %define winepedir x86_64-windows
 %define winesodir x86_64-unix
+%define wow64_arches i386,x86_64
 %endif
 %ifarch %{arm}
 %define winepedir arm-windows
@@ -268,7 +285,16 @@ BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libv4l-devel
 BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel
 BuildRequires: libGLU-devel
+%if_with sdl
 BuildRequires: libSDL2-devel
+%endif
+%if_with wayland
+BuildRequires: libwayland-client-devel libglvnd-devel libwayland-egl-devel libxkbcommon-devel
+%endif
+%if_with ffmpeg
+BuildRequires: libavutil-devel libavformat-devel libavcodec-devel
+%endif
+
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel
 BuildRequires: libunixODBC-devel
@@ -279,7 +305,11 @@ BuildRequires: valgrind-devel
 %if_with unwind
 BuildRequires: libunwind-devel
 %endif
-BuildRequires: libnetapi-devel
+
+# dlls/netapi32
+#BuildRequires: libnetapi-devel
+BuildRequires: pkgconfig(netapi)
+
 #BuildRequires: gstreamer-devel gst-plugins-devel
 
 # for winscard (libpcsclite.so here)
@@ -330,7 +360,7 @@ BuildRequires: desktop-file-utils
 # FIXME: Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
-#Requires: wine-gecko = %gecko_version
+#Requires: %wineproduct-gecko = %gecko_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
@@ -349,7 +379,7 @@ Obsoletes: %winepkgname-gl < %EVR
 
 Conflicts: libwine-vanilla-gl libwine-gl
 Conflicts: wine-vanilla-gl wine-gl
-Obsoletes: lib%name-gl
+Obsoletes: lib%name-gl < %EVR
 
 # old twain part
 Provides: %winepkgname-twain = %EVR
@@ -357,7 +387,7 @@ Obsoletes: %winepkgname-twain < %EVR
 
 Conflicts: libwine-vanilla-twain libwine-twain
 Conflicts: wine-vanilla-twain wine-twain
-Obsoletes: lib%name-twain
+Obsoletes: lib%name-twain < %EVR
 
 # Provides/Obsoletes Fedora packages
 %define common_provobs wine-filesystem wine-desktop wine-systemd wine-sysvinit
@@ -529,9 +559,6 @@ develop programs using %name.
 # Apply wine-staging patches
 %name-staging/staging/patchinstall.py DESTDIR=$(pwd) --all --backend=patch
 
-# disable rpath using for executable
-#__subst "s|^\(LDRPATH_INSTALL =\).*|\1|" Makefile.in
-
 # Apply local patches
 %name-patches/patchapply.sh
 
@@ -560,7 +587,7 @@ export CROSSCC=clang
 	--enable-win64 \
 %endif
 %if_with buildwow64
-	--enable-archs=i386,x86_64 \
+	--enable-archs=%wow64_arches \
 %endif
 	--disable-tests \
 	--without-gstreamer \
@@ -571,7 +598,9 @@ export CROSSCC=clang
 	%{subst_with pcap} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
+	%{subst_with sdl} \
 	%{subst_with wayland} \
+	%{subst_with ffmpeg} \
 	--bindir=%winebindir \
 	%nil
 
@@ -592,16 +621,11 @@ cp -v %buildroot%libwinedir/%winesodir/win32u.so %buildroot%libdir
 
 mkdir -p %buildroot%_bindir/
 
-# return wine64 and wine64-preloader (half revert of upstream 5884e98fbec966b0ad9f3babcbec7d8fe25dbc1d)
-%ifarch aarch64
-mv -v %buildroot%winebindir/wine %buildroot%winebindir/wine64
-mv -v %buildroot%winebindir/wine-preloader %buildroot%winebindir/wine64-preloader
-mv -v %buildroot%winebindir/wine_make_autoreq_happy %buildroot%_bindir/wine64_make_autoreq_happy
-%endif
+mv -v %buildroot%winebindir/wine %buildroot%winebindir/%winebin
 
 # hack: move all programs back to _bindir
 find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
-    egrep -v '/wine$|/wine-preloader$|/wineserver$|/wine64$|/wine64-preloader$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
+    egrep -v '/wine$|/wine32$|/wineserver$|/wineserver32$|/wine64$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
     xargs mv -v -t %buildroot%_bindir/
 [ -s %buildroot%_bindir/wineg++ ] || ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
 [ -s %buildroot%_bindir/winecpp ] || ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
@@ -609,7 +633,7 @@ find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
 
 # FIXME: it is missed on 64 bit (it is supposed to be installed with wine 32)
 %if_with build64
-install -p -m 0644 loader/wine.man %buildroot%_man1dir/wine.1
+install -p -m 0644 tools/wine/wine.man %buildroot%_man1dir/wine.1
 %endif
 
 # unpack desktop files
@@ -630,19 +654,20 @@ mkdir -p %buildroot%_bindir/
 tar xvf %SOURCE6
 for i in bin-scripts/*.in ; do
     tbin=%buildroot%_bindir/$(basename $i .in)
-    sed -e "s:@BINDIR@:%winebindir:g" $i > $tbin
+    sed -e "s:@BINDIR@:%winebindir:g" -e "s:@DATADIR@:%_datadir/%wineproduct:g" -e "s:@LIBDIR@:%_libdir:g" -e "s:@WINELIBDIR@:%_libdir/%wineproduct:g"   $i > $tbin
     chmod +x $tbin
 done
 
-# wine64 and wine64-preloader are already built as wine64* on x86_64 only
 %if "%wineserver" != "wineserver"
 mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
-# some systems requires wineserver in winebindir
-[ -s %buildroot%winebindir/wineserver ] || cp %buildroot%_bindir/wineserver %buildroot%winebindir/wineserver
+cp %buildroot%_bindir/wineserver %buildroot%winebindir/wineserver
 %endif
+
 %if_with build64
 [ -s %buildroot%_bindir/wine64 ] || ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
 %endif
+
+chmod a+x %buildroot%libwinedir/%winesodir/{wine,wine-preloader,wine_make_autoreq_happy}
 
 %if_with set_cap_net_raw
 # script for %name-ping
@@ -677,20 +702,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 
 %files
 %if_with build64
-%winebindir/wine64
 %_bindir/wine64
-%else
-%winebindir/wine
 %endif
+%winebindir/%winebin
 %winebindir/%wineserver
-%winebindir/%winepreloader
-
-# eterbug #14676
-%if_with build64
-%_bindir/wine64_make_autoreq_happy
-%else
-%_bindir/wine_make_autoreq_happy
-%endif
 
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
@@ -739,10 +754,16 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %libwinedir/%winesodir/wpcap.so
 %endif
 %libwinedir/%winesodir/winebus.so
+%libwinedir/%winesodir/winebth.so
+%libwinedir/%winesodir/winedmo.so
 %libwinedir/%winesodir/wineusb.so
 %libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
 %libwinedir/%winesodir/winscard.so
+
+%libwinedir/%winesodir/wine
+%libwinedir/%winesodir/wine-preloader
+%libwinedir/%winesodir/wine_make_autoreq_happy
 
 # PE executables or PE stubs
 %libwinedir/%winepedir/*.??*
@@ -777,7 +798,6 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 
 %_bindir/wine
 %_bindir/wineserver
-%_bindir/wine-preloader
 
 %_bindir/wineapploader
 
@@ -819,10 +839,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_man1dir/winedbg.*
 
 
-%dir %_datadir/wine/
-%_datadir/wine/wine.inf
-%_datadir/wine/nls/
-%_datadir/wine/fonts/
+%dir %_datadir/%wineproduct/
+%_datadir/%wineproduct/wine.inf
+%_datadir/%wineproduct/nls/
+%_datadir/%wineproduct/fonts/
 
 
 
@@ -886,6 +906,26 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Mon Apr 28 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.3.0-alt1
+- new version 10.3.0 with rpmgs script
+- update patches to staging wine-10.3
+   - windowscodecs: Implement IWICBitmapFlipRotator(WICBitmapTransformRotate90) for bitmaps with bpp >= 8. (eterbug #17003)
+   - windowscodecs/tests: Add a test for IWICBitmapFlipRotator(WICBitmapTransformRotate90). (eterbug #17003)
+   + revert "ntdll: Support x86_64 syscall emulation."
+
+
+* Thu Feb 13 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.1.0-alt1
+- new version 10.1.0 (with rpmrb script)
+
+* Thu Feb 06 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.0.1-alt2
+- enable wayland support
+- enable ffmpeg support
+
+* Tue Feb 04 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.0.1-alt1
+- new stable release wine-10.0 with staging patches
+- set strict require wine-mono 9.4.0
+- require winetricks 20250102
+
 * Thu Dec 12 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.0.14-alt1
 - update patches to staging wine-9.0
   + revert "Revert "prntvpt: Prefer builtin. (eterbug #14957)""

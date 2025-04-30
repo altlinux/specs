@@ -1,6 +1,7 @@
+%define commit e73c4d8f71801fe842c0276b603d9c8024d6d957
 Name: winetricks
-Version: 20240223
-Release: alt1
+Version: 20250207
+Release: alt2
 
 Summary: Work around common problems in Wine
 
@@ -11,14 +12,18 @@ Url: https://github.com/Winetricks/winetricks
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source-url: %url/archive/%version/%name-%version.tar.gz
-# Source-url: https://github.com/Winetricks/winetricks/commit/f87bf9e6a7c67a06487a1ef710c0d9c548ae6f01
+# Source-url: https://github.com/Winetricks/winetricks/commit/%commit
 Source: %name-%version.tar
 
 Patch2: 0001-winetricks-try-use-xvt-as-terminal.patch
+Patch3: 0001-winetricks-W_NO_WIN64_WARNINGS-1.patch
 
 Patch10: 0001-Remove-unuseful-binary-arch-detection.patch
-Patch11: 0002-add-w_expand_env32-and-w_expand_env64-and-using-them.patch
-Patch12: 0003-Rename-w_try_regsvr-to-w_try_regsvr32.patch
+#Patch11: 0002-add-w_expand_env32-and-w_expand_env64-and-using-them.patch
+Patch12: 0001-Rename-w_try_regsvr-to-w_try_regsvr32.patch
+
+Patch21: 0006-install-correct-version-of-msvcp140.patch
+Patch22: 0001-ie8-removed-dll-that-cannot-be-registered.patch
 
 BuildArch: noarch
 
@@ -33,6 +38,7 @@ Requires: cabextract gzip unzip wget which
 
 # skip optional deps
 %filter_from_requires /^kde5-kdialog/d
+%filter_from_requires /^kdialog/d
 %filter_from_requires /^zenity/d
 
 
@@ -51,9 +57,11 @@ or tweak various Wine settings individually.
 %prep
 %setup
 %patch2 -p1
+%patch3 -p1
 %patch10 -p1
-%patch11 -p1
 %patch12 -p1
+%patch21 -p1
+%patch22 -p1
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
@@ -68,8 +76,6 @@ subst 's|winetricks_latest_version_check$||' src/winetricks
 
 %install
 %makeinstall_std
-# some tarballs do not install appdata
-install -m0644 -D -t %buildroot%_datadir/metainfo src/%name.appdata.xml
 # hack for empty output to console
 subst 's|Terminal=false|Terminal=true|' %buildroot%_desktopdir/%name.desktop
 
@@ -83,11 +89,25 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_man1dir/%name.1*
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/io.github.winetricks.Winetricks.metainfo.xml
 %_datadir/bash-completion/completions/winetricks
-#exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Apr 28 2025 Vitaly Lipatov <lav@altlinux.ru> 20250207-alt2
+- vcrun2019: Install correct version of msvcp140.dll into 64bit
+- ie8: removed dll that cannot be registered
+- redo opensymbol download, remove w_try_ar function
+
+* Thu Feb 13 2025 Vitaly Lipatov <lav@altlinux.ru> 20250207-alt1
+- new version (20250207) with rpmgs script
+- disable win64 warnings
+
+* Thu Feb 06 2025 Vitaly Lipatov <lav@altlinux.ru> 20250125-alt1
+- new version (20250125) with rpmgs script
+
+* Wed Feb 05 2025 Vitaly Lipatov <lav@altlinux.ru> 20250102-alt1
+- new version (20250102) with rpmgs script
+
 * Mon Mar 04 2024 Vitaly Lipatov <lav@altlinux.ru> 20240223-alt1
 - new version (20240223) from commit f87bf9e6a7c67a06487a
 - add patches with rewrite new style wow64 support (github #2191)
