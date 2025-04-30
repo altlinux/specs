@@ -1,6 +1,6 @@
 Name: pandoc
 Version: 3.6.4.1
-Release: alt1
+Release: alt2
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -39,10 +39,10 @@ Slidy HTML slide shows.
 %endif
 
 %build
-%cabal_vendor_build
+%cabal_vendor_build --constraint="pandoc +embed_data_files"
 
 %install
-%cabal_vendor_install
+%cabal_vendor_install --constraint="pandoc +embed_data_files"
 
 mkdir -p %buildroot%_datadir/bash-completion/completions
 %buildroot%_bindir/pandoc --bash-completion > \
@@ -57,6 +57,9 @@ install -pm 644 -D -t %buildroot%_man1dir \
 %_man1dir/pandoc*.1.xz
 
 %changelog
+* Wed Apr 30 2025 Leonid Znamenok <respublica@altlinux.org> 3.6.4.1-alt2
+- embed data files into executable
+
 * Wed Apr 23 2025 Leonid Znamenok <respublica@altlinux.org> 3.6.4.1-alt1
 - 3.6.4.1 (ALT#50484) (ALT#49673)
 - rebuilt with rpm-build-haskell-vendored
