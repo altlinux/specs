@@ -29,8 +29,8 @@
 %define Name Erlang
 Name: erlang
 Epoch: 1
-Version: 26.2.5.3
-Release: alt2
+Version: 26.2.5.11
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
 Group: Development/Erlang
@@ -1224,6 +1224,10 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Mon Apr 28 2025 Denis Medvedev <nbr@altlinux.org> 1:26.2.5.11-alt1
+- 26.2.5.11 
+Fixes: CVE-2025-32433
+
 * Sat Dec 21 2024 Egor Ignatov <egori@altlinux.org> 1:26.2.5.3-alt2
 - fix FTBFS with gcc-14
 
