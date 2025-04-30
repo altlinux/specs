@@ -274,9 +274,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 14
+%global updatever 15
 %global patchver 0
-%global buildver 7
+%global buildver 6
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -360,7 +360,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2016,6 +2016,13 @@ fi
 %endif
 
 %changelog
+* Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 0:17.0.15.0.6-alt1
+- New version.
+- Security fixes:
+  - CVE-2025-21587
+  - CVE-2025-30691
+  - CVE-2025-30698
+
 * Fri Apr 18 2025 Andrey Cherepanov <cas@altlinux.org> 0:17.0.14.0.7-alt2
 - Used tabs in alternative files (ALT #53878).
 
