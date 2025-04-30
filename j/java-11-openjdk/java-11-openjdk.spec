@@ -41,7 +41,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.26.0.4
+%define version 11.0.27.0.6
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -302,9 +302,9 @@ BuildRequires: /proc rpm-build-java
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
-%global securityver 26
+%global securityver 27
 %global minorver    0
-%global buildver    4
+%global buildver    6
 %global rpmrelease  1
 %global dist		jpp11
 #%%global tagsuffix      ""
@@ -1768,6 +1768,13 @@ fi
 %endif
 
 %changelog
+* Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 0:11.0.27.0.6-alt1
+- New version.
+- Security fixes
+  - CVE-2025-21587
+  - CVE-2025-30691
+  - CVE-2025-30698
+
 * Mon Jan 27 2025 Andrey Cherepanov <cas@altlinux.org> 0:11.0.26.0.4-alt1
 - New version.
 - Security fixes
