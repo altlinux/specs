@@ -286,9 +286,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 6
+%global updatever 7
 %global patchver 0
-%global buildver 7
+%global buildver 6
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -348,7 +348,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt3
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -475,6 +475,7 @@ Source1: bootstrap.tar
 Source9: jconsole.desktop.in
 
 # Release notes
+# https://mail.openjdk.org/pipermail/jdk-updates-dev/
 Source10: NEWS
 
 # Source code for alt-java
@@ -1985,6 +1986,13 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 0:21.0.7.0.6-alt1
+- New version.
+- Security fixes:
+  - CVE-2025-21587
+  - CVE-2025-30691
+  - CVE-2025-30698
+
 * Tue Apr 15 2025 Andrey Cherepanov <cas@altlinux.org> 0:21.0.6.0.7-alt3
 - Used tabs in alternative files (ALT #53743).
 
