@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.442.b06
+%define version 1.8.0.452.b09
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo jdk8u
-%global shenandoah_revision jdk8u442-b06
+%global shenandoah_revision jdk8u452-b09
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -380,8 +380,8 @@ BuildRequires: /proc rpm-build-java
 %global __jar_repack 0
 
 Name:    java-%{javaver}-%{origin}
-Version: %{javaver}.%{updatever}.b06
-Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Version: %{javaver}.%{updatever}.b09
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2138,6 +2138,13 @@ fi
 %endif
 
 %changelog
+* Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.452.b09-alt1
+- New version.
+- Security fixes:
+  - CVE-2025-21587
+  - CVE-2025-30691
+  - CVE-2025-30698
+
 * Tue Jan 28 2025 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.442.b06-alt1_1jpp8
 - New version.
 
