@@ -4,14 +4,15 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.4.9
+Version: 6.4.10
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://github.com/linuxmint/cinnamon
+URL: https://github.com/linuxmint/cinnamon
+VCS: https://github.com/linuxmint/cinnamon.git
 
 Source0: %name-%version.tar
 Source1: polkit-%name-authentication-agent-1.desktop
@@ -149,12 +150,6 @@ rm -rf debian
 #install polkit files
 install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 
-# disable internal polkit agent
-cat>%buildroot%_datadir/glib-2.0/schemas/00_org.cinnamon.gschema.override<<EOF
-[org.cinnamon]
-enable-polkit-agent=false
-EOF
-
 # Clean-up requires
 
 # cinnamon/files/usr/share/cinnamon/cinnamon-settings/modules/cs_themes.py
@@ -206,7 +201,6 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %_datadir/dbus-1/services/org.cinnamon.CalendarServer.service
 %_datadir/desktop-directories/*.directory
 %_datadir/glib-2.0/schemas/*.xml
-%_datadir/glib-2.0/schemas/00_org.cinnamon.gschema.override
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
 %python3_sitelibdir_noarch/cinnamon/
 %_desktopdir/*.desktop
@@ -220,6 +214,10 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Wed Apr 30 2025 Anton Midyukov <antohami@altlinux.org> 6.4.10-alt1
+- New version 6.4.10.
+- Enable internal polkit agent.
+
 * Sun Apr 27 2025 Anton Midyukov <antohami@altlinux.org> 6.4.9-alt1
 - New version 6.4.9 (Closes: 54024).
 
