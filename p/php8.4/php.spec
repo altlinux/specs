@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  4
-%define _php_release_version 5
+%define _php_release_version 6
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -34,7 +34,7 @@ Source3: php.ini
 Source4: phpinfo.tar
 
 Patch1: php-8.4.3-alt-always-link-extension-with-libphp.patch
-Patch2: php-8.4.3-shared-1.patch
+Patch2: php-8.4.6-shared-1.patch
 Patch3: php-8.4.3-cli-build.patch
 Patch4: php-8.4.3-alt-build-with-PIC.patch
 Patch5: php-8.4.3-sapi-scandir.patch
@@ -490,6 +490,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Tue Apr 29 2025 Anton Farygin <rider@altlinux.com> 8.4.6-alt1
+- 8.4.5 -> 8.4.6
+
 * Fri Mar 14 2025 Anton Farygin <rider@altlinux.ru> 8.4.5-alt1
 - 8.4.4 -> 8.4.5 (Fixes: CVE-2024-11235, CVE-2025-1219, CVE-2025-1736, CVE-2025-1861,
                          CVE-2025-1734, CVE-2025-1217)
