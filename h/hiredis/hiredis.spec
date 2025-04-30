@@ -1,7 +1,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define sover 1
+%define sover 1.3.0
 
 %def_with devel
 
@@ -12,8 +12,8 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -31,8 +31,6 @@ Hiredis is a minimalistic C client library for the Redis database.
 Summary: The official C client for Redis
 License: BSD
 Group: System/Libraries
-Obsoletes: libhiredis1.1.0
-Conflicts: libhiredist1.1.0
 
 %description -n libhiredis%sover
 Hiredis is a minimalistic C client library for the Redis database.
@@ -97,8 +95,8 @@ cp hiredis-test %buildroot%_bindir/
 
 %files -n libhiredis%sover
 %doc COPYING CHANGELOG.md
+%_libdir/*.so.1
 %_libdir/*.so.%{sover}
-%_libdir/*.so.%{sover}.*
 
 %if_with devel
 %files -n libhiredis-devel
@@ -111,6 +109,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Thu Apr 24 2025 Anton Farygin <rider@altlinux.com> 1.3.0-alt1
+- 1.2.0 -> 1.3.0
+
 * Fri Jan 05 2024 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
 - libhiredis1: added obsoletes and conflicts against libhiredis1.1.0 (Closes: #48978)
 
