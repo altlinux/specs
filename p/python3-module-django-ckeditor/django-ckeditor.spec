@@ -1,24 +1,35 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname django-ckeditor
+%define pypi_name django-ckeditor
+%define mod_name ckeditor
 
-Name: python3-module-%oname
-Version: 6.4.1
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 6.7.2
 Release: alt1
 
 Summary: Django admin CKEditor integration
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-ckeditor/
+VCS: https://github.com/shaunsephton/django-ckeditor.git
+
 BuildArch: noarch
 
-# VCS: https://github.com/shaunsephton/django-ckeditor.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-django-js-asset
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 
-%add_python3_req_skip selenium
+%if_with check
+BuildRequires: python3(coverage)
+BuildRequires: python3-module-django-dbbackend-sqlite3
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 Django admin CKEditor integration. Provides a RichTextField,
@@ -27,19 +38,33 @@ utilizing CKEditor with image upload and browsing support included.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+rm -rf %buildroot%python3_sitelibdir/%mod_name-%version/docs
+
+%check
+%tox_check_pyproject
 
 %files
-%doc *.rst
+%doc *.rst LICENSE
 %python3_sitelibdir/*
 
 
 %changelog
+* Tue Apr 30 2025 Dmitry Lyalyaev <fruktime@altlinux.org> 6.7.2-alt1
+- 6.4.1 -> 6.7.2
+
 * Fri May 30 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 6.4.1-alt1
 - New version.
 
