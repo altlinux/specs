@@ -1,5 +1,5 @@
 Name:    zellij
-Version: 0.41.2
+Version: 0.42.2
 Release: alt1
 
 Summary: A terminal workspace with batteries included
@@ -63,6 +63,9 @@ cp -r ./example %buildroot%_datadir/example
 %_datadir/example
 
 %changelog
+* Wed Apr 30 2025 Ilya Sorochan <k0tran@altlinux.org> 0.42.2-alt1
+- Update version.
+
 * Mon Nov 25 2024 Ilya Sorochan <k0tran@altlinux.org> 0.41.2-alt1
 - Update version.
 
