@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.16.10
-Release: alt1
+Release: alt2
 
 Summary: A Python handler for mkdocstrings
 License: ISC
@@ -28,6 +28,8 @@ BuildRequires: python3-module-mkdocstrings
 BuildRequires: python3-module-mkdocs-material
 BuildRequires: python3-module-beautifulsoup4
 BuildRequires: python3-module-inline-snapshot
+BuildRequires: python3-module-black
+BuildRequires: python3-module-ruff
 %endif
 
 BuildArch: noarch
@@ -73,6 +75,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Apr 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 1.16.10-alt2
+- Built with new inline-snapshot.
+
 * Mon Apr 14 2025 Grigory Ustinov <grenka@altlinux.org> 1.16.10-alt1
 - Automatically updated to 1.16.10.
 
