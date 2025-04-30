@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.7.9
+Version: 5.7.14
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -14,13 +14,14 @@ Url: https://github.com/linuxdeepin/qt5platform-plugins
 Vcs: git://github.com/linuxdeepin/qt5platform-plugins.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-qt5plutform-plugins-5.6.28-alt-plugin-path.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5EdidSupport.a
-# Automatically added by buildreq on Sat Oct 28 2023
-# optimized out: cmake cmake-modules fontconfig-devel gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libcairo-devel libdouble-conversion3 libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libp11-kit libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-gui libdqt5-test libdqt5-waylandclient libdqt5-widgets libdqt5-x11extras libdqt5-xcbqpa libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 pkg-config python3 python3-base python3-dev python3-module-setuptools dqt5-base-devel sh5 wayland-devel xorg-proto-devel zlib-devel
-BuildRequires: dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libmtdev-devel libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel dqt5-wayland-devel dqt5-x11extras-devel dqt5-base-devel-static
+# Automatically added by buildreq on Wed Apr 30 2025
+# optimized out: cmake cmake-modules dqt5-base-common dqt5-base-devel dqt5-declarative-devel fontconfig-devel gcc-c++ glib2-devel glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-mesa libGLX-mesa libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcairo-devel libcap-ng libcrypt-devel libctf-nobfd0 libdouble-conversion-devel libdouble-conversion3 libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-eglfsdeviceintegration libdqt5-eglfskmssupport libdqt5-gui libdqt5-network libdqt5-opengl libdqt5-printsupport libdqt5-qml libdqt5-qmlmodels libdqt5-qmlworkerscript libdqt5-quick libdqt5-quickparticles libdqt5-quickshapes libdqt5-quicktest libdqt5-quickwidgets libdqt5-sql libdqt5-test libdqt5-waylandclient libdqt5-waylandcompositor libdqt5-widgets libdqt5-x11extras libdqt5-xcbqpa libdqt5-xml libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libgraphite2-devel libharfbuzz-cairo libharfbuzz-gobject libharfbuzz-icu libicu-devel libp11-kit libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-eglfsdeviceintegration libqt5-eglfskmssupport libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-qmlworkerscript libqt5-quick libqt5-sql libqt5-test libqt5-waylandclient libqt5-widgets libqt5-xcbqpa libqt5-xml libsasl2-3 libspirv-tools0 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 libxkbfile-devel llvm19.1-libs pam0_userpass perl pkg-config python3 python3-base sh5 wayland-devel xorg-proto-devel zlib-devel
+BuildRequires: dqt5-base-devel-static dqt5-wayland-devel dqt5-x11extras-devel dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libharfbuzz-devel libkf5waylandclient libkf5waylandserver libmtdev-devel libdqt5-quickshapes libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel
 BuildRequires: kf5-kwayland-devel
 
 %if_with clang
@@ -37,7 +38,7 @@ Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-way
 
 %prep
 %setup -n %repo-%version
-%patch -p1
+%autopatch -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
 
 %build
@@ -72,6 +73,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Wed Apr 30 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.14-alt1
+- New version 5.7.14.
+
 * Thu Jan 30 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
 - New version 5.7.9.
 - Added vcs tag.
