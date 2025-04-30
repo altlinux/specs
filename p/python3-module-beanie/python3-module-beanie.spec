@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 1.26.0
+Version: 1.29.0
 Release: alt1
 
 Summary: Asynchronous Python ODM for MongoDB
@@ -61,5 +61,8 @@ Data models are based on Pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Apr 28 2025 Alexander Burmatov <thatman@altlinux.org> 1.29.0-alt1
+- Updated to 1.29.0.
+
 * Tue Aug 06 2024 Alexander Burmatov <thatman@altlinux.org> 1.26.0-alt1
 - Initial build for Sisyphus.

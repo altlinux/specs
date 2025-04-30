@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.18.1
+Version: 2.21.0
 Release: alt1
 
 Summary: Simple and powerful factories for mock data generation
@@ -28,6 +28,8 @@ BuildRequires: python3-module-bson
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-aiosqlite
 BuildRequires: python3-module-email-validator
+BuildRequires: python3-module-beanie
+BuildRequires: python3-module-mongomock-motor
 %endif
 
 BuildArch: noarch
@@ -63,6 +65,9 @@ py.test-3 -v -k "not ($donttest)"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Apr 29 2025 Alexander Burmatov <thatman@altlinux.org> 2.21.0-alt1
+- New 2.21.0 version.
+
 * Thu Dec 19 2024 Alexander Burmatov <thatman@altlinux.org> 2.18.1-alt1
 - New 2.18.1 version.
 
