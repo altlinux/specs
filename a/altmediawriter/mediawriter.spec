@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.7
+Version:        1.0.8
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -58,8 +58,12 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Wed Apr 30 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.8-alt1
+- Add support for p11 platform
+
 * Mon Apr 07 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.7-alt1
-- 1.0.7 (See CHANGELOG.txt for details)
+- Add platform selection
+- Add use of METADATA_URLS_HOST_ENV environment variable to set METADATA_URLS_HOST
 
 * Tue Feb 11 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.6-alt1
 - Fix error message display (corrected encoding) in Windows
