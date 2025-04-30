@@ -2,10 +2,10 @@
 %define oname proteus
 
 %def_with bootstrap
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 7.4.1
+Version: 7.6.0
 Release: alt1
 
 Summary: Library to access Tryton server as a client
@@ -24,6 +24,9 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-trytond-tests
+BuildRequires: python3-module-pwdlib
+BuildRequires: python3-module-argon2-cffi
+BuildRequires: python3-module-pydot
 %endif
 
 %if_without bootstrap
@@ -57,11 +60,8 @@ This package contains tests for %oname.
 %install
 %pyproject_install
 
-%if_with check
 %check
-export PYTHONPATH=$PWD
-py.test3 -vra
-%endif
+%pyproject_run_pytest -v
 
 %files
 %doc CHANGELOG COPYRIGHT LICENSE README.rst doc/*
@@ -73,6 +73,9 @@ py.test3 -vra
 
 
 %changelog
+* Wed Apr 30 2025 Anton Vyatkin <toni@altlinux.org> 7.6.0-alt1
+- Version updated to 7.6.0.
+
 * Wed Jan 15 2025 Anton Vyatkin <toni@altlinux.org> 7.4.1-alt1
 - Version updated to 7.4.1.
 
