@@ -1,5 +1,5 @@
 Name: mobile-config-firefox
-Version: 4.4.0
+Version: 4.6.0
 Release: alt1
 
 Summary: Mobile and privacy friendly firefox configuration 
@@ -39,5 +39,8 @@ extended support releases of Firefox.
 %_datadir/metainfo/org.postmarketos.mobile_config_firefox.metainfo.xml
 
 %changelog
+* Sat Apr 26 2025 Egor Shestakov <ved@altlinux.org> 4.6.0-alt1
+- New version.
+
 * Tue Mar 11 2025 Egor Shestakov <ved@altlinux.org> 4.4.0-alt1
 - Initial build.
