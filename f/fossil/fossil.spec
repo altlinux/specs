@@ -1,6 +1,6 @@
 %def_enable Werror
 Name: fossil
-Version: 2.25
+Version: 2.26
 Release: alt1
 
 Summary: A distributed SCM with bug tracking and wiki
@@ -40,7 +40,9 @@ cp -at autosetup -- /usr/share/gnu-config/config.{guess,sub}
 # so don't use %%configure macro
 ./configure \
 	--prefix=%_usr \
+%if "%(rpmquery --qf '%%{VERSION}' libsqlite3-devel)" >= "3.49.0"
 	--disable-internal-sqlite \
+%endif
 	--with-openssl=auto
 export CFLAGS='%optflags'
 %make_build
@@ -60,6 +62,9 @@ install -pDm644 fossil.1 %buildroot%_man1dir/fossil.1
 #doc www
 
 %changelog
+* Thu May 01 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.26-alt1
+- 2.26
+
 * Wed Feb 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.25-alt1
 - 2.25
 - change building scheme
