@@ -13,7 +13,7 @@ Name: hiredis
 Name: hiredis%sover
 %endif
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: The official C client for Redis
 Group: System/Libraries
 License: BSD-3-Clause
@@ -86,7 +86,6 @@ libraries to develop applications using a Redis database.
 %make install \
 	PREFIX=%buildroot%_prefix \
 	LIBRARY_PATH=%_lib \
-	LIB_SUFFIX=%_libsuff \
 	%nil
 find %buildroot -name '*.a' -delete -print
 mkdir -p %buildroot%_bindir/
@@ -95,7 +94,7 @@ cp hiredis-test %buildroot%_bindir/
 
 %files -n libhiredis%sover
 %doc COPYING CHANGELOG.md
-%_libdir/*.so.1
+%exclude %_libdir/*.so.1
 %_libdir/*.so.%{sover}
 
 %if_with devel
@@ -109,6 +108,11 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Thu May 01 2025 Anton Farygin <rider@altlinux.com> 1.3.0-alt2
+- dopped upstream-added compatibility symlink libhiredis.so.1 symlink to comply
+  with ALT Shared Lib Policy and allow parallel installation of multiple
+  libhiredis versions (closes: #54087)
+
 * Thu Apr 24 2025 Anton Farygin <rider@altlinux.com> 1.3.0-alt1
 - 1.2.0 -> 1.3.0
 
