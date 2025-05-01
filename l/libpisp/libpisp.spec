@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %def_disable logging
 %def_disable examples
 %def_enable check
 
 Name: libpisp
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: A helper library to generate run-time configuration for the Raspberry Pi ISP (PiSP) 
@@ -70,6 +70,9 @@ that are needed to write applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu May 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - first build for Sisyphus (v1.2.0-1-g3db57db)
 

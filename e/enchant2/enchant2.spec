@@ -11,13 +11,13 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
 Summary: An Enchanting Spell Checking Program
 Group: Text tools
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://rrthomas.github.io/enchant
 
 Vcs: https://github.com/rrthomas/enchant.git
@@ -101,6 +101,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Thu May 01 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.4-alt1
+- 2.8.4
+
 * Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.3-alt1
 - v2.8.3-5-g0be6595
 
