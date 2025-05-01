@@ -4,9 +4,14 @@
 # Workaround for https://bugzilla.altlinux.org/53250
 %add_debuginfo_skiplist %_libdir
 %define optflags_debug -g0
+# Change this to RelWithDebInfo when the issue is resolverd
+%define zl_build_type Release
+
+# see cmake-includes/SharedCodeDefaults.cmake
+%define _optlevel 3
 
 Name:    ZLEqualizer
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Dynamic Equalizer Plugin from ZL Audio
@@ -28,6 +33,12 @@ Source2: sub-merge.unpack.sh
 %(cat %SOURCE1)
 
 BuildRequires: cmake
+BuildRequires: clang
+BuildRequires: libstdc++-devel
+# llvm-ranlib must be used when building with clang
+BuildRequires: /usr/bin/llvm-ranlib
+
+# for JUCE tools
 BuildRequires: gcc-c++
 
 BuildRequires: pkgconfig(alsa)
@@ -83,17 +94,29 @@ sh -eux "%SOURCE2"
 
 %autopatch -p1
 
+# build juceaid on in parallel
+sed -i -r "s/(--config\s+Custom)/\1 --parallel %_smp_build_ncpus/" \
+    JUCE/extras/Build/juceaide/CMakeLists.txt
+grep parallel JUCE/extras/Build/juceaide/CMakeLists.txt || exit 1
+
 %build
+
 %cmake \
+  -DCMAKE_BUILD_TYPE=%zl_build_type \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
   -DFOOBAR_VERSION:string=%version \
   -DGIT_EXECUTABLE:string='' \
   -DJUCE_TARGET_ARCHITECTURE:string=%_arch \
+  -DKFR_ENABLE_MULTIARCH:BOOL=ON \
+  -DZL_JUCE_FORMATS="VST3;LV2" \
+  -DDZL_JUCE_COPY_PLUGIN=FALSE \
   %nil
 
 %cmake_build
 
 %install
-cd "%_cmake__builddir/ZLEqualizer_artefacts/"
+cd "%_cmake__builddir/ZLEqualizer_artefacts/%zl_build_type"
 
 mkdir -p %buildroot%_libdir/lv2
 cp -a "LV2/ZL Equalizer.lv2" %buildroot%_libdir/lv2
@@ -111,6 +134,10 @@ cp -a "VST3/ZL Equalizer.vst3" %buildroot%_libdir/vst3
 
 
 %changelog
+* Thu May 01 2025 Ivan A. Melnikov <iv@altlinux.org> 0.6.2-alt1
+- 0.6.2
+- build with clang
+
 * Thu Apr 10 2025 Ivan A. Melnikov <iv@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
