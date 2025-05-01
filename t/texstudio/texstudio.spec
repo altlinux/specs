@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel pkgconfig(lcms
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.8.6
+Version:        4.8.7
 Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
@@ -102,15 +102,17 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %files -f %{name}.lang
 %{_bindir}/texstudio
 %dir %{_datadir}/texstudio/
-%dir %{_datadir}/texstudio/_images/
-%dir %{_datadir}/texstudio/_sphinx_design_static/
-%dir %{_datadir}/texstudio/_static/
-%{_datadir}/texstudio/_sphinx_design_static/*
-%{_datadir}/texstudio/_static/*
-%{_datadir}/texstudio/_images/*
+%dir %{_datadir}/doc/texstudio/_images/
+%dir %{_datadir}/doc/texstudio/_sphinx_design_static/
+%dir %{_datadir}/doc/texstudio/_static/
+%{_datadir}/doc/texstudio/_sphinx_design_static/*
+%{_datadir}/doc/texstudio/_static/*
+%{_datadir}/doc/texstudio/_images/*
 %{_datadir}/texstudio/*.png
-%{_datadir}/texstudio/*.css
-%{_datadir}/texstudio/latex2e.*
+%{_datadir}/doc/texstudio/*.css
+%{_datadir}/doc/texstudio/*.js
+%{_datadir}/doc/texstudio/*.png
+#{_datadir}/doc/texstudio/latex2e.*
 %{_datadir}/texstudio/*.stopWords
 %{_datadir}/texstudio/*.stopWords.level2
 %{_datadir}/texstudio/de_DE.badWords
@@ -119,8 +121,8 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %{_datadir}/texstudio/*.json
 %{_datadir}/texstudio/*.js
 %{_datadir}/texstudio/th_*.dat
-%{_datadir}/texstudio/*.html
-%{_datadir}/texstudio/CHANGELOG.md
+%{_datadir}/doc/texstudio/*.html
+%{_datadir}/doc/texstudio/CHANGELOG.md
 %{_datadir}/texstudio/README*.txt
 %{_datadir}/applications/texstudio.desktop
 %{_datadir}/metainfo/texstudio.metainfo.xml
@@ -130,6 +132,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Mon Apr 28 2025 Ilya Mashkin <oddity@altlinux.ru> 4.8.7-alt1
+- 4.8.7
+
 * Mon Feb 10 2025 Ilya Mashkin <oddity@altlinux.ru> 4.8.6-alt1
 - 4.8.6
 
