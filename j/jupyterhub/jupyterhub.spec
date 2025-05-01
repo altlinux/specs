@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    jupyterhub
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Summary: Multi-user server for Jupyter notebooks
@@ -53,5 +53,8 @@ Group: Development/Python3
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Apr 30 2025 Anton Vyatkin <toni@altlinux.org> 5.3.0-alt1
+- new version 5.3.0
+
 * Thu Feb 27 2025 Anton Vyatkin <toni@altlinux.org> 5.2.1-alt1
 - Initial build for Sisyphus.
