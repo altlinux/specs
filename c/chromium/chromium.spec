@@ -4,7 +4,7 @@
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
 %endif
-%global max_jobs 40
+%global max_jobs 48
 
 %global llvm_version 19.1
 
@@ -24,7 +24,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        135.0.7049.114
+Version:        136.0.7103.59
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -74,7 +74,7 @@ Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
-Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
+# Patch020: 0020-ALT-Do-not-hardcode-flatbuffer-version.patch
 Patch021: 0021-FEDORA-System-brotli.patch
 Patch022: 0022-Revert-Use-aggregate-init-designed-initializers-more.patch
 Patch023: 0023-Add-missing-headers.patch
@@ -86,13 +86,15 @@ Patch028: 0028-DEBIAN-work-around-incorrect-template-selection.patch
 Patch031: 0031-FEDORA-disable-screen-ai-service.patch
 Patch032: 0032-FEDORA-chromium-135-add-cfi-suppressions-for-pipewire-functions.patch
 Patch033: 0033-FEDORA-chromium-135-gperf.patch
-Patch034: 0034-FEDORA-chromium-135-print-review-fail.patch
 Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-ALT-std::exchange.patch
 
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
+Patch044: 0044-DEBIAN-av1-vaapi.patch
+Patch045: 0045-DEBIAN-node-version-ck.patch
+Patch046: 0046-DEBIAN-perfetto-nullptr.patch
 
 Patch050: 0050-OPENMANDRIVA-ozone-dont-use-x11-on-wayland.patch
 Patch051: 0051-OPENMANDRIVA-if-chromeos-can-do-it-so-can-linux.patch
@@ -100,7 +102,6 @@ Patch052: 0052-OPENMANDRIVA-enable-hw-video-encode.patch
 Patch053: 0053-OPENMANDRIVA-drop-workarounds-for-ancient-mesa-bugs.patch
 
 Patch061: 0061-DEBIAN-disable-buildtools-libc.patch
-Patch062: 0062-DEBIAN-cacheline.patch
 Patch063: 0063-DEBIAN-libsync-rk3588-panthor.patch
 # trying to fix issues with YT playback:
 Patch064: 0064-OPENSUSE-bring_back_and_disable_allowlist.patch
@@ -109,10 +110,9 @@ Patch066: 0066-DEBIAN-clang19.patch
 Patch067: 0067-DEBIAN-gn-allowlist.patch
 # for rust < 1.86:
 Patch068: 0068-DEBIAN-adler1.patch
-# Patch069: 0069-DEBIAN-swiftshader-llvm.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
-Patch071: 0071-FEDORA-pipewire-cast.patch
-Patch072: 0072-135-fix-gtk4.patch
+Patch073: 0073-FEDORA-chromium-136-rust-skrifa-build-error.patch
+Patch074: 0074-FEDORA-chromium-136-unsupport-clang-flags.patch
 
 ### End Patches
 
@@ -179,7 +179,7 @@ BuildRequires:  pkgconfig(libbrotlidec)
 BuildRequires:  pkgconfig(libcurl)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libevdev)
-BuildRequires:  pkgconfig(libevent)
+## BuildRequires:  pkgconfig(libevent)
 BuildRequires:  pkgconfig(libffi)
 BuildRequires:  pkgconfig(libhwy)
 BuildRequires:  pkgconfig(libjpeg)
@@ -237,6 +237,7 @@ BuildRequires:  python3(simplejson)
 
 BuildRequires:  rust       >= 1.75.0-alt2
 BuildRequires:  rust-cargo >= 1.75.0-alt2
+BuildRequires:  nodejs
 
 # We do not build an internal version of libvulkan but we want to have it on the
 # system.
@@ -351,6 +352,7 @@ gn_arg+=( optimize_webui=false )
 gn_arg+=( link_pulseaudio=true )
 gn_arg+=( enable_hangout_services_extension=true )
 gn_arg+=( treat_warnings_as_errors=false )
+gn_arg+=( clang_warning_suppression_file=\"\" )
 gn_arg+=( fatal_linker_warnings=false )
 gn_arg+=( system_libdir=\"%_lib\" )
 gn_arg+=( enable_nocompile_tests=false )
@@ -458,12 +460,23 @@ gn_arg+=( clang_base_path=\"/usr/lib/llvm-%llvm_version\" )
 tools/gn/bootstrap/bootstrap.py --gn-gen-args="${gn_arg[*]}" --build-path=%target
 %target/gn --script-executable=%__python3 gen --args="${gn_arg[*]}" %target
 
+if [ -r %target/toolchain.ninja ]; then
+	# We never perform incremental builds,
+	# so we do not need to maintain extensive deps logs,
+	# nor stat the outputs too many times.
+	# TODO: Prevent gn from generating deps=1 in the first place.
+	subst '
+		/^[[:space:]]\+deps[[:space:]]=/d;
+		/^[[:space:]]\+depfile[[:space:]]=/d;
+	' %target/toolchain.ninja
+fi
+
 n=%build_parallel_jobs
 [ "$n" -lt %max_jobs ] || n=%max_jobs
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
-	ninja -vvv -j "$n" -C %target $name
+	/usr/bin/time ninja -vvv -j "$n" -C %target $name
 done
 
 
@@ -578,6 +591,14 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Apr 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 136.0.7103.59-alt1
+- New version (136.0.7103.59).
+- Security fixes:
+  + CVE-2025-4096: Heap buffer overflow in HTML
+  + CVE-2025-4050: Out of bounds memory access in DevTools
+  + CVE-2025-4051: Insufficient data validation in DevTools
+  + CVE-2025-4052: Inappropriate implementation in DevTools
+
 * Wed Apr 23 2025 Andrew A. Vasilyev <andy@altlinux.org> 135.0.7049.114-alt1
 - New version (135.0.7049.114).
 
