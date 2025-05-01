@@ -7,7 +7,7 @@
 %define zlib_ng_commit ce01b1e41da298334f8214389cc9369540a7560f
 
 Name: dolphin-emu
-Version: 2503
+Version: 2503a
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -122,6 +122,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Thu May 01 2025 Nazarov Denis <nenderus@altlinux.org> 2503a-alt1
+- Version 2503a
+
 * Sun Mar 23 2025 Nazarov Denis <nenderus@altlinux.org> 2503-alt1
 - Version 2503
 
