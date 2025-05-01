@@ -5,7 +5,7 @@
 %define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.7
+Version: 0.0.8
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -88,7 +88,7 @@ pushd settings
 install -D -m 644 95-esync.conf %buildroot%limitsdir/95-esync.conf
 install -D -m 644 95-vm.max_map_count.conf %buildroot%sysctldir/95-vm.max_map_count.conf
 install -D -m 644 95-tcp_mtu_probing.conf %buildroot%sysctldir/95-tcp_mtu_probing.conf
-install -D -m 644 95-gnome-gschema.override %buildroot%schemasdir/95-gnome-gschema.override
+install -D -m 644 95_mutter-check-alive-timeout.gschema.override %buildroot%schemasdir/95_mutter-check-alive-timeout.gschema.override
 install -D -m 644 95-swappiness.conf %buildroot%sysctldir/95-swappiness.conf
 popd
 
@@ -127,12 +127,16 @@ fi
 %_bindir/alt-gaming-check
 
 %files alive-timeout
-%schemasdir/95-gnome-gschema.override
+%schemasdir/95_mutter-check-alive-timeout.gschema.override
 
 %files swappiness10
 %sysctldir/95-swappiness.conf
 
 %changelog
+* Thu May 01 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.8-alt1
+- fixed config for check-alive-timeout (ALT bug 53908)
+- updated alt-gaming-check
+
 * Mon Nov 11 2024 Mikhail Tergoev <fidel@altlinux.org> 0.0.7-alt1
 - added alt-gaming-swappiness10
 - updated alt-gaming-check
