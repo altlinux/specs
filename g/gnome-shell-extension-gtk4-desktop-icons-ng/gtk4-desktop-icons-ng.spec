@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 97
+Version: 98
 Release: alt1
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
@@ -23,6 +23,7 @@ Requires: libpoppler-gir
 Requires: libgnome-autoar-gir
 BuildRequires: %_bindir/glib-compile-schemas
 BuildRequires: meson
+BuildRequires: gtk-update-icon-cache
 
 %description
 Gtk4 Desktop Icons NG is an extension and a program together for the GNOME Shell
@@ -67,9 +68,15 @@ rm -r %buildroot%_sysconfdir/apparmor.d
 %files -f gtk4-ding.lang
 %_datadir/gnome-shell/extensions/gtk4-ding@smedius.gitlab.com
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.gtk4-ding.gschema.xml
+%_desktopdir/com.desktop.ding.desktop
+%_iconsdir/hicolor/scalable/apps/com.desktop.ding.svg
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Thu May 01 2025 Anton Midyukov <antohami@altlinux.org> 98-alt1
+- New version 98.
+- Fix multiple find file windows.
+
 * Sun Apr 20 2025 Anton Midyukov <antohami@altlinux.org> 97-alt1
 - New version 97.
 
