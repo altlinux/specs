@@ -1,7 +1,7 @@
 %define nameL com.github.luisbocanegra.minimize2tray
 
 Name: plasma-addon-kwin-minimize2tray
-Version: 20250413
+Version: 20250430
 Release: alt1
 
 Summary: Hide windows to the system tray, similar to KDocker but in the form of a KWin Script that works on Wayland
@@ -38,5 +38,9 @@ BuildRequires: kf6-kservice-devel kf6-kstatusnotifieritem-devel
 %_libdir/qt6/qml/com/github/luisbocanegra/*
 
 %changelog
+* Thu May 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250430-alt1
+- Update upstream git.e8560f34:
+    + change default shortcut to Meta+Alt+PgDown
+
 * Mon Apr 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 20250413-alt1
 - Initial build for ALT Linux.
