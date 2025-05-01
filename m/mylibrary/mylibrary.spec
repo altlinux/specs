@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    mylibrary
-Version: 3.2
-Release: alt1.1
+Version: 4.0
+Release: alt1
 
 Summary: Home librarian
 License: GPL-3.0
@@ -22,6 +22,10 @@ BuildRequires: pkgconfig(poppler-cpp)
 BuildRequires: pkgconfig(libarchive)
 BuildRequires: pkgconfig(libgcrypt)
 BuildRequires: pkgconfig(ddjvuapi)
+BuildRequires: doxygen
+BuildRequires: graphviz
+BuildRequires: /usr/bin/pdflatex
+BuildRequires: texlive-dist
 
 %description
 MyLibrary is a simple program for managing .fb2, .epub, .pdf and .djvu
@@ -38,7 +42,14 @@ or location.
 chmod -x ru.mail.bobilev_yury.MyLibrary.desktop
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=release
+%cmake -D CMAKE_BUILD_TYPE=None \
+       -W no-dev \
+       -D USE_OPENMP=OFF \
+       -D USE_PLUGINS=ON \
+       -D CREATE_HTML_DOCS_MLBOOKPROC=ON \
+       -D CREATE_PDF_DOCS_MLBOOKPROC=ON \
+       -D CREATE_HTML_DOCS_PLUGINIFC=ON \
+       -D CREATE_PDF_DOCS_PLUGINIFC=ON
 %cmake_build
 
 %install
@@ -54,8 +65,26 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %{_datadir}/MyLibrary/*
 %{_datadir}/applications/ru.mail.bobilev_yury.MyLibrary.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
+%dir %{_includedir}/MLBookProc
+%{_includedir}/MLBookProc/*
+%dir %{_includedir}/MLPluginIfc
+%{_includedir}/MLPluginIfc/*
+%dir %{_libdir}/cmake/MLBookProc
+%{_libdir}/cmake/MLBookProc/*
+%dir %{_libdir}/cmake/MLPluginIfc
+%{_libdir}/cmake/MLPluginIfc/*
+%{_libdir}/libml*.so*
+%dir %{_datadir}/MLBookProc
+%{_datadir}/MLBookProc/*
+%dir %{_datadir}/doc/MLBookProc
+%{_datadir}/doc/MLBookProc/*
+%dir %{_datadir}/doc/MLPluginIfc
+%{_datadir}/doc/MLPluginIfc/*
 
 %changelog
+* Thu May 01 2025 Nikolay Strelkov <snk@altlinux.org> 4.0-alt1
+- New version 4.0.
+
 * Sun Feb 23 2025 Nikolay Strelkov <snk@altlinux.org> 3.2-alt1.1
 - Fixed FTBFS.
 

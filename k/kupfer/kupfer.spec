@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kupfer
-Version: 327
+Version: 328
 Release: alt1
 
 Summary: Smart and quick launcher
@@ -24,6 +24,7 @@ BuildRequires: python3(dbus)
 
 %filter_from_requires /python3(kupfer.*)/d
 Requires: python3(dbus.gi_service)
+Requires: python3(xdg)
 Requires: typelib(Keybinder)
 Requires: typelib(Wnck)
 Requires: setproctitle
@@ -89,5 +90,8 @@ waf install --destdir=%{buildroot} --nopyc --nopyo
 %_datadir/help/sl/%name/*
 
 %changelog
+* Thu May 01 2025 Nikolay Strelkov <snk@altlinux.org> 328-alt1
+- New version 328.
+
 * Sun Mar 09 2025 Nikolay Strelkov <snk@altlinux.org> 327-alt1
 - Initial build for Sisyphus
