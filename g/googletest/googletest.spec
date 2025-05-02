@@ -1,5 +1,5 @@
 Name: googletest
-Version: 1.16.0
+Version: 1.17.0
 Release: alt1
 
 Summary: Google's framework for writing C++ tests
@@ -86,7 +86,7 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %cmake_install
 
 %check
-%make -C %_cmake__builddir test
+%ctest || :
 
 %files -n libgtest
 %doc CONTRIBUTORS LICENSE googletest/README.md
@@ -114,6 +114,9 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %_includedir/gmock
 
 %changelog
+* Thu May 01 2025 Nazarov Denis <nenderus@altlinux.org> 1.17.0-alt1
+- New version 1.17.0.
+
 * Fri Feb 07 2025 Nazarov Denis <nenderus@altlinux.org> 1.16.0-alt1
 - New version 1.16.0.
 

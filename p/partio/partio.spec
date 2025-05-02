@@ -4,7 +4,7 @@
 
 Name: partio
 Version: 1.19.0
-Release: alt1
+Release: alt2
 Summary: A library for particle IO and manipulation
 Group: Development/Other
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 Patch1: partio-fedora-version-libraries.patch
 Patch2: partio-alt-install-tests.patch
+Patch3: partio-alt-googletest-1.17.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake gcc-c++
@@ -90,6 +91,7 @@ This package contains tests for Partio.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 sed -i \
 	-e "s:@PROJECT_VERSION_FULL@:%version:g" \
@@ -140,6 +142,9 @@ find . -name '*.py' | xargs sed -i \
 %_libdir/partio/test
 
 %changelog
+* Fri May 02 2025 Nazarov Denis <nenderus@altlinux.org> 1.19.0-alt2
+- Fix build with googletest 1.17.0
+
 * Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 1.19.0-alt1
 - Version 1.19.0.
 
