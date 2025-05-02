@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 48
 %define beta %nil
@@ -8,14 +8,16 @@
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
 Group: Accessibility
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/Projects/Orca
+
+Vcs: https://gitlab.gnome.org/GNOME/orca.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -90,6 +92,9 @@ Jaws For Windows компании Freedom Scientific.
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Fri May 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- updated to 48.1-4-ga5f5586ba
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
