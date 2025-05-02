@@ -1,6 +1,6 @@
 %global import_path github.com/dmachard/dns-collector
 Name:    dns-collector
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Ingesting, pipelining, and enhancing your DNS logs with usage indicators, security analysis, and additional metadata
@@ -55,6 +55,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri May 02 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- New version.
+
 * Fri Apr 11 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version.
 
