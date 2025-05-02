@@ -2,7 +2,7 @@
 %def_without tests
 
 Name:    python3-module-markups
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 Summary: Wrapper around various text markups
 License: MIT
@@ -35,6 +35,7 @@ can easily add your own markups.
 
 %prep
 %setup -n %oname-%version
+subst 's/^license.*/license={text="BSD-3-Clause"}/' pyproject.toml
 
 %build
 %pyproject_build
@@ -53,6 +54,9 @@ can easily add your own markups.
 %python3_sitelibdir/Markups-%version.dist-info
 
 %changelog
+* Tue Apr 29 2025 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
+- New version.
+
 * Fri Dec 13 2024 Andrey Cherepanov <cas@altlinux.org> 4.1.0-alt1
 - New version.
 
