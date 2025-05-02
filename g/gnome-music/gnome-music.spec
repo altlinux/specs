@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 47
+%define ver_major 48
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -28,13 +28,14 @@ BuildArch: noarch
 
 %define tracker_ver 3.0
 %define gtk4_ver 4.10.0
-%define adwaita_ver 1.5
+%define adwaita_ver 1.6
 %define grilo_ver 0.3.13
 %define python_ver 3.7
 %define mediaart_ver 1.9.1
-%define pygobject_ver 3.36.1
+%define pygobject_ver 3.50.0
 %define pycairo_ver 1.14.0
 
+Requires: python3-module-pygobject3 >= %pygobject_ver
 Requires: tracker3 tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
 Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
@@ -48,7 +49,7 @@ BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libsoup%soup_api_ver-devel
 BuildRequires: libgrilo-devel >= %grilo_ver grilo-plugins-devel
-BuildRequires: libmediaart2.0-devel >= %mediaart_ver
+BuildRequires: pkgconfig(libmediaart-2.0) >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
@@ -78,10 +79,13 @@ Music playing application for GNOME3.
 %_datadir/glib-2.0/schemas/org.gnome.Music.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
 %python3_sitelibdir_noarch/gnomemusic/
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* NEWS*
 
 %changelog
+* Fri May 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- 48.0
+
 * Mon Nov 25 2024 Yuri N. Sedunov <aris@altlinux.org> 47.1-alt1
 - 47.1
 

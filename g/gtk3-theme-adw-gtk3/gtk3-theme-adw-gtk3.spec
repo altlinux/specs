@@ -2,7 +2,7 @@
 %define themename adw-gtk3
 
 Name: gtk3-theme-%themename
-Version: 5.10
+Version: 6.1
 Release: alt1
 
 Summary: The theme from libadwaita ported to GTK+3
@@ -17,19 +17,23 @@ Source: https://github.com/lassekongo83/adw-gtk3/archive/v%version/%themename-%v
 %else
 Source: %themename-%version.tar
 %endif
+Source1: https://github.com/sass/dart-sass/releases/download/1.87.0/dart-sass-1.87.0-linux-x64.tar.gz
 
+ExclusiveArch: x86_64
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson sassc
+BuildRequires: meson
+#BuildRequires: /usr/bin/sass
 
 %description
 %summary
 
 %prep
-%setup -n %themename-%version
+%setup -n %themename-%version -a1
 
 %build
+export PATH=$PATH:$PWD/dart-sass
 %meson
 %meson_build
 
@@ -42,6 +46,9 @@ BuildRequires: meson sassc
 %doc README*
 
 %changelog
+* Fri May 02 2025 Yuri N. Sedunov <aris@altlinux.org> 6.1-alt1
+- 6.1
+
 * Fri Apr 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.10-alt1
 - 5.10
 
