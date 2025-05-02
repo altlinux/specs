@@ -39,7 +39,7 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.19.2
+Version: 1.22.1
 Release: alt1
 
 Summary: lightweight graphical system monitor
@@ -54,10 +54,15 @@ Source1: conky-dotfiles.tar.bz2
 Source99: conky.watch
 
 # git://git.altlinux.org/gears/c/conky.git
-Patch: %name-%version-%release.patch
+Patch: conky-1.22.1-ALT-lua.patch
 
 BuildRequires(pre): cmake gcc-c++ rpm-build-vim
-BuildRequires: glibc-devel lua%luaver-devel python3-module-yaml libpcre2-devel python3-module-jinja2
+
+BuildRequires: lua%luaver-devel
+BuildRequires: python3-module-yaml
+BuildRequires: python3-module-jinja2
+BuildRequires: libpcre2-devel
+BuildRequires: gperf
 
 %{?_enable_audacious:BuildRequires: libaudacious-devel}
 %{?_enable_curl:BuildRequires: libcurl-devel}
@@ -102,7 +107,7 @@ VIm syntax plugin for conky config file.
 
 %prep
 %setup
-%autopatch -p1
+%patch -p1
 sed -i 's,@LUA_VERSION@,%luaver,' extras/convert.lua
 
 %build
@@ -158,7 +163,6 @@ install -m644 -p data/conky.conf data/conky_no_x11.conf %buildroot%_sysconfdir/c
 # install config converter
 mkdir -p %buildroot/usr/libexec/conky
 install -m755 -p extras/convert.lua %buildroot/usr/libexec/conky
-
 # install vim plugins
 mkdir -p %buildroot%vim_runtime_dir
 cp -a extras/vim/ftdetect %buildroot%vim_runtime_dir
@@ -191,6 +195,9 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Wed Apr 23 2025 Ulysses Apokin <ulysses@altlinux.org> 1.22.1-alt1
+- Updated to 1.22.1.
+
 * Sun Jun 04 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.19.2-alt1
 - Updated to 1.19.2.
 
