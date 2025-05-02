@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-clipboard-indicator
 Version: 68
-Release: alt1
+Release: alt2
 Summary: Clipboard manager for GNOME Shell
 License: MIT
 Group:  Graphical desktop/GNOME
@@ -37,6 +37,9 @@ over 1M downloads.
 %doc README.rst
 
 %changelog
+* Fri May 02 2025 Anton Midyukov <antohami@altlinux.org> 68-alt2
+- Update russian translations
+
 * Sat Apr 05 2025 Anton Midyukov <antohami@altlinux.org> 68-alt1
 - New version 68.
 
