@@ -1,4 +1,4 @@
-%global grub_arches x86_64 aarch64 %ix86
+%global grub_arches x86_64 aarch64 loongarch64 %ix86
 
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
@@ -6,26 +6,31 @@
 #def_with slideshow
 
 %define theme starterkit
-%define Theme starter kit
+%define Theme Starterkit
 %define codename Salvia
 %define brand alt
 %define Brand ALT
 %define flavour %brand-%theme
 %define distro_name Starterkit
 %define branding_data_dir %_datadir/branding-data-current
+
+%ifdef _priority_distbranch
 %define altbranch %_priority_distbranch
+%else
+%define altbranch sisyphus
+%endif
 
 Name: branding-%flavour
 Version: 11
-Release: alt3
+Release: alt4
 Epoch: 1
 
-Url: http://en.altlinux.org/starterkits
+Url: https://en.altlinux.org/starterkits
 
 BuildRequires(pre): rpm-macros-branding
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: distro-licenses
 
@@ -184,7 +189,7 @@ cp /usr/share/distro-licenses/ALT_Regular_License/license.{all,ru}.html.in notes
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME='%distro_name' CODENAME=%codename URL='%url' BRANCH='%altbranch' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME='%distro_name' CODENAME=%codename URL='%url' BRANCH='%altbranch' ./configure
 LC_ALL=en_US.UTF-8 make
 
 %install
@@ -296,6 +301,11 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Sat May 03 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt4
+- set Theme=Starterkit
+- set Name="Brand Theme"
+- build with qt6
+
 * Sun Mar 02 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt3
 - bootloader, bootsplash: update /etc/sysconfig/grub2 only on first install
 - release: Add conflict with altlinux-release-%%altbranch
