@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Zoomer application for wayland
 License: MIT
@@ -26,13 +26,15 @@ Source1: %name-%version-cargo.tar
 Patch: woomer-0.1.0-crate-raylib-c_char.patch
 
 # due raylib
-ExcludeArch: aarch64 ppc64le
+#ExcludeArch: aarch64 ppc64le
 
 %define glfw_ver 3.3.3
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rust-cargo
 BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(wayland-server)
+BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(glfw3) >= %glfw_ver cmake
 # for raylib
 BuildRequires: gcc-c++
@@ -50,9 +52,9 @@ boomer (https://github.com/tsoding/boomer) written in rust.
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
-%patch -p1
-sed -i -e 's/"files":{[^}]*}/"files":{}/' \
-    ./vendor/raylib/.cargo-checksum.json
+#%%patch -p1
+#sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+#    ./vendor/raylib/.cargo-checksum.json
 
 %build
 %rust_build
@@ -65,6 +67,9 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %doc README*
 
 %changelog
+* Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt3
+- updated to 0.1.0-15-g70c39b4
+
 * Mon Jan 20 2025 Ilya Sorochan <k0tran@altlinux.org> 0.1.0-alt2
 - add patch that fixes raylib crate build for different c_char
   signedness
