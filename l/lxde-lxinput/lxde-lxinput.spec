@@ -1,18 +1,19 @@
 %define upstreamname lxinput
-%define gtkver 2
+%define gtkver 3
+
 Name: lxde-%upstreamname
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 Summary: Keyboard and mouse settings dialog for LXDE
 
 Group: System/Configuration/Hardware
-License: GPLv2+
-Url: http://lxde.sourceforge.net/
-#Url: git://git.lxde.org/lxde/lxinput.git
+License: GPL-2.0-or-later
 
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
+URL: https://github.com/lxde/lxinput
+VCS: https://github.com/lxde/lxinput.git
 
 Source: %upstreamname-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl intltool libgtk+%gtkver-devel xsltproc
 Requires: lxde-lxsession
@@ -23,6 +24,7 @@ Lightweight X11 Desktop Environment.
 
 %prep
 %setup -n %upstreamname-%version
+%autopatch -p1
 
 %build
 %autoreconf
@@ -47,6 +49,14 @@ Lightweight X11 Desktop Environment.
 %_man1dir/%upstreamname.1.*
 
 %changelog
+* Sat May 03 2025 Anton Midyukov <antohami@altlinux.org> 0.3.6-alt1
+- new version (0.3.6)
+- build with gtk+3
+- update URL tag
+- add VCS tag
+- remove Packager tag
+- convert License tag to SPDX format
+
 * Tue May 17 2016 Anton Midyukov <antohami@altlinux.org> 0.3.5-alt1
 - New version (0.3.5)
 

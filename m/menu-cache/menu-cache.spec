@@ -2,23 +2,22 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: menu-cache
-Version: 1.1.0
-Release: alt3
+Version: 1.1.1
+Release: alt1
 
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
-License: LGPLv2+ and GPLv2+
+License: LGPL-2.0-or-later
 Group: Graphical desktop/Other
 
-Url: http://lxqt.org
+URL: https://github.com/lxde/menu-cache
+VCS: https://github.com/lxde/menu-cache.git
+
 Source: %name-%version.tar
-Packager: LXDE Development Team <lxde at packages.altlinux.org>
+Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Wed Jan 23 2013
 # optimized out: glib2-devel pkg-config
 BuildRequires: gtk-doc libfm-devel libgio-devel
-
-# https://github.com/lxde/menu-cache/pull/19
-Patch: menu-cache-1.1.0-0001-Support-gcc10-compilation.patch
 
 %description
 libmenu-cache is a library creating and utilizing caches to speed up
@@ -35,7 +34,6 @@ Advantages:
 
 %package -n lib%name
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
-License: LGPL
 Group: System/Libraries
 
 %description -n lib%name
@@ -47,7 +45,6 @@ This package contains shared libraries for libmenu-cache.
 
 %package -n lib%name-devel
 Summary: Library and utils to speed up the manipulation for freedesktop.org menu
-License: LGPL
 Group: Development/C
 
 %description -n lib%name-devel
@@ -59,7 +56,7 @@ This package contains development headers for libmenu-cache.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %autoreconf
@@ -86,6 +83,12 @@ rm %buildroot/%_libdir/*.a
 %_includedir/%name
 
 %changelog
+* Sat May 03 2025 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
+- new version 1.1.1
+- update URL tag
+- add VCS tag
+- remove Packager tag
+
 * Thu Aug 26 2021 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt3
 - remove unpackaged static libraries
 

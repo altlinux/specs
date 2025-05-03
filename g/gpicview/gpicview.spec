@@ -1,24 +1,23 @@
-%def_disable gtk3
-
 Name: gpicview
-Version: 0.2.5
-Release: alt3.20231013
+Version: 0.3.1
+Release: alt1
 
 Summary: A simple and fast image viewer with low memory usage
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Graphics
 
-Url: http://lxde.sourceforge.net/gpicview/
-Source: http://downloads.sourceforge.net/lxde/gpicview-%version.tar
+URL: https://github.com/lxde/gpicview
+VCS: https://github.com/lxde/gpicview.git
 
+Source: gpicview-%version.tar
 Patch: %name-%version-%release.patch
 
 # gpicview may use invocation of xdg-mime from xdg-utils to become default
 # viewer for supported image formats
 Requires: xdg-utils
 
-BuildRequires: intltool libgtk+2-devel libjpeg-devel
-%{?_enable_gtk3:BuildRequires: libgtk+3-devel}
+BuildRequires: intltool libjpeg-devel
+BuildRequires: libgtk+3-devel
 
 %description
 GPicView is a simple and fast image viewer with low memory usage. It's aimed at
@@ -35,7 +34,7 @@ XP image viewer and gimmage.
 
 %build
 %autoreconf
-%configure %{subst_enable gtk3}
+%configure --enable-gtk3
 %make_build
 
 %install
@@ -49,8 +48,15 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_datadir/gpicview/
 %_liconsdir/*
 %_desktopdir/*
+%_man1dir/gpicview.1.*
 
 %changelog
+* Sat May 03 2025 Anton Midyukov <antohami@altlinux.org> 0.3.1-alt1
+- 0.3.1
+- build with gtk+3
+- update URL tag
+- add VCS tag
+
 * Mon Feb 12 2024 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt3.20231013
 - update russian translation
 
