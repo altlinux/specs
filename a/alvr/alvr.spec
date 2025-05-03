@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.13.0
-Release: alt1
+Release: alt2
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -45,7 +45,7 @@ BuildRequires: nvidia-cuda-devel
 BuildRequires: openxr-devel
 
 # fixed build ffmpeg with CUDA
-BuildRequires: gcc11-c++
+BuildRequires: gcc13-c++
 
 Requires: typelib(GLib)
 Requires: typelib(GObject)
@@ -166,6 +166,9 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Sat May 03 2025 Mikhail Tergoev <fidel@altlinux.org> 20.13.0-alt2
+- fixed build with new NVIDIA CUDA Toolkit
+
 * Wed Mar 26 2025 Mikhail Tergoev <fidel@altlinux.org> 20.13.0-alt1
 - updated to version: 20.13.0
 - added error if PipeWire is not installed or not used (ALT bug: 53049)
