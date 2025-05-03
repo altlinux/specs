@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define nsight_compute_ver 2024.1.1
-%define nsight_sys_ver 2023.4.4
-%define min_driver_ver 550.54.15
+%define nsight_compute_ver 2025.1.1
+%define nsight_sys_ver 2024.6.2
+%define min_driver_ver 570.124.06
 %define cuda_release 12
-%define cuda_major 4
+%define cuda_major 8
 
 %global __find_debuginfo_files %nil
 
@@ -20,7 +20,7 @@
 %add_findprov_skiplist %_libdir/nsight-compute-%nsight_compute_ver/*
 
 Name: nvidia-cuda-toolkit
-Version: 12.4.1
+Version: 12.8.1
 Release: alt1
 
 Summary: NVIDIA CUDA Toolkit libraries
@@ -31,7 +31,7 @@ Group: System/Libraries
 Url: http://www.nvidia.com
 
 Source0: %name-%version.tar.xz
-Source1: %name-pkgconfig-%version.tar.xz
+Source1: pkgconfig.tar.xz
 
 Source10: nvidia-nsight-compute.desktop
 Source11: nvidia-nsight-systems.desktop
@@ -43,6 +43,7 @@ BuildRequires: libcuda >= %min_driver_ver
 BuildRequires: libibverbs librdmacm libGL libGLU libfreeglut libibumad ocl-icd-devel libnuma
 BuildRequires: libglvnd-devel gcc-c++ libvdpau-devel tbb-devel
 BuildRequires: /usr/bin/convert chrpath
+BuildRequires: python3-dev
 
 Requires: libcuda >= %min_driver_ver
 Requires: libglut libGLU nvidia-modprobe
@@ -312,6 +313,7 @@ NVIDIA NVVM Library.
 Group: System/Libraries
 Summary: NVIDIA Profiler for CUDA and OpenCL
 Requires: nvidia-cuda-devel = %EVR
+Requires: libpython3
 %description -n nvidia-profiler
 NVIDIA Profiler for CUDA and OpenCL.
 
@@ -376,6 +378,9 @@ cp -vr cuda_demo_suite/extras/* %buildroot%_datadir/%name/extras/
 mkdir -p %buildroot%_docdir/%name/
 cp -vr cuda_documentation/* %buildroot%_docdir/%name/
 
+for i in "3.8" "3.9" "3.10" "3.11"
+do rm -v cuda_gdb/bin/cuda-gdb-python${i}-tui
+done
 cp -vr cuda_gdb/bin/* %buildroot%_bindir/
 cp -vr cuda_gdb/extras/Debugger %buildroot%_datadir/%name/extras/
 
@@ -400,7 +405,7 @@ done
 cat > %buildroot%_libdir/nvcc/bin/nvcc.profile <<EOF
 NVVMIR_LIBRARY_DIR = %_libdir/nvvm/libdevice
 PATH += %_libdir/nvcc:
-LIBRARIES =+ $(_SPACE_) -L/usr/lib64/stubs -L/usr/lib64
+LIBRARIES =+ \$(_SPACE_) -L/usr/lib64/stubs -L/usr/lib64
 EOF
 chmod 644 %buildroot%_libdir/nvcc/bin/nvcc.profile
 
@@ -540,6 +545,9 @@ chrpath -d %buildroot%_libdir/*.so.*
 sed -i "/.*unsupported GNU version.*/d" %buildroot%_includedir/crt/host_config.h
 sed -i "/.*unsupported clang version.*/d" %buildroot%_includedir/crt/host_config.h
 
+# update version in pkgconfig files
+sed -i "s/Version: XX.X/Version: %{cuda_release}.%{cuda_major}/g" pkgconfig/*.pc
+
 # copy pkgconfig files
 cp -v pkgconfig/*.pc %buildroot%_pkgconfigdir/
 
@@ -592,6 +600,7 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 
 %files -n nvidia-cuda-gdb
 %_bindir/cuda-gdb
+%_bindir/cuda-gdb-*
 %_bindir/cuda-gdbserver
 %_datadir/%name/extras/Debugger
 
@@ -719,6 +728,8 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 
 %files -n libnvrtc-builtins
 %_libdir/libnvrtc-builtins.so.*
+%_libdir/libnvrtc-builtins.alt.so.*
+%_libdir/libnvrtc.alt.so.*
 
 %files -n libnvrtc
 %_libdir/libnvrtc.so.*
@@ -733,6 +744,10 @@ rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python
 %_bindir/nvprof
 
 %changelog
+* Thu May 01 2025 Mikhail Tergoev <fidel@altlinux.org> 12.8.1-alt1
+- updated to 12.8.1 (ALT bug: 53832 54080)
+- removed version from name *.pc files
+
 * Mon Feb 03 2025 Mikhail Tergoev <fidel@altlinux.org> 12.4.1-alt1
 - updated to 12.4.1
 
