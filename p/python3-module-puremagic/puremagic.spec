@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: Pure python implementation of identifying files based off their magic numbers
@@ -69,5 +69,8 @@ Disadvantages:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat May 03 2025 Andrey Cherepanov <cas@altlinux.org> 1.29-alt1
+- New version.
+
 * Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 1.28-alt1
 - Initial build for Sisyphus.
