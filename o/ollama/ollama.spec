@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.6.3
+Version: 0.6.7
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -46,7 +46,7 @@ BuildRequires: curl
 
 %description
 %summary.
-Run DeepSeek-R1, Gemma 3, Llama 3.3, Mistral, Phi-4, Qwen 2.5, and other
+Run DeepSeek-R1, Gemma 3, Llama 4, Mistral, Phi-4, Qwen 3, and other
 models, locally.
 
 This is a meta-package.
@@ -69,9 +69,6 @@ Requires: ollama-cpu = %EVR
 
 %prep
 %setup
-%ifnarch x86_64
-sed -i /GGML_CPU_ALL_VARIANTS/d CMakeLists.txt
-%endif
 
 %build
 %add_optflags -Wno-unused-function
@@ -148,6 +145,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sat May 03 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.7-alt1
+- Update to v0.6.7 (2025-04-30).
+
 * Fri Mar 28 2025 Vitaly Chikunov <vt@altlinux.org> 0.6.3-alt1
 - Update to v0.6.3 (2025-03-26). Primarily focused on Gemma 3 improvements.
 
