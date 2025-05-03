@@ -1,18 +1,21 @@
+# magpie subproject
 %def_enable snapshot
+# for ring
 %define optflags_lto %nil
 
 %define binary_name missioncenter
-%define ver_major 0.6
+%define ver_major 1.0
 %define rdn_name io.missioncenter.MissionCenter
-# src/sys_info_v2/gatherer/3rdparty/nvtop/nvtop.json
-%define nvtop_ver 20ea55dbd1eeb4342ff0112fae3ee2a0bfe352ea
+# nvtop for magpie
+# subprojects/magpie/platform-linux/3rdparty/nvtop/nvtop.json
+%define nvtop_ver 73291884d926445e499d6b9b71cb7a9bdbc7c393
 
 %def_disable bootstrap
 
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mission Center
@@ -37,10 +40,12 @@ ExcludeArch: %ix86 armh ppc64le
 %define gtk_ver 4.16
 %define adwaita_ver 1.6
 
-Requires: dconf /usr/sbin/dmidecode
+Requires: dconf
+# no dmidecode required since 1.0.0
+# Requires:  /usr/sbin/dmidecode
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson rust-cargo blueprint-compiler
+BuildRequires: meson rust-cargo blueprint-compiler protobuf-compiler
 BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver gir(Adw) = 1
@@ -57,20 +62,22 @@ Monitor your CPU, Memory, Disk, Network and GPU usage with Mission Center.
 %setup -n %name-%version %{?_disable_bootstrap:-a1} -a2
 %{?_enable_bootstrap:
 mkdir .cargo
-cargo vendor --no-delete -s src/sys_info_v2/gatherer/Cargo.toml \
+cargo vendor --no-delete -s subprojects/magpie/Cargo.toml \
 | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+%define nvtop_dir subprojects/magpie/platform-linux/3rdparty/nvtop
+
 pushd nvtop-%nvtop_ver
-for p in ../src/sys_info_v2/gatherer/3rdparty/nvtop/patches/*.patch; do
+for p in ../%nvtop_dir/patches/*.patch; do
 patch -p1 < $p; done
 popd
 
-mkdir -p %__builddir/src/sys_info_v2/gatherer/src/debug/build/native
-mv nvtop-%nvtop_ver %{__builddir}/src/sys_info_v2/gatherer/src/debug/build/native/nvtop-%nvtop_ver
+mkdir -p %__builddir/subprojects/magpie/src/debug/build/native
+mv nvtop-%nvtop_ver %__builddir/subprojects/magpie/src/debug/build/native/nvtop-%nvtop_ver
 
 # hardcode dmidecode path
-sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
+#sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 %build
 %meson
@@ -85,7 +92,7 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 %files -f %name.lang
 %_bindir/%binary_name
-%_bindir/%binary_name-gatherer
+%_bindir/%binary_name-magpie
 %_desktopdir/%rdn_name.desktop
 %_datadir/%binary_name/
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -95,6 +102,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/sys_info_v2/mem_info.rs
 
 
 %changelog
+* Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- updated to v1.0.0-3-gf17f715
+
 * Wed Oct 30 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
 - updated to v0.6.2-1-gbef908b
 
