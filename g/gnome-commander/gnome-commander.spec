@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 1.18
 %def_with exiv2
@@ -11,12 +11,12 @@
 
 Name: gnome-commander
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 %define xdg_name org.gnome.%name
 
 Summary: A Gnome file manager similar to the Norton Commander (TM)
-License: GPL-2.0
+License: GPL-2.0-or-later
 Group: File tools
 Url: https://gcmd.github.io
 
@@ -54,6 +54,9 @@ batch renaming tool, and FTP and Samba access.
 
 %prep
 %setup
+# c++17 required for gtest-1.17
+sed -i 's/\(=c.*1\)4/\17/g' tests/meson.build
+
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g}" src/gnome-cmd-data.cc
@@ -90,6 +93,10 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt2
+- updated to 1.18.2-5-gfdde0fe7
+- fixed build with gtest-1.17
+
 * Mon Feb 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
 - 1.18.2
 
