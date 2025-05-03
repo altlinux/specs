@@ -9,12 +9,12 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 9.4.0
+%define mono_version 10.0.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.3
+%define major 10.6
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -127,7 +127,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 Name: wine
-Version: %major.0
+Version: %major.1
 Release: alt1
 Epoch: 1
 
@@ -259,7 +259,10 @@ AutoProv:no
 BuildRequires: /proc
 
 # used llvm/clang toolchain if needed
-%define llvm_br clang >= %llvm_version llvm >= %llvm_version lld >= %llvm_version
+# clang has broken version on c10f2
+#define llvm_br clang >= %llvm_version llvm >= %llvm_version lld >= %llvm_version
+# just use default llvm
+%define llvm_br clang llvm lld
 
 %if_with clang
 BuildRequires: %llvm_br
@@ -906,6 +909,11 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sat May 03 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt1
+- new version (10.6.1) with rpmgs script
+- set strict require wine-mono 10.0.0
+- don't require clang version
+
 * Mon Apr 28 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.3.0-alt1
 - new version 10.3.0 with rpmgs script
 - update patches to staging wine-10.3
