@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.8.1
+Version: 1.9.1
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -20,8 +20,8 @@ Url: https://www.xkbcommon.org
 Vcs: https://github.com/xkbcommon/libxkbcommon.git
 
 %if_disabled snapshot
-Source: %url/download/%name-%version.tar.xz
-#Source: https://github.com/xkbcommon/libxkbcommon/archive/%_name-%version.tar.gz
+#Source: %url/download/%name-%version.tar.xz
+Source: https://github.com/xkbcommon/libxkbcommon/archive/%_name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -146,6 +146,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.1-alt1
 - 1.8.1
 
