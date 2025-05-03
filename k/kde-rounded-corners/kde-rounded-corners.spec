@@ -1,14 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde-rounded-corners
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 %K6init no_altplace
 
-Group: Graphical desktop/KDE
 Summary: Rounds the corners of your windows in KDE Plasma
-URL: https://github.com/matinlotfali/KDE-Rounded-Corners
 License: GPL-3.0-only
+Group: Graphical desktop/KDE
+Url: https://github.com/matinlotfali/KDE-Rounded-Corners
+Vcs: https://github.com/matinlotfali/KDE-Rounded-Corners.git
 
 Provides: kde5-rounded-corners = %EVR
 Obsoletes: kde5-rounded-corners < %EVR
@@ -50,6 +51,9 @@ BuildRequires: qt6-declarative-devel
 %_K6plug/kwin/effects/plugins/kwin4_effect_shapecorners.so
 
 %changelog
+* Sat May 03 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7.2-alt1
+- New version 0.7.2.
+
 * Sun Feb 02 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7.1-alt1
 - New version 0.7.1.
 
