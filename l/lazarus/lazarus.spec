@@ -2,7 +2,7 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 3.8
+Version: 4.0
 Release: alt1
 Epoch:   1
 
@@ -404,6 +404,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt6Pas.so
 
 %changelog
+* Sat May 03 2025 Andrey Cherepanov <cas@altlinux.org> 1:4.0-alt1
+- New version.
+
 * Sat Jan 18 2025 Andrey Cherepanov <cas@altlinux.org> 1:3.8-alt1
 - New version.
 
