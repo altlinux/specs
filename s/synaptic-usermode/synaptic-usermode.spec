@@ -1,20 +1,15 @@
 Name: synaptic-usermode
-Version: 1.3
-Release: alt4
+Version: 1.4
+Release: alt1
 
 Summary: Usermode bindings for synaptic
 Group: System/Configuration/Packaging
 License: GPL
 BuildArch: noarch
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
-Requires: synaptic >= 0.15-alt7, consolehelper
-
-BuildPreReq: libpam-devel
-
-%define conshelpdir %_libexecdir/consolehelper
+Requires: synaptic >= 0.15-alt7
 
 %description
 Synaptic is a graphical front-end for APT (Advanced Package Tool).
@@ -26,23 +21,21 @@ This package contains usermode bindings for synaptic.
 %setup
 
 %install
-mkdir -p %buildroot%_bindir
-ln -s $(relative %conshelpdir/helper %_bindir/) %buildroot%_bindir/synaptic
-install -pD -m640 synaptic.pamd %buildroot%_sysconfdir/pam.d/synaptic
-install -pD -m640 synaptic.security %buildroot%_sysconfdir/security/console.apps/synaptic
+install -pD -m755 synaptic-usermode.sh %buildroot%_bindir/synaptic-usermode
 install -pD -m644 synaptic-256.png %buildroot%_iconsdir/hicolor/256x256/apps/synaptic.png
 install -pD -m644 synaptic-scalable.svg %buildroot%_iconsdir/hicolor/scalable/apps/synaptic.svg
 install -pD -m644 synaptic.desktop %buildroot%_datadir/applications/synaptic.desktop
 
 %files
-%config(noreplace) %_sysconfdir/pam.d/synaptic
-%config(noreplace) %_sysconfdir/security/console.apps/synaptic
-%_bindir/synaptic
+%_bindir/synaptic-usermode
 %_datadir/applications/synaptic.desktop
 %_iconsdir/hicolor/256x256/apps/synaptic.png
 %_iconsdir/hicolor/scalable/apps/synaptic.svg
 
 %changelog
+* Sun May 04 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
+- use pkexec instead consolehelper
+
 * Sat Jan 11 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3-alt4
 - Added a better quality desktop icon.
 
