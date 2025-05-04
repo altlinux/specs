@@ -18,7 +18,7 @@
 
 Name: python3-module-%mod_name
 Version: 6.8.2.1
-Release: alt0.1
+Release: alt0.2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
 Group: Development/Python3
@@ -172,6 +172,10 @@ DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/shiboken6
 DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/pyside6
 #cmake --install %_cmake__builddir/sources/pyside6
 
+# Install pyside6-uic as wrapper for uic -g python
+echo -e '#!/bin/sh\n%_qt6_libexecdir/uic -g python $@' > %buildroot%_bindir/pyside6-uic
+chmod +x %buildroot%_bindir/pyside6-uic
+
 sed -i 's#env python$#python3#' %buildroot%_bindir/shiboken_tool.py
 
 #Generate egg-info manually and install since we're performing a cmake build.
@@ -231,6 +235,7 @@ popd
 %python3_sitelibdir/PySide6-%version-*.egg-info
 
 %files devel
+%_bindir/pyside6-uic
 %_datadir/PySide6/
 %_includedir/PySide6/
 %_libdir/libpyside6*.so
@@ -259,6 +264,9 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Sun May 04 2025 Andrey Cherepanov <cas@altlinux.org> 6.8.2.1-alt0.2
+- Package pyside6-uic as wrapper for uic -g python (ALT #54027).
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2.1-alt0.1
 - NMU: new version
 
