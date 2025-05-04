@@ -2,7 +2,7 @@
 
 Name: libclucene-core
 Version: 2.3.3.4
-Release: alt7
+Release: alt8
 
 Summary: CLucene is a C++ port of Lucene.
 License: LGPL-2.1-only or Apache-2.0
@@ -19,6 +19,7 @@ Patch12: clucene-core-2.3.3.4-opensuse-gcc12-header-files.patch
 # ALT
 Patch21: %rname-%version-alt-build.patch
 
+BuildRequires(pre): rpm-macros-kde-common-devel
 BuildRequires: boost-devel-headers cmake gcc-c++ zlib-devel kde-common-devel
 
 %description
@@ -64,7 +65,7 @@ as it is written in C++.
 
 
 %prep
-%setup -qn %rname-%version
+%setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
 %patch11 -p1
@@ -76,6 +77,7 @@ as it is written in C++.
 # lcc 1.25.15 barfs on googletest's testing::<unnamed>::TestNameIs::operator()
 %add_optflags -Wno-error=unused-function
 %endif
+export CMAKE_POLICY_VERSION_MINIMUM="3.5"
 %Kcmake \
     -DBUILD_CONTRIBS_LIB:BOOL=ON \
     -DLUCENE_SYS_INCLUDES:PATH=%_libdir
@@ -105,6 +107,9 @@ make -C BUILD*
 #%_libdir/lib*.a
 
 %changelog
+* Sun May 04 2025 Dmitriy Khanzhin <jinn@altlinux.org> 2.3.3.4-alt8
+- fixed build with cmake-4.0
+
 * Wed Jun 28 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.3.3.4-alt7
 - fixed build with gcc-12
 - fixed License
