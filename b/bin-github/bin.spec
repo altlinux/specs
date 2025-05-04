@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: bin-github
-Version: 0.20.0
+Version: 0.21.1
 Release: alt1
 Summary: Binaries manager for GitHub (and Docker) releases
 License: MIT
@@ -45,6 +45,9 @@ go test -v ./...
 %_bindir/bin
 
 %changelog
+* Thu May 01 2025 Vitaly Chikunov <vt@altlinux.org> 0.21.1-alt1
+- Update to v0.21.1 (2025-04-26).
+
 * Sat Feb 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.20.0-alt1
 - Update to v0.20.0 (2025-01-29).
 - The package is renamed from bin-marcosnils to bin-github.
