@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hardinfo2
-Version: 2.2.7
-Release: alt1
+Version: 2.2.10
+Release: alt1.gitda7f31d
 
 Summary: System Information and Benchmark for Linux Systems
 License: GPL-2.0-or-later
@@ -11,7 +11,6 @@ Url: https://www.hardinfo2.org
 Vcs: https://github.com/hardinfo2/hardinfo2
 
 Source: %name-%version.tar
-Patch: hardinfo2-2.1.14-alt-cmake-deps-qgears.patch
 
 # addition tools according to upstream
 Requires: lm_sensors3
@@ -33,6 +32,9 @@ BuildRequires: libcairo-devel
 BuildRequires: glib2-devel
 BuildRequires: libsoup3.0-devel
 BuildRequires: libjson-glib-devel
+BuildRequires: glslang-devel
+BuildRequires: libdecor-devel
+BuildRequires: libvulkan-devel
 
 %description
 Hardinfo2 is based on hardinfo, which has not been released >10 years.
@@ -44,15 +46,21 @@ It can benchmark your system and compare to other machines online.
 
 %prep
 %setup
-%patch
 
 %build
-%cmake -DHARDINFO2_SERVICE=0
+%cmake -DHARDINFO2_QT5_MOCQT5=1
 %cmake_build
 
 %install
 %cmake_install
+install -D %_builddir/%{name}-%{version}/tools/hardinfo2 %buildroot/%_initdir/%name
 %find_lang %name
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files -f %name.lang
 %doc README.md
@@ -63,8 +71,16 @@ It can benchmark your system and compare to other machines online.
 %_man1dir/%{name}*
 %_datadir/metainfo/org.hardinfo2.hardinfo2.metainfo.xml
 %_libdir/%name
+%_unitdir/%name.service
+%_initdir/%name
 
 %changelog
+* Sun May 04 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.10-alt1.gitda7f31d
+- 2.2.7 -> 2.2.10
+- Fixed output of operating system information for ALT (Closes: #54105)
+- Built with systemd/SysV service
+- Commit hash: da7f31d
+
 * Tue Mar 11 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.7-alt1
 - 2.2.4 -> 2.2.7
 
