@@ -1,6 +1,6 @@
 Name: screen
-Version: 4.8.0
-Release: alt4
+Version: 4.9.1
+Release: alt1
 Epoch: 1
 
 Summary: A screen manager that supports multiple sessions on one terminal
@@ -19,8 +19,6 @@ BuildPreReq: libutempter-devel >= 1.0.6
 # Automatically added by buildreq on Mon Jan 25 2016
 # optimized out: libpam-devel libtinfo-devel pam0_userpass perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-unicore xz
 BuildRequires: libncurses-devel libutempter-devel makeinfo pam_userpass-devel
-%set_autoconf_version 2.60
-%set_gcc_version 13
 
 %description
 The screen utility allows you to run interactive text-mode programs
@@ -44,7 +42,6 @@ managed by the screen utility.
 
 %build
 pushd src
-export CC=%__cc
 %autoreconf
 %add_optflags -D_GNU_SOURCE
 %if_enabled debug
@@ -121,6 +118,12 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc src/NEWS src/README src/FAQ src/doc/README.DOTSCREEN src/doc/*.ps.*
 
 %changelog
+* Sun May 04 2025 Fr. Br. George <george@altlinux.org> 1:4.9.1-alt1
+- Updated to v.4.9.1
+
+* Sun May 04 2025 Fr. Br. George <george@altlinux.org> 1:4.9.0-alt1
+- Updated to v.4.9.0
+
 * Sun May 04 2025 Fr. Br. George <george@altlinux.org> 1:4.8.0-alt4
 - Fix build and override buggy screen 5.*
 
