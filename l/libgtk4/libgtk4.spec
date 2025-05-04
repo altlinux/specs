@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -59,7 +59,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 # backported from main
 Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 
-%define meson_ver 0.63
+%define meson_ver 1.2.0
 %define glib_ver 2.80
 %define gi_ver 1.76
 %define cairo_ver 1.18.2
@@ -417,6 +417,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sun May 04 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.5-alt1
+- 4.18.5
+
 * Mon Apr 07 2025 Yuri N. Sedunov <aris@altlinux.org> 4.18.4-alt1
 - 4.18.4
 
