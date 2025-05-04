@@ -9,16 +9,17 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 9.0.0
-%define winetricks_version 20240105
+%define mono_version 10.0.0
+%define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
-%define basemajor 9.x
-%define major 9.2
+%define basemajor 10.x
+%define major 10.6
 %define rel %nil
 
 # the packages will conflict with that
 %define conflictlist wine wine-stable wine-tkg wine-proton-tkg wine-etersoft
+%define wow64conflict i586-wine i586-wine-stable i586-wine-tkg i586-wine-proton-tkg
 
 %define __add_conflict() \
 for mod in %{conflictlist}; do \
@@ -33,12 +34,30 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 # build ping subpackage
 %def_with set_cap_net_raw
 
-%if_feature llvm 11.0
+# build wow64 package (both 32/64 PE in the one package)
+%def_with wow64
+
+%ifarch aarch64
+# old clang have some troubles with .seh on aarch64
+%define llvm_version 15
+%else
+%define llvm_version 11
+%endif
+
+%if_feature llvm %llvm_version
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
 %else
 %def_without mingw
 %endif
+
+%if_with wow64
+%undefine _without_mingw
+%def_with mingw
+%endif
+
+# TODO: clang: error: unsupported option '-mabi=' for target 'x86_64-unknown-linux-gnu'
+#def_with clang
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
 %def_with unwind
@@ -49,29 +68,56 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 # use rpm-macros-features
 %if_feature vulkan
-%def_with vulkan
+    %def_with vulkan
+%else
+    %def_without vulkan
 %endif
 
-%def_without wayland
+%if_feature wayland
+    %def_with wayland
+%else
+    %def_without wayland
+%endif
 
-# use rpm-macros-features
+%if_feature ffmpeg
+    %def_with ffmpeg
+%else
+    %def_without ffmpeg
+%endif
+
+%def_with sdl
 
 %if_feature opencl
-%def_with opencl
+    %def_with opencl
+%else
+    %def_without opencl
 %endif
 
 %if_feature pcap 1.10.3
-%def_with pcap
+    %def_with pcap
 %else
-%def_without pcap
-%def_without set_cap_net_raw
+    %def_without pcap
+    %def_without set_cap_net_raw
 %endif
+
+# default for unsupported arches
+%define winepkgname wine-vanilla
 
 %ifarch x86_64 aarch64
     %def_with build64
     %define winearch wine64
     %define winepkgname wine-vanilla
-%else
+%endif
+
+# workaround for https://bugzilla.altlinux.org/38130
+# buildwow64 = _arch = x86_64  && with wow64
+%if "%_arch" == "x86_64" && %{expand:%%{?_with_wow64:1}%%{!?_with_wow64:0}}
+    %def_with buildwow64
+    %undefine _with_build64
+    %define winearch wine
+%endif
+
+%ifarch %ix86
     %def_without build64
     %define winearch wine32
     %define winepkgname wine-vanilla
@@ -104,15 +150,20 @@ Source6: %name-%version-bin-scripts.tar
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
 
-AutoReq: yes, noperl, nomingw32
-
-ExclusiveArch: %ix86 x86_64 aarch64
+AutoReq: yes, noperl, nomingw32, nocpp
 
 # set compilers
 %ifarch aarch64
 %def_with clang
 # clang-12: error: unsupported argument 'auto' to option 'flto='
 %define optflags_lto -flto=thin
+%endif
+
+# PE cross-compilation is required for ARM64
+%if_with mingw
+ExclusiveArch: %ix86 x86_64 aarch64
+%else
+ExclusiveArch: %ix86 x86_64
 %endif
 
 # minimalize memory using
@@ -130,23 +181,29 @@ ExclusiveArch: %ix86 x86_64 aarch64
 #ld: <artificial>:(.text+0x2a): undefined reference to `wld_start'
 %define optflags_lto %nil
 
-# TODO: also check build64
-# workaround for https://bugzilla.altlinux.org/38130
-# notbuild64mingw = without mingw && without build64
-%if %{expand:%%{?_without_mingw:1}%%{!?_without_mingw:0}} && %{expand:%%{?_without_build64:1}%%{!?_without_build64:0}}
-    %define notbuild64mingw 1
-%endif
-
+# used in paths
+%define wineproduct wine
 %define libdir %_libdir
-%define libwinedir %libdir/wine
-%define winebindir %_libexecdir/wine
+%define libwinedir %libdir/%wineproduct
+%define winebindir %_libexecdir/%wineproduct
 %if_with build64
     %define wineserver wineserver64
-    %define winepreloader wine64-preloader
-%else
-    %define wineserver wineserver32
-    %define winepreloader wine-preloader
+    %define winebin wine64
 %endif
+%if_with buildwow64
+    %define wineserver wineserver64
+    %define winebin wine64
+%endif
+%if_without build64
+    %define wineserver wineserver32
+    %define winebin wine32
+%endif
+
+%define winepedir unsupported-windows
+%define winesodir unsupported-unix
+
+%define winepe32dir i386-windows
+%define winepe64dir %_arch-windows
 
 # set arch dependent dirs
 %ifarch %{ix86}
@@ -156,6 +213,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
 %ifarch x86_64
 %define winepedir x86_64-windows
 %define winesodir x86_64-unix
+%define wow64_arches i386,x86_64
 %endif
 %ifarch %{arm}
 %define winepedir arm-windows
@@ -177,14 +235,17 @@ ExclusiveArch: %ix86 x86_64 aarch64
 
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
-%add_findreq_skiplist %libwinedir/%winepedir/*
+%add_findreq_skiplist %libwinedir/%winepe32dir/*
+%add_findreq_skiplist %libwinedir/%winepe64dir/*
 
 #
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stqrTIUz/stPNVRry/dsound.dll: warning: line number count (0x10000) exceeds section size (0x8)
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stbguFIA: file format not recognized
 # see also our strip below
 %if_with debugpe
-%brp_strip_none %libwinedir/%winepedir/*
+%global __os_install_post %{nil}
+%brp_strip_none %libwinedir/%winepe32dir/*
+%brp_strip_none %libwinedir/%winepe64dir/*
 %endif
 
 # we don't need provide anything
@@ -194,8 +255,10 @@ AutoProv:no
 BuildRequires: /proc
 
 # used llvm/clang toolchain if needed
-%define llvm_version 11
-%define llvm_br clang >= %llvm_version llvm >= %llvm_version lld >= %llvm_version
+# clang has broken version on c10f2
+#define llvm_br clang >= %llvm_version llvm >= %llvm_version lld >= %llvm_version
+# just use default llvm
+%define llvm_br clang llvm lld
 
 %if_with clang
 BuildRequires: %llvm_br
@@ -217,7 +280,16 @@ BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libv4l-devel
 BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel
 BuildRequires: libGLU-devel
+%if_with sdl
 BuildRequires: libSDL2-devel
+%endif
+%if_with wayland
+BuildRequires: libwayland-client-devel libglvnd-devel libwayland-egl-devel libxkbcommon-devel
+%endif
+%if_with ffmpeg
+BuildRequires: libavutil-devel libavformat-devel libavcodec-devel
+%endif
+
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel
 BuildRequires: libunixODBC-devel
@@ -228,7 +300,11 @@ BuildRequires: valgrind-devel
 %if_with unwind
 BuildRequires: libunwind-devel
 %endif
-BuildRequires: libnetapi-devel
+
+# dlls/netapi32
+#BuildRequires: libnetapi-devel
+BuildRequires: pkgconfig(netapi)
+
 #BuildRequires: gstreamer-devel gst-plugins-devel
 
 # for winscard (libpcsclite.so here)
@@ -279,12 +355,16 @@ BuildRequires: desktop-file-utils
 # FIXME: Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
-#Requires: wine-gecko = %gecko_version
+#Requires: %name-gecko = %gecko_version
 
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
 Requires: %name-common = %EVR
+
+%if_with buildwow64
+Conflicts: %wow64conflict
+%endif
 
 Conflicts: %conflictlist
 
@@ -294,7 +374,7 @@ Obsoletes: %winepkgname-gl < %EVR
 
 Conflicts: libwine-vanilla-gl libwine-gl
 Conflicts: wine-vanilla-gl wine-gl
-Obsoletes: lib%name-gl
+Obsoletes: lib%name-gl < %EVR
 
 # old twain part
 Provides: %winepkgname-twain = %EVR
@@ -302,7 +382,7 @@ Obsoletes: %winepkgname-twain < %EVR
 
 Conflicts: libwine-vanilla-twain libwine-twain
 Conflicts: wine-vanilla-twain wine-twain
-Obsoletes: lib%name-twain
+Obsoletes: lib%name-twain < %EVR
 
 # Provides/Obsoletes Fedora packages
 %define common_provobs wine-filesystem wine-desktop wine-systemd wine-sysvinit
@@ -495,13 +575,17 @@ export CROSSCC=clang
 %remove_optflags -fstack-protector-strong
 %remove_optflags -fstack-clash-protection
 # drop default FORTIFY_SOURCE here to mute warning when overrides with _FORTIFY_SOURCE=0 (wine disable it)
-%remove_optflags -D_FORTIFY_SOURCE=2
 %remove_optflags -Wp,-D_FORTIFY_SOURCE=2
+%remove_optflags -D_FORTIFY_SOURCE=2
 
 
 %configure --with-x \
+	--disable-win16 \
 %if_with build64
 	--enable-win64 \
+%endif
+%if_with buildwow64
+	--enable-archs=%wow64_arches \
 %endif
 	--disable-tests \
 	--without-gstreamer \
@@ -512,7 +596,9 @@ export CROSSCC=clang
 	%{subst_with pcap} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
+	%{subst_with sdl} \
 	%{subst_with wayland} \
+	%{subst_with ffmpeg} \
 	--bindir=%winebindir \
 	%nil
 
@@ -528,37 +614,24 @@ find %buildroot%libwinedir/%winesodir -type f | xargs chmod 0644
 find %buildroot%libwinedir/%winepedir -type f | xargs chmod 0644
 
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
-%if "%_vendor" == "alt"
 cp -v %buildroot%libwinedir/%winesodir/ntdll.so %buildroot%libdir
 cp -v %buildroot%libwinedir/%winesodir/win32u.so %buildroot%libdir
-%endif
 
 mkdir -p %buildroot%_bindir/
 
-# return wine64 and wine64-preloader (half revert of upstream 5884e98fbec966b0ad9f3babcbec7d8fe25dbc1d)
-%ifarch aarch64
-mv -v %buildroot%winebindir/wine %buildroot%winebindir/wine64
-mv -v %buildroot%winebindir/wine-preloader %buildroot%winebindir/wine64-preloader
-mv -v %buildroot%winebindir/wine_make_autoreq_happy %buildroot%_bindir/wine64_make_autoreq_happy
-%endif
+mv -v %buildroot%winebindir/wine %buildroot%winebindir/%winebin
 
 # hack: move all programs back to _bindir
 find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
-    egrep -v '/wine$|/wine-preloader$|/wineserver$|/wine64$|/wine64-preloader$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
+    egrep -v '/wine$|/wine32$|/wineserver$|/wineserver32$|/wine64$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
     xargs mv -v -t %buildroot%_bindir/
 [ -s %buildroot%_bindir/wineg++ ] || ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
 [ -s %buildroot%_bindir/winecpp ] || ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
 
-# wine64 and wine64-preloader are already built as wine64* on x86_64 only
-mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
-%if_with build64
-[ -s %buildroot%_bindir/wine64 ] || ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
-%endif
-
 
 # FIXME: it is missed on 64 bit (it is supposed to be installed with wine 32)
 %if_with build64
-install -p -m 0644 loader/wine.man %buildroot%_man1dir/wine.1
+install -p -m 0644 tools/wine/wine.man %buildroot%_man1dir/wine.1
 %endif
 
 # unpack desktop files
@@ -579,9 +652,20 @@ mkdir -p %buildroot%_bindir/
 tar xvf %SOURCE6
 for i in bin-scripts/*.in ; do
     tbin=%buildroot%_bindir/$(basename $i .in)
-    sed -e "s:@BINDIR@:%winebindir:g" $i > $tbin
+    sed -e "s:@BINDIR@:%winebindir:g" -e "s:@DATADIR@:%_datadir/%wineproduct:g" -e "s:@LIBDIR@:%_libdir:g" -e "s:@WINELIBDIR@:%_libdir/%wineproduct:g"   $i > $tbin
     chmod +x $tbin
 done
+
+%if "%wineserver" != "wineserver"
+mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
+cp %buildroot%_bindir/wineserver %buildroot%winebindir/wineserver
+%endif
+
+%if_with build64
+[ -s %buildroot%_bindir/wine64 ] || ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
+%endif
+
+chmod a+x %buildroot%libwinedir/%winesodir/{wine,wine-preloader,wine_make_autoreq_happy}
 
 %if_with set_cap_net_raw
 # script for %name-ping
@@ -615,33 +699,23 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %files
-%if "%winebindir" != "%libwinedir"
-%dir %winebindir/
-%endif
 %if_with build64
-%winebindir/wine64
 %_bindir/wine64
-%else
-%winebindir/wine
 %endif
+%winebindir/%winebin
 %winebindir/%wineserver
-%winebindir/%winepreloader
-
-# eterbug #14676
-%if_with build64
-%_bindir/wine64_make_autoreq_happy
-%else
-%_bindir/wine_make_autoreq_happy
-%endif
 
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
+%if_with buildwow64
+%dir %libwinedir/%winepe32dir/
+%dir %libwinedir/%winepe64dir/
+%else
 %dir %libwinedir/%winepedir/
+%endif
 
-%if "%_vendor" == "alt"
 %exclude %libdir/ntdll.so
 %exclude %libdir/win32u.so
-%endif
 
 %libwinedir/%winesodir/avicap32.so
 %libwinedir/%winesodir/ntdll.so
@@ -678,57 +752,27 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %libwinedir/%winesodir/wpcap.so
 %endif
 %libwinedir/%winesodir/winebus.so
+%libwinedir/%winesodir/winebth.so
+%libwinedir/%winesodir/winedmo.so
 %libwinedir/%winesodir/wineusb.so
 %libwinedir/%winesodir/wineps.so
 %libwinedir/%winesodir/localspl.so
 %libwinedir/%winesodir/winscard.so
 
+%libwinedir/%winesodir/wine
+%libwinedir/%winesodir/wine-preloader
+%libwinedir/%winesodir/wine_make_autoreq_happy
+
+# PE executables or PE stubs
+%libwinedir/%winepedir/*.??*
+
 %if_without mingw
-%{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
-%libwinedir/%winesodir/*.com.so
-%libwinedir/%winesodir/*.cpl.so
-%libwinedir/%winesodir/*.ocx.so
-%libwinedir/%winesodir/*.ax.so
-%libwinedir/%winesodir/*.exe.so
-%libwinedir/%winesodir/*.acm.so
-%libwinedir/%winesodir/*.drv.so
-%libwinedir/%winesodir/*.ds.so
-%libwinedir/%winesodir/*.sys.so
-%libwinedir/%winesodir/*.dll.so
+%libwinedir/%winesodir/*.??*.so
 %endif
 
-%if_without build64
-%libwinedir/%winepedir/*.dll16
-%libwinedir/%winepedir/*.drv16
-%libwinedir/%winepedir/*.exe16
-%libwinedir/%winepedir/winoldap.mod16
-%libwinedir/%winepedir/*.vxd
+%if_with buildwow64
+%libwinedir/%winepe32dir/*.??*
 %endif
-
-%ifdef notbuild64mingw
-%libwinedir/%winesodir/*.dll16.so
-%libwinedir/%winesodir/*.drv16.so
-%libwinedir/%winesodir/*.exe16.so
-%libwinedir/%winesodir/winoldap.mod16.so
-%libwinedir/%winesodir/*.vxd.so
-%endif
-
-
-%libwinedir/%winepedir/*.com
-%libwinedir/%winepedir/*.cpl
-%libwinedir/%winepedir/*.drv
-%libwinedir/%winepedir/*.dll
-%libwinedir/%winepedir/*.acm
-%libwinedir/%winepedir/*.ocx
-%libwinedir/%winepedir/*.tlb
-%libwinedir/%winepedir/*.sys
-%libwinedir/%winepedir/*.exe
-%libwinedir/%winepedir/*.ax
-%libwinedir/%winepedir/*.ds
-%if_without vanilla
-%libwinedir/%winepedir/windows.networking.connectivity
-%endif
-%libwinedir/%winepedir/light.msstyles
 
 
 %files common
@@ -744,9 +788,14 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %lang(pt_BR) %doc documentation/README-pt_br.md
 %lang(tr) %doc documentation/README-tr.md
 
+#if "%winebindir" != "%libwinedir"
+%dir %winebindir/
+%if "%wineserver" != "wineserver"
+%winebindir/wineserver
+%endif
+
 %_bindir/wine
 %_bindir/wineserver
-%_bindir/wine-preloader
 
 %_bindir/wineapploader
 
@@ -788,10 +837,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_man1dir/winedbg.*
 
 
-%dir %_datadir/wine/
-%_datadir/wine/wine.inf
-%_datadir/wine/nls/
-%_datadir/wine/fonts/
+%dir %_datadir/%wineproduct/
+%_datadir/%wineproduct/wine.inf
+%_datadir/%wineproduct/nls/
+%_datadir/%wineproduct/fonts/
 
 
 
@@ -828,7 +877,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %_bindir/msidb
 
 %_includedir/wine/
-#%_aclocaldir/wine.m4
+#_aclocaldir/wine.m4
 
 %_man1dir/wmc.*
 %_man1dir/wrc.*
@@ -842,6 +891,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 
 
 %files devel
+%if_with buildwow64
+%libwinedir/%winepe32dir/lib*.a
+#libwinedir/%winepe64dir/lib*.a
+%endif
 %if_with mingw
 %libwinedir/%winepedir/lib*.a
 %endif
@@ -851,6 +904,22 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun May 04 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6-alt1
+- new version (10.6) with rpmgs script
+- set strict require wine-mono 10.0.0
+- don't require clang version
+- enable wayland support
+- enable ffmpeg support
+- require winetricks 20250102
+
+* Mon Feb 12 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.2-alt2
+- spec: add wow64 support and enable it (not needs i586-wine-vanilla anymore)
+- spec: cleanup PE packing
+- spec: skip build on aarch64 if clang is too old
+- spec: disable win16 build
+- spec: don't require wine-etersoft-gecko from the main package
+- spec: add wineserver in winebindir
+
 * Sat Feb 10 2024 Vitaly Lipatov <lav@altlinux.ru> 1:9.2-alt1
 - new version 9.2 (with rpmrb script)
 - set strict require wine-mono 9.0.0
