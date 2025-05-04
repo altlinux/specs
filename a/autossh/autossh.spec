@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: autossh
 Version: 1.4g
-Release: alt4
+Release: alt5
 
 Summary: Automatically restart SSH sessions and tunnels
 License: BSD-style
@@ -13,6 +17,8 @@ Source1: autossh@.service
 Source2: autossh.conf.sample
 Source3: README.ALT
 Patch1: autossh-1.4a-alt-setproctitle.patch
+Patch2: autossh-1.4g-alt-configure-detect-setproctitle.patch
+Patch3: autossh-1.4g-alt-user-friendly-UI-UX.patch
 
 Requires: openssh-clients
 BuildRequires: setproctitle-devel
@@ -24,17 +30,19 @@ mechanism are from rstunnel (Reliable SSH Tunnel), but implemented in C.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 chmod -x autossh.host rscreen
 cp -a %SOURCE1 .
 cp -a %SOURCE2 .
 cp -a %SOURCE3 .
 
 %build
-export LIBS=-lsetproctitle
-export ac_cv_path_ssh=ssh
-%add_optflags -D_GNU_SOURCE -DHAVE_SETPROCTITLE_H
-%configure
+%add_optflags %(getconf LFS_CFLAGS)
+%ifarch x86_64
+%add_optflags -fanalyzer
+%endif
+%autoreconf
+%configure --with-ssh=ssh
 %make_build
 
 %install
@@ -44,11 +52,15 @@ install -pD -m644 autossh@.service %buildroot%_libexecdir/systemd/user/autossh@.
 
 %files
 %doc CHANGES README README.ALT autossh.conf.sample autossh.host rscreen
-%_bindir/*
-%_man1dir/*
-%_libexecdir/systemd/user/*
+%_bindir/autossh
+%_man1dir/autossh.1*
+%_libexecdir/systemd/user/autossh@.service
 
 %changelog
+* Mon Apr 28 2025 Vitaly Chikunov <vt@altlinux.org> 1.4g-alt5
+- Improve UI/UX regarding -M option.
+- spec: Minor improvements and clean ups.
+
 * Sat Dec 28 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4g-alt4
 - Dropped system instance service template: use user instances instead.
 
