@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      2.9
+Version:      2.10
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -60,6 +60,61 @@ export SKIP_IMG_DIFFS=1
 %_datadir/xfig/Libraries/*
 
 %changelog
+* Sun May 04 2025 Vladislav Zavjalov <slazav@altlinux.org> 2.10-alt1
+- vmap2
+  - create typ-file source from type configuration
+  - rewrite mp/typ FID and CodePage handling 
+  - fix angle handling (more accurate now)
+  - when writing FIG files do not set MapType=label for text objects, do not require RefType field
+  - group/group_ru fields in the type information file
+  - fix object comparison (inf, nan values in scale and angle fields)
+  - more functions for working with vmap2 object types
+  - fix object selection range when updating labels
+  - read/write vmap2.gz files (uses iofilters module which is gnu-specific!)
+  - (!) use options instead of tags in VMap2 objects
+  - write ref_pt field if ref_type is not set (now it's independent parameters)
+  - support for multi-line text
+  - fix error in line joining (min angle calculation)
+- vmap_data:
+  - rewrite default type configuration, add new types, split render config
+  - settings for mp/typ/img FID and CodePage in vmaps.sh
+  - a fiw errors fixed in scripts
+- add program ms2vmaptypes for handling vmap types
+  add module gis for reading GeoPackage/Postgis
+  rewrite rewrite shape module
+  start making vmap2 editor (--edit option for ms2vmap)
+- rendering vmaps:
+   - allow dash, cap, join drawing features for points (useful together with lines feature)
+   - add stroke2 drawing feature
+   - add stacks for drawing steps (save_to_stack drawing feature and render_stack command)
+   - add shift drawing feature
+   - add text_vspace drawing feature (multi-line text)
+   - fix pattern scaling in "draw_pos fill" feature
+   - change logic of move_to/move_from/rotate_to features:
+     single list of rules with separate distances,
+     all are tried until the first successful one
+- map projections:
+   - rewrite aliases, allow EPSG:* names
+   - add aliases for NO and SE systems
+   - support for a few EPSG projections when writing OziExplorer map files
+- geo_mkref
+  - allow fractional dpi setting in proj mode
+  - fix setting border from multiple multy-segment tracks (each segment should form a separate loop)
+  - support for --north option in nom_fi reference
+- fig
+  - fix fig metric resolution (1200dpi/1.05 -> 450)
+  - when making compound set coords to zero (we can't calculate it for text; xfig will recalculate zero coords)
+- image_tiles:
+  - add ms2mbtiles tool
+  - mbtiles: sync mode setting with default value 0 (fastest)
+  - mbtiles: in layer_write() check if tile exists before deleting it
+- geo_data: add geo_nearest_vertex_2d(), geo_maxdist_2d()
+- geom: Line constructor with two input iterators
+- geom: add dMultiLine::get_first_pt()
+- geo_nom_fi: support for 1/2 maps (V5111AL), return scale from nom_to_range_fi
+- image_tiles: add {b} special char in the url mask -- EPSG:3857 bbox
+- write_geoimg: do not throw error if rendering range is empty (could be a valid situation)
+
 * Fri Jan 03 2025 Vladislav Zavjalov <slazav@altlinux.org> 2.9-alt1
 - Improve support for tiled maps. Add MBTiles support
   Now ms2view and ms2render can use mbtiles as input map format,
