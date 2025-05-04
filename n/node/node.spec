@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.14
+%define major 22.15
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -29,7 +29,7 @@
 %define zlib_version 1.3.0.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.34.4
+%define c_ares_version 1.34.5
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 9.2.1
@@ -511,6 +511,10 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Sat May 03 2025 Vitaly Lipatov <lav@altlinux.ru> 22.15.0-alt1
+- 2025-04-23, Version 22.15.0 'Jod' (LTS), @UlisesGascon prepared by @RafaelGSS
+- set c-ares >= 1.34.5
+
 * Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 22.14.0-alt1
 - 2025-02-11, Version 22.14.0 'Jod' (LTS), @aduh95
 
