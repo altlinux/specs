@@ -1,6 +1,6 @@
 Name: emelfm2
-Version: 0.9.0
-Release: alt3
+Version: 0.9.1
+Release: alt1
 
 Summary: file manager for UNIX-like operating systems
 License: GPLv3+
@@ -10,6 +10,9 @@ Url: http://emelfm2.net
 Source: %name-%version.tar
 
 BuildRequires: libgimp-devel libacl-devel libgtk+2-devel libgtkspell-devel libudisks2-devel libdbus-glib-devel libmagic-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
+BuildRequires:  libudisks2-devel
 
 %description
 emelFM2 is a file manager for UNIX-like operating systems. It uses
@@ -25,7 +28,7 @@ buttons or assigned keys can be used to initiate commands.
 %prep
 %setup
 # lcc 1.29/e2k fixup (remove when updating to 0.9.1)
-sed -i 's/GTK_STOCK_DISCARD "/"gtk-discard" "/' src/e2_main.c
+#sed -i 's/GTK_STOCK_DISCARD "/"gtk-discard" "/' src/e2_main.c
 
 %build
 %add_optflags -fcommon
@@ -33,6 +36,7 @@ sed -i 's/GTK_STOCK_DISCARD "/"gtk-discard" "/' src/e2_main.c
      PREFIX=%_prefix LIB_DIR=%_libdir    CFLAGS="%optflags" STRIP=0 \
      DOCS_VERSION=1  WITH_TRANSPARENCY=1 WITH_KERNELFAM=1 EDITOR_SPELLCHECK=1 \
      NEW_COMMAND=1   WITH_DEVKIT=1       WITH_THUMBS=1    WITH_TRACKER=1 \
+     XDG_APPLICATION_DIR=%{_datadir}/application-registry \
      WITH_ACL=1      WITH_POLKIT=1
 
 %install
@@ -51,7 +55,7 @@ done
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/application-registry/%name.applications
+#_datadir/application-registry/%name.applications
 %_libdir/%name
 %_man1dir/%name.1*
 %_pixmapsdir/%name
@@ -65,6 +69,9 @@ done
 # as of 2024-04-28 with shady links added there)
 
 %changelog
+* Sun May 04 2025 Ilya Mashkin <oddity@altlinux.ru> 0.9.1-alt1
+- 0.9.1 (Closes: #54033)
+
 * Mon Apr 28 2025 Michael Shigorin <mike@altlinux.org> 0.9.0-alt3
 - minor spec cleanup
 - E2K: fix build with lcc 1.29.09 (ilyakurdyukov@)
