@@ -12,7 +12,7 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -26,6 +26,8 @@ Source3: haskell.env
 Source4: extra
 Source5: vendored
 Source10: LICENSE
+
+Requires: chrpath
 
 # Uses the modular reqprov subsystem
 Conflicts: rpm-build < 4.0.4-alt78
@@ -99,6 +101,12 @@ install -D -m0644 %SOURCE5 \
 %_rpmmacrosdir/ghc-vendored
 
 %changelog
+* Sun May 04 2025 Leonid Znamenok <respublica@altlinux.org> 1.6.2-alt1
+- Added %%ghc_delete_rpaths for install macros
+- Added build with debuginfo
+- Added debuginfo and split-sections in vendored build
+- Added %%cabal_vendor_test macro
+
 * Tue Apr 29 2025 Leonid Znamenok <respublica@altlinux.org> 1.6.1-alt1
 - Adapted vendored macro for cabal-vendor 1.1
 
