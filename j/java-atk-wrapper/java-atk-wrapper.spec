@@ -1,28 +1,21 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global major_version 0.38
-%global minor_version 0
+%define _unpackaged_files_terminate_build 1
 
 Name:       java-atk-wrapper
-Version:    %{major_version}.%{minor_version}
-Release:    alt2_6jpp11
+Version:    0.40.0
+Release:    alt1
 Summary:    Java ATK Wrapper
 
-License:    LGPLv2+
+License:    LGPL-3.0-or-later
+Group: Development/Other
 URL:        https://gitlab.gnome.org/GNOME/java-atk-wrapper
-Source0:    https://download.gnome.org/sources/%{name}/%{major_version}/%{name}-%{version}.tar.xz
+Source:    %name-%version.tar
 # this is a fedora-specific file
 # needed to explain how to use java-atk-wrapper with different java runtimes
 Source1:    README.fedora
 
+Patch0: fix-configure-dash-version.patch
 
-BuildRequires:	gcc
+BuildRequires(pre): rpm-macros-java
 BuildRequires:	gcc-c++
 BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
@@ -33,6 +26,8 @@ BuildRequires:  libgail3-devel libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
 BuildRequires:  libat-spi2-core-devel libat-spi2-core-gir-devel
 BuildRequires:  gobject-introspection-devel
+BuildRequires: imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
+BuildRequires: /proc java-devel-default
 
 
 Requires:   java
@@ -50,38 +45,35 @@ By talking to ATK-Bridge, it keeps itself from being affected by the
 change of underlying communication mechanism.
 
 %prep
-%setup -q
+%setup
+%patch0 -p2
 
 %build
-%configure --disable-Werror
-#make_build
-make -j2
-cp %{SOURCE1} .
+%autoreconf
+%configure \
+--with-jardir=%_jnidir \
+--with-propertiesdir=%_datadir/%name
+%make
 
 %install
-# java-atk-wrapper's make install is broken by design
-# it installs to the current JDK_HOME. We want to install it to a central
-# location and then allow all/any JRE's/JDK's to use it.
-# make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
-mkdir -p %{buildroot}%{_libdir}/%{name}
+install -m 444 %SOURCE1 README.fedora
 
-mv wrapper/java-atk-wrapper.jar %{buildroot}%{_libdir}/%{name}/
-mv jni/src/.libs/libatk-wrapper.so %{buildroot}%{_libdir}/%{name}/
-ln -s %{_libdir}/%{name}/libatk-wrapper.so \
-    %{buildroot}%{_libdir}/%{name}/libatk-wrapper.so.0
+%check
+%make check
 
 
 %files
-%doc AUTHORS
-%doc COPYING.LESSER
-%doc NEWS
-%doc README
-%doc README.fedora
-%{_libdir}/%{name}/
-
+%doc AUTHORS COPYING.LESSER NEWS README README.fedora
+%_libdir/libatk-wrapper.so
+%_jnidir/%name.jar
+%_datadir/%name
 
 %changelog
+* Sat Mar 29 2025 Artem Semenov <savoptik@altlinux.org> 0.40.0-alt1
+- Build new version 0.40.0
+
 * Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt2_6jpp11
 - jdk17 support
 
