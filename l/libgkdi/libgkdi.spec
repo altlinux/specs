@@ -2,8 +2,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: libgkdi
-Version: 0.0.2
-Release: alt2
+Version: 0.0.3
+Release: alt1
 
 Summary: Client library for MS-GKDI
 License: GPLv2+
@@ -58,6 +58,10 @@ develop programs which make use of %name
 %_libdir/gkdi/GkdiConfig.cmake
 
 %changelog
+* Mon May 5 2025 Vladimir Rubanov <august@altlinux.org> 0.0.3-alt1
+- 0.0.3-alt1
+- Resolve overlinking on e2k.
+
 * Tue Apr 22 2025 Vladimir Rubanov <august@altlinux.org> 0.0.2-alt2
 - 0.0.2-alt2
 - Remove cmake from libary's package list of dependencies.
