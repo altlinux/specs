@@ -1,6 +1,6 @@
 Name: appinstall
 Version: 1.4.4
-Release: alt1
+Release: alt2
 Summary: GUI frontend for install third-party applications
 
 License: GPL-3.0+
@@ -13,7 +13,6 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt6
-BuildRequires(pre): libpam-devel
 BuildRequires: gcc-c++
 BuildRequires: qt6-tools
 BuildRequires: python3-module-PyQt6
@@ -41,17 +40,18 @@ export PATH=$PATH:%_qt6_bindir
 
 %files
 %_bindir/%name
-%_sbindir/%name
+%_prefix/libexec/%name
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/allow.d
 %dir %_datadir/%name/
 %_datadir/%name/*
 %_pixmapsdir/%name.svg
 %_desktopdir/%name.desktop
-%config(noreplace) %_sysconfdir/pam.d/%name
-%config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 1.4.4-alt2
+- NMU: Switch to use pkexec instead consolehelper
+
 * Thu Aug 29 2024 2023 Kirill Izmestev <felixz@altlinux.org> 1.4.4-alt1
 - Upgrading a program and this package from using PyQt5 to using PyQt6.
 - Added quick filtering of applications when entering in the search \
