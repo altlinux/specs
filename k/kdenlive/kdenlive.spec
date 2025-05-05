@@ -3,8 +3,8 @@
 %define is_ffmpeg %([ -n "`rpmquery --qf '%%{SOURCERPM}' libavformat-devel 2>/dev/null | grep -e '^libav'`" ] && echo 0 || echo 1)
 
 Name: kdenlive
-Version: 24.08.3
-Release: alt2
+Version: 24.12.3
+Release: alt1
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -22,6 +22,8 @@ AutoProv: yes, nopython nopython3
 %add_python3_req_skip vosk
 %add_python3_req_skip torch
 %add_python3_req_skip whisper
+%add_python3_req_skip whisper.utils
+%add_python3_req_skip transformers
 Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: mediainfo
@@ -101,6 +103,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Mon May 05 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
+- new version
+
 * Tue Nov 12 2024 Sergey V Turchin <zerg@altlinux.org> 24.08.3-alt2
 - fix start from main menu (closes: 52021)
 

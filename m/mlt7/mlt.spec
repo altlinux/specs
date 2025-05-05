@@ -18,8 +18,8 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.28.0
-Release: alt4
+Version: 7.30.0
+Release: alt1
 %K5init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
@@ -43,7 +43,7 @@ BuildRequires: frei0r-devel libSDL-devel libSDL2-devel libSDL2_image-devel libal
 BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
 BuildRequires: librubberband-devel libvorbis-devel
-BuildRequires: libxml2-devel swig ladspa_sdk
+BuildRequires: libxml2-devel swig ladspa_sdk liblilv-devel
 BuildRequires: libarchive-devel
 %if_enabled libvidstab
 BuildRequires: libvidstab-devel
@@ -160,6 +160,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Mon May 05 2025 Sergey V Turchin <zerg@altlinux.org> 7.30.0-alt1
+- new version
+
 * Tue Dec 03 2024 Sergey V Turchin <zerg@altlinux.org> 7.28.0-alt4
 - fix build requires
 
