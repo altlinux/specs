@@ -1,5 +1,5 @@
 %define _name ascii-draw
-%define ver_major 1.0
+%define ver_major 1.1
 %define rdn_name io.github.nokse22.asciidraw
 
 # online screenshots
@@ -18,10 +18,11 @@ Vcs: https://github.com/Nokse22/ascii-draw.git
 
 BuildArch: noarch
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -57,6 +58,9 @@ There are many stiles to choose from and multiple tools available to use.
 %doc README.*
 
 %changelog
+* Mon May 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Tue Sep 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
