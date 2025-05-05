@@ -8,7 +8,7 @@
 
 Name:    token-manager
 Version: 0.12
-Release: alt10
+Release: alt11
 
 Summary: Certificate manager for CryptoPro CSP
 License: MIT
@@ -19,8 +19,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildArch: noarch
 
 Source: %name.tar
-Source1: cpconfig-pam.alt
-Source2: token-manager
+Source1: token-manager
 
 Patch0: token-manager-port-to-python3-and-PyQt5.patch
 
@@ -28,7 +27,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libpam-devel
 BuildRequires: python3-module-PyQt5
 
-Requires: consolehelper opensc
+Requires: opensc
 
 %description
 A PyQt front-end for Crypto Pro CSP for CentOS 6 and GosLinux by The
@@ -41,22 +40,20 @@ subst 's|python|python3|' %name.desktop
 
 %install
 mkdir -p %buildroot/%_bindir
-ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/cpconfig-%cpro_arch
 install -Dm 0644 %name.py %buildroot%_bindir/%name.py
 install -Dm 0644 %name.png %buildroot%_pixmapsdir/%name.png
 install -Dm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
-install -Dm 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/cpconfig-%cpro_arch
-install -Dm 0755 %SOURCE2 %buildroot%_bindir/%name
-install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.apps/cpconfig-%cpro_arch
+install -Dm 0755 %SOURCE1 %buildroot%_bindir/%name
 
 %files
 %_bindir/*
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
-%config(noreplace) %_sysconfdir/pam.d/cpconfig-%cpro_arch
-%config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %changelog
+* Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 0.12-alt11
+- NMU: Switch to use pkexec instead consolehelper
+
 * Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.12-alt10
 - Returned messagebox for errors (ALT #43588).
 
