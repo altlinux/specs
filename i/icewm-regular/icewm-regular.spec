@@ -1,6 +1,6 @@
 Name:    icewm-regular
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/Icewm
 Summary: IceWM common collection
@@ -15,7 +15,6 @@ Requires: icewm
 Requires: fonts-ttf-dejavu
 Requires: fonts-ttf-liberation
 
-Requires: SysVinit-usermode
 Requires: cfdisk
 
 #Requires: mutt
@@ -41,8 +40,6 @@ Requires: scrot
 
 Requires: altlinux-freedesktop-menu-generic
 
-Source: .gear-rules
-
 %description
 IceWM collection package to easy select packages during install
 
@@ -52,6 +49,9 @@ IceWM collection package to easy select packages during install
 %files
 
 %changelog
+* Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
+- NMU: Remove runtime dependency on SysVinit-usermode
+
 * Sun May 04 2025 Dmitriy Khanzhin <jinn@altlinux.org> 1.3-alt1
 - updated the set of dependencies
 - updated Url
