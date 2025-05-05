@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.6.9
+Version: 0.7.0
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,15 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Mon May 05 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.0-alt1
+- Fix components:
+  + add userpasswd-gnome package to gnome-base component
+  + add alterator-legacy-vsftpd component
+- Fix editions:
+  + add genisoimage to server main section for testing
+  + add alterator-legacy-vsftpd to server
+  + remove podsec from server and domain
+
 * Thu Apr 24 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.6.9-alt1
 - editions: replace postfix-server from main to base section
 - components: remove by comment xdg and menu packages from
