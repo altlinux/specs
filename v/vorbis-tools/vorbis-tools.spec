@@ -1,15 +1,16 @@
-Name: vorbis-tools
-Version: 1.4.2
-Release: alt3
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
+Name: vorbis-tools
+Version: 1.4.3
+Release: alt1
 Summary: The Vorbis General Audio Compression Codec tools
 License: GPLv2
 Group: Sound
 URL: https://www.xiph.org/
 # https://downloads.xiph.org/releases/vorbis/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch0: vorbis-tools-1.4.2-CVE-2023-43361.patch
-Patch1: vorbis-tools-1.4.2-gcc14.patch
 Patch2: vorbis-tools-1.4.2-altbug-53138.patch
 
 # Automatically added by buildreq on Fri Oct 22 2010
@@ -25,8 +26,6 @@ an informator, and a comment editor.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
 %patch2 -p2
 
 %build
@@ -36,17 +35,17 @@ an informator, and a comment editor.
 %install
 %makeinstall_std
 %find_lang %name
-
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
+rm -rf %buildroot/%_docdir
 
 %files -f %name.lang
+%doc AUTHORS CHANGES README ogg123/ogg123rc-example
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS CHANGES README
 
 %changelog
+* Mon May 05 2025 Anton Farygin <rider@altlinux.com> 1.4.3-alt1
+- 1.4.2 -> 1.4.3
+
 * Sat Mar 01 2025 Anton Farygin <rider@altlinux.ru> 1.4.2-alt3
 - Fixed buffer overflow in ogg123 when using non-C locales (Closes: #53138).
 
