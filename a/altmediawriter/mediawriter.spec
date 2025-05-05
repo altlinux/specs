@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.8
+Version:        1.0.9
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -58,6 +58,10 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Mon May 05 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.9-alt1
+- Fix closing all Popover when clicking on UI elements (Closes: 54127)
+- Fix handling of pressing Back and New buttons when Popover is open
+
 * Wed Apr 30 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.8-alt1
 - Add support for p11 platform
 
