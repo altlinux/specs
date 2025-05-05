@@ -1,24 +1,26 @@
+%define _unpackaged_files_terminate_build 1
 
 Name: cbindgen
-Version: 0.27.0
+Version: 0.28.0
 Release: alt1
-Summary: cbindgen creates C/C++11 headers for Rust libraries which expose a public C API
+
+Summary: A project for generating C bindings from Rust code.
 License: MPL-2.0
-Group: File tools
-Url: https://github.com/eqrion/cbindgen
-Vcs: https://github.com/eqrion/cbindgen.git
+Group: Development/Tools
+Url: https://crates.io/crates/cbindgen
+Vcs: https://github.com/mozilla/cbindgen
+
 Source: %name-%version.tar
-Patch: %name-%version.patch
+Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 
 %description
-%summary.
+cbindgen creates C/C++11 headers for Rust libraries which expose a public C API.
 
 %prep
-%setup
-%patch -p1
+%setup -a1
 
 mkdir -p .cargo
 cat >> .cargo/config <<EOF
@@ -42,9 +44,14 @@ EOF
 
 %files
 %doc README.md
-%_bindir/%name
+%_bindir/cbindgen
 
 %changelog
+* Mon May 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.28.0-alt1
+- New version.
+- Change group tag from File tools to Development/Tools.
+- Update VCS, URL and summary.
+
 * Fri Aug 30 2024 L.A. Kostis <lakostis@altlinux.ru> 0.27.0-alt1
 - 0.27.0.
 

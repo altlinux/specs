@@ -1,5 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
+%ifarch %ix86
+# This is necessary to avoid rustc-LLVM ERROR: out of memory.
+%def_without debuginfo
+%else
+%def_with debuginfo
+%endif
+
 %define tbird_cid        \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
 %define tbird_prefix     %_libdir/thunderbird
 %define tbird_datadir    %_datadir/thunderbird
@@ -8,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 137.0.2
+Version: 138.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -93,6 +100,9 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
 BuildRequires: libaom-devel
 BuildRequires: libdav1d-devel
+%if_with debuginfo
+BuildRequires: dump_syms
+%endif
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(aom)
@@ -191,6 +201,33 @@ ac_add_options --disable-rust-simd
 %endif
 EOF
 
+%if_with debuginfo
+cat >> .mozconfig <<EOF
+# Enabled debuginfo.
+ac_add_options --disable-strip
+ac_add_options --disable-install-strip
+ac_add_options --enable-debug-js-modules
+ac_add_options --enable-rust-debug
+ac_add_options --enable-debug
+ac_add_options --enable-debug-symbols
+# Debug symbols are not built without crashreporter:
+# "Skipping symbols generation because MOZ_CRASHREPORTER is not set".
+ac_add_options --enable-crashreporter
+EOF
+%else
+cat >> .mozconfig <<EOF
+# Disabled  debuginfo.
+ac_add_options --enable-strip
+ac_add_options --enable-install-strip
+ac_add_options --disable-debug-js-modules
+ac_add_options --disable-rust-debug
+ac_add_options --disable-debug
+ac_add_options --disable-debug-symbols
+# Crashreporter without debuginfo is useless.
+ac_add_options --disable-crashreporter
+EOF
+%endif
+
 # Non blocking stdout for NodeJS
 cat > "/tmp/node-stdout-nonblocking-wrapper" << ENDL.
 #!/bin/sh
@@ -217,7 +254,10 @@ export MOZ_APP_REMOTINGNAME="thunderbird"
 
 ./mach configure
 ./mach build
+
+%if_with debuginfo
 ./mach buildsymbols
+%endif
 
 MOZ_LANGPACK_ID="$(grep MOZ_LANGPACK_EID comm/mail/locales/Makefile.in | cut -f2 -d @)"
 pushd l10n
@@ -242,6 +282,7 @@ clang++ \
 
 %install
 export SHELL=/bin/sh
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 mkdir -p \
 	%buildroot/%_bindir \
 	%buildroot/%mozilla_arch_extdir/%tbird_cid \
@@ -342,6 +383,23 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Mon May 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0-alt1
+- New version.
+- Enable building of debug information symbols.
+- Build with crash reporter.
+- Security fixes:
+  + CVE-2025-2817: Privilege escalation in Thunderbird Updater
+  + CVE-2025-4082: WebGL shader attribute memory corruption in Thunderbird for macOS
+  + CVE-2025-4083: Process isolation bypass using "javascript:" URI links in cross-origin frames
+  + CVE-2025-4085: Potential information leakage and privilege escalation in UITour actor
+  + CVE-2025-4086: Specially crafted filename could be used to obscure download type
+  + CVE-2025-4087: Unsafe attribute access during XPath parsing
+  + CVE-2025-4088: Cross-site request forgery via storage access API redirects
+  + CVE-2025-4089: Potential local code execution in "copy as cURL" command
+  + CVE-2025-4090: Leaked library paths in Thunderbird for Android
+  + CVE-2025-4091: Memory safety bugs fixed in Firefox 138, Thunderbird 138, Firefox ESR 128.10, and Thunderbird 128.10
+  + CVE-2025-4092: Memory safety bugs fixed in Firefox 138 and Thunderbird 138
+
 * Wed Apr 16 2025 Ajrat Makhmutov <rauty@altlinux.org> 137.0.2-alt1
 - New version.
 - Remove duplication in the desktop file (closes: 52475).
