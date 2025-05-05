@@ -11,7 +11,7 @@
 
 Name: %bin_name
 Version: 3.6.5
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -70,6 +70,19 @@ cat >%buildroot/%_altdir/%name <<__EOF__
 %_bindir/qtbrowser	%_bindir/%bin_name 11
 __EOF__
 
+# install desktop-file
+mkdir -p %buildroot/%_desktopdir/
+install -m 0644 /dev/null %buildroot/%_desktopdir/%{name}.desktop
+cat >%buildroot/%_desktopdir/%{name}.desktop <<__EOF__
+[Desktop Entry]
+Name=%name
+Type=Application
+Icon=alterator
+Categories=Qt;KDE;System;
+Exec=%name
+NoDisplay=true
+__EOF__
+
 #mkdir -p %buildroot/%alterator_cfg
 #ln -s /dev/null %buildroot/%alterator_cfg/design-browser-qt
 #mkdir -p %buildroot/%_datadir/%name/design
@@ -82,9 +95,12 @@ __EOF__
 #%ghost %config %alterator_cfg/design-browser-qt
 %_bindir/%bin_name
 #%_datadir/%name/
-
+%_desktopdir/%{name}.desktop
 
 %changelog
+* Mon May 05 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.5-alt2
+- add fake desktop-file to display window icon on Wayland (closes: 54125)
+
 * Wed Apr 16 2025 Sergey V Turchin <zerg at altlinux dot org> 3.6.5-alt1
 - force compobox popup height again
 
