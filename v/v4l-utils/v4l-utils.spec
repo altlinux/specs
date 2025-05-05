@@ -1,5 +1,5 @@
 Name: v4l-utils
-Version: 1.28.1
+Version: 1.30.1
 Release: alt1
 
 Summary: Collection of video4linux support libraries and utilities
@@ -7,11 +7,15 @@ License: GPLv2+
 Group: Video
 Url: http://linuxtv.org
 
+Provides: edid-decode = %EVR
+Obsoletes: edid-decode
+
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ meson
 BuildRequires: libalsa-devel libGLU-devel libjpeg-devel libjson-c-devel
-BuildRequires: libsystemd-devel libudev-devel qt6-base-devel qt6-5compat-devel
+BuildRequires: libsystemd-devel libudev-devel
+BuildRequires: qt6-base-devel qt6-5compat-devel qt6-declarative-devel
 
 %package -n ir-keytable
 Summary: IR keytable management tool
@@ -102,8 +106,10 @@ also serve as a generic video/TV viewer application.
 %_man1dir/dvb-format-convert.1*
 %_man1dir/dvbv5-scan.1*
 %_man1dir/dvbv5-zap.1*
+%_man1dir/edid-decode.1*
 %_man1dir/v4l2-compliance.1*
 %_man1dir/v4l2-ctl.1*
+%_man1dir/v4l2-tracer.1*
 
 %files -n ir-keytable
 %config(noreplace) %_sysconfdir/rc_maps.cfg
@@ -140,6 +146,9 @@ also serve as a generic video/TV viewer application.
 %_man1dir/qvidcap.1*
 
 %changelog
+* Mon May 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.30.1-alt1
+- 1.30.1 released
+
 * Thu Jul 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.28.1-alt1
 - 1.28.1 released
 
