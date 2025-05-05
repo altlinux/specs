@@ -1,23 +1,32 @@
-%define soname 25
+%define _unpackaged_files_terminate_build 1
+%define soname 25.6
+%define python3_name python3-module-mupdf
+
 Name: mupdf
-Version: 1.25.2
+Version: 1.25.6
 Release: alt1
-Summary:  MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
+Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
 Group: Office
-URL: https://github.com/ArtifexSoftware/mupdf
+Url: https://github.com/ArtifexSoftware/mupdf
 License: AGPL-3.0
 
-Source:  %name-%version.tar
+Source: %name-%version.tar
 Source1: %name-%version-thirdparty-extract.tar
 Source2: %name-%version-thirdparty-lcms2.tar
 Source3: %name-%version-thirdparty-mujs.tar
 
-Patch0: disable_strip.patch
+Patch0: mupdf-1.25.2-alt1-disable_strip.patch
+Patch1: mupdf-1.25.6-alt1-do-not-require-libclang-and-swig.patch
+Patch2: mupdf-1.25.6-alt1-no-venv.patch
 
 BuildRequires: make gcc-c++
 BuildRequires: zlib-devel libopenjpeg2.0-devel libjbig2dec-devel libgumbo-devel
 BuildRequires: libfreeglut-devel libfreetype-devel libharfbuzz-devel gdcm-devel libjpeg-devel
 BuildRequires: libX11-devel libXext-devel
+BuildRequires: python3-module-clang
+BuildRequires: clang
+BuildRequires: swig
+BuildRequires: python3-dev
 
 Requires: lib%name%soname = %EVR
 
@@ -30,6 +39,14 @@ Summary: Development files for MuPDF library
 Group: Development/C
 Requires: lib%name%soname = %EVR
 
+%package -n libmupdfcpp%soname
+Summary: C++ bindings for MuPDF
+Group: System/Libraries
+
+%package -n %python3_name
+Summary: Python bindings for MuPDF
+Group: System/Libraries
+
 %description
 MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents.
 %description -n lib%name%soname
@@ -37,12 +54,17 @@ MuPDF shared library
 %description -n lib%name-devel
 Header files for the MuPDF shared library
 
+%description -n libmupdfcpp%soname
+The mupdf package contains the mupdf C++ library files.
+
+%description -n %python3_name
+The python3 package contains low level mupdf python bindings.
+
 %prep
 %setup -a1 -a2 -a3
-%patch0 -p1
+%autopatch -p1
 
 %build
-
 %make_build shared-release USE_SYSTEM_LIBS=yes  FZ_ENABLE_PDF=1 \
 	XCFLAGS="-I/usr/include/freetype2/ -I/usr/include/harfbuzz/ \
 	-I/usr/include/gdcm/gdcmjpeg/ -I/usr/include/gdcm/gdcmjpeg/8/ \
@@ -59,7 +81,14 @@ make INSTALL="/bin/install -p" \
 	 incdir=%_includedir \
 	 mandir=%_mandir \
 	 prefix=%_prefix \
-	 install-shared-c install-apps install-docs
+	 install-shared-c \
+	 install-shared-python \
+	 install-apps \
+	 install-docs \
+	 pydir=%python3_sitelibdir
+
+rm -f %buildroot%_libdir/libmupdf-third.a \
+     %buildroot%_libdir/libmupdf.a
 
 %files
 %_bindir/mupdf-gl
@@ -68,21 +97,37 @@ make INSTALL="/bin/install -p" \
 %_bindir/mutool
 %_mandir/man1/*
 
-%files -n lib%name%soname
+%files -n libmupdf%soname
+%dir %_defaultdocdir/mupdf
 %_libdir/libmupdf.so.%{soname}*
-%doc %_defaultdocdir/%name/CHANGES
-%doc %_defaultdocdir/%name/COPYING
-%doc %_defaultdocdir/%name/README
+%doc %_defaultdocdir/mupdf/CHANGES
+%doc %_defaultdocdir/mupdf/COPYING
+%doc %_defaultdocdir/mupdf/README
 
-%files -n lib%name-devel
+%files -n libmupdfcpp%soname
+%_libdir/libmupdfcpp.so.%{soname}*
+
+%files -n libmupdf-devel
+%dir %_includedir/mupdf
+%dir %_defaultdocdir/mupdf/examples
 %_includedir/mupdf/*.h
-%_includedir/mupdf/fitz/*.h
-%_includedir/mupdf/pdf/*.h
-
+%_includedir/mupdf/fitz/
+%_includedir/mupdf/pdf/
 %_libdir/libmupdf.so
-%doc %_defaultdocdir/%name/examples/*
+%_libdir/libmupdfcpp.so
+%doc %_defaultdocdir/mupdf/examples/*
+
+%files -n %python3_name
+%dir %python3_sitelibdir/mupdf
+%python3_sitelibdir/mupdf/__init__.py
+%python3_sitelibdir/mupdf/__pycache__/
+%python3_sitelibdir/mupdf/_mupdf.so
 
 %changelog
+* Mon Apr 14 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.25.6-alt1
+- New version 1.25.6.
+- Build C++/Python bindings.
+
 * Wed Dec 18 2024 Oleg Proskurin <proskur@altlinux.org> 1.25.2-alt1
 - Build new version
 
