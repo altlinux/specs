@@ -1,67 +1,108 @@
 %define _unpackaged_files_terminate_build 1
-%define alt_name userpasswd
-%define binary_name userpasswd-legacy
+%define binary_name_gtk userpasswd-gtk
+%define binary_name_adwaita userpasswd-adwaita
+%define build_dir_gtk build_gtk
+%define build_dir_adwaita build_adwaita
 
-Name: userpasswd
-Version: 0.3.7
+Name:    userpasswd
+Version: 1.0.0
 Release: alt1
 
-Group: System/Configuration/Other
-Summary: The graphical tool for changing password
-License: GPLv2+
+Summary: Graphical utility for changing user password
+License: GPLv3+
+Group:   System/Configuration/Other
+Url:     https://github.com/alxvmr/userpasswd
 
-Source: %name-%version.tar
+BuildRequires(pre): rpm-macros-cmake rpm-macros-alternatives
+BuildRequires: cmake gcc
+BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gio-2.0) pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(gtk4)
 
-BuildRequires (pre): rpm-macros-alternatives
-Requires: pam0_tcb >= 1.1.0.1
-Conflicts: usermode
-BuildRequires: libgtk+2-devel
+# Common files with userpasswd.desktop and userpasswd-helper
+Requires: userpasswd-common >= 1.0.0-alt1
 
-Requires: %name-common
+Source0: %name-%version.tar
 
 %description
-Install this package if you would like to provide users with
-graphical tool for changing password.
+A graphical utility to change your password
 
 %package common
-Summary: Desktop file for userpasswd
+Summary: Desktop file and helper for userpasswd
 Group: System/Configuration/Other
-Conflicts: %name < 0.3.6-alt3
-BuildArch: noarch
+Conflicts: %name < 1.0.0-alt1
+Conflicts: %name-gnome < 1.0.0-alt1
+BuildRequires: pkgconfig(pam) pkgconfig(pam_misc)
+# Due same as passwd PAM_SERVICE - /etc/pam.d/passwd
+Requires: passwd
 
 %description common
-The package provides a .desktop file
+This package provides the file and helper needed to work with passwd
+
+%package gnome
+Summary: Graphical utility for changing user password in GNOME
+Group: Other
+BuildRequires: pkgconfig(libadwaita-1)
+# Common files with userpasswd.desktop
+Requires: userpasswd-common >= 1.0.0-alt1
+
+%description gnome
+A graphical password reset utility for GNOME that uses the Adwaita library for the interface.
 
 %prep
-%setup -q
-sed -i 's/^\(PACKAGE = \)userpasswd$/\1%binary_name/' src/Makefile
-sed -i 's/\(\s\+\/usr\/lib\/\)userpasswd/\1%binary_name/' src/loop.sh
+%setup
+mkdir -p %build_dir_adwaita
+mkdir -p %build_dir_gtk
 
 %build
-%make_build
+%cmake -B %build_dir_gtk\
+    -DUSE_ADWAITA=OFF
+%cmake -B %build_dir_adwaita\
+    -DUSE_ADWAITA=ON
+
+cmake --build %build_dir_gtk -j%__nprocs
+cmake --build %build_dir_adwaita -j%__nprocs
 
 %install
-%make_install install menudir=%_desktopdir
+DESTDIR=%buildroot cmake --install %build_dir_gtk
+# rename userpasswd (gtk) -> userpasswd-gtk
+mv %buildroot%_bindir/%name %buildroot%_bindir/%binary_name_gtk
 
-mkdir -p %buildroot%_altdir
-cat >%buildroot%_altdir/%binary_name <<EOF
-%_bindir/%alt_name    %_bindir/%binary_name    30
+DESTDIR=%buildroot cmake --install %build_dir_adwaita
+# rename userpasswd (adwaita) -> userpasswd-gnome
+mv %buildroot/%_bindir/%name %buildroot/%_bindir/%binary_name_adwaita
+
+mkdir -p %buildroot/%_altdir
+cat >%buildroot%_altdir/%binary_name_gtk <<EOF
+%_bindir/%name    %_bindir/%binary_name_gtk    30
 EOF
 
-%find_lang %name
+mkdir -p %buildroot/%_altdir
+cat >%buildroot%_altdir/%binary_name_adwaita <<EOF
+%_bindir/%name    %_bindir/%binary_name_adwaita    50
+EOF
 
-%files -f %name.lang
-%_bindir/%binary_name
-%_libexecdir/%binary_name
-%_datadir/pixmaps/*
-%exclude %_datadir/pixmaps/%name.svg
-%_altdir/%binary_name
+%files
+%_bindir/%binary_name_gtk
+%_altdir/%binary_name_gtk
+
+%files gnome
+%_bindir/%binary_name_adwaita
+%_altdir/%binary_name_adwaita
 
 %files common
 %_desktopdir/%name.desktop
-%_datadir/pixmaps/%name.svg
+%_iconsdir/hicolor/*/*/*.svg
+%attr(2711, root, shadow) %_libexecdir/userpasswd/helper
+%lang(ru) %_datadir/locale/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Apr 28 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.0-alt1
+- Removed the code for the old userpasswd. New implementation uses
+  gtk4 and userpasswd-gnome logic.
+- The helper file has been moved to the common package,
+  since it is common to both userpasswd and userpasswd-gnome packages
+- Change license to GPLv3+
+
 * Fri Apr 18 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.3.7-alt1
 - Updated the application icon
 
