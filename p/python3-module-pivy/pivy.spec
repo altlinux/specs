@@ -1,7 +1,7 @@
 %define oname pivy
 Name: python3-module-%oname
 Version: 0.6.10
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: Pivy is a Coin binding for Python
 License: ISC
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch1: pivy-0.6.6-0001-fix-CMakeLists.txt-for-distutils_cmake.patch
 Patch2: pivy-0.6.6-0002-Gentoo-specific-clear-swig-deprecation-warning.patch
+Patch3: pivy-cmake4.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-python3
@@ -21,7 +22,7 @@ BuildRequires: libcoin3d-devel
 BuildRequires: libsoqt-devel
 BuildRequires: swig
 
-%add_python3_req_skip pivy.qt pivy.qt.QtCore pivy.qt.QtGui pivy.qt.QtWidgets
+%add_python3_req_skip pivy.qt pivy.qt.QtCore pivy.qt.QtGui pivy.qt.QtWidgets pivy.qt.QtOpenGL
 
 %description
 Pivy is a Coin binding for Python. Coin is a high-level 3D graphics
@@ -32,11 +33,9 @@ applications.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 %build
-#add_optflags -I%_includedir/qt4/Qt -fno-strict-aliasing
 %ifarch %e2k
 # error: "Qt requires a C++17 compiler"
 %add_optflags -std=c++17
@@ -59,6 +58,10 @@ mv %buildroot%python3_sitelibdir_noarch/%oname \
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 05 2025 Andrey Cherepanov <cas@altlinux.org> 2:0.6.10-alt2
+- Built from correct upstream tag.
+- FTBFS: fixed build with cmake 4.x.
+
 * Sun Mar 30 2025 Andrey Cherepanov <cas@altlinux.org> 2:0.6.10-alt1
 - New version.
 
