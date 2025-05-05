@@ -1,45 +1,39 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:		canl-java
-Version:	2.8.2
-Release:	alt1_1jpp11
-Summary:	EMI Common Authentication library - bindings for Java
-
+Name: canl-java
+Version: 2.8.3
+Release: alt1
+Summary: EMI Common Authentication library - bindings for Java
 #		The main parts of the code are BSD
 #		Parts derived from glite security utils java are Apache 2.0
 #		Parts derived from bouncycastle are MIT
 #		Parts derived from Apache Commons IO are Apache 2.0
 #		See LICENSE.txt for details
-License:	BSD and ASL 2.0 and MIT
-URL:		https://github.com/eu-emi/%{name}/
-Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
-#		Disable tests that require network connections
-Patch0:		%{name}-test.patch
+License: BSD and Apache-2.0 and MIT
+Group: Development/Java
+URL: https://github.com/eu-emi/%{name}/
+Source0: https://github.com/eu-emi/%{name}/archive/canl-%{version}/canl-%{version}.tar.gz
+# Disable tests that require network connections
+Patch0:	%{name}-test.patch
 
 BuildArch:	noarch
 
-BuildRequires:	maven-local
-BuildRequires:	mvn(commons-io:commons-io) >= 2.4
-BuildRequires:	mvn(junit:junit) >= 4.8
-BuildRequires:	mvn(org.assertj:assertj-core)
-BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
-BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
-Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
-Requires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
-Source44: import.info
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+BuildRequires: mvn(commons-io:commons-io) >= 2.4
+BuildRequires: mvn(junit:junit) >= 4.8
+BuildRequires: mvn(org.assertj:assertj-core)
+BuildRequires: mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
+Requires: mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
+Requires: mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
 
 %description
 This is the Java part of the EMI caNl -- the Common Authentication Library.
 
 %package javadoc
 Group: Development/Java
-Summary:	Javadoc documentation for %{name}
+Summary: Javadoc documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
@@ -69,7 +63,7 @@ Javadoc documentation for EMI caNl.
 %pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -83,6 +77,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon May 05 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.3-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2.8.2-alt1_1jpp11
 - new version
 
