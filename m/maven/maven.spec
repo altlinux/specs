@@ -16,13 +16,13 @@ BuildRequires: jpackage-default
 %define name maven
 %bcond_with bootstrap
 
-%global bundled_slf4j_version 1.7.32
+%global bundled_slf4j_version 1.7.36
 %global apphomedir %{_datadir}/%{name}%{?maven_version_suffix}
 %global confdir %{_sysconfdir}/%{name}%{?maven_version_suffix}
 
 Name:           maven
 Epoch:          1
-Version:        3.8.4
+Version:        3.8.8
 Release:        alt1
 Summary:        Java project management and project comprehension tool
 # maven itself is Apache-2.0
@@ -39,8 +39,8 @@ Patch1:         0001-Adapt-mvn-script.patch
 # Downstream-specific, avoids dependency on logback
 # Used only when %%without logback is in effect
 Patch2:         0002-Invoke-logback-via-reflection.patch
-Patch3:         0003-Use-non-shaded-HTTP-wagon.patch
-Patch4:         0004-Remove-dependency-on-powermock.patch
+Patch3:         0003-Remove-dependency-on-powermock.patch
+Patch4:         0004-Restore-DefaultModelValidator-compatibility-with-Mav.patch
 Patch5:         maven-3.8.2-alt-fix-config-mavenrc.patch
 
 BuildRequires:  maven-local
@@ -265,6 +265,9 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.8-alt1
+- New version 3.8.8 (thanks CentOS for the patch).
+
 * Sat Apr 19 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.8.4-alt1
 - New version 3.8.4.
 

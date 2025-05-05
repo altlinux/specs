@@ -48,11 +48,11 @@ BuildRequires: jpackage-default
 #
 
 Name:           slf4j
-Version:        1.7.32
-Release:        alt1_3jpp11
+Version:        1.7.36
+Release:        alt1
 Summary:        Simple Logging Facade for Java
-# the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
-License:        MIT and ASL 2.0
+# the log4j-over-slf4j and jcl-over-slf4j submodules are Apache-2.0, rest is MIT
+License:        MIT and Apache-2.0
 URL:            http://www.slf4j.org/
 BuildArch:      noarch
 
@@ -147,13 +147,14 @@ SLF4J Source JARs.
 %prep
 %setup -q -n %{name}-v_%{version}
 find -name '*.jar' -delete
-install -p -m 0644 %{SOURCE1} APACHE-LICENSE
+install -p -m 0644 %{SOURCE1} LICENSE-2.0.txt
 
 %pom_disable_module integration
 %pom_disable_module osgi-over-slf4j
 %pom_disable_module slf4j-android
 %pom_disable_module slf4j-ext
 %pom_disable_module slf4j-log4j12
+%pom_disable_module slf4j-reload4j
 
 # Port to maven-antrun-plugin 3.0.0
 sed -i s/tasks/target/ slf4j-api/pom.xml
@@ -170,19 +171,10 @@ sed -i s/tasks/target/ slf4j-api/pom.xml
     <links><link>/usr/share/javadoc/java</link></links>"
 
 # dos2unix
-find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
-    xargs -t sed -i 's/\r$//'
+find -name '*.css' -o -name '*.js' -o -name '*.txt' -exec sed -i 's/\r//' {} +
 
 # Remove wagon-ssh build extension
 %pom_xpath_remove pom:extensions
-
-# Disable default-jar execution of maven-jar-plugin, which is causing
-# problems with version 3.0.0 of the plugin.
-%pom_xpath_inject "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions" "
-    <execution>
-      <id>default-jar</id>
-      <phase>skip</phase>
-    </execution>" slf4j-api
 
 # The general pattern is that the API package exports API classes and does
 # not require impl classes. slf4j was breaking that causing "A cycle was
@@ -217,7 +209,7 @@ rm -rf target/site/{.htaccess,apidocs}
 cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 
 %files -n %{?module_prefix}%{name} -f .mfiles
-%doc --no-dereference LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 
 %files jdk14 -f .mfiles-%{name}-jdk14
 %files jcl -f .mfiles-%{name}-jcl
@@ -227,13 +219,16 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %files -n slf4j-migrator -f .mfiles-slf4j-migrator
 
 %files sources -f .mfiles-sources
-%doc --no-dereference LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 
 %files manual
-%doc --no-dereference LICENSE.txt APACHE-LICENSE
+%doc --no-dereference LICENSE.txt LICENSE-2.0.txt
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 0:1.7.36-alt1
+- New version 1.7.36.
+
 * Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:1.7.32-alt1_3jpp11
 - new version
 

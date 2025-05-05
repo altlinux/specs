@@ -16,10 +16,10 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-wagon
-Version:        3.4.2
-Release:        alt2_4jpp11
+Version:        3.5.3
+Release:        alt1
 Summary:        Tools to manage artifacts and deployment
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://maven.apache.org/wagon
 BuildArch:      noarch
 
@@ -35,7 +35,6 @@ BuildRequires:  mvn(org.apache.httpcomponents:httpcore)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.jsoup:jsoup)
 BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 %endif
@@ -118,6 +117,9 @@ following providers:
 %doc DEPENDENCIES
 
 %changelog
+* Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.5.3-alt1
+- New version 3.5.3.
+
 * Sun Jul 10 2022 Igor Vlasenko <viy@altlinux.org> 0:3.4.2-alt2_4jpp11
 - added proper Obsoletes/Confilcts: on old wagon
 

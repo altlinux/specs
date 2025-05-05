@@ -15,10 +15,10 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-parent
-Version:        34
-Release:        alt1_8jpp11
+Version:        35
+Release:        alt1
 Summary:        Apache Maven parent POM
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://maven.apache.org
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
@@ -45,6 +45,7 @@ Apache Maven parent POM file used by other Maven projects.
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin -r :maven-scm-publish-plugin
 
 %pom_xpath_remove "pom:execution[pom:id='generate-helpmojo']" maven-plugins
 
@@ -58,6 +59,9 @@ Apache Maven parent POM file used by other Maven projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Apr 30 2025 Anton Meleshnikov <alton@altlinux.org> 35-alt1
+- New version 35.
+
 * Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 34-alt1_8jpp11
 - update
 
