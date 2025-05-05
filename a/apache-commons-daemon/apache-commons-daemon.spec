@@ -1,35 +1,31 @@
-Epoch: 1
-Group: System/Base
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 %global base_name   daemon
 %global short_name  commons-%{base_name}
 
-Name:           apache-commons-daemon
-Summary:        Defines API to support an alternative invocation mechanism
-Version:        1.2.4
-Release:        alt3_1jpp11
-License:        ASL 2.0
+Name: apache-commons-daemon
+Summary: Defines API to support an alternative invocation mechanism
+Version: 1.4.1
+Release: alt1
+Epoch: 1
+License: Apache-2.0
+Group: System/Base
 
-URL:            https://commons.apache.org/%{base_name}
-Source0:        https://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+URL: https://commons.apache.org/%{base_name}
 
-Patch0:         00-configure-java-os.patch
+Source0: https://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Patch33: apache-commons-daemon-1.2.0-e2k.patch
+Patch34: apache-commons-daemon-1.2.0-riscv64.patch
+Patch35: apache-commons-daemon-1.2.4-loongarch64.patch
 
 BuildRequires:  autoconf
 BuildRequires:  dos2unix
 BuildRequires:  gcc
 BuildRequires:  xmlto
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-Source44: import.info
-Patch33: apache-commons-daemon-1.2.0-e2k.patch
-Patch34: apache-commons-daemon-1.2.0-riscv64.patch
-Patch35: apache-commons-daemon-1.2.4-loongarch64.patch
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-17-compat
+BuildRequires: maven-local
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
 
 %description
 The scope of this package is to define an API in line with the current
@@ -39,7 +35,6 @@ method.  This specification covers the behavior and life cycle of what
 we define as Java daemons, or, in other words, non interactive
 Java applications.
 
-
 %package        jsvc
 Group: System/Base
 Summary:        Java daemon launcher
@@ -47,7 +42,6 @@ Provides:       jsvc = 1:%{version}-%{release}
 
 %description    jsvc
 Java daemon launcher.
-
 
 %package        javadoc
 Group: Development/Java
@@ -58,17 +52,11 @@ BuildArch:      noarch
 %description    javadoc
 API documentation for apache-commons-daemon.
 
-
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0 -p1
-
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
-
-# mark example files as non-executable
-chmod 644 src/samples/*
 
 # convert to correct end-of-line format
 dos2unix -k -n src/samples/ProcrunServiceInstall.cmd src/samples/ProcrunServiceInstall.cmd.new
@@ -79,12 +67,10 @@ mv src/samples/ProcrunServiceInstall.cmd.new src/samples/ProcrunServiceInstall.c
 cd src/native/unix
 xmlto man man/jsvc.1.xml
 
-
 %build
 # build native jsvc
 pushd src/native/unix
-sh support/buildconf.sh
-
+#sh support/buildconf.sh
 %configure --with-java=%{java_home}
 %make_build
 popd
@@ -92,8 +78,7 @@ popd
 # build jars
 %mvn_file  : %{short_name} %{name}
 %mvn_alias : org.apache.commons:%{short_name}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build
 
 %install
 # install native jsvc
@@ -101,7 +86,6 @@ install -Dpm 755 src/native/unix/jsvc $RPM_BUILD_ROOT%{_bindir}/jsvc
 install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 
 %mvn_install
-
 
 %files -f .mfiles
 %doc LICENSE.txt PROPOSAL.html NOTICE.txt RELEASE-NOTES.txt src/samples
@@ -115,8 +99,10 @@ install -Dpm 644 src/native/unix/jsvc.1 $RPM_BUILD_ROOT%{_mandir}/man1/jsvc.1
 %files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt NOTICE.txt
 
-
 %changelog
+* Mon May 05 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.4.1-alt1
+- new version
+
 * Wed Dec 06 2023 Ivan A. Melnikov <iv@altlinux.org> 1:1.2.4-alt3_1jpp11
 - loongarch64 support
 
