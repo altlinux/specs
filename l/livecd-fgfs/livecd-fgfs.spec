@@ -1,6 +1,6 @@
 Name: livecd-fgfs
 Version: 0.2
-Release: alt2
+Release: alt3
 
 Summary: start FlightGear
 License: Public domain
@@ -10,7 +10,7 @@ Url: http://altlinux.org/m-p
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
-Requires: livecd-runapp SysVinit-usermode
+Requires: livecd-runapp
 
 %define confdir %_sysconfdir/sysconfig
 %define conffile %confdir/livecd-runapp
@@ -39,6 +39,9 @@ _EOF_
 %conffile
 
 %changelog
+* Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt3
+- NMU: Remove runtime dependency on SysVinit-usermode
+
 * Mon Mar 30 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt2
 - set local time
 
