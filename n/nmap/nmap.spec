@@ -1,6 +1,6 @@
 Name: nmap
 Version: 7.94
-Release: alt3
+Release: alt4
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -11,8 +11,7 @@ Url: http://nmap.org/
 %define srcname nmap-%version-%release
 # http://git.altlinux.org/gears/n/nmap.git
 Source: %srcname.tar
-Source1: zenmap.pamd
-Source2: zenmap.security
+Source1: zenmap-root
 
 %def_with liblua
 %def_with ncat
@@ -48,6 +47,9 @@ BuildArch: noarch
 %_python3_set_noarch
 %add_python3_req_skip gobject
 Requires: %name = %EVR
+Requires: typelib(Gtk) = 3.0
+# https://bugzilla.altlinux.org/52950
+Requires: python3-module-pygobject3
 
 %description -n zenmap
 This package includes zenmap, a GTK+ frontend for Nmap.
@@ -89,12 +91,8 @@ rm %buildroot%_bindir/uninstall_ndiff
 rm %buildroot%_mandir/*/man1/nmap.*
 
 %if_with zenmap
-ln -s $(relative %_libexecdir/consolehelper/helper %_bindir/) \
+install -pD -m755 %_sourcedir/zenmap-root \
 	%buildroot%_bindir/zenmap-root
-install -pD -m640 %_sourcedir/zenmap.pamd \
-	%buildroot%_sysconfdir/pam.d/zenmap-root
-install -pD -m640 %_sourcedir/zenmap.security \
-	%buildroot%_sysconfdir/security/console.apps/zenmap-root
 mkdir -p %buildroot%_liconsdir
 ln -s ../../../../zenmap/pixmaps/zenmap.png %buildroot%_liconsdir/
 %find_lang zenmap
@@ -132,8 +130,6 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 
 %if_with zenmap
 %files -n zenmap -f zenmap.lang
-%config(noreplace) %_sysconfdir/pam.d/zenmap-root
-%config(noreplace) %_sysconfdir/security/console.apps/zenmap-root
 %_bindir/zenmap*
 %_datadir/zenmap
 %_man1dir/zenmap.*
@@ -146,6 +142,12 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %endif
 
 %changelog
+* Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 20020501:7.94-alt4
+- NMU:
+  + zenmap: use pkexec in zenmap-root instead consolehelper.
+  + zenmap: add runtime dependency on typelib(Gtk) = 3.0.
+  + zenmap: add runtime dependency on python3-module-pygobject3.
+
 * Fri Mar 15 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.94-alt3
 - Updated package License: tag (NPSL-0.95 -> ALT-NPSL-0.95) to match
   common-licenses >= 3.21-alt2.
