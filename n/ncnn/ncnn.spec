@@ -13,7 +13,7 @@
 %endif
 
 Name: ncnn
-Version: 20250427
+Version: 20250503
 Release: alt1
 
 Summary: Mobile neural network inference framework
@@ -151,6 +151,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Mon May 05 2025 Leontiy Volodin <lvol@altlinux.org> 20250503-alt1
+- New version 20250503.
+
 * Mon Apr 28 2025 Leontiy Volodin <lvol@altlinux.org> 20250427-alt1
 - New version 20250427.
 - Added vcs tag.
