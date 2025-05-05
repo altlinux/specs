@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: cpu_features
-Version: 0.9.0
-Release: alt2
+Version: 0.10.0
+Release: alt1
 Summary: A library to get CPU features at runtime
 License: Apache-2.0
 Group: System/Libraries
@@ -35,6 +35,7 @@ Requires: cpu_features = %EVR
 
 %prep
 %setup
+sed -i /CMAKE_CXX_STANDARD/d CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -68,6 +69,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_cmakedir/CpuFeatures
 
 %changelog
+* Sun May 04 2025 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
+- Update to v0.10.0 (2025-05-02).
+
 * Tue Dec 17 2024 Vitaly Chikunov <vt@altlinux.org> 0.9.0-alt2
 - Update to v0.4.1-260-g4f45bf2 (2024-12-17) fixes JSON output.
 
