@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: quilt
-Version: 0.68
+Version: 0.69
 Release: alt1
 
 Summary: Scripts for working with series of patches
@@ -58,6 +58,9 @@ install -pm644 AUTHORS NEWS TODO doc/README.EMACS doc/*.pdf COPYING \
 %docdir/
 
 %changelog
+* Thu May 01 2025 Vitaly Chikunov <vt@altlinux.org> 0.69-alt1
+- Update to v0.69 (2025-04-26).
+
 * Wed May 08 2024 Vitaly Chikunov <vt@altlinux.org> 0.68-alt1
 - Update to v0.68 (2024-03-27).
 
