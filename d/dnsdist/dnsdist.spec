@@ -11,8 +11,8 @@
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 1.9.8
-Release: alt2
+Version: 1.9.9
+Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
 
@@ -109,6 +109,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Mon May 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.9-alt1
+- New version (1.9.9) with rpmgs script.
+
 * Tue Jan 21 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.8-alt2
 - Simplified backport to older branches (XSK support).
 
