@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 8.0.6
-Release: alt2
+Version: 9.0.0
+Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -21,13 +21,15 @@ Vcs:     https://github.com/crash-utility/crash
 Requires: binutils
 
 Source0: %name-%version.tar
-Source1: gdb-10.2.tar.gz
+Source1: https://ftp.gnu.org/gnu/gdb/gdb-16.2.tar.gz
 
 ExcludeArch: e2k
 BuildRequires(pre): kernel-%kernel_latest
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: flex
 BuildRequires: gcc-c++
+BuildRequires: libgmp-devel
+BuildRequires: libmpfr-devel
 BuildRequires: makeinfo
 BuildRequires: ncurses-devel
 BuildRequires: zlib-devel
@@ -110,6 +112,9 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Sat Apr 26 2025 Vitaly Chikunov <vt@altlinux.org> 9.0.0-alt1
+- Update to 9.0.0 (2025-04-25) which is based on gdb-16.2.
+
 * Tue Feb 25 2025 Vitaly Chikunov <vt@altlinux.org> 8.0.6-alt2
 - spec: Remove dependence on kernel-image-6.6.
 
