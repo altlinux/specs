@@ -1,6 +1,6 @@
 Name: libgif
 Version: 4.1.6
-Release: alt3
+Release: alt4
 
 Summary: A library for manipulating GIF format image files
 Group: System/Libraries
@@ -15,6 +15,7 @@ Patch3: libgif-4.1.6-alt-vers.patch
 Patch4: libgif-4.1.6-deb-cve.patch
 Patch5: libgif-4.1.6-deb-doc-fixes.patch
 Patch6: libgif-4.1.6-deb-spelling-fixes.patch
+Patch7: libgif-4.1.6-alt-include-header-stdlib.patch
 
 %def_disable static
 
@@ -70,6 +71,7 @@ image files.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 # fix format warnings
 sed -i 's/fprintf(stderr, VersionStr)/fprintf(stderr, "%%s", VersionStr)/' util/*.c
 bzip2 -9fk ChangeLog
@@ -121,6 +123,9 @@ install -pm644 AUTHORS BUGS ChangeLog.bz2 \
 %endif
 
 %changelog
+* Mon May 05 2025 Constantin Sunzow <protvin@altlinux.org> 4.1.6-alt4
+- Fix FTBFS: implicit declaration of function (compatibility with GCC 14).
+
 * Wed Mar 09 2011 Dmitry V. Levin <ldv@altlinux.org> 4.1.6-alt3
 - Rebuilt for debuginfo.
 
