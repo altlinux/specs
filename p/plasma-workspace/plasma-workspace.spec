@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.3.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -593,6 +593,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Wed Apr 23 2025 Oleg Solovyov <mcpain@altlinux.org> 1:6.3.4-alt2
+- freememorynotifier: fix duplicating buttons (Closes: #53011)
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.4-alt1
 - new version
 
