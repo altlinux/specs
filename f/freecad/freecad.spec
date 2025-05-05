@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 1.0.0
-Release: alt2
+Release: alt3
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -44,6 +44,7 @@ Patch4: freecad-alt-python-modules-path.patch
 Patch5: freecad-1.0.0-alt-deprecated-getlinks.patch
 Patch6: freecad-1.0.0-alt-version-check.patch
 Patch7: freecad-1.0.0-upstream-smesh-Fix-build-failure-with-vtk-9.4.patch
+Patch8: 0001-Port-plugins-to-PySide6.QtWidgets.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -135,6 +136,7 @@ BuildRequires: libfmt-devel
 # TODO: cgal needed for openscad was not built for armh
 Requires: openscad
 %endif
+Requires: python3-module-pyside6-devel
 Requires: python3-module-GitPython
 Requires: netgen
 Requires: libredwg
@@ -179,6 +181,7 @@ rm -rf src/CXX
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/CAM/App/CMakeLists.txt
@@ -275,6 +278,7 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' %buildroot%_libdir/
 # fix import PySide6 python module
 subst 's|PySide|&6|g' $(find %buildroot%_libdir/freecad -name \*.py) %buildroot%python3_sitelibdir/freecad/UiTools.py
 subst 's|PySide66|PySide6|g' $(find %buildroot%_libdir/freecad -name \*.py)
+subst 's|PySide6Uic|PySideUic|g' $(find %buildroot%_libdir/freecad -name \*.py)
 subst 's|import PySide6 as PySide|import PySide6|g' $(find %buildroot%_libdir/freecad -name \*.py)
 
 # remove static libraries
@@ -314,6 +318,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Sun May 04 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.0-alt3
+- Fixed using ui forms and port plugins to PySide6.QtWidgets (ALT #52581).
+
 * Fri Feb 14 2025 Constantin Sunzow <protvin@altlinux.org> 1:1.0.0-alt2
 - Rebuild with vtk 9.4.
 
