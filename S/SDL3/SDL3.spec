@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: SDL3
-Version: 3.2.10
+Version: 3.2.12
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -13,6 +13,9 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/libsdl-org/SDL/archive/release-%version/SDL-release-%version.tar.gz
 Source: SDL-release-%version.tar
+
+# https://github.com/libsdl-org/SDL/pull/12961
+Patch0: %name-3.2.12-x11.patch
 
 BuildRequires: cmake
 BuildRequires: fcitx5-devel
@@ -73,6 +76,7 @@ to develop SDL applications.
 
 %prep
 %setup -n SDL-release-%version
+%patch0 -p1
 
 %build
 %cmake \
@@ -96,6 +100,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Mon May 05 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.12-alt1
+- New version 3.2.12.
+
 * Tue Apr 01 2025 Nazarov Denis <nenderus@altlinux.org> 3.2.10-alt1
 - New version 3.2.10.
 
