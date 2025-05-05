@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-
+%define soversion %version
 Name: labplot
-Version: 2.11.1
+Version: 2.12.0
 Release: alt1
 Summary: Function and Data Plotter
 License: GPL-2.0+
-Group: Sciences/Other
+Group: Sciences/Mathematics
 Url: https://labplot.kde.org/
 %K6init no_altplace
 
@@ -48,6 +48,21 @@ Newly supported are data set operations and image manipulations. One can now
 import over 80 different images formats and export directly to ps, eps or pdf.
 The plots now use double buffering and LabPlot supports scripting using QSA.
 
+%package -n liblabplot-devel
+Summary: Development files for labplot
+Group: Development/KDE and QT
+
+%description -n liblabplot-devel
+This package contains the LabPlot Software Development Kit.
+
+%package -n liblabplot%soversion
+Summary: Library for LabPlot - data analysis and visualization
+Group: Sciences/Mathematics
+
+%description -n liblabplot%soversion
+LabPlot is a free software data analysis and visualization tool.
+This package provides the shared library for LabPlot.
+
 %prep
 %setup
 
@@ -66,23 +81,30 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %install
 %K6install
-
-# remove private libraries headers and symlinks
-rm -rf %buildroot%_includedir
-rm -rf %buildroot%_libdir/*.so
-
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc AUTHORS README.md LICENSES/* ChangeLog
 %_K6bin/*
-%_datadir/%{name}2/
+%_datadir/%{name}/
 %_K6xdgapp/*
 %_K6icon/hicolor/*/apps/*
-%_K6xdgmime/%{name}2.xml
+%_K6xdgmime/%{name}.xml
 %_datadir/metainfo/*.xml
 
+%files -n liblabplot%soversion
+%_libdir/liblabplot.so.%soversion
+
+%files -n liblabplot-devel
+%_includedir/labplot
+%_libdir/cmake/labplot
+%_K6link/liblabplot.so
+
 %changelog
+* Sat May 03 2025 Anton Farygin <rider@altlinux.com> 2.12.0-alt1
+- 2.11.1 -> 2.12.0
+- built devel and shared libs packages
+
 * Wed Feb 12 2025 Anton Farygin <rider@altlinux.ru> 2.11.1-alt1
 - 2.10.1 -> 2.11.1
 - built for QT/KDE6 with support fo vulkan, fftw3, cerf, poopler, lz4 and eigen3
