@@ -7,7 +7,7 @@
 Name: python3-module-%pypi_name
 
 Version: 3.5.3
-Release: alt1
+Release: alt2
 Summary: srt is a tiny but featureful Python library for parsing, modifying, and composing SRT files
 License: MIT
 Group: Development/Python3
@@ -15,6 +15,8 @@ Url: https://pypi.org/project/srt/
 Vcs: https://github.com/cdown/srt
 
 Source: %name-%version.tar
+#fixing BOM handling in SRT 
+Patch0: bom-handling-in-srt-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -35,6 +37,7 @@ BuildRequires: python3(hypothesis)
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -59,5 +62,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Mon May 05 2025 Pavel Shilov <zerospirit@altlinux.org> 3.5.3-alt2
+- fixing BOM handling in SRT
 * Tue Nov 12 2024 Pavel Shilov <zerospirit@altlinux.org> 3.5.3-alt1
 - initial build for Sisyphus
