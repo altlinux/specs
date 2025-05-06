@@ -5,7 +5,7 @@
 
 Name:       hedgewars
 Version:    1.0.2
-Release:    alt3
+Release:    alt4
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -17,11 +17,21 @@ URL:        http://www.hedgewars.org/
 Packager:   Grigory Ustinov <grenka@altlinux.org>
 
 Source:     %name-%version.tar
+
+%{?_with_server:
+Source10:   vendor.tar
+Source11:   hedgewars-server.cabal
+}
+
 Patch:      fix_non_inline_ShiftWorld.patch
 # https://github.com/hedgewars/hw/pull/74
 Patch2:     ffmpeg6.0-support.patch
 
 Patch3:     hedgewars-1.0.2-fix_build_with_cmake_4.0.patch
+
+%{?_with_server:
+Patch10:    hedgewars-1.0.2-mtl_2.3.patch
+}
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
@@ -29,9 +39,7 @@ Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 BuildRequires(pre): cmake
 BuildRequires: fpc-units-gtk2 fpc-units-misc fpc-units-net
 %{?_with_server:
-BuildRequires: ghc8.6.4-common ghc8.6.4-entropy ghc8.6.4-hslogger
-BuildRequires: ghc8.6.4-random ghc8.6.4-regex-tdfa ghc8.6.4-sandi ghc8.6.4-sha
-BuildRequires: ghc8.6.4-utf8-string ghc8.6.4-zlib
+BuildRequires: ghc cabal-install rpm-build-haskell-vendored
 }
 BuildRequires: libGLEW-devel libSDL2_image-devel libSDL2_mixer-devel
 BuildRequires: libSDL2_net-devel libSDL2_ttf-devel libavformat-devel
@@ -99,9 +107,16 @@ This package contains all the data files for %name.
 
 %prep
 %setup
+
 %patch -p2
 %patch2 -p1
 %patch3 -p2
+
+%{?_with_server:
+%setup -D -T -a 10
+cp %SOURCE11 gameServer
+%patch10 -p1
+}
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
@@ -113,12 +128,20 @@ rm -r misc/liblua
 %_cmake_skip_rpath \
 -DDATA_INSTALL_DIR=%_datadir/%name -Dtarget_library_install_dir="%_libdir" \
 -DFONTS_DIRS="/usr/share/fonts/ttf/wqy-zenhei;/usr/share/fonts/ttf/dejavu" \
-%{?_with_server: -DNOSERVER=0}
+-DNOSERVER=1
 
 %make_build VERBOSE=true
 
+%{?_with_server:
+%cabal_vendor_build --project-dir gameServer exe:hedgewars-server
+}
+
 %install
 %makeinstall_std
+
+%{?_with_server:
+%cabal_vendor_install --project-dir gameServer exe:hedgewars-server
+}
 
 # below is the desktop file and icon stuff.
 mkdir -p %buildroot%_datadir/applications
@@ -153,6 +176,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Wed Apr 30 2025 Leonid Znamenok <respublica@altlinux.org> 1.0.2-alt4
+- Rebuilt with GHC 9.6.6.
+
 * Wed Apr 16 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt3
 - Fixed FTBFS with cmake 4.0.
 
