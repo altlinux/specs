@@ -1,8 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define majver 2.2
+
 Name: qterminal
-Version: 2.2.0
+Version: %majver.1
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
@@ -16,7 +18,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake lxqt2-build-tools
 BuildRequires: qt6-base-devel qt6-tools-devel
-BuildRequires: libqtermwidget6-devel >= %version
+BuildRequires: libqtermwidget6-devel >= %majver
 BuildRequires: plasma6-layer-shell-qt-devel
 
 %description
@@ -61,6 +63,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Tue May 06 2025 Anton Midyukov <antohami@altlinux.org> 2.2.1-alt1
+- New version 2.2.1.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 
