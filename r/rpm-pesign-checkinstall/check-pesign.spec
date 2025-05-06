@@ -5,7 +5,7 @@
 
 Name: rpm-pesign-checkinstall
 Summary: Verify pesigned binaries (helper for checkinstall)
-Version: 3
+Version: 4
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Other
@@ -42,6 +42,10 @@ install -Dp -m755 check-pesign.sh %buildroot%_bindir/check-pesign-helper
 %endif
 
 %changelog
+* Wed Apr 30 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 4-alt1
+- Sync the whitelist with rpmrebuild-pesign to check systemd-boot.
+- filetrigger: replace obsolete "egrep" with "grep -E".
+
 * Thu Aug 12 2021 Vitaly Chikunov <vt@altlinux.org> 3-alt1
 - Use trap to clean temporary directory.
 

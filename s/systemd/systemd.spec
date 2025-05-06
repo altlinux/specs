@@ -100,7 +100,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -557,6 +557,17 @@ Summary: systemd-boot and bootctl utils
 
 %description boot-efi
 systemd-boot and bootctl utils.
+
+%package boot-efi-checkinstall
+Group: System/Kernel and hardware
+Summary: Verify systemd-boot EFI signature
+Requires: %name-boot-efi = %EVR
+Requires(post): rpm-pesign-checkinstall
+
+%description boot-efi-checkinstall
+systemd-boot and bootctl utils.
+
+This package enables EFI signature verification.
 
 %package ukify
 Group: System/Kernel and hardware
@@ -2455,6 +2466,8 @@ fi
 %dir %_systemd_dir/boot/efi
 %_systemd_dir/boot/efi/*
 %endif
+
+%files boot-efi-checkinstall
 %endif
 
 %if_enabled bootloader
@@ -2592,6 +2605,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Wed Apr 30 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:257.5-alt3
+- Add a new boot-efi-checkinstall subpackage to check that systemd-boot EFI
+  binary is signed properly.
+
 * Fri Apr 11 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.5-alt2
 - system-preset, user-preset, system-generators, user-generators dirs in /etc
   packaged to systemd-filesystem.
