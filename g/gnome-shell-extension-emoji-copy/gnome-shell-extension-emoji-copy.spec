@@ -3,7 +3,7 @@
 %define _name emoji-copy
 %define old_name emoji-selector
 # from metadata.json
-%define ego_ver 26
+%define ego_ver 28
 %define git_ver %ego_ver
 %define beta %nil
 %define uuid emoji-copy@felipeftn
@@ -16,7 +16,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ego_ver
-Release: alt2
+Release: alt1
 
 Summary: Emoji Selector for GNOME Shell
 Group: Graphical desktop/GNOME
@@ -81,6 +81,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 28-alt1
+- 28
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 26-alt2
 - updated to v26-1-gf750768 (GNOME 48 supported)
 
