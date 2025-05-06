@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A standalone implementation of PEP 735 Dependency Groups
@@ -50,5 +50,8 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Automatically updated to 1.3.1.
+
 * Tue Feb 11 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus.
