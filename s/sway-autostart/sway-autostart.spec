@@ -1,5 +1,5 @@
 Name:    sway-autostart
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Systemd service for sway autostart
@@ -40,5 +40,8 @@ install -Dm0644 sway-autostart.preset %buildroot%_presetdir/50-%name.preset
 %_presetdir/50-%name.preset
 
 %changelog
+* Tue May  6 2025 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
+- Fix flickering of bootsplash (causing too early tries to run sway)
+
 * Thu Apr 17 2025 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial release for Sisyphus
