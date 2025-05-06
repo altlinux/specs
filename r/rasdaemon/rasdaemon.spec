@@ -6,7 +6,7 @@
 
 Name: rasdaemon
 Version: 0.8.3
-Release: alt2
+Release: alt3
 Summary: Utility to receive RAS error tracings
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -108,6 +108,10 @@ fi
 %_man8dir/ras-mc-ctl.8*
 
 %changelog
+* Tue May 06 2025 Sergey Y. Afonin <asy@altlinux.org> 0.8.3-alt3
+- Again fixed reading configuration for sysvinit script start action (ALT#53451)
+- More accurate check for mounted debugfs in sysvinit script
+
 * Sat Apr 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.8.3-alt2
 - Fixed reading configuration for sysvinit script start action (ALT#53451).
 - Fixed startup crash due to overflow (pull/212).
