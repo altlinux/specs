@@ -57,12 +57,12 @@
 Name:		xymon
 Summary:	A system for monitoring servers and networks
 Group:		Monitoring
-License:	%gpl2only
+License:	GPL-2.0-only
 URL:		http://xymon.sourceforge.net/
 
 %if_disabled trunk
 Version:	4.3.30
-Release:	alt2
+Release:	alt3
 Source0:	http://prdownloads.sourceforge.net/xymon/Xymon/%{version}/%{name}-%{version}.tar.gz
 %else
 %define		trunkVersion	%(svn info ~/svn/xymon/trunk/ | grep ^Revision | awk '{print $2}')
@@ -93,8 +93,6 @@ Source42:	xymon-client.te
 Source21:	xymon.sections.mounts
 
 Requires:	xymon-common = %{version}-%{release}
-
-BuildRequires:	rpm-build-licenses
 
 BuildRequires:	libssl-devel pcre-devel rrdtool-devel openldap-devel
 %if_enabled trunk
@@ -267,6 +265,14 @@ Patch503: xymonclient-linux.sh-various-procps.patch
 
 # rollback of changes for cgiwrap introduced in 4.3.20
 Patch504: xymon-4.3.21-FollowSymLinks.patch
+
+# https://bugs.launchpad.net/ubuntu/+source/xymon/+bug/2078638
+#
+# 2025-05-06 02:20:52.025816 Peer at 0.0.0.0:0 failed: Broken pipe
+# 2025-05-06 02:20:52.025914 Peer not up, flushing message queue
+# *** buffer overflow detected ***: terminated
+#
+Patch505: xymon-4.3.30-100_md5_bufferoverflow.patch
 
 ##########################################################################
 ##########################################################################
@@ -476,6 +482,8 @@ the Xymon server in NCV format.
 %patch502 -p2
 %patch503 -p1
 %patch504 -p1
+
+%patch505 -p1
 
 # exit with 1 if "define MAXCHECK   102400" not found
 sed '/define MAXCHECK   102400/{s||define MAXCHECK   4194303|;h};${x;/./{x;q0};x;q1}' -i client/logfetch.c
@@ -1258,6 +1266,10 @@ done
 ################ end extra clients ################
 
 %changelog
+* Tue May 06 2025 Sergey Y. Afonin <asy@altlinux.org> 4.3.30-alt3
+- fixed buffer overflow error detected in p11 branch and newer
+  patch from https://bugs.launchpad.net/ubuntu/+source/xymon/+bug/2078638
+
 * Thu Oct 31 2019 Sergey Y. Afonin <asy@altlinux.org> 4.3.30-alt2
 - updated xymon.varlibwww.patch and xymon.wwwcachedir.patch for Apache 2.4
 
