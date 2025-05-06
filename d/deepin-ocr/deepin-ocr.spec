@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-ocr
-Version: 6.5.0
+Version: 6.5.1
 Release: alt1
 
 Summary: Base character recognition ability on DDE
@@ -57,6 +57,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/%name/translations/deepin-ocr_ky@Arab.qm
 
 %changelog
+* Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.1-alt1
+- New version 6.5.1.
+
 * Wed Apr 23 2025 Leontiy Volodin <lvol@altlinux.org> 6.5.0-alt1
 - New version 6.5.0.
 - Added vcs tag.
