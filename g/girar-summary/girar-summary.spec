@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: girar-summary
-Version: 1.10
+Version: 1.11
 Release: alt1
 Summary: Summarize task build in a table
 License: GPL-2.0-only
@@ -35,6 +35,9 @@ install -p -m755 girar-summary-task %buildroot%_bindir
 %_bindir/girar-summary-task
 
 %changelog
+* Mon May 05 2025 Vitaly Chikunov <vt@altlinux.org> 1.11-alt1
+- Fix girar-summary-task not printing anything (ALT#54131).
+
 * Tue Apr 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.10-alt1
 - Fix FTBFS with newer libre2.
 
