@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2025.2.9
+Version: 2025.5.1
 Release: alt1
 
 Summary: Flexible test automation for Python
@@ -33,8 +33,6 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Patch: c1e1d8cda77a51a67b58ba0ccd8983d027f5de73.patch
-
 %description
 nox is a command-line tool that automates testing in multiple Python
 environments, similar to tox. Unlike tox, Nox uses a standard Python file
@@ -42,7 +40,6 @@ for configuration.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -53,7 +50,8 @@ for configuration.
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 # test__create_venv_options uses conda
-%pyproject_run_pytest -k 'not test__create_venv_options and not test_noxfile_no_script_mode'
+# test_noxfile_script_mode_url_req tries to connect to github
+%pyproject_run_pytest -k 'not test__create_venv_options and not test_noxfile_no_script_mode and not test_noxfile_script_mode_url_req'
 
 %files
 %doc LICENSE *.md
@@ -63,6 +61,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 2025.5.1-alt1
+- Automatically updated to 2025.5.1.
+
 * Tue Feb 11 2025 Grigory Ustinov <grenka@altlinux.org> 2025.2.9-alt1
 - Automatically updated to 2025.2.9.
 
