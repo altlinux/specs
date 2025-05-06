@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: tinyssh
-Version: 20250201
+Version: 20250501
 Release: alt1
 Summary: A minimalistic SSH server which implements only a subset of SSHv2 features
 License: CC0-1.0 or 0BSD or MIT-0 or MIT
@@ -54,6 +54,10 @@ grep -Pe 'tinysshd .* to .*/libntruprime\.so' bindings.txt
 %_man8dir/tiny*.8*
 
 %changelog
+* Mon May 05 2025 Vitaly Chikunov <vt@altlinux.org> 20250501-alt1
+- Update to 20250501 (2025-05-01).
+- Fix minor strict kex violation.
+
 * Mon Feb 24 2025 Vitaly Chikunov <vt@altlinux.org> 20250201-alt1
 - Update to 20250201 (2025-02-01).
 
