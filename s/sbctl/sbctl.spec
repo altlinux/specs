@@ -2,7 +2,7 @@
 %def_with check
 
 Name: sbctl
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Secure Boot key manager
@@ -49,5 +49,8 @@ rm %buildroot%_datadir/licenses/sbctl/LICENSE
 %_datadir/fish/vendor_completions.d/sbctl.fish
 
 %changelog
+* Tue May 06 2025 Egor Ignatov <egori@altlinux.org> 0.17-alt1
+- New version 0.17.
+
 * Wed Apr 16 2025 Egor Ignatov <egori@altlinux.org> 0.16-alt1
 - First build for ALT.
