@@ -32,7 +32,7 @@
 #endif
 
 Name: dqt5-webengine
-Version: 5.15.17
+Version: 5.15.18
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -52,6 +52,7 @@ Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 Patch8: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
 Patch9: qtwebengine-opensource-src-5.15.5-webrtc-neon-detect.patch
 Patch10: qtwebengine-skia-missing-includes.patch
+Patch11: qtwebengine-icu75.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
@@ -211,6 +212,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 #
 #%patch30 -p1
 %patch31 -p1
@@ -309,8 +311,8 @@ popd
 # copy the Chromium license so it is installed with the appropriate name
 cp -p src/3rdparty/chromium/LICENSE LICENSE.Chromium
 
-# fix find system ninja
 mkdir -p bin
+# fix find system ninja
 ln -s %_bindir/ninja-build bin/ninja
 # fix find system python
 %if_enabled python3
@@ -367,7 +369,7 @@ pushd %_target_platform
     QMAKE_LFLAGS+=-Wl,-z,notext \
 %endif
     QMAKE_EXTRA_ARGS+="-proprietary-codecs -feature-webengine-system-libvpx -feature-webengine-system-openjpeg2" \
-    QMAKE_EXTRA_ARGS+="-webengine-jumbo-build 0 -system-opus -system-webp -webengine-kerberos" \
+    QMAKE_EXTRA_ARGS+="-webengine-jumbo-build 0 -system-opus -system-webp -webengine-kerberos %{?_enable_python3:-webengine-python-version python3}" \
 %if_enabled system_icu
     QMAKE_EXTRA_ARGS+="-system-webengine-icu" \
 %endif
@@ -470,6 +472,18 @@ done
 %_dqt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.15.18-alt0.dde.1
+- merge with system qt5-webengine
+
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt1
+- new version
+
+* Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt3
+- fix compile with new icu
+
+* Mon Sep 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.17-alt2
+- fix find python3
+
 * Thu Sep 19 2024 Leontiy Volodin <lvol@altlinux.org> 5.15.17-alt0.dde.1
 - fork qtbase for separate deepin buildings (ALT #48138)
 
