@@ -2,8 +2,8 @@
 %define rdn_name de.wagnermartin.Plattenalbum
 
 Name: plattenalbum
-Version: 2.2.1
-Release: alt2
+Version: 2.3.0
+Release: alt1
 Summary: Connect to your music
 License: GPL-3.0
 Group: Sound
@@ -18,7 +18,8 @@ BuildRequires: meson rpm-build-python3
 BuildRequires: python3-module-mpd python3-module-pygobject3
 BuildRequires: libgio gtk4-update-icon-cache
 
-Requires: libgtk4-gir libadwaita-gir
+Requires: libgtk4-gir >= 4.18
+Requires: libadwaita-gir
 
 %description
 A client for the Music Player Daemon (MPD).
@@ -47,6 +48,9 @@ managing playlists.
 
 
 %changelog
+* Tue May 06 2025 Andrey Kovalev <ded@altlinux.org> 2.3.0-alt1
+- Updated to upstream version 2.3.0.
+
 * Mon Jan 27 2025 Andrey Kovalev <ded@altlinux.org> 2.2.1-alt2
 - Added missing requires (closes: #52835)
 
