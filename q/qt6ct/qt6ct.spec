@@ -1,9 +1,11 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%define qt6_version %{get_version libqt6-core}
+
 Name:     qt6ct
 Version:  0.9
-Release:  alt1
+Release:  alt2.git55dba87
 
 Summary:  Qt6 Configuration Tool
 License:  BSD-2-Clause
@@ -17,6 +19,11 @@ Source:   %name-%version.tar
 BuildRequires: cmake
 BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel
 BuildRequires: pkgconfig(xkbcommon)
+
+%if "%qt6_version"
+# this package requires rebuild on every qt6 update
+Requires: libqt6-core = %qt6_version
+%endif
 
 %description
 This program allows users to configure Qt6 settings (theme, font,
@@ -42,6 +49,11 @@ icons, etc.) under DE/WM without Qt integration.
 %doc README
 
 %changelog
+* Tue May 06 2025 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt2.git55dba87
+- build from a git snapshot;
+- rebuild with recent Qt6;
+- require the Qt6 version we've been build with.
+
 * Tue Sep 26 2023 Ivan A. Melnikov <iv@altlinux.org> 0.9-alt1
 - 0.9
 
