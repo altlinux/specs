@@ -68,6 +68,7 @@
 %def_enable librsvg
 %def_disable librtmp
 %def_enable librubberband
+%def_enable libsmbclient
 %def_enable libsnappy
 %def_enable libsoxr
 %def_enable libspeex
@@ -161,7 +162,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	7.1.1
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -220,6 +221,7 @@ BuildRequires:	yasm
 %{?_enable_librsvg:BuildRequires: librsvg-devel}
 %{?_enable_librubberband:BuildRequires: librubberband-devel libstdc++-devel}
 %{?_enable_librtmp:BuildRequires: librtmp-devel}
+%{?_enable_libsmbclient:BuildRequires: libsmbclient-devel}
 %{?_enable_libsnappy:BuildRequires: libsnappy-devel}
 %{?_enable_libsrt:BuildRequires: libsrt-devel}
 %{?_enable_libsoxr:BuildRequires: libsoxr-devel}
@@ -651,6 +653,7 @@ xz Changelog
 	%{subst_enable librtmp} \
 	%{subst_enable librubberband} \
 	%{subst_enable libshine} \
+	%{subst_enable libsmbclient} \
 	%{subst_enable libsnappy} \
 	%{subst_enable libsoxr} \
 	%{subst_enable libspeex} \
@@ -868,6 +871,10 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Tue May 06 2025 Anton Farygin <rider@altlinux.com> 2:7.1.1-alt2
+- fixed build with libv4l2 1.30
+- built with libsmbclient (closes: #53816)
+
 * Tue Mar 18 2025 Anton Farygin <rider@altlinux.ru> 2:7.1.1-alt1
 - 7.1 -> 7.1.1
 
