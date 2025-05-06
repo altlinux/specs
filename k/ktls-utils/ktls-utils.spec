@@ -1,0 +1,48 @@
+Name: ktls-utils
+Version: 1.0.0
+Release: alt1
+
+Summary: TLS handshake utilities for in-kernel TLS consumers
+License: GPLv2
+Group: Networking/Other
+Url: https://github.com/oracle/ktls-utils/
+
+Source: %name-%version.tar
+
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(libkeyutils)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(libnl-3.0)
+BuildRequires: pkgconfig(libnl-genl-3.0)
+
+%description
+In-kernel TLS consumers need a mechanism to perform TLS handshakes on a
+connected socket to negotiate TLS session parameters that can then be
+programmed into the kernel's TLS record protocol engine.
+This package of software provides a TLS handshake user agent that listens
+for kernel requests and then materializes a user space socket endpoint
+on which to perform these handshakes. The resulting negotiated session
+parameters are passed back to the kernel via standard kTLS socket options.
+
+%prep
+%setup
+
+%build
+%autoreconf
+%configure --with-systemd
+%make_build
+
+%install
+%makeinstall_std
+
+%files
+%doc AUTHORS COPYING README
+%config(noreplace) %_sysconfdir/tlshd.conf
+%_sbindir/tlshd
+%_unitdir/tlshd.service
+%_man5dir/tlshd.conf.5*
+%_man8dir/tlshd.8*
+
+%changelog
+* Tue May 06 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
