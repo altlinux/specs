@@ -1,6 +1,6 @@
 Name: deepin-wayland-protocols
-Version: 1.10.0.28
-Release: alt2
+Version: 1.10.0.30
+Release: alt1
 
 Summary: Wayland protocols for DDE
 
@@ -45,6 +45,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DeepinWaylandProtocols/*.cmake
 
 %changelog
+* Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.10.0.30-alt1
+- New version 1.10.0.30.
+
 * Tue Apr 29 2025 Leontiy Volodin <lvol@altlinux.org> 1.10.0.28-alt2
 - NMU: trully built 1.10.0.28 version.
 - Added vcs tag.
