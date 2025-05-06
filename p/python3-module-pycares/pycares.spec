@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%module_name
-Version: 4.6.1
+Version: 4.8.0
 Release: alt1
 
 Summary: Python interface for c-ares
@@ -61,6 +61,9 @@ export LANG=en_US.UTF-8
 %endif
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
+- Automatically updated to 4.8.0.
+
 * Mon Apr 21 2025 Grigory Ustinov <grenka@altlinux.org> 4.6.1-alt1
 - Automatically updated to 4.6.1.
 
