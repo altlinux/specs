@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.3.2
+Version: 0.3.7
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -41,5 +41,9 @@ install -m644 image/* %buildroot%_datadir/%name/image/
 %_datadir/%name
 
 %changelog
+* Tue May 06 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.7-alt1
+- updated to version 0.3.7
+- updated check: noexec only for /home (ALT bug: 54095)
+
 * Wed Mar 12 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.2-alt1
 - initial build for ALT Sisyphus
