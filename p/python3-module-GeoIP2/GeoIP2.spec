@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
 Summary: %descr
@@ -53,6 +53,8 @@ Documentation for %oname.
 %prep
 %setup
 
+sed -i 's/license = "Apache-2.0"/license = {file = "LICENSE"}/' pyproject.toml
+
 %build
 %pyproject_build
 
@@ -79,6 +81,9 @@ rm -rf html/.{buildinfo,doctrees}
 %endif
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
 - Automatically updated to 5.0.1.
 
