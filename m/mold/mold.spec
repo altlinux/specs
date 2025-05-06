@@ -8,7 +8,7 @@
 %def_with check
 
 Name: mold
-Version: 2.37.1
+Version: 2.39.0
 Release: alt1
 
 Summary: A Modern Linker
@@ -79,6 +79,9 @@ rm %buildroot%_defaultdocdir/%name/LICENSE*
 %_man1dir/*mold.1.*
 
 %changelog
+* Tue May 06 2025 Anton Zhukharev <ancieg@altlinux.org> 2.39.0-alt1
+- Updated to 2.39.0.
+
 * Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 2.37.1-alt1
 - Updated to 2.37.1.
 
