@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -16,10 +16,11 @@ License: GPL-2.0-or-later
 Group: Graphics
 Url: https://www.%name.org
 
+Vcs: https://github.com/BestImageViewer/geeqie.git
+
 %if_disabled snapshot
 Source: https://github.com/BestImageViewer/geeqie/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
 
@@ -40,9 +41,11 @@ Requires: evince
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
 BuildRequires: evince
-BuildRequires: python3-module-markdown pandoc
+BuildRequires: python3-module-markdown pandoc docbook-dtds
 BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
+BuildRequires: pkgconfig(OpenEXR)
+BuildRequires: pkgconfig(cfitsio)
 BuildRequires: libwebp-pixbuf-loader
 %ifnarch armh
 BuildRequires: libjxl-devel
@@ -51,6 +54,7 @@ BuildRequires: libpoppler-glib-devel libheif-devel
 BuildRequires: libraw-devel libgomp-devel
 BuildRequires: libexiv2-devel zlib-devel libarchive-devel
 BuildRequires: libgspell-devel
+BuildRequires: libdw-devel
 %{?_enable_lua:BuildRequires: liblua%lua_ver-devel}
 %{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
@@ -71,9 +75,9 @@ ExifTool.
 %meson \
     -Dgq_bindir='%_lib/%name' \
     -Dgq_helpdir='share/%name' \
-    %{?_disable_ffmpegthumbnailer:-Dvideothumbnailer=disabled} \
-    %{?_disable_lua:-Dlua=disabled} \
-    %{?_disable_map:-Dmap=disabled}
+    %{subst_enable_meson_feature ffmpegthumbnailer videothumbnailer} \
+    %{subst_enable_meson_feature lua lua} \
+    %{subst_enable_meson_feature map gps-map}
 %nil
 %meson_build
 
@@ -106,6 +110,7 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %_libdir/%name/lensID
 %_libdir/%name/resize-help.sh
 %_desktopdir/%rdn_name.desktop
+%_desktopdir/org.geeqie.cache-maintenance.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -115,6 +120,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6-alt1
+- 2.6
+
 * Sun Sep 22 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5-alt1
 - 2.5
 
