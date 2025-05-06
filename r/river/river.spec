@@ -6,7 +6,7 @@
 
 Name: river
 Summary: A dynamic tiling Wayland compositor
-Version: 0.3.5
+Version: 0.3.9
 Release: alt1
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -77,5 +77,8 @@ install -D -m644 -pv contrib/%name.desktop %buildroot%_datadir/wayland-sessions/
 %_datadir/river-protocols/*.xml
 
 %changelog
+* Tue May 06 2025 Michael Chernigin <chernigin@altlinux.org> 0.3.9-alt1
+- Update to version 0.3.9.
+
 * Sat Oct 26 2024 Michael Chernigin <chernigin@altlinux.org> 0.3.5-alt1
 - Initial build for ALT.
