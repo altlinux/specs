@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 
 Summary: An SDK for building applications to work with OpenStack
@@ -25,7 +25,7 @@ BuildRequires: python3-module-yaml >= 3.13
 BuildRequires: python3-module-requestsexceptions >= 1.2.0
 BuildRequires: python3-module-jsonpatch >= 1.16
 BuildRequires: python3-module-os-service-types >= 1.7.0
-BuildRequires: python3-module-keystoneauth1 >= 3.18.0
+BuildRequires: python3-module-keystoneauth1 >= 5.10.0
 BuildRequires: python3-module-munch >= 2.1.0
 BuildRequires: python3-module-decorator >= 4.4.1
 BuildRequires: python3-module-jmespath >= 0.9.0
@@ -34,7 +34,7 @@ BuildRequires: python3-module-dogpile.cache >= 0.6.5
 BuildRequires: python3-module-cryptography >= 2.7
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.1.0
+BuildRequires: python3-module-hacking >= 7.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-fixtures >= 3.0.0
@@ -144,6 +144,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Wed Apr 30 2025 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt1
 - Automatically updated to 4.4.0.
 

@@ -1,9 +1,10 @@
 %define oname tempest
 %def_with check
-%def_with docs
+# broken with sphinx > 8
+%def_without docs
 
 Name: python3-module-%oname
-Version: 42.0.0
+Version: 43.0.0
 Release: alt1
 
 Summary: OpenStack Integration Testing
@@ -41,15 +42,15 @@ BuildRequires: python3-module-urllib3 >= 1.21.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-hacking >= 7.0.0
 BuildRequires: python3-module-mock >= 2.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-cryptography >= 2.1
-BuildRequires: python3-module-pycodestyle >= 2.0.0
 BuildRequires: python3-module-defusedxml >= 0.7.1
 BuildRequires: python3-module-fasteners >= 0.16.0
 BuildRequires: python3-module-testscenarios >= 0.5.0
+BuildRequires: python3-module-flake8-import-order >= 0.18.0
 %endif
 
 %if_with docs
@@ -144,6 +145,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %endif
 
 %changelog
+* Wed Apr 30 2025 Grigory Ustinov <grenka@altlinux.org> 43.0.0-alt1
+- Automatically updated to 43.0.0.
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 42.0.0-alt1
 - Automatically updated to 42.0.0.
 

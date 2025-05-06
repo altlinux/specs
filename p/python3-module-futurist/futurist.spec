@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: Useful additions to futures, from the future
@@ -23,7 +23,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
-BuildRequires: python3-module-contextlib2 >= 0.4.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-coverage >= 4.0
@@ -109,6 +108,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Wed Apr 30 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 
