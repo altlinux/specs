@@ -2,7 +2,7 @@
 %define  fname maxminddb
 
 Name:    python3-module-%oname
-Version: 2.6.3
+Version: 2.7.0
 Release: alt1
 
 Summary: Python MaxMind DB reader extension
@@ -45,6 +45,8 @@ This package contains pickles for %oname.
 %prep
 %setup
 
+sed -i 's/license = "Apache-2.0"/license = {file = "LICENSE"}/' pyproject.toml
+
 %build
 export MAXMINDDB_USE_SYSTEM_LIBMAXMINDDB=1
 %pyproject_build
@@ -76,6 +78,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%fname/
 %python3_sitelibdir/%fname/pickle
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 2.7.0-alt1
+- Automatically updated to 2.7.0.
+
 * Sun Jan 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.6.3-alt1
 - Automatically updated to 2.6.3.
 
