@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: psi-plus
-Version: 1.5.1653
-Release: alt2
+Version: 1.5.2076
+Release: alt1
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -19,10 +19,11 @@ Patch1: %name-disable-sm-alt.patch
 Patch2: %name-doubleclick-alt.patch
 Patch3: %name-events-alt.patch
 Patch4: %name-disable-omemo-alt.patch
+Patch5: %name-usrsctp-cmake4.patch
 
-Requires: qt5-translations
-Requires: qca-qt5-ossl
-Requires: qca-qt5-gnupg
+Requires: qt6-translations
+Requires: qca-qt6-ossl
+Requires: qca-qt6-gnupg
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -31,13 +32,13 @@ BuildRequires: libXScrnSaver-devel
 BuildRequires: libaspell-devel
 BuildRequires: libidn-devel
 BuildRequires: libhunspell-devel
-BuildRequires: libqca-qt5-devel
+BuildRequires: libqca-qt6-devel
+BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: libtidy-devel >= 1.2.0
 BuildRequires: libotr-devel
-BuildRequires: qt5-multimedia-devel
-BuildRequires: qt5-phonon-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-phonon-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: zlib-devel
 BuildRequires: libminizip-devel
 
@@ -396,42 +397,6 @@ This plugin is designed to display X-statuses of contacts using the QIP Infium j
 %description plugin-qipxstatuses -l ru_RU.UTF-8
 Данный плагин предназначен для отображения х-статусов контактов, использующих в качестве jabber-клиента QIP Infium.
 
-# Redirector plugin
-%package plugin-redirector
-Summary: Redirect support for %name
-Group: Networking/Instant messaging
-Requires: %name = %EVR
-
-%description plugin-redirector
-Redirect support for %name
-
-# Screenshot plugin
-%package plugin-screenshot
-Summary: Screenshot support for %name
-Group: Networking/Instant messaging
-Requires: %name = %EVR
-
-%description plugin-screenshot
-This plugin allows you to make a snapshot (screenshot) of the screen, edit the visible aria to make a screenshot and save the image to a local drive or upload to HTTP/FTP server.
-The plugin has the following settings:
-
- - Shortcut - Hotkey to call the plugin (Ctrl + Alt + P by default)
- - Format - type of image file, which will save a snapshot of the screen (png by default)
- - File Name - format of the filename (default: pic-yyyyMMdd-hhmmss, where yyyyMMdd=YYYYMMDD, and hhmmss are current date in the format yearmonthday-hourminutesecond; for example, pic-20100711-135132.png)
-
-The address of FTP server is specified as ftp://ftp.domain.tld/path1/path2.
-
-%description plugin-screenshot -l ru_RU.UTF-8
-Данный плагин позволяет делать снимок (скриншот) экрана, редактировать видимую область на сделанном скриншоте и сохранять снимок на локальный диск или загружать на HTTP/FTP-сервер.
-Плагин имеет следующие настройки:
-
- - Shortcut - горячая клавиша для вызова плагина (по умолчанию, Ctrl+Alt+P)
- - Format - тип графического файла, в котором будет сохранён снимок экрана (по умолчанию, png)
- - File Name - формат имени графического файла (по умолчанию, pic-yyyyMMdd-hhmmss, где yyyyMMdd=ГГГГММДД, hhmmss=ччммсс - текущая дата в формате годмесяцдень-часминутасекунда; например, pic-20100711-135132.png)
-
-Адрес FTP-сервера задаётся в виде ftp://ftp.domain.tld/path1/path2.
-Примечание: Для работы со скриншотами также можно использовать отдельное (самостоятельное) приложение qScreenshot. Доступно на различных платформах (в т.ч. и под MS Windows).
-
 # Stop spam plugin
 %package plugin-stopspam
 Summary: Stop spam support for %name
@@ -568,6 +533,7 @@ Each element can contain a regular expression to check for matches with JID, fro
 # error: pointless comparison of unsigned integer with zero
 sed -i 's/-Werror/-Wno-error/g' usrsctp/CMakeLists.txt
 %endif
+%patch5 -p1
 mv usrsctp/ iris/3rdparty/
 #%patch1 -p2
 %patch2 -p1
@@ -577,29 +543,16 @@ mv usrsctp/ iris/3rdparty/
 rm -rf src/libpsi/tools/zip/minizip
 
 %build
-for plugin in \
-	plugins/dev/redirectorplugin ; do
-
-	pushd $plugin
-	%qmake_qt5 $(basename $plugin).pro
-	%make_build
-	popd
-done
-
 %cmake \
     -DBUILD_PLUGINS="ALL" \
     -DENABLE_PLUGINS=ON \
     -DBUILD_DEV_PLUGINS=ON \
-    -DBUNDLED_USRSCTP=ON
+    -DIRIS_BUNDLED_USRSCTP=ON \
+    -DUSE_QT6=ON
 %cmake_build
 
 %install
 %cmakeinstall_std
-
-# Generic plugins
-pushd plugins/dev
-install -pDm644 redirectorplugin/libredirectplugin.so %buildroot%_libdir/%name/plugins
-popd
 
 rm %buildroot%_datadir/%name/{COPYING,README.html}
 rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandcrosses}plugin.so
@@ -704,14 +657,6 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandc
 %files plugin-qipxstatuses
 %_libdir/%name/plugins/libqipxstatusesplugin.so
 
-# Redirector plugin
-%files plugin-redirector
-%_libdir/%name/plugins/libredirectplugin.so
-
-# Screenshot plugin
-%files plugin-screenshot
-%_libdir/%name/plugins/libscreenshotplugin.so
-
 # Stopspam plugin
 %files plugin-stopspam
 %_libdir/%name/plugins/libstopspamplugin.so
@@ -733,6 +678,10 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandc
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Thu Sep 05 2024 Oleg Solovyov <mcpain@altlinux.org> 1.5.2076-alt1
+- Version 1.5.2076
+- build with Qt6
+
 * Wed Sep 04 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.1653-alt2
 - e2k build fix
 
