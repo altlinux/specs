@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.1
+Version: 8.2
 Release: alt1
 
 Summary: Python module to generate QR Codes
@@ -53,6 +53,9 @@ to generate QR Codes.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 8.2-alt1
+- Automatically updated to 8.2.
+
 * Fri Apr 11 2025 Grigory Ustinov <grenka@altlinux.org> 8.1-alt1
 - Automatically updated to 8.1.
 
