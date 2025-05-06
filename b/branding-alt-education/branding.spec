@@ -28,7 +28,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.7.beta
+Release: alt0.8.beta
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -238,7 +238,6 @@ Summary: MATE settings for %distro_name
 License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: %name-system-settings
-Requires: beesu
 Requires: dconf
 # Specified themes
 Requires: papirus-icon-theme
@@ -463,6 +462,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.recoll
 
 %changelog
+* Tue May 06 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.8.beta
+- Removed beesu (ALT #54144).
+
 * Tue Apr 08 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.7.beta
 - Updated slideshow.
 
