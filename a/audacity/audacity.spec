@@ -17,7 +17,7 @@
 
 Name: audacity
 Version: 3.7.3
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -48,10 +48,7 @@ BuildRequires: cmake
 # -Daudacity_conan_enabled=Off is a temporary workaround according to
 # https://github.com/audacity/audacity/pull/1030
 #BuildRequires: conan
-%ifarch %e2k
 BuildRequires: chrpath
-%endif
-BuildRequires: patchelf
 BuildRequires: gettext-devel
 BuildRequires: ImageMagick-tools
 BuildRequires: ladspa_sdk
@@ -173,10 +170,9 @@ export CC="$(command -v gcc)"
 %add_optflags -DwxDEBUG_LEVEL=0
 
 %cmake \
-%ifarch %e2k
   -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
   -DCMAKE_INSTALL_RPATH:PATH='$ORIGIN/../' \
-%endif
+  -DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=On \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -Daudacity_lib_preference:STRING=system \
   -Daudacity_has_networking=no \
@@ -218,12 +214,7 @@ rm -rf %buildroot%_prefix/%name
 # Remove absolute RPATHs
 # https://github.com/audacity/audacity/pull/1030#issuecomment-873630620
 # https://github.com/audacity/audacity/issues/2165
-%ifarch %e2k
-# patchelf damages e2k binaries
 setrpath="chrpath -r"
-%else
-setrpath="patchelf --set-rpath"
-%endif
 $setrpath '$ORIGIN/../%_lib/audacity' %buildroot%_bindir/audacity
 for lib in %buildroot%_libdir/audacity/*.so; do
   $setrpath '$ORIGIN' "$lib"
@@ -237,11 +228,11 @@ done
 %check
 # upstream seems to assume statically linking bundled libsbsms,
 # verify that system one is used
-patchelf --print-needed %buildroot/%_libdir/audacity/lib-builtin-effects.so | grep -q sbsms
+objdump -x -j .dynamic %buildroot/%_libdir/audacity/lib-builtin-effects.so | grep -Fw NEEDED | grep sbsms
 
 # mp3lame can be either dlopen'ed or linked explicitly,
 # ensure that a system library is linked explicitly
-patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -q libmp3lame
+objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -Fw NEEDED | grep libmp3lame
 
 # https://github.com/audacity/audacity/issues/2161
 # [...] | grep -q libavcodec
@@ -267,6 +258,11 @@ patchelf --print-needed %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -
 %_datadir/%name/help
 
 %changelog
+* Tue May 06 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.3-alt2
+- unify rpath adjustment code with %%e2k
+  + simplifies spec;
+  + helps eu-strip make smaller binaries (ALT#48494).
+
 * Fri Mar 14 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.3-alt1
 - 3.7.3
 
