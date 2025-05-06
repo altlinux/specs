@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    makedumpfile
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 Summary: Make Linux crash dump small by filtering and compressing pages
 Group:   System/Kernel and hardware
@@ -59,6 +59,10 @@ install -Dm0755 eppic_makedumpfile.so %buildroot%_libdir/%name/eppic_makedumpfil
 %_libdir/%name
 
 %changelog
+* Wed Apr 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.7.7-alt1
+- Update to 1.7.7 (2025-04-21).
+- Support for kernels up to v6.14 (x86_64).
+
 * Sat Oct 26 2024 Vitaly Chikunov <vt@altlinux.org> 1.7.6-alt1
 - Update to 1.7.6 (2024-10-23).
 - Add support for Linux 6.9, 6.10, 6.11 (x86_64).
