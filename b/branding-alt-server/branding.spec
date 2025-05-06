@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt20
+Release: alt21
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -395,6 +395,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue May 06 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt21
+- New icon for system information page
+- Increase clarity of QR code in final-notes
+- Correct copyright in accordance with documents
+
 * Wed Apr 23 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt20
 - Reduce logo size in final-notes
 
