@@ -4,7 +4,7 @@
 
 Name: deepin-qt5platform-plugins
 Version: 5.7.14
-Release: alt1
+Release: alt2
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 
@@ -21,8 +21,8 @@ BuildRequires(pre): rpm-build-ninja rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5EdidSupport.a
 # Automatically added by buildreq on Wed Apr 30 2025
 # optimized out: cmake cmake-modules dqt5-base-common dqt5-base-devel dqt5-declarative-devel fontconfig-devel gcc-c++ glib2-devel glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-mesa libGLX-mesa libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcairo-devel libcap-ng libcrypt-devel libctf-nobfd0 libdouble-conversion-devel libdouble-conversion3 libdqt5-concurrent libdqt5-core libdqt5-dbus libdqt5-eglfsdeviceintegration libdqt5-eglfskmssupport libdqt5-gui libdqt5-network libdqt5-opengl libdqt5-printsupport libdqt5-qml libdqt5-qmlmodels libdqt5-qmlworkerscript libdqt5-quick libdqt5-quickparticles libdqt5-quickshapes libdqt5-quicktest libdqt5-quickwidgets libdqt5-sql libdqt5-test libdqt5-waylandclient libdqt5-waylandcompositor libdqt5-widgets libdqt5-x11extras libdqt5-xcbqpa libdqt5-xml libfreetype-devel libglvnd-devel libgmock-devel libgpg-error libgraphite2-devel libharfbuzz-cairo libharfbuzz-gobject libharfbuzz-icu libicu-devel libp11-kit libpng-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-eglfsdeviceintegration libqt5-eglfskmssupport libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-qmlmodels libqt5-qmlworkerscript libqt5-quick libqt5-sql libqt5-test libqt5-waylandclient libqt5-widgets libqt5-xcbqpa libqt5-xml libsasl2-3 libspirv-tools0 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server libwayland-server-devel libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbcommon-devel libxkbcommon-x11 libxkbfile-devel llvm19.1-libs pam0_userpass perl pkg-config python3 python3-base sh5 wayland-devel xorg-proto-devel zlib-devel
-BuildRequires: dqt5-base-devel-static dqt5-wayland-devel dqt5-x11extras-devel dwayland-devel extra-cmake-modules libdbus-devel libgtest-devel libharfbuzz-devel libkf5waylandclient libkf5waylandserver libmtdev-devel libdqt5-quickshapes libwayland-cursor-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel
-BuildRequires: kf5-kwayland-devel
+BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel extra-cmake-modules libdbus-devel libgtest-devel libharfbuzz-devel libmtdev-devel libdqt5-quickshapes libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxkbcommon-x11-devel
+# BuildRequires: kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libwayland-cursor-devel
 
 %if_with clang
 BuildRequires: clang-devel lld-devel
@@ -30,7 +30,8 @@ BuildRequires: clang-devel lld-devel
 BuildRequires: gcc-c++
 %endif
 
-Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-waylandclient = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
+Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
+# Requires: libdqt5-waylandclient = %%_dqt5_version
 
 %description
 %repo is the
@@ -40,6 +41,8 @@ Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-way
 %setup -n %repo-%version
 %autopatch -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
+# Unsupported by upstream.
+sed -i '/wayland/d' CMakeLists.txt
 
 %build
 %if_with clang
@@ -69,10 +72,11 @@ cmake --build %_cmake__builddir -j%__nprocs
 %doc CHANGELOG.md README.md
 %doc LICENSE
 %_dqt5_plugindir/platforms/libdxcb.so
-%_dqt5_plugindir/platforms/libdwayland.so
-%_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %changelog
+* Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.14-alt2
+- Built without outdated dwayland.
+
 * Wed Apr 30 2025 Leontiy Volodin <lvol@altlinux.org> 5.7.14-alt1
 - New version 5.7.14.
 
