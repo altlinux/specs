@@ -1,6 +1,6 @@
 Name: winehelper
 Version: 0.3.7
-Release: alt1
+Release: alt2
 
 Summary: Program for easy installation of Windows applications.
 
@@ -28,9 +28,10 @@ of automatic prefix tuning.
 %install
 install -Dm755 %name %buildroot%_bindir/%name
 
-mkdir -p %buildroot%_datadir/%name/{autoinstall,database,image}
+mkdir -p %buildroot%_datadir/%name/{autoinstall,manualinstall,database,image}
 install -m755 dependencies.sh %buildroot%_datadir/%name/
 install -m644 sha256sum.list %buildroot%_datadir/%name/
+install -m644 manualinstall/* %buildroot%_datadir/%name/manualinstall/
 install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
 install -m644 database/* %buildroot%_datadir/%name/database/
 install -m644 image/* %buildroot%_datadir/%name/image/
@@ -41,6 +42,9 @@ install -m644 image/* %buildroot%_datadir/%name/image/
 %_datadir/%name
 
 %changelog
+* Tue May 06 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.7-alt2
+- added new manualinstall path
+
 * Tue May 06 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.7-alt1
 - updated to version 0.3.7
 - updated check: noexec only for /home (ALT bug: 54095)
