@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-  
+
 %define audiosover 2
 %define coresover 10
 %define sover 5
+%define progectlicense GPL-2.0
 
 Name:    RHVoice
-Version: 1.14.0
-Release: alt2
+Version: 1.16.5
+Release: alt1
 
 Summary: a free and open source speech synthesizer for Russian and other languages
-License: GPL-2.0
+License: %progectlicense
 Group: Sound
 Url: https://github.com/RHVoice/RHVoice
 
@@ -109,44 +110,38 @@ Requires: %name = %EVR
 
 # Languages
 
-%package Russian
-Summary: Russian language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
+%define langpackage() \
+%package %1 \
+Summary: %1 language for  %name \
+Group: Sound \
+License: %2 \
+BuildArch: noarch \
+Requires: %name = %EVR \
+\
+%description %1 \
+%summary \
+\
+%files %1 \
+%dir %_datadir/%name/languages/%1 \
+%_datadir/%name/languages/%1/* \
 
-%description Russian
-%summary
 
-%files Russian
-%dir %_datadir/%name/languages/Russian
-%_datadir/%name/languages/Russian/*
-
-%package English
-Summary: English language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description English
-%summary
-
-%files English
-%dir %_datadir/%name/languages/English
-%_datadir/%name/languages/English/*
-
-%package Albanian
-Summary: Albanian language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Albanian
-%summary
-
-%files Albanian
-%dir %_datadir/%name/languages/Albanian
-%_datadir/%name/languages/Albanian/*
+%langpackage Russian GPL-2.0
+%langpackage English GPL-2.0
+%langpackage Albanian GPL-2.0
+%langpackage Czech GPL-2.0
+%langpackage Croatian GPL-3.0
+%langpackage Esperanto GPL-2.0
+%langpackage Georgian GPL-2.0
+%langpackage Kyrgyz GPL-2.0
+%langpackage Macedonian AGPL-3.0
+%langpackage Polish GPL-2.0
+%langpackage Serbian GPL-3.0
+%langpackage Slovak LGPL-2.1
+%langpackage Spanish LGPL-2.1
+%langpackage Tatar GPL-2.0
+%langpackage Ukrainian GPL-2.0
+%langpackage Uzbek LGPL-2.1
 
 %package Brazilian
 Summary: Brazilian and Portuguese language for  %name
@@ -162,225 +157,45 @@ Provides: %name-Portuguese = %EVR
 %dir %_datadir/%name/languages/Brazilian-Portuguese
 %_datadir/%name/languages/Brazilian-Portuguese/*
 
-%package Czech
-Summary: Czech language for  %name
-Group: Sound
-License: GPL-2.0
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Czech
-%summary
-
-%files Czech
-%dir %_datadir/%name/languages/Czech
-%_datadir/%name/languages/Czech/*
-
-%package Esperanto
-Summary: Esperanto language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Esperanto
-%summary
-
-%files Esperanto
-%dir %_datadir/%name/languages/Esperanto
-%_datadir/%name/languages/Esperanto/*
-
-%package Georgian
-Summary: Georgian language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Georgian
-%summary
-
-%files Georgian
-%dir %_datadir/%name/languages/Georgian
-%_datadir/%name/languages/Georgian/*
-
-%package Kyrgyz
-Summary: Kyrgyz language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Kyrgyz
-%summary
-
-%files Kyrgyz
-%dir %_datadir/%name/languages/Kyrgyz
-%_datadir/%name/languages/Kyrgyz/*
-
-%package Macedonian
-Summary: Macedonian language for  %name
-Group: Sound
-License: AGPL-3.0
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Macedonian
-%summary
-
-%files Macedonian
-%dir %_datadir/%name/languages/Macedonian
-%_datadir/%name/languages/Macedonian/*
-
-%package Polish
-Summary: Polish language for  %name
-Group: Sound
-License: GPL-2.0
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Polish
-%summary
-
-%files Polish
-%dir %_datadir/%name/languages/Polish
-%_datadir/%name/languages/Polish/*
-
-%package Slovak
-Summary: Slovak language for  %name
-Group: Sound
-License: LGPL-2.1
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Slovak
-%summary
-
-%files Slovak
-%dir %_datadir/%name/languages/Slovak
-%_datadir/%name/languages/Slovak/*
-
-%package Tatar
-Summary: Tatar language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Tatar
-%summary
-
-%files Tatar
-%dir %_datadir/%name/languages/Tatar
-%_datadir/%name/languages/Tatar/*
-
-%package Ukrainian
-Summary: Ukrainian language for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Ukrainian
-%summary
-
-%files Ukrainian
-%dir %_datadir/%name/languages/Ukrainian
-%_datadir/%name/languages/Ukrainian/*
-
-%package Uzbek
-Summary: Uzbek language for  %name
-Group: Sound
-License: LGPL-2.1
-BuildArch: noarch
-Requires: %name = %EVR
-
-%description Uzbek
-%summary
-
-%files Uzbek
-%dir %_datadir/%name/languages/Uzbek
-%_datadir/%name/languages/Uzbek/*
 
 # voices
+
+%define voicepackage() \
+%package %1-%2 \
+Summary: %1 %2 voice for  %name \
+Group: Sound \
+License: %3 \
+BuildArch: noarch \
+Requires: %name-%1 = %EVR \
+\
+%description %1-%2 \
+%summary \
+\
+%files %1-%2 \
+%dir %_datadir/%name/voices/%2 \
+%_datadir/%name/voices/%2/* \
+
+
 # Russian
 
-%package Russian-aleksandr
-Summary: Russian aleksandr voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-aleksandr
-%summary
-
-%files Russian-aleksandr
-%dir %_datadir/%name/voices/aleksandr
-%_datadir/%name/voices/aleksandr/*
-
-%package Russian-aleksandr-hq
-Summary: Russian aleksandr-hq voice for  %name
-Group: Sound
-License: CC-BY-SA-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-aleksandr-hq
-%summary
-
-%files Russian-aleksandr-hq
-%dir %_datadir/%name/voices/aleksandr-hq
-%_datadir/%name/voices/aleksandr-hq/*
-
-%package Russian-anna
-Summary: Russian anna voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-anna
-%summary
-
-%files Russian-anna
-%dir %_datadir/%name/voices/anna
-%_datadir/%name/voices/anna/*
-
-%package Russian-arina
-Summary: Russian arina voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-arina
-%summary
-
-%files Russian-arina
-%dir %_datadir/%name/voices/arina
-%_datadir/%name/voices/arina/*
-
-%package Russian-artemiy
-Summary: Russian artemiy voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-artemiy
-%summary
-
-%files Russian-artemiy
-%dir %_datadir/%name/voices/artemiy
-%_datadir/%name/voices/artemiy/*
-
-%package Russian-elena
-Summary: Russian elena voice for  %name
-Group: Sound
-License: GPL-3.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-elena
-%summary
-
-%files Russian-elena
-%dir %_datadir/%name/voices/elena
-%_datadir/%name/voices/elena/*
+%voicepackage Russian aleksandr %progectlicense
+%voicepackage Russian aleksandr-hq CC-BY-SA-4.0
+%voicepackage Russian anna %progectlicense
+%voicepackage Russian arina CC-BY-NC-ND-4.0
+%voicepackage Russian artemiy CC-BY-NC-ND-4.0
+%voicepackage Russian elena GPL-3.0
+%voicepackage Russian irina %progectlicense
+%voicepackage Russian mikhail CC-BY-NC-ND-4.0
+%voicepackage Russian pavel CC-BY-NC-ND-4.0
+%voicepackage Russian seva CC-BY-NC-ND-4.0
+%voicepackage Russian tatiana CC-BY-NC-ND-4.0
+%voicepackage Russian timofey CC-BY-NC-ND-4.0
+%voicepackage Russian umka CC-BY-NC-ND-4.0
+%voicepackage Russian victoria CC-BY-NC-ND-4.0
+%voicepackage Russian vitaliy CC-BY-NC-ND-4.0
+%voicepackage Russian vitaliy-ng CC-BY-NC-ND-4.0
+%voicepackage Russian vsevolod CC-BY-NC-ND-4.0
+%voicepackage Russian yuriy CC-BY-NC-ND-4.0
 
 %package Russian-evgeniy
 Summary: Russian evgeniy voice for  %name
@@ -396,199 +211,15 @@ Requires: %name-Russian = %EVR
 %dir %_datadir/%name/voices/evgeniy-rus
 %_datadir/%name/voices/evgeniy-rus/*
 
-%package Russian-irina
-Summary: Russian irina voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-irina
-%summary
-
-%files Russian-irina
-%dir %_datadir/%name/voices/irina
-%_datadir/%name/voices/irina/*
-
-%package Russian-mikhail
-Summary: Russian mikhail voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-mikhail
-%summary
-
-%files Russian-mikhail
-%dir %_datadir/%name/voices/mikhail
-%_datadir/%name/voices/mikhail/*
-
-%package Russian-pavel
-Summary: Russian pavel voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-pavel
-%summary
-
-%files Russian-pavel
-%dir %_datadir/%name/voices/pavel
-%_datadir/%name/voices/pavel/*
-
-%package Russian-tatiana
-Summary: Russian tatiana voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-tatiana
-%summary
-
-%files Russian-tatiana
-%dir %_datadir/%name/voices/tatiana
-%_datadir/%name/voices/tatiana/*
-
-%package Russian-timofey
-Summary: Russian timofey voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-timofey
-%summary
-
-%files Russian-timofey
-%dir %_datadir/%name/voices/timofey
-%_datadir/%name/voices/timofey/*
-
-%package Russian-umka
-Summary: Russian umka voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-umka
-%summary
-
-%files Russian-umka
-%dir %_datadir/%name/voices/umka
-%_datadir/%name/voices/umka/*
-
-%package Russian-victoria
-Summary: Russian victoria voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-victoria
-%summary
-
-%files Russian-victoria
-%dir %_datadir/%name/voices/victoria
-%_datadir/%name/voices/victoria/*
-
-%package Russian-vitaliy
-Summary: Russian vitaliy voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-vitaliy
-%summary
-
-%files Russian-vitaliy
-%dir %_datadir/%name/voices/vitaliy
-%_datadir/%name/voices/vitaliy/*
-
-%package Russian-vitaliy-ng
-Summary: Russian vitaliy-ng voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-vitaliy-ng
-%summary
-
-%files Russian-vitaliy-ng
-%dir %_datadir/%name/voices/vitaliy-ng
-%_datadir/%name/voices/vitaliy-ng/*
-
-%package Russian-vsevolod
-Summary: vsevolod voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-vsevolod
-%summary
-
-%files Russian-vsevolod
-%dir %_datadir/%name/voices/vsevolod
-%_datadir/%name/voices/vsevolod/*
-
-%package Russian-yuriy
-Summary: Russian yuriy voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Russian = %EVR
-
-%description Russian-yuriy
-%summary
-
-%files Russian-yuriy
-%dir %_datadir/%name/voices/yuriy
-%_datadir/%name/voices/yuriy/*
 
 # English
 
-%package English-alan
-Summary: English alan voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-English = %EVR
-
-%description English-alan
-%summary
-
-%files English-alan
-%dir %_datadir/%name/voices/alan
-%_datadir/%name/voices/alan/*
-
-%package English-bdl
-Summary: English bdl voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-English = %EVR
-
-%description English-bdl
-%summary
-
-%files English-bdl
-%dir %_datadir/%name/voices/bdl
-%_datadir/%name/voices/bdl/*
-
-%package English-clb
-Summary: English clb voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-English = %EVR
-
-%description English-clb
-%summary
-
-%files English-clb
-%dir %_datadir/%name/voices/clb
-%_datadir/%name/voices/clb/*
+%voicepackage English alan %progectlicense
+%voicepackage English bdl %progectlicense
+%voicepackage English clb %progectlicense
+%voicepackage English ksp RHVoice-Natia-License
+%voicepackage English lyubov CC-BY-NC-ND-4.0
+%voicepackage English slt CMU-License
 
 %package English-evgeniy
 Summary: English evgeniy voice for  %name
@@ -604,49 +235,11 @@ Requires: %name-English = %EVR
 %dir %_datadir/%name/voices/evgeniy-eng
 %_datadir/%name/voices/evgeniy-eng/*
 
-%package English-lyubov
-Summary: English lyubov voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-English = %EVR
-
-%description English-lyubov
-%summary
-
-%files English-lyubov
-%dir %_datadir/%name/voices/lyubov
-%_datadir/%name/voices/lyubov/*
-
-%package English-slt
-Summary: English slt voice for  %name
-Group: Sound
-License: CMU-License
-BuildArch: noarch
-Requires: %name-English = %EVR
-
-%description English-slt
-%summary
-
-%files English-slt
-%dir %_datadir/%name/voices/slt
-%_datadir/%name/voices/slt/*
 
 # Albanian
 
-%package Albanian-hana
-Summary: Albanian hana voice for  %name
-Group: Sound
-License: CC-BY-NC-SA-4.0
-BuildArch: noarch
-Requires: %name-Albanian = %EVR
+%voicepackage Albanian hana CC-BY-NC-SA-4.0
 
-%description Albanian-hana
-%summary
-
-%files Albanian-hana
-%dir %_datadir/%name/voices/hana
-%_datadir/%name/voices/hana/*
 
 # Brazilian-Portuguese
 
@@ -665,288 +258,82 @@ Provides: %name-Portuguese-Leticia-F123 = %EVR
 %dir %_datadir/%name/voices/Leticia-F123
 %_datadir/%name/voices/Leticia-F123/*
 
+
 # Czech
 
-%package Czech-zdenek
-Summary: Czech zdenek voice for  %name
-Group: Sound
-License: CC0-1.0
-BuildArch: noarch
-Requires: %name-Czech = %EVR
+%voicepackage Czech radek CC0-1.0
+%voicepackage Czech zdenek CC0-1.0
 
-%description Czech-zdenek
-%summary
+# Croatian
 
-%files Czech-zdenek
-%dir %_datadir/%name/voices/zdenek
-%_datadir/%name/voices/zdenek/*
+%voicepackage Croatian karmela CC0 1.0
+
 
 # Esperanto
 
-%package Esperanto-spomenka
-Summary: Esperanto spomenka voice for  %name
-Group: Sound
-License: GPL-3.0
-BuildArch: noarch
-Requires: %name-Esperanto = %EVR
+%voicepackage Esperanto spomenka GPL-3.0
 
-%description Esperanto-spomenka
-%summary
-
-%files Esperanto-spomenka
-%dir %_datadir/%name/voices/spomenka
-%_datadir/%name/voices/spomenka/*
 
 # Georgian
 
-%package Georgian-natia
-Summary: Georgian natia voice for  %name
-Group: Sound
-License: RHVoice-Natia-License
-BuildArch: noarch
-Requires: %name-Georgian = %EVR
+%voicepackage Georgian natia  RHVoice-Natia-License
 
-%description Georgian-natia
-%summary
-
-%files Georgian-natia
-%dir %_datadir/%name/voices/natia
-%_datadir/%name/voices/natia/*
 
 # Kyrgyz
 
-%package Kyrgyz-azamat
-Summary: Kyrgyz azamat voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-Kyrgyz = %EVR
+%voicepackage Kyrgyz azamat %progectlicense
+%voicepackage Kyrgyz nazgul %progectlicense
 
-%description Kyrgyz-azamat
-%summary
-
-%files Kyrgyz-azamat
-%dir %_datadir/%name/voices/azamat
-%_datadir/%name/voices/azamat/*
-
-%package Kyrgyz-nazgul
-Summary: Kyrgyz nazgul voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-Kyrgyz = %EVR
-
-%description Kyrgyz-nazgul
-%summary
-
-%files Kyrgyz-nazgul
-%dir %_datadir/%name/voices/nazgul
-%_datadir/%name/voices/nazgul/*
 
 # Macedonian
 
-%package Macedonian-kiko
-Summary: Macedonian kiko voice for  %name
-Group: Sound
-License: CC-BY-NC-SA-4.0
-BuildArch: noarch
-Requires: %name-Macedonian = %EVR
+%voicepackage Macedonian kiko CC-BY-NC-SA-4.0
+%voicepackage Macedonian suze %progectlicense
 
-%description Macedonian-kiko
-%summary
-
-%files Macedonian-kiko
-%dir %_datadir/%name/voices/kiko
-%_datadir/%name/voices/kiko/*
-
-%package Macedonian-suze
-Summary: Macedonian suze voice for  %name
-Group: Sound
-BuildArch: noarch
-Requires: %name-Macedonian = %EVR
-
-%description Macedonian-suze
-%summary
-
-%files Macedonian-suze
-%dir %_datadir/%name/voices/suze
-%_datadir/%name/voices/suze/*
 
 # Polish
 
-%package Polish-alicja
-Summary: Polish alicja voice for  %name
-Group: Sound
-License: CC-BY-4.0
-BuildArch: noarch
-Requires: %name-Polish = %EVR
+%voicepackage Polish alicja CC-BY-4.0
+%voicepackage Polish cezary CC-BY-NC-ND-4.0
+%voicepackage Polish magda CC-BY-4.0
+%voicepackage Polish michal CC0-1.0
+%voicepackage Polish natan CC0-1.0
 
-%description Polish-alicja
-%summary
 
-%files Polish-alicja
-%dir %_datadir/%name/voices/alicja
-%_datadir/%name/voices/alicja/*
+# Serbian
 
-%package Polish-cezary
-Summary: Polish cezary voice for  %name
-Group: Sound
-License: CC-BY-NC-ND-4.0
-BuildArch: noarch
-Requires: %name-Polish = %EVR
+%voicepackage Serbian dragana CC0 1.0
 
-%description Polish-cezary
-%summary
-
-%files Polish-cezary
-%dir %_datadir/%name/voices/cezary
-%_datadir/%name/voices/cezary/*
-
-%package Polish-magda
-Summary: Polish magda voice for  %name
-Group: Sound
-License: CC-BY-4.0
-BuildArch: noarch
-Requires: %name-Polish = %EVR
-
-%description Polish-magda
-%summary
-
-%files Polish-magda
-%dir %_datadir/%name/voices/magda
-%_datadir/%name/voices/magda/*
-
-%package Polish-michal
-Summary: Polish michal voice for  %name
-Group: Sound
-License: CC0-1.0
-BuildArch: noarch
-Requires: %name-Polish = %EVR
-
-%description Polish-michal
-%summary
-
-%files Polish-michal
-%dir %_datadir/%name/voices/michal
-%_datadir/%name/voices/michal/*
-
-%package Polish-natan
-Summary: Polish natan voice for  %name
-Group: Sound
-License: CC0-1.0
-BuildArch: noarch
-Requires: %name-Polish = %EVR
-
-%description Polish-natan
-%summary
-
-%files Polish-natan
-%dir %_datadir/%name/voices/natan
-%_datadir/%name/voices/natan/*
 
 # Slovak
 
-%package Slovak-ondro
-Summary: Slovak ondro voice for  %name
-Group: Sound
-License: CC0-1.0
-BuildArch: noarch
-Requires: %name-Slovak = %EVR
+%voicepackage Slovak jasietka CC0-1.0
+%voicepackage Slovak ondro CC0-1.0
 
-%description Slovak-ondro
-%summary
 
-%files Slovak-ondro
-%dir %_datadir/%name/voices/ondro
-%_datadir/%name/voices/ondro/*
+# Spanish
+
+%voicepackage Spanish Mateo unlicense
+
 
 # Tatar
 
-%package Tatar-talgat
-Summary: Tatar talgat voice for  %name
-Group: Sound
-License: RHVoice-Talgat-License
-BuildArch: noarch
-Requires: %name-Tatar = %EVR
+%voicepackage Tatar talgat RHVoice-Talgat-License
 
-%description Tatar-talgat
-%summary
-
-%files Tatar-talgat
-%dir %_datadir/%name/voices/talgat
-%_datadir/%name/voices/talgat/*
 
 # Ukrainian
 
-%package Ukrainian-anatol
-Summary: Ukrainian anatol voice for  %name
-Group: Sound
-License: LGPL-2.1
-BuildArch: noarch
-Requires: %name-Ukrainian = %EVR
+%voicepackage Ukrainian anatol LGPL-2.1
+%voicepackage Ukrainian marianna CC-BY-ND-4.0
+%voicepackage Ukrainian natalia LGPL-2.1
+%voicepackage Ukrainian volodymyr CC-BY-ND-4.0
 
-%description Ukrainian-anatol
-%summary
-
-%files Ukrainian-anatol
-%dir %_datadir/%name/voices/anatol
-%_datadir/%name/voices/anatol/*
-
-%package Ukrainian-marianna
-Summary: Ukrainian marianna voice for  %name
-Group: Sound
-License: CC-BY-ND-4.0
-BuildArch: noarch
-Requires: %name-Ukrainian = %EVR
-
-%description Ukrainian-marianna
-%summary
-
-%files Ukrainian-marianna
-%dir %_datadir/%name/voices/marianna
-%_datadir/%name/voices/marianna/*
-
-%package Ukrainian-natalia
-Summary: Ukrainian natalia voice for  %name
-Group: Sound
-License: LGPL-2.1
-BuildArch: noarch
-Requires: %name-Ukrainian = %EVR
-
-%description Ukrainian-natalia
-%summary
-
-%files Ukrainian-natalia
-%dir %_datadir/%name/voices/natalia
-%_datadir/%name/voices/natalia/*
-
-%package Ukrainian-volodymyr
-Summary: Ukrainian volodymyr voice for  %name
-Group: Sound
-License: CC-BY-ND-4.0
-BuildArch: noarch
-Requires: %name-Ukrainian = %EVR
-
-%description Ukrainian-volodymyr
-%summary
-
-%files Ukrainian-volodymyr
-%dir %_datadir/%name/voices/volodymyr
-%_datadir/%name/voices/volodymyr/*
 
 # Uzbek
 
-%package Uzbek-sevinch
-Summary: Uzbek sevinch voice for  %name
-Group: Sound
-License: CC-BY-NC-SA-4.0
-BuildArch: noarch
-Requires: %name-Uzbek = %EVR
-
-%description Uzbek-sevinch
-%summary
-
-%files Uzbek-sevinch
-%dir %_datadir/%name/voices/sevinch
-%_datadir/%name/voices/sevinch/*
+%voicepackage Uzbek sevinch CC-BY-NC-SA-4.0
+%voicepackage Uzbek dilnavoz CC-BY-NC-SA-4.0
+%voicepackage Uzbek islom CC-BY-NC-SA-4.0
 
 %prep
 %setup
@@ -959,6 +346,10 @@ scons install DESTDIR=%buildroot \
 prefix=%prefix sysconfdir=%_sysconfdir bindir=%_bindir libdir=%_libdir includedir=%_includedir datadir=%_datadir
 
 %changelog
+* Tue May 06 2025 Artem Semenov <savoptik@altlinux.org> 1.16.5-alt1
+- Packaged new voices and languages
+- Updated to 1.16.5
+
 * Sat Aug 31 2024 Artem Semenov <savoptik@altlinux.org> 1.14.0-alt2
 - - Obsoleted old RHVoice packages
 
