@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.0.3
+Version: 5.0.0
 Release: alt1
 
 Summary: URI parsing, classification and composition
@@ -47,6 +47,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Wed May 29 2024 Grigory Ustinov <grenka@altlinux.org> 4.0.3-alt1
 - Automatically updated to 4.0.3.
 
