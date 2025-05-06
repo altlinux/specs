@@ -1,6 +1,6 @@
 Name: pyzam
-Version: 0.12.3
-Release: alt3
+Version: 0.13.0
+Release: alt1
 
 Summary: Recognize and Visualise Songs in Your CLI
 License: MIT
@@ -44,9 +44,12 @@ Pyzam is a free CLI music recognition tool for audio and mixtapes in Python.
 %files -n python3-module-%name
 %doc LICENSE.txt *.md
 %python3_sitelibdir/%name/
-%python3_sitelibdir/pyzam-0.12.2.dist-info/
+%python3_sitelibdir/pyzam-0.12.3.dist-info/
 
 %changelog
+* Tue May 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.13.0-alt1
+- 0.12.3 -> 0.13.0
+
 * Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.12.3-alt3
 - rebuild with removed "subst"
 
