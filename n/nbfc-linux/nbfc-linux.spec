@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: nbfc-linux
-Version: 0.2.7
-Release: alt2
+Version: 0.3.13
+Release: alt1
 
 Summary: NoteBook FanControl
 License: GPL-3.0
@@ -12,8 +14,9 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++ clang
 BuildRequires: pkgconfig(systemd)
-
-Requires: %_bindir/python3
+BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: %_bindir/python3 rpm-build-python3
 
 ExclusiveArch: x86_64
 
@@ -34,14 +37,16 @@ NoteBook FanControl ported to Linux
 %files
 %_bindir/ec_probe
 %_bindir/nbfc
+%_bindir/nbfc-qt
 %_bindir/nbfc_service
 %_unitdir/nbfc_service.service
+%_datadir/nbfc/model_support.json
 %_datadir/bash-completion/completions/ec_probe
 %_datadir/bash-completion/completions/nbfc
 %_datadir/bash-completion/completions/nbfc_service
-%_datadir/fish/completions/ec_probe.fish
-%_datadir/fish/completions/nbfc.fish
-%_datadir/fish/completions/nbfc_service.fish
+%_datadir/fish/vendor_completions.d/ec_probe.fish
+%_datadir/fish/vendor_completions.d/nbfc.fish
+%_datadir/fish/vendor_completions.d/nbfc_service.fish
 %_datadir/zsh/site-functions/_ec_probe
 %_datadir/zsh/site-functions/_nbfc
 %_datadir/zsh/site-functions/_nbfc_service
@@ -52,6 +57,9 @@ NoteBook FanControl ported to Linux
 %_datadir/nbfc/configs/*
 
 %changelog
+* Mon May 05 2025 Boris Yumankulov <boria138@altlinux.org> 0.3.13-alt1
+- new version 0.3.13
+
 * Sat Jun 22 2024 Boris Yumankulov <boria138@altlinux.org> 0.2.7-alt2
 - rebuild for fix service path
 
