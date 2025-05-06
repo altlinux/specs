@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.4
+Version: 4.0.0
 Release: alt1
 
 Summary: Python interface to Graphiz's Dot
@@ -42,6 +42,9 @@ by the Graphviz tools dot, neato, twopi.
 %prep
 %setup
 
+sed -i 's/license = "MIT"/license = {file = "LICENSES\/MIT.txt"}/' pyproject.toml
+sed -i '14d;15d;16d' pyproject.toml
+
 %build
 %pyproject_build
 
@@ -58,6 +61,9 @@ python3 test/test_pydot.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Mon Jan 06 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.4-alt1
 - Automatically updated to 3.0.4.
 
