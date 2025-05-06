@@ -15,7 +15,7 @@
 
 Name: ejabberd
 Version: 21.12
-Release: alt4
+Release: alt5
 Summary: Fault-tolerant distributed Jabber server written in Erlang
 License: GPL-2.0 with OpenSSL-exception
 Group: System/Servers
@@ -207,8 +207,6 @@ install -D -m 0644 %SOURCE3 %buildroot%_unitdir/ejabberd.service
 %attr(640,root,ejabberd) %config(noreplace) %_sysconfdir/ejabberd/ejabberd.yml
 %attr(0640,root,ejabberd) %config(noreplace) %_sysconfdir/sysconfig/ejabberd
 %attr(0640,root,root) %config %_sysconfdir/logrotate.d/ejabberd
-%config(noreplace) %_sysconfdir/pam.d/ejabberd
-%config(noreplace) %_sysconfdir/pam.d/ejabberdctl
 
 %_initdir/ejabberd
 %_unitdir/%name.service
@@ -229,6 +227,9 @@ install -D -m 0644 %SOURCE3 %buildroot%_unitdir/ejabberd.service
 %attr(1770,root,ejabberd) %dir %_lockdir/ejabberd
 
 %changelog
+* Tue May 06 2025 Anton Midyukov <antohami@altlinux.org> 21.12-alt5
+- NMU: Remove unused pam configs for consolehelper (ALT #54149).
+
 * Sun Sep 29 2024 Alexey Shabalin <shaba@altlinux.org> 21.12-alt4
 - Fix systemd service - start service as foreground (ALT #51259).
 
