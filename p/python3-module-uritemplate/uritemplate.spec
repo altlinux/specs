@@ -1,8 +1,8 @@
 %define oname uritemplate
 
 Name: python3-module-%oname
-Version: 3.0.1
-Release: alt2
+Version: 4.1.1
+Release: alt1
 
 Summary: Python implementation of RFC6570, URI Template
 License: Apache-2.0 or BSD-3-Clause
@@ -35,6 +35,9 @@ templates up to and including Level 4 in that specification.
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 07 2025 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
+- Build new version.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Drop python2 support.
 
