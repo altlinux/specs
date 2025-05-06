@@ -2,8 +2,8 @@
 %def_with caja
 
 Name: tortoisehg
-Version: 6.9
-Release: alt2
+Version: 7.0.1
+Release: alt1
 
 Summary: Mercurial GUI command line tool thg
 
@@ -123,6 +123,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Tue May 06 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
+- Build new version.
+
 * Sat Feb 08 2025 Nikolay Strelkov <snk@altlinux.org> 6.9-alt2
 - Packaged caja-thg.py (closes: #52891)
 

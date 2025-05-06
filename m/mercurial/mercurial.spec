@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 6.9
+Version: 7.0.1
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -17,6 +17,7 @@ Packager: Yury Yurevich <anarresti@altlinux.org>
 
 BuildPreReq: rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-wheel
 BuildRequires: asciidoc xmlto python3-module-docutils
 BuildRequires: python3-modules-sqlite3 libzstd-devel
@@ -143,6 +144,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Tue Apr 29 2025 Grigory Ustinov <grenka@altlinux.org> 7.0.1-alt1
+- 7.0.1.
+
 * Sun Dec 22 2024 Grigory Ustinov <grenka@altlinux.org> 6.9-alt1
 - 6.9.
 
