@@ -6,8 +6,8 @@
 Name:		burp
 Epoch:		1
 Version:	2.5.4
-Release:	alt4
-Summary:	Burp is a network-based backup and restore program
+Release:	alt5
+Summary:	A network-based backup and restore program (deprecated)
 License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
 Group:		Archiving/Backup
 Url:		https://burp.grke.org/
@@ -33,6 +33,11 @@ BuildRequires:  zlib-devel
 Burp is a network backup and restore program, using client and server.
 It uses librsync in order to save network traffic and to save on the
 amount of space that is used by each backup.
+
+ATTENTION: This software has been unmaintained for years, introducing
+   potential critical infrastructural risks to systems relying on it!
+   Users are strongly advised to transition to a maintained backup
+   solutions, such as restic (or resticprofile / autorestic)!
 
 # 2.5.4: client_protocol1_backup_phase2 test fails with lto
 # and librsync >= 2.0.1
@@ -97,11 +102,15 @@ fi
 
 %post
 %post_service burp-server
+echo >&2 "%name is deprecated. Please switch to another backup solution."
 
 %preun
 %preun_service burp-server
 
 %changelog
+* Sat Apr 26 2025 Vitaly Chikunov <vt@altlinux.org> 1:2.5.4-alt5
+- spec: Add a deprecation warning.
+
 * Mon Jul 17 2023 Vitaly Chikunov <vt@altlinux.org> 1:2.5.4-alt4
 - Support for OpenSSL 3 (to access Blowfish encryption).
 - Apply fixes to bundled yajl (CVE-2023-33460, CVE-2022-24795, CVE-2017-16516).
