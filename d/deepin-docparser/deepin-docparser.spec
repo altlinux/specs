@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: deepin-docparser
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Summary: Document parser library by deepin
@@ -89,6 +89,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Tue May 06 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.17-alt1
+- New version 1.0.17.
+
 * Thu Mar 20 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.16-alt1
 - New version 1.0.16.
 - Added vcs tag.
