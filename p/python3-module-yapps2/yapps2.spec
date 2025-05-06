@@ -1,20 +1,16 @@
 %define oname yapps2
 
 Name: python3-module-%oname
-Version: 2.2.0
-Release: alt2
+Version: 2.2.1
+Release: alt1
 Summary: Yet Another Python Parser System
 
 Group: Development/Python3
 License: MIT
 URL: http://theory.stanford.edu/~amitp/yapps/
+VCS: https://github.com/smurfix/yapps
 Source: %name-%version.tar
 BuildArch: noarch
-
-Patch0: 0001-fix-indexdation-t.patch
-Patch1: 0002-Bring-closer-to-Python-3-keep-Pytho2-compatibile.patch
-Patch2: 0003-bring-closer-to-Python-3-support-compatible-with-new.patch
-Patch3: 0004-full-Python3-port-no-backward-compatibile.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -44,10 +40,6 @@ original YAPPS source:
 
 %prep
 %setup
-#patch0 -p1
-#patch1 -p1
-#patch2 -p1
-#patch3 -p1
 
 %build
 %python3_build
@@ -65,11 +57,14 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 
 %files
-%doc ChangeLog NOTES README.md doc/*.html doc/yapps_grammar.g examples test
+%doc ChangeLog NOTES README.md doc/yapps2.man doc/yapps_grammar.g examples test
 %_bindir/*
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 07 2025 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt2
 - Drop python2 support.
 
