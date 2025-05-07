@@ -4,7 +4,7 @@
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
 Version: 8.3.12
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -76,6 +76,10 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/QemuConfig/NoWrite.pm
 
 %changelog
+* Tue May 06 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.12-alt2
+- fix merge conflicts with get_command_for_arch()
+- fix merge conflicts with kvm_user_version()
+
 * Tue Apr 22 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.3.12-alt1
 - 8.3.12 
 
