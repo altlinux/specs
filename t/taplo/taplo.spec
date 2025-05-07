@@ -2,7 +2,7 @@
 
 Name: taplo
 Version: 0.9.3
-Release: alt3
+Release: alt4
 
 Summary: A TOML toolkit written in Rust
 License: MIT
@@ -41,10 +41,12 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/pprof/.cargo-checksum.json
 
 %build
-%rust_build
+%rust_build --features lsp
 
 %install
 %rust_install
+# Note that during the build, a libtaplo_lsp.so is also built,
+# which does not seem to be used anywhere and cannot be linked through stable API.
 
 %check
 %rust_test
@@ -54,6 +56,11 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %_bindir/%name
 
 %changelog
+* Tue May 06 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.9.3-alt4
+- Add lsp feature during build (Closes: 53928).
+- Update vendored sources.
+- Add remotes to upstream.
+
 * Thu Dec 19 2024 Michael Chernigin <chernigin@altlinux.org> 0.9.3-alt3
 - Exclude armh.
 
@@ -62,4 +69,3 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 
 * Wed Nov 20 2024 Michael Chernigin <chernigin@altlinux.org> 0.9.3-alt1
 - Initial build for ALT Linux.
-
