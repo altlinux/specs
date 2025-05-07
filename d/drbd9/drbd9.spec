@@ -1,9 +1,9 @@
 %def_without check
 
 Name: drbd9
-Version: 9.2.13
-Release: alt1
-%define githash 0457237e0448663529fe161781873b356f17b3c5
+Version: 9.2.14
+Release: alt0.1.git94dde60d
+%define githash 94dde60d07482b55021e596ed8501f95b0ed9032
 
 Summary: The Linux kernel code for DRBD9
 License: GPLv2
@@ -14,13 +14,12 @@ BuildArch: noarch
 Url: https://github.com/LINBIT/drbd.git
 Source0: %name-%version.tar
 Source1: %name-headers-%version.tar
-Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-build-kernel
 %if_with check
 BuildRequires: coccinelle >= 1.0.8
 BuildRequires: libelf-devel
-BuildRequires: kernel-headers-modules-%kernel_latest
+BuildRequires: kernel-headers-modules-6.14
 %endif
 
 %description
@@ -43,7 +42,6 @@ The Linux kernel code for DRBD9.
 %setup -q
 tar -xf %SOURCE1 -C drbd/drbd-headers
 echo "GIT-hash: %githash" >drbd/.drbd_git_revision
-%patch -p1
 
 %build
 
@@ -62,6 +60,9 @@ make -C drbd KDIR=/lib/modules/*-*-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Wed May 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.14-alt0.1.git94dde60d
+- update from upstream/master for 6.14 support
+
 * Mon Mar 24 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.13-alt1
 - 9.2.13
 
