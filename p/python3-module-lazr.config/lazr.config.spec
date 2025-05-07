@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Create configuration schemas, and process and validate configurations
 License: LGPLv3
@@ -46,12 +46,15 @@ on different machines, or under different circumstances.
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/lazr
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 3.1-alt1
 - New version 3.1.
 

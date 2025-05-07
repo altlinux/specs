@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 25.4.16
-Release: alt1
+Release: alt1.1
 Summary: Self-service finite-state machines for the programmer on the go
 License: MIT
 Group: Development/Python3
@@ -65,7 +65,7 @@ rm -r %buildroot%python3_sitelibdir/automat/_test/
 %python3_sitelibdir/%mod_name/
 %exclude %python3_sitelibdir/%mod_name/_visualize.py
 %exclude %python3_sitelibdir/%mod_name/__pycache__/_visualize.*
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files visualize
 %_bindir/automat-visualize
@@ -73,6 +73,9 @@ rm -r %buildroot%python3_sitelibdir/automat/_test/
 %python3_sitelibdir/%mod_name/__pycache__/_visualize.*
 
 %changelog
+* Mon Apr 21 2025 Stanislav Levin <slev@altlinux.org> 25.4.16-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Apr 17 2025 Stanislav Levin <slev@altlinux.org> 25.4.16-alt1
 - 24.8.1 -> 25.4.16.
 

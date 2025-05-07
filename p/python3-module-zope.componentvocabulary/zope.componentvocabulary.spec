@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Component vocabularies
 License: ZPL-2.1
@@ -59,11 +59,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 3.0-alt1
 - 2.3.0 -> 3.0.
 

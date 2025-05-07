@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.3
-Release: alt1
+Release: alt1.1
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -65,7 +65,7 @@ This package contains tests for Zope Security Framework.
 %files
 %doc *.txt
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/examples/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
@@ -79,6 +79,9 @@ This package contains tests for Zope Security Framework.
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 7.3-alt1
 - 7.2 -> 7.3.
 

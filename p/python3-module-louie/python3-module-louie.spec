@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Dispatches signals between Python objects in a wide variety of contexts
 License: BSD
@@ -41,11 +41,14 @@ py.test3 %pypi_name/test
 
 %files
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%modname-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 #%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sat Jul 22 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 

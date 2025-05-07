@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: The Zope publisher publishes Python objects on the web
 License: ZPL-2.1
@@ -76,7 +76,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/testing.py
@@ -88,6 +88,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/testing.*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:7.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Mar 06 2025 Stanislav Levin <slev@altlinux.org> 1:7.3-alt1
 - 7.2 -> 7.3.
 

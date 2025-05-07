@@ -5,7 +5,7 @@
 
 Name: vapoursynth
 Version: 71
-Release: alt1
+Release: alt1.1
 
 Summary: Video processing framework with simplicity in mind
 
@@ -124,7 +124,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/%name.so
 %if_with python_ext
 %python3_sitelibdir/%name.cpython*.so
-%python3_sitelibdir/VapourSynth-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 %endif
 
 %files devel
@@ -138,6 +138,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/vspipe
 
 %changelog
+* Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 71-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Apr 16 2025 Leontiy Volodin <lvol@altlinux.org> 71-alt1
 - New version 71.
 

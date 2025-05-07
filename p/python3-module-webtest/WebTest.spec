@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.4
-Release: alt1
+Release: alt1.1
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python3
@@ -54,9 +54,12 @@ This is based on ``paste.fixture.TestApp``.
 
 %files
 %python3_sitelibdir/webtest/
-%python3_sitelibdir/WebTest-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0.4-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Feb 03 2025 Anton Vyatkin <toni@altlinux.org> 3.0.4-alt1
 - New version 3.0.4.
 

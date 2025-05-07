@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.3
-Release: alt2
+Release: alt2.1
 
 Summary: User session management for Flask
 License: MIT
@@ -55,9 +55,12 @@ extension capable of loading users from their ID.
 %files
 %doc CHANGES.md LICENSE README.md
 %python3_sitelibdir/flask_login/
-%python3_sitelibdir/Flask_Login-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.6.3-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sat Feb 03 2024 Anton Vyatkin <toni@altlinux.org> 0.6.3-alt2
 - Fixed FTBFS with python 3.12.
 

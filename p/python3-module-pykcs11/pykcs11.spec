@@ -1,6 +1,6 @@
 Name: python3-module-pykcs11
 Version: 1.5.17
-Release: alt1
+Release: alt1.1
 
 Summary: A complete PKCS#11 wrapper for Python
 
@@ -47,12 +47,15 @@ This package contains documentation.
 
 %files
 %python3_sitelibdir/PyKCS11
-%python3_sitelibdir/PyKCS11-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo pykcs11}/
 
 %files docs
 %doc README.md samples/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.5.17-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Oct 16 2024 Grigory Ustinov <grenka@altlinux.org> 1.5.17-alt1
 - Automatically updated to 1.5.17.
 

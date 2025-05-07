@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.1.0
-Release: alt1
+Release: alt1.1
 Summary: Collection objects similar to those in stdlib by jaraco
 License: MIT
 Group: Development/Python3
@@ -50,9 +50,12 @@ BuildRequires(pre): rpm-build-pyproject
 %files
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
 - 5.0.1 -> 5.1.0.
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 7.4.3
-Release: alt1
+Release: alt1.1
 
 Summary: Elasticsearch data layer for eve rest framework
 License: GPL-3.0
@@ -57,10 +57,13 @@ Features:
 %files
 %doc README.*
 %python3_sitelibdir/eve_elastic
-%python3_sitelibdir/Eve_Elastic-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.4.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Jan 10 2025 Anton Vyatkin <toni@altlinux.org> 7.4.3-alt1
 - New version 7.4.3.
 

@@ -6,7 +6,7 @@
 
 Name: tbb
 Version: 2022.1.0
-Release: alt1
+Release: alt1.1
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -134,6 +134,7 @@ pushd python
 export TBBROOT=%buildroot%_prefix
 subst "s|tbb_root, 'lib'|tbb_root, '%_lib'|g" setup.py
 subst "s|'irml'||" setup.py
+subst 's|\(version[ \t]*=\)[ \t]*"0.2"|\1"%version"|' setup.py
 %pyproject_build
 %pyproject_install
 popd
@@ -164,12 +165,15 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %if_with python
 %files -n python3-module-%name
 %python3_sitelibdir/TBB.py
-%python3_sitelibdir/TBB*.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 %python3_sitelibdir/tbb
 %python3_sitelibdir/__pycache__/*
 %endif
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2022.1.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Mar 28 2025 Anton Farygin <rider@altlinux.com> 2022.1.0-alt1
 - 2022.0.0 -> 2022.1.0
 

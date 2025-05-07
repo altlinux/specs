@@ -4,7 +4,7 @@
 
 Name:    python3-module-fvs
 Version: 0.3.4
-Release: alt1
+Release: alt1.1
 
 Summary: File Versioning System with hash comparison, deduplication and data storage to create unlinked states that can be deleted
 License: MIT
@@ -40,8 +40,11 @@ Source: %pypi_name-%version.tar
 %doc README.md
 %_bindir/fvs
 %python3_sitelibdir/fvs
-%python3_sitelibdir/FVS-*.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.3.4-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Sep 13 2023 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus.

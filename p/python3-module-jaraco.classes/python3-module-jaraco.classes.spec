@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.4.0
-Release: alt1
+Release: alt1.1
 Summary: Utility functions for Python class constructs
 License: MIT
 Group: Development/Python3
@@ -49,9 +49,12 @@ BuildRequires(pre): rpm-build-pyproject
 %files
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Apr 01 2024 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.1 -> 3.4.0.
 

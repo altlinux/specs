@@ -6,7 +6,7 @@
 
 Name:          python3-module-%pypiname
 Version:       0.5.0
-Release:       alt1.2
+Release: alt1.2.1
 Summary:       Small and simple gravatar usage in Flask
 License:       BSD-3-Clause
 Group:         Development/Python3
@@ -46,10 +46,13 @@ Small extension for Flask to make usage of Gravatar service easy.
 %files
 %doc *.rst docs/*rst
 %python3_sitelibdir/%{distname}
-%python3_sitelibdir/%{modname}*/METADATA
+%python3_sitelibdir/%{pyproject_distinfo %pypiname}/
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.5.0-alt1.2
 - NMU: added missing build dependency on setuptools.
 

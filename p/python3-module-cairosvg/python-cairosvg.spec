@@ -5,7 +5,7 @@
 
 Name:               python3-module-cairosvg
 Version:            2.7.1
-Release:            alt1
+Release: alt1.1
 Summary:            A Simple SVG Converter for Cairo
 
 Group:              Development/Python3
@@ -60,9 +60,12 @@ rm -rf %buildroot%python3_sitelibdir/%modname/__pycache__/test_api.*
 %doc README.rst NEWS.rst
 %_bindir/cairosvg
 %python3_sitelibdir/%modname/
-%python3_sitelibdir/%eggname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo cairosvg}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.7.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Jan 26 2024 Anton Vyatkin <toni@altlinux.org> 2.7.1-alt1
 - New version 2.7.1.
 

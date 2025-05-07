@@ -1,7 +1,7 @@
 %define oname Sunflower
 Name:    sunflower
 Version: 0.5.63
-Release: alt3
+Release: alt3.1
 
 Summary: Small and highly customizable twin-panel file manager for Linux with support for plugins
 License: GPL-3.0
@@ -60,11 +60,14 @@ rm -fr ./translations/zh_TW
 %files -f %name.lang
 %_bindir/%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 %_datadir/%name
 %_datadir/applications/%oname.desktop
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.5.63-alt3.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Apr 14 2023 Alexander Burmatov <thatman@altlinux.org> 0.5.63-alt3
 - Remove empty translations
 

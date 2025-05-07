@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 2.4.1
-Release: alt1
+Release: alt1.1
 Summary: Facilities for working with VCS repositories
 License: MIT
 Group: Development/Python3
@@ -50,9 +50,12 @@ BuildRequires(pre): rpm-build-pyproject
 %doc README.*
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Mar 05 2025 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
 - 2.4.0 -> 2.4.1.
 

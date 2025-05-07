@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %release_tag.0%commit_num%commit_id
-Release: alt4
+Release: alt4.1
 
 Summary: Modular toolkit for Data Processing
 
@@ -107,7 +107,7 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 %files
 %python3_sitelibdir/bimdp
 %python3_sitelibdir/%oname
-%python3_sitelibdir/MDP-%release_tag.dist-info
+%python3_sitelibdir/%{pep427_name %oname}-%release_tag.dist-info/
 %exclude %python3_sitelibdir/%oname/test
 %exclude %python3_sitelibdir/bimdp/test
 
@@ -121,6 +121,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.6.0.15.g64f14eee-alt4.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt4
 - Removed dependency on future.
 

@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.0
-Release: alt2
+Release: alt2.1
 
 Summary: Zope Component Architecture
 License: ZPL-2.1
@@ -69,7 +69,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/testfiles/
@@ -95,6 +95,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/eventtesting.*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.0-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jul 27 2023 Stanislav Levin <slev@altlinux.org> 6.0-alt2
 - Mapped PyPI name to distro's one.
 - Modernized packaging.

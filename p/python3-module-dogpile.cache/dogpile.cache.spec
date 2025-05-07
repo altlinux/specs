@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: A caching front-end based on the Dogpile lock
 
@@ -72,9 +72,12 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1).
+
 * Mon Apr 28 2025 Anton Vyatkin <toni@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

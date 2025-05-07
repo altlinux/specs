@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.0
-Release: alt1
+Release: alt1.1
 Summary: Define boolean algebras, create and parse boolean expressions and create custom boolean DSL
 License: BSD-2-Clause
 Group: Development/Python3
@@ -58,9 +58,12 @@ rm %buildroot%python3_sitelibdir/boolean/test_boolean.py
 %files
 %doc README.rst
 %python3_sitelibdir/boolean/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Apr 04 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1
 - 4.0 -> 5.0.
 

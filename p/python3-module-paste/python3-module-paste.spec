@@ -4,7 +4,7 @@
 
 Name: python3-module-paste
 Version: 3.10.1
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 
@@ -55,9 +55,12 @@ touch %buildroot%python3_sitelibdir/paste/__init__.py
 
 %files
 %python3_sitelibdir/paste/
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo paste}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.10.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 3.10.1-alt1
 - New version 3.10.1.
 

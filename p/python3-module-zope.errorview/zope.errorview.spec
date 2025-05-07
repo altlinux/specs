@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Basic HTTP and Browser exception views
 License: ZPL-2.1
@@ -63,7 +63,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.rst
 %python3_sitelibdir/zope/errorview
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 
@@ -72,6 +72,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Mar 21 2023 Anton Vyatkin <toni@altlinux.org> 2.0-alt1
 - New version 2.0.
 

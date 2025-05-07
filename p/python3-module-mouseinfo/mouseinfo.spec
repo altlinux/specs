@@ -8,7 +8,7 @@ Name: python3-module-%modulename
 # Due to upstream doesn't make tags we need to pull version
 # from scr/mouseinfo/__init__.py (based on setup.py version discovery).
 Version: 0.1.4
-Release: alt1
+Release: alt1.1
 Summary: An application to display XY position and RGB color information for the pixel currently under the mouse. 
 License: GPL-3.0-or-later
 Group: Development/Python3
@@ -48,8 +48,11 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir/
 %files
 %doc LICENSE* README.md
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.1.4-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Apr 16 2024 Pavel Shilov <zerospirit@altlinux.org> 0.1.4-alt1
 - initial build for Sisyphus

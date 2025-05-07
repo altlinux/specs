@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: More sophisticated version manipulation (than packaging)
 License: MIT
 Group: Development/Python3
@@ -52,8 +52,11 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%ns_name/%mod_name.py
 %dir %python3_sitelibdir/%ns_name/__pycache__/
 %python3_sitelibdir/%ns_name/__pycache__/%mod_name.*
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Aug 16 2023 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.

@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Zope contenttype
 License: ZPL-2.1
@@ -59,11 +59,14 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %doc README.*
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Feb 14 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - 5.1 -> 5.2.
 

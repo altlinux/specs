@@ -5,7 +5,7 @@
 
 Name: python3-module-%mname
 Version: 1.3.8
-Release: alt1
+Release: alt1.1
 
 Summary: Python wrapper for the FLTK
 
@@ -72,9 +72,12 @@ rm -r %buildroot%python3_sitelibdir/fltk/docs/
 %files
 %doc CHANGES README.md
 %python3_sitelibdir/fltk/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %mname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.3.8-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jun 20 2023 Anton Midyukov <antohami@altlinux.org> 1.3.8-alt1
 - new version (1.3.8) with rpmgs script
 - Migration to PEP517

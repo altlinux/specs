@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
+%define mod_name protocol_lib
 
 Name: protocol
 Version: 0.1.0.20190528
-Release: alt1.1
+Release: alt1.2
 
 Summary: An ASCII Header Generator for Network Protocols
 License: GPL-3.0
@@ -12,7 +13,9 @@ Url: http://www.luismg.com/protocol/
 Vcs: https://github.com/luismartingarcia/protocol.git
 
 Source: %name-%version.tar
+Patch0: protocol-0.1-modernize-setuptools-configuration.patch
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-tools
 BuildArch: noarch
 
@@ -34,30 +37,31 @@ Protocol is a simple command-line tool that serves two purposes:
 
 %prep
 %setup
+%autopatch -p1
+%python3_fix_shebang .
+sed -i 's/@VERSION@/%version/' setup.py
 
 %build
-find . -type f -exec sed -i "1s@^#\!.*python.*@#\!%__python3@" {} +
-# Quickie package
- mkdir -p protocol_lib
- mv specs.py     protocol_lib/
- mv constants.py protocol_lib/
- touch protocol_lib/__init__.py
+%pyproject_build
 
 %install
-%python3_build_install
+%pyproject_install
+# don't ship tests
+rm %buildroot%python3_sitelibdir/%mod_name/test.py
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-%buildroot/%_bindir/protocol tcp
-%__python3 test.py
+%pyproject_run -- python test.py
 
 %files
 %doc LICENSE.txt README.txt
 %_bindir/protocol
-%python3_sitelibdir_noarch/protocol_lib
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 0.1.0.20190528-alt1.2
+- NMU: fixed FTBFS (setuptools 76.0.0).
+
 * Sun Mar 03 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.0.20190528-alt1.1
 - NMU:
     + replace pathfix.py with find-sed

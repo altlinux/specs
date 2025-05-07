@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Compatibility shim providing selectable entry points for older implementations
 Group: Development/Python3
@@ -44,10 +44,13 @@ that triggers deprecation warnings.
 %files
 %python3_sitelibdir_noarch/backports/*.py
 %python3_sitelibdir_noarch/backports/__pycache__/*
-%python3_sitelibdir_noarch/%pypi_name-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %doc README* NEWS*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Oct 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - first build for Sisyphus
 

@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: routines for dealing with data streams
 License: MIT
@@ -54,9 +54,12 @@ BuildRequires(pre): rpm-build-pyproject
 %doc README.*
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0.4-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Aug 26 2024 Anton Vyatkin <toni@altlinux.org> 3.0.4-alt1
 - New version 3.0.4.
 

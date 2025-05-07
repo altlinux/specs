@@ -4,7 +4,7 @@
 
 Name:    python3-module-wsgiproxy2
 Version: 0.5.1
-Release: alt2
+Release: alt2.1
 
 Summary: WSGI Proxy that supports several HTTP backends
 
@@ -53,11 +53,14 @@ A WSGI Proxy with various http client backends.
 %files
 %doc *.rst COPYING
 %python3_sitelibdir/wsgiproxy
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo wsgiproxy2}/
 %exclude %python3_sitelibdir/*/test_*
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.5.1-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt2
 - Fixed FTBFS.
 

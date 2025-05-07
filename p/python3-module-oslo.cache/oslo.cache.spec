@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.10.1
-Release: alt1
+Release: alt1.1
 
 Summary: Cache storage for OpenStack projects
 
@@ -106,7 +106,7 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/oslo_cache
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/oslo_cache/tests
 
 %files tests
@@ -119,6 +119,9 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %endif
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.10.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.1-alt1
 - Automatically updated to 3.10.1.
 

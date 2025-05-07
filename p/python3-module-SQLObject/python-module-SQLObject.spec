@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.10.2
-Release: alt1.2
+Release: alt1.2.1
 
 Summary: SQLObject, an object-relational mapper for Python
 License: LGPL-2.1
@@ -76,7 +76,7 @@ This package contains tests for %oname
 %doc LICENSE *.rst
 %_bindir/*
 %python3_sitelibdir/sqlobject
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/sqlobject/tests
 %exclude %python3_sitelibdir/sqlobject/*/tests
 %exclude %python3_sitelibdir/sqlobject/*/test
@@ -94,6 +94,9 @@ This package contains tests for %oname
 %doc docs/*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.10.2-alt1.2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 3.10.2-alt1.2
 - NMU: fixed FTBFS (tox 4).
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.1
-Release: alt2
+Release: alt2.1
 
 Summary: Damerau-Levenshtein (DL) edit distance algorithm for Python in Cython for high performance
 License: BSD-3-Clause
@@ -54,9 +54,12 @@ cython3 pyxdameraulevenshtein/pyxdameraulevenshtein.pyx
 %files
 %doc LICENSE AUTHORS.md CHANGES.md README.md
 %python3_sitelibdir/%mod_name.*.so
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.7.1-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Dec 21 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.1-alt2
 - Add force recythonizing of source.
 

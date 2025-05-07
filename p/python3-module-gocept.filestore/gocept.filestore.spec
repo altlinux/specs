@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Provides maildir like access to files
 License: ZPL-2.1
@@ -61,7 +61,7 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 %doc *.txt README.md
 %dir %python3_sitelibdir/%mname
 %python3_sitelibdir/%mname/*
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/%mname/*/tests.*
 %exclude %python3_sitelibdir/*.pth
 
@@ -70,6 +70,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sat Jul 15 2023 Anton Vyatkin <toni@altlinux.org> 1.0-alt1
 - New version 1.0.
 

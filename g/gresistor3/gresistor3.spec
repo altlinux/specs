@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name gResistor3
+%define pypi_name gResistor
 %define src_name gResistor
 
 Name: gresistor3
 Version: 3.2.5
-Release: alt2
+Release: alt2.1
 Summary: Identification resistors are usually marked with colored bands
 License: LGPL
 Group: Engineering
@@ -55,13 +55,16 @@ rm %buildroot%_iconsdir/eu.stethewwolf.gresistor.png
 %doc README.*
 %_bindir/%name
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%src_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %_datadir/gresistor
 %_datadir/metainfo/eu.stethewwolf.gresistor.metainfo.xml
 %_desktopdir/eu.stethewwolf.gresistor.desktop
 %_iconsdir/hicolor/*/apps/eu.stethewwolf.gresistor.png
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.2.5-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon May 15 2023 Anton Midyukov <antohami@altlinux.org> 3.2.5-alt2
 - Fix Group
 

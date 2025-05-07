@@ -1,16 +1,17 @@
-%define pypi_name Cheetah
+%define pypi_name CT3
+%define mod_name Cheetah
 
 %def_with check
 
-Name: python3-module-%pypi_name
+Name: python3-module-%mod_name
 Version: 3.4.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Template engine and code-generator
 
 License: MIT
 Group: Development/Python3
-URL: https://pypi.org/project/Cheetah3
+URL: https://pypi.org/project/CT3/
 VCS: https://github.com/CheetahTemplate3/cheetah3
 
 Source: %name-%version.tar
@@ -60,15 +61,18 @@ This package contains tests for Cheetah.
 %_bindir/cheetah
 %_bindir/cheetah-analyze
 %_bindir/cheetah-compile
-%python3_sitelibdir/%pypi_name
-%python3_sitelibdir/CT3-%version.dist-info
-%exclude %python3_sitelibdir/%pypi_name/Tests
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/Tests
 
 %files tests
-%python3_sitelibdir/%pypi_name/Tests
-%exclude %python3_sitelibdir/%pypi_name/Tests/Performance.py*
+%python3_sitelibdir/%mod_name/Tests
+%exclude %python3_sitelibdir/%mod_name/Tests/Performance.py*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 

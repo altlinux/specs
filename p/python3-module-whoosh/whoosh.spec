@@ -10,7 +10,7 @@ Whoosh works can be extended or replaced to meet your needs exactly.
 
 Name: python3-module-%oname
 Version: 2.7.4
-Release: alt4
+Release: alt4.1
 
 Summary: Fast pure-Python indexing and search library
 Group: Development/Python3
@@ -66,10 +66,13 @@ cp -fR src/whoosh/query src/whoosh/matching %buildroot%python3_sitelibdir/%oname
 %files
 %doc *.txt
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/Whoosh-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/%oname/util/testing.py*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.7.4-alt4.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Jan 31 2024 Grigory Ustinov <grenka@altlinux.org> 2.7.4-alt4
 - Moved on modern pyproject macros.
 

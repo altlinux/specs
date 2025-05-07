@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.2
-Release: alt1
+Release: alt1.1
 Summary: Zope testrunner script
 License: ZPL-2.1
 Group: Development/Python3
@@ -61,11 +61,14 @@ cp -al %buildroot%_bindir/zope-testrunner{,3}
 %_bindir/zope-testrunner
 %_bindir/zope-testrunner3
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Mar 07 2025 Stanislav Levin <slev@altlinux.org> 7.2-alt1
 - 7.1 -> 7.2.
 

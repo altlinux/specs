@@ -2,12 +2,13 @@
 %define        pypiname cx-oracle
 %define        modname cx_Oracle
 %define        distname cx_Oracle
+%define        pypi_version 8.3.0
 %def_disable   check
 %def_enable    doc
 
 Name:          python3-module-%pypiname
-Version:       8.3.0.7
-Release:       alt0.git6766bca.1
+Version:       %pypi_version.7
+Release:       alt0.git6766bca.1.1
 Summary:       Python interface to Oracle Database now superseded by python-oracledb
 License:       BSD-3-Clause
 Group:         Development/Python3
@@ -70,9 +71,12 @@ export ODPIC_INC_DIR=%_includedir/
 %_defaultdocdir/%modname
 %{?!_disable_doc:%doc doc/build/html/*}
 %python3_sitelibdir/%{distname}*.so
-%python3_sitelibdir/%{modname}*/METADATA
+%python3_sitelibdir/%{pep427_name %pypiname}-%pypi_version.dist-info/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 8.3.0.7-alt0.git6766bca.1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 8.3.0.7-alt0.git6766bca.1
 - NMU: added missing build dependency on setuptools.
 

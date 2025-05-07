@@ -1,6 +1,6 @@
 Name: python3-module-mechanicalsoup
 Version: 1.2.0
-Release: alt2
+Release: alt2.1
 
 %def_with check
 
@@ -41,9 +41,12 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %python3_sitelibdir/mechanicalsoup
-%python3_sitelibdir/MechanicalSoup-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo mechanicalsoup}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri May 12 2023 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
 - Fixed FTBFS (pytest-httpbin 2.0).
 

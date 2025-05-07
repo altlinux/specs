@@ -1,5 +1,6 @@
 %define oname OpenGL
 %define pypi_name PyOpenGL
+%define pypi_name_accelerate PyOpenGL-accelerate
 %define modulename python3-module-%oname
 
 # Fatal Python error: Segmentation fault
@@ -11,7 +12,7 @@
 
 Name: python3-module-pyopengl
 Version: 3.1.9
-Release: alt2
+Release: alt2.1
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -111,7 +112,7 @@ xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.te
 %files -n %modulename
 %doc license.txt readme.rst
 %python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/Py%{oname}-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir_noarch/%oname/Tk
 
 %files -n %modulename-tk
@@ -120,9 +121,12 @@ xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.te
 %files -n %{modulename}_accelerate
 %doc license.txt readme.rst
 %python3_sitelibdir/%{oname}_accelerate
-%python3_sitelibdir/Py%{oname}_accelerate-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name_accelerate}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 3.1.9-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1).
+
 * Wed Apr 09 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.9-alt2
 - Fixed FTBFS.
 

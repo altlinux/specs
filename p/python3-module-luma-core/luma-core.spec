@@ -1,6 +1,6 @@
 Name: python3-module-luma-core
 Version: 2.4.0
-Release: alt2
+Release: alt2.1
 
 Summary: Small display library core
 License: MIT
@@ -32,9 +32,12 @@ text-rendering capabilities for small displays on single board computers.
 
 %files
 %python3_sitelibdir/luma
-%python3_sitelibdir/luma.core-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo luma-core}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.4.0-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Dec 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.0-alt2
 - require smbus2
 

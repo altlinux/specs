@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 0.14.6
-Release: alt1
+Release: alt1.1
 
 Summary: A programmable lazr.restful client library
 
@@ -63,7 +63,7 @@ rm -rf src/lazr/restfulclient/tests/test_docs.py
 %files
 %doc *.rst
 %python3_sitelibdir/lazr/restfulclient
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %python3_sitelibdir/%oname-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/lazr/restfulclient/tests
 
@@ -71,6 +71,9 @@ rm -rf src/lazr/restfulclient/tests/test_docs.py
 %python3_sitelibdir/lazr/restfulclient/tests
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.14.6-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Dec 20 2024 Anton Vyatkin <toni@altlinux.org> 0.14.6-alt1
 - New version 0.14.6.
 

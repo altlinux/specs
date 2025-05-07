@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 1.13.0
-Release: alt1
+Release: alt1.1
 
 Summary: A Session and Caching library with WSGI Middleware
 
@@ -52,9 +52,12 @@ from MyghtyUtils, then refactored and extended with database support.
 %files
 %doc README.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jan 09 2025 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
 - 1.12.1 -> 1.13.0.
 

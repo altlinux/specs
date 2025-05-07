@@ -13,7 +13,7 @@ of the 'zope.i18n' package.
 
 Name: python3-module-%pypi_name
 Version: 7.0
-Release: alt1
+Release: alt1.1
 Summary: Message Identifiers for internationalization
 License: ZPL-2.1
 Group: Development/Python3
@@ -65,7 +65,7 @@ This package contains tests for %pypi_name.
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version-nspkg.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests.py
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
@@ -77,6 +77,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Sep 25 2024 Stanislav Levin <slev@altlinux.org> 7.0-alt1
 - 6.1.0 -> 7.0.
 

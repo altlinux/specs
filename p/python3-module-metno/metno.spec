@@ -1,6 +1,8 @@
+%define pypi_name PyMetno
+
 Name: python3-module-metno
 Version: 0.12.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python library to talk to the met.no api
 License: MIT
@@ -29,9 +31,12 @@ BuildRequires: python3(wheel)
 %files
 %doc LICENSE README.*
 %python3_sitelibdir/metno
-%python3_sitelibdir/PyMetno-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri May 03 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt1
 - 0.12.0 released
 

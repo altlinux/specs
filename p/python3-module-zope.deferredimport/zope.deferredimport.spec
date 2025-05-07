@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt1
+Release: alt1.1
 Summary: Allows you to perform imports names that will be resolved when used in the code
 License: ZPL-2.1
 Group: Development/Python3
@@ -79,7 +79,7 @@ cp -fR samples %buildroot%_docdir/%name
 %files
 %doc CHANGES.rst README.rst
 %python3_sitelibdir/zope/deferredimport/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/tests.*
@@ -92,6 +92,9 @@ cp -fR samples %buildroot%_docdir/%name
 %doc %_docdir/%name/samples
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jun 29 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

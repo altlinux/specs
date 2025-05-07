@@ -1,6 +1,6 @@
 Name:     python3-module-ruamel-yaml.clib
 Version:  0.2.12
-Release:  alt1
+Release: alt1.1
 
 Summary:  C version of reader, parser and emitter for ruamel.yaml derived from libyaml
 
@@ -36,9 +36,12 @@ a ruamel directory) and the Python code for ruamel.yaml under /usr/lib/pythonX.Y
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/_ruamel_yaml.*.so
-%python3_sitelibdir/ruamel.yaml.clib-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo ruamel-yaml.clib}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.2.12-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Oct 21 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.12-alt1
 - Automatically updated to 0.2.12.
 

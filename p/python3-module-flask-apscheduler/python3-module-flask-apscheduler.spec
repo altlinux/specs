@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.13.1
-Release: alt1
+Release: alt1.1
 
 Summary: Adds APScheduler support to Flask
 License: Apache-2.0
@@ -39,9 +39,12 @@ Flask-APScheduler is a Flask extension which adds support for the APScheduler.
 %files
 %doc *.md
 %python3_sitelibdir/flask_apscheduler
-%python3_sitelibdir/Flask_APScheduler-*.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.13.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Nov 08 2023 Andrey Cherepanov <cas@altlinux.org> 1.13.1-alt1
 - New version.
 

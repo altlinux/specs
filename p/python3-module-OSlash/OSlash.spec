@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.6.3
-Release: alt4.1
+Release: alt4.1.1
 
 Summary: Functors, Applicatives, And Monads in Python
 
@@ -60,9 +60,12 @@ sed -i 's/readfp/read_file/' versioneer.py
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/oslash
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.6.3-alt4.1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 0.6.3-alt4.1
 - NMU: fixed FTBFS (tox 4).
 

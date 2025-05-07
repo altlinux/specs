@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.6
-Release: alt1
+Release: alt1.1
 
 Summary: Python Framework to analyse Git repositories
 License: Apache-2.0
@@ -52,9 +52,12 @@ unzip test-repos.zip
 %files
 %doc *.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/PyDriller-2.6.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.6-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jan 09 2024 Alexander Burmatov <thatman@altlinux.org> 2.6-alt1
 - New 2.6 version.
 

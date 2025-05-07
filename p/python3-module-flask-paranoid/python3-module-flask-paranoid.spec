@@ -8,7 +8,7 @@
 
 Name:          python3-module-%pypiname
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple user session protection
 License:       MIT
 Group:         Development/Python3
@@ -54,8 +54,11 @@ stolen and then used by the attacker.
 %doc *.md
 %{?!_disable_doc:%doc docs/_build/html/*}
 %python3_sitelibdir/%{distname}
-%python3_sitelibdir/%{modname}*/METADATA
+%python3_sitelibdir/%{pyproject_distinfo %pypiname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Aug 14 2023 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus.

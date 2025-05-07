@@ -4,7 +4,7 @@
 
 Name: mopidy
 Version: 3.4.2
-Release: alt4
+Release: alt4.1
 
 Summary: Mopidy is an extensible music server written in Python
 License: Apache-2.0
@@ -106,9 +106,12 @@ rm -rf tests/m3u/test_translator.py #https://github.com/mopidy/mopidy/issues/215
 %doc LICENSE README.rst docs/changelog.rst
 
 %python3_sitelibdir/%name
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.4.2-alt4.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sat Nov 09 2024 Anastasia Osmolovskaya <lola@altlinux.org> 3.4.2-alt4
 - Tests are temporarily disabled.
 

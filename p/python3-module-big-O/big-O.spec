@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.11.0
-Release: alt1
+Release: alt1.1
 Summary: Empirical estimation of time complexity from execution time
 License: BSD-3-Clause
 Group: Development/Python3
@@ -52,10 +52,13 @@ inputs of increasing size.
 %files
 %doc README.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/big_O-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%mod_name/test/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Jun 09 2023 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
 - 0.10.2 -> 0.11.0.
 

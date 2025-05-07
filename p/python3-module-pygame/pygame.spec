@@ -4,7 +4,7 @@
 
 Name: python3-module-pygame
 Version: 2.6.1
-Release: alt2
+Release: alt2.1
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -86,7 +86,8 @@ Pygame documentation and example programs (Python3 version)
 %prep
 %setup
 %patch -p1
-
+# https://github.com/pygame/pygame/issues/4469
+sed -i "s/distutils\.ccompiler\.spawn/distutils.spawn.spawn/" setup.py
 sed -i '811a\ \ \ \ @unittest.skip("https://github.com/pygame/pygame/issues/4274")' test/mixer_test.py
 
 %build
@@ -126,6 +127,9 @@ rm -rv %buildroot%python3_sitelibdir/%oname/tests
 %python3_includedir/%oname
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 2.6.1-alt2.1
+- NMU: fixed FTBFS (setuptools 76.0.0).
+
 * Fri Nov 22 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt2
 - Built with PYGAME_DETECT_AVX2=1 (Closes: #52126).
 - Built without tests.

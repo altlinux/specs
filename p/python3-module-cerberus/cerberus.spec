@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.7
-Release: alt1
+Release: alt1.1
 
 Summary: Extensible validation for Python dictionaries
 
@@ -50,9 +50,12 @@ for custom validation.
 %files
 %doc AUTHORS LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/Cerberus-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.3.7-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Jan 01 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt1
 - Automatically updated to 1.3.7.
 

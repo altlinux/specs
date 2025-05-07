@@ -8,7 +8,7 @@ Name: python3-module-%modulename
 # Due to upstream doesn't make tags we need to pull version
 # from pymsgbox/__init__.py (based on setup.py version discovery)
 Version: 1.0.9
-Release: alt1
+Release: alt1.1
 Summary: A simple, cross-platform, pure Python module for JavaScript-like message boxes.
 License: BSD-3-Clause
 Group: Development/Python3
@@ -45,8 +45,11 @@ BuildRequires: python3(pytest)
 %files
 %doc README.md LICENSE.*
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.0.9-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Apr 16 2024 Pavel Shilov <zerospirit@altlinux.ru> 1.0.9-alt1
 - initial build for Sisyphus

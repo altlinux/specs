@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.5.0
-Release: alt2
+Release: alt2.1
 Summary: Python binding to the Networking and Cryptography (NaCl) library
 License: Apache-2.0
 Group: Development/Python3
@@ -51,9 +51,12 @@ mv %buildroot/%python3_sitelibdir/%mod_name/{_sodium.abi3,_sodium}.so
 %files
 %doc README.rst
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%project_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.5.0-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 1.5.0-alt2
 - Added missing runtime dependency on cffi.
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.3
-Release: alt1
+Release: alt1.1
 Summary: Provides an uniform layer to support PyQt5, PySide2, PyQt6, PySide6 with a single codebase
 License: MIT
 Group: Development/Python3
@@ -76,7 +76,7 @@ and not test_qfiledialog_dir_compat"
 %doc LICENSE.txt
 %doc AUTHORS.md CHANGELOG.md README.md
 %_bindir/%oname
-%python3_sitelibdir/QtPy-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -84,6 +84,9 @@ and not test_qfiledialog_dir_compat"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.4.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Feb 12 2025 Anton Vyatkin <toni@altlinux.org> 2.4.3-alt1
 - New version 2.4.3.
 

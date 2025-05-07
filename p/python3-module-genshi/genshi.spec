@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 0.7.9
-Release: alt2
+Release: alt2.1
 
 Summary: A toolkit for stream-based generation of output for the web
 
@@ -50,9 +50,12 @@ feature is a template language, which is heavily inspired by Kid.
 
 %files
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.7.9-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Oct 11 2024 Stanislav Levin <slev@altlinux.org> 0.7.9-alt2
 - Migrated from removed setuptools' test command (see #50996).
 

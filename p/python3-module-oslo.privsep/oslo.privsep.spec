@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack library for privilege separation
 
@@ -105,7 +105,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/privsep-helper
 %python3_sitelibdir/oslo_privsep
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/oslo_privsep/tests
 
 %files tests
@@ -118,6 +118,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
 - Automatically updated to 3.6.0.
 

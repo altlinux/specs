@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.15.2
-Release: alt1
+Release: alt1.1
 
 Summary: Bringing order to Mongo since 2009
 License: MIT
@@ -57,7 +57,7 @@ This package contains tests for Ming.
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/ming
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -65,6 +65,9 @@ This package contains tests for Ming.
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.15.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sat Dec 21 2024 Anton Vyatkin <toni@altlinux.org> 0.15.2-alt1
 - New version 0.15.2.
 

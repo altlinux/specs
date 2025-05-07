@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Next generation TurboGears
 
@@ -39,9 +39,12 @@ single file mode.
 %files
 %doc README.*
 %python3_sitelibdir/tg
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Feb 19 2025 Anton Vyatkin <toni@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 

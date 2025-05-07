@@ -5,7 +5,7 @@
 
 Name: python3-module-%modulename
 Version: 1.7.1
-Release: alt4
+Release: alt4.1
 Summary: A SOCKS proxy client and wrapper for Python
 License: BSD
 Group: Development/Python
@@ -41,9 +41,12 @@ BuildRequires(pre): rpm-build-pyproject
 %files
 %python3_sitelibdir/socks*
 %python3_sitelibdir/__pycache__/socks*
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.7.1-alt4.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Apr 28 2023 Stanislav Levin <slev@altlinux.org> 1.7.1-alt4
 - Mapped PyPI name to distro's one.
 

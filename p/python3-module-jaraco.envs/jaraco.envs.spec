@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.6.0
-Release: alt1
+Release: alt1.1
 Summary: Classes for orchestrating Python virtual environments
 License: MIT
 Group: Development/Python3
@@ -52,9 +52,12 @@ BuildRequires(pre): rpm-build-pyproject
 %doc README.rst
 %python3_sitelibdir/jaraco/__pycache__/envs.cpython-*.py*
 %python3_sitelibdir/jaraco/envs.py
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Mar 14 2024 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.4.0 -> 2.6.0.
 

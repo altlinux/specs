@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 4.0.0
-Release: alt1
+Release: alt1.1
 Summary: Module for text manipulation
 License: MIT
 Group: Development/Python3
@@ -63,9 +63,12 @@ BuildRequires(pre): rpm-build-pyproject
 
 %files
 %python3_sitelibdir/jaraco/*
-%python3_sitelibdir/jaraco.text-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Jul 29 2024 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
 - 3.14.0 -> 4.0.0.
 

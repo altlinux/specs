@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Zope Dublin Core implementation
 License: ZPL-2.1
@@ -67,7 +67,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/zope/dublincore
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/dublincore/tests
 %exclude %python3_sitelibdir/zope/dublincore/browser/tests
@@ -78,6 +78,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:5.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Jul 05 2023 Anton Vyatkin <toni@altlinux.org> 1:5.0-alt1
 - New version 5.0.
 

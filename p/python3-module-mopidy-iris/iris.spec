@@ -3,7 +3,7 @@
 
 Name: python3-module-mopidy-iris
 Version: 3.69.3
-Release: alt1
+Release: alt1.1
 
 Summary: Fully-featured Mopidy frontend client
 License: Apache-2.0
@@ -63,10 +63,13 @@ npm run prod
 
 %files
 %python3_sitelibdir/mopidy_iris
-%python3_sitelibdir/Mopidy_Iris-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo mopidy-iris}/
 
 %doc README.rst LICENSE
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.69.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Apr 01 2024 Anastasia Osmolovskaya <lola@altlinux.org> 3.69.3-alt1
 - Initial build for ALT.

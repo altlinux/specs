@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.4.2
-Release: alt1
+Release: alt1.1
 Summary: Tools to supplement packaging Python releases
 License: MIT
 Group: Development/Python3
@@ -50,9 +50,12 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%ns_name/%mod_name.py
 %dir %python3_sitelibdir/%ns_name/__pycache__/
 %python3_sitelibdir/%ns_name/__pycache__/%mod_name.*
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 6.4.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Apr 07 2025 Stanislav Levin <slev@altlinux.org> 6.4.2-alt1
 - 6.4.1 -> 6.4.2.
 

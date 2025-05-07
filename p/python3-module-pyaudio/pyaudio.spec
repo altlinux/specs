@@ -7,7 +7,7 @@ Group: Development/Python3
 
 Name:		python3-module-pyaudio
 Version:	0.2.14
-Release:	alt1
+Release: 	alt1.1
 License:	MIT
 Url:		http://people.csail.mit.edu/hubert/pyaudio/
 Source0:	https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-%version.tar.gz
@@ -40,9 +40,12 @@ a variety of platforms.
 %files
 %doc README.md CHANGELOG LICENSE.txt
 %python3_sitelibdir/pyaudio
-%python3_sitelibdir/PyAudio-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo pyaudio}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.2.14-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Apr 17 2024 Grigory Ustinov <grenka@altlinux.org> 0.2.14-alt1
 - Build new version.
 

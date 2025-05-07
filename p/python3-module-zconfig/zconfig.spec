@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 4.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python configuration module from Zope
 License: ZPL-2.1
@@ -80,7 +80,7 @@ This package contains tests for ZConfig.
 %files
 %_bindir/*
 %python3_sitelibdir/ZConfig
-%python3_sitelibdir/ZConfig-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
@@ -90,6 +90,9 @@ This package contains tests for ZConfig.
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jan 16 2025 Anton Vyatkin <toni@altlinux.org> 4.2-alt1
 - New version 4.2.
 

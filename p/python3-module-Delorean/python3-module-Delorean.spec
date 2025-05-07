@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt3
+Release: alt3.1
 
 Summary: Delorean: Time Travel Made Easy
 License: MIT
@@ -60,9 +60,12 @@ Pretty much make you a badass time traveller.
 %files
 %doc README.rst LICENSE.txt CHANGES.rst
 %python3_sitelibdir/delorean/
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt3.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri May 26 2023 Anton Vyatkin <toni@altlinux.org> 1.0.0-alt3
 - Fix FTBFS
 

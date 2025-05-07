@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.3
-Release: alt1
+Release: alt1.1
 Summary: Python library to natively send files to Trash
 License: BSD-3-Clause
 Group: Development/Python3
@@ -46,9 +46,12 @@ natively and on all platforms.
 %doc README.*
 %_bindir/send2trash
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/Send2Trash-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1
 - 1.8.0 -> 1.8.3.
 

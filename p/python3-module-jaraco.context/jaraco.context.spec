@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.0.1
-Release: alt1
+Release: alt1.1
 Summary: Context managers by Jaraco
 License: MIT
 Group: Development/Python3
@@ -51,9 +51,12 @@ BuildRequires(pre): rpm-build-pyproject
 %files
 %doc README.rst
 %python3_sitelibdir/jaraco/context/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
 - 5.3.0 -> 6.0.1.
 

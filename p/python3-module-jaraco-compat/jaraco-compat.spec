@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.2.2
-Release: alt1
+Release: alt1.1
 Summary: Modules providing forward compatibility across Python versions
 License: MIT
 Group: Development/Python3
@@ -49,8 +49,11 @@ borrowed before they are available in the standard library.
 %doc README.*
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%distinfo_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 4.2.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Mar 24 2025 Stanislav Levin <slev@altlinux.org> 4.2.2-alt1
 - Initial build for Sisyphus.

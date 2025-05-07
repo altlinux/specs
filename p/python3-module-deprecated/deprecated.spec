@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 1.2.18
-Release: alt1
+Release: alt1.1
 Summary: Decorators to deprecate old python classes, functions or methods
 License: MIT
 Group: Development/Python3
@@ -46,9 +46,12 @@ methods.
 %files
 %doc README.md CHANGELOG.rst
 %python3_sitelibdir/deprecated/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.2.18-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jan 28 2025 Stanislav Levin <slev@altlinux.org> 1.2.18-alt1
 - 1.2.17 -> 1.2.18.
 

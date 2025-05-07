@@ -1,6 +1,6 @@
 Name: python3-module-gtts
 Version: 2.5.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python interface with Google Translate's TTS API
 License: MIT
@@ -38,9 +38,12 @@ BuildRequires: python3(testfixtures)
 %_bindir/gtts-cli
 %python3_sitelibdir/gtts
 %exclude %python3_sitelibdir/gtts/tests
-%python3_sitelibdir/gTTS-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo gtts}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jul 04 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.1-alt1
 - 2.5.1 released
 

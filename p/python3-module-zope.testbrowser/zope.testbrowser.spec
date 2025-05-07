@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Programmable browser for functional black-box tests
 License: ZPL-2.1
@@ -69,10 +69,13 @@ rm -r %buildroot%python3_sitelibdir/zope/testbrowser/tests/
 %files
 %doc CHANGES.rst README.rst
 %python3_sitelibdir/zope/testbrowser/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.0.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Mar 06 2025 Anton Vyatkin <toni@altlinux.org> 7.0.1-alt1
 - New version 7.0.1.
 

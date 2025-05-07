@@ -3,7 +3,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Documentation and open source tools for the Gowin FPGA bitstream format
 License: MIT
@@ -39,10 +39,13 @@ BuildRequires: python3(wheel)
 %files
 %_bindir/*
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/%srcname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %modulename}/
 %doc *.md doc/*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.15-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jan 07 2025 Anton Midyukov <antohami@altlinux.org> 0.15-alt1
 - new version (0.15) with rpmgs script
 - add Vcs

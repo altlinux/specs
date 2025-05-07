@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python SVG Charting Library
 
@@ -50,9 +50,12 @@ SVG, originally based on the SVG::Graph Ruby package by Sean E. Russel.
 
 %files
 %python3_sitelibdir/%ns_root/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.3.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Oct 17 2024 Stanislav Levin <slev@altlinux.org> 7.3.1-alt1
 - 6.1 -> 7.3.1.
 

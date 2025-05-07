@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 2.8.0
-Release: alt1
+Release: alt1.1
 Summary: JSON Web Token implementation in Python
 License: MIT
 Group: Development/Python3
@@ -51,9 +51,12 @@ A Python implementation of RFC 7519.
 %files
 %doc README.*
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Jul 19 2023 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1
 - 2.6.0 -> 2.8.0.
 

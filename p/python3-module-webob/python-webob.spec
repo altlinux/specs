@@ -6,7 +6,7 @@
 
 Name: python3-module-webob
 Version: 1.8.9
-Release: alt1
+Release: alt1.1
 
 Summary: WSGI request and response object
 License: MIT
@@ -46,9 +46,12 @@ environment.
 %files
 %doc README.rst
 %python3_sitelibdir_noarch/webob/
-%python3_sitelibdir_noarch/%pypi_name-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.8.9-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Oct 28 2024 Anton Vyatkin <toni@altlinux.org> 1.8.9-alt1
 - New version 1.8.9.
 

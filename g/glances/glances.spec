@@ -4,7 +4,7 @@
 
 Name: glances
 Version: 4.3.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -116,7 +116,7 @@ install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
 
 %files -n python3-module-%name
 %python3_sitelibdir/glances
-%python3_sitelibdir/Glances-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %if_with webserver
 %files webserver
@@ -129,6 +129,9 @@ install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
 %endif
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.3.0.8-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jan 21 2025 Alexander Kuznetsov <kuznetsovam@altlinux.org> 4.3.0.8-alt1
 - New version 4.3.0.8 (closes: #53271).
 - Add subpackage with webserver requirements and systemd unit.

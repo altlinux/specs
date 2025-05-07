@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 6.1
-Release: alt1
+Release: alt1.1
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
 Group: Development/Python3
@@ -61,19 +61,22 @@ This package contains development files for %pypi_name.
 %files
 %doc README.*
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
-%exclude %_includedir/python3*/%pypi_name/
+%exclude %_includedir/python3*/%{pep427_name %pypi_name}/
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.h
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %files devel
-%_includedir/python3*/%pypi_name/
+%_includedir/python3*/%{pep427_name %pypi_name}/
 %python3_sitelibdir/%ns_name/%mod_name/*.h
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Oct 04 2024 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 6.0 -> 6.1.
 

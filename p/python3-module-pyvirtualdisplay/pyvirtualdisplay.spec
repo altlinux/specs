@@ -8,7 +8,7 @@
 
 Name: python3-module-%modulename
 Version: 3.0
-Release: alt1
+Release: alt1.1
 Summary: Python wrapper for Xvfb, Xephyr and Xvnc
 Group: Development/Python3
 License: BSD
@@ -56,10 +56,13 @@ pytest3 -v
 
 %files
 %doc README.md
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/%modulename/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Jun 12 2023 Anton Midyukov <antohami@altlinux.org> 3.0-alt1
 - new version (3.0) with rpmgs script
 

@@ -3,7 +3,7 @@
 
 Name: %pypi_name
 Version: 0.1.4
-Release: alt0.1
+Release: alt0.1.1
 Summary: Adds support for creating XML-RPC APIs to Flask
 Group: Development/Python3
 
@@ -56,10 +56,13 @@ Differences to Flask-XML-RPC
 %files -n python3-module-%{pypi_name}
 %python3_sitelibdir_noarch/flask_xmlrpcre
 %python3_sitelibdir_noarch/flaskext
-%python3_sitelibdir_noarch/Flask_XML_RPC_Re-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir_noarch/Flask_XML_RPC_Re-%version-*.pth
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.1.4-alt0.1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jan 25 2024 L.A. Kostis <lakostis@altlinux.ru> 0.1.4-alt0.1
 - Initial build for ALTLinux.
 

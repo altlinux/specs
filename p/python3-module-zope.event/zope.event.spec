@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.0
-Release: alt1.1
+Release: alt1.1.1
 
 Summary: Very basic event publishing system
 License: ZPL-2.1
@@ -72,7 +72,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt docs/*.rst
 %python3_sitelibdir/zope/event
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests*
 
@@ -80,6 +80,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Jul 28 2023 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
 - NMU: mapped PyPI name to distro's one.
 

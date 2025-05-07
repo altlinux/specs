@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1
-Release: alt1
+Version: 3.1.0
+Release: alt1.1
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -51,9 +51,12 @@ this configuration file.
 
 %files
 %python3_sitelibdir/paste/deploy
-%python3_sitelibdir/%oname-%version.0.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:3.1.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Mar 26 2024 Grigory Ustinov <grenka@altlinux.org> 1:3.1-alt1
 - Automatically updated to 3.1.
 

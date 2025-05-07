@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name flask-socketio
 %define mod_name flask_socketio
-%define distinfo_name Flask_SocketIO
 
 %def_without check
 
 Name:    python3-module-%pypi_name
 Version: 5.3.6
-Release: alt1
+Release: alt1.1
 
 Summary: Socket.IO integration for Flask applications.
 License: MIT
@@ -66,12 +65,15 @@ This package contains documentation for %pypi_name.
 %files
 %doc *.md
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{distinfo_name}*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files docs
 %doc docs/_build/html/*
 %doc example
 
 %changelog
+* Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 5.3.6-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Oct 24 2023 Andrey Limachko <liannnix@altlinux.org> 5.3.6-alt1
 - Initial build for Sisyphus

@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.5.1
-Release: alt1
+Release: alt1.1
 Summary: Testing support by jaraco
 License: MIT
 Group: Development/Python3
@@ -54,9 +54,12 @@ BuildRequires: python3-test
 %files
 %doc README.rst
 %python3_sitelibdir/jaraco/test/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1
 - 5.4.0 -> 5.5.1.
 

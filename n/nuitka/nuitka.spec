@@ -3,7 +3,7 @@
 
 Name: nuitka
 Version: 2.6.6
-Release: alt1
+Release: alt1.1
 
 Summary: Python compiler with full language support and CPython compatibility
 
@@ -59,9 +59,12 @@ messages are given.
 %_bindir/nuitka
 %_bindir/nuitka-run
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.6.6-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 2.6.6-alt1
 - build for Sisyphus again
 

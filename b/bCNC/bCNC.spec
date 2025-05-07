@@ -3,7 +3,7 @@
 
 Name:    bCNC
 Version: 0.9.14.318
-Release: alt3
+Release: alt3.1
 
 Summary: GRBL CNC command sender, autoleveler and g-code editor
 License: GPL-2.0
@@ -59,12 +59,15 @@ done
 %files
 %_bindir/%name
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 %doc *.md
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.9.14.318-alt3.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jan 31 2023 Anton Midyukov <antohami@altlinux.org> 0.9.14.318-alt3
 - add %%py3_requires serial (Closes:45081)
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 Summary: ASCII transliterations of Unicode text
 License: GPLv2
 Group: Development/Python3
@@ -50,9 +50,12 @@ an article title).
 %doc LICENSE README.rst tools
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/Unidecode-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Apr 28 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 

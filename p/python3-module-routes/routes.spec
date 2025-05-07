@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.5.1
-Release: alt1.2
+Release: alt1.3
 Summary: Routing Recognition and Generation Tools
 License: BSD
 Group: Development/Python3
@@ -56,6 +56,11 @@ This package contains pickles for Routes.
 
 %prep
 %setup
+# https://setuptools.readthedocs.io/en/latest/userguide/distribution.html#tagging-and-daily-build-or-snapshot-releases
+sed -i \
+    -e 's/^tag_build[ \t]*=.*/# &/' \
+    -e 's/^tag_date[ \t]*=.*/# &/' \
+setup.cfg
 
 %build
 %pyproject_build
@@ -72,12 +77,15 @@ popd
 %files
 %doc *.rst *.txt
 %python3_sitelibdir/%oname
-%python3_sitelibdir/Routes-%version.dev*.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1.3
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1.2
 - Fixed FTBFS.
 

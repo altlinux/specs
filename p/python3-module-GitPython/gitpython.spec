@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.44
-Release: alt1
+Release: alt1.1
 Summary: GitPython is a python library used to interact with Git repositories
 License: BSD
 Group: Development/Python3
@@ -94,9 +94,12 @@ export NO_SUBMODULES=YES
 
 %files
 %python3_sitelibdir/git/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.1.44-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Jan 13 2025 Stanislav Levin <slev@altlinux.org> 3.1.44-alt1
 - 3.1.43 -> 3.1.44.
 

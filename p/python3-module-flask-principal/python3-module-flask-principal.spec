@@ -8,7 +8,7 @@
 
 Name:          python3-module-%pypiname
 Version:       0.4.0
-Release:       alt1.1
+Release:       alt1.1.1
 Summary:       Identity management for Flask applications
 License:       MIT
 Group:         Development/Python3
@@ -54,9 +54,12 @@ official repository for this project.
 %{?!_disable_doc:%doc docs/_build/html/*}
 %python3_sitelibdir/%{distname}.py
 %python3_sitelibdir/__pycache__
-%python3_sitelibdir/%{modname}*/METADATA
+%python3_sitelibdir/%{pyproject_distinfo %pypiname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1.1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 

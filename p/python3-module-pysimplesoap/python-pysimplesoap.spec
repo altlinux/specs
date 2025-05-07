@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-build-python3
 
 Name:          python3-module-pysimplesoap
 Version:       1.16.2
-Release:       alt2
+Release: alt2.1
 Summary:       Python simple and lightweight SOAP Library
 Group:         Development/Python
 License:       LGPLv3+
@@ -45,9 +45,12 @@ cp -p %{SOURCE1} .
 %files -n python3-module-pysimplesoap
 %doc license.txt
 %python3_sitelibdir_noarch/pysimplesoap
-%python3_sitelibdir_noarch/%pypi_name-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.16.2-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sat Oct 14 2023 Anton Vyatkin <toni@altlinux.org> 1.16.2-alt2
 - Dropped dependency on distutils.
 

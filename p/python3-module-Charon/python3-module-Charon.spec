@@ -8,7 +8,7 @@
 
 Name:    python3-module-%modulename
 Version: 4.10.2
-Release: alt2
+Release: alt2.1
 
 Summary: File metadata and streaming library
 License: LGPL-3.0
@@ -51,10 +51,13 @@ pytest3 -v
 
 %files
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-1.0.dist-info
+%python3_sitelibdir/%{pep427_name %modulename}-1.0.dist-info/
 %doc *.md
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.10.2-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jun 13 2023 Anton Midyukov <antohami@altlinux.org> 4.10.2-alt2
 - Migration to PEP517
 

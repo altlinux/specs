@@ -5,7 +5,7 @@
 
 Name: python3-module-%mod_name
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Parser interpreter based on PEG grammars written in Python
 License: MIT
@@ -60,12 +60,15 @@ mkdocs build
 %doc site examples
 %python3_sitelibdir/%mod_name
 %exclude %python3_sitelibdir/%mod_name/tests/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files tests
 %python3_sitelibdir_noarch/%mod_name/tests/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jun 20 2024 Fr. Br. George <george@altlinux.org> 2.0.2-alt1
 - Autobuild version bump to 2.0.2
 

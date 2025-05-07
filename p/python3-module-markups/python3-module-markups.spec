@@ -3,7 +3,7 @@
 
 Name:    python3-module-markups
 Version: 4.1.1
-Release: alt1
+Release: alt1.1
 Summary: Wrapper around various text markups
 License: MIT
 Group:   Development/Python3
@@ -51,9 +51,12 @@ subst 's/^license.*/license={text="BSD-3-Clause"}/' pyproject.toml
 %files
 %doc README.rst
 %python3_sitelibdir/markups
-%python3_sitelibdir/Markups-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo markups}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Apr 29 2025 Andrey Cherepanov <cas@altlinux.org> 4.1.1-alt1
 - New version.
 

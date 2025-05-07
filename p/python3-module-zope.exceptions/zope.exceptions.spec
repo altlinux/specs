@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Zope Exceptions
 License: ZPL-2.1
@@ -60,10 +60,13 @@ rm -r %buildroot%python3_sitelibdir/%ns_name/%mod_name/tests
 %files
 %doc *.txt README.*
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*.pth
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Nov 05 2024 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - 5.1 -> 5.2.
 

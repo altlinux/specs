@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.17
-Release: alt1
+Release: alt1.1
 Summary: Compress responses in your Flask app with gzip, deflate or brotli
 License: MIT
 Group: Development/Python3
@@ -53,9 +53,12 @@ Flask-Compress will solve the problem for you.
 %files
 %doc *.md
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%distinfo_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.17-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Feb 05 2025 Stanislav Levin <slev@altlinux.org> 1.17-alt1
 - 1.14 -> 1.17.
 

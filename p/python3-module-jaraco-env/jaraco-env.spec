@@ -8,7 +8,7 @@
 
 Name: python3-module-%norm_name
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 Summary: Facilities for environment variables
 License: MIT
 Group: Development/Python3
@@ -50,8 +50,11 @@ This library facilitates handling of environment variables.
 %python3_sitelibdir/%ns_name/%mod_name.py
 %dir %python3_sitelibdir/%ns_name/__pycache__/
 %python3_sitelibdir/%ns_name/__pycache__/%mod_name.*
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Jul 24 2023 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus.

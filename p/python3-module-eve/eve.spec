@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 Summary: Python REST API for Humans
 License: BSD
 Group: Development/Python3
@@ -41,9 +41,12 @@ via community extensions.
 %files
 %doc README.*
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Oct 15 2024 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.0 -> 2.2.0.
 

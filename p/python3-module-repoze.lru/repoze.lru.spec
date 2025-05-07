@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.7
-Release: alt3
+Release: alt3.1
 
 Summary: Tiny LRU cache
 
@@ -51,9 +51,12 @@ rm -fv %buildroot%python3_sitelibdir/repoze/lru/tests.py
 %doc *.txt
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%ns_name.%mod_name-%version-*-nspkg.pth
-%python3_sitelibdir/%ns_name.%mod_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.7-alt3.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jun 04 2024 Stanislav Levin <slev@altlinux.org> 0.7-alt3
 - map PyPI name to distro's one.
 

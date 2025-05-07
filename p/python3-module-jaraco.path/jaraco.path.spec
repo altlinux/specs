@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.7.2
-Release: alt1
+Release: alt1.1
 Summary: Miscellaneous path functions
 License: MIT
 Group: Development/Python3
@@ -53,9 +53,12 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%ns_name/__pycache__/
 %python3_sitelibdir/%ns_name/__pycache__/%mod_name.*
 %python3_sitelibdir/%ns_name/%mod_name.py
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.7.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 3.7.2-alt1
 - 3.7.1 -> 3.7.2.
 

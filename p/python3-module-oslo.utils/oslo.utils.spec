@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 8.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Utility library
 
@@ -106,7 +106,7 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/oslo_utils
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/oslo_utils/tests
 
 %files tests
@@ -119,6 +119,9 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 %endif
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 8.2.0-alt1
 - Automatically updated to 8.2.0.
 

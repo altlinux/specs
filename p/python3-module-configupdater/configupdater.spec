@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.2
-Release: alt1
+Release: alt1.1
 Summary: Parser like ConfigParser but for updating configuration files
 License: MIT
 Group: Development/Python3
@@ -49,9 +49,12 @@ writing new ones.
 %files
 %doc README.rst
 %python3_sitelibdir/configupdater/
-%python3_sitelibdir/ConfigUpdater-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.2-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Mar 01 2024 Stanislav Levin <slev@altlinux.org> 3.2-alt1
 - 3.1.1 -> 3.2.
 

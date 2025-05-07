@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.1
-Release: alt1
+Release: alt1.1
 
 Summary: Interfaces and simple adapter that give the size of an object
 License: ZPL-2.1
@@ -69,7 +69,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/zope
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 
@@ -78,6 +78,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
 - New version 5.1.
 

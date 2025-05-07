@@ -4,7 +4,7 @@
 
 Name: python3-module-kivy
 Version: 2.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Open source UI framework written in Python
 
@@ -95,13 +95,16 @@ and not test_local_zipsequence"
 
 %files
 %python3_sitelibdir/kivy/
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo kivy}/
 %exclude %python3_sitelibdir/kivy/tests
 
 %files tests
 %python3_sitelibdir/kivy/tests
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Jan 31 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
 - Automatically updated to 2.3.1.
 - Built with check.

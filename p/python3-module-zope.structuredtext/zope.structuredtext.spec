@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt2
+Release: alt2.1
 
 Summary: StructuredText parser
 License: ZPL-2.1
@@ -60,7 +60,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt *.rst docs/*.rst
 %python3_sitelibdir/zope
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 %exclude %python3_sitelibdir/*/*/*/examples*
@@ -71,6 +71,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Jan 21 2024 Anton Vyatkin <toni@altlinux.org> 5.0-alt2
 - Fixed FTBFS.
 

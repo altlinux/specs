@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt6
+Release: alt6.1
 
 Summary: Bootstrap confidence interval estimation routines for Numpy/Scipy/Pandas
 License: BSD-3-Clause
@@ -63,9 +63,12 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt6.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Oct 21 2024 Stanislav Levin <slev@altlinux.org> 1.1.0-alt6
 - Removed dependency on pyerf.
 

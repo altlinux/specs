@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.0
-Release: alt1
+Release: alt1.1
 
 Summary: zExceptions contains common exceptions used in Zope
 License: ZPL-2.1
@@ -54,7 +54,7 @@ This package contains tests for zExceptions.
 %files
 %doc README.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -62,6 +62,9 @@ This package contains tests for zExceptions.
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Jun 28 2023 Anton Vyatkin <toni@altlinux.org> 5.0-alt1
 - New version 5.0.
 

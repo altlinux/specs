@@ -1,6 +1,6 @@
 Name: python3-module-luma-oled
 Version: 3.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Small OLED display library
 License: MIT
@@ -30,9 +30,12 @@ using I2C/SPI/Parallel on any linux-based single-board computer.
 
 %files
 %python3_sitelibdir/luma
-%python3_sitelibdir/luma.oled-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo luma-oled}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Dec 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.10.0-alt1
 - 3.10.0 released
 

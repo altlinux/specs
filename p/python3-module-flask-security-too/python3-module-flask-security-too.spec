@@ -7,7 +7,7 @@
 
 Name:          python3-module-%pypiname
 Version:       5.3.3
-Release:       alt1
+Release: alt1.1
 Summary:       Quick and simple security for Flask applications
 License:       MIT
 Group:         Development/Python3
@@ -79,8 +79,11 @@ PYTHONWARNINGS=ignore %pyproject_run_unittest
 %doc *.rst
 %{?!_disable_doc:%doc docs/_build/html/*}
 %python3_sitelibdir/%{distname}
-%python3_sitelibdir/%{modname}*/METADATA
+%python3_sitelibdir/%{pyproject_distinfo %pypiname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.3.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Jan 30 2023 Pavel Skrylev <majioa@altlinux.org> 5.3.3-alt1
 - Initial build v5.3.3 for Sisyphus.

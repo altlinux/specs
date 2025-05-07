@@ -9,7 +9,7 @@
 Name: python3-module-%oname
 Epoch:   1
 Version: 3.7.0
-Release: alt1
+Release: alt1.1
 Summary: A pluggable command-line frontend
 License: MIT/X11
 Group: Development/Python3
@@ -68,10 +68,14 @@ mv %buildroot%_bindir/paster %buildroot%_bindir/paster3
 %files
 %doc docs/_build/*
 %python3_sitelibdir/paste/script
-%python3_sitelibdir/%oname-*
+%python3_sitelibdir/%oname-%version-*-nspkg.pth
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %_bindir/paster3
 
 %changelog
+* Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 1:3.7.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Jan 22 2025 Anton Vyatkin <toni@altlinux.org> 1:3.7.0-alt1
 - new version 3.7.0
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.3.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python library for importing Wavefront .obj files
 
@@ -38,9 +38,12 @@ vertex data for each material ready for rendering.
 
 %files
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Fri Jul 26 2024 Ivan Mazhukin <vanomj@altlinux.org> 1.3.3-alt1
 - initial build for ALT Sisyphus
 

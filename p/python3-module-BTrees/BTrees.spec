@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 6.1
-Release: alt1
+Release: alt1.1
 
 Summary: Scalable persistent object containers
 License: ZPL-2.1
@@ -85,13 +85,16 @@ rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 %files
 %doc LICENSE.txt *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/BTrees-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Sep 18 2024 Stanislav Levin <slev@altlinux.org> 6.1-alt1
 - 6.0 -> 6.1.
 

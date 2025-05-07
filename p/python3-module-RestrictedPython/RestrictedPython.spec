@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 8.0
-Release: alt1
+Release: alt1.1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
 Group: Development/Python3
@@ -50,9 +50,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 8.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Jan 23 2025 Grigory Ustinov <grenka@altlinux.org> 8.0-alt1
 - Automatically updated to 8.0.
 

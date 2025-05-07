@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Iconic fonts in PyQt and PySide applications
 License: MIT
@@ -63,9 +63,12 @@ It started as a Python port of the QtAwesome C++ library by Rick Blommers.
 %_bindir/qta-browser
 %_bindir/qta-install-fonts-all-users
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Mar 24 2025 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 

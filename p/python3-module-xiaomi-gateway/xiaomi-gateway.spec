@@ -1,6 +1,8 @@
+%define pypi_name PyXiaomiGateway
+
 Name: python3-module-xiaomi-gateway
 Version: 0.14.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python library to communicate with the Xiaomi Gateway
 License: BSD
@@ -28,9 +30,12 @@ BuildRequires: python3(wheel)
 
 %files
 %python3_sitelibdir/xiaomi_gateway
-%python3_sitelibdir/PyXiaomiGateway-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.14.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Nov 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.3-alt1
 - 0.14.3 released
 

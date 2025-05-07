@@ -7,7 +7,7 @@
 
 Name: python3-module-flask-restful
 Version: 0.3.10
-Release: alt1
+Release: alt1.1
 
 Summary: Simple framework for creating REST APIs
 
@@ -49,9 +49,12 @@ Flask-RESTful provides the building blocks for creating a great REST API.
 %files
 %doc LICENSE *.md
 %python3_sitelibdir/flask_restful
-%python3_sitelibdir/Flask_RESTful-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo flask-restful}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.3.10-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Tue Sep 19 2023 Grigory Ustinov <grenka@altlinux.org> 0.3.10-alt1
 - Build new version.
 

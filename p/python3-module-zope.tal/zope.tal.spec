@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.1
-Release: alt1
+Release: alt1.1
 
 Summary: Zope3 Template Attribute Languate
 License: ZPL-2.1
@@ -73,7 +73,7 @@ rm -rf src/zope/tal/tests/test_files.py
 %files
 %doc README.*
 %python3_sitelibdir/zope/tal
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/runtest.*
@@ -86,6 +86,9 @@ rm -rf src/zope/tal/tests/test_files.py
 
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 5.1-alt1
 - New version 5.1.
 

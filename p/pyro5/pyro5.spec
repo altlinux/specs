@@ -3,7 +3,7 @@
 
 Name: pyro5
 Version: 5.15
-Release: alt1
+Release: alt1.1
 Summary: Distributed object middleware for Python (RPC)
 License: MIT
 Group: Development/Python3
@@ -73,9 +73,12 @@ py.test3 -m "not network"
 
 %files -n python3-module-%modulename
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/%modulename-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 5.15-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Oct 23 2023 Anton Midyukov <antohami@altlinux.org> 5.15-alt1
 - new version (5.15) with rpmgs script
 

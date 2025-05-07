@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Bringing the elegance of C# EventHanlder to Python
 License: BSD
@@ -49,10 +49,13 @@ part of the language.
 %files
 %doc README.*
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.5-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Oct 10 2024 Stanislav Levin <slev@altlinux.org> 0.5-alt1
 - 0.2.1 -> 0.5.
 

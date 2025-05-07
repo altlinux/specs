@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Database connections for multi-threaded environments
 License: MIT
@@ -49,9 +49,12 @@ of multi-threaded environments.
 
 %files
 %python3_sitelibdir/dbutils/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Thu Mar 28 2024 Ajrat Makhmutov <rauty@altlinux.org> 3.1.0-alt2
 - Remove autorequirement of PyGreSQL.
 

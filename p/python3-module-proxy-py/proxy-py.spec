@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.4.10
-Release: alt1
+Release: alt1.1
 Summary: Proxy server
 License: BSD
 Group: Development/Python3
@@ -66,9 +66,12 @@ BuildRequires: %_bindir/openssl
 %_bindir/grout
 %_bindir/proxy
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/proxy.py-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2.4.10-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Feb 19 2025 Stanislav Levin <slev@altlinux.org> 2.4.10-alt1
 - 2.4.9 -> 2.4.10.
 

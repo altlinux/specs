@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Middleware library
 
@@ -106,7 +106,7 @@ install -pDm 644 man/oslomiddleware.1 %buildroot%_man1dir/oslomiddleware.1
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/oslo_middleware
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/oslo_middleware/tests
 
 %files tests
@@ -119,6 +119,9 @@ install -pDm 644 man/oslomiddleware.1 %buildroot%_man1dir/oslomiddleware.1
 %endif
 
 %changelog
+* Wed May 07 2025 Stanislav Levin <slev@altlinux.org> 6.4.0-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Apr 30 2025 Grigory Ustinov <grenka@altlinux.org> 6.4.0-alt1
 - Automatically updated to 6.4.0.
 

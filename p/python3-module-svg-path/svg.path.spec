@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_nname
 Version: 6.3
-Release: alt1
+Release: alt1.1
 Summary: SVG path objects and parser
 License: MIT
 Group: Development/Python3
@@ -55,9 +55,12 @@ commands in SVG, and a parser for SVG path definitions.
 %files
 %doc README.rst CHANGES.txt CONTRIBUTORS.txt
 %python3_sitelibdir/%ns_root/%mod_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.3-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Wed Oct 16 2024 Stanislav Levin <slev@altlinux.org> 6.3-alt1
 - 4.1 -> 6.3.
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.1
-Release: alt1
+Release: alt1.1
 
 Summary: File-system Representation Interfaces
 License: ZPL-2.1
@@ -52,12 +52,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/zope/filerepresentation/
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/zope/filerepresentation/tests.py
 %exclude %python3_sitelibdir/zope/filerepresentation/__pycache__/tests.*
 
 %changelog
+* Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.1-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Sun Feb 16 2025 Anton Vyatkin <toni@altlinux.org> 6.1-alt1
 - New version 6.1.
 
