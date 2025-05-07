@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Test python asyncio-based code with ease
@@ -55,5 +55,8 @@ unittest.IsolatedAsyncioTestCase. Builtin unittest module is now asyncio-feature
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 07 2025 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Thu Dec 28 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
 - Initial build for Sisyphus.
