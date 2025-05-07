@@ -23,7 +23,7 @@
 %define nv_version 570
 %define nv_release 133
 %define nv_minor 07
-%define pkg_rel alt289
+%define pkg_rel alt290
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -368,6 +368,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue May 06 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt290
+- add open kernel module switching support
+
 * Thu Apr 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt289
 - new version
 

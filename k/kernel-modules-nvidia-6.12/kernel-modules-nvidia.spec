@@ -13,7 +13,7 @@
 %ifarch %ix86 armh
 %define module_version	390.157
 %endif
-%define module_release	alt1
+%define module_release	alt3
 %define flavour		6.12
 %define karch x86_64 aarch64 %ix86
 
@@ -106,6 +106,9 @@ BuildRequires(pre): kernel-headers-modules-6.12
 BuildRequires: rpm-utils
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_srcver
+%ifnarch %ix86 armh
+BuildRequires: kernel-source-%module_name-open-%module_srcver
+%endif
 %if "%legacy7" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy7_src
 %endif
@@ -171,13 +174,18 @@ do
     sffx=`echo "$ver"| sed -e "s|\.||g"`
     rm -rf kernel-source-%module_name-$sffx
     tar -jxvf %_usrsrc/kernel/sources/kernel-source-%module_name-$sffx.tar.bz2
+    [ -f %_usrsrc/kernel/sources/kernel-source-%module_name-open-$sffx.tar.bz2 ] \
+	&& tar -jxvf %_usrsrc/kernel/sources/kernel-source-%module_name-open-$sffx.tar.bz2
 
-    pushd kernel-source-%module_name-$sffx
-    if [ -f Makefile.kbuild ] ; then
-	rm -f makefile Makefile
-	ln -s Makefile.kbuild Makefile
-    fi
-    popd
+    for kmd in kernel-source-%module_name-$sffx kernel-source-%module_name-open-$sffx ; do
+	[ -d $kmd ] || continue
+	pushd $kmd
+	if [ -f Makefile.kbuild ] ; then
+	    rm -f makefile Makefile
+	    ln -s Makefile.kbuild Makefile
+	fi
+	popd
+    done
 done
 
 
@@ -186,17 +194,20 @@ done
 for ver in %mod_ver_list
 do
     sffx=`echo "$ver"| sed -e "s|\.||g"`
-    pushd kernel-source-%module_name-$sffx
-    INTO_KERNEL_SRCDIR=
-    [ -d nvidia-modeset ] || \
-	INTO_KERNEL_SRCDIR="-C %_usrsrc/linux-%kversion-%flavour"
-    %make_build modules \
-	$INTO_KERNEL_SRCDIR \
-	M=$PWD \
-	TEMP_DIR=$PWD/ \
-	ARCH=%base_arch \
-	SYSSRC=%_usrsrc/linux-%kversion-%flavour
-    popd
+    for kmd in kernel-source-%module_name-$sffx kernel-source-%module_name-open-$sffx ; do
+	[ -d $kmd ] || continue
+	pushd $kmd
+	INTO_KERNEL_SRCDIR=
+	[ -d nvidia-modeset ] || \
+	    INTO_KERNEL_SRCDIR="-C %_usrsrc/linux-%kversion-%flavour"
+	%make_build modules \
+	    $INTO_KERNEL_SRCDIR \
+	    M=$PWD \
+	    TEMP_DIR=$PWD/ \
+	    ARCH=%base_arch \
+	    SYSSRC=%_usrsrc/linux-%kversion-%flavour
+	popd
+    done
 done
 
 %install
@@ -208,19 +219,23 @@ mkdir -p %buildroot/%nvidia_workdir
 for ver in %mod_ver_list
 do
     sffx=`echo "$ver"| sed -e "s|\.||g"`
-    pushd kernel-source-%module_name-$sffx
-    install -p -m644 %module_name%module_ext %buildroot/%module_local_dir/%kversion-%flavour-%krelease-$ver
-    [ -e %modesetmodule_name%module_ext ] &&
-	install -p -m644 %modesetmodule_name%module_ext %buildroot/%module_local_dir/modeset-%kversion-%flavour-%krelease-$ver
-    [ -e %drmmodule_name%module_ext ] &&
-	install -p -m644 %drmmodule_name%module_ext %buildroot/%module_local_dir/drm-%kversion-%flavour-%krelease-$ver
-    [ -e uvm/%uvmmodule_name%module_ext ] &&
-	install -p -m644 uvm/%uvmmodule_name%module_ext %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
-    [ -e %uvmmodule_name%module_ext ] &&
-	install -p -m644 %uvmmodule_name%module_ext    %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver
-    [ -e %peermemmodule_name%module_ext ] &&
-	install -p -m644 %peermemmodule_name%module_ext    %buildroot/%module_local_dir/peermem-%kversion-%flavour-%krelease-$ver
-    popd
+    for kmd in kernel-source-%module_name-$sffx kernel-source-%module_name-open-$sffx ; do
+	[ -d $kmd ] || continue
+	OPENSFFX=`echo $kmd | grep -q -e '-open' && echo '_open' ||:`
+	pushd $kmd
+	install -p -m644 %module_name%module_ext %buildroot/%module_local_dir/%kversion-%flavour-%krelease-$ver$OPENSFFX
+	[ -e %modesetmodule_name%module_ext ] &&
+	    install -p -m644 %modesetmodule_name%module_ext %buildroot/%module_local_dir/modeset-%kversion-%flavour-%krelease-$ver$OPENSFFX
+	[ -e %drmmodule_name%module_ext ] &&
+	    install -p -m644 %drmmodule_name%module_ext %buildroot/%module_local_dir/drm-%kversion-%flavour-%krelease-$ver$OPENSFFX
+	[ -e uvm/%uvmmodule_name%module_ext ] &&
+	    install -p -m644 uvm/%uvmmodule_name%module_ext %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver$OPENSFFX
+	[ -e %uvmmodule_name%module_ext ] &&
+	    install -p -m644 %uvmmodule_name%module_ext    %buildroot/%module_local_dir/uvm-%kversion-%flavour-%krelease-$ver$OPENSFFX
+	[ -e %peermemmodule_name%module_ext ] &&
+	    install -p -m644 %peermemmodule_name%module_ext    %buildroot/%module_local_dir/peermem-%kversion-%flavour-%krelease-$ver$OPENSFFX
+	popd
+    done
 done
 
 # workaround agains absent modules
@@ -293,6 +308,12 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed May 07 2025 Sergey V Turchin <zerg at altlinux dot org> 570.133.07-alt3
+- fix package on ix86
+
+* Wed May 07 2025 Sergey V Turchin <zerg at altlinux dot org> 570.133.07-alt2
+- build openkernel module
 
 * Thu Apr 03 2025 Sergey V Turchin <zerg at altlinux dot org> 570.133.07-alt1
 - new release (570.133.07)

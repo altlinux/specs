@@ -25,7 +25,7 @@
 %define nv_version 570
 %define nv_release 133
 %define nv_minor   07
-%define pkg_rel alt277
+%define pkg_rel alt278
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -99,15 +99,15 @@ Source201: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 Source202: ftp://download.nvidia.com/XFree86/Linux-aarch64/%tbver/NVIDIA-Linux-aarch64-%tbver.run
 
 Source2: nvidia.xinf
+Source3: nvidia_open.xinf
 Source100: nvidia_create_xinf.cpp
 Source101: nvidia_create_xinf.pro
 
-Patch1: alt-fix-build-kernel.patch
+Patch1: disable_fstack-clash-protection_fcf-protection.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: alt-enable-modeset.patch
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
-Patch6: disable_fstack-clash-protection_fcf-protection.patch
 
 BuildRequires(pre): rpm-build-ubt libgbm-devel
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -157,6 +157,14 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
 
+%package -n kernel-source-%module_name-open-%module_version
+Group: Development/Kernel
+Summary: Linux %module_name modules open sources
+License: %myLicense
+Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+%description -n kernel-source-%module_name-open-%module_version
+%module_name modules open sources for Linux kernel
+
 %package -n firmware-%module_name-%version
 Group: Development/Kernel
 Summary: Firmware for NVIDIA video devices.
@@ -181,20 +189,22 @@ sh %SOURCE201 -x
 cd %tbname-%tbver%dirsuffix
 
 pushd kernel
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 #
 %ifarch aarch64
 %patch4 -p1
 %patch5 -p1
-%endif
-%patch6 -p1
-rm -rf precompiled
-%ifarch aarch64
 #fgrep -rl MT_DEVICE_GRE |xargs sed -i s,MT_DEVICE_GRE,MT_NORMAL_NC,
 sed -ri '/NV_ASM_SET_MEMORY_H_PRESENT/atypedef _Bool bool;' conftest.sh
 %endif
+popd
+
+pushd kernel-open
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 popd
 
 %build
@@ -256,8 +266,9 @@ fi
 #
 
 install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
-ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
+install -m 0644 %SOURCE3 %buildroot/%nv_lib_dir/nvidia_open.xinf
 ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
+ln -sr %buildroot/%nv_lib_dir/nvidia_open.xinf %buildroot/%xinf_dir/nvidia-%{version}_open.xinf
 
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/nvidia_drv.so %buildroot/%nv_lib_dir/
@@ -326,12 +337,16 @@ install -m 0644 nvidia_layers.json %buildroot/%nv_lib_dir/nvidia_layers.json
 
 %if_enabled kernelsource
 # kernel-source install
-%__rm -rf kernel-source-%module_name-%module_version/
-%__mkdir_p %buildroot/%_usrsrc/kernel/sources/ kernel-source-%module_name-%module_version/
+%__rm -rf kernel-source-%module_name{,-open}-%module_version/
+%__mkdir_p %buildroot/%_usrsrc/kernel/sources/ kernel-source-%module_name{,-open}-%module_version/
 %__cp -ar kernel/* kernel-source-%module_name-%module_version/
+%__cp -ar kernel-open/* kernel-source-%module_name-open-%module_version/
 %__cp LICENSE kernel-source-%module_name-%module_version/
+%__cp LICENSE kernel-source-%module_name-open-%module_version/
 tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
     %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
+tar -c kernel-source-%module_name-open-%module_version | bzip2 -c > \
+    %buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-open-%module_version.tar.bz2
 %endif
 
 # install firmware
@@ -407,8 +422,8 @@ fi
 %ifarch x86_64
 %nv_lib_dir/nvidia/
 %endif
-%nv_lib_dir/nvidia.xinf
-%xinf_dir/nvidia-%version.xinf
+%nv_lib_dir/nvidia*.xinf
+%xinf_dir/nvidia-%{version}*.xinf
 %_datadir/nvidia/nvidia-application-profiles-%version-rc
 %_datadir/nvidia/nvidia-application-profiles-%version-key-documentation
 %_datadir/glvnd/egl_vendor.d/%{version}_nvidia.json
@@ -422,10 +437,15 @@ fi
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
-%_usrsrc/*
+%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
+%files -n kernel-source-%module_name-open-%module_version
+%_usrsrc/kernel/sources/kernel-source-%module_name-open-%module_version.tar.bz2
 %endif
 
 %changelog
+* Tue May 06 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt278
+- package open kernel module sources
+
 * Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt277
 - disable kernel module stack-clash-protection
 
