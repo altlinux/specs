@@ -122,7 +122,7 @@
 
 Name:    samba
 Version: 4.20.8
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2251,6 +2251,10 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Wed May 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.8-alt2
+- collect_tombstones: Doing a full scan for deleted objects in
+  corresponding dn only (thx Ivan Volchenko).
+
 * Mon Apr 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.8-alt1
 - Update to security release of Samba 4.20
 - Major fixes from upstream (Samba#15782, Samba#15738, Samba#15795, Samba#15151,
