@@ -42,16 +42,25 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 %ifarch aarch64
 # old clang have some troubles with .seh on aarch64
-%define llvm_version 15
+# use at least llvm 15
+%define min_llvm_ver 15
 %else
-%define llvm_version 11
+%define min_llvm_ver 11
 %endif
 
-%if_feature llvm %llvm_version
+%define llvm_ver %(LANG=C printf %%.0f %_llvm_version)
+%if %llvm_ver < %min_llvm_ver
+%global _llvm_version %min_llvm_ver.0
+%define llvm_ver %min_llvm_ver
+%endif
+
+%if_feature llvm %_llvm_version
 # build real PE libraries (.dll, not .dll.so), via clang
 %def_with mingw
 %else
 %def_without mingw
+# can't build wow64 without PE
+%undefine _with_wow64
 %endif
 
 %if_with wow64
@@ -60,7 +69,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 # TODO: clang: error: unsupported option '-mabi=' for target 'x86_64-unknown-linux-gnu'
-#def_with clang
+%def_without clang
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
 %def_with unwind
@@ -96,6 +105,12 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
     %def_without opencl
 %endif
 
+%if_feature osmesa
+    %def_with osmesa
+%else
+    %def_without osmesa
+%endif
+
 %if_feature pcap 1.10.3
     %def_with pcap
 %else
@@ -128,7 +143,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -158,7 +173,11 @@ AutoReq: yes, noperl, nomingw32, nocpp
 
 # set compilers
 %ifarch aarch64
+%undefine _without_clang
 %def_with clang
+%endif
+
+%if_with clang
 # clang-12: error: unsupported argument 'auto' to option 'flto='
 %define optflags_lto -flto=thin
 %endif
@@ -259,10 +278,12 @@ AutoProv:no
 BuildRequires: /proc
 
 # used llvm/clang toolchain if needed
-# clang has broken version on c10f2
-#define llvm_br clang >= %llvm_version llvm >= %llvm_version lld >= %llvm_version
+%if "%_vendor" == "alt"
+%define llvm_br clang%_llvm_version llvm%_llvm_version lld%_llvm_version
+%else
 # just use default llvm
 %define llvm_br clang llvm lld
+%endif
 
 %if_with clang
 BuildRequires: %llvm_br
@@ -281,6 +302,7 @@ BuildRequires: git-core
 # General dependencies
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
+BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires: util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libattr-devel
@@ -319,7 +341,9 @@ BuildRequires: pkgconfig(netapi)
 BuildRequires: libpcsclite-devel
 
 # can be missed on old systems
+%if_with osmesa
 BuildRequires: libOSMesa-devel
+%endif
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -568,10 +592,10 @@ develop programs using %name.
 %build
 %if_with clang
 %remove_optflags -frecord-gcc-switches
-export CC=clang
-%endif
-%if_with mingw
-export CROSSCC=clang
+export CC=clang-%llvm_ver
+# not supported
+#export CPP=clang-cpp-%llvm_ver
+export LD=lld-%llvm_ver
 %endif
 
 # disable fortify as it can breaks wine
@@ -598,8 +622,11 @@ export CROSSCC=clang
 	--with-cups \
 	--without-capi \
 	%{subst_with opencl} \
+	%{subst_with osmesa} \
 	%{subst_with pcap} \
-	%{subst_with mingw} \
+%if_with mingw
+	--with-mingw=%llvm_bindir/clang \
+%endif
 	%{subst_with vulkan} \
 	%{subst_with sdl} \
 	%{subst_with wayland} \
@@ -904,11 +931,16 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %libwinedir/%winepedir/lib*.a
 %endif
 # fix for makefiles: Don't build native import libraries for PE-only build.
-%ifarch %{ix86} x86_64
+%if_without clang
 %libwinedir/%winesodir/lib*.a
 %endif
 
 %changelog
+* Sun May 04 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt2
+- use _llvm_version and llvm_bindir from rpm-macros-llvm-common
+- use feature_osmesa
+- don't build wow64 when clang is missed
+
 * Sat May 03 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt1
 - new version (10.6.1) with rpmgs script
 - set strict require wine-mono 10.0.0
