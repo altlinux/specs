@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.27.0
-Release: alt1.1
+Release: alt2
 
 Summary: Libre realtime strategy game of ancient warfare
 License: GPL-2.0-or-later and MIT
@@ -19,6 +19,8 @@ Source1: cxxtest.tar
 Source2: fcollada.tar
 
 Patch1: 0ad-0.27-alt-loongarch64-and-riscv64.patch
+Patch2: 0ad-0.27-alt-mozjs128.patch
+Patch3: 0ad-0.27-alt-mozjs128-strict-mode.patch
 
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-flyweight-devel
@@ -38,7 +40,7 @@ BuildRequires: libgloox-devel
 BuildRequires: libicu-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libmozjs115-devel
+BuildRequires: libmozjs128-devel
 BuildRequires: libnspr-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
@@ -139,6 +141,9 @@ cp -a binaries/data/l10n %buildroot%_datadir/0ad/
 %_pixmapsdir/0ad.png
 
 %changelog
+* Tue May 06 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.0-alt2
+- Rebuild against libmozjs128 (ALT 54116).
+
 * Fri Feb 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:0.27.0-alt1.1
 - NMU:
   + build on loongarch64 and riscv64;
