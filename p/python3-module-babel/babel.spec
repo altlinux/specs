@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-babel
-Version: 2.15.0
+Version: 2.17.0
 Release: alt1
 Epoch: 1
 
@@ -86,6 +86,9 @@ LC_ALL=ru_RU.UTF-8 python3 -m pytest tests # -k "not `sed -E 's/ (.)/ and not \1
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 07 2025 Fr. Br. George <george@altlinux.org> 1:2.17.0-alt1
+- Autobuild version bump to 2.17.0
+
 * Sat Jul 27 2024 Fr. Br. George <george@altlinux.org> 1:2.15.0-alt1
 - Autobuild version bump to 2.15.0
 
