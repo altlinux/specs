@@ -2,21 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: far2l
-Version: 2.6.3
-Release: alt3
+Version: 2.6.5
+Release: alt1
 
 Summary: Linux port of FAR v2
 
 Group: File tools
 License: GPL-2.0
-Url: https://github.com/elfmz/far2l
+URL: https://github.com/elfmz/far2l
+VCS: https://github.com/elfmz/far2l.git
 
 # Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
-# https://github.com/elfmz/far2l/commit/c160f4f7914d8f003ee8bfea598689005464e608.patch
-Patch: upstream-c160f4f7.patch
-# https://github.com/elfmz/far2l/commit/4cb8b0fe3b0d7d1016c1a3fc9ed75a69d197c120.patch
-Patch1: upstream-4cb8b0fe.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -35,6 +32,7 @@ BuildRequires: libneon-devel
 BuildRequires: libxerces-c-devel
 BuildRequires: libXi-devel
 BuildRequires: libX11-devel
+BuildRequires: libxml2-devel
 
 # skip optional requires from /usr/share/far2l scripts
 %filter_from_requires /^sudo/d
@@ -84,18 +82,32 @@ Used code from projects:
 %install
 %cmake_install
 
+# do not show in application menu
+desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far2l-tty.desktop
+desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far2ledit.desktop
+desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far2ledit-tty.desktop
+
 %files
 %_bindir/%name
 %_bindir/%{name}edit
 %_libexecdir/%name/
 %_datadir/%name/
+%_datadir/bash-completion/completions/far2l
 %_desktopdir/far2l.desktop
+%_desktopdir/far2l-tty.desktop
+%_desktopdir/far2ledit-tty.desktop
+%_desktopdir/far2ledit.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/far2l.svg
+%_iconsdir/far2ledit.svg
 %_mandir/ru/man1/far2l.*
 %_man1dir/far2l.*
 
 %changelog
+* Wed May 07 2025 Anton Midyukov <antohami@altlinux.org> 2.6.5-alt1
+- new version (2.6.5) with rpmgs script
+- add VCS tag
+
 * Thu Oct 24 2024 Anton Midyukov <antohami@altlinux.org> 2.6.3-alt3
 - skip optional dependency on kde-cli-tools
 
