@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clifm
-Version: 1.24
-Release: alt2
+Version: 1.25
+Release: alt1
 
 Summary: Shell-like, command line terminal file manager
 License: GPL-2.0
@@ -67,6 +67,9 @@ Virtual directories.
 %_iconsdir/hicolor/scalable/apps/%{name}.svg
 
 %changelog
+* Wed May 07 2025 Nikolay Strelkov <snk@altlinux.org> 1.25-alt1
+- New version 1.25.
+
 * Sat Mar 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.24-alt2
 - Use python3 executable instead of python
 

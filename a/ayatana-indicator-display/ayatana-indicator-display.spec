@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: ayatana-indicator-display
-Version: 24.5.1
+Version: 24.5.2
 Release: alt1
 
 Summary: Ayatana Indicator for Display configuration
@@ -94,6 +94,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/polkit-1/rules.d/50-org.ayatana.indicator.display.AccountsService.rules
 
 %changelog
+* Wed May 07 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.2-alt1
+- New version 24.5.2.
+
 * Sat Mar 22 2025 Nikolay Strelkov <snk@altlinux.org> 24.5.1-alt1
 - New version 24.5.1.
 

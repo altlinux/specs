@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vala-panel-appmenu
-Version: 24.05
+Version: 25.04
 Release: alt1
 
 Summary: AppMenu plugin for xfce4-panel, mate-panel and vala-panel
@@ -136,5 +136,8 @@ rm -rfv %{buildroot}%{_datadir}/doc/vala-panel-appmenu
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed May 07 2025 Nikolay Strelkov <snk@altlinux.org> 25.04-alt1
+- New version 25.04.
+
 * Sat Feb 15 2025 Nikolay Strelkov <snk@altlinux.org> 24.05-alt1
 - Initial build for Sisyphus

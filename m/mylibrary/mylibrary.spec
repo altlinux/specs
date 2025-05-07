@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    mylibrary
-Version: 4.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Home librarian
@@ -82,6 +82,9 @@ rm -v %{buildroot}%{_datadir}/MyLibrary/COPYING
 %{_datadir}/doc/MLPluginIfc/*
 
 %changelog
+* Wed May 07 2025 Nikolay Strelkov <snk@altlinux.org> 4.0.1-alt1
+- New version 4.0.1.
+
 * Thu May 01 2025 Nikolay Strelkov <snk@altlinux.org> 4.0-alt1
 - New version 4.0.
 
