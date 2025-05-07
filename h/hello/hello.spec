@@ -1,6 +1,6 @@
 Name: hello
-Version: 2.10
-Release: alt1.1
+Version: 2.12.1
+Release: alt1
 
 Summary: GNU hello, THE greeting printing program
 Group: Development/C
@@ -10,7 +10,7 @@ Url: ftp://ftp.gnu.org/gnu/hello/
 
 Source: %name-%version.tar.gz
 # explicitly added texinfo for info files
-BuildRequires: texinfo
+BuildRequires: texinfo gnulib
 
 %description
 The GNU `hello' program produces a familiar, friendly greeting.  It
@@ -19,7 +19,10 @@ would otherwise be unavailable to them.  Because it is protected by the
 GNU General Public License, users are free to share and change it.
 
 %prep
-%setup -a0
+%setup
+cp -a /usr/share/gnulib/build-aux/git-version-gen build-aux
+sed -i '/AM_GNU_GETTEXT_VERSION/s/\[[0-9.]*\]/[0.20]/' configure.ac
+mkdir -p .%name-%version && cp -a * .%name-%version/
 
 %build
 %autoreconf
@@ -32,12 +35,16 @@ GNU General Public License, users are free to share and change it.
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog ChangeLog.O NEWS README THANKS TODO
-%doc %name-%version
+%doc .%name-%version
 %_bindir/*
 %_infodir/*
 %_mandir/man?/*
 
 %changelog
+* Wed May 07 2025 Fr. Br. George <george@altlinux.org> 2.12.1-alt1
+- Autobuild version bump to 2.12.1
+- Fix build
+
 * Thu Dec 03 2015 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1.1
 - NMU: added BR: texinfo
 
