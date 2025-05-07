@@ -2,8 +2,8 @@
 
 Name: openipmi
 Summary: %name - Library interface to IPMI
-Version: 2.0.36
-Release: alt2
+Version: 2.0.37
+Release: alt1
 License: LGPL-2.1-or-later and GPL-2.0-or-later or BSD-3-Clause
 VCS: https://git.code.sf.net/p/openipmi/code
 Url: https://openipmi.sourceforge.io/
@@ -170,6 +170,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Wed May 07 2025 Anton Farygin <rider@altlinux.com> 2.0.37-alt1
+- 2.0.36 -> 2.0.37
+
 * Mon Aug 05 2024 Anton Farygin <rider@altlinux.ru> 2.0.36-alt2
 - gui: added python3-modules-tkinter dependency (closes: #35022)
 - SPEC: added VCS and fixed URL tags
