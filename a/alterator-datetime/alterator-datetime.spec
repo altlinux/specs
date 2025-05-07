@@ -2,7 +2,7 @@
 
 Name: alterator-datetime
 Version: 4.9.3
-Release: alt2
+Release: alt3
 
 Summary: alterator module for date/time setup
 License: GPL
@@ -68,6 +68,9 @@ Helper functions for %name.
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Wed May 07 2025 Anton Midyukov <antohami@altlinux.org> 4.9.3-alt3
+- 20-datetime.sh: fix for alterator-setup
+
 * Tue Apr 15 2025 Anton Midyukov <antohami@altlinux.org> 4.9.3-alt2
 - add findreq skiplist preinstall.d/* (remove auto dependency on
   rootfs-installer-feature)
