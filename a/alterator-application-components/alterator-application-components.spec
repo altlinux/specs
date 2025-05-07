@@ -2,12 +2,12 @@
 
 Name: alterator-application-components
 Version: 0.2.8
-Release: alt1
+Release: alt2
 
 Summary: Alterator application for managing system components
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-application-components
+URL: https://altlinux.space/alterator/alt-components
 
 Source: %name-%version.tar
 
@@ -70,11 +70,14 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Tue May 06 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.8-alt2
+- Change URL to altlinux.space.
+
 * Mon May 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.8-alt1
 - Merge two dialogs shown during the apply process into one.
 - Go back to remove and install in separate apt transactions. This fixes some
   conflicts then trying to install and remove components at the same time.
-- Add ctrl+f shodtcut to focus search box.
+- Add ctrl+f shortcut to focus search box.
 - Fix duplicate error messages on apply.
 
 * Sun Apr 20 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.7-alt1
