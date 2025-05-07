@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.4
+Release: alt0.5
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -298,6 +298,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue May 06 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.5
+- alterator: symlinks for new installer steps icons
+
 * Thu Apr 24 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.4
 - Updated installer styling
 - Proper branding update from server-v (thx geochip@)

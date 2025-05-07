@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9.158
-Release: alt1
+Release: alt2
 
 Summary: translations for all alterator modules
 License: GPL
@@ -125,6 +125,9 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Tue May 06 2025 Sergey Konev <darisishe@altlinux.org> 2.9.158-alt2
+- alterator-blivet: minor help update
+
 * Tue Apr 08 2025 Sergey Konev <darisishe@altlinux.org> 2.9.158-alt1
 - alterator-blivet: update translations and help
 
