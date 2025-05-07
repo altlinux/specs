@@ -10,7 +10,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 5.7.1
+%define version 5.8.2
 %bcond_with bootstrap
 
 # Component versions, taken from gradle.properties
@@ -19,8 +19,8 @@ BuildRequires: jpackage-default
 %global vintage_version %{version}
 
 Name:           junit5
-Version:        5.7.1
-Release:        alt1_3jpp11
+Version:        5.8.2
+Release:        alt1
 Summary:        Java regression testing framework
 License:        EPL-2.0
 URL:            https://junit.org/junit5/
@@ -40,13 +40,13 @@ Source206:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform
 Source207:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-suite-api/%{platform_version}/junit-platform-suite-api-%{platform_version}.pom
 Source208:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-reporting/%{platform_version}/junit-platform-reporting-%{platform_version}.pom
 Source209:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-testkit/%{platform_version}/junit-platform-testkit-%{platform_version}.pom
+Source210:      https://repo1.maven.org/maven2/org/junit/platform/junit-platform-suite-commons/%{platform_version}/junit-platform-suite-commons-%{platform_version}.pom
 # Jupiter POMs
 Source300:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter/%{jupiter_version}/junit-jupiter-%{jupiter_version}.pom
 Source301:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-api/%{jupiter_version}/junit-jupiter-api-%{jupiter_version}.pom
 Source302:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-engine/%{jupiter_version}/junit-jupiter-engine-%{jupiter_version}.pom
 Source303:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-migrationsupport/%{jupiter_version}/junit-jupiter-migrationsupport-%{jupiter_version}.pom
 Source304:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter-params/%{jupiter_version}/junit-jupiter-params-%{jupiter_version}.pom
-Source305:      https://repo1.maven.org/maven2/org/junit/jupiter/junit-jupiter/%{jupiter_version}/junit-jupiter-%{jupiter_version}.pom
 # Vintage POM
 Source400:      https://repo1.maven.org/maven2/org/junit/vintage/junit-vintage-engine/%{vintage_version}/junit-vintage-engine-%{vintage_version}.pom
 # BOM POM
@@ -99,24 +99,31 @@ cp -p %{SOURCE206} junit-platform-runner/pom.xml
 cp -p %{SOURCE207} junit-platform-suite-api/pom.xml
 cp -p %{SOURCE208} junit-platform-reporting/pom.xml
 cp -p %{SOURCE209} junit-platform-testkit/pom.xml
+cp -p %{SOURCE210} junit-platform-suite-commons/pom.xml
 cp -p %{SOURCE300} junit-jupiter/pom.xml
 cp -p %{SOURCE301} junit-jupiter-api/pom.xml
 cp -p %{SOURCE302} junit-jupiter-engine/pom.xml
 cp -p %{SOURCE303} junit-jupiter-migrationsupport/pom.xml
 cp -p %{SOURCE304} junit-jupiter-params/pom.xml
-cp -p %{SOURCE305} junit-jupiter/pom.xml
 cp -p %{SOURCE400} junit-vintage-engine/pom.xml
 cp -p %{SOURCE500} junit-bom/pom.xml
 
-for pom in $(find -mindepth 2 -name pom.xml); do
+for pom in $(find -mindepth 2 -name pom.xml | grep -v tests/); do
+
     # Set parent to aggregator
     %pom_xpath_inject pom:project "<parent><groupId>org.fedoraproject.xmvn.junit5</groupId><artifactId>aggregator</artifactId><version>1.0.0</version></parent>" $pom
+
     # OSGi BSN
     bsn=$(sed 's|/pom.xml$||;s|.*/|org.|;s|-|.|g' <<<"$pom")
     %pom_xpath_inject pom:project "<properties><osgi.bsn>${bsn}</osgi.bsn></properties>" $pom
+
     # Incorrect scope - API guardian is just annotation, needed only during compilation
     %pom_xpath_set -f "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
+
+    sed -i s/runtime/compile/ $pom
+
 done
+
 
 %pom_remove_parent junit-bom
 
@@ -131,7 +138,7 @@ done
 %mvn_package :aggregator __noinstall
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 # Build docs.  Ignore exit asciidoc -- it fails for some reason, but
 # still produces readable docs.
@@ -151,6 +158,9 @@ ln -s ../../javadoc/junit5 documentation/src/docs/api
 %doc --no-dereference documentation/src/docs/*
 
 %changelog
+* Tue May 06 2025 Anton Meleshnikov <alton@altlinux.org> 5.8.2-alt1
+- New version 5.8.2 (thanks fedora for the spec).
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 5.7.1-alt1_3jpp11
 - update
 

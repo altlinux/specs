@@ -13,25 +13,21 @@ BuildRequires: jpackage-11
 %bcond_with bootstrap
 
 Name:           maven-surefire
-Version:        3.0.0_M4
-Release:        alt1_6jpp11
+Version:        3.2.2
+Release:        alt1
 Summary:        Test framework project
-License:        ASL 2.0 and CPL
+License:        Apache-2.0 and CPL-1.0
 URL:            https://maven.apache.org/surefire/
 BuildArch:      noarch
 
-%global upstream_version %(echo '%{version}' | tr '_' '-')
-%global src_version %(echo '%{version}' | tr '_' '~')
-
 # ./generate-tarball.sh
-Source0:        %{name}-%{src_version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 # Remove bundled binaries which cannot be easily verified for licensing
 Source1:        generate-tarball.sh
 Source2:        https://junit.sourceforge.net/cpl-v10.html
 
-Patch1:         0001-Port-to-TestNG-6.11.patch
+Patch1:         0001-Port-to-TestNG-7.4.0.patch
 Patch2:         0002-Disable-JUnit-4.8-test-grouping.patch
-Patch3:         0003-Port-to-maven-shared-utils-3.3.3.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -40,26 +36,26 @@ BuildRequires:  javapackages-bootstrap
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.shared:maven-common-artifact-filters)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-core)
-BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-java)
+BuildRequires:  mvn(org.eclipse.aether:aether-util)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.junit.platform:junit-platform-launcher)
 BuildRequires:  mvn(org.testng:testng)
 BuildRequires:  mvn(org.testng:testng::jdk15:)
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 %endif
-
 
 # PpidChecker relies on /usr/bin/ps to check process uptime
 Requires:       libprocps procps
@@ -129,12 +125,11 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -n surefire-%{upstream_version}
+%setup -q -n surefire-%version
 cp -p %{SOURCE2} .
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 # Disable strict doclint
 sed -i /-Xdoclint:all/d pom.xml
@@ -142,10 +137,10 @@ sed -i /-Xdoclint:all/d pom.xml
 %pom_disable_module maven-surefire-report-plugin
 %pom_disable_module surefire-report-parser
 %pom_disable_module surefire-shadefire
-
-%pom_remove_dep :maven-toolchain maven-surefire-common
-
 %pom_disable_module surefire-grouper
+
+%pom_add_dep org.apiguardian:apiguardian-api
+%pom_remove_dep org.junit:junit-bom
 %pom_remove_dep :surefire-grouper surefire-providers/common-junit48
 %pom_remove_dep :surefire-grouper surefire-providers/surefire-testng-utils
 rm surefire-providers/common-junit48/src/main/java/org/apache/maven/surefire/common/junit48/{FilterFactory,GroupMatcherCategoryFilter}.java
@@ -161,11 +156,11 @@ rm surefire-providers/surefire-testng-utils/src/main/java/org/apache/maven/suref
 %pom_remove_plugin -r :jacoco-maven-plugin
 # Not wanted
 %pom_remove_plugin -r :maven-shade-plugin
+find -name *.java -exec sed -i -e s/org.apache.maven.surefire.shared.utils/org.apache.maven.shared.utils/ -e s/org.apache.maven.surefire.shared.io/org.apache.commons.io/ -e s/org.apache.maven.surefire.shared.lang3/org.apache.commons.lang3/ -e s/org.apache.maven.surefire.shared.compress/org.apache.commons.compress/ {} \;
 # Not in Fedora
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
 # Complains
 %pom_remove_plugin -r :apache-rat-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
 # We don't need site-source
 %pom_remove_plugin :maven-assembly-plugin maven-surefire-plugin
 %pom_remove_dep -r ::::site-source
@@ -176,14 +171,14 @@ rm surefire-providers/surefire-testng-utils/src/main/java/org/apache/maven/suref
 %mvn_package ":*{junit,testng,failsafe-plugin}*"  @1
 %mvn_package ":*tests*" __noinstall
 # tests turned off because they need jmock
-%mvn_build -f -- -DcommonsIoVersion=2.8.0 -DcommonsLang3Version=3.11
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
 %doc README.md
-%doc --no-dereference LICENSE NOTICE cpl-v10.html
+%doc --no-dereference cpl-v10.html
 
 %files plugin -f .mfiles-surefire-plugin
 %files provider-junit -f .mfiles-junit
@@ -192,9 +187,12 @@ rm surefire-providers/surefire-testng-utils/src/main/java/org/apache/maven/suref
 %files -n maven-failsafe-plugin -f .mfiles-failsafe-plugin
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE cpl-v10.html
+%doc --no-dereference cpl-v10.html
 
 %changelog
+* Tue May 06 2025 Anton Meleshnikov <alton@altlinux.org> 0:3.2.2-alt1
+- New version 3.2.2 (thanks CentOS for the spec).
+
 * Thu Jul 07 2022 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M4-alt1_6jpp11
 - fixed build with new testng
 
