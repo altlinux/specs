@@ -5,7 +5,7 @@
 
 Name: happy
 Version: 1.20.1.1
-Release: alt1
+Release: alt2
 License: BSD-2-Clause
 
 Group: Development/Haskell
@@ -29,14 +29,26 @@ similar way to the @yacc@ tool for C.
 %build
 %ghc_bin_build
 
+pushd doc > /dev/null
+    autoconf
+    ./configure
+popd > /dev/null
+
 %install
 %ghc_bin_install
 %ghc_gen_filelist %pkg_name %version
 
+mkdir -p %buildroot%_man1dir
+cp doc/happy.1 %buildroot%_man1dir
+
 %files -f %pkgid-files.all
 %_bindir/happy
+%_man1dir/happy.1*
 
 %changelog
+* Tue May 06 2025 Leonid Znamenok <respublica@altlinux.org> 1.20.1.1-alt2
+- Packaged man
+
 * Tue Feb 25 2025 Leonid Znamenok <respublica@altlinux.org> 1.20.1.1-alt1
-Initial build for Sisyphus
+- Initial build for Sisyphus
 

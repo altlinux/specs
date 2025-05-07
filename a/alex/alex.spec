@@ -4,7 +4,7 @@
 %define pkgid %pkg_name-%version
 
 Name: alex
-Version: 3.5.2.0
+Version: 3.5.3.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -38,6 +38,8 @@ tool lex or flex for C/C++.
 %_bindir/alex
 
 %changelog
-* Fri Feb 21 2025 Leonid Znamenok <respublica@altlinux.org> 3.5.2.0-alt1
-Initial build for Sisyphus
+* Tue May 06 2025 Leonid Znamenok <respublica@altlinux.org> 3.5.3.0-alt1
+- New version 3.5.3.0
 
+* Fri Feb 21 2025 Leonid Znamenok <respublica@altlinux.org> 3.5.2.0-alt1
+- Initial build for Sisyphus
