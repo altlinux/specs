@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.12
+Version: 3.0.14
 Release: alt1
 
 Summary: Application Framework for Python
@@ -52,7 +52,7 @@ development of CLI tools.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pdm dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -80,5 +80,8 @@ development of CLI tools.
 %doc README.* LICENSE
 
 %changelog
+* Wed May 07 2025 Denis Sergeev <zeff@altlinux.org> 3.0.14-alt1
+- 3.0.12 -> 3.0.14.
+
 * Mon Jan 27 2025 Denis Sergeev <zeff@altlinux.org> 3.0.12-alt1
 - Initial build for Sisyphus.
