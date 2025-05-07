@@ -16,7 +16,7 @@
 
 Name: thunderbird
 Version: 138.0
-Release: alt1
+Release: alt2
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -39,6 +39,7 @@ Patch004: 0004-Disable-browser-option.patch
 Patch005: 0005-Fix-types-defination.patch
 Patch006: 0006-Fix-wrong-redefinition-of-double_t-on-i586.patch
 Patch007: 0007-Correction-of-the-Russian-translation.patch
+Patch008: 0008-ALT-stop-putting-commonDialogs.properties-into-share.patch
 ### End Patches
 
 Provides: mailclient
@@ -177,6 +178,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch5 -p2
 %patch6 -p2
 %patch7 -p1
+%patch8 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -206,9 +208,6 @@ cat >> .mozconfig <<EOF
 # Enabled debuginfo.
 ac_add_options --disable-strip
 ac_add_options --disable-install-strip
-ac_add_options --enable-debug-js-modules
-ac_add_options --enable-rust-debug
-ac_add_options --enable-debug
 ac_add_options --enable-debug-symbols
 # Debug symbols are not built without crashreporter:
 # "Skipping symbols generation because MOZ_CRASHREPORTER is not set".
@@ -219,9 +218,6 @@ cat >> .mozconfig <<EOF
 # Disabled  debuginfo.
 ac_add_options --enable-strip
 ac_add_options --enable-install-strip
-ac_add_options --disable-debug-js-modules
-ac_add_options --disable-rust-debug
-ac_add_options --disable-debug
 ac_add_options --disable-debug-symbols
 # Crashreporter without debuginfo is useless.
 ac_add_options --disable-crashreporter
@@ -383,6 +379,11 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed May 07 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0-alt2
+- New version.
+- Disable debug mode.
+- Stop putting commonDialogs.properties into shared memory (closes: 50737).
+
 * Mon May 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0-alt1
 - New version.
 - Enable building of debug information symbols.
