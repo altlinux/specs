@@ -2,27 +2,30 @@
 
 Name: mypaint
 Version: 2.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: A simple paint program
 Group: Graphics
 License: GPL-2.0-or-later and ISC and Public-domain
 Url: http://mypaint.org/
 
+Vcs: https://github.com/mypaint/mypaint.git
+
 %if_disabled snapshot
 Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
 %else
-# VCS: https://github.com/mypaint/mypaint
+
 Source: %name-%version.tar
 %endif
-
 # https://github.com/mypaint/mypaint/pull/1193
-Patch: 032a155b72f2b021f66a994050d83f07342d04af.patch
+Patch1: 032a155b72f2b021f66a994050d83f07342d04af.patch
+Patch2: https://github.com/wobbol/mypaint/commit/3b682d5898f4a6b709a2cd1a4d2b1b9288277cd6.patch
 
 %define mypaintlib_ver 1.6
 
 Requires: %name-data = %version-%release
 Requires: mypaint-brushes >= 2.0
+Requires: typelib(Gtk) = 3.0
 Requires: typelib(MyPaint) = 1.6
 
 %add_python3_path %_datadir/%name %_libdir/%name
@@ -72,7 +75,9 @@ with mypaint brush library.
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+
 # fix libdir
 subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 
@@ -96,6 +101,9 @@ subst "s|prefix, 'lib'|prefix, '%_lib'|" mypaint.py
 %doc README.md Changelog.md Licenses.md
 
 %changelog
+* Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2.1
+- "Fix pyobject enums in pygobject >= 3.51.0" (ALT #54192)
+
 * Wed Dec 14 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
 - Fixed build with python3.11
 
