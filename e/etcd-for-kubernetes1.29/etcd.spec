@@ -1,17 +1,12 @@
 %global import_path github.com/etcd-io/etcd
 
-%define etcd_group etcd
-%define etcd_user  etcd
-
 %global _unpackaged_files_terminate_build 1
 
-%define prog_name    etcd
-%define prog_version 3.5.16
 %define git_commit   f20bbad
 
-Name:    %prog_name%prog_version
-Version: %prog_version
-Release: alt2
+Name:    etcd-for-kubernetes1.29
+Version: 3.5.16
+Release: alt3
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
 Group:   System/Servers
@@ -21,10 +16,9 @@ VCS:     https://github.com/etcd-io/etcd
 
 Source0: %name-%version.tar
 
-Provides: %prog_name = %EVR
-Conflicts: %prog_name < %EVR
-Conflicts: %prog_name > %EVR
-Obsoletes: etcd < 3.5.16-alt2
+Provides: etcd-for-kubernetes = %EVR
+Conflicts: etcd-for-kubernetes
+Conflicts: etcd
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
@@ -32,18 +26,11 @@ BuildRequires: rpm-build-golang golang >= 1.22
 
 %description
 Etcd is a distributed key value store that provides a reliable way to store data
-across a cluster of machines. Etcd gracefully handles leader elections during network
-partitions and will tolerate machine failure, including the leader.
+across a cluster of machines.
+This package contains etcd version needed for kubernetes container image.
 
 %prep
 %setup -q
-
-for d in contrib etcdctl etcdutl pkg raft hack security; do
-mv $d/README.md README-$d.md
-done
-mv etcdctl/READMEv2.md READMEv2-etcdctl.md
-mv client/v2/README.md README-clientv2.md
-mv client/v3/README.md README-clientv3.md
 
 %build
 export CGO_ENABLED=0
@@ -58,10 +45,6 @@ cd .build/src/%import_path
 %golang_build \
     server \
     etcdctl \
-    etcdutl \
-    tools/etcd-dump-db \
-    tools/etcd-dump-logs \
-    tools/etcd-dump-metrics \
 #
 
 %install
@@ -69,48 +52,21 @@ export BUILDDIR="$PWD/.build"
 
 %golang_install
 
-mkdir -p -- \
-    %buildroot%_sbindir \
-    %buildroot%_unitdir \
-    %buildroot%_sysconfdir/%prog_name \
-    %buildroot%_sharedstatedir/%prog_name \
-#
+mkdir -p -- %buildroot%_sbindir
 
-mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/%prog_name
-
-sed \
-    -e 's,@USER@,%etcd_user,g' \
-    -e 's,@STATEDIR@,%_sharedstatedir/%prog_name,g' \
-    -e 's,@SYSCONFDIR@,%_sysconfdir/%prog_name,g' \
-    -e 's,@BINDIR@,%_sbindir,g' \
-    < rpm/etcd.service > %buildroot%_unitdir/%prog_name.service
-
-install -D -p -m 0644 rpm/etcd.conf    %buildroot%_sysconfdir/%prog_name/%prog_name.conf
+mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/etcd
 
 # remove unused files
 rm -rf -- %buildroot/%go_root
 
-%pre
-groupadd -r -f %etcd_group
-useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&1 ||:
-
-%post
-%post_service %prog_name
-
-%preun
-%preun_service %prog_name
-
 %files
-%doc README.md etcd.conf.yml.sample
-%doc README-*.md READMEv2-etcdctl.md
-%dir %attr(770,%etcd_user,%etcd_group) %_sharedstatedir/%prog_name
-%dir %_sysconfdir/%prog_name
-%config(noreplace) %_sysconfdir/%prog_name/%prog_name.conf
-%_bindir/*
-%_sbindir/*
-%_unitdir/%prog_name.service
+%_bindir/etcdctl
+%_sbindir/etcd
 
 %changelog
+* Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt3
+- Make separate etcd packages for kubernetes container images
+
 * Wed Mar 19 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt2
 - Rename package to include version in the name
 

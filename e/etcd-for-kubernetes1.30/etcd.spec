@@ -1,0 +1,116 @@
+%global import_path github.com/etcd-io/etcd
+
+%global _unpackaged_files_terminate_build 1
+
+%define git_commit   9a5533382
+
+Name:    etcd-for-kubernetes1.30
+Version: 3.5.15
+Release: alt3
+Summary: A highly-available key value store for shared configuration
+Group:   System/Servers
+
+URL:     https://etcd.io/
+License: Apache-2.0
+
+Source0: %name-%version.tar
+
+Provides: etcd-for-kubernetes = %EVR
+Conflicts: etcd-for-kubernetes
+Conflicts: etcd
+
+ExclusiveArch: %go_arches
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.21
+
+%description
+Etcd is a distributed key value store that provides a reliable way to store data
+across a cluster of machines.
+This package contains etcd version needed for kubernetes container image.
+
+%prep
+%setup -q
+
+%build
+export CGO_ENABLED=0
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export LDFLAGS="-X go.etcd.io/etcd/api/v3/version.GitSHA=%git_commit"
+
+%golang_prepare
+
+cd .build/src/%import_path
+
+%golang_build \
+    server \
+    etcdctl \
+#
+
+%install
+export BUILDDIR="$PWD/.build"
+
+%golang_install
+
+mkdir -p -- %buildroot%_sbindir
+
+mv -f -- %buildroot%_bindir/server %buildroot%_sbindir/etcd
+
+# remove unused files
+rm -rf -- %buildroot/%go_root
+
+%files
+%_bindir/etcdctl
+%_sbindir/etcd
+
+%changelog
+* Tue May 06 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.15-alt3
+- Make separate etcd packages for kubernetes container images
+
+* Wed Mar 19 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.15-alt2
+- Rename package to include version in the name
+
+* Wed Sep 18 2024 Alexander Stepchenko <geochip@altlinux.org> 3.5.15-alt1
+- 3.5.12 -> 3.5.15 (Fixes: CVE-2023-45288, CVE-2024-24786)
+
+* Mon Feb 05 2024 Alexey Shabalin <shaba@altlinux.org> 3.5.12-alt1
+- 3.5.12
+
+* Sat May 27 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.9-alt1
+- 3.5.9 (Fixes: CVE-2023-32082).
+
+* Fri Apr 14 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.8-alt1
+- 3.5.8 (Fixes: CVE-2021-28235).
+
+* Fri Jan 28 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.1-alt1
+- 3.5.1
+
+* Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.18-alt1
+- 3.4.18
+
+* Wed Jan 26 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.15-alt2
+- Update changelog.
+
+* Thu Oct 28 2021 Paul Wolneykien <manowar@altlinux.org> 3.4.9-alt1.1
+- Fix building on x86_64.
+
+* Fri Mar 19 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.15-alt1
+- 3.4.15
+
+* Fri Jan 15 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.14-alt1
+- 3.4.14
+
+* Sat Sep 05 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.13-alt1
+- 3.4.13 (Fixes: CVE-2020-15106, CVE-2020-15112, CVE-2020-15113, CVE-2020-15114,
+                 CVE-2020-15115, CVE-2020-15136).
+
+* Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.9-alt1
+- 3.4.9.
+
+* Tue Apr 28 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt2
+- add post_service and preun_service.
+
+* Sun Apr 26 2020 Alexey Shabalin <shaba@altlinux.org> 3.4.7-alt1
+- 3.4.7 (Fixes: CVE-2018-1098, CVE-2018-1099, CVE-2018-16886).
+
+* Tue Aug 08 2017 Alexey Gladkov <legion@altlinux.ru> 3.2.5-alt1
+- First build for ALTLinux.
