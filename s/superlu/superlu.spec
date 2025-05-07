@@ -9,7 +9,7 @@
 %endif
 
 Name: superlu
-Version: 7.0.0
+Version: 7.0.1
 Release: alt1
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD and GPLv2+
@@ -127,6 +127,9 @@ ctest
 %doc FORTRAN
 
 %changelog
+* Wed May 07 2025 Anton Farygin <rider@altlinux.com> 7.0.1-alt1
+- 7.0.0 -> 7.0.1
+
 * Fri Aug 30 2024 Anton Farygin <rider@altlinux.ru> 7.0.0-alt1
 - 6.0.1 -> 7.0.0
 
