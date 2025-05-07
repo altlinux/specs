@@ -1,15 +1,16 @@
 %define exID netspeedsimplified@prateekmedia.extension
 %define nameU netspeedsimplified
+%define nameS org.gnome.shell.extensions.netspeedsimplified
 
 Name: gnome-shell-extension-netspeedsimplified
-Version: 43
-Release: alt2
+Version: 44
+Release: alt1
 
 Summary: Net speed Simplified
 
 BuildArch: noarch
 
-License:  GPL-3.0 license
+License:  GPL-3.0
 Group:  Graphical desktop/GNOME
 Url: https://github.com/prateekmedia/netspeedsimplified
 VCS: https://github.com/prateekmedia/netspeedsimplified
@@ -24,22 +25,25 @@ A Net Speed monitor With Loads of Customization.
 %prep
 %setup -n %nameU-%version
 
-subst 's|"47"|"47", "48"|' metadata.json
+# subst 's|"47"|"47", "48"|' metadata.json
 
 %build
 %install
 mkdir -p %buildroot%_datadir/gnome-shell/extensions/%exID/
-cp -R schemas %buildroot%_datadir/gnome-shell/extensions/%exID/schemas
-cp *.js %buildroot%_datadir/gnome-shell/extensions/%exID/
-cp LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID/LICENSE
-cp metadata.json %buildroot%_datadir/gnome-shell/extensions/%exID/metadata.json
-cp stylesheet.css %buildroot%_datadir/gnome-shell/extensions/%exID/stylesheet.css
+install -D -p -m 0644 \
+    schemas/%nameS.gschema.xml \
+    %buildroot%_datadir/glib-2.0/schemas/%nameS.gschema.xml
+cp -a *.js *.json *.css LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID/
 
 %files
 %_datadir/gnome-shell/extensions/%exID/*
+%_datadir/glib-2.0/schemas/*.xml
 %doc *.md LICENSE 
 
 %changelog
+* Wed May 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 44-alt1
+- 43 -> 44
+
 * Wed Mar 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 43-alt2
 - fixed for GNOME 48
 
