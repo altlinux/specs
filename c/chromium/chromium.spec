@@ -1,5 +1,6 @@
 %def_enable  ffmpeg
 %def_enable  google_api_keys
+%def_enable  samurai
 
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
@@ -24,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        136.0.7103.59
+Version:        136.0.7103.92
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -237,7 +238,9 @@ BuildRequires:  python3(simplejson)
 
 BuildRequires:  rust       >= 1.75.0-alt2
 BuildRequires:  rust-cargo >= 1.75.0-alt2
-BuildRequires:  nodejs
+%if_enabled samurai
+BuildRequires:  samurai
+%endif
 
 # We do not build an internal version of libvulkan but we want to have it on the
 # system.
@@ -460,6 +463,10 @@ gn_arg+=( clang_base_path=\"/usr/lib/llvm-%llvm_version\" )
 tools/gn/bootstrap/bootstrap.py --gn-gen-args="${gn_arg[*]}" --build-path=%target
 %target/gn --script-executable=%__python3 gen --args="${gn_arg[*]}" %target
 
+%if_enabled samurai
+export NINJA=samu
+%else
+export NINJA=ninja
 if [ -r %target/toolchain.ninja ]; then
 	# We never perform incremental builds,
 	# so we do not need to maintain extensive deps logs,
@@ -470,13 +477,14 @@ if [ -r %target/toolchain.ninja ]; then
 		/^[[:space:]]\+depfile[[:space:]]=/d;
 	' %target/toolchain.ninja
 fi
+%endif
 
 n=%build_parallel_jobs
 [ "$n" -lt %max_jobs ] || n=%max_jobs
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
-	/usr/bin/time ninja -vvv -j "$n" -C %target $name
+	/usr/bin/time $NINJA -vvv -j "$n" -C %target $name
 done
 
 
@@ -591,6 +599,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed May 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 136.0.7103.92-alt1
+- New version (136.0.7103.92).
+- Security fixes:
+  + CVE-2025-4372: Use after free in WebAudio
+
 * Wed Apr 30 2025 Andrew A. Vasilyev <andy@altlinux.org> 136.0.7103.59-alt1
 - New version (136.0.7103.59).
 - Security fixes:
