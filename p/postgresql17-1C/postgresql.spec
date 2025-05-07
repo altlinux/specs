@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     17
 %define postgresql_minor     2
-%define postgresql_altrel    8
+%define postgresql_altrel    9
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1102,6 +1102,9 @@ fi
 %endif
 
 %changelog
+* Wed May 07 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt9
+- Fixes CVE-2025-4207
+
 * Sat Apr 12 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt8
 - Add libpq5 subpackage (ALT #53800)
 
