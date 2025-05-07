@@ -1,12 +1,12 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 60
+%define ver_major 61
 %define beta %nil
 %define uuid %_name@amezin.github.com
 %define xdg_name com.github.amezin.%_name
 
-%def_disable check
+%def_enable check
 
 %def_disable bootstrap
 
@@ -30,34 +30,28 @@ Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
 %else
 Source: %_name-%version%beta.tar
 %endif
-Source1: %name-%version-npm.tar
-Patch1: %name-55-alt-no_npm.patch
+
+%define meson_ver 1.8.0
 
 Requires: gnome-shell >= 47
 Requires: typelib(Adw) = 1 typelib(Vte) = 3.91
-Requires: typelib(Handy) = 1
+Requires: typelib(GnomeDesktop)
+#Requires: typelib(Handy) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson npm xvfb-run
+BuildRequires: meson >= %meson_ver xvfb-run
 BuildRequires: /usr/bin/gjs
 BuildRequires: /usr/bin/gtk-builder-tool /usr/bin/gtk4-builder-tool
 BuildRequires: /usr/bin/glib-compile-schemas /usr/bin/gapplication xsltproc
-%{?_enable_check:BuildRequires: eslint desktop-file-utils /usr/bin/appstreamcli}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 %summary
 
 %prep
-%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
-#%%patch1 -b .no_npm
-%{?_enable_bootstrap:
-npm install && npm audit fix &&
-tar -cf %name-%version-npm.tar node_modules && \
-mv %name-%version-npm.tar %_sourcedir/}
+%setup -n %name-%version%beta
 
 %build
-mkdir -p %__builddir && touch %__builddir/npm-install.stamp
-export DDTERM_POST_INSTALL_STAMP=${PWD}/%__builddir/npm-install.stamp
 %meson
 xvfb-run %meson_build
 
@@ -77,6 +71,10 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 61-alt1
+- 61
+- spec cleanup (ALT #54094)
+
 * Tue Apr 29 2025 Yuri N. Sedunov <aris@altlinux.org> 60-alt1
 - 60
 
