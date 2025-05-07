@@ -6,7 +6,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.19
+Version: 6.1.23
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -17,8 +17,9 @@ Url: https://github.com/linuxdeepin/dde-control-center
 Vcs: https://github.com/linuxdeepin/dde-control-center.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch0: deepin-control-center-6.1.4-alt-qch.patch
-Patch1: deepin-control-center-6.1.19-alt-fixes-underlinked-libs.patch
+Patch0: %name-%version-%release.patch
+Patch1: deepin-control-center-6.1.4-alt-qch.patch
+Patch2: deepin-control-center-6.1.23-alt-fixes-underlinked-libs.patch
 
 #FAILED: src/plugin-mouse/CMakeFiles/mouse.dir/mouse_autogen/OYYSJO5W5K/qrc_mouse.cpp.o
 #virtual memory exhausted: Cannot allocate memory
@@ -88,7 +89,6 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/dock/dock.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/display/display.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/notification/notification.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
-patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/update/update.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 #patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/blueTooth/blueTooth.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/wacom/wacom.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
 patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/datetime/datetime.so --shrink-rpath --allowed-rpath-prefixes %_dqt6_libdir
@@ -141,6 +141,8 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_datadir/%repo/translations/v1.0/datetime_language_ky@Arab.qm
 %_datadir/%repo/translations/v1.0/keyboard_language_es_419.qm
 %_datadir/%repo/translations/v1.0/keyboard_language_ky@Arab.qm
+%_datadir/%repo/translations/v1.0/dde-control-center_es_419.qm
+%_datadir/%repo/translations/v1.0/dde-control-center_ky@Arab.qm
 
 %files -n lib%repo%sover
 %_libdir/lib%repo.so.%{sover}*
@@ -152,6 +154,9 @@ patchelf %buildroot%_libdir/dde-control-center/org/deepin/dcc/libdde-control-cen
 %_includedir/%repo/
 
 %changelog
+* Wed May 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.23-alt1
+- New version 6.1.23.
+
 * Tue Apr 08 2025 Leontiy Volodin <lvol@altlinux.org> 6.1.19-alt1
 - New version 6.1.19.
 - Added vcs tag.
