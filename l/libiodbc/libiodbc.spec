@@ -1,137 +1,128 @@
-%def_disable gtk
+%def_enable gtk
+
+%global descr The iODBC Driver Manager is a free implementation of the SAG CLI\
+and ODBC compliant driver manager which allows developers to write ODBC\
+compliant applications that can connect to various databases using\
+appropriate backend drivers.\
+\
+The iODBC Driver Manager was originally created by Ke Jin and is\
+currently maintained by OpenLink Software under a LGPL or BSD license.
+
+%define oname iodbc
 
 Name: libiodbc
-Version: 3.52.8
+Version: 3.52.16
 Release: alt1
 
-Group: System/Libraries
 Summary: The iODBC Driver Manager
+Group: System/Libraries
+License: BSD-3-Clause OR LGPL-2.0-or-later
 Url: http://www.iodbc.org/
-License: BSD / LGPLv2
+Vcs: https://github.com/openlink/iODBC
 
-Source: http://www.iodbc.org/downloads/iODBC/libiodbc-%version.tar.gz
+Source: %name-%version.tar
 
-BuildRequires: chrpath glibc-devel
+BuildRequires: chrpath
 %if_enabled gtk
 BuildRequires: libgtk+2-devel
 %endif
 
 %description
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
+%descr
 
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
-
-
-%package -n libiodbcinst
+%package -n %{name}inst
 Summary: The iODBC Driver Manager main library
 Group: System/Libraries
-%description -n libiodbcinst
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
 
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
-%package utils
-Summary: The iODBC Driver Manager common binary files
-Group: System/Libraries
-%description utils
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
-
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
-
-%package -n libiodbcdrvproxy
-Summary: The iODBC Driver Manager main library
-Group: System/Libraries
-%description -n libiodbcdrvproxy
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
-
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
-
-%package -n libiodbcadm
-Summary: The iODBC Driver Manager main library
-Group: System/Libraries
-%description -n libiodbcadm
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
-
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
-
-%package admin
-Summary: GTK based administrator for iODBC development
-Group: System/Configuration/Other
-%description admin
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
-
-This package contains a GTK based administrator program for maintaining
-DSN information in odbc.ini and odbcinst.ini files.
-
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
+%description -n %{name}inst
+%descr
 
 %package devel
 Summary: header files and libraries for iODBC development
 Group: Development/Databases
-Provides: iodbc-devel = %version-%release
-Requires: %name-utils
+Provides: %oname-devel = %EVR
+Requires: %name-utils = %EVR
+Requires: %name = %EVR
+%if_enabled gtk
+Requires: libdrvproxy = %EVR
+Requires: %{name}adm = %EVR
+Requires: %{name}inst = %EVR
+%endif
 Requires: libunixODBC-devel
+
 %description devel
-The iODBC Driver Manager is a free implementation of the SAG CLI and
-ODBC compliant driver manager which allows developers to write ODBC
-compliant applications that can connect to various databases using
-appropriate backend drivers.
+%descr
 
 This package contains the header files and libraries needed to develop
 program that use the driver manager.
 
-The iODBC Driver Manager was originally created by Ke Jin and is
-currently maintained by OpenLink Software under a LGPL or BSD license
-(see "LICENSE" file included in the distribution).
+%package -n libdrvproxy
+Summary: The iODBC Driver Manager main library
+Group: System/Libraries
+Requires: %name = %EVR
+Requires: %{name}inst = %EVR
+Requires: %{name}adm = %EVR
 
+%description -n libdrvproxy
+%descr
+
+%package -n %{name}adm
+Summary: The iODBC Driver Manager main library
+Group: System/Libraries
+Requires: %name = %EVR
+Requires: %{name}inst = %EVR
+
+%description -n %{name}adm
+%descr
+
+%package admin
+Summary: GTK based administrator for iODBC development
+Group: System/Configuration/Other
+Requires: %{name}inst = %EVR
+
+%description admin
+%descr
+
+This package contains a GTK based administrator program for maintaining
+DSN information in odbc.ini and odbcinst.ini files.
+
+%package utils
+Summary: The iODBC Driver Manager common binary files
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description utils
+%descr
+
+This package contains some demo programs that may be useful.
 
 %prep
-%setup -q
-#autoreconf
-
+%setup
 
 %build
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-shared \
 	--disable-rpath \
 	--enable-odbc3 \
 	--disable-libodbc \
-%if_enabled gtk
-	--enable-gui \
-%else
-	--disable-gui \
-%endif
 	--with-iodbc-inidir=%_sysconfdir \
 	--includedir=%_includedir/iodbc \
-	--enable-pthreads
-%make
+	--enable-pthreads \
+%if_enabled gtk
+	--enable-gui
+%else
+	--disable-gui
+%endif
+%ifarch i586
+%make_build CFLAGS+='-Wno-incompatible-pointer-types'
+%else
+%make_build
+%endif
 
 %install
-%make install DESTDIR=%buildroot
+%makeinstall_std
 
 # workaround against missing configure --disable-rpath option
 find %buildroot/%_libdir -type f -name \*.so.\* | \
@@ -139,41 +130,49 @@ while read l; do chrpath -d $l; done
 find %buildroot/%_bindir -type f -perm /0111 | \
 while read b; do chrpath -d $b || : ; done
 
-
 %files
-%_libdir/libiodbc.so.*
+%_libdir/%name.so.*
 
-%files -n libiodbcinst
-%_libdir/libiodbcinst.so.*
-
-%files utils
-%_bindir/iodbctest
-%_bindir/iodbctestw
-%_mandir/man1/iodbctest.1*
-%_mandir/man1/iodbctestw.1*
-
-%if_enabled gtk
-%files -n libiodbcdrvproxy
-%_libdir/libiodbcdrvproxy.so.*
-%files -n libiodbcadm
-%_libdir/libiodbcadm.so.*
-%files admin
-%_bindir/iodbcadm-gtk
-%_mandir/man1/iodbcadm-gtk.1*
-%endif
+%files -n %{name}inst
+%_libdir/%{name}inst.so.*
 
 %files devel
-%doc AUTHORS LICENSE* ChangeLog NEWS README*
+%doc AUTHORS COPYING LICENSE* ChangeLog NEWS README*
 %doc etc/odbc.ini.sample etc/odbcinst.ini.sample
-%_mandir/man1/iodbc-config.1*
-%_bindir/iodbc-config
-%_datadir/libiodbc
-%_includedir/*
-%_libdir/*.so
-%_libdir/pkgconfig/libiodbc.pc
+%_bindir/%oname-config
+%_datadir/%name/*
+%_includedir/%oname
+%_libdir/%name.so
+%_libdir/%{name}inst.so
+%if_enabled gtk
+%_libdir/libdrvproxy.so
+%_libdir/%{name}adm.so
+%endif
+%_man1dir/%oname-config.1.xz
+%_pkgconfigdir/%name.pc
 
+%if_enabled gtk
+%files -n libdrvproxy
+%_libdir/libdrvproxy.so.*
+
+%files -n %{name}adm
+%_libdir/%{name}adm.so.*
+
+%files admin
+%_bindir/%{oname}adm-gtk
+%_man1dir/%{oname}adm-gtk.1.xz
+%endif
+
+%files utils
+%_bindir/%{oname}test
+%_bindir/%{oname}testw
+%_man1dir/%{oname}test.1.xz
+%_man1dir/%{oname}testw.1.xz
 
 %changelog
+* Mon Apr 21 2025 Ulysses Apokin <ulysses@altlinux.org> 3.52.16-alt1
+- new version
+
 * Fri Dec 20 2013 Sergey V Turchin <zerg@altlinux.org> 3.52.8-alt1
 - new version
 
