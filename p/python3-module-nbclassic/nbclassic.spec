@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: Jupyter Notebook as a Jupyter Server extension
 License: BSD-3-Clause
@@ -23,6 +23,8 @@ Requires: python3-module-jupyter_core
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-jupyter-builder
+BuildRequires: python3-module-babel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-jupyter
@@ -55,7 +57,7 @@ This package contains tests for %pypi_name.
 %prep
 %setup -n %pypi_name-%version
 %patch -p2
-sed -i 's:^\[tool.hatch.build.hooks.jupyter-builder\]$:[ignoreme]:' pyproject.toml
+
 rm -rf node_modules
 rm nbclassic/static/components/jquery-typeahead/node_modules/.bin/lz-string
 rm nbclassic/static/components/moment/meteor/moment.js
@@ -93,6 +95,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/nbclassic.json \
 %python3_sitelibdir/%pypi_name/*/tests
 
 %changelog
+* Wed May 07 2025 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+
 * Fri Apr 25 2025 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
 - new version 1.3.0
 
