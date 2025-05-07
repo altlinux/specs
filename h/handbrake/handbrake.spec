@@ -6,7 +6,7 @@
 
 Name: handbrake
 Version: 1.9.0
-Release: alt1
+Release: alt2
 Summary: Multithreaded Video Transcoder
 Url: http://handbrake.fr/
 Group: Video
@@ -22,6 +22,7 @@ Patch1: alt-fix_locale_path.patch
 Patch2: alt-ffmpeg-disable-strip.patch
 Patch3: alt-disable-asm-altivec-x265.patch
 Patch4: alt-explicit_cast_neon_func_parameters.patch
+Patch5: alt-update_russian_translations.patch
 
 
 BuildRequires: tar gcc-c++ git binutils coreutils m4 patch tar python3 gcc-common make 
@@ -75,6 +76,7 @@ cp  %SOURCE7 %SOURCE8 %SOURCE34 \
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 sed -i 's|loc_dir_replace_this_with_value|%_datadir/locale/|g' \
@@ -119,6 +121,9 @@ cd build
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Wed May 07 2025 Oleg Proskurin <proskur@altlinux.org> 1.9.0-alt2
+- Fix the build and update the russian translations (Closes #53272)
+
 * Sat Dec 28 2024 Oleg Proskurin <proskur@altlinux.org> 1.9.0-alt1
 - New version (Closes: #52164, #52141, #38550)
 
