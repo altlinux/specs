@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt21
+Release: alt22
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -395,6 +395,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed May 07 2025 Kirill Sharov <sheriffkorov@altlinux.org> 11.0-alt22
+- Clare web browser for AArch64 in release-notes
+
 * Tue May 06 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt21
 - New icon for system information page
 - Increase clarity of QR code in final-notes
