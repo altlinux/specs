@@ -10,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.110.0
+Version: 2.111.0
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -205,7 +205,11 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Wed May 07 2025 Andrey Kovalev <ded@altlinux.org> 2.111.0-alt1
+- Updated to upstream version 2.111.0.
+
 * Wed Mar 19 2025 Andrey Kovalev <ded@altlinux.org> 2.110.0-alt1
+- Updated to upstream version 2.110.0.
 
 * Wed Sep 04 2024 Andrey Kovalev <ded@altlinux.org> 2.109.1-alt2
 - Split /usr/include/d into /usr/include/dmd/druntime/ and /usr/include/phobos.
