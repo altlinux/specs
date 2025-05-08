@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: smartmontools
-Version: 7.4
+Version: 7.5
 Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
@@ -53,7 +53,7 @@ smartmontools themselves.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
+%patch2 -p2
 grep -FlZ /usr/local/bin/mail *.in |
 	xargs -r0 sed -i 's,/usr/local/bin/mail,/bin/mail,g' --
 grep -FlZ /usr/local/etc/sysconfig *.am *.in |
@@ -109,6 +109,9 @@ install -pD -m755 %_sourcedir/smartmontools-update-drivedb \
 %_sysconfdir/cron.monthly/smartmontools-update-drivedb
 
 %changelog
+* Thu May 08 2025 Andrew Savchenko <bircoph@altlinux.org> 7.5-alt1
+- Update to 7.5.
+
 * Sat May 04 2024 Andrew Savchenko <bircoph@altlinux.org> 7.4-alt1
 - Update to 7.4.
 - Add capabilities support for dropping unneeded privileges.
