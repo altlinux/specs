@@ -4,8 +4,8 @@
 
 %define rname xdg-desktop-portal-kde
 Name: %rname
-Version: 6.3.4
-Release: alt2
+Version: 6.3.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -71,6 +71,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K6xdgconf/plasma-workspace/env/%{name}.sh
 
 
 %changelog
+* Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
+- new version
+
 * Mon Apr 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt2
 - fix parsing $XDG_CURRENT_DESKTOP (closes: 53733)
 

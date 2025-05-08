@@ -10,8 +10,8 @@
 %endif
 
 Name: %rname
-Version: 6.3.4
-Release: alt2
+Version: 6.3.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -152,6 +152,9 @@ done
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.Mobile.xml
 
 %changelog
+* Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt2
 - fix translations
 

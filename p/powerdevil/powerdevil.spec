@@ -8,7 +8,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: %rname
-Version: 6.3.4
+Version: 6.3.5
 Release: alt1
 %K6init
 
@@ -131,6 +131,9 @@ sed -i 's|Libcap|setcap_EXEC_ALREADY_IN_RPM_POST_SCRIPT|' CMakeLists.txt
 
 
 %changelog
+* Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
+- new version
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
 - new version
 

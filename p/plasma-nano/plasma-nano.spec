@@ -1,7 +1,7 @@
 %define rname plasma-nano
 
 Name: %rname
-Version: 6.3.4
+Version: 6.3.5
 Release: alt1
 %K6init
 
@@ -43,6 +43,9 @@ A minimal plasma shell package intended for embedded devices.
 #%_datadir/metainfo/*.xml
 
 %changelog
+* Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
+- new version
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
 - new version
 

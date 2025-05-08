@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: %rname
-Version: 6.3.4
+Version: 6.3.5
 Release: alt1
 %K6init no_altplace
 
@@ -61,6 +61,9 @@ Provides: gtk4-theme-breeze = %version-%release
 
 
 %changelog
+* Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
+- new version
+
 * Wed Apr 02 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.4-alt1
 - new version
 
