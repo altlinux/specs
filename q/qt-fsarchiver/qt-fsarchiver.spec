@@ -6,14 +6,13 @@
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt-fsarchiver
 Version: 0.8.4.%subver
-Release: alt4
-Url: http://www.fsarchiver.org
+Release: alt5
+Url: https://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source:  %sname-%version-%subver.tar
-Source1: %sname-pam
-Source2: %sname-security
-Source3: %sname.desktop
+Source1: %sname.sh
+Source2: %sname.desktop
 # Source4: %{sname}_ru-%version-%subver.ts
 
 Patch: qt5-fsarchiver-0.6.19-alt-glibc-2.16.patch
@@ -136,32 +135,32 @@ cp translations/%{sname}*.qm %buildroot%_datadir/qt5/translations
 install -d -m755 %buildroot%_liconsdir/
 install -pD -m640 src/images/harddrive1.png %buildroot%_liconsdir/%sname.png
 
-install -d -m 755 %buildroot%_bindir/
-
-ln -s %_bindir/consolehelper %buildroot%_bindir/%sname
-
-install -pD -m640 %SOURCE1 %buildroot%_sysconfdir/pam.d/%sname
-install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%sname
+mkdir -p %buildroot%_bindir
+mkdir -p %buildroot%_prefix/libexec
+mv %buildroot%_sbindir/qt5-fsarchiver %buildroot%_prefix/libexec/qt5-fsarchiver
+install -m755 %SOURCE1 %buildroot%_bindir/qt5-fsarchiver
+rm %buildroot%_sbindir/qt5-fsarchiver_polkit
 
 rm -f %buildroot/%_desktopdir/*-%sname.desktop
 
-install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
+install -pD -m640 %SOURCE2 %buildroot/%_desktopdir/%sname.desktop
 
 %files
 %doc doc/Aenderungen doc/Change doc/Liesmich doc/Readme doc/copyright
-
-%_sbindir/*
-%_bindir/%sname
+%_bindir/qt5-fsarchiver
+%_prefix/libexec/qt5-fsarchiver
+%_sbindir/findsmb-qt5
 %_desktopdir/qt5-fsarchiver.desktop
 %_liconsdir/*
-%_sysconfdir/pam.d/*
-%_sysconfdir/security/console.apps/*
 %_datadir/qt5/translations/*%{sname}*.qm
 %exclude %_docdir/%sname
 #exclude %_datadir/qt5/translations/*%{name}*.ts
 %_datadir/polkit-1/actions/org.project.pkexec.run-%sname.policy
 
 %changelog
+* Thu May 08 2025 Anton Midyukov <antohami@altlinux.org> 0.8.4.0-alt5
+- NMU: do not use consolehelper (Closes: 54178)
+
 * Thu Jul 22 2021 Stanislav Levin <slev@altlinux.org> 0.8.4.0-alt4
 - Dropped unused dependencies on Python packages.
 
@@ -226,8 +225,3 @@ install -pD -m640 %SOURCE3 %buildroot/%_desktopdir/%sname.desktop
 
 * Wed Jun 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.12-alt1
 - Initial build for ALT Linux
-
-
-
-
-qt5-fsarchiver-findsmb-0.8.0.patch
