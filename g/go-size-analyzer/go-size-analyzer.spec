@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    go-size-analyzer
-Version: 1.7.7
+Version: 1.8.1
 Release: alt1
 
 Summary: A tool for analyzing the size of compiled Go binaries, offering cross-platform support, detailed breakdowns, and multiple output formats
@@ -16,8 +16,9 @@ Source1: %name-%version-vendor.tar
 
 ExclusiveArch: %go_arches
 
-BuildRequires(pre): rpm-build-golang
-BuildRequires: golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang
+BuildRequires: /proc
 
 %description
 A simple tool to analyze the size of a Go compiled binary.
@@ -34,17 +35,15 @@ A simple tool to analyze the size of a Go compiled binary.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-export GOROOT="%_libexecdir/golang"
+export LDFLAGS="-X %import_path.version=%version"
 
 %golang_prepare
 
-cd .build/src/%import_path
 %golang_build cmd/gsa
 
 %install
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
-export GOROOT="%_libexecdir/golang"
 
 %golang_install
 
@@ -53,6 +52,8 @@ export GOROOT="%_libexecdir/golang"
 %_bindir/*
 
 %changelog
+* Fri May 02 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.8.1-alt1
+- New version 1.8.1.
+
 * Sun Mar 16 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.7.7-alt1
 - Initial build
-
