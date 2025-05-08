@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: %_name
-Version: 0.6.1
+Version: 0.6.3
 Release: alt1
 
 Summary: Hyprland configuration library
@@ -22,7 +22,7 @@ Source: %_name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: pkgconfig(hyprutils) >= 0.1.1
+BuildRequires: pkgconfig(hyprutils) >= 0.7.1
 %{?_enable_check:BuildRequires: ctest}
 
 %description
@@ -69,6 +69,9 @@ Development files for the Hyprlang library.
 %_pkgconfigdir/%_name.pc
 
 %changelog
+* Thu May 08 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
+- 0.6.3
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - 0.6.1
 
