@@ -1,7 +1,7 @@
 %global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
 
 Name: netatalk
-Version: 4.0.7
+Version: 4.2.3
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -18,11 +18,12 @@ Patch2: netatalk-3.1.12-afpstats-python3-compat.patch
 Patch3: netatalk-systemd-execstartpre.patch
 
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-meson
-BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel docbook-style-xsl
-BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel xsltproc
-BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel meson cmake unicode-ucd
-BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus
+BuildRequires(pre): rpm-build-python3 rpm-macros-meson rpm-build-perl
+BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel docbook-style-xsl python3-module-yaml python3-module-pyaml
+BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel xsltproc libcups-devel libiniparser-devel
+BuildRequires: libkrb5-devel libldap-devel libmysqlclient-devel libpam-devel meson cmake unicode-ucd libxslt libxslt-devel
+BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus findutils libtdb-devel
+BuildRequires:     pandoc
 Requires: cracklib-words cracklib
 
 %description
@@ -66,17 +67,24 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 # Set RuntimeDirectory in the service file rather than use a tmpfiles.d config
 #sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initscripts/service.systemd.tmpl
 
+## Don't build the japanese docs and put the english docs into a subfolder
+sed -i 's\install: true\install: false\' doc/translated/ja/meson.build
+#sed -i 's\doc/netatalk\doc/netatalk/htmldoc\' doc/manual/meson.build
+
+# Set RuntimeDirectory in the service file rather than use a tmpfiles.d config
+sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initscripts/systemd.netatalk.service.in
+
 
 %build
 
 
 %meson  \
         -Ddefault_library=shared                                               \
-        -Dwith-manual=local                                                    \
         -Dwith-rpath=false                                                     \
         -Dwith-overwrite=true                                                  \
         -Dwith-tcp-wrappers=false                                              \
-        -Dwith-tests=true                                                      \
+        -Dwith-tests=true							\
+        -Dwith-cups=true                                                      \
         -Dwith-pkgconfdir-path=%{_sysconfdir}/netatalk                         \
         -Dwith-init-style=systemd	                                       \
         -Dwith-lockfile-path=%{_runtimedir}/lock/netatalk/netatalk                 \
@@ -114,7 +122,7 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 %meson_test
 
 %files
-%doc CONTRIBUTORS NEWS COPYING COPYRIGHT INSTALL.md README.md SECURITY.md
+%doc CONTRIBUTORS.md NEWS.md COPYING COPYRIGHT INSTALL.md README.md SECURITY.md
 %doc %{_defaultdocdir}/%name/htmldocs
 %config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
 %dir %_sysconfdir/netatalk
@@ -146,6 +154,18 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #_mandir/man*/netatalk-config.1*
 
 %changelog
+* Thu May 08 2025 Ilya Mashkin <oddity@altlinux.ru> 4.2.3-alt1
+- 4.2.3
+
+* Mon Mar 24 2025 Ilya Mashkin <oddity@altlinux.ru> 4.1.2-alt1
+- 4.1.2
+
+* Wed Jan 15 2025 Ilya Mashkin <oddity@altlinux.ru> 4.1.0-alt1
+- 4.1.0
+
+* Fri Dec 13 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.8-alt1
+- 4.0.8
+
 * Tue Nov 26 2024 Ilya Mashkin <oddity@altlinux.ru> 4.0.7-alt1
 - 4.0.7
 
