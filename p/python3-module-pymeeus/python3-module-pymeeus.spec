@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.5.12
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library of astronomical algorithms in Python
 Group: Development/Python3
@@ -45,10 +45,13 @@ py.test3 tests
 
 %files
 %python3_sitelibdir_noarch/%pypi_name/
-%python3_sitelibdir_noarch/%_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %doc *.rst *.md
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.12-alt1.2
+- fixed build with setuptools 75.8.1
+
 * Sat Jul 27 2024 Yuri N. Sedunov <aris@altlinux.org> 0.5.12-alt1.1
 - fixed pytest >= 7.2 compatibility
 

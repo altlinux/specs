@@ -1,11 +1,13 @@
 Name: powerstat
-Version: 0.04.04
+Version: 0.04.05
 Release: alt1
 
 Summary: A tool to measure power consumption
 License: GPL-2.0-or-later
 Group: Monitoring
 Url: https://github.com/ColinIanKing/powerstat
+
+Vcs: https://github.com/ColinIanKing/powerstat.git
 
 Source: %url/archive/V%version/%name-%version.tar.gz
 
@@ -41,6 +43,9 @@ echo "CFLAGS += %(getconf LFS_CFLAGS)" >> Makefile
 %doc README.md
 
 %changelog
+* Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 0.04.05-alt1
+- 0.04.05
+
 * Thu Feb 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.04.04-alt1
 - 0.04.04
 

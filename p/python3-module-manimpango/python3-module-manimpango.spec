@@ -3,14 +3,14 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings to Pango library
 Group: Development/Python3
 License: GPL-3.0
 Url: https://pypi.python.org/pypi/%modname
 
-Vcs: https://github.com/ManimCommunity/ManimPango/
+Vcs: https://github.com/ManimCommunity/ManimPango.git
 
 Source: https://pypi.io/packages/source/m/%pypi_name/%pypi_name-%version.tar.gz
 
@@ -33,11 +33,14 @@ Python3 bindings for Pango for using with Manim.
 
 %files
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%modname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %doc README*
 
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1.1
+- fixed build with setuptools 75.8.1
+
 * Sun Sep 15 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

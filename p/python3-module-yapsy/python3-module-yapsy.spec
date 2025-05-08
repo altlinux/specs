@@ -7,7 +7,7 @@
 Name: python3-module-%pypi_name
 # yapsy/__init__.py:__version__="2.0.0"
 Version: 2.0.0
-Release: alt0.5
+Release: alt0.6
 
 Summary: A small Python plugin system library
 Group: Development/Python3
@@ -44,10 +44,13 @@ a plugin system into a wider application.
 
 %files
 %python3_sitelibdir_noarch/%pypi_name
-%python3_sitelibdir_noarch/%modname-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %doc README* CHANGELOG* LICENSE*
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt0.6
+- fixed build with setuptools 75.8.1
+
 * Tue Oct 17 2023 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt0.5
 - updated to 1.12.2-17-g6b487b0 (pre 2.0.0)
 - ported to %%pyproject macros

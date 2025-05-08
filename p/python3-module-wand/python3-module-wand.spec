@@ -10,7 +10,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.13
-Release: alt1
+Release: alt1.1
 
 Summary: Ctypes-based simple MagickWand API binding for Python
 Group: Development/Python3
@@ -44,6 +44,10 @@ implemented in Wand.
 
 %prep
 %setup -n %modname-%version
+%if_enabled snapshot
+%define version_tuple %(%__python3 -c 'print(f"{tuple(map(int, "%version".split(".")))}")')
+sed -i -e 's/^\(VERSION_INFO[ \t]*=\).*/\1%version_tuple/' wand/version.py
+%endif
 
 %build
 %pyproject_build
@@ -57,10 +61,13 @@ py.test3
 
 %files
 %python3_sitelibdir_noarch/%pypi_name/
-%python3_sitelibdir_noarch/%modname-*dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %doc README*
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1.1
+- fixed build with setuptools 75.8.1
+
 * Wed Aug 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.6.13-alt1
 - first build for Sisyphus
 

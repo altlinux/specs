@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.4.15
-Release: alt1
+Release: alt1.1
 
 Summary: A Python Enum that inherits from str
 Group: Development/Python3
@@ -37,11 +37,14 @@ StrEnum is a Python 'enum.Enum' that inherits from 'str' to complement
 
 %files
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%modname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %doc README*
 
 
 %changelog
+* Tue May 06 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.15-alt1.1
+- fixed build with setuptools 75.8.1
+
 * Fri Sep 20 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.15-alt1
 - first build for Sisyphus
 
