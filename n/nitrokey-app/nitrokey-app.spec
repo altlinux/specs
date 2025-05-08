@@ -5,7 +5,7 @@
 
 Name: nitrokey-app
 Version: 1.4.2
-Release: alt1
+Release: alt2
 License: GPLv3+
 Summary: Application for Nitrokey devices management
 Url: https://www.nitrokey.com/
@@ -55,6 +55,9 @@ sed 's/(COMPILE_FLAGS "-Wall/(COMPILE_FLAGS "-std=gnu++17 -Wall/' -i CMakeLists.
 %doc OTP_full_specification.txt *.md
 
 %changelog
+* Thu May 08 2025 Andrew Savchenko <bircoph@altlinux.org> 1.4.2-alt2
+- ftbfs: fix build with cmake 4.x
+
 * Sun Nov 10 2024 Andrew Savchenko <bircoph@altlinux.org> 1.4.2-alt1
 - Major update to 1.4.2.
 - Hardware management is moved to libnitrokey.
