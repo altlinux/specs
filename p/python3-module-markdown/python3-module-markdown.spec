@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name markdown
 %define modname Markdown
-%define ver_major 3.7
+%define ver_major 3.8
 
 %def_enable check
 
@@ -22,17 +22,21 @@ Source: https://pypi.io/packages/source/m/%pypi_name/%pypi_name-%version.tar.gz
 %else
 Source: Markdown-%version.tar
 %endif
+# revert this until setuptools_ver 77.0
+Patch10: markdown-3.8-up-PEP639.diff
 
 BuildArch: noarch
 
 %define metadata_ver 4.4
+%define setuptools_ver 77.0
 
 Requires: python3-module-Pygments
 #markdown/util.py:    import importlib_metadata as metadata
 Requires: python3-module-importlib-metadata >= %metadata_ver
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3(wheel)
+BuildRequires: python3-devel python3(wheel) python3-module-setuptools
+# >= %setuptools_ver
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-coverage
 BuildRequires: python3-module-Pygments
@@ -58,6 +62,7 @@ This package contains documentation for Markdown.
 
 %prep
 %setup -n %pypi_name-%version
+%patch10 -p1 -R
 
 %build
 %pyproject_build
@@ -65,7 +70,7 @@ This package contains documentation for Markdown.
 %install
 %pyproject_install
 mv %buildroot%_bindir/%{pypi_name}_py \
-	%buildroot%_bindir/%{pypi_name}_py3
+    %buildroot%_bindir/%{pypi_name}_py3
 
 %check
 %tox_check
@@ -75,10 +80,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %files
 %_bindir/%{pypi_name}_py3
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%modname-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %doc README* docs/changelog.md
 
 %changelog
+* Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8-alt1
+- 3.8
+
 * Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 3.7-alt1
 - 3.7
 
