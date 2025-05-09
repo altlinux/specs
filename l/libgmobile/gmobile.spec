@@ -1,24 +1,26 @@
 %def_enable snapshot
+%define _libexecdir %_prefix/libexec
 
 %def_enable introspection
+%def_enable vala
 %def_enable hwdb
 %def_enable gtk_doc
 %def_enable man
 %def_enable tests
 %def_enable examples
-%def_disable installed_tests
+%def_enable installed_tests
 
 %def_enable check
 
 %define _name gmobile
 %define namespace Gm
-%define ver_major 0.2
+%define ver_major 0.3
 %define api_ver_major 0
 %define api_ver 0
 %define sover 0
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Classes and utilities for mobile devices
@@ -34,11 +36,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 
@@ -111,10 +114,12 @@ sed -i "s|\(udevdir = \)prefix / 'lib' / 'udev'|\1'%_udevdir'|" meson.build
 %meson \
     -Ddefault_library=shared \
     %{subst_enable_meson_bool introspection introspection} \
+    %{subst_enable_meson_bool vala vapi} \
     %{subst_enable_meson_bool hwdb hwdb} \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool man man} \
     %{subst_enable_meson_bool tests tests} \
+    %{subst_enable_meson_bool installed_tests installed_tests} \
     %{subst_enable_meson_bool examples examples}
 %nil
 %meson_build
@@ -139,6 +144,7 @@ rm %buildroot%_libdir/%name.a
 %_includedir/%_name
 %_libdir/%name.so
 %_pkgconfigdir/%_name.pc
+%{?_enable_vala:%_vapidir/%_name.*}
 
 %if_enabled introspection
 %files gir
@@ -162,12 +168,15 @@ rm %buildroot%_libdir/%name.a
 
 %if_enabled installed_tests
 %files tests
-%_libexecdir/installed-tests/%_name-%api_ver/
-%_datadir/installed-tests/%_name-%api_ver/
+%_libexecdir/installed-tests/%_name/
+%_datadir/installed-tests/%_name/
 %endif
 
 
 %changelog
+* Fri May 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- updated to v0.3.0-6-gdc03dfe
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - 0.2.2
 
