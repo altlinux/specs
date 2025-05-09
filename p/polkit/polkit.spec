@@ -1,8 +1,8 @@
 %define _libexecdir /usr/libexec
 
 Name: polkit
-Version: 124
-Release: alt3
+Version: 126
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -17,6 +17,7 @@ Requires(pre): dbus
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ gobject-introspection-devel gtk-doc libexpat-devel libpam-devel
 BuildRequires: pkgconfig(duktape) pkgconfig(systemd)
 
@@ -82,18 +83,17 @@ touch ChangeLog
 	-D gtk_doc=true \
 	-D introspection=true \
 	-D man=true \
-	-D session_tracking=libsystemd-login \
+	-D session_tracking=logind \
 	-D pam_prefix=%_sysconfdir/pam.d
 %meson_build
 
 %install
 %meson_install
-
 %find_lang %name-1
 
 %pre
-%_sbindir/groupadd -r -f polkitd 2>/dev/null ||:
-%_sbindir/useradd -r -n -g polkitd -d / \
+groupadd -r -f polkitd 2>/dev/null ||:
+useradd -r -n -g polkitd -d / \
 	-s /dev/null -c "User for polkitd" polkitd 2>/dev/null ||:
 
 %files -f %name-1.lang
@@ -103,9 +103,9 @@ touch ChangeLog
 %_sysconfdir/pam.d/polkit-1
 %_bindir/pk[act]*
 %attr(4511,root,root) %_bindir/pkexec
-%dir %_prefix/libexec/%name-1
-%_prefix/libexec/%name-1/polkitd
-%attr(4511,root,root) %_prefix/libexec/polkit-1/polkit-agent-helper-1
+%dir %_prefix/lib/%name-1
+%_prefix/lib/%name-1/polkitd
+%attr(4511,root,root) %_prefix/lib/polkit-1/polkit-agent-helper-1
 %dir %_datadir/%name-1
 %dir %_datadir/%name-1/actions
 %attr(0700,polkitd,root) %dir %_datadir/%name-1/rules.d
@@ -113,6 +113,8 @@ touch ChangeLog
 %_datadir/%name-1/actions/org.freedesktop.policykit.policy
 %_datadir/dbus-1/system-services/org.freedesktop.PolicyKit1.service
 %_unitdir/polkit.service
+%_tmpfilesdir/polkit-tmpfiles.conf
+%_sysusersdir/polkit.conf
 %_man1dir/*.1*
 %_man8dir/*.8*
 
@@ -135,6 +137,9 @@ touch ChangeLog
 %_girdir/*.gir
 
 %changelog
+* Tue Apr 22 2025 Alexey Shabalin <shaba@altlinux.org> 126-alt1
+- 126 (ALT#53941)
+
 * Mon Jun 24 2024 Alexey Shabalin <shaba@altlinux.org> 124-alt3
 - backport fixes from upstream main branch
 - add requires dbus.service to polkit.service (ALT#50664)

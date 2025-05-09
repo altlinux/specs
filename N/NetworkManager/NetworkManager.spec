@@ -42,7 +42,7 @@
 
 Name: NetworkManager
 Version: 1.52.0
-Release: alt2
+Release: alt3
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -101,6 +101,9 @@ Requires: %name-bluetooth = %version-%release
 Requires: %name-wifi = %version-%release
 Requires: %name-wwan = %version-%release
 Requires: %name-ppp = %version-%release
+
+# In 126 version /usr/libexec/polkit-1/polkit-agent-helper-1 -> /usr/lib/polkit-1/polkit-agent-helper-1
+Conflicts: polkit < 126-alt1
 
 # Drop busctl from Requires:
 # it from NetworkManager.service and pulls systemd.
@@ -357,7 +360,7 @@ GObject introspection devel data for the NetworkManager (libnm).
 %endif
 	-Dudev_dir=%_udevdir \
 	-Dpolkit=true \
-	-Dpolkit_agent_helper_1=/usr/libexec/polkit-1/polkit-agent-helper-1 \
+	-Dpolkit_agent_helper_1=/usr/lib/polkit-1/polkit-agent-helper-1 \
 	-Dmodify_system=false \
 	-Detcnet_alt=true \
 	%{subst_enable_meson_bool ifcfg ifcfg_rh} \
@@ -640,6 +643,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 22 2025 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt3
+- Update path to polkit-agent-helper-1.
+
 * Tue Apr 01 2025 Mikhail Efremov <sem@altlinux.org> 1.52.0-alt2
 - Patch from upstream:
   + meson: Fix docs generation with PyGObject 3.52.
