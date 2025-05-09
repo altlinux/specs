@@ -9,7 +9,7 @@
 
 Name:    etcd
 Version: 3.5.16
-Release: alt3
+Release: alt4
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
 Group:   System/Servers
@@ -92,10 +92,10 @@ groupadd -r -f %etcd_group
 useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&1 ||:
 
 %post
-%post_service %name
+%post_systemd %name.service
 
 %preun
-%preun_service %name
+%preun_systemd %name.service
 
 %files
 %doc README.md etcd.conf.yml.sample
@@ -112,6 +112,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Thu May 08 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt4
+- Fix systemd service disabling before package deletion (Closes: #49768)
+
 * Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt3
 - Rename package back to etcd without version in the name
 

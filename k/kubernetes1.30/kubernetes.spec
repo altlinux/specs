@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -308,26 +308,26 @@ groupadd -r -f kube > /dev/null 2>&1 ||:
 useradd -r -g kube -M -d %_localstatedir/%prog_name -s /dev/null -c "Kubernetes user" kube > /dev/null 2>&1 ||:
 
 %post master
-%post_service kube-apiserver
-%post_service kube-scheduler
-%post_service kube-controller-manager
+%post_systemd kube-apiserver.service
+%post_systemd kube-scheduler.service
+%post_systemd kube-controller-manager.service
 
 %preun master
-%preun_service kube-apiserver
-%preun_service kube-scheduler
-%preun_service kube-controller-manager
+%preun_systemd kube-apiserver.service
+%preun_systemd kube-scheduler.service
+%preun_systemd kube-controller-manager.service
 
 %post kubelet
-%post_service kubelet
+%post_systemd kubelet.service
 
 %preun kubelet
-%preun_service kubelet
+%preun_systemd kubelet.service
 
 %post node
-%post_service kube-proxy
+%post_systemd kube-proxy.service
 
 %preun node
-%preun_service kube-proxy
+%preun_systemd kube-proxy.service
 
 %post crio
 if [ -f /etc/net/sysctl.conf ]; then
@@ -394,6 +394,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.12-alt2
+- Fix systemd service disabling before package deletion (Closes: #49768)
+
 * Wed Apr 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.12-alt1
 - 1.30.11 -> 1.30.12
 

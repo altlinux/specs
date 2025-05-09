@@ -17,7 +17,7 @@
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
-Release: alt4
+Release: alt5
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -114,10 +114,10 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
             install.systemd
 
 %post
-%post_service crio
+%post_systemd crio.service
 
 %preun
-%preun_service crio
+%preun_systemd crio.service
 
 %files
 %_bindir/crio
@@ -138,6 +138,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu May 08 2025 Alexander Stepchenko <geochip@altlinux.org> 1.26.4-alt5
+- Fix systemd service disabling before package deletion (Closes: #49768)
+
 * Thu Jul 04 2024 Alexander Stepchenko <geochip@altlinux.org> 1.26.4-alt4
 - Use macros for systemd instead of absolute paths.
 
