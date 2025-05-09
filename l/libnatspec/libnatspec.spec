@@ -1,6 +1,6 @@
 Name: libnatspec
-Version: 0.3.3
-Release: alt2
+Version: 0.3.4
+Release: alt1
 
 Summary: Library for national and language-specific issues
 
@@ -95,6 +95,9 @@ mv %buildroot%_libdir/%{name}.* %buildroot/%_lib
 
 
 %changelog
+* Fri May 09 2025 Kirill Izmestev <felixz@altlinux.org> 0.3.4-alt1
+- Add Ossetian locale support.
+
 * Fri Oct 04 2024 Kirill Izmestev <felixz@altlinux.org> 0.3.3-alt2
 - Fixed Tatar locale name as glibc.
 
