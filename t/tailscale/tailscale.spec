@@ -4,14 +4,14 @@
 
 Name: tailscale
 Version: 1.82.5
-Release: alt1
+Release: alt2
 
 Summary: A mesh VPN that makes it easy to connect your devices, wherever they are.
 License: BSD-3-Clause
 Group: System/Servers
 
 Url: https://tailscale.com/
-Vcs: https://{%import_path}.git
+Vcs: https://github.com/tailscale/tailscale.git
 Source0: %name-%version.tar
 Source1: %name-vendor.tar
 
@@ -74,5 +74,8 @@ install -Dm644 cmd/tailscaled/tailscaled.defaults %buildroot%_sysconfdir/sysconf
 %doc README.md AUTHORS LICENSE PATENTS
 
 %changelog
+* Thu May 08 2025 Semen Fomchenkov <armatik@altlinux.org> 1.82.5-alt2
+- spec: fix Vcs URL
+
 * Thu May 01 2025 Semen Fomchenkov <armatik@altlinux.org> 1.82.5-alt1
 - Initial build for Sisyphus.
