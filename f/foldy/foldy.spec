@@ -3,11 +3,11 @@
 %define service_name org.altlinux.FoldyService
 %define gir_name Foldy
 %define glib_min_version 2.76
-%define api_version 3
-%define minor_version 12
+%define api_version 4
+%define minor_version 1
 
 Name: foldy
-Version: 3.12
+Version: 4.1
 Release: alt1
 
 Summary: Folder manager aimed to mobile devices
@@ -31,8 +31,11 @@ BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_min_version
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: vapi(gee-0.8)
 BuildRequires: gir(Gee) = 0.8
+BuildRequires: pkgconfig(libportal)
+BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: blueprint-compiler
 BuildRequires: gobject-introspection-devel
+BuildRequires: gettext-devel
 %{?_enable_check:BuildRequires: appstream desktop-file-utils}
 
 %description
@@ -146,6 +149,9 @@ export AS_VALIDATE_NONET="true"
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Thu May 08 2025 Vladimir Vaskov <rirusha@altlinux.org> 4.1-alt1
+- New version: 4.1
+
 * Thu Apr 10 2025 Vladimir Vaskov <rirusha@altlinux.org> 3.12-alt1
 - New version: 3.12
 - Changed upstream remote URL and VCS
