@@ -2,10 +2,10 @@ Name: kernel-image-6.14
 Release: alt1
 %define kernel_src_version	6.14
 %define kernel_base_version	6.14
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	latest1
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri May 09 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.6-alt1
+- v6.14.6 (2025-05-09).
+
 * Fri May 02 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.5-alt1
 - v6.14.5 (2025-05-02).
 
