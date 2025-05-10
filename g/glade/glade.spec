@@ -5,15 +5,15 @@
 %define api_ver 2.0
 %define xdg_name org.gnome.Glade
 %def_enable gtk_doc
-%def_enable python
+%def_disable python
 %def_enable gjs
 %def_enable gladeui
 %def_enable webkit2gtk
-%def_enable check
+%def_disable check
 
 Name: glade
 Version: %ver_major.0
-Release: alt2.1
+Release: alt3
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -163,6 +163,10 @@ dbus-run-session xvfb-run %__meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt3
+- GLADE_3_40_0-31-g1b15f940 (last commit, project archived)
+- disabled python support, disabled %%check
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt2.1
 - BR: /bin/dbus-* -> /usr/bin/dbus-*
 
