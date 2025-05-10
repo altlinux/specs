@@ -1,6 +1,6 @@
 Name:  adaptix
 Version: 3.0.0
-Release: alt3
+Release: alt4
 
 Summary: An extremely flexible and configurable data model conversion library.
 License: Apache-2.0
@@ -76,7 +76,7 @@ rm  -r %buildroot%python3_sitelibdir/%name/tests/tests_helpers
 %doc LICENSE *.md
 %python3_sitelibdir/%name/
 #%python3_sitelibdir/%{pyproject_distinfo %name}
-%python3_sitelibdir/adaptix-3.0.0b10.dist-info/
+%python3_sitelibdir/adaptix-3.0.0b11.dist-info/
 
 %files -n python3-module-%name-examples
 %python3_sitelibdir/%name/examples
@@ -88,6 +88,9 @@ rm  -r %buildroot%python3_sitelibdir/%name/tests/tests_helpers
 %python3_sitelibdir/tests_helpers
 
 %changelog
+* Sat May 10 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt4
+- update git.0e4132507c (version 3.0.0b11)
+
 * Mon Apr 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt3
 - update git.9c8606c1bf (version 3.0.0b10)
 
