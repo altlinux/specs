@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: gnome-%__name
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1%beta
 
 Summary: Tweak various aspects of GNOME
@@ -31,9 +31,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%__name
 
-%define adw_ver 1.6
-#adw_about_dialog_add_other_app
-#%%define adw_ver 1.7
+%define adw_ver 1.7
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1 typelib(XdpGtk4) dconf
@@ -76,6 +74,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.9-alt1
+- 0.5.9
+
 * Thu Apr 17 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.7-alt1
 - 0.5.7
 

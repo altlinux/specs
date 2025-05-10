@@ -2,12 +2,12 @@
 %define api_ver 3
 %define _name %__name%api_ver
 
-%def_enable glade
+%def_disable glade
 %def_enable gtk_doc
 
 Name: lib%_name
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: GTK+3 widget for fast data display
 License: LGPLv2+
@@ -75,6 +75,9 @@ This package provides development documenation for GtkDatabox3 library.
 %_datadir/gtk-doc/html/%__name-1/}
 
 %changelog
+* Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.1
+- disabled glade support
+
 * Fri Apr 16 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
 
