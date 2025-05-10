@@ -6,12 +6,12 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-%def_enable glade_catalog
+%def_disable glade_catalog
 %def_enable check
 
 Name: %_name%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 
 Summary: Library with GTK+3 widgets for mobile devices (API version 1)
 Group: System/Libraries
@@ -124,6 +124,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1.1
+- disabled glade support
+
 * Fri Feb 09 2024 Yuri N. Sedunov <aris@altlinux.org> 1.8.3-alt1
 - 1.8.3
 

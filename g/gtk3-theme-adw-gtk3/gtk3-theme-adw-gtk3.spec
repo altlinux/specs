@@ -2,7 +2,7 @@
 %define themename adw-gtk3
 
 Name: gtk3-theme-%themename
-Version: 6.1
+Version: 6.2
 Release: alt1
 
 Summary: The theme from libadwaita ported to GTK+3
@@ -46,6 +46,9 @@ export PATH=$PATH:$PWD/dart-sass
 %doc README*
 
 %changelog
+* Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 6.2-alt1
+- 6.2
+
 * Fri May 02 2025 Yuri N. Sedunov <aris@altlinux.org> 6.1-alt1
 - 6.1
 
