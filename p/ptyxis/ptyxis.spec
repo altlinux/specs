@@ -5,11 +5,12 @@
 %define libadwaita_version 1.5.0
 %define libportal_gtk4_version 0.7.1
 %define pcre_version 10.21
+%define _unpackaged_files_terminate_build 1
 
 %def_enable check
 
 Name: ptyxis
-Version: 48.1
+Version: 48.3
 Release: alt1
 
 Summary: Ptyxis is a terminal for GNOME with first-class support for containers
@@ -86,6 +87,9 @@ desktop-file-validate %buildroot%_desktopdir/org.gnome.Ptyxis.desktop
 %_altdir/%name
 
 %changelog
+* Sat May 10 2025 Boris Yumankulov <boria138@altlinux.org> 48.3-alt1
+- new version 48.3
+
 * Fri Mar 28 2025 Boris Yumankulov <boria138@altlinux.org> 48.1-alt1
 - new version 48.1
 
