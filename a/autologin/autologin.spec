@@ -1,6 +1,6 @@
 Name: autologin
 Version: 1.0.0
-Release: alt10
+Release: alt11
 Serial: 1
 
 Summary: Automatically log in
@@ -52,6 +52,9 @@ CONFIG="/etc/sysconfig/autologin"
 %doc README AUTHORS
 
 %changelog
+* Sat May 10 2025 Anton Midyukov <antohami@altlinux.org> 1:1.0.0-alt11
+- NMU: autologin.pamd: make module pam_console.so optional
+
 * Sat Dec 14 2024 Lenar Shakirov <snejok@altlinux.org> 1:1.0.0-alt10
 - Fix FTBS
 
