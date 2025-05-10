@@ -3,7 +3,7 @@
 
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt1.20230318
+Release: alt1.20250321
 Epoch: 8
 Summary: Intel integrated graphics chipsets
 License: MIT
@@ -22,7 +22,7 @@ BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel libXcursor-devel libXdamage-devel libXinerama-devel
 BuildRequires: libXrandr-devel libXtst-devel xorg-proto-devel libxshmfence-devel libXrender-devel libxcbutil-devel
 BuildRequires: xorg-util-macros libXfixes-devel libudev-devel libXScrnSaver-devel libXcomposite-devel
-BuildRequires: libXxf86vm-devel libXfont2-devel
+BuildRequires: libXxf86vm-devel libXfont2-devel libXv-devel
 
 %description
 The xf86-video-intel module is an open-source 2D graphics driver for
@@ -71,6 +71,10 @@ Intel graphics chipsets including:
 %endif
 
 %changelog
+* Sat May 10 2025 L.A. Kostis <lakostis@altlinux.ru> 8:2.99.917-alt1.20250321
+- git snapshot master.4a64400e.
+- BR: added libXv-devel.
+
 * Wed Sep 11 2024 L.A. Kostis <lakostis@altlinux.ru> 8:2.99.917-alt1.20230318
 - git snapshot master.ce811e78.
 - Update Url.
