@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nbfc-linux
-Version: 0.3.13
+Version: 0.3.15
 Release: alt1
 
 Summary: NoteBook FanControl
@@ -16,7 +16,7 @@ BuildRequires: gcc-c++ clang
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(libcurl)
-BuildRequires: %_bindir/python3 rpm-build-python3
+BuildRequires: %_bindir/python3
 
 ExclusiveArch: x86_64
 
@@ -37,7 +37,6 @@ NoteBook FanControl ported to Linux
 %files
 %_bindir/ec_probe
 %_bindir/nbfc
-%_bindir/nbfc-qt
 %_bindir/nbfc_service
 %_unitdir/nbfc_service.service
 %_datadir/nbfc/model_support.json
@@ -57,6 +56,9 @@ NoteBook FanControl ported to Linux
 %_datadir/nbfc/configs/*
 
 %changelog
+* Sat May 10 2025 Boris Yumankulov <boria138@altlinux.org> 0.3.15-alt1
+- new version 0.3.15
+
 * Mon May 05 2025 Boris Yumankulov <boria138@altlinux.org> 0.3.13-alt1
 - new version 0.3.13
 
