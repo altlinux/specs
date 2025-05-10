@@ -8,7 +8,7 @@
 
 Name: sddm
 Version: 0.21.0
-Release: alt3
+Release: alt4
 %K6init no_altplace man
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,9 @@ install -p -m 0644 %SOURCE11 %buildroot%_sysconfdir/pam.d/sddm-autologin
 %_tmpfilesdir/sddm.conf
 
 %changelog
+* Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.21.0-alt4
+- drop requires on PAM(pam_console.so) (ALT bug 54215)
+
 * Tue Jan 07 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.21.0-alt3
 - alt sddm.conf: comment the parameter '[Theme] Current='
 
