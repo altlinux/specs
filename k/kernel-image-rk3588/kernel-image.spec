@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.27
+%define kernel_sublevel	.28
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -366,6 +366,11 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat May 10 2025 Alexei Takaseev <taf@altlinux.org> 6.12.28-alt1
+- v6.12.28 (2025-05-09).
+- config-rk3588: Undo from 6.12.24-alt1 Disable No Safety Features Timestamping in PHY devices
+- config-rk3588: CONFIG_IRQ_TIME_ACCOUNTING=y
+
 * Tue May 06 2025 Alexei Takaseev <taf@altlinux.org> 6.12.27-alt1
 - v6.12.27 (2025-05-05).
 
