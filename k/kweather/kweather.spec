@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 24.12.3
-Release: alt1
+Release: alt1.1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,9 @@ License: GPL-2.0-or-later
 Requires: kf6-kirigami-addons
 Provides: kde5-kweather = %EVR
 Obsoletes: kde5-kweather < %EVR
+
+#sea https://bugzilla.altlinux.org/53914
+Requires: qml6(QtCharts)
 
 Source: %rname-%version.tar
 Patch1: alt-clear-country-names.patch
@@ -50,6 +53,9 @@ A convergent weather application for Plasma.
 
 
 %changelog
+* Sat May 10 2025 Aleksandr Shamaraev <shad@altlinux.org> 24.12.3-alt1.1
+- NMU: added requires Qt6ChartsQml (ALT #53914)
+
 * Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
