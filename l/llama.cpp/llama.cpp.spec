@@ -8,9 +8,10 @@
 %else
 %def_without cuda
 %endif
+%def_with vulkan
 
 Name: llama.cpp
-Version: 4855
+Version: 5332
 Release: alt1
 Epoch: 1
 Summary: LLM inference in C/C++
@@ -24,8 +25,12 @@ Requires: %name-cuda = %EVR
 %filter_from_requires /(libcudart\.so\.12)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 %endif
+%if_with vulkan
+Requires: %name-vulkan = %EVR
+%endif
 
 Source: %name-%version.tar
+Patch: %name-%version.patch
 Source1: kompute-0.tar
 
 BuildRequires(pre): rpm-macros-cmake
@@ -37,6 +42,10 @@ BuildRequires: libstdc++-devel-static
 %if_with cuda
 BuildRequires: gcc12-c++
 BuildRequires: nvidia-cuda-devel-static
+%endif
+%if_with vulkan
+BuildRequires: glslc
+BuildRequires: libvulkan-devel
 %endif
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: ctest
@@ -52,7 +61,7 @@ Supports CPU, GPU, and hybrid CPU+GPU inference.
 
 Supported models:
 
-   LLaMA, LLaMA 2, Mistral 7B, Mixtral MoE, Falcon, Chinese LLaMA /
+   LLaMA models, Mistral 7B, Mixtral MoE, Falcon, Chinese LLaMA /
    Alpaca and Chinese LLaMA-2 / Alpaca-2, Vigogne (French), Koala,
    Baichuan 1 & 2 + derivations, Aquila 1 & 2, Starcoder models, Refact,
    Persimmon 8B, MPT, Bloom, Yi models, StableLM models, Deepseek models,
@@ -62,7 +71,7 @@ Supported models:
    MoE, Smaug, Poro 34B, Bitnet b1.58 models, Flan T5, Open Elm models,
    ChatGLM3-6b + ChatGLM4-9b + GLMEdge-1.5b + GLMEdge-4b, SmolLM,
    EXAONE-3.0-7.8B-Instruct, FalconMamba Models, Jais, Bielik-11B-v2.3,
-   RWKV-6, QRWKV-6, GigaChat-20B-A3B
+   RWKV-6, QRWKV-6, GigaChat-20B-A3B, Trillion-7B-preview, Ling models
 
 Multimodal models:
 
@@ -119,16 +128,30 @@ Requires: %name-cpu = %EVR
 %description cuda
 %summary.
 
+%package vulkan
+Summary: %name backend for GPU
+Group: Sciences/Computer science
+Requires: %name-cpu = %EVR
+
+%description vulkan
+%summary.
+
 %prep
 %setup
+%autopatch -p1
 tar xf %SOURCE1 -C ggml/src/ggml-kompute
+commit=$(awk '$2=="b%version"{print$1}' .gear/tags/list)
 cat <<-EOF >> cmake/build-info.cmake
 	set(BUILD_NUMBER %version)
 	set(GGML_BUILD_NUMBER %version)
-	set(BUILD_COMMIT "%release")
+	set(BUILD_COMMIT "${commit::8} [%release]")
 EOF
 sed -i '/POSITION_INDEPENDENT_CODE/s/PROPERTIES/& SOVERSION 0.0.%version/' ggml/src/CMakeLists.txt src/CMakeLists.txt
 sed -i 's/POSITION_INDEPENDENT_CODE/SOVERSION 0.0.%version &/' ggml/cmake/ggml-config.cmake.in
+# We do not have Internet access (issues/13371).
+sed -i 's/common_has_curl()/0/' tests/test-arg-parser.cpp
+# Libs with unclear purpose.
+sed -i s/BUILD_SHARED_LIBS/0/ tools/mtmd/CMakeLists.txt
 
 %build
 # Unless -DCMAKE_SKIP_BUILD_RPATH=yes CMake fails to strip build time RPATH
@@ -146,6 +169,9 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 %if_with cuda
 	-DGGML_CUDA=ON \
 	-DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
+%endif
+%if_with vulkan
+	-DGGML_VULKAN=ON \
 %endif
 	%nil
 grep -E 'LLAMA|GGML' %_cmake__builddir/CMakeCache.txt | sort | tee build-options.txt
@@ -176,7 +202,7 @@ printf '%%s\n' llama-server llama-simple llama-run |
 %dnl export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libexecdir/llama PATH+=:%buildroot%_bindir
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
 llama-cli --version
-llama-cli --version |& grep -Fx 'version: %version (%release)'
+llama-cli --version |& grep -Ex 'version: %version \(\S+ \[%release\]\)'
 # test-eval-callback wants network.
 %ctest -j1 -E test-eval-callback
 llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500
@@ -217,7 +243,18 @@ llama-cli -m %_datadir/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -
 %_libexecdir/llama/libggml-cuda.so
 %endif
 
+%if_with vulkan
+%files vulkan
+%_bindir/vulkan-shaders-gen
+%dir %_libexecdir/llama
+%_libexecdir/llama/libggml-vulkan.so
+%endif
+
 %changelog
+* Sat May 10 2025 Vitaly Chikunov <vt@altlinux.org> 1:5332-alt1
+- Update to b5332 (2025-05-09), with vision support in llama-server.
+- Enable Vulkan backend (for GPU) in llama.cpp-vulkan package.
+
 * Mon Mar 10 2025 Vitaly Chikunov <vt@altlinux.org> 1:4855-alt1
 - Update to b4855 (2025-03-07).
 - Enable CUDA backend (for NVIDIA GPU) in llama.cpp-cuda package.
