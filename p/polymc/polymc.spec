@@ -1,6 +1,6 @@
 Name: polymc
-Version: 6.1
-Release: alt2
+Version: 7.0
+Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -74,6 +74,9 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Fri May 09 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
+- new version 7.0 (with rpmrb script) (ALT bug 53379)
+
 * Thu Apr 04 2024 Roman Alifanov <ximper@altlinux.org> 6.1-alt2
 - fix META URL (ALT bug 48495)
 
