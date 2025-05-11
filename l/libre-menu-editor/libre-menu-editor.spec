@@ -5,7 +5,7 @@
 %define rdn_name page.codeberg.libre_menu_editor.LibreMenuEditor
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Menu editor
@@ -27,6 +27,7 @@ Source: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: xdg-utils
 
@@ -51,6 +52,9 @@ Menu editor for GNOME.
 %doc readme.*
 
 %changelog
+* Sun May 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.2-alt1
+- 1.9.2
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.1-alt1
 - 1.9.1
 
