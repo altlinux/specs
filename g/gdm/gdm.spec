@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -201,6 +201,7 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 	-Ddefault-pam-config='%default_pam_config' \
 	-Ddmconfdir='%_sysconfdir/X11/sessions' \
 	-Dudev-dir='%_udevrulesdir' \
+	-Ddbus-sys='%_datadir/dbus-1/system.d' \
 	%{?_without_xdmcp:-Dxdmcp=disabled} \
 	%{?_without_libaudit:-Dlibaudit=disabled} \
 	%{?_without_plymouth:-Dplymouth=disabled} \
@@ -260,7 +261,7 @@ dbus-run-session %__meson_test
 %config %_sysconfdir/pam.d/gdm-smartcard
 %config %_sysconfdir/pam.d/gdm-fingerprint
 %_udevrulesdir/61-%name.rules
-%config %_sysconfdir/dbus-1/system.d/%name.conf
+%_datadir/dbus-1/system.d/gdm.conf
 %config %_datadir/polkit-1/rules.d/20-%name.rules
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %dir %gdm_confdir
@@ -310,6 +311,10 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon May 12 2025 Alexey Shabalin <shaba@altlinux.org> 48.0-alt2
+- Relocate dbus policy to /usr
+- Don't require pam_console.so (ALT#54211)
+
 * Mon Mar 17 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
