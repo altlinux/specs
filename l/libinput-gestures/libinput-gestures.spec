@@ -1,11 +1,13 @@
 Name: libinput-gestures
-Version: 2.79
+Version: 2.80
 Release: alt1
 
 Summary: Actions gestures on your touchpad using libinput
 License: GPL-2.0-only
 Group: System/Libraries
 Url: https://github.com/bulletmark/libinput-gestures
+Vcs: https://github.com/bulletmark/libinput-gestures.git
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -55,6 +57,10 @@ cp -v ./%name ./%name-%version
 %_systemd_dir/user/%name.service
 
 %changelog
+* Sun May 11 2025 Anton Kurachenko <srebrov@altlinux.org> 2.80-alt1
+- New version 2.80.
+- Added VCS tag.
+
 * Sun Feb 02 2025 Anton Kurachenko <srebrov@altlinux.org> 2.79-alt1
 - New version 2.79.
 
