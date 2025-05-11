@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: llama-swap
-Version: 92
+Version: 110
 Release: alt1
 Summary: A proxy for llama.cpp-server to provide automatic model switching
 License: MIT
@@ -38,5 +38,8 @@ go test -v ./...
 %_bindir/llama-swap
 
 %changelog
+* Sun May 11 2025 Vitaly Chikunov <vt@altlinux.org> 110-alt1
+- Update to v110 (2025-05-05).
+
 * Mon Mar 10 2025 Vitaly Chikunov <vt@altlinux.org> 92-alt1
 - First import v92 (2025-03-09).
