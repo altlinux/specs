@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define kflavours 6.12 6.13 6.14
+%define kflavours 6.12 6.14
 %define inst_dir %_sysconfdir/apt/sources.list.d
 %define alt_url https://lakostis.unsafe.ru/RPMS/ALTLinux
 
 Name: apt-repo-lakostis-kmodules
 Version: 0.0.1
-Release: alt5
+Release: alt6
 
 Summary: kernel modules from alt-lakostis repo
 
@@ -38,6 +38,9 @@ done
 %inst_dir/*.list
 
 %changelog
+* Sun May 11 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt6
+- remove 6.13 (EOL).
+
 * Tue Apr 08 2025 L.A. Kostis <lakostis@altlinux.ru> 0.0.1-alt5
 - Added unsafe.ru mirror.
 
