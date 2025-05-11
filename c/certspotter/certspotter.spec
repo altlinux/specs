@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: certspotter
-Version: 0.18.0
+Version: 0.19.1
 Release: alt1
 Summary: Certificate Transparency Log Monitor
 License: MPL-2.0
@@ -54,6 +54,9 @@ go test -v
 %_cachedir/certspotter
 
 %changelog
+* Sun May 11 2025 Vitaly Chikunov <vt@altlinux.org> 0.19.1-alt1
+- Update to v0.19.1 (2025-05-07).
+
 * Thu Nov 16 2023 Vitaly Chikunov <vt@altlinux.org> 0.18.0-alt1
 - Update to v0.18.0 (2023-11-13).
 
