@@ -1,8 +1,6 @@
-%define _libexecdir /usr/libexec
-
 Name: polkit
 Version: 126
-Release: alt1
+Release: alt2
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
@@ -137,6 +135,9 @@ useradd -r -n -g polkitd -d / \
 %_girdir/*.gir
 
 %changelog
+* Sun May 11 2025 Alexey Shabalin <shaba@altlinux.org> 126-alt2
+- fixed path to polkit-agent-helper-1 (ALT#54217)
+
 * Tue Apr 22 2025 Alexey Shabalin <shaba@altlinux.org> 126-alt1
 - 126 (ALT#53941)
 
