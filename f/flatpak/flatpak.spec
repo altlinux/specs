@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.16.0
+Version: 1.16.1
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -25,7 +25,7 @@ Url: https://flatpak.org/
 Vcs: https://github.com/flatpak/flatpak.git
 # Source-url: https://github.com/flatpak/flatpak/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
-Patch1: flatpak-1.12.2-alt-flatpak.sh.patch
+Patch1: flatpak-1.16.1-alt-flatpak.sh.patch
 
 %define flatpak_group %name
 %define flatpak_user %name
@@ -122,7 +122,7 @@ This package contains developer documentation for lib%name.
 
 %prep
 %setup
-%patch1
+%patch1 -b .sh
 
 %build
 %meson \
@@ -225,6 +225,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Sun May 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Fri Jan 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
