@@ -2,7 +2,7 @@
 %global soname 4
 
 Name: libxmp
-Version: 4.6.2
+Version: 4.6.3
 Release: alt1
 
 Summary: Module Player library for MOD, S3M, IT and others
@@ -68,6 +68,9 @@ mv "$b/%_docdir/%name/libxmp.3" "$b/%_man3dir/"
 %_docdir/%name/
 
 %changelog
+* Mon May 12 2025 Michael Shigorin <mike@altlinux.org> 4.6.3-alt1
+- new version (watch file uupdate)
+
 * Tue Feb 25 2025 Michael Shigorin <mike@altlinux.org> 4.6.2-alt1
 - new version (watch file uupdate)
 
