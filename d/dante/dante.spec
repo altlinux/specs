@@ -10,8 +10,8 @@ ExcludeArch: ppc64le
 
 Summary: A free SOCKS v4/v5 client implementation
 Name: dante
-Version: 1.4.3
-Release: alt4
+Version: 1.4.4
+Release: alt1
 License: BSD-type
 Group: Security/Networking
 Url: http://www.inet.no/dante/
@@ -27,9 +27,15 @@ Patch0:	dante-am.patch
 Patch1:	dante-build.patch
 Patch2:	dante-cpp.patch
 Patch3: dante-getaddrinfo_check_drop.patch
+Patch4: dante-1.4.4-alt-SIOCGIFHWADDR.patch
 
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 perl python-base
-BuildRequires: flex libpam0-devel db4.7-utils libldap-devel libkrb5-devel libsasl2-devel
+BuildRequires(pre): rpm-macros-systemd
+BuildRequires: db4.7-utils
+BuildRequires: flex
+BuildRequires: libkrb5-devel
+BuildRequires: libldap-devel
+BuildRequires: libpam0-devel
+BuildRequires: libsasl2-devel
 
 %description
 Dante is a free implementation of the SOCKS proxy protocol, version 4,
@@ -55,7 +61,7 @@ network.
 %package devel
 Summary: development libraries for SOCKS
 Group: Development/C
-Requires: dante
+Requires: dante = %EVR
 
 %description devel
 Static libraries required to compile programs including SOCKS.
@@ -63,27 +69,25 @@ Static libraries required to compile programs including SOCKS.
 %package devel-static
 Summary: development libraries for SOCKS
 Group: Development/C
-Requires: lib%name-devel-static = %version-%release
+Requires: lib%name-devel = %EVR
 
 %description devel-static
 Static libraries required to compile programs including SOCKS.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 %build
 %autoreconf
+PATH=:$PATH:/sbin # /sbin is required to run ldconfig to find libc for preload support.
 %configure \
 	--disable-silent-rules \
 	--without-glibc-secure \
 	--without-upnp \
 	--enable-clientdl \
 	--enable-serverdl \
-	--disable-preload \
+	--enable-preload \
 	--enable-shared \
 	%{subst_enable static} \
 	%nil
@@ -114,16 +118,23 @@ useradd -r -c "SOCKS server" -d /var/empty -s /dev/null _sockd || :
 
 %post server
 test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
+%systemd_post sockd.service
+
+%preun server
+%systemd_preun sockd.service
+
+%postun server
+%systemd_postun sockd.service
 
 %files
-%doc BUGS CREDITS LICENSE NEWS README README.ldap SUPPORT doc/README* example/socks.conf example/socks-simple-withoutnameserver.conf example/sockd.conf example/socks-simple.conf
+%doc BUGS CREDITS LICENSE NEWS README* SUPPORT doc/README* example/*.conf
 %config %_sysconfdir/socks.conf
-%_libdir/libsocks.so.0.1.1
+%_libdir/libsocks.so.0.*
 %_libdir/libsocks.so.0
-#_libdir/libdsocks.so
+%_libdir/libdsocks.so
 %_bindir/socksify
-%_mandir/man1/socksify.1*
-%_mandir/man5/socks.conf.5*
+%_man1dir/socksify.1*
+%_man5dir/socks.conf.5*
 
 %files server
 %config %_sysconfdir/sockd.conf
@@ -140,7 +151,7 @@ test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
 %_unitdir/*.service
 
 %files devel
-%doc INSTALL doc/rfc* doc/SOCKS4.protocol
+%doc INSTALL doc/rfc* doc/*.protocol
 %_libdir/libsocks.so
 %_includedir/socks.h
 
@@ -150,6 +161,10 @@ test -r %_sharedstatedir/sockd/passwd.db || sockd.passwd -r
 %endif
 
 %changelog
+* Sun May 11 2025 Vitaly Chikunov <vt@altlinux.org> 1.4.4-alt1
+- NMU: Update to 1.4.4 (2024-12-16), (fixes: CVE-2024-54662).
+- NMU: Fix socksify(1) (ALT#51145), but be warned there is no IPv6 support.
+
 * Fri Jan 05 2024 Alexei Mezin <alexvm@altlinux.org> 1.4.3-alt4
 - Add symlink to systemd service with correct name to comply with packaging policy.
 
