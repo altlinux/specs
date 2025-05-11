@@ -3,7 +3,7 @@
 
 Name: far2l
 Version: 2.6.5
-Release: alt1
+Release: alt2
 
 Summary: Linux port of FAR v2
 
@@ -14,6 +14,8 @@ VCS: https://github.com/elfmz/far2l.git
 
 # Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
+# https://github.com/elfmz/far2l/issues/2744
+Patch: fix-input-non-ASCII-with-wxGTK3.2.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -104,6 +106,9 @@ desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far
 %_man1dir/far2l.*
 
 %changelog
+* Sun May 11 2025 Anton Midyukov <antohami@altlinux.org> 2.6.5-alt2
+- fix input non-ASCII characters (Closes: 54201)
+
 * Wed May 07 2025 Anton Midyukov <antohami@altlinux.org> 2.6.5-alt1
 - new version (2.6.5) with rpmgs script
 - add VCS tag
