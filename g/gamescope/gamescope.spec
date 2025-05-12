@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
 
 Name: gamescope
-Version: 3.15.14
+Version: 3.16.4
 Release: alt1
 
-Summary: SteamOS session compositing window manager
+Summary: Micro-compositor for video games on Wayland
 
 Group: System/X11
 License: BSD-2-Clause
@@ -21,6 +20,7 @@ Patch2: 0001-cstdint.patch
 Patch3: Allow-to-use-system-wlroots.patch
 Patch4: Switch-wlroots-to-the-new-pc-filename.patch
 Patch5: Add-pixman-dependency.patch
+Patch6: Add-libudev-dependency.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -31,7 +31,7 @@ BuildRequires: libliftoff-devel
 BuildRequires: libbenchmark-devel
 BuildRequires: libglm-devel
 BuildRequires: hwdata-devel
-BuildRequires: libwlroots-devel
+BuildRequires: libwlroots0.18-devel
 BuildRequires: pipewire-libs-devel
 BuildRequires: libX11-devel
 BuildRequires: libXdamage-devel
@@ -67,67 +67,43 @@ BuildRequires: pkgconfig(libdecor-0)
 BuildRequires: pkgconfig(xcb-ewmh)
 BuildRequires: libei-devel
 BuildRequires: git-core
+BuildRequires: libluajit-devel
+BuildRequires: libudev-devel
 
 ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
-In an embedded session usecase, gamescope does the same thing as steamcompmgr,
-but with less extra copies and latency:
-*   It's getting game frames through Wayland by way of Xwayland,
-    so there's no copy within X itself before it gets the frame.
-*   It can use DRM/KMS to directly flip game frames to the screen,
-    even when stretching or when notifications are up, removing another copy.
-*   When it does need to composite with the GPU, it does so with async Vulkan
-    compute, meaning you get to see your frame quick even if the game already
-    has the GPU busy with the next frame.
-
-It also runs on top of a regular desktop,
-the 'nested' usecase steamcompmgr didn't support.
-*   Because the game is running in its own personal Xwayland sandbox desktop,
-    it can't interfere with your desktop and your desktop can't interfere with it.
-*   You can spoof a virtual screen with a desired resolution and refresh rate
-    as the only thing the game sees, and control/resize the output as needed.
-    This can be useful in exotic display configurations like ultrawide
-    or multi-monitor setups that involve rotation.
-
-It runs on Mesa + AMD or Intel, and could be made to run
-on other Mesa/DRM drivers with minimal work.
-AMD requires Mesa 20.3+, Intel requires Mesa 21.2+.
-Can support NVIDIA if/when they support
-atomic KMS + accelerated Xwayland + Vulkan DMA-BUF extensions.
-See https://github.com/Plagman/gamescope/issues/151 for NVIDIA support state.
-
-If running RadeonSI clients with older cards (GFX8 and below),
-currently have to set R600_DEBUG=nodcc,
-or corruption will be observed until the stack picks up DRM modifiers support.
+Gamescope is the micro-compositor optimized for running video games on Wayland.
 
 %prep
 %setup -a1
-%autopatch1 -p1
+%autopatch -p1
 
 mkdir -p pkgconfig
 cp -v %SOURCE2 pkgconfig/stb.pc
 
 # use system spirv headers
 sed -i 's^../thirdparty/SPIRV-Headers/include/spirv/^/usr/include/spirv/^' src/meson.build
+rm -rv thirdparty/SPIRV-Headers
+
+# use system libraries
+rm -rv subprojects/{libdisplay-info,libliftoff,openvr,wlroots}
 
 %build
 export PKG_CONFIG_PATH=pkgconfig
 %meson \
-	-Dpipewire=enabled \
-	-Dbenchmark=enabled \
-	-Ddrm_backend=enabled \
-	-Dsdl2_backend=enabled \
-	-Davif_screenshots=enabled \
-	\
-	-Denable_gamescope=true \
-	-Denable_openvr_support=true \
-	-Denable_gamescope_wsi_layer=true \
-	\
-	-Drt_cap=disabled \
-	\
-	-Dforce_fallback_for=[] \
-	%nil
+    -Davif_screenshots=enabled \
+    -Dbenchmark=enabled \
+    -Ddrm_backend=enabled \
+    -Denable_gamescope=true \
+    -Denable_gamescope_wsi_layer=true \
+    -Denable_openvr_support=true \
+    -Dforce_fallback_for=[] \
+    -Dinput_emulation=enabled \
+    -Dpipewire=enabled \
+    -Drt_cap=disabled \
+    -Dsdl2_backend=enabled \
+    %nil
 
 %meson_build -v
 
@@ -142,8 +118,12 @@ DESTDIR=%buildroot meson install -C %_cmake__builddir --skip-subprojects
 %_bindir/gamescopestream
 %_libdir/libVkLayer_FROG_gamescope_wsi_*.so
 %_datadir/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.*.json
+%_datadir/%name/
 
 %changelog
+* Mon May 12 2025 Mikhail Tergoev <fidel@altlinux.org> 3.16.4-alt1
+- 3.16.4
+
 * Wed Nov 13 2024 Mikhail Tergoev <fidel@altlinux.org> 3.15.14-alt1
 - 3.15.14
 - Added build for aarch64 and i586. 
