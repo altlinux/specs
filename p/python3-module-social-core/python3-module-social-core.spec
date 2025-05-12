@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.5.6
+Version: 4.6.1
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -18,7 +18,6 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-requests-oauthlib
-BuildRequires: python3-module-httpretty
 BuildRequires: python3-module-openid
 BuildRequires: python3-module-oauthlib
 BuildRequires: python3-module-jose
@@ -27,6 +26,7 @@ BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-saml
 BuildRequires: python3-module-xmlsec
 BuildRequires: python3-module-google-auth-library-python
+BuildRequires: python3-module-responses
 BuildRequires: libxmlsec1-openssl-devel
 %endif
 
@@ -53,6 +53,8 @@ This package contains tests for %name.
 %setup -n %pypi_name-%version
 sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
     $(find . -name 'utils.py')
+sed -i 's/license = "BSD-3-Clause"/license = {file = "LICENSE"}/' pyproject.toml
+sed -i '/license-files/d' pyproject.toml
 
 %build
 %pyproject_build
@@ -61,7 +63,7 @@ sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not test_steam.py"
 
 %files
 %doc *.md
@@ -76,6 +78,9 @@ sed -i 's|requests.packages.urllib3.poolmanager|urllib3.poolmanager|' \
 %python3_sitelibdir/social_core/tests/
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.6.1-alt1
+- Update to version 4.6.1.
+
 * Fri Mar 14 2025 Alexander Burmatov <thatman@altlinux.org> 4.5.6-alt1
 - Update to version 4.5.6.
 

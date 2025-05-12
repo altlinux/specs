@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.17.2
-Release: alt1
+Release: alt2
 
 Summary: Powerful schema-less ODM for MongoDB and Python (sync + async)
 License: MIT
@@ -39,8 +39,11 @@ with Python.
 %files
 %doc *.md
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/Mongo_Thingy-%version.dist-info/
+%python3_sitelibdir/%mod_name-%version.dist-info/
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 0.17.2-alt2
+- Fix build.
+
 * Mon Apr 28 2025 Alexander Burmatov <thatman@altlinux.org> 0.17.2-alt1
 - Initial build for Sisyphus.

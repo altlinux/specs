@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: Dictionaries as objects, that can have different dictionary views
 License: MIT
@@ -43,8 +43,11 @@ sed -i '54s/^/    /' test_thingy.py
 %doc *.rst
 %python3_sitelibdir/%pypi_name.py
 %python3_sitelibdir/__pycache__/%{pypi_name}*
-%python3_sitelibdir/Thingy-%version.dist-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 0.10.0-alt2
+- Fix build.
+
 * Mon Apr 28 2025 Alexander Burmatov <thatman@altlinux.org> 0.10.0-alt1
 - Initial build for Sisyphus.

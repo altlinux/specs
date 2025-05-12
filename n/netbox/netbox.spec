@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.2.8
+Version: 4.2.9
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -202,6 +202,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.2.9-alt1
+- New 4.2.9 version.
+
 * Sat Apr 26 2025 Alexander Burmatov <thatman@altlinux.org> 4.2.8-alt1
 - New 4.2.8 version.
 
