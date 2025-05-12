@@ -1,47 +1,55 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/dpkg /usr/bin/mkoctfile boost-devel boost-mpi-devel openmpi-devel
-# END SourceDeps(oneline)
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    devel
+%def_enable    python3
+%def_disable   matlab
+%def_disable   doc
+%global        srcname flann
+%global        soversion 1.9
+
+Name:          libflann
+Version:       1.9.2
+Release:       alt3
+Summary:       Fast Library for Approximate Nearest Neighbors
+Group:         Development/C
+License:       BSD
+URL:           http://www.cs.ubc.ca/research/flann
+Vcs:           https://github.com/flann-lib/flann.git
+Source:        %{name}-%{version}.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: /proc
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: zlib-devel
+BuildRequires: liblz4-devel
+BuildRequires: libgomp-devel
+BuildRequires: hdf5-tools
+BuildRequires: libhdf5-devel
+BuildRequires: boost-devel
+BuildRequires: boost-mpi-devel
+BuildRequires: openmpi-devel
+%{?_enable_matlab:BuildRequires: getfemxx}
+%if_enabled    check
+BuildRequires: ctest
+BuildRequires: libgtest-devel
+%endif
+%if_enabled    doc
+BuildRequires: latex2html
+BuildRequires: texlive
+BuildRequires: texlive-collection-basic
+BuildRequires: texlive-dist
+%endif
+%if_enabled    python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-distutils-extra
+%endif
+
+Provides:      flann = %EVR
+
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-Group: Development/C
 %add_optflags %optflags_shared
-%define oldname flann
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%undefine __cmake_in_source_build
-%global srcname flann
-%global soversion 1.9
-
-Name:           libflann
-Version:        1.9.2
-Release:        alt2.1
-Summary:        Fast Library for Approximate Nearest Neighbors
-
-License:        BSD
-URL:            http://www.cs.ubc.ca/research/flann
-Source:         %{name}-%{version}.tar
-
-# Prevent the buildsysem from running setup.py, and use system-installed libflann.so
-# Not submitted upstream
-Patch0:         flann-1.9.1-fixpyflann.patch
-Patch1:         flann-1.9.2-alt-cmake-dir.patch
-BuildRequires:  gcc-c++
-BuildRequires:  ctest cmake
-BuildRequires:  zlib-devel
-BuildRequires:  liblz4-devel
-
-BuildRequires:  hdf5-tools libhdf5-devel
-BuildRequires:  libgtest-devel
-
-BuildRequires:  latex2html
-BuildRequires:  texlive texlive-collection-basic texlive-dist
-BuildRequires:  texlive texlive-collection-basic
-BuildRequires:  texlive-dist
-
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-distutils-extra
-Source44: import.info
-Provides: flann = %{version}-%{release}
 
 %description
 FLANN is a library for performing fast approximate nearest neighbor searches
@@ -49,91 +57,120 @@ in high dimensional spaces. It contains a collection of algorithms found
 to work best for nearest neighbor search and a system for automatically
 choosing the best algorithm and optimum parameters depending on the data sets.
 
-%package devel
-Group: Development/Other
-Summary: Development headers and libraries for flann
-Requires: %{name} = %{version}-%{release}
-# flann/flann_mpi.hpp requires boost/mpi.hpp, which is a convenience header
-# inside of the boost-devel package
-Requires: boost-complete
-Provides: flann-devel = %{version}-%{release}
+%package       -n %srcname
+Group:         Development/C
+Summary:       Example binaries for flann
 
-%description devel
+%description   -n %srcname
+Example binaries for flann.
+
+
+%if_enabled    devel
+%package       devel
+Group:         Development/Other
+Summary:       Development headers and libraries for flann
+#Requires:      %{name} = %{version}-%{release}
+Provides:      flann-devel = %EVR
+Requires:      gcc-c++
+Requires:      cmake
+Requires:      zlib-devel
+Requires:      liblz4-devel
+Requires:      libgomp-devel
+Requires:      hdf5-tools
+Requires:      libhdf5-devel
+Requires:      boost-devel-headers
+Requires:      boost-mpi-devel
+Requires:      openmpi-devel
+Requires:      ctest
+Requires:      libgtest-devel
+Requires:      latex2html
+Requires:      texlive
+Requires:      texlive-collection-basic
+Requires:      texlive-dist
+Requires:      python3-devel
+Requires:      python3-module-distutils-extra
+
+
+%description   devel
 Development headers and libraries for flann.
 
-%package static
-Group: Development/Other
-Summary: Static libraries for flann
-Provides: flann-static = %{version}-%{release}
 
-%description static
+%package       devel-static
+Group:         Development/Other
+Summary:       Static libraries for flann
+Provides:      flann-static = %EVR
+
+%description   devel-static
 Static libraries for flann.
+%endif
 
-%package -n python3-module-flann
-Group: Development/Other
-Summary: Python bindings for flann
-Requires: %{name} = %{version}-%{release}
+
+%if_enabled    python3
+%package       -n python3-module-flann
+Group:         Development/Other
+Summary:       Python bindings for flann
+Requires:      %{name} = %EVR
 %{?python_provide:%python_provide python3-%{srcname}}
 
-%description -n python3-module-flann
+%description   -n python3-module-flann
 Python 3 bindings for flann
+%endif
+
 
 %prep
 %setup
-%patch0 -p0 -b .fixpyflann
-%patch1 -p1
-%ifarch %e2k
-sed -i "/num_threads(params\.cores)/{s/params\.cores/nthreads/;s/^/int nthreads=params.cores;\n/}" \
-	src/cpp/flann/algorithms/{nn,lsh}_index.h
-%endif
-
-# Fix library install directory
-sed -i 's/"lib"/"%{_lib}"/' cmake/flann_utils.cmake
+#%ifarch %e2k
+#sed -i "/num_threads(params\.cores)/{s/params\.cores/nthreads/;s/^/int nthreads=params.cores;\n/}" \
+#	src/cpp/flann/algorithms/{nn,lsh}_index.h
+#%endif
 
 %build
-%{fedora_v2_cmake} -DBUILD_MATLAB_BINDINGS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON_BINDINGS=TRUE
-%fedora_v2_cmake_build
-%fedora_v2_cmake_build %{!?rhel:--target} doc
+%cmake \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DBUILDROOT=%buildroot \
+   %{!?_enable_doc:-DBUILD_DOC=OFF} \
+   %{!?_enable_matlab:-DBUILD_MATLAB_BINDINGS=OFF}
+
+%cmake_build
 
 %install
-%fedora_v2_cmake_install
-rm -rf %{buildroot}%{_datadir}/%{oldname}/python
+%cmake_install
 
-# install the python bindings
-cp -r src/python src/python3
-
-cp %{_vpath_builddir}/src/python/setup.py src/python3
-
-pushd src/python3
-%{__python3} setup.py install --prefix=/usr --root=%{buildroot} --install-lib=%{python3_sitelibdir}
-popd
-
-# get rid of duplicate shared libraries
-rm -rf %{buildroot}%{python3_sitelibdir}/pyflann/lib
-# Remove example binaries
-rm -rf %{buildroot}%{_bindir}*
-# Remove installed documentation, we'll install it later with the doc macro
-rm -rf %{buildroot}%{_datadir}/doc/flann
+%check
+%ctest
 
 %files
-%doc doc/manual.pdf
+%{?_enable_doc:%doc doc/manual.pdf}
 %{_libdir}/*.so.%{version}
 %{_libdir}/*.so.%{soversion}
 
-%files devel
+%files         -n %srcname
+%_bindir/%{srcname}*
+
+%if_enabled    devel
+%files         devel
 %{_libdir}/*.so
 %{_libdir}/cmake/*
 %{_libdir}/pkgconfig/*
-%{_includedir}/flann
+%{_includedir}/%{srcname}
 
-%files static
+%files         devel-static
 %{_libdir}/*.a
+%endif
 
+%if_enabled    python3
 %files -n python3-module-flann
 %{python3_sitelibdir}/pyflann
 %{python3_sitelibdir}/flann-%{version}*.egg-info
+%endif
+
 
 %changelog
+* Thu May 08 2025 Pavel Skrylev <majioa@altlinux.org> 1.9.2-alt3
+- * quite rewrite spec
+- * rebased to upstream with .gear
+- ! fixed FTBFS with doc disabling
+
 * Wed Jan 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.9.2-alt2.1
 - ! fixed python3 deps
 
