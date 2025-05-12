@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.3.5
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -110,7 +110,7 @@ Plasma Discover maximum package.
 Summary: Plasma Discover core files
 Group: System/Configuration/Packaging
 Requires: %name-common
-Requires: kf6-kirigami appstream-data
+Requires: kf6-kirigami kf6-purpose appstream-data
 #Requires: plasma-runtime
 Provides: plasma5-discover-core = %EVR
 Obsoletes: plasma5-discover-core < %EVR
@@ -347,6 +347,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt2
+- require kf6-kirigami
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 
