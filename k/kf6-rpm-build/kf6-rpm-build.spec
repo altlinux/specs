@@ -13,7 +13,7 @@
 %define __if_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 Name: kf6-rpm-build
-Version: 6.1.0
+Version: 6.1.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -55,6 +55,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf6-find-qtlang
 %_bindir/rpm-build-kf6-*
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 6.1.1-alt1
+- skip license test by default
+
 * Mon Apr 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
 - add workaround against new cmake
 
