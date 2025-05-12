@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.110
+Version:	3.111
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -271,6 +271,9 @@ popd
 %files -n lib%name-nssckbi-checkinstall
 
 %changelog
+* Mon May 12 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.111-alt1
+- New version (3.111).
+
 * Mon May 05 2025 Ajrat Makhmutov <rauty@altlinux.org> 3.110-alt1
 - New version (3.110).
 
