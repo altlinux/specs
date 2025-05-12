@@ -1,7 +1,7 @@
 %define  modulename cypari2
 
 Name:    python3-module-%modulename
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: Python interface to the number theory library PARI/GP
@@ -42,6 +42,9 @@ A Python interface to the number theory library PARI/GP.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon May 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
+- Automatically updated to 2.2.2.
+
 * Tue Jan 07 2025 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
 - Automatically updated to 2.2.1.
 
