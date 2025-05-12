@@ -13,8 +13,8 @@
 %endif
 
 Name: python3-module-%pyname
-Version: 0.17.0
-Release: alt2
+Version: 0.18.0
+Release: alt1
 Summary: Ahead of Time Python compiler for numeric kernels
 License: BSD and MIT
 Provides: %pyname
@@ -73,9 +73,6 @@ instruction units.
 %setup
 %patch0 -p1
 
-# drop distutils
-sed -i 's/distutils.errors/setuptools.errors/' pythran/run.py
-
 # remove bundled use the ones from system
 rm -r pythran/{boost,xsimd}
 
@@ -116,6 +113,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Mon May 12 2025 Anton Vyatkin <toni@altlinux.org> 0.18.0-alt1
+- New version 0.18.0.
+
 * Mon Apr 14 2025 Anton Vyatkin <toni@altlinux.org> 0.17.0-alt2
 - Fixed FTBFS.
 
