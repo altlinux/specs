@@ -1,5 +1,5 @@
 Name: s3backer
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: FUSE-based single file backing store via Amazon S3
@@ -43,6 +43,9 @@ export ac_cv_path_MODPROBE_EXECUTABLE=%_sbindir/modprobe
 %_man1dir/s3backer.1*
 
 %changelog
+* Mon May 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.4-alt1
+- 2.1.4 released
+
 * Thu Jun 13 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.3-alt1
 - 2.1.3 released
 
