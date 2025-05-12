@@ -1,6 +1,6 @@
 %define module_name zfs
-%define module_version 2.3.1
-%define module_release alt2
+%define module_version 2.3.2
+%define module_release alt1
 
 %define flavour 6.12
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -75,6 +75,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon May 12 2025 Anton Farygin <rider@altlinux.com> 2.3.2-alt1
+- 2.3.1 -> 2.3.2
 
 * Thu Mar 20 2025 Anton Farygin <rider@altlinux.ru> 2.3.1-alt2
 - Added  virtual Provides zfs-kernel-module to allow module installation
