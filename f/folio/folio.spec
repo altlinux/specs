@@ -3,7 +3,7 @@
 %define app_id com.toolstack.Folio
 
 Name: folio
-Version: 25.01
+Version: 25.02
 Release: alt1
 
 Summary: A beautiful markdown note-taking app for GNOME
@@ -80,6 +80,9 @@ Some features include:
 %doc README.md
 
 %changelog
+* Mon May 12 2025 Yuri N. Sedunov <aris@altlinux.org> 25.02-alt1
+- updated to 25.02-3-g175fcde
+
 * Sat Feb 15 2025 Yuri N. Sedunov <aris@altlinux.org> 25.01-alt1
 - updated to 25.01-3-ge6720c8
 
