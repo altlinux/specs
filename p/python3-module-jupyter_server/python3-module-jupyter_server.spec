@@ -4,8 +4,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.15.0
-Release: alt2
+Version: 2.16.0
+Release: alt1
 
 Summary: The backend -core services, APIs, and REST endpoints-to Jupyter web applications
 License: BSD-3-Clause
@@ -80,6 +80,9 @@ and not test_connection"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 12 2025 Anton Vyatkin <toni@altlinux.org> 2.16.0-alt1
+- New version 2.16.0.
+
 * Sat Mar 08 2025 Anton Vyatkin <toni@altlinux.org> 2.15.0-alt2
 - Fixed FTBFS.
 
