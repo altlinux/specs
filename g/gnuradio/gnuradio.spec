@@ -8,7 +8,7 @@
 
 Name: gnuradio
 Version: 3.10.11.0
-Release: alt3
+Release: alt4
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
 Group: Engineering
@@ -100,6 +100,13 @@ transmitted and received are defined by software. What this means is
 that it turns the digital modulation schemes used in today's high
 performance wireless devices into software problems.
 
+%package libs
+Summary: GNU Radio shared libraries
+Group: System/Libraries
+
+%description libs
+GNU Radio shared libraries.
+
 %package docs
 Summary: GNU Radio Documentation
 Group: Engineering
@@ -172,7 +179,6 @@ done
 %_iconsdir/hicolor/*/apps/gnuradio-grc.png
 %_desktopdir/gnuradio-grc.desktop
 %_datadir/mime/packages/*
-%_libdir/*.so.*
 %_datadir/%name
 %_docdir/%name-%version
 %python3_sitelibdir/%name
@@ -183,6 +189,9 @@ done
 %endif #docs
 %_datadir/metainfo/org.gnuradio.grc.metainfo.xml
 %_man1dir/*.1.*
+
+%files libs
+%_libdir/*.so.*
 
 %if_enabled docs
 %files docs
@@ -198,6 +207,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun May 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.11.0-alt4
+- split gnuradio libraries onto own subpackage
+
 * Sat Nov 02 2024 Anton Midyukov <antohami@altlinux.org> 3.10.11.0-alt3
 - remove "BuildRequires: mpir-devel" (now for sure)
 

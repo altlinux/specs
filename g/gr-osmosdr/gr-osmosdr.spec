@@ -3,7 +3,7 @@
 Name: gr-osmosdr
 Url: https://osmocom.org/projects/gr-osmosdr/wiki/GrOsmoSDR
 Version: 0.2.6
-Release: alt2
+Release: alt3
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -44,6 +44,13 @@ offers a wrapper functionality for FunCube Dongle,  Ettus UHD
 and rtl-sdr radios. By using gr-osmosdr source you can take
 advantage of a common software api in your application(s)
 independent of the underlying radio hardware.
+
+%package -n libgr-osmosdr
+Summary: gr-osmosdr shared library
+Group: System/Libraries
+
+%description -n libgr-osmosdr
+gr-osmosdr shared library.
 
 %package devel
 Summary: Development files for gr-osmosdr
@@ -102,13 +109,15 @@ EOF
 %files
 %doc AUTHORS
 %_bindir/*
-%_libdir/*.so.*
 %python3_sitelibdir/*
 %_datadir/gnuradio/grc/blocks/*
 %if_with doc
 %exclude %_docdir/%name/html
 %exclude %_docdir/%name/xml
 %endif
+
+%files -n libgr-osmosdr
+%_libdir/*.so.*
 
 %files devel
 %_includedir/osmosdr
@@ -123,6 +132,9 @@ EOF
 %endif
 
 %changelog
+* Sun May 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.6-alt3
+- split gr-osmosdr library onto own subpackage
+
 * Thu Oct 31 2024 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt2
 - remove "BuildRequires: mpir-devel"
 
