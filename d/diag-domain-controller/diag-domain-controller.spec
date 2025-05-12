@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool domain-controller
 Name: diag-%diagnostic_tool
-Version: 0.2.1
+Version: 0.3
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
@@ -37,6 +37,43 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed May 07 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.3-alt1
+- fix: the fixed the is_sections_with_domain_name_in_krb5_empty test (thx Sergey Savelev)
+- fix: fixed the does_sysvol_contain_necessary_files test (thx Sergey Savelev)
+- For a test to verify that the [realms] and [domain_realm] sections
+  from krb5.conf are empty, the corresponding section has been added
+  to the .diag file (thx Sergey Savelev)
+- Added check that [realms] and [domain_realm] sections are not empty (thx Sergey Savelev)
+- The logic of the function for checking the caching of Kerberos
+  tickets has been changed (thx Sergey Savelev)
+- The function for checking the entry "nameserver 127.0.0.1" in
+  the configuration file resolv.conf has been updated (thx Sergey Savelev)
+- The logic of tests based on timedatectl has become simpler (thx Sergey Savelev)
+- Changed the function to check if the samba service is running (thx Sergey Savelev)
+- Added side function to check if service is active (thx Sergey Savelev)
+- Fixed output of errors related to samba-tool (thx Sergey Savelev)
+- To check the location of the folder with the domain name in sysvol
+  in the file .diag has added a corresponding section (thx Sergey Savelev)
+- Added a test to check for non-empty "Policies" and "scripts"
+  folders in sysvol/<domain_name> (thx Sergey Savelev)
+- The function for checking the domain name match from smb.conf
+  and krb5.conf uses functions to get domain names from these files (thx Sergey Savelev)
+- The function to check for the required domain name in resolv.conf
+  uses the function to get the domain name from krb5.conf and the
+  list of domain names from resolv.conf (thx Sergey Savelev)
+- In the hostname validation test, a function is called to get the
+  domain name from smb.conf (thx Sergey Savelev)
+- Variables containing the domain name from different configuration
+  files are rendered as separate functions (thx Sergey Savelev)
+- Add port listening test to .diag (thx Sergey Savelev)
+- Added a test to verify that certain ports are being listened to
+  by the necessary services (thx Sergey Savelev)
+- The function to verify that the "samba" package is installed
+  in the system is simplified, a side function is used to check the
+  installed packages (thx Sergey Savelev)
+- Added a side function to check that packages are installed in
+  the system (thx Sergey Savelev)
+
 * Fri Feb 21 2025 Andrey Limachko <liannnix@altlinux.org> 0.2.1-alt1
 - Fixed typo in is_ntp_service_running test
 
