@@ -6,13 +6,12 @@
 
 %ifarch x86_64
 %def_with cuda
-%define gcc_ver 13
 %filter_from_requires /libcudart\.so\.12/d
 %endif
 
 Name: bcd
 Version: 1.1
-Release: alt1.%{?date0}git%{?shortcommit0}
+Release: alt2.%{?date0}git%{?shortcommit0}
 Summary: Bayesian Collaborative Denoiser for Monte-Carlo Rendering
 Group: Graphics
 # BSD: main program
@@ -50,7 +49,7 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: zlib-devel
 BuildRequires: libgomp-devel
 %if_with cuda
-BuildRequires: nvidia-cuda-devel gcc%gcc_ver-c++ libgomp%gcc_ver-devel
+BuildRequires: nvidia-cuda-devel
 %endif
 
 %description
@@ -112,9 +111,6 @@ developing applications that use %name.
 %add_optflags -Wno-return-type
 export CXXFLAGS="%optflags $(pkg-config --cflags eigen3 OpenEXR) -I%_includedir/nlohmann"
 export LDFLAGS="$(pkg-config --libs eigen3 OpenEXR)"
-%if_with cuda
-export GCC_VERSION=%gcc_ver
-%endif
 %cmake \
   -Wno-dev \
   -DBCD_BUILD_GUI=OFF \
@@ -153,6 +149,9 @@ cp -pr include/* %buildroot%_includedir
 %_libdir/*.so
 
 %changelog
+* Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt2.20180610gitd94c9fa
+- BR: simplify for new cuda.
+
 * Sun Apr 13 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt1.20180610gitd94c9fa
 - Initial build for ALTLinux
 - Based on bcd-1.1-16.20180610gitd94c9fa.fc42.src.rpm
