@@ -7,7 +7,7 @@
 %define libexec %_libdir
 
 Name: speech-dispatcher
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: A speech output processing service
@@ -180,6 +180,9 @@ find %buildroot%_libdir -name '*.la' -delete
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon May 12 2025 Artem Semenov <savoptik@altlinux.org> 0.12.1-alt1
+- Updated to new version 0.12.1
+
 * Tue Mar 04 2025 Artem Semenov <savoptik@altlinux.org> 0.12.0-alt1
 - New version 0.12.0.
 
