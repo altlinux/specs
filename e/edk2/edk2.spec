@@ -1,8 +1,8 @@
 %global optflags_lto %nil
-%define tool_chain_tag GCC5
+%define tool_chain_tag GCC
 %def_disable skip_enroll
 
-%define DBXDATE 20241101
+%define DBXDATE 20250224
 
 %ifndef _priority_distbranch
 # We have it defined in macros but not in buildmacros.
@@ -12,7 +12,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20241122
+Version: 20250221
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -165,23 +165,31 @@ CC_FLAGS="-t %tool_chain_tag"
 %if "%_priority_distbranch" == "p10" || "%_priority_distbranch" == "p11"
 CC_FLAGS="${CC_FLAGS} -b RELEASE"
 %else
-CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+#CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+CC_FLAGS="${CC_FLAGS} -b RELEASE"
 %endif
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE -D NETWORK_ALLOW_HTTP_CONNECTIONS=TRUE"
 CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE=TRUE -D TPM2_CONFIG_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=FALSE"
-CC_FLAGS="${CC_FLAGS} -D CAVIUM_ERRATUM_27456=TRUE"
 
 # ovmf features
 OVMF_2M_FLAGS="${CC_FLAGS} -D FD_SIZE_2MB=TRUE -D NETWORK_TLS_ENABLE=FALSE -D NETWORK_ISCSI_ENABLE=FALSE"
-OVMF_4M_FLAGS="${CC_FLAGS} -D FD_SIZE_4MB=TRUE -D NETWORK_TLS_ENABLE=TRUE -D NETWORK_ISCSI_ENABLE=TRUE"
+OVMF_4M_FLAGS="${CC_FLAGS} -D FD_SIZE_4MB=TRUE -D NETWORK_TLS_ENABLE=TRUE -D NETWORK_ISCSI_ENABLE=TRUE -D PVSCSI_ENABLE=TRUE"
 
 # secure boot features
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE=TRUE"
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE=TRUE"
 OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE -D BUILD_SHELL=FALSE"
+
+PCD_RELEASE_DATE=$(date -d %version "+%%m/%%d/%%Y")
+PCD_VENDOR="--pcd PcdFirmwareVendor=ALTLinux"
+PCD_VERSION="--pcd PcdFirmwareVersionString=%version"
+PCD_DATE="--pcd PcdFirmwareReleaseDateString=${PCD_RELEASE_DATE}"
+PCD_NX_COMPAT="--pcd PcdDxeNxMemoryProtectionPolicy=0 --pcd PcdUninstallMemAttrProtocol=TRUE"
+PCD_LA57="--pcd PcdUse5LevelPageTable=TRUE"
+PCD_FLAGS="${PCD_VENDOR} ${PCD_VERSION} ${PCD_DATE} ${PCD_NX_COMPAT} ${PCD_LA57}"
 
 unset MAKEFLAGS
 
@@ -230,24 +238,24 @@ build_iso() {
 
 # Build with neither SB nor SMM; include UEFI shell.
 mkdir -p OVMF
-build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+build ${OVMF_2M_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 cp -p Build/OvmfX64/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.fd
 cp -p Build/OvmfX64/*/FV/OVMF_VARS.fd OVMF/OVMF_VARS.fd
 # Build 4MB with neither SB nor SMM; include UEFI shell.
-build ${OVMF_4M_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+build ${OVMF_4M_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 cp -p Build/OvmfX64/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE_4M.fd
 cp -p Build/OvmfX64/*/FV/OVMF_VARS.fd OVMF/OVMF_VARS_4M.fd
 # Build with SB and SMM; exclude UEFI shell.
-build ${OVMF_2M_FLAGS} ${OVMF_SB_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+build ${OVMF_2M_FLAGS} ${OVMF_SB_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 cp -p Build/OvmfX64/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
 # Build 4MB with SB and SMM; exclude UEFI shell.
-build ${OVMF_4M_FLAGS} ${OVMF_SB_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+build ${OVMF_4M_FLAGS} ${OVMF_SB_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 cp -p Build/OvmfX64/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE_4M.secboot.fd
 # Build AmdSev and IntelTdx variants
 touch OvmfPkg/AmdSev/Grub/grub.efi   # dummy
-build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/AmdSev/AmdSevX64.dsc
+build ${OVMF_2M_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/AmdSev/AmdSevX64.dsc
 cp -p Build/AmdSev/*/FV/OVMF.fd OVMF/OVMF.amdsev.fd
-build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/IntelTdx/IntelTdxX64.dsc
+build ${OVMF_2M_FLAGS} ${PCD_FLAGS} -a X64 -p OvmfPkg/IntelTdx/IntelTdxX64.dsc
 cp -p Build/IntelTdx/*/FV/OVMF.fd OVMF/OVMF.inteltdx.fd
 
 # build shell
@@ -370,6 +378,9 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Fri Apr 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250221-alt1
+- edk2-stable202502
+
 * Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 20241122-alt1
 - edk2-stable202411
 
