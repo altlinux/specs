@@ -1,4 +1,4 @@
-%define branch 5.1
+%define branch 5.2
 %define origname Django
 %define oname django
 
@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.8
+Version: %branch.1
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD-3-Clause
@@ -184,6 +184,12 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 5.2.1-alt1
+- New version 5.2.1.
+- Fixes for the following security vulnerabilities:
+  + CVE-2025-32873: Denial-of-service possibility in strip_tags()
+- Some bugfixes.
+
 * Wed Apr 16 2025 Alexander Burmatov <thatman@altlinux.org> 5.1.8-alt1
 - New version 5.1.8.
 - Fixes for the following security vulnerabilities:

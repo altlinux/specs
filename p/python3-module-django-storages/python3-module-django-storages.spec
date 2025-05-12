@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.14.2
+Version: 1.14.6
 Release: alt1
 
 Summary: Support for many storage backends in Django
@@ -56,6 +56,9 @@ versions of Django. Check the Trove classifiers in setup.py to be sure.
 
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 1.14.6-alt1
+- 1.14.2 -> 1.14.6
+
 * Tue Apr 09 2024 Dmitry Lyalyaev <fruktime@altlinux.org> 1.14.2-alt1
 - 1.13.2 -> 1.14.2
 

@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.2.9
+Version: 4.3.0
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -35,6 +35,7 @@ Requires: python3-module-django-filter
 Requires: python3-module-django-taggit
 Requires: python3-module-django-tables2
 Requires: python3-module-django-pglocks
+Requires: python3-module-django-storages
 Requires: python3-module-django-auth-ldap
 Requires: python3-module-django-prometheus
 Requires: python3-module-social-app-django
@@ -54,6 +55,7 @@ Requires: python3-module-svgwrite
 Requires: python3-module-markdown
 Requires: python3-module-packaging
 Requires: python3-module-feedparser
+Requires: python3-module-jsonschema
 Requires: python3-module-sentry-sdk
 Requires: python3-module-drf-spectacular
 Requires: python3-module-drf-spectacular-sidecar
@@ -202,6 +204,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.0-alt1
+- New 4.3.0 version.
+
 * Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.2.9-alt1
 - New 4.2.9 version.
 
