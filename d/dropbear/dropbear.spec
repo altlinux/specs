@@ -2,21 +2,39 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-Name: dropbear
+%define flavour glibc
+%if %flavour == "musl"
+%def_enable static
+%define pkgname dropbear-musl
+%else
+%def_disable static
+%define pkgname dropbear
+%endif
+
+Name: %pkgname
 Summary: A smallish SSH server and client
-Version: 2025.87
+Version: 2025.88
 Release: alt1
 License: MIT
 # "Dropbear is open source software, distributed under a MIT-style license."
 Group: System/Servers
 Url: https://matt.ucc.asn.au/dropbear/dropbear.html
 Vcs: https://github.com/mkj/dropbear
+%if_enabled static
+Conflicts: dropbear
+Provides: dropbear-static = %EVR
+%endif
 
-Source: %name-%version.tar
+Source: dropbear-%version.tar
 Source2: dropbear.service
 Source3: dropbear.sysconfig
 
+%if_enabled static
+BuildRequires: musl-devel-static-import >= 1.2.5-alt7
+BuildRequires: zlib-devel-static
+%else
 BuildRequires: zlib-devel
+%endif
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: iproute2
 BuildRequires: python3-module-asyncssh
@@ -33,7 +51,9 @@ Dropbear is a relatively small SSH 2 server.
 %package scp
 Summary: Standalone scp program from OpenSSH
 Group: %group
-
+%if_enabled static
+Conflicts: dropbear-scp
+%endif
 Conflicts: openssh-common
 
 %description scp
@@ -41,28 +61,40 @@ The Dropbear distribution includes a standalone version of OpenSSH's scp
 program.
 
 %prep
-%setup
+%setup -n dropbear-%version
 cat > localoptions.h <<EOF
 #define SFTPSERVER_PATH "/usr/lib/openssh/sftp-server"
 EOF
+sed -i '/LDFLAGS/s/-static/-static-pie/' Makefile.in
 
 %build
+%if_enabled static
+export CC=musl-gcc
+%endif
 # --disable-harden: We have hardening enabled in GCC by default.
 %ifarch x86_64 %ix86
 # Additional upstream hardening for x86.
 %add_optflags -mfunction-return=thunk -mindirect-branch=thunk
 %endif
-%configure --disable-harden
+%configure \
+	--disable-harden \
+	%{subst_enable static}
 %make_build all scp SCPPROGRESS=1
 
 %install
 %makeinstall
 install -D -m 0755 scp %buildroot%_bindir/scp
-mkdir -p %buildroot%_sysconfdir/%name
-install -Dpm644 %SOURCE2 %buildroot%_unitdir/%name.service
-install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+mkdir -p %buildroot%_sysconfdir/dropbear
+install -Dpm644 %SOURCE2 %buildroot%_unitdir/dropbear.service
+install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/dropbear
 
 %check
+ldd ./dropbear ./dropbearkey ./dbclient ./dropbearconvert ./scp
+%if_enabled static
+file ./dropbear | grep 'LSB pie executable, .*, static-pie linked'
+%else
+file ./dropbear | grep 'LSB pie executable,.*, dynamically linked, interpreter.*ld-linux'
+%endif
 ./dropbear -V |& grep -Fx 'Dropbear v%version'
 ./dropbearkey || : 'Listed key algorithms'
 ./dbclient -c help || : 'Listed ciphers'
@@ -85,27 +117,31 @@ vm-run --ext4 --heredoc <<-EOF
 EOF
 
 %post
-%post_service %name
+%post_service dropbear
 
 %preun
-%preun_service %name
+%preun_service dropbear
 
 %files
-%define _customdocdir %_docdir/%name
+%define _customdocdir %_docdir/dropbear
 %doc [A-Z][A-Z]*
 %_bindir/dbclient
 %_bindir/dropbearconvert
 %_bindir/dropbearkey
 %_sbindir/dropbear
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%_unitdir/%name.service
+%dir %_sysconfdir/dropbear
+%config(noreplace) %_sysconfdir/sysconfig/dropbear
+%_unitdir/dropbear.service
 %_mandir/*/*
 
 %files scp
 %_bindir/scp
 
 %changelog
+* Mon May 12 2025 Vitaly Chikunov <vt@altlinux.org> 2025.88-alt1
+- Update to DROPBEAR_2025.88 (2025-05-07), (fixes: CVE-2025-47203).
+- Add dropbear-musl package with statically built dropbear.
+
 * Fri Mar 14 2025 Vitaly Chikunov <vt@altlinux.org> 2025.87-alt1
 - Update to DROPBEAR_2025.87 (2025-03-05). Now with post-quantum key exchange.
 
