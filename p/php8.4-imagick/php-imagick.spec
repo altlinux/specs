@@ -2,7 +2,7 @@
 %define 	real_name	imagick
 
 Name:	 	php%_php_suffix-%{php_extension}
-Version:	3.7.0
+Version:	3.8.0
 Epoch:		1
 Release:	alt1.%_php_release_version
 Summary:	PHP wrapper to the ImageMagick library
@@ -13,7 +13,6 @@ VCS: 		https://github.com/Imagick/imagick
 Source0:	php-%php_extension-%version.tar
 Source1:	php-%php_extension.ini
 Source2:	php-%php_extension-params.sh
-Patch1:         php-imagick-3.7.0-fix-php-8.4-compat-github-pr699.patch
 
 BuildRequires(pre): rpm-build-php8.4-version
 BuildRequires: php-devel = %php_version
@@ -25,7 +24,6 @@ using the ImageMagick API.
 
 %prep
 %setup -n php-%php_extension-%version
-%patch1 -p1
 
 %build
 phpize
@@ -57,6 +55,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Wed May 07 2025 Anton Farygin <rider@altlinux.com> 1:3.8.0-alt1
+- 3.7.0 -> 3.8.0
 
 * Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 1:3.7.0-alt1
 - 3.6.0 -> 3.7.0
