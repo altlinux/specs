@@ -5,7 +5,7 @@
 %define gtkver 2
 Name: lxde-%upstreamname
 Version: 0.5.3
-Release: alt8.20180522
+Release: alt9.20180522
 
 Summary: Lightweight X11 Display Manager
 License: GPL
@@ -95,6 +95,9 @@ sed 's/xserverrc vt1/xserverrc vt7/g' -i %buildroot%_sysconfdir/lxdm/lxdm.conf
 %_unitdir/lxdm.service
 
 %changelog
+* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt9.20180522
+- NMU: alt.lxdm.pam: slim.pam: Don't require pam_console.so, pam_systemd.so
+
 * Wed Jul 17 2019 Anton Midyukov <antohami@altlinux.org> 0.5.3-alt8.20180522
 - rebuild without ConsoleKit2
 
