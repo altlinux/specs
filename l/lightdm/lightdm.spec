@@ -9,7 +9,7 @@
 
 Name: lightdm
 Version: 1.32.0
-Release: alt9
+Release: alt10
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -289,6 +289,9 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1.32.0-alt10
+- NMU: data/pam/lightdm: do'nt require pam_console.so (closes: 54212)
+
 * Fri Oct 25 2024 Paul Wolneykien <manowar@altlinux.org> 1.32.0-alt9
 - Fix: Invoke session wrapper with splitted arguments (closes: 51809).
 
