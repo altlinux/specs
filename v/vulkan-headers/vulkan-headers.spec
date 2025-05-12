@@ -1,5 +1,5 @@
 Name: vulkan-headers
-Version: 1.4.304
+Version: 1.4.313
 Release: alt1
 Summary: Khronos group Vulkan API SDK headers
 
@@ -55,6 +55,12 @@ Vulkan SDK API registry files.
 %_datadir/vulkan/registry
 
 %changelog
+* Sun May 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.313-alt1
+- 1.4.313.
+
+* Wed Mar 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.309-alt1
+- 1.4.309.
+
 * Fri Feb 07 2025 L.A. Kostis <lakostis@altlinux.ru> 1.4.304-alt1
 - 1.4.304.
 
