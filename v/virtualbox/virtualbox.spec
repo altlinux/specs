@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.1.8
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -192,7 +192,6 @@ software solution on the market.
 %package guest-additions
 Summary: Full package of additions for VirtualBox OSE guest systems
 Group: Emulators
-Requires: xorg-drv-vboxvideo x11presetdrv
 Requires: %name-guest-utils
 Provides: %name-guest-additions-gl = %version-%release
 Obsoletes: %name-guest-additions-gl < %version-%release
@@ -797,6 +796,8 @@ mountpoint -q /dev || {
 %files
 %_bindir/*
 %vboxdir/*
+%exclude %_bindir/VBoxClient-all
+%exclude %_bindir/VBoxDRMClient
 %exclude %_bindir/xpidl
 %if_with additions
 %exclude %_bindir/VBoxClient
@@ -928,6 +929,10 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon May 12 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.8-alt2
+- Fixed duplicate ownership of guest additions files (closes:54225)
+- Removed obsolete dependencies (closes:48755)
+
 * Mon Apr 21 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.8-alt1
 - Update to newest version 7.1.8
 - Fixed an issue where the notification
