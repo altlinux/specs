@@ -1,11 +1,11 @@
 %define ver 1.3.9
 %def_with mod_proxy
-%define mod_proxy_ver 0.9.4
+%define mod_proxy_ver 0.9.5
 %define git %nil
 
 Name: proftpd
 Version: %ver
-Release: alt0.4.rc3
+Release: alt1
 
 %define _libexecdir %{expand:%_libdir}
 # TODO
@@ -772,6 +772,10 @@ fi
 %_controldir/%name
 
 %changelog
+* Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt1
+- 1.3.9.
+- mod_proxy: update to 0.9.5.
+
 * Tue Mar 11 2025 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt0.4.rc3
 - 1.3.9rc3.
 
