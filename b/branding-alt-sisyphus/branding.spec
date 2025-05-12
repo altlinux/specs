@@ -17,7 +17,7 @@
 
 Name: branding-%flavour
 Version: 20240122
-Release: alt4
+Release: alt5
 
 Url: http://en.altlinux.org
 
@@ -290,6 +290,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 20240122-alt5
+- os-release: change NAME="ALT Linux"
+
 * Tue Jan 28 2025 Anton Midyukov <antohami@altlinux.org> 20240122-alt4
 - bootloader, bootsplash: run %%post when first install package
 - bootloader: add dependency on grub-common for %%grub_arches
