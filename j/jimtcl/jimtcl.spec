@@ -1,5 +1,5 @@
 Name: jimtcl
-Version: 0.82
+Version: 0.83
 Release: alt1
 
 Summary: A small embeddable Tcl interpreter
@@ -61,13 +61,16 @@ rm %buildroot%_libdir/jim/tcltest.tcl
 %_libdir/jim
 
 %files devel
-%doc DEVELOPING README.extensions README.metakit README.namespaces README.oo README.utf-8 STYLE
+%doc README.extensions README.metakit README.namespaces README.oo README.utf-8 STYLE
 %_includedir/*
 %_bindir/build-jim-ext
 %_libdir/libjim.so
 %_pkgconfigdir/jimtcl.pc
 
 %changelog
+* Mon May 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.83-alt1
+- 0.83 released
+
 * Mon Feb 27 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.82-alt1
 - 0.82 released
 
