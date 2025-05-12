@@ -1,6 +1,6 @@
 Name: apt-indicator
-Version: 0.4.0
-Release: alt2
+Version: 0.4.1
+Release: alt1
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -39,6 +39,8 @@ help2man --output=apt-indicator.1 --no-info apt-indicator ||:
 %install
 %make INSTALL_ROOT=%buildroot install
 
+install -m 0755 apt-indicator-su %buildroot/%_bindir/
+
 # icons
 install -Dm 0644 pixmaps/package-available.png %buildroot/%_iconsdir/hicolor/22x22/apps/apt-indicator.png
 install -Dm 0644 pixmaps/light/package-available.svg %buildroot/%_iconsdir/hicolor/scalable/apps/apt-indicator.svg
@@ -73,6 +75,10 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.1-alt1
+- use pkexec instead of xdg-su (closes: 54157)
+- remove months from period setting (closes: 40154)
+
 * Mon Aug 26 2024 Sergey V Turchin <zerg at altlinux dot org> 0.4.0-alt2
 - fix requires
 
