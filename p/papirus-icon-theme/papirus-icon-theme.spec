@@ -1,14 +1,12 @@
 Name:     papirus-icon-theme
 
-Version:  20250201
+Version:  20250501
 Release:  alt1
 
 Summary:  All Papirus icon themes
 License:  GPLv3
 Group:    Other
 Url:      https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 
@@ -18,8 +16,6 @@ Requires: icon-theme-Papirus = %EVR
 Requires: icon-theme-Papirus-Dark = %EVR
 Requires: icon-theme-Papirus-Education = %EVR
 Requires: icon-theme-Papirus-Light = %EVR
-Requires: icon-theme-ePapirus = %EVR
-Requires: icon-theme-ePapirus-Dark = %EVR
 
 %description
 Papirus is a free and open source SVG icon theme for Linux, based on
@@ -27,14 +23,12 @@ Paper Icon Set with a lot of new icons and a few extras, like
 Hardcode-Tray support, KDE colorscheme support, Folder Color support,
 and others.
 
-Papirus icon theme is available in six variants:
+Papirus icon theme is available in four variants:
 
 * Papirus
 * Papirus Dark
 * Papirus Education
 * Papirus Light
-* ePapirus (for elementary OS and Pantheon Desktop only)
-* ePapirus Dark (for elementary OS and Pantheon Desktop only)
 
 %package -n icon-theme-Papirus
 Summary: Papirus icon theme
@@ -65,23 +59,6 @@ Group: Other
 Requires: icon-theme-Papirus
 
 %description -n icon-theme-Papirus-Light
-%summary.
-
-%package -n icon-theme-ePapirus
-Summary: ePapirus icon theme
-Group: Other
-Requires: icon-theme-Papirus
-
-%description -n icon-theme-ePapirus
-%summary.
-
-%package -n icon-theme-ePapirus-Dark
-Summary: ePapirus-Dark icon theme
-Group: Other
-Requires: icon-theme-Papirus
-Requires: icon-theme-ePapirus
-
-%description -n icon-theme-ePapirus-Dark
 %summary.
 
 %package -n papirus-remix-icon-theme
@@ -314,7 +291,7 @@ done
 
 %install
 mkdir -p %buildroot%_iconsdir
-cp -a Papirus* ePapirus* %buildroot%_iconsdir
+cp -a Papirus* %buildroot%_iconsdir
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -335,13 +312,13 @@ cp -a Papirus* ePapirus* %buildroot%_iconsdir
 %doc AUTHORS LICENSE README.md
 %_iconsdir/Papirus-Light
 
-%files -n icon-theme-ePapirus
-%doc AUTHORS LICENSE README.md
-%_iconsdir/ePapirus
+#%files -n icon-theme-ePapirus
+#%doc AUTHORS LICENSE README.md
+#%_iconsdir/ePapirus
 
-%files -n icon-theme-ePapirus-Dark
-%doc AUTHORS LICENSE README.md
-%_iconsdir/ePapirus-Dark
+#%files -n icon-theme-ePapirus-Dark
+#%doc AUTHORS LICENSE README.md
+#%_iconsdir/ePapirus-Dark
 
 %files -n papirus-remix-icon-theme
 %doc AUTHORS LICENSE README.md
@@ -363,6 +340,10 @@ cp -a Papirus* ePapirus* %buildroot%_iconsdir
 %_iconsdir/Papirus-Light-*
 
 %changelog
+* Mon May 12 2025 Andrey Cherepanov <cas@altlinux.org> 20250501-alt1
+- New version (thanks felixz@).
+- Removed packages: icon-theme-ePapirus and icon-theme-ePapirus-Dark.
+
 * Sat Feb 01 2025 Kirill Izmestev <felixz@altlinux.org> 20250201-alt1
 - New version.
 

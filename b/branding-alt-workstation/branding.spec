@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt5
+Release: alt5.1
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -218,7 +218,6 @@ License: Distributable
 Group:   Graphical desktop/GNOME
 Requires: dconf
 # Specified themes
-Requires: icon-theme-ePapirus
 Requires: icon-theme-Papirus
 Requires: icon-theme-Papirus-Dark
 Requires: icon-theme-Papirus-Light
@@ -371,6 +370,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon May 12 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt5.1
+- NMU: remove icon-theme-ePapirus requirements.
+
 * Mon Apr 28 2025 Anton Midyukov <antohami@altlinux.org> 11.0-alt5
 - indexhtml: add runtime dependency on shared-desktop-icons again
 - indexhtml: replace absolute links with relative links
