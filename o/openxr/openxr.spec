@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: openxr
-Version: 1.1.46
+Version: 1.1.47
 Release: alt1
 
 Summary: An API for writing VR and AR software
@@ -62,13 +62,14 @@ want to compile applications using the OpenXR library.
 %cmake \
     -DBUILD_ALL_EXTENSIONS=ON \
     -DBUILD_LOADER=ON \
-    -DBUILD_WITH_STD_FILESYSTEM=OFF \
-    -DBUILD_WITH_WAYLAND_HEADERS=ON \
-    -DCMAKE_BUILD_TYPE=RelWithDebinfo \
+    -DBUILD_STATIC_LIBS=OFF \
     -DBUILD_TESTS=ON \
-    -DDYNAMIC_LOADER=ON
+    -DCMAKE_BUILD_TYPE=RelWithDebinfo \
+    -DDYNAMIC_LOADER=ON \
+    -DFILESYSTEM_USE_STD=ON \
+    -DGLSLANG_VALIDATOR=%{_bindir}/glslangValidator
 %cmake_build
-
+    
 %install
 %cmake_install
 
@@ -94,6 +95,9 @@ rm -v %buildroot%_docdir/openxr/LICENSE
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon May 12 2025 Mikhail Tergoev <fidel@altlinux.org> 1.1.47-alt1
+- 1.1.47
+
 * Thu Mar 27 2025 Mikhail Tergoev <fidel@altlinux.org> 1.1.46-alt1
 - 1.1.46
 
