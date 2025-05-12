@@ -4,7 +4,7 @@
 
 Name: slim
 Version: 1.3.6
-Release: alt5
+Release: alt6
 
 Summary: SLiM is a graphical, desktop-independent login manager for X11.
 
@@ -81,6 +81,9 @@ install -m 644 %SOURCE7 %buildroot%_unitdir/%{name}.service
 %config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
 
 %changelog
+* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1.3.6-alt6
+- NMU: slim.pam: Don't require pam_console.so (closes: 54214)
+
 * Fri May 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.3.6-alt5
 - NMU: fixed FTBFS on Sisyphus by excluding duplicated service.
 
