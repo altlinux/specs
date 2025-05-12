@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lact
-Version: 0.7.3
-Release: alt2
+Version: 0.7.4
+Release: alt1
 
 Summary: Linux GPU Control Application
 License: MIT
@@ -24,9 +24,9 @@ Patch1: lact-0.7.3-alt-loongarch-define.patch
 
 BuildRequires(pre): clang-devel
 
-BuildRequires: blueprint-compiler
 BuildRequires: libgtk4-devel
 BuildRequires: llvm-devel
+BuildRequires: ocl-icd-devel
 BuildRequires: rust-cargo
 
 %description
@@ -77,6 +77,9 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Mon May 12 2025 Nazarov Denis <nenderus@altlinux.org> 0.7.4-alt1
+- New version 0.7.4.
+
 * Tue Apr 29 2025 Andrew Guschin <guschin@altlinux.org> 0.7.3-alt2
 - NMU: fix FTBFS on loongarch64
 
