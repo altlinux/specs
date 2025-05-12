@@ -9,7 +9,7 @@
 %define libnewmailnotifier libnewmailnotifier%pim_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -27,8 +27,10 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
+BuildRequires: libvulkan-devel
 BuildRequires: qt6-webengine-devel
 BuildRequires: qt6-speech-devel qt6-networkauth-devel
+BuildRequires: libcups-devel
 BuildRequires: libqca-qt6-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: xsltproc libsasl2-devel boost-devel
@@ -140,7 +142,7 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 %_K6bin/gidmigrator
 %_K6bin/akonadi_*
 %_K6plug/pim6/akonadi/config/*.so
-%_K6plug/pim6/kcms/kaddressbook/*.so
+%_K6plug/pim6/kcms/common/*.so
 %_K6plug/pim6/mailtransport/*.so
 %_K6plug/kf6/kio/*.so
 %_K6xdgapp/org.kde.akonadi*.desktop
@@ -175,6 +177,12 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

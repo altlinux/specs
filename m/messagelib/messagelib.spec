@@ -16,7 +16,7 @@
 %define libkpim6webengineviewer libkpim6webengineviewer%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -36,6 +36,7 @@ BuildRequires: qt6-webengine-devel
 BuildRequires: libqca-qt6-devel
 BuildRequires: libgpgme-devel libassuan-devel libldap-devel libsasl2-devel
 BuildRequires: boost-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel 
 BuildRequires: kf6-kdoctools-devel kf6-kguiaddons-devel kf6-kcalendarcore-devel kf6-kcontacts-devel
@@ -206,6 +207,12 @@ mkdir -p %buildroot/%_K6plug/pim6
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpim6importwizard%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -22,6 +22,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: boost-devel libassuan-devel libdb4-devel libsasl2-devel
+BuildRequires: libcups-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdoctools-devel kf6-kio-devel kf6-kitemmodels-devel
 BuildRequires: kf6-ktextwidgets-devel kf6-kwallet-devel kf6-karchive-devel kf6-kiconthemes-devel kf6-ktexttemplate-devel
@@ -94,6 +95,12 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

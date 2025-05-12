@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -26,6 +26,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-phonon-devel qt6-tools-devel
 BuildRequires: boost-devel libXres-devel libassuan-devel libldap-devel libsasl2-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-kcmutils-devel kf6-kdoctools-devel kf6-kio-devel kf6-knewstuff-devel kf6-kwallet-devel kf6-kholidays-devel kf6-kcalendarcore-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-kparts-devel kf6-kitemmodels-devel kf6-ktexttemplate-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
@@ -129,6 +130,12 @@ Obsoletes: libkorganizerprivate5 < %EVR
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

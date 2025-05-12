@@ -3,9 +3,10 @@
 %define sover 6
 %define libkpim6pimcommon libkpim6pimcommon%sover
 %define libkpim6pimcommonakonadi libkpim6pimcommonakonadi%sover
+%define libkpim6pimcommonactivities libkpim6pimcommonactivities%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -29,6 +30,7 @@ BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knewstuff-devel kf
 BuildRequires: kf6-ktextwidgets-devel kf6-kunitconversion-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-purpose-devel kf6-kcmutils-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-ktextaddons-devel
+BuildRequires: plasma6-activities-devel
 BuildRequires: kldap-devel akonadi-search-devel grantleetheme-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: kimap-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel
@@ -65,6 +67,13 @@ Requires: %name-common
 %description -n %libkpim6pimcommonakonadi
 %name library
 
+%package -n %libkpim6pimcommonactivities
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libkpim6pimcommonactivities
+%name library
+
 
 %prep
 %setup -n %rname-%version
@@ -92,9 +101,17 @@ Requires: %name-common
 %files -n %libkpim6pimcommonakonadi
 %_K6lib/libKPim6PimCommonAkonadi.so.%sover
 %_K6lib/libKPim6PimCommonAkonadi.so.*
-
+%files -n %libkpim6pimcommonactivities
+%_K6lib/libKPim6PimCommonActivities.so.%sover
+%_K6lib/libKPim6PimCommonActivities.so.*
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

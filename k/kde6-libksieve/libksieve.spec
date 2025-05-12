@@ -13,7 +13,7 @@
 %define libkpim6ksievecore libpim6ksievecore%sover
 
 Name: kde6-%rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -30,6 +30,7 @@ BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
 BuildRequires: qt6-webengine-devel
 %endif
 BuildRequires: boost-devel libsasl2-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kidentitymanagement-devel kimap-devel kmailtransport-devel kmime-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel   kf6-kdoctools-devel
@@ -146,6 +147,12 @@ done
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

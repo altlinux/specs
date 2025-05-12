@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%gui_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -18,6 +18,7 @@ License: LGPL-2.1-or-later
 Provides: kde5-kleopatra = %EVR
 Obsoletes: kde5-kleopatra < %EVR
 Requires: gnupg2 dirmngr pinentry-x11
+Requires: %name-common >= %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-gpgme17.patch
@@ -25,6 +26,7 @@ Patch1: alt-gpgme17.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules boost-devel qt6-declarative-devel
 BuildRequires: libassuan-devel libgpgme-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-knotifications-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-sonnet-devel kf6-kitemmodels-devel kf6-kstatusnotifieritem-devel
@@ -95,21 +97,27 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,6}-kleopatra.xml
 %_K6bin/kwatchgnupg
 %_K6xdgapp/*kleopatra*.desktop
 %_K6xdgapp/*kwatchgnupg*.desktop
-%_K6plug/pim6/kcms/kleopatra/kleopatra_config_gnupgsystem.so
+#%_K6plug/pim6/kcms/kleopatra/kleopatra_config_gnupgsystem.so
 %_K6icon/*/*/apps/*kleopatra.*
 %_K6icon/*/*/apps/*kwatchgnupg.*
 %_K6data/kio/servicemenus/*.desktop
 %_datadir/metainfo/*.xml
 
-%files -n %libkleopatraclientcore
-%_K6lib/libkleopatraclientcore.so.%core_sover
-%_K6lib/libkleopatraclientcore.so.*
-%files -n %libkleopatraclientgui
-%_K6lib/libkleopatraclientgui.so.%gui_sover
-%_K6lib/libkleopatraclientgui.so.*
+#%files -n %libkleopatraclientcore
+#%_K6lib/libkleopatraclientcore.so.%core_sover
+#%_K6lib/libkleopatraclientcore.so.*
+#%files -n %libkleopatraclientgui
+#%_K6lib/libkleopatraclientgui.so.%gui_sover
+#%_K6lib/libkleopatraclientgui.so.*
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

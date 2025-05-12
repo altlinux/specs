@@ -19,7 +19,7 @@
 %define libakonadidatasetools libakonadidatasetools%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -38,6 +38,7 @@ Obsoletes: kde5-pim-addons < %EVR
 Requires: %name-kaddressbook
 Requires: %name-kmail
 Requires: %name-korganizer
+Requires: %name-kleopatra
 Requires: %name-plugins
 
 Source: %rname-%version.tar
@@ -46,10 +47,12 @@ BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-webengine-devel
 BuildRequires: libpoppler-qt6-devel libdiscount-devel
 BuildRequires: libsasl2-devel libgpgme-devel libassuan-devel
+BuildRequires: libcups-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kdeclarative-devel  kf6-kdoctools-devel kf6-kio-devel kf6-kpackage-devel kf6-kparts-devel
 BuildRequires: kf6-kwallet-devel kf6-syntax-highlighting-devel kf6-prison-devel kf6-kholidays-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kcmutils-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: kde6-libkgapi-devel kaddressbook-devel kidentitymanagement-devel kcalutils-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
@@ -83,16 +86,23 @@ developing applications that use %name.
 %package kaddressbook
 Summary: addon
 Group: Graphical desktop/KDE
-Requires: %name-common >= %EVR
+Requires: %name-plugins >= %EVR
 Provides: kde5-pim-addons-kaddressbook = %EVR
 Obsoletes: kde5-pim-addons-kaddressbook < %EVR
 %description kaddressbook
 %summary.
 
+%package kleopatra
+Summary: addon
+Group: Graphical desktop/KDE
+Requires: %name-plugins >= %EVR
+%description kleopatra
+%summary.
+
 %package kmail
 Summary: addon
 Group: Graphical desktop/KDE
-Requires: %name-common >= %EVR
+Requires: %name-plugins >= %EVR
 Provides: kde5-pim-addons-kmail = %EVR
 Obsoletes: kde5-pim-addons-kmail < %EVR
 %description kmail
@@ -101,7 +111,7 @@ Obsoletes: kde5-pim-addons-kmail < %EVR
 %package korganizer
 Summary: addon
 Group: Graphical desktop/KDE
-Requires: %name-common >= %EVR
+Requires: %name-plugins >= %EVR
 Provides: kde5-pim-addons-korganizer = %EVR
 Obsoletes: kde5-pim-addons-korganizer < %EVR
 %description korganizer
@@ -276,6 +286,9 @@ Obsoletes: libakonadidatasetools5 < %EVR
 %_K6plug/plasmacalendarplugins/
 %_K6qml/org/kde/plasma/PimCalendars/
 
+%files kleopatra
+%_K6plug/pim6/kcms/kleopatra/
+
 %files plugins
 %_K6plug/pim6/libksieve/
 %_K6plug/pim6/pimcommon/
@@ -327,6 +340,12 @@ Obsoletes: libakonadidatasetools5 < %EVR
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

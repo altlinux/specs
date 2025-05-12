@@ -4,7 +4,7 @@
 %define libkpim6mailcommon libkpim6mailcommon%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -18,9 +18,10 @@ ExcludeArch: %not_qt6_qtwebengine_arches
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
-BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel qt6-webengine-devel qt6-phonon-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel qt6-multimedia-devel qt6-webengine-devel qt6-phonon-devel
 BuildRequires: libgpgme-devel libassuan-devel libldap-devel libsasl2-devel xsltproc
 BuildRequires: boost-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-ktextaddons-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
@@ -87,6 +88,12 @@ Requires: %name-common
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

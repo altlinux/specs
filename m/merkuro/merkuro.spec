@@ -6,7 +6,7 @@
 
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -28,18 +28,18 @@ Source: %rname-%version.tar
 Patch0: fix-menubar-display.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
-BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel qt6-location-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kiconthemes-devel kf6-kio-devel
 BuildRequires: kf6-kirigami-devel kf6-kitemmodels-devel kf6-kpackage-devel kf6-ktextwidgets-devel
 BuildRequires: kf6-qqc2-desktop-style-devel kf6-knotifications-devel kf6-ktexttemplate-devel
-BuildRequires: kf6-kirigami-addons-devel
+BuildRequires: kf6-kirigami-addons-devel kf6-kholidays-devel
 BuildRequires: plasma6-lib-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
 BuildRequires: kcalutils-devel kidentitymanagement-devel kimap-devel kmime-devel
 BuildRequires: kpimtextedit-devel kde6-libkdepim-devel kde6-libkleo-devel mailcommon-devel
 BuildRequires: messagelib-devel pimcommon-devel kmailtransport-devel mimetreeparser-devel
-BuildRequires: kmbox-devel
+BuildRequires: kmbox-devel akonadi-search-devel
 
 %description
 Kirigami-based calendar and task management application that uses Akonadi.
@@ -105,6 +105,12 @@ Obsoletes: libmerkuro_contact5 < %EVR
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

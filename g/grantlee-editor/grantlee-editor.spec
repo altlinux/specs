@@ -4,7 +4,7 @@
 %define libgrantleethemeeditor libgrantleethemeeditor%pim_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -24,6 +24,7 @@ Patch0: alt-fix-display-theme-content.patch
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-webengine-devel
 BuildRequires: boost-devel libassuan-devel libsasl2-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-karchive-devel kf6-kcrash-devel kf6-kdbusaddons-devel  kf6-kdoctools-devel
 BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-knewstuff-devel kf6-kparts-devel kf6-ktexteditor-devel
 BuildRequires: kf6-ktextwidgets-devel kf6-kwallet-devel kf6-syntax-highlighting-devel kf6-kcontacts-devel
@@ -95,6 +96,12 @@ Obsoletes: libgrantleethemeeditor5 < %EVR
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

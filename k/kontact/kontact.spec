@@ -4,7 +4,7 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -27,6 +27,7 @@ Patch1: alt-fix-kontact-crash.patch
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-webengine-devel
 BuildRequires: boost-devel libsasl2-devel
+BuildRequires: libcups-devel
 BuildRequires: kf6-kcmutils-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdoctools-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemmodels-devel kf6-kparts-devel kf6-ktextwidgets-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-kcontacts-devel
@@ -101,6 +102,12 @@ Obsoletes: libkontactprivate5 < %EVR
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

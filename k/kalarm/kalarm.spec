@@ -5,7 +5,7 @@
 %define libkalarmplugin libkalarmplugin%pim_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -23,11 +23,11 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel
 BuildRequires: boost-devel xsltproc libXres-devel libsasl2-devel
-BuildRequires: libvlc-devel
+BuildRequires: libvlc-devel libmpv-devel
 BuildRequires: kf6-kcontacts-devel kf6-kholidays-devel kf6-kcalendarcore-devel kf6-ki18n-devel kf6-ktextwidgets-devel
 BuildRequires: kf6-kcmutils-devel kf6-kdoctools-devel kf6-kio-devel kf6-kwallet-devel kf6-knotifications-devel
 BuildRequires: kf6-kglobalaccel-devel kf6-kidletime-devel kf6-knotifyconfig-devel kf6-kitemmodels-devel
-BuildRequires: kf6-kstatusnotifieritem-devel kf6-ktexttemplate-devel
+BuildRequires: kf6-kstatusnotifieritem-devel kf6-ktexttemplate-devel kf6-kiconthemes-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel kcalutils-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kmime-devel
 BuildRequires: kpimtextedit-devel kde6-libkdepim-devel messagelib-devel pimcommon-devel
@@ -72,7 +72,10 @@ Obsoletes: libkalarmplugin5 < %EVR
 %setup -n %rname-%version
 
 %build
-%K6build
+%K6build \
+    -DENABLE_LIBVLC=ON \
+    -DENABLE_LIBMPV=ON \
+    #
 
 %install
 %K6install
@@ -88,6 +91,7 @@ Obsoletes: libkalarmplugin5 < %EVR
 %_K6bin/kalarmautostart
 %_K6exec/kauth/kalarm_helper
 %_K6plug/pim6/kalarm/akonadiplugin.so
+%_K6plug/pim6/kalarm/audioplugin_*.so
 %_K6start/kalarm.autostart.desktop
 %_K6xdgapp/org.kde.kalarm.desktop
 %_K6cfg/*kalarm*.kcfg
@@ -111,6 +115,12 @@ Obsoletes: libkalarmplugin5 < %EVR
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Fri Mar 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
