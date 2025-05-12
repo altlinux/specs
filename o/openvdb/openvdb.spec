@@ -11,9 +11,6 @@
 %set_verify_elf_method strict
 %endif
 
-# for cuda
-%define gcc_ver 13
-
 %ifarch x86_64
 %def_with cuda
 %else
@@ -24,7 +21,7 @@
 
 Name: openvdb
 Version: 12.0.0
-Release: alt1
+Release: alt2
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: Apache-2.0
@@ -54,9 +51,7 @@ BuildRequires: pkgconfig(python3)
 BuildRequires: python3-module-numpy libnumpy-py3-devel
 BuildRequires: python3-module-nanobind
 %if_with cuda
-BuildRequires: nvidia-cuda-devel-static gcc%{gcc_ver}-c++
-# due different gcc our LTO data will clash
-%define optflags_lto %nil
+BuildRequires: nvidia-cuda-devel-static
 %endif
 
 %description
@@ -127,9 +122,6 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %endif
 
 %build
-%if_with cuda
-export GCC_VERSION=%gcc_ver
-%endif
 %cmake \
 	-DOPENVDB_BUILD_DOCS=ON \
 	-DOPENVDB_CORE_SHARED=ON \
@@ -185,12 +177,18 @@ export GCC_VERSION=%gcc_ver
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.0-alt2
+- BR: simplify for new cuda.
+
 * Thu Feb 13 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.0-alt1
 - 12.0.0.
 - upstream changed License MPL->APL.
 - BR: pybind11 -> nanobind.
 - BR: SSE42 -> AVX.
 - cuda/BR: build with gcc13 and disable LTO.
+
+* Thu Feb 08 2024 Ivan A. Melnikov <iv@altlinux.org> 10.1.0-alt3.1
+- NMU: fix building with boost 1.84.0-alt1
 
 * Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 10.1.0-alt3
 - E2K: fix build (lcc 1.26.x pretends to be like gcc 9.3.0)
