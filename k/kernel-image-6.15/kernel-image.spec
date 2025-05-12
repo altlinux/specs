@@ -1,5 +1,5 @@
 Name: kernel-image-6.15
-Release: alt0.rc5
+Release: alt0.rc6
 %define kernel_src_version	6.14
 %define kernel_base_version	6.15
 %define kernel_sublevel	.0
@@ -610,6 +610,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon May 12 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc6
+- Update to v6.15-rc6 (2025-05-11).
+
 * Mon May 05 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc5
 - Update to v6.15-rc5 (2025-05-04).
 
