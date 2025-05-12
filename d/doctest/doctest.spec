@@ -1,6 +1,6 @@
 Name: doctest
-Version: 2.4.11
-Release: alt2
+Version: 2.4.12
+Release: alt1
 
 Summary: Feature-rich header-only C++ testing framework
 License: MIT
@@ -53,6 +53,9 @@ ctest --test-dir %_cmake__builddir
 %_libdir/cmake/%name/
 
 %changelog
+* Mon May 12 2025 Anton Farygin <rider@altlinux.com> 2.4.12-alt1
+- 2.4.11 -> 2.4.12
+
 * Tue Oct 31 2023 Michael Shigorin <mike@altlinux.org> 2.4.11-alt2
 - E2K: ftbfs workaround for lcc
 - minor spec cleanup
