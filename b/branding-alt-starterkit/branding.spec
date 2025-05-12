@@ -22,7 +22,7 @@
 
 Name: branding-%flavour
 Version: 11
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Url: https://en.altlinux.org/starterkits
@@ -301,6 +301,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt5
+- os-release: change NAME="ALT Linux"
+
 * Sat May 03 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt4
 - set Theme=Starterkit
 - set Name="Brand Theme"
