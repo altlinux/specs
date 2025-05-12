@@ -1,6 +1,6 @@
 Name: rustdesk
-Version: 1.3.9
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
 License: AGPL-3.0
@@ -112,6 +112,9 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Mon May 12 2025 Anton Kurachenko <srebrov@altlinux.org> 1.4.0-alt1
+- New version 1.4.0.
+
 * Thu May 8 2025 Anton Kurachenko <srebrov@altlinux.org> 1.3.9-alt2
 - Improved additional scripts and switched that to using pkexec for install/remove libsciter-gtk.so.
 - Changed package description.
