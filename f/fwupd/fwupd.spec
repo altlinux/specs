@@ -33,15 +33,13 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.0.8
-Release: alt1.1
+Version: 2.0.9
+Release: alt1
 
 Summary: Firmware update daemon
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
-
-Packager: Egor Ignatov <egori@altlinux.org>
 
 Source0: %name-%version.tar
 Source2: fwupd.watch
@@ -189,9 +187,7 @@ might have mobile broadband hardware. It is probably not required on servers.
     -Dtests=false \
 %endif
     -Dplugin_modem_manager=enabled \
-    -Dplugin_qc_firehose=true \
     -Dbluez=enabled
-#
 
 %meson_build
 
@@ -309,6 +305,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Mon May 12 2025 Egor Ignatov <egori@altlinux.org> 2.0.9-alt1
+- 2.0.9
+
 * Wed Apr 16 2025 Ivan A. Melnikov <iv@altlinux.org> 2.0.8-alt1.1
 - NMU: fix FTBFS on loongarch64, riscv64 and i586
   - enable uefi on loongarch64 and riscv64;
