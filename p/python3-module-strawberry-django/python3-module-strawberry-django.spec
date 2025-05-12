@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.57.0
+Version: 0.58.0
 Release: alt1
 
 Summary: Strawberry GraphQL Django extension
@@ -33,6 +33,7 @@ BuildRequires: python3-module-django-choices-field
 BuildRequires: python3-module-django-polymorphic
 BuildRequires: python3-module-django-mptt
 BuildRequires: python3-module-django-tree-queries
+BuildRequires: python3-module-django-model-utils
 %endif
 
 BuildArch: noarch
@@ -54,6 +55,7 @@ mutations and resolvers from Django models.
 
 %check
 export DJANGO_SETTINGS_MODULE=tests.django_settings
+echo 'STATIC_URL = "/static/"' >> tests/django_settings.py
 %pyproject_run_pytest
 
 %files
@@ -62,6 +64,9 @@ export DJANGO_SETTINGS_MODULE=tests.django_settings
 %python3_sitelibdir/%{pyproject_distinfo strawberry_graphql_django}
 
 %changelog
+* Sat Apr 26 2025 Alexander Burmatov <thatman@altlinux.org> 0.58.0-alt1
+- New 0.58.0 version.
+
 * Tue Mar 18 2025 Alexander Burmatov <thatman@altlinux.org> 0.57.0-alt1
 - New 0.57.0 version.
 

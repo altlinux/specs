@@ -2,7 +2,7 @@
 %define oname django-model-utils
 
 Name: python3-module-%oname
-Version: 4.0.0
+Version: 5.0.0
 Release: alt1
 
 Summary: Django model mixins and utilities
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
-
+BuildRequires: python3-module-setuptools
 
 %description
 Django model mixins and utilities.
@@ -61,10 +61,10 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
@@ -90,8 +90,11 @@ mv tests/ %buildroot%python3_sitelibdir/%oname/
 %files tests
 %python3_sitelibdir/*/tests
 
-
 %changelog
+* Mon Apr 28 2025 Alexander Burmatov <thatman@altlinux.org> 5.0.0-alt1
+- Version updated to 5.0.0
+- use pyproject macros
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.0.0-alt1
 - Version updated to 4.0.0
 - build for python2 disabled
