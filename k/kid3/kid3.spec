@@ -8,7 +8,7 @@
 %define rname kid3
 Name: %rname
 Version: 3.9.6
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Sound
@@ -26,7 +26,7 @@ BuildRequires: gcc-c++ glib2-devel libreadline-devel /usr/bin/xsltproc
 BuildRequires: libavdevice-devel libavformat-devel libswscale-devel
 # libavresample-devel
 BuildRequires: libchromaprint-devel
-BuildRequires: id3lib-devel libtag-devel
+BuildRequires: id3lib-devel taglib-devel
 BuildRequires: libflac++-devel libvorbis-devel
 %if_enabled mp4
 BuildRequires: libmpeg4ip-devel
@@ -231,6 +231,9 @@ done
 #%_K6dbus_iface/*id3*
 
 %changelog
+* Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 3.9.6-alt2
+- build with new taglib
+
 * Thu Dec 05 2024 Sergey V Turchin <zerg@altlinux.org> 3.9.6-alt1
 - new version
 
