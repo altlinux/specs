@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define sover 5
+%define sover 6
 
 Name:    bobcat
-Version: 5.11.01
-Release: alt2
+Version: 6.07.01
+Release: alt1
 
 Summary: C++ library for managing child processes, streams/sockets, shared memory and config files
 License: GPL-3.0-or-later
@@ -11,9 +11,8 @@ Group:   Development/C++
 Url:     https://gitlab.com/fbb-git/bobcat
 
 Source: %name-%version.tar
-Patch0: %name-%version-ssl3.patch
-Patch1: %name-%version-uint8.patch
-Patch2: %name-%version-randommt.patch
+
+ExcludeArch: %ix86
 
 BuildRequires: icmake
 BuildRequires: gcc-c++
@@ -48,13 +47,32 @@ Group:   Development/C++
 %description -n lib%name-devel
 %summary
 
+%package doc
+Summary: Doc files for %name
+BuildArch: noarch
+Group: Other
+
+%description doc
+%summary
+
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
+export CXXFLAGS="%optflags --std=c++2a -Werror -fdiagnostics-color=never -ffat-lto-objects"
+export CXX="g++"
+sed -i 's/^#define CXX/\/\/ #define CXX/g' bobcat/INSTALL.im
+sed -i 's/^#define CXXFLAGS/\/\/ #define CXXFLAGS/g' bobcat/INSTALL.im
+sed -i 's/^#define DOC/\/\/ #define DOC/g' bobcat/INSTALL.im
+sed -i 's/^#define HDR/\/\/ #define HDR/g' bobcat/INSTALL.im
+sed -i 's/^#define LIB/\/\/ #define LIB/g' bobcat/INSTALL.im
+echo "/* created during rpmbuild */"                            >> bobcat/INSTALL.im
+echo "#define CXX         \"${CXX} -std=c++20\""                           >> bobcat/INSTALL.im
+echo "#define CXXFLAGS    \"${CXXFLAGS} -std=c++20\""                      >> bobcat/INSTALL.im
+echo "#define DOC         \"%_docdir/bobcat\""   >> bobcat/INSTALL.im
+echo "#define HDR         \"%_includedir/bobcat\""          >> bobcat/INSTALL.im
+echo "#define LIB         \"%_libdir\""                       >> bobcat/INSTALL.im
+export ICMAKE_CPPSTD=--std=c++20
 pushd bobcat
 ./build libraries all
 ./build man 
@@ -63,7 +81,6 @@ popd
 %install
 mkdir -pv %buildroot
 pushd bobcat
-sed -i 's|"/usr/lib"|"%_libdir"|g' INSTALL.im
 ./build install lhdm %buildroot
 popd
 
@@ -82,10 +99,14 @@ rm -v %buildroot%_libdir/lib%name.a
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/lib%name.so
-%dir %_datadir/doc/libbobcat5-dev
-%_datadir/doc/libbobcat5-dev/*
+
+%files doc
+%_docdir/%name
 
 %changelog
+* Tue May 13 2025 Artem Semenov <savoptik@altlinux.org> 6.07.01-alt1
+- Updated to new version 6.07.01
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 5.11.01-alt2
 - Added description
 - Cleaned-up the spec
