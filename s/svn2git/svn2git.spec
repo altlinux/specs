@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    svn2git
-Version: 1.0.18
-Release: alt3
+Version: 1.0.20
+Release: alt1
 
 Summary: :octopus: A fast-import based converter for an svn repo to git repos
 License: GPL-3.0
@@ -10,7 +10,6 @@ Group:   Other
 Url:     https://github.com/svn-all-fast-export/svn2git
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: git subversion bats bats-file bats-assert bats-support
@@ -24,7 +23,6 @@ This project contains all the tools required to do a conversion of an svn reposi
 
 %prep
 %setup
-%patch -p1
 sed -i 's|/usr/local|%buildroot%prefix|g' src/src.pro
 
 %build
@@ -45,6 +43,9 @@ sed -i 's|test/libs/bats-core/bin/bats|/usr/bin/bats|g' test.sh
 %doc *.md
 
 %changelog
+* Tue May 13 2025 Artem Semenov <savoptik@altlinux.org> 1.0.20-alt1
+- Updated to new version 1.0.20
+
 * Fri Mar 21 2025 Artem Semenov <savoptik@altlinux.org> 1.0.18-alt3
 - Cleaned-up the spec
 
