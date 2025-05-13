@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.30.3
+Version: 1.30.4
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
@@ -139,6 +139,9 @@ exit $ret
 
 
 %changelog
+* Tue May 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.30.4-alt1
+- 1.30.4
+
 * Thu Apr 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.30.3-alt1
 - 1.30.3
 
