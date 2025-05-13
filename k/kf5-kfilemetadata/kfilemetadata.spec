@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: System/Libraries
@@ -22,7 +22,7 @@ Patch1: kf5-kfilemetadata-5.115.0-rosa-search-non-utf-content.patch
 #BuildRequires: ebook-tools-devel extra-cmake-modules gcc-c++ kf5-karchive-devel kf5-ki18n-devel libavdevice-devel libavformat-devel libexiv2-devel libpoppler-qt5-devel libpostproc-devel libswscale-devel libtag-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-multimedia-devel
-BuildRequires: ebook-tools-devel libpoppler-qt5-devel libtag-devel
+BuildRequires: ebook-tools-devel libpoppler-qt5-devel taglib-devel
 %if_enabled exiv2
 BuildRequires: libexiv2-devel
 %endif
@@ -88,6 +88,9 @@ popd
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt4
+- build with taglib
+
 * Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt3
 - merge with p10
 
