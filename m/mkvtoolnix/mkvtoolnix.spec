@@ -12,14 +12,14 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 90.0
+Version: 92.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
 Url: https://mkvtoolnix.download/
+Vcs: https://codeberg.org/mbunkus/mkvtoolnix
 
-# https://gitlab.com/mbunkus/mkvtoolnix.git
 Source: %name-%version.tar
 Patch1: ax_boost_base_morearch.patch
 
@@ -161,6 +161,10 @@ rake V=1 tests:run_unit
 %endif
 
 %changelog
+* Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 92.0-alt1
+- 92.0.
+- Added Vcs link.
+
 * Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 90.0-alt1
 - 90.0.
 
