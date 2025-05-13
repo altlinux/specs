@@ -1,27 +1,42 @@
 %define _name qxmpp
+%define _Name QXmpp
+%define suff Qt6
+%define libname lib%_Name%suff
 
+%def_enable omemo
+%def_with gstreamer
+%def_with qca
+%def_enable docs
 # tst_qxmppiceconnection timed out in hasher
 %def_disable check
 
-Name: %_name-qt5
-Version: 1.5.3
+Name: %_name-qt6
+Version: 1.10.3
 Release: alt1
 
 Summary: Qt XMPP library
 License: LGPL-2.1-or-later
 Group: Development/KDE and QT
-Url: https://github.com/%_name-project/%_name
+Url: https://invent.kde.org/libraries/qxmpp
 
-Vcs: https://github.com/qxmpp-project/qxmpp.git
-Source: %url/archive/v%version/%_name-%version.tar.gz
+Vcs: https://invent.kde.org/libraries/qxmpp.git
+
+Source: %url/-/archive/v%version/%_name-v%version.tar.gz
 
 Conflicts: lib%_name
 
-%define qt_ver 5.7
+%define qt_ver 6.1
+%define gst_ver 1.20
+
+%{?_with_qca:Requires: qca-qt6}
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ qt5-base-devel >= %qt_ver
-BuildRequires: libspeex-devel libtheora-devel libvpx-devel libopus-devel doxygen
+BuildRequires: gcc-c++ qt6-base-devel >= %qt_ver
+BuildRequires: libspeex-devel libtheora-devel libvpx-devel libopus-devel
+%{?_enable_omemo:BuildRequires: pkgconfig(libomemo-c)}
+%{?_with_qca:BuildRequires: qca-qt6-devel}
+%{?_with_gstreamer:BuildRequires: gst-plugins1.0-devel} >= %gst_ver
+%{?_enable_docs:BuildRequires:doxygen graphviz}
 %{?_enable_check:BuildRequires: /proc ctest}
 
 %description
@@ -36,7 +51,7 @@ documentation, automatic tests and many examples.
 %package -n lib%name-devel
 Summary: Qt XMPP library development files
 Group: Development/KDE and QT
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Conflicts: lib%_name-devel
 
 %description -n lib%name-devel
@@ -93,16 +108,16 @@ recommended to the advanced users to read and enjoy the low level
 details.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name-v%version
 
 %build
 %cmake \
-	-DCMAKE_BUILD_TYPE="Release" \
-	-DWITH_SPEEX=TRUE \
-	-DWITH_THEORA=TRUE \
-	-DWITH_VPX=TRUE \
-	-DWITH_OPUS=TRUE \
-	-DBUILD_DOCUMENTATION=TRUE
+    -DCMAKE_BUILD_TYPE="Release" \
+    %{?_enable_omemo:-DBUILD_OMEMO=TRUE} \
+    %{?_with_gstreamer:-DWITH_GSTREAMER=TRUE} \
+    %{?_with_qca:-DWITH_QCA=TRUE} \
+    %{?_enable_docs:-DBUILD_DOCUMENTATION=TRUE} \
+%nil
 %cmake_build
 
 %install
@@ -111,26 +126,34 @@ mkdir -p %buildroot%_defaultdocdir/%_name
 install -m644 AUTHORS CHANGELOG.md README.md %buildroot%_defaultdocdir/%_name/
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
 %cmake_build -t test
 
 %files -n lib%name
-%_libdir/lib%_name.so.*
+%_libdir/%libname.so.*
+%{?_enable_omemo:%_libdir/libQXmppOmemo%suff.so.*}
 
 %files -n lib%name-devel
-%_includedir/%_name/
-%_libdir/lib%_name.so
-%_pkgconfigdir/%_name.pc
-%_libdir/cmake/%_name/
+%_includedir/%_Name%suff/
+%_libdir/%libname.so
+%{?_enable_omemo:%_libdir/libQXmppOmemo%suff.so}
+%_pkgconfigdir/%_Name%suff.pc
+%_libdir/cmake/%_Name%suff/
+%{?_enable_omemo:%_libdir/cmake/QXmppOmemo%suff/}
 
 %files doc
 %dir %_defaultdocdir/%_name
-%_defaultdocdir/%_name/html/
+%{?_enable_docs:%_defaultdocdir/%_name/html/}
 %_defaultdocdir/%_name/AUTHORS
 %_defaultdocdir/%_name/CHANGELOG.md
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.3-alt1
+- 1.10.3 with Qt6
+
+* Mon May 01 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.5-alt1
+- 1.5.5
+
 * Sat Mar 11 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
 - 1.5.3
 
