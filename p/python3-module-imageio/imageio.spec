@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.37.0
-Release: alt1
+Release: alt2
 Summary: Python library for reading and writing image data
 License: BSD-2-Clause
 Group: Development/Python3
@@ -34,6 +34,7 @@ It is cross-platform, runs on Python 3.9+, and is easy to install.
 
 %install
 %pyproject_install
+rm -rv %buildroot%python3_sitelibdir/%oname/testing.py
 
 %files
 %doc LICENSE
@@ -44,6 +45,9 @@ It is cross-platform, runs on Python 3.9+, and is easy to install.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri May 09 2025 Alexander Kovalev <alexvk@altlinux.org> 2.37.0-alt2
+- Removed testing.py (ALT #54111).
+
 * Sat Mar 29 2025 Alexander Kovalev <alexvk@altlinux.org> 2.37.0-alt1
 - Updated version to 2.37.0.
 
