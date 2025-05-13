@@ -12,8 +12,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: %rname
-Version: 24.12.3
-Release: alt2
+Version: 25.04.1
+Release: alt1
 %K6init
 
 Group: File tools
@@ -28,8 +28,6 @@ Requires: kf6-kio
 #Requires: kf6-kio-extras
 
 Source: %rname-%version.tar
-Patch0: kdebug-502770.patch
-#
 Patch2: alt-def-general.patch
 Patch3: alt-def-toolbar.patch
 Patch4: alt-fix-unmounting-during-preview-generation.patch
@@ -92,8 +90,6 @@ Obsoletes: libdolphinvcs5 < %EVR
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
-#
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p2
@@ -138,6 +134,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 %_K6icon/*/*/apps/*dolphin*.*
 %_K6cfg/dolphin*
 %_K6conf_up/*dolphin*
+%_K6conf_bin/*dolphin*
 %_K6data/dolphin/
 %_K6data/kglobalaccel/*dolphin*
 %_K6data/knsrcfiles/*
@@ -161,8 +158,14 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - add fix against kdebug#502770
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
 
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version

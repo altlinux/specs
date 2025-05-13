@@ -9,8 +9,8 @@
 %define libokularcore libokular6core%sover
 
 Name: %rname
-Version: 24.12.3
-Release: alt2
+Version: 25.04.1
+Release: alt1
 %K6init no_altplace
 
 Group: Office
@@ -172,7 +172,6 @@ fi
 %_K6qml/org/kde/okular/
 %_K6plug/okular_generators/
 %_K6plug/kf6/parts/okularpart.so
-%_datadir/kconf_update/okular*
 %_K6cfg/*okular*
 %_K6cfg/*settings*
 %if_enabled msits
@@ -191,6 +190,12 @@ fi
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Thu Mar 20 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - fix build requires
 

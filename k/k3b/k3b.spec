@@ -15,7 +15,7 @@
 
 %define rname k3b
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init no_altplace
 
@@ -41,7 +41,7 @@ BuildRequires: libdvdread-devel libflac++-devel liblame-devel libmad-devel libmp
 %if_enabled musicbrainz
 BuildRequires: libmusicbrainz-devel
 %endif
-BuildRequires: libsamplerate-devel libsndfile-devel libtag-devel libvorbis-devel
+BuildRequires: libsamplerate-devel libsndfile-devel taglib-devel libvorbis-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel  kf6-kdoctools-devel
 BuildRequires: kf6-kfilemetadata-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel
@@ -166,6 +166,12 @@ Requires: kde-common
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

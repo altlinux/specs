@@ -11,7 +11,7 @@
 %add_findreq_skiplist %_K6data/%rname/scripts/*.py
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -27,7 +27,6 @@ Source: %rname-%version.tar
 
 # ALT
 Patch10: alt-defaults.patch
-Patch11: alt-find-taglib.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 
@@ -36,7 +35,7 @@ BuildRequires: qt6-phonon-devel qt6-declarative-devel qt6-5compat-devel
 %if_enabled qtwebengine
 BuildRequires: qt6-webengine-devel
 %endif
-BuildRequires: libmaxminddb-devel libgmp-devel libtag-devel
+BuildRequires: libmaxminddb-devel libgmp-devel taglib-devel
 BuildRequires: kde6-libktorrent-devel kf6-syndication-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
@@ -61,7 +60,6 @@ KTorrent library
 %prep
 %setup -q -n %rname-%version
 %patch10 -p1 -b .defaults
-%patch11 -p1
 
 #sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
@@ -104,6 +102,12 @@ done
 %_libdir/libktcore.so.*
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

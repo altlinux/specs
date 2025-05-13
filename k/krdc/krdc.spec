@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -15,14 +15,14 @@ License: GPL-2.0-or-later
 
 Provides: kde5-krdc = %EVR
 Obsoletes: kde5-krdc < %EVR
-Requires: freerdp-plugins-standard
+#Requires: /usr/bin/winpr-makecert
 
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel
-BuildRequires: libvncserver-devel libssh-devel
-BuildRequires: libfreerdp-devel xfreerdp freerdp-plugins-standard
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-wayland-devel
+BuildRequires: libvncserver-devel libssh-devel libfuse3-devel
+BuildRequires: libfreerdp3-devel /usr/bin/winpr-makecert
 BuildRequires: kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcompletion-devel kf6-kdnssd-devel
 BuildRequires: kf6-kdoctools-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-knotifications-devel
 BuildRequires: kf6-kservice-devel kf6-kwallet-devel kf6-kxmlgui-devel kf6-knotifyconfig-devel
@@ -85,6 +85,7 @@ mv %buildroot/%_datadir/mime/packages/org.kde.krdc{,6}-mime.xml
 %_K6bin/krdc
 %_K6plug/krdc/
 %_K6xdgapp/org.kde.krdc.desktop
+%_K6icon/*/*/apps/*krdc*
 %_K6cfg/krdc.kcfg
 #%_K6data/kio/servicemenus/*rdc*.desktop
 %_datadir/metainfo/*.xml
@@ -100,6 +101,12 @@ mv %buildroot/%_datadir/mime/packages/org.kde.krdc{,6}-mime.xml
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname kcalc
 
 Name: %rname
-Version: 24.12.3
-Release: alt2
+Version: 25.04.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ Patch1: alt-i18n.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
-BuildRequires: libgmp-devel libmpfr-devel
+BuildRequires: libgmp-devel libmpfr-devel libmpc-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
@@ -55,6 +55,12 @@ rm -f po/ru/kcalc.po.tmp
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Thu Apr 10 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - fix i18n
 

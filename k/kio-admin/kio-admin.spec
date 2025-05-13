@@ -1,17 +1,17 @@
-%define _unpackaged_files_terminate_build 1
+%define rname kio-admin
 
-Name: kio-admin
-Version: 25.03.80
+Name: %rname
+Version: 25.04.1
 Release: alt1
 %K6init
 
-Summary: Manage files as administrator using the admin:// KIO protocol
-License: (GPL-2.0-only or GPL-3.0-only) and BSD-3-Clause and CC0-1.0 and FSFAP
 Group: Graphical desktop/KDE
+Summary: Manage files as administrator using the admin:/ KIO protocol
+License: (GPL-2.0-only or GPL-3.0-only) and BSD-3-Clause and CC0-1.0 and FSFAP
 Url: https://invent.kde.org/system/kio-admin
 Vcs: https://invent.kde.org/system/kio-admin.git
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -36,21 +36,25 @@ operations in root-scope.
 
 %install
 %K6install
-%find_lang %name --all-name
+%find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc README.* LICENSES/*
-%dir %_K6plug/kf6/kfileitemaction/
-%_K6plug/kf6/kfileitemaction/%name.so
-%dir %_K6plug/kf6/kio/
-%_K6plug/kf6/kio/admin.so
+%_K6plug/kf6/kfileitemaction/*admin*.so
+%_K6plug/kf6/kio/*admin*.so
 %_K6exec/%name-helper
-%_K6dbus/system.d/*kio*.conf
-%_K6dbus_sys_srv/*kio*.service
-%_datadir/metainfo/*kio*.xml
-%_datadir/polkit-1/actions/*kio*.policy
+%_K6dbus/system.d/*admin*.conf
+%_K6dbus_sys_srv/*admin*.service
+%_datadir/metainfo/*admin*.xml
+%_datadir/polkit-1/actions/*admin*.policy
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Sun Mar 16 2025 Anton Kurachenko <srebrov@altlinux.org> 25.03.80-alt1
 - New version 25.03.80.
 

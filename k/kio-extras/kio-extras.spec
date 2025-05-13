@@ -6,7 +6,7 @@
 %def_enable exiv2
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -29,6 +29,7 @@ Source: %rname-%version.tar
 Patch11: alt-smb-share.patch
 Patch12: alt-fix-permissions.patch
 Patch13: alt-find-samba.patch
+Patch14: alt-def-trash.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-5compat-devel qt6-phonon-devel
@@ -37,9 +38,9 @@ BuildRequires: qcoro6-devel
 BuildRequires: libexiv2-devel
 %endif
 BuildRequires: libjpeg-devel libmtp-devel libopenslp-devel libsmbclient-devel libssh-devel openexr-devel
-BuildRequires: libtirpc-devel
+BuildRequires: libtirpc-devel libproxy-devel
 BuildRequires: libimobiledevice-devel
-BuildRequires: gperf libtag-devel
+BuildRequires: gperf taglib-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdnssd-devel kf6-kdoctools kf6-kdoctools-devel kf6-kcmutils-devel
@@ -85,6 +86,7 @@ Obsoletes: libkioarchive5 < %EVR
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 %K6build \
@@ -131,6 +133,12 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 
 
 %changelog
+* Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
+* Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
