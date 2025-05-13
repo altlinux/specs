@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.8
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -30,6 +30,7 @@ BuildRequires: xorg-xextproto-devel xorg-inputproto-devel libXtst-devel
 BuildRequires: libexpat-devel
 BuildRequires: libjpeg-devel libtiff-devel libpng-devel libmspack-devel zlib-devel
 BuildRequires: libgtk+3-devel libcairo-devel
+BuildRequires: libxkbcommon-devel
 
 BuildRequires: libXxf86vm-devel libbfd-devel
 BuildRequires: libstdc++-devel
@@ -323,6 +324,9 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Tue May 13 2025 Anton Midyukov <antohami@altlinux.org> 3.2.8-alt2
+- add BR libxkbcommon-devel
+
 * Sun Apr 27 2025 Anton Midyukov <antohami@altlinux.org> 3.2.8-alt1
 - new version 3.2.8
 
