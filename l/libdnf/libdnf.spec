@@ -1,6 +1,6 @@
 Name:    libdnf
 Version: 0.65.0
-Release: alt1
+Release: alt2
 
 Summary: Package management library.
 License: LGPL-2.1
@@ -12,6 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch0: libdnf-alt-gcc13.patch
 Patch1: libdnf-revert-check-rpmcliVerifySignatures.patch
+Patch2: libdnf-cmake.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -32,6 +33,16 @@ BuildRequires: swig
 BuildRequires: python3-module-sphinx
 BuildRequires: cppunit-devel
 BuildRequires: libgpgme-devel
+BuildRequires: /proc
+BuildRequires: pkgconfig(blkid)
+BuildRequires: pkgconfig(libbrotlidec)
+BuildRequires: pkgconfig(libidn2)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(mount)
+BuildRequires: pkgconfig(yaml-0.1)
+BuildRequires: pkgconfig(zlib)
 
 %description
 This library provides a high level package-manager. It's core library of dnf,
@@ -61,8 +72,7 @@ Python3 bindings for the hawkey library.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 %ifarch %e2k
 # workaround for EDG frontend
 find libdnf tests -name '*.cpp' | xargs sed -i "\
@@ -137,6 +147,9 @@ rm -rf %buildroot%python3_sitelibdir/hawkey/test/
 %_man3dir/hawkey.3*
 
 %changelog
+* Tue May 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.65.0-alt2
+- NMU: fixed FTBFS with cmake 4.0.
+
 * Wed Jan 24 2024 Andrey Cherepanov <cas@altlinux.org> 0.65.0-alt1
 - New version.
 
