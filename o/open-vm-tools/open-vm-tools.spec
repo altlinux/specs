@@ -22,8 +22,8 @@
 %def_with gtkmm3
 
 %global majorversion    12.5
-%global minorversion    0
-%global toolsbuild      24276846
+%global minorversion    2
+%global toolsbuild      24697584
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -328,6 +328,9 @@ fi
 
 
 %changelog
+* Tue May 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 12.5.2-alt1
+- 12.5.2 (CVE-2025-22247)
+
 * Thu Oct 10 2024 Andrew A. Vasilyev <andy@altlinux.org> 12.5.0-alt1
 - 12.5.0 (CVE-2024-40896)
 - remove Java from R: (Closes: #50869)
