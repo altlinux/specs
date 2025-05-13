@@ -4,7 +4,7 @@
 
 Name: kf6-%rname
 Version: 6.13.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -16,7 +16,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-multimedia-devel
-BuildRequires: ebook-tools-devel libpoppler-qt6-devel libtag-devel
+BuildRequires: ebook-tools-devel libpoppler-qt6-devel taglib-devel
 %if_enabled exiv2
 BuildRequires: libexiv2-devel
 %endif
@@ -68,6 +68,7 @@ KF6 library
 %_datadir/qlogging-categories6/*.*categories
 
 %files devel
+%_K6bin/*dump*
 #%_K6inc/kfilemetadata_version.h
 %_K6inc/KFileMetaData/
 %_K6link/lib*.so
@@ -79,6 +80,9 @@ KF6 library
 
 
 %changelog
+* Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt2
+- build with taglib
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 
