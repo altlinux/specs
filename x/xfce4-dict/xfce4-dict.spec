@@ -1,5 +1,5 @@
 Name: xfce4-dict
-Version: 0.8.8
+Version: 0.8.9
 Release: alt1
 
 Summary: Xfce4 Dictionary - A client program to query different dictionaries
@@ -14,11 +14,12 @@ Patch: %name-%version-%release.patch
 Obsoletes: xfce4-dict-plugin < 0.5.2
 Provides: xfce4-dict-plugin
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libgio-devel
 
-Requires: enchant xdg-utils
+Requires: enchant2 xdg-utils
 
 %define _unpackaged_files_terminate_build 1
 
@@ -37,13 +38,12 @@ panel plugin for the Xfce panel.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --enable-debug=minimum
-%make_build
+%meson
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -55,9 +55,12 @@ panel plugin for the Xfce panel.
 %_man1dir/*
 %_iconsdir/*/*/*/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Tue May 13 2025 Mikhail Efremov <sem@altlinux.org> 0.8.9-alt1
+- Switched to meson build.
+- Used enchant2 instead of enchant.
+- Updated to 0.8.9.
+
 * Wed Oct 02 2024 Mikhail Efremov <sem@altlinux.org> 0.8.8-alt1
 - Updated to 0.8.8.
 
