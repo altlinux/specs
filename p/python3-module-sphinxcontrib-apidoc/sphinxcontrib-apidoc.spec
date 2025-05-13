@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: A Sphinx extension for running sphinx-apidoc on each build
@@ -54,6 +54,9 @@ export PBR_VERSION="%version"
 %python3_sitelibdir/sphinxcontrib_apidoc-%version.dist-info
 
 %changelog
+* Tue May 13 2025 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Automatically updated to 0.6.0.
+
 * Sat May 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
 - Build new version.
 
