@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.13
+Version: 0.1.14
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -106,6 +106,9 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Tue May 13 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.14-alt1
+- add objects interfaces from available applications
+
 * Mon Mar 31 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.13-alt1
 - support release-notes-applications
 - add control interface
