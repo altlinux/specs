@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.8
-Release: alt2
+Version: 0.2.9
+Release: alt1
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -70,6 +70,10 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Tue May 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.9-alt1
+- Show content of selected categories and sections instead of empty description.
+- Display apply diff in columns.
+
 * Tue May 06 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.8-alt2
 - Change URL to altlinux.space.
 
