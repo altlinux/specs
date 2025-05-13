@@ -6,9 +6,8 @@
 %define beta %nil
 %define api_ver_major 4
 %define api_ver 4.0
+%define namespace GWeather
 %define xdg_name org.gnome.GWeather%api_ver_major
-
-%def_enable new_russia
 
 %def_disable soup2
 %def_enable introspection
@@ -20,23 +19,26 @@
 
 Name: %_name%api_ver
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A library for weather information
 Group: System/Libraries
-License: GPLv3
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Projects/LibGWeather
+
+Vcs: https://gitlab.gnome.org/GNOME/libgweather.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
 Source: %_name-%version%beta.tar
 %endif
-%{?_enable_new_russia:
-# Simferopol, Sevastopol & Kerch, Donetsk, Mariupol, Lugansk,
-# Severodonetsk, Lisichansk, Zaporozhye, Herson ...
-Patch10: %_name-4.4.2-alt-Novorossia.patch
-Patch11: %_name-4.4.4-alt-Novorossia-po-locations.patch}
+Patch8: %name-4.4.4-alt-update-russian-locations.patch
+Patch9: %name-4.4.4-alt-update-russian-translation.patch
+Patch10: %name-4.4.4-alt-add-new-territories.patch
+Patch11: %name-4.4.4-alt-update-new-territories-translation.patch
+#Patch10: %_name-4.4.2-alt-Novorossia.patch
+#Patch11: %_name-4.4.4-alt-Novorossia-po-locations.patch
 
 %define glib_ver 2.68
 %define soup2_ver 2.44
@@ -123,9 +125,10 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup -n %_name-%version%beta
-%{?_enable_new_russia:
-%patch10 -b .NR
-%patch11 -b .NR}
+%patch8 -p1 -b .extR
+%patch9 -p1 -b .extR
+%patch10 -p1 -b .NR
+%patch11 -p1 -b .NR
 
 sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
@@ -133,11 +136,11 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 # for tm.tm_gmtoff
 %add_optflags -D_GNU_SOURCE
 %meson \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_disable_vala:-Denable_vala=false} \
-    %{?_enable_soup2:-Dsoup2=true}
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool vala enable_vala} \
+    %{subst_enable_meson_bool soup2 soup2}
 %nil
-%{?_enable_new_russia:%meson_build %_name-%api_ver-locations-pot %_name-%api_ver-update-po}
+%meson_build %_name-%api_ver-locations-pot %_name-%api_ver-update-po
 %meson_build
 
 %install
@@ -172,10 +175,10 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GWeather-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GWeather-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
 %if_enabled vala
@@ -184,8 +187,14 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %_vapidir/gweather%api_ver_major.deps
 %endif
 
-
 %changelog
+* Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4.4-alt2
+- qualimock@:
+  updated Russian Federation locations (all regions including new
+  territories, cities with population over 50k and available airports)
+  (ALT #54065)
+- added Vcs tag, fixed License tag
+
 * Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 4.4.4-alt1
 - 4.4.4
 
