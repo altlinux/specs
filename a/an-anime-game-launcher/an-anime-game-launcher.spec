@@ -1,11 +1,12 @@
 Name: an-anime-game-launcher
-Version: 3.13.1
-Release: alt2
+Version: 3.14.0
+Release: alt1
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
 License: GPL-3.0
 Group: Games/Other
 Url: https://github.com/an-anime-team/an-anime-game-launcher
+Vcs: https://github.com/an-anime-team/an-anime-game-launcher.git
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -16,6 +17,8 @@ BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: libgtk4-devel
 BuildRequires: libadwaita-devel
+BuildRequires: libssl-devel
+BuildRequires: protobuf-compiler
 Requires: git-core
 Requires: p7zip
 Requires: libwebp-tools
@@ -30,14 +33,14 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.29.1"]
+[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.30.2"]
 git = "https://github.com/an-anime-team/anime-game-core"
-tag = "1.29.1"
+tag = "1.30.2"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.27.1"]
+[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.28.2"]
 git = "https://github.com/an-anime-team/anime-launcher-sdk"
-tag = "1.27.1"
+tag = "1.28.2"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -83,6 +86,10 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Tue May 13 2025 Anton Kurachenko <srebrov@altlinux.org> 3.14.0-alt1
+- New version 3.14.0.
+- Added VCS tag.
+
 * Tue Apr 29 2025 Anton Kurachenko <srebrov@altlinux.org> 3.13.1-alt2
 - Added git-core, p7zip and libwebp-tools to Requires (Closes: #54029).
 
