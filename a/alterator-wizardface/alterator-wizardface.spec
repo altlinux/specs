@@ -3,7 +3,7 @@
 
 Name: alterator-wizardface
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Url: http://altlinux.org/alterator
 Source: %name-%version.tar
@@ -34,16 +34,6 @@ BuildRequires: alterator
 %description
 alterator's wizard like module aggregator
 
-%package usermode
-Summary: Usermode bindings for %name
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: %name = %version-%release
-Requires: consolehelper
-
-%description usermode
-Usermode bindings for %name
-
 %brp_strip_none %_alterator_libdir/*
 %add_verify_elf_skiplist %_alterator_libdir/*
 %add_findreq_skiplist %_alterator_libdir/*
@@ -57,30 +47,6 @@ Usermode bindings for %name
 %install
 %makeinstall
 
-#install consolehelper
-obj=alterator-wizard
-
-install -d %buildroot/%_bindir
-ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/$obj
-install -d %buildroot%_sysconfdir/pam.d/
-
-cat>%buildroot%_sysconfdir/pam.d/$obj<<EOF
-#%PAM-1.0
-auth	sufficient	pam_rootok.so
-auth	required	pam_stack.so service=system-auth
-account	required	pam_permit.so
-password	required	pam_deny.so
-session	optional	pam_xauth.so
-EOF
-
-install -d %buildroot%_sysconfdir/security/console.apps/
-cat>%buildroot%_sysconfdir/security/console.apps/$obj<<EOF
-USER=root
-PROGRAM=%_sbindir/$obj
-SESSION=true
-FALLBACK=true
-EOF
-
 %files
 %_sbindir/*
 #%_alterator_libdir/ui/*
@@ -89,12 +55,10 @@ EOF
 %_datadir/install2/initinstall.d/*
 %_datadir/install2/postinstall.d/*
 
-%files usermode
-%config(noreplace) %_sysconfdir/pam.d/*
-%config(noreplace) %_sysconfdir/security/console.apps/*
-%_bindir/*
-
 %changelog
+* Wed May 07 2025 Anton Midyukov <antohami@altlinux.org> 2.3-alt2
+- NMU: Remove alterator-wizardface-usermode subpackage (closes: 54142).
+
 * Wed Apr 20 2022 Paul Wolneykien <manowar@altlinux.org> 2.3-alt1
 - Use the new 'on-replace' frame hook to fix setting of the help
   page on multi-form steps (closes: 42514).
