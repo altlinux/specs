@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       pgbouncer
-Version:    1.23.0
-Release:    alt1.1
+Version:    1.24.1
+Release:    alt1
 Summary:    Lightweight connection pooler for PostgreSQL
 License:    ISC
 Group:      Databases
@@ -26,7 +26,7 @@ BuildRequires: pkgconfig(libcares) >= 1.9.0
 BuildRequires: libpam-devel
 BuildRequires: libsystemd-devel
 %ifnarch %e2k
-BuildRequires: pandoc
+#BuildRequires: pandoc
 %endif
 # That was a pkg with an ugly temporary name:
 Obsoletes: pgbouncer17 < %EVR
@@ -65,9 +65,9 @@ touch lib/mk/install-sh
     --with-pam \
     --with-root-ca-file=/etc/pki/tls/certs/ca-bundle.crt
 
-%ifarch %e2k
+#%%ifarch %%e2k
 sed -i 's,\$(PANDOC).*,touch $@,' doc/Makefile
-%endif
+#%%endif
 
 %make_build
 
@@ -103,8 +103,8 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %doc NEWS.md README.md doc/*.md
 %_bindir/%name
 %ifnarch %e2k
-%_man1dir/*
-%_man5dir/*
+#%%_man1dir/*
+#%%_man5dir/*
 %endif
 %attr(750,root,%name) %dir %_sysconfdir/%name
 %config(noreplace) %attr(640,root,%name) %_sysconfdir/%name/%name.ini
@@ -118,6 +118,10 @@ useradd  -r -g %name -s /sbin/nologin -c "PgBouncer Server" -M -d /run/%name %na
 %attr(1770,root,%name) %dir %_logdir/%name
 
 %changelog
+* Wed Apr 30 2025 Alexei Takaseev <taf@altlinux.org> 1.24.1-alt1
+- 1.24.1 (Fixes: CVE-2025-2291).
+- Disable manpages (pandoc while broken)
+
 * Wed Aug 21 2024 Michael Shigorin <mike@altlinux.org> 1.23.0-alt1.1
 - E2K: disable manpages (pandoc not available yet).
 
