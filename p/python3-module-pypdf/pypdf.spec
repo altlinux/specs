@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%modulename
-Version: 5.4.0
+Version: 5.5.0
 Release: alt1
 
 Summary: A Pure-Python library built as a PDF toolkit
@@ -52,6 +52,9 @@ It is therefore a useful tool for websites that manage or manipulate PDFs.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Tue May 13 2025 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
+- Automatically updated to 5.5.0.
+
 * Mon Mar 17 2025 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1
 - Automatically updated to 5.4.0.
 
