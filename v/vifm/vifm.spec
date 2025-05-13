@@ -1,5 +1,5 @@
 Name: vifm
-Version: 0.14
+Version: 0.14.2
 Release: alt1
 
 Summary: Two pane file manager with vi-like keybindings
@@ -52,6 +52,9 @@ sed -i 's/#!\/usr\/bin\/env perl/#!\/usr\/bin\/perl/' src/vifm-convert-dircolors
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue May 13 2025 Ilya Mashkin <oddity@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+
 * Mon Feb 17 2025 Ilya Mashkin <oddity@altlinux.ru> 0.14-alt1
 - 0.14
 
