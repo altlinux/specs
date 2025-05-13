@@ -9,7 +9,7 @@
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.10.1
+Version: 3.10.3
 Release: alt1
 
 Summary: Matlab(TM) style python plotting package
@@ -391,6 +391,9 @@ py.test-3 --pyargs matplotlib.tests \
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Tue May 13 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.3-alt1
+- Automatically updated to 3.10.3.
+
 * Thu Mar 20 2025 Grigory Ustinov <grenka@altlinux.org> 3.10.1-alt1
 - Automatically updated to 3.10.1.
 
