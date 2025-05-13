@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 10.2.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Url: https://altsp.su
 
@@ -291,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt2
+- os-release: change NAME="ALT Linux"
+
 * Tue Apr 08 2025 Anton Midyukov <antohami@altlinux.org> 1:10.2.1-alt1
 - 10.2.1
 - os-release: use STATUS_EN instead STATUS
