@@ -1,40 +1,43 @@
-Name: python3-module-aiohttp
-Version: 3.11.13
+%define _unpackaged_files_terminate_build 1
+%define pypi_name aiohttp
+%define mod_name %pypi_name
+%def_with vendored_llhttp
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 3.11.18
 Release: alt1
 
 Summary: http client/server for asyncio
 License: Apache-2.0
 Group: Development/Python
-Url: https://github.com/aio-libs/aiohttp
+Url: https://pypi.org/project/aiohttp/
+Vcs: https://github.com/aio-libs/aiohttp
 
-Source0: %name-%version-%release.tar
-Source1: llhttp.tar
-
+Source0: %name-%version.tar
+%if_with vendored_llhttp
+Source1: modules.tar
+Source2: vendor_nodejs.tar
+%endif
+Source3: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(cython)
-BuildRequires: python3(multidict)
+%pyproject_builddeps_build
+BuildRequires: python3-module-cython
+%if_with check
+# not packaged yet
+%add_pyproject_deps_check_filter python-on-whales
+%add_pyproject_deps_check_filter setuptools-git
+%add_pyproject_deps_check_filter wait-for-it
+%pyproject_builddeps_metadata_extra speedups
+%pyproject_builddeps_check
+%endif
 
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-cov)
-BuildRequires: python3(pytest-mock)
-BuildRequires: python3(xdist)
-BuildRequires: python3(attr)
-BuildRequires: python3(yarl)
-BuildRequires: python3(aiosignal)
-BuildRequires: python3(aiohappyeyeballs)
-BuildRequires: python3(gunicorn)
-BuildRequires: python3(re_assert)
-BuildRequires: python3(freezegun)
-BuildRequires: python3(brotli)
-BuildRequires: python3(brotlicffi)
-
-# helpers.py uses async_timeout instead of asyncio if Python < 3.11
-# AutoReq can't find this dependency due to nested import
-%if "%(rpmvercmp %_python3_version 3.11)" < "0"
-BuildRequires: python3(async_timeout)
-Requires: python3(async_timeout)
+%if_with vendored_llhttp
+BuildRequires: /usr/bin/npx
+BuildRequires: /usr/bin/clang
+BuildRequires: /usr/bin/make
 %endif
 
 %package tests
@@ -50,23 +53,32 @@ http client/server for asyncio (PEP-3156).
 This package contains tests for aiohttp
 
 %prep
-%setup -a1
-# gen.py expects to find .git in project root, cheat a bit
-sed -i 's,".git",".gitmodules",' tools/gen.py
-# use system cython
-sed -i '/^cythonize:/ s,.install-cython,,' Makefile
-find tools -type f -name \*.py | xargs sed -ri '/env python$/ s,$,3,'
+%setup %{?_with_vendored_llhttp:-a1 -a2}
+%autopatch -p1
+%python3_fix_shebang .
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+cat requirements/base.in >> requirements/test.in
+%pyproject_deps_resync_check_pipreqfile requirements/test.in
+%endif
 
 %build
-make cythonize
+%if_with vendored_llhttp
+cd vendor/llhttp/
+make
+cd -
+%endif
+make cythonize-nodeps
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-export AIOHTTP_NO_EXTENSIONS=1
-%pyproject_run_pytest -m 'not dev_mode and not internal' \
+%pyproject_run -- pytest -m 'not dev_mode and not internal' \
+	-vra -o=addopts='' \
+	-n auto \
 	--ignore=tests/autobahn \
 	--ignore=tests/test_proxy_functional.py \
 	--ignore-glob='tests/test_benchmarks_*' \
@@ -76,17 +88,20 @@ export AIOHTTP_NO_EXTENSIONS=1
 %endif
 
 %files
-%doc *.txt *.rst examples
-%python3_sitelibdir/aiohttp
-%python3_sitelibdir/aiohttp-%version.dist-info
-%exclude %python3_sitelibdir/aiohttp/*test*
-%exclude %python3_sitelibdir/aiohttp/*/*test*
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%exclude %python3_sitelibdir/%mod_name/*test*
+%exclude %python3_sitelibdir/%mod_name/*/*test*
 
 %files tests
-%python3_sitelibdir/aiohttp/*test*
-%python3_sitelibdir/aiohttp/*/*test*
+%python3_sitelibdir/%mod_name/*test*
+%python3_sitelibdir/%mod_name/*/*test*
 
 %changelog
+* Mon May 12 2025 Stanislav Levin <slev@altlinux.org> 3.11.18-alt1
+- 3.11.13 -> 3.11.18.
+
 * Thu Mar 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.11.13-alt1
 - 3.11.13 released
 
@@ -201,7 +216,7 @@ export AIOHTTP_NO_EXTENSIONS=1
 - Remove self dependence.
 
 * Wed Mar 02 2016 Denis Medvedev <nbr@altlinux.org>  0.15.3-alt3.git20150425.2
-- File "inv"  for sphynx is in python-sphinx-objects.inv. 
+- File "inv"  for sphynx is in python-sphinx-objects.inv.
 
 * Mon Feb 08 2016 Denis Medvedev <nbr@altlinux.org> 0.15.3-alt2.git20150425.2
 - NMU: manual build
