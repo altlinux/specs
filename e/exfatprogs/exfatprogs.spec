@@ -2,13 +2,14 @@
 %def_enable check
 
 Name: exfatprogs
-Version: 1.2.8
+Version: 1.2.9
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
 Group: System/Kernel and hardware
-License: GPL-2.0
+License: GPL-2.0-or-later
 Url: https://github.com/exfatprogs/exfatprogs
+
 Vcs: https://github.com/exfatprogs/exfatprogs.git
 
 Source: %name-%version.tar
@@ -53,6 +54,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.9-alt1
+- 1.2.9
+
 * Tue Mar 04 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.8-alt1
 - 1.2.8
 
