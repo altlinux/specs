@@ -1,5 +1,5 @@
 %define ghc_major 9.6
-%define ghc_version 9.6.6
+%define ghc_version 9.6.7
 
 %define warn_description This package only contains bindings to current "stable" ghc release - %ghc_major
 
@@ -7,7 +7,9 @@
 
 Name: ghc
 Version: %ghc_version
-Release: alt2
+Release: alt1
+
+Epoch: 1
 
 Summary: Metapackage for current stable GHC
 License: BSD-3-Clause and HaskellReport
@@ -76,29 +78,29 @@ This is a meta-package for all the development library packages in GHC
 # Only %%ghc_lib_subpackage replaced via %%ghc_lib_subpackage_empty
 %ghc_lib_subpackage_empty -n ghc -v %version
 
-%define basepkg_version 4.18.2.1
-%ghc_lib_subpackage_empty -n array -v 0.5.6.0
-%ghc_lib_subpackage_empty -n base -v 4.18.2.1
+%define basepkg_version 4.18.3.0
+%ghc_lib_subpackage_empty -n array -v 0.5.8.0
+%ghc_lib_subpackage_empty -n base -v 4.18.3.0
 %ghc_lib_subpackage_empty -n binary -v 0.8.9.1
-%ghc_lib_subpackage_empty -n bytestring -v 0.11.5.3
+%ghc_lib_subpackage_empty -n bytestring -v 0.11.5.4
 %ghc_lib_subpackage_empty -n Cabal-syntax -v 3.10.3.0
 %ghc_lib_subpackage_empty -n Cabal -v 3.10.3.0
 %ghc_lib_subpackage_empty -n containers -v 0.6.7
 %ghc_lib_subpackage_empty -n deepseq -v 1.4.8.1
 %ghc_lib_subpackage_empty -n directory -v 1.3.8.5
 %ghc_lib_subpackage_empty -n exceptions -v 0.10.7
-%ghc_lib_subpackage_empty -n filepath -v 1.4.300.1
+%ghc_lib_subpackage_empty -n filepath -v 1.4.301.0
 %ghc_lib_subpackage_empty -n ghc-bignum -v 1.3
-%ghc_lib_subpackage_empty -n ghc-boot-th -v 9.6.6
-%ghc_lib_subpackage_empty -n ghc-boot -v 9.6.6
+%ghc_lib_subpackage_empty -n ghc-boot-th -v 9.6.7
+%ghc_lib_subpackage_empty -n ghc-boot -v 9.6.7
 %ghc_lib_subpackage_empty -n ghc-compact -v 0.1.0.0
-%ghc_lib_subpackage_empty -n ghc-heap -v 9.6.6
-%ghc_lib_subpackage_empty -n ghci -v 9.6.6
+%ghc_lib_subpackage_empty -n ghc-heap -v 9.6.7
+%ghc_lib_subpackage_empty -n ghci -v 9.6.7
 %ghc_lib_subpackage_empty -n ghc-prim -v 0.10.0
 %ghc_lib_subpackage_empty -n haskeline -v 0.8.2.1
 %ghc_lib_subpackage_empty -n hpc -v 0.6.2.0
 %ghc_lib_subpackage_empty -n integer-gmp -v 1.1
-%ghc_lib_subpackage_empty -n libiserv -v 9.6.6
+%ghc_lib_subpackage_empty -n libiserv -v 9.6.7
 %ghc_lib_subpackage_empty -n mtl -v 2.3.1
 %ghc_lib_subpackage_empty -n parsec -v 3.1.16.1
 %ghc_lib_subpackage_empty -n pretty -v 1.1.3.6
@@ -110,7 +112,7 @@ This is a meta-package for all the development library packages in GHC
 %ghc_lib_subpackage_empty -n time -v 1.12.2
 %ghc_lib_subpackage_empty -n transformers -v 0.6.1.0
 %ghc_lib_subpackage_empty -n ucd2haskell -v 0.3.0
-%ghc_lib_subpackage_empty -n unix -v 2.8.4.0
+%ghc_lib_subpackage_empty -n unix -v 2.8.6.0
 %ghc_lib_subpackage_empty -n xhtml -v 3000.2.2.1
 
 %files
@@ -122,8 +124,11 @@ This is a meta-package for all the development library packages in GHC
 %files devel
 
 %changelog
+* Mon May 12 2025 Leonid Znamenok <respublica@altlinux.org> 1:9.6.7-alt1
+- Bumped to GHC 9.6.7
+
 * Thu Apr 24 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt2
-- Rebuild with dependency on ghc-devel (Closes: #53978)
+- Rebuilt with dependency on ghc-devel (Closes: #53978)
 
 * Tue Mar 18 2025 Leonid Znamenok <respublica@altlinux.org> 9.6.6-alt1
 - Bumped to GHC 9.6.6

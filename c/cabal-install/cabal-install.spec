@@ -1,7 +1,7 @@
 Name: cabal-install
 
 Version: 3.14.2.0
-Release: alt2
+Release: alt3
 License: BSD-3-Clause
 
 Group: Development/Haskell
@@ -50,6 +50,9 @@ install -pm 644 -D -t %buildroot/%_datadir/bash-completion/completions \
 %_datadir/bash-completion/completions/cabal
 
 %changelog
+* Mon May 12 2025 Leonid Znamenok <respublica@altlinux.org> 3.14.2.0-alt3
+- Rebuild with GHC 9.6.7
+
 * Wed Apr 23 2025 Leonid Znamenok <respublica@altlinux.org> 3.14.2.0-alt2
 - Rebuild with -no-fdlocking flag for lukko
   + See: (https://github.com/haskellari/lukko/issues/15)
