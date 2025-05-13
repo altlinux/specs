@@ -1,7 +1,7 @@
 %define plugin hyprsplit
 
 Name: hyprland-plugin-%plugin
-Version: 0.48.1
+Version: 0.49.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -12,6 +12,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/shezdy/hyprsplit
 
 Source: %name-%version.tar
+
+Patch0: do-not-check-the-hash.patch
 
 ExcludeArch: %ix86
 
@@ -34,6 +36,7 @@ BuildRequires: pkgconfig(libglvnd)
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %make_build all 
@@ -47,6 +50,9 @@ install %plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Tue May 13 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.49.0-alt1
+- new version 0.49.0 (with rpmrb script)
+
 * Tue Apr 01 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.1-alt1
 - new version 0.48.1 (with rpmrb script)
 

@@ -1,6 +1,6 @@
 Name: hyprland-qtutils
-Version: 0.1.3
-Release: alt2
+Version: 0.1.4
+Release: alt1
 License: BSD-3-Clause
 
 Summary: Hyprland QT/qml utility apps
@@ -51,6 +51,9 @@ Qt/qml utilities that might be used by various hypr* apps.
 %_bindir/hyprland-donate-screen
 
 %changelog
+* Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.4-alt1
+- new version 0.1.4 (with rpmrb script)
+
 * Thu Jan 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt2
 - drop manual dependencies
 

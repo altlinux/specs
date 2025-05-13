@@ -1,5 +1,5 @@
 Name: hyprland-preview-share-picker
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 License: MIT
 
@@ -49,5 +49,8 @@ install -vD %SOURCE3 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
+- new version 0.2.1 (with rpmrb script)
+
 * Sat Mar 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
 - Initial build

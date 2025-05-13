@@ -1,5 +1,5 @@
 Name: hyprpaper
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 License: BSD-3-Clause
 
@@ -56,6 +56,9 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %_userunitdir/%name.service
 
 %changelog
+* Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.5-alt1
+- new version 0.7.5 (with rpmrb script)
+
 * Thu Jan 30 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.4-alt1
 - new version 0.7.4 (with rpmrb script)
 

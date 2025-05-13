@@ -1,7 +1,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.48.1
+Version: 0.49.0
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -68,6 +68,8 @@ BuildRequires: libtomlplusplus-devel
 BuildRequires: glaze-devel
 
 BuildRequires: pkgconfig(hwdata)
+# systemd and uwsm
+BuildRequires: pkgconfig(systemd)
 
 %description
 Hyprland is a dynamic tiling Wayland compositor based on wlroots
@@ -75,6 +77,17 @@ that doesn't sacrifice on its looks.
 
 It supports multiple layouts, fancy effects, has a very flexible IPC
 model allowing for a lot of customization, and more.
+
+%package uwsm
+Summary: Hyprland session for uwsm
+Group: Graphical desktop/Other
+ExcludeArch: %ix86
+
+Requires: %name
+Requires: uwsm
+
+%description uwsm
+%summary.
 
 %package devel
 Summary: Static library and header files for the %name
@@ -90,7 +103,9 @@ Group: Development/C++
 subst '/generateVersion\.sh/d' meson.build
 
 %build
-%meson
+%meson \
+    -Dsystemd=enabled \
+	-Duwsm=enabled
 %meson_build
 
 %install
@@ -119,6 +134,9 @@ subst '/generateVersion\.sh/d' meson.build
 %_datadir/zsh/site-functions/_hyprctl
 %_datadir/zsh/site-functions/_hyprpm
 
+%files uwsm
+%_datadir/wayland-sessions/%name-uwsm.desktop
+
 %files devel
 %_datadir/pkgconfig/%name-protocols.pc
 %_datadir/pkgconfig/%name.pc
@@ -126,6 +144,9 @@ subst '/generateVersion\.sh/d' meson.build
 %_includedir/%name
 
 %changelog
+* Sat May 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.49.0-alt1
+- new version 0.49.0 (with rpmrb script)
+
 * Sat Mar 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.48.1-alt1
 - new version 0.48.1 (with rpmrb script)
 - renderer: Simplify and fix hdr metadata setting
