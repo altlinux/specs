@@ -6,8 +6,8 @@
 %endif
 
 Name: xfsprogs
-Version: 6.12.0
-Release: alt2
+Version: 6.14.0
+Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
 License: LGPL-2.1 and GPL-2.0
@@ -150,6 +150,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Tue May 13 2025 Anton Farygin <rider@altlinux.com> 6.14.0-alt1
+- 6.12.0 -> 6.14.0
+
 * Tue Dec 10 2024 Anton Midyukov <antohami@altlinux.org> 6.12.0-alt2
 - NMU: xfs_scrub_fail.in: hide systemd-escape program in variables
 
