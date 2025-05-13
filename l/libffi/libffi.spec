@@ -2,7 +2,7 @@
 %define soname 8
 
 Name: libffi
-Version: 3.4.7
+Version: 3.4.8
 Release: alt1
 Epoch: 1
 
@@ -88,7 +88,8 @@ make -k check
 %makeinstall_std
 
 %files -n %name%soname
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files devel
 %doc README.md
@@ -102,6 +103,9 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Tue May 13 2025 Anton Farygin <rider@altlinux.com> 1:3.4.8-alt1
+- 3.4.7 -> 3.4.8
+
 * Mon Feb 24 2025 Anton Farygin <rider@altlinux.ru> 1:3.4.7-alt1
 - 3.4.6 -> 3.4.7
 
