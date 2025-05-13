@@ -1,5 +1,5 @@
 Name: apt-indicator
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: Applet for indication that newer packages are available
@@ -8,7 +8,7 @@ Group: System/Configuration/Packaging
 Url: http://apt-indicator.sourceforge.net/
 
 Requires: qt6-svg
-Requires: /usr/bin/xdg-su /usr/sbin/synaptic
+Requires: /usr/sbin/synaptic
 
 Source: %name-%version.tar
 
@@ -75,6 +75,12 @@ mkdir -p %buildroot/%_datadir/%name/pixmaps
 %_iconsdir/hicolor/*/apps/apt-indicator.*
 
 %changelog
+* Tue May 13 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.2-alt1
+- using full path to pkexec
+
+* Tue May 13 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.1-alt2
+- fix requires
+
 * Mon May 12 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.1-alt1
 - use pkexec instead of xdg-su (closes: 54157)
 - remove months from period setting (closes: 40154)
