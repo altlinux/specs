@@ -1,8 +1,8 @@
-%define TOOL_CHAIN_TAG GCC5
+%define TOOL_CHAIN_TAG GCC
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20241122
+Version: 20250221
 Release: alt1
 Summary: EFI Development Kit II Tools
 
@@ -177,6 +177,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Tue May 13 2025 Alexey Shabalin <shaba@altlinux.org> 20250221-alt1
+- edk2-stable202502
+
 * Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 20241122-alt1
 - edk2-stable202411
 
