@@ -2,7 +2,7 @@
 %def_enable gui
 
 Name: calf
-Version: 0.90.5
+Version: 0.90.7
 Release: alt1
 
 Summary: Audio plugins pack
@@ -19,7 +19,8 @@ Source: https://github.com/calf-studio-gear/calf/archive/%version/%name-%version
 Source: %name-%version.tar
 %endif
 
-BuildRequires: gcc-c++ desktop-file-utils
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ desktop-file-utils
 BuildRequires: glib2-devel libexpat-devel libfftw3-devel libfluidsynth-devel
 BuildRequires: pkgconfig(jack) liblash-devel lv2-devel
 %{?_enable_gui:BuildRequires: libcairo-devel libgtk+2-devel}
@@ -48,7 +49,6 @@ boxes.
 
 This package contains JACK wrapper for Calf plugins with gui.
 
-
 %package plugins
 Summary: Calf plugins in LV2 format
 Group: Sound
@@ -67,8 +67,7 @@ extensions.
 
 %prep
 %setup
-# CMake stuff is buggy and incomplete
-mv configure.ac.deprecated configure.ac
+sed -i 's@\/lib\/@/%_lib/@' src/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -77,20 +76,19 @@ mv configure.ac.deprecated configure.ac
 %add_optflags -msse2
 %endif
 %define _optlevel 3
-%autoreconf
-%configure \
-    --enable-static=no \
-    --with-lv2-dir=%_libdir/lv2 \
-    --enable-experimental=yes \
-%ifarch x86_64 %ix86
-    --enable-sse \
-%endif
-    LIBS="%(pkg-config --libs jack)"
+# reenable RPATHs because libraries in private subdirectory
+%cmake \
+    -DCMAKE_SKIP_RPATH:BOOL=OFF \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DWANT_EXPERIMENTAL=ON \
+    -DJACK_LIBRARIES="%(pkg-config --libs jack)"
+    %{?_disable_gui:-DWANT_GUI=OFF}
 %nil
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
 %_libdir/%name/
@@ -113,8 +111,10 @@ mv configure.ac.deprecated configure.ac
 %files plugins
 %_libdir/lv2/%name.lv2/
 
-
 %changelog
+* Tue May 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.90.7-alt1
+- 0.90.7 (ported to CMake build system)
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.90.5-alt1
 - 0.90.5
 
