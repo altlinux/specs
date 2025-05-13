@@ -46,6 +46,7 @@
 %def_enable chromaprint
 %def_enable systemd
 %def_enable snapcast
+%def_enable nlohmann_json
 # auto|avahi|bonjour|disabled
 %define zeroconf avahi
 %define mpd_user _mpd
@@ -67,7 +68,7 @@
 %define  Name MPD
 
 Name:    mpd
-Version: 0.23.16
+Version: 0.24.3
 Release: alt1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
@@ -84,11 +85,6 @@ Source4: %name.logrotate
 Source5: %name.tmpfile
 
 Patch0: %name-0.23.8-alt-fluidsynth-fix-sound-font-location.patch
-# https://github.com/MusicPlayerDaemon/MPD/pull/2181
-# should fix build with libfmt-11.1.0
-Patch1: 2181.patch
-# and some leftovers
-Patch2: mpd-0.23.16-libfmt11-fix.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-meson
@@ -133,6 +129,7 @@ BuildRequires: meson gcc-c++ zlib-devel libfmt-devel
 %{?_enable_opus:BuildRequires: libopus-devel}
 %{?_enable_pcre:BuildRequires: libpcre2-devel}
 %{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
+%{?_enable_nlohmann_json:BuildRequires: nlohmann-json-devel}
 %{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink}
 %if %zeroconf == avahi
 BuildRequires: libavahi-glib-devel libdbus-devel
@@ -217,6 +214,7 @@ This package contains %Name documentation.
 	%{subst_enable_meson_feature chromaprint chromaprint} \
 	%{subst_enable_meson_feature systemd systemd} \
 	%{subst_enable_meson_bool snapcast snapcast} \
+	%{subst_enable_meson_feature nlohmann_json nlohmann_json} \
 %if_enabled systemd
 	-Dsystemd_system_unit_dir=%_unitdir \
 	-Dsystemd_user_unit_dir=%_userunitdir \
@@ -281,6 +279,10 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 0.24.3-alt1
+- 0.24.3.
+- features: enable nlohmann-json.
+
 * Mon Jan 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.23.16-alt1
 - 0.23.16.
 - fix build with libfmt-11.1.0 (upstream PR#2181).
