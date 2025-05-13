@@ -6,7 +6,7 @@
 %def_disable static
 
 Name: mbedtls
-Version: 3.6.3
+Version: 3.6.3.1
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -155,6 +155,9 @@ rm -rf %buildroot%_bindir
 %_libexecdir/%name/*
 
 %changelog
+* Tue May 13 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.3.1-alt1
+- New version 3.6.3.1.
+
 * Mon Mar 24 2025 Nazarov Denis <nenderus@altlinux.org> 3.6.3-alt1
 - New version 3.6.3.
 - Security fixes:
