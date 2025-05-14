@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed May 14 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1
+- components: add mediawiki, moodle and education-robotics
+
 * Wed May 14 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
 - components: add fonts-ttf-ms
 - components/yandex: fix name
