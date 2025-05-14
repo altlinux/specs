@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.11
+Version: 0.1.12
 Release: alt1
 
 Summary: Logs and progress bars manager for Python
@@ -50,6 +50,9 @@ sed -i 's/license = "MIT"/license = {file = "LICENSE"}/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 12 2025 Alexander Kovalev <alexvk@altlinux.org> 0.1.12-alt1
+- New version 0.1.12.
+
 * Sat Apr 05 2025 Alexander Kovalev <alexvk@altlinux.org> 0.1.11-alt1
 - New version 0.1.11.
 
