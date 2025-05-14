@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed May 14 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.4-alt1
+- editions: add gnome-boxes to server (main section)
+
 * Wed May 14 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.3-alt1
 - components: add mediawiki, moodle and education-robotics
 
