@@ -4,7 +4,7 @@
 
 Name:           ninja-build
 Version:        1.12.2
-Release:        alt1
+Release:        alt2
 Epoch:          1
 
 Summary:        A small build system with a focus on speed
@@ -60,9 +60,12 @@ A set of RPM macros for packaging applications using %name.
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-#CFLAGS="%optflags"
-#export CFLAGS
-./configure.py --bootstrap --verbose --debug
+# see %%configure definition from rpmbuild
+CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
+CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
+FFLAGS="${FFLAGS:-%optflags}"; export FFLAGS;
+
+./configure.py --bootstrap --verbose
 %if_with docs
 ./ninja -v manual
 %endif
@@ -112,6 +115,11 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Wed May 14 2025 Ivan A. Melnikov <iv@altlinux.org> 1:1.12.2-alt2
+- Make ninja-build up to 50 times faster:
+  - respect %optflags;
+  - employ non-debug build.
+
 * Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.12.2-alt1
 - New version.
 
