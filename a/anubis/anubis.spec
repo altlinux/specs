@@ -2,7 +2,7 @@
 %define import_path github.com/TecharoHQ/anubis.git
 
 Name: anubis
-Version: 1.16.0
+Version: 1.18.0
 Release: alt1
 
 Group: Networking/WWW
@@ -61,6 +61,8 @@ mkdir -p %buildroot{%_sysconfdir,%_localstatedir}/%name
 install -p -m644 run/default.env %buildroot%_sysconfdir/%name/default.env
 install -pD -m644 run/anubis@.service %buildroot%_unitdir/anubis@.service
 
+rm -f data/embed.go
+
 %post
 %post_systemd %name@*.service
 
@@ -70,17 +72,19 @@ install -pD -m644 run/anubis@.service %buildroot%_unitdir/anubis@.service
 %files
 %_bindir/*
 %doc LICENSE README.md
-%doc docs/docs/admin/policies.md
 %doc docs/docs/CHANGELOG.md
-%doc docs/docs/admin/policies.md
+%doc docs/docs/admin/policies.mdx
 %doc docs/docs/admin/native-install.mdx
-%doc data/botPolicies.json
+%doc data
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/default.env
 %_unitdir/anubis@.service
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Wed May 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt1
+- New version 1.18.0.
+
 * Mon Apr 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
 - Initial build in Sisyphus
 
