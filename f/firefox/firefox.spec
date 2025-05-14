@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 138.0.1
+Version: 138.0.3
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -21,6 +21,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
+VCS: https://github.com/mozilla-firefox/firefox
 # Hang up on build browser/components/about
 ExcludeArch: ppc64le
 
@@ -385,6 +386,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed May 14 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0.3-alt1
+- New version (138.0.3).
+- Migrate to new git repository.
+- Add VCS tag.
+
 * Sun May 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0.1-alt1
 - New version (138.0.1).
 - Disable sponsored shortcuts on the New Tab page.
