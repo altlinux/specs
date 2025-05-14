@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed May 14 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
+- components: add fonts-ttf-ms
+- components/yandex: fix name
+
 * Tue May 06 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.1-alt1
 - components: replace alterator-legacy-vsftpd to
   alterator-legacy-services category
