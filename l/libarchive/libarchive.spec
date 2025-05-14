@@ -4,8 +4,8 @@
 %define libarchive libarchive%sover
 
 Name: libarchive
-Version: 3.7.5
-Release: alt2
+Version: 3.7.9
+Release: alt1
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -125,6 +125,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 14 2025 Alexander Danilov <admsasha@altlinux.org> 3.7.9-alt1
+- 3.7.5 -> 3.7.9 (Fixes: CVE-2025-1632, CVE-2024-48615)
+
 * Tue Sep 24 2024 Sergey V Turchin <zerg@altlinux.org> 3.7.5-alt2
 - relax autoconf requires
 
