@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-kopidel
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Creating a bootable iso that copies the file system
@@ -69,6 +69,12 @@ it on other machines, then you have found what you were looking for!
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Wed May 14 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.3-alt1
+- Add a working directory check to the CLI.
+- Fix create_disk_partition_info for BTRFS only subvolume setup.
+- Stop using stdbuf to handle steps stdout.
+- Add support for translating the menuentry in grub.
+
 * Thu Apr 24 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.2-alt1
 - Fix GUI arguments pass to steps executed via stdbuf.
 
