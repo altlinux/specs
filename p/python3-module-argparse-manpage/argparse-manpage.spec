@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 4.6
-Release: alt1
+Release: alt2
 Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
 Group: Development/Python3
@@ -72,6 +72,9 @@ mv %buildroot%_bindir/argparse-manpage{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 14 2025 Stanislav Levin <slev@altlinux.org> 4.6-alt2
+- fixed FTBFS (setuptools 78.0.0).
+
 * Thu Jun 06 2024 Stanislav Levin <slev@altlinux.org> 4.6-alt1
 - 4.5 -> 4.6.
 

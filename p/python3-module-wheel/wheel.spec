@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.45.1
-Release: alt2
+Release: alt3
 Summary: A built-package format for Python3
 License: MIT
 Group: Development/Python3
@@ -79,7 +79,12 @@ mkdir -p "%buildroot%system_wheels_path"
 install -m0644 -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-%pyproject_run_pytest -ra
+# https://github.com/pypa/wheel/issues/658
+%pyproject_run_pytest -ra \
+    --deselect='tests/test_bdist_wheel.py::test_licenses_default' \
+    --deselect='tests/test_bdist_wheel.py::test_licenses_deprecated' \
+    --deselect='tests/test_bdist_wheel.py::test_licenses_override' \
+
 
 %files
 %doc *.txt
@@ -91,6 +96,9 @@ install -m0644 -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Wed May 14 2025 Stanislav Levin <slev@altlinux.org> 0.45.1-alt3
+- fixed FTBFS (setuptools 77.0.0).
+
 * Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 0.45.1-alt2
 - fixed FTBFS (setuptools 75.8.1).
 

@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 76.0.0
+Version: 80.4.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -162,6 +162,8 @@ export VIRTUALENV_SYSTEM_SITE_PACKAGES=1
 # to make pip install built wheel of setuptools and ignore the globally
 # installed one of the same version (see setuptools/tests/fixtures.py::venv)
 export PIP_IGNORE_INSTALLED=1
+# required for `setup.py develop` which uses pip internally since setuptools 80
+export PIP_NO_BUILD_ISOLATION=NO
 %endif
 %pyproject_run_pytest -vra
 
@@ -187,6 +189,9 @@ export PIP_IGNORE_INSTALLED=1
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Tue May 13 2025 Stanislav Levin <slev@altlinux.org> 1:80.4.0-alt1
+- 76.0.0 -> 80.4.0.
+
 * Thu Mar 13 2025 Stanislav Levin <slev@altlinux.org> 1:76.0.0-alt1
 - 75.8.0 -> 76.0.0.
 
