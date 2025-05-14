@@ -5,7 +5,7 @@
 
 Name:          ruby-gnome2
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 License:       LGPL-2.1+
 Group:         Development/Ruby
@@ -15,67 +15,68 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: libgtk+2-devel
-BuildRequires: libgtk+3-devel
-BuildRequires: libpixman-devel
-BuildRequires: libexpat-devel
-BuildRequires: libharfbuzz-devel
-BuildRequires: libdrm-devel
-BuildRequires: libpcre-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libXxf86vm-devel
-BuildRequires: libvte3-devel
-BuildRequires: libvte-devel
-BuildRequires: libvlc-devel
-BuildRequires: libuuid-devel
-BuildRequires: libgtksourceview-devel
-BuildRequires: libfribidi-devel
-BuildRequires: libtiff-devel
-BuildRequires: libmount-devel
-BuildRequires: libblkid-devel
-BuildRequires: libat-spi2-core-devel
-BuildRequires: libepoxy-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXi-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libpng-devel
-BuildRequires: libxml2-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel
-BuildRequires: wayland-protocols
-BuildRequires: libxkbcommon-devel
-BuildRequires: gstreamer1.0-devel
-BuildRequires: gobject-introspection-devel
-BuildRequires: at-spi2-atk-devel
-BuildRequires: libselinux-devel
-BuildRequires: libXtst-devel
-BuildRequires: libthai-devel
-BuildRequires: libdatrie-devel
-BuildRequires: bzlib-devel
-BuildRequires: glib2-devel
-BuildRequires: libgio-devel
-BuildRequires: libpango-devel
-BuildRequires: libjpeg-devel
-BuildRequires: gst-plugins-devel
 BuildRequires: gcc-c++
-BuildRequires: libbrotli-devel
-BuildRequires: libcairo-devel
-BuildRequires: glib2-devel
-BuildRequires: xorg-glproto-devel
-BuildRequires: xorg-dri2proto-devel
-BuildRequires: libXau-devel
-BuildRequires: libXext-devel
-BuildRequires: libffi-devel
-BuildRequires: libossp-uuid-dce-devel
-BuildRequires: libgegl-devel
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(vte)
+BuildRequires: pkgconfig(libvlc)
+BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(fribidi)
+BuildRequires: pkgconfig(libtiff-4)
+BuildRequires: pkgconfig(mount)
+BuildRequires: pkgconfig(blkid)
+BuildRequires: pkgconfig(epoxy)
+BuildRequires: pkgconfig(xcb-xinerama)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xcb-randr)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(wayland-cursor)
+BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(libselinux)
+BuildRequires: pkgconfig(xtst)
+BuildRequires: pkgconfig(libthai)
+BuildRequires: pkgconfig(datrie-0.2)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libbrotlicommon)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(glproto)
+BuildRequires: pkgconfig(dri2proto)
+BuildRequires: pkgconfig(xau)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(ossp-uuid)
+BuildRequires: pkgconfig(gegl-0.4)
+BuildRequires: pkgconfig(atk-bridge-2.0)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(gtksourceview-2.0)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(expat)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(xshmfence)
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(libsystemd)
+BuildRequires: pkgconfig(libwebp)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(liblzma)
+BuildRequires: pkgconfig(libdeflate)
 BuildRequires: gem(pkg-config) >= 1.3.5
 BuildRequires: gem(native-package-installer) >= 1.0.3
 %if_enabled check
@@ -114,7 +115,7 @@ This is a set of bindings for the GNOME 2.x and 3.x libraries to use from Ruby
 
 %package       -n gem-atk
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -129,7 +130,7 @@ GObject-Introspection.
 %if_enabled    doc
 %package       -n gem-atk-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета atk
 Group:         Development/Documentation
@@ -151,7 +152,7 @@ GObject-Introspection.
 %if_enabled    devel
 %package       -n gem-atk-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета atk
 Group:         Development/Ruby
@@ -173,7 +174,7 @@ GObject-Introspection.
 
 %package       -n gem-gsf
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -187,7 +188,7 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 %if_enabled    doc
 %package       -n gem-gsf-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gsf
 Group:         Development/Documentation
@@ -208,7 +209,7 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 %if_enabled    devel
 %package       -n gem-gsf-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gsf
 Group:         Development/Ruby
@@ -229,7 +230,7 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 
 %package       -n gem-gdk3
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -245,7 +246,7 @@ Ruby/GDK3 is a Ruby binding of GDK 3.
 %if_enabled    doc
 %package       -n gem-gdk3-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gdk3
 Group:         Development/Documentation
@@ -266,7 +267,7 @@ Ruby/GDK3 is a Ruby binding of GDK 3.
 %if_enabled    devel
 %package       -n gem-gdk3-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gdk3
 Group:         Development/Ruby
@@ -287,7 +288,7 @@ Ruby/GDK3 is a Ruby binding of GDK 3.
 
 %package       -n gem-gdk4
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -303,7 +304,7 @@ Ruby/GDK4 is a Ruby binding of GDK 4.
 %if_enabled    doc
 %package       -n gem-gdk4-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gdk4
 Group:         Development/Documentation
@@ -324,7 +325,7 @@ Ruby/GDK4 is a Ruby binding of GDK 4.
 %if_enabled    devel
 %package       -n gem-gdk4-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gdk4
 Group:         Development/Ruby
@@ -345,7 +346,7 @@ Ruby/GDK4 is a Ruby binding of GDK 4.
 
 %package       -n gem-gegl
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -359,7 +360,7 @@ Ruby/GEGL is a Ruby binding of GEGL.
 %if_enabled    doc
 %package       -n gem-gegl-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gegl
 Group:         Development/Documentation
@@ -380,7 +381,7 @@ Ruby/GEGL is a Ruby binding of GEGL.
 %if_enabled    devel
 %package       -n gem-gegl-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gegl
 Group:         Development/Ruby
@@ -401,7 +402,7 @@ Ruby/GEGL is a Ruby binding of GEGL.
 
 %package       -n gem-gio2
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -416,7 +417,7 @@ Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x.
 %if_enabled    doc
 %package       -n gem-gio2-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gio2
 Group:         Development/Documentation
@@ -437,7 +438,7 @@ Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x.
 %if_enabled    devel
 %package       -n gem-gio2-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gio2
 Group:         Development/Ruby
@@ -458,7 +459,7 @@ Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x.
 
 %package       -n gem-gtk3
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -473,7 +474,7 @@ Ruby/GTK3 is a Ruby binding of GTK+ 3.
 %if_enabled    doc
 %package       -n gem-gtk3-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtk3
 Group:         Development/Documentation
@@ -494,7 +495,7 @@ Ruby/GTK3 is a Ruby binding of GTK+ 3.
 %if_enabled    devel
 %package       -n gem-gtk3-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtk3
 Group:         Development/Ruby
@@ -515,7 +516,7 @@ Ruby/GTK3 is a Ruby binding of GTK+ 3.
 
 %package       -n gem-gtk4
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -530,7 +531,7 @@ Ruby/GTK4 is a Ruby binding of GTK+ 4.
 %if_enabled    doc
 %package       -n gem-gtk4-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtk4
 Group:         Development/Documentation
@@ -551,7 +552,7 @@ Ruby/GTK4 is a Ruby binding of GTK+ 4.
 %if_enabled    devel
 %package       -n gem-gtk4-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtk4
 Group:         Development/Ruby
@@ -572,7 +573,7 @@ Ruby/GTK4 is a Ruby binding of GTK+ 4.
 
 %package       -n gem-gvlc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -586,7 +587,7 @@ Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK.
 %if_enabled    doc
 %package       -n gem-gvlc-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gvlc
 Group:         Development/Documentation
@@ -607,7 +608,7 @@ Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK.
 %if_enabled    devel
 %package       -n gem-gvlc-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gvlc
 Group:         Development/Ruby
@@ -628,7 +629,7 @@ Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK.
 
 %package       -n gem-vte3
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -642,7 +643,7 @@ Ruby/VTE3 is a Ruby binding of VTE for use with GTK3.
 %if_enabled    doc
 %package       -n gem-vte3-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета vte3
 Group:         Development/Documentation
@@ -663,7 +664,7 @@ Ruby/VTE3 is a Ruby binding of VTE for use with GTK3.
 %if_enabled    devel
 %package       -n gem-vte3-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета vte3
 Group:         Development/Ruby
@@ -684,7 +685,7 @@ Ruby/VTE3 is a Ruby binding of VTE for use with GTK3.
 
 %package       -n gem-vte4
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -698,7 +699,7 @@ Ruby/VTE4 is a Ruby binding of VTE for GTK 4
 %if_enabled    doc
 %package       -n gem-vte4-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета vte4
 Group:         Development/Documentation
@@ -719,7 +720,7 @@ Ruby/VTE4 is a Ruby binding of VTE for GTK 4
 %if_enabled    devel
 %package       -n gem-vte4-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета vte4
 Group:         Development/Ruby
@@ -739,7 +740,7 @@ Ruby/VTE4 is a Ruby binding of VTE for GTK 4
 
 %package       -n gem-glib2
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -759,7 +760,7 @@ such as GTK+.
 %if_enabled    doc
 %package       -n gem-glib2-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета glib2
 Group:         Development/Documentation
@@ -785,7 +786,7 @@ such as GTK+.
 %if_enabled    devel
 %package       -n gem-glib2-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета glib2
 Group:         Development/Ruby
@@ -810,7 +811,7 @@ such as GTK+.
 
 %package       -n gem-wnck3
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -824,7 +825,7 @@ Executable file for wnck3 gem.
 %if_enabled    doc
 %package       -n gem-wnck3-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета wnck3
 Group:         Development/Documentation
@@ -845,7 +846,7 @@ Executable file for wnck3 gem.
 %if_enabled    devel
 %package       -n gem-wnck3-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета wnck3
 Group:         Development/Ruby
@@ -866,7 +867,7 @@ Executable file for wnck3 gem.
 
 %package       -n gem-pango
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -881,7 +882,7 @@ Ruby/Pango is a Ruby binding of pango based on GObject-Introspection.
 %if_enabled    doc
 %package       -n gem-pango-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pango
 Group:         Development/Documentation
@@ -902,7 +903,7 @@ Ruby/Pango is a Ruby binding of pango based on GObject-Introspection.
 %if_enabled    devel
 %package       -n gem-pango-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pango
 Group:         Development/Ruby
@@ -923,7 +924,7 @@ Ruby/Pango is a Ruby binding of pango based on GObject-Introspection.
 
 %package       -n gem-rsvg2
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -938,7 +939,7 @@ Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection.
 %if_enabled    doc
 %package       -n gem-rsvg2-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rsvg2
 Group:         Development/Documentation
@@ -959,7 +960,7 @@ Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection.
 %if_enabled    devel
 %package       -n gem-rsvg2-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rsvg2
 Group:         Development/Ruby
@@ -980,7 +981,7 @@ Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection.
 
 %package       -n gem-goffice
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -995,7 +996,7 @@ Ruby/GOffice is a Ruby binding of GOffice.
 %if_enabled    doc
 %package       -n gem-goffice-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета goffice
 Group:         Development/Documentation
@@ -1016,7 +1017,7 @@ Ruby/GOffice is a Ruby binding of GOffice.
 %if_enabled    devel
 %package       -n gem-goffice-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета goffice
 Group:         Development/Ruby
@@ -1037,7 +1038,7 @@ Ruby/GOffice is a Ruby binding of GOffice.
 
 %package       -n gem-poppler
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1052,7 +1053,7 @@ Ruby/Poppler is a Ruby binding of poppler-glib.
 %if_enabled    doc
 %package       -n gem-poppler-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета poppler
 Group:         Development/Documentation
@@ -1073,7 +1074,7 @@ Ruby/Poppler is a Ruby binding of poppler-glib.
 %if_enabled    devel
 %package       -n gem-poppler-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета poppler
 Group:         Development/Ruby
@@ -1094,7 +1095,7 @@ Ruby/Poppler is a Ruby binding of poppler-glib.
 
 %package       -n gem-clutter
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1110,7 +1111,7 @@ Ruby/Clutter is a Ruby binding of Clutter.
 %if_enabled    doc
 %package       -n gem-clutter-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter
 Group:         Development/Documentation
@@ -1131,7 +1132,7 @@ Ruby/Clutter is a Ruby binding of Clutter.
 %if_enabled    devel
 %package       -n gem-clutter-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter
 Group:         Development/Ruby
@@ -1152,7 +1153,7 @@ Ruby/Clutter is a Ruby binding of Clutter.
 
 %package       -n gem-adwaita
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1166,7 +1167,7 @@ Ruby/Adwaita is a Ruby binding of Adwaita.
 %if_enabled    doc
 %package       -n gem-adwaita-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета adwaita
 Group:         Development/Documentation
@@ -1187,7 +1188,7 @@ Ruby/Adwaita is a Ruby binding of Adwaita.
 %if_enabled    devel
 %package       -n gem-adwaita-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета adwaita
 Group:         Development/Ruby
@@ -1207,7 +1208,7 @@ Ruby/Adwaita is a Ruby binding of Adwaita.
 
 %package       -n gem-gnumeric
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1221,7 +1222,7 @@ Ruby/Gnumeric is a Ruby binding of Gnumeric.
 %if_enabled    doc
 %package       -n gem-gnumeric-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gnumeric
 Group:         Development/Documentation
@@ -1242,7 +1243,7 @@ Ruby/Gnumeric is a Ruby binding of Gnumeric.
 %if_enabled    devel
 %package       -n gem-gnumeric-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gnumeric
 Group:         Development/Ruby
@@ -1263,7 +1264,7 @@ Ruby/Gnumeric is a Ruby binding of Gnumeric.
 
 %package       -n gem-libhandy
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1277,7 +1278,7 @@ Ruby/Handy is a Ruby binding of Handy.
 %if_enabled    doc
 %package       -n gem-libhandy-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libhandy
 Group:         Development/Documentation
@@ -1298,7 +1299,7 @@ Ruby/Handy is a Ruby binding of Handy.
 %if_enabled    devel
 %package       -n gem-libhandy-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libhandy
 Group:         Development/Ruby
@@ -1318,7 +1319,7 @@ Ruby/Handy is a Ruby binding of Handy.
 
 %package       -n gem-gstreamer
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1332,7 +1333,7 @@ Ruby/GStreamer is a Ruby binding for GStreamer.
 %if_enabled    doc
 %package       -n gem-gstreamer-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gstreamer
 Group:         Development/Documentation
@@ -1353,7 +1354,7 @@ Ruby/GStreamer is a Ruby binding for GStreamer.
 %if_enabled    devel
 %package       -n gem-gstreamer-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gstreamer
 Group:         Development/Ruby
@@ -1374,7 +1375,7 @@ Ruby/GStreamer is a Ruby binding for GStreamer.
 
 %package       -n gem-libsecret
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1388,7 +1389,7 @@ Executable file for libsecret gem.
 %if_enabled    doc
 %package       -n gem-libsecret-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libsecret
 Group:         Development/Documentation
@@ -1409,7 +1410,7 @@ Executable file for libsecret gem.
 %if_enabled    devel
 %package       -n gem-libsecret-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libsecret
 Group:         Development/Ruby
@@ -1430,7 +1431,7 @@ Executable file for libsecret gem.
 
 %package       -n gem-webkit-gtk
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1444,7 +1445,7 @@ Ruby/WebKitGTK is a Ruby binding of WebKitGTK+.
 %if_enabled    doc
 %package       -n gem-webkit-gtk-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета webkit-gtk
 Group:         Development/Documentation
@@ -1465,7 +1466,7 @@ Ruby/WebKitGTK is a Ruby binding of WebKitGTK+.
 %if_enabled    devel
 %package       -n gem-webkit-gtk-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета webkit-gtk
 Group:         Development/Ruby
@@ -1486,7 +1487,7 @@ Ruby/WebKitGTK is a Ruby binding of WebKitGTK+.
 
 %package       -n gem-webkit2-gtk
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1500,7 +1501,7 @@ Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+.
 %if_enabled    doc
 %package       -n gem-webkit2-gtk-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета webkit2-gtk
 Group:         Development/Documentation
@@ -1521,7 +1522,7 @@ Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+.
 %if_enabled    devel
 %package       -n gem-webkit2-gtk-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета webkit2-gtk
 Group:         Development/Ruby
@@ -1543,7 +1544,7 @@ Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+.
 
 %package       -n gem-gdk-pixbuf2
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1557,7 +1558,7 @@ Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x.
 %if_enabled    doc
 %package       -n gem-gdk-pixbuf2-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gdk_pixbuf2
 Group:         Development/Documentation
@@ -1578,7 +1579,7 @@ Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x.
 %if_enabled    devel
 %package       -n gem-gdk-pixbuf2-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gdk_pixbuf2
 Group:         Development/Ruby
@@ -1599,7 +1600,7 @@ Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x.
 
 %package       -n gem-clutter-gtk
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1615,7 +1616,7 @@ Ruby/ClutterGTK is a Ruby binding of Clutter-GTK.
 %if_enabled    doc
 %package       -n gem-clutter-gtk-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter-gtk
 Group:         Development/Documentation
@@ -1636,7 +1637,7 @@ Ruby/ClutterGTK is a Ruby binding of Clutter-GTK.
 %if_enabled    devel
 %package       -n gem-clutter-gtk-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter-gtk
 Group:         Development/Ruby
@@ -1657,7 +1658,7 @@ Ruby/ClutterGTK is a Ruby binding of Clutter-GTK.
 
 %package       -n gem-clutter-gdk
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1673,7 +1674,7 @@ Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter.
 %if_enabled    doc
 %package       -n gem-clutter-gdk-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter-gdk
 Group:         Development/Documentation
@@ -1694,7 +1695,7 @@ Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter.
 %if_enabled    devel
 %package       -n gem-clutter-gdk-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter-gdk
 Group:         Development/Ruby
@@ -1715,7 +1716,7 @@ Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter.
 
 %package       -n gem-cairo-gobject
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1730,7 +1731,7 @@ Ruby/CairoGObject is a Ruby binding of cairo-gobject.
 %if_enabled    doc
 %package       -n gem-cairo-gobject-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cairo-gobject
 Group:         Development/Documentation
@@ -1751,7 +1752,7 @@ Ruby/CairoGObject is a Ruby binding of cairo-gobject.
 %if_enabled    devel
 %package       -n gem-cairo-gobject-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cairo-gobject
 Group:         Development/Ruby
@@ -1772,7 +1773,7 @@ Ruby/CairoGObject is a Ruby binding of cairo-gobject.
 
 %package       -n gem-gtksourceview5
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1786,7 +1787,7 @@ Ruby/GtkSourceView5 is a Ruby binding of gtksourceview-5.x.
 %if_enabled    doc
 %package       -n gem-gtksourceview5-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtksourceview5
 Group:         Development/Documentation
@@ -1807,7 +1808,7 @@ Ruby/GtkSourceView5 is a Ruby binding of gtksourceview-5.x.
 %if_enabled    devel
 %package       -n gem-gtksourceview5-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtksourceview5
 Group:         Development/Ruby
@@ -1827,7 +1828,7 @@ Ruby/GtkSourceView5 is a Ruby binding of gtksourceview-5.x.
 
 %package       -n gem-gtksourceview4
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1841,7 +1842,7 @@ Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x.
 %if_enabled    doc
 %package       -n gem-gtksourceview4-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtksourceview4
 Group:         Development/Documentation
@@ -1862,7 +1863,7 @@ Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x.
 %if_enabled    devel
 %package       -n gem-gtksourceview4-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtksourceview4
 Group:         Development/Ruby
@@ -1883,7 +1884,7 @@ Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x.
 
 %package       -n gem-gtksourceview3
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1897,7 +1898,7 @@ Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x.
 %if_enabled    doc
 %package       -n gem-gtksourceview3-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtksourceview3
 Group:         Development/Documentation
@@ -1918,7 +1919,7 @@ Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x.
 %if_enabled    devel
 %package       -n gem-gtksourceview3-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtksourceview3
 Group:         Development/Ruby
@@ -1939,7 +1940,7 @@ Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x.
 
 %package       -n gem-clutter-gstreamer
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -1955,7 +1956,7 @@ Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer.
 %if_enabled    doc
 %package       -n gem-clutter-gstreamer-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter-gstreamer
 Group:         Development/Documentation
@@ -1976,7 +1977,7 @@ Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer.
 %if_enabled    devel
 %package       -n gem-clutter-gstreamer-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter-gstreamer
 Group:         Development/Ruby
@@ -1997,7 +1998,7 @@ Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer.
 
 %package       -n gem-gobject-introspection
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME
 Group:         Development/Ruby
 
@@ -2011,7 +2012,7 @@ Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect.
 %if_enabled    doc
 %package       -n gem-gobject-introspection-doc
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gobject-introspection
 Group:         Development/Documentation
@@ -2032,7 +2033,7 @@ Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect.
 %if_enabled    devel
 %package       -n gem-gobject-introspection-devel
 Version:       4.2.5
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gobject-introspection
 Group:         Development/Ruby
@@ -2054,72 +2055,85 @@ Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect.
 %if_enabled    devel
 %package       -n ruby-gnome2-devel
 Version:       4.2.0
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby bindings for GNOME development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-gnome2
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      libgtk+2-devel
-Requires:      libgtk+3-devel
-Requires:      libpixman-devel
-Requires:      libexpat-devel
-Requires:      libharfbuzz-devel
-Requires:      libdrm-devel
-Requires:      libpcre-devel
-Requires:      libXdmcp-devel
-Requires:      libXdamage-devel
-Requires:      libXxf86vm-devel
-Requires:      libvte3-devel
-Requires:      libvte-devel
-Requires:      libvlc-devel
-Requires:      libuuid-devel
-Requires:      libgtksourceview-devel
-Requires:      libfribidi-devel
-Requires:      libtiff-devel
-Requires:      libmount-devel
-Requires:      libblkid-devel
-Requires:      libat-spi2-core-devel
-Requires:      libepoxy-devel
-Requires:      libXinerama-devel
-Requires:      libXi-devel
-Requires:      libXrandr-devel
-Requires:      libXcursor-devel
-Requires:      libXcomposite-devel
-Requires:      libpng-devel
-Requires:      libxml2-devel
-Requires:      libwayland-cursor-devel
-Requires:      libwayland-egl-devel
-Requires:      wayland-protocols
-Requires:      libxkbcommon-devel
-Requires:      gstreamer1.0-devel
-Requires:      gobject-introspection-devel
-Requires:      at-spi2-atk-devel
-Requires:      libselinux-devel
-Requires:      libXtst-devel
-Requires:      libthai-devel
-Requires:      libdatrie-devel
-Requires:      bzlib-devel
-Requires:      glib2-devel
-Requires:      libgio-devel
-Requires:      libpango-devel
-Requires:      libjpeg-devel
-Requires:      gst-plugins-devel
-Requires:      gcc-c++
-Requires:      libbrotli-devel
-Requires:      libcairo-devel
-Requires:      xorg-glproto-devel
-Requires:      xorg-dri2proto-devel
-Requires:      libXau-devel
-Requires:      libXext-devel
-Requires:      libffi-devel
-Requires:      libossp-uuid-dce-devel
-Requires:      gem-cairo-devel
+Requires:      pkgconfig(pixman-1)
+Requires:      pkgconfig(expat)
+Requires:      pkgconfig(libdrm)
+Requires:      pkgconfig(libpcre)
+Requires:      pkgconfig(xdmcp)
+Requires:      pkgconfig(xdamage)
+Requires:      pkgconfig(xxf86vm)
+Requires:      pkgconfig(vte)
+Requires:      pkgconfig(libvlc)
+Requires:      pkgconfig(uuid)
+Requires:      pkgconfig(fribidi)
+Requires:      pkgconfig(libtiff-4)
+Requires:      pkgconfig(mount)
+Requires:      pkgconfig(blkid)
+Requires:      pkgconfig(epoxy)
+Requires:      pkgconfig(xcb-xinerama)
+Requires:      pkgconfig(xi)
+Requires:      pkgconfig(xcb-randr)
+Requires:      pkgconfig(xcursor)
+Requires:      pkgconfig(xcomposite)
+Requires:      pkgconfig(libpng)
+Requires:      pkgconfig(libxml-2.0)
+Requires:      pkgconfig(wayland-cursor)
+Requires:      pkgconfig(wayland-egl)
+Requires:      pkgconfig(wayland-client)
+Requires:      pkgconfig(xkbcommon)
+Requires:      pkgconfig(gstreamer-plugins-base-1.0)
+Requires:      pkgconfig(gobject-introspection-1.0)
+Requires:      pkgconfig(libselinux)
+Requires:      pkgconfig(xtst)
+Requires:      pkgconfig(libthai)
+Requires:      pkgconfig(datrie-0.2)
+Requires:      pkgconfig(glib-2.0)
+Requires:      pkgconfig(gio-2.0)
+Requires:      pkgconfig(pango)
+Requires:      pkgconfig(libjpeg)
+Requires:      pkgconfig(libbrotlicommon)
+Requires:      pkgconfig(cairo)
+Requires:      pkgconfig(glproto)
+Requires:      pkgconfig(dri2proto)
+Requires:      pkgconfig(xau)
+Requires:      pkgconfig(xext)
+Requires:      pkgconfig(libffi)
+Requires:      pkgconfig(ossp-uuid)
+Requires:      pkgconfig(gegl-0.4)
+Requires:      pkgconfig(atk-bridge-2.0)
+Requires:      pkgconfig(xrandr)
+Requires:      pkgconfig(xinerama)
+Requires:      pkgconfig(gtksourceview-2.0)
+Requires:      pkgconfig(gtk+-2.0)
+Requires:      pkgconfig(gtk+-3.0)
+Requires:      pkgconfig(gtk4)
 Requires:      pkgconfig(expat)
 Requires:      pkgconfig(harfbuzz)
 Requires:      pkgconfig(xshmfence)
 Requires:      pkgconfig(libpcre2-8)
 Requires:      pkgconfig(libsystemd)
+Requires:      pkgconfig(libwebp)
+Requires:      pkgconfig(libzstd)
+Requires:      pkgconfig(liblzma)
+Requires:      pkgconfig(libdeflate)
+Requires:      gem(pkg-config) >= 1.3.5
+Requires:      gem(native-package-installer) >= 1.0.3
+Requires:      gem(commonmarker) >= 0
+Requires:      gem(native-package-installer) >= 0
+Requires:      gem(test-unit) >= 0
+Requires:      gem(webrick) >= 0
+Requires:      gem(yard) >= 0
+Requires:      gem(yard-gobject-introspection) >= 0
+Requires:      gem(fiddle) >= 0
+Requires:      gem(pkg-config) >= 1.3.5
+Requires:      gem(test-unit) >= 2
+Requires:      gem(cairo) >= 1.16.2
 
 %description   -n ruby-gnome2-devel
 Ruby bindings for GNOME development package.
@@ -2739,6 +2753,9 @@ This is a set of bindings for the GNOME 2.x and 3.x libraries to use from Ruby
 
 
 %changelog
+* Mon May 12 2025 Pavel Skrylev <majioa@altlinux.org> 4.2.5-alt0.3
+- ![NBTFS] fixed devel packages for build and devel functions to pkgconfig
+
 * Tue Mar 04 2025 Pavel Skrylev <majioa@altlinux.org> 4.2.5-alt0.2
 - ! fixed disappeared dep to libsystemd.pc on build
 
