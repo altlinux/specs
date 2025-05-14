@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
 License: BSD / MIT
@@ -25,15 +25,14 @@ BuildRequires: libjpeg-devel
 BuildRequires: libcurl-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libhdf5-devel
-# For generating documentation
+# For generating documentation.
 BuildRequires: python3-module-pdoc3
 
 %pyproject_builddeps_build
 
 %if_with check
 %pyproject_builddeps_metadata
-%pyproject_builddeps_check
-BuildRequires: python3-module-cftime
+%pyproject_builddeps_metadata_extra tests
 BuildRequires: netcdf-tools
 BuildRequires: python3-module-numpy-testing
 %endif
@@ -80,23 +79,17 @@ supported, but the enum and opaque data types are not. Mixtures of
 compound and vlen data types (compound types containing vlens, and vlens
 containing compound types) are not supported.
 
-This package contains documentation for %pypi_name
+This package contains documentation for %pypi_name.
 
 %prep
 %setup
-
-%build
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
+%build
 %pyproject_build
 
-# This is necessary to avoid error: "ImportError: Error importing 'netCDF4'".
-%__python3 setup.py build_ext --inplace
-
-export PYTHONPATH="src/:$PYTHONPATH"
-chmod +x create_docs.sh
-./create_docs.sh
+%pyproject_run -- pdoc3 --html --output-dir ./docs/ netCDF4
 
 %install
 %pyproject_install
@@ -109,12 +102,15 @@ chmod +x create_docs.sh
 %doc LICENSE
 %_bindir/*
 %python3_sitelibdir/netCDF4/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %files docs
 %doc docs/netCDF4/index.html
 
 %changelog
+* Wed May 14 2025 Ivan Khanas <xeno@altlinux.org> 1.7.1-alt2
+- Fix FTBFS: change %%files with distinfo macro.
+
 * Thu Apr 10 2025 Ivan Khanas <xeno@altlinux.org> 1.7.1-alt1
 - New version.
 - Migrate to pyproject macros.

@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.11.6
-Release: alt1
+Release: alt2
 
 Summary: Auto-generate API documentation for Python 3+ projects
 License: AGPL-3.0-or-later
@@ -24,7 +24,6 @@ BuildRequires(pre): rpm-build-pyproject
 
 %if_with check
 %pyproject_builddeps_metadata
-%pyproject_builddeps_check
 %endif
 
 %description
@@ -39,6 +38,9 @@ Guaranteed 99%% correct magic out of the box!
 
 %prep
 %setup
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -48,8 +50,6 @@ cat <<EOF > MANIFEST.in
 recursive-include pdoc/templates *.mako
 EOF
 
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 %pyproject_build
 
 %install
@@ -65,5 +65,8 @@ EOF
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 14 2025 Ivan Khanas <xeno@altlinux.org> 0.11.6-alt2
+- Maintainer`s work.
+
 * Tue Apr 22 2025 Ivan Khanas <xeno@altlinux.org> 0.11.6-alt1
 - First build for ALT.

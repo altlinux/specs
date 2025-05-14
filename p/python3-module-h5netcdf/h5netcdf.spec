@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Pythonic interface to netCDF4 via h5py
 License: BSD-3-Clause
@@ -25,7 +25,6 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_check
 BuildRequires: python3-module-numpy-testing
 %endif
 
@@ -43,10 +42,10 @@ tested for compatibility with other netCDF4 interfaces.
 
 %prep
 %setup
-
-%build
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+
+%build
 
 export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %pyproject_build
@@ -63,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 14 2025 Ivan Khanas <xeno@altlinux.org> 1.6.1-alt2
+- Maintainer`s work.
+
 * Fri Apr 11 2025 Ivan Khanas <xeno@altlinux.org> 1.6.1-alt1
 - New version.
 - Migrate to pyproject macros.
