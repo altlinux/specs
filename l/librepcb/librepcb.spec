@@ -2,18 +2,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librepcb
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: A powerful, innovative and intuitive EDA suite for everyone
 Summary(ru_RU.UTF-8): Мощный, инновационный и интуитивно понятный пакет EDA для всех
 License: GPL-3.0
 Group:   Engineering
-Url:     https://librepcb.org
+URL:     https://librepcb.org
+VCS:     https://github.com/LibrePCB/LibrePCB.git
 
 # Source-url: https://download.librepcb.org/releases/%version/%name-%version-source.zip
 Source: %name-%version.tar
+Source1: %name-vendor-%version.tar
 Patch: alt-qt6-support.patch
+
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules
@@ -45,6 +48,8 @@ BuildRequires: libpolyclipping-devel
 BuildRequires: libgtest-devel
 BuildRequires: libmuparser-devel
 BuildRequires: fontobene-qt6-devel
+BuildRequires: /proc
+BuildRequires: rust-cargo
 
 %description
 LibrePCB is a free, cross-platform, easy-to-use electronic design automation
@@ -58,8 +63,33 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 студентов и профессионалов, от новичков до экспертов.
 
 %prep
-%setup
+%setup -a1
 %autopatch -p1
+
+mv %name-vendor-%version libs/librepcb/rust-core/vendor
+pushd libs/librepcb/rust-core
+mkdir -p .cargo
+cat >> .cargo/config.toml <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[install]
+root = "%buildroot%_prefix"
+
+[build]
+rustflags = ["-Copt-level=3", "-Cdebuginfo=1"]
+
+[profile.release]
+strip = false
+EOF
+popd
 
 %build
 %ifarch %e2k
@@ -93,6 +123,9 @@ LibrePCB — это бесплатный, кроссплатформенный, 
 %_datadir/mime/packages/org.%name.LibrePCB.xml
 
 %changelog
+* Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 1.3.0-alt1
+- new version (1.3.0) with rpmgs script
+
 * Sun Jan 26 2025 Michael Shigorin <mike@altlinux.org> 1.2.0-alt2
 - E2K: disable debuginfo (oversized for cpio)
 
