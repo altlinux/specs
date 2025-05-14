@@ -4,7 +4,7 @@
 
 Name: mupdf
 Version: 1.25.6
-Release: alt1
+Release: alt2
 Summary: MuPDF is a lightweight open source software framework for viewing and converting PDF, XPS, and E-book documents
 Group: Office
 Url: https://github.com/ArtifexSoftware/mupdf
@@ -27,6 +27,7 @@ BuildRequires: python3-module-clang
 BuildRequires: clang
 BuildRequires: swig
 BuildRequires: python3-dev
+BuildRequires: tesseract-devel
 
 Requires: lib%name%soname = %EVR
 
@@ -65,7 +66,7 @@ The python3 package contains low level mupdf python bindings.
 %autopatch -p1
 
 %build
-%make_build shared-release USE_SYSTEM_LIBS=yes  FZ_ENABLE_PDF=1 \
+%make_build shared-release USE_SYSTEM_LIBS=yes USE_TESSERACT=yes FZ_ENABLE_PDF=1 \
 	XCFLAGS="-I/usr/include/freetype2/ -I/usr/include/harfbuzz/ \
 	-I/usr/include/gdcm/gdcmjpeg/ -I/usr/include/gdcm/gdcmjpeg/8/ \
 	-I/usr/include/openjpeg-2.5/" \
@@ -93,6 +94,7 @@ rm -f %buildroot%_libdir/libmupdf-third.a \
 %files
 %_bindir/mupdf-gl
 %_bindir/mupdf-x11
+%_bindir/mupdf-x11-curl
 %_bindir/muraster
 %_bindir/mutool
 %_mandir/man1/*
@@ -124,6 +126,9 @@ rm -f %buildroot%_libdir/libmupdf-third.a \
 %python3_sitelibdir/mupdf/_mupdf.so
 
 %changelog
+* Mon May 12 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.25.6-alt2
+- Built with tesseract ocr.
+
 * Mon Apr 14 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.25.6-alt1
 - New version 1.25.6.
 - Build C++/Python bindings.
