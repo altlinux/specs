@@ -1,6 +1,6 @@
 Name:    icewm-regular
-Version: 1.3
-Release: alt2
+Version: 1.4
+Release: alt1
 
 Group: Graphical desktop/Icewm
 Summary: IceWM common collection
@@ -29,6 +29,7 @@ Requires: icewm-startup-mount-tray
 Requires: icewm-startup-networkmanager
 Requires: icewm-startup-notification-daemon
 Requires: icewm-startup-pnmixer
+Requires: icewm-startup-polkit-gnome
 Requires: qasmixer
 
 Requires: gqview
@@ -49,6 +50,9 @@ IceWM collection package to easy select packages during install
 %files
 
 %changelog
+* Wed May 14 2025 Dmitriy Khanzhin <jinn@altlinux.org> 1.4-alt1
+- added dependency on icewm-startup-polkit-gnome
+
 * Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
 - NMU: Remove runtime dependency on SysVinit-usermode
 
