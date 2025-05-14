@@ -6,7 +6,7 @@
 
 Name: hfsutils
 Version: 3.2.6
-Release: alt3
+Release: alt4
 
 Summary: Tools for reading and writing Macintosh HFS volumes
 License: GPLv2+
@@ -80,7 +80,6 @@ make	BINDEST=$RPM_BUILD_ROOT%_bindir \
 	INSTALL="install -p" \
 	install install_lib
 install -p -m 0755 hfsck/hfsck $RPM_BUILD_ROOT/%_bindir
-ln -sf hfsck $RPM_BUILD_ROOT/%_bindir/fsck.hfs
 
 %files
 %doc CHANGES CREDITS README TODO
@@ -101,7 +100,6 @@ ln -sf hfsck $RPM_BUILD_ROOT/%_bindir/fsck.hfs
 %_bindir/humount
 %_bindir/hvol
 %_bindir/hfsck
-%_bindir/fsck.hfs
 %_mandir/man1/hattrib.1.*
 %_mandir/man1/hcd.1.*
 %_mandir/man1/hcopy.1.*
@@ -131,6 +129,9 @@ ln -sf hfsck $RPM_BUILD_ROOT/%_bindir/fsck.hfs
 %_includedir/rsrc.h
 
 %changelog
+* Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 3.2.6-alt4
+- NMU: Do not pack /usr/bin/fsck.hfs to avoid conflict with hfsprogs
+
 * Fri Jan 31 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.2.6-alt3
 - Fix FTBFS.
 
