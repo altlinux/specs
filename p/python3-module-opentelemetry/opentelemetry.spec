@@ -4,7 +4,7 @@
 %def_with tests
 
 Name:    python3-module-%pypi_name
-Version: 1.30.0
+Version: 1.33.0
 Release: alt1
 
 Summary: OpenTelemetry Python API and SDK
@@ -69,6 +69,7 @@ OpenTelemetry Python SDK for the OpenTelemetry Project.
 %package -n python3-module-%pypi_name-semantic-conventions
 Summary: OpenTelemetry Python Semantic Conventions
 Group: Development/Python3
+%py3_provides %pypi_name.semconv._incubating.attributes
 
 %description -n python3-module-%pypi_name-semantic-conventions
 This library contains generated code for the semantic conventions defined by
@@ -237,6 +238,10 @@ done
 %doc *.md LICENSE docs/examples
 
 %changelog
+* Wed May 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.33.0-alt1
+- New version.
+- Added semconv._incubating.attributes as provides.
+
 * Fri Mar 07 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.30.0-alt1
 - New version.
 
