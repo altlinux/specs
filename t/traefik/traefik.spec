@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 3.3.3
+Version: 3.4.0
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -15,7 +15,7 @@ Vcs: https://github.com/traefik/traefik.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-ExclusiveArch:  %go_arches
+ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
 BuildRequires: rpm-build-golang golang >= 1.23.0
 %if_without prebuild_webui
@@ -89,7 +89,7 @@ cd .gopath/src/%import_path
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
-export CODENAME=saint-nectaire
+export CODENAME=chaource
 export DATE=$(date -u '+%%Y-%%m-%%d')
 export GOFLAGS="-mod=vendor"
 
@@ -103,14 +103,14 @@ popd
 mkdir -p dist
 
 go generate
-CGO_ENABLED=0 GOGC=off go build -ldflags " -w  \
-    -X github.com/traefik/traefik/v2/pkg/version.Version=$VERSION \
-    -X github.com/traefik/traefik/v2/pkg/version.Codename=$CODENAME \
-    -X github.com/traefik/traefik/v2/pkg/version.BuildDate=$DATE \
+GOGC=off go build -ldflags " -w  \
+    -X github.com/traefik/traefik/v3/pkg/version.Version=$VERSION \
+    -X github.com/traefik/traefik/v3/pkg/version.Codename=$CODENAME \
+    -X github.com/traefik/traefik/v3/pkg/version.BuildDate=$DATE \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
-    " -a -installsuffix nocgo -o dist/traefik ./cmd/traefik
+    " -o dist/traefik ./cmd/traefik
 
 %install
 install -p -D -m 0755 .gopath/src/%import_path/dist/traefik %buildroot%_bindir/%name
@@ -149,6 +149,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue May 13 2025 Alexey Shabalin <shaba@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Fri Feb 07 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.3-alt1
 - 3.3.3
 
