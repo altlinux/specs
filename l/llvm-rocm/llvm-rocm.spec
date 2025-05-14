@@ -47,7 +47,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: 6.3.2
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure with ROCm addition
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
@@ -72,6 +72,8 @@ Patch17: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.pa
 # device-libs patches
 Patch30: device-libs-cmake-alt-install-prefix.patch
 Patch31: device-libs-cmake-amdgcn-bitcode.patch
+# https://github.com/ROCm/llvm-project/commit/a18cc4c7cb51f94182b6018c7c73acde1b8ebddb
+Patch32: a18cc4c7cb51f94182b6018c7c73acde1b8ebddb.patch
 
 # comgr patches
 Patch40: comgr-rocm-alt-device-libs-path.patch
@@ -115,7 +117,7 @@ BuildRequires: mold
 Requires: llvm >= %_llvm_version
 
 # 64-bit only
-ExclusiveArch: x86_64 ppc64le aarch64
+ExclusiveArch: x86_64 aarch64
 
 %description
 LLVM is a compiler infrastructure designed for compile-time, link-time,
@@ -376,6 +378,7 @@ pushd amd/device-libs
 %patch30 -p1
 popd
 %patch31 -p2
+%patch32 -p1
 
 # comgr patches
 pushd amd/comgr
@@ -401,11 +404,6 @@ export NPROCS="%__nprocs"
 if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
 fi
-# ppc64le build consumes more than 128Gb with
-# 64 workers?
-%ifarch ppc64le
-export NPROCS=48
-%endif
 %define builddir %_cmake__builddir
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %cmake -G Ninja -S llvm \
@@ -435,11 +433,7 @@ export NPROCS=48
 	-DCLANG_PLUGIN_SUPPORT:BOOL=ON \
 	-DCLANG_FORCE_MATCHING_LIBCLANG_SOVERSION:BOOL=ON \
 	-DENABLE_LINKER_BUILD_ID:BOOL=ON \
-%ifarch ppc64le
-	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="powerpc64le-unknown-linux-gnu" \
-%else
 	-DLLVM_DEFAULT_TARGET_TRIPLE:STRING="%{_target_cpu}-unknown-linux-gnu" \
-%endif
 	\
 	%if_with clang
 	-DCMAKE_C_COMPILER=clang \
@@ -826,6 +820,10 @@ ninja -C %builddir check-all || :
 %_bindir/hipconfig*
 
 %changelog
+* Wed May 14 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.2
+- DeviceLibs: fix build with CMake 4+.
+- Remove ppc64le.
+
 * Tue Feb 11 2025 L.A. Kostis <lakostis@altlinux.ru> 6.3.2-alt0.1
 - 6.3.2.
 - Link with mold.
