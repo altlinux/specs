@@ -1,7 +1,7 @@
 Summary: Collection of tools for reading/writing CPU model specific registers
 Name: msr-tools
 Version: 1.3
-Release: alt1
+Release: alt2
 Group: System/Base
 License: GPLv2+
 ExclusiveArch: %ix86 x86_64
@@ -21,14 +21,17 @@ make CFLAGS="$RPM_OPT_FLAGS"
 %install
 install -D rdmsr %buildroot%_sbindir/rdmsr
 install -D wrmsr %buildroot%_sbindir/wrmsr
-install -D cpuid %buildroot%_sbindir/cpuid
+install -D cpuid %buildroot%_sbindir/msr-cpuid
 
 %files
 %_sbindir/rdmsr
 %_sbindir/wrmsr
-%_sbindir/cpuid
+%_sbindir/msr-cpuid
 
 %changelog
+* Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 1.3-alt2
+- NMU: rename /usr/sbin/cpuid -> /usr/sbin/msr-cpuid
+
 * Thu Oct 16 2014 Anton Farygin <rider@altlinux.ru> 1.3-alt1
 - new version
 
