@@ -3,7 +3,7 @@
 %define legacy_name acc-legacy
 
 Name: alterator-standalone
-Version: 7.5.0
+Version: 7.5.1
 Release: alt1
 
 Summary: System Management center
@@ -57,7 +57,7 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %config %_altdir/%name
 %ghost %_bindir/%alt_name
 %_bindir/acc-legacy
-%_sbindir/acc
+%_sbindir/acc-legacy-run
 %_sbindir/%name
 # The UI modules aren't currently compiled
 #%_alterator_libdir/ui/*
@@ -66,6 +66,9 @@ install -Dpm644 acc.desktop %buildroot/%_desktopdir/acc.desktop
 %_man8dir/*
 
 %changelog
+* Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 7.5.1-alt1
+- replace /usr/sbin/acc -> /usr/sbin/acc-legacy-run
+
 * Fri Mar 28 2025 Anton Midyukov <antohami@altlinux.org> 7.5.0-alt1
 - Replace consolehelper with polkit (closes: 53655)
 
