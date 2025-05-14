@@ -1,17 +1,15 @@
 Name: xiccd
-Version: 0.3.0
+Version: 0.4.1
 Release: alt1
 
 Summary: X color profile daemon
-License: %gpl3plus
+License: GPL-3.0-or-later
 Group: Graphics
 
 URL: https://github.com/agalakhov/xiccd
-# https://github.com/agalakhov/xiccd.git
+Vcs: https://github.com/agalakhov/xiccd.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libX11-devel libXrandr-devel glib2-devel libcolord-devel
 
@@ -30,6 +28,7 @@ It does the following tasks:
 %prep
 %setup
 %patch -p1
+sed -i -r 's;^(AC_INIT\(\[xiccd\],)[[:blank:]]+.+\)$;\1 %version);' configure.ac
 
 %build
 %autoreconf
@@ -43,8 +42,16 @@ It does the following tasks:
 %config(noreplace) %_sysconfdir/xdg/autostart/*.desktop
 %_bindir/%name
 %_man8dir/*
+%_defaultdocdir/%name/
 
 %changelog
+* Wed May 14 2025 Mikhail Efremov <sem@altlinux.org> 0.4.1-alt1
+- Add foreign option for automake.
+- Fixed version string.
+- Added Vcs tag.
+- Don't use rpm-build-licenses.
+- Updated to 0.4.1.
+
 * Tue Jun 18 2019 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Updated to 0.3.0.
 
