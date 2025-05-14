@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.04.0
+Version: 25.05.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -106,6 +106,7 @@ Requires: kfind filelight kcharselect spectacle
 Requires: ktimer
 Requires: kamera kdenetwork-filesharing
 Requires: kio-zeroconf sweeper
+Requires: dolphin-plugins
 %description -n kde
 %summary
 
@@ -169,7 +170,6 @@ Obsoletes: kde5-somedevel < %EVR
 Requires: kde6-runtime
 #
 Requires: kate
-Requires: dolphin-plugins
 Requires: lokalize okteta kapptemplate kde-dev-scripts kompare
 Requires: kdesdk-thumbnailers poxml umbrello
 Requires: kcachegrind
@@ -281,6 +281,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.05.0-alt1
+- add requires dolphin-plugins to default kde for mountiso plugin
+
 * Tue Apr 29 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.0-alt1
 - rename kde-runtime to kde6-runtime
 
