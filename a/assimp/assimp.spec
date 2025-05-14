@@ -6,7 +6,7 @@
 
 Name: assimp
 Version: 5.4.3
-Release: alt1
+Release: alt2
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
 # Assimp is BSD
@@ -28,6 +28,8 @@ Source1: assimp_generate_tarball.sh
 # Un-bundle libraries that are provided by the distribution.
 # Also fixes FTBFS: https://github.com/assimp/assimp/issues/4334
 Patch0: assimp-5.4.3-alt-unbundle.patch
+# https://github.com/assimp/assimp/issues/6069
+Patch1: md2-loader-CVE-2025-3196.patch
 
 BuildRequires: boost-complete
 BuildRequires: cmake
@@ -81,6 +83,7 @@ You need to install it if you want to develop programs using assimp.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p1 -b .CVE-2025-3196
 
 %ifarch %e2k
 # solve the problem radically, as -Werror is everywhere around
@@ -137,6 +140,9 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 5.4.3-alt2
+- MD2/Loader: fix CVE-2025-3196 (upstream issue #6069).
+
 * Mon Sep 16 2024 L.A. Kostis <lakostis@altlinux.ru> 5.4.3-alt1
 - 5.4.3.
 - Update unbundle.patch
