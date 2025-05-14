@@ -19,8 +19,8 @@
 %define soname 4
 
 Name: embree
-Version: 4.3.3
-Release: alt2
+Version: 4.4.0
+Release: alt1
 Summary: Collection of high-performance ray tracing kernels developed at Intel
 Group: Graphics
 License: Apache-2.0
@@ -30,8 +30,11 @@ Source: %name-%version.tar
 
 Source1: %name.watch
 
-# https://github.com/RenderKit/embree/commit/1ace3ba33d75603fc60d0ee3b21a249ef9dee673
-Patch: 1ace3ba33d75603fc60d0ee3b21a249ef9dee673.patch
+Patch0: %name-alt-arl.patch
+Patch1: %name-sycl-add-sqrtf.patch
+# already defined
+Patch2: %name-alt-no-fortify-source.patch
+Patch3: %name-4.3-blender.patch
 
 Patch2000: %name-e2k.patch
 
@@ -52,7 +55,7 @@ BuildRequires: pkgconfig(OpenImageIO)
 BuildRequires: pkgconfig(tbb)
 %if_with oneapi
 BuildRequires: libze-devel libze-intel-gpu-devel llvm-dpcpp-devel clang-dpcpp-devel
-BuildRequires: clang-dpcpp-tools opencl-headers
+BuildRequires: clang-dpcpp-tools opencl-headers libigc-devel libigc-tools
 %endif
 
 # https://github.com/embree/embree/issues/186
@@ -83,13 +86,15 @@ applications that use %{name}.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
 
 %build
-
 %ifarch %e2k
 %add_optflags -Wno-reduced-alignment -Wno-sign-compare -mno-avx
 %endif
@@ -132,13 +137,19 @@ rm -f %buildroot%prefix/%{name}-vars.*
 %_libdir/lib%{name}%{libsuffix}.so
 %if_with oneapi
 %_libdir/lib%{name}%{libsuffix}_sycl.a
-%_bindir/*
 %endif
 %_includedir/%{name}%{libsuffix}/
 %_libdir/cmake/%name-%version/
 %_man3dir/*
 
 %changelog
+* Sat Apr 26 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.0-alt1
+- sycl: do not link with libsycl (patch from blender).
+- sycl: added xe_lpgplus devices.
+- sycl: added missing sqrtf.
+- build: do not set fortify_source (defined already).
+- build: link neon2x into main static lib (patch from blender).
+
 * Sun Jan 26 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.3-alt2
 - build with oneapi/SYCL.
 

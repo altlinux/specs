@@ -5,8 +5,8 @@
 %filter_from_requires /python[0-9.]\+(libscanbuild[.].*)/d
 
 %global proj dpcpp
-# dpc llvm uses llvm20 as codebase
-%global v_major 20
+# dpc llvm uses llvm21 as codebase
+%global v_major 21
 %global v_majmin %v_major.0
 %global sycl_major 8
 %global llvm_name llvm-%proj
@@ -16,6 +16,8 @@
 %global clang_sover %v_major
 %global clang_cpp_sover %v_major
 %global libclc_name libclc-%proj
+%global libclang_name libclang-%proj
+%global libclang_cpp_name libclang-cpp-%proj
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -44,21 +46,25 @@
 %def_without jit
 %def_disable tests
 
-%define tarversion 2024-WW43
+%define tarversion 2025-WW13
+%define ur_version 0.11.10
+%define mp11_version 1.86.0
+%define vci_version 0.22.1
 %define mversion %version
 
 Name: %llvm_name
-Version: 2024.10.24
-Release: alt0.4
+Version: 2025.03.25
+Release: alt0.1
 Summary: oneAPI DPC++ compiler Infrastructure
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 # Source-URL: https://github.com/intel/llvm/archive/refs/tags/%tarversion.tar.gz
 Url: https://github.com/intel/llvm.git
-Source: llvm-project-%{version}.tar
-# all bundled modules are here
-# see changelog for revisions
-Patch: %name-%version-alt0.1.patch
+Source0: llvm-project-%{version}.tar
+Source1: mp11-boost-%mp11_version.tar
+Source2: emhash.tar
+Source3: parallel-hashmap.tar
+Source4: vc-intrinsics-%vci_version.tar
 
 # ALTLinux patches
 Patch1: clang-alt-triple.patch
@@ -74,10 +80,14 @@ Patch17: clang-ALT-bug-47780-Calculate-sha1-build-id-for-produced-executables.pa
 
 # ALTLinux/DPC++ specific patches
 Patch100: dpc-opencl-alt-use-system-cl-libs.patch
-Patch101: unified-runtime-alt-use-local-umf.patch
-Patch102: sycl-alt-do-not-hardcode-cl-lib.patch
-Patch103: sycl-alt-remove-cl-headers.patch
-Patch104: llvm-dpcpp-alt-enable-zstd.patch
+Patch101: sycl-alt-do-not-hardcode-cl-lib.patch
+Patch102: sycl-alt-remove-cl-headers.patch
+Patch103: clang-sycl-fix-arl-ocloc-name.patch
+Patch104: dpcpp-boost-debloat.patch
+Patch105: sycl-ir-system-vc-intrinsics.patch
+Patch106: sycl-use-system-umf.patch
+# unified-runtime patches
+Patch200: ur-use-system-lz-cr.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -99,7 +109,8 @@ BuildRequires: zip zlib-devel binutils-devel ninja-build libzstd-devel-static
 # DPCPP specific requires
 BuildRequires: gdb libhwloc-devel libbacktrace-devel
 BuildRequires: ocl-icd-devel libtbb-devel spirv-tools libspirv-tools-devel
-BuildRequires: libvulkan-devel spirv-headers glslang glslc libze-devel
+BuildRequires: libvulkan-devel spirv-headers >= 1.5.5-alt17 glslang glslc
+BuildRequires: libumf-devel libze-intel-gpu-devel libze-devel
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel
 %else
@@ -239,7 +250,7 @@ The goal of the Clang project is to create a new C, C++, Objective C
 and Objective C++ front-end for the LLVM compiler. Its tools are built
 as libraries and designed to be loosely-coupled and extendable.
 
-%package -n libclang%clang_sover
+%package -n %libclang_name%clang_sover
 Group: Development/C
 Summary: clang shared library
 %requires_filesystem
@@ -249,14 +260,14 @@ Requires: %clang_name-support = %EVR
 AutoReq: nopython
 AutoProv: nopython
 
-%description -n libclang%clang_sover
+%description -n %libclang_name%clang_sover
 The goal of the Clang project is to create a new C, C++, Objective C
 and Objective C++ front-end for the LLVM compiler. Its tools are built
 as libraries and designed to be loosely-coupled and extendable.
 
-This package contains the clang shared library.
+This package contains the clang shared library for %proj.
 
-%package -n libclang-cpp%clang_cpp_sover
+%package -n %libclang_cpp_name%clang_cpp_sover
 Group: Development/C
 Summary: clang-cpp shared libraries
 %requires_filesystem
@@ -265,20 +276,20 @@ Summary: clang-cpp shared libraries
 AutoReq: nopython
 AutoProv: nopython
 
-%description -n libclang-cpp%clang_cpp_sover
+%description -n %libclang_cpp_name%clang_cpp_sover
 The goal of the Clang project is to create a new C, C++, Objective C
 and Objective C++ front-end for the LLVM compiler. Its tools are built
 as libraries and designed to be loosely-coupled and extendable.
 
-This package contains the clang-cpp shared library.
+This package contains the clang-cpp shared library for %proj.
 
 %package -n %clang_name-libs
 Group: Development/C
 Summary: clang shared libraries
 %requires_filesystem
 # This is a compat package.
-Requires: libclang%clang_sover = %EVR
-Requires: libclang-cpp%clang_cpp_sover = %EVR
+Requires: %libclang_name%clang_sover = %EVR
+Requires: %libclang_cpp_name%clang_cpp_sover = %EVR
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -459,8 +470,7 @@ Requires: %libclc_name = %EVR
 %libclc_name library and headers
 
 %prep
-%setup -n llvm-project-%{version}
-%patch -p1
+%setup -n llvm-project-%{version} -a1 -a2 -a3 -a4
 %patch1 -p1 -b .alt-triple
 #%%patch2 -p1
 sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
@@ -478,7 +488,10 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
+%patch104 -p2
+#%%patch105 -p2 -b .system-vc-intrinsics
+%patch106 -p2
+%patch200 -p2
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -535,6 +548,7 @@ mkdir -p %builddir/_deps
 	--cmake-opt="-DUR_HIP_ROCM_DIR=%prefix" \
 	--cmake-opt="-DUR_HIP_LIB_DIR=%_libdir" \
 %endif
+	--cmake-opt="-DLLVM_ENABLE_RTTI=ON" \
 	--cmake-opt="-DLLVM_BUILD_LLVM_DYLIB:BOOL=ON" \
 	--cmake-opt="-DCMAKE_C_FLAGS:STRING='%optflags'" \
 	--cmake-opt="-DCMAKE_CXX_FLAGS:STRING='%optflags'" \
@@ -547,29 +561,15 @@ mkdir -p %builddir/_deps
 	--cmake-opt="-DPACKAGE_VENDOR=%vendor" \
 	--cmake-opt="-DPYTHON_EXECUTABLE=%_bindir/python3" \
 	--cmake-opt="-DLLVM_BINUTILS_INCDIR=%_includedir/bfd" \
-	--cmake-opt="-DLLVMGenXIntrinsics_SOURCE_DIR=$PWD/vc-intrinsics" \
 	--cmake-opt="-DSYCL_UR_USE_FETCH_CONTENT=OFF" \
+	--cmake-opt="-DLLVMGenXIntrinsics_SOURCE_DIR=$PWD/vc-intrinsics-%vci_version" \
 	--cmake-opt="-DFETCHCONTENT_FULLY_DISCONNECTED=ON" \
 	--cmake-opt="-DSYCL_UR_SOURCE_DIR=$PWD/unified-runtime" \
 	--cmake-opt="-DUR_OPENCL_INCLUDE_DIR=%_includedir" \
-	--cmake-opt="-DUMF_USE_FETCH_CONTENT=OFF" \
-	--cmake-opt="-DUMF_SOURCE_DIR=$PWD/unified-memory-framework" \
-	--cmake-opt="-DUMF_LEVEL_ZERO_INCLUDE_DIR=%_includedir/level_zero" \
-	--cmake-opt="-DUMF_BUILD_CUDA_PROVIDER=OFF" \
-	--cmake-opt="-DUMF_BUILD_TESTS=OFF" \
-	--cmake-opt="-DUMF_BUILD_EXAMPLES=OFF" \
-	--cmake-opt="-DUMF_BUILD_LIBUMF_POOL_DISJOINT=ON" \
+	--cmake-opt="-DUR_USE_EXTERNAL_UMF=ON" \
+	--cmake-opt="-DCOMPUTE_RUNTIME_LEVEL_ZERO_INCLUDE=%_includedir/level_zero" \
 	--cmake-opt="-DOpenCL_INCLUDE_DIR=%_includedir" \
-	--cmake-opt="-DBOOST_MP11_SOURCE_DIR=$PWD/boost-mp11" \
-	--cmake-opt="-DBOOST_UNORDERED_SOURCE_DIR=$PWD/boost-unordered" \
-	--cmake-opt="-DBOOST_ASSERT_SOURCE_DIR=$PWD/boost-assert" \
-	--cmake-opt="-DBOOST_CONFIG_SOURCE_DIR=$PWD/boost-config" \
-	--cmake-opt="-DBOOST_CONTAINER_HASH_SOURCE_DIR=$PWD/boost-container_hash" \
-	--cmake-opt="-DBOOST_CORE_SOURCE_DIR=$PWD/boost-core" \
-	--cmake-opt="-DBOOST_DESCRIBE_SOURCE_DIR=$PWD/boost-describe" \
-	--cmake-opt="-DBOOST_PREDEF_SOURCE_DIR=$PWD/boost-predef" \
-	--cmake-opt="-DBOOST_STATIC_ASSERT_SOURCE_DIR=$PWD/boost-static_assert" \
-	--cmake-opt="-DBOOST_THROW_EXCEPTION_SOURCE_DIR=$PWD/boost-throw_exception" \
+	--cmake-opt="-DBOOST_MP11_SOURCE_DIR=$PWD/mp11-boost-%mp11_version" \
 	--cmake-opt="-DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=%_includedir" \
 	%nil
 
@@ -786,6 +786,7 @@ bin	clang-offload-wrapper
 bin	clang-refactor
 bin	clang-repl
 bin	clang-scan-deps
+bin	clang-sycl-linker
 bin	clang-tblgen
 bin	git-clang-format
 bin	hmaptool
@@ -834,8 +835,6 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %dir %llvm_datadir/clang
 %dir %llvm_datadir/man
 %dir %llvm_man1dir
-%dir %llvm_docdir
-%dir %llvm_docdir/LLVM
 
 %files -f %_tmppath/dyn-files-%name
 %doc llvm/CREDITS.TXT llvm/LICENSE.TXT llvm/README.txt
@@ -871,11 +870,11 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %llvm_datadir/clang/bash-autocomplete.sh
 %_datadir/bash-completion/completions/clang*
 
-%files -n libclang%clang_sover
+%files -n %libclang_name%clang_sover
 %llvm_libdir/libclang.so.%{clang_sover}*
 %_libdir/libclang.so.%{clang_sover}*
 
-%files -n libclang-cpp%clang_cpp_sover
+%files -n %libclang_cpp_name%clang_cpp_sover
 %llvm_libdir/libclang-cpp*.so.%{clang_cpp_sover}*
 %_libdir/libclang-cpp*.so.%{clang_cpp_sover}*
 
@@ -950,8 +949,6 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %llvm_libdir/libsycl*.o
 %llvm_libdir/libsycl-devicelib-host*.a
 %llvm_libdir/*_collector.so
-%llvm_libdir/libdisjoint_pool.a
-%llvm_libdir/cmake/umf
 %if_with jit
 %llvm_libdir/libSYCLKernelJITPasses.a
 %llvm_libdir/SYCLKernelJIT.so
@@ -965,17 +962,14 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %llvm_includedir/syclcompat.hpp
 %llvm_includedir/ur_*
 %llvm_includedir/xpti
-%llvm_includedir/umf*
 %_datadir/gdb/python/*.py
 %llvm_prefix/lib/cmake
 
 %files -n %sycl_name-runtime-libraries
 %llvm_libdir/libur_common.a
 %llvm_libdir/libxpti.a
-%llvm_libdir/libumf*.so*
 %llvm_libdir/libur*.so*
 %llvm_libdir/libxptifw.so
-%_libdir/libumf*.so*
 %_libdir/libur*.so*
 %if_with hip
 %exclude %llvm_libdir/libur_adapter_hip*
@@ -1014,6 +1008,19 @@ LD_LIBRARY_PATH=%buildroot%llvm_libdir \
 %endif
 
 %changelog
+* Thu May 01 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.03.25-alt0.1
+- New snapshot (2025-WW13):
+  + clang: enable RTTI
+  + debloat boost modules (patch from blender)
+  + use system umf
+  + vc-intrinsics: use bundled 0.22.1.
+  + BR: requires spirv-headers from vulkan 1.4.309!
+  + libclang/libclang-cpp: rename to avoid clash with future
+    llvm versions.
+
+* Fri Apr 25 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt0.5
+- clang/sycl: fix ARL ocloc name (it's xe_lpgplus family).
+
 * Sat Mar 15 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.10.24-alt0.4
 - Enable zstd support (for --offload-compress).
 

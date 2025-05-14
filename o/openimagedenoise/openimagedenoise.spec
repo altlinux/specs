@@ -17,7 +17,7 @@
 %define soname 2
 
 Name: openimagedenoise
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 Summary: Intel Open Image Denoise library
 Group: Development/Other
@@ -28,12 +28,9 @@ ExclusiveArch: x86_64 aarch64
 
 # https://github.com/OpenImageDenoise/oidn/releases/download/v%version/oidn-%version.src.tar.gz
 Source: %oname-%version.tar
-
-Source2: %name.watch
-
 Patch: oidn-alt-aarch64-cuda-glibc-fix.patch
 
-BuildRequires: cmake
+BuildRequires: cmake gcc-c++
 BuildRequires: python3
 BuildRequires: tbb-devel
 BuildRequires: ispc
@@ -42,14 +39,12 @@ BuildRequires: libopenimageio-devel chrpath
 BuildRequires: hip-devel hip-runtime-amd rocm-comgr-devel rocm-device-libs hsa-rocr-devel
 %endif
 %if_with oneapi
-# FIXME DPC++ compiler doesn't support LTO?
+# FIXME  sycl code doesn't support LTO?
 %define optflags_lto %nil
 BuildRequires: llvm-dpcpp-devel clang-dpcpp-devel clang-dpcpp-tools intel-ocloc libze-devel libigc-devel
 %endif
 %if_with cuda
-BuildRequires: nvidia-cuda-devel nvidia-cuda-devel-static gcc12-c++
-%else
-BuildRequires: gcc-c++
+BuildRequires: nvidia-cuda-devel >= 12.8 nvidia-cuda-devel-static
 %endif
 
 %description
@@ -124,9 +119,6 @@ EOF
 export ROCM_PATH=/usr
 export ALTWRAP_LLVM_VERSION=rocm
 %endif
-%if_with cuda
-export GCC_VERSION=12
-%endif
 %cmake \
 	-DOIDN_STATIC_LIB:BOOL=OFF \
 	%if_with hip
@@ -199,6 +191,12 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Tue Apr 08 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt1
+- Updated to upstream version 2.3.3.
+- Remove .watch file (doesn't work anyway, as we need archives
+  from releases not from tags).
+- cuda: build with default gcc.
+
 * Tue Jan 28 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.2-alt1
 - Updated to upstream version 2.3.2.
 - x86_64: Enabled oneAPI/SYCL.
