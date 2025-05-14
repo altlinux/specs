@@ -15,8 +15,8 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 138.0
-Release: alt2
+Version: 138.0.1
+Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -379,6 +379,9 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed May 14 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0.1-alt1
+- New version.
+
 * Wed May 07 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0-alt2
 - New version.
 - Disable debug mode.
