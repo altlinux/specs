@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.7.7
+Version: 0.7.8
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -110,6 +110,9 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Tue May 13 2025 Anton Midyukov <antohami@altlinux.org> 1:0.7.8-alt1
+- integrity-sign: add extra library extension support
+
 * Thu Nov 21 2024 Paul Wolneykien <manowar@altlinux.org> 1:0.7.7-alt1
 - Fix: Don't run update-grub if /etc/sysconfig/grub2 doesn't exist.
 - controls: Return error if specified configuration variable isn't
