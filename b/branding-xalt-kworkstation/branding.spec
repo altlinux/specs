@@ -29,7 +29,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -292,6 +292,8 @@ cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
 NAME="%Brand"
 VERSION="%altversion%status"
 ID=altlinux
+VARIANT="%Theme"
+VARIANT_ID=%smalltheme
 LOGO="alt-distro-logo"
 VERSION_ID=%altversion
 PRETTY_NAME="%ProductName%status (%codename)"
@@ -498,6 +500,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt4
+- add VARIANT and VARIANT_ID to os-release
+
 * Wed Apr 23 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt3
 - update product logo
 
