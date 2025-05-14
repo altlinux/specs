@@ -23,13 +23,13 @@
 %_alterator_datadir/applications/%{1}.application
 
 Name: alterator-application-systeminfo
-Version: 0.4.4
+Version: 0.4.5
 Release: alt2
 
 Summary: ALT Systeminfo - Alterator application that shows information about system
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/alterator-application-systeminfo
+URL: https://altlinux.space/alterator/alt-systeminfo
 
 Source: %name-%version.tar
 
@@ -89,6 +89,17 @@ ALT Systeminfo - Alterator application that shows information about system.
 %files_alterator_application license
 
 %changelog
+* Wed May 14 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.5-alt2
+- Actualize upstream URL.
+
+* Sat Apr 19 2025 Kirill Sharov <sheriffkorov@altlinux.org> 0.4.5-alt1
+- Changed:
+  + Size of edition wizard window.
+- Fixed:
+  + Missing names of editions if locale is not en or ru.
+- Removed:
+  + Extra text about components from edition wizard.
+
 * Wed Apr 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.4.4-alt2
 - Split unused subpackages with internal applications, interfaces and backends.
 
