@@ -1,6 +1,6 @@
 Name: mate
 Version: 1.26.0
-Release: alt2
+Release: alt3
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -46,7 +46,7 @@ Group: Graphical desktop/MATE
 Requires: mate-default
 Requires: mate-disk-image-mounter
 Requires: mate-document-viewer-djvu mate-document-viewer-dvi mate-document-viewer-pixbuf mate-document-viewer-xps
-Requires: mate-file-manager-beesu mate-file-manager-image-converter mate-file-manager-open-terminal
+Requires: mate-file-manager-image-converter mate-file-manager-open-terminal
 Requires: mate-file-manager-sendto mate-file-manager-share mate-file-manager-wallpaper mate-system-log
 Requires: python3-module-caja
 
@@ -58,6 +58,9 @@ This virtual package installs full MATE Desktop.
 %files maxi
 
 %changelog
+* Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 1.26.0-alt3
+- removed mate-file-manager-beesu
+
 * Fri Jan 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.26.0-alt2
 - removed mate-dictionary
 

@@ -1,8 +1,9 @@
 %define rname caja-extensions
+#%%def_with beesu
 
 Name: mate-file-manager-extensions
 Version: 1.28.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -129,7 +130,11 @@ Caja xattr-tags extension, allows to quickly set xattr-tags
 	--enable-sendto \
 	--with-sendto-plugins=emailclient \
 	--enable-share \
+%if_with beesu
 	--enable-gksu \
+%else
+	--disable-gksu \
+%endif
 	--enable-wallpaper
 
 %make_build
@@ -176,9 +181,11 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/caja-extensions/share-dialog.ui
 %_datadir/caja/extensions/libcaja-share.caja-extension
 
+%if_with beesu
 %files -n mate-file-manager-beesu
 %_libdir/caja/extensions-2.0/libcaja-gksu.so
 %_datadir/caja/extensions/libcaja-gksu.caja-extension
+%endif
 
 %files -n mate-file-manager-wallpaper
 %_libdir/caja/extensions-2.0/libcaja-wallpaper.so
@@ -189,6 +196,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 1:1.28.0-alt2
+- NMU: disable mate-file-manager-beesu package build (closes: #54148)
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
