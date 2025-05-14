@@ -1,5 +1,5 @@
 Name: python3-module-maturin
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: Rust within Python
@@ -49,6 +49,9 @@ chmod +x %buildroot%_bindir/maturin
 %python3_sitelibdir/maturin-%version.dist-info
 
 %changelog
+* Wed May 14 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.6-alt1
+- 1.8.6 released
+
 * Mon May 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.5-alt1
 - 1.8.5 released
 
