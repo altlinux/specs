@@ -12,8 +12,8 @@
 %endif
 
 Name: talos
-Version: 1.10.0
-Release: alt0.alpha.3
+Version: 1.10.1
+Release: alt1
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -176,6 +176,9 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Wed May 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.1-alt1
+- v1.10.1
+
 * Mon Mar 31 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt0.alpha.3
 - v1.10.0-alpha.3
 - set url for pause and flannel images to registry.a.o
