@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-batch-components
-Version: 0.2.2
+Version: 0.3
 Release: alt1
 
 Summary: Alterator backends for getting information about all components
@@ -40,6 +40,10 @@ Requires: alterator-backend-systeminfo
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Thu May 15 2025 Andrey Limachko <liannnix@altlinux.org> 0.3-alt1
+- Remove unused imports and clean up batch_status.py
+- Remove %_alterator_datadir macro and hardcode path
+
 * Wed Apr 09 2025 Pavel Khromov <hromovpi@altlinux.org> 0.2.2-alt1
 - Add requires from alterator-backend-systeminfo
 
@@ -55,4 +59,3 @@ Requires: alterator-backend-systeminfo
 
 * Mon Mar 03 2025 Andrey Limachko <liannnix@altlinux.org> 0.0.1-alt1
 - Initial build (thx Pavel Khromov).
-
