@@ -1,7 +1,7 @@
 %define sover 1
 Name: metis
 Version: 5.1.0
-Release: alt2
+Release: alt3
 Summary: Family of Multilevel Partitioning Algorithms
 License: GPL
 Group: Sciences/Mathematics
@@ -75,6 +75,7 @@ install -m644 %SOURCE1 .
 %build
 FLAGS="%optflags -I%_includedir/pcre"
 cmake \
+	-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_CXX_FLAGS:STRING="$FLAGS" \
@@ -128,6 +129,9 @@ rm -fR %_libexecdir/metis
 %_datadir/%name
 
 %changelog
+* Thu May 15 2025 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt3
+- Fixed FTBFS.
+
 * Thu Sep 17 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt2
 - Fixed FTBFS.
 
