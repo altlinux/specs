@@ -7,7 +7,7 @@
 
 Name:          puppetdb
 Version:       8.4.1
-Release:       alt3
+Release:       alt3.1
 Summary:       Centralized Puppet Storage
 License:       Apache-2.0
 Group:         Other
@@ -65,7 +65,9 @@ BuildConflicts: gem(puppet) >= 9.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findreq_skiplist %_libexecdir/%name/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %_libexecdir/%name/**/*
 %ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
 Requires:      puppet
 Requires:      postgresql
@@ -81,7 +83,7 @@ speed with a powerful API.
 
 %package       -n gem-puppetdb-terminus
 Version:       3.0.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -98,7 +100,7 @@ Puppet terminus files to connect to PuppetDB
 %if_enabled    doc
 %package       -n puppetdb-terminus-doc
 Version:       3.0.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppetdb-terminus
 Group:         Development/Documentation
@@ -119,7 +121,7 @@ Puppet terminus files to connect to PuppetDB
 %if_enabled    devel
 %package       -n puppetdb-terminus-devel
 Version:       3.0.0
-Release:       alt3
+Release:       alt3.1
 Summary:       Connect Puppet to PuppetDB by setting up a terminus for PuppetDB development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppetdb-terminus
 Group:         Development/Ruby
@@ -257,6 +259,9 @@ echo 'NOTE: To complete update/install procedure, make sure you have followed ma
 
 
 %changelog
+* Thu May 15 2025 Pavel Skrylev <majioa@altlinux.org> 8.4.1-alt3.1
+- ![NBTFS] filter out unnecessary requires
+
 * Fri Mar 22 2024 Pavel Skrylev <majioa@altlinux.org> 8.4.1-alt3
 - ! fixed default sysconfig environment
 - ! fixed pdb run script allowing using the JAVA_HOME variable
