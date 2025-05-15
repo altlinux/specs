@@ -1,21 +1,18 @@
-# shellcheck requires newer modules then we have in Sisyphus
-# So... We build static shellcheck with bundled new modules.
-%def_disable getsource
-
 Name: shellcheck
+
 Version: 0.10.0
-Release: alt1
+Release: alt2
 License: GPL-3.0-or-later
 Url: https://github.com/koalaman/shellcheck
 Group: Development/Tools
 
-BuildRequires: /proc ghc8.6.4 ghc8.6.4-cabal-install pandoc
-
-%if_disabled getsource
 Source: %name-%version.tar
-%endif
+Source1: vendor.tar
 
-Source1: shellcheck.1.md
+BuildRequires(pre): ghc
+BuildRequires(pre): rpm-build-haskell-vendored
+
+BuildRequires: pandoc
 
 Summary: Shell script analysis tool
 
@@ -30,41 +27,30 @@ an advanced user's otherwise working script to fail under future
 circumstances.
 
 %prep
-%if_enabled getsource
-%setup -c -T
-%else
-%setup
-%endif
+%setup -a 1
 
 %build
-%if_enabled getsource
-rm -rf $HOME/.cabal
-mkdir shellcheck-%version
-ln -s -r -f shellcheck-%version $HOME/.cabal
-cabal new-update
-cabal fetch ShellCheck-%version
-echo '' | cabal new-repl -w ghc-8.6.4 --build-dep fail
-tar -cf shellcheck-%version.tar shellcheck-%version
-exit 1
-%else
-rm -rf $HOME/.cabal
-ln -s -r -f . $HOME/.cabal
-cabal new-install %_smp_mflags ShellCheck-%version
-%endif
+%cabal_vendor_build exe:shellcheck
 
-pandoc -s -f markdown-smart -t man %SOURCE1 -o shellcheck.1
+pandoc -s -f markdown-smart -t man shellcheck.1.md -o shellcheck.1
 
 %install
-mkdir -p %buildroot%_bindir
+%cabal_vendor_install exe:shellcheck
+
 mkdir -p %buildroot%_man1dir
-cp bin/shellcheck %buildroot%_bindir
 cp shellcheck.1 %buildroot%_man1dir
+
+%check
+%cabal_vendor_test
 
 %files
 %_bindir/shellcheck
 %_man1dir/shellcheck.1*
 
 %changelog
+* Mon May 05 2025 Leonid Znamenok <respublica@altlinux.org> 0.10.0-alt2
+- Rebuilt with rpm-build-haskell-vendored.
+
 * Wed Jul 03 2024 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.10.0-alt1
 - Updated to 0.10.0.
 
