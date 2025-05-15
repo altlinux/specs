@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 2025.4
+%define ver_major 2025.5
 %define rdn_name io.github.giantpinkrobots.varia
 
 %def_enable check
 
 Name: varia
-Version: %ver_major.22
+Version: %ver_major.14
 Release: alt1
 
 Summary: Quick and efficient download manager
@@ -72,6 +72,9 @@ stream downloads.
 %doc README*
 
 %changelog
+* Thu May 15 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.5.14-alt1
+- 2025.5.14
+
 * Wed Apr 23 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.4.22-alt1
 - 2025.4.22
 
