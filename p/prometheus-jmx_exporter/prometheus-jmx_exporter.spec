@@ -1,6 +1,6 @@
 Name:    prometheus-jmx_exporter
 Version: 1.0.1
-Release: alt2
+Release: alt3
 Summary: A process for exposing JMX Beans via HTTP for Prometheus consumption
 
 Group:   Development/Java
@@ -13,11 +13,12 @@ BuildRequires(pre): rpm-build-java
 BuildRequires: java-devel >= 17.0
 BuildRequires: /proc
 BuildRequires: maven-local
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-shade-plugin
-BuildRequires: maven-profile
 BuildRequires: maven-artifact-manager
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-plugin-bundle
 BuildRequires: maven-plugin-registry
+BuildRequires: maven-profile
+BuildRequires: maven-shade-plugin
 
 ExcludeArch: %ix86 armh
 
@@ -31,6 +32,7 @@ Obsoletes: prometheus-jmx-exporter < %EVR
 
 %prep
 %setup -n jmx_exporter-%version
+test -d ~/.m2 && rm -rf ~/.m2
 tar xf %SOURCE1 -C ~
 # Disable integration tests
 subst '/integration_test_suite/d' pom.xml
@@ -51,6 +53,9 @@ install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-jmx_exporter.pom
 %_mavenpomdir/*
 
 %changelog
+* Thu May 15 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt3
+- FTBFS: fix build.
+
 * Mon Oct 07 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2
 - Obsoletes prometheus-jmx-exporter.
 
