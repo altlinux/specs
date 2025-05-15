@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.41.1
+Version: 0.42.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -11,23 +11,14 @@ Group: Terminals
 VCS: https://github.com/kovidgoyal/kitty
 Url: https://sw.kovidgoyal.net/kitty/
 
-Requires: %name-kitten = %EVR
-Requires: %name-terminfo = %EVR
-Requires: %name-shell-integration = %EVR
-
-Provides: xvt
-Provides: x-terminal-emulator
-
-# Provide alternatives file but don't depend on alternatives package
-%filter_from_requires /^\/etc\/alternatives\/packages.d$/d
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: SymbolsNerdFontMono-Regular.ttf
 Patch0: %name-%version-alt.patch
 
-# 0.27.0: unmet /usr/pkg/bin/tic
-%add_findreq_skiplist %_libexecdir/kitty/shell-integration/ssh/bootstrap-utils.sh
+Requires: kitty-kitten = %EVR
+Requires: kitty-terminfo = %EVR
+Requires: kitty-shell-integration = %EVR
 
 # play sound
 Requires: libcanberra
@@ -35,6 +26,22 @@ Requires: libcanberra
 Requires: libstartup-notification
 # icat kitten
 Requires: ImageMagick-tools
+
+# Find python3 dependencies
+%add_python3_path %_libexecdir/kitty
+
+# These scripts run on the remote host, no need to process them
+%add_findreq_skiplist %_libexecdir/kitty/shell-integration/ssh/*
+%add_python3_compile_exclude %_libexecdir/kitty/shell-integration/ssh
+
+# Don't provide python3 modules
+AutoProv: nopython3
+
+Provides: xvt
+Provides: x-terminal-emulator
+
+# Provide alternatives file but don't depend on alternatives package
+%filter_from_requires /^\/etc\/alternatives\/packages.d$/d
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-golang
@@ -56,6 +63,7 @@ BuildRequires: libssl-devel
 BuildRequires: libdbus-devel
 BuildRequires: liblcms2-devel
 BuildRequires: libxxhash-devel
+BuildRequires: termutils-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libharfbuzz-devel
 
@@ -65,15 +73,11 @@ BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: python3-module-sphinx-inline-tabs
 BuildRequires: python3-module-sphinxext-opengraph
 
+BuildRequires: /proc
+
 # The python3-module-sphinx package is poorly maintained, so just keep
 # this BR for compatibility.
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
-
-# tic for xterm-kitty terminfo
-BuildRequires: ncurses
-
-# + install -Dm644 /dev/stdin .../usr/share/bash-completion/completions/kitty
-BuildRequires: /proc
 
 %if_with check
 # 0.35.1: test_zsh_integration fails, disable by not installing zsh
@@ -81,10 +85,8 @@ BuildRequires: /proc
 BuildRequires: bash
 BuildRequires: fish
 BuildRequires: /dev/pts
-BuildRequires: fonts-ttf-gnu-freefont-mono
+BuildRequires: fonts-ttf-dejavu
 %endif
-
-%add_python3_path %_libexecdir/kitty
 
 %description
 - Offloads rendering to the GPU for lower system load and buttery
@@ -130,6 +132,8 @@ BuildArch: noarch
 Summary: Shell-integration files for kitty
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: kitty-kitten = %EVR
+Requires: kitty-terminfo = %EVR
 
 %description shell-integration
 %summary.
@@ -228,6 +232,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Mon May 12 2025 Egor Ignatov <egori@altlinux.org> 0.42.0-alt1
+- new version 0.42.0
+
 * Thu Apr 03 2025 Egor Ignatov <egori@altlinux.org> 0.41.1-alt1
 - new version 0.41.1
 
