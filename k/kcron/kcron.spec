@@ -1,8 +1,8 @@
 %define rname kcron
 
 Name: %rname
-Version: 24.12.3
-Release: alt2
+Version: 25.04.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -60,6 +60,9 @@ done
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Mon Apr 07 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - fix translations
 

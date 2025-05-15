@@ -1,7 +1,7 @@
 %define rname kimagemapeditor
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -43,12 +43,15 @@ An HTML imagemap editor.
 %_K6plug/kf6/parts/*kimagemapeditor*.so
 %_K6xdgapp/org.kde.kimagemapeditor.desktop
 %_K6icon/*/*/actions/*.*
-%_K6icon/*/*/apps/kimagemapeditor.*
+%_K6icon/*/*/apps/*kimagemapeditor.*
 %_K6data/kimagemapeditor/
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*kimagemapeditor*.xml
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

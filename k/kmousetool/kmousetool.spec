@@ -1,7 +1,7 @@
 %define rname kmousetool
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -41,11 +41,14 @@ BuildRequires: kf6-kcoreaddons-devel kf6-kauth-devel kf6-kwindowsystem-devel
 %doc LICENSES/*
 %_K6bin/kmousetool
 %_K6xdgapp/org.kde.kmousetool.desktop
-%_K6icon/hicolor/*/*/kmousetool*.*
+%_K6icon/hicolor/*/*/*kmousetool*.*
 %_K6data/kmousetool/
 %_datadir/metainfo/*kmousetool*.xml
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

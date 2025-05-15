@@ -1,7 +1,7 @@
 %define rname ktimer
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -43,11 +43,14 @@ Lets you start an application after a certain amount of time has passed.
 %doc LICENSES/*
 %_K6bin/ktimer
 %_K6xdgapp/org.kde.ktimer.desktop
-%_K6icon/*/*/*/ktimer.*
+%_K6icon/*/*/*/*ktimer.*
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

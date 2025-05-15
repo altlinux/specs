@@ -4,8 +4,8 @@
 %define libelisalib libelisalib%sover
 
 Name: %rname
-Version: 24.12.3
-Release: alt2
+Version: 25.04.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -99,6 +99,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Thu Apr 17 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - update build requires
 

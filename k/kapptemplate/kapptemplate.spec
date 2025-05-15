@@ -1,7 +1,7 @@
 %define rname kapptemplate
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -22,7 +22,7 @@ BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcode
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel
-BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel
+BuildRequires: kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kirigami-addons-devel
 
 %description
@@ -45,13 +45,16 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 %_K6bin/kapptemplate
 %_K6data/kdevappwizard/
 %_K6cfg/kapptemplate*
-%_K6icon/*/*/apps/kapptemplate.*
+%_K6icon/*/*/apps/*kapptemplate.*
 %_K6xdgapp/*kapptemplate.desktop
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %define rname skanpage
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -19,7 +19,6 @@ Obsoletes: kde5-skanpage < %EVR
 Requires: qt6-imageformats kde6-kquickimageeditor
 
 Source: %rname-%version.tar
-Patch1: alt-def-no-ocr.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules
@@ -28,7 +27,7 @@ BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: qt6-webengine-devel
 BuildRequires: libgomp-devel libleptonica-devel tesseract-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-ki18n-devel kf6-kirigami-devel
-BuildRequires: kf6-purpose-devel kf6-kxmlgui-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-purpose-devel kf6-kxmlgui-devel kf6-kcolorscheme-devel kf6-kio-devel
 BuildRequires: ksanecore-devel
 BuildRequires: kde6-kquickimageeditor-devel
 
@@ -38,7 +37,6 @@ It supports saving to image and PDF files.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 sed -i 's|#include <KSaneCore/|#include <KSaneCore6/|' src/*.{h,cpp}
 
@@ -59,6 +57,9 @@ sed -i 's|#include <KSaneCore/|#include <KSaneCore6/|' src/*.{h,cpp}
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

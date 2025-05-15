@@ -1,7 +1,7 @@
 %define rname kmag
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -39,11 +39,14 @@ those working in the fields of image analysis, web development etc.
 %doc LICENSES/*
 %_K6bin/%rname
 %_K6xdgapp/org.kde.%{rname}.desktop
-%_K6icon/hicolor/*/*/%{rname}*.*
+%_K6icon/hicolor/*/*/*%{rname}*.*
 %_K6data/%rname/
 %_datadir/metainfo/*kmag*.xml
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

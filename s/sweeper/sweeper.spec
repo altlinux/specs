@@ -1,7 +1,7 @@
 %define rname sweeper
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -38,10 +38,14 @@ System Cleaner.
 %doc LICENSES/*
 %_K6bin/sweeper
 %_K6xdgapp/org.kde.sweeper.desktop
+%_K6icon/*/*/apps/*sweeper.*
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*sweeper*.xml
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

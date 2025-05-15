@@ -1,7 +1,7 @@
 %define rname tokodon
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -19,6 +19,7 @@ Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules
+BuildRequires: libvulkan-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: mpvqt6-devel
 BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel qt6-websockets-devel
@@ -27,6 +28,7 @@ BuildRequires: qt6-webengine-devel qt6-webview-devel
 %endif
 BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kirigami-addons-devel kf6-kirigami-devel
 BuildRequires: kf6-knotifications-devel kf6-qqc2-desktop-style-devel kf6-purpose-devel
+BuildRequires: kf6-kiconthemes-devel
 BuildRequires: kf6-kirigami-addons-devel
 
 %description
@@ -47,13 +49,15 @@ A modern Mastodon client.
 %_K6bin/tokodon
 %_K6xdgapp/*tokodon*.desktop
 %_K6icon/*/*/apps/*tokodon*
-%_K6icon/*/*/actions/tokodon*.*
 %_K6notif/*tokodon*.notifyrc
 %_K6plug/kf?/purpose/*tokodon*.so
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*tokodon*.xml
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname ghostwriter
 
 Name: ghostwriter
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -22,7 +22,7 @@ Patch1: alt-crash.patch
 BuildRequires(pre): rpm-macros-qt6 rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: qt6-declarative-devel qt6-5compat-devel qt6-tools-devel
 BuildRequires: qt6-webengine-devel qt6-webchannel-devel qt6-svg-devel
-BuildRequires: kf6-kdoctools kf6-kcoreaddons-devel kf6-kxmlgui-devel kf6-kconfigwidgets-devel kf6-kwidgetsaddons-devel kf6-sonnet-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-kcoreaddons-devel kf6-kxmlgui-devel kf6-kconfigwidgets-devel kf6-kwidgetsaddons-devel kf6-sonnet-devel kf6-kcolorscheme-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib-devel
@@ -60,6 +60,9 @@ or your novel.
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

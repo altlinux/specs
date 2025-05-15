@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K6bin/hotshot2calltree
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -59,11 +59,14 @@ sed -i \
 %_K6bin/op2calltree
 %_K6bin/pprof2calltree
 %_K6xdgapp/org.kde.%{rname}.desktop
-%_K6icon/hicolor/*/*/%{rname}*.*
+%_K6icon/hicolor/*/*/*%{rname}*.*
 %_K6data/%rname/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

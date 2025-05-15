@@ -4,7 +4,7 @@
 %define libkmixcore libkmixcore%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -83,7 +83,7 @@ Requires: %name-common >= %EVR
 %_K6data/kxmlgui?/kmix/
 %_K6xdgapp/*kmix.desktop
 %_K6notif/*kmix*.notifyrc
-%_K6icon/*/*/actions/kmix.*
+%_K6icon/*/*/actions/*kmix.*
 %_datadir/metainfo/*.xml
 
 %files devel
@@ -94,6 +94,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libkmixcore.so.%sover
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

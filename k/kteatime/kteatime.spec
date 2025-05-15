@@ -1,7 +1,7 @@
 %define rname kteatime
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -40,12 +40,15 @@ Handy timer for steeping tea.
 %doc LICENSES/*
 %_K6bin/kteatime
 %_K6xdgapp/org.kde.kteatime.desktop
-%_K6icon/*/*/apps/kteatime.*
+%_K6icon/*/*/apps/*kteatime.*
 %_K6notif/kteatime*
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

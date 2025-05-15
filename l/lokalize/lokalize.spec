@@ -9,7 +9,7 @@
 
 %define rname lokalize
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -62,13 +62,16 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 %_K6data/lokalize/
 %_K6xdgapp/org.kde.lokalize.desktop
 %_K6cfg/lokalize*
-%_K6icon/*/*/apps/lokalize.*
+%_K6icon/*/*/apps/*lokalize.*
 %_K6notif/lokalize*
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*lokalize*.xml
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

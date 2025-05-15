@@ -1,11 +1,11 @@
 %define rname kwave
 
-%define sover 24
+%define sover 25
 %define libkwavegui libkwavegui%sover
 %define libkwave libkwave%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -113,6 +113,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 %_K6lib/libkwavegui.so.*
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

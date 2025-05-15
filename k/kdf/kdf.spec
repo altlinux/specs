@@ -1,10 +1,10 @@
 %define rname kdf
 
-%define kdfprivate_sover 24
+%define kdfprivate_sover 25
 %define libkdfprivate libkdfprivate%kdfprivate_sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -90,6 +90,9 @@ KF6 library
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

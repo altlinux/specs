@@ -4,7 +4,7 @@
 %define libkgetcore libkgetcore%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -83,7 +83,7 @@ KF6 library
 %_K6bin/*
 %_K6plug/kget/
 %_K6plug/kget_kcms/
-%_K6icon/*/*/apps/kget.*
+%_K6icon/*/*/apps/*kget.*
 %_K6cfg/kget*
 %_K6data/kget/
 %_K6xdgapp/*kget*
@@ -104,6 +104,9 @@ KF6 library
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libkolourpaint libkolourpaint_lgpl%sover
 
 Name: %rname
-Version: 24.12.3
-Release: alt2
+Version: 25.04.1
+Release: alt1
 %K6init
 
 Group: Graphics
@@ -94,6 +94,9 @@ done
 %_K6lib/libkolourpaint_lgpl.so.*
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Mar 11 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
 - package color palettes (closes: 53282)
 
