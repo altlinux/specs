@@ -1,18 +1,28 @@
-Name:		system-backup
-Version:	0.1.1
-Release:	alt3
+%define _unpackaged_files_terminate_build 1
 
-Summary:	Script for local system backup
-License:	GPL-3
-Group:		Archiving/Backup
+Name: system-backup
+Version: 0.1.4
+Release: alt1
 
-Url:		http://www.altlinux.org/Rescue/Recovery
-Source:		%name-%version.tar
-BuildArch:	noarch
+Summary: Script for local system backup
+Group: Archiving/Backup
+License: GPLv3+
 
-Packager:	Leonid Krivoshein <klark@altlinux.org>
+Url: http://www.altlinux.org/Rescue/Recovery
+Source: %name-%version.tar
+BuildArch: noarch
 
+Packager: Leonid Krivoshein <klark@altlinux.org>
+
+Requires: bash
+Requires: coreutils
+Requires: kmod
+Requires: pigz
 Requires: pv
+Requires: sfdisk
+Requires: tar
+Requires: util-linux
+AutoReq: noshell, noshebang
 
 %description
 Script for creation full backup of the installed ALT Linux.
@@ -29,8 +39,11 @@ install -pm755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Fri May 16 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.4-alt1
+- Bug fixes, requirements added, minor improvements.
+
 * Thu Jul 28 2022 Anton Midyukov <antohami@altlinux.org> 0.1.1-alt3
-- Requires: pv
+- Requires: pv.
 
 * Fri Jun 21 2019 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt2
 - Exclude backup storage directory for all backups.
