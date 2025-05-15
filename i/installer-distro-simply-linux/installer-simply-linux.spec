@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 11.2.0
+Version: 11.3.0
 Release: alt1
 
 Summary: Installer common files
@@ -86,6 +86,16 @@ Installer stage3
 Данный виртуальный пакет зависит от пакетов необходимых на третьем этапе
 установки дистрибутива "Просто линукс" (Simply linux).
 
+%package live
+Summary: Some tricks needed for installation from a live image
+Group: System/Configuration/Other
+Requires: %name = %version-%release
+Requires: installer-common-desktop >= 0.1.2-alt1
+Conflicts: installer-feature-simply-livecd
+
+%description live
+Some tricks needed for installation from a live image.
+
 %prep
 %setup -q
 
@@ -108,7 +118,13 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 
 %files stage3
 
+%files live
+%_libexecdir/alterator/hooks/livecd-initinstall.d/*
+
 %changelog
+* Thu May 15 2025 Mikhail Efremov <sem@altlinux.org> 11.3.0-alt1
+- Add live subpackage.
+
 * Fri Mar 21 2025 Mikhail Efremov <sem@altlinux.org> 11.2.0-alt1
 - setup-backgrounds: Use default-background symlink.
 - setup-backgrounds: Ensure that background prefix is 'slinux_'.
