@@ -13,7 +13,7 @@
 # More subpackages to come once licensing issues are fixed
 Name: edk2
 Version: 20250221
-Release: alt1
+Release: alt2
 Summary: EFI Development Kit II
 
 License: BSD-2-Clause-Patent
@@ -48,7 +48,7 @@ Source91: DBXUpdate-%DBXDATE.ia32.bin
 
 Patch1: %name-%version.patch
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 loongarch64 riscv64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: iasl nasm gcc-c++
@@ -58,6 +58,10 @@ BuildRequires: qemu-img
 BuildRequires: xorriso dosfstools mtools
 BuildRequires: /proc /dev/pts
 BuildRequires: python3-module-virt-firmware >= 24.7-alt1
+%if %_build_cpu != x86_64
+BuildRequires: gcc-x86_64-linux-gnu
+%endif
+
 # openssl configure
 BuildRequires: /usr/bin/pod2man bc zlib-devel perl-PathTools perl-IPC-Cmd perl-JSON
 
@@ -93,6 +97,7 @@ Open Virtual Machine Firmware (ia32)
 %package efi-shell
 Summary: EFI Development Kit II
 Group: System/Kernel and hardware
+BuildArch: noarch
 Provides: efi-shell = 2.2
 Obsoletes: efi-shell < 2.2
 
@@ -159,6 +164,10 @@ source ./edksetup.sh
 
 # compiler
 CC_FLAGS="-t %tool_chain_tag"
+%if %_build_cpu != x86_64
+# XXX: edk overrides GCC_{X64,IA32}_PREFIX from GCC5_BIN
+export "%{tool_chain_tag}_BIN"='x86_64-linux-gnu-'
+%endif
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
@@ -337,9 +346,9 @@ cp DBXUpdate-%DBXDATE.ia32.bin ovmf-ia32/
 mkdir -p %buildroot%_datadir/qemu/firmware
 
 # shell
-mkdir -p %buildroot%_prefix/lib64/efi
+mkdir -p %buildroot%_prefix/share/efi
 cp -p Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
-        %buildroot%_prefix/lib64/efi/shell.efi
+        %buildroot%_prefix/share/efi/shellx64.efi
 
 #install OVMF
 mkdir -p %buildroot%_datadir/edk2
@@ -375,9 +384,14 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_datadir/qemu/firmware/*edk2-ovmf-ia32*.json
 
 %files efi-shell
-%_prefix/lib64/efi/shell.efi
+%_prefix/share/efi/shellx64.efi
 
 %changelog
+* Thu May 15 2025 Ivan A. Melnikov <iv@altlinux.org> 20250221-alt2
+- support cross-compilation (by asheplyakov@)
+- make efi-shell subpackage noarch ((by asheplyakov@)
+- build on loongarch64 and riscv64
+
 * Fri Apr 25 2025 Alexey Shabalin <shaba@altlinux.org> 20250221-alt1
 - edk2-stable202502
 
