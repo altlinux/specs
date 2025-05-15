@@ -1,6 +1,6 @@
 Name: codeblocks
-Version: 20.03
-Release: alt12
+Version: 25.03
+Release: alt1
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -20,35 +20,14 @@ Patch0: codeblocks-language-detection-from-locale.patch
 Patch1: codeblocks-ebuild.conf.patch
 Patch2: %name-%version-FortranProject_autotools_build.patch
 Patch3: %name-%version-add-shebang-to-gdb-fortran-extension.patch
-Patch4: %name-%version-multi-arch.patch
 Patch5: %name-%version-fix-empty-arduino-page.patch
-Patch6: 0001-Do-not-call-wxChoice::GetString-with-wxNOT_FOUND.patch
-Patch7: 0001-Fix-build-with-wxWidgets-3.1.4.patch
-# Fix build with libwxGTK3.2
-Patch8: sc_wxtypes-normalize.patch
-# These patches should be applied before patch14
-# patch9 was slightly edited
-Patch9: 56ac0396fad7a5b4bbb40bb8c4b5fe1755078aef.patch
-patch10: 40eb88e3f2b933f19f9933e06c8d0899c54f5e25.patch
-Patch11: remove_code_for_wxWidgets_less_3.0.0_part1.patch
-Patch12: remove_code_for_wxWidgets_less_3.0.0_part2.patch
-Patch13: remove_code_for_wxWidgets_less_3.0.0_part3.patch
-# Fix compilation of notebookstyles.cpp
-Patch14: 29315df024251850832583f73e67e515dae10830.patch
-# Fix regexp. Without this patch program doesnt start
-Patch15: 46720043319758cb0e798eb23520063583c40eaa.patch
-# Fix Assert failure when exit program first time
-Patch16: f700ec868532f4fd6784702ba086d900189864e8.patch
-Patch17: codeblocks-smartindent-notparallel.patch
-# Support LoongArch architecture
-Patch18: codeblocks-20.03-alt-loongarch64.patch
 
 Requires: automake >= 1.7 libwxGTK3.2 gcc gcc-c++ gdb xterm gamin mythes-en
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+3-devel
 BuildRequires: libhunspell-devel libwxGTK3.2-devel
-BuildRequires: tinyxml-devel zip zlib-devel bzlib-devel
+BuildRequires: libtinyxml2-devel zip zlib-devel bzlib-devel
 
 %description
 Code::Blocks is a free C++ IDE built specifically to meet the most
@@ -95,36 +74,18 @@ cp %SOURCE4 .
 
 %patch0 -p1
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 %patch3 -p2
-%patch4 -p1
 %patch5 -p2
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
 
 %ifarch %e2k
 sed -i 's/#elif defined(__x86_64__)/& || defined(__e2k__)/' \
   src/include/mozilla_chardet/nsprpub/pr/include/prcpucfg_linux.h
 %endif
 
-# https://sourceforge.net/p/codeblocks/tickets/936/
-sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
-
 %build
 msgfmt %name.po -o %name.mo
 ./bootstrap
-%add_optflags -std=gnu++14
 %configure --with-contrib-plugins=all \
            --with-boost-libdir=%_libdir \
            --enable-fortran \
@@ -134,9 +95,8 @@ msgfmt %name.po -o %name.mo
 %install
 %makeinstall_std
 
-rm -f %buildroot/%_libdir/%name/plugins/*.la
-rm -f %buildroot/%_libdir/%name/wxContribItems/*.la
-rm -f %buildroot/%_libdir/%name/plugins/contrib/*.la
+rm -v %buildroot/%_libdir/%name/plugins/*.la
+rm -v %buildroot/%_libdir/%name/wxContribItems/*.la
 
 install -m 644 -D alt-icons/16x16/%name.png %buildroot%_miconsdir/%name.png
 install -m 644 -D alt-icons/32x32/%name.png %buildroot%_niconsdir/%name.png
@@ -158,8 +118,10 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %dir %_datadir/%name/locale
 %dir %_datadir/%name/locale/ru_RU
 %_datadir/%name/locale/ru_RU/codeblocks.mo
+%dir %_datadir/%name/docs
+%_datadir/%name/docs/index.ini
 
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %_datadir/%name/abbreviations.zip
 %_datadir/%name/Astyle.zip
@@ -188,6 +150,7 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/%name/plugins/libabbreviations.*
 %_libdir/%name/plugins/libAstyle.*
 %_libdir/%name/plugins/libautosave.*
+%_libdir/%name/plugins/libclangd_client.*
 %_libdir/%name/plugins/libclasswizard.*
 %_libdir/%name/plugins/libcodecompletion.*
 %_libdir/%name/plugins/libcompiler.*
@@ -217,13 +180,14 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/libwxsmithlib.so*
 %_libdir/%name/wxContribItems
 %_man1dir/codesnippets.1.xz
-%_datadir/appdata/%name-contrib.metainfo.xml
+%_datadir/metainfo/%name-contrib.metainfo.xml
 
 %_datadir/%name/AutoVersioning.zip
 %_datadir/%name/BrowseTracker.zip
 %_datadir/%name/byogames.zip
 %_datadir/%name/cb_koders.zip
 %_datadir/%name/Cccc.zip
+%_datadir/%name/clangd_client.zip
 %_datadir/%name/codesnippets.zip
 %_datadir/%name/CppCheck.zip
 %_datadir/%name/codestat.zip
@@ -271,7 +235,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_datadir/%name/images/56x56/*
 %_datadir/%name/images/64x64/*
 %_datadir/%name/images/fortranproject
+%_datadir/%name/images/svg/*
 # Fix of post-install unowned files
+%dir %_datadir/%name/images/svg
 %dir %_datadir/%name/images/16x16
 %dir %_datadir/%name/images/20x20
 %dir %_datadir/%name/images/24x24
@@ -282,7 +248,6 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %dir %_datadir/%name/images/56x56
 %dir %_datadir/%name/images/64x64
 
-%_datadir/%name/images/codesnippets
 %_datadir/%name/images/wxsmith
 %_datadir/%name/lib_finder
 %_datadir/%name/SpellChecker
@@ -340,6 +305,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Wed May 14 2025 Grigory Ustinov <grenka@altlinux.org> 25.03-alt1
+- Build new version (Closes: #54204).
+
 * Fri Aug 09 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20.03-alt12
 - Fixed build for Elbrus.
 
