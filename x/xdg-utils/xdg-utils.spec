@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt3
+Release: alt4
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -106,6 +106,7 @@ popd
 
 %install
 %makeinstall_std
+rm -v %buildroot{%_bindir/xdg-su,%_man1dir/xdg-su*}
 
 %files
 %_bindir/xdg-desktop-icon
@@ -116,12 +117,15 @@ popd
 %_bindir/xdg-open
 %_bindir/xdg-screensaver
 %_bindir/xdg-settings
-%_bindir/xdg-su
+#_bindir/xdg-su
 %_bindir/xdg-terminal
 %_man1dir/*
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Mon May 12 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt4
+- remove xdg-su (ALT bug 54150)
+
 * Fri Apr 04 2025 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt3
 - fix detect KDE
 
