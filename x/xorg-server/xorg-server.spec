@@ -26,9 +26,9 @@
 
 Name: xorg-server
 Version: 21.1.16
-Release: alt1
+Release: alt2
 Epoch: 2
-License: MIT/X11
+License: MIT X11
 Summary: Xserver - X Window System display server
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -195,10 +195,6 @@ mkdir -p %buildroot%_sysconfdir/X11/{app-defaults,xorg.conf.d}
 
 touch %buildroot%_sysconfdir/X11/xorg.conf
 
-install -pD -m644 xserver.pamd %buildroot%_sysconfdir/pam.d/xserver
-mkdir -p %buildroot%_sysconfdir/security/console.apps
-touch %buildroot%_sysconfdir/security/console.apps/xserver
-
 # rpm macros
 install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 
@@ -210,8 +206,6 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %post_control xorg-server
 
 %files
-%config(noreplace) %_sysconfdir/pam.d/xserver
-%config(missingok noreplace) %_sysconfdir/security/console.apps/xserver
 %ghost %_sysconfdir/X11/xorg.conf
 %_bindir/X
 %attr(0700,root,root) %_bindir/Xorg
@@ -266,6 +260,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Thu May 15 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.16-alt2
+- removed dependencies on consolehelper (closes: #54275)
+
 * Tue Feb 25 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.16-alt1
 - 21.1.16
 
