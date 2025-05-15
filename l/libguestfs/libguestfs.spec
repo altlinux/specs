@@ -30,7 +30,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.54.0
+Version: 1.54.1
 Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
@@ -562,6 +562,9 @@ fi
 %endif #erlang
 
 %changelog
+* Thu May 15 2025 Anton Farygin <rider@altlinux.com> 1.54.1-alt1
+- 1.54.1
+
 * Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.54.0-alt1
 - 1.54.0
 
