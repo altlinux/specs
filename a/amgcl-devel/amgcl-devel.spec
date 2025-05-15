@@ -3,7 +3,7 @@
 
 Name:          %oname-devel
 Version:       1.4.4
-Release:       alt1
+Release:       alt2
 Summary:       C++ library for solving large sparse linear systems with algebraic multigrid method
 License:       MIT
 Group:         Sciences/Mathematics
@@ -15,6 +15,24 @@ BuildArch:     noarch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: /proc
+BuildRequires: boost-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: libmetis-devel
+BuildRequires: libgomp-devel
+BuildRequires: libscotch-devel
+BuildRequires: openmpi-devel
+BuildRequires: libblas-devel
+#BuildRequires: libpastix-devel
+#BuildRequires: libblaze-devel
+
+Requires:      rpm-macros-cmake
+Requires:      cmake
+Requires:      gcc-c++
+Requires:      boost-devel
+Requires:      boost-program_options-devel
+Requires:      libgomp-devel
+Requires:      openmpi-devel
 
 %description
 AMGCL is a header-only C++ library for solving large sparse linear systems with
@@ -37,7 +55,6 @@ own backends which enables tight integration between AMGCL and the user code.
 
 %build
 %cmake
-
 %cmake_build
 
 %install
@@ -50,5 +67,9 @@ own backends which enables tight integration between AMGCL and the user code.
 
 
 %changelog
+* Tue May 13 2025 Pavel Skrylev <majioa@altlinux.org> 1.4.4-alt2
+- ! fixed policies and cmake min version for newer cmake
+- ! fixed requires for the devel pckage
+
 * Sun Nov 24 2024 Pavel Skrylev <majioa@altlinux.org> 1.4.4-alt1
 - initial build for Sisyphus
