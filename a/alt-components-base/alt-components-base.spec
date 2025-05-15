@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,18 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Thu May 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.5-alt1
+- Fix components:
+  + replace branding-alt-server-{alterator,indexhtml}
+    from branding-alt-server to separate component
+  + replace patch and xml-utils from base-utils to separate component
+  + replace fwupd from firmware-tools to separate component
+  + fix kernel-modules-virtualbox package name in virtualbox component
+- Fix editions:
+  + replace alt-server-docs, pax, gnupg2, avahi-mdns components to main
+    section for server and domain editions
+  + add fwupd, branding-alt-server-common and dev-utils to main section
+
 * Wed May 14 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.4-alt1
 - editions: add gnome-boxes to server (main section)
 
