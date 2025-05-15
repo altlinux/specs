@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt92
+Release: alt93
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -254,24 +254,12 @@ sed -i 's, > /dev/null 2>&1,,' buildlib/tools.m4
 gettextize --force --quiet --no-changelog --symlink
 %autoreconf
 
-# std::optional support
+# support for std::optional (C++17), std::string::starts_with (C++20)
 # (We set a GNU dialect in -std= in order to minimally diverge
 # from GCC's default, which is also -std=gnu++NN.)
-%ifnarch %e2k
-%add_optflags -std=gnu++17
-%else
+%add_optflags -std=gnu++20
+%ifarch %e2k
 %remove_optflags -Wno-error
-%add_optflags -std=gnu++14
-find -type f -'(' -name '*.cc' -or -name '*.h' -')' -print0 \
-| xargs -0 sed -i -re \
-'s,(std::)(optional|nullopt),\1experimental::\2,g;
- s,^(#[[:blank:]]*include[[:blank:]]*<)(optional>),\1experimental/\2,'
-find -type f -'(' -name '*.cc' -or -name '*.h' -')' -print0 \
-| xargs -0 sed -i -re \
-'s,(std::)(is_unsigned_v),\1experimental::\2,g;
- s,^(#[[:blank:]]*include[[:blank:]]*<)(type_traits>),\1experimental/\2,'
-# [[fallthrough]] attribute is not yet known to lcc:
-%add_optflags -Wno-error=attributes
 %endif
 
 %configure --includedir=%_includedir/apt-pkg --enable-Werror %{subst_enable static}
@@ -482,10 +470,12 @@ export APT_TEST_INTERMEDIATES
 
 . ./run-tests.defaults.sh
 
+all_unique_methods=('' $(for method in "${APT_TEST_ALL_METHODS[@]}" "${APT_TEST_ALL_http_METHODS[@]}"; do echo "$method"; done | sort -u))
+readonly -a all_unique_methods
+
 # Below we run the same tests many times in order to possibly catch
 # bad races. (It's more probable to catch a race under heavy load;
-# therefore, of the total specified number of tries, we do
-# simultaneously as many as reasonable and possibly even more than TRIES.)
+# so, we do simultaneously as many as reasonable, possibly more than real nprocs.)
 
 # To not run in parallel, build the pkg with --define 'nprocs_for_check %%nil'
 # Consider multiplying `nproc` by 2 for heavier load.
@@ -493,32 +483,39 @@ NPROCS=`nproc`
 if ! [ "$NPROCS" -gt 0 ] 2>/dev/null; then
 	NPROCS=1
 fi
+NPROCS=$(( 2 * NPROCS )) # for heavier load
 %{?nprocs_for_check:NPROCS=%nprocs_for_check}
-TRIES=2
-if [ $TRIES -lt ${NPROCS:-0} ]; then
-	TRIES=$NPROCS
-fi
 
 already_once=0
-for (( try = 0; try < TRIES; )); do
-    # FIXME: APT_TEST_ALL_http_METHODS are repeated too many times.
-    for method in "${APT_TEST_ALL_METHODS[@]}"; do
-	# do the same method several times in parallel (to provoke races)
-	for (( repeat = 0; repeat < 2; ++repeat )); do
-	    echo "$((try++)):$method"
-	    if (( already_once && (try >= TRIES) )); then
+job=0
+# Repeat all, so that every one gets tested at least once under maximal load;
+# this is the purpose of extra_job counter.
+readonly EXTRA_JOBS=$((1 * NPROCS)) # just an arbitrary num of extra jobs at the end
+for (( extra_job = 0; extra_job < EXTRA_JOBS; )); do
+    for method in "${all_unique_methods[@]}"; do
+	# We could do the same method several times by increasing the number here
+	# (to provoke even more races), but there are already too many tests.
+	for (( repeat = 0; repeat < 1; ++repeat )); do
+	    # %%02d in order not to pass spaces in xargs' {} placeholder
+	    printf '%%02d:%%s\n' "$((job++))" "$method"
+	    if (( already_once && (++extra_job >= EXTRA_JOBS) )); then
 		break 2
 	    fi
 	done
     done
     already_once=1
-done |
-    xargs -d'\n' -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
-	  -- sh -efuo pipefail \
-	  -c 'APT_TEST_METHODS={}
-              APT_TEST_METHODS="${APT_TEST_METHODS#*:}"
-              export APT_TEST_METHODS
-              %runtests '${NPROCS:+'|& sed --unbuffered -e "s/^/[$PARALLEL_SLOT {}] /"'}
+done >jobs
+
+sed -i -Ee "s,^([^:]+):,\1/$job:," jobs
+
+export NPROCS # for the embedded script (to show the total number of slots)
+xargs <jobs \
+      -d'\n' -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
+      -- sh -efuo pipefail \
+	  -c 'APT_RUN_TEST_ONLY_IF_METHOD_MATCHES={}
+              APT_RUN_TEST_ONLY_IF_METHOD_MATCHES="${APT_RUN_TEST_ONLY_IF_METHOD_MATCHES#*:}"
+              export APT_RUN_TEST_ONLY_IF_METHOD_MATCHES
+              %runtests '${NPROCS:+'|& sed --unbuffered -e "s,^,[$(printf %%2d $PARALLEL_SLOT)/$NPROCS {}] ,"'}
 
 %package under-pkdirect-checkinstall
 Summary: Immediately test %name+PK when installing this package (via packagekit-direct)
@@ -613,6 +610,18 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Sat May  3 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt93
+- Made Debug::Connect config also effective for unwrapped TLS connections.
+  (If set, the cleartext HTTP connections are logged into the specified dir.)
+- apt.conf(Allow-Duplicated): drop ^NVIDIA_ as outdated & confusing (ALT#53988).
+  (There have been no such packages in ALT since a long time.)
+- e2k build: The used C++ features no longer need special treatment/lcc options.
+- checkinstall subpkg (xxtra-heavy-load):
+  + Fixed not to run the http-related tests (multiplied in 0.5.15lorg2-alt92)
+    too many times; thereby reduced the time.
+  + Doubled the number of parallel slots for heavier load (to provoke races).
+  + Show the total number of parallel slots and jobs.
+
 * Wed Apr 16 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt92
 - Support encoded usernames and passwords in URIs (incl. http_proxy); it was
   impossible to have @ there; now one should write %%40 (ALT#38277).
