@@ -5,7 +5,7 @@
 
 Name: gpsd
 Summary: Service daemon for mediating access to a GPS
-Version: 3.25
+Version: 3.26
 Release: alt1
 License: BSD-2-Clause
 Group: System/Servers
@@ -213,6 +213,9 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %_bindir/gpsdecode
 %_man1dir/gpsdecode*
 
+%_bindir/gpslogntp
+%_man1dir/gpslogntp*
+
 %_bindir/gpsmon
 %_man1dir/gpsmon*
 
@@ -277,6 +280,9 @@ install -p -m 0644 %name-%version/packaging/rpm/gpsd.sysconfig %buildroot/%_sysc
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu May 15 2025 Anton Farygin <rider@altlinux.com> 3.26-alt1
+- 3.25 -> 3.26
+
 * Sat Sep 21 2024 Anton Farygin <rider@altlinux.ru> 3.25-alt1
 - 3.23.1 -> 3.25
 
