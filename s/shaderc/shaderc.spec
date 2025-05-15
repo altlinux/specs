@@ -1,6 +1,6 @@
 %define sover 1
-%define glslang_ver 15.1.0
-%define spirv_tools_ver 2024.4
+%define glslang_ver 15.3.0
+%define spirv_tools_ver 2025.2
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type
 %def_disable static
@@ -11,7 +11,7 @@
 %endif
 
 Name: shaderc
-Version: 2024.4
+Version: 2025.2
 Release: alt0.1
 
 Summary: A collection of tools, libraries and tests for shader compilation 
@@ -26,7 +26,7 @@ Patch0: %name-%version-%release.patch
 Patch1: %name-alt-skip-dirs.patch
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ spirv-headers >= 1.5.5-alt16 libspirv-tools-devel >= %spirv_tools_ver glslang-devel >= %glslang_ver
+BuildRequires: gcc-c++ spirv-headers >= 1.5.5-alt18 libspirv-tools-devel >= %spirv_tools_ver glslang-devel >= %glslang_ver
 BuildRequires: python3-devel ninja-build
 %if_with doc
 BuildRequires: asciidoctor
@@ -92,10 +92,7 @@ subst '/^#!.*python$/s|python$|python3|' $(grep -Rl '#!.*python$' *)
 echo '"%name v%version v%version\\n"' >> %_target_platform/build-version.inc
 echo '"spirv-tools v%spirv_tools_ver v%spirv_tools_ver\\n"' >> %_target_platform/build-version.inc
 echo '"glslang v%glslang_ver v%glslang_ver\\n"' >> %_target_platform/build-version.inc
-ninja \
-  -vvv \
-  -j %__nprocs \
-  -C %_cmake__builddir
+%cmake_build
 
 %install
 %cmake_install
@@ -123,8 +120,11 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/*
 
 %changelog
+* Thu May 15 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.2-alt0.1
+- v2025.2.
+
 * Fri Feb 07 2025 L.A. Kostis <lakostis@altlinux.ru> 2024.4-alt0.1
-- 2024.4.
+- v2024.4.
 - BR: bump deps.
 
 * Sat Dec 14 2024 L.A. Kostis <lakostis@altlinux.ru> 2024.3-alt0.1
