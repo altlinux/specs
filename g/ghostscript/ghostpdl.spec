@@ -1,5 +1,5 @@
 Name: ghostscript
-Version: 10.04.0
+Version: 10.05.1
 Release: alt1
 
 %define ijsver	0.35
@@ -317,6 +317,9 @@ cp -a examples %buildroot%_docdir/%name-%version
 %_includedir/ijs
 
 %changelog
+* Thu May 15 2025 Fr. Br. George <george@altlinux.org> 10.05.1-alt1
+- Autobuild version bump to 10.05.1
+
 * Wed Oct 02 2024 Fr. Br. George <george@altlinux.org> 10.04.0-alt1
 - Autobuild version bump to 10.04.0 (Cloeses: 47283)
 
