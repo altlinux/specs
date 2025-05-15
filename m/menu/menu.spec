@@ -2,7 +2,7 @@
 
 Name: menu
 Version: 2.1.41
-Release: alt24
+Release: alt25
 
 Group: System/Base
 Summary: Menu system
@@ -112,6 +112,7 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
 %install
 mkdir -p %buildroot/%_bindir
 mkdir -p %buildroot/%_sbindir
+mkdir -p %buildroot/%_prefix/libexec
 mkdir -p %buildroot/%_mandir/{man1,man5}
 mkdir -p %buildroot/%_sysconfdir/{menu,menu-methods,firsttime.d}
 mkdir -p %buildroot/%_menudir/default
@@ -141,7 +142,15 @@ install -p -m0644 doc/*.5 %buildroot/%_mandir/man5
 
 install -p -m0755 %SOURCE6 %buildroot/%_sysconfdir/X11/xinit.d/%name
 
-install -pD -m755 %_sourcedir/update-menus.sh %buildroot%_sbindir/update-menus
+# create hardlink update-menus
+mv %buildroot%_bindir/update-menus %buildroot%_prefix/libexec/
+install -pD -m755 %_sourcedir/update-menus.sh %buildroot%_bindir/update-menus
+ln %buildroot%_bindir/update-menus %buildroot%_sbindir/update-menus
+
+# replace symlink with hardlink
+rm %buildroot%_sbindir/install-menu
+ln %buildroot%_bindir/install-menu %buildroot%_sbindir/install-menu
+
 install -pD -m755 %_sourcedir/menu.filetrigger %buildroot%_rpmlibdir/menu.filetrigger
 
 mkdir -p %buildroot/%_sysconfdir/menu-methods
@@ -183,6 +192,7 @@ sh -n %buildroot%_sysconfdir/firsttime.d/menu
 #
 %_bindir/*
 %_sbindir/*
+%_prefix/libexec/update-menus
 %_rpmlibdir/menu.filetrigger
 %dir %_localstatedir/menu
 %_menudir/*
@@ -191,6 +201,9 @@ sh -n %buildroot%_sysconfdir/firsttime.d/menu
 %doc doc/{*html,README*,BUGS,menu.txt*} AUTHORS debian/changelog debian/copyright examples
 
 %changelog
+* Thu May 15 2025 Anton Midyukov <antohami@altlinux.org> 2.1.41-alt25
+- NMU: preparing to bin-sbin-merge
+
 * Sun Sep 22 2024 Anton Midyukov <antohami@altlinux.org> 2.1.41-alt24
 - update-menus.sh: use config /etc/locale.conf as a fallback
 
