@@ -1,61 +1,36 @@
-Epoch: 0
+Name:    mockito
+Version: 5.17.0
+Release: alt1
+Summary: Tasty mocking framework for unit tests in Java
+License: MIT
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+URL: https://site.mockito.org/
 
-Name:           mockito
-Version:        3.12.4
-Release:        alt1_5jpp11
-Summary:        Tasty mocking framework for unit tests in Java
-License:        MIT
-URL:            https://site.mockito.org/
-BuildArch:      noarch
+BuildArch: noarch
 
 # ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-Source1:        generate-tarball.sh
+Source0: %name-%version.tar.gz
+Source1: generate-tarball.sh
 
 # A custom build script to allow building with maven instead of gradle
-Source2:        mockito-core.pom
+Source2: mockito-core.pom
 
-# Maven central POMs for subprojects
-Source3:        https://repo1.maven.org/maven2/org/mockito/mockito-inline/%{version}/mockito-inline-%{version}.pom
-Source4:        https://repo1.maven.org/maven2/org/mockito/mockito-junit-jupiter/%{version}/mockito-junit-jupiter-%{version}.pom
-
-# Mockito expects byte-buddy to have a shaded/bundled version of ASM, but
-# we don't bundle in Fedora, so this patch makes mockito use ASM explicitly
-Patch0:         use-unbundled-asm.patch
-
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bnd)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(net.bytebuddy:byte-buddy)
-BuildRequires:  mvn(net.bytebuddy:byte-buddy-agent)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apiguardian:apiguardian-api)
-BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.hamcrest:hamcrest)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires:  mvn(org.objenesis:objenesis)
-BuildRequires:  mvn(org.opentest4j:opentest4j)
-BuildRequires:  mvn(org.ow2.asm:asm)
-%endif
-Source44: import.info
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+BuildRequires: mvn(biz.aQute.bnd:biz.aQute.bnd)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(net.bytebuddy:byte-buddy)
+BuildRequires: mvn(net.bytebuddy:byte-buddy-agent)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apiguardian:apiguardian-api)
+BuildRequires: mvn(org.assertj:assertj-core)
+BuildRequires: mvn(org.hamcrest:hamcrest)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.objenesis:objenesis)
+BuildRequires: mvn(org.opentest4j:opentest4j)
+BuildRequires: mvn(org.ow2.asm:asm)
 
 %description
 Mockito is a mocking framework that tastes really good. It lets you write
@@ -63,41 +38,8 @@ beautiful tests with clean & simple API. Mockito doesn't give you hangover
 because the tests are very readable and they produce clean verification
 errors.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadocs for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
-%package inline
-Group: Development/Java
-Summary:        Mockito preconfigured inline mock maker
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description inline
-Mockito preconfigured inline mock maker (intermediate and to be
-superseded by automatic usage in a future version).
-
-%if %{without bootstrap}
-%package junit-jupiter
-Group: Development/Java
-Summary:        Mockito JUnit 5 support
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description junit-jupiter
-Mockito JUnit 5 support.
-%endif
-
 %prep
-%setup -q
-%patch0 -p1
-
-
-# Disable failing test
-# TODO check status: https://github.com/mockito/mockito/issues/2162
-sed -i '/add_listeners_concurrently_sanity_check/i @org.junit.Ignore' src/test/java/org/mockitousage/debugging/StubbingLookupListenerCallbackTest.java
+%setup
 
 # Use our custom build script
 sed -e 's/@VERSION@/%{version}/' %{SOURCE2} > pom.xml
@@ -131,36 +73,7 @@ EOF
 %mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
 
 %build
-# See the usage of exec-maven-plugin in the pom
-mkdir -p target/classes/
-javac  -target 1.8 -source 1.8 -d target/classes/ src/main/java/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.java
-mv target/classes/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.{class,raw}
-
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
-
-# Build the inline subproject
-cd subprojects/inline/src/main/resources
-jar cf ../../../../../target/mockito-inline.jar mockito-extensions
-cd -
-%mvn_artifact %{SOURCE3} target/mockito-inline.jar
-%mvn_package org.mockito:mockito-inline inline
-
-%if %{without bootstrap}
-# Build the junit-jupiter subproject
-cd subprojects/junit-jupiter
-mkdir -p target/classes/
-CLASSPATH=$(build-classpath apiguardian junit5/junit-jupiter-api junit5/junit-platform-commons)
-javac  -target 1.8 -source 1.8 -d target/classes/ \
-      -cp ../../target/mockito-core-%{version}.jar:$CLASSPATH \
-      src/main/java/org/mockito/junit/jupiter/*.java
-jar -cf ../../target/mockito-junit-jupiter.unwrapped.jar -C target/classes org
-cd -
-bnd wrap --properties osgi-junit-jupiter.bnd --version %{version} \
-    --output target/mockito-junit-jupiter.jar \
-    target/mockito-junit-jupiter.unwrapped.jar
-%mvn_artifact %{SOURCE4} target/mockito-junit-jupiter.jar
-%mvn_package org.mockito:mockito-junit-jupiter junit-jupiter
-%endif
+%mvn_build -f
 
 %install
 %mvn_install
@@ -169,16 +82,10 @@ bnd wrap --properties osgi-junit-jupiter.bnd --version %{version} \
 %doc --no-dereference LICENSE
 %doc README.md doc/design-docs/custom-argument-matching.md
 
-%files inline -f .mfiles-inline
-
-%if %{without bootstrap}
-%files junit-jupiter -f .mfiles-junit-jupiter
-%endif
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 %changelog
+* Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 5.17.0-alt1
+- new version
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:3.12.4-alt1_5jpp11
 - update
 

@@ -1,43 +1,27 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: maven-local
-# END SourceDeps(oneline)
+Name:    apache-commons-lang3
+Version: 3.17.0
+Release: alt1
+Summary: Provides a host of helper utilities for the java.lang API
+License: Apache-2.0
+Group:   Development/Java
+URL:     https://commons.apache.org/lang
+
+BuildArch: noarch
+
+Source0: https://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
+Patch1: 0001-Remove-test-dependency-on-JUnit-Pioneer.patch
+
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
-
-Name:           apache-commons-lang3
-Version:        3.12.0
-Release:        alt2_7jpp11
-Summary:        Provides a host of helper utilities for the java.lang API
-License:        ASL 2.0
-URL:            https://commons.apache.org/lang
-BuildArch:      noarch
-
-Source0:        https://archive.apache.org/dist/commons/lang/source/commons-lang3-%{version}-src.tar.gz
-Patch1:         0001-Remove-test-dependency-on-JUnit-Pioneer.patch
-
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bndlib)
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
-BuildRequires:  mvn(org.hamcrest:hamcrest)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
-%endif
-Source44: import.info
+BuildRequires: maven-local
+BuildRequires: mvn(biz.aQute.bnd:biz.aQute.bndlib)
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.easymock:easymock)
+BuildRequires: mvn(org.hamcrest:hamcrest)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
 
 %description
 The standard Java libraries fail to provide enough methods for
@@ -66,26 +50,25 @@ package.
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_dep org.openjdk.jmh:jmh-core
 %pom_remove_dep org.openjdk.jmh:jmh-generator-annprocess
-%pom_remove_dep :junit-bom
-
+%pom_remove_dep org.apache.commons:commons-text
+ 
 %mvn_file : %{name} commons-lang3
-
+ 
 # testParseSync() test fails on ARM and PPC64LE for unknown reason
 sed -i 's/\s*public void testParseSync().*/@org.junit.jupiter.api.Disabled\n&/' \
     src/test/java/org/apache/commons/lang3/time/FastDateFormatTest.java
-
+ 
 # non-deterministic tests fail randomly
 rm src/test/java/org/apache/commons/lang3/RandomStringUtilsTest.java
-
+ 
 # Missing dependencies
 rm src/test/java/org/apache/commons/lang3/HashSetvBitSetTest.java
-
+ 
 # Remove limits and Java 11 options
 sed -i '/<argLine>/d' pom.xml
 
 %build
-# See "-DcommonsLang3Version" in maven-surefire for the tested version
-%mvn_build -f -- -Dmaven.test.skip.exec=true -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -95,6 +78,9 @@ sed -i '/<argLine>/d' pom.xml
 %doc RELEASE-NOTES.txt
 
 %changelog
+* Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
+- new version
+
 * Wed Oct 25 2023 Igor Vlasenko <viy@altlinux.org> 3.12.0-alt2_7jpp11
 - fixed build (closes: #48155)
 
