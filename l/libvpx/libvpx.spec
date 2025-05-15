@@ -1,4 +1,4 @@
-%define soname 9
+%define soname 11
 %ifarch %ix86
 %define platform x86-linux-gcc
 %else
@@ -22,7 +22,7 @@
 %endif
 
 Name: libvpx
-Version: 1.15.0
+Version: 1.15.1
 Release: alt1
 Summary: VP8 video codec
 Group: Video
@@ -115,6 +115,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Mon May 05 2025 Anton Farygin <rider@altlinux.com> 1.15.1-alt1
+- 1.15.0 -> 1.15.1
+
 * Wed Dec 25 2024 Anton Farygin <rider@altlinux.ru> 1.15.0-alt1
 - 1.14.0 -> 1.15.0
 
