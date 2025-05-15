@@ -3,7 +3,7 @@
 
 Name: qhull
 Version: 2020.2
-Release: alt1
+Release: alt2
 
 Summary: General dimension convex hull programs
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -105,6 +105,7 @@ This package contains the HTML documentation.
 export CFLAGS="%optflags_shared"
 export CXXFLAGS="%optflags_shared"
 cmake \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     %if %_lib == lib64
     -DLIB_SUFFIX:STRING=64 \
     %endif
@@ -147,6 +148,9 @@ install -m755 user_eg* %buildroot%_bindir
 %doc %_docdir/%name
 
 %changelog
+* Thu May 15 2025 Grigory Ustinov <grenka@altlinux.org> 2020.2-alt2
+- Fixed FTBFS.
+
 * Tue May 11 2021 Grigory Ustinov <grenka@altlinux.org> 2020.2-alt1
 - Build new version.
 
