@@ -25,7 +25,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        136.0.7103.92
+Version:        136.0.7103.113
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -599,6 +599,13 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu May 15 2025 Andrew A. Vasilyev <andy@altlinux.org> 136.0.7103.113-alt1
+- New version (136.0.7103.113).
+- Security fixes:
+  + CVE-2025-4664: Insufficient policy enforcement in Loader
+  + CVE-2025-4609: Incorrect handle provided in unspecified
+    circumstances in Mojo
+
 * Wed May 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 136.0.7103.92-alt1
 - New version (136.0.7103.92).
 - Security fixes:
