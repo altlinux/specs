@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.1.1
+Version: 0.1.3
 Release: alt1
 
 Summary: Extensible control center
@@ -37,6 +37,7 @@ Extensible control center for GNOME desktop
 %package -n lib%name
 Summary: Versatile library for creating extensible apps and plugins for them
 Group: System/Libraries
+Requires: libpeas2-python3-loader
 
 %description -n lib%name
 lib%name is a library designed to support both core application development
@@ -120,6 +121,14 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Wed May 14 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.3-alt1
+- added python plugin support
+- display loaded plugins at credits section
+
+* Tue May 13 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.2-alt1
+- added conflicts warnings
+- added more methods to PanelPage
+
 * Mon May 12 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.1-alt1
 - fixed opening panels at mobile layout
 - added panels sorting

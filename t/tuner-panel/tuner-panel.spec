@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerPanel
 
 Name: tuner-panel
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Panel mode switcher
@@ -45,5 +45,8 @@ Plugin for Tuner that adds panel mode switcher to Tweaks appearance page.
 %doc README.md
 
 %changelog
+* Tue May 13 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.2-alt1
+- fixed icons size
+
 * Mon May 12 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.1-alt1
 - initial build
