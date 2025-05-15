@@ -1,5 +1,5 @@
 %define vrs	3.1
-%define tstamp 	20230828
+%define tstamp 	20250104
 
 Name: libedit3
 Version: %vrs.%tstamp
@@ -53,13 +53,6 @@ rm aclocal.m4 m4/*.m4
 %install
 %makeinstall_std
 
-# In 20160618-3.1 some manpages dropped prefix for some reason.
-cd %buildroot%_man3dir
-	for m in tok_*.3 history*.3 ; do
-		mv -v "$m" el_"$m"
-	done
-cd -
-
 %set_verify_elf_method strict
 %define _stripped_files_terminate_build 1
 %define _unpackaged_files_terminate_build 1
@@ -76,6 +69,9 @@ cd -
 %_man3dir/*
 
 %changelog
+* Thu May 15 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20250104-alt1
+- Updated to 20250104-3.1.
+
 * Tue Oct 03 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.1.20230828-alt1
 - Updated to 20230828-3.1.
 
