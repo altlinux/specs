@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-MariaDB
 Name: perl-%dist
-Version: 1.23
+Version: 1.24
 Release: alt1
 
 Summary: MariaDB driver for DBI interface in Perl
@@ -58,6 +58,9 @@ rm %buildroot%perl_vendor_archlib/DBD/MariaDB/INSTALL.pod
 %perl_vendor_autolib/DBD/*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.24-alt1
+- automated CPAN update
+
 * Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
 - automated CPAN update
 
