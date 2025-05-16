@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 0.2 
+Version: 0.2.2
 Release: alt0.1
 
 Summary: Python module for new Alterator
@@ -43,5 +43,11 @@ Supported modules:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt0.1
+- Added ability to use from alterator import Components.
+
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.1-alt0.1
+- components: supported localized comment.
+
 * Tue May 13 2025 Andrey Cherepanov <cas@altlinux.org> 0.2-alt0.1
 - Initial build for Sisyphus for new Alterator.
