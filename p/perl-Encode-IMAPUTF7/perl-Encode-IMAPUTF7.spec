@@ -1,6 +1,6 @@
 %define dist Encode-IMAPUTF7
 Name: perl-%dist
-Version: 1.05
+Version: 1.06
 Release: alt1
 
 Summary: Modification of UTF-7 encoding for IMAP
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ international characters outside of the printable ASCII range. The
 modified UTF-7 encoding is defined in RFC2060 (section 5.1.3).
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ modified UTF-7 encoding is defined in RFC2060 (section 5.1.3).
 %perl_vendor_privlib/Encode
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.06-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 1.05-alt1
 - 1.04 -> 1.05
 - renamed to proper CPAN name: IMAPUtf7 -> IMAPUTF7
