@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.82
-Release: alt2
+Release: alt3
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -36,6 +36,7 @@ Requires: libnsl1
 Requires: libnss
 Requires: lsof
 Requires: sysctl-conf-userns
+Requires: xorg-xwayland
 Requires: xz
 
 %add_python3_path %_libexecdir/%name/%{name}_launcher
@@ -76,8 +77,17 @@ savegame and screenshot functionality, and many social features.
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
 %changelog 
+* Fri May 16 2025 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt3
+- Add require on xorg-xwayland (ALT #52648, #54338)
+
+* Sat Nov 23 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt1.p11.1
+- Build for branch p11
+
 * Fri Nov 22 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt2
 - Add require on libEGL for VR (ALT #52087)
+
+* Sat Oct 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt0.p11.1
+- Build for branch p11
 
 * Sat Oct 05 2024 Nazarov Denis <nenderus@altlinux.org> 1.0.0.82-alt1
 - Version 1.0.0.82
