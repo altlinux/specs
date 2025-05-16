@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.7-alt1
+- components: add localized comments for education components
+
 * Fri May 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.6-alt1
 - editions: add alterator-legacy-ulogd and zabbix-agent2 to main section
 - Fix components:
