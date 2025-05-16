@@ -14,8 +14,8 @@
 %endif
 
 Name:    qgis
-Version: 3.42.2
-Release: alt2
+Version: 3.42.3
+Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
@@ -400,6 +400,9 @@ sed -i '/QtWebEngine/d' %buildroot%_datadir/%name/python/qsci_apis/PyQt5.api
 %endif
 
 %changelog
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.42.3-alt1
+- New version.
+
 * Mon Apr 28 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.42.2-alt2
 - Fixed build for Elbrus.
 
