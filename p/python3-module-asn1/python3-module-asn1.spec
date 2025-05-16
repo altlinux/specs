@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: Python-ASN1 is a simple ASN.1 encoder and decoder for Python 2.7 and 3.5+.
@@ -38,11 +38,13 @@ Source: %pypi_name-%version.tar
 
 %files
 %doc AUTHORS.rst CHANGELOG.rst README.rst
-%python3_sitelibdir/%pypi_name.py
+%python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
-%python3_sitelibdir/__pycache__/asn1.cpython*
 
 %changelog
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Sat May 03 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.1-alt1
 - New version.
 
