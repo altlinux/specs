@@ -8,7 +8,7 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUti
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.64
+Version: 0.66
 Release: alt1
 Summary: perl interface to the GMP library's rational (mpq) functions..
 Group: Development/Perl
@@ -47,6 +47,9 @@ A bigrational module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 0.66-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.64-alt1
 - automated CPAN update
 
