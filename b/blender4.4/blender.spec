@@ -4,7 +4,6 @@
 %define git %nil
 %define kern_dir scripts/addons_core/cycles/lib
 %define project blender
-%define gcc_ver 13
 
 %def_with docs
 
@@ -57,7 +56,7 @@
 %def_with jemalloc
 
 Name: %{project}4.4
-Version: 4.4.1
+Version: 4.4.3
 Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -90,8 +89,16 @@ Patch34: blender-cycles-fix-hip-kernels.patch
 Patch36: blender-4.4-system-draco.patch
 Patch37: blender-4.4-alt-hiprt-2.5.patch
 Patch38: blender-4.4-alt-hiprt-optflags.patch
+# revert upstream 2bab4ae370e524c3bc0373d90cd3f6eaa57c46eb commit
+# as ARL doesn't support bindless textures
+Patch39: blender-4.4-oneapi-no-bindless-textures.patch
+Patch41: blender-4.4-oneapi-add-arl.patch
+Patch42: blender-4.4-oneapi-sycl-cmath.patch
 
 # upstream fixes to merge
+# 2c99edbffa9f4b5defe33eb77d96a224d30443e2 already in main
+# + PR 138176: fixes for embree 4.4
+Patch100: blender-4.4-embree4.patch
 
 # e2k and loongarch64 are broken now
 #Patch2000: blender-e2k-support.patch
@@ -121,7 +128,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: libgomp%{gcc_ver}-devel
+BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpotrace-devel
@@ -134,7 +141,6 @@ BuildRequires: libvulkan-devel libshaderc-devel
 BuildRequires: libspnav-devel
 BuildRequires: libwebp-devel
 BuildRequires: pipewire-libs-devel
-BuildRequires: MaterialX-devel
 %ifarch aarch64
 BuildRequires: sse2neon-devel
 %endif
@@ -169,7 +175,7 @@ BuildRequires: OpenUSD-devel
 %endif
 
 %if_with cuda
-BuildRequires: nvidia-cuda-devel gcc%{gcc_ver}-c++
+BuildRequires: nvidia-cuda-devel
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %set_verify_elf_skiplist %_datadir/%project/*/%kern_dir/*.cubin
@@ -353,8 +359,12 @@ EOF
 %patch37 -p1
 %patch38 -p1
 %endif
+%patch39 -p1
+%patch41 -p1
+%patch42 -p1
 
 # upstream patches
+%patch100 -p1 -b .embree4.4
 
 %ifarch %e2k
 #%%patch2000 -p1
@@ -386,9 +396,6 @@ BUILD_TIME="$(stat -c '%%y' '%SOURCE0' | date -f - '+%%H:%%M:%%S')"
 %add_optflags -DGLOG_USE_GLOG_EXPORT
 %if_with hiprt
 export ALTWRAP_LLVM_VERSION=rocm
-%endif
-%if_with cuda
-export GCC_VERSION=%gcc_ver
 %endif
 %cmake -G Ninja \
 %if_with hip
@@ -527,6 +534,17 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Fri May 16 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.3-alt2
+- cuda: rebuild with default gcc.
+
+* Sat May 03 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.3-alt1.ark
+- 4.4.3.
+- cycles/oneapi: link with sycl-cmath to solve unresolved symbols.
+
+* Fri Apr 25 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.1-alt2.ark
+- oneapi: disable bindless textures (should fix issue on ARL).
+- added embree4 patch from upstream.
+
 * Fri Apr 25 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.1-alt2
 - enable MaterialX support.
 
