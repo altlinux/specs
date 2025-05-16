@@ -8,7 +8,7 @@
 
 Name: errands
 Version: %ver_major.2.8
-Release: alt1
+Release: alt1.1
 
 Summary: Todo application for GNOME
 License: MIT
@@ -22,6 +22,8 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+# .pot, ru.po update
+Patch10: https://github.com/mrvladus/Errands/commit/cd8668130bcf0c9e1a92bece9f773b65e82ba6db.patch
 
 %define adwaita_ver 1.5
 
@@ -51,9 +53,11 @@ Todo application for those who prefer simplicity.
 
 %prep
 %setup %{?_disable_snapshot:-n %_name-%version}
+%patch10 -p1
 
 %build
 %meson
+#%meson_build %name-pot %name-update-po
 %meson_build
 
 %install
@@ -74,6 +78,9 @@ Todo application for those who prefer simplicity.
 %doc README*
 
 %changelog
+* Fri May 16 2025 Yuri N. Sedunov <aris@altlinux.org> 46.2.8-alt1.1
+- updated russian translation (ALT #54325)
+
 * Sun Mar 16 2025 Yuri N. Sedunov <aris@altlinux.org> 46.2.8-alt1
 - 46.2.8
 
