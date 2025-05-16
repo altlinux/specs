@@ -5,7 +5,7 @@
 %define module Mail-SPF
 
 Name: perl-%module
-Version: 3.20240923
+Version: 3.20250505
 Release: alt1
 
 Summary: Perl module that implements Sender Policy Framework
@@ -13,7 +13,7 @@ License: BSD
 Group: Development/Perl
 
 URL: %CPAN %module
-Source0: http://www.cpan.org/authors/id/M/MB/MBRADSHAW/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AD/ADAVIS/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -46,6 +46,9 @@ rm t/90-author-pod-validation.t
 %perl_vendor_privlib/Mail/SPF*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 3.20250505-alt1
+- automated CPAN update
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 3.20240923-alt1
 - automated CPAN update
 
