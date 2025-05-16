@@ -23,8 +23,8 @@
 %global omp_sover %v_majmin
 # libomp has own versioning
 %global omp_vmajor 5
-# According to offload/README.txt
-%global libomptarget_arches x86_64 aarch64 ppc64le
+# see llvm-project/offload/plugins-nextgen/host/CMakeLists.txt
+%global libomptarget_arches x86_64 aarch64 loongarch64 ppc64le riscv64
 %ifarch ppc64le
 %global libomp_arch powerpc64le
 %else
@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1191,6 +1191,11 @@ sed -i '
 mkdir -p %buildroot%llvm_datadir/cmake
 cp -ar cmake/Modules %buildroot%llvm_datadir/cmake/
 
+# Help verify-elf to locate certain symbols
+export RPM_LD_PRELOAD_libllvm=%buildroot%_libdir/libLLVM.so.%v_majmin
+# LLVMPolly.so is a plugin, so it should not be linked with libLLVM explicitly
+export RPM_FILES_TO_LD_PRELOAD_libllvm=%llvm_libdir/LLVMPolly.so
+
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
@@ -1483,6 +1488,11 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Fri May 16 2025 Ivan A. Melnikov <iv@altlinux.org> 20.1.4-alt0.2
+- Mark loognarch64 and riscv64 as omp architectures (fixes FTBS).
+- Avoid 'undefined symbol' false-positives from verify-elf
+  on LLVMPolly.so.
+
 * Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.4-alt0.1
 - Update to 20.1.4.
 
