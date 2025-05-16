@@ -10,7 +10,7 @@
 # As ubuntu
 %define gcc_ver 9
 
-%define _vk_api_version 1.4.308
+%define _vk_api_version 1.4.313
 
 %def_with clang
 %def_with wayland
@@ -26,7 +26,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2025.Q1.3
+Version: 2025.Q2.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -61,6 +61,9 @@ Source7: cwpack.tar
 Source8: VK_LAYER_AMD_switchable_graphics.json
 Source9: llvm-dialects.tar
 
+# https://github.com/Tencent/rapidjson/pull/719
+Patch: pal-rapidjson-719.patch
+
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
 Radeon(tm) graphics adapters on Linux(r). It is built on top of AMD's Platform
@@ -72,6 +75,10 @@ AMD developer tools.
 
 %prep
 %setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7 -b9
+# after 9yrs still not fixed
+pushd %_builddir/pal/shared/devdriver/third_party/rapidjson
+%patch -p1
+popd
 mkdir -p %_builddir/llvm-project
 mv %_builddir/llvm/llvm %_builddir/llvm-project
 cp -ar %_builddir/llvm/{cmake,third-party} %_builddir/llvm-project/
@@ -124,6 +131,19 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri May 16 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.Q2.1-alt1
+- pal/rapidjson: remove non-compiling assignment operator
+- 2025-4-30 update:
+  + icd: bump vulkan version.
+  + llvm-dialects: Updated to b249d1d32856
+  + cwpack: Updated to 73d612971b3a
+  + metrohash: Updated to 6ab6ee5d31d0
+  + llvm-project: Updated to 8fd93e26cf9b
+  + gpurt: Updated to 7b226d48b46b
+  + llpc: Updated to 40cb8d95ad8d
+  + pal: Updated to c5e800072a32
+  + xgl: Updated to e9782eb33ce5
+
 * Wed Mar 19 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.Q1.3-alt1
 - 2025-3-13 update:
   + icd: bump vulkan version.
