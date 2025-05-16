@@ -6,14 +6,14 @@ BuildRequires: perl(B/Keywords.pm) perl(Data/Dumper.pm) perl(Exporter.pm) perl(E
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.003
-Release: alt2
+Version: 0.004
+Release: alt1
 Summary: Utility functions for PPI
 Group: Development/Perl
 License: perl
 URL: https://github.com/Grinnz/PPIx-Utils
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/D/DB/DBOOK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DB/DBOOK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -34,10 +34,13 @@ the Perl::Critic manpage.
 %perl_vendor_install
 
 %files
-%doc LICENSE README CONTRIBUTING.md Changes
+%doc README CONTRIBUTING.md Changes
 %perl_vendor_privlib/P*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 0.004-alt1
+- automated CPAN update
+
 * Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 0.003-alt2
 - to Sisyphus as Perl-MinimumVersion dep
 
