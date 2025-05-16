@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 0.16
+Version: 0.17
 Release: alt1
 Summary: On the fly conversion of Python docstrings to markdown
 License: LGPL-2.1
@@ -53,6 +53,9 @@ of its features to Markdown.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 16 2025 Stanislav Levin <slev@altlinux.org> 0.17-alt1
+- 0.16 -> 0.17.
+
 * Wed Mar 26 2025 Stanislav Levin <slev@altlinux.org> 0.16-alt1
 - 0.12 -> 0.16.
 
