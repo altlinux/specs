@@ -7,8 +7,8 @@
 %def_enable tests
 
 Name: SPICE
-Version: 0.15.2
-Release: alt3
+Version: 0.16.0
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -28,7 +28,7 @@ BuildRequires: libcacard-devel >= 2.5.1
 BuildRequires: python3-module-six python3-module-pyparsing
 BuildRequires: glib2-devel >= 2.38
 BuildRequires: libgdk-pixbuf-devel >= 2.26
-BuildRequires: spice-protocol >= 0.14.3
+BuildRequires: spice-protocol >= 0.14.5
 %{?_enable_manual:BuildRequires: asciidoc asciidoc-a2x}
 %{?_enable_opus:BuildRequires: libopus-devel >= 0.9.14}
 %{?_enable_lz4:BuildRequires: liblz4-devel}
@@ -102,6 +102,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Thu May 15 2025 Alexey Shabalin <shaba@altlinux.org> 0.16.0-alt1
+- 0.16.0
+
 * Thu Feb 15 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.15.2-alt3
 - Fixed build for Elbrus.
 
