@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 # END SourceDeps(oneline)
 %define dist URI
 Name: perl-%dist
-Version: 5.31
+Version: 5.32
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -40,6 +40,9 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 5.32-alt1
+- automated CPAN update
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 5.31-alt1
 - automated CPAN update
 
