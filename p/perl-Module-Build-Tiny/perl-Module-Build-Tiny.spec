@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Summary:	A tiny replacement for Module::Build
 Name:		perl-Module-Build-Tiny
-Version:	0.051
+Version:	0.052
 Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Module-Build-Tiny
@@ -91,6 +91,9 @@ AUTHOR_TESTING=1 RELEASE_TESTING=1 ./Build test
 %{perl_vendor_privlib}/Module/
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 0.052-alt1
+- automated CPAN update
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 0.051-alt1
 - automated CPAN update
 
