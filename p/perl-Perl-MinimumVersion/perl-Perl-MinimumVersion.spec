@@ -7,7 +7,7 @@ BuildRequires: perl-podlators perl(PPIx/Utils.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Perl-MinimumVersion
-Version:        1.40
+Version:        1.44
 Release:        alt1
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
@@ -75,6 +75,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.44-alt1
+- automated CPAN update
+
 * Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
 - automated CPAN update
 
