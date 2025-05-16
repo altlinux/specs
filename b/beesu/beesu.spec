@@ -6,11 +6,12 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless beesu update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_42
+Release: alt3_42
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
 License: GPLv2+
 Source0: http://honeybeenet.altervista.org/beesu/files/beesu-sources/%{name}-%{version}.tar.bz2
+Patch: beesu_move_to_libexec.patch
 
 BuildRequires: gcc-c++
 
@@ -31,6 +32,7 @@ Fedora to let you have a graphic interface like gksu.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %make_build CFLAGS="%{optflags} -fno-delete-null-pointer-checks"
@@ -62,13 +64,16 @@ EOF
 %config(noreplace) %{_sysconfdir}/pam.d/%{name}
 %config(noreplace) %{_sysconfdir}/security/console.apps/%{name}
 %{_sysconfdir}/bash_completion.d/%{name}-bash-completion.sh
-%{_sbindir}/%{name}
+%{_prefix}/libexec/%{name}
 %{_bindir}/%{name}
 %{_mandir}/man1/%{name}.1*
 /etc/pam.d/config-util
 
 
 %changelog
+* Fri May 16 2025 Anton Midyukov <antohami@altlinux.org> 2.7-alt3_42
+- NMU: move /usr/sbin/beesu to /usr/libexec
+
 * Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 2.7-alt2_42
 - dropped requires on userpasswd (closes: #44764)
 
