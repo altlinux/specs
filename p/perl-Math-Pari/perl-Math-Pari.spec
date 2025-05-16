@@ -12,7 +12,7 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
-Version:	2.030525
+Version:	2.030528
 Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
@@ -114,6 +114,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 4:2.030528-alt1
+- automated CPAN update
+
 * Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 4:2.030525-alt1
 - automated CPAN update
 
