@@ -6,14 +6,14 @@ BuildRequires: perl(Digest/SHA.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurper
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.21
-Release: alt2
+Version: 0.22
+Release: alt1
 Summary: Implements the Amazon Web Services signature version 4, AWS4-HMAC-SHA256
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/D/DB/DBOOK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DB/DBOOK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc Changes README
 %perl_vendor_privlib/N*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 0.22-alt1
+- automated CPAN update
+
 * Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 0.21-alt2
 - to Sisyphus as perl-Amazon-S3 dep
 
