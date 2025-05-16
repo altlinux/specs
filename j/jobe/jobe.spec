@@ -1,8 +1,8 @@
-%define php_version 8.2
+%define php_version %php_defver
 
 Name:    jobe
 Version: 2.1.2
-Release: alt2
+Release: alt3
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
 License: MIT
@@ -16,6 +16,7 @@ Source1: %name.conf
 Source2: jobe-sudoers
 Patch1: jobe-alt-fixes.patch
 
+BuildRequires(pre): rpm-build-php
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-webserver-common
 BuildRequires(pre): rpm-build-python3
@@ -111,6 +112,9 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt3
+- Use default PHP version for repository.
+
 * Wed Apr 09 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt2
 - Made /var/www/webapps/jobe/writable/cache writeable.
 

@@ -2,8 +2,8 @@
 %def_without pam
 
 Name: moodle
-Version: 4.5.3
-Release: alt2
+Version: 4.5.4
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -216,7 +216,7 @@ for ar in *.zip;do unzip "$ar" >/dev/null && rm -f "$ar";done
 install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 
 # Install PHP configuration for Moodle
-install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/%php_version/apache2-mod_php/php.d/moodle.ini
+install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_php/php.d/moodle.ini
 
 %post apache2
 # Disable mod_php7 if it is enabled
@@ -244,7 +244,7 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/%php_version/apache2-mod_php/ph
 %config(noreplace) %apache2_confdir_inc/Directory_%{moodle_name}_default.conf
 %config(noreplace) %apache2_extra_start/100-%name.conf
 %config(noreplace) %apache2_mods_start/100-%name.conf
-%config(noreplace) %_sysconfdir/%php_version/apache2-mod_php/php.d/moodle.ini
+%config(noreplace) %_sysconfdir/php/%php_version/apache2-mod_php/php.d/moodle.ini
 
 %files local-mysql
 
@@ -254,6 +254,13 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/%php_version/apache2-mod_php/ph
 %endif
 
 %changelog
+* Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 4.5.4-alt1
+- New version.
+- Security fixes: CVE-2025-3647, CVE-2025-3645, CVE-2025-3644, CVE-2025-3643,
+  CVE-2025-3642, CVE-2025-3641, CVE-2025-3640, CVE-2025-3638, CVE-2025-3637,
+  CVE-2025-3636, CVE-2025-3635, CVE-2025-3634, CVE-2025-3628, CVE-2025-3627,
+  CVE-2025-3625, CVE-2024-40446, CVE-2025-32045, CVE-2025-32044
+
 * Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 4.5.3-alt2
 - Use default PHP version for repository.
 
