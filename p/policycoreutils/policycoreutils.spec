@@ -10,7 +10,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 3.8.1
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -20,8 +20,6 @@ Source0: %name-%version.tar
 Source1: restorecond.init
 Source2: sandbox.init
 Source3: system-config-selinux.pam
-Source6: system-config-selinux.console
-Source8: selinux-polgengui.console
 Source9: mcstrans.init
 
 Source13: selinux-python-%version.tar
@@ -201,8 +199,6 @@ chmod -x %buildroot%python3_sitelibdir/seobject.py
 install -d -m 0755 %buildroot%_localstatedir/selinux
 install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/system-config-selinux
 install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/selinux-polgengui
-install -D -m 0644 %SOURCE6 %buildroot%_sysconfdir/security/console.apps/system-config-selinux
-install -D -m 0644 %SOURCE8 %buildroot%_sysconfdir/security/console.apps/selinux-polgengui
 
 # sysvinit
 install -D -m 0755 %SOURCE1 %buildroot%_initddir/restorecond
@@ -394,8 +390,6 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 
 %config(noreplace) %_sysconfdir/pam.d/system-config-selinux
 %config(noreplace) %_sysconfdir/pam.d/selinux-polgengui
-%config(noreplace) %_sysconfdir/security/console.apps/system-config-selinux
-%config(noreplace) %_sysconfdir/security/console.apps/selinux-polgengui
 
 %_datadir/polkit-1/actions/org.selinux.policy
 %_datadir/polkit-1/actions/org.selinux.config.policy
@@ -421,6 +415,9 @@ cp -r mcstrans-%version/share/* %buildroot%_datadir/mcstrans/
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Fri May 16 2025 Anton Midyukov <antohami@altlinux.org> 1:3.8.1-alt2
+- (NMU) Remove consolehelper support (Closes: #54276).
+
 * Sun Mar 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.8.1-alt1
 - (NMU) Updated to 3.8.1.
 
