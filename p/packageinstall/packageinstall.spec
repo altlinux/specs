@@ -1,5 +1,5 @@
 Name:	 packageinstall
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Summary: GUI frontend for install packages using apt-get
 
@@ -29,17 +29,20 @@ lrelease-qt6 %name.pro
 %install
 %install_qt6
 mkdir -p %buildroot%_sbindir/
-mv %buildroot%_bindir/%name %buildroot%_sbindir
+mv %buildroot%_bindir/%name %buildroot%_sbindir/%name-bin
 install -m 0755 packageinstall-user %buildroot/%_bindir/packageinstall
 
 %files
 %doc AUTHORS README.md
 %_bindir/%name
-%_sbindir/%name
+%_sbindir/%name-bin
 %dir %_datadir/apps/%name/
 %_datadir/apps/%name/
 
 %changelog
+* Fri May 16 2025 Anton Midyukov <antohami@altlinux.org> 1.4.3-alt1
+- NMU: rename packageinstall binary to packageinstall-bin
+
 * Tue Apr 22 2025 Sergey V Turchin <zerg at altlinux dot org> 1.4.2-alt1
 - drop consolehelper
 
