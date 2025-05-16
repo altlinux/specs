@@ -2,7 +2,7 @@
 %define module_name Archive-Zip-SimpleZip
 
 Name: perl-%module_name
-Version: 1.000
+Version: 1.002
 Release: alt1
 Summary: Create Zip Archives
 Group: Development/Perl
@@ -43,6 +43,9 @@ create a Zip archive and how to add a file to it.
 %perl_vendor_privlib/A*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.002-alt1
+- automated CPAN update
+
 * Sun Jul 03 2022 Igor Vlasenko <viy@altlinux.org> 1.000-alt1
 - new version
 
