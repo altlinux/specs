@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(JSON/PP.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist Authen-SASL
 Name: perl-%dist
-Version: 2.1700
+Version: 2.1800
 Release: alt1
 
 Summary: SASL authentication framework for Perl
@@ -38,7 +41,7 @@ connection.
 %perl_vendor_install
 
 %files
-%doc	api.txt Changes example_pl README
+%doc	api.txt Changes README
 %dir	%perl_vendor_privlib/Authen
 	%perl_vendor_privlib/Authen/SASL.pm
 %doc	%perl_vendor_privlib/Authen/SASL.pod
@@ -49,6 +52,9 @@ connection.
 	%perl_vendor_privlib/Authen/SASL/Perl/*.pm
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 2.1800-alt1
+- automated CPAN update
+
 * Sun Aug 13 2023 Igor Vlasenko <viy@altlinux.org> 2.1700-alt1
 - automated CPAN update
 
