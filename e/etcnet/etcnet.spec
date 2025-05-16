@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.32
+Version:	0.9.33
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -40,7 +40,7 @@ Requires:	%name = %version-%release, wireless-tools
 Requires:	dhcpcd >= 1.3.22pl4-alt3, iptables, iptables-ipv6, ebtables, ipset >= 4.1-alt2
 Requires:	ethtool >= 0:3-alt4, ifplugd >= 0.28-alt2
 Requires:	hotplug, ppp, openvpn, wireguard-tools, amneziawg-tools
-Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 2.5.0-alt1
+Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 3.6-alt2 ppp-pppoe >= 2.5.0-alt1
 
 %description full
 This virtual package requires /etc/net and all packages that may appear useful
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Fri May 16 2025 Alexey Shabalin <shaba@altlinux.org> 0.9.33-alt1
+- create-ovsport: Fixed start ovsbr when ovsport start (ALT#45305).
+
 * Fri Mar 21 2025 Anton Farygin <rider@altlinux.com> 0.9.32-alt1
 - Added interface TYPE=awg with amneziawg support.
 
