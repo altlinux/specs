@@ -18,7 +18,7 @@ BuildRequires: perl(File/Slurper.pm)
 %define _enable_test 1
 
 Name: perl-Tree-DAG_Node
-Version: 1.33
+Version: 1.35
 Release: alt1
 
 Summary: (super)class for representing nodes in a tree
@@ -58,6 +58,9 @@ mother or ancestor, or having a node have two mothers).
 %doc Changes README
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.35-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.33-alt1
 - automated CPAN update
 
