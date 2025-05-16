@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Polygon
-Version: 1.10
+Version: 1.11
 Release: alt1
 
 Summary: Polygon calculations
@@ -50,6 +50,9 @@ This class provides an OO interface around Math::Polygon::Calc and Math::Polygon
 %perl_vendor_privlib/Math/*
 
 %changelog
+* Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.11-alt1
+- automated CPAN update
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
 - automated CPAN update
 
