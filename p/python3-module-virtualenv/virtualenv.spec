@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.30.0
+Version: 20.31.2
 Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
@@ -19,14 +19,14 @@ Patch: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 # system seed wheels
-Requires: python3-module-system-seed-wheels-wheels
+Requires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra test
-BuildRequires: python3-module-system-seed-wheels-wheels
+BuildRequires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
 %endif
 
 %description
@@ -80,6 +80,10 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 14 2025 Stanislav Levin <slev@altlinux.org> 20.31.2-alt1
+- 20.30.0 -> 20.31.2
+- stopped shipping a wheel for wheel package
+
 * Tue Apr 01 2025 Stanislav Levin <slev@altlinux.org> 20.30.0-alt1
 - 20.29.3 -> 20.30.0.
 
