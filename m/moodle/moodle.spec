@@ -2,7 +2,7 @@
 %def_without pam
 
 Name: moodle
-Version: 4.5.4
+Version: 5.0.0
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -254,6 +254,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 4.5.4-alt1
 - New version.
 - Security fixes: CVE-2025-3647, CVE-2025-3645, CVE-2025-3644, CVE-2025-3643,
