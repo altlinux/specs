@@ -9,6 +9,7 @@
 %endif
 # As ubuntu
 %define gcc_ver 9
+%define llvm_ver 20.1
 
 %define _vk_api_version 1.4.313
 
@@ -17,6 +18,7 @@
 %def_with shader_cache
 
 %define optflags_lto %nil
+%define _optlevel 3
 
 %ifarch x86_64
 %define bits 64
@@ -27,7 +29,7 @@
 
 Name: vulkan-amdgpu
 Version: 2025.Q2.1
-Release: alt1
+Release: alt2
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -38,14 +40,15 @@ ExclusiveArch: x86_64 %ix86
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake /proc
-BuildRequires: cmake ninja-build python3-devel python3-module-jinja2 curl libxcb-devel libssl-devel llvm-devel
+BuildRequires: cmake ninja-build python3-devel python3-module-jinja2 curl libxcb-devel libssl-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel glslang libdxcompiler-devel python3-module-ruamel-yaml
+BuildRequires: rapidjson-devel libyaml-devel libzstd-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: libffi-devel
 %endif
 %if_with clang
-BuildRequires: clang mold llvm-devel gcc-c++ libstdc++-devel-static
+BuildRequires: clang%{llvm_ver} mold llvm%{llvm_ver}-devel gcc-c++ libstdc++-devel-static
 %else
 BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel-static
 %endif
@@ -63,6 +66,7 @@ Source9: llvm-dialects.tar
 
 # https://github.com/Tencent/rapidjson/pull/719
 Patch: pal-rapidjson-719.patch
+Patch1: pal-alt-unbundle-libs.patch
 
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
@@ -74,10 +78,10 @@ platforms, including support for recently released GPUs and compatibility with
 AMD developer tools.
 
 %prep
+rm -rf %_builddir/*
 %setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7 -b9
-# after 9yrs still not fixed
-pushd %_builddir/pal/shared/devdriver/third_party/rapidjson
-%patch -p1
+pushd %_builddir/pal
+%patch1 -p2
 popd
 mkdir -p %_builddir/llvm-project
 mv %_builddir/llvm/llvm %_builddir/llvm-project
@@ -89,8 +93,12 @@ rm -rf %_builddir/llpc/imported/llvm-dialects && ln -s %_builddir/llvm-dialects 
 # build amdvlk.so
 # according https://github.com/GPUOpen-Drivers/AMDVLK#build-driver-and-generate-json-files
 %if_with clang
+export ALTWRAP_LLVM_VERSION=%llvm_ver
 %cmake \
+	-GNinja \
 	-DXGL_USE_CLANG=ON \
+	-DCMAKE_CXX_COMPILER=clang++ \
+	-DCMAKE_C_COMPILER=clang \
 %else	
 export GCC_VERSION=%{gcc_ver} \
 %cmake \
@@ -131,6 +139,14 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(base
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat May 17 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.Q2.1-alt2
+- pal: unbundle third-party libs:
+  - use system rapidjson
+  - use system zstd
+  - use system libyaml
+- spec: build with clang20.1
+- spec: set optlevel to 3.
+
 * Fri May 16 2025 L.A. Kostis <lakostis@altlinux.ru> 2025.Q2.1-alt1
 - pal/rapidjson: remove non-compiling assignment operator
 - 2025-4-30 update:
