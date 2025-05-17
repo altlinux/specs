@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20250211
+%define orig_timestamp 20250512
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 30
+Version: 31
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -36,13 +36,23 @@ definitions for all Intel processors.
 %make_build
 
 %install
-mkdir -p %buildroot/lib/firmware/intel-ucode
-UCODE=intel-microcode
 %ifarch %ix86
-# use stripped down version for x86_64 and ia32
-UCODE=${UCODE}-64
+export FWDIR_TARGET=intel-ucode-fw
+%else
+export FWDIR_TARGET=intel-ucode-fw64
 %endif
-mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
+export FWDIR=%buildroot/lib/firmware/intel-ucode
+mkdir -p ${FWDIR}
+%make ${FWDIR_TARGET}
+# apply best-effort blacklist
+if [ -r debian/ucode-blacklist.txt ] ; then \
+	cat debian/ucode-blacklist.txt | while read -r fn crap ; do \
+		if [ -r "$FWDIR/${fn}" ] ; then \
+			mv "$FWDIR/${fn}" "$FWDIR/${fn}.initramfs" ;\
+			echo "Renaming blacklisted microcode ${fn}" ; \
+		fi ; \
+	done ; \
+fi
 
 %files
 %doc license changelog releasenote.md security.md
@@ -50,6 +60,108 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Sat May 17 2025 L.A. Kostis <lakostis@altlinux.ru> 2:31-alt1.20250512
+- Implement rudimental ucode blacklisting from debian
+- Synced with debian/3.20250512.1:
+  + New upstream microcode datafile 20250512:
+    - Mitigations for INTEL-SA-01153 (ITS: Indirect Target Selection):
+      CVE-2024-28956: Processor may incompletely mitigate Branch Target
+      Injection due to indirect branch predictions that are not fully
+      constrained by eIBRS nor by the IBPB barrier.  Part of the "Training
+      Solo" set of vulnerabilities.
+    - Mitigations for INTEL-SA-01244:
+      CVE-2025-20103: Insufficient resource pool in the core management
+      mechanism for some Intel Processors may allow an authenticated user
+      to potentially enable denial of service via local access.
+      CVE-2025-20054: Uncaught exception in the core management mechanism
+      for some Intel Processors may allow an authenticated user to
+      potentially enable denial of service via local access.
+    - Mitigations for INTEL-SA-01247:
+      CVE-2024-43420, CVE-2025-20623: Exposure of sensitive information
+      caused by shared microarchitectural predictor state that influences
+      transient execution for some Intel Atom and some Intel Core
+      processors (10th Generation) may allow an authenticated user to
+      potentially enable information disclosure via local access.
+      CVE-2024-45332 (Branch Privilege Injection): Exposure of sensitive
+      information caused by shared microarchitectural predictor state that
+      influences transient execution in the indirect branch predictors for
+      some Intel Processors may allow an authenticated user to potentially
+      enable information disclosure via local access.
+    - Mitigations for INTEL-SA-01322:
+      CVE-2025-24495 (Training Solo): Incorrect initialization of resource
+      in the branch prediction unit for some Intel Core Ultra Processors
+      may allow an authenticated user to potentially enable information
+      disclosure via local access (IBPB bypass)
+      CVE-2025-20012 (Training Solo): Incorrect behavior order for some
+      Intel Core Ultra Processors may allow an unauthenticated user to
+      potentially enable information disclosure via physical access.
+    - Improved fix for the Vmin Shift Instability for the Intel Core 13th
+      and 14th gen processors under low-activity scenarios (sig 0xb0671).
+      This microcode update is supposed to be delivered as a system
+      firmware update, but according to Intel it should be effective when
+      loaded by the operating system if the system firmware has revision
+      0x12e.
+    - Fixes for unspecified functional issues on several processor models
+  + New microcodes or new extended signatures:
+    sig 0x000a06d1, pf_mask 0x95, 2025-02-07, rev 0x10003a2, size 1664000
+    sig 0x000a06d1, pf_mask 0x20, 2025-02-07, rev 0xa0000d1, size 1635328
+    sig 0x000b0650, pf_mask 0x80, 2025-03-18, rev 0x000a, size 136192
+    sig 0x000b06d1, pf_mask 0x80, 2025-03-18, rev 0x011f, size 79872
+    sig 0x000c0662, pf_mask 0x82, 2025-03-20, rev 0x0118, size 90112
+    sig 0x000c06a2, pf_mask 0x82, 2025-03-20, rev 0x0118
+    sig 0x000c0652, pf_mask 0x82, 2025-03-20, rev 0x0118
+    sig 0x000c0664, pf_mask 0x82, 2025-03-20, rev 0x0118
+  + Updated microcodes:
+    sig 0x00050657, pf_mask 0xbf, 2024-12-12, rev 0x5003901, size 39936
+    sig 0x0005065b, pf_mask 0xbf, 2024-12-12, rev 0x7002b01, size 30720
+    sig 0x000606a6, pf_mask 0x87, 2025-01-07, rev 0xd000404, size 309248
+    sig 0x000606c1, pf_mask 0x10, 2025-01-07, rev 0x10002d0, size 300032
+    sig 0x000706a8, pf_mask 0x01, 2024-12-05, rev 0x0026, size 76800
+    sig 0x000706e5, pf_mask 0x80, 2025-01-07, rev 0x00ca, size 115712
+    sig 0x000806c1, pf_mask 0x80, 2024-12-01, rev 0x00bc, size 112640
+    sig 0x000806c2, pf_mask 0xc2, 2024-12-01, rev 0x003c, size 99328
+    sig 0x000806d1, pf_mask 0xc2, 2024-12-11, rev 0x0056, size 105472
+    sig 0x000806ec, pf_mask 0x94, 2024-11-17, rev 0x0100, size 106496
+    sig 0x000806f8, pf_mask 0x87, 2025-01-28, rev 0x2b000639, size 591872
+    sig 0x000806f7, pf_mask 0x87, 2025-01-28, rev 0x2b000639
+    sig 0x000806f6, pf_mask 0x87, 2025-01-28, rev 0x2b000639
+    sig 0x000806f5, pf_mask 0x87, 2025-01-28, rev 0x2b000639
+    sig 0x000806f4, pf_mask 0x87, 2025-01-28, rev 0x2b000639
+    sig 0x000806f8, pf_mask 0x10, 2025-01-28, rev 0x2c0003f7, size 624640
+    sig 0x000806f6, pf_mask 0x10, 2025-01-28, rev 0x2c0003f7
+    sig 0x000806f5, pf_mask 0x10, 2025-01-28, rev 0x2c0003f7
+    sig 0x000806f4, pf_mask 0x10, 2025-01-28, rev 0x2c0003f7
+    sig 0x00090672, pf_mask 0x07, 2024-12-12, rev 0x003a, size 226304
+    sig 0x00090675, pf_mask 0x07, 2024-12-12, rev 0x003a
+    sig 0x000b06f2, pf_mask 0x07, 2024-12-12, rev 0x003a
+    sig 0x000b06f5, pf_mask 0x07, 2024-12-12, rev 0x003a
+    sig 0x000b06f6, pf_mask 0x07, 2024-12-12, rev 0x003a
+    sig 0x000b06f7, pf_mask 0x07, 2024-12-12, rev 0x003a
+    sig 0x000906a3, pf_mask 0x80, 2024-12-12, rev 0x0437, size 224256
+    sig 0x000906a4, pf_mask 0x80, 2024-12-12, rev 0x0437
+    sig 0x000906a4, pf_mask 0x40, 2024-12-06, rev 0x000a, size 119808
+    sig 0x000906ed, pf_mask 0x22, 2024-11-14, rev 0x0104, size 106496
+    sig 0x000a0652, pf_mask 0x20, 2024-11-14, rev 0x0100, size 97280
+    sig 0x000a0653, pf_mask 0x22, 2024-11-14, rev 0x0100, size 98304
+    sig 0x000a0655, pf_mask 0x22, 2024-11-14, rev 0x0100, size 97280
+    sig 0x000a0660, pf_mask 0x80, 2024-11-14, rev 0x0102, size 98304
+    sig 0x000a0661, pf_mask 0x80, 2024-11-14, rev 0x0100, size 97280
+    sig 0x000a0671, pf_mask 0x02, 2024-12-01, rev 0x0064, size 108544
+    sig 0x000a06a4, pf_mask 0xe6, 2025-02-13, rev 0x0024, size 140288
+    sig 0x000a06f3, pf_mask 0x01, 2025-02-10, rev 0x3000341, size 1542144
+    sig 0x000b0671, pf_mask 0x32, 2025-03-17, rev 0x012f, size 219136
+    sig 0x000b0674, pf_mask 0x32, 2025-03-17, rev 0x012f
+    sig 0x000b06a2, pf_mask 0xe0, 2025-01-15, rev 0x4128, size 224256
+    sig 0x000b06a3, pf_mask 0xe0, 2025-01-15, rev 0x4128
+    sig 0x000b06a8, pf_mask 0xe0, 2025-01-15, rev 0x4128
+    sig 0x000b06e0, pf_mask 0x19, 2024-12-06, rev 0x001d, size 139264
+    sig 0x000c06f2, pf_mask 0x87, 2025-03-14, rev 0x210002a9, size 563200
+    sig 0x000c06f1, pf_mask 0x87, 2025-03-14, rev 0x210002a9
+  + Removed microcodes (ES/QS steppings):
+    sig 0x00050656, pf_mask 0xbf, 2023-07-28, rev 0x4003605, size 38912
+    sig 0x000c06f1, pf_mask 0x87, 2025-03-14, rev 0x210002a9 [EXCLUDED]
+  + Makefile: exclude QS/ES steppings 0x50656, 0xc06f1.
+
 * Wed Mar 19 2025 L.A. Kostis <lakostis@altlinux.ru> 2:30-alt1.20250211
 - Synced with debian/3.20250211.1:
   + New upstream microcode datafile 20250211:
@@ -365,8 +477,6 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
     sig 0x000c06f2, pf_mask 0x87, 2023-11-20, rev 0x21000200, size 549888
     sig 0x000c06f1, pf_mask 0x87, 2023-11-20, rev 0x21000200
 
-
-
 * Tue Nov 14 2023 L.A. Kostis <lakostis@altlinux.ru> 2:23-alt1.20231114
 - New upstream microcode datafile 20231114:
   + Security updates for INTEL-SA-00950 (CVE-2023-23583).
@@ -502,7 +612,6 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
       sig 0x000b06a2, pf_mask 0xc0, 2023-02-22, rev 0x4112, size 212992
       sig 0x000b06a3, pf_mask 0xc0, 2023-02-22, rev 0x4112
   + source: update symlinks to reflect id of the latest release, 20230512
-
 
 * Fri Feb 17 2023 L.A. Kostis <lakostis@altlinux.ru> 2:20-alt1.20230214
 - Updated to upstream microcode datafile 20230214:
@@ -1189,7 +1298,6 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
   * source: remove superseded upstream data file: 20170707.
   * source: remove unneeded intel-ucode/ directory for 20171117.
 - TODO: we need to implement ucode blacklisting as well as debian does.
-
 
 * Mon Sep 04 2017 L.A. Kostis <lakostis@altlinux.ru> 1:3-alt0.20170707.1
 - Rebased to Debian package (because Fedora version is outdated):
