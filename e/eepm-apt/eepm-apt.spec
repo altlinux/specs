@@ -1,5 +1,5 @@
 Name: eepm-apt
-Version: 3.60.2
+Version: 3.60.3
 Release: alt1
 
 Summary: APT like frontend via Etersoft EPM package manager
@@ -53,6 +53,9 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 %_bindir/apt
 
 %changelog
+* Sat May 17 2025 Vitaly Lipatov <lav@altlinux.ru> 3.60.3-alt1
+- apt: update common vars
+
 * Sat Mar 08 2025 Vitaly Lipatov <lav@altlinux.ru> 3.60.2-alt1
 - apt: drop --assumeyes
 - apt: fix typo
