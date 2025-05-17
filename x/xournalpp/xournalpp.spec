@@ -1,7 +1,7 @@
 %def_with gtest
 
 Name: xournalpp
-Version: 1.2.1
+Version: 1.2.7
 Release: alt1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
@@ -9,8 +9,10 @@ Group: Office
 License: GPLv2+
 Url: https://github.com/%name/%name
 Source: %name-%version.tar.gz
-Patch: xournalpp-gcc13.patch
-Patch1: xournalpp-x32.patch
+Patch: 0001-Hack-test.patch
+Patch1: 0002-GCC-13.patch
+Patch100: 0003-32-bit-fix.patch
+Patch101: 0004-aarch64-fix.patch
 Requires: %name-plugins = %version-%release
 Requires: %name-ui = %version-%release
 %add_findreq_skiplist %_datadir/%name/plugins/Example/*
@@ -47,18 +49,16 @@ The %name-ui package contains a graphical user interface for  %name.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
-%if "%EVR" == "1.2.1-alt1"
-# XXX
-sed -i '/EXPECT_TRUE(coordEq(a->getElementHeight()/d' test/unit_tests/control/LoadHandlerTest.cpp
-%endif
+%patch -p2
+%patch1 -p2
+%patch100 -p2
+%patch101 -p1
 
 %build
 %if_with gtest
-%cmake -DENABLE_GTEST=ON
+%cmake -DENABLE_GTEST=ON -DCPACK_STRIP_FILES=off
 %else
-%cmake
+%cmake -DCPACK_STRIP_FILES=off
 %endif
 
 %cmake_build
@@ -96,6 +96,13 @@ sed -i '/EXPECT_TRUE(coordEq(a->getElementHeight()/d' test/unit_tests/control/Lo
 %_datadir/%name/ui
 
 %changelog
+* Tue May 13 2025 Fr. Br. George <george@altlinux.org> 1.2.7-alt1
+- Autobuild version bump to 1.2.7
+
+* Thu Mar 21 2024 Fr. Br. George <george@altlinux.org> 1.2.3-alt1
+- Autobuild version bump to 1.2.3
+- Create a patch to fuzzy tests
+
 * Thu Sep 28 2023 Fr. Br. George <george@altlinux.org> 1.2.1-alt1
 - Autobuild version bump to 1.2.1
 - Upstream dropped cppunit for the sake of gtest
