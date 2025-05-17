@@ -1,8 +1,9 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gmime
 %define ver_major 3.2
 %define api_ver 3.0
+%define namespace GMime
 
 %def_enable crypto
 %def_disable static
@@ -10,18 +11,19 @@
 
 Name: lib%_name%api_ver
 Version: %ver_major.15
-Release: alt1
+Release: alt2
 
 Summary: Glorious MIME Utility Library
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: https://github.com/jstedfast/gmime
+
+Vcs: https://github.com/jstedfast/gmime.git
 
 %if_disabled snapshot
 #Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 Source: https://github.com/jstedfast/gmime/releases/download/%version/%_name-%version.tar.xz
 %else
-Vcs: https://github.com/jstedfast/gmime.git
 Source: %_name-%version.tar
 %endif
 
@@ -121,10 +123,10 @@ statically linked GMime-based software.
 %_vapidir/%_name-%api_ver.deps
 
 %files gir
-%_typelibdir/GMime-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GMime-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %files devel-doc
 %_gtk_docdir/%_name-%ver_major/
@@ -135,6 +137,9 @@ statically linked GMime-based software.
 %endif
 
 %changelog
+* Sat May 17 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.15-alt2
+- updated to 3.2.15-10-gdf1151b3 (fixed build with automake-1.17)
+
 * Fri Jun 21 2024 Yuri N. Sedunov <aris@altlinux.org> 3.2.15-alt1
 - 3.2.15
 
