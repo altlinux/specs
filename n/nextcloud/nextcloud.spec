@@ -2,7 +2,7 @@
 %define php_version %php_defver
 
 Name: nextcloud
-Version: 31.0.2
+Version: 31.0.5
 Release: alt1
 
 %define installdir %webserver_webappsdir/%name
@@ -45,6 +45,7 @@ Source0: %name-%version.tar
 Source1: %name.watch
 Patch1: nextcloud-simple-check-unicode-locale.patch
 Patch2: nextcloud-fix-openssl-config.patch
+Patch3: nextcloud-31.0.2-alt1-apps-blacklist.patch
 
 # Automatically added by buildreq on Mon Oct 03 2016
 # optimized out: python-base python-modules python3
@@ -80,8 +81,7 @@ nginx web-server default configuration for %name.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 %install
 mkdir -p %buildroot%installdir
@@ -168,6 +168,10 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.5-alt1
+- New version.
+- Do now show pride themes (thanks x1z53 <x1z53@yandex.ru> for patch).
+
 * Tue Mar 25 2025 Andrey Cherepanov <cas@altlinux.org> 31.0.2-alt1
 - New version.
 - Used current supported PHP version in repository.
