@@ -22,7 +22,7 @@
 
 Name:    freecad
 Version: 1.0.0
-Release: alt4
+Release: alt5
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -323,6 +323,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.0-alt5
+- Adapt for PySide2.QtWidgets some missing imports (ALT #54088).
+
 * Wed May 07 2025 Constantin Sunzow <protvin@altlinux.org> 1:1.0.0-alt4
 - Fix linkage with OCCT 7.9.0 (ALT 54082, 54089).
 
