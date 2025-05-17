@@ -4,7 +4,7 @@
 
 Name: example-zig
 Summary: Example of packaging Zig program
-Version: 3
+Version: 4
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Other
@@ -37,13 +37,16 @@ BuildRequires: zig
 # This is not required step for normal packaging, but run executable to
 # ensure it's working. Also, this ensures the example package is correct.
 PATH=%buildroot%_bindir
-example-zig
+example_zig
 
 %files
-%_bindir/example-zig
-%_libdir/libexample-zig.so
+%_bindir/example_zig
+%_libdir/libexample_zig.so
 
 %changelog
+* Sat May 17 2025 Vitaly Chikunov <vt@altlinux.org> 4-alt1
+- Update for zig-0.14.0.
+
 * Wed Aug 14 2024 Vitaly Chikunov <vt@altlinux.org> 3-alt1
 - Update example code and fix build with zig-0.13.0.
 
