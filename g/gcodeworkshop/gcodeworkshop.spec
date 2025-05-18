@@ -1,12 +1,12 @@
 Name: gcodeworkshop
-Version: 202502
+Version: 202504
 Release: alt1
 
 Summary: GCodeWorkShop is text editor for CNC programmers
 License: GPL-3.0-or-later
 Group: Engineering
 
-Url: https://github.com/GCodeProjects/GCodeWorkShop
+URL: https://github.com/GCodeProjects/GCodeWorkShop
 VCS: https://github.com/GCodeProjects/GCodeWorkShop.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -40,9 +40,12 @@ rm -vr %buildroot/%_datadir/doc/gcodeworkshop/
 %_desktopdir/gcodeworkshop.desktop
 %_iconsdir/hicolor/32x32/mimetypes/application-x-g-code.png
 %_iconsdir/hicolor/48x48/apps/edytornc.png
-%doc LICENSE README.md doc/SerialTransmission_Help.html
+%doc COPYING COPYING.LESSER NEWS.md README.md doc/SerialTransmission_Help.html
 
 %changelog
+* Sun May 18 2025 Anton Midyukov <antohami@altlinux.org> 202504-alt1
+- New version 202504.
+
 * Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 202502-alt1
 - New version 202502.
 
