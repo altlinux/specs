@@ -1,6 +1,6 @@
 Name: xxkb
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: Switcher and indicator of current keyboard layout
 Summary(ru_RU.UTF-8): Индикатор и переключатель состояния клавиатуры
@@ -13,6 +13,7 @@ Source: %name-%version-%release.tar
 Source1: xxkb-32.png
 Source2: xxkb-48.png
 Source3: xxkb.desktop
+Patch1:  0001-ignore-BadMatch.patch
 
 # Automatically added by buildreq on Sun Dec 28 2008
 BuildRequires: imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
@@ -58,6 +59,7 @@ The xxkb works with any window manager.
 
 %prep
 %setup -n %name-%version-%release
+%patch1 -p2
 
 %build
 xmkmf
@@ -86,6 +88,9 @@ install -pD -m644 %{SOURCE3} %buildroot%_desktopdir/%name.desktop
 %doc CHANGES.koi8 README.koi8 XXkb.ad
 
 %changelog
+* Sat May 17 2025 Vladislav Zavjalov <slazav@altlinux.org> 1.11.1-alt2
+- ignore BadMatch (closes: #41504)
+
 * Sat Dec 29 2018 Dmitry V. Levin <ldv@altlinux.org> 1.11.1-alt1
 - 1.11 -> 1.11.1
 
