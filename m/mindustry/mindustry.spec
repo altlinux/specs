@@ -1,7 +1,8 @@
 %define gradle_version 8.10
+%define xdg_name com.github.Anuken.Mindustry
 
 Name: mindustry
-Version: 148
+Version: 149
 Release: alt1
 License: GPL-3.0
 
@@ -18,7 +19,8 @@ Source1: %name-arc-%version.tar
 Source2: gradle-cache.tar
 # Source3-url: https://services.gradle.org/distributions/gradle-%gradle_version-bin.zip
 Source3: gradle-bin.zip
-Source4: %name.desktop
+Source4: %xdg_name.desktop
+Source5: %xdg_name.metainfo.xml
 
 ExclusiveArch: x86_64 
 
@@ -60,7 +62,8 @@ install -d %buildroot%_javadir/%name
 install -m644 desktop/build/libs/Mindustry.jar %buildroot%_javadir/%name/%name.jar
 install -m644 server/build/libs/server-release.jar %buildroot%_javadir/%name/%name-server.jar
 
-install -D %SOURCE4 %buildroot%_desktopdir/%name.desktop
+install -D %SOURCE4 %buildroot%_desktopdir/%xdg_name.desktop
+install -D %SOURCE5 %buildroot%_datadir/metainfo/%xdg_name.metainfo.xml
 
 install -d %buildroot%_bindir
 cat <<EOF >> %buildroot%_bindir/%name
@@ -75,20 +78,26 @@ EOF
 
 for size in 256 512 1024; do
 install -Dm644 "core/assets/icons/icon_${size}x${size}x32.png" \
-"%buildroot%_iconsdir/hicolor/${size}x${size}/apps/%name.png"
+"%buildroot%_iconsdir/hicolor/${size}x${size}/apps/%xdg_name.png"
 done
 
 %files
 %attr(755,root,root) %_bindir/%name
 %_javadir/%name/%name.jar
 %_iconsdir/hicolor/*/apps/*.png
-%_desktopdir/%name.desktop
+%_desktopdir/%xdg_name.desktop
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %files server
 %attr(755,root,root) %_bindir/%name-server
 %_javadir/%name/%name-server.jar
 
 %changelog
+* Sun May 18 2025 Kirill Unitsaev <fiersik@altlinux.org> 149-alt1
+- new version (149) with rpmgs script
+- use the xdg-id
+- add metainfo for the app
+
 * Wed Apr 23 2025 Kirill Unitsaev <fiersik@altlinux.org> 148-alt1
 - new version (148) with rpmgs script
 
