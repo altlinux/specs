@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.46
+%define ver_major 0.47
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -41,6 +41,8 @@ Source: %name-%version%beta.tar
 %define gmobile_ver 0.1.0
 %define wayland_proto_ver 1.15
 %define gnome_desktop_ver 43
+
+Provides: greetd-greeter
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson
@@ -135,6 +137,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
+- 0.47.0
+
 * Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - updated to v0.46.0-4-gf13f582
 

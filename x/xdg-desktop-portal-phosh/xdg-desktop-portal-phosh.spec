@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.46
+%define ver_major 0.47
 %define beta %nil
 
 %def_enable check
@@ -26,9 +26,9 @@ Source: %name-%version%beta.tar
 %define xdg_desktop_portal_ver 1.19.1
 %define adw_ver 1.6
 %define gsds_ver 47
-%define pfs_ver 0.0.2
+%define pfs_ver 0.0.3
 
-#Requires: xdg-desktop-portal-gtk >= 1.14
+Requires: xdg-desktop-portal >= %xdg_desktop_portal_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
 BuildRequires: meson pkgconfig(libadwaita-1) >= %adw_ver
@@ -66,6 +66,9 @@ portal.
 
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
+- 0.47.0
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - first build for Sisyphus
 

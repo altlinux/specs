@@ -20,8 +20,8 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
-Release: alt0.5%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: Phosh File Selector Library
 Group: System/Libraries
@@ -123,7 +123,11 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %check
 %__meson_test
 
+
 %files -n %pkg_libname -f %_name.lang
+%_bindir/%_name-open
+%_desktopdir/%xdg_name1.desktop
+%_iconsdir/hicolor/*/apps/%{xdg_name1}*.svg
 %_libdir/%libname-%api_ver.so
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %doc README* NEWS
@@ -154,6 +158,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
+- 0.0.3
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt0.5
 - first build for Sisyphus
 

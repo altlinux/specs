@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.46
+%define ver_major 0.47
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -26,7 +26,7 @@
 
 Name: phosh
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: A pure Wayland shell for mobile devices
 License: GPL-3.0-or-later
@@ -297,6 +297,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
+- 0.47.0
+
 * Fri Apr 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1.1
 - added x-d-p-phosh to runtime dependencies (ALT #53890)
 

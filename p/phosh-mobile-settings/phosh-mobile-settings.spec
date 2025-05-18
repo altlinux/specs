@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.46
+%define ver_major 0.47
 %define beta %nil
 %define gmobile_ver 0.2.1
 %define rdn_name mobi.phosh.MobileSettings
@@ -9,6 +9,8 @@
 %def_disable embed_gmobile
 # Linux dmabuf support unavailable
 %def_disable check
+
+%define gvc_ver 5f9768a
 
 Name: phosh-mobile-settings
 Version: %ver_major.0
@@ -26,7 +28,9 @@ Source: https://gitlab.gnome.org/World/Phosh/phosh-mobile-settings/-/archive/v%v
 %else
 Source: %name-%version%beta.tar
 %endif
-%{?_enable_embed_gmobile:Source1: gmobile-%gmobile_ver.tar}
+# https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
+Source10: gvc-%gvc_ver.tar
+%{?_enable_embed_gmobile:Source11: gmobile-%gmobile_ver.tar}
 
 %define phoc_ver %ver_major
 %define phosh_ver %ver_major
@@ -51,6 +55,8 @@ BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libportal-gtk4)
+# for gvc
+BuildRequires: pkgconfig(libpulse)
 %if_enabled embed_gmobile
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: gobject-introspection-devel}
@@ -63,8 +69,9 @@ BuildRequires: pkgconfig(gmobile) >= %gmobile_ver
 Mobile Settings App for phosh and related components.
 
 %prep
-%setup -n %name-%{?_disable_snapshot:v}%version%beta %{?_enable_embed_gmobile:-a1
+%setup -n %name-%{?_disable_snapshot:v}%version%beta -a10 %{?_enable_embed_gmobile:-a11
 mv gmobile-%gmobile_ver subprojects/gmobile}
+mv gvc-%gvc_ver subprojects/gvc
 
 %build
 %meson
@@ -95,6 +102,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
+- 0.47.0
+
 * Mon Mar 31 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - 0.46.0
 

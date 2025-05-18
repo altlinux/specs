@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.46
+%define ver_major 0.47
 %define beta %nil
 %define rdn_name mobi.phosh.OskStub
 
@@ -30,6 +30,7 @@ Provides: osk-wayland
 
 %define gmobile_ver 0.2.0
 %define gsds_ver 47
+%define systemd_ver 241
 
 Requires: dconf
 Requires: hunspell-en_US hunspell-ru-lebedev
@@ -48,7 +49,7 @@ BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(gnome-desktop-3.0)
 BuildRequires: pkgconfig(gsettings-desktop-schemas) >= %gsds_ver
 BuildRequires: pkgconfig(libfeedback-0.0)
-BuildRequires: pkgconfig(libsystemd)
+BuildRequires: pkgconfig(libsystemd) >= %systemd_ver
 # compliters: default -- hunspell
 BuildRequires: pkgconfig(hunspell)
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
@@ -98,14 +99,17 @@ xvfb-run %__meson_test
 %_datadir/%name/layouts.json
 %dir %_datadir/%name/completers
 %_datadir/%name/completers/hunspell.completer
-%_datadir/glib-2.0/schemas/sm.puri.phosh.osk.enums.xml
-%_datadir/glib-2.0/schemas/sm.puri.phosh.osk.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.osk.enums.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.osk.gschema.xml
 %{?_enable_man:%_man1dir/%name.1*}
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README* NEWS
 
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.47.0-alt1
+- 0.47.0
+
 * Sun Mar 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.46.0-alt1
 - 0.46.0
 
