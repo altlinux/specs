@@ -1,7 +1,7 @@
-%define git c5e1fad
+%define git %nil
 Name: libze-intel-gpu-raytracing
-Version: 1.0.0
-Release: alt15.g%git
+Version: 1.1.0
+Release: alt1
 
 Summary: oneAPI Level Zero Ray Tracing Support
 License: Apache-2.0
@@ -9,7 +9,8 @@ Group: Development/C++
 
 Url: https://github.com/intel/level-zero-raytracing-support
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+# do not set FORTIFY_SOURCE (already set)
+Patch: alt-cflags.patch
 
 ExclusiveArch: x86_64
 
@@ -43,5 +44,9 @@ This library should not get used directly but only through Level Zero.
 %_libdir/libze_intel_gpu_raytracing.so
 
 %changelog
+* Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1.0-alt1
+- 1.1.0.
+- build: do not set FORTIFY_SOURCE (already set).
+
 * Sun Jan 26 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt15.gc5e1fad
 - Initial build for ALTLinux.
