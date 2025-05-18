@@ -1,10 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%define git 9dc52f8
+%define git %nil
 
 Name: libcpuid
-Version: 0.7.1
-Release: alt28.g%git
+Version: 0.8.0
+Release: alt1
 Summary: libcpuid provides CPU identification
 License: BSD-2-Clause
 Group: Development/C
@@ -47,7 +47,7 @@ cpuid kernel driver for arm64.
 subst 's,lib\/cmake\/,${LIB_DESTINATION}/cmake/,' libcpuid/CMakeLists.txt
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir
+%cmake -DCMAKE_INSTALL_LIBDIR=%_libdir -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 %cmake_build
 
 %install
@@ -78,6 +78,9 @@ subst 's,lib\/cmake\/,${LIB_DESTINATION}/cmake/,' libcpuid/CMakeLists.txt
 #%%endif
 
 %changelog
+* Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 0.8.0-alt1
+- New version 0.8.0.
+
 * Wed Apr 23 2025 L.A. Kostis <lakostis@altlinux.ru> 0.7.1-alt28.g9dc52f8
 - v0.7.1-28-g9dc52f8 (to detect new Intel CPUs).
 
