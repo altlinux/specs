@@ -1,7 +1,7 @@
 %def_with tests
 
 Name: corectrl
-Version: 1.4.3
+Version: 1.5.1
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -13,12 +13,12 @@ Source1: 90-%name.rules
 Source2: %name.control
 
 BuildRequires(pre): cmake
-# Automatically added by buildreq on Sun Oct 02 2022
-BuildRequires: libbotan-devel libdbus-devel libdrm-devel libpolkit-devel qt5-charts-devel qt5-svg-devel qt5-tools-devel quazip-qt5-devel
+BuildRequires: libbotan-devel libdbus-devel libdrm-devel libpolkit-devel qt6-charts-devel qt6-svg-devel qt6-tools-devel quazip-qt6-devel
 BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11 ctest nholthaus-units-devel libspdlog-devel
 %if_with tests
 BuildRequires: catch-devel trompeloeil-devel
 %endif
+Requires: hwdata libqt6-quickcontrols2universal libqt6-chartsqml
 
 %description
 CoreCtrl is a Free and Open Source GNU/Linux application that allows you to
@@ -37,7 +37,7 @@ find . -name CMakeLists.txt -exec sed -i -e 's/stdc++fs/stdc++/g' {} \;
   %if_with tests
   -DBUILD_TESTING=TRUE \
   %endif
-  -DWITH_PCI_IDS_PATH=%_datadir/hwdatabase/pci.ids
+  %nil
 %cmake_build
 
 %check
@@ -78,6 +78,15 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt1
+- 1.5.1.
+- qt5->qt6.
+- control: fix egrep warning (closes #52762).
+- adjust qt6 components requires.
+
+* Fri Dec 20 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.3-alt2
+- Added hwdata to requires.
+
 * Tue Nov 19 2024 L.A. Kostis <lakostis@altlinux.ru> 1.4.3-alt1
 - 1.4.3.
 
