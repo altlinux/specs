@@ -1,5 +1,5 @@
 %define _name binary
-%define ver_major 5.2
+%define ver_major 5.3
 %define rdn_name io.github.fizzyizzy05.%_name
 
 %def_enable check
@@ -21,6 +21,7 @@ Source: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
 Requires: dconf
 
@@ -53,10 +54,14 @@ hexadecimal and binary numbers.
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README.*
 
 %changelog
+* Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
+- updated to 5.3-2-g12046d6
+
 * Fri Feb 07 2025 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
 - updated to 5.2-fix-date-9-g8610442
 
