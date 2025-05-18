@@ -2,7 +2,7 @@
 
 Name: gnokii
 Version: 0.6.31
-Release: alt3
+Release: alt4
 
 Summary: Unix tool suite for Nokia mobile phones
 Group: Communications
@@ -120,6 +120,12 @@ pushd xgnokii
 %makeinstall_std
 popd
 
+# Rename smsd to gnokii-smsd
+mv %buildroot%_bindir/{,gnokii-}smsd
+mv %buildroot%_man8dir/{,gnokii-}smsd.8
+sed -i 's,smsd ,gnokii-smsd ,' %buildroot%_man8dir/gnokii-smsd.8
+sed -i 's,smsd.,gnokii-smsd.,' %buildroot%_man8dir/gnokii-smsd.8
+
 mv %buildroot%_defaultdocdir/%name %buildroot%_docdir/%name-%version
 install -pm644 ChangeLog %buildroot%_docdir/%name-%version/
 
@@ -171,8 +177,8 @@ rm %buildroot%_libdir/smsd/*.la
 %doc smsd/sms.tables.mysql.sql
 %doc smsd/sms.tables.pq.sql
 %doc smsd/sms.tables.sqlite.sql
-%_bindir/smsd
-%_man8dir/smsd.8*
+%_bindir/gnokii-smsd
+%_man8dir/gnokii-smsd.8*
 %dir %_libdir/smsd
 %_libdir/smsd/libsmsd_file.so
 
@@ -186,6 +192,9 @@ rm %buildroot%_libdir/smsd/*.la
 %_libdir/smsd/libsmsd_sqlite.so
 
 %changelog
+* Fri May 16 2025 Anton Midyukov <antohami@altlinux.org> 0.6.31-alt4
+- NMU: Rename smsd to gnokii-smsd.
+
 * Wed Feb 05 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.31-alt3
 - Fixed build with new gettext.
 
