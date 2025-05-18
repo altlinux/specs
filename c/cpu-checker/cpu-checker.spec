@@ -1,6 +1,6 @@
 Name: cpu-checker
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: Tools to help evaluate certain CPU (or BIOS) features
 License: GPLv3
@@ -28,13 +28,20 @@ various features.
 %install
 %makeinstall_std
 
+# Rename kvm-ok files
+mv -v %buildroot%_sbindir/kvm-ok %buildroot%_sbindir/check-kvm-ok
+mv -v %buildroot%_man1dir/kvm-ok.1 %buildroot%_man1dir/check-kvm-ok.1
+
 %files
 %_sbindir/check-bios-nx
-%_sbindir/kvm-ok
+%_sbindir/check-kvm-ok
 %_man1dir/check-bios-nx.1.*
-%_man1dir/kvm-ok.1.*
+%_man1dir/check-kvm-ok.1.*
 
 %changelog
+* Sun May 18 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7-alt3
+- Renamed kvm-ok -> check-kvm-ok (Closes: #54341).
+
 * Mon Mar 03 2025 Anton Kurachenko <srebrov@altlinux.org> 0.7-alt2
 - Added loongarch64 support.
 - Totally replaced egrep by grep -E (#43193).
