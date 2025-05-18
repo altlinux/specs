@@ -21,8 +21,8 @@
 %define git_date 18.11.2024
 
 Name:    freecad
-Version: 1.0.0
-Release: alt5
+Version: 1.0.1
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -42,7 +42,6 @@ Patch2: freecad-0.19.2-alt-boost-link.patch
 Patch3: freecad-alt-fix-icon-name-in-menu.patch
 Patch4: freecad-alt-python-modules-path.patch
 Patch6: freecad-1.0.0-alt-version-check.patch
-Patch7: freecad-1.0.0-upstream-smesh-Fix-build-failure-with-vtk-9.4.patch
 Patch8: 0001-Port-plugins-to-PySide6.QtWidgets.patch
 # https://forum.freecad.org/viewtopic.php?p=812867#p812867
 # https://bugzilla.altlinux.org/show_bug.cgi?id=54082
@@ -182,7 +181,6 @@ tar xf %SOURCE2
 rm -rf src/CXX
 %endif
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
@@ -323,6 +321,9 @@ rm -rf %buildroot%ldir/Mod/Tux
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.1-alt1
+- New version.
+
 * Sat May 17 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.0.0-alt5
 - Adapt for PySide2.QtWidgets some missing imports (ALT #54088).
 
