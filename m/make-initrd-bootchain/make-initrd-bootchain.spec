@@ -8,7 +8,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt29
+Release: alt30
 
 Summary: %child modules set for %parent
 License: GPL-3.0
@@ -208,6 +208,14 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Sun May 18 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt30
+- added the ability to boot from an ISO-image unpacked
+  into a subdirectory
+- minor errors in the bootchain-localdev module and in
+  the documentation have been fixed
+- squash parameter introduced, separated from fuid
+- documentation has been updated to the current version
+
 * Sat Mar 29 2025 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt29
 - altboot: save vars to /run/stage1/vars
 - altboot: save /etc/network to /run/stage1
