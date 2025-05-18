@@ -1,12 +1,13 @@
 Name: mkimage-profiles
-Version: 1.7.7
+Version: 1.8.0
 Release: alt1
 
 Summary: ALT based distribution metaprofile
 License: GPL-2.0-or-later
 Group: Development/Other
 
-Url: http://altlinux.org/m-p
+URL: https://www.altlinux.org/Mkimage-profiles
+VCS: https://altlinux.space/mkimage-profiles/mkimage-profiles
 Source: %name-%version.tar
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -134,6 +135,20 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Sun May 18 2025 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
+- grub: automatically substitute uuid of device $ROOT to kernel cmdline
+- initrd-propagator: set method disk,uuid
+- init, stage2: set INSTALL2_INIT="systemd.unit=install2.target" for systemd
+- docs: delete absolute path without 'file://' from index-*.html
+- docs: copy indexhtml with conversion of symlinks to directories and files
+- docs: move indexhtml up one level
+- remove mipsel support
+- mixin.mk: simplify mixin/vm-archdep
+- bootloader: remove use/botloader/uboot
+- live-install: do'nt add branding-$(BRANDING)-alterator from BASE_PACKAGES
+- live-install: do add installer-feature-online-repo for e2k too
+- install2, live-install: add e2k btrfs fixup feature
+
 * Fri Apr 25 2025 Anton Midyukov <antohami@altlinux.org> 1.7.7-alt1
 - grub: fix init bootargs in netinstall configs
 - grub: change console=ttyS0 and console=tty0 places
