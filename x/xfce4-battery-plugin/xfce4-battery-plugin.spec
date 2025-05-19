@@ -1,5 +1,5 @@
 Name: xfce4-battery-plugin
-Version: 1.1.6
+Version: 1.2.0
 Release: alt1
 
 Summary: Battery monitor plugin for the Xfce panel
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Requires: xfce4-panel
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.16
 
@@ -25,14 +26,11 @@ BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 %setup
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -41,11 +39,14 @@ BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/*/*/*/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
 # Seems glibc doesn't support uz@Latn
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-battery-plugin.mo
 
 %changelog
+* Mon May 19 2025 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
+- Switched to meson build.
+- Updated to 1.2.0.
+
 * Tue Dec 24 2024 Mikhail Efremov <sem@altlinux.org> 1.1.6-alt1
 - Updated to 1.1.6.
 
