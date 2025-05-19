@@ -3,19 +3,22 @@
 
 Name: soundconverter
 Version: 4.0.6
-Release: alt2
+Release: alt3
 
 Summary: A simple sound converter application for GNOME
 License: GPL-3.0-or-later
 Group: Sound
 
-Url: https://github.com/kassoulet/soundconverter
+URL: https://github.com/kassoulet/soundconverter
+VCS: https://github.com/kassoulet/soundconverter.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: rpm-build-gir
 BuildRequires: intltool
 BuildRequires: python3-devel
 BuildRequires: python3(setuptools)
@@ -75,8 +78,14 @@ rm %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt3
+- spec:
+  + fix typo in changelog
+  + add VCS tag
+  + cosmetic update BR
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt2
-- do'nt package gschemas.compiled
+- don't package gschemas.compiled
 
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt1
 - New version 4.0.6.
