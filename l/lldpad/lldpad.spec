@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lldpad
-Version: 1.1
-Release: alt2
+Version: 1.1.1
+Release: alt1
 Summary: Intel LLDP Agent
 
 Group: Networking/Other
@@ -73,6 +73,9 @@ rm -f %buildroot%_libdir/*.{a,la}
 %_man3dir/*
 
 %changelog
+* Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Wed Aug 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.1-alt2
 - Increased release for greater than in autoimports.
 
