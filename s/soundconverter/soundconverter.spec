@@ -3,7 +3,7 @@
 
 Name: soundconverter
 Version: 4.0.6
-Release: alt1
+Release: alt2
 
 Summary: A simple sound converter application for GNOME
 License: GPL-3.0-or-later
@@ -59,6 +59,9 @@ rm -r %buildroot%_datadir/locale/sr@Latn/
 # Cleanup docdir
 rm -r %buildroot%_datadir/doc/%name
 
+# cleanup compiled schemas
+rm %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
+
 %files -f %name.lang
 %doc AUTHORS README.md
 %_bindir/%name
@@ -72,6 +75,9 @@ rm -r %buildroot%_datadir/doc/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt2
+- do'nt package gschemas.compiled
+
 * Fri Nov 01 2024 Anton Midyukov <antohami@altlinux.org> 4.0.6-alt1
 - New version 4.0.6.
 
