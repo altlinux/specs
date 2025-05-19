@@ -1,0 +1,65 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+Name: gnome-shell-extension-freon
+Version: 58
+Release: alt2
+Summary: Shows CPU temperature, disk temperature, video card temperature
+License: GPL-3.0-or-later
+Group:  Graphical desktop/GNOME
+URL: gnome-shell-extension-freon
+VCS: gnome-shell-extension-freon.git
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+BuildArch: noarch
+
+%description
+Freon is forked from gnome-shell-extension-sensors. Freon is an extension for displaying CPU
+temperature, disk temperature, video card temperature (NVIDIA/Catalyst/Bumblebee&NVIDIA),
+voltage and fan RPM in GNOME Shell.
+
+%prep
+%setup
+%autopatch -p1
+
+%build
+pushd freon@UshakovVasilii_Github.yahoo.com
+# build locale
+for f in po/*.po; do
+	name=${f:3:${#f}-6}
+	mkdir -p locale/"$name"/LC_MESSAGES
+	msgfmt "$f" --output-file=locale/"$name"/LC_MESSAGES/freon.mo
+done
+popd
+
+%install
+mkdir -p %buildroot%_datadir/gnome-shell/extensions
+cp -a freon@UshakovVasilii_Github.yahoo.com %buildroot%_datadir/gnome-shell/extensions/
+pushd %buildroot%_datadir/gnome-shell/extensions/freon@UshakovVasilii_Github.yahoo.com
+
+# fix install translations
+mv locale %buildroot%_datadir/
+rm -r po
+
+# fix install gsettings schemas
+mkdir -p %buildroot%_datadir/glib-2.0
+mv schemas %buildroot%_datadir/glib-2.0/
+
+# remove extra icon theme
+rm -r icons/material-icons
+popd
+
+%find_lang freon
+
+%files -f freon.lang
+%_datadir/gnome-shell/extensions/freon@UshakovVasilii_Github.yahoo.com
+%_datadir/glib-2.0/schemas/*.gschema.xml
+%doc README.md LICENSE
+
+%changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 58-alt2
+- Update Russian translation
+
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 58-alt1
+- initial build
