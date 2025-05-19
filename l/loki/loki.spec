@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 3.3.2
+Version: 3.5.0
 Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: AGPL-3.0-only
@@ -18,7 +18,7 @@ Source6: promtail.yaml
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.1
+BuildRequires: rpm-build-golang golang >= 1.24.0
 BuildRequires: systemd-devel
 Provides: grafana-loki = %EVR
 
@@ -62,7 +62,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-%define buildpkg github.com/grafana/loki/pkg/util/build
+%define buildpkg %import_path/v3/pkg/util/build
 export CGO_ENABLED=0
 export GOFLAGS="-mod=vendor"
 export TAGS="netgo"
@@ -157,6 +157,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc clients/cmd/docker-driver/pipeline-example.yaml
 
 %changelog
+* Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
+- New version 3.5.0.
+
 * Tue Jan 14 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.2-alt1
 - New version 3.3.2.
 
