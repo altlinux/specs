@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-clipboard-indicator
 Version: 68
-Release: alt3
+Release: alt4
 Summary: Clipboard manager for GNOME Shell
 License: MIT
 Group:  Graphical desktop/GNOME
@@ -30,13 +30,25 @@ over 1M downloads.
 
 %install
 %makeinstall_std
+
+# fix install glibc schema
+mkdir -p %buildroot%_datadir/glib-2.0/schemas
+mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/*.xml \
+	%buildroot%_datadir/glib-2.0/schemas
+rm -vr %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas
+
 %find_lang clipboard-indicator
 
 %files -f clipboard-indicator.lang
 %_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com
+%_datadir/glib-2.0/schemas/*.xml
 %doc README.rst
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 68-alt4
+- clipboard-indicator: fix install gsettings schemas
+- Update russian translations
+
 * Thu May 15 2025 Anton Midyukov <antohami@altlinux.org> 68-alt3
 - Update russian translations (Closes: 54303)
 
