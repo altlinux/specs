@@ -7,7 +7,7 @@
 
 Name:          lib%sname
 Version:       1.14.6
-Release:       alt1
+Release:       alt1.1
 Summary:       Hierarchical Data Format 5 library
 License:       BSD
 Group:         System/Libraries
@@ -49,6 +49,7 @@ requirements of modern systems and applications.
 %package       -n lib%sname-devel
 Summary:       HDF5 library development package
 Group:         Development/C
+Requires:      %sname-utils = %EVR
 Requires:      gcc-c++
 Requires:      cmake
 Requires:      libstdc++-devel
@@ -137,5 +138,8 @@ find -name hdf5-config.cmake -exec sed 's,${PACKAGE_PREFIX_DIR}/${PACKAGE_PREFIX
 
 
 %changelog
+* Mon May 19 2025 Pavel Skrylev <majioa@altlinux.org> 1.14.6-alt1.1
+- ! restored lost dep to utils because of its cmake's config requirement
+
 * Tue May 13 2025 Pavel Skrylev <majioa@altlinux.org> 1.14.6-alt1
 - initial build for ALT Linux Sisyphus
