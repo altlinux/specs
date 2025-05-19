@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.4.2
+Version: 6.5.0
 Release: alt1
 
 Summary: Scalable, non-blocking web server and tools
@@ -15,7 +15,6 @@ VCS: https://github.com/tornadoweb/tornado
 
 Source: %name-%version.tar
 Patch: Do-not-turn-DeprecationWarning-into-Exception.patch
-Patch1: tornado-increase-timeout-for-simplehttpclienttest.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -36,7 +35,6 @@ ideal for real-time web services.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 # remove shebang from files
 sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
@@ -58,9 +56,12 @@ export ASYNC_TEST_TIMEOUT=120
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/%oname-6.5.dist-info
 
 %changelog
+* Mon May 19 2025 Grigory Ustinov <grenka@altlinux.org> 6.5.0-alt1
+- Automatically updated to 6.5.0.
+
 * Fri Nov 22 2024 Grigory Ustinov <grenka@altlinux.org> 6.4.2-alt1
 - Automatically updated to 6.4.2.
 
