@@ -1,6 +1,6 @@
 %define _name xfce4-generic-slider
 Name: %_name-plugin
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: A slider for adjusting the value passed to a command
@@ -13,8 +13,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-generic-slider.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4ui-gtk3-devel >= 4.16.0 libxfce4panel-gtk3-devel >= 4.16.0
+BuildRequires: libxfce4util >= 4.16.0 libxfce4ui-gtk3-devel >= 4.16.0 libxfce4panel-gtk3-devel >= 4.16.0
 
 Requires: xfce4-panel
 
@@ -33,13 +34,11 @@ calls to a second command.
 ln -s README.md README
 
 %build
-%xfce4reconf
-%configure \
-	--enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %_name
 
 %files -f %_name.lang
@@ -49,6 +48,10 @@ ln -s README.md README
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Mon May 19 2025 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1
+- Switched to meson build.
+- Updated to 1.1.0.
+
 * Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 1.0.1-alt1
 - Updated to 1.0.1.
 
