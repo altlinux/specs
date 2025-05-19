@@ -8,7 +8,7 @@
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.0.35
-Release: alt4
+Release: alt5
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -29,7 +29,7 @@ BuildRequires: protobuf-compiler python3-dev python3-module-sphinx-sphinx-build-
 BuildRequires: python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp
 BuildRequires: python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp
 BuildRequires: python3-module-sphinxcontrib-serializinghtml python3-tools xxd
-BuildRequires: zlib-devel libzstd-devel
+BuildRequires: zlib-devel libzstd-devel liblz4-devel
 
 ExcludeArch: ppc64le %ix86 %arm %mips32 ppc
 
@@ -47,14 +47,14 @@ sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/Encod
 
 mkdir -p %_build/../libboost
 cp %SOURCE1 %_build/../libboost/
-tar xfv %SOURCE2 -C extra
+tar xfv %SOURCE2 -C extra/libkmip
 
 %build
 %cmake -DWITH_BOOST=libboost -DBUILD_CONFIG=xtrabackup_release -DWITH_PROTOBUF=system \
   -DCMAKE_INSTALL_PREFIX=%prefix -DWITH_SSL=system -DINSTALL_MANDIR=%_mandir -DWITH_MAN_PAGES=1 \
   -DINSTALL_MYSQLTESTDIR=%_datadir/percona-xtrabackup-test-%pxbu_major_minor \
   -DINSTALL_PLUGINDIR="%_lib/xtrabackup/plugin" -DFORCE_INSOURCE_BUILD=1 \
-  -DWITH_ZLIB=system -DWITH_ZSTD=system \
+  -DWITH_ZLIB=system -DWITH_ZSTD=system -DWITH_LZ4=system \
 %if_without man
    -DWITH_MAN_PAGES=FALSE \
 %endif
@@ -94,6 +94,10 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Mon May 19 2025 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt5
+- 8.0.35-33
+- Build with system lz4
+
 * Fri Jan 10 2025 Alexei Takaseev <taf@altlinux.org> 8.0.35-alt4
 - 8.0.35-32
 
