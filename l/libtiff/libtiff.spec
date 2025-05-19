@@ -5,15 +5,16 @@
 
 Name: libtiff
 Version: 4.7.0
-Release: alt1
+Release: alt2
 
 Summary: Library of functions for manipulating TIFF format image files
-License: BSD-style
+License: libtiff
 Group: System/Libraries
 Url: https://libtiff.gitlab.io/libtiff/
 VCS: https://gitlab.com/libtiff/libtiff.git
 
 Source: %name-%version.tar
+Patch: libtiff-4.7.0-upstream-race-condition-in-tiffcrop.patch
 
 %def_enable cxx
 
@@ -107,6 +108,7 @@ This package contains TIFF I/O C++ development library and header files.
 
 %prep
 %setup
+%autopatch -p1
 rm -f libtool.m4
 
 libtoolize --force --copy
@@ -168,6 +170,10 @@ autoheader
 %endif
 
 %changelog
+* Mon May 19 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.0-alt2
+- Fix FTBFS: race condition in tiffcrop.
+- Update license tag to SPDX format.
+
 * Tue Apr 08 2025 Constantin Sunzow <protvin@altlinux.org> 4.7.0-alt1
 - New version.
 
