@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt5.20240531
+Release: alt6.20250310.1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -24,6 +24,7 @@ Source3: wx-config
 
 Patch1: wxGTK3-3.0.2-abicheck.patch
 Patch2: wxGTK3.0.5.1-fix-building-with-gcc14.patch
+Patch3: wxGTK3-3.0.5.1-fix-building-with-autoconf-2.72.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -452,6 +453,10 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt6.20250310.1
+- new snapshot
+- fix build with autoconf 2.72
+
 * Sun Nov 03 2024 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt5.20240531
 - new snapshot
 
