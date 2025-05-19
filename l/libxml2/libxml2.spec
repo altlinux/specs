@@ -2,7 +2,7 @@
 %set_verify_elf_method strict
 
 Name: libxml2
-Version: 2.12.9
+Version: 2.12.10
 Release: alt1
 Epoch: 1
 
@@ -236,6 +236,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1:2.12.10-alt1
+- 2.12.10 (Fixes: CVE-2025-24928, CVE-2024-56171) ALT#54348.
+
 * Thu Aug 22 2024 Alexey Shabalin <shaba@altlinux.org> 1:2.12.9-alt1
 - 2.12.9 (Fixes: CVE-2024-40896).
 
