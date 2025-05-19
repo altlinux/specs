@@ -1,6 +1,6 @@
 Name: fatresize
 Version: 1.0.3
-Release: alt13
+Release: alt14
 
 Summary: The FAT16/FAT32 non-destructive resizer.
 License: %gpl2plus
@@ -13,6 +13,9 @@ Source: %name-%version.tar.gz
 # http://anonscm.debian.org/cgit/parted/debian/fatresize.git/tree/debian/patches/libparted-3.1.patch
 Patch: fatresize-1.0.3-libparted-3.1.patch
 
+# https://github.com/ya-mouse/fatresize/pull/42
+Patch2: fatresize-1.0.3-autoconf-2.72.patch
+
 BuildRequires: libparted-devel >= 1.8.0 libe2fs-devel
 BuildRequires: rpm-build-licenses docbook-to-man docbook-dtds OpenSP 
 
@@ -22,6 +25,7 @@ The FAT16/FAT32 non-destructive resizer.
 %prep
 %setup
 %patch -p1
+%patch2 -p2
 
 %build
 %add_optflags -funsigned-char
@@ -38,6 +42,9 @@ The FAT16/FAT32 non-destructive resizer.
 %_man1dir/%name.1.*
 
 %changelog
+* Mon May 19 2025 Oleg Solovyov <mcpain@altlinux.org> 1.0.3-alt14
+- fix build with autoconf 2.72
+
 * Thu Dec 05 2019 Slava Aseev <ptrnine@altlinux.org> 1.0.3-alt13
 - Remove minimal partition size limitation (512 MiB)
 - Fix getting device name
