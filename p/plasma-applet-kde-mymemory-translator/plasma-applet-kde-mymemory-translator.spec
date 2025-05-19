@@ -2,7 +2,7 @@
 %define nameLC plasma_applet_Kde.mymemory.translator
 
 Name: plasma-applet-kde-mymemory-translator
-Version: 0.6.7
+Version: 0.6.9
 Release: alt1
 
 Summary: Mymemory translator
@@ -45,7 +45,7 @@ rm -r %nameL/contents/ui/components/GetAPI.qml
 mkdir -p %buildroot%_datadir/plasma/plasmoids/%nameL
 mv %nameL %buildroot%_datadir/plasma/plasmoids/
 
-for locale in es fr hi ru; do
+for locale in es fr hi ru ja; do
  msgfmt translate/${locale}.po -o translate/${locale}.mo
  install -Dm 0644 translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
@@ -55,6 +55,9 @@ done
 %_datadir/locale/*/LC_MESSAGES/%nameLC.mo
 
 %changelog
+* Mon May 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.9-alt1
+- 0.6.7 -> 0.6.9
+
 * Sun May 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.6.7-alt1
 - Initial build for ALT Linux.
 - Created and added russian translate.
