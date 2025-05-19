@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.38
-Release: alt1.g1fc7fe0e1
+Version: 1.4.1.44
+Release: alt1.g41bcdca7f
 Summary: A music player and library organiser
 
 Group: Sound
@@ -11,9 +11,11 @@ Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
 Patch1: 01-fix-cmake.patch
+Patch2: 02-fix-version.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake cmake
+BuildRequires: /proc
 BuildRequires: boost-devel-headers gcc-c++
 BuildRequires: libgio-devel libglew-devel libgpod-devel libmtp-devel
 BuildRequires: libqt5-opengl libqt5-sql libqt5-webkit libqt5-xmlpatterns qt5-x11extras-devel
@@ -28,14 +30,23 @@ BuildRequires: qt5-tools-devel
 BuildRequires: libalsa-devel
 BuildRequires: libfftw3-devel
 BuildRequires: git
-#BuildRequires: liblastfm-devel
+BuildRequires: libclastfm-devel
 
 BuildRequires: protobuf-compiler
 # Enable Google Drive support
 BuildRequires: libgoogle-sparsehash
 BuildRequires: libavcodec-devel libavformat-devel libpcre-devel
-BuildRequires: libprotobuf-devel qjson-qt5-devel libcdio-devel
+BuildRequires: libprotobuf-devel libcdio-devel
 BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(mount)
+BuildRequires: pkgconfig(libbrotlidec)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libtiff-4)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: liborc-devel
 
 # Clementine crashes without it
 Requires: gst-plugins-base%{gst_api_ver}
@@ -48,7 +59,7 @@ Clementine is a modern music player and library organizer
 
 %prep
 %setup
-%patch1 -p2
+%autopatch -p2
 %ifarch %e2k
 %add_optflags -Winvalid-offsetof
 sed -i "s|== Separator|== QChar(Separator)|" \
@@ -65,7 +76,14 @@ if [ ! -d .git ]; then
 fi
 
 %build
-%cmake -DBUNDLE_PROJECTM_PRESETS=ON -DFORCE_GIT_REVISION=%version.%release
+%cmake -DBUNDLE_PROJECTM_PRESETS=ON \
+       -DFORCE_GIT_REVISION=%version.%release \
+       -DBUILD_WERROR:BOOL=OFF \
+       -DCMAKE_BUILD_TYPE:STRING=Release \
+       -DCMAKE_CXX_STANDARD:INT=17 \
+       -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
+       -DUSE_SYSTEM_TAGLIB:BOOL=ON \
+       -Wno-dev
 %cmake_build
 
 %install
@@ -85,6 +103,9 @@ fi
 
 
 %changelog
+* Mon May 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.44-alt1.g41bcdca7f
+- Update upstream source to 1.4.1-44-g41bcdca7f
+
 * Mon Apr 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.38-alt1.g1fc7fe0e1
 - Update upstream source to 1.4.1-38-g1fc7fe0e1
 - Fix build with cmake 4.0
