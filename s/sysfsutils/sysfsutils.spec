@@ -6,7 +6,7 @@
 %define sover 2
 Name: sysfsutils
 Version: 2.1.1
-Release: alt2
+Release: alt3
 Summary: Utilities for interfacing with sysfs
 Group: System/Kernel and hardware
 License: GPL-2.0
@@ -79,12 +79,6 @@ install -d -m755 %buildroot%_sysconfdir/sysfs.d
 %check
 bash -n %buildroot%_initdir/sysfs
 
-# Following symlink needed to resolve 'ExecStart=/etc/init.d/sysfs' because
-# '%%_initdir' defined to '/etc/rc.d/init.d'
-ln -s rc.d/init.d %buildroot/etc/
-systemd-analyze verify --root=%buildroot %_unitdir/sysfs.service
-rm %buildroot/etc/init.d
-
 # Only compiles examples but does not run them.
 %make_build check
 
@@ -115,6 +109,9 @@ rm %buildroot/etc/init.d
 %_pkgconfigdir/libsysfs.pc
 
 %changelog
+* Sat May 17 2025 Vitaly Chikunov <vt@altlinux.org> 2.1.1-alt3
+- spec: check: Fix FTBFS removing call to systemd-analyze.
+
 * Fri Jun 02 2023 Vitaly Chikunov <vt@altlinux.org> 2.1.1-alt2
 - Revert 'Do not package (Debianish) sysfs sysv/systemd services.'
 - Sync init script with Debian which adds support for '/etc/sysfs.d'.
