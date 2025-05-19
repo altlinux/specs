@@ -1,5 +1,5 @@
 Name: tree-sitter-lua
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Lua grammar for tree-sitter
@@ -29,6 +29,9 @@ install -pm0644 package.json %buildroot%_libdir/tree-sitter-lua
 %_libdir/tree-sitter-lua
 
 %changelog
+* Mon May 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
+- 0.4.0 released
+
 * Tue Mar 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.0-alt1
 - 0.3.0 relesed
 
