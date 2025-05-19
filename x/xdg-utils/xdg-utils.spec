@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt4
+Release: alt5
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -66,7 +66,8 @@ The following scripts are provided at this time:
 * xdg-open              Open a file or URL in the user's preferred application
 * xdg-email             Send mail using the user's preferred e-mail composer
 * xdg-screensaver       Control the screensaver
-* xdg-su                Run as root
+* xdg-settings          Get or set the default web browser and URL handlers
+* xdg-terminal          Utility script to open the registered terminal emulator
 
 Testsuite for xdg-utils is available from
 http://portland.freedesktop.org/wiki/TestSuite
@@ -123,6 +124,9 @@ rm -v %buildroot{%_bindir/xdg-su,%_man1dir/xdg-su*}
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue May 20 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt5
+- update description according to binaries list
+
 * Mon May 12 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt4
 - remove xdg-su (ALT bug 54150)
 
