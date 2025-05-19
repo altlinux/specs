@@ -9,7 +9,7 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 2.7.7
+Version: 2.7.8
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -231,6 +231,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP User" -g _kea
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon May 19 2025 Andrey Limachko <liannnix@altlinux.org> 2.7.8-alt1
+- 2.7.8
+
 * Wed Apr 16 2025 Andrey Limachko <liannnix@altlinux.org> 2.7.7-alt1
 - 2.7.7
 
