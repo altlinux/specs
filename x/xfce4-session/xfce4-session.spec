@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.20.2
-Release: alt1
+Release: alt1.1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -44,6 +44,21 @@ Conflicts: libxfce4windowing < 4.19.6
 Данный пакет содержит в себе менеджер сессий, используемый в окружении
 рабочего стола Xfce.
 
+%package wayland
+Summary: Wayland session for Xfce desktop environment
+Summary (ru): Сессия wayland для окружения рабочего стола Xfce
+Group: Graphical desktop/XFce
+Requires: %name = %EVR
+Requires: labwc-base
+Requires: xorg-xwayland
+
+%description wayland
+Wayland session for Xfce desktop environment.
+
+%description -l ru
+Данный пакет содержит сессию Wayland для окружения рабочего
+стола Xfce.
+
 %prep
 %setup
 %patch -p1
@@ -79,11 +94,16 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_mandir/man?/*
 %_datadir/xsessions/*.desktop
 %_datadir/polkit-1/actions/*.policy
-%_datadir/wayland-sessions/xfce-wayland.desktop
-%_datadir/xfce4/labwc/
 %_datadir/xdg-desktop-portal/xfce-portals.conf
 
+%files wayland
+%_datadir/wayland-sessions/xfce-wayland.desktop
+%_datadir/xfce4/labwc/
+
 %changelog
+* Mon May 19 2025 Ivan A. Melnikov <iv@altlinux.org> 4.20.2-alt1.1
+- NMU: put wayland session into a separate package (ALT#54329).
+
 * Mon Mar 24 2025 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt1
 - Dropped fake changelog entry.
 - Updated to 4.20.2.
