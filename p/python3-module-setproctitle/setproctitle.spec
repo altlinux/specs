@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 
 Summary: A library to allow customization of the process title
@@ -47,6 +47,9 @@ tools such as ps and top).
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon May 19 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt1
+- New version 1.3.6.
+
 * Tue Feb 25 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt1
 - Automatically updated to 1.3.5.
 
