@@ -1,7 +1,12 @@
 %define _unpackaged_files_terminate_build 1
+%if %{expand:%%{!?_without_check:%%{!?_disable_check:1}}0}
+%def_enable tests
+%else
+%def_disable tests
+%endif
 
 Name: xfce4-calculator-plugin
-Version: 0.7.3
+Version: 0.8.0
 Release: alt1
 
 Summary: A calculator plugin for the Xfce panel
@@ -14,6 +19,7 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-calculator-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 
@@ -27,17 +33,16 @@ Simple command line based calculator for the Xfce panel
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-debug=minimum
-%make_build
+%meson \
+	 %{subst_enable_meson_bool tests tests}
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %check
-make check
+%meson_test
 
 %files -f %name.lang
 %doc README.md AUTHORS NEWS
@@ -45,9 +50,11 @@ make check
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Mon May 19 2025 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Switched to meson build.
+- Updated to 0.8.0.
+
 * Tue Dec 24 2024 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
 - Updated to 0.7.3.
 
