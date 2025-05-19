@@ -9,7 +9,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.39.4
+Version: 1.40.0
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -20,7 +20,7 @@ Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.22.8
+BuildRequires: rpm-build-golang golang >= 1.23.3
 BuildRequires: go-md2man
 BuildRequires: libgpgme-devel
 BuildRequires: libdevmapper-devel
@@ -87,6 +87,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.40.0-alt1
+- New version 1.40.0.
+
 * Tue Apr 08 2025 Alexey Shabalin <shaba@altlinux.org> 1.39.4-alt1
 - New version 1.39.4.
 
