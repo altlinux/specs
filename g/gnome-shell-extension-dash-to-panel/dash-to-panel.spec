@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-dash-to-panel
 Version: 68
-Release: alt1
+Release: alt2.fa8fabd.1
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -45,18 +45,20 @@ needed for easy access to running and favorited applications.
 %makeinstall_std
 %find_lang %gettext_domain
 
-# fix install glibc schema
-mkdir -p %buildroot%_datadir/glib-2.0/schemas
-mv %buildroot%_datadir/gnome-shell/extensions/%eid/schemas/*.xml \
-	%buildroot%_datadir/glib-2.0/schemas
-rm -vr %buildroot%_datadir/gnome-shell/extensions/%eid/schemas
+# remove docs from directory of extension
+rm %buildroot%_datadir/gnome-shell/extensions/%eid/COPYING
+rm %buildroot%_datadir/gnome-shell/extensions/%eid/README.md
 
 %files -f %gettext_domain.lang
 %_datadir/gnome-shell/extensions/%eid/*
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.dash-to-panel.gschema.xml
-%doc README.md
+%doc README.md COPYING
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 68-alt2.fa8fabd.1
+- new snapshot
+- update russian translation
+
 * Wed Mar 12 2025 Anton Midyukov <antohami@altlinux.org> 68-alt1
 - New version 68.
 
