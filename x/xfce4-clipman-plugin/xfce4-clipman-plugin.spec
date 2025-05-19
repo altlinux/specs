@@ -1,5 +1,5 @@
 Name: xfce4-clipman-plugin
-Version: 1.6.7
+Version: 1.7.0
 Release: alt1
 
 Summary: Clipboard history plugin for the Xfce panel
@@ -19,6 +19,10 @@ Patch: %name-%version-%release.patch
 %def_disable wayland
 %endif
 
+# Seems tests for gui only and doesn't work in hasher
+%def_disable tests
+
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: xorg-proto-devel libXtst-devel
@@ -49,18 +53,16 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--disable-static \
-	--enable-libqrencode \
-	--enable-x11 \
-	%{subst_enable wayland} \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dqrencode=enabled \
+	-Dx11=enabled \
+	%{subst_enable_meson_feature wayland wayland} \
+	%{subst_enable_meson_bool tests tests}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
@@ -77,9 +79,11 @@ Clipman это менеджер буфера обмена для Xfce. Он со
 %_xdgconfigdir/autostart/*
 %_datadir/metainfo/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Mon May 19 2025 Mikhail Efremov <sem@altlinux.org> 1.7.0-alt1
+- Switched to meson build.
+- Updated to 1.7.0.
+
 * Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 1.6.7-alt1
 - Enabled wayland support in the Sisyphus only.
 - Updated to 1.6.7.
