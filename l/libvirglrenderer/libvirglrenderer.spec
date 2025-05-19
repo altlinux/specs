@@ -1,6 +1,6 @@
 
 Name: libvirglrenderer
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Virgl Rendering library
@@ -17,6 +17,7 @@ BuildRequires: pkgconfig(libdrm_amdgpu) >= 2.4.121
 BuildRequires: pkgconfig(gbm) >= 18.0.0
 BuildRequires: pkgconfig(epoxy) >= 1.5.4
 BuildRequires: pkgconfig(libva) pkgconfig(libva-drm)
+BuildRequires: python3(yaml)
 
 %description
 The virgil3d rendering library is a library used by
@@ -66,6 +67,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Tue Sep 24 2024 Alexey Shabalin <shaba@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
