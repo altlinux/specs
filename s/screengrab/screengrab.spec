@@ -4,7 +4,7 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 2.10.0
+Version: 3.0.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
@@ -18,14 +18,18 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: cmake
+BuildRequires: lxqt2-build-tools
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Gui)
 BuildRequires: pkgconfig(Qt6Help)
 BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6WaylandClient)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: pkgconfig(Qt6Xdg)
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libqt6xdg-devel
+BuildRequires: plasma6-layer-shell-qt-devel
+BuildRequires: libpng-devel
 # To generate screengrab.desktop
 BuildRequires: perl-YAML-LibYAML-API
 
@@ -54,6 +58,7 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %endif
 
 %build
+%add_optflags -I%_includedir/KF6 -L%_libdir/kf6/devel
 %cmake
 %cmake_build
 
@@ -69,6 +74,9 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %_datadir/metainfo/screengrab.metainfo.xml
 
 %changelog
+* Sat May 17 2025 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt1
+- New version 3.0.0.
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.10.0-alt1
 - New version 2.10.0.
 
