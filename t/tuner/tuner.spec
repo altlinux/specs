@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Extensible control center
@@ -96,6 +96,7 @@ GObject introspection devel data for the lib%name.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%app_id.desktop
+%_datadir/metainfo/%app_id.metainfo.xml
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %doc README.md
 
@@ -121,6 +122,12 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Mon May 19 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.4-alt1
+- improved no plugins page
+- improved translations
+- added plugins list reloading
+- added metainfo
+
 * Wed May 14 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.3-alt1
 - added python plugin support
 - display loaded plugins at credits section

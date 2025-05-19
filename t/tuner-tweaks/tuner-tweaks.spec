@@ -4,7 +4,7 @@
 
 Name: tuner-tweaks
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Extra GNOME settings
 License: GPL-3.0-or-later
@@ -13,6 +13,8 @@ Group: Graphical desktop/Other
 Url: https://altlinux.space/alt-gnome/TunerTweaks
 Vcs: https://altlinux.space/alt-gnome/TunerTweaks
 Source: %name-%version.tar
+
+Requires: tuner
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -42,6 +44,9 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %doc README.md
 
 %changelog
+* Mon May 19 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.1-alt2
+- added tuner app requirement (Closes: 54362)
+
 * Mon May 12 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.1-alt1
 - implemented window button row actions
 
