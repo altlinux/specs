@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libtracefs
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 Summary: Library to access kernel tracefs
 License: LGPL-2.1-only
@@ -63,7 +63,8 @@ export CFLAGS="%optflags"
 %install
 %makeinstall_std prefix=%_prefix libdir=%_libdir install_doc V=1
 rm %buildroot%_libdir/libtracefs.a
-install -Dp bin/sqlhist %buildroot/%_bindir/sqlhist
+install -Dp bin/sqlhist %buildroot%_bindir/sqlhist
+install -Dpm644 samples/sqlhist.bash %buildroot%_datadir/bash-completion/completions/sqlhist.bash
 
 %check
 %make_build test V=1
@@ -76,6 +77,8 @@ utest/trace-utest
 %files tools
 %_bindir/sqlhist
 %_man1dir/sqlhist.1*
+%_datadir/bash-completion/completions/sqlhist.bash
+%_datadir/bash-completion/completions/tracefs_sql.bash
 
 %files devel
 %doc README
@@ -88,6 +91,9 @@ utest/trace-utest
 %_defaultdocdir/%name-doc
 
 %changelog
+* Wed May 14 2025 Vitaly Chikunov <vt@altlinux.org> 1.8.2-alt1
+- Update to libtracefs-1.8.2 (2025-04-14).
+
 * Fri Aug 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.8.1-alt1
 - Update to libtracefs-1.8.1 (2024-07-24).
 
