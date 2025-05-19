@@ -15,7 +15,7 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.41
+Version: 8.0.42
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -60,7 +60,6 @@ Patch1: mysql-8.0.33-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mysql-8.0.26-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
-Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
 Patch9: mysql-8.0.33-alt-disable-run-libmysql_api_test.patch
 Patch10: mysql-8.0.39-alt-disable-faster-TLS-model.patch
@@ -919,6 +918,18 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Mon May 19 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.42-alt1
+- new version
+  + (fixes: CVE-2025-21574, CVE-2025-21575, CVE-2025-21577, CVE-2025-21579)
+  + (fixes: CVE-2025-21580, CVE-2025-21581, CVE-2025-21584, CVE-2025-21585)
+  + (fixes: CVE-2025-30681, CVE-2025-30682, CVE-2025-30683, CVE-2025-30684)
+  + (fixes: CVE-2025-30685, CVE-2025-30687, CVE-2025-30688, CVE-2025-30689)
+  + (fixes: CVE-2025-30693, CVE-2025-30695, CVE-2025-30696, CVE-2025-30699)
+  + (fixes: CVE-2025-30703, CVE-2025-30704, CVE-2025-30705, CVE-2025-30715)
+  + (fixes: CVE-2025-30721)
+- update mysql-shell 8.0.41 -> 8.0.42
+- repo cleanup: remove multiple obsolete patches
+
 * Wed Feb 05 2025 Nikolai Kostrigin <nickel@altlinux.org> 8.0.41-alt1
 - new version
   + (fixes: CVE-2025-21490, CVE-2025-21491, CVE-2025-21492, CVE-2025-21494)
