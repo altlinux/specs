@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-clipboard-indicator
 Version: 68
-Release: alt4
+Release: alt5
 Summary: Clipboard manager for GNOME Shell
 License: MIT
 Group:  Graphical desktop/GNOME
@@ -31,20 +31,37 @@ over 1M downloads.
 %install
 %makeinstall_std
 
-# fix install glibc schema
+# fix install gsettings schemas
 mkdir -p %buildroot%_datadir/glib-2.0/schemas
 mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/*.xml \
 	%buildroot%_datadir/glib-2.0/schemas
 rm -vr %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas
+
+# fix install translations
+mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/locale \
+	%buildroot%_datadir/
+# cleanup translation sources
+find %buildroot%_datadir/locale \
+	-name *.po -exec rm {} \;
+
+# remove unsupported locales
+rm %buildroot%_datadir/locale/ja/LC_MESSAGES/ja.mo
+rm %buildroot%_datadir/locale/ko/LC_MESSAGES/ko.mo
+
+# remove docs from directory of extension
+rm %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/*.rst
 
 %find_lang clipboard-indicator
 
 %files -f clipboard-indicator.lang
 %_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com
 %_datadir/glib-2.0/schemas/*.xml
-%doc README.rst
+%doc README.rst LICENSE.rst
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 68-alt5
+- fix install translations
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 68-alt4
 - clipboard-indicator: fix install gsettings schemas
 - Update russian translations
