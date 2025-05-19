@@ -57,7 +57,7 @@
 
 Name: %{project}4.4
 Version: 4.4.3
-Release: alt2
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -85,6 +85,8 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 # gfx900 needs -O1 on Linux too, otherwise it will fail
 # https://github.com/ROCm/llvm-project/issues/58#issuecomment-2041433424
 Patch34: blender-cycles-fix-hip-kernels.patch
+# cycles: restore Vega support, let's keep it for a while
+Patch35: blender-4.4-alt-cycles-restore-vega.patch
 # use system libdraco.so.9 instead of bundled one
 Patch36: blender-4.4-system-draco.patch
 Patch37: blender-4.4-alt-hiprt-2.5.patch
@@ -354,6 +356,7 @@ cat >/tmp/bits/math-vector.h <<EOF
 EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
+%patch35 -p1 -R -b .cycles-restore-vega
 %patch36 -p1
 %if_with hiprt
 %patch37 -p1
@@ -534,6 +537,9 @@ rm -f %buildroot%_datadir/%project/lib/libcycles_kernel_oneapi_aot.so
 %endif
 
 %changelog
+* Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.3-alt3
+- cycles: restore Vega support (util our rocm support it).
+
 * Fri May 16 2025 L.A. Kostis <lakostis@altlinux.ru> 4.4.3-alt2
 - cuda: rebuild with default gcc.
 
