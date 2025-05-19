@@ -1,5 +1,5 @@
 Name: xfce4-eyes-plugin
-Version: 4.6.2
+Version: 4.7.0
 Release: alt1
 
 Summary: Eyes plugin for Xfce Desktop
@@ -12,6 +12,7 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-eyes-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 
@@ -28,13 +29,11 @@ Scary!
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -44,9 +43,11 @@ Scary!
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Mon May 19 2025 Mikhail Efremov <sem@altlinux.org> 4.7.0-alt1
+- Switched to meson build.
+- Updated to 4.7.0.
+
 * Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 4.6.2-alt1
 - Updated to 4.6.2.
 
