@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.18
+Version: 1.0.19
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -73,6 +73,7 @@ alt-container \
 asman \
 asman-server \
 qazos \
+altemu \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -84,6 +85,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Mon May 19 2025 Artyom Bystrov <arbars@altlinux.org> 1.0.19-alt1
+- Added altemu
+
 * Tue May 06 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.18-alt1
 - Added asman-server
 
