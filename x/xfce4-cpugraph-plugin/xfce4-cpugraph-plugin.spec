@@ -1,5 +1,5 @@
 Name: xfce4-cpugraph-plugin
-Version: 1.2.11
+Version: 1.3.0
 Release: alt1
 
 Summary: CPU monitor for the Xfce panel
@@ -12,6 +12,7 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-cpugraph-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel >= 4.16.0 libxfce4util-devel >= 4.17.2
 BuildRequires: libxfconf-devel >= 4.12.0
@@ -35,13 +36,11 @@ the system. The colors and the size of the plugin are customizable.
 # explicit one required for std::string_view as of lcc 1.26.21
 %add_optflags -std=c++17
 %endif
-%xfce4reconf
-%configure \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -50,9 +49,11 @@ the system. The colors and the size of the plugin are customizable.
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/icons/hicolor/*/*/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Mon May 19 2025 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
+- Switched to meson build.
+- Updated to 1.3.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.2.11-alt1
 - Updated to 1.2.11.
 
