@@ -7,7 +7,7 @@
 %define dns_backend_type internal
 
 Name: connman
-Version: 1.43
+Version: 1.44
 Release: alt1
 
 Summary: ConnMan is a daemon for managing internet connections.
@@ -23,7 +23,7 @@ Source5: connman-openresolv.service
 Patch: %name-%version.patch
 
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(glib-2.0) >= 2.40
+BuildRequires: pkgconfig(glib-2.0) >= 2.44 pkgconfig(gio-2.0) >= 2.44
 BuildRequires: pkgconfig(dbus-1) >= 1.4
 BuildRequires: openvpn vpnc xl2tpd pptp-client ppp-devel
 BuildRequires: pkgconfig(openconnect) >= 8 openconnect
@@ -169,6 +169,9 @@ ln -s ../connman-openresolv.path %buildroot%_unitdir/multi-user.target.wants
 %_includedir/*
 
 %changelog
+* Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.44-alt1
+- New version 1.44.
+
 * Fri Oct 25 2024 Alexey Shabalin <shaba@altlinux.org> 1.43-alt1
 - New version 1.43.
 
