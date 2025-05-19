@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.19.5
-Release: alt1
+Release: alt1.1
 Summary: Client-side and server-side support for the OpenAPI Specification v3
 License: BSD-3-Clause
 Group: Development/Python3
@@ -19,7 +19,7 @@ BuildRequires: python3-module-poetry-core
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-lazy-object-proxy
-BuildRequires: python3-module-jsonschema-spec
+BuildRequires: python3-module-jsonschema-path
 BuildRequires: python3-module-openapi-spec-validator
 BuildRequires: python3-module-werkzeug
 BuildRequires: python3-module-isodate
@@ -60,6 +60,9 @@ sed -i '/--cov/d' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon May 19 2025 Stanislav Levin <slev@altlinux.org> 0.19.5-alt1.1
+- NMU: fixed FTBFS (removed jsonschema-spec).
+
 * Fri Mar 21 2025 Anton Vyatkin <toni@altlinux.org> 0.19.5-alt1
 - New version 0.19.5.
 
