@@ -12,8 +12,10 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 1.6.2
+Version: 2.0.0
 Release: alt1
+
+BuildArch: noarch
 
 Summary: RPM helpers to rebuild Haskell packages
 License: MIT
@@ -58,6 +60,8 @@ Requires: %name = %EVR
 Requires: cabal-install
 Requires: cabal-vendor
 
+Requires: /proc
+
 %description vendored
 Macros for building Haskell programs with vendored dependencies
 Designed for use in conjunction with the cabal-vendor utility from Sisyphus
@@ -70,18 +74,18 @@ cp %SOURCE10 .
 mkdir -p %buildroot%_rpmlibdir
 cp haskell.* -t %buildroot%_rpmlibdir/
 mkdir -p %buildroot%_rpmmacrosdir
-sed \
-	-e 's/@ENABLE_SPLIT_OBJS@/%{native_code_gen_split_objs}/' \
-	-e 's/@ENABLE_SPLIT_SECTIONS@/%{native_code_gen_split_sections}/' \
-	-e 's/@ENABLE_SHARED@/%{dyn_libs}/' \
-	-e 's/@NO_INTERPRETER@/%{no_interpreter}/' \
-	%SOURCE1 > %buildroot%_rpmmacrosdir/haskell
+
+install -D -m0644 %SOURCE1 \
+    %buildroot%_rpmmacrosdir/haskell
+
 install -D %SOURCE2 \
 	%buildroot%_sysconfdir/buildreqs/files/ignore.d/rpm-build-haskell
 install -D -m0755 %SOURCE3 \
 	%buildroot%_rpmmacrosdir/haskell.env
+
 install -D -m0755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelist.sh
 install -D -m0755 ghc_gen_filelist.sh %buildroot%_libexecdir/%name/ghc_gen_filelist.sh
+
 install -D -m0644 %SOURCE4 \
 	%buildroot%_rpmmacrosdir/ghc-extra
 install -D -m0644 %SOURCE5 \
@@ -101,6 +105,11 @@ install -D -m0644 %SOURCE5 \
 %_rpmmacrosdir/ghc-vendored
 
 %changelog
+* Tue May 20 2025 Leonid Znamenok <respublica@altlinux.org> 2.0.0-alt1
+- Removed hs_* macros
+- Updated %%cabal_vendor_* to use %%cabal_static_opts macros
+- Added /proc dependency to rpm-build-haskell-vendored
+
 * Sun May 04 2025 Leonid Znamenok <respublica@altlinux.org> 1.6.2-alt1
 - Added %%ghc_delete_rpaths for install macros
 - Added build with debuginfo
