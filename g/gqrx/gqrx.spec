@@ -1,13 +1,15 @@
 Name: gqrx
-Version: 2.17.5
+Version: 2.17.6
 Release: alt1
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
 License: GPL-3.0
 Group: Other
-Url: https://github.com/csete/gqrx
+URL: https://github.com/csete/gqrx
+VCS: https://github.com/csete/gqrx.git
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires (pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -22,7 +24,6 @@ BuildRequires: qt6-svg-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libpulse-simple)
-#BuildRequires: git-core
 BuildRequires: pkgconfig(gnuradio-analog)
 BuildRequires: pkgconfig(gnuradio-blocks)
 BuildRequires: pkgconfig(gnuradio-digital)
@@ -46,15 +47,15 @@ Requires: qt6-svg
 ExcludeArch: %ix86 %arm ppc64le
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake
 %cmake_build
-#sed -i -e 's/Accessories;//g' gqrx.desktop
 
 %install
 %cmake_install
@@ -72,6 +73,10 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Tue May 20 2025 Anton Midyukov <antohami@altlinux.org> 2.17.6-alt1
+- New version 2.17.6.
+- Add VCS tag.
+
 * Mon Aug 12 2024 Anton Midyukov <antohami@altlinux.org> 2.17.5-alt1
 - New version 2.17.5.
 
