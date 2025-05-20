@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.4.5
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -619,7 +619,8 @@ popd
 
 # most current distro packages have it in %%_bindir (hello kde4?)
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
-ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
+ln %buildroot%_bindir/mariadb-install-db %buildroot%_sbindir/mariadb-install-db
+ln -sf mariadb-install-db %buildroot%_sbindir/mysql_install_db
 
 # Move pam_user_map.so to %_pam_modules_dir
 mkdir -p %buildroot%_pam_modules_dir
@@ -1067,6 +1068,9 @@ fi
 %endif
 
 %changelog
+* Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 11.4.5-alt3
+- NMU: fix symlink %%_sbindir/mariadb-install-db for bin-sbin-merge
+
 * Tue Mar 18 2025 Alexei Takaseev <taf@altlinux.org> 11.4.5-alt2
 - Fix path to database files (ALT #53371)
 
