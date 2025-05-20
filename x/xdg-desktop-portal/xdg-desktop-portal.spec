@@ -1,5 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
+
 %def_disable docs
 %def_enable man
 # kernel.unprivileged_userns_clone required
@@ -7,8 +8,8 @@
 %def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.20.0
-Release: alt1.1
+Version: 1.20.3
+Release: alt1
 
 Summary: Portal frontend service to Flatpak
 Group: Graphical desktop/GNOME
@@ -144,6 +145,9 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %endif
 
 %changelog
+* Tue May 20 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
+- 1.20.3
+
 * Tue Apr 15 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1.1
 - enabled udev support needed for the USB portal
 
