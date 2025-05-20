@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.14.0
+Version: 6.15.0
 Release: alt1
 Summary: Reliable private and pypi.org caching server
 License: MIT
@@ -64,5 +64,8 @@ Server for private package indexes and PyPI caching.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon May 19 2025 Stanislav Levin <slev@altlinux.org> 6.15.0-alt1
+- 6.14.0 -> 6.15.0.
+
 * Sat Dec 28 2024 Stanislav Levin <slev@altlinux.org> 6.14.0-alt1
 - Initial build for Sisyphus.
