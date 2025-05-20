@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,17 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed May 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.9-alt1
+- Fix components:
+  + extend hw packages in hardware-tools
+  + fix diffutils package name in dev-utils
+- Fix editions:
+  + fix system/utils packages list
+  + replace io-utils to main section
+  + replace hardware-tools to main section
+  + add lsb to main section
+  + replace fwupd to main section
+
 * Tue May 20 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.8-alt1
 - components: add comments for yandex and fonts-ttf-ms
 
