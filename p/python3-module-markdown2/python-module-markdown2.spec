@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: python3-module-%modulename
-Version: 2.3.1
-Release: alt2
+Version: 2.3.10
+Release: alt1
 
 Summary: Another implementation of Markdown in Python
 License: %gpl2plus | %bsd
@@ -70,6 +70,9 @@ py.test-%_python3_version -vv
 
 
 %changelog
+* Tue May 20 2025 Alexander Danilov <admsasha@altlinux.org> 2.3.10-alt1
+- Version 2.3.10 (Fixes: CVE-2018-5773, CVE-2020-11888).
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.1-alt2
 - python2 disabled
 
