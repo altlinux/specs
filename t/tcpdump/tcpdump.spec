@@ -3,7 +3,7 @@
 
 Name: tcpdump
 Version: 4.99.5
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network traffic monitoring tool
@@ -63,6 +63,12 @@ install -pm755 *.awk %buildroot%_datadir/%name/
 %doc CHANGES CREDITS LICENSE README.md
 
 %changelog
+* Wed Apr 02 2025 Arseny Maslennikov <arseny@altlinux.org> 1:4.99.5-alt2
+- Add a patch to not chroot if '-Z root' is present on the command line.
+  That fixes upstream commit 75866fb1db0b
+  ("Skip privilege dropping when using -Z root on --with-user builds")
+  present in tcpdump-4.99.5. (Closes: 53687)
+
 * Fri Nov 29 2024 Arseny Maslennikov <arseny@altlinux.org> 1:4.99.5-alt1
 - 4.99.4 -> 4.99.5.
 
