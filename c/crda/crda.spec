@@ -1,7 +1,7 @@
 %define crda_lib %_libexecdir/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2024.10.07
+%define _db_date 2025.02.20
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
@@ -134,6 +134,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Tue May 20 2025 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt6.2025.02.20
+- wireless-regdb: update to 2025-02-20.
+
 * Sun Nov 17 2024 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt6.2024.10.07
 - crda: update pubkeys.
 - regdb: update to 20241007.
