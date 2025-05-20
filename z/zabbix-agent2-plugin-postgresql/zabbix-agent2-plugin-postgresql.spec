@@ -1,7 +1,7 @@
 %define zabbix_group    zabbix
 
 Name:   zabbix-agent2-plugin-postgresql
-Version: 7.0.12
+Version: 7.0.13
 Release: alt1
 
 Summary: Provides native Zabbix solution for monitoring PostgreSQL
@@ -44,6 +44,9 @@ mv postgresql.conf %{buildroot}%{_sysconfdir}/zabbix/zabbix_agent2.conf.d/plugin
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/zabbix/zabbix_agent2.conf.d/plugins.d/postgresql.conf
 
 %changelog
+* Tue May 20 2025 Alexei Takaseev <taf@altlinux.org> 7.0.13-alt1
+- 7.0.13
+
 * Tue Apr 22 2025 Alexei Takaseev <taf@altlinux.org> 7.0.12-alt1
 - 7.0.12
 
