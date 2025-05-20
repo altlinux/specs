@@ -8,7 +8,7 @@
 %define r_ver 1.76.0
 
 Name: rust
-Version: 1.86.0
+Version: 1.87.0
 Release: alt1
 Epoch: 1
 
@@ -20,6 +20,7 @@ VCS: https://github.com/rust-lang/rust
 
 # https://static.rust-lang.org/dist/rustc-%version-src.tar.gz
 Source: %name-%version.tar
+Patch001: 0001-Fix-profiler_builtins-build-script-to-handle-full-pa.patch
 
 Requires: /proc
 Requires: gcc
@@ -51,6 +52,10 @@ BuildRequires: clang%{llvm_version} >= 18
 BuildRequires: clang%{llvm_version}-devel
 BuildRequires: llvm%{llvm_version}-devel
 BuildRequires:  lld%{llvm_version}-devel
+# This is necessary to avoid error: could not find native static library
+# `/usr/lib/llvm-18.1/lib64/clang/18/lib/x86_64-unknown-linux-gnu/libclang_rt.profile.a`,
+# perhaps an -L flag is missing?
+BuildRequires: clang%{llvm_version}-support
 %else
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -441,6 +446,9 @@ rm -rf %rustdir
 %rustlibdir/src
 
 %changelog
+* Tue May 20 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.87.0-alt1
+- New version (1.87.0).
+
 * Fri Apr 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 1:1.86.0-alt1
 - New version (1.86.0).
 
@@ -830,4 +838,3 @@ rm -rf %rustdir
 * Fri Jan 15 2016 Vladimir Lettiev <crux@altlinux.ru> 1.5.0-alt1
 - initial build
 
-Patch001: 0001-Move-is_builder_target-is_system_llvm-and-is_rust_ll.patch
