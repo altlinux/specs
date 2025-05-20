@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: swtpm
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: TPM Emulator
@@ -180,6 +180,9 @@ fi
 %_libexecdir/installed-tests/swtpm
 
 %changelog
+* Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Fri Dec 06 2024 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 
