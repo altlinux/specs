@@ -3,7 +3,7 @@
 Name: kbd
 Epoch: 0
 Version: 2.6.4
-Release: alt1
+Release: alt2
 
 Group: Terminals
 Summary: Tools for managing the Linux console
@@ -130,24 +130,6 @@ This package is used to change the keyboard repeat rate and delay time.
 The delay is the amount of time that a key must be depressed before it
 will start to repeat.
 
-%package -n kbdrate-usermode
-Group: System/Configuration/Hardware
-Summary: Usermode bindings for kbdrate
-BuildArch: noarch
-
-# due to the parent package change (util-linux --> kbd)
-Epoch: %kbdrate_serial
-
-Requires: kbdrate = %kbdrate_serial:%version-%release
-Requires: consolehelper
-
-%description -n kbdrate-usermode
-Kbdrate package is used to change the keyboard repeat rate and delay time.
-The delay is the amount of time that a key must be depressed before it
-will start to repeat.
-
-This package contains usermode bindings for kbdrate.
-
 %package -n vlock
 Summary: A program which locks one or more virtual consoles
 Group: Terminals
@@ -211,16 +193,12 @@ done
 mkdir -p \
 	%buildroot/sbin \
 	%buildroot/%_bindir \
-	%buildroot/%_sysconfdir/security/console.apps \
 	%buildroot/%_sysconfdir/pam.d \
 	%buildroot/%_unitdir
 
-install -p -m640 rpm/kbdrate.pamd %buildroot/%_sysconfdir/pam.d/kbdrate
-install -p -m640 rpm/kbdrate.apps %buildroot/%_sysconfdir/security/console.apps/kbdrate
 install -p -m644 rpm/consolesaver.service %buildroot/%_unitdir/consolesaver.service
 
 mv %buildroot/bin/kbdrate %buildroot/sbin/
-ln -s -- %_usr/lib/consolehelper/helper %buildroot/bin/kbdrate
 
 install -p -m640 rpm/vlock.pamd %buildroot/%_sysconfdir/pam.d/vlock
 
@@ -341,7 +319,6 @@ done
 %exclude /bin/openvt
 %exclude /bin/deallocvt
 %exclude /bin/fgconsole
-%exclude /bin/kbdrate
 %exclude /sbin/kbdrate
 %exclude /sbin/setsysfont
 %exclude /sbin/setsyskeytable
@@ -407,17 +384,15 @@ done
 /sbin/kbdrate
 %_man8dir/kbdrate.*
 
-%files -n kbdrate-usermode
-%config(noreplace) %_sysconfdir/pam.d/kbdrate
-%config(noreplace) %_sysconfdir/security/console.apps/kbdrate
-/bin/kbdrate
-
 %files -n vlock
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/vlock
 %attr(2711,root,chkpwd) %_bindir/vlock
 %_man1dir/vlock.*
 
 %changelog
+* Thu May 15 2025 Anton Midyukov <antohami@altlinux.org> 0:2.6.4-alt2
+- NMU: Remove kbdrate-usermode subpackage (closes: 54141).
+
 * Fri Dec 15 2023 Alexey Gladkov <legion@altlinux.ru> 0:2.6.4-alt1
 - New release version (2.6.4).
 
