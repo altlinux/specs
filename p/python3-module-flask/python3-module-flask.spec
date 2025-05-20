@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: Flask is a lightweight WSGI web application framework
@@ -42,7 +42,7 @@ frameworks.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -61,6 +61,9 @@ frameworks.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 20 2025 Anton Zhukharev <ancieg@altlinux.org> 3.1.1-alt1
+- Updated to 3.1.1 (fixes CVE-2025-47278).
+
 * Tue Dec 10 2024 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt1
 - Updated to 3.1.0.
 
