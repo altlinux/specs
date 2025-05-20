@@ -1,7 +1,7 @@
 %define  oname eradicate
 
 Name:    python3-module-%oname
-Version: 2.3.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Removes commented-out code from Python files
@@ -44,6 +44,9 @@ which is valid Python syntax, but is probably not code.)
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue May 20 2025 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Sun Jun 11 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 
