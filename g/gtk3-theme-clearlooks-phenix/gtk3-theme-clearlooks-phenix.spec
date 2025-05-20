@@ -1,8 +1,8 @@
 %define  themename Clearlooks-Phenix
 
 Name:    gtk3-theme-clearlooks-phenix
-Version: 7.0.1
-Release: alt4.gite1bb5fe
+Version: 7.1
+Release: alt1
 Epoch:   1
 
 Summary: GTK3 port of the Clearlooks theme
@@ -16,8 +16,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source:   %name-%version.tar
 
-Patch10:  alt-fix-gtk3-small-bugs.patch
-Patch11:  alt-fix-menubar-view-for-Libreoffice.patch
+Patch1:  alt-fix-menubar-view-for-Libreoffice.patch
 
 BuildArch: noarch
 
@@ -33,8 +32,7 @@ window managers.
 
 %prep
 %setup -c %themename
-%patch10 -d %themename -p1
-%patch11 -d %themename -p1
+%patch1 -d %themename -p1
 rm -rf %themename/.gear
 
 %install
@@ -46,6 +44,9 @@ cp -r %themename %buildroot%_datadir/themes/
 %_datadir/themes/%themename
 
 %changelog
+* Tue May 20 2025 Andrey Cherepanov <cas@altlinux.org> 1:7.1-alt1
+- New version.
+
 * Fri Sep 04 2020 Andrey Cherepanov <cas@altlinux.org> 1:7.0.1-alt4.gite1bb5fe
 - Remove unnecessary packed .gear subdirectory (ALT #38871).
 
