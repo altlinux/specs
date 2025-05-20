@@ -1,5 +1,5 @@
 Name: xfce4-netload-plugin
-Version: 1.4.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Netload monitor plugin for the Xfce panel
@@ -12,8 +12,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-netload-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel
+BuildRequires: libxfce4util-devel libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel libgtk+3-devel
 
 Requires: xfce4-panel
@@ -31,13 +32,11 @@ Requires: xfce4-panel
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -46,9 +45,12 @@ Requires: xfce4-panel
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/icons/hicolor/*/*/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Tue May 20 2025 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
+- Fixed bogus date in changelog.
+- Switched to meson build.
+- Updated to 1.5.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
 - Updated to 1.4.2.
 
@@ -142,5 +144,5 @@ Requires: xfce4-panel
 * Tue Sep 16 2003 Andrey Astafiev <andrei@altlinux.ru> 0.2.0-alt1
 - 0.2.0
 
-* Sun Sep 13 2003 Andrey Astafiev <andrei@altlinux.ru> 0.2.0pre6-alt0.9
+* Sat Sep 13 2003 Andrey Astafiev <andrei@altlinux.ru> 0.2.0pre6-alt0.9
 - First version of RPM package for Sisyphus.
