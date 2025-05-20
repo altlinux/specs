@@ -14,7 +14,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.8.0.1
-Release: alt4
+Release: alt5
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -1144,6 +1144,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Tue May 20 2025 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt5
+- Add thin rackup handler require.
+
 * Thu Mar 13 2025 Alexander Burmatov <thatman@altlinux.org> 6.8.0.1-alt4
 - use activesupport 7.x
 
