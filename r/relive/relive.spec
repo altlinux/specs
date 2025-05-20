@@ -1,6 +1,7 @@
 Name: relive
-Version: 1.0.4587
-Release: alt2
+Epoch: 1
+Version: 1.0.9
+Release: alt1
 Summary: An Open-Source Engine Replacement for Oddworld: Abe's Oddysee and Oddworld: Abe's Exoddus
 Group: Games/Arcade
 License: MIT
@@ -10,7 +11,7 @@ Source: %name-%version.tar
 Source2: %name-ao.sh
 Source3: %name-ae.sh
 
-BuildPreReq: rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: libSDL2_mixer-devel
@@ -18,7 +19,7 @@ BuildRequires: zenity
 BuildRequires: libglvnd-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libXext-devel
-ExcludeArch: armh
+
 %description
 An Open-Source Engine Replacement for Oddworld: Abe's Oddysee and Oddworld: Abe's Exoddus
 
@@ -33,10 +34,12 @@ or Steam, and put in in the :
 %build
 
 %cmake
-%cmake_build
+%cmake_insource \
+    -DCMAKE_BUILD_TYPE=Release
+%make_build
 
 %install
-install -D -m0755 ./%_arch-alt-linux/Source/relive/relive %buildroot%_bindir/%name
+install -D -m0755 ./Source/relive/relive %buildroot%_bindir/%name
 
 mkdir -p %buildroot%_libexecdir/%name
 cp ./assets/%name-ao %buildroot%_libexecdir/%name/%name-ao
@@ -65,6 +68,10 @@ install -D -m0755 %SOURCE3 %buildroot%_bindir/%name-ae
 %_datadir/%name
 
 %changelog
+* Fri May 16 2025 Artyom Bystrov <arbars@altlinux.org> 1:1.0.9-alt1
+- Add epoch
+- Update sources with fix of build with CMake 4.0.x
+
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 1.0.4587-alt2
 - Update sources
 - Fix build on GCC13
