@@ -3,7 +3,7 @@
 
 Name: xmltooling
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenSAML XML Processing library
 
@@ -81,7 +81,7 @@ This package includes XML schemas and related files.
 %setup
 %ifarch %e2k
 # lcc's cpp adds an extra space breaking this regex
-sed -r -i 's,\^boost(.)lib(.)version,boost\1lib\2version,' configure m4/boost.m4
+sed -r -i 's,\^boost(.)lib(.)version,boost\1lib\2version,' m4/boost.m4
 %endif
 
 %build
@@ -114,6 +114,9 @@ rm -f %buildroot/%_libdir/libxmltooling-lite.la
 %_pkgconfigdir/xmltooling-lite.pc
 
 %changelog
+* Tue May 20 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.3.0-alt1.1
+- e2k build fix
+
 * Thu Oct 17 2024 Leontiy Volodin <lvol@altlinux.org> 3.3.0-alt1
 - New version 3.3.0.
 
