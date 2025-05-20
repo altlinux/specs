@@ -1,6 +1,6 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.13.0
+Version: 2.13.1
 Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
@@ -13,7 +13,6 @@ Source0: %name-%version.tar
 Patch0001: 0001-Change-owner-of-man-cache.patch
 Patch0003: 0003-catman-Use-PATH-env.patch
 Patch0004: 0004-Implemented-in-process-lzma-decompression.patch
-Patch0006: 0005-Update-Russian-manual-page-translation.patch
 
 Obsoletes: man < 2.0
 Obsoletes: man-whatis < 2.0
@@ -160,6 +159,9 @@ rm -rf -- %cache/*
 %config(noreplace) %_sysconfdir/cron.daily/man-db.cron
 
 %changelog
+* Tue May 20 2025 Ivan A. Melnikov <iv@altlinux.org> 2.13.1-alt1
+- New version (2.13.1).
+
 * Wed Mar 19 2025 Ivan A. Melnikov <iv@altlinux.org> 2.13.0-alt1
 - New version (2.13.0).
 - Make it possible to switch the filetrigger off (ALT#49709), by lav@:
