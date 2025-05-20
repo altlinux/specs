@@ -1,5 +1,5 @@
 Name: xfce4-mailwatch-plugin
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: The Xfce4 Mailwatch Plugin is a multi-protocol, multi-mailbox mail watcher
@@ -13,6 +13,7 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-mailwatch-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
 BuildRequires: libgnutls-devel libgcrypt-devel
@@ -34,15 +35,15 @@ Currently, the protocols supported are:
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --enable-ssl \
-    --enable-ipv6 \
-    --enable-debug=mimimum
-%make_build
+%meson \
+	-Dgnutls=enabled \
+	-Dipv6=enabled
+
+%meson_build -v
+
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -52,9 +53,12 @@ Currently, the protocols supported are:
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Tue May 20 2025 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Fixed bogus date in changelog.
+- Switched to meson build.
+- Updated to 1.4.0.
+
 * Wed Dec 25 2024 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
 - Updated to 1.3.2.
 
@@ -107,10 +111,10 @@ Currently, the protocols supported are:
 - Spec updated.
 - Fix License.
 
-* Mon Nov 24 2009 Dmitriy Kruglikov <dkr@altlinux.ru> 1.1.0-alt4
+* Tue Nov 24 2009 Dmitriy Kruglikov <dkr@altlinux.ru> 1.1.0-alt4
 - Added icons
 
-* Mon Nov 22 2009 Dmitriy Kruglikov <dkr@altlinux.ru> 1.1.0-alt3
+* Sun Nov 22 2009 Dmitriy Kruglikov <dkr@altlinux.ru> 1.1.0-alt3
 - Updated to spec. New BuildRequires:
 
 * Sat Nov 21 2009 Dmitriy Kruglikov <dkr@altlinux.ru> 1.1.0-alt1
