@@ -3,7 +3,7 @@
 
 Name: alterator-notes
 Version: 1.5.1
-Release: alt5
+Release: alt6
 
 Provides: alterator-license = %version
 Obsoletes: alterator-license
@@ -76,6 +76,9 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_alterator_backend3dir/*
 
 %changelog
+* Tue May 20 2025 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt6
+- license.desktop: correct Name (License -> License agreement) (Closes: 54379)
+
 * Mon Apr 28 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt5
 - correct dekstop-file category
 
