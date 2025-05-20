@@ -2,7 +2,7 @@
 %define rpmstate /run/openvswitch-rpm-state-
 
 Name: ovn
-Version: 24.03.4
+Version: 24.03.5
 Release: alt1
 
 Summary: Open Virtual Network support
@@ -404,6 +404,9 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 24.03.5-alt1
+- 24.03.5
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 24.03.4-alt1
 - 24.03.4
 

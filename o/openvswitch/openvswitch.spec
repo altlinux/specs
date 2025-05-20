@@ -12,7 +12,7 @@
 %endif
 
 Name: openvswitch
-Version: 3.3.3
+Version: 3.3.4
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -28,7 +28,6 @@ Source11: %name.init
 Source12: %name.tmpfiles
 
 Patch0001: 0001-execute-openvswitch-as-openvswitch-user.patch
-Patch0003: 0003-ovs-use-strongswan-for-ipsec.patch
 Patch0004: 0004-ovs-update-systemd-unit-for-ALT.patch
 Patch0005: 0005-ovs-fix-linking.patch
 Patch0006: 0006-ovs-Python-3-support.patch
@@ -58,7 +57,7 @@ BuildRequires: libunwind-devel
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
 BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx python3-module-netaddr python3-module-pyparsing
-%{?_with_dpdk:BuildRequires: dpdk-devel >= 23.11.2 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 23.11.3 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
 %{?_enable_afxdp:BuildRequires: libbpf-devel >= 0.7 libxdp-devel libelf-devel libnuma-devel}
 
 %description
@@ -147,7 +146,6 @@ Python3 bindings for the Open vSwitch database
 %prep
 %setup
 %patch0001 -p1
-%patch0003 -p1
 %patch0004 -p1
 %patch0005 -p1
 %patch0006 -p1
@@ -156,6 +154,7 @@ Python3 bindings for the Open vSwitch database
 %ifarch %e2k
 sed -i "s/__has_extension(c_atomic)/0/" lib/ovs-atomic.h
 %endif
+sed -i "s/ike-daemon=libreswan/ike-daemon=strongswan/" rhel/usr_lib_systemd_system_openvswitch-ipsec.service
 
 %build
 export PYTHON3=%__python3
@@ -380,6 +379,9 @@ fi
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 3.3.4-alt1
+- 3.3.4
+
 * Mon Dec 16 2024 Alexey Shabalin <shaba@altlinux.org> 3.3.3-alt1
 - 3.3.3
 
