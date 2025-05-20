@@ -1,5 +1,5 @@
 Name: xfce4-mpc-plugin
-Version: 0.5.5
+Version: 0.6.0
 Release: alt1
 
 Summary: MPD Client Plugin
@@ -12,6 +12,7 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-mpc-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: libmpd-devel
@@ -38,13 +39,12 @@ Features :
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dlibmpd=enabled
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -53,6 +53,10 @@ Features :
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Tue May 20 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Switched to meson build.
+- Updated to 0.6.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.5.5-alt1
 - Updated description.
 - Updated to 0.5.5.
