@@ -1,6 +1,6 @@
 %define module_name             accel-ppp
 %define module_version          1.13.0
-%define module_release          alt2
+%define module_release          alt3
 
 %define flavour		6.12
 %define karch	%ix86 x86_64 aarch64 ppc64le armh
@@ -65,6 +65,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue May 20 2025 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt3
+- update upstream to git:8f072b6f193979becc27d9977eed7e97cb830f46
 
 * Fri Dec 27 2024 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt2
 - update upstream to git:563f4aadcb736d5c2b26e9575a71cafcb8cf6287

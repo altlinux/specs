@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.13.0
-Release: alt2
+Release: alt3
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 License: GPLv2
@@ -11,6 +11,7 @@ AutoProv: yes
 
 BuildRequires: cmake libpcre2-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
+BuildRequires: clang
 
 %description
 The ACCEL-PPP is completly new implementation of PPTP/PPPoE/L2TP
@@ -45,6 +46,7 @@ Provide accel-ppp ipoe kernel module
 tar -cjf ../%name-%version.tar.bz2 ../%name-%version
 
 %build
+
 %cmake \
       -G'Unix Makefiles' \
       -DCMAKE_SKIP_RPATH:BOOL=FALSE \
@@ -57,7 +59,8 @@ tar -cjf ../%name-%version.tar.bz2 ../%name-%version
       -DLUA=5.3 \
       -DBUILD_INSTALL_PREFIX=%buildroot \
       -DCMAKE_BUILD_TYPE=Debug \
-      -DMEMDEBUG=TRUE
+      -DMEMDEBUG=TRUE \
+      -DCMAKE_C_COMPILER=clang
 
 %cmake_build
 
@@ -102,6 +105,11 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue May 20 2025 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt3
+- update upstream to git:8f072b6f193979becc27d9977eed7e97cb830f46
+- Revert unworked "Fix running with glibc >= 2.34 (ALT #52532)" in 1.13.0-alt2
+- Use LLVM for compile (ALT #52532, ALT #52590)
+
 * Fri Dec 27 2024 Alexei Takaseev <taf@altlinux.org> 1.13.0-alt2
 - update upstream to git:563f4aadcb736d5c2b26e9575a71cafcb8cf6287
 - Change BR libpcre-devel -> libpcre2-devel
