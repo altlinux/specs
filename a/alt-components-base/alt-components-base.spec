@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.7
+Version: 0.7.8
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Tue May 20 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.8-alt1
+- components: add comments for yandex and fonts-ttf-ms
+
 * Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.7-alt1
 - components: add localized comments for education components
 
