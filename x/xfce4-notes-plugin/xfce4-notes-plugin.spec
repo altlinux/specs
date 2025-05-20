@@ -1,5 +1,5 @@
 Name: xfce4-notes-plugin
-Version: 1.11.2
+Version: 1.12.0
 Release: alt1
 
 Summary: Sticky notes plugin for the Xfce panel
@@ -13,9 +13,10 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-notes-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfconf-devel
-BuildRequires: libxfce4util-vala libxfce4panel-gtk3-vala libxfconf-vala
+BuildRequires: libxfce4util-vala libxfce4panel-gtk3-vala libxfconf-vala libxfce4ui-gtk3-vala
 BuildRequires: libcairo-gobject-devel
 BuildRequires: libgtksourceview4-devel
 BuildRequires: vala
@@ -33,22 +34,17 @@ BuildRequires: vala
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-	--enable-maintainer-mode \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc README.md NEWS AUTHORS
 %_bindir/*
 %_libdir/xfce4/panel/plugins/*.so
-%exclude %_libdir/xfce4/panel/plugins/*.la
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/xfce4/notes/
@@ -56,6 +52,10 @@ BuildRequires: vala
 %_desktopdir/xfce4-notes.desktop
 
 %changelog
+* Tue May 20 2025 Mikhail Efremov <sem@altlinux.org> 1.12.0-alt1
+- Switched to meson build.
+- Updated to 1.12.0.
+
 * Sun Feb 02 2025 Mikhail Efremov <sem@altlinux.org> 1.11.2-alt1
 - Updated to 1.11.2.
 
