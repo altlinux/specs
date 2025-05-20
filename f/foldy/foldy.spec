@@ -4,10 +4,10 @@
 %define gir_name Foldy
 %define glib_min_version 2.76
 %define api_version 4
-%define minor_version 1
+%define minor_version 2
 
 Name: foldy
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: Folder manager aimed to mobile devices
@@ -149,6 +149,9 @@ export AS_VALIDATE_NONET="true"
 %_girdir/%gir_name-%api_version.gir
 
 %changelog
+* Tue May 20 2025 Vladimir Vaskov <rirusha@altlinux.org> 4.2-alt1
+- New version: 4.2
+
 * Thu May 08 2025 Vladimir Vaskov <rirusha@altlinux.org> 4.1-alt1
 - New version: 4.1
 
