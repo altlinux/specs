@@ -1,36 +1,37 @@
-Name:		kmod
-Version:	32
-Release:	alt1
-Summary:	Linux kernel module management utilities
-
-Group:		System/Kernel and hardware
-License:	GPL-2.0-or-later AND LGPL-2.1-or-later
-URL:		http://modules.wiki.kernel.org/
-ExclusiveOS:	Linux
-Requires:	lib%name = %version-%release
-
-Source0:	%name-%version.tar
-
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+Name: kmod
+Version: 34.2
+Release: alt1
+Summary: Linux kernel module management utilities
+
+Group: System/Kernel and hardware
+License: GPL-2.0-or-later AND LGPL-2.1-or-later
+Url: http://modules.wiki.kernel.org/
+ExclusiveOS: Linux
+Requires: lib%name = %EVR
+
+Source0: %name-%version.tar
+
 BuildRequires: bash-completion
-BuildRequires: docbook-dtds
-BuildRequires: docbook-style-xsl
 BuildRequires: glibc-devel-static
 BuildRequires: liblzma-devel
 BuildRequires: libssl-devel
 BuildRequires: libzstd-devel
-BuildRequires: xsltproc
 BuildRequires: zlib-devel
+BuildRequires: scdoc
+# for tests
+BuildRequires: kernel-headers-modules-latest
 
-Provides:	module-init-tools = 3.17-alt1
-Obsoletes:	module-init-tools
-Conflicts:	module-init-tools-compat
+Provides: module-init-tools = 3.17-alt1
+Obsoletes: module-init-tools
+Conflicts: module-init-tools-compat
 Conflicts: filesystem < 3
 Provides: /bin/kmod /bin/lsmod
 Provides: /sbin/depmod /sbin/insmod /sbin/lsmod /sbin/modinfo /sbin/modprobe /sbin/rmmod
+Obsoletes: bash-completion-%name
 
 %description
 The kmod package provides various programs needed for automatic
@@ -39,53 +40,40 @@ as other module management programs. Device drivers and filesystems are two
 examples of loaded and unloaded modules.
 
 %package -n lib%name
-Summary:	Libraries to handle kernel module loading and unloading
-License:	LGPL-2.1-or-later
-Group:		System/Kernel and hardware
-Provides:	%name-libs = %version-%release
+Summary: Libraries to handle kernel module loading and unloading
+License: LGPL-2.1-or-later
+Group: System/Kernel and hardware
+Provides: %name-libs = %EVR
 
 %description -n lib%name
 The kmod-libs package provides runtime libraries for any application that
 wishes to load or unload Linux kernel modules from the running system.
 
 %package -n lib%name-devel
-Summary:	Header files for kmod development
-Group:		Development/C
-License:	LGPL-2.1-or-later
-Requires:	lib%name = %version-%release
-Provides:	%name-devel = %version-%release
+Summary: Header files for kmod development
+Group: Development/C
+License: LGPL-2.1-or-later
+Requires: lib%name = %EVR
+Provides: %name-devel = %EVR
 
 %description -n lib%name-devel
 The libkmod-devel package provides header files used for development of
 applications that wish to load or unload Linux kernel modules.
 
-%package -n bash-completion-%name
-Summary:        Bash completion routines for the kmod utilities
-License:        GPL-2.0-or-later AND LGPL-2.1-or-later
-Group:          Shells
-BuildArch:      noarch
-Requires:       %name
-Requires:       bash-completion
-
-%description -n bash-completion-%name
-Contains bash completion support for kmod utilities.
-
 %prep
-%setup -q
+%setup
 
 %build
 touch libkmod/docs/gtk-doc.make
 %autoreconf
 
 %configure \
-	--disable-static \
-	--disable-test-modules \
-	--with-rootlibdir=%_libdir \
-	--with-openssl \
-	--with-zlib \
-	--with-xz \
-	--with-zstd \
-	#
+    --disable-static \
+    --with-openssl \
+    --with-zlib \
+    --with-xz \
+    --with-zstd \
+    #
 %make_build
 
 %install
@@ -99,26 +87,26 @@ mkdir -p %buildroot/{%_sysconfdir,%prefix/lib}/depmod.d
 
 # Add blacklists from module-init-tools
 find rpm/modprobe.d -maxdepth 1 -type f -name '*.conf' -print0 |
-	xargs -r0 install -m644 -p -t %buildroot%_modprobedir/ --
+    xargs -r0 install -m644 -p -t %buildroot%_modprobedir/ --
 
 %ifarch %ix86 x86_64
 install -m644 -p rpm/modprobe.d/arch/i386.conf %buildroot%_modprobedir/arch.conf
 %endif
 
 # Make compatibility symlinks
-mkdir -p %buildroot%_sbindir
-for n in modprobe modinfo insmod rmmod depmod lsmod; do
-	t=$(relative %_bindir/kmod %_sbindir/$n)
-	ln -s "$t" "%buildroot%_sbindir/$n"
+for n in lsmod; do
+    t=$(relative %_bindir/kmod %_bindir/$n)
+    ln -s "$t" "%buildroot%_bindir/$n"
 done
 
 # cleanup non-root access utils
 rm -f %buildroot%_bindir/{depmod,insmod,modinfo,modprobe,rmmod}
 
 %check
-make check V=1
+%make check V=1 KDIR=/lib/modules/*/build
 
 %files
+%doc NEWS README.md COPYING
 %dir %_sysconfdir/depmod.d
 %dir %_sysconfdir/modprobe.d
 %dir %_prefix/lib/depmod.d
@@ -134,7 +122,9 @@ make check V=1
 %_sbindir/rmmod
 %_man5dir/*
 %_man8dir/*
-%doc NEWS README.md COPYING
+%_datadir/bash-completion/completions/*
+%_datadir/fish/vendor_functions.d/*
+%_datadir/zsh/site-functions/*
 
 %files -n lib%name
 %_libdir/libkmod.so.*
@@ -145,10 +135,12 @@ make check V=1
 %_libdir/libkmod.so
 %_datadir/pkgconfig/%name.pc
 
-%files -n bash-completion-%name
-%_datadir/bash-completion/completions/*
-
 %changelog
+* Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 34.2-alt1
+- Version (34.2).
+- Obsoletes bash-completion-%name.
+- Package fish and zsh completions.
+
 * Mon May 27 2024 Alexey Shabalin <shaba@altlinux.org> 32-alt1
 - Version (32).
 - Moved utils and lib to /usr.
