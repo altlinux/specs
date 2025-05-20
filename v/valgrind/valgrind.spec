@@ -1,6 +1,6 @@
 Name: valgrind
-Version: 3.24.0
-Release: alt2
+Version: 3.25.0
+Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
 License: GPLv2+
@@ -16,24 +16,14 @@ Patch5: valgrind-rh-ldso-supp.patch
 Patch6: valgrind-rh-alt-some-stack-protector.patch
 Patch7: valgrind-rh-some-Wl-z-now.patch
 
-
-# patches from VALGRIND_3_24_BRANCH
-Patch101: valgrind-upstream-0001-Prepare-NEWS-for-branch-3.24-fixes.patch
-Patch102: valgrind-upstream-0002-vgdb.c-fork_and_exec_valgrind-Fix-off-by-one-error-w.patch
-Patch103: valgrind-upstream-0003-vgdb.c-fork_and_exec_valgrind-Fix-another-off-by-one.patch
-Patch104: valgrind-upstream-0004-regtest-add-a-fdleak-filter-for-write-on-write-on-li.patch
-Patch105: valgrind-upstream-0005-Add-exp-and-supp-patterns-for-missing-main-frame-for.patch
-Patch106: valgrind-upstream-0006-Add-additional-exp-ppc64le-files-to-EXTRA_DIST.patch
-Patch107: valgrind-upstream-0007-Add-support-for-landlock_create_ruleset-444-landlock.patch
-Patch108: valgrind-upstream-0008-helgrind-tests-tc17_sembar.c-Remove-bool-typedef.patch
-Patch109: valgrind-upstream-0009-drd-tests-swapcontext.c-Rename-typedef-struct-thread.patch
-Patch110: valgrind-upstream-0010-none-tests-bug234814.c-sa_handler-take-an-int-as-arg.patch
-Patch111: valgrind-upstream-0011-Add-open_tree-move_mount-fsopen-fsconfig-fsmount-fsp.patch
-Patch112: valgrind-upstream-0012-Recognize-new-DWARF5-DW_LANG-constants.patch
-Patch113: valgrind-upstream-0013-Bug-498317-FdBadUse-is-not-a-valid-CoreError-type-in.patch
-Patch114: valgrind-upstream-0014-linux-support-EVIOCGRAB-ioctl.patch
-Patch115: valgrind-upstream-0015-ppc-test_dfp2-build-fix-for-GCC-15.patch
-
+# Patches from VALGRIND_3_25_BRANCH
+Patch102: valgrind-upstream-0002-Prepare-NEWS-for-branch-3.25-fixes.patch
+Patch104: valgrind-upstream-0004-Bug-503641-close_range-syscalls-started-failing-with.patch
+Patch105: valgrind-upstream-0005-mount-syscall-param-filesystemtype-may-be-NULL.patch
+Patch106: valgrind-upstream-0006-Add-workaround-for-missing-riscv_hwprobe-syscall-258.patch
+Patch107: valgrind-upstream-0007-Don-t-count-closed-inherited-file-descriptors.patch
+Patch108: valgrind-upstream-0008-regtest-use-bin-cat-in-none-tests-fdleak_cat.vgtest.patch
+Patch109: valgrind-upstream-0009-riscv64-Fix-nan-boxing-for-single-precision-calculat.patch
 
 # Apparently, nobody cares whether valgrind works on arm or not.
 # And of powerpc, nobody cares at all.
@@ -175,6 +165,10 @@ echo "===============END TESTING==============="
 
 
 %changelog
+* Tue May 20 2025 Ivan A. Melnikov <iv@altlinux.org> 3.25.0-alt1
+- 3.24.0 -> 3.25.0
+- Add some patches from VALGRIND_3_25_BRANCH.
+
 * Thu Feb 27 2025 Ivan A. Melnikov <iv@altlinux.org> 3.24.0-alt2
 - Synced with upstream VALGRIND_3_24_BRANCH.
 
