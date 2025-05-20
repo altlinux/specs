@@ -5,8 +5,8 @@
 
 
 Name: perl
-Version: 5.38.2
-Release: alt0.2
+Version: 5.38.4
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -48,8 +48,8 @@ Patch21: perl-5.24.3-alt-solovyov.patch
 #Patch22: perl-5.38.0-alt-mcpain-trust-mode.patch
 Patch23: perl-5.38.0-alt-e2k-bitfields.patch
 # hack;
-# Perl lib version (5.38.2) doesn't match executable 'buildroot/usr/bin/perl5.38.2' version (5.38.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
-Source24: perl-5.38.2-alt-Config.pm-hack.patch
+# Perl lib version (5.38.4) doesn't match executable '/usr/src/tmp/perl-buildroot/usr/bin/perl5.38.4' version (5.38.2) at /usr/src/tmp/perl-buildroot/usr/lib64/perl5/Config.pm line 62.
+Source24: perl-5.38.4-alt-Config.pm-hack.patch
 
 # cpan update patches here. use format below:
 #Patch50: cpan-update-Scalar-List-Utils-1.55-to-Scalar-List-Utils-1.56.patch
@@ -356,7 +356,7 @@ make
 #make -C ext/re all
 %endif
 
-%if "%version" == "5.38.2"
+%if "%version" == "5.38.4"
 # ugly hack for buildroot
 # Perl lib version (5.38.2) doesn't match executable 'buildroot/usr/bin/perl5.38.2' version (5.38.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
 patch -p1 < %{SOURCE24}
@@ -1002,6 +1002,9 @@ ln -sf perl-bootstrap-wrapper %buildroot%_bindir/perl
 %doc	%privlib/pod/perldiag.pod
 
 %changelog
+* Tue May 20 2025 Igor Vlasenko <viy@altlinux.org> 1:5.38.4-alt1
+- 5.38.2 -> 5.38.4
+
 * Sat Apr 06 2024 Vitaly Lipatov <lav@altlinux.ru> 1:5.38.2-alt0.2
 - split diagnostics to perl-diagnostics subpackage (see #31417)
 
