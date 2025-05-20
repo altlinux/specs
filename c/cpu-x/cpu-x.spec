@@ -4,16 +4,14 @@
 %def_enable opencl
 
 Name: cpu-x
-Version: 5.2.0
-Release: alt1.1
+Version: 5.3.1
+Release: alt1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/X0rg/CPU-X
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-# https://github.com/TheTumultuousUnicornOfDarkness/CPU-X/issues/376
-Patch1: fix-ix86-detection.patch
 
 Buildrequires(pre): rpm-macros-cmake
 Buildrequires: gcc-c++ cmake 
@@ -78,6 +76,10 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Tue May 20 2025 L.A. Kostis <lakostis@altlinux.ru> 5.3.1-alt1
+- 5.3.1.
+- Re-apply russian translation fixes.
+
 * Mon Mar 24 2025 L.A. Kostis <lakostis@altlinux.ru> 5.2.0-alt1.1
 - NMU: Fix ix86 detection regression (upstream fix).
 
