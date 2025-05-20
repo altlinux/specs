@@ -3,7 +3,7 @@
 
 Name:     cni-plugin-flannel
 Epoch:    1
-Version:  1.5.1.3
+Version:  1.7.1.1
 Release:  alt1
 
 Summary:  A CNI network plugin that is powered by flannel
@@ -63,6 +63,9 @@ rm %buildroot%_bindir/cni-plugin
 %doc README.md RELEASING.md LICENSE
 
 %changelog
+* Fri May 16 2025 Nadezhda Fedorova <fedor@altlinux.org> 1:1.7.1.1-alt1
+- 1.5.1.3 -> 1.7.1.1
+
 * Thu Sep 26 2024 Alexander Stepchenko <geochip@altlinux.org> 1:1.5.1.3-alt1
 - 1.5.1 -> 1.5.1.3
 

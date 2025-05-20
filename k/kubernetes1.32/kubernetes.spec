@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt2
+Release: alt3
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -43,6 +43,7 @@ Source27: crio.conf
 Source28: 99-kubernetes-cri.conf
 
 Patch1: kubernets-alt-loongarch64-support.patch
+Patch2: kubernetes1.32-cve.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -392,6 +393,14 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Tue May 13 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.32.4-alt3
+- Fixes:
+  + CVE-2023-45142
+  + CVE-2024-45337
+  + CVE-2025-22869
+  + CVE-2025-22870
+  + CVE-2025-22872
+
 * Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.4-alt2
 - Fix systemd service disabling before package deletion (Closes: #49768)
 

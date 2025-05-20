@@ -6,7 +6,7 @@
 
 Name:     %prog_name%prog_version
 Version:  %prog_version
-Release:  alt1
+Release:  alt2
 
 Summary:  CoreDNS is a DNS server that chains plugins
 License:  Apache-2.0
@@ -61,6 +61,17 @@ export IGNORE_SOURCES=1
 %_man7dir/*
 
 %changelog
+* Wed May 14 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.11.3-alt2
+- Fixes: 
+  + CVE-2025-30204
+  + CVE-2024-51744
+  + CVE-2024-53259
+  + CVE-2024-45337
+  + CVE-2025-22869
+  + CVE-2025-22870
+  + CVE-2025-22872
+
+
 * Thu Sep 19 2024 Alexander Stepchenko <geochip@altlinux.org> 1.11.3-alt1
 - 1.11.1 -> 1.11.3
 - Fixes:

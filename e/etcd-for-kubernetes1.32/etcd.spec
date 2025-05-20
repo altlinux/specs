@@ -6,7 +6,7 @@
 
 Name:    etcd-for-kubernetes1.32
 Version: 3.5.16
-Release: alt3
+Release: alt4
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
 Group:   System/Servers
@@ -64,6 +64,15 @@ rm -rf -- %buildroot/%go_root
 %_sbindir/etcd
 
 %changelog
+* Wed May 14 2025 Nadezhda Fedorova <fedor@altlinux.org> 3.5.16-alt4
+- Fixes:
+    + CVE-2025-30204
+    + CVE-2024-51744
+    + CVE-2024-45337
+    + CVE-2025-22869
+    + CVE-2025-22870
+    + CVE-2025-22872
+
 * Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 3.5.16-alt3
 - Make separate etcd packages for kubernetes container images
 
