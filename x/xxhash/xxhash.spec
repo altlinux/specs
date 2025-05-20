@@ -1,5 +1,5 @@
 Name: xxhash
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Extremely fast hash algorithm
@@ -77,6 +77,9 @@ make test-xxhsum-c
 %_pkgconfigdir/libxxhash.pc
 
 %changelog
+* Tue May 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.8.3-alt1
+- 0.8.3.
+
 * Fri Dec 15 2023 L.A. Kostis <lakostis@altlinux.ru> 0.8.2-alt1
 - 0.8.2.
 
