@@ -3,9 +3,9 @@
 
 Name:    ocrdesktop
 Version: 4.0
-Release: alt1
+Release: alt2
 
-Summary: Accessiblity tool for use the current window with OCR technique
+Summary: Accessibility tool for use the current window with OCR technique
 License: GPL
 Group:   Accessibility
 URL:     https://github.com/chrys87/ocrdesktop
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Requires: tesseract-langpack-en
 Requires: tesseract-langpack-ru
 Requires: libwnck3-gir
+Requires: python3-module-pyatspi
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
@@ -52,6 +53,9 @@ install -m 644 ./%name.1.gz %buildroot%_man1dir/
  %_datadir/doc/%name/*
 
 %changelog
+* Tue May 20 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt2
+- Added req to pyatspi (Closes: 54263)
+
 * Tue Apr 22 2025 Artem Semenov <savoptik@altlinux.org> 4.0-alt1
 - Updated to new version 4.0
 
