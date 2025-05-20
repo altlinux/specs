@@ -12,7 +12,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 106
+Version: 107
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -350,8 +350,8 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/10i18n
 %dracutlibdir/modules.d/30convertfs
 %dracutlibdir/modules.d/45drm
+%dracutlibdir/modules.d/45simpledrm
 %dracutlibdir/modules.d/45plymouth
-%dracutlibdir/modules.d/60systemd-sysusers
 %dracutlibdir/modules.d/62bluetooth
 %dracutlibdir/modules.d/80lvmmerge
 %dracutlibdir/modules.d/80lvmthinpool-monitor
@@ -420,6 +420,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/99fs-lib
 %dracutlibdir/modules.d/99shell-interpreter
 %dracutlibdir/modules.d/99shutdown
+%dracutlibdir/modules.d/99systemd-sysusers
 %attr(0644,root,root) %ghost %config(missingok,noreplace) %_logdir/dracut.log
 %dir %_sharedstatedir/initramfs
 %_unitdir/dracut-shutdown.service
@@ -514,6 +515,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/dracut.conf.d/ima
 
 %changelog
+* Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 107-alt1
+- 107
+
 * Mon Apr 07 2025 Alexey Shabalin <shaba@altlinux.org> 106-alt1
 - 106
 - Cherry-pick some commits from main branch.
