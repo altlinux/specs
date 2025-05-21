@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.9.9
-Release: alt1
+Release: alt2
 
 Summary: Python3 module for %pypi_name
 License: LGPL-3.0
@@ -54,7 +54,7 @@ mv %buildroot%python3_sitelibdir%_sysconfdir %buildroot
 cp -r %buildroot%python3_sitelibdir/usr/* %buildroot/usr/
 rm -r %buildroot%python3_sitelibdir/usr
 
-install -Dm 755 autostart/systemd/Arch/%pypi_name.service %buildroot%_systemd_dir/system/%pypi_name
+install -Dm 755 autostart/systemd/Arch/%pypi_name.service %buildroot%_systemd_dir/system/%pypi_name.service
 install -m 644 config/settings/settings.conf %buildroot%_sysconfdir/fenrirscreenreader/settings/settings.conf
 
 %check
@@ -72,10 +72,13 @@ install -m 644 config/settings/settings.conf %buildroot%_sysconfdir/fenrirscreen
 %_bindir/%pypi_name
 %_bindir/%pypi_name-daemon
 %config(noreplace) %_sysconfdir/fenrirscreenreader/*
-%_systemd_dir/system/%pypi_name
+%_systemd_dir/system/%pypi_name.service
 %_man1dir/%pypi_name.1.xz
 
 %changelog
+* Wed May 21 2025 Artem Semenov <savoptik@altlinux.org> 1.9.9-alt2
+- Fixed systemd service name (Closes: 54393)
+
 * Tue Apr 22 2025 Artem Semenov <savoptik@altlinux.org> 1.9.9-alt1
 - Update to 1.9.9
 
