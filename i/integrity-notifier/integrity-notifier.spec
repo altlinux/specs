@@ -1,5 +1,5 @@
 Name:     integrity-notifier
-Version:  0.7.1
+Version:  0.7.2
 Release:  alt1
 
 Summary:  Integrity event notifier
@@ -38,6 +38,10 @@ mkdir -p -m 0755 %buildroot%_logdir/integrityd
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 
 %changelog
+* Wed May 21 2025 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt1
+- Restart both services on failure.
+- Fix: Don't exit on write failure (closes: 54267).
+
 * Wed May 22 2024 Paul Wolneykien <manowar@altlinux.org> 0.7.1-alt1
 - Switch to multilog(8) for log rotation.
 
