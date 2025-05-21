@@ -5,7 +5,7 @@
 %define build_dir_adwaita build_adwaita
 
 Name:    userpasswd
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Graphical utility for changing user password
@@ -88,6 +88,7 @@ EOF
 %files gnome
 %_bindir/%binary_name_adwaita
 %_altdir/%binary_name_adwaita
+%_datadir/metainfo/%name.metainfo.xml
 
 %files common
 %_desktopdir/%name.desktop
@@ -96,6 +97,13 @@ EOF
 %lang(ru) %_datadir/locale/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Wed May 21 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.1-alt1
+- Fixed display of icon on the panel in Wayland sessions (Closes: 54368)
+- Fixed starting /usr/bin/userpasswd by clicking the icon if userpasswd
+  or userpasswd-gnome package is not installed (Closes: 53977)
+- Fixed string comparison on passwd request (Closes: 54366)
+- Added metadata file
+
 * Mon Apr 28 2025 Maria Alexeeva <alxvmr@altlinux.org> 1.0.0-alt1
 - Removed the code for the old userpasswd. New implementation uses
   gtk4 and userpasswd-gnome logic.
