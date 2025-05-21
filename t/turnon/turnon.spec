@@ -6,18 +6,18 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.7
 Release: alt1
 
 Summary: Turn on devices in your network
 License: MPL-2.0
 Group: Networking/Other
-Url: https://github.com/swsnr/turnon
+Url: https://codeberg.org/swsnr/turnon
 
-Vcs: https://github.com/swsnr/turnon.git
+Vcs: https://codeberg.org/swsnr/turnon.git
 
 %if_disabled snapshot
-Source: https://github.com/swsnr/turnon/archive/v%version/%name-%version.tar.gz
+Source: https://codeberg.org/swsnr/turnon/archive/v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -28,7 +28,7 @@ Source1: %name-%version-cargo.tar
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-rust
-BuildRequires: rust-cargo blueprint-compiler
+BuildRequires: rust-cargo just blueprint-compiler
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -37,17 +37,20 @@ A small GNOME application to send Wake On LAN (WoL) magic packets to
 devices in a network.
 
 %prep
-%setup -n %name-%version %{?_disable_bootstrap:-a1}
+%setup -n %name%{?_enable_snapshot:-%version} %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ -d .cargo ] || mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+sed -i "s/\(version := \).*$/\1'%version'/" justfile
+
 %build
+just compile
 %rust_build
 
 %install
-%makeinstall_std DESTPREFIX=%buildroot%_prefix
+just DESTPREFIX=%buildroot%_prefix install
 %find_lang %rdn_name
 
 %files -f %rdn_name.lang
@@ -61,6 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.7-alt1
+- 2.6.7
+
 * Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
