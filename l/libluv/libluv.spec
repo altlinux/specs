@@ -1,10 +1,10 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: libluv
-Version: 1.48.0.2
+Version: 1.51.0.1
 Release: alt1
 
-Summary: libuv bindings for luajit
+Summary: libuv bindings for luajit and lua.
 
 Group: Development/Tools
 License: Apache-2.0
@@ -16,6 +16,7 @@ BuildRequires(pre): rpm-macros-cmake cmake
 
 BuildRequires: libuv-devel
 BuildRequires: libluajit-devel
+BuildRequires: lua5.1-module-compat53-devel
 
 %description
 This library makes libuv available to lua scripts. It was made for the
@@ -38,6 +39,7 @@ libluv header and build tools.
     -DLUA_BUILD_TYPE=System \
     -DBUILD_MODULE=OFF \
     -DBUILD_SHARED_LIBS=ON \
+    -DLUA_COMPAT53_DIR=%_includedir/lua-5.1 \
     -DSHAREDLIBS_INSTALL_LIB_DIR=%_libdir
 
 %cmake_build
@@ -55,6 +57,9 @@ libluv header and build tools.
 
 
 %changelog
+* Wed May 21 2025 Vladimir Didenko <cow@altlinux.ru> 1.51.0.1-alt1
+- new version
+
 * Wed Mar 6 2024 Vladimir Didenko <cow@altlinux.ru> 1.48.0.2-alt1
 - new version
 
