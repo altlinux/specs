@@ -8,7 +8,7 @@
 
 Name: %_name-audio
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenShot Audio Library
 Group: System/Libraries
@@ -41,6 +41,10 @@ that are needed to write applications that use %name.
 
 %prep
 %setup
+%ifarch %e2k
+sed -E -i 's/(std::vector<.*feedbackVolume) *\{/\1={/' \
+	JuceLibraryCode/modules/juce_dsp/widgets/juce_{Chorus,Phaser}.h
+%endif
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -69,6 +73,9 @@ that are needed to write applications that use %name.
 %_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1.1
+- fixed build for E2K by ilyakurdyukov@
+
 * Mon Dec 23 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
