@@ -1,10 +1,12 @@
 %define soversion 2
-%define llvmversion 14
+%define llvmversion 15
 %define optflags_lto %nil
 
+%set_verify_elf_method skip
+
 Name: intel-graphics-compiler
-Version: 2.10.5
-Release: alt1.1
+Version: 2.11.2
+Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
 Group: Development/C++
@@ -12,11 +14,9 @@ URL: https://github.com/intel/intel-graphics-compiler
 
 Source: %name-%version.tar
 
-Patch1: %name-2.3.1-alt-build.patch
-Patch2: ffdcbc033c0ad140b898a7ccb431f2dabd5dedab.patch
-Patch3: c5c2623610f37abdd9f3b12efcc4a6d42ac55773.patch
+Patch1: %name-2.11.2-alt-build.patch
 # our -Wall triggers -Werror for everything
-Patch4: %name-alt-disable-werror.patch
+Patch2: %name-alt-disable-werror.patch
 
 BuildRequires(pre): rpm-build-cmake ninja-build
 
@@ -138,6 +138,9 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Tue May 13 2025 Andrey Kovalev <ded@altlinux.org> 2.11.2-alt1
+- Updated to upstream version 2.11.2.
+
 * Fri Apr 11 2025 L.A. Kostis <lakostis@altlinux.ru> 2.10.5-alt1.1
 - NMU:
   - Explicitly disable LTO (not supported).

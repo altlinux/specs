@@ -1,0 +1,67 @@
+%define llvmversion 15
+
+Name: libintel-opencl-clang%llvmversion
+Version: 15.0.1
+Release: alt1
+
+Summary: Library to compile OpenCL C kernels to SPIR-V modules
+License: NCSA
+Group: Development/C++
+
+Url: https://github.com/intel/opencl-clang
+# Source-url: https://github.com/intel/opencl-clang/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
+
+ExcludeArch: i586
+
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: llvm%llvmversion.0
+BuildRequires: llvm%llvmversion.0-devel
+BuildRequires: clang%llvmversion.0-devel
+BuildRequires: zlib-devel
+BuildRequires: libspirv-llvm%llvmversion.0-translator-devel
+BuildRequires: mlir%llvmversion.0-tools
+BuildRequires: libmlir%llvmversion.0-devel
+BuildRequires: libpolly%llvmversion.0-devel
+BuildRequires: libstdc++-devel
+BuildRequires: libxml2-devel
+BuildRequires: liblzma-devel
+
+%description
+opencl-clang is a thin wrapper library around clang. The library has OpenCL-oriented API and
+is capable to compile OpenCL C kernels to SPIR-V modules.
+
+%package devel
+Summary: Development files for %name
+Group: Development/C++
+Requires: %name = %EVR
+Conflicts: libintel-opencl-clang14-devel
+
+%description devel
+This package contains libraries and header files for
+developing against %name
+
+%prep
+%setup
+
+%build
+%cmake \
+    -DLLVM_TABLEGEN_EXE:FILEPATH=%_libexecdir/llvm-%llvmversion.0/bin/llvm-tblgen \
+    -DLLVM_DIR=%_libexecdir/llvm-%llvmversion.0/lib64/cmake/llvm/
+%cmake_build
+
+%install
+%cmake_install
+
+%files
+%doc LICENSE
+%_libdir/libopencl-clang.so.*
+
+%files devel
+%_libdir/libopencl-clang.so
+%_includedir/cclang/
+
+%changelog
+* Tue May 13 2025 Andrey Kovalev <ded@altlinux.org> 15.0.1-alt1
+- initial build for ALT Sisyphus
