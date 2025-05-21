@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %add_python3_req_skip gpresult.Preferences.Preferences.Drive
 %add_python3_req_skip gpresult.Preferences.Preferences.EnvVar
 %add_python3_req_skip gpresult.Preferences.Preferences.File
@@ -8,7 +9,7 @@
 
 Name: gpresult
 Version: 0.0.5
-Release: alt1
+Release: alt2
 
 Summary: Display applied policies
 License: GPLv3+
@@ -18,7 +19,7 @@ BuildArch: noarch
 
 BuildRequires: rpm-build-python3
 BuildRequires: python3(wheel), python3(hatchling), python3(prettytable)
-Requires: libgvdb-gir gpupdate >= 0.11.0
+Requires: gpupdate >= 0.11.0
 
 Source0: %name-%version.tar
 
@@ -34,20 +35,22 @@ The utility allows you to display a list of domain  (GPO) policies that apply to
 
 %install
 %pyproject_install
-install -Dm0644 completions/%name %buildroot/%_datadir/bash-completion/completions/%name
+%find_lang %name
 
-%files
+%files -f %name.lang
 %python3_sitelibdir/%name
-%python3_sitelibdir/%name/locales
 %python3_sitelibdir/%name-%version.dist-info
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
-%exclude %python3_sitelibdir/%name/locales/en_US/LC_MESSAGES/*.po
-%exclude %python3_sitelibdir/%name/locales/ru_RU/LC_MESSAGES/*.po
 
 %changelog
+* Tue May 06 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.5-alt2
+- Removed libgvdb-gir dependency (automatic dependency lookup works)
+- Translation files moved to /usr/share/locale/
+- Repackaged translations and added bash-completions to pyproject-toml
+
 * Fri Apr 11 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.5-alt1
-- Fix display of policy version (Closes: #53798)
+- Fixed display of policy version (Closes: #53798)
 
 * Fri Jan 31 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.4-alt1
 - Added translations for argparse and fixed typos (Closes: #52282)
