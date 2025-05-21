@@ -1,5 +1,5 @@
 Name: xfce4-smartbookmark-plugin
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Summary: Smart bookmarks for the Xfce panel
@@ -12,9 +12,10 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-smartbookmark-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
-BuildRequires: libXt-devel libgtk+3-devel xorg-cf-files
+BuildRequires: libxfce4util-devel libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
+BuildRequires: libgtk+3-devel
 
 Requires: xfce4-panel >= 4.16
 
@@ -30,23 +31,23 @@ directly to your browser and perform custom searches.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc README.md NEWS AUTHORS
 %_libdir/xfce4/panel/plugins/*.so
-%exclude %_libdir/xfce4/panel/plugins/*.la
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Switched to meson build.
+- Updated to 0.6.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Updated to 0.5.3.
 
