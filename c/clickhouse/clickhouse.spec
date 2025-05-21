@@ -1,7 +1,7 @@
 %global __find_debuginfo_files %nil
 %define _unpackaged_files_terminate_build 1
-%global llvm_version 18.1
-%global clang_version 18
+%global llvm_version 19.1
+%global clang_version 19
 %global __nprocs 8
 
 %def_with clang
@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 24.8.13.16
+Version: 25.3.3.42
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -138,6 +138,7 @@ rm -rf contrib/sysroot/linux*
 
 # -DENABLE_HIVE:BOOL=OFF is needed to circumvent build failure due to not finding orc headers
 export ALTWRAP_LLVM_VERSION="%llvm_version"
+export ROOT_PATH=$PWD
 %cmake \
 %if_with clang
 	-DCMAKE_C_COMPILER=clang-%clang_version \
@@ -223,9 +224,13 @@ fi
 
 %files common-static
 %_bindir/clickhouse
-%_bindir/clickhouse-odbc-bridge
-%_bindir/clickhouse-library-bridge
 %_bindir/clickhouse-static-files-disk-uploader
+%_bindir/clickhouse-check-marks
+%_bindir/clickhouse-checksum-for-compressed-block
+%_bindir/clickhouse-keeper-bench
+%_bindir/clickhouse-keeper-data-dumper
+%_bindir/clickhouse-zookeeper-dump-tree
+%_bindir/clickhouse-zookeeper-remove-by-list
 %_datadir/clickhouse
 %_datadir/bash-completion/completions/clickhouse
 %_datadir/bash-completion/completions/clickhouse-bootstrap
@@ -262,6 +267,9 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Fri May 16 2025 Anton Farygin <rider@altlinux.com> 25.3.3.42-alt1
+- 24.8.13.16 -> 25.3.3.42
+
 * Thu Feb 06 2025 Anton Farygin <rider@altlinux.ru> 24.8.13.16-alt1
 - 24.8.12.28 -> 24.8.13.16
 
