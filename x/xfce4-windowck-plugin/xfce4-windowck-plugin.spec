@@ -1,5 +1,5 @@
 Name: xfce4-windowck-plugin
-Version: 0.5.2
+Version: 0.6.1
 Release: alt1
 
 Summary: Put the maximized window title and windows buttons in the panel
@@ -12,9 +12,10 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-windowck-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
-BuildRequires: libwnck3-devel
+BuildRequires: libgio-devel libwnck3-devel
 
 Requires: xfce4-panel
 
@@ -29,17 +30,11 @@ buttons on the panel.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-debug=minimum
-
-# makefiles not ready for parallel build
-export NPROCS=1
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -49,9 +44,11 @@ export NPROCS=1
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/themes/Windowck*/
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
+- Switched to meson build.
+- Updated to 0.6.1.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
