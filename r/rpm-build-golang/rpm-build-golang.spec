@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 Name:      rpm-build-golang
-Version:   1.0.9
+Version:   1.1.0
 Release:   alt1
 Summary:   RPM build enviroment to build GO packages
 Group:     Development/Other
@@ -67,6 +67,10 @@ cp %SOURCE8 %buildroot%_rpmmacrosdir/golang.env
 %_rpmmacrosdir/golang.env
 
 %changelog
+* Tue May 20 2025 Ivan Khanas <xeno@altlinux.org> 1.1.0-alt1
+- Add check to install only executable files in golang-install script.
+- Replace mv with install in golang-install script.
+
 * Thu Nov 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.9-alt1
 - Added loongarch64 to %%go_arches.
 - %%gobuild: don't force `-buildmode pie` on LoongArch (not supported yet).
