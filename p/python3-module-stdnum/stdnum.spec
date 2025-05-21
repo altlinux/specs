@@ -4,7 +4,7 @@
 %def_with check
 
 Name:       python3-module-%oname
-Version:    2.0
+Version:    2.1
 Release:    alt1
 
 Summary:    A provide functions to handle, parse and validate standard numbers.
@@ -51,6 +51,9 @@ or some common formatting is eligible for inclusion in this library.
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 2.1-alt1
+- New version 2.1.
+
 * Sun May 11 2025 Anton Vyatkin <toni@altlinux.org> 2.0-alt1
 - New version 2.0.
 
