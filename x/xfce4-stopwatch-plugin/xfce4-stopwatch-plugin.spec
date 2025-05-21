@@ -1,5 +1,5 @@
 Name: xfce4-stopwatch-plugin
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: Stopwatch plugin for the Xfce panel
@@ -12,6 +12,7 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-stopwatch-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4util-devel
 
@@ -31,24 +32,24 @@ automatically.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc README.md AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*
-%exclude %_libdir/xfce4/panel/plugins/*.la
 %_iconsdir/hicolor/*/apps/*.*
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Switched to meson build.
+- Updated to 0.6.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
 - Updated to 0.5.2.
 
