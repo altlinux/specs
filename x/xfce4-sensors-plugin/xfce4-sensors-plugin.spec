@@ -1,5 +1,5 @@
 Name: xfce4-sensors-plugin
-Version: 1.4.5
+Version: 1.5.0
 Release: alt1
 
 Summary: Sensors plugin for Xfce Desktop
@@ -18,6 +18,7 @@ Patch: %name-%version-%release.patch
 %def_disable xnvctrl
 %endif
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gcc-c++
 BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel >= 4.16.0 libxfce4util-devel >= 4.17.2
@@ -36,21 +37,20 @@ Requires: xfce4-panel >= 4.17 hddtemp lm_sensors3
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-    --enable-hddtemp=yes \
-    --disable-netcat \
-    --enable-libsensors=yes \
-    --enable-procacpi \
-    --enable-sysfsacpi \
-    %{subst_enable xnvctrl} \
-    --enable-notification \
-    --enable-debug=minimum
-%make_build
+%meson \
+	-Dhddtemp=enabled \
+	-Dhddtemp-path=/usr/sbin/hddtemp \
+	-Dnetcat=disabled \
+	-Dlibsensors=enabled \
+	-Dprocacpi=enabled \
+	-Dsysfsacpi=enabled \
+	%{subst_enable_meson_feature xnvctrl xnvctrl} \
+	-Dlibnotify=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -59,15 +59,15 @@ Requires: xfce4-panel >= 4.17 hddtemp lm_sensors3
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 %_libdir/xfce4/panel/plugins/*.so
-%_libdir/xfce4/modules/libxfce4sensors.so*
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/xfce4/panel/plugins/%name.css
 %_man1dir/xfce4-sensors.1*
-%exclude %_pkgconfigdir/*.pc
-%exclude %_libdir/xfce4/modules/libxfce4sensors.la
-%exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 1.5.0-alt1
+- Switched to meson build.
+- Updated to 1.5.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.4.5-alt1
 - Dropped obsoleted patch.
 - Updated to 1.4.5.
