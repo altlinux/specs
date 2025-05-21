@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -384,9 +384,6 @@ Requires: atril-gtk-xps
 # Append all modules from xscreensaver                                                        
 Requires: desktop-screensaver-modules-xscreensaver
 Requires: desktop-screensaver-modules-xscreensaver-gl
-# Package managenment                                                                         
-Requires: synaptic
-Requires: synaptic-usermode
 # Menu
 Requires: altlinux-freedesktop-menu-shallow-menu
 Requires: altlinux-freedesktop-menu-mate-like-menu
@@ -461,9 +458,6 @@ Requires: branding-alt-education-kde-settings
 # Append all modules from xscreensaver                                                        
 Requires: desktop-screensaver-modules-xscreensaver
 Requires: desktop-screensaver-modules-xscreensaver-gl
-# Package managenment                                                                         
-Requires: synaptic
-Requires: synaptic-usermode
 # Menu
 Requires: altlinux-freedesktop-menu-shallow-menu
 Requires: altlinux-freedesktop-menu-mate-like-menu
@@ -632,6 +626,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed May 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.5-alt1
+- Remove synaptic.
+
 * Mon Mar 10 2025 Constantin Sunzow <protvin@altlinux.org> 1.7.4-alt1
 - Remove unsupported itest.
 
