@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.2.0
+Version:  0.2.1
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
@@ -14,7 +14,9 @@ Source:   %name-%version.tar
 
 BuildArch: noarch
 
-Requires: fakeroot
+BuildRequires: bats /proc apt-repo-tools rpmpeek fakeroot gostsum
+
+Requires: apt-repo-tools rpmpeek fakeroot gostsum
 
 %description
 Generates checksum file for an RPM repo slice.
@@ -28,12 +30,20 @@ Generates checksum file for an RPM repo slice.
 %install
 %makeinstall_std sysconfdir=%_sysconfdir unitdir=%_unitdir logrotatedir=%_logrotatedir bindir=%_bindir libexecdir=%_prefix/libexec
 
+%check
+%make_build check
+
 %files
 %doc README
 %_prefix/libexec/%name/*.sh
 %_bindir/%name
 
 %changelog
+* Wed May 21 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
+- Add -n | --no-fakeroot option.
+- Added the first basic unit-test.
+- Fixed RPM-list check in repo mode
+
 * Tue May 20 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.0-alt1
 - Renamed to 'checksumgen'.
 - Support a list of RPM filenames in -l | --rpmlist argument.
