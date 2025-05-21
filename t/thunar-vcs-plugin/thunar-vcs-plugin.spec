@@ -2,7 +2,7 @@
 %def_enable subversion
 
 Name: thunar-vcs-plugin
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Version Contol System plugin for Thunar
@@ -14,8 +14,10 @@ Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-vcs-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libthunar-devel libgio-devel libxfce4util-devel libexo-gtk3-devel
+BuildRequires: libthunar-devel >= 4.18.0 libgio-devel libxfce4util-devel libexo-gtk3-devel
+BuildRequires: libxfce4ui-gtk3-devel >= 4.18.0
 BuildRequires: libgtk+3-devel
 %if_enabled subversion
 BuildRequires: libapr1-devel libsubversion-devel libaprutil1-devel
@@ -33,16 +35,14 @@ menu. It also shows the svn file status in the file properties window.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-	%{subst_enable subversion} \
-	%{subst_enable git} \
-    --enable-debug=minimum
-%make_build
+%meson \
+	%{subst_enable_meson_feature subversion svn} \
+	%{subst_enable_meson_feature git git}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -51,9 +51,12 @@ menu. It also shows the svn file status in the file properties window.
 %_libdir/thunarx-*/*.so
 %_iconsdir/hicolor/*/*/*.png
 
-%exclude %_libdir/thunarx-*/*.la
-
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Fixed meson checks.
+- Switched to meson build.
+- Updated to 0.4.0.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Fixed build with libaprutil1.
 - Updated to 0.3.0.
