@@ -3,7 +3,7 @@
 %def_with check
 
 Name:       dosage
-Version:    3.0
+Version:    3.1
 Release:    alt1
 
 Summary:    dosage is a comic strip downloader and archiver
@@ -15,7 +15,6 @@ Vcs:        https://github.com/webcomics/dosage
 BuildArch:  noarch
 
 Source0:    %name-%version.tar
-Patch:      drop-distutils.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -24,13 +23,12 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3-module-colorama
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-imagesize
-BuildRequires: python3-module-appdirs
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-platformdirs
 BuildRequires: python3-module-responses
+BuildRequires: python3-module-rich
 %endif
 
 %add_python3_req_skip requests.packages.urllib3.util.retry
@@ -45,7 +43,6 @@ webcomic's site layout makes this impossible).
 
 %prep
 %setup
-%patch -p0
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -65,6 +62,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 3.1-alt1
+- New version 3.1.
+
 * Tue Oct 17 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
 - New version 3.0.
 
