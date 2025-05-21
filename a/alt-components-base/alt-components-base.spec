@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.10
+Version: 0.7.11
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -145,6 +145,9 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Wed May 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.11-alt1
+- editions: revert alt-server-docs to base section
+
 * Wed May 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.10-alt1
 - editions: replace lsb-core to main section
 
