@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 
 Summary: The SQL Linter for Humans
@@ -60,5 +60,8 @@ SQLFluff is an open source, dialect-flexible and configurable SQL linter.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 13 2025 Anastasia Doronina <swaggyglice@altlinux.org> 3.4.0-alt1
+- Update to 3.4.0.
+
 * Tue Feb 11 2025 Anastasia Doronina <swaggyglice@altlinux.org> 3.3.1-alt1
 - Initial Build for Sisyphus.
