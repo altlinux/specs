@@ -1,7 +1,7 @@
 %set_gcc_version 13
 Name:     kronos
 Version:  2.6.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Sega Saturn Emulator
 License:  GPL2
@@ -46,6 +46,9 @@ cd yabause
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue May 20 2025 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt2
+- Fix build.
+
 * Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt1
 - Update to new version
 
