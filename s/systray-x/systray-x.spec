@@ -1,9 +1,13 @@
+%define mozilla_arch_extdir %_libdir/mozilla/extensions
+%define tbird_cid \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
+%define tbird_arch_extensionsdir %mozilla_arch_extdir/%tbird_cid
+
 # Disable because binary with same name
 %def_without kde
 
 Name:    systray-x
 Version: 0.9.11
-Release: alt2
+Release: alt3
 
 Summary: A system tray extension for Thunderbird
 License: MPL-2.0
@@ -14,11 +18,10 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: %name-version.patch
-Patch1: tb_137_compat.patch
 
 ExcludeArch: armh ppc64le
 
-BuildRequires(pre): rpm-build-thunderbird
+BuildRequires: thunderbird
 BuildRequires: qt6-base-devel
 BuildRequires: zip
 BuildRequires: unzip
@@ -55,6 +58,9 @@ Requires: %name = %EVR
 %prep
 %setup
 %autopatch -p1
+max_ver="$((`sed -n 's/^Version=\([0-9]\+\)\..*$/\1/p' %_libdir/thunderbird/application.ini`+1))"
+# Use real current Thunderbird version + 1
+subst "s|136|$max_ver|" webext/manifest.json
 
 %build
 export PATH=$PATH:%_qt6_bindir
@@ -81,6 +87,9 @@ unzip -d %buildroot%tbird_arch_extensionsdir/systray-x@Ximi1970 systray-x@Ximi19
 %tbird_arch_extensionsdir/systray-x@Ximi1970
 
 %changelog
+* Fri Apr 25 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt3
+- FTBFS: fixed build with new thunderbird.
+
 * Fri Apr 18 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt2
 - Adapted to Thunderbird 137.x (ALT #53895).
 - Built with Qt6.
