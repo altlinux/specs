@@ -1,7 +1,7 @@
 %define _name hidapi
 
 Name: libhidapi
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 
 Summary: Library for communicating with USB and Bluetooth HID devices
@@ -64,6 +64,9 @@ USB and Bluetooth HID-class devices.
 %_pkgconfigdir/%_name-libusb.pc
 
 %changelog
+* Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1
+- 0.15.0
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 - spec adapted for ALT

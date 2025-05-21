@@ -8,15 +8,15 @@
 %endif
 
 Name: lsp-plugins
-Version: 1.2.21
+Version: 1.2.22
 Release: alt1
 
 Summary: Linux Studio Plugins
 Group: Sound
-License: LGPL-3.0
+License: LGPL-3.0-or-later
 Url: https://lsp-plug.in/
 
-Vcs: https://github.com/sadko4u/lsp-plugins
+Vcs: https://github.com/sadko4u/lsp-plugins.git
 
 Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
 
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.22-alt1
+- 1.2.22
+
 * Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.2.21-alt1
 - 1.2.21
 

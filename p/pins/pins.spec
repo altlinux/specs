@@ -3,7 +3,7 @@
 
 %define _name Pins
 %define binary_name pinapp
-%define ver_major 2.2
+%define ver_major 2.3
 %define rdn_name io.github.fabrialberio.%binary_name
 
 %def_enable check
@@ -66,6 +66,9 @@ editing properties in .desktop files.
 %doc README*
 
 %changelog
+* Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Mon Mar 24 2025 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 

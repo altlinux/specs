@@ -2,13 +2,13 @@
 
 %define _name halftone
 %define __name Halftone
-%define ver_major 0.6
+%define ver_major 0.7
 %define rdn_name io.github.tfuxu.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Dither your images
@@ -72,6 +72,9 @@ technique.
 %doc README* CHANGELOG*
 
 %changelog
+* Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu Apr 03 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
 - first build for Sisyphus
 
