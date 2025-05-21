@@ -5,7 +5,7 @@
 
 Name: flannel
 Version: 0.26.7
-Release: alt1
+Release: alt2
 
 Summary: flannel is a network fabric for containers
 License: Apache-2.0
@@ -57,8 +57,14 @@ install -D -p -m 0755 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed May 21 2025 Alexander Stepchenko <geochip@altlinux.org> 0.26.7-alt2
+- Add security fixes information to changelog
+
 * Fri May 16 2025 Nadezhda Fedorova <fedor@altlinux.org> 0.26.7-alt1
 - 0.25.7 -> 0.26.7
+- Security fixes:
+  + CVE-2024-45337: Misuse of connection.serverAuthenticate may cause authorization bypass in golang.org/x/crypto
+  + CVE-2024-45338: Non-linear parsing of case-insensitive content in golang.org/x/net/html
 
 * Fri Oct 11 2024 Alexander Stepchenko <geochip@altlinux.org> 0.25.7-alt1
 - 0.25.1 -> 0.25.7 (Fixes: CVE-2023-45288, CVE-2024-24786)
