@@ -1,6 +1,6 @@
 Name: panzerchasm
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Free software reconstruction of game "Chasm: The Rift"
 License: GPL-3.0-only
@@ -45,8 +45,8 @@ You have to put them under '~/.config/panzerchasm/'.
 %build
 mkdir BUILD
 cd BUILD
-cmake ..
-%make
+%cmake ..
+%cmake_build
 
 %install
 mkdir -p %buildroot%_desktopdir
@@ -63,7 +63,7 @@ EOF
 
 mkdir -p %buildroot%_iconsdir
 
-install -D -m0755 BUILD/PanzerChasm/PanzerChasm %buildroot/%_libexecdir/%name/%name
+install -D -m0755 BUILD/%_cmake__builddir/PanzerChasm/PanzerChasm %buildroot/%_libexecdir/%name/%name
 install -D -m0755 %SOURCE1 %buildroot/%_bindir/%name
 install -D -m0644 PanzerChasm/PanzerChasm.ico %buildroot%_iconsdir/%name.ico
 
@@ -76,6 +76,9 @@ install -D -m0644 PanzerChasm/PanzerChasm.ico %buildroot%_iconsdir/%name.ico
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue May 20 2025 Artyom Bystrov <arbars@altlinux.org> 0.3-alt3
+- Fix build.
+
 * Thu Sep 23 2021 Artyom Bystrov <arbars@altlinux.org> 0.3-alt2
 - Add patch for adding <limits> headers in map_bsp_tree source file
 - fix build on new GCC
