@@ -1,5 +1,5 @@
 Name: riscv32-none-elf-gdb
-Version: 15.2
+Version: 16.3
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_libexecdir/%target/share/gdb/auto-load
 %_libexecdir/%target/share/gdb/auto-load
 
 %changelog
+* Wed May 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 16.3-alt1
+- 16.3 released
+
 * Wed Feb 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.2-alt1
 - initial
 
