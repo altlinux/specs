@@ -1,6 +1,6 @@
 Name: flycast
 Version: 2.4
-Release: alt1
+Release: alt2
 Summary: multi-platform Sega Dreamcast, Naomi, Naomi 2, and Atomiswave emulator
 License: GPL-2.0
 Group: Emulators
@@ -9,7 +9,7 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar.xz
 
-EXclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 BuildRequires(Pre): cmake rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libzip-devel zlib-devel libGL-devel libxxhash-devel python3-dev git libSDL2-devel libcurl-devel liblua5.3-devel libpulseaudio-devel libao-devel libminiupnpc-devel glslang-devel libspirv-cross-devel libchdr-devel libvulkan-devel vulkan-tools 
@@ -21,7 +21,7 @@ and Atomiswave emulator derived from reicast.
 %prep
 %setup
 # Ensure unneeded deps are not bundled
-	for dep in chdr dirent libretro-common libzip miniupnpc patches SDL vixl xxHash; do
+	for dep in chdr dirent libretro-common libzip miniupnpc patches SDL xxHash; do
 		rm -rf core/deps/${dep}
 	done
 
@@ -66,7 +66,7 @@ and Atomiswave emulator derived from reicast.
 	sed -i -e '/find_program(CCACHE_PROGRAM ccache)/d' CMakeLists.txt
 
 %build
-cmake -B build 	-DUSE_OPENGL=ON \
+%cmake -B build 	-DUSE_OPENGL=ON \
 		-DUSE_VULKAN=OFF \
 		-DUSE_HOST_SDL=ON \
 		-DUSE_HOST_LIBZIP=ON \
@@ -98,6 +98,10 @@ install -D -m 0644 shell/linux/man/%name.1 %buildroot%_man1dir/
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Tue May 20 2025 Artyom Bystrov <arbars@altlinux.org> 2.4-alt2
+- Fix build.
+- Aarch64 is back!
+
 * Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 2.4-alt1
 - Update to new version (ALTBUG #48830) (ALTBUG #50714)
 
