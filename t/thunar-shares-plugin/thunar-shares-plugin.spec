@@ -1,5 +1,5 @@
 Name: thunar-shares-plugin
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Epoch: 1
 Summary: Thunar file manager extension to share files using Samba
@@ -13,9 +13,10 @@ Source:   %name-%version.tar
 Patch:    %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libthunar-devel
-BuildRequires: libxfconf-devel >= 4.12.0
+BuildRequires: libthunar-devel >= 4.18.0
+BuildRequires: libxfconf-devel >= 4.18.0
 
 # Can be used by shareman too.
 #Requires: Thunar
@@ -37,22 +38,22 @@ is based on nautilus-share.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS README.md NEWS
 %_libdir/thunarx-*/%name.so
-%exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 1:0.5.0-alt1
+- Switched to meson build.
+- Updated to 0.5.0.
+
 * Mon Jan 20 2025 Mikhail Efremov <sem@altlinux.org> 1:0.4.0-alt1
 - Updated to 0.4.0.
 
