@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.43.2
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -154,7 +154,8 @@ export QMAKE=qmake-qt6
 
 
 %meson \
-      -Dwebkit=false 
+      -Dwebkit=false \
+      -Drecollq=true
 #      -DRECOLL_QT6_BUILD=1 \
 #      -DRECOLL_ENABLE_WEBENGINE=1
 
@@ -223,6 +224,9 @@ chrpath -d %buildroot%_bindir/recollindex
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed May 21 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.2-alt2
+- Added recollq (Closes: #54354)
+
 * Thu May 08 2025 Ilya Mashkin <oddity@altlinux.ru> 1.43.2-alt1
 - 1.43.2
 
