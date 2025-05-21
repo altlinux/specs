@@ -1,5 +1,5 @@
 Name: thunar-archive-plugin
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Summary: Thunar archive plugin
@@ -11,8 +11,9 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-archive-plugin.git
 Source: %name-%version.tar
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libthunar-devel libexo-gtk3-devel
+BuildRequires: libxfce4util-devel libthunar-devel
 BuildRequires: libgtk+3-devel
 
 Requires: thunar
@@ -38,18 +39,15 @@ using a single click.
 %setup
 
 %build
-%xfce4reconf
-%configure \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc README.md AUTHORS NEWS
-%exclude %_libdir/thunarx-*/*.la
 %_libdir/thunarx-*/*.so
 %_libexecdir/%name/
 %_miconsdir/*.png
@@ -58,6 +56,10 @@ using a single click.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-archive-plugin.mo
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Switched to meson build.
+- Updated to 0.6.0.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.3-alt1
 - Updated to 0.5.3.
 
