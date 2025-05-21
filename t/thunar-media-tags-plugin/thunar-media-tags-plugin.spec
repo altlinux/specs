@@ -1,5 +1,5 @@
 Name: thunar-media-tags-plugin
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Thunar media tags plugin
@@ -12,8 +12,9 @@ Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-media-tags-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libthunar-devel libxfce4util-devel
+BuildRequires: libthunar-devel >= 4.18.0 libxfce4util-devel >= 4.18.0
 BuildRequires: libgtk+3-devel libtag-devel
 
 %define _unpackaged_files_terminate_build 1
@@ -35,24 +36,26 @@ Currently, these are:
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc README.md AUTHORS NEWS
-%exclude %_libdir/thunarx-*/*.la
 %_libdir/thunarx-*/*.so
 
 # Seems glibc doesn't support uz@Latn
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-media-tags-plugin.mo
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Fixed meson build.
+- Switched to meson build.
+- Updated to 0.6.0.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
 - Updated to 0.5.0.
 
