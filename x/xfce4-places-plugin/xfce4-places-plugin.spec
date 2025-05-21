@@ -1,5 +1,5 @@
 Name: xfce4-places-plugin
-Version: 1.8.4
+Version: 1.9.0
 Release: alt1
 
 Summary: This plugin is a menu with quick access to folders, documents, and removable media
@@ -12,10 +12,11 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-places-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
 BuildRequires: libxfconf-devel
-BuildPreReq: libgio-devel libnotify-devel
+BuildRequires: libgio-devel libnotify-devel
 
 Requires: xfce4-panel >= 4.16
 
@@ -38,15 +39,12 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-gio-unix \
-	--enable-notifications \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dlibnotify=enabled
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -55,9 +53,11 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/panel/plugins/*.desktop
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 1.9.0-alt1
+- Switched to meson build.
+- Updated to 1.9.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.8.4-alt1
 - Updated to 1.8.4.
 
