@@ -5,7 +5,7 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.11.2
+Version: 1.11.3
 Release: alt1
 
 Summary: A Python wrapper for the extremely fast Blosc compression library
@@ -134,6 +134,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 1.11.3-alt1
+- New version 1.11.3.
+
 * Tue Jun 25 2024 Anton Vyatkin <toni@altlinux.org> 1.11.2-alt1
 - New version 1.11.2.
 
