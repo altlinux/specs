@@ -2,20 +2,20 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define soname 1.13
+%define soname 1.14
 
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/issues/1810
 %define optflags_lto %nil
 
-# the required range is 9.0...18.9
+# the required range is 11.0...19.1
 %ifarch %e2k
 %define llvm_ver 13.0
 %else
-%define llvm_ver 18.1
+%define llvm_ver 19.1
 %endif
 
 Name: openshadinglanguage
-Version: 1.13.12.0
+Version: 1.14.5.1
 Release: alt0.1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -32,16 +32,18 @@ Source2: %name.watch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libopenimageio-devel
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): cmake
+BuildRequires: gcc-c++
 BuildRequires: llvm%{llvm_ver}-devel clang%{llvm_ver}-devel
 BuildRequires: boost-complete
 BuildRequires: openexr-devel
 BuildRequires: flex bison
 BuildRequires: libpugixml-devel
 BuildRequires: python3 pybind11-devel libnumpy-py3-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 BuildRequires: zlib-devel
 BuildRequires: partio-devel
+BuildRequires: librobin-map-devel
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
 
@@ -138,10 +140,9 @@ Open Shading Language (OSL) python3 module.
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvm_ver
-%if_with cuda
-export GCC_VERSION=12
-%endif
 %cmake \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_STRIP:STRING="" \
 	-DCMAKE_CXX_STANDARD=17 \
 	-DOSL_BUILD_MATERIALX:BOOL=ON \
 	-DOSL_SHADER_INSTALL_DIR:PATH=%_datadir/%name/shaders/ \
@@ -196,11 +197,17 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %_datadir/%name/shaders/*.h
 
 %files -n python3-module-%name
-%python3_sitelibdir/*.so
+%python3_sitelibdir/oslquery
 
 %changelog
+* Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 1.14.5.1-alt0.1
+- 1.14.5.1.
+- compile w/ llvm19.1.
+- qt5->qt6.
+- BR: added librobin-map-devel.
+
 * Fri Jan 17 2025 L.A. Kostis <lakostis@altlinux.ru> 1.13.12.0-alt0.1
-- v1.13.12.0.
+- 1.13.12.0.
 
 * Mon Jul 08 2024 L.A. Kostis <lakostis@altlinux.ru> 1.13.10.0-alt0.1
 - 1.13.10.0.

@@ -3,11 +3,6 @@
 %set_verify_elf_method strict,lint=relaxed
 %define git %nil
 %define kern_dir scripts/addons_core/cycles/lib
-%ifarch %e2k
-%define gcc_ver %nil
-%else
-%define gcc_ver 13
-%endif
 
 %def_with docs
 
@@ -61,7 +56,7 @@
 
 Name: blender
 Version: 4.3.0
-Release: alt7
+Release: alt8
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -100,6 +95,10 @@ Patch35: blender-4.4-alt-hiprt-2.5.patch
 Patch36: blender-4.3.0-generic-64bit.patch
 Patch37: blender-4.3.0-loongarch64.patch
 Patch38: blender-4.3.0-alt-unbundle-hiprt.patch
+# new OSL 1.14 API changes
+# partialy implements upstream c997e614144e41351ab348ab7ef56d25ba9a3936
+# and faa17e2cc673421efd48969d4ddbb60d01f649ee
+Patch39: blender-4.3-osl-1.14-compat.patch
 
 Patch2000: blender-e2k-support.patch
 
@@ -112,7 +111,6 @@ BuildRequires: libavdevice-devel libavformat-devel libavfilter-devel libswresamp
 BuildRequires: libfftw3-devel >= 3.3.9 libjack-devel libopenal-devel libsndfile-devel
 BuildRequires: libjpeg-devel pkgconfig(libopenjp2) libpng-devel libtiff-devel libpcre-devel libswscale-devel libxml2-devel
 BuildRequires: liblzo2-devel
-BuildRequires: libopenCOLLADA-devel >= 0-alt3
 BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: libopenimageio-devel
@@ -128,7 +126,7 @@ BuildRequires: libfreetype-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: alembic-devel
 BuildRequires: openvdb-devel libblosc-devel
-BuildRequires: libgomp%{gcc_ver}-devel
+BuildRequires: libgomp-devel
 BuildRequires: libgmp-devel libgmpxx-devel
 BuildRequires: libharu-devel
 BuildRequires: libpulseaudio-devel
@@ -175,7 +173,7 @@ BuildRequires: OpenUSD-devel
 %endif
 
 %if_with cuda
-BuildRequires: nvidia-cuda-devel gcc%{gcc_ver}-c++
+BuildRequires: nvidia-cuda-devel
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %set_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
@@ -341,6 +339,7 @@ EOF
 %patch36 -p1
 %patch37 -p1
 %patch38 -p1 -b .unbundle-hiprt
+%patch39 -p1 -b .osl-1.14
 
 %ifarch %e2k
 %patch2000 -p1
@@ -372,9 +371,6 @@ popd
 
 %if_with hiprt
 export ALTWRAP_LLVM_VERSION=rocm
-%endif
-%if_with cuda
-export GCC_VERSION=%gcc_ver
 %endif
 %cmake -G Ninja \
 %if_with hip
@@ -408,7 +404,6 @@ export GCC_VERSION=%gcc_ver
 	-DWITH_INSTALL_PORTABLE=OFF \
 	-DWITH_PYTHON_SAFETY=OFF \
 	-DWITH_OPENMP=ON \
-	-DWITH_OPENCOLLADA=ON \
 	-DWITH_CYCLES=ON \
 %if_with embree
 	-DEMBREE_ROOT_DIR=%_prefix \
@@ -498,6 +493,11 @@ popd
 %endif
 
 %changelog
+* Mon May 19 2025 L.A. Kostis <lakostis@altlinux.ru> 4.3.0-alt8
+- cycles: fix build with OSL >= 1.14.
+- spec: cleanup cuda build.
+- spec: remove OpenCOLLADA dependency (use OpenUSD as replacement).
+
 * Mon Apr 14 2025 Michael Shigorin <mike@altlinux.org> 4.3.0-alt7
 - Build for Sisyphus.
 
