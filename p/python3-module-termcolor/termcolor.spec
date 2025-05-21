@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Summary: ANSI color formatting for output in terminal
 License: MIT
@@ -49,6 +49,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 21 2025 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 3.0.1 -> 3.1.0.
+
 * Fri Apr 04 2025 Stanislav Levin <slev@altlinux.org> 3.0.1-alt1
 - 3.0.0 -> 3.0.1.
 
