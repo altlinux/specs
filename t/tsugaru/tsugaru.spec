@@ -1,7 +1,7 @@
 %set_gcc_version 13
 Name: tsugaru
 Version: 20241003
-Release: alt1
+Release: alt2
 Summary: It is an emulator of legendary Fujitsu FM TOWNS computer including Marty
 Group: Emulators
 License: BSD3
@@ -52,13 +52,13 @@ export CXX=%__cxx
 %build
 mkdir build
 cd ./build
-cmake ../src
-%make_build
+%cmake_insource ../src
+%make
 cd ../gui
 mkdir build
 cd ./build
-cmake ../src
-cmake --build main_gui
+%cmake_insource ../src
+%make
 
 %install
 
@@ -146,7 +146,11 @@ done
 %_datadir/%name
 
 %changelog
+* Tue May 20 2025 Artyom Bystrov <arbars@altlinux.org> 20241003-alt2
+- Fix build with CMake 4.0.x
+
 * Thu Nov  7 2024 Artyom Bystrov <arbars@altlinux.org> 20241003-alt1
+- Update to new version
 
 * Sat Jun 24 2023 Artyom Bystrov <arbars@altlinux.org> 20230113-alt2
 - Fix build with GCC13
