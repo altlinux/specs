@@ -4,7 +4,7 @@
 
 Name: libseccomp
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Summary: An interface to the Linux Kernel's seccomp(2) filter
 License: LGPL-2.1-only
 Group: System/Libraries
@@ -51,11 +51,6 @@ This package contains development files of %name.
 
 %install
 %makeinstall_std V=1
-install -p tools/scmp_api_level     %buildroot%_bindir
-install -p tools/scmp_app_inspector %buildroot%_bindir
-install -p tools/scmp_arch_detect   %buildroot%_bindir
-install -p tools/scmp_bpf_disasm    %buildroot%_bindir
-install -p tools/scmp_bpf_sim       %buildroot%_bindir
 
 # To stabilize location of syscalls.csv
 %define _customdocdir %_docdir/%name
@@ -72,14 +67,19 @@ export  LIBSECCOMP_TSTCFG_JOBS=0 \
 
 %files devel
 %doc LICENSE CHANGELOG CREDITS *.md src/syscalls.csv
-%_bindir/scmp_*
+%_bindir/scmp_sys_resolver
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
 %_man1dir/*
 %_man3dir/*
 
+
 %changelog
+* Wed May 21 2025 Vitaly Chikunov <vt@altlinux.org> 2.6.0-alt2
+- Bugfix update to v2.6.0-6-g38c524f (2024-12-08).
+- spec: Do not install raw and obsolete tools.
+
 * Sun Jan 26 2025 Vitaly Chikunov <vt@altlinux.org> 2.6.0-alt1
 - Update to v2.6.0 (2025-01-23).
 - spec: Minor usrmerge-related change (do not move libs to /lib).
