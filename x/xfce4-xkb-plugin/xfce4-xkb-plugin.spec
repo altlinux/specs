@@ -1,6 +1,6 @@
 Name: xfce4-xkb-plugin
-Version: 0.8.5
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: XKB layout switch plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Дополнение для панели Xfce для работы с раскладками клавиатуры
@@ -13,8 +13,9 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-xkb-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libgarcon-devel
+BuildRequires: libxfce4util-devel libxfce4panel-gtk3-devel >= 4.16.0 libxfce4ui-gtk3-devel libgarcon-devel
 BuildRequires: librsvg-devel libwnck3-devel libxklavier-devel xorg-cf-files libnotify-devel
 
 Requires: xfce4-panel
@@ -39,13 +40,11 @@ XFce panel.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -57,11 +56,14 @@ XFce panel.
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
 # Seems glibc doesn't support uz@Latn
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.9.0-alt1
+- Switched to meson build.
+- Updated to 0.9.0.
+
 * Thu Jan 09 2025 Mikhail Efremov <sem@altlinux.org> 0.8.5-alt2
 - Fixed License tag.
 
