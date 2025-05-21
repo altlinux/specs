@@ -1,5 +1,5 @@
 Name: crudini
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 Summary: A utility for manipulating ini files
 Group: Development/Python3
@@ -9,6 +9,7 @@ Url: https://github.com/pixelb/%name
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 Source: https://github.com/pixelb/%name/archive/%name-%version.tar.gz
+Source2: %name.1
 Patch: crudini-py3.patch
 
 BuildArch: noarch
@@ -16,7 +17,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-iniparse
 BuildRequires:  diffutils
-BuildRequires:  grep
+BuildRequires:  grep 
 Requires: python3-module-iniparse
 
 %description
@@ -31,7 +32,8 @@ scripts.
 
 %install
 install -p -D -m 0755 %name.py %buildroot%_bindir/%name
-install -p -D -m 0644 %name.1 %buildroot%_man1dir/%name.1
+#install -p -D -m 0644 %name.1 %buildroot%_man1dir/%name.1
+install -p -D -m 0644 %SOURCE2 %buildroot%_man1dir/%name.1
 
 #check
 #pushd tests
@@ -44,6 +46,9 @@ install -p -D -m 0644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Mon May 19 2025 Ilya Mashkin <oddity@altlinux.ru> 0.9.6-alt1
+- 0.9.6 (Closes: #54350)
+
 * Tue Nov 26 2024 Ilya Mashkin <oddity@altlinux.ru> 0.9.5-alt1
 - 0.9.5
 
