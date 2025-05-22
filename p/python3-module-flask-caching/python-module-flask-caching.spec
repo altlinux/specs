@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: python3-module-flask-caching
-Version: 1.10.1
+Version: 1.11.1
 Release: alt1
 
 Summary: Cache support for Flask
@@ -40,10 +40,13 @@ This is a fork of the Flask-Cache extension.
 %python3_prune
 
 %files
-%doc README.md PKG-INFO LICENSE
+%doc LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 22 2025 Alexander Danilov <admsasha@altlinux.org> 1.11.1-alt1
+- new version 1.11.1 (Fixes: CVE-2021-33026).
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt1
 - new version 1.10.1 (with rpmrb script)
 
