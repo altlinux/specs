@@ -3,7 +3,7 @@
 %define major 1
 
 Name: vkd3d
-Version: 1.14
+Version: 1.16
 Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
@@ -16,6 +16,7 @@ Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Sat Mar 25 2023 (-ba)
 BuildRequires: flex libvulkan-devel libspirv-tools-devel spirv-headers wine-devel-tools
+BuildRequires: perl-JSON DirectXShaderCompiler
 
 %if_enabled demos
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
@@ -113,6 +114,10 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1.16-alt1
+- 1.16.
+- BR: update.
+
 * Fri Nov 22 2024 L.A. Kostis <lakostis@altlinux.ru> 1.14-alt1
 - 1.14.
 
