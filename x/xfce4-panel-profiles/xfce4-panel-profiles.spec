@@ -1,5 +1,5 @@
 Name: xfce4-panel-profiles
-Version: 1.0.15
+Version: 1.1.1
 Release: alt1
 
 Summary: A simple application to manage Xfce panel layouts
@@ -13,6 +13,7 @@ Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildArch: noarch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 %add_python3_path %_datadir/%name
 
@@ -32,14 +33,12 @@ export these panel layouts.
 %patch -p1
 
 %build
-# It is not autotools configure
-./configure \
-	--prefix=%_prefix \
-	--python=python3
-%make_build
+%meson \
+	-Dcheck-runtime-dependencies=false
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -52,6 +51,10 @@ export these panel layouts.
 %_man1dir/%name.*
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
+- Switched to meson build.
+- Updated to 1.1.1.
+
 * Fri Jan 10 2025 Mikhail Efremov <sem@altlinux.org> 1.0.15-alt1
 - Fixed installed files mode.
 - Updated to 1.0.15.
