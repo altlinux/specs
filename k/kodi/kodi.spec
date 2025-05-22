@@ -1,6 +1,6 @@
 Name: kodi
 Version: 21.2
-Release: alt4
+Release: alt5
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -156,6 +156,10 @@ sed -i "s/private:/public:/" \
 	xbmc/cores/AudioEngine/Sinks/pipewire/Pipewire.h
 sed -i "s/HTML_BASIC_COLORS.find(value/&.c_str()/" \
 	xbmc/cores/VideoPlayer/DVDSubtitles/DVDSubtitleTagSami.cpp
+sed -i 's/m_points{/m_points={/' \
+	xbmc/platform/linux/input/LibInputTouch.h
+sed -E -i 's/(m_specialImageLoaders)\{/\1={/' \
+	xbmc/imagefiles/SpecialImageLoaderFactory.h
 %endif
 
 %build
@@ -211,6 +215,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Thu May 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt5
+- E2K: even more workarounds (ilyakurdyukov@)
+
 * Sat Apr 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.2-alt4
 - fixed excessive pipewire-related logs
 
