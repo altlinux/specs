@@ -11,8 +11,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: %major
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -26,13 +26,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: inkview.desktop
-
-Patch1: inkscape-1.4-fedora-poppler-25.02.0-01.patch
-Patch2: inkscape-1.4-fedora-poppler-25.02.0-02.patch
-Patch3: inkscape-1.4-fedora-poppler-25.02.0-03.patch
-Patch4: inkscape-1.4-fedora-poppler-25.02.0-04.patch
-Patch5: inkscape-1.4-fedora-poppler-25.02.0-05.patch
-Patch6: inkscape-1.4-fedora-poppler-25.02.0-06.patch
 
 # a program package can't have any provides
 AutoProv:no
@@ -270,6 +263,9 @@ true
 %files checkinstall
 
 %changelog
+* Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- new version 1.4.2 (with rpmrb script)
+
 * Tue Mar 25 2025 Constantin Sunzow <protvin@altlinux.org> 1.4-alt2
 - Fix FTBFS: compat with poppler 25.02.
 
