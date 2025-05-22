@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define major 22.15
+%define major 22.16
 
 %define nodejs_soversion 127
 %define nodejs_abi %nodejs_soversion
@@ -511,6 +511,9 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 22.16.0-alt1
+- 2025-05-21, Version 22.16.0 'Jod' (LTS), @aduh95
+
 * Sat May 03 2025 Vitaly Lipatov <lav@altlinux.ru> 22.15.0-alt1
 - 2025-04-23, Version 22.15.0 'Jod' (LTS), @UlisesGascon prepared by @RafaelGSS
 - set c-ares >= 1.34.5
