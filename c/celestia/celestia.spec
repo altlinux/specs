@@ -1,13 +1,13 @@
 Name: celestia
-Version: 1.6.2.2
-Release: alt3
+Version: 1.6.4
+Release: alt1
 Epoch: 1
 
 Summary: A real-time visual space simulation
 
 License: GPL-2.0
 Group: Education
-Url: https://celestia.space
+Url: https://celestiaproject.space/
 
 Requires: celestia-common
 Provides: celestia-ui = %EVR
@@ -15,9 +15,11 @@ Provides: celestia-qt = %EVR celestia-gtk = %EVR celestia-glut = %EVR
 Obsoletes: celestia-qt < %EVR celestia-gtk < %EVR celestia-glut < %EVR
 
 # Source-url: https://github.com/CelestiaProject/Celestia/archive/master.zip
+Vcs: https://github.com/CelestiaProject/Celestia.git
 Source: %name-%version.tar
 
-Patch: celestia-1.6.2.2-alt-lua5.4.patch
+# due https://github.com/autotools-mirror/autoconf/commit/c8d6d6eb8be36144f1285f35901e325b56bac68f
+Patch: autoconf-2.72.patch
 
 BuildRequires: cmake gcc-c++ libstdc++-devel
 BuildRequires: libGLEW-devel libXi-devel libXmu-devel libfreeglut-devel
@@ -41,6 +43,7 @@ travelthroughout the solar system, to any of over
 %package common
 Group: Education
 Summary: A real-time visual space simulation (common part)
+BuildArch: noarch
 %description common
 This is a common part of Celestia
 
@@ -55,9 +58,9 @@ travelthroughout the solar system, to any of over
 Group: Education
 Summary: A real-time visual space simulation (Qt5 frontend)
 Requires: celestia-common = %EVR
-Provides: celestia-ui = %version-%release
-Provides: celestia = %version-%release
-Obsoletes: celestia < %version-%release
+Provides: celestia-ui = %EVR
+Provides: celestia = %EVR
+Obsoletes: celestia < %EVR
 
 %description qt
 This is a Qt5 frontend to Celestia
@@ -73,7 +76,7 @@ travelthroughout the solar system, to any of over
 Group: Education
 Summary: A real-time visual space simulation (GTK frontend)
 Requires: celestia-common = %EVR
-Provides: celestia-ui = %version-%release
+Provides: celestia-ui = %EVR
 
 %description gtk
 This is a GTK frontend to Celestia
@@ -89,7 +92,7 @@ travelthroughout the solar system, to any of over
 Group: Education
 Summary: A real-time visual space simulation (GLUT frontend)
 Requires: celestia-common = %EVR
-Provides: celestia-ui = %version-%release
+Provides: celestia-ui = %EVR
 
 %description glut
 This is a GLUT frontend to Celestia
@@ -103,7 +106,7 @@ travelthroughout the solar system, to any of over
 
 %prep
 %setup
-%patch -p2
+%patch -p1
 %autoreconf
 
 %build
@@ -125,18 +128,18 @@ install src/celestia/kde/data/%name.desktop %buildroot%_desktopdir/
 install -D -m 644 src/celestia/gtk/data/%name.png %buildroot%_liconsdir/%name.png
 install -D -m 644 src/celestia/gtk/data/%name.svg %buildroot%_iconsdir/hicolor/scalable/%name.svg
 
-install -d %buildroot/etc/alternatives/packages.d
-cat >%buildroot/etc/alternatives/packages.d/%name-qt <<__EOF__
-%_bindir/celestia      %_bindir/celestia-qt 20
-__EOF__
-
-cat >%buildroot/etc/alternatives/packages.d/%name-gtk <<__EOF__
-%_bindir/celestia      %_bindir/celestia-gtk 10
-__EOF__
-
-cat >%buildroot/etc/alternatives/packages.d/%name-glut <<__EOF__
-%_bindir/celestia      %_bindir/celestia-glut 30
-__EOF__
+#install -d %buildroot/etc/alternatives/packages.d
+#cat >%buildroot/etc/alternatives/packages.d/%name-qt <<__EOF__
+#%_bindir/celestia      %_bindir/celestia-qt 20
+#__EOF__
+#
+#cat >%buildroot/etc/alternatives/packages.d/%name-gtk <<__EOF__
+#%_bindir/celestia      %_bindir/celestia-gtk 10
+#__EOF__
+#
+#cat >%buildroot/etc/alternatives/packages.d/%name-glut <<__EOF__
+#%_bindir/celestia      %_bindir/celestia-glut 30
+#__EOF__
 
 %find_lang %name
 
@@ -177,6 +180,13 @@ rm -fv %buildroot%_libdir/libcelmodel.a
 #/etc/alternatives/packages.d/%name-qt
 
 %changelog
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.4-alt1
+- Update to 1.6.4.
+
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.2.2-alt4
+- Fix build with autoconf-2.72 (tnx to glebfm@).
+- Update URL and add Vcs link.
+
 * Thu Sep 22 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.2.2-alt3
 - Fix FTBFS (build w/ lua5.4).
 - Remove obsoleted patches.
