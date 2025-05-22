@@ -1,5 +1,5 @@
 Name: xfce4-taskmanager
-Version: 1.5.8
+Version: 1.6.0
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
@@ -12,10 +12,12 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-taskmanager.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel
+BuildRequires: libxfce4ui-gtk3-devel >= 4.18.0 libxfconf-devel
 BuildRequires: glib2-devel libXmu-devel
 BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
+BuildRequires: libgio-devel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -30,15 +32,13 @@ BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-wnck3 \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	-Dwnck=enabled
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -48,6 +48,10 @@ BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 1.6.0-alt1
+- Switched to meson build.
+- Updated to 1.6.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 1.5.8-alt1
 - Updated to 1.5.8.
 
