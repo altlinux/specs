@@ -1,5 +1,5 @@
 Name: xfce4-volumed-pulse
-Version: 0.2.5
+Version: 0.3.0
 Release: alt1
 
 Summary: Daemon to add additional functionality to the volume keys of the keyboard (for pulseaudio)
@@ -12,8 +12,9 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-volumed-pulse.git
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildPreReq: libxfconf-devel >= 4.8
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
+BuildRequires(pre): rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildRequires: libxfconf-devel >= 4.18
 BuildRequires: glib2-devel libgtk+3-devel libpulseaudio-devel libkeybinder3-devel libnotify-devel
 
 Conflicts: xfce4-volumed
@@ -34,15 +35,13 @@ Fork of Xfce4-Volumed to use PulseAudio.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-libnotify \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dlibnotify=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -51,6 +50,10 @@ Fork of Xfce4-Volumed to use PulseAudio.
 %_bindir/%name
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
+- Switched to meson build.
+- Updated to 0.3.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
 - Updated to 0.2.5.
 
