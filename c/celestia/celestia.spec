@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: A real-time visual space simulation
@@ -124,7 +124,7 @@ travelthroughout the solar system, to any of over
 %install
 %makeinstall_std
 mkdir -p %buildroot%_desktopdir
-install src/celestia/kde/data/%name.desktop %buildroot%_desktopdir/
+install src/celestia/gtk/data/%name.desktop %buildroot%_desktopdir/
 install -D -m 644 src/celestia/gtk/data/%name.png %buildroot%_liconsdir/%name.png
 install -D -m 644 src/celestia/gtk/data/%name.svg %buildroot%_iconsdir/hicolor/scalable/%name.svg
 
@@ -180,6 +180,9 @@ rm -fv %buildroot%_libdir/libcelmodel.a
 #/etc/alternatives/packages.d/%name-qt
 
 %changelog
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.4-alt1.1
+- fix .desktop category (closes #42030).
+
 * Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.4-alt1
 - Update to 1.6.4.
 
