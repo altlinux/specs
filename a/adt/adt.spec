@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -63,6 +63,9 @@ install -p -D man/ru/%name.man %buildroot%_mandir/ru/man1/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed May 21 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.11-alt1
+- implemented parameters for the tool
+
 * Tue Apr 08 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.10-alt1
 - fix tests filter
 
