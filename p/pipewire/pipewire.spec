@@ -49,7 +49,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Media Sharing Server
@@ -293,6 +293,7 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %dir %_datadir/%name/%name.conf.avail
 %_datadir/%name/%name.conf.avail/10-rates.conf
 %_datadir/%name/%name.conf.avail/20-upmix.conf
+%_datadir/%name/%name.conf.avail/50-raop.conf
 
 %{?_enable_media_session:
 %dir %_datadir/%name/media-session.d
@@ -440,6 +441,9 @@ echo %_libdir/pipewire-%api_ver/jack/ > %buildroot%_sysconfdir/ld.so.conf.d/pipe
 %_pkgconfigdir/jackserver.pc
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Mon Apr 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
 - 1.4.2
 - made media-session build optional and disabled by default,
