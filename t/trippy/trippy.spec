@@ -2,7 +2,7 @@
 %define bin_name trip
 
 Name: trippy
-Version: 0.12.2
+Version: 0.13.0
 Release: alt1
 Summary: Interactive network diagnostic tool with route visualization
 
@@ -41,12 +41,15 @@ EOF
 %rust_install -t %_sbindir %bin_name
 
 %check
-cargo test
+%rust_test
 
 %files
 %doc README.md trippy-config-sample.toml
 %_sbindir/%bin_name
 
 %changelog
+* Wed May 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.13.0-alt1
+- Update version
+
 * Fri Apr 11 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.12.2-alt1
 - Initial build
