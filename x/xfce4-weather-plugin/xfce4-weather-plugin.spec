@@ -1,5 +1,5 @@
 Name: xfce4-weather-plugin
-Version: 0.11.3
+Version: 0.12.0
 Release: alt1
 
 Summary: Weather plugin for the Xfce panel
@@ -11,15 +11,24 @@ Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.14
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel >= 4.16.0
 BuildRequires: libxfconf-devel
+BuildRequires: libgio-devel
 BuildRequires: libjson-c-devel
-BuildRequires: libxml2-devel libsoup-devel libupower-devel
+BuildRequires: libxml2-devel libupower-devel
+%if %{defined _priority_distbranch} %{?_priority_distbranch:&& %_priority_distbranch != p9 && %_priority_distbranch != p10}
+BuildRequires: libsoup3.0-devel
+%else
+BuildRequires: libsoup-devel
+%endif
 
-Requires: xfce4-panel >= 4.14
+Requires: xfce4-panel
 
 %define _unpackaged_files_terminate_build 1
+
+%define geonames_username altlinux
 
 %description
 %name is the plugin for the Xfce panel, that display weather information
@@ -30,15 +39,14 @@ using forecast data provided by met.no.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-    --disable-static \
-	--enable-maintainer-mode \
-    --enable-debug=minimum
-%make_build
+%meson \
+	-Dupower-glib=enabled \
+	-Dgeonames-username=%geonames_username
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -48,9 +56,13 @@ using forecast data provided by met.no.
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/apps/*.*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.12.0-alt1
+- Built with libsoup3.0 on branches >= p11.
+- Used our own geonames.org account.
+- Switched to meson build.
+- Updated to 0.12.0.
+
 * Wed Nov 06 2024 Mikhail Efremov <sem@altlinux.org> 0.11.3-alt1
 - Updated to 0.11.3.
 
