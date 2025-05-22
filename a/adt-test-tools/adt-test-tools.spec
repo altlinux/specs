@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt-test-tools
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: Test tools for ADT.
@@ -32,10 +32,13 @@ mkdir -p %buildroot%_datadir/alterator/diagnostic_tool2_user
 
 mkdir -p %buildroot%_datadir/alterator/diagnostic_tool3_user
 
+mkdir -p %buildroot%_datadir/alterator/diagnostic_tool4
+mkdir -p %buildroot%_datadir/alterator/diagnostic_tool4_user
+
 install -v -p -m 755 -D adt-test-tool %buildroot%_libexecdir/%name
 install -v -p -m 755 -D adt-test-tool-user %buildroot%_libexecdir/%name
 
-install -v -p -m 644 -D diagnostic_tool.backend %buildroot%_sysconfdir/alterator/backends/system
+install -v -p -m 644 -D diagnostic_tool_sys.backend %buildroot%_sysconfdir/alterator/backends/system
 install -v -p -m 644 -D diagnostic_tool_user.backend %buildroot%_sysconfdir/alterator/backends/user
 
 install -v -p -m 644 -D diagnostic_tool2.backend %buildroot%_sysconfdir/alterator/backends/system
@@ -51,11 +54,17 @@ install -v -p -m 644 -D diagnostic_tool2_user.diag %buildroot%_datadir/alterator
 
 install -v -p -m 644 -D diagnostic_tool3_user.diag %buildroot%_datadir/alterator/diagnostic_tool3_user
 
+install -v -p -m 644 -D diagnostic_tool4_sys.backend %buildroot%_sysconfdir/alterator/backends/system
+install -v -p -m 644 -D diagnostic_tool4_user.backend %buildroot%_sysconfdir/alterator/backends/user
+
+install -v -p -m 644 -D diagnostic_tool4_sys.diag %buildroot%_datadir/alterator/diagnostic_tool4
+install -v -p -m 644 -D diagnostic_tool4_user.diag %buildroot%_datadir/alterator/diagnostic_tool4_user
+
 %files
 %_libexecdir/%name/adt-test-tool
 %_libexecdir/%name/adt-test-tool-user
 
-%_sysconfdir/alterator/backends/system/diagnostic_tool.backend
+%_sysconfdir/alterator/backends/system/diagnostic_tool_sys.backend
 %_sysconfdir/alterator/backends/user/diagnostic_tool_user.backend
 
 %_sysconfdir/alterator/backends/system/diagnostic_tool2.backend
@@ -71,7 +80,16 @@ install -v -p -m 644 -D diagnostic_tool3_user.diag %buildroot%_datadir/alterator
 
 %_datadir/alterator/diagnostic_tool3_user/diagnostic_tool3_user.diag
 
+%_sysconfdir/alterator/backends/system/diagnostic_tool4_sys.backend
+%_sysconfdir/alterator/backends/user/diagnostic_tool4_user.backend
+
+%_datadir/alterator/diagnostic_tool4/diagnostic_tool4_sys.diag
+%_datadir/alterator/diagnostic_tool4_user/diagnostic_tool4_user.diag
+
 %changelog
+* Wed May 21 2025 Aleksey Saprunov <sav@altlinux.org> 0.1.8-alt1
+- implemented parameters for the tool
+
 * Mon Dec 09 2024 Aleksey Saprunov <sav@altlinux.org> 0.1.7-alt1
 - refator ini files to toml files
 
