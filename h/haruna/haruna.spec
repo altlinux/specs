@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 1.3.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Video
@@ -18,6 +18,7 @@ Provides: kde5-haruna = %EVR
 Obsoletes: kde5-haruna < %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-smb.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules
@@ -84,6 +85,7 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build \
@@ -114,6 +116,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt2
+- add smb:/ support
+
 * Thu Mar 06 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.3-alt1
 - new version
 
