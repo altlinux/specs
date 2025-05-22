@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu May 22 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt6
+- update to latest public distr of ALT Server 11.0
+- small improvements (PBS)
+
 * Sat May 03 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt5
 - update to latest public distr of ALT Server 11.0
 
