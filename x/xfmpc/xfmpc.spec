@@ -1,6 +1,6 @@
 Name: xfmpc
 Summary: MPD client written in GTK+ for Xfce
-Version: 0.3.2
+Version: 0.4.0
 Release: alt1
 License: GPL-2.0+
 Url: https://docs.xfce.org/apps/xfmpc/start
@@ -10,8 +10,9 @@ Patch: %name-%version-%release.patch
 
 Group: Graphical desktop/XFce
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel
+BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel >= 4.18.0
 BuildRequires: libmpd-devel
 BuildRequires: vala
 
@@ -28,18 +29,11 @@ A graphical GTK+ MPD client focusing on low footprint.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--disable-silent-rules
-
-# Disable parallel build for now
-export NPROCS=1
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -49,6 +43,10 @@ export NPROCS=1
 %_man1dir/xfmpc.1.*
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Switched to meson build.
+- Updated to 0.4.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.3.2-alt1
 - Updated to 0.3.2.
 
