@@ -1,9 +1,6 @@
-#define git_date .git20120414
-%define git_date %nil
-
 Name: xfce4-screenshooter
-Version: 1.11.1
-Release: alt2%git_date
+Version: 1.11.2
+Release: alt1
 
 Summary: Screenshot Xfce4 panel plugin
 Summary (ru_RU.UTF-8): Дополнение для панели Xfce позволяющее делать снимки экрана
@@ -76,12 +73,14 @@ A plugin for the Xfce panel is also available.
 %_datadir/applications/*.desktop
 %_datadir/metainfo/*.xml
 %_bindir/xfce4-screenshoot*
-%_libexecdir/xfce4/screenshooter/
 %_mandir/man1/xfce4-screenshooter*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 1.11.2-alt1
+- Updated to 1.11.2.
+
 * Fri Sep 27 2024 Mikhail Efremov <sem@altlinux.org> 1.11.1-alt2
 - Enabled wayland support in the Sisyphus only.
 
