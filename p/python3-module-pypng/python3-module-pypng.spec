@@ -4,7 +4,7 @@
 %def_with numpy
 
 Name:    python3-module-%pypi_name
-Version: 0.20231004.0
+Version: 0.20250521.0
 Release: alt1
 
 Summary: Pure Python library for PNG image encoding/decoding
@@ -64,6 +64,9 @@ rm -f %buildroot%_bindir/priplan9topng
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 22 2025 Grigory Ustinov <grenka@altlinux.org> 0.20250521.0-alt1
+- Automatically updated to 0.20250521.0.
+
 * Tue Oct 24 2023 Grigory Ustinov <grenka@altlinux.org> 0.20231004.0-alt1
 - Automatically updated to 0.20231004.0.
 
