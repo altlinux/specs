@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.11.1
+Version: 0.12.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -102,6 +102,12 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Apr 24 2025 Alexey Appolonov <alexey@altlinux.org> 0.12.0-alt1
+- Ability to specify "obligatory" branches;
+- Ability to handle the JSON documents that do not have a root node;
+- Ability to set case-sensitivity of node names (letter case is ignored
+  by default).
+
 * Fri Aug 16 2024 Alexey Appolonov <alexey@altlinux.org> 0.11.1-alt1
 - Stricter compliance with the C++17 standard.
 
