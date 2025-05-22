@@ -1,5 +1,5 @@
 Name: alien
-Version: 8.95.6
+Version: 8.95.8
 Release: alt1
 
 Summary: Install Debian and Slackware Packages with RPM
@@ -55,6 +55,9 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 8.95.8-alt1
+- new version 8.95.8 (with rpmrb script)
+
 * Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.95.6-alt1
 - new version 8.95.6 (with rpmrb script)
 - build real 8.95.6 version (ALT bug 44936)
