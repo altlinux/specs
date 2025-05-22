@@ -1,9 +1,9 @@
 Name: unrar
-Version: 6.2.3
+Version: 7.1.6
 Release: alt1
 
 Summary: RAR unarchiver
-License: Freely distributable
+License: UnRAR
 Group: Archiving/Compression
 
 Url: http://www.rarlab.com
@@ -61,6 +61,9 @@ install -D dll.hpp %buildroot%_includedir/libunrar/dll.hpp
 %_includedir/libunrar/dll.hpp
 
 %changelog
+* Thu May 22 2025 Fr. Br. George <george@altlinux.org> 7.1.6-alt1
+- Autobuild version bump to 7.1.6
+
 * Fri Apr 25 2025 Alexander Danilov <admsasha@altlinux.org> 6.2.3-alt1
 - Update version to 6.2.3 (Fixes: CVE-2022-48579).
 
