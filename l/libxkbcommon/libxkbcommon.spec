@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.9.2
+Version: 1.10.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -27,7 +27,7 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson >= 0.51 bison flex
+BuildRequires: meson >= 0.51 bison >= 3.6 flex
 BuildRequires: xkeyboard-config-devel >= 2.29
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
@@ -146,6 +146,9 @@ sed -i 's/--undefined-version,//' meson.build
 %_man1dir/xkbcli*
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- updated to xkbcommon-1.10.0-1-gbffbef88
+
 * Wed May 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
 - updated to xkbcommon-1.9.2-2-gc2d3694b
 

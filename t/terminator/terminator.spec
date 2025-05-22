@@ -4,18 +4,19 @@
 %def_enable check
 
 Name: terminator
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
-License: GPL-2.0
+License: GPL-2.0-only
 Url: https://github.com/gnome-terminator/terminator
+
+Vcs: https://github.com/gnome-terminator/terminator.git
 
 %if_disabled snapshot
 Source: %url/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/gnome-terminator/terminator.git
 Source: %name-%version.tar
 %endif
 
@@ -30,8 +31,7 @@ Requires: typelib(Gtk) = 3.0
 Requires: typelib(Vte) = 2.91
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-
-BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3(wheel) python3(setuptools)
 BuildRequires: intltool
 %{?_enable_check:BuildRequires: /proc xvfb-run python3(pytest)
 BuildRequires: python3(gi) python3(cairo) python3(configobj)
@@ -77,6 +77,9 @@ xvfb-run py.test-3
 %doc README* CHANGELOG*
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1
+- 2.1.5
+
 * Fri May 31 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.4-alt1
 - 2.1.4
 

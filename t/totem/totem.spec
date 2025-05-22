@@ -5,11 +5,12 @@
 %define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Totem
-%define parser_ver 3.10.1
+
+%define parser_ver 3.26.5
 %define gst_api_ver 1.0
-%define gst_ver 1.4.2
-%define gst_plugins_ver 1.2.4
-%define gtk_ver 3.16.0
+%define gst_ver 1.21.1
+%define gst_plugins_ver 1.21.1
+%define gtk_ver 3.22.0
 %define grilo_ver 0.3.13
 %define grilo_plugins_ver 0.3.12
 %define glib_ver 2.36.0
@@ -22,33 +23,33 @@
 %if_enabled vala
 %def_enable rotation
 %endif
-# removed in 3.31.x
-%def_disable zeitgeist
 
 %def_enable introspection
 %def_enable gtk_doc
-%def_enable python
+%def_disable python
 %def_disable coherence_upnp
 %def_disable jamendo
 # removed since 3.33.0
 %def_disable lirc
 %def_disable brasero
 
-
 Name: totem
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
-License: GPL-2.0 and LGPL-2.0
+License: GPL-2.0-or-later
 Url: https://wiki.gnome.org/Apps/Videos
+
+Vcs: https://gitlab.gnome.org/GNOME/totem.git
 
 %if_enabled snapshot
 Source: %name-%version%beta.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
+Patch10: totem-43.2-alt-32-bit-format.patch
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -74,9 +75,9 @@ Requires: grilo-plugins >= %grilo_plugins_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson gcc-c++ gtk-doc perl-podlators
-BuildRequires: desktop-file-utils db2latex-xsl yelp-tools
-BuildRequires: /usr/bin/appstream-util
+BuildRequires: db2latex-xsl yelp-tools
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
+BuildRequires: pkgconfig(epoxy)
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_plugins_ver
 BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
@@ -94,10 +95,10 @@ BuildRequires: pkgconfig(libportal-gtk3)
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel pylint-py3
 %endif
+%{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libpeas-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_lirc:BuildRequires: liblirc-devel}
-%{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
-%{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libpeas-gir-devel}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 Totem is simple movie player for the Gnome desktop.
@@ -151,8 +152,8 @@ A default plugins for Totem:
 	skipto
 	properties
 	media-player-keys
-	pythonconsole
-	opensubtitles
+%{?_enable_python:	pythonconsole
+	opensubtitles}
 	mpris
 
 %package plugins-lirc
@@ -170,15 +171,6 @@ Requires: %name = %EVR
 
 %description plugins-rotation
 A plugin to allow videos to be rotated if they're in the wrong orientation.
-
-%package plugins-zeitgeist
-Summary: Zeitgeist plugin for Totem
-Group: Video
-Requires: %name = %EVR
-Requires: zeitgeist
-
-%description plugins-zeitgeist
-A plugin sending events to Zeitgeist
 
 %package plugins-jamendo
 Summary: Plugin for jamendo.com music collection
@@ -234,11 +226,15 @@ used by other applications like filemanagers.
 
 %prep
 %setup -n %name-%version%beta
+%ifarch %ix86 armh
+%patch10 -b .format
+%endif
+
 subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %build
 %meson \
-    %{?_enable_python:-Denable-python=yes} \
+    %{?_disable_python:-Denable-python=no} \
     %{?_enable_gtk_doc:-Denable-gtk-doc=true}
 %nil
 # https://github.com/mesonbuild/meson/issues/1994
@@ -281,25 +277,23 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %files plugins
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/apple-trailers/
 %_libdir/%name/plugins/autoload-subtitles/
 %_libdir/%name/plugins/im-status/
 %_libdir/%name/plugins/mpris/
 %_libdir/%name/plugins/open-directory/
-%_libdir/%name/plugins/opensubtitles/
+%{?_enable_python:%_libdir/%name/plugins/opensubtitles/}
 %_libdir/%name/plugins/properties/
-%_libdir/%name/plugins/pythonconsole/
+%{?_enable_python:%_libdir/%name/plugins/pythonconsole/}
 %_libdir/%name/plugins/recent/
 %_libdir/%name/plugins/save-file/
 %_libdir/%name/plugins/screensaver/
 %_libdir/%name/plugins/screenshot/
 %_libdir/%name/plugins/skipto/
 %_libdir/%name/plugins/variable-rate/
-%_libdir/%name/plugins/vimeo/
-%config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
+%{?_enable_python:%config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
 %_datadir/GConf/gsettings/opensubtitles.convert
-%_datadir/GConf/gsettings/pythonconsole.convert
+%_datadir/GConf/gsettings/pythonconsole.convert}
 
 %if_enabled lirc
 %files plugins-lirc
@@ -309,11 +303,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %if_enabled rotation
 %files plugins-rotation
 %_libdir/%name/plugins/rotation/
-%endif
-
-%if_enabled zeitgeist
-%files plugins-zeitgeist
-%_libdir/%name/plugins/zeitgeist-dp/
 %endif
 
 %if_enabled jamendo
@@ -345,6 +334,11 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+- disabled python plugins, see
+  https://gitlab.gnome.org/GNOME/libpeas/-/issues/58
+
 * Wed Oct 23 2024 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

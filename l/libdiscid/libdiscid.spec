@@ -2,15 +2,17 @@
 %define _name discid
 
 Name: lib%_name
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Summary: A Library for creating MusicBrainz DiscIDs
 Group: System/Libraries
 License: LGPL-2.1-or-later
-
 Url: http://musicbrainz.org/doc/%name
-Source: http://ftp.musicbrainz.org/pub/musicbrainz/%name/%name-%version.tar.gz
+
+Vcs: https://github.com/metabrainz/libdiscid.git
+
+Source: https://data.metabrainz.org/pub/musicbrainz/%name/%name-%version.tar.gz
 
 %description
 This C library %name creates MusicBrainz DiscIDs from audio CDs. It
@@ -34,7 +36,6 @@ Requires: %name-devel = %EVR
 
 %description devel-static
 Static libs for building statically linked software that uses %name.
-
 
 %prep
 %setup
@@ -63,6 +64,9 @@ Static libs for building statically linked software that uses %name.
 
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 0.6.5-alt1
+- 0.6.5
+
 * Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
 - 0.6.4
 

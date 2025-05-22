@@ -7,18 +7,19 @@
 %def_disable check
 
 Name: libinstpatch
-Version: 1.1.6
-Release: alt1.1
+Version: 1.1.7
+Release: alt1
 
 Summary: MIDI instrument patch library
 Group: System/Libraries
 License: LGPL-2.1-only
 Url: https://www.swamiproject.org/
 
+Vcs: https://github.com/swami/libinstpatch.git
+
 %if_disabled snapshot
 Source: https://github.com/swami/%name/archive/v%version/%name-%version.tar.gz
 %else
-Vcs: https://github.com/swami/libinstpatch
 Source: %name-%version.tar
 %endif
 
@@ -73,6 +74,9 @@ This package includes the development libraries and header files for
 %doc examples/*.c
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
+- 1.1.7
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1.1
 - rebuild with new cmake macros
 
