@@ -1,7 +1,7 @@
 %define rname angelfish
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -23,7 +23,6 @@ Obsoletes: kde5-angelfish < %EVR
 Source: %rname-%version.tar
 Source1: po-ru-add.po
 Patch1: alt-def-size.patch
-Patch2: alt-i18n.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-wayland-devel qt6-webengine-devel
@@ -45,7 +44,6 @@ This is the webbrowser designed to
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p1
 
 msgcat --use-first po/ru/angelfish.po %SOURCE1 > po/ru/angelfish.po.tmp
 cat po/ru/angelfish.po.tmp >po/ru/angelfish.po
@@ -85,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 

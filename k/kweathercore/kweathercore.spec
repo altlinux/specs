@@ -4,7 +4,7 @@
 %define libkweathercore libkweathercore%sover
 
 Name: %rname
-Version: 24.12.3
+Version: 25.04.1
 Release: alt1
 %K6init altplace
 
@@ -75,10 +75,14 @@ Requires: %name-common >= %EVR
 
 %files -n %libkweathercore
 %doc LICENSES/* README.md
+%_K6qml/org/kde/weathercore/
 %_K6lib/libKWeatherCore.so.%sover
 %_K6lib/libKWeatherCore.so.*
 
 %changelog
+* Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
