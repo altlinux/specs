@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt0.3
+Release: alt0.4
 
 Summary: %Variant documentation
 License: %fdl
@@ -20,7 +20,6 @@ BuildArch: noarch
 Source: %name-%version-%release.tar
 
 Conflicts: %(for n in %variants ; do [ "$n" = %name ] || echo -n "$n "; done)
-Obsoletes: docs-alt-server-v
 
 BuildRequires(pre):rpm-build-licenses
 BuildRequires: publican
@@ -47,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri May 23 2025 Alexander Stepchenko <geochip@altlinux.org> 11.0-alt0.4
+- remove Obsoletes docs-alt-server-v
+
 * Thu Apr 24 2025 Alexander Stepchenko <geochip@altlinux.org> 11.0-alt0.3
 - add Obsoletes docs-alt-server-v
 
