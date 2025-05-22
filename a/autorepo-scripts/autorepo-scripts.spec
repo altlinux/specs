@@ -2,7 +2,7 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL perl(ALTLinux/RepoList.pm)
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.634
+Version: 0.635
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -49,6 +49,16 @@ Requires: %name = %version-%release
 %description -n autorepo-altnode-builder
 %summary
 
+%package -n autorepo-altnode-build-merger
+Summary: autorepo scripts and config for a builder merge node
+Group: Development/Other
+Requires: %name = %version-%release
+Requires: autorepo-altnode-builder = %version-%release
+Conflicts: autorepo-scripts < 0.635
+
+%description -n autorepo-altnode-build-merger
+%summary
+
 %package autoports
 Summary: autorepo scripts for an autoports node
 Group: Development/Other
@@ -73,10 +83,18 @@ rm $RPM_BUILD_ROOT%_bindir/*.spec
 mkdir -p %buildroot%_datadir/%name/templates/
 install -m 755 *.template %buildroot%_datadir/%name/templates/
 
+mkdir -p %buildroot%_sysconfdir/sysctl.d
+#echo "fs.protected_hardlinks = 0" > %buildroot%_sysconfdir/sysctl.d/20-build-merger.conf
+cat > %buildroot%_sysconfdir/sysctl.d/20-build-merger.conf <<EOF
+# allow hardlinking files of different users to create merged repository
+fs.protected_hardlinks = 0
+EOF
+
+
 %files
 %doc configs
+%doc crontab
 %doc DEPLOY.txt
-%doc rsync-local
 %_bindir/autorepo*
 %perl_vendor_privlib/Autorepo*
 %_datadir/%name/templates
@@ -90,6 +108,8 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %exclude %_bindir/autorepo-ls-bad-ugly
 %exclude %_bindir/autorepo-parallel-build
 %exclude %_bindir/autorepo-sequential-build
+# build-merger
+%exclude %_bindir/autorepo-merge-repositories
 
 #files autoports
 %_bindir/autoports*
@@ -107,10 +127,17 @@ install -m 755 *.template %buildroot%_datadir/%name/templates/
 %files -n autorepo-altnode-builder
 %_bindir/autorepo-altnode-builder-statistics
 
+%files -n autorepo-altnode-build-merger
+%config %_sysconfdir/sysctl.d/20-build-merger.conf
+%_bindir/autorepo-merge-repositories
+
 %files -n autorepo-altnode-misc
 %_bindir/autorepo-altnode-misc-statistics-wrapper
 
 %changelog
+* Sat May 10 2025 Igor Vlasenko <viy@altlinux.org> 0.635-alt1
+- new version
+
 * Thu May 08 2025 Igor Vlasenko <viy@altlinux.org> 0.634-alt1
 - new version
 
