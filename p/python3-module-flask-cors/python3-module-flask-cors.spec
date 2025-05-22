@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 5.0.1
+Version: 6.0.0
 Release: alt1
 
 Summary: Cross Origin Resource Sharing (CORS) support for Flask
@@ -63,6 +63,9 @@ sed -i 's/^version =.*$/version = "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 22 2025 Anton Zhukharev <ancieg@altlinux.org> 6.0.0-alt1
+- Updated to 6.0.0 (fixes CVE-2024-6839, CVE-2024-6844, CVE-2024-6866).
+
 * Mon Feb 24 2025 Anton Zhukharev <ancieg@altlinux.org> 5.0.1-alt1
 - Updated to 5.0.1.
 
