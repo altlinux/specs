@@ -1,13 +1,13 @@
 Name: parole
-Version: 4.18.2
-Release: alt2
+Version: 4.20.0
+Release: alt1
 
-%def_enable clutter
 %if_xfce4_wayland_support
 %def_enable wayland
 %else
 %def_disable wayland
 %endif
+%def_disable docs
 
 Summary: Media player for the Xfce desktop
 License: GPLv2+
@@ -16,17 +16,16 @@ Group: Video
 URL: https://docs.xfce.org/apps/parole/start
 Vcs: https://gitlab.xfce.org/apps/parole.git
 Source: %name-%version.tar
-Source1: alt_ru.po
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-build-xfce4 >= 0.3.0 xfce4-dev-tools
 BuildRequires: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
-BuildRequires: libgtk+3-devel libnotify-devel libtag-devel
+BuildRequires: libgtk+3-devel libnotify-devel taglib-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
-%{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel}
-BuildRequires: gtk-doc
+%{?_enable_docs:BuildRequires: BuildRequires: gtk-doc}
 
 Requires: gstreamer1.0
 Requires: gst-plugins-base1.0 gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins-ugly1.0 gst-libav
@@ -54,32 +53,23 @@ for developing plugins for %name.
 %setup
 %patch -p1
 
-# Merge our own and upstream Russian translations
-msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
-mv -f merged_ru.po po/ru.po
-
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	--enable-x11 \
-	%{subst_enable wayland} \
-	--enable-taglib \
-	%{subst_enable clutter} \
-	--enable-gtk-doc \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dx11=enabled \
+	%{subst_enable_meson_feature wayland wayland} \
+	-Dtaglib=enabled \
+	%{subst_enable_meson_bool docs gtk-doc}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
 %doc AUTHORS README.md THANKS NEWS
 %_bindir/%name
 %_libdir/%name-*/
-%exclude %_libdir/%name-*/*.la
 %_desktopdir/*.desktop
 %_datadir/metainfo/%name.appdata.xml
 %_iconsdir/hicolor/*/apps/*
@@ -87,9 +77,19 @@ mv -f merged_ru.po po/ru.po
 
 %files devel
 %_includedir/*
+%if_enabled docs
 %doc %_datadir/gtk-doc/html/*
+%endif
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Fixed taglib version check.
+- Built with taglib-2.x.
+- Used Russian translation from upstream.
+- Dropped html documentation.
+- Switched to meson build.
+- Updated to 4.20.0.
+
 * Tue Jan 21 2025 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt2
 - Added xfconf-utils to requires (closes: #48707, #51616).
 
