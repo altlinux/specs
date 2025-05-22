@@ -5,7 +5,7 @@
 %def_disable static
 
 Name: libfaudio
-Version: 25.03
+Version: 25.05
 Release: alt1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
@@ -82,6 +82,9 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 25.05-alt1
+- 25.05.
+
 * Fri Mar 28 2025 L.A. Kostis <lakostis@altlinux.ru> 25.03-alt1
 - 25.03.
 - Switch to SDL3.
