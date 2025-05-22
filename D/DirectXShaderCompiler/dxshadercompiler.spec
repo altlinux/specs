@@ -7,7 +7,7 @@
 
 Name: DirectXShaderCompiler
 Version: 1.8.2403
-Release: alt0.3
+Release: alt0.4
 Summary: DirectX Shader Compiler
 Group: Development/C++
 License: Apache-2.0 with LLVM-exception
@@ -19,6 +19,8 @@ Source0: %name-%version.tar
 # see https://github.com/microsoft/DirectXShaderCompiler/issues/5079#issuecomment-1480210642
 Source1: DirectX-Headers.tar
 Patch0: alt-spirv-tools-shared.patch
+# https://github.com/microsoft/DirectXShaderCompiler/pull/7240
+Patch1: cmake4-support.patch
 Patch2000: alt-e2k.patch
 Patch3500: alt-loongarch64.patch
 
@@ -41,6 +43,7 @@ graphics, games, and computation can use it to generate shader programs.
 %prep
 %setup -n %name-%version -a1
 %patch0 -p1
+%patch1 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -69,6 +72,9 @@ cp -ar %_cmake__builddir/bin/dxc* %buildroot%_bindir/
 %_libdir/lib%{rname}.so
 
 %changelog
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1.8.2403-alt0.4
+- tools/clang: compile with CMake 4.x (PR #7240).
+
 * Fri May 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.2403-alt0.3
 - Fixed build for Elbrus
 
