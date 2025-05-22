@@ -1,6 +1,6 @@
 Name: thunar-media-tags-plugin
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Thunar media tags plugin
 License: GPLv2+
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libthunar-devel >= 4.18.0 libxfce4util-devel >= 4.18.0
-BuildRequires: libgtk+3-devel libtag-devel
+BuildRequires: libgtk+3-devel taglib-devel
 
 %define _unpackaged_files_terminate_build 1
 
@@ -51,6 +51,9 @@ Currently, these are:
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-media-tags-plugin.mo
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt2
+- Built with taglib-2.x.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
 - Fixed meson build.
 - Switched to meson build.
