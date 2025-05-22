@@ -28,7 +28,7 @@
 %endif
 
 Name: fio
-Version: 3.39
+Version: 3.40
 Release: alt1
 Summary: Flexible I/O Tester
 License: GPL-2.0
@@ -45,6 +45,7 @@ Provides: fio-engine-libaio
 Source0: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libaio-devel
+BuildRequires: libgnutls-devel
 BuildRequires: zlib-devel
 %{?_enable_gfapi:BuildRequires: libglusterfs-devel}
 %{?_enable_gfio:BuildRequires: libgtk+2-devel}
@@ -250,6 +251,9 @@ rmdir $PWD
 %files checkinstall
 
 %changelog
+* Wed May 21 2025 Vitaly Chikunov <vt@altlinux.org> 3.40-alt1
+- Update to fio-3.40 (2025-05-20).
+
 * Sun Feb 23 2025 Vitaly Chikunov <vt@altlinux.org> 3.39-alt1
 - Update to fio-3.39 (2025-02-18).
 
