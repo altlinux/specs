@@ -4,7 +4,7 @@
 # Note: /usr/bin/compose still use php command
 
 Name: composer
-Version: 2.8.6
+Version: 2.8.9
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -68,6 +68,9 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 2.8.9-alt1
+- new version 2.8.9 (with rpmrb script)
+
 * Tue Mar 11 2025 Vitaly Lipatov <lav@altlinux.ru> 2.8.6-alt1
 - new version 2.8.6 (with rpmrb script)
 
