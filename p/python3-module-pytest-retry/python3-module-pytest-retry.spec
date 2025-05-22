@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.3
-Release: alt1.gitbb465fff
+Version: 1.7.0
+Release: alt1
 
 Summary: A simple plugin for retrying flaky tests in CI environments
 License: MIT
@@ -54,5 +54,8 @@ thereby improving the consistency of the test suite results.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed May 21 2025 Denis Rastyogin <gerben@altlinux.org> 1.7.0-alt1
+- Updated to 1.7.0.
+
 * Wed Jul 24 2024 Denis Rastyogin <gerben@altlinux.org> 1.6.3-alt1.gitbb465fff
 - Initial build for ALT Sisyphus.

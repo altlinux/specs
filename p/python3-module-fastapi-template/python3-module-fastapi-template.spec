@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_nname
-Version: 5.1.3
+Version: 5.1.4
 Release: alt1
 
 Summary: Flexible general-purpose template for FastAPI
@@ -19,7 +19,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: instead_of_pytests.sh
-Patch: fastapi-template-5.1.3-alt-fix_version.patch
+Patch: fastapi-template-5.1.4-alt-fix_version.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -105,6 +105,9 @@ _FASTAPI_TEMPLATE_COMPLETE=fish_source \
 %_datadir/fish/vendor_completions.d/%pypi_name.fish
 
 %changelog
+* Wed May 21 2025 Denis Rastyogin <gerben@altlinux.org> 5.1.4-alt1
+- Updated to 5.1.4.
+
 * Tue Jan 21 2025 Denis Rastyogin <gerben@altlinux.org> 5.1.3-alt1
 - Updated to 5.1.3.
 
