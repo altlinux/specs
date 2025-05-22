@@ -1,6 +1,6 @@
 Name: matrix-synapse
-Version: 1.125.0
-Release: alt2
+Version: 1.129.0
+Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache-2.0
@@ -184,6 +184,9 @@ fi
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 1.129.0-alt1
+- new version 1.129.0 (with rpmrb script)
+
 * Sun Mar 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1.125.0-alt2
 - don't require parameterized (for tests only)
 
