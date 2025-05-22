@@ -2,12 +2,12 @@
 %def_enable check
 
 Name: 7-zip
-Version: 24.05
-Release: alt2
+Version: 24.09
+Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
-Source: %name-%version.tar.xz
+Source: %name-%version.tar.gz
 Source1: check.tar
 Patch2: dangling-pointer.patch
 Patch3: uninitialized.patch
@@ -38,8 +38,8 @@ BuildRequires: gcc-c++
 
 %prep
 %setup -a1
-%patch2 -p1
-%patch3 -p1
+##patch2 -p1
+##patch3 -p1
 ##patch100 -p1
 %ifarch %e2k
 %add_optflags -msse4.1 -mno-sse4.2
@@ -128,6 +128,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Thu May 22 2025 Fr. Br. George <george@altlinux.org> 24.09-alt1
+- Autobuild version bump to 24.09
+
 * Thu May 23 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 24.05-alt2
 - remove obsolete patch for Elbrus
 
