@@ -1,6 +1,6 @@
 Name:     integrity-notifier
 Version:  0.7.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Integrity event notifier
 License:  GPLv2+
@@ -38,6 +38,12 @@ mkdir -p -m 0755 %buildroot%_logdir/integrityd
 %config(noreplace) %_sysconfdir/xdg/autostart/*
 
 %changelog
+* Thu May 22 2025 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt2
+- Fixed a vulnerability where an attacker can make the notification
+  service unit crash by an attempt to run a damaged file from a
+  background process (Fixes: OVE-20250522-0001).
+- README files updated.
+
 * Wed May 21 2025 Paul Wolneykien <manowar@altlinux.org> 0.7.2-alt1
 - Restart both services on failure.
 - Fix: Don't exit on write failure (closes: 54267).
