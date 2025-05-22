@@ -3,7 +3,7 @@
 
 Name: gnome-shell-extension-dash-to-panel
 Version: 68
-Release: alt2.fa8fabd.1
+Release: alt3.fa8fabd.1
 
 %define sname dash-to-panel
 %define eid dash-to-panel@jderose9.github.com
@@ -55,6 +55,9 @@ rm %buildroot%_datadir/gnome-shell/extensions/%eid/README.md
 %doc README.md COPYING
 
 %changelog
+* Thu May 22 2025 Anton Midyukov <antohami@altlinux.org> 68-alt3.fa8fabd.1
+- update russian translation
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 68-alt2.fa8fabd.1
 - new snapshot
 - update russian translation
