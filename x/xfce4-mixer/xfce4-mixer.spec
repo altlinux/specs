@@ -1,5 +1,5 @@
 Name: xfce4-mixer
-Version: 4.18.2
+Version: 4.20.0
 Release: alt1
 
 Summary: A volume control application and plugin for the Xfce panel
@@ -11,6 +11,7 @@ Vcs: https://gitlab.xfce.org/apps/xfce4-mixer.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools >= 0.1.1-alt1
 BuildRequires: libxfce4ui-gtk3-devel libxfce4util-devel libxfconf-devel
 BuildRequires: libxfce4panel-gtk3-devel >= 4.14.0
@@ -31,19 +32,17 @@ the Xfce panel.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--with-host=linux \
-	--enable-keybinder=yes \
-	--enable-pulse \
-	--disable-oss \
-	--enable-alsa \
-	--disable-sndio \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dkeybinder=enabled \
+	-Dpulse=enabled \
+	-Doss=disabled \
+	-Dalsa=enabled \
+	-Dsndio=disabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -55,9 +54,11 @@ the Xfce panel.
 %_xfce4data/panel/plugins/*.desktop
 %_man1dir/*
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
+- Switched to meson build.
+- Updated to 4.20.0.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 4.18.2-alt1
 - Updated to 4.18.2.
 
