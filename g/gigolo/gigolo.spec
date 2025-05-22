@@ -1,5 +1,5 @@
 Name:           gigolo
-Version:        0.5.4
+Version:        0.6.0
 Release:        alt1
 Summary:        frontend to manage connections to remote filesystems using GIO/GVfs
 Group:          File tools
@@ -10,6 +10,7 @@ Vcs:        https://gitlab.xfce.org/apps/gigolo.git
 Source:     %name-%version.tar
 Patch:		%name-%version-%release.patch
 
+BuildRequires(pre): meson
 BuildRequires: rpm-build-xfce4 >= 0.2.0-alt1 xfce4-dev-tools >= 4.15.0
 BuildRequires: libgtk+3-devel libgio-devel libX11-devel
 
@@ -25,17 +26,13 @@ filesystem and manage bookmarks of such.
 %prep
 %setup
 %patch -p1
-%xfce4_cleanup_version
 
 %build
-%xfce4reconf
-%configure \
-	--enable-maintainer-mode \
-	--enable-debug=minimum
-%make_build
+%meson
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
@@ -47,6 +44,10 @@ filesystem and manage bookmarks of such.
 %_man1dir/%name.*
 
 %changelog
+* Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
+- Switched to meson build.
+- Updated to 0.5.4.
+
 * Thu Dec 26 2024 Mikhail Efremov <sem@altlinux.org> 0.5.4-alt1
 - Require gvfs (closes: #51956).
 - Updated to 0.5.4.
