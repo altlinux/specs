@@ -1,7 +1,7 @@
 %define rname kimageformats
 
 Name: kf6-%rname
-Version: 6.13.0
+Version: 6.14.0
 Release: alt1
 %K6init altplace
 
@@ -21,6 +21,7 @@ BuildRequires: libavif-devel
 BuildRequires: libraw-devel
 BuildRequires: libheif-devel
 BuildRequires: libjasper-devel
+BuildRequires: libopenjpeg2.0-devel openjpeg-tools2.0
 %ifnarch %arm
 BuildRequires: libjxl-devel
 %endif
@@ -62,6 +63,9 @@ Requires: kde-common
 #%_K6srv/qimageioplugins/
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 

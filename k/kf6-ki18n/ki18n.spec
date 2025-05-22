@@ -7,7 +7,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf6-%rname
-Version: 6.13.0
+Version: 6.14.0
 Release: alt1
 %K6init no_altplace
 
@@ -161,6 +161,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 

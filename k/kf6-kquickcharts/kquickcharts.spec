@@ -5,7 +5,7 @@
 %define libquickchartscontrols libquickchartscontrols%sover
 
 Name: kf6-%rname
-Version: 6.13.0
+Version: 6.14.0
 Release: alt1
 %K6init altplace
 
@@ -94,6 +94,9 @@ Requires: %name-common = %version-%release
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 

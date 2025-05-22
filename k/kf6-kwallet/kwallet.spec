@@ -1,7 +1,9 @@
 %define rname kwallet
 
+%def_disable ksecretd
+
 Name: kf6-%rname
-Version: 6.13.0
+Version: 6.14.1
 Release: alt1
 %K6init
 
@@ -19,11 +21,12 @@ Source: %rname-%version.tar
 Source1: kwalletd6.po
 Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
-Patch4: alt-org-freedesktop-secrets-service.patch
+Patch4: alt-fdo-secrets-ksecretd.patch
+Patch5: alt-fdo-secrets-kwallet.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules glibc-devel qt6-base-devel qt6-declarative-devel
-BuildRequires: libgcrypt-devel libgpgme-devel libassuan-devel
+BuildRequires: libgcrypt-devel libgpgme-devel libassuan-devel libsecret-devel
 BuildRequires: boost-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kguiaddons-devel kf6-ki18n-devel
@@ -73,7 +76,11 @@ KF6 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
+%if_enabled ksecretd
 %patch4 -p1
+%else
+%patch5 -p1
+%endif
 
 msgcat --use-first po/ru/kwalletd6.po %SOURCE1 > po/ru/kwalletd6.po.tmp
 cat po/ru/kwalletd6.po.tmp >po/ru/kwalletd6.po
@@ -99,14 +106,14 @@ install -d %buildroot/%_sysconfdir/alternatives/packages.d/
 if [ "%_K6dbus_srv" == "%_datadir/dbus-1/services" ] ; then
     mkdir -p %buildroot/%_datadir/kf6/dbus-1/services/
     mv %buildroot/%_K6dbus_srv/org.freedesktop.secrets.service %buildroot/%_datadir/kf6/dbus-1/services/
-    cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
-%_K6dbus_srv/org.freedesktop.secrets.service %_datadir/dbus-1/services/org.kde.kwalletd6.service %version
+fi
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_datadir/dbus-1/services/org.freedesktop.secrets.service %_datadir/kf6/dbus-1/services/org.freedesktop.secrets.service %version
 __EOF__
-    mv %buildroot/%_K6bin/kwallet-query %buildroot/%_K6bin/kwallet-query-6
-    cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+mv %buildroot/%_K6bin/kwallet-query %buildroot/%_K6bin/kwallet-query-6
+cat >> %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
 %_bindir/kwallet-query %_K6bin/kwallet-query-6 %version
 __EOF__
-fi
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
@@ -114,14 +121,14 @@ fi
 
 %files
 %config /%_sysconfdir/alternatives/packages.d/%name
+%_K6bin/ksecretd
 %_bindir/kwalletd6
 %_K6bin/kwalletd6
 %_K6bin/kwallet-query*
 %_K6xdgapp/*.desktop
 %_K6notif/*.notifyrc
-#%_K6srv/*.desktop
-%_datadir/dbus-1/services/org.kde.kwalletd5.service
-%_datadir/dbus-1/services/org.kde.kwalletd6.service
+%_datadir/dbus-1/services/org.kde.kwalletd?.service
+%_datadir/dbus-1/services/org.kde.*secret*.service
 %_datadir/kf6/dbus-1/services/org.freedesktop.secrets.service
 %_datadir/xdg-desktop-portal/portals/kwallet.portal
 
@@ -139,6 +146,12 @@ fi
 
 
 %changelog
+* Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.1-alt1
+- new version
+
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 

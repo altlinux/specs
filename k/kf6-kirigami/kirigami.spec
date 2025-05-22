@@ -8,9 +8,10 @@
 %define libkirigamilayouts libkirigamilayouts%sover
 %define libkirigamiprimitives libkirigamiprimitives%sover
 %define libkirigamiprivate libkirigamiprivate%sover
+%define libkirigamilayoutsprivate libkirigamilayoutsprivate%sover
 
 Name: kf6-kirigami
-Version: 6.13.0
+Version: 6.14.1
 Release: alt1
 %K6init altplace
 
@@ -19,7 +20,7 @@ Summary: A QtQuick based components set
 Url: https://techbase.kde.org/Kirigami
 License: LGPL-2.1-or-later
 
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: qt6-declarative
 
 Source0: %rname-%version.tar
@@ -57,7 +58,7 @@ Requires: kde-common
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: libgomp-devel
 %description devel
 The %name-devel package contains libraries and header files for developing
@@ -66,49 +67,56 @@ applications that use %name
 %package -n %libkirigami
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigami
 KF6 library
 %package -n %libkirigamidelegates
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigamidelegates
 KF6 library
 
 %package -n %libkirigamiplatform
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigamiplatform
 KF6 library
 
 %package -n %libkirigamidialogs
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigamidialogs
 KF6 library
 
 %package -n %libkirigamilayouts
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigamilayouts
 KF6 library
 
 %package -n %libkirigamiprimitives
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigamiprimitives
 KF6 library
 
 %package -n %libkirigamiprivate
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libkirigamiprivate
+KF6 library
+
+%package -n %libkirigamilayoutsprivate
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common >= %EVR
+%description -n %libkirigamilayoutsprivate
 KF6 library
 
 %prep
@@ -160,8 +168,17 @@ sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
 %files -n %libkirigamiprivate
 %_K6lib/libKirigamiPrivate.so.%sover
 %_K6lib/libKirigamiPrivate.so.*
+%files -n %libkirigamilayoutsprivate
+%_K6lib/libKirigamiLayoutsPrivate.so.%sover
+%_K6lib/libKirigamiLayoutsPrivate.so.*
 
 %changelog
+* Thu May 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.1-alt1
+- new version
+
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 

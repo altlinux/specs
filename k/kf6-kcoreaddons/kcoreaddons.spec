@@ -5,7 +5,7 @@
 %endif
 
 Name: kf6-%rname
-Version: 6.13.0
+Version: 6.14.0
 Release: alt1
 %K6init altplace
 
@@ -117,6 +117,7 @@ sed -i -E 's/(if \()(static const auto.*; )(force ==)/\2\1\3/' src/lib/io/kurlmi
 %files devel
 %_K6inc/KCoreAddons/
 %_K6link/lib*.so
+%_pkgconfigdir/*CoreAddons*.pc
 %_K6lib/cmake/KF6CoreAddons
 %_K6data/jsonschema/*.json
 
@@ -138,6 +139,9 @@ sed -i -E 's/(if \()(static const auto.*; )(force ==)/\2\1\3/' src/lib/io/kurlmi
 
 
 %changelog
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
 * Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
 - new version
 
