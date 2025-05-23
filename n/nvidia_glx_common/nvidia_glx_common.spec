@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 570
-%define nv_release 133
-%define nv_minor 07
-%define pkg_rel alt291
+%define nv_release 153
+%define nv_minor 02
+%define pkg_rel alt292
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Fri May 23 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt292
+- new version
+
 * Tue May 13 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt291
 - remove non-glvnd code
 

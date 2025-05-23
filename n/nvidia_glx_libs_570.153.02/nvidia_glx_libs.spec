@@ -19,8 +19,8 @@
 %endif
 
 %define nv_version 570
-%define nv_release 133
-%define nv_minor   07
+%define nv_release 153
+%define nv_minor   02
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
@@ -162,10 +162,10 @@ NVIDIA's Tesla, Quadro, GRID and GeForce devices from Fermi and higher architect
 
 %package -n nvidia-powerd
 Group: System/Libraries
-Summary: NVIDIA DLLs for wine
+Summary: NVIDIA Dynamic Boost daemon
 Requires: nvidia_glx_common
 %description -n nvidia-powerd
-NVIDIA DLLs for wine.
+Daemon that manages the Dynamic Boost feature on compatible NVIDIA GPUs.
 
 %prep
 %setup -T -c -n %tbname-%version%dirsuffix
@@ -299,6 +299,9 @@ done
 %endif
 
 %changelog
+* Fri May 23 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt1
+- new version
+
 * Thu Apr 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt1
 - new version
 
