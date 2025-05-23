@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.4.5
-Release: alt3
+Version: 11.4.7
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -110,20 +110,17 @@ Patch0: %name-%version.patch
 Patch1: mariadb-10.6.8-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
-#Patch5: mariadb-10.0.21-alt-load_defaults.patch
 Patch7: mariadb-10.3.8-alt-config-libs.patch
 
 # Patches specific for this mysql package
 Patch30: mariadb-errno.patch
-#Patch31: mariadb-string-overflow.patch
 Patch32: mariadb-basedir.patch
 Patch33: mariadb-covscan-signexpr.patch
-#Patch34: mariadb-covscan-stroverflow.patch
 
-Patch101: rocksdb-6.8.0-alt-add-libatomic-if-needed.patch
+Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
 Patch102: mariadb-10.5.11-alt-link-with-latomic-if-needed.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
-Patch104: mariadb-11.4.4-disable-download-fmt.patch
+Patch104: mariadb-11.4.7-disable-download-fmt.patch
 
 Patch2000: mariadb-e2k.patch
 
@@ -428,17 +425,12 @@ tar -xf %SOURCE107 -C extra/libfmt/src/libfmt
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
-#%%patch5 -p1
 %patch7 -p1
 
 %patch30 -p1
-#%%patch31 -p1
 %patch32 -p1
-#%%patch33 -p1
-#%%patch34 -p1
 
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
-#%%patch102 -p1
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
 
@@ -1068,6 +1060,12 @@ fi
 %endif
 
 %changelog
+* Fri May 23 2025 Alexei Takaseev <taf@altlinux.org> 11.4.7-alt1
+- 11.4.5 (Fixes: CVE-2023-52969, CVE-2023-52970, CVE-2023-52971, CVE-2025-30693, CVE-2025-30722)
+- Update mariadb-11.4.7-disable-download-fmt.patch
+- Update rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
+- Cleanup spec
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 11.4.5-alt3
 - NMU: fix symlink %%_sbindir/mariadb-install-db for bin-sbin-merge
 
