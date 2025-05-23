@@ -3,7 +3,7 @@
 
 Name: lightdm-kde-greeter
 Version: 6.0.3
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
 License: GPL-3.0+
@@ -12,6 +12,7 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 Source: %name-%version.tar
 
 Patch1: add-russian-translations-to-desktop-files.patch
+Patch2: fix-the-focus-on-the-userlist-at-startup.patch
 
 %ifarch aarch64
 %define optflags_lto %nil
@@ -49,6 +50,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build \
@@ -88,6 +90,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Fri May 23 2025 Anton Golubev <golubevan@altlinux.org> 6.0.3-alt2
+- fix the focus on the userlist at startup
+
 * Wed May 14 2025 Anton Golubev <golubevan@altlinux.org> 6.0.3-alt1
 - better display for wide screens
 
