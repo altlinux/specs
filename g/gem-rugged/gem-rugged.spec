@@ -5,7 +5,7 @@
 %define        gemname rugged
 
 Name:          gem-rugged
-Version:       1.7.2
+Version:       1.9.0
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library
 License:       MIT
@@ -27,7 +27,7 @@ BuildConflicts: gem(minitest) >= 6
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rugged) = 1.7.2
+Provides:      gem(rugged) = %version
 
 
 %description
@@ -37,14 +37,14 @@ testing and using the libgit2 library in a language that is awesome.
 
 %if_enabled    doc
 %package       -n gem-rugged-doc
-Version:       1.7.2
+Version:       %version
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rugged
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rugged) = 1.7.2
+Requires:      gem(rugged) = %version
 
 %description   -n gem-rugged-doc
 Rugged is a Ruby binding to the libgit2 linkable library documentation
@@ -60,14 +60,14 @@ testing and using the libgit2 library in a language that is awesome.
 
 %if_enabled    devel
 %package       -n gem-rugged-devel
-Version:       1.7.2
+Version:       %version
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rugged
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rugged) = 1.7.2
+Requires:      gem(rugged) = %version
 Requires:      gem(rake-compiler) >= 0.9.0
 Requires:      gem(pry) >= 0
 Requires:      gem(minitest) >= 5.0
@@ -89,6 +89,8 @@ testing and using the libgit2 library in a language that is awesome.
 %prep
 %setup
 %autopatch
+sed -i 's/LIBGIT2_VER_/LIBGIT2_VERSION_/g
+    s|^#include <git2/version.h>|#include <git2/common.h>\n&|' ext/rugged/extconf.rb
 
 %build
 %ruby_build
@@ -119,6 +121,9 @@ testing and using the libgit2 library in a language that is awesome.
 
 
 %changelog
+* Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0 (ALT #52635)
+
 * Fri Jul 26 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.2-alt1
 - ^ 1.7.1 -> 1.7.2
 

@@ -5,7 +5,7 @@
 Summary: A cross-platform graphical front-end for emulators - desktop edition
 Name: emulationstation-de
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 License: MIT
 Group: Emulators
 Url: https://gitlab.com/es-de/emulationstation-de
@@ -19,6 +19,7 @@ Source3: themes.tar.gz
 Patch0: install.patch
 Patch1: pugixml.patch
 Patch2: ICU-compilation.patch
+Patch10: emulationstation-de-3.1.1-up-libgit2-1.9.patch
 
 
 BuildRequires(Pre):  rpm-macros-cmake rpm-build-python3
@@ -51,6 +52,7 @@ This is fork of original ES from Batocera project.
 #%%patch0 -p1
 #%%patch1 -p1
 %patch2 -p1
+%patch10 -p1
 
 # Fix perms
 # chmod 0755 resources/help
@@ -108,6 +110,9 @@ rm -rf %{buildroot}%{_includedir}
 %{_datadir}/pixmaps/org.es_de.frontend.svg
 
 %changelog
+* Fri May 23 2025 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1.1
+- applied upstream fix for libgit2 >= 1.9 (ALT #54423)
+
 * Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 3.1.1-alt1
 - Update to new version
 - Add patch to fix build
@@ -132,3 +137,5 @@ rm -rf %{buildroot}%{_includedir}
 
 * Fri Jun  7 2024 Artyom Bystrov <arbars@altlinux.org> 2.11.2-alt1
 - Initial commit
+
+
