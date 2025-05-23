@@ -1,6 +1,6 @@
 Name: libeditline
 Version: 1.17.1
-Release: alt1
+Release: alt2
 
 Summary: A small compatible replacement for readline
 License: BSD
@@ -9,6 +9,8 @@ Group: System/Libraries
 Url: https://github.com/troglobit/editline
 # Source-url: https://github.com/troglobit/editline/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+
+Patch: libeditline-1.17.1-alt-fix-syntax-error-in-configure.ac-file.patch
 
 %description
 %summary
@@ -23,6 +25,7 @@ Requires: %name = %EVR
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -48,6 +51,9 @@ rm -v %buildroot%_man3dir/editline.3
 %_pkgconfigdir/libeditline.pc
 
 %changelog
+* Fri May 23 2025 Boris Yumankulov <boria138@altlinux.org> 1.17.1-alt2
+- Fix syntax error in configure.ac file
+
 * Mon Jul 01 2024 Boris Yumankulov <boria138@altlinux.org> 1.17.1-alt1
 - initial build for ALT Sisyphus
 
