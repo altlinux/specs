@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2
-Release: alt1.1
+Version: 7.3
+Release: alt1
 Summary: Zope testrunner script
 License: ZPL-2.1
 Group: Development/Python3
@@ -66,6 +66,9 @@ cp -al %buildroot%_bindir/zope-testrunner{,3}
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 7.3-alt1
+- 7.2 -> 7.3.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 7.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
