@@ -5,7 +5,7 @@
 %define sover 0
 
 Name: profanity
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 Summary: A console based jabber client inspired by irssi
 Group: Networking/Instant messaging
@@ -87,12 +87,12 @@ mv %name %name.app
 make distclean
 %configure\
     --with-libxml2\
-    --disable-notifications\
     --enable-otr\
     --without-xscreensaver\
     --enable-omemo\
     --enable-omemo-qrcode\
-    --enable-pgp
+    --enable-pgp\
+    --enable-notifications
 
 %make_build LDFLAGS=-pthread
 
@@ -121,6 +121,9 @@ LC_ALL=C.UTF8 make check
 %_libdir/*.so
 
 %changelog
+* Fri May 02 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 0.15.0-alt1
+- Update to upstream 0.15.0
+
 * Sat Apr 06 2024 Daniel Zagaynov <kotopesutility@altlinux.org> 0.14.0-alt1
 - Update to upstream 0.14.0
 
