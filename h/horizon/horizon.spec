@@ -1,11 +1,15 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: horizon
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0-or-later
 Group: Engineering
-Url: https://github.com/horizon-eda/horizon
+URL: https://github.com/horizon-eda/horizon
+VCS: https://github.com/horizon-eda/horizon.git
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -61,11 +65,17 @@ BuildRequires: libspnav-devel
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*
+%_man1dir/*.1.*
 %doc *.md
 
 %changelog
+* Thu May 22 2025 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt2
+- fix unpackaged files
+- fix typo in changelog
+- add VCS tag
+
 * Tue May 21 2024 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt1
-- nnew version 2.6.0
+- new version 2.6.0
 
 * Sat Mar 02 2024 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1.2
 - NMU: build with libpodofo0.9-devel (0.10 is not supported yet)
