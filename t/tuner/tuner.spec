@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Extensible control center
@@ -32,7 +32,15 @@ BuildRequires: gobject-introspection-devel
 %{?_enable_docs:BuildRequires: valadoc}
 
 %description
-Extensible control center for GNOME desktop
+Tuner is the home for your additional system settings, components,
+applications, and whatever else you want!
+
+Extended control over the interface and functions using plugins.
+The interface is adapted to different device sizes.
+Easy installation from the repository.
+You can create your own plugins without affecting the main program code.
+Easy creation of plugins working with dconf and unlimited plugin functionality
+thanks to libpeas.
 
 %package -n lib%name
 Summary: Versatile library for creating extensible apps and plugins for them
@@ -122,6 +130,14 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Fri May 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.5-alt1
+- improved translations
+- changed app icon
+- updated metadata (Closes: 54409)
+- fixed reset button behaviour at some places (Closes: 54413)
+- updated plugin loading order (Closes: 54427)
+- added more info about installed plugins
+
 * Mon May 19 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.4-alt1
 - improved no plugins page
 - improved translations
