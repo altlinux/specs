@@ -1,9 +1,10 @@
-%def_without check
-
+%define _unpackaged_files_terminate_build 1
 %define xdg_name com.vysp3r.ProtonPlus
 
+%def_without check
+
 Name: protonplus
-Version: 0.4.27
+Version: 0.4.30
 Release: alt1
 
 Summary: Simple and powerful manager for Wine, Proton, DXVK and VKD3D
@@ -64,6 +65,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 %_iconsdir/hicolor/*/apps/%xdg_name.png
 
 %changelog
+* Fri May 23 2025 Boris Yumankulov <boria138@altlinux.org> 0.4.30-alt1
+- new version 0.4.30
+
 * Fri Mar 28 2025 Boris Yumankulov <boria138@altlinux.org> 0.4.27-alt1
 - new version 0.4.27
 
