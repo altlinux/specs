@@ -3,12 +3,12 @@
 %define _libexecdir %prefix/libexec
 %define ver_major 0.4
 %define api_ver 1.0
-%def_enable gtk2_module
+%def_disable gtk2_module
 %def_enable gtk3_module
 
 Name: caribou
 Version: %ver_major.22
-Release: alt3
+Release: alt4
 
 Summary: A simplified in-place on-screen keyboard
 Group: Graphical desktop/GNOME
@@ -151,6 +151,9 @@ GObject introspection devel data for the Caribou library.
 %_girdir/Caribou-%api_ver.gir
 
 %changelog
+* Fri May 23 2025 Anton Midyukov <antohami@altlinux.org> 0.4.22-alt4
+- NMU: disable gtk2 module
+
 * Fri May 14 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.22-alt3
 - fix FTBFS related to vala build system
 
