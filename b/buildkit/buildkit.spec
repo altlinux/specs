@@ -1,6 +1,6 @@
 %global import_path github.com/moby/buildkit
 Name:     buildkit
-Version:  0.21.1
+Version:  0.22.0
 Release:  alt1
 
 Summary:  BuildKit is a toolkit for converting source code to build artifacts
@@ -57,6 +57,9 @@ install -Dm 0644 examples/systemd/system/* -t %buildroot%_unitdir
 %doc docs
 
 %changelog
+* Fri May 23 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.22.0-alt1
+- new version 0.22.0
+
 * Wed Apr 30 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.21.1-alt1
 - new version 0.21.1
 
