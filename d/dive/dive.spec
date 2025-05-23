@@ -3,8 +3,8 @@
 # TODO: build with external sources
 
 Name: dive
-Version: 0.12.0
-Release: alt2
+Version: 0.13.1
+Release: alt1
 
 Summary: A tool for exploring each layer in a docker image
 
@@ -51,6 +51,9 @@ install -D -p -m 755 ./dist/dive %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri May 23 2025 Vitaly Lipatov <lav@altlinux.ru> 0.13.1-alt1
+- new version 0.13.1 (with rpmrb script)
+
 * Sun Feb 25 2024 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt2
 - skip coverage tests
 
