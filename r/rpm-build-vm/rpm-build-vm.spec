@@ -9,7 +9,7 @@
 %endif
 
 Name: rpm-build-vm
-Version: 1.75
+Version: 1.76
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -66,6 +66,8 @@ on supported architectures (this one (%_arch) is unsupported).
 %package run
 Summary: vm-run virtualized runner
 Group: Development/Other
+# Due to /usr/sbin/kvm-ok
+Conflicts: cpu-checker
 
 # Other arches will get a stub which will always return success
 %ifarch %supported_arches
@@ -131,6 +133,8 @@ Requires(post): busybox
 %endif
 %endif
 Requires(post): %name-createimage = %EVR
+Requires(post): iproute2
+Requires(post): iputils
 Requires(post): procps
 Requires(post): time
 
@@ -201,19 +205,7 @@ install -Dp checkinstall.sh %buildroot%_libexecdir/vm-run.ci/checkinstall
 %_sysconfdir/bashrc.d/vm*.sh
 
 %post run
-# u&mount should to be readable to use inside vm
-control mount unprivileged
-
-# Useful for enable audit for some kernel-modules tests
-[ ! -x /sbin/auditctl ] || chmod a+rx /sbin/auditctl
-
-# For --overlay=
-chmod a+twx /mnt
-
-# Allow user creation (for openssh)
-chmod a+r /etc/login.defs
-
-# Call filetrigger for the past kernels.
+# Call filetrigger for the past kernels and packages.
 find /boot | %_rpmlibdir/vm-run.filetrigger
 
 %post checkinstall -p %_libexecdir/vm-run.ci/checkinstall
@@ -232,6 +224,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Fri May 23 2025 Vitaly Chikunov <vt@altlinux.org> 1.76-alt1
+- Unprivilege ping, improve fixperms and depmod message.
+
 * Sat Nov 16 2024 Vitaly Chikunov <vt@altlinux.org> 1.75-alt1
 - Consistently print 'Error:' on failures and do not append usage.
 
