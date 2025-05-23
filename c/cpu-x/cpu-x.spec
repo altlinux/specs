@@ -5,13 +5,16 @@
 
 Name: cpu-x
 Version: 5.3.1
-Release: alt1
+Release: alt1.1
 Summary: CPU-X is a Free software that gathers information on CPU, motherboard and more
 License: GPL-3.0-or-later
 Group: System/Kernel and hardware
 Url: https://github.com/X0rg/CPU-X
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+# idea taken from https://github.com/maierfelix/VK_KHR_ray_tracing/blob/master/VK_KHR_ray_tracing/VK_KHR_ray_tracing.cpp
+Patch1: cpu-x-fix-vulkan-rt.patch
+Patch2: cpu-x-fix-gl-vendor.patch
 
 Buildrequires(pre): rpm-macros-cmake
 Buildrequires: gcc-c++ cmake 
@@ -29,6 +32,7 @@ BuildRequires: pkgconfig(libproc2)
 BuildRequires: pkgconfig(libstatgrab)
 BuildRequires: pkgconfig(ncursesw)
 BuildRequires: pkgconfig(polkit-gobject-1)
+BuildRequires: pkgconfig(epoxy)
 %{?_enable_opencl:BuildRequires: ocl-icd-devel}
 Requires: icon-theme-hicolor
 
@@ -76,6 +80,14 @@ rm -r %buildroot%_datadir/locale/zh_Hant
 %_prefix/libexec/*
 
 %changelog
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 5.3.1-alt1.1
+- vulkan: Fix vulkan RT detection (we can't just create vk instance with RT, it
+  require more steps like pipeline setup, so do simple query extension instead
+  of full init).
+- opengl: fix GL vendor detection in case of Mesa community driven drivers
+  (like r300/r600).
+- BR: added libepoxy.
+
 * Tue May 20 2025 L.A. Kostis <lakostis@altlinux.ru> 5.3.1-alt1
 - 5.3.1.
 - Re-apply russian translation fixes.
