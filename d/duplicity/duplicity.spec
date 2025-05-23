@@ -1,6 +1,6 @@
 Name: duplicity
-Version: 2.2.3
-Release: alt1.1
+Version: 3.0.4.1
+Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
 
@@ -52,6 +52,7 @@ hard links.
 
 %install
 %python3_install
+rm -v %buildroot%python3_sitelibdir/%name/backends/_testbackend.py
 
 %find_lang %name
 
@@ -69,6 +70,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Fri May 23 2025 Vitaly Lipatov <lav@altlinux.ru> 3.0.4.1-alt1
+- new version 3.0.4.1 (with rpmrb script)
+
 * Sun Jan 05 2025 Grigory Ustinov <grenka@altlinux.org> 2.2.3-alt1.1
 - NMU: drop unnessesary dependency on future.
 
