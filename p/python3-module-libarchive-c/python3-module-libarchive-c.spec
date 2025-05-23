@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.2
+Version: 5.3
 Release: alt1
 Summary: Python interface to libarchive
 License: CC0
@@ -64,6 +64,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 5.3-alt1
+- 5.2 -> 5.3.
+
 * Mon Mar 17 2025 Stanislav Levin <slev@altlinux.org> 5.2-alt1
 - 5.1 -> 5.2.
 
