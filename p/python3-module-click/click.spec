@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.1.8
+Version: 8.2.1
 Release: alt1
 Summary: Composable command line interface toolkit
 License: BSD-3-Clause
@@ -21,7 +21,11 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+%pyproject_builddeps_metadata
 %pyproject_builddeps_check
+# required by tests/test_utils.py::test_echo_via_pager
+BuildRequires: /usr/bin/less
+BuildRequires: /usr/bin/cat
 %endif
 
 %description
@@ -41,7 +45,7 @@ rm src/click/_winconsole.py
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/tests.txt
+%pyproject_deps_resync_check_depgroup tests
 %endif
 
 %build
@@ -59,6 +63,9 @@ rm src/click/_winconsole.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 21 2025 Stanislav Levin <slev@altlinux.org> 8.2.1-alt1
+- 8.1.8 -> 8.2.1.
+
 * Mon Dec 23 2024 Stanislav Levin <slev@altlinux.org> 8.1.8-alt1
 - 8.1.7 -> 8.1.8.
 
