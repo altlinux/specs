@@ -3,7 +3,7 @@
 
 Name: 7-zip
 Version: 24.09
-Release: alt1
+Release: alt2
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -39,7 +39,7 @@ BuildRequires: gcc-c++
 %prep
 %setup -a1
 ##patch2 -p1
-##patch3 -p1
+%patch3 -p1
 ##patch100 -p1
 %ifarch %e2k
 %add_optflags -msse4.1 -mno-sse4.2
@@ -128,6 +128,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Fri May 23 2025 Alexander Danilov <admsasha@altlinux.org> 24.09-alt2
+- Fix build for old branch.
+
 * Thu May 22 2025 Fr. Br. George <george@altlinux.org> 24.09-alt1
 - Autobuild version bump to 24.09
 
