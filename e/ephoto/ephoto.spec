@@ -4,17 +4,18 @@
 
 Name: ephoto
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: The Enlightenment Photo Viewer
 Group: Graphical desktop/Enlightenment
 License: BSD-2-Clause
 Url: https://www.smhouston.us/%name/
 
-%if_disabled snapshot
-Source: https://www.smhouston.us/stuff/%name-%version%beta.tar.xz
-%else
 Vcs: https://git.enlightenment.org/apps/ephoto.git
+
+%if_disabled snapshot
+Source: http://download.enlightenment.org/rel/apps/%name/%name-%version%beta.tar.xz
+%else
 Source: %name-%version%beta.tar
 %endif
 
@@ -40,10 +41,13 @@ Photo Viewer for Enlightenment desktop.
 %_libdir/%name/%{name}_thumbnail
 %_datadir/%name/
 %_desktopdir/%name.desktop
-%_iconsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 %doc AUTHORS README TODO
 
 %changelog
+* Fri May 23 2025 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt2
+- updated to 0be8a0f from master branch
+
 * Mon Dec 27 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
