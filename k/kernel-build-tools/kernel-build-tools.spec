@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.127
+Version: 0.128
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -97,6 +97,9 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Fri May 23 2025 Michael Shigorin <mike@altlinux.org> 0.128-alt1
+- km-create-tag: Add -u|--key-id option.
+
 * Sun Mar 16 2025 Vitaly Chikunov <vt@altlinux.org> 0.127-alt1
 - Added fake P:kernel-headers-modules-rk (ALT#53472).
 
