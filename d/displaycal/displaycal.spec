@@ -2,7 +2,7 @@
 
 Name: displaycal
 Version: 3.9.14
-Release: alt1
+Release: alt1.1
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -93,11 +93,14 @@ rm -v %buildroot%python3_sitelibdir/%up_name/{setup.py,postinstall.py}
 %_desktopdir/*.desktop
 %_metainfodir/net.displaycal.%up_name.appdata.xml
 %python3_sitelibdir/%up_name/
-%python3_sitelibdir/%up_name-%version.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %name}/
 %_man1dir/*
 
 
 %changelog
+* Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 3.9.14-alt1.1
+- NMU: fixed FTBFS (setuptools 75.8.1)
+
 * Mon Dec 09 2024 Vitaly Lipatov <lav@altlinux.ru> 3.9.14-alt1
 - new version 3.9.14 (with rpmrb script)
 
