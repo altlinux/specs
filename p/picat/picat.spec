@@ -1,5 +1,5 @@
 Name: picat
-Version: 3.8.0
+Version: 3.8.7
 Release: alt1
 
 Summary: Picat logical programming language
@@ -73,6 +73,9 @@ install -pm644 README %buildroot%docdir/
 %libdir/preloaded/*.pi
 
 %changelog
+* Sat Mar 22 2025 Andrey Bergman <vkni@altlinux.org> 3.8.7-alt1
+- Version update.
+
 * Sun Feb 02 2025 Andrey Bergman <vkni@altlinux.org> 3.8.0-alt1
 - Version update.
 
