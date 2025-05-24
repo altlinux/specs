@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v docs-alt-domain docs-alt-platform
 
 Name: docs-%variant
 Version: 11.0
-Release: alt0.4
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Sat May 24 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt1
+- update to ALT Virtualization PVE 11.0rc1
+
 * Fri May 23 2025 Alexander Stepchenko <geochip@altlinux.org> 11.0-alt0.4
 - remove Obsoletes docs-alt-server-v
 
