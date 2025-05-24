@@ -3,7 +3,7 @@
 %define sover 0
 
 Name: cadical
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: CaDiCaL SAT Solver
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/lib%{name}.a
 
 %changelog
+* Fri Feb 14 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.3-alt1
+- Update to upstream 2.1.3
+
 * Mon Feb 03 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.2-alt1
 - Update to upstream 2.1.2
 
