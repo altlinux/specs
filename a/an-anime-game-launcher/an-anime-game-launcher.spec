@@ -1,5 +1,5 @@
 Name: an-anime-game-launcher
-Version: 3.14.0
+Version: 3.14.1
 Release: alt1
 
 Summary: An Anime Game launcher for Linux with telemetry disabling
@@ -33,14 +33,14 @@ cat >> .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.30.2"]
+[source."git+https://github.com/an-anime-team/anime-game-core?tag=1.31.1"]
 git = "https://github.com/an-anime-team/anime-game-core"
-tag = "1.30.2"
+tag = "1.31.1"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.28.2"]
+[source."git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.28.4"]
 git = "https://github.com/an-anime-team/anime-launcher-sdk"
-tag = "1.28.2"
+tag = "1.28.4"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -86,6 +86,9 @@ ln -sf %_libdir/%name/anime-game-launcher %buildroot%_bindir/%name
 %_libdir/%name
 
 %changelog
+* Sat May 24 2025 Anton Kurachenko <srebrov@altlinux.org> 3.14.1-alt1
+- New version 3.14.1.
+
 * Tue May 13 2025 Anton Kurachenko <srebrov@altlinux.org> 3.14.0-alt1
 - New version 3.14.0.
 - Added VCS tag.
