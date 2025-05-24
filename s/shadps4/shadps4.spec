@@ -1,7 +1,7 @@
 %define cryptopp_cmake_commit 2c384c28265a93358a2455e610e76393358794df
 %define robin_map_version 1.4.0
 %define magic_enum_commit a413fcc9c46a020a746907136a384c227f3cd095
-%define sirit_commit 427a42c9ed99b38204d9107bc3dc14e92458acf1
+%define sirit_commit 09a1416ab1b59ddfebd2618412f118f2004f3b2c
 %define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
 %define cryptopp_commit effed0d0b865afc23ed67e0916f83734e4b9b3b7
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
@@ -11,8 +11,8 @@
 %define libatrac9_commit ec8899dadf393f655f2871a94e0fe4b3d6220c9a
 
 Name: shadps4
-Version: 0.8.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: Sony PlayStation 4 emulator
 License: GPL-2.0
@@ -70,6 +70,7 @@ BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 BuildRequires: libtoml11-devel
 BuildRequires: libusb-devel
+BuildRequires: libuuid-devel
 BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: libxbyak-devel
 BuildRequires: libxxhash-devel
@@ -142,6 +143,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libexecdir/%name
 
 %changelog
+* Sat May 24 2025 Nazarov Denis <nenderus@altlinux.org> 0.9.0-alt1
+- Version 0.9.0
+
 * Mon May 05 2025 Nazarov Denis <nenderus@altlinux.org> 0.8.0-alt2
 - Add pach to restore PKG support
 
