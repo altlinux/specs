@@ -3,7 +3,7 @@
 %def_disable domU
 
 Name: kernel-image-repka
-Release: alt2
+Release: alt3
 
 %define kernel_base_version	6.1
 %define kernel_sublevel	.11
@@ -220,11 +220,6 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
 
-pushd %buildroot/boot/devicetree/$KernelVer
-find . -mindepth 2 -name "*.dtb" | \
-       while read f; do ln -srv "$f" "$(basename $f)"; done
-popd
-
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
@@ -409,6 +404,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat May 24 2025 Anton Kurachenko <srebrov@altlinux.org> 6.1.11-alt3
+- Removed unnecessary symlinks to dtbs.
+
 * Mon Mar 31 2025 Anton Kurachenko <srebrov@altlinux.org> 6.1.11-alt2
 - Changed package description.
 - Minor changes in the spec and config.
