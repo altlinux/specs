@@ -2,13 +2,16 @@
 %define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major.0
+Version: %ver_major.2.1
 Release: alt1%beta
 
-Summary: A collection of GNOME backgrounds
-License: GPLv2
+Summary: Default wallpapers for GNOME
+License: CC-BY-SA-3.0
 Group: Graphical desktop/GNOME
 Url: https://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-backgrounds.git
+
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
@@ -38,6 +41,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2.1-alt1
+- 48.2.1
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 
