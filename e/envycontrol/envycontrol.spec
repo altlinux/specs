@@ -1,5 +1,5 @@
 Name: envycontrol
-Version: 3.5.1
+Version: 3.5.2
 Release: alt1
 
 Summary: EnvyControl is a program aimed to provide an easy way to switch GPU modes on Nvidia Optimus systems
@@ -37,6 +37,9 @@ AMD + Nvidia graphics configurations) under Linux.
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 24 2025 Vitaly Lipatov <lav@altlinux.ru> 3.5.2-alt1
+- new version 3.5.2 (with rpmrb script)
+
 * Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt1
 - new version 3.5.1 (with rpmrb script)
 
