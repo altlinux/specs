@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define beta %nil
 %define gst_api_ver 1.0
 
@@ -7,22 +7,23 @@
 %def_disable ipod
 
 Name: exaile
-Version: 4.1.3
-Release: alt2
+Version: 4.1.4
+Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
 License: GPL-2.0-or-later
 Group: Sound
 Url: http://www.exaile.org
 
-BuildArch: noarch
+Vcs: https://github.com/exaile/exaile.git
 
 %if_disabled snapshot
-Source: https://github.com/exaile/%name/releases/download/%version/%name-%version%beta.tar.gz
+Source: https://github.com/exaile/%name/archive/%version/%name-%version%beta.tar.gz
 %else
-Vcs: https://github.com/exaile.git
 Source: %name-%version.tar
 %endif
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -32,6 +33,7 @@ BuildRequires(pre): rpm-build-python3
 # https://pypi.org/project/spydaap/
 %filter_from_requires /spydaap/d
 
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(WebKit2) = 4.1
 Requires: dbus dconf
@@ -122,6 +124,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %endif
 
 %changelog
+* Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.4-alt1
+- 4.1.4
+
 * Tue Oct 08 2024 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt2
 - updated to 4.1.3-36-g2f06cc94
 - requires python3(bsddb3) (ALT #51008)

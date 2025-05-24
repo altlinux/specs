@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
 %define modname gidocgen
 %define ver_major 2025
+%def_disable flake8_test
 
 %def_enable check
 
 Name: gi-docgen
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Documentation tool for GObject-based libraries
 Group: Development/Other
@@ -38,9 +39,10 @@ BuildRequires: python3-module-Pygments
 BuildRequires: python3-module-packaging
 BuildRequires: python3-module-toml
 BuildRequires: python3-module-typogrify
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-flake8 python3-module-mypy
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-mypy
 BuildRequires: python3-module-markdown python3-module-jinja2 python3-module-Pygments
-BuildRequires: python3-module-toml python3-module-typogrify}
+BuildRequires: python3-module-toml python3-module-typogrify
+%{?_enable_flake8_test:BuildRequires: python3-module-flake8}}
 
 %description
 GI-DocGen is a document generator for GObject-based libraries. GObject is
@@ -85,6 +87,10 @@ ln -sf ../../../../share/%modname/templates %buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3-alt2
+- updated to 2025.3-3-g9bec04e
+- disabled flake8 test
+
 * Fri Feb 28 2025 Yuri N. Sedunov <aris@altlinux.org> 2025.3-alt1
 - 2025.3
 

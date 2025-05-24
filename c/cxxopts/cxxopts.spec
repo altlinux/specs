@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name cxxopts
 
 %def_disable unicode_help
 %def_enable check
 
 Name: %_name
-Version: 3.2.1
-Release: alt2
+Version: 3.3.0
+Release: alt1
 
 Summary: Lightweight C++ option parser library
 License: MIT
@@ -67,6 +67,9 @@ sed -i 's/-Werror/-Wno-error/' cmake/cxxopts.cmake
 %endif
 
 %changelog
+* Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Mon Apr 28 2025 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt2
 - updated to v3.2.1-12-gdbf4c6a (fixed for CMake-4/gcc-15)
 - made unicode support optional (disabled by default)
