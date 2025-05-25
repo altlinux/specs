@@ -1,6 +1,7 @@
 %define _name gexiv2
 %define ver_major 0.14
 %define api_ver 0.10
+%define namespace GExiv2
 
 %def_enable gtk_doc
 %def_enable vala
@@ -8,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: GObject-based Exiv2 wrapper
@@ -83,10 +84,10 @@ This package provides Python3 bindings for the gexiv2 library.
 %build
 
 %meson \
-	-Dintrospection=true \
-	%{?_enable_vala:-Dvapi=true} \
-	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	%{?_disable_python3:-Dpython3=false}
+    -Dintrospection=true \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool gtk_doc gtk_doc} \
+    %{subst_enable_meson_bool python3 python3}
 %nil
 %meson_build
 
@@ -107,10 +108,10 @@ This package provides Python3 bindings for the gexiv2 library.
 %{?_enable_vala:%_vapidir/%_name.*}
 
 %files gir
-%_typelibdir/GExiv2-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GExiv2-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %{?_enable_python3:
 %files -n python3-module-%_name
@@ -123,6 +124,9 @@ This package provides Python3 bindings for the gexiv2 library.
 %endif
 
 %changelog
+* Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.14.5-alt1
+- 0.14.5
+
 * Fri Jun 28 2024 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
 - 0.14.3
 

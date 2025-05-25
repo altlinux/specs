@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: mission-center
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Mission Center
@@ -102,6 +102,9 @@ mv nvtop-%nvtop_ver %__builddir/subprojects/magpie/src/debug/build/native/nvtop-
 
 
 %changelog
+* Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sat May 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - updated to v1.0.0-3-gf17f715
 
