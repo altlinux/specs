@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libwebsockets
-Version: 4.3.3
+Version: 4.3.5
 Release: alt1
 
 Summary: A lightweight C library for Websockets
@@ -99,6 +99,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 4.3.5-alt1
+- new version 4.3.5 (with rpmrb script)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3.3-alt1
 - new version 4.3.3 (with rpmrb script)
 
