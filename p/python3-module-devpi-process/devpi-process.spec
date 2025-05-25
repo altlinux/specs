@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.2
-Release: alt1
+Release: alt2
 Summary: Programmatic API to create and use a devpi server process
 License: MIT
 Group: Development/Python3
@@ -22,7 +22,7 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra test
+%pyproject_builddeps_metadata_extra testing
 %endif
 
 %description
@@ -51,5 +51,8 @@ that programmatically.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun May 25 2025 Stanislav Levin <slev@altlinux.org> 1.0.2-alt2
+- Fixed extra name used for pulling tests dependencies.
+
 * Sat Dec 28 2024 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus.
