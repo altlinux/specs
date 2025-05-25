@@ -1,7 +1,7 @@
 %define abiversion 7
 
 Name: libjasper
-Version: 4.2.4
+Version: 4.2.5
 Release: alt1
 
 Summary: Implementation of the codec specified in the JPEG-2000 Part-1 standard
@@ -102,6 +102,9 @@ code stream format defined in ISO/IEC 15444-1:2000.
 %doc %_docdir/JasPer/
 
 %changelog
+* Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 4.2.5-alt1
+- new version 4.2.5 (with rpmrb script)
+
 * Tue Dec 03 2024 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt1
 - new version 4.2.4 (with rpmrb script)
 
