@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hashlink
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: HashLink is a virtual machine for Haxe
@@ -60,6 +60,7 @@ install -m644 src/hlc_main.c %buildroot%_includedir/hlc_main.c
 %_libdir/fmt.hdll
 %_libdir/sdl.hdll
 %_libdir/openal.hdll
+%_libdir/heaps.hdll
 %_libdir/ssl.hdll
 %_libdir/sqlite.hdll
 %_libdir/ui.hdll
@@ -72,6 +73,9 @@ install -m644 src/hlc_main.c %buildroot%_includedir/hlc_main.c
 %_includedir/hlc_main.c
 
 %changelog
+* Sat May 24 2025 Vitaly Lipatov <lav@altlinux.ru> 1.15-alt1
+- new version 1.15 (with rpmrb script)
+
 * Sun Feb 02 2025 Vitaly Lipatov <lav@altlinux.ru> 1.14-alt1
 - new version 1.14 (with rpmrb script)
 - build from tarball
