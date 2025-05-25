@@ -2,7 +2,7 @@
 %define oname grok
 
 Name: libgrokj2k
-Version: 14.3.0
+Version: 15.0.0
 Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
@@ -106,6 +106,9 @@ rm -rf thirdparty/libz
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 15.0.0-alt1
+- new version 15.0.0 (with rpmrb script)
+
 * Sat Jan 25 2025 Vitaly Lipatov <lav@altlinux.ru> 14.3.0-alt1
 - new version 14.3.0 (with rpmrb script)
 - add BR: cli11-devel
