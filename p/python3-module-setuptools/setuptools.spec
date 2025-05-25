@@ -8,7 +8,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 80.7.1
+Version: 80.8.0
 Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
@@ -189,6 +189,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Sat May 24 2025 Stanislav Levin <slev@altlinux.org> 1:80.8.0-alt1
+- 80.7.1 -> 80.8.0.
+
 * Thu May 15 2025 Stanislav Levin <slev@altlinux.org> 1:80.7.1-alt1
 - 80.4.0 -> 80.7.1.
 
