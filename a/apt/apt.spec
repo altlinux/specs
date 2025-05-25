@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt95
+Release: alt96
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -608,6 +608,11 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Wed May 21 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt96
+- Added support for HTTPS connections through an HTTP proxy (ALT#38543).
+  (Backported from Debian 1.5_alpha4~9.) (To come next: through HTTPS proxy.)
+  Applicable configuration is the same as for HTTP.
+
 * Wed May 21 2025 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt95
 - Restricted access to files output by Debug::Connect (to protect secrets).
 - Updated Russian help message (missing commands were: autoremove, changelog);
