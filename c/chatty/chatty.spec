@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name Chatty
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.8
-%define tag_ver 588a14c595e5a221fb68536c47a12df2336c4e77
+%define tag_ver 1f9bf31f0b67edbb24d439311aec8a0213d3bee9
 %define rdn_name sm.puri.%_name
 %define rdn_name1 sm.puri.%name
 %define cmatrix_ver 0.0.3
@@ -18,8 +18,8 @@
 %endif
 
 Name: chatty
-Version: %ver_major.7
-Release: alt2
+Version: %ver_major.8
+Release: alt1
 
 Summary: SMS, MMS and XMPP messaging application for GNOME
 Group: Networking/Instant messaging
@@ -34,10 +34,6 @@ Source: https://gitlab.gnome.org/World/Chatty/-/archive/v%version/%name-v%versio
 Source: %name-%version.tar
 %endif
 Source1: libcmatrix-%cmatrix_ver.tar
-# https://bugzilla.altlinux.org/54030
-# https://gitlab.gnome.org/World/Chatty/-/merge_requests/1473
-# revert this
-Patch10: chatty-0.8.7-up-70d1ba4ebaa43937dd304b733ceed9c8c0296900.diff
 
 %define glib_ver 2.78
 %define gtk4_ver 4.12
@@ -46,9 +42,11 @@ Patch10: chatty-0.8.7-up-70d1ba4ebaa43937dd304b733ceed9c8c0296900.diff
 
 Requires: dconf yelp
 Requires: ModemManager feedbackd
+Requires: gnome-contacts
 Requires: gnupg2
 Requires: gst-plugins-base1.0
 Requires: gst-libav
+Requires: mmsd-tng
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ yelp-tools
@@ -83,7 +81,6 @@ supporting SMS, MMS, XMPP and matrix.
 %prep
 %setup -n %{?_enable_snapshot:%name-%version}%{?_disable_snapshot:%_name-v%version-%tag_ver} -a1
 mv libcmatrix-%cmatrix_ver subprojects/libcmatrix
-%patch10 -p1 -R
 
 %build
 %meson
@@ -111,6 +108,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun May 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
+- 0.8.8
+
 * Mon Apr 28 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.7-alt2
 - v0.8.7-1-gd17ad8e (updated russian translation)
 - restored desktop/metainfo file names
