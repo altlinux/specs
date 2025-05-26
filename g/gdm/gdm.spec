@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 48
 %define beta %nil
@@ -19,6 +19,7 @@
 %def_with libaudit
 %def_with plymouth
 %def_enable wayland
+%def_enable x11
 %def_enable xsession
 #Enable running X server as user
 %def_enable user_display_server
@@ -26,12 +27,14 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt3%beta
 
 Summary: The GNOME Display Manager
-License: GPL-2.0
-URL: http://wiki.gnome.org/Projects/GDM
+License: GPL-2.0-or-later
+Url: http://wiki.gnome.org/Projects/GDM
 Group: Graphical desktop/GNOME
+
+Vcs: https://gitlab.gnome.org/GNOME/gdm.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
@@ -98,15 +101,16 @@ BuildRequires: dconf pkgconfig(systemd) libpam-devel
 %{?_with_libaudit:BuildRequires: libaudit-devel}
 %{?_with_plymouth:BuildRequires: plymouth-devel}
 BuildRequires: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
-BuildRequires: libXdmcp-devel
 
+%{?_enable_x11:
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXext-devel libXft-devel libSM-devel
 BuildRequires: libXi-devel xorg-proto-devel libXinerama-devel
 BuildRequires: xorg-xephyr xorg-server
-BuildRequires: libkeyutils-devel
-BuildRequires: libcheck-devel >= %check_ver
-
 BuildRequires: libdmx-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libkeyutils-devel}
+
+BuildRequires: libcheck-devel >= %check_ver
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
 BuildRequires: libdaemon-devel libudev-devel
@@ -192,22 +196,23 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%defaul
 
 %build
 %meson \
-	%{?_enable_ipv6:-Dipv6=true} \
-	-Dinitial-vt='%vt_nr' \
-	-Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
-	-Dsysconfsubdir='%gdm_subconfdir' \
-	-Dpam-prefix='%_sysconfdir' \
-	-Dpam-mod-dir='%_pam_modules_dir' \
-	-Ddefault-pam-config='%default_pam_config' \
-	-Ddmconfdir='%_sysconfdir/X11/sessions' \
-	-Dudev-dir='%_udevrulesdir' \
-	-Ddbus-sys='%_datadir/dbus-1/system.d' \
-	%{?_without_xdmcp:-Dxdmcp=disabled} \
-	%{?_without_libaudit:-Dlibaudit=disabled} \
-	%{?_without_plymouth:-Dplymouth=disabled} \
-	%{?_disable_wayland:-Dwayland-support=false} \
-	%{?_enable_xsession:-Dgdm-xsession=true} \
-	%{?_disable_user_display_server:-Duser-display-server=false}
+    %{subst_enable_meson_bool ipv6 ipv6} \
+    -Dinitial-vt='%vt_nr' \
+    -Ddefault-path='/bin:/usr/bin:/usr/local/bin' \
+    -Dsysconfsubdir='%gdm_subconfdir' \
+    -Dpam-prefix='%_sysconfdir' \
+    -Dpam-mod-dir='%_pam_modules_dir' \
+    -Ddefault-pam-config='%default_pam_config' \
+    -Ddmconfdir='%_sysconfdir/X11/sessions' \
+    -Dudev-dir='%_udevrulesdir' \
+    -Ddbus-sys='%_datadir/dbus-1/system.d' \
+    %{?_without_xdmcp:-Dxdmcp=disabled} \
+    %{?_without_libaudit:-Dlibaudit=disabled} \
+    %{?_without_plymouth:-Dplymouth=disabled} \
+    %{subst_enable_meson_bool wayland wayland-support} \
+    %{subst_enable_meson_bool x11 x11-support} \
+    %{subst_enable_meson_bool xsession gdm-xsession} \
+    %{subst_enable_meson_bool user_display_server user-display-server}
 %nil
 %meson_build
 
@@ -220,8 +225,9 @@ rm -f %buildroot%_sysconfdir/pam.d/gdm
 # env.d directories
 mkdir -p %buildroot{%gdm_confdir,%_datadir/%name}/env.d
 
+%{?_enable_x11:
 # control gdm/xdmcp
-install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
+install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp}
 
 # default.pa for gdm
 install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/default.pa
@@ -232,21 +238,23 @@ install -p -m644 -D %SOURCE3 %buildroot%_localstatedir/lib/gdm/.config/pulse/def
 %check
 dbus-run-session %__meson_test
 
+%if_enabled x11
 %pre
 %pre_control gdm_xdmcp
 
 %post
 %post_control -s disabled gdm_xdmcp
+%endif
 
 %files
 %_sbindir/gdm
 %_bindir/gdm-config
 %_bindir/gdmflexiserver
-%_libexecdir/gdm-host-chooser
-%_libexecdir/gdm-session-worker
+%{?_enable_x11:%_libexecdir/gdm-host-chooser
 %_libexecdir/gdm-simple-chooser
+%_libexecdir/gdm-x-session}
+%_libexecdir/gdm-session-worker
 %_libexecdir/gdm-wayland-session
-%_libexecdir/gdm-x-session
 %_libexecdir/gdm-runtime-config
 %exclude %_libexecdir/gdm-auth-config-redhat
 %_pam_modules_dir/pam_gdm.so
@@ -260,20 +268,20 @@ dbus-run-session %__meson_test
 %config %_sysconfdir/pam.d/gdm-launch-environment
 %config %_sysconfdir/pam.d/gdm-smartcard
 %config %_sysconfdir/pam.d/gdm-fingerprint
-%_udevrulesdir/61-%name.rules
-%_datadir/dbus-1/system.d/gdm.conf
+%{?_enable_x11:%_udevrulesdir/61-%name.rules}
+%_datadir/dbus-1/system.d/%name.conf
 %config %_datadir/polkit-1/rules.d/20-%name.rules
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %dir %gdm_confdir
 %config(noreplace) %gdm_confdir/custom.conf
-%gdm_confdir/Xsession
+%{?_enable_x11:%gdm_confdir/Xsession}
 %gdm_confdir/env.d/
 %gdm_confdir/Init/
 %gdm_confdir/PostLogin/
 %gdm_confdir/PostSession/
 %gdm_confdir/PreSession/
 
-%config %_controldir/gdm_xdmcp
+%{?_enable_x11:%config %_controldir/gdm_xdmcp}
 %dir %_datadir/%name
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
@@ -311,6 +319,10 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt3
+- 48.0-20-gea33c5d9b
+- made x11 support optional (enabled by default)
+
 * Mon May 12 2025 Alexey Shabalin <shaba@altlinux.org> 48.0-alt2
 - Relocate dbus policy to /usr
 - Don't require pam_console.so (ALT#54211)
