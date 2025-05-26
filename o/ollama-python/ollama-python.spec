@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ollama-python
-Version: 0.4.8
+Version: 0.4.9
 Release: alt1
 Summary: Ollama Python library
 License: MIT
@@ -13,7 +13,7 @@ Vcs: https://github.com/ollama/ollama-python
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires: python3(hatch-vcs)
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: pytest3
 BuildRequires: python3(anyio)
@@ -54,13 +54,14 @@ Requires(post): ollama-cpu
 sed -Ei '/^version\s*=/s/"[0.]+"/"%version"/' pyproject.toml
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --ignore=examples
 
 %post checkinstall
 set -xe
@@ -82,6 +83,10 @@ rm -rf /root/.ollama
 %files checkinstall
 
 %changelog
+* Tue May 27 2025 Vitaly Chikunov <vt@altlinux.org> 0.4.9-alt1
+- Update to v0.4.9 (2025-05-14).
+- spec: Upstream switched from Poetry to Hatch.
+
 * Tue Apr 22 2025 Vitaly Chikunov <vt@altlinux.org> 0.4.8-alt1
 - Update to v0.4.8 (2025-04-16).
 
