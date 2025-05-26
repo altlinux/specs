@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Extensible control center
@@ -130,6 +130,10 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Mon May 26 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.6-alt1
+- fixed segfault
+- improved adaptivity
+
 * Fri May 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.5-alt1
 - improved translations
 - changed app icon
