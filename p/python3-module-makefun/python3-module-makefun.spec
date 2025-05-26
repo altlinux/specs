@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.15.6
-Release: alt2
+Version: 1.16.0
+Release: alt1
 
 Summary: Dynamically create python functions with a proper signature
 License: BSD-3-Clause
@@ -17,15 +17,18 @@ Vcs: https://github.com/smarie/python-makefun
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-setuptools-scm
-BuildRequires: python3-module-wheel
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_build_filter pytest-runner
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
+%add_pyproject_deps_check_filter nox
+%add_pyproject_deps_check_filter virtualenv
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -34,9 +37,14 @@ Small library to dynamically create python functions.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_pipreqfile noxfile-requirements.txt
+%endif
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -51,6 +59,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon May 26 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt1
+- Updated to 1.16.0.
+- Reverted building scheme "fixing".
+
 * Fri Oct 25 2024 Grigory Ustinov <grenka@altlinux.org> 1.15.6-alt2
 - Fixed building scheme for backport to stable branches.
 
