@@ -12,9 +12,11 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
+%set_autoconf_version 2.71
+
 Name: libcdata
 Version: 20240414
-Release: alt1
+Release: alt2
 
 Summary: Library for cross-platform C generic data functions
 License: LGPLv3+
@@ -74,6 +76,9 @@ applications that want to make use of libcdata.
 %_man3dir/*
 
 %changelog
+* Mon May 26 2025 Alexander Danilov <admsasha@altlinux.org> 20240414-alt2
+- Set the version of autoconf to 2.71 to simplify the build.
+
 * Thu Jan 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240414-alt1
 - New version 20240103.
 
