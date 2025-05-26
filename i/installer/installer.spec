@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.19
+Version: 1.16.20
 Release: alt1
 
 Summary: Installer common parts
@@ -144,6 +144,21 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Sun May 25 2025 Anton Midyukov <antohami@altlinux.org> 1.16.20-alt1
+- preinstall.d/30-setup-network.sh: major refactoring
+  + filter wireless interfaces
+  + do not reconfigure existing config interfaces
+  + configure only one network interface statically under the following
+    conditions: this is the same interface that was configured statically
+    in stage1, the directory from stage1 was copied
+  + static interface settings are transferred by copying from the stage1
+    interface
+  + do not use alterator-net-eth to configure static interface
+- initinstall.d, preinstall.d: save|restore /etc/apt before|after during
+  install
+- install2: create and remove destdir before and after installation
+- install2-desktop.sh: small improvements
+
 * Fri Apr 18 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.16.19-alt1
 - steps: add final-notes.desktop
 
