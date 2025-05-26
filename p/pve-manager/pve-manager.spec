@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -32,7 +32,7 @@ Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
 Requires: librados2-perl >= 1.3.1
 
 Source: %name-%version.tar
-
+Source2: 50-pve.preset
 Source6: basealt_logo.png
 Source8: basealt_favicon.ico
 Source9: basealt_logo-128.png
@@ -79,6 +79,8 @@ cp -p -r sencha-touch %buildroot%_jsdir/
 # fix config backup job retention
 mkdir -p %buildroot%_localstatedir/%name/jobs
 
+mkdir -p %buildroot%_localstatedir/%name/apl-info
+
 mkdir -p %buildroot%_tmpfilesdir
 cat << __EOF__ > %buildroot%_tmpfilesdir/%name.conf
 d /run/pveproxy 0700 www-data www-data -
@@ -86,31 +88,45 @@ f /var/lock/pveproxy.lck 0644 www-data www-data
 f /var/lock/spiceproxy.lck 0644 www-data www-data
 __EOF__
 
+# Enable autostart pvenetcommit.service
+mkdir -p %buildroot%_unitdir/sysinit.target.wants
+ln -r -s %buildroot%_unitdir/pvenetcommit.service %buildroot%_unitdir/sysinit.target.wants
+
+# Install systemd preset
+mkdir -p %buildroot%_presetdir
+install -m 0644 %SOURCE2 %buildroot%_presetdir/50-pve.preset
+
 # Cleanup
 rm -rf %buildroot%_sysconfdir/apt
 rm -rf %buildroot%_sysconfdir/initramfs-tools
-rm -f  %buildroot%_sysconfdir/modprobe.d/pve-blacklist.conf
+#rm -f  %buildroot%_sysconfdir/modprobe.d/pve-blacklist.conf
 rm -rf %buildroot%_sysconfdir/network
-rm -f  %buildroot%_unitdir/pve-daily-update.service
-rm -f  %buildroot%_unitdir/pve-daily-update.timer
+#rm -f  %buildroot%_unitdir/pve-daily-update.service
+#rm -f  %buildroot%_unitdir/pve-daily-update.timer
 rm -f  %buildroot%_unitdir/pvebanner.service
 #rm -f  %buildroot%_unitdir/pvenetcommit.service
 rm -f  %buildroot%_bindir/pvebanner
 rm -f  %buildroot%_bindir/pvesubscription
-# rm -f  %buildroot%_bindir/pveupgrade
-rm -f  %buildroot%_datadir/doc/pve-manager/aplinfo.dat
+#rm -f  %buildroot%_bindir/pveupgrade
+#rm -f  %buildroot%_datadir/doc/pve-manager/aplinfo.dat
 rm -f  %buildroot%_man1dir/pvesubscription.1*
-rm -f  %buildroot%_man1dir/pveupgrade.1*
+#rm -f  %buildroot%_man1dir/pveupgrade.1*
 rm -f  %buildroot%_man1dir/pve6to7.1*
 rm -f  %buildroot%_bindir/pve6to7
 rm -f  %buildroot%_bindir/pve7to8
 rm -f  %buildroot%_man1dir/pve7to8.1*
 
 %post
-%post_systemd_postponed pvedaemon pvestatd pveproxy spiceproxy pvescheduler
+%post_systemd_postponed pvedaemon.service pvestatd.service pveproxy.service spiceproxy.service pvescheduler.service pve-daily-update.timer
+
+if test ! -e /var/lib/pve-manager/apl-info/download.proxmox.com; then
+    mkdir -p /var/lib/pve-manager/apl-info
+    cp /usr/share/doc/pve-manager/aplinfo.dat /var/lib/pve-manager/apl-info/download.proxmox.com
+    pveam update ||:
+fi
 
 %preun
-%preun_systemd pvedaemon pveproxy pvestatd spiceproxy pvescheduler
+%preun_systemd pvedaemon.service pvestatd.service pveproxy.service spiceproxy.service pvescheduler.service pve-daily-update.timer
 
 %files
 %doc debian/copyright
@@ -119,8 +135,14 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_datadir/zsh/vendor-completions/*
 %_sysconfdir/logrotate.d/pve
 %config(noreplace) %_sysconfdir/vzdump.conf
-%_unitdir/*
+%_unitdir/*.service
+%_unitdir/*.timer
+%_unitdir/*.target
+%_unitdir/ceph-*.service.d/*
+%_unitdir/sysinit.target.wants/*
+%_presetdir/50-pve.preset
 %_systemd_dir/network/99-default.link.d/proxmox-mac-address-policy.conf
+%config %_sysconfdir/modprobe.d/pve-blacklist.conf
 %_tmpfilesdir/%name.conf
 %_bindir/*
 %perl_vendor_privlib/PVE/*.pm
@@ -133,8 +155,8 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %perl_vendor_privlib/PVE/Jobs
 %perl_vendor_privlib/PVE/Service
 %perl_vendor_privlib/PVE/Status
-%_datadir/pve-manager
-%_localstatedir/pve-manager
+%_datadir/%name
+%_localstatedir/%name
 %_localstatedir/vz
 %attr(0770,root,www-data) %_logdir/pveproxy
 %_man1dir/*
@@ -142,8 +164,15 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 %_jsdir/sencha-touch
 
 %changelog
+* Wed May 21 2025 Alexey Shabalin <shaba@altlinux.org> 8.4.1-alt2
+- enable autostart pvenetcommit.service
+- package pve-daily-update.timer and pve-daily-update.service
+- install aplinfo.dat
+- package config with blacklist nvidiafb module
+- package 50-pve.preset for autoenable systemd services
+
 * Thu Apr 17 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 8.4.1-alt1
-- 8.4.1 
+- 8.4.1
 
 * Tue Mar 18 2025 Sergey Konev <darisishe@altlinux.org> 8.3.3-alt4
 - fix UTF8 username in user.cfg (thx kustovdv@)

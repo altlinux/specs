@@ -2,8 +2,8 @@
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 0.10.0
-Release: alt2
+Version: 0.11.2
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -17,12 +17,13 @@ Provides: libpve-network-perl = %EVR
 Requires: ifupdown2
 Requires: pve-common >= 5.0.45
 Requires: pve-cluster >= 8.0.10
-Requires: frr
+Requires: pve-firewall >= 5.1.0
+Requires: frr frr-pythontools
 Requires: dnsmasq
 
-BuildRequires: pve-cluster >= 8.0.10
-BuildRequires: pve-firewall >= 5.1.0
-BuildRequires: pve-doc-generator >= 5.3.3
+BuildRequires: pve-cluster
+BuildRequires: pve-firewall
+BuildRequires: pve-doc-generator
 BuildRequires: perl
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -74,6 +75,11 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Wed May 21 2025 Alexey Shabalin <shaba@altlinux.org> 0.11.2-alt1
+- 0.11.2
+- Requires frr-pythontools for frr-reload.py
+- Enable bgpd and bfdd in frr daemon config
+
 * Mon Jan 27 2025 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt2
 - Fixed dnsmasq dbus config, allow policy user _dnsmasq.
 

@@ -1,6 +1,6 @@
 Name: ifupdown2
 Version: 3.2.0.11
-Release: alt3
+Release: alt4
 Summary: Network Interface Management tool similar to ifupdown
 License: GPL-2
 Group: System/Base
@@ -13,8 +13,10 @@ Source1: %name.tar
 Source2: resolvconf.if-up
 Source3: resolvconf.if-down
 
+Patch1: ifupdown2-3.2.0.11-alt-dont-use-dpkg-for-getting-version.patch
 Patch2: 0002-ALT-python-3.12-compatibility.patch
 Patch3: ALT-do-not-run-scripts-rpmnew-rpmsave.patch
+Patch4: ifupdown2-3.2.0.11-alt-replace-distutils-strtobool.patch
 
 BuildArch: noarch
 
@@ -68,11 +70,15 @@ using resolvconf utility
 %setup
 tar -xf %SOURCE1
 pushd %name
+%patch1 -p1
 %patch2 -p1
 for p in `cat ../debian/patches/series`; do
     patch -p1 < ../debian/patches/$p
 done
 %patch3 -p1
+%patch4 -p1
+
+sed -i "s/__version__ =.*/__version__ = '%version'/g" ifupdown2/__init__.py
 
 sed -i 's|/sbin/mstpctl|/usr/sbin/mstpctl|g' ifupdown2/addons/mstpctl.py
 sed -i 's|/usr/sbin/ip|/sbin/ip|g' ifupdown2/ifupdownaddons/modulebase.py
@@ -166,6 +172,10 @@ fi
 %_sysconfdir/network/if-down.d/*
 
 %changelog
+* Thu May 22 2025 Alexander Stepchenko <geochip@altlinux.org> 3.2.0.11-alt4
+- Replace function from distutils
+- Don't use dpkg for querying ifupdown2 version
+
 * Mon Apr 14 2025 Sergey Konev <darisishe@altlinux.org> 3.2.0.11-alt3
 - New subpackage with hooks for /etc/resolv.conf managment
 

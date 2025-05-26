@@ -21,9 +21,8 @@
 %def_disable grpc
 %def_disable zeromq
 %def_with libpam
-%def_disable ospfapi
-%def_disable ospfclient
-%def_disable shell_access
+%def_enable ospfapi
+%def_enable ospfclient
 %def_disable realms
 %def_enable fpm
 %def_enable pcre2posix
@@ -36,7 +35,7 @@
 %def_disable dp_dpdk
 
 Name: frr
-Version: 10.2
+Version: 10.2.2
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -46,7 +45,15 @@ Vcs: https://github.com/FRRouting/frr.git
 Source0: %name-%version.tar
 Source1: %name-tmpfiles.conf
 #Patch: %%name-%%version.patch
-Patch0001: 0001-update-init-script.patch
+Patch1001: 0001-update-init-script.patch
+
+# PVE patches
+Patch0001: 0001-enable-bgp-bfd-daemons.patch
+Patch0002: 0002-bgpd-add-an-option-for-RT-auto-derivation-to-force-A.patch
+Patch0003: 0003-tests-add-bgp-evpn-autort-test.patch
+Patch0004: 0004-zebra-add-ZEBRA_IF_DUMMY-flag-for-dummy-interfaces.patch
+Patch0005: 0005-fabricd-add-option-to-treat-dummy-interfaces-as-loop.patch
+Patch0006: 0006-fabricd-enable-dummy_as_loopback-option-per-default.patch
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
@@ -88,10 +95,66 @@ FRRouting supports BGP4, OSPFv2, OSPFv3, ISIS, RIP, RIPng, PIM, NHRP, PBR, EIGRP
 
 FRRouting is a fork of Quagga.
 
+%package pythontools
+Summary: Python tools for frr
+Group: Networking/Other
+Requires: %name = %EVR
+BuildArch: noarch
+
+%description pythontools
+FRRouting is free software that manages TCP/IP based routing protocols. It takes
+a multi-server and multi-threaded approach to resolve the current complexity
+of the Internet.
+
+FRRouting supports BGP4, OSPFv2, OSPFv3, ISIS, RIP, RIPng, PIM, NHRP, PBR, EIGRP and BFD.
+
+This package contains a small Python tool to provide configuration reload functionality.
+This is useful when the interactive configuration shell is not used. Without
+this package installed, "reload" will not work for the FRR daemons.
+
+%package rpki-rtrlib
+Summary: FRR BGP RPKI support (rtrlib)
+Group: Networking/Other
+Requires: %name = %EVR
+
+%description rpki-rtrlib
+Adds RPKI support to FRR's bgpd, allowing validation of BGP routes
+against cryptographic information stored in WHOIS databases.  This is
+used to prevent hijacking of networks on the wider internet.  It is only
+relevant to internet service providers using their own autonomous system
+number.
+
+%package snmp
+Summary: FRR SNMP support
+Group: System Environment/Daemons
+Group: Networking/Other
+Requires: %name = %EVR
+
+%description snmp
+Adds SNMP support to FRR's daemons by attaching to net-snmp's snmpd
+through the AgentX protocol.  Provides read-only access to current
+routing state through standard SNMP MIBs.
+
+%package grpc
+Summary: FRR GRPC support for FRR daemons
+Group: Networking/Other
+License: GPLv3+
+Requires: %name = %EVR
+
+%description grpc
+Adds GRPC support to the individual FRR daemons.
+
 %prep
 %setup
 #%%patch -p1
-%patch0001 -p1
+%patch1001 -p1
+
+#%%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p1
+%patch0004 -p1
+%patch0005 -p1
+%patch0006 -p1
 
 %build
 %autoreconf
@@ -120,7 +183,6 @@ FRRouting is a fork of Quagga.
     %{subst_with libpam} \
     %{subst_enable ospfapi} \
     %{subst_enable ospfclient} \
-    %{?_enable_shell_access:--enable-shell-access} \
     %{subst_enable realms} \
     %{subst_enable fpm} \
     %{subst_enable pcre2posix} \
@@ -169,14 +231,7 @@ find %buildroot -type f -name "*.la" -delete -print
 rm %buildroot%_libdir/%name/*.so
 rm -r %buildroot%_includedir
 
-cat > %buildroot%_sysconfdir/%name/%name.conf << __EOF__
-!hostname frr
-
-!password frr
-!enable password frr
-
-log file %_logdir/%name/%name.log
-__EOF__
+touch %buildroot%_sysconfdir/%name/%name.conf
 cat > %buildroot%_sysconfdir/%name/vtysh.conf << __EOF__
 ! vtysh is using PAM authentication allowing root to use it.
 __EOF__
@@ -198,15 +253,9 @@ usermod -G %frrvty_group %frr_user >/dev/null 2>&1 ||:
 # Create dummy files if they don't exist so basic functions can be used.
 if [ ! -e %_sysconfdir/%name/%name.conf ]; then
     echo "hostname `hostname`" > %_sysconfdir/%name/%name.conf
+    echo "log file %_logdir/%name/%name.log"  >> %_sysconfdir/%name/%name.conf
     chown %frr_user:%frr_group %_sysconfdir/%name/%name.conf
     chmod 640 %_sysconfdir/%name/%name.conf
-fi
-
-#still used by vtysh, this way no error is produced when using vtysh
-if [ ! -e %_sysconfdir/%name/vtysh.conf ]; then
-    touch %_sysconfdir/%name/vtysh.conf
-    chmod 640 %_sysconfdir/%name/vtysh.conf
-    chown %frr_user:%frrvty_group %_sysconfdir/%name/vtysh.conf
 fi
 
 %preun
@@ -218,22 +267,70 @@ fi
 %dir %attr(750,%frr_user,%frr_group) %_sysconfdir/%name
 %config(noreplace) %_logrotatedir/%name
 %config(noreplace) %attr(644,%frr_user,%frr_group) %_sysconfdir/frr/daemons
-%config(noreplace) %attr(640,%frr_user,%frr_group) %_sysconfdir/%name/[!v]*.conf*
+%ghost %config(noreplace) %attr(640,%frr_user,%frr_group) %_sysconfdir/%name/%name.conf
 %config(noreplace) %attr(640,%frr_user,%frrvty_group) %_sysconfdir/%name/vtysh.conf
 %config(noreplace) %_sysconfdir/pam.d/frr
 %dir %attr(755,root,%frr_group) %_logdir/%name
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%frr_libdir
-#%%frr_moduledir
+%dir %frr_libdir
+%frr_libdir/*.so*
+%frr_moduledir
 %frr_daemondir
 %_unitdir/%name.service
 %_initdir/%name
 %_datadir/yang/*.yang
 %_tmpfilesdir/%name.conf
 
+%exclude %frr_daemondir/*.py
+%if_enabled rpki
+%exclude %frr_moduledir/bgpd_rpki.so
+%endif
+%if_enabled snmp
+%exclude %frr_libdir/libfrrsnmp.so*
+%exclude %frr_moduledir/*snmp.so
+%endif
+%if_enabled grpc
+%exclude %frr_libdir/libfrrgrpc_pb.*
+%exclude %frr_moduledir/grpc.so
+%endif
+
+%files pythontools
+%frr_daemondir/*.py
+
+%if_enabled rpki
+%post rpki-rtrlib
+# add rpki module to daemons
+sed -i -e 's/^\(bgpd_options=\)\(.*\)\(".*\)/\1\2 -M rpki\3/' %_sysconfdir/frr/daemons
+
+%postun rpki-rtrlib
+# remove rpki module from daemons
+sed -i 's/ -M rpki//' %_sysconfdir/frr/daemons
+
+%files rpki-rtrlib
+%frr_moduledir/bgpd_rpki.so
+%endif
+
+%if_enabled snmp
+%files snmp
+%frr_libdir/libfrrsnmp.so*
+%frr_moduledir/*snmp.so
+%endif
+
+%if_enabled grpc
+%files grpc
+%frr_libdir/libfrrgrpc_pb.*
+%frr_moduledir/grpc.so
+%endif
+
 %changelog
+* Wed May 21 2025 Alexey Shabalin <shaba@altlinux.org> 10.2.2-alt1
+- 10.2.2
+- Add patches from PVE project
+- Build with ospfapi and ospfclient
+- Add subpackages: pythontools, rpki-rtrlib, snmp, grpc
+
 * Mon Nov 25 2024 Alexey Shabalin <shaba@altlinux.org> 10.2-alt1
 - 10.2
 
