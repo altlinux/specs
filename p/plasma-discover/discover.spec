@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.3.5
-Release: alt3
+Release: alt4
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -347,6 +347,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Mon May 26 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt4
+- disable packagekit online updates
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt3
 - fix offline updates defaults
 
