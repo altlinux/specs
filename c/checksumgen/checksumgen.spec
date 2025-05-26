@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     checksumgen
-Version:  0.2.1
+Version:  0.2.2
 Release:  alt1
 
 Summary:  Generates checksum file for an RPM repo slice
@@ -35,10 +35,23 @@ Generates checksum file for an RPM repo slice.
 
 %files
 %doc README
+%dir %_prefix/libexec/%name
 %_prefix/libexec/%name/*.sh
 %_bindir/%name
 
 %changelog
+* Mon May 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.2-alt1
+- Added tests.
+- Fixed RPM signature key listing.
+- Replace --isodir with --pkglist option.
+- Display warning when the todo list is empty.
+- Fixed delsed generation.
+- Fix/improve the baselist grep (closes: 54438).
+- Fix: Sort the todo list.
+- Fixed prevlist grep patterns: use fixed strings.
+- Fixed \t (tab) in query format string.
+- Fix: Own %_prefix/libexec/checksumgen.
+
 * Wed May 21 2025 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
 - Add -n | --no-fakeroot option.
 - Added the first basic unit-test.
