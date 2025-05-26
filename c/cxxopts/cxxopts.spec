@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Lightweight C++ option parser library
@@ -67,6 +67,9 @@ sed -i 's/-Werror/-Wno-error/' cmake/cxxopts.cmake
 %endif
 
 %changelog
+* Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
+- 3.3.1
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 3.3.0-alt1
 - 3.3.0
 
