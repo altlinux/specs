@@ -16,7 +16,7 @@
 %define nv_version 570
 %define nv_release 153
 %define nv_minor 02
-%define pkg_rel alt292
+%define pkg_rel alt293
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -356,6 +356,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon May 26 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt293
+- fix switch libraries (closes: 54408)
+
 * Fri May 23 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt292
 - new version
 
