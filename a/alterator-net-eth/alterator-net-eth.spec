@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.10
+Version: 5.2.11
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,10 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Fri May 23 2025 Anton Midyukov <antohami@altlinux.org> 5.2.11-alt1
+- backend3/net-eth: set DURING_INSTALL=1 if determined that installer
+  is running
+
 * Wed Mar 12 2025 Sergey V Turchin <zerg@altlinux.org> 5.2.10-alt1
 - don't use combobox in advanced dialog
 - rearrange advanced dialog widgets
