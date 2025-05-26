@@ -1,16 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+# TODO: change libode package name according SharedLibsPolicy
+%define soname 8
 
 Name: ode
-Version: 0.16.5
+Version: 0.16.6
 Release: alt1
 Summary: The Open Dynamics Engine (ODE)
 License: LGPLv2.1+
 Group: Graphics
-Url: http://www.ode.org/
+Url: https://www.ode.org/
 
-# https://bitbucket.org/odedevs/ode.git
+VCS: https://bitbucket.org/odedevs/ode.git
 Source: %name-%version.tar
 # http://www.ode.org/ode-latest-userguide.pdf
 Source1: ode-latest-userguide.pdf
@@ -154,7 +156,8 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 
 %files -n lib%name
 %doc CHANGELOG.txt LICENSE* README.md
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -169,6 +172,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Mon May 26 2025 Anton Farygin <rider@altlinux.com> 0.16.6-alt1
+- 0.16.5 -> 0.16.6
+
 * Thu Apr 25 2024 Andrey Cherepanov <cas@altlinux.org> 0.16.5-alt1
 - New version.
 
