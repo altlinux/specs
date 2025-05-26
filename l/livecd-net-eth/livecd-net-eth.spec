@@ -1,5 +1,5 @@
 Name: livecd-net-eth
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
@@ -29,6 +29,13 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Mon May 26 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
+- livecd-net-eth.init: 
+  + setup NetworkManager(etcnet) instead NetworkManager(native)
+  + setup stage1 network interfaces as etcnet
+  + set HOSTNAME from stage1 settings
+  + do not set DHCP_TIMEOUT=7
+
 * Wed Mar 19 2025 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
 - livecd-net-eth.init: refactoring for compatibility witn alterator-net-eth
 - livecd-net-eth.init: create configs of interface for en* only
