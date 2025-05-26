@@ -4,7 +4,7 @@
 
 Name: itk
 Version: %itkver.3
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: N-dimensional scientific image processing, segmentation, registration
@@ -252,6 +252,20 @@ popd
 
 %patch9 -p1
 
+%ifarch %e2k
+# missing destructors as of lcc 1.29.06 (mcst#9134, mcst#9152)
+sed -i 's/~.*LinearTransform() = default;//' \
+	Modules/Filtering/ImageIntensity/include/itk{,Vector}RescaleIntensityImageFilter.h
+sed -i 's/~BinaryThreshold() = default;//' \
+	Modules/Filtering/Thresholding/include/itkBinaryThresholdImageFilter.h
+sed -i 's/~VectorIndexSelectionCast() = default;//' \
+	Modules/Filtering/ImageIntensity/include/itkVectorIndexSelectionCastImageFilter.h
+sed -i 's/~ObiAttenuation() = default;//' \
+	Modules/Remote/RTK/include/rtkVarianObiRawImageFilter.h
+sed -i 's/~SoftThreshold() = default;//' \
+	Modules/Remote/RTK/include/rtkSoftThresholdImageFilter.h
+%endif
+
 # Save an unbuilt copy of the Example's sources for %%doc
 mkdir itk-examples
 cp -a Examples itk-examples
@@ -423,6 +437,9 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 %_libdir/libITKVtkGlue-%itkver.so.*
 
 %changelog
+* Mon May 26 2025 Michael Shigorin <mike@altlinux.org> 5.4.3-alt2
+- E2K: lcc 1.29.06 ftbfs workaround (ilyakurdyukov@; mcst#9134, mcst#9152).
+
 * Thu Mar 27 2025 Constantin Sunzow <protvin@altlinux.org> 5.4.3-alt1
 - New version.
 
