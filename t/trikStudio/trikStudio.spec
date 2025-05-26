@@ -7,8 +7,8 @@
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2022.2
-Release: alt2.1
+Version: 2025.2
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -20,10 +20,9 @@ Patch: %name-%version-alt.patch
 Patch1: gamepad.patch
 Patch2: alt-ftbfs.patch
 Patch3: fix-build-with-qt5-quazip1.patch
-Patch4: trikRuntime.patch
-Patch5: support-python3.11.patch
+Patch5: quazip.patch
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
+BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel chrpath
 BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel quazip-qt5-devel qt5-serialport-devel p7zip-standalone
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
@@ -34,6 +33,7 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
+Requires: libqscintilla2-qt5-devel pythonqt-devel
 Requires: libhidapi lego-mindstorms-udev-rules
 Requires: %name-data = %version-%release
 Conflicts: lib%name
@@ -105,11 +105,6 @@ pushd thirdparty/gamepad
 %patch1
 popd
 
-pushd plugins/robots/thirdparty/trikRuntime/trikRuntime
-%patch4
-popd
-
-# Quick hack for python3.11 but think about using system pythonqt library.
 %patch5 -p1
 
 %ifarch loongarch64 riscv64
@@ -120,10 +115,9 @@ sed -e '/use_gold_linker/d' -i \
 %endif
 
 %build
+export PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d. -f1-2)
 %qmake_qt5 -r \
-    LIBS+="`pkg-config --libs quazip1-qt5`" \
-    INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
-      sed 's/-I//g'`" \
+    CONFIG+=use_system_quazip1-qt5 \
 %if_with debug
     CONFIG+=debug CONFIG-=release \
 %else
@@ -132,21 +126,25 @@ sed -e '/use_gold_linker/d' -i \
 %ifarch %e2k
     CONFIG+=noPch CONFIG+=warn_off \
 %endif
-    QMAKE_LFLAGS+=-Wl,-rpath-link=%_builddir/%name-%version/bin/release \
+    QMAKE_LFLAGS+=-Wl,-rpath-link=%name-%version/bin \
+    QMAKE_LFLAGS+=-Wl,--disable-new-dtags \
     QMAKE_LFLAGS+=-Wl,-rpath=%_libdir/%name \
+    CONFIG+=no_rpath \
 %if_with sanitize
     CONFIG+=!nosanitizers \
 %endif
-    CONFIG+=no_rpath \
     PREFIX=%_prefix LIBDIR=%_libdir TRIK_STUDIO_VERSION=%version studio.pro
+
 %make_build
 
 %install
+export PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d. -f1-2)
 
-for N in Kernel Network Hal Control ScriptRunner ; do
-    [ -e bin/release/libtrik${N}.la ] || ln -sf libtrik${N}.so bin/release/libtrik${N}.la ||:
-    [ -e bin/release/trik${N}.pc ] || echo > bin/release/trik${N}.pc ||:
+for N in Kernel Network Hal Control ScriptRunner RuntimeQsLog Communicator; do
+    [ -e bin/libtrik${N}.la ] || ln -sf libtrik${N}.so bin/libtrik${N}.la ||:
+    [ -e bin/trik${N}.pc ] || echo > bin/trik${N}.pc ||:
 done
+
 %make_install INSTALL_ROOT=%buildroot install
 mv %buildroot%_libdir/*.so* %buildroot%_libdir/%name
 mv %buildroot%_bindir/trik-studio %buildroot%_libdir/%name/
@@ -164,11 +162,18 @@ rm -rf %buildroot%_includedir/trik*
 rm -rf %buildroot%_includedir/qslog*
 rm -rf %buildroot%_includedir/QsLog*
 %endif
+rm -f %buildroot%_libdir/**.pc
 rm -f %buildroot%_prefix/lib/**.pc
+rm -f %buildroot/lib/trikPythonQt*.pc
+rm -f %buildroot/lib/libtrikPythonQt*.so*
 rm -f %buildroot/lib/*PythonQt_QtAll* %buildroot/include/PythonQt_QtAll.h
 rm -f %buildroot%_libdir/%name/plugins/tools/kitPlugins/librobots-null-interpreter.so
+rm -rf %buildroot/include/PythonQt*
+rm -rf %buildroot/include/com_trolltech*.h
+rm -rf %buildroot%_includedir/qt5/Qsci
+rm -rf %buildroot%_datadir/qt5/qsci/
 
-pushd bin/release
+pushd bin
 for d in examples help translations images; do
     cp -fr $d %buildroot%_datadir/%name/
 done
@@ -176,9 +181,11 @@ done
 cp -f gamepad %buildroot%_bindir/
 mv -f %buildroot/opt/checkapp/bin/checkapp %buildroot%_bindir/
 mkdir -p %buildroot%_datadir/%name/languages
-cp -f ../../thirdparty/gamepad/gamepad/languages/*.qm %buildroot%_datadir/%name/languages/
 
 popd
+
+find %buildroot%_libdir/%name -name 'libtrikScriptRunner.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
+find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.12.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
 
 %files
 %_bindir/*
@@ -209,6 +216,9 @@ popd
 %endif
 
 %changelog
+* Mon May 15 2025 Valentin Sokolov <sova@altlinux.org> 2025.2-alt1
+- Update to 2025.2
+
 * Mon Nov 20 2023 Ivan A. Melnikov <iv@altlinux.org> 2022.2-alt2.1
 - Don't use gold on loongarch64 and riscv64
 - Allow building with multiple parallel processes
