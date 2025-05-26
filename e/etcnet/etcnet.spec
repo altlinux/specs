@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.33
+Version:	0.9.34
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -10,15 +10,9 @@ Url:		https://www.altlinux.org/Etcnet
 Source:		%name-%version.tar
 
 Requires(pre,postun):	setup service
-Requires:	grep, sed, iproute2 >= 4.4.0, ifrename >= 28-alt5.pre10, chkconfig
+Requires:	grep, sed, iproute2, ifrename, chkconfig
 Requires:	etcnet-defaults = %version-%release
-
 BuildArch:	noarch
-
-Conflicts:	net-scripts
-Conflicts:	ethtool < 0:3-alt4, ifplugd < 0.28-alt2, ipset < 4.1-alt2
-Conflicts:	systemd < 1:210-alt7
-Conflicts:	openvswitch <= 2.12.0-alt4
 Provides:	network-config-subsystem
 
 %description
@@ -37,10 +31,10 @@ support for new interface types can be added without overall design changes.
 Summary:	/etc/net plus everything it can work with
 Group:		System/Configuration/Networking
 Requires:	%name = %version-%release, wireless-tools
-Requires:	dhcpcd >= 1.3.22pl4-alt3, iptables, iptables-ipv6, ebtables, ipset >= 4.1-alt2
-Requires:	ethtool >= 0:3-alt4, ifplugd >= 0.28-alt2
+Requires:	dhcpcd >= 1.3.22pl4-alt3, iptables, iptables-ipv6, ebtables, ipset
+Requires:	ethtool, ifplugd
 Requires:	hotplug, ppp, openvpn, wireguard-tools, amneziawg-tools
-Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 3.6-alt2 ppp-pppoe >= 2.5.0-alt1
+Requires:	pptp-client, wpa_supplicant, avahi-autoipd, rp-pppoe-base >= 3.6-alt2 ppp-pppoe
 
 %description full
 This virtual package requires /etc/net and all packages that may appear useful
@@ -94,17 +88,6 @@ if [ $1 -eq 0 ]; then
 	/sbin/chkconfig --del network
 fi
 
-# since 0.5.0 we have 'network' chkconfig entry instead of 'etcnet' one
-%triggerun -- %name < 0.5.1
-if [ $2 -gt 0 ]; then
-# This is etcnet upgrade.
-	/sbin/chkconfig --del etcnet
-	/sbin/chkconfig --add network
-fi
-
-%triggerpostun -- net-scripts
-/sbin/chkconfig --add network
-
 # We used to ship some Ruby contrib scripts, but having Ruby installed
 # by dependency isn't an idea most normal users would like. So let
 # people adjust their environment manually for particular contribs to work.
@@ -146,6 +129,12 @@ fi
 %files full
 
 %changelog
+* Mon May 19 2025 Anton Farygin <rider@altlinux.com> 0.9.34-alt1
+- Auto-detect PPPoE plugin name to support ppp-pppoe < 2.5.0.
+- Fixed PID file location check for pppd 2.5.0+ (/run/ppp) with /var/run fallback.
+- post-scripts: Removed legacy chkconfig migration code.
+- Simplified specfile by removing obsolete version constraints.
+
 * Fri May 16 2025 Alexey Shabalin <shaba@altlinux.org> 0.9.33-alt1
 - create-ovsport: Fixed start ovsbr when ovsport start (ALT#45305).
 
