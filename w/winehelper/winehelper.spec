@@ -1,6 +1,6 @@
 Name: winehelper
-Version: 0.3.7
-Release: alt2
+Version: 0.3.8
+Release: alt1
 
 Summary: Program for easy installation of Windows applications.
 
@@ -42,6 +42,10 @@ install -m644 image/* %buildroot%_datadir/%name/image/
 %_datadir/%name
 
 %changelog
+* Mon May 26 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.8-alt1
+- 0.3.8
+- removed command: update-menus (ALT bug: 54274)
+
 * Tue May 06 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.7-alt2
 - added new manualinstall path
 
