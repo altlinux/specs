@@ -6,10 +6,11 @@
 %define _libexecdir %_prefix/libexec
 
 %def_enable classic_mode
+%def_enable x11
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -67,7 +68,9 @@ This extension provides system monitor for GNOME Shell.
 %build
 %meson \
     %{subst_enable_meson_bool classic_mode classic_mode} \
+    %{subst_enable_meson_bool x11 x11} \
     -Dextension_set=all
+%nil
 %meson_build
 
 %install
@@ -81,10 +84,11 @@ This extension provides system monitor for GNOME Shell.
 # Classic mode
 %if_enabled classic_mode
 %files -n gnome-session-classic
-%_datadir/xsessions/gnome-classic.desktop
 %_datadir/wayland-sessions/gnome-classic-wayland.desktop
 %_datadir/wayland-sessions/gnome-classic.desktop
-%_datadir/xsessions/gnome-classic-xorg.desktop
+%{?_enable_x11:
+%_datadir/xsessions/gnome-classic.desktop
+%_datadir/xsessions/gnome-classic-xorg.desktop}
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
 %endif
@@ -196,6 +200,10 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+- made x11 support optional (enabled by default)
+
 * Sun Apr 13 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 

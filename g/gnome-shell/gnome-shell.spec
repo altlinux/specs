@@ -18,7 +18,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -33,7 +33,7 @@ Source: %name-%version%beta.tar
 %endif
 %{?_enable_snapshot:Source1: libgnome-volume-control-%gvc_ver.tar}
 
-Patch3: %name-3.8.4-alt-invalid_user_shell.patch
+Patch3: %name-48.1-alt-invalid_user_shell.patch
 
 Obsoletes: gnome-shell-extension-per-window-input-source
 
@@ -89,6 +89,7 @@ Requires: malcontent >= %malcontent_ver
 Requires: pipewire
 Requires: xdg-desktop-portal-gnome
 Requires: fonts-ttf-adwaita
+#Requires: localsearch
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
 # js/misc/dependencies.js
@@ -315,6 +316,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+
 * Mon Apr 14 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - 48.1
 
