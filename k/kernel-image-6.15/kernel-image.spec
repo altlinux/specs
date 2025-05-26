@@ -1,6 +1,6 @@
 Name: kernel-image-6.15
-Release: alt0.rc7
-%define kernel_src_version	6.14
+Release: alt1
+%define kernel_src_version	6.15
 %define kernel_base_version	6.15
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
@@ -537,7 +537,7 @@ check-pesign-helper
 %modules_dir/modules.dep
 %modules_dir/modules.devname
 %modules_dir/modules.order
-%modules_dir/modules.softdep
+%modules_dir/modules.*dep
 %modules_dir/modules.symbols
 %ghost %modules_dir/modules.*.bin
 %defattr(0600,root,root,0700)
@@ -610,6 +610,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon May 26 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt1
+- Update to v6.15 (2025-05-25) release.
+- spec: Fix packaging modules.weakdep appeared after kmod update.
+- config: Enable CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y.
+
 * Mon May 19 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt0.rc7
 - Update to v6.15-rc7 (2025-05-18).
 - config: Enable CONFIG_INIT_STACK_ALL_ZERO=y.
