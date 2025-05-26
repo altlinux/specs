@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.7.2
+Version: 5.8.0
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -44,7 +44,8 @@ sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
 	--deselect "tests/test_paths.py::test_jupyter_path_user_site" \
 	--deselect "tests/test_paths.py::test_jupyter_path_no_user_site" \
 	--deselect "tests/test_paths.py::test_jupyter_config_path" \
-	--deselect "tests/test_paths.py::test_jupyter_config_path_no_user_site"
+	--deselect "tests/test_paths.py::test_jupyter_config_path_no_user_site" \
+	tests/
 
 %files
 %doc *.md
@@ -55,6 +56,9 @@ sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon May 26 2025 Anton Vyatkin <toni@altlinux.org> 5.8.0-alt1
+- New version 5.8.0.
+
 * Wed Mar 13 2024 Anton Vyatkin <toni@altlinux.org> 5.7.2-alt1
 - New version 5.7.2.
 
