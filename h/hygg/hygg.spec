@@ -1,5 +1,5 @@
 Name: hygg
-Version: 0.1.14
+Version: 0.1.15
 Release: alt1
 
 Summary: Simplifying the way you read
@@ -98,5 +98,8 @@ install -D target/release/cli-justify %buildroot%_bindir/cli-justify
 %_bindir/cli-justify
 
 %changelog
+* Mon May 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.15-alt1
+- 0.1.14 -> 0.1.15
+
 * Wed Apr 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.14-alt1
 - Initial build for ALT Linux.
