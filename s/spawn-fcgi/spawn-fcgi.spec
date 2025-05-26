@@ -3,7 +3,7 @@
 
 Name: spawn-fcgi
 Version: 1.6.5
-Release: alt1
+Release: alt2
 
 Summary: spawn FastCGI applications
 License: BSD
@@ -13,6 +13,7 @@ Url: https://redmine.lighttpd.net/projects/spawn-fcgi/wiki
 VCS: https://github.com/lighttpd/spawn-fcgi
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
+BuildRequires: meson
 
 %description
   spawn-fcgi is used to spawn FastCGI applications
@@ -27,14 +28,17 @@ Patch0: %name-%version-alt.patch
 %prep
 %setup
 %patch0 -p1
-%autoreconf
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall
+%meson_install
+
+%check
+%meson_test
+
 install -pDm755 altlinux/spawn-fcgi.init %buildroot%_initdir/spawn-fcgi
 install -pDm644 altlinux/spawn-fcgi.sysconfig %buildroot%_sysconfdir/sysconfig/spawn-fcgi
 
@@ -57,6 +61,9 @@ EOF
 %_initdir/spawn-fcgi
 
 %changelog
+* Mon May 26 2025 Anton Farygin <rider@altlinux.com> 1.6.5-alt2
+- fixed pid file location in the startup service (closes: #53986)
+
 * Thu Dec 05 2024 Anton Farygin <rider@altlinux.ru> 1.6.5-alt1
 - 1.6.4 -> 1.6.5
 
