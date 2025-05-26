@@ -18,8 +18,8 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.1
-Release: alt2%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: GNOME Control Center
 License: GPL-2.0-or-later
@@ -224,6 +224,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- updated to 48.2-1-g444c93e8b
+
 * Thu Apr 24 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt2
 - updated to 48.1-10-gf09206b44
 - fixed broken zone.tab (ALT #52217)
