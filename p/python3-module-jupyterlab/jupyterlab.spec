@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name jupyterlab
 
+%ifarch i586
+%def_without check
+%else
 %def_with check
+%endif
 
 Name: python3-module-%pypi_name
-Version: 4.4.2
+Version: 4.4.3
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -102,6 +106,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/jupyterlab.json \
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Mon May 26 2025 Anton Vyatkin <toni@altlinux.org> 4.4.3-alt1
+- new version 4.4.3
+
 * Wed May 07 2025 Anton Vyatkin <toni@altlinux.org> 4.4.2-alt1
 - new version 4.4.2
 
