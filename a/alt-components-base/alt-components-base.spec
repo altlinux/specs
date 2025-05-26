@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.7.11
+Version: 0.7.12
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -45,7 +45,7 @@ Requires: alt-components-base = %version-%release
 %setup
 
 %build
-for d in components/*/ ; do
+for d in components/*/ categories/* ; do
     find "$d" -type f -name "description*.md" -print0 | while IFS= read -r -d '' file; do
         cmark "$file" > "${file/%%md/html}"
     done
@@ -58,12 +58,18 @@ mkdir -p "%buildroot%_alterator_datadir/components/categories"
 rm -f install.base_components.list install.vendors_components.list vendors_categories.list
 touch install.base_components.list install.vendors_components.list vendors_categories.list
 
-for d in categories/* ; do
+for d in categories/*/ ; do
     d="$(basename "$d")"
-    f="categories/$d"
+    f="categories/$d/$d.category"
     c="$(alterator-entry get "$f" category ||:)"
 
-    install -v -p -m 644 -D "$f" "%buildroot%_alterator_datadir/components/categories"
+    mkdir -p "%buildroot%_alterator_datadir/components/categories/$d"
+    install -v -p -m 644 -D "$f" "%buildroot%_alterator_datadir/components/categories/$d/"
+
+    find "categories/$d" -type f -name "description*.html" -print0 | while IFS= read -r -d '' file; do
+        install -v -p -m 644 -D "$file" "%buildroot%_alterator_datadir/components/categories/$d"
+    done
+
     if [ "$c" != "vendors" ]; then
         echo "%_alterator_datadir/components/categories/$d" >>install.base_components.list
     else
@@ -145,6 +151,10 @@ done
 %_alterator_datadir/editions/edition_domain
 
 %changelog
+* Mon May 26 2025 Michael Chernigin <chernigin@altlinux.org> 0.7.12-alt1
+- components: add directory for each category to support descriptions
+- components: remove component descriptions headings
+
 * Wed May 21 2025 Evgeny Sinelnikov <sin@altlinux.org> 0.7.11-alt1
 - editions: revert alt-server-docs to base section
 

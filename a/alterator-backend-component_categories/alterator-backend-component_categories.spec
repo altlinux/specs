@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-component_categories
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: Backend for components categories
@@ -47,6 +47,7 @@ install -v -p -m 644 -D component-categories.backend %buildroot%_datadir/alterat
 
 install -v -p -m 755 -D component-category-info %buildroot%_libexecdir/%name
 install -v -p -m 755 -D list-component-categories %buildroot%_libexecdir/%name
+install -v -p -m 755 -D component-category-description %buildroot%_libexecdir/%name
 
 %files
 %dir %_libexecdir/%name
@@ -62,6 +63,10 @@ install -v -p -m 755 -D list-component-categories %buildroot%_libexecdir/%name
 %_datadir/polkit-1/actions/org.altlinux.alterator.component-categories1.policy
 
 %changelog
+* Thu May 22 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.5-alt1
+- Add Description method
+- Support categories directories
+
 * Sat Jan 25 2025 Michael Chernigin <chernigin@altlinux.org> 0.1.4-alt1
 - Rewrite scripts to python using alterator_entry module.
 

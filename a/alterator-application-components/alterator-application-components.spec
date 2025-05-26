@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.9
+Version: 0.2.10
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -70,6 +70,15 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Fri May 23 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.10-alt1
+- Update tree item background color based on check state.
+- Add edition component count to status bar.
+- Add component count to section item display name.
+- Prepend description with a title.
+- Show categories and sections components count in the description.
+- Display description for categories.
+- Show categories content on the right.
+
 * Tue May 13 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.9-alt1
 - Show content of selected categories and sections instead of empty description.
 - Display apply diff in columns.

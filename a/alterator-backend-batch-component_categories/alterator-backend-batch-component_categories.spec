@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-batch-component_categories
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Alterator backends for getting information about all categories
@@ -44,6 +44,9 @@ install -v -p -m 644 -D org.altlinux.alterator.batch_component_categories1.polic
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Thu May 22 2025 Michael Chernigin <chernigin@altlinux.org> 0.3-alt1
+- Support category dirs
+
 * Thu May 15 2025 Andrey Limachko <liannnix@altlinux.org> 0.2-alt1
 - Remove %_alterator_datadir macro and hardcode path
 
