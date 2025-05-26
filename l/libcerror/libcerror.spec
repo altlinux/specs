@@ -12,9 +12,11 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
+%set_autoconf_version 2.71
+
 Name: libcerror
 Version: 20240413
-Release: alt1
+Release: alt2
 
 Summary: Library for cross-platform C error functions
 License: LGPLv3+
@@ -71,6 +73,9 @@ applications that want to make use of libcerror.
 %_man3dir/%name.3.*
 
 %changelog
+* Mon May 26 2025 Alexander Danilov <admsasha@altlinux.org> 20240413-alt2
+- Set the version of autoconf to 2.71 to simplify the build.
+
 * Thu Dec 26 2024 Sergey Gvozdetskiy <serjigva@altlinux.org> 20240413-alt1
 - New version 20240413.
 
