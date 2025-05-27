@@ -12,7 +12,7 @@
 %endif
 
 Name: talos
-Version: 1.10.1
+Version: 1.10.2
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -22,7 +22,7 @@ Url: https://www.talos.dev/
 Vcs: https://github.com/siderolabs/talos.git
 
 Source: %name-%version.tar
-#Patch: %%name-%%version.patch
+Patch: %name-%version.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -61,7 +61,7 @@ Group: System/Configuration/Boot and Init
 
 %prep
 %setup
-#%%autopatch -p1
+%autopatch -p1
 
 %define go_ver %(rpm -q --qf '%%{VERSION}' golang)
 %define etcd_ver %(rpm -q --qf '%%{VERSION}' etcd)
@@ -176,6 +176,9 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.2-alt1
+- New version 1.10.2.
+
 * Wed May 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.1-alt1
 - v1.10.1
 
