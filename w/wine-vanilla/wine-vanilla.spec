@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.6
+%define major 10.8
 %define rel %nil
 
 # the packages will conflict with that
@@ -65,7 +65,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %def_with mingw
 %endif
 
-# TODO: clang: error: unsupported option '-mabi=' for target 'x86_64-unknown-linux-gnu'
+# build all project with clang
 %def_without clang
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
@@ -102,6 +102,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
     %def_without opencl
 %endif
 
+# see https://bugzilla.altlinux.org/54434
 %if_feature osmesa 24.04
     %def_with osmesa
 %else
@@ -140,7 +141,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -164,10 +165,11 @@ Source6: %name-%version-bin-scripts.tar
 
 Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 Patch2: 0102-fix-build-on-32-bit-systems-with-llvm-https-bugs.win.patch
+Patch3: 0001-configure-Correctly-override-DLLEXT-for-ARM-builds.patch
 
 AutoReq: yes, noperl, nomingw32, nocpp
 
-# set compilers
+# build with clang on aarch64, as for Mac OS
 %ifarch aarch64
 %undefine _without_clang
 %def_with clang
@@ -581,6 +583,7 @@ develop programs using %name.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -931,6 +934,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.8-alt1
+- new version 10.8
+- apply patch to fix build on aarch64 with clang
+
 * Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6-alt2
 - use _llvm_version and llvm_bindir from rpm-macros-llvm-common
 - use feature_osmesa
