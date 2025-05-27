@@ -7,8 +7,8 @@
 %define wxbranch 3.2
 
 Name: wxGTK3.2
-Version: 3.2.8
-Release: alt2
+Version: 3.2.8.1
+Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -324,6 +324,9 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun May 25 2025 Anton Midyukov <antohami@altlinux.org> 3.2.8.1-alt1
+- new version (3.2.8.1) with rpmgs script
+
 * Tue May 13 2025 Anton Midyukov <antohami@altlinux.org> 3.2.8-alt2
 - add BR libxkbcommon-devel
 
