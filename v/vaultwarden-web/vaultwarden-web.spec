@@ -1,12 +1,12 @@
 Name:    vaultwarden-web
-Version: 2025.1.1
+Version: 2025.5.0
 Release: alt1
 
 Summary: Web vault builds for vaultwarden
 License: GPL-3.0+
 Group:   Security/Networking
 Url:     https://github.com/dani-garcia/bw_web_builds
-# Source-url: https://github.com/dani-garcia/bw_web_builds/releases/download/v2025.1.1/bw_web_v2025.1.1.tar.gz
+# Source-url: https://github.com/dani-garcia/bw_web_builds/releases/download/v2025.5.0/bw_web_v2025.5.0.tar.gz
 
 Source0: %name-%version.tar
 Source1: web-vault.tar
@@ -29,6 +29,9 @@ install -d %buildroot%_datadir
 %_datadir/%name
 
 %changelog
+* Tue May 27 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2025.5.0-alt1
+- New version.
+
 * Fri Jan 31 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2025.1.1-alt1
 - New version.
 

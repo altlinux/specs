@@ -1,8 +1,8 @@
 %def_without check
 
 Name:    vaultwarden
-Version: 1.33.2
-Release: alt2
+Version: 1.34.1
+Release: alt1
 
 Summary: Unofficial Bitwarden compatible server
 License: AGPL-3.0
@@ -43,11 +43,6 @@ formerly known as bitwarden_rs.
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/BlackDex/yubico-rs?rev=00df14811f58155c0f02e3ab10f1570ed3e115c6"]
-git = "https://github.com/BlackDex/yubico-rs"
-rev = "00df14811f58155c0f02e3ab10f1570ed3e115c6"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -117,6 +112,9 @@ fi
 %dir %attr(0755, %name, %name) %ghost %_runtimedir/%name
 
 %changelog
+* Tue May 27 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.34.1-alt1
+- New version.
+
 * Fri Feb 14 2025 Ilya Sorochan <k0tran@altlinux.org> 1.33.2-alt2
 - Fix loongarch64 patch for mysqlclient-sys crate.
 
