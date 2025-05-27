@@ -4,7 +4,7 @@
 
 Name: kdenlive
 Version: 24.12.3
-Release: alt1
+Release: alt2
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -27,8 +27,8 @@ AutoProv: yes, nopython nopython3
 Requires: mlt-utils >= %current_ver_mlt frei0r-plugins
 Requires: recordmydesktop dvdauthor dvgrab genisoimage
 Requires: mediainfo
-Requires: icon-theme-breeze kde-runtime kio-extras
 Requires: kf6-kirigami
+Requires: icon-theme-breeze kde6-runtime kio-extras
 %if %is_ffmpeg
 Requires: /usr/bin/ffmpeg /usr/bin/ffplay /usr/bin/ffprobe
 %else
@@ -103,6 +103,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 
 
 %changelog
+* Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt2
+- update requires
+
 * Mon May 05 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.3-alt1
 - new version
 
