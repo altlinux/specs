@@ -6,7 +6,7 @@
 
 Name: kf6-%rname
 Version: 6.14.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -22,6 +22,7 @@ Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback.patch
 Patch3: alt-copy-first.patch
 Patch4: alt-soname.patch
+Patch5: alt-crash.patch
 Patch10: alt-streebog-support.patch
 
 BuildRequires(pre): rpm-build-kf6
@@ -112,6 +113,7 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %if_enabled streebog
 %patch10 -p2 -b .streebog
@@ -174,6 +176,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt2
+- fix crash (closes: 54392)
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
 - new version
 
