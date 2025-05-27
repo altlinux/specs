@@ -5,7 +5,7 @@
 %define req_permhelper /usr/sbin/usermod
 
 %define req_std_burning /usr/bin/cdrecord /usr/bin/mkisofs /usr/bin/readcd cdrdao dvd+rw-tools cdrskin
-%define req_std_common kde-runtime %req_permhelper
+%define req_std_common kde6-runtime %req_permhelper
 #define req_multimedia sox-play libsox-fmt-pulseaudio transcode vcdimager normalize lame flac mpc
 %define req_multimedia sox-play libsox-fmt-pulseaudio normalize lame flac mpc
 %define req_mini %req_std_burning %req_std_common
@@ -16,7 +16,7 @@
 %define rname k3b
 Name: %rname
 Version: 25.04.1
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Archiving/Cd burning
@@ -166,6 +166,9 @@ Requires: kde-common
 
 
 %changelog
+* Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt2
+- fix requires
+
 * Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 
