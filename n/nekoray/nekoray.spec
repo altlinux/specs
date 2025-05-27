@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nekoray
-Version: 4.3.2
+Version: 4.3.5
 Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
 Group: System/Servers
-URL: https://github.com/MatsuriDayo/nekoray
+URL: https://github.com/Mahdi-zarei/nekoray
+VCS: https://github.com/Mahdi-zarei/nekoray.git
 
 Source: %name-%version.tar
 Source1: %name-vendors-%version.tar
@@ -126,6 +127,9 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Tue May 27 2025 Andrey Kovalev <ded@altlinux.org> 4.3.5-alt1
+- Updated to upstream version 4.3.5.
+
 * Thu Apr 10 2025 Andrey Kovalev <ded@altlinux.org> 4.3.2-alt1
 - Updated to upstream version 4.3.2.
 - Fixed FTBFS with cmake4.
