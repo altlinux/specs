@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.14
+%define kernel_base_version 6.15
 %define kernel_source kernel-source-%kernel_base_version
 
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -311,7 +311,7 @@ cd %kernel_source
 # This will make perf ask for kernelversion.
 touch .git
 
-cd tools
+pushd tools
 
 # Avoid conflict with trace-cmd which installs same plug-ins in
 # %%_libdir/traceevent/plugins
@@ -342,6 +342,9 @@ sed -i 's/ -s //' testing/selftests/arm64/gcs/Makefile
 
 # pathfix
 grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
+
+popd
+grep -rlZ '__nonstring;' --include=*.h {drivers,include}/acpi | xargs -0t sed -i 's/__nonstring/__attribute__((&__))/'
 
 %build
 %define optflags_lto %nil
@@ -815,6 +818,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Tue May 27 2025 Vitaly Chikunov <vt@altlinux.org> 6.15-alt1
+- Update to v6.15 (2025-05-25).
+
 * Mon Apr 21 2025 Vitaly Chikunov <vt@altlinux.org> 6.14-alt1
 - Update to v6.14 (2025-03-24).
 
