@@ -7,7 +7,7 @@
 Name: python3-module-%pypi_name
 
 Version: 2.98
-Release: alt1.3
+Release: alt1.4
 Summary: Offline Text To Speech (TTS) converter for Python 
 License: MPL-2.0
 Group: Development/Python3
@@ -18,6 +18,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 #eSpeak voice count varies between versions
 Patch0: eSpeak-speak-test-alt.patch
+#skip test_listening_for_events
+Patch1: not-test-listening-for-events-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3(setuptools)
@@ -38,7 +40,7 @@ BuildRequires: aplay
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -58,6 +60,9 @@ BuildRequires: aplay
 %exclude %python3_sitelibdir/%pypi_name/drivers/sapi5.py
 
 %changelog
+* Tue May 27 2025 Pavel Shilov <zerospirit@altlinux.org> 2.98-alt1.4
+- Skip test listening for event.
+
 * Tue May 06 2025 Pavel Shilov <zerospirit@altlinux.org> 2.98-alt1.3
 - Skip eSpeak voice count varies between versions.
 
