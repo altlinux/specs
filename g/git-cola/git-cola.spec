@@ -1,5 +1,5 @@
 Name: git-cola
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -92,6 +92,9 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 4.13.0-alt1
+- New version 4.13.0.
+
 * Thu Feb 27 2025 Leontiy Volodin <lvol@altlinux.org> 4.12.0-alt1
 - New version 4.12.0.
 
