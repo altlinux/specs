@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 25.04.1
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -80,7 +80,7 @@ Obsoletes: kde5-okular-common < %EVR
 Summary: Core files for %name
 Group: Graphical desktop/KDE
 Requires: %name-common >= %EVR
-Requires: kde-runtime
+Requires: kde6-runtime
 Provides: kde5-okular-core = %EVR
 Obsoletes: kde5-okular-core < %EVR
 %description core
@@ -190,6 +190,9 @@ fi
 
 
 %changelog
+* Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt2
+- fix requires
+
 * Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 
