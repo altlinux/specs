@@ -1,5 +1,5 @@
 Name: cpp-jwt
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: A C++14 library for JSON Web Tokens(JWT)
@@ -36,12 +36,17 @@ For the uninitiated, JSON Web Token(JWT) is a JSON based standard (RFC-7519) for
 
 %install
 %cmake_install
+%__mkdir_p %buildroot%_cmakedir
+%__mv %buildroot%_datadir/cmake/%name %buildroot%_cmakedir/%name
 
 %files -n lib%name-devel
 %doc LICENSE README.md
 %_includedir/jwt
-%_libdir/cmake/%name
+%_cmakedir/%name
 
 %changelog
+* Tue May 27 2025 Nazarov Denis <nenderus@altlinux.org> 1.5-alt1
+- New version 1.5.
+
 * Tue May 30 2023 Nazarov Denis <nenderus@altlinux.org> 1.4-alt1
 - Initial build for ALT Linux
