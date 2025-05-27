@@ -1,6 +1,6 @@
 Name: libavif
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Implementation of the AV1 Image File Format
 License: BSD
@@ -32,7 +32,7 @@ this package contains development part of libavif
 %setup
 
 %build
-%cmake -DAVIF_CODEC_DAV1D=ON -DAVIF_CODEC_RAV1E=ON
+%cmake -DAVIF_CODEC_DAV1D=SYSTEM -DAVIF_CODEC_RAV1E=SYSTEM
 %cmake_build
 
 %install
@@ -48,6 +48,9 @@ this package contains development part of libavif
 %_pkgconfigdir/*
 
 %changelog
+* Tue May 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt2
+- rebuilt with system codecs
+
 * Mon May 12 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
 - 1.3.0 released
 
