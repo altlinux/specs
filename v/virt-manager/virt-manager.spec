@@ -1,25 +1,20 @@
 
 %define _libexecdir /usr/libexec
+%define default_hvs "qemu,lxc"
 
 Name: virt-manager
-Version: 4.1.0
-Release: alt3
+Version: 5.0.0
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
-License: GPLv2+
+License: GPL-2.0-or-later
 Url: https://virt-manager.org/
 BuildArch: noarch
 AutoReqProv: nopython
 
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
-Source2: %name-ru.po
-Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
-# Patch: %%name-%%version-%%release.patch
-Patch0002: 0002-Add-loongarch-support.patch
-Patch0003: 0003-Add-some-default-device-support-for-loongarch.patch
-Patch0004: 0004-Add-test-cases-for-loongarch.patch
 
 Requires: virt-manager-common = %EVR
 Requires: libvirt-client
@@ -39,8 +34,9 @@ Requires: typelib(GtkSource) = 4
 Requires: typelib(SpiceClientGtk) = 3.0
 Requires: typelib(Vte) = 2.91
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-setuptools python3-module-argcomplete
+BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-macros-meson
+BuildRequires: meson
+BuildRequires: python3-devel python3-module-argcomplete
 BuildRequires: libgio
 BuildRequires: gettext-tools
 BuildRequires: python3-module-docutils
@@ -85,20 +81,17 @@ machine).
 
 %prep
 %setup
-#%%patch -p1
-%autopatch -p1
-cp -f %SOURCE2 po/ru.po
 
 %build
-python3 setup.py configure
-
-#%%python_build
+%meson \
+    -Ddefault-hvs=%default_hvs \
+    -Dupdate-icon-cache=false \
+    -Dcompile-schemas=false \
+    -Dtests=disabled
+%meson_build
 
 %install
-#%%python_install
-python3 setup.py \
-    --no-update-icon-cache --no-compile-schemas \
-    install --root=%buildroot
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -111,7 +104,7 @@ done
 
 %files
 %_bindir/%name
-%_datadir/%name/ui/*.ui
+%_datadir/%name/ui
 %_datadir/%name/virtManager
 %_datadir/%name/icons
 %_desktopdir/%name.desktop
@@ -138,6 +131,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 5.0.0-alt1
+- New version 5.0.0.
+
 * Mon May 13 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.1.0-alt3
 - NMU: support LoongArch guests
 
