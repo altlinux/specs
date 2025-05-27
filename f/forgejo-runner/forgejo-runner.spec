@@ -2,7 +2,7 @@
 
 Name: forgejo-runner
 Version: 6.3.1
-Release: alt1
+Release: alt2
 
 Summary: Forgejo Runner
 License: MIT
@@ -98,6 +98,9 @@ exit 0
 %_userunitdir/%name.service
 
 %changelog
+* Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 6.3.1-alt2
+- not define User and Group for user unit (ALT#54407).
+
 * Tue Apr 22 2025 Alexey Shabalin <shaba@altlinux.org> 6.3.1-alt1
 - New version 6.3.1.
 
