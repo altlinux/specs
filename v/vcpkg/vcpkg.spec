@@ -1,7 +1,7 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2025.02.11
+Version: 2025.05.19
 Release: alt1
 
 Summary: C++ Library Manager
@@ -75,6 +75,9 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Tue May 27 2025 Vitaly Lipatov <lav@altlinux.ru> 2025.05.19-alt1
+- new version (2025.05.19) with rpmgs script (ALT bug 53482)
+
 * Wed Mar 12 2025 Vitaly Lipatov <lav@altlinux.ru> 2025.02.11-alt1
 - new version 2025.02.11 (with rpmrb script)
 
