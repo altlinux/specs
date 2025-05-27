@@ -8,7 +8,7 @@
 
 Summary: Capstone disassembly/disassembler framework
 Name: capstone
-Version: 5.0.1
+Version: 5.0.6
 Release: alt1
 License: BSD-3-Clause
 Group: Development/Tools
@@ -134,6 +134,9 @@ cstool -d x64 90
 %_javadir/*.jar
 
 %changelog
+* Tue May 20 2025 Dmitrii Chuprov <cheese@altlinux.org> 5.0.6-alt1
+- Update to 5.0.6 (2025-03-23).
+
 * Wed Jul 17 2024 Vitaly Chikunov <vt@altlinux.org> 5.0.1-alt1
 - Update to 5.0.1 (2023-08-23).
 
