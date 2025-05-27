@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define gss_p gamescope-session-plus
 %define _libexecdir /usr/libexec
-%define commit 015e09825d4f9a2dfdbc20fc2711e2dcee2af68a
+%define commit 1a3fdb7fa15a4bba7204bef69702b7a10a297828
 
 Name: gamescope-session-steam
-Version: 0.0.3.git015e09
-Release: alt1.1
+Version: 0.0.4.git1a3fdb
+Release: alt1
 
 Summary: Steam Big Picture session based on gamescope
 
@@ -102,6 +102,9 @@ fi
 %_sysconfdir/sddm.conf.d/10-gamescope-session.conf
 
 %changelog
+* Tue May 27 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.4.git1a3fdb-alt1
+- updated to upstream git 1a3fdb
+
 * Sat Aug 17 2024 Boris Yumankulov <boria138@altlinux.org> 0.0.3.git015e09-alt1.1
 - NMU: added desktop and session return patch (ALT bug: 51054)
 
