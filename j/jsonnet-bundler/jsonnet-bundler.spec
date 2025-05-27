@@ -1,6 +1,6 @@
 %global import_path github.com/jsonnet-bundler/jsonnet-bundler
 Name:     jsonnet-bundler
-Version:  0.5.1
+Version:  0.6.0
 Release:  alt1
 
 Summary:  A jsonnet package manager.
@@ -42,5 +42,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue Aug 27 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Fri Jul 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.1-alt1
 - Initial build for Sisyphus
