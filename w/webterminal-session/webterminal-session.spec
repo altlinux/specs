@@ -1,7 +1,7 @@
 
 Name: webterminal-session
 Version: 0.4.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Graphical desktop/Other
@@ -11,7 +11,7 @@ URL: http://git.altlinux.org/gears/w/webterminal-session.git
 
 BuildArch: noarch
 
-Requires: kde-runtime kwin
+Requires: kde6-runtime kwin
 
 Source: %name-%version.tar
 
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Tue May 27 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.3-alt2
+- update requires
+
 * Wed Apr 16 2025 Sergey V Turchin <zerg at altlinux dot org> 0.4.3-alt1
 - add chromium
 
