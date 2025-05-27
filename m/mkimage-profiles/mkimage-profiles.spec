@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,14 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Tue May 27 2025 Anton Midyukov <antohami@altlinux.org> 1.8.1-alt1
+- features.in/Makefile: rsync files/ directory too
+- grub: do not not delete duplicates $STAGE2_BOOTARGS
+- grub, tty: add menu for select serial console settings
+- grub: add "Safe Mode" submenu
+- initial alt-components feature
+- grub: set fallback ROOT_UUID
+
 * Sun May 18 2025 Anton Midyukov <antohami@altlinux.org> 1.8.0-alt1
 - grub: automatically substitute uuid of device $ROOT to kernel cmdline
 - initrd-propagator: set method disk,uuid
