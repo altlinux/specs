@@ -1,6 +1,6 @@
 Name: livecd-net-eth
 Version: 0.5.1
-Release: alt1
+Release: alt2
 
 Summary: Try to autoconfigure ethernet interfaces
 License: GPL-2.0-or-later
@@ -29,6 +29,9 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %_unitdir/%name.service
 
 %changelog
+* Tue May 27 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt2
+- livecd-net-eth.init: fix typo
+
 * Mon May 26 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt1
 - livecd-net-eth.init: 
   + setup NetworkManager(etcnet) instead NetworkManager(native)
