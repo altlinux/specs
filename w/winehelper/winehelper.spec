@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.3.8
+Version: 0.3.9
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -14,6 +14,8 @@ Requires: wine-full
 Requires: ca-certificates
 Requires: cups-pdf fonts-ttf-ms
 Requires: p7zip
+
+%add_findreq_skiplist %_datadir/%name/winetricks_*
 
 ExclusiveArch: x86_64
 
@@ -35,6 +37,7 @@ install -m644 manualinstall/* %buildroot%_datadir/%name/manualinstall/
 install -m644 autoinstall/*  %buildroot%_datadir/%name/autoinstall/
 install -m644 database/* %buildroot%_datadir/%name/database/
 install -m644 image/* %buildroot%_datadir/%name/image/
+cp -v winetricks_* %buildroot%_datadir/%name/
 
 %files
 %doc LICENSE CHANGELOG COPYING THIRD-PARTY
@@ -42,6 +45,9 @@ install -m644 image/* %buildroot%_datadir/%name/image/
 %_datadir/%name
 
 %changelog
+* Tue May 27 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.9-alt1
+- 0.3.9
+
 * Mon May 26 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.8-alt1
 - 0.3.8
 - removed command: update-menus (ALT bug: 54274)
