@@ -68,7 +68,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %def_with mingw
 %endif
 
-# TODO: clang: error: unsupported option '-mabi=' for target 'x86_64-unknown-linux-gnu'
+# build all project with clang
 %def_without clang
 
 # https://bugs.etersoft.ru/show_bug.cgi?id=15244
@@ -105,7 +105,8 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
     %def_without opencl
 %endif
 
-%if_feature osmesa
+# see https://bugzilla.altlinux.org/54434
+%if_feature osmesa 24.04
     %def_with osmesa
 %else
     %def_without osmesa
@@ -143,7 +144,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -171,7 +172,7 @@ Source10: %name-patches-%version.tar
 
 AutoReq: yes, noperl, nomingw32, nocpp
 
-# set compilers
+# build with clang on aarch64, as for Mac OS
 %ifarch aarch64
 %undefine _without_clang
 %def_with clang
@@ -936,6 +937,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Tue May 27 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt3
+- don't build with old broken OSMesa (see altbug 54434)
+
 * Sun May 04 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt2
 - use _llvm_version and llvm_bindir from rpm-macros-llvm-common
 - use feature_osmesa
