@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.3.1.2
+Version: 2.3.1.3
 Release: alt1
 
 Summary: Sphinx objects.inv Inspection/Manipulation Tool
@@ -12,6 +12,7 @@ License: MIT
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/bskinn/sphobjinv.git
+
 #Source: https://pypi.io/packages/source/s/%modname/%modname-%version.tar.gz
 Source: https://github.com/bskinn/%modname/archive/v%version/%modname-%version.tar.gz
 
@@ -44,6 +45,9 @@ BuildRequires: python3(dictdiffer) python3(jsonschema)}
 
 
 %changelog
+* Tue May 27 2025 Yuri N. Sedunov <aris@altlinux.org> 2.3.1.3-alt1
+- 2.3.1.3
+
 * Wed Dec 25 2024 Yuri N. Sedunov <aris@altlinux.org> 2.3.1.2-alt1
 - 2.3.1.2
 
