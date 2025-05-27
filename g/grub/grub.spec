@@ -22,7 +22,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt11
+Release: alt12
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -515,6 +515,10 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu May 15 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt12
+- update-grub: use system locale when generating config
+- fix PXE boot (closes: #54249)
+
 * Mon Mar 31 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt11
 - bump grub SBAT level to 5
 - cmd/search: Fix a possible NULL ptr dereference (closes: #53541)
