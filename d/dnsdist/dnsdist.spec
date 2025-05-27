@@ -11,7 +11,7 @@
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 1.9.9
+Version: 1.9.10
 Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
@@ -21,6 +21,8 @@ Group: Networking/DNS
 Url: https://dnsdist.org
 
 Source: https://downloads.powerdns.com/releases/%name-%version.tar.bz2
+
+ExcludeArch: i586
 
 # Automatically added by buildreq on Fri Nov 08 2024
 # optimized out: boost-devel-headers glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libabseil-cpp-devel libabseil-cpp2407.0.0 libgpg-error libstdc++-devel node perl pkg-config sh5 systemd
@@ -109,6 +111,10 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.10-alt1
+- New version (1.9.10) with rpmgs script.
+- Excluded build on i586.
+
 * Mon May 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.9-alt1
 - New version (1.9.9) with rpmgs script.
 
