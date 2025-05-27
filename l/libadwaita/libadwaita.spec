@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 Epoch: 1
 
@@ -148,6 +148,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Tue May 27 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.4-alt1
+- 1.7.4
+
 * Sat May 24 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.3-alt1
 - 1.7.3
 
