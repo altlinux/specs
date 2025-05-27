@@ -2,7 +2,7 @@
 %define pypi_name tzlocal
 
 Name: python3-module-%pypi_name
-Version: 5.3
+Version: 5.3.1
 Release: alt1
 
 Summary: A Python module that tries to figure out what your local timezone is
@@ -10,6 +10,7 @@ Summary: A Python module that tries to figure out what your local timezone is
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/tzlocal/
+Vcs: https://github.com/regebro/tzlocal
 
 BuildArch: noarch
 
@@ -63,6 +64,9 @@ ln -sfv ../usr/share/zoneinfo/Africa/Harare \
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Fri May 23 2025 Denis Sergeev <zeff@altlinux.org> 5.3.1-alt1
+- New version 5.3.1.
+
 * Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 5.3-alt1
 - new version 5.3
 
