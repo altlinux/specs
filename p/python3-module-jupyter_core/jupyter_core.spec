@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.8.0
+Version: 5.8.1
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -56,6 +56,9 @@ sed -i "/addopts/,/]/ s/--color=yes//" pyproject.toml
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue May 27 2025 Anton Vyatkin <toni@altlinux.org> 5.8.1-alt1
+- New version 5.8.1.
+
 * Mon May 26 2025 Anton Vyatkin <toni@altlinux.org> 5.8.0-alt1
 - New version 5.8.0.
 
