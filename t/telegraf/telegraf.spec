@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.33.2
+Version:	1.34.4
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -20,7 +20,7 @@ Source104: telegraf.tmpfiles
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.0
+BuildRequires: rpm-build-golang golang >= 1.24.0
 
 %description
 Telegraf is an agent written in Go for collecting, processing, aggregating, and writing metrics.
@@ -90,10 +90,10 @@ install -p -D -m 644 %SOURCE103 %buildroot%_unitdir/%name.service
 install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 
 %pre
-%_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -g %name -G %name  -c 'Telegraf Agent Daemon' \
+groupadd -r -f %name 2>/dev/null ||:
+useradd -r -g %name -G %name  -c 'Telegraf Agent Daemon' \
         -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
-%_sbindir/usermod -a -G proc telegraf ||:
+usermod -a -G proc telegraf ||:
 
 %post
 %post_service %name
@@ -116,6 +116,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 1.34.4-alt1
+- 1.34.4.
+
 * Thu Feb 13 2025 Alexey Shabalin <shaba@altlinux.org> 1.33.2-alt1
 - 1.33.2.
 
