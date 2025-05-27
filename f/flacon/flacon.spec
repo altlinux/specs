@@ -1,6 +1,6 @@
 Name: flacon
 Version: 12.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -19,7 +19,6 @@ BuildRequires: ctest
 BuildRequires: faac
 BuildRequires: flac
 BuildRequires: lame
-BuildRequires: libtag-devel
 BuildRequires: libuchardet-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: mac
@@ -27,6 +26,7 @@ BuildRequires: mediainfo
 BuildRequires: opus-tools
 BuildRequires: qt6-tools-devel
 BuildRequires: sox-base
+BuildRequires: taglib-devel
 BuildRequires: ttaenc
 BuildRequires: vorbis-tools
 BuildRequires: wavpack
@@ -86,6 +86,9 @@ LANG=C.UTF-8 %ctest || :
 %_man1dir/%name.1.*
 
 %changelog
+* Tue May 27 2025 Nazarov Denis <nenderus@altlinux.org> 12.0.0-alt1.1
+- Build with taglib-devel (ALT #54495)
+
 * Sat Feb 15 2025 Nazarov Denis <nenderus@altlinux.org> 12.0.0-alt1
 - New version 12.0.0.
 
