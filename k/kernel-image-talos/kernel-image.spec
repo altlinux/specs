@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.23
+%define kernel_sublevel	.30
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -436,7 +436,7 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/modules.dep
 %modules_dir/modules.devname
 %modules_dir/modules.order
-%modules_dir/modules.softdep
+%modules_dir/modules.*dep
 %modules_dir/modules.symbols
 %ghost %modules_dir/modules.*.bin
 %defattr(0600,root,root,0700)
@@ -474,6 +474,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed May 28 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.30-alt1
+- Update to v6.12.30 (2025-05-22).
+- config: Update config.
+- spec: Fix packaging modules.weakdep appeared after kmod update.
+
 * Mon Apr 14 2025 Alexander Stepchenko <geochip@altlinux.org> 6.12.23-alt1
 - Update to v6.12.23 (2025-04-10).
 - Move kernel/drivers/crypto to drm package.
