@@ -1,5 +1,5 @@
 Name: niri
-Version: 25.05
+Version: 25.05.1
 Release: alt1
 License: GPL-3.0
 
@@ -82,6 +82,9 @@ install -pD resources/niri-shutdown.target %buildroot%_userunitdir/niri-shutdown
 %_userunitdir/niri-shutdown.target
 
 %changelog
+* Wed May 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 25.05.1-alt1
+- new version 25.05.1 (with rpmrb script)
+
 * Sun May 18 2025 Kirill Unitsaev <fiersik@altlinux.org> 25.05-alt1
 - new version 25.05 (with rpmrb script)
 
