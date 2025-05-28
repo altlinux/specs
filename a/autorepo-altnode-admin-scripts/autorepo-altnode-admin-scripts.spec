@@ -1,5 +1,5 @@
 Name: autorepo-altnode-admin-scripts
-Version: 0.11
+Version: 0.14
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,15 @@ install -m 755 autorepo-altnode-admin-delete-*node $RPM_BUILD_ROOT%_sbindir
 %_sbindir/*
 
 %changelog
+* Wed May 28 2025 Igor Vlasenko <viy@altlinux.org> 0.14-alt1
+- new version
+
+* Mon May 05 2025 Igor Vlasenko <viy@altlinux.org> 0.13-alt1
+- better autoports support
+
+* Thu May 01 2025 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- repocop fixes
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
 - autoimports support
 
