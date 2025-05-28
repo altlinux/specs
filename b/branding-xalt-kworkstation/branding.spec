@@ -22,14 +22,14 @@
 %define fakebrand xalt
 
 %define major 11
-%define minor 0
+%define minor 1
 %define bugfix 0
 %define altversion %major.%minor
 %define altmajor %major
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -500,6 +500,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed May 28 2025 Sergey V Turchin <zerg at altlinux dot org> 11.1.0-alt1
+- bump version
+
 * Wed May 14 2025 Sergey V Turchin <zerg at altlinux dot org> 11.0.0-alt4
 - add VARIANT and VARIANT_ID to os-release
 
