@@ -1,8 +1,8 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.32.2.0
-Release: alt2
+Version: 3.32.3.0
+Release: alt1
 
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -154,6 +154,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed May 28 2025 Andrey Cherepanov <cas@altlinux.org> 3.32.3.0-alt1
+- New version.
+
 * Wed Mar 26 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.32.2.0-alt2
 - Fixed build for Elbrus.
 
