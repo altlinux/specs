@@ -37,9 +37,10 @@ License:        GPL-2.0-or-later
 Group:          Monitoring
 
 Name:           icinga2
-Version:        2.14.0
-Release:        alt9
+Version:        2.14.6
+Release:        alt1
 URL:            https://www.icinga.com/
+Vcs:            https://github.com/Icinga/icinga2.git
 
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 Source1:        icinga2-register-host
@@ -361,6 +362,9 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 2.14.6-alt1
+- New version 2.14.6 (fixes: CVE-2025-48057, CVE-2024-49369).
+
 * Mon Jun 24 2024 Paul Wolneykien <manowar@altlinux.org> 2.14.0-alt9
 - Fixed build with %%_unitdir.
 

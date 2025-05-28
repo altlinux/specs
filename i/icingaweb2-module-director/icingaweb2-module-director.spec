@@ -21,14 +21,15 @@
 %define basedir	%_datadir/icingaweb2
 
 Name:           icingaweb2-module-director
-Version:        1.11.0
-Release:        alt3
+Version:        1.11.5
+Release:        alt1
 
 Summary:        Config module for Icinga 2
 License:        GPL-2.0-or-later
 Group:          Monitoring
 
 URL:            https://icinga.com
+Vcs:            https://github.com/Icinga/icingaweb2-module-director.git
 
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
 Patch0:         director-no-deprecated-modules.patch
@@ -39,7 +40,7 @@ BuildRequires:  php-devel
 Requires:       icinga2 >= 2.8.0
 Requires:       icingaweb2 >= 2.8.0
 Requires:       icingaweb2-common >= 2.8.0
-Requires:       icingaweb2-module-incubator >= 0.20.0
+Requires:       icingaweb2-module-incubator >= 0.22.0
 Requires:       php%_php_major.%_php_minor >= 7.3
 Requires:       php%_php_major.%_php_minor-curl
 Requires:       php%_php_major.%_php_minor-iconv
@@ -100,6 +101,9 @@ getent passwd %icingadirector_user >/dev/null || useradd -c "Icinga2 director" -
 %_unitdir/icinga-director.service
 
 %changelog
+* Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 1.11.5-alt1
+- New version 1.11.5 (fixes: CVE-2024-24820, CVE-2025-23203).
+
 * Fri Feb 02 2024 Paul Wolneykien <manowar@altlinux.org> 1.11.0-alt3
 - Removed extra file dependency on /etc/sysconfig/icinga2.
 

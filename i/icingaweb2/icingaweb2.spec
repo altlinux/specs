@@ -19,14 +19,15 @@
 %define webdir %_var/www/vhosts/%name
 
 Name:           icingaweb2
-Version:        2.12.1
-Release:        alt5
+Version:        2.12.4
+Release:        alt1
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
 Group:          Monitoring
 
 URL:            https://icinga.com
+Vcs:            https://github.com/Icinga/icingaweb2.git
 
 Source0:        https://github.com/Icinga/icingaweb2/archive/v%version/%name-%version.tar
 Patch0:         icingaweb2-skip-etc-open.patch
@@ -295,6 +296,10 @@ fi
 %_datadir/%name/public/css
 
 %changelog
+* Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.4-alt1
+- New version 2.12.4 (fixes: CVE-2025-27405, CVE-2025-27404,
+  CVE-2025-30164, CVE-2025-27609).
+
 * Mon Apr 21 2025 Paul Wolneykien <manowar@altlinux.org> 2.12.1-alt5
 - Fix: Don't send error messages and warnings to STDOUT (closes: 53897).
 

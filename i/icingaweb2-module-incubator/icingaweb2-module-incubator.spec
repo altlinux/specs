@@ -21,12 +21,13 @@
 %define module_name incubator
 
 Name: icingaweb2-module-%module_name
-Version: 0.20.0
-Release: alt4
+Version: 0.22.0
+Release: alt1
 Summary: Bleeding edge Icinga Web 2 libraries
 License: MIT
 Group: Monitoring
 Url: https://www.icinga.org
+Vcs: https://github.com/Icinga/icingaweb2-module-incubator.git
 
 Source0: https://github.com/Icinga/icingaweb2-module-%module_name/archive/v%version/%name-%version.tar
 Patch0:  incubator-no-deprecated-modules.patch
@@ -50,7 +51,6 @@ Icinga Web 2 - ReactPHP-based 3rd party libraries
 %build
 
 %install
-patch -p1 < patches/gipfl-web-form.patch
 mkdir -p %buildroot%basedir/modules/%module_name
 mkdir -p %buildroot%basedir/modules/%module_name/vendor
 mkdir -p %buildroot%basedir/modules/%module_name/public
@@ -66,6 +66,9 @@ cp -pv *.md *.php *.info %buildroot%basedir/modules/%module_name
 %basedir/modules/%module_name/*
 
 %changelog
+* Wed May 28 2025 Paul Wolneykien <manowar@altlinux.org> 0.22.0-alt1
+- New version 0.22.0.
+
 * Fri Mar 28 2025 Alexander Danilov <admsasha@altlinux.org> 0.20.0-alt4
 - Manual applied patch.
 
