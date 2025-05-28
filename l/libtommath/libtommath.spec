@@ -1,5 +1,5 @@
 Name: libtommath
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Summary: A portable number theoretic multiple-precision integer library
@@ -10,7 +10,7 @@ Url: http://www.libtom.net/
 # https://github.com/libtom/libtommath.git
 Source: ltm-%version.tar.xz
 
-BuildRequires: dblatex ghostscript-utils libtiff-utils
+BuildRequires: cmake dblatex ghostscript-utils libtiff-utils
 
 %description
 A free open source portable number theoretic multiple-precision integer
@@ -40,32 +40,15 @@ using %name.
 %prep
 %setup
 
-# Fix pkgconfig path
-sed -i \
-    -e 's|^prefix=.*|prefix=%prefix|g' \
-    -e 's|^libdir=.*|libdir=%_libdir|g' \
-    -e 's|^includedir=.*|includedir=%_includedir|g' \
-    %name.pc.in
-
 %build
-%make_build V=1 LIBPATH=%_libdir CFLAGS="%optflags -I./" -f makefile.shared
-echo "@@@@"
-make V=1 -f makefile manual docs
+%cmake -DBUILD_SHARED_LIBS=TRUE -DBUILD_TESTING=TRUE
+%cmake_build
 
 %install
-# There is no configure script that ships with libtommath but it does
-# understand DESTDIR and it installs via that and the
-# INSTALL_USER and INSTALL_GROUP environment variables.
-export INSTALL_USER=$(id -un)
-export INSTALL_GROUP=$(id -gn)
-make install INCPATH=%_includedir/tommath DESTDIR=%buildroot LIBPATH=%_libdir -f makefile.shared
-find %buildroot -name '*.la' -exec rm -f {} ';'
-find %buildroot -name '*.a' -exec rm -f {} ';'
-find %buildroot -name '*.h' -exec chmod 644 {} ';'
+%cmakeinstall_std
 
 %check
-make -f makefile.shared test
-./test
+%_target_platform/demo/test-ltm
 
 %files
 %doc LICENSE
@@ -73,8 +56,9 @@ make -f makefile.shared test
 
 %files devel
 %doc LICENSE
-%_includedir/tommath
+%_includedir/tommath.h
 %_libdir/*.so
+%_libdir/cmake/libtommath
 %_pkgconfigdir/*.pc
 
 %files doc
@@ -83,6 +67,9 @@ make -f makefile.shared test
 #  doc/poster.pdf doc/tommath.pdf
 
 %changelog
+* Wed May 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
+- 1.3.0 released
+
 * Wed Feb 14 2024 Fr. Br. George <george@altlinux.org> 1.2.1-alt1
 - Autobuild version bump to 1.2.1
 
