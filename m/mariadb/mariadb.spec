@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 11.4.7
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -680,7 +680,9 @@ rm -f %buildroot%prefix/%plugindir/daemon_example.ini
 
 # house cleaning
 rm -f %buildroot%_bindir/mysql_embedded
+rm -f %buildroot%_man1dir/mysql_embedded*
 rm -f %buildroot%_bindir/mariadb-embedded
+rm -f %buildroot%_man1dir/mariadb-embedded*
 rm -rf %buildroot%_datadir/info
 rm -f %buildroot%_datadir/mariadb/binary-configure
 rm -f %buildroot%_datadir/mariadb/my-huge.cnf
@@ -692,20 +694,28 @@ rm -f %buildroot%_datadir/mariadb/wsrep.cnf
 rm -f %buildroot%_datadir/mariadb/mysqld_multi.server
 rm -f %buildroot%_datadir/mariadb/mysql-log-rotate
 rm -f %buildroot%_datadir/mariadb/mysql.server
+rm -f %buildroot%_man1dir/mysql.server*
 rm -f %buildroot%_datadir/mariadb/magic
 
 # cleanup
 rm -f %buildroot/etc/my.cnf.d/enable_encryption.preset
 rm -f %buildroot%_bindir/galera_recovery
+rm -f %buildroot%_man1dir/galera_recovery*
 rm -f %buildroot%_bindir/mariadb-service-convert
+rm -f %buildroot%_man1dir/mariadb-service-convert*
 rm -f %buildroot%_bindir/mysqld_safe_helper
 rm -f %buildroot%_bindir/mariadbd-safe-helper
+rm -f %buildroot%_man1dir/mariadbd-safe-helper*
+rm -f %buildroot%_man1dir/mysqld_safe_helper*
+rm -f %buildroot%_man1dir/my_safe_process*
 rm -f %buildroot%_bindir/test-connect-t
 rm -f %buildroot%_libdir/libmariadbd.a
 rm -f %buildroot%_libdir/libmysqlclient.a
 rm -f %buildroot%_libdir/libmysqlclient_r.a
 rm -f %buildroot%_libdir/libmariadbclient.a
 rm -f %buildroot%_libdir/libmariadb.a
+rm -f %buildroot%_man1dir/mysql-stress-test.pl*
+rm -f %buildroot%_man1dir/mysql-test-run.pl*
 
 ################################################################################
 # run the tests
@@ -782,6 +792,25 @@ fi
 %if_with mroonga
 %_datadir/mariadb/mroonga
 %endif
+%_man1dir/aria_*.1*
+%exclude %_man1dir/aria_s3_copy.1*
+%_man1dir/mariadb-conv.1*
+%_man1dir/mariadb-fix-extensions.1*
+%_man1dir/mariadb-install-db.1*
+%_man1dir/mariadb-secure-installation.1*
+%_man1dir/mariadb-tzinfo-to-sql.1*
+%_man1dir/mariadb-upgrade.1*
+%_man1dir/mariadbd-multi.1*
+%_man1dir/mariadbd-safe.1*
+%_man1dir/*isam*.1*
+%_man1dir/mysql_fix_extensions.1*
+%_man1dir/mysql_install_db.1*
+%_man1dir/mysql_secure_installation.1*
+%_man1dir/mysql_tzinfo_to_sql.1*
+%_man1dir/mysql_upgrade.1*
+%_man1dir/mysqld_multi.1*
+%_man1dir/mysqld_safe.1*
+%_man8dir/*
 
 %_sbindir/*
 %prefix/%plugindir/*
@@ -853,6 +882,8 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/mariadbcheck
 %config(noreplace) %_sysconfdir/my.cnf.d/galera.cnf
 %_datadir/mariadb/wsrep_notify
+%_man1dir/galera_new_cluster.1*
+%_man1dir/wsrep_*.1*
 %endif
 
 %if_with cracklib
@@ -871,6 +902,7 @@ fi
 %prefix/%plugindir/ha_rocksdb.so
 %_man1dir/mysql_ldb.1*
 %_man1dir/mariadb-ldb.1*
+%_man1dir/myrocks_hotbackup.1*
 %endif
 
 %if_with gssapi
@@ -934,6 +966,19 @@ fi
 %_bindir/mysqldumpslow
 %_bindir/mariadb-dumpslow
 %_bindir/mytop
+%_man1dir/mariadb-access.1*
+%_man1dir/mariadb-convert-table-format.1*
+%_man1dir/mariadb-dumpslow.1*
+%_man1dir/mariadb-find-rows.1*
+%_man1dir/mariadb-hotcopy.1*
+%_man1dir/mariadb-setpermission.1*
+%_man1dir/mysql_convert_table_format.1*
+%_man1dir/mysql_find_rows.1*
+%_man1dir/mysql_setpermission.1*
+%_man1dir/mysqlaccess.1*
+%_man1dir/mysqldumpslow.1*
+%_man1dir/mysqlhotcopy.1*
+%_man1dir/mytop.1*
 %endif
 
 %if_with client
@@ -972,24 +1017,35 @@ fi
 %_bindir/perror
 %_bindir/replace
 %_bindir/resolve*
-
-%_mandir/man?/*
-%exclude %_man1dir/mysql_config.1*
-%exclude %_man1dir/mariadb_config.1*
-%exclude %_man1dir/mysql_client_test_embedded.1*
-%exclude %_man1dir/mariadb-client-test-embedded.1*
-%exclude %_man1dir/mariadb-client-test.1*
-%exclude %_man1dir/mariadb-client-test-embedded.1*
-%exclude %_man1dir/mysqltest_embedded.1*
-%exclude %_man1dir/mariadb-test-embedded.1*
-%exclude %_man1dir/mariadb-test.1*
-%if_with rocksdb
-%exclude %_man1dir/mysql_ldb.1*
-%exclude %_man1dir/mariadb-ldb.1*
-%endif
-%{?_with_rocksdb:%exclude %_man1dir/mysql_ldb.1*}
-%{?_with_rocksdb:%exclude %_man1dir/mariadb-ldb.1*}
-%{?_with_s3:%exclude %_man1dir/aria_s3_copy.1*}
+%_man1dir/innochecksum.1*
+%_man1dir/mariadb-admin.1*
+%_man1dir/mariadb-binlog.1*
+%_man1dir/mariadb-check.1*
+%_man1dir/mariadb-client-test.1*
+%_man1dir/mariadb-dump.1*
+%_man1dir/mariadb-import.1*
+%_man1dir/mariadb-show.1*
+%_man1dir/mariadb-slap.1*
+%_man1dir/mariadb-test.1*
+%_man1dir/mariadb-waitpid.1*
+%_man1dir/mariadb.1*
+%_man1dir/msql2mysql.1*
+%_man1dir/my_print_defaults.1*
+%_man1dir/mysql.1*
+%_man1dir/mysql_client_test.1*
+%_man1dir/mysql_waitpid.1*
+%_man1dir/mysqladmin.1*
+%_man1dir/mysqlbinlog.1*
+%_man1dir/mysqlcheck.1*
+%_man1dir/mysqldump.1*
+%_man1dir/mysqlimport.1*
+%_man1dir/mysqlshow.1*
+%_man1dir/mysqlslap.1*
+%_man1dir/mysqltest.1*
+%_man1dir/perror.1*
+%_man1dir/replace.1*
+%_man1dir/resolve_stack_dump.1*
+%_man1dir/resolveip.1*
 %endif
 
 %if_with bench
@@ -1002,6 +1058,9 @@ fi
 %_bindir/mariabackup
 %_bindir/mariadb-backup
 %_bindir/mbstream
+%_man1dir/mariabackup.1*
+%_man1dir/mariadb-backup.1*
+%_man1dir/mbstream.1*
 %endif
 
 %if_with libs
@@ -1034,6 +1093,7 @@ fi
 #_mandir/man1/comp_err.1*
 %_man1dir/mysql_config.1*
 %_man1dir/mariadb_config.1*
+%_man3dir/*
 %_aclocaldir/mysql.m4
 %_pkgconfigdir/mariadb.pc
 %_pkgconfigdir/libmariadb.pc
@@ -1051,15 +1111,16 @@ fi
 %_bindir/mariadb-test-embedded
 %_man1dir/mysql_client_test_embedded.1*
 %_man1dir/mariadb-client-test-embedded.1*
-%_man1dir/mariadb-client-test.1*
 %_man1dir/mysqltest_embedded.1*
 %_man1dir/mariadb-test-embedded.1*
-%_man1dir/mariadb-test.1*
 %endif
 %endif
 %endif
 
 %changelog
+* Wed May 28 2025 Alexei Takaseev <taf@altlinux.org> 11.4.7-alt2
+- Fixed placed manpages
+
 * Fri May 23 2025 Alexei Takaseev <taf@altlinux.org> 11.4.7-alt1
 - 11.4.5 (Fixes: CVE-2023-52969, CVE-2023-52970, CVE-2023-52971, CVE-2025-30693, CVE-2025-30722)
 - Update mariadb-11.4.7-disable-download-fmt.patch
