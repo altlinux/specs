@@ -11,7 +11,7 @@
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt1
+Release: alt2
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -395,10 +395,14 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed May 28 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.1-alt2
+- Add CVE fixes information to changelog
+
 * Tue May 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.1-alt1
 - 1.32.4 -> 1.33.1
 - Security fixes:
   + CVE-2023-45142: OpenTelemetry-Go Contrib has DoS vulnerability in otelhttp due to unbound cardinality metrics
+  + CVE-2024-28180: Go JOSE vulnerable to Improper Handling of Highly Compressed Data (Data Amplification)
 
 * Tue May 13 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.32.4-alt3
 - Fixes:
