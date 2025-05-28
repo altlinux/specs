@@ -13,7 +13,7 @@ re-usable library.
 
 Name:       python3-module-%pypi_name
 Version:    6.1.1
-Release:    alt1
+Release:    alt1.1
 
 Summary:    Python Build Reasonableness
 
@@ -82,7 +82,8 @@ rm -rv %buildroot%python3_sitelibdir/%pypi_name/tests
 rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
 
 %check
-excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_run|test_with_argument'
+# test_console_script_develop: https://bugs.launchpad.net/pbr/+bug/2107732
+excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_run|test_with_argument|test_console_script_develop'
 %tox_check_pyproject -- --exclude-regex "$excluded_tests"
 
 %files
@@ -95,6 +96,9 @@ excluded_tests='test_requirement_parsing|test_pep_517_support|test_wsgi_script_r
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Wed May 28 2025 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1.1
+- NMU: fixed FTBFS (setuptools 80.0.0).
+
 * Sat Feb 08 2025 Grigory Ustinov <grenka@altlinux.org> 6.1.1-alt1
 - Automatically updated to 6.1.1.
 
