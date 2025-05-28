@@ -11,7 +11,7 @@
 %def_with jemalloc
 
 Name: fluent-bit
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: Fast data collector for Linux
@@ -34,7 +34,7 @@ ExcludeArch: armh ppc64le
 BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Mon Nov 18 2024
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libssl-devel pkg-config python3-base sh5
-BuildRequires: gcc-c++ cmake flex libbacktrace-devel libcares-devel libedit-devel libluajit-devel libnghttp2-devel libpq-devel librdkafka-devel libsystemd-devel libyaml-devel
+BuildRequires: gcc-c++ cmake flex libbacktrace-devel libcares-devel libedit-devel libluajit-devel libnghttp2-devel libpq-devel librdkafka-devel libsystemd-devel libyaml-devel libsqlite3-devel
 BuildRequires: libssl-devel libsasl2-devel
 # libudev-devel BR is needed for systemd input plugin
 BuildRequires: libudev-devel
@@ -140,6 +140,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Wed May 28 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Thu Apr 24 2025 Leontiy Volodin <lvol@altlinux.org> 4.0.1-alt1
 - New version 4.0.1.
 
