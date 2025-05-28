@@ -2,7 +2,7 @@
 %define upstream FiraCode
 
 Name: fonts-ttf-%fname
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 License: OFL-1.1
 
@@ -33,6 +33,9 @@ BuildRequires(pre): rpm-build-fonts
 
 
 %changelog
+* Wed May 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.4.0-alt1
+- new version 3.4.0 (with rpmrb script)
+
 * Sat Jan 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.3.0-alt1
 - new version 3.3.0 (with rpmrb script) (ALT bug 52668)
 

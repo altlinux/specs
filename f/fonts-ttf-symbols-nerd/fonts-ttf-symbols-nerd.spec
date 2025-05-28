@@ -3,7 +3,7 @@
 %define fconf 10-nerd-font-symbols.conf
 
 Name: fonts-ttf-%fname
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 License: MIT
 
@@ -40,6 +40,9 @@ ln -s %_fontconfig_templatedir/%fconf %buildroot%_fontconfig_confdir/%fconf
 %config(noreplace) %_fontconfig_confdir/%fconf
 
 %changelog
+* Wed May 28 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.4.0-alt1
+- new version 3.4.0 (with rpmrb script)
+
 * Sat Jan 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 3.3.0-alt1
 - new version 3.3.0 (with rpmrb script)
 - add a font config file
