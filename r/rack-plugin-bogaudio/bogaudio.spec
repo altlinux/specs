@@ -1,5 +1,5 @@
 Name: rack-plugin-bogaudio
-Version: 2.6.46
+Version: 2.6.47
 Release: alt1
 
 Summary: BogaudioModules for VCV Rack
@@ -31,6 +31,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Wed May 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.47-alt1
+- 2.6.47 released
+
 * Tue May 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.46-alt1
 - 2.6.46 released
 
