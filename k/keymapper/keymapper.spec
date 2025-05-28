@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: keymapper
-Version: 4.11.4
+Version: 4.12.1
 Release: alt1
 
 Summary: A cross-platform context-aware key remapper
@@ -23,13 +23,15 @@ BuildRequires: pkgconfig(xkbcommon-x11)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libudev)
 
+Requires: notify-send
+
 %description
 A cross-platform context-aware key remapper. It allows to:
 - Redefine your keyboard layout and shortcuts systemwide or per
   application.
 - Manage all your keyboard shortcuts in a single configuration file.
 - Change shortcuts for similar actions in different applications at once.
-- Share configuration files between multiple systems (GNU/Linux, 
+- Share configuration files between multiple systems (GNU/Linux,
   Windows, MacOS).
 - Specify input and output as characters instead of the keys required to
   type them.
@@ -60,6 +62,9 @@ A cross-platform context-aware key remapper. It allows to:
 %_datadir/kwin/scripts/keymapper/*
 
 %changelog
+* Wed May 28 2025 Nikolay Strelkov <snk@altlinux.org> 4.12.1-alt1
+- New version 4.12.1.
+
 * Sat Apr 12 2025 Nikolay Strelkov <snk@altlinux.org> 4.11.4-alt1
 - New version 4.11.4.
 

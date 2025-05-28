@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xfce4-indicator-plugin
-Version: 2.4.3
+Version: 2.5.0
 Release: alt1
 
 Summary: Plugin to display information from applications in the Xfce panel
@@ -49,6 +49,9 @@ Ubuntu's MessagingMenu design specification.
 %_datadir/xfce4/panel/plugins/indicator.desktop
 
 %changelog
+* Wed May 28 2025 Nikolay Strelkov <snk@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Fri Jan 17 2025 Nikolay Strelkov <snk@altlinux.org> 2.4.3-alt1
 - Dropped %%xfce4_drop_gitvtag macro.
 - New version 2.4.3.
