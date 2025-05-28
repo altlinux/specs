@@ -84,7 +84,7 @@
 # Set of architectures for which we build fastdebug builds
 %global fastdebug_arches x86_64 ppc64le aarch64
 # Set of architectures with a Just-In-Time (JIT) compiler
-%global jit_arches      %{arm} %{aarch64} %{ix86} %{power64} s390x sparcv9 sparc64 x86_64 loongarch64
+%global jit_arches      %{arm} %{aarch64} %{ix86} %{power64} s390x sparcv9 sparc64 x86_64 loongarch64 riscv64
 # Set of architectures which use the Zero assembler port (!jit_arches)
 %global zero_arches ppc s390
 # Set of architectures which run a full bootstrap cycle
@@ -94,7 +94,7 @@
 # Set of architectures with a Ahead-Of-Time (AOT) compiler
 %global aot_arches      x86_64 %{aarch64}
 # Set of architectures which support the serviceability agent
-%global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %{arm} loongarch64
+%global sa_arches       %{ix86} x86_64 sparcv9 sparc64 %{aarch64} %{power64} %{arm} loongarch64 riscv64
 # Set of architectures which support class data sharing
 # See https://bugzilla.redhat.com/show_bug.cgi?id=513605
 # MetaspaceShared::generate_vtable_methods is not implemented for the PPC JIT
@@ -265,6 +265,10 @@
 %global archinstall loongarch64
 %global stapinstall loongarch64
 %endif
+%ifarch riscv64
+%global archinstall riscv64
+%global stapinstall riscv64
+%endif
 # Need to support noarch for srpm build
 %ifarch noarch
 %global archinstall %{nil}
@@ -360,7 +364,7 @@
 
 Name:    java-17-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt1.1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1102,7 +1106,7 @@ function buildjdk() {
 %ifarch %{ppc64le}
     --with-jobs=1 \
 %else
-%ifarch loongarch64
+%ifarch loongarch64 riscv64
     --with-jobs=$NUM_PROC \
 %else
     --with-jobs=8 \
@@ -2016,6 +2020,9 @@ fi
 %endif
 
 %changelog
+* Wed May 28 2025 Ivan A. Melnikov <iv@altlinux.org> 0:17.0.15.0.6-alt1.1
+- NMU: Build on riscv64.
+
 * Wed Apr 30 2025 Andrey Cherepanov <cas@altlinux.org> 0:17.0.15.0.6-alt1
 - New version.
 - Security fixes:
