@@ -1,16 +1,16 @@
-%define pypi_name advanced-alchemy
-%define mod_name advanced_alchemy
+%define pypi_name litestar-htmx
+%define mod_name litestar_htmx
 
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.4.4
+Version: 0.4.1
 Release: alt1
 
-Summary: A carefully crafted, thoroughly tested, optimized companion library for SQLAlchemy
+Summary: Litestar plugin for HTMX
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/litestar-org/advanced-alchemy
+URL:     https://github.com/litestar-org/litestar-htmx
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
@@ -18,9 +18,8 @@ BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-asyncmy
-BuildRequires: python3-module-asyncpg
-BuildRequires: python3-module-psycopg
+BuildRequires: python3-module-litestar
+BuildRequires: python3-module-jinja2
 %endif
 
 BuildArch: noarch
@@ -44,13 +43,9 @@ Source: %pypi_name-%version.tar
 
 %files
 %doc *.md
-%_bindir/alchemy
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
-* Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 1.4.4-alt1
-- New 1.4.4 version.
-
-* Fri Jul 19 2024 Alexander Burmatov <thatman@altlinux.org> 0.17.3-alt1
+* Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus.

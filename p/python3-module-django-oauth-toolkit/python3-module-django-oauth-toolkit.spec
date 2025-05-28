@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.3.0
+Version: 3.0.1
 Release: alt1
 
 Summary: OAuth2 goodies for the Djangonauts
@@ -56,5 +56,8 @@ export DJANGO_SETTINGS_MODULE=tests.settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue May 13 2025 Alexander Burmatov <thatman@altlinux.org> 3.0.1-alt1
+- Update version to 3.0.1.
+
 * Mon Oct 23 2023 Alexander Burmatov <thatman@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus.

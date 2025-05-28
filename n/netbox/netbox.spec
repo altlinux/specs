@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.3.0
+Version: 4.3.1
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -204,6 +204,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.1-alt1
+- New 4.3.1 version.
+
 * Mon May 12 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.0-alt1
 - New 4.3.0 version.
 

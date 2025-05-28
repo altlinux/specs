@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 7.4.1
+Version: 7.5.0
 Release: alt1
 
 Summary: Python API client library for Netbox
@@ -47,6 +47,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/pynetbox-0.0.0.dist-info/
 
 %changelog
+* Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 7.5.0-alt1
+- New 7.5.0 version.
+
 * Thu Nov 07 2024 Alexander Burmatov <thatman@altlinux.org> 7.4.1-alt1
 - New 7.4.1 version.
 

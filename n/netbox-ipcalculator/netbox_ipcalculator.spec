@@ -1,6 +1,6 @@
 Name:    netbox-ipcalculator
-Version: 1.4.9
-Release: alt2
+Version: 1.4.10
+Release: alt1
 
 Summary: IP Calculator plugin for Netbox
 License: Apache-2.0
@@ -42,6 +42,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-ipcalculator/READ
 %_defaultdocdir/netbox-ipcalculator/README
 
 %changelog
+* Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 1.4.10-alt1
+- New 1.4.10 version.
+
 * Fri May 16 2025 Alexander Burmatov <thatman@altlinux.org> 1.4.9-alt2
 - Add required NetBox version.
 

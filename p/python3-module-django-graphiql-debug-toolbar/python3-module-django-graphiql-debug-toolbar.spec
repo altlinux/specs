@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0
-Release: alt3
+Release: alt4
 
 Summary: Django Debug Toolbar for GraphiQL IDE and Graphene
 License: MIT
@@ -43,6 +43,8 @@ rm -f %buildroot%python3_sitelibdir/LICENSE
 rm -f %buildroot%python3_sitelibdir/README.md
 
 %check
+echo 'STATIC_URL = "/static/"' >> tests/settings.py
+sed -i 's/get_show_toolbar_mock.assert_called_once_with()/get_show_toolbar_mock.assert_called_once_with(async_mode=False)/' tests/test_middleware.py
 %pyproject_run_pytest
 
 %files
@@ -51,6 +53,9 @@ rm -f %buildroot%python3_sitelibdir/README.md
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue May 13 2025 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt4
+- Fix tests.
+
 * Tue Aug 20 2024 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt3
 - Add compatibility for django-debug-toolbar >= 4.4.6.
 
