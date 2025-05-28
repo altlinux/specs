@@ -3,10 +3,11 @@
 %set_verify_elf_method strict
 
 %def_enable autotools
+%def_enable scripts
 
 Name: synaptic
 Version: 0.58
-Release: alt29
+Release: alt30
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
 Group: System/Configuration/Packaging
@@ -83,7 +84,7 @@ intltoolize --force
 # A style enforcement: always use the keyword, which helps to avoid API misuse
 %add_optflags -Werror=suggest-override
 
-%configure --with-vte --with-pkg-hold --enable-scripts
+%configure --with-vte --with-pkg-hold %{subst_enable scripts}
 %make_build
 
 %install
@@ -110,6 +111,9 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed May 28 2025 Ivan A. Melnikov <iv@altlinux.org> 0.58-alt30
+- NMU: Support building without lua (by asheplyakov@)
+
 * Tue May 23 2023 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt29
 - Enabled the dialog to show changelogs. (In ALT, they are in the index,
   unlike in Debian, where they have to be downloaded separately.)
