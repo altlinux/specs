@@ -1,5 +1,5 @@
 Name: eepm-play-gui
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 License: AGPL2
 
@@ -52,6 +52,9 @@ GUI frontend for install third-party applications using epm play.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Wed May 28 2025 Roman Alifanov <ximper@altlinux.org> 0.7.1-alt1
+- increased the width of the logdialog
+
 * Sat Mar 29 2025 Roman Alifanov <ximper@altlinux.org> 0.7.0-alt1
 - very large speed up of getting a list of packages
 
