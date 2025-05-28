@@ -6,7 +6,7 @@
 
 Name:    python3-module-%modulename
 Version: 10.0.1
-Release: alt3
+Release: alt4
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
 License: BSD-3-Clause
@@ -38,8 +38,7 @@ BuildRequires: python3-module-jaraco.context
 BuildRequires: python3-module-portend
 BuildRequires: python3-module-requests_toolbelt
 BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-ignore-flaky
-BuildRequires: python3-module-pytest-forked
+BuildRequires: python3-module-pytest-rerunfailures
 %endif
 BuildArch: noarch
 
@@ -71,8 +70,9 @@ rm -f %python3_sitelibdir/%{modulename}/testing.py
 %endif
 
 %check
-# test_tls_client_auth fails on i586 and ppc64le
-%pyproject_run_pytest -k 'not test_tls_client_auth'
+# see cheroot/test/conftest.py
+export HTTP_REQUEST_TIMEOUT=3
+%pyproject_run_pytest -vra
 
 %files
 %_bindir/cheroot
@@ -88,6 +88,9 @@ rm -f %python3_sitelibdir/%{modulename}/testing.py
 %endif
 
 %changelog
+* Wed May 28 2025 Stanislav Levin <slev@altlinux.org> 10.0.1-alt4
+- Fixed FTBFS (an attempt to workaround flaky tests).
+
 * Wed Dec 11 2024 Anton Vyatkin <toni@altlinux.org> 10.0.1-alt3
 - Fixed FTBFS.
 
