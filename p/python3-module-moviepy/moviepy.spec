@@ -3,9 +3,13 @@
 %def_with check
 %def_with docs
 
+%ifarch %ix86
+%def_with exclude_test
+%endif
+
 Name: python3-module-%pypi_name
-Version: 2.1.2
-Release: alt2.1
+Version: 2.2.1
+Release: alt1
 
 Summary: Video editing with Python
 
@@ -62,6 +66,8 @@ This package contains documentation for %pypi_name.
 %autopatch -p1
 
 %build
+# fix license
+sed -i 's/license = { text = "MIT License" }/license = "MIT"/;/License :: OSI Approved :: MIT License/d' pyproject.toml
 %pyproject_build
 
 %if_with docs
@@ -80,15 +86,7 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %check
-%pyproject_run_pytest -k \
-	"not test_PR_529 \
-	and not test_ffmpeg_parse_infos_decode_file \
-	and not test_ffmpeg_parse_video_rotation \
-	and not test_correct_video_rotation \
-	and not test_ffmpeg_resize \
-	and not test_ffmpeg_stabilize_video \
-	and not test_audio_delay"
-# test_audio_delay failed on i586
+%pyproject_run_pytest %{?_with_exclude_test:-k "not test_audio_delay"}
 
 %files
 %doc *.txt *.md
@@ -102,6 +100,11 @@ install -m0644 docs/build/man/%pypi_name.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Tue May 27 2025 Alexander Kovalev <alexvk@altlinux.org> 2.2.1-alt1
+- New version 2.2.1.
+- Revert pull request #2417.
+- Spec: return all tests to check except test_audio_delay for i586.
+
 * Wed Apr 23 2025 Alexander Kovalev <alexvk@altlinux.org> 2.1.2-alt2.1
 - Merge pull request #2417 to fix FTBFS.
 
