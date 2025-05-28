@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: distro-licenses
-Version: 1.3.15
+Version: 1.3.16
 Release: alt1
 License: CC0-1.0
 Summary: Texts of various distribution licenses
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Thu May 29 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.16-alt1
+- Add license ALT_Orchestra_License
+
 * Tue Mar 18 2025 Evgeny Sinelnikov <sin@altlinux.org> 1.3.15-alt1
 - distro-license-check: add p11 to valid distbranches (closes: #53509)
 
