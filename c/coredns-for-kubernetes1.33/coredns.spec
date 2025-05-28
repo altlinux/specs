@@ -6,7 +6,7 @@
 
 Name:     coredns-for-kubernetes%k8s_ver
 Version:  1.12.0
-Release:  alt1
+Release:  alt2
 
 Summary:  CoreDNS is a DNS server that chains plugins
 License:  Apache-2.0
@@ -53,6 +53,14 @@ export IGNORE_SOURCES=1
 %_bindir/coredns
 
 %changelog
+* Fri May 23 2025 Alexander Stepchenko <geochip@altlinux.org> 1.12.0-alt2
+- Security fixes:
+  + CVE-2025-22869: Potential denial of service in golang.org/x/crypto
+  + CVE-2025-22870: HTTP Proxy bypass using IPv6 Zone IDs in golang.org/x/net
+  + CVE-2025-22872: Incorrect Neutralization of Input During Web Page Generation in x/net in golang.org/x/net
+  + CVE-2025-29786: Memory Exhaustion in Expr Parser with Unrestricted Input
+  + CVE-2025-30204: jwt-go allows excessive memory allocation during header parsing
+
 * Tue May 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.12.0-alt1
 - 1.11.3 -> 1.12.0
 - Security fixes:
