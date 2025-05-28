@@ -2,6 +2,7 @@
 %define _stripped_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 %define app_id dev.zed.Zed
+%define app_cli zed-editor
 
 %define webrtc_basedir %_builddir
 %define webrtc_tar webrtc-b99fd2c-6
@@ -14,7 +15,7 @@
 %endif
 
 Name: zed
-Version: 0.187.8
+Version: 0.187.9
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -79,13 +80,13 @@ cargo build %_smp_mflags --release --offline --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
-install -pD -m0755 target/release/cli %buildroot%_bindir/zed
+install -pD -m0755 target/release/cli %buildroot%_bindir/%app_cli
 install -pD -m0644 crates/zed/resources/app-icon.png %buildroot%_iconsdir/hicolor/512x512/apps/%app_id.png
 install -pD -m0644 crates/zed/resources/app-icon@2x.png %buildroot%_iconsdir/hicolor/1024x1024/apps/%app_id.png
 
 export DO_STARTUP_NOTIFY="true"
 export APP_ID="%app_id"
-export APP_CLI="zed"
+export APP_CLI="%app_cli"
 export APP_ICON="%app_id"
 export APP_ARGS="%%U"
 export APP_NAME="Zed"
@@ -100,12 +101,16 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 # some licenses files have copyrights
 %doc LICENSE-AGPL LICENSE-APACHE README.md assets/licenses.md
 %_libexecdir/zed-editor
-%_bindir/zed
+%_bindir/%app_cli
 %_desktopdir/%app_id.desktop
 %_datadir/metainfo/%app_id.metainfo.xml
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Wed May 28 2025 Anton Zhukharev <ancieg@altlinux.org> 0.187.9-alt1
+- Updated to 0.187.9.
+- Changed cli name from "zed" to "zed-editor" (closes #54347).
+
 * Mon May 26 2025 Anton Zhukharev <ancieg@altlinux.org> 0.187.8-alt1
 - Updated to 0.187.8.
 
