@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extensions
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: GNOME Shell Extensions
 Group: Graphical desktop/GNOME
@@ -45,12 +45,20 @@ and optional functionality to GNOME Shell.
 See %_docdir/%name-%version/README for more information.
 
 %package -n gnome-session-classic
-Summary: GNOME Classic sessions
+Summary: GNOME Classic Wayland sessions
 Group: Graphical desktop/GNOME
 Requires: %name = %EVR
 
 %description -n gnome-session-classic
-This package provides files required for GNOME Classic mode.
+This package provides files required for GNOME Classic mode on Wayland.
+
+%package -n gnome-session-classic-xsession
+Summary: GNOME Classic Xorg sessions
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+
+%description -n gnome-session-classic-xsession
+This package provides files required for GNOME Classic mode on Xorg.
 
 %package system-monitor
 Summary: System Monitor GNOME Shell extension
@@ -86,11 +94,14 @@ This extension provides system monitor for GNOME Shell.
 %files -n gnome-session-classic
 %_datadir/wayland-sessions/gnome-classic-wayland.desktop
 %_datadir/wayland-sessions/gnome-classic.desktop
-%{?_enable_x11:
-%_datadir/xsessions/gnome-classic.desktop
-%_datadir/xsessions/gnome-classic-xorg.desktop}
 %_datadir/gnome-shell/modes/classic.json
 %_datadir/glib-2.0/schemas/00_org.gnome.shell.extensions.classic.gschema.override
+%endif
+
+%if_enabled x11
+%files -n gnome-session-classic-xsession
+%_datadir/xsessions/gnome-classic.desktop
+%_datadir/xsessions/gnome-classic-xorg.desktop
 %endif
 
 %files system-monitor
@@ -200,6 +211,9 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt2
+- moved Xorg Classic session files to separate package
+
 * Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 - made x11 support optional (enabled by default)

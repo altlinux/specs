@@ -1,8 +1,8 @@
-%define ver_major 47
+%define ver_major 48
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1.3
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: GPL-3.0-or-later
@@ -10,19 +10,17 @@ Group: Graphical desktop/GNOME
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
-
 # The following are required versions of those packages that
 # do not follow GNOME version numbers.
 ## Core components
 %define session_ver %ver_major
-%define keyring_ver 3.31.91
+%define keyring_ver %ver_major
 
 ## Applications
 %define nautilus_ver %ver_major
-%define seahorse_ver 43
+%define seahorse_ver 47
 %define utils_ver 3.20
-%define monitor_ver 42
+%define monitor_ver %ver_major
 %define games_ver 42
 %define weather_ver %ver_major
 %define pm_ver 43
@@ -33,7 +31,7 @@ BuildRequires(pre): rpm-build-licenses
 %define bijiben_ver 41
 %define cheese_ver 44.1
 %define roller_ver 44.3
-%define eog_ver %ver_major
+%define eog_ver 47
 %define network_manager_ver 1.36.0
 %define terminal_ver 3.54.1
 %define console_ver %ver_major
@@ -81,7 +79,7 @@ Provides: gnome-minimal = %version-%release
 
 # GNOME Desktop Core
 Requires: gnome-session-wayland >= %session_ver
-Requires: gnome-session-xsession
+#Requires: gnome-session-xsession
 Requires: gnome-session-classic
 Requires: pipewire wireplumber
 Requires: gnome-control-center >= %ver_major
@@ -208,7 +206,7 @@ Requires: cheese >= %cheese_ver
 Requires: bijiben >= %bijiben_ver
 
 # Utilities
-Requires: gnome-utils >= %utils_ver
+#Requires: gnome-utils >= %utils_ver
 
 ## Let's have nice notifications
 Requires: notification-daemon
@@ -480,6 +478,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Mon May 05 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
+- minimal: removed gnome-session-xsession for wayland-only gdm
+
 * Tue Feb 18 2025 Yuri N. Sedunov <aris@altlinux.org> 47.0-alt1.3
 - minimal: added gnome-shell-extensions-system-monitor
 
