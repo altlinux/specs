@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -110,6 +110,9 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Thu May 29 2025 Paul Wolneykien <manowar@altlinux.org> 1:0.7.9-alt1
+- Fixed reconfiguration error for bootloaders other than GRUB.
+
 * Tue May 13 2025 Anton Midyukov <antohami@altlinux.org> 1:0.7.8-alt1
 - integrity-sign: add extra library extension support
 
