@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qadwaitadecorations-activator-gnome
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Enables QT Adwaita decorations for GNOME on Wayland
@@ -30,5 +30,8 @@ install -Dpm755 qt_adwaita_decorations.sh %buildroot%_sysconfdir/profile.d/%name
 %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Mon Mar 31 2025 Alexey Volkov <qualimock@altlinux.org> 0.1.2-alt1
+- new version 0.1.2 (closes: #54161)
+
 * Fri Mar 07 2025 Alexey Volkov <qualimock@altlinux.org> 0.1.1-alt1
 - initial build for ALT
