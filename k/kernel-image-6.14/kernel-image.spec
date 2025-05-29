@@ -2,7 +2,7 @@ Name: kernel-image-6.14
 Release: alt1
 %define kernel_src_version	6.14
 %define kernel_base_version	6.14
-%define kernel_sublevel	.7
+%define kernel_sublevel	.9
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -537,7 +537,7 @@ check-pesign-helper
 %modules_dir/modules.dep
 %modules_dir/modules.devname
 %modules_dir/modules.order
-%modules_dir/modules.softdep
+%modules_dir/modules.*dep
 %modules_dir/modules.symbols
 %ghost %modules_dir/modules.*.bin
 %defattr(0600,root,root,0700)
@@ -610,6 +610,18 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.9-alt1
+- v6.14.9 (2025-05-29).
+- config-aarch64: enable some sensors and cameras on PinePhone.
+- config: enable more led-trigger configs config-aarch64: enable config
+  of mchp23 spi sram.
+- spec: Fix packaging modules.weakdep appeared after kmod update.
+
+* Thu May 22 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.8-alt1
+- v6.14.8 (2025-05-22).
+- config: Enable CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y.
+- config: Enable CONFIG_INIT_STACK_ALL_ZERO=y.
+
 * Sun May 18 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.7-alt1
 - v6.14.7 (2025-05-18).
 
