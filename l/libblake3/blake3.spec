@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libblake3
-Version: 1.5.4
+Version: 1.8.2
 Release: alt1
 Summary: The official C implementations of the BLAKE3 cryptographic hash function
 License: CC0-1.0 or Apache-2.0 or Apache-2.0 with LLVM-exception
@@ -16,9 +16,13 @@ Vcs: https://github.com/BLAKE3-team/BLAKE3
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: banner
 BuildRequires: cmake
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3 /proc}}
+BuildRequires: gcc-c++
+BuildRequires: tbb-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /proc
+BuildRequires: python3
+}}
 
 %description
 BLAKE3 is a cryptographic hash function that is:
@@ -52,45 +56,53 @@ Requires(pre): gcc
 %summary.
 
 %prep
-%setup
-sed -i 's/"blake3.h"/<blake3.h>/' c/example.c
-# Now it's used only for testing.
-ln -s Makefile.altlinux c/GNUmakefile
-# aarch64 does not support `-mfpu=neon` flag, armh should not have it.
-sed -i '/blake3_neon.c.*BLAKE3_CFLAGS_NEON/d' c/CMakeLists.txt
+%setup -n %name-%version/c
+sed -i 's/"blake3.h"/<blake3.h>/' example*.c
+# Incorrect linking option requiring -devel package that is not actually needed.
+sed -i '/PKG_CONFIG_LIBS/s/-lstdc++//' CMakeLists.txt
+# Incorrect `Requires:` only causing problems.
+sed -i '/PKG_CONFIG_REQUIRES/d' libblake3.pc.in
 
 %build
-cd c
-%cmake -DBUILD_SHARED_LIBS=ON
+%cmake \
+	-DBUILD_SHARED_LIBS=ON \
+	-DBLAKE3_USE_TBB=ON \
+	%nil
 %cmake_build
 
 %install
-cd c
 %cmake_install
 
 %check
-cd c
-banner check
 set -o pipefail
 %ifarch aarch64
   # Leak sanitizer is so slow there.
   export ASAN_OPTIONS=leak_check_at_exit=0
 %endif
-make check 2>&1 | tail
+make -f Makefile.altlinux check 2>&1 | tail
+# To compare ABI changes in future versions with logdiff.
+nm -D %buildroot%_libdir/libblake3.so.%version
+grep ^BLAKE3_API blake3.h
 
 %pre checkinstall
 set -exo pipefail
 cd /tmp
-gcc `pkg-config --cflags libblake3` -o example %_defaultdocdir/%name-devel-%version/example.c `pkg-config --libs libblake3`
-./example < /dev/null | grep af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262
-rm example
+for example_c in %_defaultdocdir/%name-devel-%version/example*.c; do
+	gcc `pkg-config --cflags libblake3` -o example $example_c `pkg-config --libs libblake3`
+	./example /dev/null < /dev/null | grep af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262
+done
+dd if=/dev/zero of=test.blob bs=1M count=1024
+time ./example test.blob | grep 94b4ec39d8d42ebda685fbb5429e8ab0086e65245e750142c1eea36a26abc24d
+# %%CPU will show if threading is used.
+rm example test.blob
 
 %files
-%doc LICENSE* README.md
-%_libdir/libblake3.so.*
+%doc ../LICENSE* ../README.md
+%_libdir/libblake3.so.0
+%_libdir/libblake3.so.%version
 
 %files devel
-%doc c/README.md c/example.c CONTRIBUTING.md blake3.pdf
+%doc README.md example*.c ../blake3.pdf
 %_includedir/blake3.h
 %_libdir/libblake3.so
 %_libdir/cmake/blake3
@@ -99,6 +111,9 @@ rm example
 %files checkinstall
 
 %changelog
+* Thu May 29 2025 Vitaly Chikunov <vt@altlinux.org> 1.8.2-alt1
+- Update to 1.8.2 (2025-04-20).
+
 * Wed Aug 21 2024 Vitaly Chikunov <vt@altlinux.org> 1.5.4-alt1
 - Update to 1.5.4 (2024-08-19).
 
