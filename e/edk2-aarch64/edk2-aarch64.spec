@@ -3,7 +3,7 @@
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20241122
+Version: 20250221
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -105,6 +105,7 @@ mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 export PYTHON_COMMAND=%__python3
 export EXTRA_OPTFLAGS="%optflags"
 %if %_build_cpu != aarch64
+export GCC_AARCH64_PREFIX=aarch64-linux-gnu-
 export GCC5_AARCH64_PREFIX=aarch64-linux-gnu-
 %endif
 python3 CryptoPkg/Library/OpensslLib/configure.py
@@ -119,8 +120,8 @@ CC_FLAGS="-t %tool_chain_tag"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
-#CC_FLAGS="${CC_FLAGS} -b RELEASE"
-CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+#CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
+CC_FLAGS="${CC_FLAGS} -b RELEASE"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE=TRUE"
@@ -132,14 +133,15 @@ CC_FLAGS="${CC_FLAGS} -D CAVIUM_ERRATUM_27456=TRUE"
 
 VERBOSE_FLAGS="-D DEBUG_PRINT_ERROR_LEVEL=0x8040004F"
 SILENT_FLAGS="-D DEBUG_PRINT_ERROR_LEVEL=0x80000000"
-TPM_FLAGS="-D TPM2_ENABLE=TRUE"
+TPM_FLAGS="-D TPM2_ENABLE=TRUE -DTPM2_CONFIG_ENABLE=TRUE"
 NO_TPM_FLAGS="-D TPM2_ENABLE=FALSE"
 
-# grub.efi uses EfiLoaderData for code
-NX_BROKEN_SHIM_GRUB_DATA="--pcd PcdDxeNxMemoryProtectionPolicy=0xC000000000007FD1"
-# shim.efi has broken MemAttr code
-NX_BROKEN_SHIM_GRUB_MEM="--pcd PcdUninstallMemAttrProtocol=TRUE"
-PCD_FLAGS="${NX_BROKEN_SHIM_GRUB_DATA} ${NX_BROKEN_SHIM_GRUB_MEM}"
+PCD_RELEASE_DATE=$(date -d %version "+%%m/%%d/%%Y")
+PCD_VENDOR="--pcd PcdFirmwareVendor=ALTLinux"
+PCD_VERSION="--pcd PcdFirmwareVersionString=%version"
+PCD_DATE="--pcd PcdFirmwareReleaseDateString=${PCD_RELEASE_DATE}"
+PCD_NX_COMPAT="--pcd PcdDxeNxMemoryProtectionPolicy=0xC000000000007FD1 --pcd PcdUninstallMemAttrProtocol=TRUE"
+PCD_FLAGS="${PCD_VENDOR} ${PCD_VERSION} ${PCD_DATE} ${PCD_NX_COMPAT}"
 
 # arm firmware features
 #ARM_FLAGS="-t %%tool_chain_tag -b DEBUG --cmd-len=65536"
@@ -195,6 +197,8 @@ mkdir -p %buildroot%_datadir/{edk2,AAVMF}
 
 cp -a AAVMF %buildroot%_datadir/
 ln -r -s %buildroot%_datadir/AAVMF %buildroot%_datadir/edk2/aarch64
+ln -r -s %buildroot%_datadir/AAVMF/QEMU_EFI-silent-pflash.raw %buildroot%_datadir/AAVMF/AAVMF_CODE.fd
+ln -r -s %buildroot%_datadir/AAVMF/vars-template-pflash.raw %buildroot%_datadir/AAVMF/AAVMF_VARS.fd
 
 for f in %_sourcedir/*edk2-aarch64*.json; do
     install -pm 644 $f %buildroot%_datadir/qemu/firmware
@@ -206,6 +210,10 @@ done
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Thu May 29 2025 Alexey Shabalin <shaba@altlinux.org> 20250221-alt1
+- edk2-stable202502
+- add symlinks AAVMF_CODE and AAVMF_VARS (ALT#54332)
+
 * Fri Jan 31 2025 Alexey Shabalin <shaba@altlinux.org> 20241122-alt1
 - edk2-stable202411
 
