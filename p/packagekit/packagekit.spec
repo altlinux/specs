@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.0
-Release:   alt3
+Release:   alt4
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -312,6 +312,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Thu May 29 2025 Ivan Zakharyaschev <imz@altlinux.org> 1.3.0-alt4
+- Fixed compilation with older glib (for p10).
+
 * Mon May 19 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.0-alt3
 - Fix the regexp for changelog parsing
 
