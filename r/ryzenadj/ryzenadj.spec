@@ -1,5 +1,5 @@
 Name: ryzenadj
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Adjust power management settings for Ryzen Mobile Processors
@@ -34,5 +34,8 @@ ExclusiveArch: %ix86 x86_64
 %_bindir/%name
 
 %changelog
+* Thu May 29 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.17.0-alt1
+- 0.17.0
+
 * Fri Feb 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.16.0-alt1
 - Initial build for ALT.
