@@ -3,8 +3,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		influxdb
-Version:	1.8.10
-Release:	alt1.1
+Version:	1.12.0
+Release:	alt1
 Summary:	Distributed time-series database
 
 Group:		Development/Other
@@ -22,7 +22,9 @@ Source104: influxdb.tmpfiles
 Patch1: influxdb-opentsdb-fix.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.23
+BuildRequires: libflux-devel
 BuildRequires: xmlto asciidoc
 
 %description
@@ -53,7 +55,6 @@ export COMMIT=%release
 export BRANCH=altlinux
 export GOFLAGS="-mod=vendor"
 
-
 %golang_prepare
 
 pushd .gopath/src/%import_path
@@ -68,10 +69,10 @@ popd
 %install
 export BUILDDIR="$PWD/.gopath"
 export GOPATH="%go_path"
+export IGNORE_SOURCES=1
 
 %golang_install
 
-rm -rf -- %buildroot%_datadir
 rm -f %buildroot%_bindir/{stress_test_server,test_client}
 
 # Install config files
@@ -93,8 +94,8 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %make_install DESTDIR=%buildroot%_prefix -C man install
 
 %pre
-%_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -g %name -G %name  -c 'InfluxDB Daemon' \
+groupadd -r -f %name 2>/dev/null ||:
+useradd -r -g %name -G %name  -c 'InfluxDB Daemon' \
         -s /sbin/nologin  -d %_sharedstatedir/%name %name 2>/dev/null ||:
 
 %post
@@ -118,6 +119,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0755, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed May 28 2025 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Tue Oct 31 2023 Ivan A. Melnikov <iv@altlinux.org> 1.8.10-alt1.1
 - NMU: update vendored golang.org/x/sys to fix build
   on loongarch64
