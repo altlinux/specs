@@ -2,10 +2,13 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+
 %def_with check
 
+%define abiversion 1
 Name: libfido2
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: Library functionality to communicate with a FIDO device over USB
@@ -15,6 +18,7 @@ Url: https://github.com/Yubico/libfido2
 Vcs: https://github.com/Yubico/libfido2
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -23,9 +27,9 @@ BuildRequires: libssl-devel
 BuildRequires: libudev-devel
 BuildRequires: libcbor-devel
 BuildRequires: zlib-devel
-%{?_with_check:BuildRequires: ctest}
-
-%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
 Provides library functionality to communicate with a FIDO device over USB,
@@ -33,10 +37,17 @@ and to verify attestation and assertion signatures.
 
 Supports the FIDO U2F (CTAP 1) and FIDO2 (CTAP 2) protocols.
 
+%package -n %{name}_%{abiversion}
+Summary: %{summary %name}
+Group: System/Libraries
+
+%description -n %{name}_%{abiversion}
+%{description %name}.
+
 %package devel
 Summary: Development header files for %name
 Group: Development/C
-Requires: %name = %EVR
+Requires: %{name}_%{abiversion} = %EVR
 
 %description devel
 Provides development header files for %name.
@@ -44,13 +55,14 @@ Provides development header files for %name.
 %package tools
 Summary: Command-line tools to communicate with a FIDO device over USB
 Group: System/Configuration/Hardware
-Requires: %name = %EVR
+Requires: %{name}_%{abiversion} = %EVR
 
 %description tools
 Provides command-line tools for %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ifarch %e2k
@@ -59,7 +71,9 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %endif
 %cmake \
     -DBUILD_STATIC_LIBS=OFF \
-    %{?_without_check:-DBUILD_TESTS=OFF} \
+%if_without check
+    -DBUILD_TESTS=OFF \
+%endif
     %nil
 %cmake_build
 
@@ -69,9 +83,10 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %check
 %ctest
 
-%files
+%files -n %{name}_%{abiversion}
 %doc LICENSE NEWS
-%_libdir/%name.so.*
+%_libdir/%name.so.%abiversion
+%_libdir/%name.so.%version
 
 %files tools
 %_bindir/*
@@ -84,6 +99,10 @@ sed -i 's,-Werror,& -Wno-error=conversion,' CMakeLists.txt
 %_man3dir/*
 
 %changelog
+* Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 1.16.0-alt1
+- Updated to 1.16.0.
+- Followed Shared Libs Policy.
+
 * Wed Jul 03 2024 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
 - Updated to 1.15.0.
 
