@@ -6,7 +6,7 @@
 
 Name: tbb
 Version: 2022.1.0
-Release: alt1.1
+Release: alt2
 Summary: Threading Building Blocks
 License: Apache-2.0
 Group: Development/Tools
@@ -142,6 +142,13 @@ popd
 
 rm -f %buildroot%_defaultdocdir/TBB/README.md
 
+# Fix pkgconfig compatibility by renaming tbb32.pc to tbb.pc for i586 architecture to maintain consistent naming across all platforms.
+if [ -f "%buildroot%_pkgconfigdir/tbb32.pc" ];then
+	mv "%buildroot%_pkgconfigdir/tbb32.pc" "%buildroot%_pkgconfigdir/tbb.pc"
+fi
+
+
+
 %ifnarch ppc64le aarch64 armh
 %check
 %cmake_build -t test
@@ -171,6 +178,9 @@ rm -f %buildroot%_defaultdocdir/TBB/README.md
 %endif
 
 %changelog
+* Thu May 29 2025 Anton Farygin <rider@altlinux.com> 2022.1.0-alt2
+- fixed pkgconfig compatibility by renaming tbb32.pc to tbb.pc (closes: #54530)
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 2022.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
