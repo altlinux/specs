@@ -1,6 +1,7 @@
 %def_disable snapshot
 
 %define rev %nil
+%define beta %nil
 %if_enabled snapshot
 %define git_distance 1175
 %endif
@@ -8,28 +9,29 @@
 %define xdg_name com.rawtherapee.RawTherapee
 
 Name: rawtherapee
-Version: 5.11%{?_enable_snapshot:.%git_distance}
-Release: alt1
+Version: 5.12%{?_enable_snapshot:.%git_distance}
+Release: alt1%(echo %beta| tr - .)
 
 Summary: THe Experimental RAw Photo Editor
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Graphics
-URL: https://www.rawtherapee.com
+Url: https://www.rawtherapee.com
+
+Vcs: https://github.com/Beep6581/RawTherapee
 
 %if_enabled snapshot
-Vcs: https://github.com/Beep6581/RawTherapee
-Source: rawtherapee-%version.tar
+Source: rawtherapee-%version%beta.tar
 %else
 # use full archive not git-archive to avoid dancing around version
 #Source: https://rawtherapee.com/shared/source/%name-%version.tar.xz
-Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
+Source: https://github.com/Beep6581/RawTherapee/releases/download/%version%beta/%name-%version%beta.tar.xz
 %endif
 
 %define gtk_ver 3.24.3
 %define tiff_ver 4.0.4
 %define rsvg_ver 2.52
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 Requires: libgtk+3 >= %gtk_ver
 
 BuildRequires(pre): rpm-macros-cmake >= 2.8.8
@@ -41,7 +43,7 @@ BuildRequires: bzlib-devel libiptcdata-devel
 BuildRequires: libjpeg-devel liblcms2-devel libpng-devel libfftw3-devel
 BuildRequires: libexpat-devel libpixman-devel libcanberra-gtk3-devel
 BuildRequires: libexiv2-devel libharfbuzz-devel
-BuildRequires: liblensfun-devel
+BuildRequires: liblensfun1-devel
 # since 5.11
 BuildRequires: libraw-devel libjxl-devel
 
@@ -57,7 +59,7 @@ BuildArch: noarch
 This package provides noarch data needed for Raw Therapee to work.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
@@ -67,8 +69,8 @@ subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 %define optflags -O%_optlevel -g
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
-	%{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
-	%{?_enable_snapshot:-DCACHE_NAME_SUFFIX="5-dev"}
+    %{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
+    %{?_enable_snapshot:-DCACHE_NAME_SUFFIX="5-dev"}
 %cmake_build
 
 %install
@@ -89,6 +91,13 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 5.12-alt1
+- 5.12
+
+* Sat May 10 2025 Yuri N. Sedunov <aris@altlinux.org> 5.12-alt0.5.rc2
+- 5.12-rc2
+- build against stable lensfun
+
 * Mon Aug 26 2024 Yuri N. Sedunov <aris@altlinux.org> 5.11-alt1
 - 5.11
 
