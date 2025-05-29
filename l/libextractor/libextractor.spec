@@ -6,7 +6,7 @@
 
 Name: libextractor
 Version: 1.13
-Release: alt1.1
+Release: alt2
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -21,6 +21,8 @@ Source: ftp://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+# https://bugs.gnunet.org/view.php?id=9223
+Patch: %name-1.13-up-exiv2-path.diff
 
 %define flac_ver 1.3
 
@@ -64,6 +66,7 @@ This package contains the files needed to build packages that depend on %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -104,6 +107,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt2
+- fixed https://bugs.gnunet.org/view.php?id=9223 (ALT #54545)
+
 * Wed Mar 19 2025 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt1.1
 - updated to v1.13-7-g4bf5f20a
 - fixed BR, added Vcs tag, fixed License tag
