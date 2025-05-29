@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.29
+%define kernel_sublevel	.31
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -537,7 +537,7 @@ check-pesign-helper
 %modules_dir/modules.dep
 %modules_dir/modules.devname
 %modules_dir/modules.order
-%modules_dir/modules.softdep
+%modules_dir/modules.*dep
 %modules_dir/modules.symbols
 %ghost %modules_dir/modules.*.bin
 %defattr(0600,root,root,0700)
@@ -610,6 +610,18 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.31-alt1
+- v6.12.31 (2025-05-29).
+- config-aarch64: enable some sensors and cameras on PinePhone.
+
+* Fri May 23 2025 Vitaly Chikunov <vt@altlinux.org> 6.12.30-alt2
+- config: enable more led-trigger configs config-aarch64: enable config
+  of mchp23 spi sram.
+- spec: Fix packaging modules.weakdep appeared after kmod update.
+
+* Thu May 22 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.30-alt1
+- v6.12.30 (2025-05-22).
+
 * Sun May 18 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.29-alt1
 - v6.12.29 (2025-05-18).
 
