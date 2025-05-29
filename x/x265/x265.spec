@@ -1,18 +1,16 @@
-%define soversion 199
+%define soversion 215
 Name: x265
-Version: 3.5
-Release: alt1.1
+Version: 4.1
+Release: alt1
 Summary: H.265/HEVC encoder
 License: GPLv2
 Group: Video
-Url: http://x265.org
-Requires: libx265-%soversion = %version-%release
-Source: %name-%version-%release.tar
-Patch0: x265-high-bit-depth-soname.patch
-Patch1: x265-pic.patch
-Patch2: x265-arm-cflags.patch
-Patch3: x265-detect_cpu_armhfp.patch
+Url: https://www.x265.org/
+VCS: https://bitbucket.org/multicoreware/x265_git.git
+Source: %name-%version.tar
+Patch0: x265-%version-%release.patch
 BuildRequires: cmake gcc-c++ nasm libnuma-devel
+BuildRequires: /proc
 
 %description
 H.265/HEVC encoder
@@ -25,7 +23,7 @@ Obsoletes: libx265 = 2.5-alt1
 %package -n libx265-devel
 Summary: Development files of H.265/HEVC encoder library
 Group: Development/C
-Requires: libx265-%soversion = %version-%release
+Requires: libx265-%soversion = %EVR
 
 %description -n libx265-%soversion
 H.265/HEVC encoder library
@@ -36,9 +34,6 @@ Development files of H.265/HEVC encoder library
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 sed -i	-e '/X265_VERSION / s,unknown,%version,' \
 	-e '/X265_LATEST_TAG / s,0\.0,%version,' \
@@ -52,70 +47,73 @@ build() {
 %cmake \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DLIB_INSTALL_DIR=%_lib \
+        -DHIGH_BIT_DEPTH=ON \
 	-DCMAKE_SKIP_RPATH:BOOL=YES \
 	-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
 	-DENABLE_PIC:BOOL=ON \
 	-DENABLE_TESTS:BOOL=ON \
 	-DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy \
-	-DENABLE_SHARED=ON \
 	$* \
 	-S source
 %cmake_build
 }
 
-%ifarch x86_64 aarch64 ppc64 ppc64le
+%ifarch x86_64 aarch64
 builddir=10bit
     build \
     -DENABLE_CLI=OFF \
     -DENABLE_ALTIVEC=OFF \
+    -DEXPORT_C_API=OFF \
     -DHIGH_BIT_DEPTH=ON
 
 builddir=12bit
     build \
+    -DHIGH_BIT_DEPTH=ON \
+    -DMAIN12=ON \
+    -DENABLE_SHARED=OFF \
+    -DEXPORT_C_API=OFF \
     -DENABLE_CLI=OFF \
     -DENABLE_ALTIVEC=OFF \
-    -DHIGH_BIT_DEPTH=ON \
     -DMAIN12=ON
 %endif
 
+%ifarch x86_64 aarch64
+mkdir 8bit
+ln -s ../12bit/libx265.a 8bit/libx265_main12.a
+ln -s ../10bit/libx265.a 8bit/libx265_main10.a
+%endif
+
 # 8 bit base library + encoder
-builddir=8bit
-    build -DENABLE_HDR10_PLUS=YES \
-    %ifarch %ix86
+builddir=8bit 
+    build \
+    -DENABLE_SHARED=ON \
+    -DENABLE_HDR10_PLUS=YES \
+%ifarch x86_64 aarch64
+    -D EXTRA_LIB='x265_main10.a;x265_main12.a' \
+    -D EXTRA_LINK_FLAGS='-L.' \
+    -DLINKED_10BIT=ON \
+    -DLINKED_12BIT=ON \
+%endif
+%ifarch %ix86
       -DENABLE_ASSEMBLY=OFF \
-    %endif
+%endif
     #
 
 %install
-%define _cmake__builddir ${i}bit
-for i in 8 10 12; do
-    if [ -d ${i}bit ]; then
-            %cmake_install
-            # Remove unversioned library, should not be linked to
-            rm -f %buildroot%_libdir/libx265_main${i}.so
-    fi
-done
+%define _cmake__builddir 8bit
+%cmake_install
 
 find %buildroot -name "*.a" -delete
 
 %check
-for i in 8 10 12; do
-    if [ -d ${i}bit ]; then
-        pushd ${i}bit
-            test/TestBench || :
-        popd
-    fi
-done
+pushd 8bit
+test/TestBench || :
 
 %files
 %_bindir/x265
 
 %files -n libx265-%soversion
 %_libdir/libx265.so.%soversion
-%ifarch x86_64 aarch64 ppc64 ppc64le
-%{_libdir}/libx265_main10.so.%soversion
-%{_libdir}/libx265_main12.so.%soversion
-%endif
 
 %files -n libx265-devel
 %_libdir/libx265.so
@@ -126,6 +124,11 @@ done
 %_pkgconfigdir/*
 
 %changelog
+* Thu May 29 2025 Anton Farygin <rider@altlinux.com> 4.1-alt1
+- 3.5 -> 4.1
+- shipped a single libx265.so that now includes 8-/10-/12-bit support
+- removed libx265_main10/12
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 3.5-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
