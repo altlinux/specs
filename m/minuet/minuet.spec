@@ -4,7 +4,7 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -92,6 +92,9 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 
 
 %changelog
+* Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

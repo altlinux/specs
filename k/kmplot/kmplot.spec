@@ -1,7 +1,7 @@
 %define rname kmplot
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -14,7 +14,6 @@ Provides:  kde5-kmplot = %EVR
 Obsoletes: kde5-kmplot < %EVR
 
 Source: %rname-%version.tar
-Patch0: alt-fix-saving-softimage-pic.patch
 Patch1: alt-fix-hiding-statusbar.patch
 
 BuildRequires(pre): rpm-build-kf6
@@ -33,7 +32,6 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 
 %prep
 %setup -n %rname-%version
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -54,6 +52,9 @@ KmPlot is a program to plot graphs of functions, their integrals or derivatives.
 
 
 %changelog
+* Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

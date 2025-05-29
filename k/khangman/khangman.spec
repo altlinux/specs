@@ -1,7 +1,7 @@
 %define rname khangman
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -15,8 +15,6 @@ Provides:  kde5-khangman = %EVR
 Obsoletes: kde5-khangman < %EVR
 
 Source: %rname-%version.tar
-Source10: ru.txt
-Patch1: alt-ru-keys.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-svg-devel
@@ -36,13 +34,6 @@ is displayed.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
-mkdir -p languages/ru/
-cat <<__EOF__ >languages/ru/CMakeLists.txt
-install( FILES ru.txt  DESTINATION \${DATA_INSTALL_DIR}/khangman )
-__EOF__
-install -m 0644 %SOURCE10 languages/ru/
-echo 'add_subdirectory(ru)' >> languages/CMakeLists.txt
 
 %build
 %K6build
@@ -64,6 +55,9 @@ echo 'add_subdirectory(ru)' >> languages/CMakeLists.txt
 
 
 %changelog
+* Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Mon Feb 24 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
