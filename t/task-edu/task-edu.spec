@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -444,7 +444,7 @@ Requires: kbruch
 Requires: kgeography
 Requires: ktouch
 Requires: minuet
-Requires: kde-runtime
+Requires: kde6-runtime
 Requires: kde-printing
 Requires: kde-scanning
 Requires: kdeconnect
@@ -626,6 +626,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu May 29 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
+- Replaced kde-runtime by kde6-runtime (ALT #54486).
+
 * Wed May 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.5-alt1
 - Remove synaptic.
 
