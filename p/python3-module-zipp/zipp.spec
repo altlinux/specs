@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.21.0
+Version: 3.22.0
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -21,6 +21,8 @@ Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
+# requires internet
+%add_pyproject_deps_build_filter coherent.licensed
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
@@ -51,6 +53,9 @@ A pathlib-compatible Zipfile object wrapper.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed May 28 2025 Stanislav Levin <slev@altlinux.org> 3.22.0-alt1
+- 3.21.0 -> 3.22.0.
+
 * Mon Nov 11 2024 Stanislav Levin <slev@altlinux.org> 3.21.0-alt1
 - 3.20.2 -> 3.21.0.
 
