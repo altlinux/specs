@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.3.5
 Release: alt1
 
 Summary: SSE plugin for Starlette
@@ -56,6 +56,9 @@ rm -fv tests/{experimentation,integration}/test_multiple_consumers*.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 2.3.5-alt1
+- Updated to 2.3.5.
+
 * Mon Mar 10 2025 Anton Zhukharev <ancieg@altlinux.org> 2.2.1-alt1
 - Updated to 2.2.1.
 
