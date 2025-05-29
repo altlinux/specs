@@ -1,23 +1,24 @@
-%define modname libevdev
+%define pypi_name libevdev
 %def_enable check
 
-Name: python3-module-%modname
-Version: 0.11
+Name: python3-module-%pypi_name
+Version: 0.12
 Release: alt1
 
 Summary: Python wrapper around the libevdev C library
 Group: Development/Python3
 License: MIT
-Url: https://pypi.org/project/%modname
+Url: https://pypi.org/project/%pypi_name
+
+Vcs: https://gitlab.freedesktop.org/libevdev/python-libevdev
+
+Source: https://pypi.io/packages/source/l/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
-Vcs: https://gitlab.freedesktop.org/libevdev/python-libevdev
-Source: https://pypi.io/packages/source/l/%modname/%modname-%version.tar.gz
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-pytest libevdev}
+BuildRequires: python3(wheel) python3(setuptools)
+%{?_enable_check:BuildRequires: python3(pytest) libevdev}
 
 %description
 python-libevdev is a Python wrapper around the libevdev C library. It
@@ -26,13 +27,13 @@ device nodes and to read and/or modify the device's state and
 capabilities.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
@@ -40,11 +41,14 @@ py.test3
 
 
 %files
-%python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 %doc README*
 
 %changelog
+* Thu May 29 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
+- 0.12
+
 * Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - 0.11
 
