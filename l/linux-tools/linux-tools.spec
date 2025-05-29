@@ -23,7 +23,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -339,6 +339,11 @@ sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 sed -Ei 's/(-static-libasan|-fsanitize\S+)//g' testing/selftests/{openat2,fchmodat2}/Makefile
 grep -lrZ -e '-nostdlib' testing/selftests/arm64 | xargs -0 sed -i 's/-nostdlib/-g &/'
 sed -i 's/ -s //' testing/selftests/arm64/gcs/Makefile
+
+# loongarch64 doesn't support 4K pages, change it to 16K
+%ifarch loongarch64
+sed -i 's/0x1000 /0x4000 /' testing/selftests/exec/Makefile
+%endif
 
 # pathfix
 grep -lrZz '#!/usr/bin/env python' | xargs -0 sed -i '1s,#!.*,#!%__python3,'
@@ -818,6 +823,9 @@ fi
 %_man1dir/kvm_stat.1*
 
 %changelog
+* Wed May 28 2025 Andrew Guschin <guschin@altlinux.org> 6.15-alt2
+- NMU: fix FTBFS on loongarch64
+
 * Tue May 27 2025 Vitaly Chikunov <vt@altlinux.org> 6.15-alt1
 - Update to v6.15 (2025-05-25).
 
