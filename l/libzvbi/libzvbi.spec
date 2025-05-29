@@ -3,7 +3,7 @@
 
 Name: libzvbi
 Version: 0.2.35
-Release: alt2
+Release: alt3
 
 Summary: Raw VBI, Teletext and Closed Caption decoding library
 
@@ -12,6 +12,7 @@ Group: Video
 Url: http://zapping.sourceforge.net/
 
 Source: http://prdownloads.sf.net/zapping/%oname-%version.tar.bz2
+Patch1: libzvbi-0.2.33-upstream-overflow-leading-to-heap-overflow.patch
 
 BuildRequires: doxygen libpng-devel libX11-devel intltool libICE-devel
 # for build tests
@@ -62,6 +63,7 @@ will use the zvbi library (aka libzvbi)
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
 
 %build
 %autoreconf
@@ -101,6 +103,9 @@ will use the zvbi library (aka libzvbi)
 %endif
 
 %changelog
+* Thu May 29 2025 Alexander Danilov <admsasha@altlinux.org>  0.2.35-alt3
+- Applied upstream patch (fixed CVE-2025-2176).
+
 * Thu Jun 25 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.35-alt2
 - NMU: drop Obsoleted/Provides: %name
 - drop cvs from BR:
