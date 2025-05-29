@@ -3,7 +3,7 @@
 %define mod_name keycloak
 
 Name: python3-module-%pypi_name
-Version: 5.5.0
+Version: 5.5.1
 Release: alt1
 
 Summary: Python package providing access to the Keycloak API
@@ -46,6 +46,9 @@ sed -Ei '/^version = /s|= "[0-9.]+"$|= "%version"|' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu May 29 2025 Stanislav Levin <slev@altlinux.org> 5.5.1-alt1
+- 5.5.0 -> 5.5.1.
+
 * Thu Apr 10 2025 Stanislav Levin <slev@altlinux.org> 5.5.0-alt1
 - 5.4.0 -> 5.5.0.
 
