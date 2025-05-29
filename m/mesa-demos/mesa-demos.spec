@@ -1,6 +1,6 @@
 Name: mesa-demos
 Version: 9.0.0
-Release: alt2
+Release: alt3
 Epoch: 5
 Summary: Miscellaneous Mesa GL utilities
 License: MIT
@@ -10,7 +10,7 @@ Url: http://www.mesa3d.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: meson gcc-c++ glslang-devel libGLES-devel libGLEW-devel libGLUT-devel libOSMesa-devel libcairo-devel libdecor-devel
+BuildRequires: meson gcc-c++ glslang-devel libGLES-devel libGLEW-devel libGLUT-devel libcairo-devel libdecor-devel
 BuildRequires: libdrm-devel libgbm-devel libvulkan-devel libwayland-egl-devel libxkbcommon-x11-devel pkgconfig(wayland-protocols)
 
 %description
@@ -70,6 +70,9 @@ framerate information to stdout
 %_bindir/vkgears
 
 %changelog
+* Thu May 22 2025 Valery Inozemtsev <shrek@altlinux.ru> 5:9.0.0-alt3
+- rebuild from Mesa 25.1
+
 * Wed Oct 04 2023 Valery Inozemtsev <shrek@altlinux.ru> 5:9.0.0-alt2
 - another division into subpackages (closes: #47829)
 
