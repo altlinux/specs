@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 25.2.1.931
+Version: 25.2.4.1000
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -222,6 +222,11 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+
+* Tue Apr 22 2025 yabro <yabro@altlinux.org> 25.2.4.1000-alt1
+- Browser updated to 25.2.4.1000
+ + High CVE-2025-2783: Incorrect handle provided in unspecified circumstances in Mojo on Windows
+ + High CVE-2025-24201: Out of bounds write in GPU on Mac
 
 * Tue Mar 6 2025 yabro <yabro@altlinux.org> 25.2.1.931-alt1
 - Fixed Tab crushes bug (closes: 53162)
