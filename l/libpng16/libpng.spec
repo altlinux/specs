@@ -1,6 +1,6 @@
 Name: libpng16
-Version: 1.6.42
-Release: alt2
+Version: 1.6.48
+Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
 License: PNGv2
@@ -78,6 +78,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Wed May 28 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.48-alt1
+- 1.6.48
+
 * Thu Feb 01 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.6.42-alt2
 - NMU: fixed FTBFS on LoongArch (enable SIMD)
 
