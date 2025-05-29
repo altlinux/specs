@@ -1,20 +1,22 @@
 Name: tre
-Version: 0.8.0
-Release: alt2.2
+Version: 0.9.0
+Release: alt1
 
 Summary: TRE is "approximate regexp" library
 License: BSD
 Group: Development/C
 
-Url: http://laurikari.net/tre
-Source: %url/%name-%version.tar.bz2
+Url: https://laurikari.net/tre
+Vcs: https://github.com/laurikari/tre.git
+Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 %define agrep agrep-%name
 %define soversion 5
 
 # Automatically added by buildreq on Mon May 10 2004
-BuildRequires: hostinfo libdb4-devel python-devel
+BuildRequires: hostinfo libdb4-devel python3-devel
+BuildRequires: python3(setuptools)
 
 %description
 (void package)
@@ -22,7 +24,7 @@ BuildRequires: hostinfo libdb4-devel python-devel
 %package -n %agrep
 Summary: agrep version using TRE library
 Group: Text tools
-Conflicts: agrep = 2.04-alt1
+Conflicts: agrep
 
 %description -n %agrep
 agrep is a grep-like utility which can do approximate searches.
@@ -63,11 +65,11 @@ This package contains static library to build statically linked
 TRE software.
 %endif
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for TRE, regex library with approximate matching
 Group: Development/Python
 
-%description -n python-module-%name
+%description -n python3-module-%name
 TRE is a lightweight, robust, and efficient POSIX compliant
 regexp matching library with some exciting features such as
 approximate matching.
@@ -78,40 +80,46 @@ This package contains Python bindings for TRE.
 %setup
 
 %build
-%autoreconf
+./utils/autogen.sh
 %configure %{subst_enable static}
 %make_build
 cd python
-python2 setup.py build
+python3 setup.py build
 
 %install
 %makeinstall
 %find_lang %name
 cd python
-python2 setup.py install --root=%buildroot
+python3 setup.py install --root=%buildroot
+
+%check
+%make check
 
 %files -n %agrep -f %name.lang
-%_bindir/*
-%_man1dir/*
+%_bindir/agrep
+%_man1dir/agrep.1.*
 
 %files -n lib%name%soversion
 %_libdir/*.so.*
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_libdir/pkgconfig/*
-%_includedir/*
+%_pkgconfigdir/%name.pc
+%_includedir/%name/*.h
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
 %endif
 
-%files -n python-module-%name
-%python_sitelibdir/*.egg-info
-%python_sitelibdir/%name.so
+%files -n python3-module-%name
+%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%name.*.so
 
 %changelog
+* Thu May 29 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.9.0-alt1
+- NMU: new version
+
 * Fri Apr 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt2.2
 - NMU: applied logoved fixes
 
