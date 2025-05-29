@@ -93,7 +93,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 25.0
-%define ver_minor 6
+%define ver_minor 7
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -210,13 +210,6 @@ Summary: Mesa offscreen rendering libraries
 Group: System/Libraries
 
 %description -n libOSMesa
-%summary
-
-%package -n libOSMesa-devel
-Summary: Mesa offscreen rendering development package
-Group: Development/C
-
-%description -n libOSMesa-devel
 %summary
 
 %package -n libd3d
@@ -467,11 +460,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n libOSMesa
 %_libdir/libOSMesa.so.*
 
-%files -n libOSMesa-devel
-%_includedir/GL/osmesa.h
-%_libdir/libOSMesa.so
-%_pkgconfigdir/osmesa.pc
-
 %files -n libd3d
 %dir %_libdir/d3d
 %_libdir/d3d/*.so.*
@@ -581,6 +569,10 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu May 29 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.0.7-alt1
+- 25.0.7
+- removed libOSMesa-devel subpackage, because libOSMesa will be removed in the next version
+
 * Thu May 15 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.0.6-alt1
 - 25.0.6
 
