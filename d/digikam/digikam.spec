@@ -20,7 +20,7 @@ Name: %rname
 %define ver_minor 5
 %define ver_bugfix 0
 Version: 8.6.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 %define sover %version
@@ -56,6 +56,8 @@ Source3: doc-translated.tar
 Source6: CMakeLists.txt
 #
 Source10: mysql_install_db
+# upstream
+Patch1: kdebug-504902.patch
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
@@ -178,6 +180,8 @@ Development files for %label.
 %setup -n %rname-%version -c -a1 -a2 -a3
 mv %rname-%version core
 pushd core
+%patch1 -p2
+#
 %patch100 -p1
 %patch101 -p1
 %patch102 -p2
@@ -286,6 +290,9 @@ cp -ar  %buildroot/%_K6data/kxmlgui{5,6}
 
 
 %changelog
+* Thu May 29 2025 Sergey V Turchin <zerg@altlinux.org> 8.6.0-alt2
+- add fix against kdebug#504902
+
 * Mon Apr 21 2025 Sergey V Turchin <zerg@altlinux.org> 8.6.0-alt1
 - new version
 
