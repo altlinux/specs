@@ -21,18 +21,13 @@
 # NOTE: Helper's name must be one of xfce4-settings helpers.
 
 # Browser
-%ifarch %e2k %arm mipsel i586
+%ifarch %e2k %arm mipsel i586 riscv64
 # e2k: 2019: no chromium port available
 # mipsel: firefox works better now -- iv@
 # i586: chromium no longer supports 32bit
 %define web_browser firefox
 %else
-%ifarch riscv64
-# riscv64: 2021: no firefox port available
-%define web_browser epiphany
-%else
 %define web_browser chromium
-%endif
 %endif
 
 # Media Player
@@ -72,7 +67,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.910
+Version: 10.920
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -499,6 +494,17 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Thu May 29 2025 Mikhail Efremov <sem@altlinux.org> 10.920-alt1
+- menu: Replace livecd-install.desktop -> install2.desktop.
+- menu: Drop apt-indicator.
+- menu: Drop 'PulseAudio' from pavucontrol desktop file.
+- xfce-settings: Set desktop files metadata to 'true'.
+- xfce-settings: Set all desktop files in XDG-Desktop.skel as trusted.
+- xfce-settings: Don't rename XDG-Desktop.skel to Desktop.
+- alterator: Update slinux logo in the installer.
+- slideshow: Updated slides.
+- xfce-settings: Use firefox on riscv64 too.
+
 * Fri Mar 21 2025 Mikhail Efremov <sem@altlinux.org> 10.910-alt1
 - alterator: Add logo_width.png.
 - alterator: Add logo_48.png.
