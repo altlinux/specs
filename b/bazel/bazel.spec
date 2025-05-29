@@ -11,7 +11,7 @@
 %add_debuginfo_skiplist %_bindir/*
 
 Name: bazel
-Version: 7.3.2
+Version: 8.2.1
 Release: alt1
 
 Summary: A fast, scalable, multi-language and extensible build system
@@ -43,7 +43,7 @@ large codebases across multiple repositories, and large numbers of users.
 %setup
 
 %build
-export EXTRA_BAZEL_ARGS="--tool_java_runtime_version=local_jdk"
+export EXTRA_BAZEL_ARGS="--tool_java_runtime_version=local_jdk --copt=-Wno-return-type"
 export SOURCE_DATE_EPOCH="$(date -u +%%s)"
 export VERBOSE=yes
 bash ./compile.sh
@@ -75,6 +75,9 @@ install -D -m644 scripts/zsh_completion/_bazel %buildroot%_datadir/zsh/site-func
 %_datadir/zsh/site-functions/_bazel
 
 %changelog
+* Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 8.2.1-alt1
+- Updated to 8.2.1 (closes #54435).
+
 * Sun Oct 13 2024 Anton Zhukharev <ancieg@altlinux.org> 7.3.2-alt1
 - Updated to 7.3.2.
 
