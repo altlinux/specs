@@ -4,7 +4,7 @@
 %define snakename riru_build_utils
 
 Name: riru-build-utils
-Version: 0.10.2
+Version: 0.10.5
 Release: alt1
 
 Summary: Build utilities for Average Rirusha Project
@@ -22,10 +22,11 @@ Requires: openssh-clients
 Requires: gear-remotes-utils
 Requires: git
 Requires: hasherc
+Requires: meson
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
 BuildRequires: rpm-build-python3
+BuildRequires: meson
 BuildRequires: python3-module-paramiko
 BuildRequires: python3-module-lxml
 BuildRequires: python3-module-requests
@@ -56,6 +57,9 @@ Contains update, test and create commands.
 %_datadir/%name/
 
 %changelog
+* Thu May 29 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.10.5-alt1
+- New version: 0.10.5
+
 * Wed May 28 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.10.2-alt1
 - New version: 0.10.2
 - Change upstream URL/VCS
