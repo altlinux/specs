@@ -1,6 +1,6 @@
 Name: livecd-net-eth
 Version: 0.5.1
-Release: alt2
+Release: alt3
 
 Summary: Try to autoconfigure ethernet interfaces
 License: GPL-2.0-or-later
@@ -22,13 +22,23 @@ when it's required to autoconfigure ethernet interfaces via DHCP.
 
 %install
 install -pDm755 %name.init %buildroot%_initdir/%name
+install -pDm755 %name.sh %buildroot%_prefix/libexec/%name
 install -pDm644 %name.service %buildroot%_unitdir/%name.service
 
 %files
 %_initdir/%name
+%_prefix/libexec/%name
 %_unitdir/%name.service
 
+%preun
+%preun_service %name
+
 %changelog
+* Wed May 28 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt3
+- add %%preun_service
+- Revert "livecd-net-eth.init: do not set DHCP_TIMEOUT=7"
+- Separate script livecd-net-eth.sh from livecd-net-eth.init
+
 * Tue May 27 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt2
 - livecd-net-eth.init: fix typo
 
