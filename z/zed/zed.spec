@@ -15,7 +15,7 @@
 %endif
 
 Name: zed
-Version: 0.187.9
+Version: 0.188.3
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -33,10 +33,6 @@ Source3: update-metadata-releases.py
 Source4: https://github.com/livekit/client-sdk-rust/releases/download/%webrtc_tar/webrtc-linux-x64-release.zip
 Source5: https://github.com/livekit/client-sdk-rust/releases/download/%webrtc_tar/webrtc-linux-arm64-release.zip
 Patch0: %name-%version-alt.patch
-
-# zed needs netcat to do `git fetch'
-# see https://bugzilla.altlinux.org/53668
-Requires: netcat
 
 BuildRequires: /proc
 BuildRequires: rust-cargo
@@ -107,6 +103,10 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu May 29 2025 Anton Zhukharev <ancieg@altlinux.org> 0.188.3-alt1
+- Updated to 0.188.3.
+- Removed dependency on netcat.
+
 * Wed May 28 2025 Anton Zhukharev <ancieg@altlinux.org> 0.187.9-alt1
 - Updated to 0.187.9.
 - Changed cli name from "zed" to "zed-editor" (closes #54347).
