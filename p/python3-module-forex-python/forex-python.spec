@@ -1,9 +1,10 @@
 %define oname forex-python
 
+# Tests are absolutely useless, because almost all relies on api.coindesk.com
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.8
+Version: 1.9.2
 Release: alt1
 
 Summary: Foreign exchange rates, Bitcoin price index and currency conversion using ratesapi.io
@@ -31,8 +32,6 @@ The currency module of the Tryton application platform.
 %prep
 %setup
 
-sed -i 's/1.6/%version/' setup.py
-
 %build
 %pyproject_build
 
@@ -45,11 +44,14 @@ rm -rv %buildroot%python3_sitelibdir/docs
 %pyproject_run_pytest
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.md
 %python3_sitelibdir/forex_python
 %python3_sitelibdir/forex_python-%version.dist-info
 
 %changelog
+* Thu May 29 2025 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
+- Automatically updated to 1.9.2.
+
 * Mon May 20 2024 Grigory Ustinov <grenka@altlinux.org> 1.8-alt1
 - Build new version.
 
