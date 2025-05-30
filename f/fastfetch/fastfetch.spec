@@ -1,6 +1,6 @@
 Name: fastfetch
 Version: 2.43.0
-Release: alt1
+Release: alt1.1
 Summary: Like neofetch, but much faster because written in c
 
 License: MIT
@@ -23,7 +23,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: ImageMagick-devel
 BuildRequires: zlib-devel
 BuildRequires: libglvnd-devel
-BuildRequires: libOSMesa-devel
+BuildRequires: libOSMesa
 BuildRequires: libxfconf-devel
 BuildRequires: glib2-devel
 BuildRequires: ocl-icd-devel
@@ -90,6 +90,9 @@ popd
 %_datadir/zsh/site-functions/_fastfetch
 
 %changelog
+* Fri May 30 2025 Artyom Bystrov <arbars@altlinux.org> 2.43.0-alt1.1
+- Fix build
+
 * Fri May 16 2025 Artyom Bystrov <arbars@altlinux.org> 2.43.0-alt1
 - Update to new version
 
