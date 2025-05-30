@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name-base%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -206,6 +206,9 @@ GObject introspection devel data for the GStreamer library
 
 
 %changelog
+* Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1
+- 1.26.2 (fixed CVE-2025-47806, CVE-2025-47807)
+
 * Fri Apr 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.26.1-alt1
 - 1.26.1
 
