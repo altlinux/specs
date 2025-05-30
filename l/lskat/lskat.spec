@@ -1,7 +1,7 @@
 %define rname lskat
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -28,7 +28,7 @@ BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kio-devel kf6-kitemmodels-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knewstuff-devel
 BuildRequires: kf6-knotifications-devel kf6-knotifyconfig-devel kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel
 BuildRequires: kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
-BuildRequires: kf6-solid-devel kf6-sonnet-devel
+BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kiconthemes-devel
 BuildRequires: kde6-libkdegames-devel
 
 %description
@@ -58,6 +58,9 @@ where the second player is either live opponent, or built in artificial intellig
 
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

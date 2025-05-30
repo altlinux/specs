@@ -1,7 +1,7 @@
 %define rname bovo
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -21,7 +21,7 @@ BuildRequires: /usr/bin/7zz
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kauth-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel
 BuildRequires: kf6-kdbusaddons-devel  kf6-kdoctools-devel kf6-ki18n-devel kf6-kwidgetsaddons-devel
-BuildRequires: kf6-kxmlgui-devel kf6-kcrash-devel kf6-kcolorscheme-devel
+BuildRequires: kf6-kxmlgui-devel kf6-kcrash-devel kf6-kcolorscheme-devel kf6-kiconthemes-devel
 BuildRequires: kde6-libkdegames-devel
 
 %description
@@ -48,6 +48,9 @@ where you try to connect five in a row prior to your opponent.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname knights
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -25,7 +25,7 @@ BuildRequires: libvulkan-devel
 BuildRequires: qt6-declarative-devel qt6-speech-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdoctools-devel kf6-ksvg-devel
 BuildRequires: kf6-kio-devel kf6-kpackage-devel kf6-kplotting-devel kf6-ktextwidgets-devel
-BuildRequires: kf6-kwallet-devel
+BuildRequires: kf6-kwallet-devel kf6-kiconthemes-devel
 BuildRequires: plasma6-lib-devel
 BuildRequires: kde6-libkdegames-devel
 
@@ -56,6 +56,9 @@ Knights supports local and Internet play against a human being or a computer eng
 
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

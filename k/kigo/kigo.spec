@@ -1,7 +1,7 @@
 %define rname kigo
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -21,7 +21,7 @@ BuildRequires: extra-cmake-modules
 BuildRequires: /usr/bin/7zz
 BuildRequires: libvulkan-devel
 BuildRequires: qt6-declarative-devel qt6-svg-devel
-BuildRequires: kf6-kdbusaddons-devel kf6-kcrash-devel kf6-kdoctools-devel
+BuildRequires: kf6-kdbusaddons-devel kf6-kcrash-devel kf6-kdoctools-devel kf6-kiconthemes-devel
 BuildRequires: kf6-knewstuff-devel kf6-kio-devel kf6-ktextwidgets-devel
 BuildRequires: kde6-libkdegames-devel
 
@@ -57,6 +57,9 @@ glass or plastic) on the vacant intersections of a grid of 19x19 lines (9x9 or
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

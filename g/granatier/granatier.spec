@@ -1,7 +1,7 @@
 %define rname granatier
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -20,7 +20,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-wayla
 BuildRequires: libssl-devel
 BuildRequires: /usr/bin/7zz
 BuildRequires: libvulkan-devel
-BuildRequires: kf6-kcompletion-devel kf6-kcrash-devel kf6-kdbusaddons-devel
+BuildRequires: kf6-kcompletion-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kdoctools-devel kf6-ki18n-devel kf6-knewstuff-devel
 BuildRequires: kf6-kservice-devel kf6-kxmlgui-devel kf6-kcolorscheme-devel
 BuildRequires: kde6-libkdegames-devel
@@ -50,6 +50,9 @@ Bomberman game.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

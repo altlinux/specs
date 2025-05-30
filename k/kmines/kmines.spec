@@ -1,7 +1,7 @@
 %define rname kmines
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -21,7 +21,7 @@ BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompl
 BuildRequires: kf6-kcoreaddons-devel kf6-kdbusaddons-devel  kf6-kdoctools-devel kf6-ki18n-devel
 BuildRequires: kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knotifyconfig-devel kf6-kservice-devel
 BuildRequires: kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
-BuildRequires: kf6-kcrash-devel
+BuildRequires: kf6-kcrash-devel kf6-kiconthemes-devel
 BuildRequires: /usr/bin/7zz
 BuildRequires: libvulkan-devel
 BuildRequires: kde6-libkdegames-devel
@@ -51,6 +51,9 @@ BuildRequires: kde6-libkdegames-devel
 
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 

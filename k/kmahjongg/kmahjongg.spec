@@ -1,7 +1,7 @@
 %define rname kmahjongg
 
 Name: %rname
-Version: 24.12.2
+Version: 25.04.1
 Release: alt1
 %K6init
 
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kcompletion-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdeclarative-devel  kf6-kdoctools-devel
-BuildRequires: kf6-ki18n-devel kf6-knewstuff-devel kf6-kpackage-devel kf6-kservice-devel kf6-kxmlgui-devel
+BuildRequires: kf6-ki18n-devel kf6-knewstuff-devel kf6-kpackage-devel kf6-kservice-devel kf6-kxmlgui-devel kf6-kiconthemes-devel
 BuildRequires: kde6-libkdegames-devel kde6-libkmahjongg-devel
 
 %description
@@ -51,6 +51,9 @@ a variation usually known as Mahjong Solitaire.
 
 
 %changelog
+* Fri May 30 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
+- new version
+
 * Tue Feb 25 2025 Sergey V Turchin <zerg@altlinux.org> 24.12.2-alt1
 - new version
 
