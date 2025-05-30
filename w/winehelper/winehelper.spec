@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.3.9
+Version: 0.4.0
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -45,6 +45,9 @@ cp -v winetricks_* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Fri May 30 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Tue May 27 2025 Mikhail Tergoev <fidel@altlinux.org> 0.3.9-alt1
 - 0.3.9
 
