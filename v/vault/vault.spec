@@ -5,8 +5,8 @@
 %def_with prebuild_webui
 
 Name:    vault
-Version: 1.13.12
-Release: alt6
+Version: 1.19.5
+Release: alt1
 
 Summary: A tool for secrets management, encryption as a service, and privileged access management
 License: MPL-2.0
@@ -113,6 +113,10 @@ setcap -q cap_ipc_lock+ep %_bindir/%name 2>/dev/null ||:
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Fri May 30 2025 Alexander Danilov <admsasha@altlinux.org> 1.19.5-alt1
+- New version 1.19.5.
+- Fixes: CVE-2024-8365.
+
 * Sun Dec 15 2024 Nikolay Burykin <bne@altlinux.org> 1.13.12-alt6
 - Fixes: CVE-2024-8185, CVE-2024-9180, CVE-2024-6468 (Closes: #52418)
 
