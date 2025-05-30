@@ -20,8 +20,8 @@
 %define soname 12.0
 
 Name: openvdb
-Version: 12.0.0
-Release: alt2
+Version: 12.0.1
+Release: alt1
 Summary: C++ library for sparse volumetric data discretized on three-dimensional grids
 Group: Graphics
 License: Apache-2.0
@@ -177,6 +177,9 @@ sed -i 's,MINIMUM_GCC_VERSION 9.3.1,MINIMUM_GCC_VERSION 9.3.0,' \
 %_defaultdocdir/OpenVDB
 
 %changelog
+* Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.1-alt1
+- 12.0.1.
+
 * Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 12.0.0-alt2
 - BR: simplify for new cuda.
 
