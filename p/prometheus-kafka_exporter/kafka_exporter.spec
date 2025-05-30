@@ -3,7 +3,7 @@
 
 Name:    prometheus-kafka_exporter
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: Kafka exporter for Prometheus
 License: Apache-2.0
@@ -12,9 +12,14 @@ Url:     https://github.com/danielqsj/kafka_exporter
 
 Source: %mod-%version.tar
 Source1: vendor.tar
+Source2: %name.sysconfig
+Source3: %name.service
+Source4: %name.socket
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+
+Requires(pre): prometheus-common
 
 %description
 Kafka exporter for Prometheus. For other metrics from Kafka, have a look at the
@@ -39,11 +44,27 @@ export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 
 %golang_install
+install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -Dm0644 %SOURCE3 %buildroot%_unitdir/%name.service
+install -Dm0644 %SOURCE4 %buildroot%_unitdir/%name.socket
+mkdir -p %buildroot%_sharedstatedir/prometheus/kafka-exporter
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
 %doc *.md
 %_bindir/*
+%_unitdir/%name.*
+%dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/kafka-exporter
+%config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri May 30 2025 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt2
+- Added systemd units.
+
 * Thu May 15 2025 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt1
 - Initial build for Sisyphus.
