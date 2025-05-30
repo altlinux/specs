@@ -1,6 +1,6 @@
 Name: livecd-net-eth
-Version: 0.5.1
-Release: alt3
+Version: 0.5.2
+Release: alt1
 
 Summary: Try to autoconfigure ethernet interfaces
 License: GPL-2.0-or-later
@@ -34,6 +34,13 @@ install -pDm644 %name.service %buildroot%_unitdir/%name.service
 %preun_service %name
 
 %changelog
+* Fri May 30 2025 Anton Midyukov <antohami@altlinux.org> 0.5.2-alt1
+- livecd-net-eth.sh: do not override global variables in a cycle
+- livecd-net-eth.sh: more global variable, fix setup_networkd function
+- livecd-net-eth.sh: configure etcnet interface as static, if link is
+  not detected
+- livecd-net-eth.sh: set shebang to bash
+
 * Wed May 28 2025 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt3
 - add %%preun_service
 - Revert "livecd-net-eth.init: do not set DHCP_TIMEOUT=7"
