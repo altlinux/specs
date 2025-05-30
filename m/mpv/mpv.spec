@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.40.0
-Release: alt1
+Release: alt1.1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -40,6 +40,9 @@ BuildRequires: /usr/bin/rst2man
 %if_enabled lua
 BuildRequires: liblua5.1-devel libluajit-devel
 %endif
+
+# https://bugzilla.altlinux.org/show_bug.cgi?id=54548
+Requires: yt-dlp
 
 Summary(ru_RU.UTF-8): MPV - это медиапроигрыватель с открытыми исходниками, основанный на проектах MPlayer и mplayer2.
 
@@ -148,6 +151,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 0.40.0-alt1.1
+- Add yt-dlp to requires (closes ALT #54548).
+
 * Wed Mar 26 2025 L.A. Kostis <lakostis@altlinux.ru> 0.40.0-alt1
 - 0.40.0.
 - BR:
