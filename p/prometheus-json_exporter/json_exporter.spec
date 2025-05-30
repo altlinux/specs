@@ -3,7 +3,7 @@
 
 Name:    prometheus-json_exporter
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: A prometheus exporter which scrapes remote JSON by JSONPath
 License: Apache-2.0
@@ -12,9 +12,14 @@ Url:     https://github.com/prometheus-community/json_exporter
 
 Source: %mod-%version.tar
 Source1: vendor.tar
+Source2: %name.sysconfig
+Source3: %name.service
+Source4: %name.socket
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
+
+Requires(pre): prometheus-common
 
 %description
 A prometheus exporter which scrapes remote JSON by JSONPath.
@@ -38,11 +43,30 @@ export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 
 %golang_install
+install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
+install -Dm0644 %SOURCE3 %buildroot%_unitdir/%name.service
+install -Dm0644 %SOURCE4 %buildroot%_unitdir/%name.socket
+mkdir -p %buildroot%_sharedstatedir/prometheus/json-exporter
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
-%doc *.md
+%doc *.md examples
 %_bindir/*
+%_unitdir/%name.*
+%dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/json-exporter
+%config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Sun May 25 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt2
+- Added systemd units.
+- Added examples.
+
+* Mon May 05 2025 Anton Meleshnikov <alton@altlinux.org> 1:3.9.1-alt1
+
 * Thu May 15 2025 Andrey Cherepanov <cas@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.
