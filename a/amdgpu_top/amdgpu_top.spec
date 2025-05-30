@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define git 136e5a1
+%define git %nil
 
 Name: amdgpu_top
-Version: 0.10.4
-Release: alt1.g%{git}
+Version: 0.10.5
+Release: alt1
 
 Summary: Tool that display AMD GPU utilization
 Group: System/Configuration/Hardware
@@ -30,9 +30,9 @@ cat > .cargo/config <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs?rev=69196107b2a8ab8dabfd67265f004f16f146a308"]
+[source."git+https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs?rev=545a84f8beb0ea96fe945ebda3325ae9a16fdd2a"]
 git = "https://github.com/Umio-Yasuno/libdrm-amdgpu-sys-rs"
-rev = "69196107b2a8ab8dabfd67265f004f16f146a308"
+rev = "545a84f8beb0ea96fe945ebda3325ae9a16fdd2a"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -58,5 +58,8 @@ install -pm644 docs/%name.1 %buildroot%_man1dir/
 %_man1dir/%name.1*
 
 %changelog
+* Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 0.10.5-alt1
+- 0.10.5.
+
 * Mon May 12 2025 L.A. Kostis <lakostis@altlinux.ru> 0.10.4-alt1.g136e5a1
 - Initial build for ALTLinux.
