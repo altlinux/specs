@@ -5,7 +5,7 @@
 %endif
 
 Name: starship
-Version: 1.21.1
+Version: 1.23.0
 Release: alt1
 Summary: The minimal, blazing-fast, and infinitely customizable prompt for any shell
 License: ISC
@@ -15,7 +15,6 @@ VCS: https://github.com/starship/starship
 
 Source: %name-%version.tar
 Source1: vendor.tar
-Patch: starship-1.17.1-libz-ng-sys-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: cargo-vendor-checksum
@@ -31,7 +30,6 @@ BuildRequires: git
 
 %prep
 %setup -a 1
-%patch -p1
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
@@ -65,6 +63,9 @@ cargo test -- --skip expiration_date_set
 %doc LICENSE
 
 %changelog
+* Wed May 28 2025 Alexander Makeenkov <amakeenk@altlinux.org> 1.23.0-alt1
+- Updated to version 1.23.0.
+
 * Sat Dec 14 2024 Alexander Makeenkov <amakeenk@altlinux.org> 1.21.1-alt1
 - Updated to version 1.21.1.
 
