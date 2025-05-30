@@ -4,7 +4,7 @@
 %define snakename riru_build_utils
 
 Name: riru-build-utils
-Version: 0.10.5
+Version: 0.10.7
 Release: alt1
 
 Summary: Build utilities for Average Rirusha Project
@@ -57,6 +57,9 @@ Contains update, test and create commands.
 %_datadir/%name/
 
 %changelog
+* Fri May 30 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.10.7-alt1
+- New version: 0.10.7
+
 * Thu May 29 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.10.5-alt1
 - New version: 0.10.5
 
