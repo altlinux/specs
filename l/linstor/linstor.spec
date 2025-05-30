@@ -9,13 +9,12 @@
 
 Name: linstor
 Version: 1.31.1
-Release: alt1
+Release: alt2
 Summary: DRBD replicated volume manager
 Group: System/Servers
 License: GPLv2+
 Url: https://github.com/LINBIT/linstor-server
 Source0: http://www.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
-Source1: gradle-8.2.1-bin.zip
 
 %define java_arches x86_64 aarch64 loongarch64
 ExclusiveArch: %{java_arches}
@@ -24,7 +23,7 @@ BuildRequires(pre): /proc rpm-build-java jpackage-utils
 BuildRequires: java-21-openjdk-headless java-21-openjdk-devel python3
 BuildRequires: python3
 BuildRequires: unzip
-#BuildRequires: gradle
+BuildRequires: gradle
 
 %description
 LINSTOR developed by LINBIT, is a software that manages replicated volumes
@@ -35,11 +34,9 @@ large Linux server clusters.  It's used to provide persistent Linux block
 storage for cloudnative and hypervisor environments.
 
 %prep
-%setup -n %NAME_VERS -a1
+%setup -n %NAME_VERS
 
 %build
-# export PATH=$PWD/gradle-6.7/bin:$PATH
-export PATH=$PWD/gradle-8.2.1/bin:$PATH
 gradle %GRADLE_TASKS %GRADLE_FLAGS
 #for p in server satellite controller; do echo "%%LS_PREFIX/.$p" >> "%%_builddir/%%NAME_VERS/$p/jar.deps"; done
 
@@ -155,6 +152,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Fri May 30 2025 Ivan Khanas <xeno@altlinux.org> 1.31.1-alt2
+- Stop using binary gradle.
+
 * Wed May 21 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.31.1-alt1
 - 1.31.1
 
