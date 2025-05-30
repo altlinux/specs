@@ -4,7 +4,7 @@
 %def_disable check
 
 Name:    python3-module-%srcname
-Version: 0.2.0
+Version: 0.13.0
 Release: alt1
 
 Summary: A collection of cache libraries in the same API interface
@@ -54,5 +54,8 @@ py.test3 -v
 %doc *.md
 
 %changelog
+* Sat May 31 2025 Andrey Limachko <liannnix@altlinux.org> 0.13.0-alt1
+- new version (0.13.0) with rpmgs script
+
 * Thu Jul 29 2021 Anton Midyukov <antohami@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
