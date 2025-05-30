@@ -1,8 +1,8 @@
 %def_without clang
 
 Name: strawberry
-Version: 1.2.4
-Release: alt2
+Version: 1.2.11
+Release: alt1
 
 Summary: Audio player and music collection organizer
 
@@ -14,17 +14,20 @@ Summary: Audio player and music collection organizer
 License: GPL-3.0-or-later and Apache-2.0 and LGPL-2.0-or-later and BSD
 Group: Sound
 Url: https://www.strawberrymusicplayer.org
-Vcs: git://github.com/strawberrymusicplayer/strawberry.git
+VCS: https://github.com/strawberrymusicplayer/strawberry.git
+
+Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/strawberrymusicplayer/strawberry/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 Requires: gst-plugins-good1.0 vlc-mini
 
 BuildRequires(pre): desktop-file-utils rpm-build-ninja /usr/bin/appstream-util
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
-BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel libtag-devel libvlc-devel protobuf-compiler
-BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
+BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel taglib-devel libvlc-devel protobuf-compiler sparsehash-devel rapidjson-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc libkdsingleapplication-qt6-devel
 BuildRequires: libicu-devel
 
 %if_with clang
@@ -59,6 +62,7 @@ Features:
 
 %prep
 %setup
+%autopatch -p1
 %ifarch %e2k
 sed -i "s/u'\\\\0'/(QChar)&/" src/tagreader/tagreadergme.cpp
 %endif
@@ -96,6 +100,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.11-alt1
+- New version 1.2.11.
+- Built with libtag2.
+
 * Thu Jan 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.4-alt2
 - Fixed build for Elbrus.
 

@@ -1,9 +1,9 @@
-%def_disable qt5
+%def_enable qt5
 
-%define soname 1
+%define ver_major 1.2
 
 Name: kdsingleapplication
-Version: 1.1.0
+Version: %ver_major.0
 Release: alt1
 
 Summary: KDAB's helper class for single-instance policy applications
@@ -11,15 +11,15 @@ Summary: KDAB's helper class for single-instance policy applications
 License: MIT
 Group: System/Libraries
 Url: https://github.com/KDAB/KDSingleApplication
+VCS: https://github.com/KDAB/KDSingleApplication.git
 
 Source: %url/archive/v%version/KDSingleApplication-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++ cmake qt6-base-devel libvulkan-devel
 %if_enabled qt5
 BuildRequires: qt5-base-devel
-%else
-BuildRequires: qt6-base-devel
 %endif
 
 %description
@@ -27,11 +27,19 @@ BuildRequires: qt6-base-devel
 
 %if_enabled qt5
 
-%package -n lib%name%soname
+%package -n lib%name-common
+Group: Development/Other
+Summary: Common files for lib%name
+BuildArch: noarch
+
+%description -n lib%name-common
+This package provides common files for lib%name.
+
+%package -n lib%name%ver_major
 Group: System/Libraries
 Summary: %summary
 
-%description -n lib%name%soname
+%description -n lib%name%ver_major
 %summary.
 
 This package provides lib%name for qt5.
@@ -39,19 +47,27 @@ This package provides lib%name for qt5.
 %package -n lib%name-devel
 Group: Development/C++
 Summary: %summary
-Requires: lib%name%soname
+Requires: lib%name%ver_major
 
 %description -n lib%name-devel
 This package contains libraries and header files for developing applications
 that use KDSingleApplication with Qt5.
 
-%else
+%endif
 
-%package -n lib%name-qt6-%soname
+%package -n lib%name-qt6-common
+Group: Development/Other
+Summary: Common files for lib%name-qt6
+BuildArch: noarch
+
+%description -n lib%name-qt6-common
+This package provides common files for lib%name-qt6.
+
+%package -n lib%name-qt6_%ver_major
 Group: System/Libraries
 Summary: %summary
 
-%description -n lib%name-qt6-%soname
+%description -n lib%name-qt6_%ver_major
 %summary.
 
 This package provides lib%name for qt5.
@@ -59,41 +75,54 @@ This package provides lib%name for qt5.
 %package -n lib%name-qt6-devel
 Group: Development/C++
 Summary: %summary
-Requires: lib%name-qt6-%soname
+Requires: lib%name-qt6_%ver_major
 
 %description -n lib%name-qt6-devel
 This package contains libraries and header files for developing applications
 that use KDSingleApplication with Qt6.
 
-%endif
-
 %prep
 %setup -n KDSingleApplication-%version
+%autopatch -p1
 
 %build
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+export LC_ALL=C.UTF-8
+
 %if_enabled qt5
-  -DKDSingleApplication_QT6=OFF \
-%else
-  -DKDSingleApplication_QT6=ON \
-%endif
+%cmake -B build5 \
+ -GNinja \
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+ -DKDSingleApplication_QT6=OFF \
+ -DECM_MKSPECS_INSTALL_DIR=%_libdir/qt5/mkspecs/modules \
 #
-cmake --build %_cmake__builddir -j%__nprocs
+cmake --build "build5" -j%__nprocs
+%endif
+
+%cmake -B build6 \
+ -GNinja \
+ -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+ -DKDSingleApplication_QT6=ON \
+#
+cmake --build "build6" -j%__nprocs
 
 %install
-%cmake_install
+export DESTDIR="%buildroot"
+%if_enabled qt5
+cmake --install "build5" --verbose
+%endif
+cmake --install "build6" --verbose
 
 %if_enabled qt5
 
-%files -n lib%name%soname
+%files -n lib%name-common
 %doc %_docdir/KDSingleApplication/LICENSE.txt
 %doc %_docdir/KDSingleApplication/README.md
 %dir %_docdir/KDSingleApplication/LICENSES/
 %doc %_docdir/KDSingleApplication/LICENSES/MIT.txt
 %doc %_docdir/KDSingleApplication/LICENSES/BSD-3-Clause.txt
-%_libdir/lib%name.so.%{soname}*
+
+%files -n lib%name%ver_major
+%_libdir/lib%name.so.%{ver_major}*
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
@@ -103,17 +132,19 @@ cmake --build %_cmake__builddir -j%__nprocs
 %dir %_libdir/cmake/KDSingleApplication/
 %_libdir/cmake/KDSingleApplication/KDSingleApplicationConfig*.cmake
 %_libdir/cmake/KDSingleApplication/KDSingleApplicationTargets*.cmake
-# %_libdir/qt5/mkspecs/modules/qt_KDSingleApplication.pri
+%_libdir/qt5/mkspecs/modules/qt_KDSingleApplication.pri
 
-%else
+%endif
 
-%files -n lib%name-qt6-%soname
+%files -n lib%{name}-qt6-common
 %doc %_docdir/KDSingleApplication-qt6/LICENSE.txt
 %doc %_docdir/KDSingleApplication-qt6/README.md
 %dir %_docdir/KDSingleApplication-qt6/LICENSES/
 %doc %_docdir/KDSingleApplication-qt6/LICENSES/MIT.txt
 %doc %_docdir/KDSingleApplication-qt6/LICENSES/BSD-3-Clause.txt
-%_libdir/lib%name-qt6.so.%{soname}*
+
+%files -n lib%name-qt6_%ver_major
+%_libdir/lib%name-qt6.so.%{ver_major}*
 
 %files -n lib%{name}-qt6-devel
 %_libdir/lib%name-qt6.so
@@ -126,8 +157,12 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/KDSingleApplication-qt6/KDSingleApplicationTargets*.cmake
 %_libdir/qt6/mkspecs/modules/qt_KDSingleApplication.pri
 
-%endif
-
 %changelog
+* Tue May 27 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+- Built with vulkan support and qt5 library.
+- Packaged common files separately.
+- Added VCS tag.
+
 * Mon Jan 15 2024 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Sisyphus (for strawberry).
