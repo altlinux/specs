@@ -4,7 +4,7 @@
 %define commonname hasherc_common
 
 Name: hasherc
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A tool for building packages for ALT operating systems in containers
@@ -52,6 +52,9 @@ NOT FULL REPLACEMENT FOR HASHER
 %python3_sitelibdir_noarch/%commonname/
 
 %changelog
+* Fri May 30 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.2.1-alt1
+- New version: 0.2.1
+
 * Thu May 29 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.2.0-alt1
 - New version: 0.2.0
 
