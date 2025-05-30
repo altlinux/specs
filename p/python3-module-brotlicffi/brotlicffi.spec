@@ -2,7 +2,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Library contains Python bindings for the reference Brotli
 License: MIT
@@ -67,6 +67,10 @@ export PYTHONPATH=$PWD
 %doc docs/build/*
 
 %changelog
+* Sat May 31 2025 Andrey Limachko <liannnix@altlinux.org> 1.1.0.0-alt2
+- Fix FTBFS.
+- Fix intersphinx mapping in conf.py for Sphinx 8.x compatibility.
+
 * Sun Oct 22 2023 Andrey Limachko <liannnix@altlinux.org> 1.1.0.0-alt1
 - Version 1.1.0.0
 - Rename package to brotlicffi. brotli provide replaced with python3-module-brotli
