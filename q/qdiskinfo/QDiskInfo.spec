@@ -1,8 +1,8 @@
 %define nameB QDiskInfo
 
 Name: qdiskinfo
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: QDiskInfo is a frontend for smartctl. It provides a user experience similar to CrystalDiskInfo.
 
@@ -44,6 +44,9 @@ export CXX=clang++
 %doc *.md LICENSE
 
 %changelog
+* Fri May 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4-alt1
+- 0.3 -> 0.4
+
 * Tue May 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3-alt2
 - update git.3416cc7ac1
 - enabled translations
