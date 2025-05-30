@@ -1,6 +1,6 @@
 Name: fotocx
 Version: 25.0
-Release: alt1
+Release: alt1.1
 
 %define app_id kornelix.%name
 
@@ -55,7 +55,7 @@ This package provides noarch data needed for Fotox to work.
 %prep
 %setup -n %name
 chmod -x doc/*
-sed -i 's/opj_decompress/opj2_decompress/' f.pixmap.cc
+sed -i 's/opj_decompress/opj2_decompress/' %name.cc f.pixmap.cc
 
 %build
 %make_build PREFIX=/usr CXXFLAGS="%optflags %(getconf LFS_CFLAGS)"
@@ -85,6 +85,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 25.0-alt1.1
+- fixed fix for our openjpeg2 tools names (ALT #54571)
+
 * Thu Jan 02 2025 Yuri N. Sedunov <aris@altlinux.org> 25.0-alt1
 - 25.0
 
