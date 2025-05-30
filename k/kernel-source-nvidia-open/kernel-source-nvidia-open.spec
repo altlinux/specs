@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 %define module_name	nvidia-open
-%define module_version  575.51.02
+%define module_version  575.57.08
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
@@ -32,6 +32,9 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 575.57.08-alt1
+- 575.57.08.
+
 * Fri Apr 18 2025 L.A. Kostis <lakostis@altlinux.ru> 575.51.02-alt1
 - 575.51.02.
 
