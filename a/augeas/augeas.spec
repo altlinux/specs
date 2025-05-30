@@ -1,11 +1,11 @@
 Name: augeas
 Version: 1.14.1
-Release: alt1
+Release: alt2
 Summary: A library for changing configuration files
 
 Group: System/Configuration/Other
 License: LGPLv2+
-Url: http://augeas.net/
+Url: https://augeas.net/
 Vcs: https://github.com/hercules-team/augeas
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -75,6 +75,9 @@ The libraries for %name.
 %_libdir/pkgconfig/augeas.pc
 
 %changelog
+* Wed May 28 2025 Anton Farygin <rider@altlinux.com> 1.14.1-alt2
+- added commit af2aa88ab with null pointer dereference fix (Fixes CVE-2025-2588)
+
 * Tue Jul 16 2024 Anton Farygin <rider@altlinux.ru> 1.14.1-alt1
 - 1.14.1
 
