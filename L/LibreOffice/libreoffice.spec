@@ -29,13 +29,13 @@
 
 Name: LibreOffice
 %define hversion 25.2
-%define urelease 0.3
+%define urelease 3.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -657,6 +657,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri May 23 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 25.2.3.2-alt1
+- Update to upstream 25.2.3.2 (Close CVE-2025-2866).
+
 * Wed Apr 09 2025 Ivan A. Melnikov <iv@altlinux.org> 25.2.0.3-alt2
 - Generate proper debuginfo
   + reduce optflags_debug to -g1 to fit into 4Gb payload limit;

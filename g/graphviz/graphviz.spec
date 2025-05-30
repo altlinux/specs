@@ -23,8 +23,8 @@
 
 
 Name: graphviz
-Version: 12.1.2
-Release: alt2
+Version: 12.2.1
+Release: alt1
 
 Summary: Graphs visualization tools
 License: EPL-1.0 and GPL-2.0+ with Bison-exception and CPL-1.0
@@ -372,6 +372,9 @@ rm -rf %buildroot%gvlibdir/python3/
 # - enable/fix/test language bindings
 
 %changelog
+* Fri May 23 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 12.2.1-alt1
+- Update to upstream 12.2.1
+
 * Mon Nov 18 2024 Anton Midyukov <antohami@altlinux.org> 12.1.2-alt2
 - Remove limit of 100 vertices (Closes: 51872) (thanks mike@)
 
