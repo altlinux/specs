@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool domain-controller
+
 Name: diag-%diagnostic_tool
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Domain Controller Diagnostic Tool
 License: GPLv3
 Group: System/Configuration/Other
-URL: https://gitlab.basealt.space/alt/diag-domain-controller
+URL: https://altlinux.space/alterator/diag-domain-controller
 BuildArch: noarch
 Source: %name-%version.tar
 
@@ -37,6 +38,12 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat May 31 2025 Andrey Limachko <liannnix@altlinux.org> 0.4-alt1
+- added the is_nslcd_service_disabled test (thx Sergey Savelev)
+- added the is_nscd_service_disabled test (thx Sergey Savelev)
+- added the is_list_trusts_validated test (thx Sergey Savelev)
+- added the is_dns_lookup_realm_disabled test (thx Sergey Savelev)
+
 * Wed May 07 2025 Evgenii Sozonov <arzdez@altlinux.org> 0.3-alt1
 - fix: the fixed the is_sections_with_domain_name_in_krb5_empty test (thx Sergey Savelev)
 - fix: fixed the does_sysvol_contain_necessary_files test (thx Sergey Savelev)
