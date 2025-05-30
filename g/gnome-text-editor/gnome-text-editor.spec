@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: gnome-text-editor
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -66,6 +66,9 @@ general purpose default editor.
 %doc README* NEWS
 
 %changelog
+* Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48.3-alt1
+- 48.3
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
 - 48.2
 

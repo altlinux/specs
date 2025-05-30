@@ -21,7 +21,7 @@
 
 Name: %_name
 Version: %ver_major.3
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Phosh File Selector Library
 Group: System/Libraries
@@ -123,11 +123,7 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %check
 %__meson_test
 
-
 %files -n %pkg_libname -f %_name.lang
-%_bindir/%_name-open
-%_desktopdir/%xdg_name1.desktop
-%_iconsdir/hicolor/*/apps/%{xdg_name1}*.svg
 %_libdir/%libname-%api_ver.so
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %doc README* NEWS
@@ -152,12 +148,18 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 %if_enabled examples
 %files demo
+%_bindir/%_name-open
 %_bindir/%_name-demo
 %_desktopdir/%{xdg_name}Demo.desktop
+%_desktopdir/%xdg_name1.desktop
+%_iconsdir/hicolor/*/apps/%{xdg_name1}*.svg
 %_iconsdir/hicolor/*/apps/%{xdg_name}Demo*.svg
 %endif
 
 %changelog
+* Fri May 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1.1
+- moved pfs-open to -demo subpackage (ALT #54550)
+
 * Sun May 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
 - 0.0.3
 
