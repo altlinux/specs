@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:      yadm
-Version:   3.2.2
+Version:   3.5.0
 Release:   alt1
 
 Summary:   Yet Another Dotfiles Manager
@@ -32,7 +32,7 @@ in the repository.
 %install
 install -m755 -D %name %buildroot%_bindir/%name
 install -m644 -D %name.1 %buildroot%_man1dir/%name.1
-install -m644 -D completion/bash/%name %buildroot%_datadir/bash-completion/completions/%name 
+install -m644 -D completion/bash/%name %buildroot%_datadir/bash-completion/completions/%name
 install -m644 -D completion/zsh/_%name %buildroot%_datadir/zsh/site-functions/_%name
 install -m644 -D completion/fish/%name.fish %buildroot%_datadir/fish/completions/%name.fish
 
@@ -47,5 +47,8 @@ install -m644 -D completion/fish/%name.fish %buildroot%_datadir/fish/completions
 %_man1dir/%name.*
 
 %changelog
+* Tue May 20 2025 Andrey Limachko <liannnix@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Mon Nov 06 2023 Andrey Limachko <liannnix@altlinux.org> 3.2.2-alt1
 - Initial build for Sisyphus.
