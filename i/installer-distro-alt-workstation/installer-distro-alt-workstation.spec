@@ -1,6 +1,6 @@
 Name: installer-distro-alt-workstation
 Version: 11.0.0
-Release: alt2
+Release: alt3
 
 Summary: Installer configuration (ALT Workstation)
 License: GPL-2.0+
@@ -24,6 +24,8 @@ Requires: installer-common-stage2 >= 1.14.4-alt1
 # modules
 Requires: alterator-sysconfig
 Requires: alterator-datetime
+Requires: alterator-net-eth
+Requires: installer-feature-network-settings-copy
 Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
@@ -48,7 +50,6 @@ Requires: alterator-grub
 Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
 Requires: alterator-luks
-Requires: alterator-net-eth
 
 %description stage3
 This package contains installer configuration for
@@ -84,6 +85,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %files stage3
 
 %changelog
+* Tue May 27 2025 Anton Midyukov <antohami@altlinux.org> 11.0.0-alt3
+- Move network setup step to stage2
+
 * Wed Mar 12 2025 Anton Midyukov <antohami@altlinux.org> 11.0.0-alt2
 - Enable sshd.service, touch enable/disable services configs
 
