@@ -12,7 +12,7 @@
 %endif
 
 Name: talos
-Version: 1.10.2
+Version: 1.10.3
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -81,11 +81,18 @@ sed -i \
   pkg/machinery/constants/constants.go
 
 sed -i \
-  -e 's|HOME_URL=.*|HOME_URL="https://altlinux.space/alt-orchestra/talos/wiki"|' \
-  -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://altlinux.space/alt-orchestra/talos/issues"|' \
+  -e 's|HOME_URL=.*|HOME_URL="https://altlinux.space/alt-orchestra/talos-build/wiki"|' \
+  -e 's|BUG_REPORT_URL=.*|BUG_REPORT_URL="https://altlinux.space/alt-orchestra/talos-build/issues"|' \
   -e 's|VENDOR_NAME=.*|VENDOR_NAME="ALT Linux Team"|' \
   -e 's|VENDOR_URL=.*|VENDOR_URL="https://altlinux.org"|' \
+  -e 's|DefaultDiscoveryServiceEndpoint =.*|DefaultDiscoveryServiceEndpoint = "https://discovery.altlinux.space/"|' \
   pkg/machinery/constants/constants.go
+
+sed -i \
+  -e 's|discovery.talos.dev|discovery.altlinux.space|g' \
+  internal/app/machined/pkg/controllers/cluster/config_test.go \
+  pkg/machinery/config/configloader/internal/decoder/testdata/controlplane.yaml \
+  pkg/machinery/config/configloader/internal/decoder/testdata/worker.yaml
 
 
 # TODO:
@@ -95,7 +102,7 @@ sed -i \
 #DefaultNTPServer
 
 # Define ALT kernel
-sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.9-talos"|' \
+sed -i 's|DefaultKernelVersion = .*|DefaultKernelVersion = "6.12.30-talos"|' \
   pkg/machinery/constants/constants.go
 
 
@@ -176,6 +183,11 @@ mv %buildroot%_bindir/machined %buildroot%_libexecdir/%name/machined
 %_libexecdir/%name/machined
 
 %changelog
+* Fri May 30 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.3-alt1
+- New version 1.10.3.
+- Update HOME_URL and BUG_REPORT_URL.
+- Set discovery.altlinux.space as Discovery Endpoint.
+
 * Tue May 27 2025 Alexey Shabalin <shaba@altlinux.org> 1.10.2-alt1
 - New version 1.10.2.
 
