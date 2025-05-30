@@ -1,5 +1,5 @@
-%define git 40adb99
-%define snapdate 20241008
+%define git f58f558
+%define snapdate 20250526
 
 # ORIGINAL DESCRIPTION FROM FEDORA PACKAGE
 # We choose not to package the "stb_include" library (stb_include.h) because,
@@ -20,7 +20,7 @@
 
 Name: stb
 Version: 2.38
-Release: alt7.g%git.%snapdate
+Release: alt8.g%git.%snapdate
 
 Summary: single-file libraries for C/C++
 License: MIT or ALT-Public-Domain
@@ -202,7 +202,7 @@ Patch18: %url/pull/1736.patch
 %global stb_hexwave_version 0.5
 %global stb_image_version 2.30
 %global stb_image_resize_version 0.97
-%global stb_image_resize2_version 2.12
+%global stb_image_resize2_version 2.14
 %global stb_image_write_version 1.16
 %global stb_include_version 0.2
 %global stb_leakcheck_version 0.6
@@ -372,6 +372,10 @@ EOF
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Fri May 30 2025 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt8.gf58f558.20250526
+- Rebased to f58f558:
+  + stb_image_resize2: updated to 2.14.
+
 * Mon Jan 20 2025 L.A. Kostis <lakostis@altlinux.ru> 2.38-alt7.g40adb99.20241008
 - Rebased to 40adb99:
   + stb_image_resize2 updated to 2.12.
