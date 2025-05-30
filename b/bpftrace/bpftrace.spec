@@ -6,7 +6,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name: bpftrace
-Version: 0.23.0
+Version: 0.23.3
 Release: alt1
 Summary: High-level tracing language for Linux eBPF
 Group: Development/Debuggers
@@ -22,7 +22,7 @@ Url: https://github.com/bpftrace/bpftrace
 Source: %name-%version.tar
 ExclusiveArch:	x86_64 aarch64 loongarch64
 
-%define llvm_ver 18
+%define llvm_ver 19
 %define llvm_pkgver %llvm_ver.1
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: asciidoctor
@@ -50,6 +50,8 @@ BuildRequires(pre): rpm-build-kernel
 BuildRequires: bc
 BuildRequires: bpftool
 BuildRequires: dwarves
+BuildRequires: iproute2
+BuildRequires: iputils
 BuildRequires: kernel-headers-modules-%kernel_latest
 BuildRequires: libgtest-devel
 BuildRequires: python3(looseversion)
@@ -135,6 +137,13 @@ fi
 %_datadir/bash-completion/completions/bpftrace
 
 %changelog
+* Fri May 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.23.3-alt1
+- Update to v0.23.3 (2025-05-22).
+- spec: Switch build to Clang/LLVM 19.
+
+* Sat Apr 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.23.1-alt1
+- Update to v0.23.1 (2025-04-11).
+
 * Wed Mar 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.23.0-alt1
 - Update to v0.23.0 (2025-03-25).
 
