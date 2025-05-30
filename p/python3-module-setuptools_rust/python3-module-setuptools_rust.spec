@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: Setuptools helpers for rust Python extensions.
 
@@ -22,6 +22,7 @@ Requires: python3-module-semantic-version
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+Requires: rust rust-cargo
 
 %description
 Compile and distribute Python extensions written in rust as easily as if they
@@ -41,6 +42,9 @@ were written in C.
 %python3_sitelibdir/%{pyproject_distinfo %modname}
 
 %changelog
+* Fri May 30 2025 Vladimir Didenko <cow@altlinux.org> 1.11.1-alt2
+- add rust and cargo into dependencies (closes: #54553)
+
 * Tue Apr 8 2025 Vladimir Didenko <cow@altlinux.org> 1.11.1-alt1
 - new version
 
