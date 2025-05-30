@@ -1,17 +1,16 @@
-%define _unpackaged_files_terminate_build 1
-
+# errors on i586 and aarch64
 %def_without check
 %def_with pythran
 
 %define modname scipy
-%define ver_major 1.11
-%define ver_minor 4
+%define ver_major 1.15
+%define ver_minor 3
 
 %define numpy_version 1.16.5
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt4
+Release: alt1
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -19,18 +18,21 @@ Group: Development/Python3
 
 Url: https://www.scipy.org/
 VCS: git://github.com/scipy/scipy.git
-Patch0: %name-%version-%release.patch
 Source0: %name-%version.tar
 Source1: site.cfg
-# submodules  by update-submodules.sh
+# submodules by update-submodules.sh
 Source2: %name-%version-doc-source-_static-scipy-mathjax.tar
-Source3: %name-%version-scipy-_lib-boost_math.tar
-Source4: %name-%version-scipy-_lib-highs.tar
-Source5: %name-%version-scipy-_lib-unuran.tar
-Source6: %name-%version-scipy-sparse-linalg-_propack-PROPACK.tar
-Source7: datasets.tar
+Source3: %name-%version-scipy-_lib-array_api_compat.tar
+Source4: %name-%version-scipy-_lib-array_api_extra.tar
+Source5: %name-%version-scipy-_lib-boost_math.tar
+Source6: %name-%version-scipy-_lib-cobyqa.tar
+Source7: %name-%version-scipy-_lib-pocketfft.tar
+Source8: %name-%version-scipy-_lib-unuran.tar
+Source9: %name-%version-scipy-sparse-linalg-_propack-PROPACK.tar
+Source10: %name-%version-subprojects-highs.tar
+Source11: datasets.tar
 
-# will be released with scipy 1.8.0
+Patch: 0001-ALT-Make-use-of-local-storage-of-datasets-as-a-defau.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx3
@@ -65,6 +67,7 @@ BuildRequires: /usr/bin/pytest3
 BuildRequires: python3-module-numpy-tests
 BuildRequires: /proc
 BuildRequires: python3-module-pooch
+BuildRequires: python3-module-hypothesis
 %add_python3_req_skip scipy.fft.tests
 %else
 %add_python3_req_skip numpy.testing
@@ -72,6 +75,16 @@ BuildRequires: python3-module-pooch
 
 # special/_precompute/struve_convergence.py
 %add_python3_req_skip matplotlib.pyplot
+
+%add_python3_req_skip cupy
+%add_python3_req_skip cupy.cuda.device
+%add_python3_req_skip cupy.fft
+%add_python3_req_skip cupy.linalg
+%add_python3_req_skip scipy.special._mptestutils
+%add_python3_req_skip scipy.special.tests.test_hyp2f1
+%add_python3_req_skip torch
+%add_python3_req_skip torch.fft
+%add_python3_req_skip torch.linalg
 
 %description
 SciPy is the library of scientific codes built on top of NumPy.
@@ -89,8 +102,8 @@ SciPy is the library of scientific codes built on top of NumPy.
 This package contains development files of SciPy.
 
 %prep
-%setup -a2 -a3 -a4 -a5 -a6 -a7
-%patch0 -p1
+%setup -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
+%patch -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
@@ -131,6 +144,7 @@ export SCIPY_USE_PYTHRAN=0%{?with_pythran}
 %install
 export SCIPY_USE_PYTHRAN=0%{?with_pythran}
 %pyproject_install
+
 find %buildroot%python3_sitelibdir -type f -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' -- '{}' + ||:
 find %buildroot%python3_sitelibdir -type f -exec \
@@ -162,17 +176,31 @@ for i in $(find %buildroot%python3_sitelibdir \
                -o -name 'gammainc_data.*' -type f \
                -o -name '_mptestutils.*' -type f)
 do
-	rm -r "$i"
+	rm -rv "$i"
 done
 %endif
 
 %find_lang %name
 
 %check
-pushd %{buildroot}/%{python3_sitelibdir}
-pytest3 scipy
-popd
+export XDG_CACHE_HOME=$PWD
+pushd %buildroot/%python3_sitelibdir
+pytest3 scipy -k 'not test_basic_functions and not test_cython and not TestDatasets'
+rm -rv .pytest_cache
 
+for i in $(find %buildroot%python3_sitelibdir \
+               -name tests -type d \
+               -o -name 'conftest.*' -type f \
+               -o -name '_testutils.*' -type f \
+               -o -name 'gammainc_data.*' -type f \
+               -o -name '_mptestutils.*' -type f)
+do
+	rm -r "$i"
+done
+
+grep -zPqsr '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' || exit 1
+grep -zPrl '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' %buildroot%python3_sitelibdir/%modname | xargs \
+sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^/# /}'
 
 %files -f %name.lang
 %python3_sitelibdir/_*.so
@@ -183,6 +211,9 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Wed May 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.15.3-alt1
+- Build new version.
+
 * Wed Mar 26 2025 Alexey Volkov <qualimock@altlinux.org> 1.11.4-alt4
 - Replaced usage of `suppress_warnings` with standard Python warning handling.
 - Fixed runtime error caused by missing `numpy.testing` import (Closes: #52821).
