@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define diagnostic_tool system-report
 Name: diag-%diagnostic_tool
-Version: 0.0.2
+Version: 0.1
 Release: alt1
 
 Summary: Diagnostic Tool for collecting system information
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 
 Requires: system-report
 
-BuildRequires: rpm-macros-alterator
+BuildRequires(pre): rpm-macros-alterator
 
 %description
 Diagnostic Tool for collecting system information.
@@ -38,6 +38,9 @@ install -p -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri May 30 2025 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.1-alt1
+- The structure of the files .diag and .backend has been rewritten to the toml format
+
 * Wed Oct 02 2024 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 0.0.2-alt1
 - Add icon. Author: Elena Dyatlenko
 - Expanded description
