@@ -1,13 +1,16 @@
+%define git d3d1062
+
 Name: powertop
 Version: 2.15
-Release: alt1
+Release: alt2.git%{git}
 Epoch: 1
 
 Summary: Tool that helps you find what software is using the most power
 License: GPLv2
 Group: System/Kernel and hardware
 
-Url: https://01.org/powertop/
+Url: https://github.com/fenrus75/powertop
+Vcs: https://github.com/fenrus75/powertop
 Source0: %name-%version.tar
 Source1: %name.service
 Source2: %name.init
@@ -15,7 +18,7 @@ Source100: %name.watch
 Patch0: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ libncursesw-devel libnl-devel libpci-devel zlib-devel
-BuildRequires: autoconf-archive
+BuildRequires: autoconf-archive libtracefs-devel
 
 %define cachedir %_cachedir/%name
 
@@ -35,7 +38,7 @@ Please note that it also runs just fine with e.g. AMD CPUs. :)
 %patch0 -p1
 
 %build
-./autogen.sh
+%autoreconf
 %configure
 %make_build
 
@@ -66,6 +69,10 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Sat May 31 2025 L.A. Kostis <lakostis@altlinux.ru> 1:2.15-alt2.gitd3d1062
+- GIT d3d1062.
+- Update URL/Vcs links.
+
 * Sat Nov 12 2022 Anton Farygin <rider@altlinux.ru> 1:2.15-alt1
 - 2.15
 
