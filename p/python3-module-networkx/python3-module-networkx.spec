@@ -10,7 +10,7 @@
 
 Name:           python3-module-%pypi_name
 Epoch:          2
-Version:        3.4.2
+Version:        3.5
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
@@ -123,6 +123,9 @@ and not test_graphviz_alias"
 %python3_sitelibdir/%pypi_name/*/*/tests
 
 %changelog
+* Sat May 31 2025 Anton Vyatkin <toni@altlinux.org> 2:3.5-alt1
+- New version 3.5
+
 * Tue Oct 22 2024 Anton Vyatkin <toni@altlinux.org> 2:3.4.2-alt1
 - New version 3.4.2.
 
