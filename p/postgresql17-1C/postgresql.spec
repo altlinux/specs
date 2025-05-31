@@ -22,8 +22,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     17
-%define postgresql_minor     2
-%define postgresql_altrel    9
+%define postgresql_minor     5
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -58,7 +58,8 @@ Patch9: 0008-Add_event-id_to_jsonlog.patch
 
 # 1C
 Patch101: 00001-1C-FULL.patch
-Patch102: 00001-Estimate-the-selectivity-as-quadratic-mean-of-non.patch
+# TODO check every relsease and drop as possible
+Patch102: 00002-Disable-join-test.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -775,6 +776,9 @@ fi
 %_datadir/%PGSQL/extension/amcheck-*.sql
 %_datadir/%PGSQL/extension/amcheck.control
 %_libdir/%PGSQL/auth_delay.so
+%_libdir/%PGSQL/auto_dump.so
+%_datadir/%PGSQL/extension/auto_dump-*.sql
+%_datadir/%PGSQL/extension/auto_dump.control
 %_libdir/%PGSQL/auto_explain.so
 %_libdir/%PGSQL/autoinc.so
 %_datadir/%PGSQL/extension/autoinc-*.sql
@@ -868,6 +872,9 @@ fi
 %_libdir/%PGSQL/pg_freespacemap.so
 %_datadir/%PGSQL/extension/pg_freespacemap-*.sql
 %_datadir/%PGSQL/extension/pg_freespacemap.control
+%_libdir/%PGSQL/pg_hint_plan.so
+%_datadir/%PGSQL/extension/pg_hint_plan-*.sql
+%_datadir/%PGSQL/extension/pg_hint_plan.control
 %_libdir/%PGSQL/pg_prewarm.so
 %_datadir/%PGSQL/extension/pg_prewarm-*.sql
 %_datadir/%PGSQL/extension/pg_prewarm.control
@@ -883,6 +890,9 @@ fi
 %_libdir/%PGSQL/pg_visibility.so
 %_datadir/%PGSQL/extension/pg_visibility-*.sql
 %_datadir/%PGSQL/extension/pg_visibility.control
+%_libdir/%PGSQL/pg_wait_sampling.so
+%_datadir/%PGSQL/extension/pg_wait_sampling-*.sql
+%_datadir/%PGSQL/extension/pg_wait_sampling.control
 %_libdir/%PGSQL/pg_walinspect.so
 %_datadir/%PGSQL/extension/pg_walinspect-*.sql
 %_datadir/%PGSQL/extension/pg_walinspect.control
@@ -1102,6 +1112,12 @@ fi
 %endif
 
 %changelog
+* Sat May 31 2025 Alexei Takaseev <taf@altlinux.org> 17.5-alt1
+- 17.5
+- Update 1C patch
+- Drop 00001-Estimate-the-selectivity-as-quadratic-mean-of-non.patch, exist in 1C patch
+- Add 00002-Disable-join-test.patch
+
 * Wed May 07 2025 Alexei Takaseev <taf@altlinux.org> 17.2-alt9
 - Fixes CVE-2025-4207
 
