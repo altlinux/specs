@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 138.0.4
+Version: 139.0.1
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -23,7 +23,9 @@ Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
 VCS: https://github.com/mozilla-firefox/firefox
 # Hang up on build browser/components/about
-ExcludeArch: ppc64le
+# i586: hasher-privd: parent: handle_io:
+# idle time limit (3600 seconds) exceeded.
+ExcludeArch: ppc64le i586
 
 Source0: firefox-source.tar
 ### Start Patches
@@ -386,6 +388,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Sat May 31 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.1-alt1
+- New version (139.0.1).
+- Fix FTBFS: exclude i586 arch due to idle time limit exceeded.
+- Security fixes:
+  + MFSA-TMP-2025-0001: Double-free in libvpx encoder
+  + CVE-2025-5263: Error handling for script execution was incorrectly isolated from web content
+  + CVE-2025-5264: Potential local code execution in "Copy as cURL" command
+  + CVE-2025-5265: Potential local code execution in "Copy as cURL" command
+  + CVE-2025-5266: Script element events leaked cross-origin resource status
+  + CVE-2025-5270: SNI was sometimes unencrypted
+  + CVE-2025-5271: Devtools' preview ignored CSP headers
+  + CVE-2025-5267: Clickjacking vulnerability could have led to leaking saved payment card details
+  + CVE-2025-5268: Memory safety bugs fixed in Firefox 139, Thunderbird 139, Firefox ESR 128.11, and Thunderbird 128.11
+  + CVE-2025-5272: Memory safety bugs fixed in Firefox 139 and Thunderbird 139
+
 * Sun May 18 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0.4-alt1
 - New version (138.0.4).
 - Security fixes:
