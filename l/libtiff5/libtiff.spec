@@ -2,21 +2,43 @@
 
 Name: libtiff5
 Version: 4.4.0
-Release: alt5
+Release: alt6
 
 Summary: Library of functions for manipulating TIFF format image files
 License: libtiff
 Group: System/Libraries
-Url: http://www.libtiff.org/
+Url: https://libtiff.gitlab.io/libtiff/
+VCS: https://gitlab.com/libtiff/libtiff.git
 
 # git://git.altlinux.org/gears/l/%name
 Source: %name-%version-%release.tar
+Patch0: libtiff-4.4.0-fedora-cve-2024-7006.patch
+Patch1: libtiff-4.4.0-upstream-cve-2023-52356.patch
+Patch2: libtiff-4.4.0-upstream-cve-2023-6228.patch
+Patch3: libtiff-4.4.0-upstream-cve-2022-40090.patch
+Patch4: libtiff-4.4.0-debian-cve-2023-0795-0796-0797-0798-0799.patch
+Patch5: libtiff-4.4.0-debian-cve-2023-0800-0801-0802-0803-0804.patch
+Patch6: libtiff-4.4.0-upstream-cve-2023-1916.patch
+Patch7: libtiff-4.4.0-ubuntu-cve-2023-25433.patch
+Patch8: libtiff-4.4.0-upstream-cve-2023-26966.patch
+Patch9: libtiff-4.4.0-upstream-cve-2023-2731.patch
+Patch10: libtiff-4.4.0-upstream-cve-2023-2908.patch
+Patch11: libtiff-4.4.0-upstream-cve-2023-3316.patch
+Patch12: libtiff-4.4.0-upstream-cve-2023-3576.patch
+Patch13: libtiff-4.4.0-upstream-cve-2023-3618.patch
+Patch14: libtiff-4.4.0-upstream-cve-2023-41175.patch
+Patch15: libtiff-4.4.0-ubuntu-cve-2023-6277-1.patch
+Patch16: libtiff-4.4.0-ubuntu-cve-2023-6277-2.patch
+Patch17: libtiff-4.4.0-ubuntu-cve-2023-6277-3.patch
+Patch18: libtiff-4.4.0-ubuntu-cve-2023-6277-4.patch
+Patch19: libtiff-4.4.0-debian-cve-2022-48281.patch
+Patch20: libtiff-4.4.0-ubuntu-cve-2023-40745.patch
+Patch21: libtiff-4.4.0-ubuntu-cve-2023-26965.patch
 
 %def_disable static
 %def_enable cxx
 
 BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel liblzma-devel libwebp-devel libzstd-devel zlib-devel
-BuildRequires: libdeflate-devel
 
 %if_with jbig
 BuildRequires: libjbig-devel
@@ -32,6 +54,7 @@ used file format for bitmapped images.  TIFF files usually end in the
 
 %prep
 %setup -n %name-%version-%release
+%autopatch -p1
 :>port/dummy.c
 
 cd libtiff
@@ -94,6 +117,20 @@ rm -rv %buildroot{%_bindir,%_mandir,%_pkgconfigdir,%_libdir/*.so,%_includedir,%d
 %docdir/[A-Z]*
 
 %changelog
+* Fri May 30 2025 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt6
+- (Fixes: CVE-2022-40090, CVE-2022-4645, CVE-2022-48281,
+  CVE-2023-0795, CVE-2023-0796, CVE-2023-0797, CVE-2023-0798,
+  CVE-2023-0799, CVE-2023-0800, CVE-2023-0801, CVE-2023-0802,
+  CVE-2023-0803, CVE-2023-0804, CVE-2023-1916, CVE-2023-25433,
+  CVE-2023-25434, CVE-2023-25435, CVE-2023-26965, CVE-2023-26966,
+  CVE-2023-2731, CVE-2023-2908, CVE-2023-30086, CVE-2023-30774,
+  CVE-2023-30775, CVE-2023-3164, CVE-2023-3316, CVE-2023-3576,
+  CVE-2023-3618, CVE-2023-40745, CVE-2023-41175, CVE-2023-52356,
+  CVE-2023-6228, CVE-2023-6277, CVE-2024-7006)
+- remove BR: libdeflate-devel
+- update license tag to SPDX format
+- update Url tag, add VCS tag
+
 * Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt5
 - build only libtiff5 subpackage with libtiff.so.5
 - set license: libtiff
