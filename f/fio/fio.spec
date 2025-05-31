@@ -21,15 +21,10 @@
 %else
 %def_enable gfapi
 %endif
-%ifarch x86_64 aarch64 ppc64le
-%def_enable libpmem
-%else
-%def_disable libpmem
-%endif
 
 Name: fio
 Version: 3.40
-Release: alt1
+Release: alt2
 Summary: Flexible I/O Tester
 License: GPL-2.0
 Group: System/Kernel and hardware
@@ -57,7 +52,6 @@ BuildRequires: zlib-devel
 %{?_enable_numa:BuildRequires: libnuma-devel }
 %{?_enable_rbd:BuildRequires: ceph-devel}
 %{?_enable_rdmacm:BuildRequires: librdmacm-devel libnl-devel}
-%{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: CUnit-devel
 }}
@@ -101,16 +95,6 @@ Group: %group
 
 %description engine-nbd
 %summary.
-
-%package engine-pmdk
-Summary: PMDK engines for fio
-Requires: %name = %EVR
-Group: %group
-Provides: fio-engine-dev-dax
-Provides: fio-engine-libpmem
-
-%description engine-pmdk
-%summary: dev-dax and libpmem.
 
 %package engine-rados
 Summary: Rados engines for fio
@@ -226,12 +210,6 @@ rmdir $PWD
 %_libdir/fio/fio-nbd.so
 %endif
 
-%if_enabled libpmem
-%files engine-pmdk
-%_libdir/fio/fio-dev-dax.so
-%_libdir/fio/fio-libpmem.so
-%endif
-
 %if_enabled rbd
 %files engine-rados
 %_libdir/fio/fio-rados.so
@@ -251,6 +229,9 @@ rmdir $PWD
 %files checkinstall
 
 %changelog
+* Sat May 31 2025 Vitaly Chikunov <vt@altlinux.org> 3.40-alt2
+- Do not build pmdk engine as it is not maintained.
+
 * Wed May 21 2025 Vitaly Chikunov <vt@altlinux.org> 3.40-alt1
 - Update to fio-3.40 (2025-05-20).
 
