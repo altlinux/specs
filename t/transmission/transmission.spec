@@ -8,7 +8,7 @@
 
 Name: transmission
 Version: 4.0.6
-Release: alt4
+Release: alt5
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -31,6 +31,7 @@ Source: http://download.m0k.org/%name/files/%name-%version.tar
 Patch2: %name-alt-extra-doc-disable.patch
 Patch3: %name-alt-fix-trsnslations-qt.patch
 Patch4: %name-miniupnp228.patch
+Patch5: %name-alt-fix-FTBFS-cmake4.0.patch
 Source1: %dname.init
 Source2: %dname.logrotate
 Source3: %dname.service
@@ -248,6 +249,9 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Sat May 31 2025 Mikhail Tergoev <fidel@altlinux.org> 4.0.6-alt5
+- fixed FTBFS with cmake4
+
 * Sun Nov 17 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.0.6-alt4
 - fixed build for Elbrus
 
