@@ -1,7 +1,7 @@
 %define game_name Warcraft2
 Name: wargus
 Version: 3.3.2
-Release: alt1
+Release: alt2
 Summary: %game_name mod for the Stratagus engine
 License: GPLv2
 Group: Games/Strategy
@@ -32,6 +32,7 @@ Contains data files.
 
 %prep
 %setup -n %name-%version
+sed -i 's/^cmake_minimum_required(VERSION [.0-9]*)/cmake_minimum_required(VERSION 3.5)/' StormLib/CMakeLists.txt
 
 %build
 %cmake
@@ -63,6 +64,9 @@ done
 %_man6dir/*.6.*
 
 %changelog
+* Sat May 31 2025 Ildar Mulyukov <ildar@altlinux.ru> 3.3.2-alt2
+- small workaround for building with newer CMake
+
 * Fri Feb 02 2024 Ildar Mulyukov <ildar@altlinux.ru> 3.3.2-alt1
 - new version
 
