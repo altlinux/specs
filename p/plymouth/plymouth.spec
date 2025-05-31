@@ -11,7 +11,7 @@
 
 Name: plymouth
 Version: 24.004.60
-Release: alt5.20240608
+Release: alt6.20250516.1
 Epoch: 1
 
 Summary: Graphical Boot Animation and Logger
@@ -481,6 +481,9 @@ fi \
 %files system-theme
 
 %changelog
+* Thu May 22 2025 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt6.20250516.1
+- new snapshot
+
 * Sun Jun 09 2024 Anton Midyukov <antohami@altlinux.org> 1:24.004.60-alt5.20240608
 - new snapshot
 
