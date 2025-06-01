@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: nix
-Version: 2.24.10
-Release: alt3
+Version: 2.29.0
+Release: alt1
 
 Summary: Nix software deployment system
 License: LGPLv2+
@@ -14,14 +16,17 @@ Source1: %name.conf
 
 Source2: sysusers.conf
 
-Source3: tmpfiles.conf
+Patch: nix-2.29.0-alt-remove-unused-sh-files.patch
 
-BuildRequires: autoconf-archive
-BuildRequires: automake
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-systemd
+BuildRequires: meson
+BuildRequires: cmake
 BuildRequires: bison
 BuildRequires: bzlib-devel
 BuildRequires: boost-program_options-devel
 BuildRequires: boost-context-devel
+BuildRequires: boost-coroutine-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libeditline-devel
 BuildRequires: flex
@@ -43,13 +48,16 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: libgit2-devel
 BuildRequires: libgc-devel
 BuildRequires: libtoml11-devel
-
-Requires: %name-doc = %EVR
-
-# Need for doc
+BuildRequires: libblake3-devel
+BuildRequires: graphviz
+BuildRequires: rsync
+BuildRequires: curl
 BuildRequires: /proc
 BuildRequires: lowdown
 BuildRequires: mdbook-linkcheck
+BuildRequires: doxygen
+
+Requires: %name-doc = %EVR
 
 ExclusiveArch: x86_64
 
@@ -87,29 +95,23 @@ The %name-doc package contains documentation files for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
-%autoreconf
-
 # Test disabled because rapidcheck is not builded
 # pkgconfig.prov: ERROR: %_usrsrc/tmp/librapidcheck-devel-buildroot/usr/lib64/pkgconfig/rapidcheck.pc: invalid pkg-config output: rapidcheck =
-%configure --localstatedir=/nix/var --docdir=%_docdir/%name-doc-%version --disable-tests --disable-unit-tests --enable-gc
-%make_build
+# Perl bindings build requires to libnix
+%meson -Dnix:profile-dir=%_sysconfdir/profile.d -Dbindings=false -Ddoc-gen=true -Dunit-tests=false
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
-# Delete unused files
-rm -r %buildroot%_sysconfdir/init
-rm -r %buildroot%_sysconfdir/profile.d/nix.sh
-rm -r %buildroot%_sysconfdir/profile.d/nix.fish
-
-mkdir -p %buildroot%_sysusersdir/
 mkdir -p %buildroot%_sysconfdir/nix/
+mkdir -p %buildroot%_sysusersdir/
 
 install -m 0644 %SOURCE1 %buildroot%_sysconfdir/nix/nix.conf
 install -m 0644 %SOURCE2 %buildroot%_sysusersdir/%name-daemon.conf
-install -m 0644 %SOURCE3 %buildroot%_tmpfilesdir/%name-daemon.conf
 
 # fix permission of nix profile
 chmod 755 %buildroot%_sysconfdir/profile.d/nix-daemon.fish
@@ -117,18 +119,21 @@ chmod 755 %buildroot%_sysconfdir/profile.d/nix-daemon.sh
 
 patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 
+%pre
+%sysusers_create_package %name %SOURCE2
+
 %files
 %doc COPYING
 %doc README.md
 %_bindir/nix*
 %config(noreplace) %_sysconfdir/nix/nix.conf
+%_libexecdir/tmpfiles.d/nix-daemon.conf
+%_sysusersdir/nix-daemon.conf
 %_sysconfdir/profile.d/nix-daemon.fish
 %_sysconfdir/profile.d/nix-daemon.sh
 %_libexecdir/nix/build-remote
 %_unitdir/nix-daemon.service
 %_unitdir/nix-daemon.socket
-%_sysusersdir/nix-daemon.conf
-%_tmpfilesdir/nix-daemon.conf
 %_datadir/bash-completion/completions/nix
 %_datadir/fish/vendor_completions.d/nix.fish
 %_datadir/zsh/site-functions/_nix
@@ -136,16 +141,24 @@ patchelf --remove-rpath %buildroot%_bindir/nix %buildroot%_libdir/*.so
 
 %files devel
 %_includedir/nix/
+%_includedir/*.h
+%_includedir/*.hh
 %_pkgconfigdir/*.pc
 
 %files -n lib%name
 %_libdir/*.so
 
 %files doc
-%docdir %_docdir/%name-doc-%version
-%_docdir/%name-doc-%version
+%_docdir/nix/
+%_man1dir/nix*
+%_man5dir/nix*
+%_man8dir/nix*
 
 %changelog
+* Sun May 25 2025 Boris Yumankulov <boria138@altlinux.org> 2.29.0-alt1
+- new version 2.29.0
+- create users and group using %%sysusers_create_package macro
+
 * Wed Mar 12 2025 Boris Yumankulov <boria138@altlinux.org> 2.24.10-alt3
 - clean spec
 - build nix-doc package
