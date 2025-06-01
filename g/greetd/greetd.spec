@@ -3,11 +3,11 @@
 
 %define _pseudouser_user     _greeter
 %define _pseudouser_group    _greeter
-%define _pseudouser_home     %_var/empty
+%define _pseudouser_home     %_localstatedir/greeter
 
 Name: greetd
 Version: 0.10.3
-Release: alt1
+Release: alt2
 Summary: Generic greeter daemon
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -110,8 +110,11 @@ popd
 
 install -Dm644 greetd.service %buildroot%_unitdir/greetd.service
 
-echo 'u _greeter - "greetd greeter user" - /bin/bash' |
-	install -Dm644 /dev/stdin %buildroot/lib/sysusers.d/greetd.conf
+echo 'u _greeter - "greetd greeter user" %_pseudouser_home /bin/bash' |
+	install -Dm644 /dev/stdin %buildroot/%_sysusersdir/%name.conf
+
+echo 'd %_pseudouser_home 0750 _greeter _greeter' |
+	install -Dm644 /dev/stdin %buildroot/%_tmpfilesdir/%name.conf
 
 mkdir -p %buildroot%_sysconfdir/greetd/greeters
 
@@ -134,7 +137,8 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/agreety.toml 
 %dir %_sysconfdir/greetd
 %config(noreplace) %_sysconfdir/pam.d/greetd
 %_unitdir/greetd.service
-/lib/sysusers.d/greetd.conf
+%_sysusersdir/%name.conf
+%_tmpfilesdir/%name.conf
 %_man1dir/greetd-*.1*
 %_man5dir/greetd-*.5*
 %_man7dir/greetd-*.7*
@@ -148,7 +152,13 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/agreety.toml 
 %files fakegreet
 %_bindir/fakegreet
 
+%triggerin -- %name < 0.10.3-alt2
+/usr/sbin/usermod -d %_pseudouser_home %_pseudouser_user >/dev/null 2>&1 ||:
+
 %changelog
+* Sat May 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.10.3-alt2
+- change pseudouser home
+
 * Mon Mar 10 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.10.3-alt1
 - NMU:
   + new version 0.10.3
