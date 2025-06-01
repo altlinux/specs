@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.6.2
-Release: alt3
+Release: alt4
 
 Summary: Pythonic argument parser, that will make you smile
 
@@ -14,6 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch: docopt-fix-escape-warn.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -34,25 +35,26 @@ and instead can write only the help message--*the way you want it*.
 
 %prep
 %setup
-
-# remove upstream egg-info
-rm -rf *.egg-info
+%patch -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-#python3_check
+%tox_check
 
 %files
 %python3_sitelibdir/%oname.py
 %python3_sitelibdir/__pycache__/%oname.*
-%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/%oname-*.dist-info
 
 %changelog
+* Sun Jun 01 2025 L.A. Kostis <lakostis@altlinux.ru> 0.6.2-alt4
+- Fix invalid escape sequence warnings.
+
 * Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt3
 - build python3 module separately
 
