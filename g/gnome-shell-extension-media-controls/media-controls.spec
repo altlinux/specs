@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-media-controls
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: A mpris client for the Gnome shell
 
@@ -14,6 +14,8 @@ License: MIT
 Group:  Graphical desktop/GNOME
 Url: https://extensions.gnome.org/extension/4470/media-controls/
 VCS: https://github.com/sakithb/media-controls
+
+ExcludeArch: i586
 
 Source0: %nameU-%version.tar
 Source1: node_modules.tar 
@@ -54,5 +56,8 @@ cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Sun Jun 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.1.0-alt2
+- Fix FTBFS: exclude i586 arch due to idle time limit exceeded.
+
 * Thu Apr 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.1.0-alt1
 - Initial build for ALT Linux.

@@ -1,6 +1,6 @@
 Name: plasma-addon-krohnkite
 Version: 0.9.9.1
-Release: alt1
+Release: alt2
 
 Summary: A dynamic tiling extension for KWin 6 only
 License: MIT
@@ -12,7 +12,7 @@ Vcs: https://github.com/anametologin/krohnkite
 Source0: %name-%version.tar
 Source1: node_modules.tar
 
-BuildArch: noarch
+ExcludeArch: i586
 
 BuildRequires(Pre): rpm-macros-make
 BuildRequires: git npm node
@@ -43,5 +43,8 @@ cp -a -r pkg/* %buildroot%_datadir/kwin/scripts/krohnkite/
 %_datadir/kwin/scripts/krohnkite
 
 %changelog
+* Sun Jun 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.9.1-alt2
+- Fix FTBFS: exclude i586 arch due to idle time limit exceeded.
+
 * Mon May 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.9.9.1-alt1
 - Initial build for ALT Linux.
