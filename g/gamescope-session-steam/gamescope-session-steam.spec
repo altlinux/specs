@@ -5,7 +5,7 @@
 
 Name: gamescope-session-steam
 Version: 0.0.4.git1a3fdb
-Release: alt1
+Release: alt2
 
 Summary: Steam Big Picture session based on gamescope
 
@@ -16,10 +16,8 @@ Url: https://github.com/ChimeraOS/gamescope-session-steam
 # Source-url: https://github.com/ChimeraOS/%name/archive/%commit.tar.gz?/%name-%commit.tar.gz
 Source: %name-%version.tar
 
-# drop unneded steamos functions
-Patch1: drop-steamos-functions.patch
-# fixed shebang
-Patch2: shebang.patch
+# drop unneded steamos functions and fix first launch
+Patch1: update-steam-fake-scripts.patch
 # took away extra permissions
 Patch3: update-policy.patch
 # added desktop and session return patch
@@ -56,15 +54,6 @@ Requires: yad
 # removing unneeded legacy file
 rm -rv usr/share/wayland-sessions/gamescope-session.desktop
 
-# removing the use of root for steamdeck mod
-pushd usr/bin/
-rm -v steamos-polkit-helpers/*
-mv -v jupiter-biosupdate steamos-polkit-helpers/
-mv -v steamos-select-branch steamos-polkit-helpers/
-mv -v steamos-update steamos-polkit-helpers/
-cp -v steamos-polkit-helpers/steamos-update steamos-polkit-helpers/jupiter-dock-updater
-popd
-
 %build
 %install
 # base files
@@ -85,6 +74,9 @@ fi
 %_bindir/steamos-cp-fake-polkit-bin
 %_bindir/steam-http-loader
 %_bindir/steamos-session-select
+%_bindir/steamos-select-branch
+%_bindir/steamos-update
+%_bindir/jupiter-biosupdate
 %dir %_datadir/%gss_p/sessions.d
 %_datadir/%gss_p/sessions.d/steam
 %_datadir/%gss_p/steamos-polkit-helpers
@@ -102,6 +94,9 @@ fi
 %_sysconfdir/sddm.conf.d/10-gamescope-session.conf
 
 %changelog
+* Mon Jun 02 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.4.git1a3fdb-alt2
+- fixed first launch
+
 * Tue May 27 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.4.git1a3fdb-alt1
 - updated to upstream git 1a3fdb
 
