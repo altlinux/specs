@@ -2,7 +2,7 @@
 
 Name: python3-module-sphinx-reredirects
 
-Version: 0.1.6
+Version: 1.0.0
 Release: alt1
 
 Summary: The extension for Sphinx documentation projects that handles redirects for moved pages
@@ -14,6 +14,7 @@ Vcs: https://github.com/documatt/sphinx-reredirects
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-flit-core
 
 BuildArch: noarch
 
@@ -34,11 +35,14 @@ to the new page location.
 %pyproject_install
 
 %files
-%doc LICENSE README.rst *.md
+%doc LICENSE *.md
 %python3_sitelibdir/%pypname/
 %python3_sitelibdir/%{pyproject_distinfo %pypname}
 
 %changelog
+* Sun Jun 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- 0.1.6 -> 1.0.0
+
 * Sun Mar 23 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.1.6-alt1
 - 0.1.5 -> 0.1.6
 
