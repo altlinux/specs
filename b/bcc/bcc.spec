@@ -19,7 +19,7 @@
 %endif
 
 Name:		bcc
-Version: 0.34.0
+Version: 0.35.0
 Release: alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
@@ -196,7 +196,6 @@ subst '/add_subdirectory(tests)/d' CMakeLists.txt
 subst '/add_subdirectory(examples)/d' CMakeLists.txt
 
 %remove_optflags -frecord-gcc-switches
-%add_optflags -fdebug-default-version=4
 export CC=clang
 export CXX=clang++
 %cmake \
@@ -309,6 +308,9 @@ rm -f /tmp/vm.* /tmp/initramfs-*.img
 %files checkinstall
 
 %changelog
+* Fri May 30 2025 Vitaly Chikunov <vt@altlinux.org> 0.35.0-alt1
+- Update to v0.35.0 (2025-05-29).
+
 * Sat Apr 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.34.0-alt1
 - Update to v0.34.0 (2025-04-11).
   + Support for kernel up to 6.13.
