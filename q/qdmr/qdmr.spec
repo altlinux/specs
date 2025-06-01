@@ -1,6 +1,6 @@
 
 Name: qdmr
-Version: 0.11.3
+Version: 0.12.1
 Release: alt1
 
 Summary: GUI application and command-line-tool to program DMR radios
@@ -8,6 +8,7 @@ License: GPLv3+
 Group: Engineering
 
 Url: https://dm3mat.darc.de/qdmr
+Vcs: https://github.com/hmatuschek/qdmr.git
 Source: %name-%version.tar
 
 BuildRequires: cmake
@@ -53,17 +54,16 @@ with libdmrconf. It is not required for QDMR users.
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DINSTALL_UDEV_RULES:BOOL=ON \
+  -DINSTALL_UDEV_PATH:STRING=%_udevrulesdir \
+  %nil
+
 %cmake_build
 
 %install
 %cmakeinstall_std
-if [ -d %buildroot/etc/udev/rules.d ]; then
-	# XXX: relocate udev rules to /lib/udev/rules.d
-	mkdir -p %buildroot/%_udevrulesdir
-	find %buildroot/etc/udev/rules.d -type f -print0 | \
-	xargs -0 -r mv -f --target-directory=%buildroot/%_udevrulesdir
-fi
 
 %files
 %doc README.md
@@ -82,6 +82,9 @@ fi
 %prefix/include/libdmrconf/*.h
 
 %changelog
+* Fri Feb 07 2025 Ivan A. Melnikov <iv@altlinux.org> 0.12.1-alt1
+- v0.12.1 (ALT#52751).
+
 * Wed Aug 16 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.11.3-alt1
 - v0.11.3, amongst other things
   + Fixed crash on missing access rights for TyT devices
