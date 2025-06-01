@@ -4,7 +4,7 @@
 %def_without check
 
 Name: protonplus
-Version: 0.4.30
+Version: 0.4.31
 Release: alt1
 
 Summary: Simple and powerful manager for Wine, Proton, DXVK and VKD3D
@@ -65,6 +65,9 @@ ln -s %xdg_name %buildroot%_bindir/%name
 %_iconsdir/hicolor/*/apps/%xdg_name.png
 
 %changelog
+* Sat May 31 2025 Boris Yumankulov <boria138@altlinux.org> 0.4.31-alt1
+- new version 0.4.31
+
 * Fri May 23 2025 Boris Yumankulov <boria138@altlinux.org> 0.4.30-alt1
 - new version 0.4.30
 
