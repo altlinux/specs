@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiohttp
 %define mod_name %pypi_name
-%def_with vendored_llhttp
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.11.18
+Version: 3.12.4
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -15,16 +14,13 @@ Url: https://pypi.org/project/aiohttp/
 Vcs: https://github.com/aio-libs/aiohttp
 
 Source0: %name-%version.tar
-%if_with vendored_llhttp
-Source1: modules.tar
-Source2: vendor_nodejs.tar
-%endif
-Source3: %pyproject_deps_config_name
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 BuildRequires: python3-module-cython
+BuildRequires: libllhttp-devel
 %if_with check
 # not packaged yet
 %add_pyproject_deps_check_filter python-on-whales
@@ -32,12 +28,6 @@ BuildRequires: python3-module-cython
 %add_pyproject_deps_check_filter wait-for-it
 %pyproject_builddeps_metadata_extra speedups
 %pyproject_builddeps_check
-%endif
-
-%if_with vendored_llhttp
-BuildRequires: /usr/bin/npx
-BuildRequires: /usr/bin/clang
-BuildRequires: /usr/bin/make
 %endif
 
 %package tests
@@ -53,7 +43,7 @@ http client/server for asyncio (PEP-3156).
 This package contains tests for aiohttp
 
 %prep
-%setup %{?_with_vendored_llhttp:-a1 -a2}
+%setup
 %autopatch -p1
 %python3_fix_shebang .
 %pyproject_deps_resync_build
@@ -64,11 +54,9 @@ cat requirements/base.in >> requirements/test.in
 %endif
 
 %build
-%if_with vendored_llhttp
-cd vendor/llhttp/
-make
-cd -
-%endif
+# link with system libllhttp
+export AIOHTTP_USE_SYSTEM_DEPS=1
+rm -r vendor/llhttp/
 make cythonize-nodeps
 %pyproject_build
 
@@ -99,6 +87,9 @@ make cythonize-nodeps
 %python3_sitelibdir/%mod_name/*/*test*
 
 %changelog
+* Thu May 29 2025 Stanislav Levin <slev@altlinux.org> 3.12.4-alt1
+- 3.11.18 -> 3.12.4.
+
 * Mon May 12 2025 Stanislav Levin <slev@altlinux.org> 3.11.18-alt1
 - 3.11.13 -> 3.11.18.
 
