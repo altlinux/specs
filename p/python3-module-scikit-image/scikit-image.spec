@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Version: 0.25.2
-Release: alt1
+Release: alt2
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
 Group: Development/Python3
@@ -47,6 +47,7 @@ BuildRequires: python3-module-lazy_loader
 BuildRequires: python3-module-numpydoc
 BuildRequires: python3-module-networkx
 BuildRequires: python3-module-pytest-localserver
+BuildRequires: python3-module-fsspec
 %endif
 
 # for docs
@@ -181,6 +182,9 @@ popd
 %endif
 
 %changelog
+* Sun Jun 01 2025 Anton Vyatkin <toni@altlinux.org> 0.25.2-alt2
+- Fixed FTBFS.
+
 * Wed Feb 19 2025 Anton Vyatkin <toni@altlinux.org> 0.25.2-alt1
 - New version 0.25.2.
 
