@@ -11,8 +11,8 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.15.0
-Release: alt2
+Version: 1.16.0
+Release: alt1
 Summary: Optional static typing for Python
 License: MIT
 Group: Development/Python3
@@ -132,6 +132,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Fri May 30 2025 Stanislav Levin <slev@altlinux.org> 1.16.0-alt1
+- 1.15.0 -> 1.16.0.
+
 * Thu May 15 2025 Stanislav Levin <slev@altlinux.org> 1.15.0-alt2
 - fixed FTBFS (typing_extensions 4.13).
 
