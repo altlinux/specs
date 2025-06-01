@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.3
+Version: 7.4
 Release: alt1
 Summary: Zope testrunner script
 License: ZPL-2.1
@@ -66,6 +66,9 @@ cp -al %buildroot%_bindir/zope-testrunner{,3}
 %exclude %python3_sitelibdir/%ns_name/%mod_name/tests/
 
 %changelog
+* Fri May 30 2025 Stanislav Levin <slev@altlinux.org> 7.4-alt1
+- 7.3 -> 7.4.
+
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 7.3-alt1
 - 7.2 -> 7.3.
 
