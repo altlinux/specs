@@ -1,7 +1,7 @@
 %define node_module configurable-http-proxy
 
 Name: node-configurable-http-proxy
-Version: 4.6.3
+Version: 5.0.1
 Release: alt1
 
 Summary: Node-http-proxy plus a REST API
@@ -43,5 +43,8 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/docs/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Sun Jun 01 2025 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Thu Feb 27 2025 Anton Vyatkin <toni@altlinux.org> 4.6.3-alt1
 - Initial build for Sisyphus.
