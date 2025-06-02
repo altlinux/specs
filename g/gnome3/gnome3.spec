@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GNOME 3 Desktop installers
 License: GPL-3.0-or-later
@@ -84,7 +84,7 @@ Requires: gnome-session-classic
 Requires: pipewire wireplumber
 Requires: gnome-control-center >= %ver_major
 #Requires: power-profiles-daemon
-Requires: xorg-drv-libinput
+#Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
 Requires: gnome-shell-extensions-system-monitor
@@ -478,6 +478,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1.1
+- minimal: removed xorg-drv-libinput
+
 * Mon May 05 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - minimal: removed gnome-session-xsession for wayland-only gdm
 
