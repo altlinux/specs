@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.2.0
-Release: alt2
+Release: alt3
 Summary: Manage devpi-server, Python packaging and testing
 License: MIT
 Group: Development/Python3
@@ -57,6 +57,8 @@ It allows to upload, test and install packages from devpi indexes.
 ln -sf -t testing/ \
     %python3_sitelibdir/test_devpi_server/{functional,reqmock,simpypi}.py
 
+# https://github.com/Pylons/pyramid/issues/3731
+export PYTHONWARNINGS='ignore:pkg_resources is deprecated as an API.:UserWarning:pyramid.path'
 %pyproject_run_pytest -ra
 
 %files
@@ -66,6 +68,9 @@ ln -sf -t testing/ \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 7.2.0-alt3
+- Fixed FTBFS (setuptools 80.9.0).
+
 * Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 7.2.0-alt2
 - fixed FTBFS (setuptools 75.8.1).
 

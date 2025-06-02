@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 8.3.5
-Release: alt2
+Release: alt3
 Summary: Python test framework
 License: MIT
 Group: Development/Python3
@@ -83,6 +83,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 8.3.5-alt3
+- Fixed FTBFS (setuptools 80.9.0).
+
 * Mon May 12 2025 Stanislav Levin <slev@altlinux.org> 8.3.5-alt2
 - fixed FTBFS (attrs 25.2).
 

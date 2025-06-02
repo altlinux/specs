@@ -4,7 +4,7 @@
 
 Name: python3-module-paste
 Version: 3.10.1
-Release: alt1.1
+Release: alt2
 
 Summary: Tools for using a Web Server Gateway Interface stack
 
@@ -14,7 +14,8 @@ Url: https://pypi.org/project/Paste
 Vcs: https://github.com/pasteorg/paste
 
 Source: %name-%version.tar
-
+# https://github.com/pasteorg/paste/issues/107
+Patch0: paste-3.10.1-tests-ignore-pkg_resources-warning.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -41,6 +42,7 @@ middleware based on those interfaces.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -58,6 +60,9 @@ touch %buildroot%python3_sitelibdir/paste/__init__.py
 %python3_sitelibdir/%{pyproject_distinfo paste}/
 
 %changelog
+* Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 3.10.1-alt2
+- Fixed FTBFS (setuptools 80.9.0).
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.10.1-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
