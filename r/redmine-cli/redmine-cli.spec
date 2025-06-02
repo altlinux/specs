@@ -2,7 +2,7 @@
 %define import_path github.com/MrJeffLarry/redmine-cli
 
 Name: redmine-cli
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: A software program that allows you to interact with the Redmine
@@ -35,8 +35,6 @@ comfort of your terminal or command prompt.
 %autopatch -p1
 
 %build
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 
 cp %SOURCE3 .
 chmod +x commit.sh
@@ -50,8 +48,6 @@ HASH=$(./commit.sh)
 
 %install
 export BUILDDIR="$PWD"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 
 %golang_install
 
@@ -59,8 +55,12 @@ export GOPATH="$BUILDDIR:%go_path"
 %make test
 
 %files
+%doc LICENSE
 %_bindir/red-cli
 
 %changelog
+* Fri May 23 2025 Ivan Hanas <xeno@altlinux.org> 0.1.7-alt1
+- New version.
+
 * Sun May 18 2025 Ivan Khanas <xeno@altlinux.org> 0.1.6-alt1
 - First Build for Alt Linux Sisyphus.
