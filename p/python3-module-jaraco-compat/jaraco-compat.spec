@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.2
-Release: alt1.1
+Version: 4.3.1
+Release: alt1
 Summary: Modules providing forward compatibility across Python versions
 License: MIT
 Group: Development/Python3
@@ -52,6 +52,9 @@ borrowed before they are available in the standard library.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 4.3.1-alt1
+- 4.2.2 -> 4.3.1.
+
 * Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 4.2.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
