@@ -24,7 +24,7 @@ BuildRequires: libtinfo-devel
 
 Name:           diskscan
 Version:        0.20
-Release:        alt1_3.11
+Release:        alt1_3.11.1
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
@@ -52,6 +52,8 @@ the disk vendor decision making logic.
 %prep
 %setup -q
 
+subst "s|VERSION 3.0.2|VERSION 3.5|" CMakeLists.txt
+
 %build
 %{suse_cmake}
 %{suse_make_jobs}
@@ -66,6 +68,9 @@ the disk vendor decision making logic.
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Mon Jun 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.20-alt1_3.11.1
+- NMU: fixed FTBFS
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.20-alt1_3.11
 - update by suseimport
 
