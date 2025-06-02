@@ -3,11 +3,11 @@
 %define _stripped_files_terminate_build 1
 
 Name:    universal-ctags
-Version: 6.1.0
-Release: alt1.20250105.0
+Version: 6.2.0
+Release: alt1
 Epoch:   1
 
-Summary: Universal Ctags generates an index of language objects found in source
+Summary: Generates an index of language objects found in sources
 License: GPL-2.0-only
 Group:   Development/Other
 Url:     https://ctags.io/
@@ -54,14 +54,13 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %install
 %makeinstall
 
-%define _customdocdir %_docdir/%name
-
 %check
 ./ctags --version
 ./ctags --list-features
 %make_build check
 
 %files
+%define _customdocdir %_docdir/%name
 %doc COPYING README.md docs/*.rst docs/*.svg docs/news/*.rst
 %_bindir/ctags
 %_bindir/readtags
@@ -73,6 +72,9 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %_man7dir/ctags-*.7*
 
 %changelog
+* Sun Jun 01 2025 Vitaly Chikunov <vt@altlinux.org> 1:6.2.0-alt1
+- Update to v6.2.0 (2025-06-01).
+
 * Wed Jan 08 2025 Vitaly Chikunov <vt@altlinux.org> 1:6.1.0-alt1.20250105.0
 - Update to p6.1.20250105.0 (2025-01-03).
 
