@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.3
-Release: alt22
+Release: alt23
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -74,6 +74,7 @@ Requires: libuuid
 Requires: libwayland-client
 Requires: libwayland-cursor
 Requires: libwayland-egl
+Requires: libwxGTK3.0-gl
 Requires: libX11
 Requires: libXau
 Requires: libxcb
@@ -120,6 +121,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Mon Jun 02 2025 Andrey Cherepanov <cas@altlinux.org> 8.3-alt23
+- requires libwxGTK3.0-gl (ALT #54585)
+
 * Thu Jan 16 2025 Sergey V Turchin <zerg@altlinux.org> 8.3-alt22
 - remove proptietary requires because distros incompatiblity (closes: 52065)
 
