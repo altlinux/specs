@@ -1,6 +1,6 @@
 Name:           gfsview
 Version:        20121130
-Release:        alt1
+Release:        alt2
 
 Summary:        Graphical viewer for Gerris simulation files
 
@@ -10,8 +10,9 @@ URL:            http://gfs.sourceforge.net
 
 Source:         %name-%version.tar
 Patch:          use_system_gl2ps.patch
+Patch1:         remove_osmesa_related_code.patch
 
-BuildRequires: gerris libOSMesa-devel libGLU-devel libgl2ps-devel
+BuildRequires: gerris libGLU-devel libgl2ps-devel
 BuildRequires: libgtkglext-devel libstartup-notification-devel
 BuildRequires: libftgl-devel
 
@@ -21,6 +22,7 @@ BuildRequires: libftgl-devel
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 rm -rv gl2ps
 
 # Comment "undefined symbol: gl2psLineWidth"
@@ -61,5 +63,8 @@ find %buildroot%_libdir -type f -name "*.la" -delete -print
 %_datadir/mime/packages/%name.xml
 
 %changelog
+* Mon Jun 02 2025 Grigory Ustinov <grenka@altlinux.org> 20121130-alt2
+- Build without libosmesa.
+
 * Sat Apr 06 2024 Grigory Ustinov <grenka@altlinux.org> 20121130-alt1
 - Initial build for Sisyphus.
