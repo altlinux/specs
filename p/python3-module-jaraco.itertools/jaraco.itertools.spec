@@ -7,8 +7,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.4.2
-Release: alt1.1
+Version: 6.4.3
+Release: alt1
 Summary: Tools to supplement packaging Python releases
 License: MIT
 Group: Development/Python3
@@ -22,6 +22,8 @@ Source1: %pyproject_deps_config_name
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
+# coherent.licensed resolves license text by its name on internet
+%add_pyproject_deps_build_filter coherent.licensed
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
@@ -53,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 6.4.3-alt1
+- 6.4.2 -> 6.4.3.
+
 * Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 6.4.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
