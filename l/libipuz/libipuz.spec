@@ -15,7 +15,7 @@
 %def_enable sandboxed
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library for parsing and writing .ipuz puzzle files
@@ -140,6 +140,9 @@ popd}
 
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- updated to 0.5.2-2-g03293f2
+
 * Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - first build for Sisyphus (0.5.1-11-g1ee3f0f)
 
