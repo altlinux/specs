@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Python port of FIGlet
@@ -48,6 +48,9 @@ py.test3
 %doc README*
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Wed Dec 13 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - first build for Sisyphus
 
