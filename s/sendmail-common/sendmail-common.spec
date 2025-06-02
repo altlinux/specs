@@ -1,6 +1,6 @@
 Name: sendmail-common
 Version: 1.7
-Release: alt3
+Release: alt4
 
 Summary: Common files for sendmail-compatible MTAs
 License: GPL
@@ -26,11 +26,8 @@ mkdir -p %buildroot
 cp -av install/* %buildroot/
 mkdir -p %buildroot{%_bindir,%_sbindir,/usr/lib}
 
-for f in %_bindir/mailq %_bindir/newaliases /usr/lib/sendmail; do
+for f in %_bindir/mailq %_bindir/newaliases %_sbindir/mailq %_sbindir/newaliases /usr/lib/sendmail; do
 	ln -s ../sbin/sendmail "%buildroot$f"
-done
-for f in mailq newaliases; do
-	ln -s sendmail "%buildroot%_sbindir/$f"
 done
 
 %files
@@ -41,6 +38,9 @@ done
 %_datadir/%name
 
 %changelog
+* Wed May 28 2025 Anton Midyukov <antohami@altlinux.org> 1.7-alt4
+- NMU: fix symlinks for compatibility with bin-sbin-merge.
+
 * Fri Nov 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7-alt3
 - Packaged %_sbindir/{mailq,newaliases} symlinks to eliminate unwanted
   dependencies on ssmtp-common.
