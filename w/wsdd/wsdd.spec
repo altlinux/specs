@@ -1,5 +1,5 @@
 Name:    wsdd
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: A Web Service Discovery host daemon
@@ -58,6 +58,9 @@ getent passwd _%name > /dev/null || \
 %_man8dir/wsdd.8*
 
 %changelog
+* Mon Jun 02 2025 Andrey Cherepanov <cas@altlinux.org> 0.9-alt1
+- New version.
+
 * Sun Mar 31 2024 Andrey Cherepanov <cas@altlinux.org> 0.8-alt1
 - New version.
 
