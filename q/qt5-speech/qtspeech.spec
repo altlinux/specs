@@ -3,7 +3,7 @@
 
 Name: qt5-speech
 Version: 5.15.16
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtSpeech component
@@ -18,7 +18,8 @@ Source: %qt_module-everywhere-src-%version.tar
 BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-multimedia-devel
 BuildRequires: pkg-config glib2-devel
-BuildRequires: libspeechd-devel flite-devel libalsa-devel
+BuildRequires: libspeechd-devel libalsa-devel
+# BuildRequires: flite-devel
 
 %description
 Qt Speech support.
@@ -106,6 +107,9 @@ ln -s %_includedir src/plugins/tts/flite/flite
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Jun 02 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt2
+- build without flite
+
 * Thu Dec 12 2024 Sergey V Turchin <zerg@altlinux.org> 5.15.16-alt1
 - new version
 
