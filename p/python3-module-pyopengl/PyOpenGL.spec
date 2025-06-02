@@ -12,7 +12,7 @@
 
 Name: python3-module-pyopengl
 Version: 3.1.9
-Release: alt2.1
+Release: alt2.2
 
 Summary: Metapackage including python modules for OpenGL library
 
@@ -36,7 +36,6 @@ BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pygame
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-xlib
-BuildRequires: libOSMesa-devel
 BuildRequires: libfreeglut-devel
 BuildRequires: xvfb-run
 BuildRequires: /proc
@@ -124,6 +123,9 @@ xvfb-run -a -s "-screen 0 1024x768x24 -ac +extension GLX +render -noreset" py.te
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_accelerate}/
 
 %changelog
+* Mon Jun 02 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.9-alt2.2
+- Fixed FTBFS.
+
 * Mon May 05 2025 Stanislav Levin <slev@altlinux.org> 3.1.9-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1).
 
