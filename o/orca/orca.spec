@@ -9,7 +9,7 @@
 
 Name: orca
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -35,7 +35,7 @@ Requires: typelib(Gtk) = 3.0 typelib(Gtk) = 4.0 typelib(Atspi) = 2.0
 Requires: yelp
 Requires: at-spi2-core
 # don't speak russian
-Requires: speech-dispatcher-module-flite flite
+#Requires: speech-dispatcher-module-flite flite
 # speak russian
 Requires: espeak-ng
 Requires: python3-module-speechd
@@ -92,6 +92,9 @@ Jaws For Windows компании Freedom Scientific.
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1.1
+- removed flite runtime dependency
+
 * Fri May 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
 - updated to 48.1-4-ga5f5586ba
 
