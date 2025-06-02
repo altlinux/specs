@@ -4,7 +4,7 @@ Name: kernel-image-rk3588
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.30
+%define kernel_sublevel	.31
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -347,9 +347,8 @@ fi
 %modules_dir/modules.dep
 %modules_dir/modules.devname
 %modules_dir/modules.order
-%modules_dir/modules.softdep
+%modules_dir/modules.*dep
 %modules_dir/modules.symbols
-%ghost %modules_dir/modules.weakdep
 %ghost %modules_dir/modules.*.bin
 %defattr(0600,root,root,0700)
 %modules_dir/updates
@@ -367,6 +366,15 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat May 31 2025 Alexei Takaseev <taf@altlinux.org> 6.12.31-alt1
+- v6.12.31 (2025-05-29).
+- config: enable more led-trigger configs config-aarch64: enable config
+  of mchp23 spi sram.
+- spec: Fix packaging modules.weakdep appeared after kmod update.
+- config: Enable CONFIG_INIT_STACK_ALL_ZERO=y
+- Update DTS for Rockchip from Armbian
+- Update 0002-Armbian_rockchip64-6.12.patch
+
 * Fri May 23 2025 Alexei Takaseev <taf@altlinux.org> 6.12.30-alt1
 - v6.12.30 (2025-05-22).
 
