@@ -14,7 +14,7 @@
 
 Name: ncnn
 Version: 20250503
-Release: alt1
+Release: alt2
 
 Summary: Mobile neural network inference framework
 
@@ -25,6 +25,7 @@ Vcs: https://github.com/Tencent/ncnn.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Source1: vendor.tar
+Patch: ncnn-20250503-upstream-fix-conv-crash-6038.patch
 
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Tue Oct 31 2023
@@ -82,6 +83,7 @@ The package provides python3 module for %name.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %if_without glslang
 rmdir glslang
@@ -151,6 +153,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Mon Jun 02 2025 Leontiy Volodin <lvol@altlinux.org> 20250503-alt2
+- Fixed ncnn2table crash (ALT #54190).
+
 * Mon May 05 2025 Leontiy Volodin <lvol@altlinux.org> 20250503-alt1
 - New version 20250503.
 
