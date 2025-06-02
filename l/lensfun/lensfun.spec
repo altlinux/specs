@@ -22,20 +22,21 @@
 
 Name: %_name
 Version: %ver_major.4
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Tools and library to rectifying the defects introduced by your photographic equipment.
 Group: System/Libraries
-License: LGPLv3 and CC-BY-SA-3.0
+License: LGPL-2.1-or-later and CC-BY-SA-3.0
 Url: https://lensfun.github.io
 
 Vcs: https://github.com/lensfun/lensfun.git
+
 Source: %_name-%version.tar
 
 Patch1: lensfun-0.3.2-alt-pkexec.patch
 
-%filter_from_provides /pkgconfig(lensfun)/d
-%filter_from_provides /python3(lensfun)/d
+#%%filter_from_provides /pkgconfig(lensfun)/d
+#%%filter_from_provides /python3(lensfun)/d
 
 Requires: %_name-tools = %EVR
 
@@ -160,6 +161,10 @@ popd
 %_datadir/%name/version_%api_ver/
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt2
+- updated to v0.3.4-1-gebfbe426
+- restored provides
+
 * Thu Jul 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
 - 0.3.4
 
