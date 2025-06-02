@@ -19,13 +19,15 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
 License: GPL-2.0 and LGPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-desktop.git
 
 %if_disabled snapshot
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
@@ -159,7 +161,7 @@ the functionality of the Gnome 3 desktop library.
 %check
 %__meson_test
 
-%files
+#%files
 
 %files -n lib%name -f %_name.lang
 %{?_enable_legacy_library:%_libdir/lib%_name-3.so.*}
@@ -219,6 +221,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 44.3-alt1
+- 44.3
+
 * Wed Aug 21 2024 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
 - 44.1
 

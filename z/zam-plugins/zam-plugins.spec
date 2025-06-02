@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 Name: zam-plugins
-Version: 4.3
+Version: 4.4
 Release: alt1
 
 Summary: A collection of JACK/LADSPA/LV2/VST*/CLAP audio plugins
@@ -112,6 +112,9 @@ export HAVE_ZITA_CONVOLVER=true
 %doc README.md NOTICE.*
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 4.4-alt1
+- 4.4
+
 * Sun May 12 2024 Yuri N. Sedunov <aris@altlinux.org> 4.3-alt1
 - 4.3
 
