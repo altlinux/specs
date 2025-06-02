@@ -99,8 +99,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
-Release: alt3
+Version: %ver_major.6
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -2605,6 +2605,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri May 30 2025 Alexey Shabalin <shaba@altlinux.org> 1:257.6-alt1
+- 257.6 (Fixes: CVE-2025-4598).
+
 * Wed Apr 30 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:257.5-alt3
 - Add a new boot-efi-checkinstall subpackage to check that systemd-boot EFI
   binary is signed properly.
