@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,20 @@ done
 %_destdir
 
 %changelog
+* Mon Jun 02 2025 Valentin Sokolov <sova@altlinux.org> 0.5.0-alt1
+- Added a group of settings for Gnome
+- Added a group of settings for Apperance Gnome
+- Added a group of settings for Enviroment Gnome
+- Added a group of settings for PowerManagement Gnome
+- Added a group of settings for Multitasking Gnome
+- Added a group of settings for Accessibility Gnome
+- Added a group of settings for LockScreen Gnome
+- Added a group of settings for Vision Gnome
+- Added pam_canonicalize_user control policy
+- Improved description of decryption policy
+- Improved local administrator name policy
+- Improved screensaver mode policy (closes: 44055)
+
 * Thu Mar 06 2025 Valentin Sokolov <sova@altlinux.org> 0.4.0-alt1
 - Initial group policies for LAPS
 - Added enable LAPS applier policy
