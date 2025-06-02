@@ -5,8 +5,8 @@
 %define mod_name develop
 
 Name: python3-module-%pypi_nname
-Version: 8.17.5
-Release: alt1.1
+Version: 8.17.6
+Release: alt1
 Summary: Development utilities
 License: MIT
 Group: Development/Python3
@@ -46,6 +46,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 8.17.6-alt1
+- 8.17.5 -> 8.17.6.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 8.17.5-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
