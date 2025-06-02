@@ -1,23 +1,22 @@
 %define optflags_lto %nil
 
-%define git_ver 17723
-%define git_commit b266e3d4bf0e7b067efab0db6cba2ef31bd37974
+%define git_ver 17986
+%define git_commit 68d25733443297c892b956fff8cd3e7c38c3744e
 
-%define glslang_version 13.1.1
+%define glslang_version 15.3.0
 %define asmjit_commit 416f7356967c1f66784dc1580fe157f9406d8bff
-%define hidapi_commit 6bfdcf7368169efe1b745cd4468d45cda05ef8de
+%define hidapi_commit f42423643ec9011c98cccc0bb790722bbbd3f30b
 %define yaml_cpp_commit 456c68f452da09d8ca84b375faa2b1397713eaba
-%define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
-%define soundtouch_commit 394e1f58b23dc80599214d2e9b6a5e0dfd0bbe07
-%define miniupnp_version miniupnpd_2_3_6
+%define soundtouch_commit 3982730833b6daefe77dcfb32b5c282851640c17
+%define miniupnp_version miniupnpd_2_3_9
 %define rtmidi_version 6.0.0
 %define zstd_version 1.5.7
-%define openal_version 1.24.1
+%define openal_version 1.24.3
 %define fusion_version 1.2.8
-%define vulkan_memory_allocator_commit 37064843398c69cc0ca7f8cf5b33128c03a2bd74
+%define vulkan_memory_allocator_version 3.3.0
 
 Name: rpcs3
-Version: 0.0.36
+Version: 0.0.37
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -39,44 +38,48 @@ Source2: asmjit-%asmjit_commit.tar
 Source3: hidapi-%hidapi_commit.tar
 # https://github.com/RPCS3/yaml-cpp/archive/%yaml_cpp_commit/yaml-cpp-%yaml_cpp_commit.tar.gz
 Source4: yaml-cpp-%yaml_cpp_commit.tar
-# https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
-Source5: cubeb-%cubeb_commit.tar
 # https://github.com/RPCS3/soundtouch/archive/%soundtouch_commit/soundtouch-%soundtouch_commit.tar.gz
-Source6: soundtouch-%soundtouch_commit.tar
+Source5: soundtouch-%soundtouch_commit.tar
 # https://github.com/miniupnp/miniupnp/archive/%miniupnp_version/miniupnp-%miniupnp_version.tar.gz
-Source7: miniupnp-%miniupnp_version.tar
+Source6: miniupnp-%miniupnp_version.tar
 # https://github.com/thestk/rtmidi/archive/refs/tags/%rtmidi_version/rtmidi-%rtmidi_version.tar.gz
-Source8: rtmidi-%rtmidi_version.tar
+Source7: rtmidi-%rtmidi_version.tar
 # https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
-Source9: zstd-%zstd_version.tar
+Source8: zstd-%zstd_version.tar
 # https://github.com/kcat/openal-soft/archive/%openal_version/openal-soft-%openal_version.tar.gz
-Source10: openal-soft-%openal_version.tar
+Source9: openal-soft-%openal_version.tar
 # https://github.com/xioTechnologies/Fusion/archive/v%fusion_version/Fusion-%fusion_version.tar.gz
-Source11: Fusion-%fusion_version.tar
-# https://github.com/Megamouse/VulkanMemoryAllocator/archive/%vulkan_memory_allocator_commit/VulkanMemoryAllocator-vulkan_memory_allocator_commit.tar.gz
-Source12: VulkanMemoryAllocator-%vulkan_memory_allocator_commit.tar
+Source10: Fusion-%fusion_version.tar
+# https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/v%vulkan_memory_allocator_version/VulkanMemoryAllocator-%vulkan_memory_allocator_version.tar.gz
+Source11: VulkanMemoryAllocator-%vulkan_memory_allocator_version.tar
 
 BuildRequires: /proc
 BuildRequires: clang
-BuildRequires: doxygen
+BuildRequires: clang-tools
 BuildRequires: glslang
 BuildRequires: glslc
-BuildRequires: graphviz
 BuildRequires: libGLEW-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libSDL3-devel
 BuildRequires: libalsa-devel
 BuildRequires: libavformat-devel
+BuildRequires: libcubeb-devel
 BuildRequires: libcurl-devel
+BuildRequires: libe2fs
 BuildRequires: libedit-devel
 BuildRequires: libevdev-devel
 BuildRequires: libfaudio-devel
 BuildRequires: libffi-devel
 BuildRequires: libflatbuffers-devel
+BuildRequires: libfreeglut
+BuildRequires: libglade
+BuildRequires: libgraphviz
+BuildRequires: libgtkglext
 BuildRequires: libopenal-devel
 BuildRequires: libopencv-devel
 BuildRequires: libpng-devel
 BuildRequires: libpugixml-devel
+BuildRequires: libqt6-labsqmlmodels
 BuildRequires: libstb-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
@@ -99,20 +102,19 @@ BuildRequires: qt6-svg-devel
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 %__mv -Tf ../asmjit-%asmjit_commit 3rdparty/asmjit/asmjit
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
-%__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 %__mv -Tf ../miniupnp-%miniupnp_version 3rdparty/miniupnp/miniupnp
 %__mv -Tf ../rtmidi-%rtmidi_version 3rdparty/rtmidi/rtmidi
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../openal-soft-%openal_version 3rdparty/OpenAL/openal-soft
 %__mv -Tf ../Fusion-%fusion_version 3rdparty/fusion/fusion
-%__mv -Tf ../VulkanMemoryAllocator-%vulkan_memory_allocator_commit 3rdparty/GPUOpen/VulkanMemoryAllocator
+%__mv -Tf ../VulkanMemoryAllocator-%vulkan_memory_allocator_version 3rdparty/GPUOpen/VulkanMemoryAllocator
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -143,12 +145,12 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 	-DUSE_NATIVE_INSTRUCTIONS:BOOL=FALSE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBPNG:BOOL=TRUE \
-	-DUSE_SYSTEM_CURL:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBUSB:BOOL=TRUE \
 	-DUSE_SYSTEM_FLATBUFFERS:BOOL=TRUE \
 	-DUSE_SYSTEM_PUGIXML:BOOL=TRUE \
 	-DUSE_SYSTEM_WOLFSSL:BOOL=TRUE \
 	-DUSE_SYSTEM_FAUDIO:BOOL=TRUE \
+	-DUSE_SYSTEM_CUBEB:BOOL=TRUE \
 	-DLLVM_DIR:PATH=$(llvm-config --cmakedir) \
 	-GNinja \
 	-Wno-dev
@@ -170,6 +172,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Mon Jun 02 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.37-alt1
+- Version 0.0.37
+
 * Mon Mar 31 2025 Nazarov Denis <nenderus@altlinux.org> 0.0.36-alt1
 - Version 0.0.36
 
