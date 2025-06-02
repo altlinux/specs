@@ -2,7 +2,7 @@
 %define app_id org.altlinux.Tour
 
 Name: alt-tour
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: ALT Tour and Greeter
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: vala
 BuildRequires: blueprint-compiler
+BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(json-glib-1.0)
 
@@ -39,11 +40,18 @@ A guided tour and greeter for Alt with GNOME DE.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%app_id.desktop
+%_datadir/metainfo/%app_id.metainfo.xml
 %_sysconfdir/xdg/autostart/%app_id.desktop
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %doc README.md
 
 %changelog
+* Mon Jun 02 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.7-alt1
+- added metadata
+- updated app icon
+- changed system style preview icons
+- updated translations
+
 * Mon Apr 07 2025 Alexander Davydzik <paladindev@altlinux.org> 1.1.6-alt1
 - fixed autostart
 
