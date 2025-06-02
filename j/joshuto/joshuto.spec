@@ -1,6 +1,6 @@
 Name:    joshuto
-Version: 0.9.8
-Release: alt3.1f045515.1
+Version: 0.9.9
+Release: alt1
 
 Summary: ranger-like terminal file manager written in Rust
 License: LGPL-3.0
@@ -16,6 +16,8 @@ Patch1: joshuto-0.9.8-alt-loongarch64_nix_vendor_fix.patch
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
 BuildRequires: cargo-vendor-checksum
+
+ExcludeArch: %ix86
 
 %description
 %summary
@@ -52,6 +54,9 @@ cargo-vendor-checksum \
 %_bindir/*
 
 %changelog
+* Mon Jun 02 2025 Mikhail Gordeev <obirvalger@altlinux.org> 0.9.9-alt1
+- new version 0.9.9
+
 * Wed Sep 18 2024 Mikhail Gordeev <obirvalger@altlinux.org> 0.9.8-alt3.1f045515.1
 - Fix rebuild
 
