@@ -1,13 +1,15 @@
 %define pypi_name gphoto2
 
 Name: python3-module-%pypi_name
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 
 Summary: Python bindings to GPhoto libraries
 Group: Development/Python3
 License: GPL-3.0
 Url: https://pypi.python.org/pypi/%pypi_name
+
+Vcs: https://github.com/jim-easterbrook/python-gphoto2.git
 
 Source: https://pypi.io/packages/source/g/%pypi_name/%pypi_name-%version.tar.gz
 
@@ -38,6 +40,9 @@ functions, but sometimes in a rather un-Pythonic manner.
 
 
 %changelog
+* Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Thu Oct 17 2024 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
 - 2.5.1
 
