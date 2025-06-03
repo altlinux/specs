@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alteratorctl
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -9,7 +9,8 @@ License: GPL-2.0+
 Group: System/Configuration/Other
 URL: https://gitlab.basealt.space/alt/alteratorctl
 
-BuildRequires: cmake rpm-macros-cmake cmake-modules gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel
+BuildRequires(Pre): rpm-macros-cmake
+BuildRequires: cmake cmake-modules gcc glib2-devel libdbus-glib-devel libgio-devel libpcre2-devel
 BuildRequires: libffi-devel zlib-devel libmount-devel libblkid-devel libselinux-devel libtomlc99-devel libgumbo-devel
 BuildRequires: libpolkit-devel
 
@@ -40,12 +41,17 @@ A command line tool for using alterator DBus objects.
 
 %install
 %cmakeinstall_std
+ln -s %_bindir/%name %buildroot%_bindir/actl
 
 %files
 %_bindir/%name
+%_bindir/actl
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 
 %changelog
+* Sat May 31 2025 Pavel Khromov <hromovpi@altlinux.org> 0.1.9-alt1
+- Fixing build requires and creating symbolic link named actl
+
 * Fri Apr 18 2025 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.8-alt1
 - fix: fixed package list during install
 
