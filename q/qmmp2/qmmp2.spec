@@ -8,7 +8,7 @@
 
 %define rname qmmp
 Name: qmmp%major
-Version: 2.2.4
+Version: 2.2.6
 Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
@@ -17,6 +17,9 @@ Group: Sound
 Summary: Qmmp - Qt-based multimedia player
 Url: http://qmmp.ylsoftware.com/
 License: GPL-2.0
+
+Provides: qmmp1 = %version-%release
+Obsoletes: qmmp1 < %version-%release
 
 Source: %rname-%version.tar
 Patch2: alt-def-plugins.patch
@@ -249,6 +252,10 @@ ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/
 %_libdir/lib*.so
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 1:2.2.6-alt1
+- new version
+- obsolete qmmp1
+
 * Tue Apr 22 2025 Sergey V Turchin <zerg@altlinux.org> 1:2.2.4-alt1
 - new version
 
