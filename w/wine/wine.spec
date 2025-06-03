@@ -106,11 +106,8 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %endif
 
 # see https://bugzilla.altlinux.org/54434
-%if_feature osmesa 24.04
-    %def_with osmesa
-%else
-    %def_without osmesa
-%endif
+# libOSMesa-devel is removed in https://packages.altlinux.org/ru/tasks/385592/
+%def_without osmesa
 
 %if_feature pcap 1.10.3
     %def_with pcap
@@ -144,7 +141,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -937,6 +934,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Jun 01 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt4
+- disable build with libOSMesa-devel (no longer supported)
+
 * Tue May 27 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt3
 - don't build with old broken OSMesa (see altbug 54434)
 
