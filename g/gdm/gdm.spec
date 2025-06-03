@@ -27,7 +27,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt3%beta
+Release: alt4%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0-or-later
@@ -298,7 +298,7 @@ dbus-run-session %__meson_test
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
 %dir %_datadir/%name/greeter/autostart
-%exclude %_datadir/gdm/greeter/autostart/orca-autostart.desktop
+%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %files help -f %name-help.lang
 
@@ -319,6 +319,10 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Tue Jun 03 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt4
+- updated to 48.0-31-gf7d3c31b7
+- packaged orca-autostart.desktop again (ALT #53729)
+
 * Mon May 26 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt3
 - 48.0-20-gea33c5d9b
 - made x11 support optional (enabled by default)
