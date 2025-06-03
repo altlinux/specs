@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2025.2
-Release: alt1
+Release: alt1.2
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -126,7 +126,7 @@ export PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d. -f1-2)
 %ifarch %e2k
     CONFIG+=noPch CONFIG+=warn_off \
 %endif
-    QMAKE_LFLAGS+=-Wl,-rpath-link=%name-%version/bin \
+    QMAKE_LFLAGS+=-Wl,-rpath-link=%_builddir/%name-%version/bin \
     QMAKE_LFLAGS+=-Wl,--disable-new-dtags \
     QMAKE_LFLAGS+=-Wl,-rpath=%_libdir/%name \
     CONFIG+=no_rpath \
@@ -216,6 +216,9 @@ find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.12.so.*
 %endif
 
 %changelog
+* Mon Jun 02 2025 Maria Alexeeva <alxvmr@altlinux.org> 2025.2-alt1.2
+- NMU: Fixed build for loongarch64
+
 * Mon May 15 2025 Valentin Sokolov <sova@altlinux.org> 2025.2-alt1
 - Update to 2025.2
 
