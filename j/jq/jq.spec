@@ -4,8 +4,8 @@
 
 Name: jq
 %define lname lib%name
-Version: 1.7.1
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Summary: Command-line JSON processor
 Group: Development/Other
 Source: %name-%version.tar
@@ -91,6 +91,9 @@ cat ./test-suite.log
 %endif
 
 %changelog
+* Tue Jun 03 2025 Anton Farygin <rider@altlinux.com> 1.8.0-alt1
+- 1.7.1 -> 1.8.0 (Fixes: CVE-2024-23337, CVE-2024-53427, CVE-2025-48060)
+
 * Sun Apr 28 2024 Anton Farygin <rider@altlinux.ru> 1.7.1-alt2
 - removed ruby-tools from BuildRequires (fix FTBFS)
 
