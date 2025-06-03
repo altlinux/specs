@@ -3,7 +3,7 @@
 %define soname 14
 
 Name: eclib
-Version: 20250122
+Version: 20250530
 Release: alt1
 
 Summary: Tools for create the elliptic curve database
@@ -15,6 +15,9 @@ Vcs: git://github.com/JohnCremona/eclib.git
 
 Source: https://github.com/JohnCremona/eclib/releases/download/%version/%name-%version.tar.bz2
 Patch1: ax_boost_base-loongarch64.patch
+
+# fail tests (check_qcurves)
+ExcludeArch: i586
 
 BuildRequires: boost-program_options-devel
 BuildRequires: libflint2-devel
@@ -107,6 +110,10 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/mwrank.1*
 
 %changelog
+* Tue Jun 03 2025 Leontiy Volodin <lvol@altlinux.org> 20250530-alt1
+- New version 20250530.
+- Excluded build on i586.
+
 * Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 20250122-alt1
 - New version 20250122.
 - Added vcs tag.
