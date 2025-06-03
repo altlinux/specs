@@ -1,12 +1,12 @@
 %def_disable check
 
 Name: kernel-image-rocknix
-Release: alt2
+Release: alt1
 epoch:1
-%define kernel_need_version	6.8
+%define kernel_need_version	6.15
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	6.8
-%define kernel_sublevel .12
+%define kernel_base_version	6.15
+%define kernel_sublevel .0
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -188,8 +188,6 @@ echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
 subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
-
-sed -Ei 's/-j\d*//' scripts/Makefile.btf
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -426,6 +424,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue May 27 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.15.0-alt1
+- 6.15
+
+* Mon Apr 07 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:6.12.22-alt1
+- 6.12.22
+
 * Wed Nov 06 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.8.12-alt2
 - add chassis type in DTS of Anbernic and Powkiddy (closes: #51967)
 
@@ -437,5 +441,3 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 
 * Wed May 22 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:6.8.10-alt1
 - 6.8.10
-
-
