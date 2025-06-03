@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: List processing tools and functional utilities
 License: BSD-3-Clause
@@ -36,6 +36,8 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 %install
 %pyproject_install
 
+rm -rv %buildroot/%python3_sitelibdir/%oname/tests
+
 %check
 # https://github.com/pytoolz/toolz/issues/564
 %tox_check_pyproject -- -k'not test_shakespeare'
@@ -47,6 +49,9 @@ sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1.2
+- Removed tests from the package.
+
 * Fri Feb 07 2025 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
