@@ -3,7 +3,7 @@
 
 Name: phosphor-dbus-interfaces
 Version: 1.0.0
-Release: alt1
+Release: alt2.git5774060
 
 Summary: YAML descriptors of standard dbus interfaces
 
@@ -76,8 +76,10 @@ YAML descriptors of standard dbus interfaces.
 
 %files data
 %_datadir/phosphor-dbus-yaml
-%_datadir/redfish-registry
 
 %changelog
+* Tue Jun 03 2025 Anton Meleshnikov <alton@altlinux.org> 1.0.0-alt2.git5774060
+- Rollback to git5774060.
+
 * Thu Apr 24 2025 Anton Meleshnikov <alton@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus.
