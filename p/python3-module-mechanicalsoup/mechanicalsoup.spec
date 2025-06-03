@@ -1,15 +1,20 @@
-Name: python3-module-mechanicalsoup
-Version: 1.2.0
-Release: alt2.1
+%define _unpackaged_files_terminate_build 1
+
+%define pypi_name mechanicalsoup
+%define mod_name %pypi_name
 
 %def_with check
 
+Name: python3-module-%pypi_name
+Version: 1.4.0
+Release: alt1
 Summary: A Python library for automating website interaction
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/MechanicalSoup/
+Vcs: https://github.com/MechanicalSoup/MechanicalSoup
 BuildArch: noarch
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -40,10 +45,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -oaddopts=-Wignore
 
 %files
-%python3_sitelibdir/mechanicalsoup
-%python3_sitelibdir/%{pyproject_distinfo mechanicalsoup}/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 03 2025 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.2.0 -> 1.4.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
