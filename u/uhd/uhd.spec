@@ -21,12 +21,11 @@
 %endif
 
 Name: uhd
-Url: https://github.com/EttusResearch/uhd
-Version: 4.7.0.0
+Version: 4.8.0.0
 Release: alt1
+Summary: Universal Hardware Driver for Ettus Research products
 License: GPL-3.0-or-later
 Group: Engineering
-Summary: Universal Hardware Driver for Ettus Research products
 
 Source: %name-%version.tar
 Source1: %name-limits.conf
@@ -38,8 +37,7 @@ Source2: images.tar
 # Tests fail on i586, armh
 ExcludeArch: %ix86 %arm
 
-Patch: uhd-4.3.0.0-python3-fix.patch
-Patch1: disable-uhd_image_downloader_test.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: ctest cmake
@@ -109,7 +107,7 @@ Summary: Python 3 API for %name
 Requires: lib%name = %EVR
 
 %description -n python3-module-%name
-Python 3 API for %name
+Python 3 API for %name.
 
 %package -n python3-module-usrp_mpm
 Group: Development/Python3
@@ -124,7 +122,7 @@ Requires: lib%name = %EVR
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/usrp_mpm/
 
 %description -n python3-module-usrp_mpm
-Python 3 module for usrp (part %name)
+Python 3 module for usrp (part %name).
 
 %prep
 %setup
@@ -248,6 +246,9 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Wed May 21 2025 Anton Midyukov <antohami@altlinux.org> 4.8.0.0-alt1
+- New version 4.8.0.0.
+
 * Sun Aug 11 2024 Anton Midyukov <antohami@altlinux.org> 4.7.0.0-alt1
 - New version 4.7.0.0.
 

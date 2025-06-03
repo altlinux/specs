@@ -7,12 +7,13 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.10.11.0
-Release: alt4
+Version: 3.10.12.0
+Release: alt1
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
 Group: Engineering
-Url: http://www.gnuradio.org
+URL: https://www.gnuradio.org
+VCS: https://github.com/gnuradio/gnuradio.git
 
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
@@ -189,6 +190,9 @@ done
 %endif #docs
 %_datadir/metainfo/org.gnuradio.grc.metainfo.xml
 %_man1dir/*.1.*
+%_datadir/bash-completion/completions/gr_modtool
+%_datadir/zsh/site-functions/_gr_modtool
+%_datadir/fish/vendor_completions.d/gr_modtool.fish
 
 %files libs
 %_libdir/*.so.*
@@ -207,6 +211,9 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 3.10.12.0-alt1
+- New version 3.10.12.0.
+
 * Sun May 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.10.11.0-alt4
 - split gnuradio libraries onto own subpackage
 

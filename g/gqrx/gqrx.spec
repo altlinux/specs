@@ -1,5 +1,5 @@
 Name: gqrx
-Version: 2.17.6
+Version: 2.17.7
 Release: alt1
 
 Summary: Software defined radio receiver powered by GNU Radio and Qt.
@@ -73,6 +73,9 @@ appstream-util validate-relax --nonet \
 %doc COPYING LICENSE-CTK README.md
 
 %changelog
+* Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 2.17.7-alt1
+- New version 2.17.7.
+
 * Tue May 20 2025 Anton Midyukov <antohami@altlinux.org> 2.17.6-alt1
 - New version 2.17.6.
 - Add VCS tag.
