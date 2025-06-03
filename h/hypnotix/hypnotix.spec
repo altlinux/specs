@@ -1,5 +1,5 @@
 Name: hypnotix
-Version: 4.3
+Version: 4.9
 Release: alt1
 Summary: An M3U IPTV Player
 License: GPL-2.0-or-later
@@ -31,7 +31,7 @@ Hypnotix is an IPTV streaming application with support for live TV, movies and s
 %setup
 %autopatch -p2
 
-sed -i -e s/__DEB_VERSION__/"3.6"/g ./usr/lib/hypnotix/hypnotix.py
+sed -i -e s/__DEB_VERSION__/"4.9"/g ./usr/lib/hypnotix/hypnotix.py
 
 %build
 %make_build
@@ -53,6 +53,10 @@ cp -r usr %buildroot
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Jun 1 2025 Artyom Bystrov <arbars@altlinux.org> 4.9-alt1
+- New version
+- Fixed version in "About" window (ALTBUG #54442)
+
 * Mon Jan 22 2024 Artyom Bystrov <arbars@altlinux.org> 4.3-alt1
 - New version
 
