@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -12,6 +12,7 @@ Vcs: https://github.com/istio/istio.git
 Source0: %url/archive/%version/%name-%version.tar.gz
 # go mod vendor
 Source1: vendor.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-golang /proc fdupes
 
@@ -40,6 +41,7 @@ Zsh command line completion support for %name.
 
 %prep
 %setup -a1
+%autopatch -p1
 sed '/buildVersion/s|"unknown"|"%version"|' \
    -i pkg/version/version.go
 
@@ -84,6 +86,9 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jun 03 2025 Leontiy Volodin <lvol@altlinux.org> 1.26.1-alt1
+- New version 1.26.1.
+
 * Wed May 28 2025 Leontiy Volodin <lvol@altlinux.org> 1.26.0-alt1
 - New version 1.26.0.
 
