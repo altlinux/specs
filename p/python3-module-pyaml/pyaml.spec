@@ -1,19 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pyaml
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 25.1.0
-Release: alt1.1
+Version: 25.5.0
+Release: alt1
 
 Summary: PyYAML-based module to produce pretty and readable YAML-serialized data
 License: WTFPL
 Group: Development/Python3
-URL: https://pypi.org/project/pyaml
+Url: https://pypi.org/project/pyaml
 VCS: https://github.com/mk-fg/pretty-yaml
 BuildArch: noarch
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -24,9 +25,6 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(yaml)
 
 BuildRequires: python3(unidecode)
-
-BuildRequires: python3(tox)
-BuildRequires: python3-module-pytest
 %endif
 
 %description
@@ -42,17 +40,19 @@ PyYAML-based module to produce pretty and readable YAML-serialized data.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_unittest -v
 
 %files
 %doc COPYING README.rst
 %_bindir/pyaml
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version.dist-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*/tests
 
 %changelog
+* Tue Jun 03 2025 Stanislav Levin <slev@altlinux.org> 25.5.0-alt1
+- 25.1.0 -> 25.5.0.
+
 * Thu Feb 06 2025 Stanislav Levin <slev@altlinux.org> 25.1.0-alt1.1
 - NMU: fixed FTBFS (tox 4).
 
