@@ -9,7 +9,7 @@
 
 Name: wxGTK3.0
 Version: %wxbranch.5.1
-Release: alt6.20250310.1
+Release: alt7.20250310.1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -242,6 +242,9 @@ wxGTK example programs.
 %setup
 %autopatch -p1
 
+# workaround for problem with configure after autoconf 2.72 build
+sed -i 's|@EGREP@|%_bindir/grep -E|' wx-config.in
+
 # patch some installed files to avoid conflicts with 2.8.*
 #sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
 sed -i -e 's|wxstd.mo|wxstd30.mo|' Makefile.in
@@ -453,6 +456,9 @@ ln -s ../..%_libexecdir/%name/wx-config %buildroot%_bindir/wx-config
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt7.20250310.1
+- fix the consequences of the build with autoconf 2.72
+
 * Mon May 19 2025 Anton Midyukov <antohami@altlinux.org> 3.0.5.1-alt6.20250310.1
 - new snapshot
 - fix build with autoconf 2.72
