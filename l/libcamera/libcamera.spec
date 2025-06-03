@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.5.0
-Release: alt1.1
+Version: 0.5.1
+Release: alt1
 Epoch: 1
 
 Summary: A complex camera support library for Linux
@@ -149,6 +149,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Jun 03 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.1-alt1
+- 0.5.1
+
 * Fri Apr 11 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.5.0-alt1.1
 - libpisp-devel required to build for aarch64
 
