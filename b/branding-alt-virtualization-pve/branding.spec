@@ -20,13 +20,13 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.6
+Release: alt0.7
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
 
 BuildRequires(pre): rpm-macros-branding
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
 BuildRequires: ImageMagick fontconfig bc fribidi
 
@@ -290,6 +290,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Jun 02 2025 Sergey Konev <darisishe@altlinux.org> 11.0-alt0.7
+- Updated slides for PVE
+- Better installer styling
+- Fixed EN product feedback link
+
 * Fri May 23 2025 Alexander Stepchenko <geochip@altlinux.org> 11.0-alt0.6
 - remove Obsoletes branding-alt-server-v
 
