@@ -1,6 +1,6 @@
 Name: radicle
-Version: 1.1
-Release: alt2
+Version: 1.2
+Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
 License: MIT Apache-2.0
@@ -43,7 +43,7 @@ tar xf %SOURCE1
 %endif
 
 %install
-export GIT_HEAD=3b5fac17
+export GIT_HEAD=6f25d73d
 export CARGO_HOME=${PWD}/cargo
 for p in cli node remote-helper; do
 cargo install %_smp_mflags --offline --no-track --path radicle-$p --root=%buildroot%_prefix
@@ -76,6 +76,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Tue Jun 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2-alt1
+- 1.2 released
+
 * Thu Feb 13 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1-alt2
 - v1.1-32-g3b5fac17
 
