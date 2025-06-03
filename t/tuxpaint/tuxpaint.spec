@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.34
+Version: 0.9.35
 Release: alt1
 
 Summary: A drawing program for young children
@@ -20,7 +20,7 @@ Patch2: tuxpaint-pango-cflags.patch
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_gfx-devel
 BuildRequires: libSDL2_ttf-devel libSDL2_pango-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
-BuildRequires: libimagequant-devel
+BuildRequires: libimagequant-devel libxml2-devel
 BuildPreReq: gperf
 
 %description
@@ -60,7 +60,7 @@ Development shared library for %name
 %patch0 -p2
 # we can do it not only on e2k
 %patch1 -p2
-%patch2 -p1
+%patch2 -p2
 
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
 subst "s|< \$(PLUGIN_LIBS)|< \$(PLUGIN_LIBS) \$(SDL_LIBS) \$(PNG)|g" Makefile
@@ -124,6 +124,9 @@ rm -fv %buildroot%_datadir/doc/%name-%version/*/tp_magic_example.so
 %_man1dir/tp-magic-config*
 
 %changelog
+* Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.9.35-alt1
+- Build new version.
+
 * Sun Oct 27 2024 Grigory Ustinov <grenka@altlinux.org> 0.9.34-alt1
 - Build new version.
 
