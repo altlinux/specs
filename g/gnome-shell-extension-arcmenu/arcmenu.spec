@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-arcmenu
-Version: 65
-Release: alt5
+Version: 66
+Release: alt1
 Summary: Application menu for GNOME Shell
 License: GPL-2.0-or-later
 Group:  Graphical desktop/GNOME
@@ -47,6 +47,9 @@ install -Dm644 %SOURCE1 \
 %doc README.md
 
 %changelog
+* Sun Jun 01 2025 Anton Midyukov <antohami@altlinux.org> 66-alt1
+- New version 66.
+
 * Sun Apr 20 2025 Anton Midyukov <antohami@altlinux.org> 65-alt5
 - Hide category menu item if it contains no apps
 - Fix bug where apps assigned to multiple categories only appeared
