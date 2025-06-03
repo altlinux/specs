@@ -1,7 +1,7 @@
 %define repo dlib
 
 Name: dlib
-Version: 19.24.8
+Version: 20.0.0
 Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
@@ -10,8 +10,7 @@ Url: http://dlib.net
 Vcs: https://github.com/davisking/dlib.git
 
 Source: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.gz
-# Built from VCS.
-# git merge -s ours tag --allow-unrelated-histories
+Patch: %name-%version-%release.patch
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libX11-devel libfftw3-devel libgif-devel libjpeg-devel libpng-devel libsqlite3-devel openmpi-devel python3-devel
@@ -48,17 +47,13 @@ This package provides python module for %name.
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 rm -rf dlib/external
 sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_package(pybind11 CONFIG)|' \
   tools/python/CMakeLists.txt
 # don't apply cmake options for cmake into python's setup.py
 sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | OFF |;' \
   dlib/cmake_utils/set_compiler_specific_options.cmake
-# fix version for 19.24.7
-%if "%version" == "19.24.7"
-sed -i '/CPACK_PACKAGE_VERSION_PATCH/s|99|7|' \
-  dlib/CMakeLists.txt
-%endif
 
 %build
 %cmake \
@@ -97,6 +92,9 @@ sed -i '/CPACK_PACKAGE_VERSION_PATCH/s|99|7|' \
 %endif
 
 %changelog
+* Tue Jun 03 2025 Leontiy Volodin <lvol@altlinux.org> 20.0.0-alt1
+- New version 20.0.0.
+
 * Tue Mar 04 2025 Leontiy Volodin <lvol@altlinux.org> 19.24.8-alt1
 - New version 19.24.8.
 
