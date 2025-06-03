@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.3.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -171,6 +171,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt2
+- don't show distro variant because using pretty name
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 
