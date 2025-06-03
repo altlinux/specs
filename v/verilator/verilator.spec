@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 5.018
+Version: 5.036
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
 Group: Engineering
 License: LGPLv3 or Artistic-2.0
-Url: https://www.veripool.org/wiki/verilator
+URL: https://www.veripool.org/verilator/
+VCS: https://github.com/verilator/verilator
 
 # VCS: https://github.com/verilator/verilator
 Source: %name-%version.tar
@@ -19,6 +20,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: perl-podlators tex(dehypht.tex) help2man
 BuildRequires: python3-module-sphinx_rtd_theme
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-distro
 BuildRequires: gdb /proc
 
 %description
@@ -39,6 +41,8 @@ simulators. This package contains documentation and examples.
 
 %prep
 %setup
+%patch0 -p1
+
 %ifarch %e2k
 sed -i "s/__armel__/__e2k__/" include/verilatedos.h
 %endif
@@ -70,6 +74,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Tue Jun 03 2025 Andrey Kovalev <ded@altlinux.org> 5.036-alt1
+- new version 5.036
+
 * Fri Nov 24 2023 Egor Ignatov <egori@altlinux.org> 5.018-alt1
 - new version 5.018
 
