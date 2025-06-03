@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libmceliece
-Version: 20241009
+Version: 20250507
 Release: alt1
 Summary: Classic McEliece microlibrary
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
@@ -55,13 +55,13 @@ Requires: %name = %EVR
 %description devel
 %summary.
 
-%package checkinstall
-Summary: CI tests for %name
+%package tests
+Summary: Tests for %name
 Group: Development/Other
-Requires(pre): %name-devel = %EVR
-Requires(pre): valgrind
+Requires: %name-devel = %EVR
+Requires: valgrind
 
-%description checkinstall
+%description tests
 %summary.
 
 %prep
@@ -92,20 +92,6 @@ rm %buildroot%_libexecdir/*.a
 mkdir -p %buildroot%_datadir
 mv %buildroot/%_prefix/man %buildroot%_datadir
 
-%pre checkinstall
-set -exo pipefail
-%ifarch %valgrind_arches
-# "A compiled version of libmceliece that does not pass the full test suite is
-#  not supported."
-# "One run of mceliece-fulltest was observed to take 752 core-minutes on a
-#  2.245GHz EPYC 7742 without Turbo Boost. This test finished in around 39
-#  minutes of real time; mceliece-fulltest includes some automatic
-#  parallelization."
-time mceliece-fulltest
-%else
-time mceliece-test
-%endif
-
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir PATH=%buildroot%_bindir:$PATH
 for i in %buildroot%_bindir/mceliece*[0-9]-keypair; do
@@ -125,21 +111,18 @@ sha256sum mceliece*.sessionkey*
 %_man1dir/mceliece[0-9]*.1*
 
 %files devel
-%_bindir/mceliece-*
 %_includedir/mceliece.h
 %_libdir/libmceliece.so
 %_man1dir/mceliece-*.1*
 %_man3dir/*.3*
 
-%ifarch x86_64 aarch64
-# aarch64: 41006.93user 151.47system 36:42.86elapsed 1868%CPU (0avgtext+0avgdata 58840maxresident)k
-# i586: hasher-privd: parent: work_limits_ok: time elapsed limit (2400 seconds) exceeded
-# ppc64le: hasher-privd: parent: work_limits_ok: time elapsed limit (2400 seconds) exceeded
-# x86_64: 39815.55user 599.86system 30:11.43elapsed 2231%CPU (0avgtext+0avgdata 61440maxresident)k
-%files checkinstall
-%endif
+%files tests
+%_bindir/mceliece-*
 
 %changelog
+* Tue Jun 03 2025 Vitaly Chikunov <vt@altlinux.org> 20250507-alt1
+- Update to 20250507.
+
 * Sat Nov 23 2024 Vitaly Chikunov <vt@altlinux.org> 20241009-alt1
 - Correct version to 20241009 (2024-10-09).
 - Previous release is incorrectly versioned as 20230612, in real it
