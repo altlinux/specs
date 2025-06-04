@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-set
-Version: 25.05.0
+Version: 25.06.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -100,7 +100,7 @@ Requires: plasma-disks
 %if_enabled qtwebengine
 Requires: khelpcenter
 %endif
-Requires: kolourpaint kio-audiocd kgpg
+Requires: kolourpaint kio-audiocd kgpg kleopatra
 Requires: kmenuedit plasma-thunderbolt
 Requires: kfind filelight kcharselect spectacle
 Requires: ktimer
@@ -281,6 +281,9 @@ Requires: kaddressbook
 %files -n kde-pim
 
 %changelog
+* Wed Jun 04 2025 Sergey V Turchin <zerg@altlinux.org> 25.06.0-alt1
+- require kleopatra
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.05.0-alt1
 - add requires dolphin-plugins to default kde for mountiso plugin
 
