@@ -16,7 +16,7 @@
 %global optflags_lto %nil
 
 Name: bluez
-Version: 5.82
+Version: 5.83
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -208,6 +208,7 @@ fi
 %_man5dir/*.5*
 %_man7dir/hci.7*
 %_man7dir/l2cap.7*
+%_man7dir/mgmt.7*
 %_man7dir/sco.7*
 
 %files cups
@@ -226,6 +227,9 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Wed Jun 04 2025 L.A. Kostis <lakostis@altlinux.ru> 5.83-alt1
+- 5.83.
+
 * Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 5.82-alt1
 - 5.82.
 - unit/test-vcp: disable for now (upstream issue #683).
