@@ -4,7 +4,7 @@
 %def_with ldap
 
 Name: audit
-Version: 4.0.4
+Version: 4.0.5
 Release: alt1
 
 Summary: User space tools for Linux kernel 2.6+ auditing
@@ -117,7 +117,7 @@ export PYTHON3=python3
 	--libexecdir=%prefix/libexec \
 	--with-aarch64 \
 	--with-arm \
-	--with-libcap-ng=auto \
+	--with-libcap-ng=yes \
 	--without-golang \
 	--enable-experimental \
 	--with-io_uring \
@@ -238,6 +238,9 @@ fi
 %endif
 
 %changelog
+* Wed Jun 04 2025 Egor Ignatov <egori@altlinux.org> 4.0.5-alt1
+- new version 4.0.5
+
 * Thu May 29 2025 Egor Ignatov <egori@altlinux.org> 4.0.4-alt1
 - new version 4.0.4
 
