@@ -2,8 +2,8 @@
 
 Name: drbd9
 Version: 9.2.14
-Release: alt0.1.git94dde60d
-%define githash 94dde60d07482b55021e596ed8501f95b0ed9032
+Release: alt1
+%define githash a1e7c10e591a844b327da120d169df7da7c933b7
 
 Summary: The Linux kernel code for DRBD9
 License: GPLv2
@@ -60,6 +60,9 @@ make -C drbd KDIR=/lib/modules/*-*-*/build -k
 %doc README.md COPYING
 
 %changelog
+* Tue Jun 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.14-alt1
+- 9.2.14
+
 * Wed May 07 2025 Andrew A. Vasilyev <andy@altlinux.org> 9.2.14-alt0.1.git94dde60d
 - update from upstream/master for 6.14 support
 

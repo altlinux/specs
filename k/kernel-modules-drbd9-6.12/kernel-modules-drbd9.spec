@@ -1,6 +1,6 @@
 %define module_name     drbd9
 %define module_version  9.2.14
-%define module_release  alt1
+%define module_release  alt2
 %define flavour         6.12
 %define karch x86_64 aarch64 ppc64le
 
