@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 20250130
+Version: 20250603
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -62,6 +62,13 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Tue Jun 03 2025 Vitaly Lipatov <lav@altlinux.ru> 20250603-alt1
+- update features' versions
+
+* Wed Feb 12 2025 Vitaly Lipatov <lav@altlinux.ru> 20250212-alt1
+- if_feature/if_notfeature: fix bug with 0 value as true
+- update glibc/gcc
+
 * Wed Jan 29 2025 Vitaly Lipatov <lav@altlinux.ru> 20250130-alt1
 - update features' versions
 - removed php 8.1
