@@ -1,17 +1,17 @@
 Name: flowblade
-Version: 2.10.0.2
-Release: alt3
+Version: 2.20
+Release: alt1
 
 Summary: non-linear video editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа
+
 License: GPL-3.0-or-later
 Group: Video
-
-Url: https://jliljebl.github.io/flowblade/
-
+URL: https://jliljebl.github.io/flowblade/
 VCS: https://github.com/jliljebl/flowblade/
+
 Source: %name-%version.tar
-Patch1: %name-trunk-%version-%release.patch
+Patch1: flowblade_sys_path.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -21,6 +21,8 @@ BuildRequires: libayatana-indicator3-devel librsvg-devel
 BuildRequires: python3-module-chardet
 
 %py3_requires mlt7
+Requires: frei0r-plugins
+Requires: ladspa-swh-plugins
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/Flowblade
 
@@ -39,13 +41,29 @@ To use Blender projects in Flowblade you should install Blender.
 
 %prep
 %setup -q
-%patch1 -p1
+%patch1 -p2
+
+# fix wrong-script-interpreter errors
+sed -i -e 's|#!/usr/bin/env python|#!/usr/bin/python3|g' Flowblade/launch/*
+sed -i -e 's|#!/usr/bin/env python|#!/usr/bin/python3|g' Flowblade/tools/clapperless.py
+
+# fix to %%{_datadir}/locale
+sed -i "s|respaths.LOCALE_PATH|'%{_datadir}/locale'|g" Flowblade/translations.py
+
+# flowblade is not a native Wayland application and needs to run using XWayland
+sed -i -e 's|env GDK_BACKEND=x11 flowblade %f|env GDK_BACKEND=x11 SDL_VIDEODRIVER=x11 flowblade %f|' installdata/io.github.jliljebl.Flowblade.desktop
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+
+# fix permissions
+chmod +x %buildroot%python3_sitelibdir/Flowblade/launch/*
+
+# setup of mime is already done, so for what we need this file ?
+rm -v %buildroot/usr/lib/mime/packages/flowblade
 
 %files
 %_bindir/%name
@@ -55,10 +73,12 @@ To use Blender projects in Flowblade you should install Blender.
 %_datadir/metainfo/io.github.jliljebl.Flowblade.appdata.xml
 %_datadir/applications/io.github.jliljebl.Flowblade.desktop
 %_datadir/icons/hicolor/128x128/apps/io.github.jliljebl.Flowblade.png
-%_datadir/mime/packages/flowblade
 %_datadir/mime/packages/io.github.jliljebl.Flowblade.xml
 
 %changelog
+* Wed Jun 04 2025 Grigory Ustinov <grenka@altlinux.org> 2.20-alt1
+- Automatically updated to 2.20 (Closes: #53831, #48163).
+
 * Mon Oct 07 2024 Grigory Ustinov <grenka@altlinux.org> 2.10.0.2-alt3
 - Fix regexes for python3.12.
 
