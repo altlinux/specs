@@ -1,33 +1,34 @@
 Name: qlipper
 Version: 5.1.2
-Release: alt2
+Release: alt3.20241029.1
 
 Summary: Lightweight clipboard history
-License: GPLv3+
+License: GPL-3.0-or-later
 Group: Graphical desktop/Other
 
-Url: https://github.com/pvanek/qlipper
+URL: https://github.com/pvanek/qlipper
+VCS: https://github.com/pvanek/qlipper.git
 
 Source0: %name-%version.tar
-Source1: qlipper_ru.ts
+#Source1: qlipper_ru.ts
 Source2: qlipper-startup.desktop
-Patch0: qlipper-5.1.1-cmake-ru.patch
-Patch1: qlipper-5.1.1-desktop-ru.patch
+Patch: %name-%version-%release.patch
+#Patch0: qlipper-5.1.1-cmake-ru.patch
+#Patch1: qlipper-5.1.1-desktop-ru.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc
+BuildRequires: cmake
 BuildRequires: desktop-file-utils
-BuildRequires: pkgconfig(Qt5Widgets)
-BuildRequires: qt5-tools-devel
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: qt6-tools-devel
 
 %description
 Lightweight clipboard history applet.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-cp -a %SOURCE1 ts
+%autopatch -p1
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -name '*.cpp' -o -name '*.h' |
@@ -35,12 +36,12 @@ find -type f -name '*.cpp' -o -name '*.h' |
 %endif
 
 %build
-%cmake -DCMAKE_BUILD_TYPE=release -DUSE_SYSTEM_QXT=OFF -DUSE_SYSTEM_QTSA=ON ..
+%cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
-desktop-file-validate %buildroot/%_desktopdir/%name.desktop
+%cmake_install
+desktop-file-validate %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot%_sysconfdir/xdg/autostart
 install -pm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
@@ -54,8 +55,14 @@ install -pm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/128x128/apps/qlipper.png
 %_sysconfdir/xdg/autostart/qlipper-startup.desktop
+%dir %_datadir/%name
+%dir %_datadir/%name/translations
 
 %changelog
+* Wed Jun 04 2025 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt3.20241029.1
+- new snapshot
+- build with qt6
+
 * Wed May 04 2022 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt2
 - autostart in LXQt only (Closes: 42674)
 - clean Packager
