@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 1
+%define autorelease 2
 
 Summary: Gamerzilla Integration Library
 Name: libgamerzilla
@@ -48,7 +48,8 @@ the user's Hubzilla server and passes on the awards.
 %setup -q
 
 %build
-%{fedora_v2_cmake}
+%{fedora_v2_cmake} \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 %fedora_v2_cmake_build
 
 %install
@@ -72,6 +73,9 @@ sed -i 's,^Version: $,Version: %version,' %buildroot%_pkgconfigdir/gamerzilla.pc
 %{_bindir}/gamerzillaserver
 
 %changelog
+* Wed Jun 04 2025 Leontiy Volodin <lvol@altlinux.org> 0.1.3-alt1_2
+- fix build with cmake 4
+
 * Thu Oct 12 2023 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt1_1
 - new version
 
