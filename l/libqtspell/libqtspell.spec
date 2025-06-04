@@ -1,10 +1,10 @@
-%def_disable qt4
-%define _qt4_translationdir %_datadir/qt4/translations
+%def_enable qt5
+%def_enable qt6
 
 %define oname qtspell
 Name: libqtspell
-Version: 0.8.5
-Release: alt3
+Version: 1.0.1
+Release: alt1
 
 Summary: Spell checking for Qt text widgets
 License: GPLv3+
@@ -15,17 +15,20 @@ Url: https://github.com/manisandro/qtspell
 Source: %oname-%version.tar
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# manually removed: i586-libxcb libfreetype-infinality libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libqt4-webkit-devel phonon-devel python3 python3-module-zope qt4-designer qt5-imageformats qt5-tools-devel ruby ruby-stdlibs
-# Automatically added by buildreq on Sat Aug 15 2015
-# optimized out: cmake cmake-modules fontconfig glib2-devel libEGL-devel libGL-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt5-core libqt5-gui libqt5-widgets libqt5-xml libstdc++-devel pkg-config python3-base qt5-base-devel qt5-tools
-BuildRequires: ccmake doxygen gcc-c++ graphviz libenchant-devel
-
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-%if_enabled qt4
-BuildRequires: libqt4-devel
-%endif
+BuildRequires: gcc-c++ libenchant-devel
+BuildRequires: doxygen graphviz
+
+%if_enabled qt5
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
+%endif
+
+%if_enabled qt6
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+%endif
 
 Requires: iso-codes
 
@@ -33,22 +36,6 @@ Requires: iso-codes
 QtSpell adds spell-checking functionality to Qt's text widgets, using the
 enchant spell-checking library.
 
-%package qt4
-Group: Text tools
-Summary: Spell checking for Qt4 text widgets
-
-%description qt4
-QtSpell adds spell-checking functionality to Qt4's text widgets, using the
-enchant spell-checking library.
-
-%package qt4-devel
-Group: Text tools
-Summary: Development files for %name-qt4
-Requires: %name-qt4 = %version-%release
-
-%description qt4-devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
 
 %package qt5
 Group: Text tools
@@ -77,6 +64,35 @@ Requires: qt5-translations
 %description qt5-translations
 The %name-qt5-translations contains translations for %name-qt5.
 
+
+%package qt6
+Group: Text tools
+Summary: Spell checking for Qt6 text widgets
+
+%description qt6
+QtSpell adds spell-checking functionality to Qt6's text widgets, using the
+enchant spell-checking library.
+
+%package qt6-devel
+Group: Text tools
+Summary: Development files for %name-qt6
+Requires: %name-qt6 = %EVR
+
+%description qt6-devel
+The %name-qt6-devel package contains libraries and header files for
+developing applications that use %name-qt6.
+
+%package qt6-translations
+Group: Text tools
+Summary: Translations for %name-qt6
+BuildArch: noarch
+Requires: %name-qt6 = %EVR
+Requires: qt6-translations
+
+%description qt6-translations
+The %name-qt6-translations contains translations for %name-qt6.
+
+
 %package doc
 Group: Text tools
 Summary: Developer documentation for %name
@@ -95,40 +111,34 @@ that use %name.
 %add_optflags -std=c++11
 %endif
 
-%if_enabled qt4
-%define _cmake__builddir build-qt4
-%cmake -DUSE_QT5=OFF
+%if_enabled qt5
+%define _cmake__builddir build-qt5
+%cmake -DQT_VER=5
 %cmake_build
 %cmake_build -t doc
 %endif
 
-%define _cmake__builddir build-qt5
-%cmake -DUSE_QT5=ON
+%if_enabled qt6
+%define _cmake__builddir build-qt6
+%cmake -DQT_VER=6
 %cmake_build
 %cmake_build -t doc
+%endif
 
 %install
-%if_enabled qt4
-# install qt4 build
-%define _cmake__builddir build-qt4
-%cmake_install
-%endif
-
+%if_enabled qt5
 # install qt5 build
 %define _cmake__builddir build-qt5
 %cmake_install
-
-%if_enabled qt4
-%files qt4
-%doc COPYING
-%_libdir/libqtspell-qt4.so.*
-%_qt4_translationdir/QtSpell_*.qm
-%files qt4-devel
-%_includedir/QtSpell-qt4/
-%_libdir/libqtspell-qt4.so
-%_pkgconfigdir/QtSpell-qt4.pc
 %endif
 
+%if_enabled qt6
+# install qt6 build
+%define _cmake__builddir build-qt6
+%cmake_install
+%endif
+
+%if_enabled qt5
 %files qt5
 %doc COPYING
 %_libdir/libqtspell-qt5.so.*
@@ -140,12 +150,35 @@ that use %name.
 
 %files qt5-translations
 %_qt5_translationdir/QtSpell_*.qm
+%endif
+
+%if_enabled qt6
+%files qt6
+%doc COPYING
+%_libdir/libqtspell-qt6.so.*
+
+%files qt6-devel
+%_includedir/QtSpell-qt6/
+%_libdir/libqtspell-qt6.so
+%_pkgconfigdir/QtSpell-qt6.pc
+
+%files qt6-translations
+%_qt6_translationdir/QtSpell_*.qm
+%endif
 
 %files doc
 %doc COPYING
+%if_enabled qt6
+%doc build-qt6/doc/html
+%else
 %doc build-qt5/doc/html
+%endif
 
 %changelog
+* Thu Jun 05 2025 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1
+- enable build Qt6 build
+
 * Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 0.8.5-alt3
 - build without Qt4
 

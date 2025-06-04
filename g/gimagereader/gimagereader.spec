@@ -1,8 +1,9 @@
-%def_without qt4
+%def_with qt5
+%def_with qt6
 
 Name: gimagereader
 Version: 3.4.2
-Release: alt2
+Release: alt3
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -41,12 +42,13 @@ BuildRequires: tesseract-devel >= 3.04.01
 BuildRequires: libgtksourceviewmm3-devel libpoppler-glib-devel
 BuildRequires: libgtkspellmm3-devel >= 3.0.5
 
-%if_with qt4
-BuildRequires: libqt4-devel libqtspell-qt4-devel libpoppler-qt4-devel
+%if_with qt5
+BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel libquazip-qt5-devel qt5-imageformats
 %endif
 
-# qt5
-BuildRequires: libqtspell-qt5-devel libpoppler-qt5-devel qt5-base-devel libquazip-qt5-devel libquazip-qt5-devel qt5-imageformats
+%if_with qt6
+BuildRequires: libqtspell-qt6-devel libpoppler-qt6-devel qt6-base-devel quazip-qt6-devel qt6-imageformats
+%endif
 
 # for compatibility
 Requires: %name-gtk
@@ -81,11 +83,7 @@ This package contains the Gtk+ front-end.
 %package qt5
 Group: Office
 Summary: A Qt 5 front-end to tesseract-ocr
-Requires: %name-common = %version-%release
-%if_without qt4
-Provides: gimagereader-qt4 = %EVR
-Obsoletes: gimagereader-qt4 < %EVR
-%endif
+Requires: %name-common = %EVR
 
 %description qt5
 gImageReader is a simple front-end to tesseract. Features include:
@@ -96,15 +94,15 @@ gImageReader is a simple front-end to tesseract. Features include:
  - Recognized text displayed directly next to the image
  - Editing of output text, including search/replace and removing line breaks
  - Spellchecking for output text (if corresponding dictionary installed)
-This package contains the Qt front-end.
+This package contains the Qt5 front-end.
 
-%if_with qt4
-%package qt4
+
+%package qt6
 Group: Office
-Summary: A Qt4 front-end to tesseract-ocr
-Requires: %name-common = %version-%release
+Summary: A Qt6 front-end to tesseract-ocr
+Requires: %name-common = %EVR
 
-%description qt4
+%description qt6
 gImageReader is a simple front-end to tesseract. Features include:
  - Automatic page layout detection
  - User can manually define and adjust recognition regions
@@ -113,8 +111,8 @@ gImageReader is a simple front-end to tesseract. Features include:
  - Recognized text displayed directly next to the image
  - Editing of output text, including search/replace and removing line breaks
  - Spellchecking for output text (if corresponding dictionary installed)
-This package contains the Qt front-end.
-%endif
+This package contains the Qt6 front-end.
+
 
 %package common
 Group: Office
@@ -155,30 +153,34 @@ subst "s|/usr/bin/python$|%__python3|" gtk/data/uigen.py
 %cmake -DINTERFACE_TYPE=gtk -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
 %cmake_build
 
-%if_with qt4
-%define _cmake__builddir build-qt4
-%cmake -DINTERFACE_TYPE=qt4 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
-%cmake_build
-%endif
-
+%if_with qt5
 %define _cmake__builddir build-qt5
 %cmake -DINTERFACE_TYPE=qt5 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
 %cmake_build
+%endif
+
+%if_with qt6
+%define _cmake__builddir build-qt6
+%cmake -DINTERFACE_TYPE=qt6 -DENABLE_VERSIONCHECK=0 -DMANUAL_DIR="%_docdir/%name-common"
+%cmake_build
+%endif
 
 %install
 %define _cmake__builddir build-gtk
 %cmake_install
 
-%if_with qt4
-%define _cmake__builddir build-qt4
+%if_with qt5
+%define _cmake__builddir build-qt5
 %cmake_install
 %endif
 
-%define _cmake__builddir build-qt5
+%if_with qt6
+%define _cmake__builddir build-qt6
 %cmake_install
+%endif
 
 %find_lang %name
-rm -rfv %buildroot%_datadir/locale/{sr_Cyrl,sr_Latn}/
+rm -rv %buildroot%_datadir/locale/{sr_Cyrl,sr_Latn}/
 
 # make link to old base command
 ln -s %name-gtk %buildroot%_bindir/%name
@@ -198,22 +200,27 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_desktopdir/%name-gtk.desktop
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 
-%if_with qt4
-%files qt4
-%_bindir/%name-qt4
-#_datadir/appdata/%name-qt4.appdata.xml
-%_desktopdir/%name-qt4.desktop
-%endif
-
+%if_with qt5
 %files qt5
 %_bindir/%name-qt5
 %_datadir/metainfo/%name-qt5.appdata.xml
 %_desktopdir/%name-qt5.desktop
+%endif
+
+%if_with qt6
+%files qt6
+%_bindir/%name-qt6
+%_datadir/metainfo/%name-qt6.appdata.xml
+%_desktopdir/%name-qt6.desktop
+%endif
 
 %files
 %_bindir/%name
 
 %changelog
+* Wed Jun 04 2025 Vitaly Lipatov <lav@altlinux.ru> 3.4.2-alt3
+- enable build with Qt6 (ALT bug 54208)
+
 * Sat Jul 20 2024 Vitaly Lipatov <lav@altlinux.ru> 3.4.2-alt2
 - add patch to fix build with enchant 2.7
 
