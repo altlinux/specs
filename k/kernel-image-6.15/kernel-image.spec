@@ -2,10 +2,10 @@ Name: kernel-image-6.15
 Release: alt1
 %define kernel_src_version	6.15
 %define kernel_base_version	6.15
-%define kernel_sublevel	.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	mainline
+%define kernel_latest	latest1
 Version: %kversion
 
 %define krelease	%release
@@ -610,6 +610,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 05 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.1-alt1
+- v6.15.1 (2025-06-04).
+- config: Enable CONFIG_LEGACY_VSYSCALL_NONE=y.
+- config: enable new DRM_PANEL configs.
+- config-aarch64: enable new configs for Rockchip, Qualcomm, Raspberry Pi.
+- config-aarch64: enable some sensors and cameras on PinePhone.
+- config: enable more led-trigger configs config-aarch64: enable config
+  of mchp23 spi sram.
+
 * Mon May 26 2025 Vitaly Chikunov <vt@altlinux.org> 6.15.0-alt1
 - Update to v6.15 (2025-05-25) release.
 - spec: Fix packaging modules.weakdep appeared after kmod update.
