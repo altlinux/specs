@@ -2,7 +2,7 @@
 
 Name: indexhtml-common
 Version: 0.6.4
-Release: alt1
+Release: alt2
 
 Summary: indexhtml-common
 License: %gpl3plus
@@ -13,6 +13,7 @@ Packager: ALT Docs Team <docs@packages.altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 
 %description
@@ -22,11 +23,11 @@ This package contains files required to integrate indexhtml packages.
 %setup
 
 %build
-cmake -DCMAKE_INSTALL_PREFIX=%prefix -DDEFAULTINDEXHTMLDIR=%_indexhtmldir .
-%make_build
+%cmake -DDEFAULTINDEXHTMLDIR=%_indexhtmldir .
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 mkdir -p %buildroot{%_indexhtmldir,%_sysconfdir/firsttime.d}
 ln -s $(relative %_sbindir/indexhtml-update %_sysconfdir/firsttime.d/indexhtml) \
   %buildroot%_sysconfdir/firsttime.d/indexhtml
@@ -38,6 +39,9 @@ ln -s $(relative %_sbindir/indexhtml-update %_sysconfdir/firsttime.d/indexhtml) 
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Wed Jun 04 2025 Anton Midyukov <antohami@altlinux.org> 0.6.4-alt2
+- NMU: use %%cmake macros (fix FTBFS)
+
 * Fri Jun 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.6.4-alt1
 - indexhtml-update: avoid /etc/sysconfig/i18n dependency
 
