@@ -1,11 +1,12 @@
 Name: barman
-Version: 3.10.0
-Release: alt1.1
+Version: 3.14.0
+Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
 License: GPL-3.0+
 Group: Databases
 Url: http://www.pgbarman.org/
+VCS: https://github.com/EnterpriseDB/barman.git
 
 Source: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
 Source1: barman.cron
@@ -71,7 +72,7 @@ by 2ndQuadrant.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # Change shebang in all relevant executable files in this directory and all subdirectories
 find -type f -executable -exec sed -i '1s=^#!%_bindir/\(python\|env python\)[23]\?=#!%__python3=' {} +
@@ -86,8 +87,8 @@ mkdir -p %buildroot%_logrotatedir/
 mkdir -p %buildroot/var/lib/barman
 mkdir -p %buildroot/var/log/barman
 mkdir -p %buildroot%_sysconfdir/barman/conf.d
-install -pm 644 doc/barman.conf %buildroot%_sysconfdir/barman/barman.conf
-install -pm 644 doc/barman.d/* %buildroot%_sysconfdir/barman/conf.d
+install -pm 644 docs/barman.conf %buildroot%_sysconfdir/barman/barman.conf
+install -pm 644 docs/barman.d/* %buildroot%_sysconfdir/barman/conf.d
 install -pm 644 %SOURCE1 %buildroot%_sysconfdir/cron.d/barman
 install -pm 644 %SOURCE2 %buildroot%_logrotatedir/barman
 install -Dpm 644 scripts/barman.bash_completion %buildroot%_datadir/bash-completion/completions/barman
@@ -95,9 +96,16 @@ touch %buildroot/var/log/barman/barman.log
 
 %__subst 's|/etc/barman.d|/etc/barman/conf.d|g' %buildroot%_sysconfdir/barman/barman.conf
 
+%pre
+getent group barman >/dev/null || groupadd -r barman
+getent passwd barman >/dev/null || \
+    useradd -r -g barman -d /var/lib/barman -s /bin/bash \
+    -c "Backup and Recovery Manager for PostgreSQL" barman
+exit 0
+
 %files
 %doc LICENSE
-%doc NEWS README.rst
+%doc RELNOTES.md README.rst
 %_bindir/%name
 %_man1dir/%name.1.xz
 %_man5dir/%name.5.xz
@@ -112,7 +120,7 @@ touch %buildroot/var/log/barman/barman.log
 %attr(600,barman,barman) %ghost /var/log/%name/%name.log
 
 %files -n barman-cli
-%doc NEWS README.rst
+%doc RELNOTES.md README.rst
 %_bindir/barman-wal-archive
 %_bindir/barman-wal-restore
 %_bindir/barman-cloud-restore
@@ -124,31 +132,18 @@ touch %buildroot/var/log/barman/barman.log
 %_bindir/barman-cloud-wal-archive
 %_bindir/barman-cloud-check-wal-archive
 %_bindir/barman-cloud-wal-restore
-%doc %_man1dir/barman-wal-archive.1.xz
-%doc %_man1dir/barman-wal-restore.1.xz
-%doc %_man1dir/barman-cloud-backup.1.xz
-%doc %_man1dir/barman-cloud-wal-archive.1.xz
-%doc %_man1dir/barman-cloud-backup-list.1.xz
-%doc %_man1dir/barman-cloud-backup-delete.1.xz
-%doc %_man1dir/barman-cloud-backup-keep.1.xz
-%doc %_man1dir/barman-cloud-backup-show.1.xz
-%doc %_man1dir/barman-cloud-restore.1.xz
-%doc %_man1dir/barman-cloud-wal-restore.1.xz
-%doc %_man1dir/barman-cloud-check-wal-archive.1.xz
+%_man1dir/barman-*.1.xz
 
 %files -n python3-module-barman
-%doc NEWS README.rst
+%doc RELNOTES.md README.rst
 %python3_sitelibdir/%name-%version.dist-info/
 %python3_sitelibdir/%name/
 
-%pre
-getent group barman >/dev/null || groupadd -r barman
-getent passwd barman >/dev/null || \
-    useradd -r -g barman -d /var/lib/barman -s /bin/bash \
-    -c "Backup and Recovery Manager for PostgreSQL" barman
-exit 0
-
 %changelog
+* Wed Jun 04 2025 Leontiy Volodin <lvol@altlinux.org> 3.14.0-alt1
+- New version 3.14.0.
+- Added VCS tag.
+
 * Tue Mar 19 2024 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1.1
 - NMU: added missing build dependency on setuptools.
 
