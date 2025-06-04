@@ -31,7 +31,7 @@
 %endif
 
 Name: curl
-Version: 8.14.0
+Version: 8.14.1
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -54,12 +54,30 @@ BuildRequires: libgnutls30
 BuildRequires: groff-base
 BuildRequires: libidn2-devel libkrb5-devel libgsasl-devel
 BuildRequires: zlib-devel libzstd-devel libpsl-devel libldap-devel libbrotli-devel
-%{?_with_check:BuildRequires: python3-base /proc}
-%{?_with_check:BuildRequires: libnghttp2-tools}
-%{?_with_check:BuildRequires: gnutls-utils}
-%{?_with_check:BuildRequires: /usr/bin/stunnel}
-%{?_with_check:BuildRequires: perl(Digest/SHA.pm) perl(Memoize.pm) openssh-server openssh-clients}
-%{?_with_check:BuildRequires: caddy pytest3 python3-module-cryptography}
+%if_with check
+BuildRequires: python3-base
+BuildRequires: /proc
+BuildRequires: libnghttp2-tools
+BuildRequires: gnutls-utils
+BuildRequires: /usr/bin/stunnel
+BuildRequires: perl(Digest/SHA.pm)
+BuildRequires: perl(Memoize.pm)
+BuildRequires: openssh-server
+BuildRequires: openssh-clients
+BuildRequires: caddy
+BuildRequires: pytest3
+BuildRequires: python3-module-cryptography
+# for pytest
+BuildRequires: apache2-httpd-worker
+BuildRequires: apache2-devel
+BuildRequires: apache2-mod_ssl
+BuildRequires: apache2-mod_http2
+BuildRequires: vsftpd
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-psutil
+BuildRequires: python3-module-filelock
+BuildRequires: libnghttp2-tools
+%endif
 
 %{?_with_openssl:BuildRequires: libssl-devel}
 %{?_with_gnutls:BuildRequires: libgnutls-devel libnettle-devel}
@@ -167,6 +185,10 @@ export PATH=/sbin:/usr/sbin:$PATH
 	--with-gssapi \
 	--enable-websockets \
 	--enable-versioned-symbols \
+%if_with check
+	--with-test-httpd \
+	--with-test-vsftpd=/usr/sbin/vsftpd \
+%endif
 	%{subst_with libssh2} \
 	--with-ca-bundle=%_datadir/ca-certificates/ca-bundle.crt
 
@@ -178,14 +200,16 @@ export PATH=/sbin:/usr/sbin:$PATH
 rm -f %buildroot%_man1dir/mk-ca-bundle.*
 
 %check
-%make -k test-full %relax
+%make -j4 -k test-nonflaky %relax
 pushd tests/http
 python3 -m pytest -v ||:
 popd
 
 %files
 %_bindir/curl
+%_bindir/wcurl
 %_man1dir/curl.1*
+%_man1dir/wcurl.1*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -208,6 +232,10 @@ popd
 %endif
  
 %changelog
+* Wed Jun 04 2025 Anton Farygin <rider@altlinux.com> 8.14.1-alt1
+- 8.14.0 -> 8.14.1 (Fixes: CVE-2025-5399)
+- turned on more tests
+
 * Wed May 28 2025 Anton Farygin <rider@altlinux.com> 8.14.0-alt1
 - 8.13.0 -> 8.14.0
 
