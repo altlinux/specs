@@ -1,6 +1,6 @@
 Name: fritzing
-Version: 0.9.6
-Release: alt2
+Version: 1.0.5
+Release: alt1
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -14,7 +14,7 @@ Source1: %name-parts.tar
 # Need to refresh at every update of fritzing-parts
 # Execute Fritzing -db parts.db in fritzing-parts directory
 # 1. Install new version of Fritzing and parts
-# 2. cd /usr/share/fritzing/fritzing-parts/core
+# 2. cd /usr/share/fritzing/fritzing-parts
 # 3. git init . ; git add . ; git commit
 # 4. Fritzing . -db ~/parts.db
 # 5. ???
@@ -23,15 +23,21 @@ Source2: parts.db
 
 Patch: fritzing-desktop-file-translation.patch
 
-Patch1: %name-%version-%release.patch
+Patch1: 0003-maximum-qt-version.patch
+Patch2: 0004-Work-around-build-issues-with-Qt-6.9.patch
+Patch3: 0010-quazip-detect.patch
+Patch4: 0011-ngspice-detect.patch
+Patch5: 0012-clipper1-detect.patch
+
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires: boost-devel-headers desktop-file-utils gcc-c++ glibc-devel-static
 BuildRequires: rpm-build-python3 rpmbuild-helper-desktop zlib-devel
-BuildRequires: rpmbuild-helper-sugar-activity ruby ruby-stdlibs qt5-tools
-BuildRequires: libgit2-devel qt5-base-devel qt5-svg-devel qt5-serialport-devel
-BuildRequires: quazip-qt5-devel
+BuildRequires: rpmbuild-helper-sugar-activity ruby ruby-stdlibs qt6-tools
+BuildRequires: libgit2-devel qt6-base-devel qt6-svg-devel qt6-serialport-devel
+BuildRequires: quazip-qt6-devel
+BuildRequires: ngspice-devel libpolyclipping-devel libsvgpp-devel chrpath
 
 # large chunk of arch-independent data is better not duplicated
 Requires: %name-data = %EVR
@@ -61,17 +67,19 @@ This package contains shared data files for Fritzing.
 %prep
 %setup -a1
 
-# Dynamically link against system libgit2
-sed -i 's/LIBGIT_STATIC = true/LIBGIT_STATIC = false/' phoenix.pro
-
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
-# make sure that russian translation will be removed
-rm translations/fritzing_ru.qm
+rm -v sketches/core/Fritzing\ Creator\ Kit\ DE+EN/creator-kit-*/Fritzing/TwitterSaurus.fzz
+rm -rv sketches/core/Fritzing\ Creator\ Kit\ DE+EN/creator-kit-*/Processing/TwitterSaurus*
+rm -v sketches/core/obsolete/TwitterSaurus.fzz
 
 # rebuild russian translation
-lrelease-qt5 phoenix.pro
+lrelease-qt6 phoenix.pro
 
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -79,15 +87,26 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
-qmake-qt5
+qmake-qt6
 %make_build debug
 
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot debug-install
 
 cp -r %name-parts %buildroot/%_datadir/%name
-
 install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
+
+# A few files in /usr/share/fritzing end up executable.
+find %{buildroot}%{_datadir}/%{name} -type f -exec chmod 644 '{}' ';'
+find %{buildroot}%{_datadir}/%{name} -type d -exec chmod 755 '{}' ';'
+
+chrpath -d %buildroot%_bindir/Fritzing
+
+%check
+if [[ "$(find %buildroot%_datadir/%name -name 'TwitterSaurus*' -o -name 'twitter4j*' | wc -l)" -gt 0 ]]; then
+  echo "Found TwitterSaurus / twitter4j files - these should NOT be included in the final package" >&2
+  exit 1
+fi
 
 %files
 %doc LICENSE.*
@@ -103,6 +122,9 @@ install -m0644 %SOURCE2 "%buildroot/%_datadir/%name/%name-parts/parts.db"
 %_datadir/%name
 
 %changelog
+* Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
+- Build new version.
+
 * Sun Mar 23 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.6-alt2
 - NMU: fix FTBFS by using quazip from quazip-qt5-devel RPM package.
 
