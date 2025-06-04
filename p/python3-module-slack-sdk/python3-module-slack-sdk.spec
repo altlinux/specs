@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.34.0
+Version: 3.35.0
 Release: alt1
 
 Summary: Slack Developer Kit for Python
@@ -15,6 +15,7 @@ VCS: https://github.com/slackapi/python-slack-sdk
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: slack-sdk-3.35.0-aiohttp-test-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -28,6 +29,8 @@ BuildRequires: python3-module-boto3
 BuildRequires: python3-module-sqlalchemy
 BuildRequires: python3-module-moto
 BuildRequires: python3-module-websocket-client
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-aiosqlite
 %endif
 
 %description
@@ -39,6 +42,7 @@ seamlessly when used together, too.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -56,6 +60,9 @@ seamlessly when used together, too.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 04 2025 Anton Vyatkin <toni@altlinux.org> 3.35.0-alt1
+- New version 3.35.0.
+
 * Wed Dec 18 2024 Anton Vyatkin <toni@altlinux.org> 3.34.0-alt1
 - New version 3.34.0.
 
