@@ -1,16 +1,18 @@
 Name: icon-theme-morewaita
-Version: 48.1
+Version: 48.2
 Release: alt1
 
 Summary: An expanded Adwaita-styled companion icon theme with extra icons
-License: GPL-3.0-or-later
+License: GPL-3.0-or-later AND CC-BY-SA-4.0
 Group: Graphical desktop/GNOME
-Url: https://github.com/somepaulo/MoreWaita
-Vcs: https://github.com/somepaulo/MoreWaita
+URL: https://github.com/somepaulo/MoreWaita
+VCS: https://github.com/somepaulo/MoreWaita.git
 
 BuildArch: noarch
 
 Source: %name-%version.tar
+# See https://altlinux.space/armatik/icon-theme-alt-workstation/issues/3
+Source1: %name-alt-%version.tar
 
 Requires: icon-naming-utils
 
@@ -30,18 +32,19 @@ Gnome Shell's original icons.
 
 %install
 %meson_install
-cp -r scalable symbolic %buildroot/%_iconsdir/MoreWaita/
-# cleanup from meson.build files
-find %buildroot/%_iconsdir/MoreWaita/ -name meson.build -exec rm -v {} \;
-
-# remove incorrect icons
-rm %buildroot%_iconsdir/MoreWaita/scalable/apps/synaptic.svg
+tar -xf %SOURCE1 -C %buildroot%_iconsdir/MoreWaita/
 
 %files
 %_iconsdir/MoreWaita/
 %doc AUTHORS LICENSE README.md
+%exclude %_iconsdir/MoreWaita/AUTHORS
+%exclude %_iconsdir/MoreWaita/LICENSE
 
 %changelog
+* Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 48.2-alt1
+- New version 48.2.
+- Add altlinux specyphic icons.
+
 * Sun Mar 23 2025 Anton Midyukov <antohami@altlinux.org> 48.1-alt1
 - New version 48.1.
 
