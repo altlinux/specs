@@ -1,7 +1,7 @@
 %define nameL io.github.ebonjaeger.bluejay
 
 Name: bluejay
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Bluetooth manager written in Qt
@@ -21,6 +21,7 @@ BuildRequires: extra-cmake-modules llvm-devel kf6-bluez-qt-devel
 BuildRequires: kf6-ki18n-devel clang libstdc++-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kconfig-devel pkgconfig(Qt6Qml) libgomp-devel
 BuildRequires: qt6-declarative-devel kf6-qqc2-desktop-style-devel
+BuildRequires: kf6-kcolorscheme-devel
 
 %description
 A Bluetooth manager and Bluez front-end. With it, you can 
@@ -60,6 +61,9 @@ cmake  \
 %doc *.md LICENSE
 
 %changelog
+* Wed Jun 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.3-alt1
+- 1.0.2 -> 1.0.3
+
 * Tue Mar 18 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

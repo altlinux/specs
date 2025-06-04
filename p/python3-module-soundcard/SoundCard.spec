@@ -1,8 +1,8 @@
 %define nameD soundcard
 
 Name: python3-module-%nameD
-Version: 0.4.3
-Release: alt2.1
+Version: 0.4.4
+Release: alt1
 
 Summary: A Pure-Python Real-Time Audio Library
 License: BSD-3-Clause
@@ -39,6 +39,9 @@ the native audio libraries of Linux, Windows and macOS.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Wed Jun 04 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4.4-alt1
+- 0.4.3 -> 0.4.4
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.4.3-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
