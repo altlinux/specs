@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.31
+%define kernel_sublevel	.32
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -150,7 +150,7 @@ these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
 
 %package -n kernel-image-domU-%flavour
-Summary: Uncompressed linux kernel for XEN domU boot 
+Summary: Uncompressed linux kernel for XEN domU boot
 Group: System/Kernel and hardware
 Requires(pre,postun): kmod
 
@@ -240,7 +240,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
-Group: Development/Kernel 
+Group: Development/Kernel
 Requires: gcc%kgcc_version
 AutoReqProv: nocpp
 %if "%sub_flavour" == "def"
@@ -610,6 +610,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jun 04 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.32-alt1
+- v6.12.32 (2025-06-04).
+- config: Enable CONFIG_INIT_STACK_ALL_ZERO=y.
+
 * Thu May 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.31-alt1
 - v6.12.31 (2025-05-29).
 - config-aarch64: enable some sensors and cameras on PinePhone.
