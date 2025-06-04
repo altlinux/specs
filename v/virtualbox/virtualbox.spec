@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.1.8
-Release: alt2
+Version: 7.1.10
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -929,6 +929,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Jun 04 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.10-alt1
+- Update to newest version 7.1.10
+
 * Mon May 12 2025 Valery Sinelnikov <greh@altlinux.org> 7.1.8-alt2
 - Fixed duplicate ownership of guest additions files (closes:54225)
 - Removed obsolete dependencies (closes:48755)

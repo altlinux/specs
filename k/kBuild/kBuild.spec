@@ -1,6 +1,6 @@
 %def_disable    bootstrap
 %define         short_version 0.1.9998
-%define         svn_revision 3606
+%define         svn_revision 3674
 
 ExclusiveArch: %ix86 x86_64
 
@@ -89,6 +89,9 @@ install -m 644 -D kmk.1 %buildroot%_man1dir/kmk.1
 %_datadir/%name
 
 %changelog
+* Wed May 28 2025 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3674-alt1
+- Update to last unstable release from svn trunk (r3674)
+
 * Mon Sep 30 2024 Valery Sinelnikov <greh@altlinux.org> 0.1.9998.r3606-alt1
 - Update to last unstable release from svn trunk (r3606)
 
