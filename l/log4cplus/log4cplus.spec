@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%define soname 9
 
 Name: log4cplus
-Version: 2.0.7
-Release: alt1.2
+Version: 2.1.2
+Release: alt1
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/C++
-Url: http://log4cplus.sourceforge.net/
-
-# https://github.com/log4cplus/log4cplus.git
+Url: https://sourceforge.net/projects/log4cplus/
+VCS: https://github.com/log4cplus/log4cplus.git
 Source: %name-%version.tar
 
 # submodules
@@ -28,11 +28,11 @@ log4cplus is a simple to use C++ logging API providing thread-safe,
 flexible, and arbitrarily granular control over log management and
 configuration.  It is modeled after the Java log4j API.
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: Shared libraries of logging library to C++
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%soname
 log4cplus is a simple to use C++ logging API providing thread-safe,
 flexible, and arbitrarily granular control over log management and
 configuration.  It is modeled after the Java log4j API.
@@ -42,7 +42,7 @@ This package contains shared libraries of log4cplus.
 %package -n lib%name-devel
 Summary: Development files of logging library to C++
 Group: Development/C++
-Requires: lib%name = %EVR
+Requires: lib%name%soname = %EVR
 
 %description -n lib%name-devel
 log4cplus is a simple to use C++ logging API providing thread-safe,
@@ -51,22 +51,10 @@ configuration.  It is modeled after the Java log4j API.
 
 This package contains development files of log4cplus.
 
-%package -n lib%name-devel-docs
-Summary: Development documentation for logging library to C++
-Group: Development/Documentation
-
-%description -n lib%name-devel-docs
-log4cplus is a simple to use C++ logging API providing thread-safe,
-flexible, and arbitrarily granular control over log management and
-configuration.  It is modeled after the Java log4j API.
-
-This package contains development documentation and manpages for
-log4cplus.
-
 %package -n python3-module-%name
 Summary: Python bindings of logging library to C++
 Group: Development/Python3
-Requires: lib%name = %EVR
+Requires: lib%name%soname = %EVR
 %py3_provides %name
 
 %description -n python3-module-%name
@@ -89,6 +77,7 @@ sed -i "s/__INTEL_COMPILER/__EDG__/" include/log4cplus/config.hxx
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 export PYTHON=python3
+export CPPFLAGS="-D_FILE_OFFSET_BITS=64"
 %autoreconf
 %configure \
 	--enable-static=no \
@@ -101,10 +90,6 @@ sed -i 's|^\(SWIG =.*\)|\1 -py3|' $(find ./ -name Makefile)
 
 %make_build
 
-pushd docs
-doxygen doxygen.config
-popd
-
 %install
 %makeinstall_std
 
@@ -113,30 +98,27 @@ mkdir -p %buildroot%python3_sitelibdir/%name
 mv %buildroot%python3_sitelibdir_noarch/%name/* %buildroot%python3_sitelibdir/%name/
 %endif
 
-install -d %buildroot%_man3dir
-install -m644 docs/man/man3/* %buildroot%_man3dir
-
 %check
 %make check
 
-%files -n lib%name
+%files -n lib%name%soname
 %doc LICENSE
 %doc AUTHORS ChangeLog NEWS README* TODO
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
 
-%files -n lib%name-devel-docs
-%doc docs/html/*
-%_man3dir/*
-
 %files -n python3-module-%name
 %python3_sitelibdir/%name
 
 %changelog
+* Tue May 13 2025 Anton Farygin <rider@altlinux.com> 2.1.2-alt1
+- 2.0.7 -> 2.1.2
+
 * Tue Jun 06 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.7-alt1.2
 - Make docs arch dependent.
 
