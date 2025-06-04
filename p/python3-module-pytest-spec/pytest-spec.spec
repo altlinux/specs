@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.0
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: pytest plugin to display test execution output like a SPECIFICATION
 
@@ -59,6 +59,9 @@ Available features:
 %python3_sitelibdir/pytest_spec-%version.dist-info
 
 %changelog
+* Wed Jun 04 2025 Anton Vyatkin <toni@altlinux.org> 5.0.0-alt1
+- New version 5.0.0.
+
 * Wed Dec 04 2024 Anton Vyatkin <toni@altlinux.org> 4.0.0-alt2
 - Fixed FTBFS.
 
