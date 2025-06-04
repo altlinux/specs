@@ -13,7 +13,7 @@
 
 Name: Singular
 Version: 4.4.1
-Release: alt2
+Release: alt3
 
 Summary: Computer Algebra System for polynomial computations
 # License analysis:
@@ -99,7 +99,6 @@ BuildRequires: python3-devel
 %endif
 # Need uudecode for documentation images in tarball
 BuildRequires: sharutils
-BuildRequires: surf-geometry
 BuildRequires: lrcalc
 BuildRequires: texlive-dist
 BuildRequires: texlive-collection-basic
@@ -107,7 +106,6 @@ BuildRequires: texlive-collection-basic
 Requires: %name-libs = %EVR
 Requires: environment-modules
 Requires: less
-# Requires: surf-geometry
 
 %description
 Singular is a computer algebra system for polynomial computations, with
@@ -370,7 +368,6 @@ cat > %buildroot%_bindir/Singular << EOF
 #!/bin/sh
 
 # . /etc/profile.d/modules.sh
-# module load surf-geometry-%%_arch
 export SINGULAR_DATA_DIR=%_datadir
 exec %singulardir/Singular "\$@"
 EOF
@@ -382,7 +379,6 @@ cat > %buildroot%_bindir/TSingular << EOF
 #!/bin/sh
 
 # . /etc/profile.d/modules.sh
-# module load surf-geometry-%%_arch
 exec %singulardir/TSingular --singular %_bindir/Singular "\$@"
 EOF
 
@@ -393,7 +389,6 @@ cat > %buildroot%_bindir/ESingular << EOF
 #!/bin/sh
 
 # . /etc/profile.d/modules.sh
-# module load surf-geometry-%%_arch
 export ESINGULAR_EMACS_DIR=%_datadir/singular/emacs
 exec %singulardir/ESingular --singular %_bindir/Singular "\$@"
 EOF
@@ -514,6 +509,9 @@ make check
 %_pkgconfigdir/libpolys.pc
 
 %changelog
+* Wed Jun 04 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1-alt3
+- Removed surf-geometry from BRs.
+
 * Wed Jan 22 2025 Leontiy Volodin <lvol@altlinux.org> 4.4.1-alt2
 - Renamed Singular-devel to libSingular-devel.
 - libfactory-devel packaged more separately.
