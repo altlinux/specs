@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.7
+Version: 6.0.8
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -252,6 +252,8 @@ Obsoletes: kde5-messenger-client-6-mix < %EVR
 Provides: kde-messenger-client = %EVR
 Provides: kde-messenger-client-mix = %EVR
 Requires: kde-common
+#Requires: neochat
+Requires: tokodon
 #Requires: choqok
 #Requires: jami
 #Requires: konversation
@@ -349,6 +351,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Wed Jun 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.8-alt1
+- require tokodon
+
 * Fri Apr 18 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.7-alt1
 - clean requires
 
