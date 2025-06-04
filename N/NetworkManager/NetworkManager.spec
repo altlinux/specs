@@ -42,7 +42,7 @@
 
 Name: NetworkManager
 Version: 1.52.0
-Release: alt3
+Release: alt4
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -643,6 +643,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 03 2025 Oleg Solovyov <mcpain@altlinux.org> 1.52.0-alt4
+- wifi: handle invalid secret for WPA3-SAE
+
 * Tue Apr 22 2025 Alexey Shabalin <shaba@altlinux.org> 1.52.0-alt3
 - Update path to polkit-agent-helper-1.
 
