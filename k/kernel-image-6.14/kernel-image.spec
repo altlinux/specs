@@ -2,7 +2,7 @@ Name: kernel-image-6.14
 Release: alt1
 %define kernel_src_version	6.14
 %define kernel_base_version	6.14
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -610,6 +610,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Jun 04 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.10-alt1
+- v6.14.10 (2025-06-04).
+- config: Enable CONFIG_LEGACY_VSYSCALL_NONE=y.
+
 * Thu May 29 2025 Kernel Bot <kernelbot@altlinux.org> 6.14.9-alt1
 - v6.14.9 (2025-05-29).
 - config-aarch64: enable some sensors and cameras on PinePhone.
