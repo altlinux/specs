@@ -1,6 +1,6 @@
 Name: grsync
-Version: 1.3.0
-Release: alt3
+Version: 1.3.1
+Release: alt1
 
 Summary: Grsync is a GUI for rsync
 License: GPLv2
@@ -62,6 +62,9 @@ install -pD -m644 %_sourcedir/grsync16.png %buildroot%_miconsdir/grsync.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Build new version.
+
 * Thu Jan 27 2022 Alexander Danilov <admsasha@altlinux.org> 1.3.0-alt3
 - Fixed FTBFS (Move to libwebkitgtk4-devel).
 
