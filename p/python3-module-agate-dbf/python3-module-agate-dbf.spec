@@ -1,7 +1,7 @@
 %define  modulename agate-dbf
 
 Name:    python3-module-%modulename
-Version: 0.2.0
+Version: 0.2.3
 Release: alt1
 
 Summary: Adds read support for DBF files to agate.
@@ -35,5 +35,8 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.3-alt1
+- Automatically updated to 0.2.3.
+
 * Wed Feb 07 2018 Mikhail Gordeev <obirvalger@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus

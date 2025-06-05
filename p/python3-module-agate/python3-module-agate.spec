@@ -2,7 +2,7 @@
 %define  modulename agate
 
 Name:    python3-module-%modulename
-Version: 1.7.1
+Version: 1.13.0
 Release: alt1
 
 Summary: A Python data analysis library that is optimized for humans instead of machines.
@@ -19,7 +19,6 @@ BuildRequires: python3-dev
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
-Patch0: %name-1.6.0-alt-disable-import-sphinx_rtd_them.patch
 
 %description
 agate is a Python data analysis library that is optimized for humans instead of
@@ -28,7 +27,6 @@ problems with readable code.
 
 %prep
 %setup -n %modulename-%version
-%patch0 -p1
 
 %build
 %python3_build
@@ -56,6 +54,9 @@ cp docs/_build/man/*.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.13.0-alt1
+- Automatically updated to 1.13.0.
+
 * Tue Apr 25 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.7.1-alt1
 - New version 1.7.1.
 
