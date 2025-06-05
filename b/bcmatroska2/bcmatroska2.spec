@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: bcmatroska2
-Version: 5.4.0
+Version: 5.4.17
 Release: alt1
 
 Summary: C Library to Deal with Matroska Files
@@ -12,6 +12,7 @@ Url: https://gitlab.linphone.org/BC/public/bcmatroska2
 Vcs: git://gitlab.linphone.org/BC/public/bcmatroska2.git
 
 Source: https://gitlab.linphone.org/BC/public/bcmatroska2/-/archive/%version/%name-%version.tar.bz2
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake libbctoolbox-devel
@@ -36,6 +37,7 @@ applications which will use libbcmatroska2.
 
 %prep
 %setup
+%autopatch -p1
 sed -i 's|VERSION 0.23|VERSION %version|' CMakeLists.txt
 sed -i '/DESTINATION/s|${CMAKE_INSTALL_INCLUDEDIR}|${CMAKE_INSTALL_INCLUDEDIR}/%name|' \
   $(find ./ -name '*CMakeLists.txt')
@@ -69,6 +71,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/BCMatroska2/*.cmake
 
 %changelog
+* Thu Jun 05 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.17-alt1
+- New version 5.4.17.
+
 * Tue Mar 18 2025 Leontiy Volodin <lvol@altlinux.org> 5.4.0-alt1
 - New version 5.4.0.
 
