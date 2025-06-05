@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-application-components
-Version: 0.2.10
+Version: 0.3.0
 Release: alt1
 
 Summary: Alterator application for managing system components
@@ -70,6 +70,13 @@ find ./alterator/ -type f -exec alterator-entry validate {} \+
 %_bindir/alt-components
 
 %changelog
+* Thu Jun 05 2025 Michael Chernigin <chernigin@altlinux.org> 0.3.0-alt1
+- Add support for tags in components and editions.
+- New view mode menu in view menu.
+- Add icons to buttons in main window.
+- Show components which will be installed and uninstalled.
+- Keep sections and tags expanded after "Collapse all".
+
 * Fri May 23 2025 Michael Chernigin <chernigin@altlinux.org> 0.2.10-alt1
 - Update tree item background color based on check state.
 - Add edition component count to status bar.
