@@ -1,7 +1,7 @@
 Name:         lsb-init
 Summary:      ALT Linux implementation of LSB compliant init functions
 Version:      5.0
-Release:      alt1
+Release:      alt2
 License:      GPL
 URL:          http://www.linuxbase.org
 Source:       %name-%version.tar
@@ -13,6 +13,7 @@ Packager:     Igor Vlasenko <viy@altlinux.ru>
 # http://www.linuxfoundation.org/en/Specifications
 #Exclusivearch: %{ix86} x86_64
 BuildArch: noarch
+Provides: /usr/lib/lsb/init-functions
 
 # Requires:     lsb-core
 Patch: lsb-init-alt-log.patch
@@ -44,6 +45,9 @@ install -m 644 ./lib/lsb/* %buildroot/lib/lsb
 %doc test-initscript.sh
 
 %changelog
+* Thu Jun 05 2025 Andrey Cherepanov <cas@altlinux.org> 5.0-alt2
+- Provided /usr/lib/lsb/init-functions.
+
 * Sat Jul 31 2021 Andrey Cherepanov <cas@altlinux.org> 5.0-alt1
 - Update version for lsb-5.0.
 

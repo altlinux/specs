@@ -12,7 +12,7 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.1.9
+Version: 3.0.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -251,12 +251,10 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %preun_service pacemaker_remote
 
 %files
-%doc COPYING ChangeLog README.markdown
+%doc COPYING ChangeLog.md README.markdown
 %doc %_datadir/pacemaker/alerts
-%exclude %_libexecdir/pacemaker/cts-log-watcher
 %exclude %_libexecdir/pacemaker/cts-support
 %exclude %_sbindir/pacemaker-remoted
-%exclude %_sbindir/pacemaker_remoted
 %config(noreplace) %_sysconfdir/sysconfig/pacemaker
 %_sbindir/pacemakerd
 %_initdir/pacemaker
@@ -323,7 +321,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_initdir/pacemaker_remote
 %_unitdir/pacemaker_remote.service
 %_sbindir/pacemaker-remoted
-%_sbindir/pacemaker_remoted
 %_man8dir/pacemaker-remoted.*
 
 %files doc
@@ -332,7 +329,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %files cts
 %python3_sitelibdir_noarch/*
 %_datadir/pacemaker/tests
-%_libexecdir/pacemaker/cts-log-watcher
 %_libexecdir/pacemaker/cts-support
 
 %files -n lib%name-devel
@@ -349,6 +345,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/base
 
 %changelog
+* Sun Apr 13 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
+- New version.
+
 * Fri Nov 22 2024 Andrey Cherepanov <cas@altlinux.org> 2.1.9-alt1
 - New version.
 
