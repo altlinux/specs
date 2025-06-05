@@ -5,7 +5,7 @@
 
 Name: libmceliece
 Version: 20250507
-Release: alt2
+Release: alt3
 Summary: Classic McEliece microlibrary
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
 Group: System/Libraries
@@ -46,6 +46,14 @@ for the details of Classic McEliece computation, including optimization,
 timing-attack protection, and (in ongoing work) verification, freeing up
 the calling libraries to concentrate on application-specific needs such
 as protocol integration. Applications can also call libmceliece directly.
+
+%package -n mceliece
+Summary: Tools for %name
+Group: File tools
+Requires: %name = %EVR
+
+%description -n mceliece
+%summary.
 
 %package devel
 Summary: Development files for %name
@@ -107,21 +115,26 @@ ls -lad mceliece*.*
 sha256sum mceliece*.sessionkey*
 
 %files
-%_bindir/mceliece[0-9]*
 %_libdir/libmceliece.so.*
+
+%files -n mceliece
+%_bindir/mceliece[0-9]*
 %_man1dir/mceliece.1*
 %_man1dir/mceliece[0-9]*.1*
 
 %files devel
 %_includedir/mceliece.h
 %_libdir/libmceliece.so
-%_man1dir/mceliece-*.1*
 %_man3dir/*.3*
 
 %files tests
 %_bindir/mceliece-*
+%_man1dir/mceliece-*.1*
 
 %changelog
+* Thu Jun 05 2025 Vitaly Chikunov <vt@altlinux.org> 20250507-alt3
+- spec: Fix man-pages location for tests, split tools from lib package.
+
 * Thu Jun 05 2025 Ivan A. Melnikov <iv@altlinux.org> 20250507-alt2
 - NMU: Don't depend on valgrind on architectures that don't have it
   (fixes build on loongarch64 and riscv64).
