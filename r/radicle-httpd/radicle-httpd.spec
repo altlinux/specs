@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.18.2
+Version: 0.19.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -47,6 +47,9 @@ asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_ma
 %_unitdir/radicle-httpd.service
 
 %changelog
+* Thu Jun 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.19.0-alt1
+- 0.19.0 released
+
 * Fri May 30 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.18.2-alt1
 - 0.18.2 released
 
