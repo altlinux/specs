@@ -7,7 +7,7 @@
 %define docdir %_docdir/%name-doc-%version
 
 Name: python3-module-%modulename
-Version: 0.85.2
+Version: 3.3.0
 Release: alt1
 
 Summary: Textual is a Rapid Application Development framework for Python
@@ -16,20 +16,18 @@ Group: Development/Python3
 Url: https://pypi.org/project/textual/
 Vcs: https://github.com/Textualize/textual.git
 BuildArch: noarch
+
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry
-
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-rich
-BuildRequires: python3-module-markdown
-BuildRequires: python3-module-typing_extensions
-BuildRequires: python3-module-pytest-asyncio
-BuildRequires: python3-module-linkify-it-py
-BuildRequires: python3-module-pytest-textual-snapshot
-BuildRequires: python3-module-pytest-xdist
+##check filter code style, coverage, publishing, documentation modules
+%add_pyproject_deps_check_filter mkdocs-exclude mkdocs-rss-plugin textual-dev types-setuptools
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -51,6 +49,11 @@ interfaces with a simple Python API.
 %setup
 # for windows
 rm src/textual/drivers/win32.py
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -59,20 +62,14 @@ rm src/textual/drivers/win32.py
 %pyproject_install
 
 # test_snapshots needs GUI mode, tested locally
-# In test_input_value_visibility broken "value"
 # test_textual_env_var assert None is not None
-# test_register_language, test_register_language_existing_language,
-# test_language_binary_missing no module tree_sitter_languages
-# https://github.com/grantjenks/py-tree-sitter-languages
 %check
-%pyproject_run_pytest -ra -Wignore \
-    -ra tests -k "\
-    not test_textual_env_var and \
-    not test_register_language and \
-    not test_register_language_existing_language and \
-    not test_language_binary_missing" \
-    --ignore="tests/snapshot_tests/test_snapshots.py" \
-    --ignore="tests/input/test_input_value_visibility.py"
+%pyproject_run_pytest \
+    -n auto \
+    --ignore=tests/snapshot_tests/test_snapshots.py \
+    --ignore=tests/test_slug.py \
+    --ignore=tests/text_area/test_languages.py \
+    -k 'not textual_env_var'
 
 %files
 %python3_sitelibdir/%modulename
@@ -83,6 +80,9 @@ rm src/textual/drivers/win32.py
 %doc docs/* examples/
 
 %changelog
+* Wed Jun 04 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.3.0-alt1
+- New version (3.3.0).
+
 * Tue Nov 12 2024 Elena Dyatlenko <lenka@altlinux.org> 0.85.2-alt1
 - Updated to upstream version v0.85.2.
 - Add blog to doc
