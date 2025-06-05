@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 7.6.1
+Version: 7.6.2
 Release: alt1
 
 Summary: Tryton server
@@ -31,6 +31,7 @@ BuildRequires: python3-module-passlib
 BuildRequires: python3-module-simpleeval
 BuildRequires: python3-module-pwdlib
 BuildRequires: python3-module-argon2-cffi
+BuildRequires: python3-module-html2text
 %endif
 
 %py_provides %oname
@@ -80,6 +81,9 @@ python3 -m unittest discover -s trytond.tests -v
 
 
 %changelog
+* Thu Jun 05 2025 Anton Vyatkin <toni@altlinux.org> 7.6.2-alt1
+- new version 7.6.2
+
 * Wed May 21 2025 Anton Vyatkin <toni@altlinux.org> 7.6.1-alt1
 - new version 7.6.1
 
