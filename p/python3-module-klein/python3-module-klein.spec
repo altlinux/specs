@@ -1,8 +1,8 @@
 %define  modulename klein
 
 Name:    python3-module-%modulename
-Version: 19.6.0
-Release: alt3
+Version: 24.8.0
+Release: alt1
 
 Summary: werkzeug + twisted.web
 License: MIT
@@ -13,13 +13,11 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools python3-module-incremental
+BuildRequires: python3-module-setuptools python3-module-incremental
 
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
-
-Patch1: 0001-typing-is-not-needed-since-Python-3.5-as-it-s-built-in.patch
 
 %description
 Klein is a micro-framework for developing production-ready web services with
@@ -30,7 +28,6 @@ components like Werkzeug and Twisted.
 
 %prep
 %setup -n %modulename-%version
-%patch1 -p1
 
 %build
 %python3_build
@@ -45,6 +42,9 @@ components like Werkzeug and Twisted.
 %doc README.rst
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 24.8.0-alt1
+- Automatically updated to 24.8.0.
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 19.6.0-alt3
 - NMU: don't pack tests
 
