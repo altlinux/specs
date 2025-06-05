@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2024.10.3
-Release: alt1
+Release: alt2
 
 Summary: Watch a Sphinx directory and rebuild the documentation when a change is detected
 
@@ -19,12 +19,16 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flit
 
 %if_with check
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-livereload
+# pyproject.toml:dependencies
 BuildRequires: python3-module-colorama
+BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-starlette
 BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-watchfiles
+BuildRequires: python3-module-websockets
+# pyproject.toml:optional-dependencies.test
 BuildRequires: python3-module-httpx
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -55,6 +59,9 @@ Also includes a livereload enabled web server.
 %python3_sitelibdir/sphinx_autobuild-%version.dist-info
 
 %changelog
+* Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 2024.10.3-alt2
+- Fixed FTBFS (missing tests dependency).
+
 * Sat Oct 05 2024 Grigory Ustinov <grenka@altlinux.org> 2024.10.3-alt1
 - Automatically updated to 2024.10.3.
 
