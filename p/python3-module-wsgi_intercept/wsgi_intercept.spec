@@ -2,13 +2,13 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.13.0
+Version: 1.13.1
 Release: alt1
 Summary: wsgi_intercept installs a WSGI application in place of a real URI for testing
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/wsgi_intercept
-Source: %oname-%version.tar.gz
+Source: %name-%version.tar
 Patch: wsgi_intercept-fix.urllib3.patch
 BuildArch: noarch
 
@@ -62,7 +62,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup -n %oname-%version
+%setup
 %patch -p1
 
 %if_with docs
@@ -97,6 +97,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.13.1-alt1
+- Build new version.
+
 * Mon Feb 12 2024 Ilfat Aminov <aminov@altlinux.org> 1.13.0-alt1
 - 1.13.0
 
