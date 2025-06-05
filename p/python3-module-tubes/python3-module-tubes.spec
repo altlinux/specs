@@ -1,8 +1,8 @@
 %define  modulename tubes
 
 Name:    python3-module-%modulename
-Version: 0.2.0
-Release: alt3
+Version: 0.2.1
+Release: alt1
 
 Summary: A series of tubes.
 License: MIT
@@ -19,14 +19,11 @@ BuildArch: noarch
 
 Source:  %modulename-%version.tar
 
-Patch1: 0001-remove-unnecessary-dependency.patch
-
 %description
 %summary
 
 %prep
 %setup -n %modulename-%version
-%patch1 -p1
 
 %build
 %python3_build
@@ -41,6 +38,9 @@ Patch1: 0001-remove-unnecessary-dependency.patch
 %doc README.rst LICENSE
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1
+- Automatically updated to 0.2.1.
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt3
 - don't pack tests
 
