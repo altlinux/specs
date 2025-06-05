@@ -1,12 +1,12 @@
 %def_disable snapshot
 %define _name turnon
-%define ver_major 2.6
+%define ver_major 2.7
 %define rdn_name de.swsnr.%_name
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.1
 Release: alt1
 
 Summary: Turn on devices in your network
@@ -45,6 +45,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 sed -i "s/\(version := \).*$/\1'%version'/" justfile
 
+# use full path for binary
+sed -i 's|\(Exec=\)\(%rdn_name\)|\1%_bindir/\2|' dbus-1/de.swsnr.turnon.service
+
 %build
 just compile
 %rust_build
@@ -64,6 +67,10 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Thu Jun 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
+- 2.7.1
+- use full path in dbus service file (ALT #53609)
+
 * Wed May 21 2025 Yuri N. Sedunov <aris@altlinux.org> 2.6.7-alt1
 - 2.6.7
 

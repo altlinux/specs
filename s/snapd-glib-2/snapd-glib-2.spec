@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: snapd-glib-%api_ver
-Version: 1.67
-Release: alt1.1
+Version: 1.70
+Release: alt1
 
 Group: System/Libraries
 Summary: Library providing a GLib interface to snapd (API 2)
@@ -25,6 +25,7 @@ Vcs: https://github.com/canonical/snapd-glib.git
 
 Source: https://github.com/canonical/%_name/archive/%version/%_name-%version.tar.gz
 # https://bugzilla.altlinux.org/53704
+# fixed in 1.68 (6620406c7)
 Patch: snapd-glib-1.67-alt-add-lost-snapdqt_global.h.patch
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir %{?_enable_vala:rpm-build-vala} %{?_enable_qt:rpm-macros-qt6}
@@ -111,7 +112,6 @@ for snapd-qt to verify the functionality of snapd-qt.
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
 %meson \
@@ -166,6 +166,9 @@ for snapd-qt to verify the functionality of snapd-qt.
 %endif
 
 %changelog
+* Thu Jun 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.70-alt1
+- 1.70
+
 * Wed Apr 02 2025 Yuri N. Sedunov <aris@altlinux.org> 1.67-alt1.1
 - snapd-qt-devel: added snapdqt_global.h (ALT #53704)
 
