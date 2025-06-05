@@ -16,10 +16,11 @@
 %def_disable iscsi
 %def_enable btrfs
 %def_disable lsm
+%def_enable smart
 
 Name: %{_name}2
-Version: 2.10.1
-Release: alt2
+Version: 2.10.90
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -39,21 +40,23 @@ Obsoletes: %_name
 %define glib_ver 2.68
 %define gi_ver 1.30.1
 %define polkit_ver 0.102
-%define udev_ver 165
+%define udev_ver 257
+%define gudev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 3.0.3
+%define blockdev_ver 3.2.0
 %define libmount_ver 2.30
 
 Requires(pre): control
 Requires: lib%name = %EVR
-Requires: /lib/udev/rules.d
+Requires: %_udevrulesdir
 Requires: polkit
 Requires: /usr/sbin/cryptsetup
 Requires: dbus >= %dbus_ver dbus-tools-gui
 # required dosfstools with compatibility symlinks
 Requires: dosfstools >= 4.2-alt2
-Requires: mdadm ntfsprogs parted gdisk xfsprogs nvme
+Requires: mdadm ntfsprogs parted gdisk nvme
+#Requires: xfsprogs
 %{?_enable_acl:Requires: acl}
 
 Requires: libblockdev-fs >= %blockdev_ver
@@ -63,11 +66,14 @@ Requires: libblockdev-mdraid >= %blockdev_ver
 Requires: libblockdev-part >= %blockdev_ver
 Requires: libblockdev-swap >= %blockdev_ver
 Requires: libblockdev-nvme >= %blockdev_ver
+%{?_enable_smart:Requires: libblockdev-smart >= %blockdev_ver}
 
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
-BuildRequires: libudev-devel libgudev-devel >= %udev_ver
+#BuildRequires: libudev-devel >= %udev_ver
+BuildRequires: libudev-devel
+BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: pkgconfig(systemd) libmount-devel >= %libmount_ver
 BuildRequires: libblockdev-devel >= %blockdev_ver libblockdev-loop-devel
 BuildRequires: libblockdev-mdraid-devel libblockdev-fs-devel libblockdev-crypto-devel
@@ -81,6 +87,7 @@ BuildRequires: libblkid-devel
 %{?_enable_iscsi:BuildRequires: iscsi-initiator-utils-devel}
 %{?_enable_btrfs:BuildRequires: libblockdev-btrfs-devel}
 %{?_enable_lsm:BuildRequires: libstoragemgmt-devel libconfig-devel}
+%{?_enable_smart:BuildRequires: libblockdev-smart-devel >= %blockdev_ver}
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -171,18 +178,19 @@ This package contains UDisks module for iSCSI configuration.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
+#%%patch10 -p1
 
 %build
 %autoreconf
 %configure --disable-static \
-	%{?_disable_gtk_doc:--enable-gtk-doc=no} \
-	%{subst_enable acl} \
-	%{?_enable_fhs_media:--enable-fhs-media} \
-	%{subst_enable lvm2} \
-	%{subst_enable iscsi} \
-	%{subst_enable btrfs} \
-	%{subst_enable lsm} \
+    %{?_disable_gtk_doc:--enable-gtk-doc=no} \
+    %{subst_enable acl} \
+    %{?_enable_fhs_media:--enable-fhs-media} \
+    %{subst_enable lvm2} \
+    %{subst_enable iscsi} \
+    %{subst_enable btrfs} \
+    %{subst_enable lsm} \
+    %{subst_enable smart}
 %nil
 %make_build
 
@@ -291,6 +299,10 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Oct 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.90-alt1
+- 2.10.90
+- removed xfsprogs from runtime dependencies (ALT #54692)
+
 * Thu May 30 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.1-alt2
 - removed useless udisks-2.10.0-disable-sanitize-log.patch
   disabled in previous release
