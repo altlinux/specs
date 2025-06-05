@@ -1,33 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname webtest
+%define pypi_name webtest
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.0.4
-Release: alt1.1
+Name: python3-module-%pypi_name
+Version: 3.0.6
+Release: alt1
 Summary: Helper to test WSGI applications
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/WebTest/
 Vcs: https://github.com/Pylons/webtest.git
-
-Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3(bs4)
-BuildRequires: python3(mock)
-BuildRequires: python3(PasteDeploy)
-BuildRequires: python3(pytest)
-BuildRequires: python3(waitress)
-BuildRequires: python3(webob)
-BuildRequires: python3(wsgiproxy)
-BuildRequires: python3(pyquery)
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -42,6 +35,8 @@ This is based on ``paste.fixture.TestApp``.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -53,10 +48,13 @@ This is based on ``paste.fixture.TestApp``.
 %pyproject_run_pytest -v
 
 %files
-%python3_sitelibdir/webtest/
-%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 3.0.6-alt1
+- 3.0.4 -> 3.0.6.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.0.4-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 

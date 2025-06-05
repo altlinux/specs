@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.1.0
-Release: alt1.1
+Release: alt2
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -17,6 +17,9 @@ Url: https://github.com/Pylons/pastedeploy
 Source: %name-%version.tar
 
 %py3_provides %oname
+# mapping from PyPI name
+# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
+Provides: python3-module-%{pep503_name %oname} = %EVR
 %py3_requires Paste
 %if_with bootstrap
 %add_python3_req_skip paste.script.templates
@@ -54,6 +57,9 @@ this configuration file.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 1:3.1.0-alt2
+- Mapped PyPI name to the distro's one.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:3.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
