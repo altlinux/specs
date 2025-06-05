@@ -1,8 +1,8 @@
 %def_without check
 %define modulename olefile
 Name: python3-module-olefile
-Version: 0.46
-Release: alt2
+Version: 0.47
+Release: alt1
 
 Summary: Python package to parse, read and write Microsoft OLE2 files
 
@@ -14,7 +14,7 @@ Group: Development/Python3
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://pypi.io/packages/source/o/%modulename/%modulename-%version.zip
-Source: %modulename-%version.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
@@ -32,7 +32,7 @@ StickyNotes, several Microscopy file formats,
 McAfee antivirus quarantine files, etc.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -45,6 +45,9 @@ McAfee antivirus quarantine files, etc.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 0.47-alt1
+- Build new version.
+
 * Mon Oct 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.46-alt2
 - Drop python2 support.
 
