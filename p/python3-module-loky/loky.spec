@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.5.1
+Version: 3.5.5
 Release: alt1
 Summary: A robust implementation of concurrent.futures.ProcessPoolExecutor
 License: BSD
@@ -18,12 +18,13 @@ Patch: %name-%version-alt.patch
 # manually manage dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
+# required by loky/backend/context.py:_count_physical_cores_linux
+Requires: /proc
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 BuildRequires: /proc
-%pyproject_builddeps_metadata
-BuildRequires: python3-module-pytest
+%pyproject_builddeps_metadata_extra tests
 %endif
 
 %description
@@ -51,6 +52,9 @@ ProcessPoolExecutor class of concurrent.futures
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu May 29 2025 Stanislav Levin <slev@altlinux.org> 3.5.5-alt1
+- 3.5.1 -> 3.5.5.
+
 * Wed Mar 19 2025 Stanislav Levin <slev@altlinux.org> 3.5.1-alt1
 - 3.5.0 -> 3.5.1.
 

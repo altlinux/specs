@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.2
+Version: 1.5.1
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
@@ -26,8 +26,10 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps -- vendored
+# synced to continuous_integration/install.sh
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-threadpoolctl
 %endif
 
 %description
@@ -84,6 +86,9 @@ sed -i \
 %exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Thu May 29 2025 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
+- 1.4.2 -> 1.5.1.
+
 * Fri May 03 2024 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
 - 1.4.0 -> 1.4.2.
 
