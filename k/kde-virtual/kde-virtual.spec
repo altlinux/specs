@@ -5,7 +5,7 @@
 %endif
 
 Name: kde-virtual
-Version: 6.0.8
+Version: 6.0.9
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -15,6 +15,7 @@ License: ALT-Public-Domain
 
 #BuildArch: noarch
 
+BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): rpm-macros-qt6-webengine
 
 %description
@@ -334,7 +335,7 @@ Requires: lightdm-kde-greeter dm-tool
 %if_enabled qtwebengine
 %files -n kde-email-client-2-kmail
 %endif
-%ifnarch armh
+%ifarch %thunderbird_arches
 %files -n kde-email-client-4-thunderbird
 %endif
 
@@ -351,6 +352,9 @@ Requires: lightdm-kde-greeter dm-tool
 %files -n kde-display-manager-7-lightdm
 
 %changelog
+* Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 6.0.9-alt1
+- use thunderbird_arch macro for kde-email-client files
+
 * Wed Jun 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.0.8-alt1
 - require tokodon
 

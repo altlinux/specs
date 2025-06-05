@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -11,6 +11,7 @@ URL:     http://altlinux.org/education
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
+BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt5-webengine
 
@@ -151,7 +152,7 @@ Requires: perl-DBD-mysql
 Requires: postgresql-jdbc
 Requires: mysql-connector-java
 # Mozilla
-%ifnarch armh
+%ifarch %thunderbird_arches
 Requires: thunderbird
 %endif
 %description lite
@@ -626,6 +627,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.7.7-alt1
+- Use the thunderbird_arch macro for the thunderbird requirement.
+
 * Thu May 29 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.6-alt1
 - Replaced kde-runtime by kde6-runtime (ALT #54486).
 

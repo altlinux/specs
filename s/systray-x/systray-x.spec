@@ -7,7 +7,7 @@
 
 Name:    systray-x
 Version: 0.9.11
-Release: alt3
+Release: alt4
 
 Summary: A system tray extension for Thunderbird
 License: MPL-2.0
@@ -19,8 +19,9 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch0: %name-version.patch
 
-ExcludeArch: armh ppc64le
+ExclusiveArch: %thunderbird_arches
 
+BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires: thunderbird
 BuildRequires: qt6-base-devel
 BuildRequires: zip
@@ -87,6 +88,9 @@ unzip -d %buildroot%tbird_arch_extensionsdir/systray-x@Ximi1970 systray-x@Ximi19
 %tbird_arch_extensionsdir/systray-x@Ximi1970
 
 %changelog
+* Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.9.11-alt4
+- Use %%thunderbird_arch to specify supported architectures.
+
 * Fri Apr 25 2025 Andrey Cherepanov <cas@altlinux.org> 0.9.11-alt3
 - FTBFS: fixed build with new thunderbird.
 

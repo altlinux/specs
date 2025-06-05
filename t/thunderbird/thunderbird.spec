@@ -15,14 +15,14 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 138.0.1
+Version: 139.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
 Group: Networking/Mail
 URL: https://www.thunderbird.net
-ExcludeArch: armh
+ExclusiveArch: %thunderbird_arches
 
 Source0: %name-%version.tar
 Source1: thunderbird.cpp
@@ -47,6 +47,7 @@ Requires: hunspell-en
 # ALT #40907
 Requires: libotr5
 
+BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): browser-plugins-npapi-devel
 # Python requires
@@ -379,6 +380,31 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.1-alt1
+- New version.
+- Put the list of supported architectures to the rpm-macros-thunderbird.
+
+* Sat May 31 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0-alt1
+- New version.
+- Fix FTBFS: exclude i586 arch due to idle time limit exceeded.
+- Security fixes:
+  + CVE-2025-5262: Double-free in libvpx encoder
+  + CVE-2025-5263: Error handling for script execution was incorrectly isolated from web content
+  + CVE-2025-5264: Potential local code execution in "Copy as cURL" command
+  + CVE-2025-5265: Potential local code execution in "Copy as cURL" command
+  + CVE-2025-5266: Script element events leaked cross-origin resource status
+  + CVE-2025-5270: SNI was sometimes unencrypted
+  + CVE-2025-5271: Devtools' preview ignored CSP headers
+  + CVE-2025-5267: Clickjacking vulnerability could have led to leaking saved payment card details
+  + CVE-2025-5268: Memory safety bugs fixed in Firefox 139, Thunderbird 139, Firefox ESR 128.11, and Thunderbird 128.11
+  + CVE-2025-5272: Memory safety bugs fixed in Firefox 139 and Thunderbird 139
+
+* Sat May 24 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2025-4918: Out-of-bounds access when resolving Promise objects
+  + CVE-2025-4919: Out-of-bounds access when optimizing linear sums
+
 * Wed May 14 2025 Ajrat Makhmutov <rauty@altlinux.org> 138.0.1-alt1
 - New version.
 
