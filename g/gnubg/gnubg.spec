@@ -1,5 +1,5 @@
 Name:       gnubg
-Version:    1.06.002
+Version:    1.08.003
 Release:    alt1
 Summary:    A backgammon game and analyser
 License:    GPLv3
@@ -8,13 +8,15 @@ Url:        http://www.gnubg.org
 Packager:   Motsyo Gennadi <drool@altlinux.ru>
 Source:     %name-%version.tar
 Source1:    %name.desktop
-Patch:      %name-1.04.000-no-python-win-deps.patch
 
 Requires:   %name-data = %version-%release
 
 BuildRequires: flex libcanberra-gtk2-devel libgtkglext-devel libreadline-devel libsqlite3-devel
 
 ExclusiveArch: %ix86 x86_64
+
+%add_python3_req_skip win32ui
+%add_python3_req_skip win32con
 
 %description
 GNU Backgammon (@gnubg{}) is software for playing and analysing backgammon
@@ -32,7 +34,6 @@ This package contains the GNU Backgammon arch-independent data files and documen
 
 %prep
 %setup
-%patch -p1
 
 %build
 ./configure --with-python=no \
@@ -64,6 +65,9 @@ install -p -m644 %SOURCE1 %buildroot%_desktopdir
 %_datadir/%name
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.08.003-alt1
+- Build new version.
+
 * Thu Oct 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.06.002-alt1
 - Just fix version number.
 
