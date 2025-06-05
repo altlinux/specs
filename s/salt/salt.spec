@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3007.2
+Version: 3007.3
 Release: alt1
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -273,6 +273,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Jun 05 2025 Andrey Cherepanov <cas@altlinux.org> 3007.3-alt1
+- New version.
+
 * Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 3007.2-alt1
 - New version.
 
