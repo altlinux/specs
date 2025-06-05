@@ -33,7 +33,7 @@
 
 Name: %rname
 Version: 6.3.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -381,13 +381,14 @@ for d in runners/*/*.json ; do
     sed -i '/EnabledByDefault/s|true|false|' $d
 done
 # enable some krunners by default
-#for d in appstream services shell
-#do
-#    sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=true|' runners/${d}/plasma-runner-${d}.desktop
-#done
 for d in appstream services shell
 do
     sed -i '/EnabledByDefault/s|false|true|' runners/${d}/plasma-runner-${d}.json
+done
+# disable some applets by default
+for d in clipboard
+do
+    sed -i '/EnabledByDefault/s|true|false|' applets/${d}/metadata.json
 done
 
 %build
@@ -593,6 +594,9 @@ install -m0644 -p -D %SOURCE43 %buildroot/%_userunitdir/plasma-core.target.d/xdg
 
 
 %changelog
+* Thu Jun 05 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.5-alt2
+- disable clipboard applet by default
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 1:6.3.5-alt1
 - new version
 
