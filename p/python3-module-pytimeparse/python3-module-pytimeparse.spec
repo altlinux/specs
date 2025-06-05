@@ -1,7 +1,7 @@
 %define  modulename pytimeparse
 
 Name:    python3-module-%modulename
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: A small Python module to parse various kinds of time expressions.
@@ -35,5 +35,8 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Jun 05 2025 Grigory Ustinov <grenka@altlinux.org> 1.1.8-alt1
+- Automatically updated to 1.1.8.
+
 * Wed Feb 07 2018 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.7-alt1
 - Initial build for Sisyphus
