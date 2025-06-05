@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 6.3.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -19,10 +19,8 @@ Source: %rname-%version.tar
 Patch10: alt-allow-empty-password.patch
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: cmake gcc-c++ glibc-devel extra-cmake-modules qt6-base-devel libgcrypt-devel libpam-devel
+BuildRequires: cmake glibc-devel extra-cmake-modules qt6-base-devel libgcrypt-devel libpam-devel
 BuildRequires: kf6-kwallet-devel
-# find kwalletd6
-BuildRequires: kf6-kwallet
 
 %description
 %summary.
@@ -39,17 +37,7 @@ KDE6 PAM KWallet integration.
 %patch10 -p1
 
 %build
-KWALLETD_PATH=%_K6bin/kwalletd6
-for f in \
-    /usr/share/dbus-1/services/org.kde.kwalletd6.service \
-    #
-do
-    [ -e $f ] || continue
-    KWALLETD_PATH_NEW=`grep '^Exec=' $f | sed 's|^Exec=||'`
-    [ -z "$KWALLETD_PATH_NEW" ] || KWALLETD_PATH=$KWALLETD_PATH_NEW
-done
 %K6build \
-    -DKWALLETD_BIN_PATH=$KWALLETD_PATH \
     -DCMAKE_INSTALL_LIBDIR:PATH=%_libdir \
     #
 
@@ -66,6 +54,9 @@ done
 
 
 %changelog
+* Thu Jun 05 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt2
+- fix find ksecretd (closes: 54619)
+
 * Wed May 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.3.5-alt1
 - new version
 
