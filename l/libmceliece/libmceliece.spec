@@ -5,7 +5,7 @@
 
 Name: libmceliece
 Version: 20250507
-Release: alt1
+Release: alt2
 Summary: Classic McEliece microlibrary
 License: LicenseRef-PD-hp OR CC0-1.0 OR 0BSD OR MIT-0 OR MIT
 Group: System/Libraries
@@ -59,7 +59,9 @@ Requires: %name = %EVR
 Summary: Tests for %name
 Group: Development/Other
 Requires: %name-devel = %EVR
+%ifarch %valgrind_arches
 Requires: valgrind
+%endif
 
 %description tests
 %summary.
@@ -120,6 +122,10 @@ sha256sum mceliece*.sessionkey*
 %_bindir/mceliece-*
 
 %changelog
+* Thu Jun 05 2025 Ivan A. Melnikov <iv@altlinux.org> 20250507-alt2
+- NMU: Don't depend on valgrind on architectures that don't have it
+  (fixes build on loongarch64 and riscv64).
+
 * Tue Jun 03 2025 Vitaly Chikunov <vt@altlinux.org> 20250507-alt1
 - Update to 20250507.
 
