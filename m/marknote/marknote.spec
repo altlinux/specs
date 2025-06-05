@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 1.3.0
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Text tools
@@ -54,5 +54,8 @@ making it easy to use your notes outside of Marknote as well as inside the app.
 %_datadir/metainfo/*marknote*
 
 %changelog
+* Thu Jun 05 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
+- add russian translation
+
 * Wed Jun 04 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - initial build
