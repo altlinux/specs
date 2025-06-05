@@ -3,23 +3,26 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 6.0.7
+Version: 6.0.13
 Release: alt1
+
 Summary: Deepin Polkit Agent
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-polkit-agent
-Packager: Leontiy Volodin <lvol@altlinux.org>
+Vcs: git://github.com/linuxdeepin/dde-polkit-agent.git
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake dtkcore libdtkwidget-devel dtk6-common-devel deepin-qt-dbus-factory-devel libpolkitqt5-qt5-devel dqt5-tools-devel
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires: cmake libdtk6widget-devel dtk6-common-devel dqt6-tools-devel dqt6-declarative-devel libdde-shell-devel deepin-shell libpolkitqt6-qt6-devel libcups-devel
 
 %description
 DDE Polkit Agent is the polkit agent used in Deepin Desktop Environment.
@@ -34,10 +37,10 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 
 %build
-export PATH=%_dqt5_bindir:$PATH
-export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
+export LC_ALL="C.UTF-8"
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -45,16 +48,10 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
-%cmake \
-  -GNinja \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
-  -DCMAKE_INSTALL_RPATH=%_dqt5_libdir \
-%nil
-cmake --build "%_cmake__builddir" -j%__nprocs
+%DQ6build
 
 %install
-%cmake_install
+%DQ6install
 
 %files
 %doc README.md
@@ -69,6 +66,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Thu Jun 05 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.13-alt1
+- New version 6.0.13.
+- Added vcs tag.
+- Switched to dqt6.
+
 * Thu May 23 2024 Leontiy Volodin <lvol@altlinux.org> 6.0.7-alt1
 - New version 6.0.7.
 - Built via separate qt5 instead system (ALT #48138).
