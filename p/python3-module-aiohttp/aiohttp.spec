@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.12.7
+Version: 3.12.9
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -87,6 +87,9 @@ make cythonize-nodeps
 %python3_sitelibdir/%mod_name/*/*test*
 
 %changelog
+* Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 3.12.9-alt1
+- 3.12.7 -> 3.12.9.
+
 * Tue Jun 03 2025 Stanislav Levin <slev@altlinux.org> 3.12.7-alt1
 - 3.12.6 -> 3.12.7.
 
