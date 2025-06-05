@@ -2,7 +2,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 %define kpmcore_ver %version
 
 Requires: libkpmcore >= %kpmcore_ver
-Requires: qca-qt5-ossl lvm2 cryptsetup polkit
+Requires: qca-qt6-ossl lvm2 cryptsetup polkit
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: gcc-c++ extra-cmake-modules
@@ -69,6 +69,9 @@ file systems.
 %doc README*
 
 %changelog
+* Thu Jun 05 2025 Yuri N. Sedunov <aris@altlinux.org> 25.04.2-alt1
+- 25.04.2
+
 * Fri May 09 2025 Yuri N. Sedunov <aris@altlinux.org> 25.04.1-alt1
 - 25.04.1
 
