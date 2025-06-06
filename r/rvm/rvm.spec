@@ -1,8 +1,8 @@
 %define        _unpackaged_files_terminate_build 1
 
 Name:          rvm
-Version:       1.29.12.125
-Release:       alt0.4
+Version:       1.29.12.126
+Release:       alt0.1
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -10,20 +10,36 @@ Url:           https://rvm.io
 Vcs:           https://github.com/rvm/rvm.git
 BuildArch:     noarch
 
+Autoreq:       yes,noshell
 Source:        %name-%version.tar
+Source1:       %name.sh
 Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /proc /dev
 BuildRequires: curl
 BuildRequires: gnupg2
 
-Requires:      %name-devel
-Requires:      gem(gem-wrappers)
-Requires:      gem(rubygems-bundler)
-Requires:      gem(rake)
-Requires:      gem(rvm)
-Requires:      gem(bundler)
-Requires:      gem(openssl)
+Requires:      setup
+Requires:      curl
+Requires:      gnupg2
+Requires:      gperf
+Requires:      gcc
+Requires:      gcc-c++
+Requires:      doxygen
+Requires:      autoconf
+Requires:      groff-base
+Requires:      libssl-devel
+Requires:      libgmp-devel
+Requires:      libreadline-devel
+Requires:      libdb4-devel
+Requires:      libffi-devel
+Requires:      libgdbm-devel
+Requires:      libncursesw-devel
+Requires:      zlib-devel
+Requires:      libyaml-devel
+%ifarch %valgrind_arches
+Requires:      valgrind-devel
+%endif
 
 %description
 RVM is the acronym of Ruby enVironment Manager. It manages Ruby application
@@ -48,30 +64,14 @@ Currently supported following ruby interpreters:
 %package       devel
 Summary:       Ruby enVironment Manager (RVM) pure development package with RVM code
 Group:         Development/Ruby
-Autoreq:       yes,noshell
 
-Requires:      setup
-Requires:      curl
-Requires:      gnupg2
-Requires:      gperf
-Requires:      gcc
-Requires:      gcc-c++
-Requires:      doxygen
-Requires:      autoconf
-Requires:      groff-base
-Requires:      rust
-Requires:      libssl-devel
-Requires:      libgmp-devel
-Requires:      libreadline-devel
-Requires:      libdb4-devel
-Requires:      libffi-devel
-Requires:      libgdbm-devel
-Requires:      libncursesw-devel
-Requires:      zlib-devel
-Requires:      libyaml-devel
-%ifarch %valgrind_arches
-Requires:      valgrind-devel
-%endif
+Requires:      %name
+Requires:      gem(gem-wrappers)
+Requires:      gem(rubygems-bundler)
+Requires:      gem(rake)
+Requires:      gem(rvm)
+Requires:      gem(bundler)
+Requires:      gem(openssl)
 
 %description   devel
 RVM is the acronym of Ruby enVironment Manager. It manages Ruby application
@@ -115,36 +115,43 @@ popd
 ln -rvs %buildroot%_logdir/%name %buildroot%_localstatedir/%name/log
 ls %buildroot%_libexecdir/%name/bin/*| while read f; do fn="$(basename "$f")"; ln -s %_libexecdir/%name/bin/"$fn" %buildroot%_bindir/"$fn"; done
 cp -rp %buildroot%_libexecdir/%name/config/* %buildroot%_sysconfdir/%name/
-cat > %buildroot%_sysconfdir/bashrc.d/%name.sh << PROFILE
-[[ -s "%_libexecdir/%name/scripts/rvm" ]] && source "%_libexecdir/%name/scripts/rvm" # Load RVM into a shell session *as a function*
-PROFILE
+install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/%name.sh
 
-%pre           devel
-getent group rvm >/dev/null || %_sbindir/groupadd -r rvm
-usermod -a -G rvm root
-
+%pre
 ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 %files
-%doc README* CHANGELOG* CONTRIBUTING* FORMATTING* HACKING* VERSION
-
-%files         devel
-%attr(755,root,rvm) %config(noreplace) %_sysconfdir/bashrc.d/%name.sh
+%attr(755,root,root) %config(noreplace) %_sysconfdir/bashrc.d/%name.sh
 %config(noreplace) %_sysconfdir/%name
 %_bindir/*
 %_libexecdir/%name
-%attr(775,root,rvm) %_localstatedir/%name
-%attr(775,root,rvm) %_localstatedir/%name/wrappers
-%attr(775,root,rvm) %_localstatedir/%name/environments
-%attr(775,root,rvm) %_localstatedir/%name/src
-%attr(775,root,rvm) %_localstatedir/%name/archives
-%attr(775,root,rvm) %_localstatedir/%name/rubies
-%attr(775,root,rvm) %_localstatedir/%name/gems
-%attr(775,root,rvm) %_localstatedir/%name/user
-%attr(775,root,rvm) %_localstatedir/%name/tmp
-%dir %attr(775,root,rvm) %_logdir/%name
+%attr(775,root,root) %_localstatedir/%name
+%attr(775,root,root) %_localstatedir/%name/wrappers
+%attr(775,root,root) %_localstatedir/%name/environments
+%attr(775,root,root) %_localstatedir/%name/src
+%attr(775,root,root) %_localstatedir/%name/archives
+%attr(775,root,root) %_localstatedir/%name/rubies
+%attr(775,root,root) %_localstatedir/%name/gems
+%attr(775,root,root) %_localstatedir/%name/user
+%attr(775,root,root) %_localstatedir/%name/tmp
+%dir %attr(775,root,root) %_logdir/%name
+
+%files         devel
+%doc README* CHANGELOG* CONTRIBUTING* FORMATTING* HACKING* VERSION
+
 
 %changelog
+* Wed Jun 04 2025 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.1
+- * swapped functions of rvm and rvm-devel packages
+- > use version passed as arg for rubygem installation procedure instrad of
+    dropping to version_default
+- - removed rvm group usage in favor of .rvm at user home
+- ! fixed ruby installatiion procedure, closing:
+ + ALT #53866
+ + ALT #49776
+ + ALT #49775
+ + ALT #49774
+
 * Tue Aug 06 2024 Pavel Skrylev <majioa@altlinux.org> 1.29.12.125-alt0.4
 - ! log link to %%_logdir from %%_localstatedir
 - * rollback group rvm to use the rvm ruby installations

@@ -1,13 +1,14 @@
 %define        _unpackaged_files_terminate_build 1
-%define        ruby_version 3.3.0
+%define        ruby_version_core 3.3
+%define        ruby_version %{ruby_version_core}.0
 %define        lname lib%name
 %define        ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
-%define        _version 3.3.7
+%define        _version %{ruby_version_core}.8
 %define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.1
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -43,7 +44,7 @@ BuildRequires: gem(test-unit) >= 3.3.5
 BuildRequires: gem(ipaddr) >= 0
 %endif
 %if_without check
-#NOTE disabled or a while
+#NOTE disabled for a while
 #BuildConflicts: ruby
 %endif
 
@@ -51,14 +52,6 @@ Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      %name-stdlibs = %EVR
 Requires:      /bin/install
 Provides:      /usr/bin/ruby
-%define obsolete() \
-Provides:      %1 = %EVR \
-Obsoletes:     %1
-%define mobsolete() \
-%(for m in %*; do \
-echo "Provides: %name-module-$m = %EVR"; \
-echo "Obsoletes: %name-module-$m"; \
-done)
 
 # Ruby built using LTO cannot rebuild itself because of segfaults
 %define        optflags_lto %nil
@@ -105,7 +98,7 @@ Group:         Development/C
 BuildArch:     noarch
 
 Requires:      %name = %EVR
-Requires:      rvm-devel
+Requires:      rvm >= 1.29.12.126-alt0.1
 Requires:      libruby-devel = %EVR
 Requires:      gem(rake) >= 0
 Requires:      gem(benchmark_driver) >= 0
@@ -319,7 +312,7 @@ mkdir -p \
    %buildroot%_docdir/%name
 
 cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
-ln -s %name-3.3.pc %buildroot%_pkgconfigdir/%name.pc
+ln -s %name-%{ruby_version_core}.pc %buildroot%_pkgconfigdir/%name.pc
 # install ruby macros
 install -D -p -m 0644 %SOURCE3 %buildroot%_rpmmacrosdir/ruby.env
 %__ruby -e 'File.open("%buildroot%_sysconfdir/bashrc.d/%name.sh", "w") { |f| f.puts ERB.new(IO.read("%SOURCE1")).result }'
@@ -333,21 +326,14 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %check
 %make test
 
-%pre
-getent group ruby >/dev/null || %_sbindir/groupadd -r ruby
-usermod -a -G ruby root
-
-%post
-echo "NOTE: to make the environment variable changes come into effect, please relogin the terminal session" 1>&2
-
 %files
 %_altdir/%name
 %_man1dir/%name.*
 %dir %_datadir/ri
-%attr(0755,root,ruby) %_sysconfdir/bashrc.d/%name.sh
-%dir %attr(775,root,ruby) %_cachedir/%name/
-%dir %attr(775,root,ruby) %_cachedir/%name/gemie
-%dir %attr(775,root,ruby) %_cachedir/%name/gemie/bin
+%attr(0755,root,root) %_sysconfdir/bashrc.d/%name.sh
+%dir %attr(775,root,root) %_cachedir/%name/
+%dir %attr(775,root,root) %_cachedir/%name/gemie
+%dir %attr(775,root,root) %_cachedir/%name/gemie/bin
 
 %files         -n %lname
 %_libdir/*.so.*
@@ -387,6 +373,12 @@ echo "NOTE: to make the environment variable changes come into effect, please re
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Thu Jun 05 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.8-alt1
+- ^ 3.3.7 -> 3.3.8
+- * replaced rvm-devel with rvm in favor of better understandbility
+- ! fixed ruby.sh bashrc script to define gemset folders
+- ! fixed CVE-2025-25186
+
 * Wed Mar 05 2025 Pavel Skrylev <majioa@altlinux.org> 3.3.7-alt1.1
 - + added absent ruby cache bin folder on disk (closes #49375)
 
