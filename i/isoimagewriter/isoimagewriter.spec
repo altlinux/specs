@@ -1,7 +1,7 @@
 %define nameL org.kde.isoimagewriter
 
 Name: isoimagewriter
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 
 Summary: Program to write hybrid ISO files onto USB disks
@@ -43,5 +43,8 @@ BuildRequires: kf6-solid-devel
 %_datadir/metainfo/%nameL.appdata.xml
 
 %changelog
+* Fri Jun 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 25.04.2-alt1
+- 25.04.1 -> 25.04.2
+
 * Thu May 29 2025 Aleksandr Shamaraev <shad@altlinux.org> 25.04.1-alt1
 - Initial build for ALT Linux.
