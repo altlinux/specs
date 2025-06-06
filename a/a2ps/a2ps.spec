@@ -2,7 +2,7 @@
 
 Name: a2ps
 Version: 4.14
-Release: alt4
+Release: alt5
 
 # Brain damaged lib/program_name system...
 %set_verify_elf_method unresolved=relaxed
@@ -24,7 +24,7 @@ Patch7: %name-2.13-pld-i18n.patch
 Patch8: %name-2.13-pld-ogonkify-xfig-fix.patch
 Patch9: %name-4.13-select_c-filename-shell-command-vulnerability.patch
 #Patch10: %name-4.13-alt-gcc3.4.patch
-Patch10: %name-4.13-includes.patch
+Patch10: %name-4.14-alt-gcc14-implicit-declaration-fix.patch
 Patch11: %name-4.13-varargs.patch
 Patch12: %name-4.13-64bit-fixes.patch
 Patch13: %name-4.13-alt-liba2ps_with_lm.patch
@@ -57,12 +57,17 @@ filters (such as groff, texi2dvi, dvips, gzip etc.), what allows a
 uniform treatment (n-up, page selection, duplex etc.) of heterogeneous
 files.
 
-%description -l ru_RU.KOI8-R
-GNU a2ps -- это фильтр, преобразующий документы из различных форматов в
-PostScript. Он достаточно прост в использовании, но при этом позволяет
-выполнять сложные операции над файлами PostScript. В своей работе он
-может взаимодействовать с другими фильтрами, такими как groff, texi2dvi,
-dvips, gzip и т.д.
+%description -l ru_RU.UTF-8
+GNU a2ps - я█я┌п╬ я└п╦п╩я▄я┌я─ Any to PostScript.  п п╬п╫п╣я┤п╫п╬, п╬п╫ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌
+п╬п╠я▀я┤п╫я▀п╣ я┌п╣п╨я│я┌п╬п╡я▀п╣ я└п╟п╧п╩я▀, п╫п╬ я┌п╟п╨п╤п╣ п╫п╣п©п╩п╬я┘п╬ п©п╣я┤п╟я┌п╟п╣я┌ п╫п╟ п╪п╫п╬пЁп╦я┘ п©п╬п©я┐п╩я▐я─п╫я▀я┘
+я▐п╥я▀п╨п╟я┘.
+п∙пЁп╬ п╢п╣п╡п╦п╥ - "п■п╣п╩п╟п╧ п©я─п╟п╡п╦п╩я▄п╫я▀п╣ п╡п╣я┴п╦", я┤я┌п╬ п╬п╥п╫п╟я┤п╟п╣я┌, я┤я┌п╬ п╫п╣я│п╪п╬я┌я─я▐ п╫п╟
+п╡я▀я│п╬п╨я┐я▌ я│я┌п╣п©п╣п╫я▄ п╨п╬п╫я└п╦пЁя┐я─п╦я─я┐п╣п╪п╬я│я┌п╦, п╡я│п╣ я│п╢п╣п╩п╟п╫п╬ я┌п╟п╨, я┤я┌п╬п╠я▀ п╫п╟я┤п╦п╫п╟я▌я┴п╦п╧
+п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄ я│п╪п╬пЁ п╡я▀п©п╬п╩п╫я▐я┌я▄ я│п╩п╬п╤п╫я▀п╣ п╪п╟п╫п╦п©я┐п╩я▐я├п╦п╦ я│ PostScript.
+п²п╟п©я─п╦п╪п╣я─, п╣я│я┌я▄ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌я▄ п╢п╣п╩п╣пЁп╦я─п╬п╡п╟я┌я▄ п╬п╠я─п╟п╠п╬я┌п╨я┐ п╫п╣п╨п╬я┌п╬я─я▀я┘ я└п╟п╧п╩п╬п╡
+п╢я─я┐пЁп╦п╪ я└п╦п╩я▄я┌я─п╟п╪ (я┌п╟п╨п╦п╪ п╨п╟п╨ groff, texi2dvi, dvips, gzip п╦ я┌. п╢.),
+я┤я┌п╬ п©п╬п╥п╡п╬п╩я▐п╣я┌ п╣п╢п╦п╫п╬п╬п╠я─п╟п╥п╫я┐я▌ п╬п╠я─п╟п╠п╬я┌п╨я┐ (n-up, page selection, duplex
+п╦ я┌. п╢.) я─п╟п╥п╫п╬я─п╬п╢п╫я▀я┘ я└п╟п╧п╩п╬п╡.
 
 %package -n lib%name
 Summary: %name shared library
@@ -72,8 +77,8 @@ License: GPL
 %description -n lib%name
 The lib%name package contains a shared library of functions of %name' filters.
 
-%description -n lib%name -l ru_RU.KOI8-R
-В этом пакете находится динамическая библиотека, используемая фильтрами %name.
+%description -n lib%name -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ lib%name я│п╬п╢п╣я─п╤п╦я┌ я─п╟п╥п╢п╣п╩я▐п╣п╪я┐я▌ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ я└я┐п╫п╨я├п╦п╧ я└п╦п╩я▄я┌я─п╬п╡ %name.
 
 %package -n lib%name-devel
 Summary: %name development files
@@ -85,9 +90,8 @@ PreReq: lib%name = %EVR
 The lib%name package contains development files for using
 lib%name in development.
 
-%description -n lib%name-devel -l ru_RU.KOI8-R
-В этом пакете находятся файлы, необхоимые для использования
-библиотеки lib%name в разработке приложений.
+%description -n lib%name-devel -l ru_RU.UTF-8
+п║п╬п╢п╣я─п╤п╦я┌ я└п╟п╧п╩я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ lib%name.
 
 %package -n lib%name-devel-static
 Summary: Staitc library for %name
@@ -98,9 +102,9 @@ PreReq: lib%name-devel = %EVR
 %description -n lib%name-devel-static
 This package contains library for building statically linked software.
 
-%description -n lib%name-devel-static -l ru_RU.KOI8-R
-В этом пакете находятся файлы, необхоимые для использования
-библиотеки lib%name в разработке статических приложений.
+%description -n lib%name-devel-static -l ru_RU.UTF-8
+п║п╬п╢п╣я─п╤п╦я┌ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐ п╢п╩я▐ я│п╬п╥п╢п╟п╫п╦я▐ я│я┌п╟я┌п╦я┤п╣я│п╨п╦ я│п╡я▐п╥п╟п╫п╫п╬пЁп╬ п©я─п╬пЁя─п╟п╪п╪п╫п╬пЁп╬
+п╬п╠п╣я│п©п╣я┤п╣п╫п╦я▐.
 
 %prep
 %setup -q
@@ -166,6 +170,9 @@ install -m 755 %SOURCE1 %buildroot%_sbindir
 %endif
 
 %changelog
+* Tue Jun  3 2025 Evgeniy Gorbanyov <esgor@altlinux.org> 4.14-alt5
+- Fixed FTBFS with gcc-14.
+
 * Wed Oct 25 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 4.14-alt4
 - NMU: fixed FTBFS with glibc 2.38
 
