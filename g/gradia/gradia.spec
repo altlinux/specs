@@ -4,8 +4,9 @@
 %set_verify_elf_method fhs=relaxed
 
 Name: gradia
-Version: 20250528
+Version: 1.2.1
 Release: alt1
+Epoch: 1
 
 Summary: Make your screenshots ready for all
 License: GPL-3.0-or-later
@@ -59,8 +60,12 @@ overall appearance.
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
 %_datadir/metainfo/%app_id.metainfo.xml
+%_datadir/fonts/*
 %doc README.md
 
 %changelog
+* Fri Jun 06 2025 David Sultaniiazov <x1z53@altlinux.org> 1:1.2.1-alt1
+- Update to v1.2.1
+
 * Wed May 28 2025 David Sultaniiazov <x1z53@altlinux.org> 20250528-alt1
 - Initial build
