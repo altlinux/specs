@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 1.0.5
-Release: alt1
+Release: alt2
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -28,6 +28,7 @@ Patch2: 0004-Work-around-build-issues-with-Qt-6.9.patch
 Patch3: 0010-quazip-detect.patch
 Patch4: 0011-ngspice-detect.patch
 Patch5: 0012-clipper1-detect.patch
+Patch6: %name-%version-%release.patch
 
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
@@ -41,6 +42,9 @@ BuildRequires: ngspice-devel libpolyclipping-devel libsvgpp-devel chrpath
 
 # large chunk of arch-independent data is better not duplicated
 Requires: %name-data = %EVR
+
+# ngspice
+Requires: ngspice libngspice0
 
 %description
 Fritzing is an open-source initiative to support designers, artists,
@@ -73,6 +77,7 @@ This package contains shared data files for Fritzing.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 rm -v sketches/core/Fritzing\ Creator\ Kit\ DE+EN/creator-kit-*/Fritzing/TwitterSaurus.fzz
 rm -rv sketches/core/Fritzing\ Creator\ Kit\ DE+EN/creator-kit-*/Processing/TwitterSaurus*
@@ -122,6 +127,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Fri Jun 06 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.5-alt2
+* Fully enabled ngspice simulation.
+
 * Tue Jun 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.0.5-alt1
 - Build new version.
 
