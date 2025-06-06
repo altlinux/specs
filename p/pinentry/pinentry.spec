@@ -5,7 +5,7 @@
 
 Name: pinentry
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
@@ -78,8 +78,6 @@ Requires: xprop
 Requires: %name-common = %EVR
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
-Provides: pinentry-qt = %EVR
-Obsoletes: pinentry-qt < %EVR
 
 %package qt6
 Group: %group
@@ -88,6 +86,8 @@ Requires: xprop
 Requires: %name-common = %EVR
 Provides: %name = %version-%release
 Provides: %name-x11 = %version-%release
+Provides: pinentry-qt = %EVR
+Obsoletes: pinentry-qt < %EVR
 
 %description gtk2
 This is simple PIN or passphrase entry dialog which utilize
@@ -265,6 +265,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt2
+- set pinentry-qt6 as pinentry-qt provider
+
 * Tue Sep 17 2024 Sergey V Turchin <zerg@altlinux.org> 1.3.1-alt1
 - new version
 - build Qt6 version
