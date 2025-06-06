@@ -1,31 +1,29 @@
-Name:		torrent-file-editor
-Version:	0.3.17
-Release:	alt3
-License:	GPLv3+
-Summary:	Torrent File Editor
-Group:		File tools
-Url:		https://torrent-file-editor.github.io/
-Source0:	%name-%version.tar.gz
+Name: torrent-file-editor
+Version: 1.0.0
+Release: alt1
 
-Patch0:		torrent-file-editor-0.3.17-uk_UA.patch
+License: GPLv3+
+Summary: Torrent File Editor
+Group: File tools
 
-Provides:	%name-common %name-qt5
-Obsoletes:	%name-common %name-qt5
+Url: https://torrent-file-editor.github.io
+Vcs: https://github.com/torrent-file-editor/torrent-file-editor
 
-BuildRequires: ccmake qt5-tools-devel
+Source: %name-%version.tar
+
+BuildRequires: ccmake qt6-tools-devel qt6-5compat-devel
 
 %description
 Qt based GUI tool designed to create and edit .torrent files
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 mkdir ./build && cd ./build
 cmake ../. \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
-	-DQT5_BUILD=ON \
+	-DQT6_BUILD=ON \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DENABLE_PCH:BOOL=OFF
@@ -43,6 +41,13 @@ cd ./build
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Fri Jun 06 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0.0-alt1
+- 0.3.17 -> 1.0.0
+- fixed FTBFS
+- build with Qt6
+- removed patch
+- added VCS
+
 * Mon Jun 28 2021 Motsyo Gennadi <drool@altlinux.ru> 0.3.17-alt3
 - build only with Qt5
 
