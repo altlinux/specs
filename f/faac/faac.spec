@@ -2,7 +2,7 @@
 
 Name:          faac
 Version:       1.30
-Release:       alt1
+Release:       alt2
 Summary:       FAAC is a Freeware Advanced Audio Coder
 License:       LGPL
 Group:         Sound
@@ -52,6 +52,9 @@ MP3 encoders.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i 's/!defined(__clang__)/& \&\& !defined(__EDG__)/' libfaac/quantize.c
+%endif
 
 %build
 %autoreconf
@@ -79,6 +82,9 @@ MP3 encoders.
 %_libdir/*.so
 
 %changelog
+* Fri Jun 06 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.30-alt2
+- e2k build fix
+
 * Thu Feb 06 2025 Pavel Skrylev <majioa@altlinux.org> 1.30-alt1
 - * changed gear style
 - ^ 1.28 -> 1.30
