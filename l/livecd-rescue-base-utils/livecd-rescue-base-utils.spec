@@ -1,6 +1,6 @@
 Name: livecd-rescue-base-utils
-Version: 1.0
-Release: alt2
+Version: 1.1
+Release: alt1
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
@@ -22,7 +22,7 @@ Requires: photorec
 Requires: sleuthkit
 Requires: smartmontools
 Requires: testdisk
-Requires: wipefreespace
+#Requires: wipefreespace
 Requires: whdd
 
 # Partition management
@@ -40,12 +40,10 @@ Requires: dosfstools
 Requires: e2fsprogs
 Requires: exfatprogs
 Requires: f2fs-tools
-Requires: jfsprogs
+#Requires: jfsprogs
 Requires: mtools
 Requires: ntfs-3g
-Requires: reiser4progs
-Requires: reiserfsprogs
-Requires: xfsprogs
+#Requires: xfsprogs
 
 # Applications/Networking
 Requires: cifs-utils
@@ -57,7 +55,7 @@ Requires: ntpdate
 Requires: wget
 
 # Console mouse
-Requires: gpm
+#Requires: gpm
 
 # File management
 Requires: mc
@@ -85,6 +83,10 @@ Requires: mokutil
 %files
 
 %changelog
+* Fri Jun 06 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- Remove dependencies on wipefreespace, jfsprogs, reiser4progs,
+  reiserfsprogs, xfsprogs, gpm
+
 * Thu Feb 06 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt2
 - Add dependencies on pesign, mokutil (x86_64 only)
 
