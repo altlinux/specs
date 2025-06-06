@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 Summary: Type system extensions for programs checked with the mypy type checker
 License: MIT
@@ -20,8 +20,7 @@ Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3-module-flit-core
 
 %description
 The %pypi_name module defines extensions to the standard "typing" module
@@ -46,6 +45,9 @@ that are supported by the mypy type checker and the mypyc compiler.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jun 06 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.0 -> 1.1.0.
+
 * Tue Mar 07 2023 Stanislav Levin <slev@altlinux.org> 1.0.0-alt1
 - 0.4.3 -> 1.0.0.
 
