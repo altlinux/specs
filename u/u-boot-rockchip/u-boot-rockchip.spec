@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2025.04
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -68,6 +68,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Fri Jun 06 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt2
+- added support for two more Powkiddy RGB20 variants (closes: 54694)
+
 * Tue Apr 08 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2025.04-alt1
 - 2025.04 released
 
