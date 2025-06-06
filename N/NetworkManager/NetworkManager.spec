@@ -41,8 +41,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.52.0
-Release: alt4
+Version: 1.53.90
+Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -383,9 +383,11 @@ GObject introspection devel data for the NetworkManager (libnm).
 	-Dfirewalld_zone=true \
 	-Dnft=/usr/sbin/nft \
 	-Diptables=/sbin/iptables \
+	-Dip6tables=/sbin/ip6tables \
 	%{subst_enable_meson_bool iwd iwd} \
 	-Dconfig_wifi_backend_default=wpa_supplicant \
 	-Dselinux=false \
+	-Dnbft=false \
 	-Ddist_version=%version-%release
 
 %meson_build -v
@@ -548,6 +550,10 @@ fi
 %endif
 %_usr/lib/firewalld/zones/*.xml
 
+%{?_enable_systemd:%exclude %_unitdir/NetworkManager-config-initrd.service}
+%{?_enable_systemd:%exclude %_unitdir/NetworkManager-initrd.service}
+%{?_enable_systemd:%exclude %_unitdir/NetworkManager-wait-online-initrd.service}
+
 %if_enabled ovs
 %{?_enable_systemd:%dir %_unitdir/NetworkManager.service.d/}
 %endif
@@ -643,6 +649,12 @@ fi
 %endif
 
 %changelog
+* Thu Jun 05 2025 Mikhail Efremov <sem@altlinux.org> 1.53.90-alt1
+- Don't package NetworkManager-*initrd.service.
+- Setted ip6tables path.
+- Disabled NBFT support in nm-initrd-generator.
+- Updated to 1.53.90 (1.54-rc1).
+
 * Tue Jun 03 2025 Oleg Solovyov <mcpain@altlinux.org> 1.52.0-alt4
 - wifi: handle invalid secret for WPA3-SAE
 
