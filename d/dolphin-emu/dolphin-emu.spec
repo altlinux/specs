@@ -1,13 +1,13 @@
-%define git_commit 9763c0a1e2b9db0c3861d25bc2f5a0ace6a15ee3
+%define git_commit 9843115ad8414970312c954d83145300d7cdbec3
 
 %define enet_commit 2a85cd64459f6ba038d233a634d9440490dbba12
 %define implot_version 0.16
-%define rcheevos_version 11.4.0
+%define rcheevos_commit 0115d9198ff7a73ff6568027dfb948ef6031818c
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 %define zlib_ng_commit ce01b1e41da298334f8214389cc9369540a7560f
 
 Name: dolphin-emu
-Version: 2503a
+Version: 2506a
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -25,8 +25,8 @@ Source0: dolphin-%version.tar
 Source1: enet-%enet_commit.tar
 # https://github.com/epezent/implot/archive/v%implot_version/implot-%implot_version.tar.gz
 Source2: implot-%implot_version.tar
-# https://github.com/RetroAchievements/rcheevos/archive/v%rcheevos_version/rcheevos-%rcheevos_version.tar.gz
-Source3: rcheevos-%rcheevos_version.tar
+# https://github.com/RetroAchievements/rcheevos/archive/%rcheevos_commit/rcheevos-%rcheevos_commit.tar.gz
+Source3: rcheevos-%rcheevos_commit.tar
 # https://github.com/syoyo/tinygltf/archive/%tinygltf_commit/tinygltf-%tinygltf_commit.tar.gz
 Source4: tinygltf-%tinygltf_commit.tar
 # https://github.com/zlib-ng/zlib-ng/archive/$zlib_ng_commit/zlib-ng-%zlib_ng_commit.gz
@@ -84,7 +84,7 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %__mv -Tf ../enet-%enet_commit Externals/enet/enet
 %__mv -Tf ../implot-%implot_version Externals/implot/implot
-%__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
+%__mv -Tf ../rcheevos-%rcheevos_commit Externals/rcheevos/rcheevos
 %__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
 %__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
 
@@ -122,6 +122,9 @@ echo "#define SCM_REV_STR \"%git_commit\"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Fri Jun 06 2025 Nazarov Denis <nenderus@altlinux.org> 2506a-alt1
+- Version 2506a
+
 * Thu May 01 2025 Nazarov Denis <nenderus@altlinux.org> 2503a-alt1
 - Version 2503a
 
