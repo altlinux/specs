@@ -1,9 +1,11 @@
+%def_enable snapshot
+
 %define _name adwaita-icon-theme
 %define ver_major 48
 %define beta %nil
 
 Name: icon-theme-adwaita
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Adwaita icon theme
@@ -13,7 +15,11 @@ Url: http://www.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/adwaita-icon-theme.git
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+%else
+Source: %_name-%version%beta.tar
+%endif
 
 BuildArch: noarch
 
@@ -47,6 +53,9 @@ Adwaita icon theme for GTK.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 48.0-alt1
 - 48.0
 

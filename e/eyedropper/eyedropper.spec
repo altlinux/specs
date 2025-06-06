@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name eyedropper
 %define ver_major 2.1
@@ -9,7 +9,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME Eyedropper
 License: GPL-3.0
@@ -78,6 +78,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc CHANGELOG* README*
 
 %changelog
+* Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt2
+- updated to v2.1.0-15-gf174d74 (ALT #54518)
+
 * Sun Mar 30 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0
 

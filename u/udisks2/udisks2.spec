@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name udisks
 %define api_ver 2.0
@@ -20,7 +20,7 @@
 
 Name: %{_name}2
 Version: 2.10.90
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.0
@@ -68,6 +68,7 @@ Requires: libblockdev-swap >= %blockdev_ver
 Requires: libblockdev-nvme >= %blockdev_ver
 %{?_enable_smart:Requires: libblockdev-smart >= %blockdev_ver}
 
+BuildRequires(pre): rpm-build-gir
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
@@ -184,6 +185,7 @@ This package contains UDisks module for iSCSI configuration.
 %autoreconf
 %configure --disable-static \
     %{?_disable_gtk_doc:--enable-gtk-doc=no} \
+    %{?_enable_snapshot:--enable-gtk-doc=yes} \
     %{subst_enable acl} \
     %{?_enable_fhs_media:--enable-fhs-media} \
     %{subst_enable lvm2} \
@@ -299,6 +301,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 2.10.90-alt2
+- updated to 2.10.90-63-gb4398d39
+
 * Fri Oct 04 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.90-alt1
 - 2.10.90
 - removed xfsprogs from runtime dependencies (ALT #54692)
