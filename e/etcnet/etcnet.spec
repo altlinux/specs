@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.34
+Version:	0.9.35
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -129,6 +129,10 @@ fi
 %files full
 
 %changelog
+* Fri Jun 06 2025 Anton Farygin <rider@altlinux.com> 0.9.35-alt1
+- Skip interface activation on boot if NM_CONTROLLED=yes to avoid conflicts
+  with NetworkManager.
+
 * Mon May 19 2025 Anton Farygin <rider@altlinux.com> 0.9.34-alt1
 - Auto-detect PPPoE plugin name to support ppp-pppoe < 2.5.0.
 - Fixed PID file location check for pppd 2.5.0+ (/run/ppp) with /var/run fallback.
