@@ -1,21 +1,22 @@
 %define armips_commit a8d71f0f279eb0d30ecf6af51473b66ae0cf8e8d
 %define discord_rpc_commit 963aa9f3e5ce81a4682c6ca3d136cddda614db33
-%define glslang_commit b34f619e1c85810dcb3c578107d2e48ba4ee2b37
+%define glslang_commit 50e0708ec3a5c16020c4f845c654b80b8edb80bd
 %define spirv_cross_commit 4212eef67ed0ca048cb726a6767185504e7695e5
 %define cpu_features_commit fd4ffc1632db7b4e763bd28ffa6fc9d761cf3587
 %define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
 %define ffmpeg_commit 82049cca2e4c1516ed00a77b502a21f91b7843f4
-%define rcheevos_commit 32917bdddf4982e62047862c6633e7671aaaf2cb
+%define rcheevos_commit ef0e22bc076235315b94499bbd9f799a3c781708
 %define libchdr_commit 26d27ca4903aaccd3ef41337b29bf5ecafb1f0ca
 %define rapidjson_commit 73063f5002612c6bf64fe24f851cd5cc0d83eef9
+%define lua_commit 7648485f14e8e5ee45e8e39b1eb4d3206dbd405a
 
 %ifarch %ix86
 %set_verify_elf_method textrel=relaxed
 %endif
 
 Name: ppsspp
-Version: 1.18.1
-Release: alt4
+Version: 1.19
+Release: alt1
 
 Summary: PlayStation Portable Emulator
 License: GPL-2.0-or-later
@@ -48,12 +49,10 @@ Source8: rcheevos-%rcheevos_commit.tar
 Source9: libchdr-%libchdr_commit.tar
 # https://github.com/Tencent/rapidjson/archive/%rapidjson_commit/rapidjson-%rapidjson_commit.tar.gz
 Source10: rapidjson-%rapidjson_commit.tar
+# https://github.com/hrydgard/ppsspp-lua/archive/%lua_commit/ppsspp-lua-%lua_commit.tar.gz
+Source11: ppsspp-lua-%lua_commit.tar
 
 Patch0: %name-alt-git.patch
-Patch1: %name-alt-miniupnpc.patch
-Patch2: %name-1.18.1-alt-loongarch-always-return.patch
-# https://github.com/hrydgard/ppsspp/pull/19840
-Patch3: %name-1.18.1-sdl2_ttf.patch
 
 Requires: %name-common = %EVR
 
@@ -61,7 +60,9 @@ BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: libGLEW-devel
 BuildRequires: libSDL2_ttf-devel
+BuildRequires: libe2fs
 BuildRequires: libminiupnpc-devel
+BuildRequires: libpng-devel
 BuildRequires: libsnappy-devel
 BuildRequires: libwayland-cursor-devel
 BuildRequires: libwayland-egl-devel
@@ -110,7 +111,7 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11
 
 %__mv -Tf ../armips-%armips_commit ext/armips
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
@@ -122,11 +123,9 @@ This build using the Qt frontend.
 %__mv -Tf ../rcheevos-%rcheevos_commit ext/rcheevos
 %__mv -Tf ../libchdr-%libchdr_commit ext/libchdr
 %__mv -Tf ../rapidjson-%rapidjson_commit ext/rapidjson
+%__mv -Tf ../%name-lua-%lua_commit ext/lua
 
 %patch0 -p1
-%patch1 -p1
-%patch2 -p2
-%patch3 -p1
 
 %build
 %add_optflags -Wno-error=return-type
@@ -228,6 +227,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Fri Jun 06 2025 Nazarov Denis <nenderus@altlinux.org> 1.19-alt1
+- Version 1.19
+
 * Sun Feb 02 2025 Nazarov Denis <nenderus@altlinux.org> 1.18.1-alt4
 - Switched to use .gear/tags
 
