@@ -9,7 +9,7 @@
 
 Name: authenticator
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Generate Two-Factor Codes
 License: GPL-3.0-or-later
@@ -24,6 +24,7 @@ Source: https://gitlab.gnome.org/World/Authenticator/-/archive/%version/%name-%v
 Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
+Patch10: %name-4.6.2-alt-fix_for_appstream_data.patch
 
 %define glib_ver 2.80
 %define gtk_ver 4.18
@@ -67,6 +68,8 @@ mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
+%patch10 -p1
+
 %build
 %meson
 %meson_build
@@ -91,6 +94,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1.1
+- armatik@: fixed metainfo check with appstream >= 1.0.5
+
 * Thu Mar 27 2025 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1
 - 4.6.2
 

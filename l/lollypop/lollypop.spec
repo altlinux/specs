@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lollypop
-Version: %ver_major.41
+Version: %ver_major.42
 Release: alt1
 
 Summary: Lollypop music player
@@ -81,6 +81,9 @@ Lollypop is a new GNOME music playing application.
 %doc README*
 
 %changelog
+* Fri Jun 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.42-alt1
+- 1.4.42
+
 * Wed Feb 05 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.41-alt1
 - 1.4.41
 
