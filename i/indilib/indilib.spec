@@ -3,7 +3,7 @@
 
 Name: %{shortname}lib
 Version: 1.9.0
-Release: alt2
+Release: alt3
 
 %define _unpackaged_files_terminate_build 1
 # This package tries to mix and match PIE and PIC which is wrong and will
@@ -38,6 +38,7 @@ BuildRequires: kde-common-devel
 
 Patch0: libindi-uaccess.patch
 Patch1: libindi-gcc11.patch
+Patch2: indilib-1.9.0-alt-fix-cmake-compilation.patch
 
 %description
 INDI is an instrument neutral distributed interface control protocol
@@ -101,6 +102,7 @@ range of Astronomical devices (telescopes, focusers, CCDs..etc).
 %setup -n %{shortname}-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -150,6 +152,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' |
 %_libdir/*.a
 
 %changelog
+* Thu Jun 05 2025 Anton Meleshnikov <alton@altlinux.org> 1.9.0-alt3
+- Fix build with CMAKE 4.0.1
+
 * Thu Jul 13 2023 Artyom Bystrov <arbars@altlinux.org> 1.9.0-alt2
 - Fix build on GCC13
 

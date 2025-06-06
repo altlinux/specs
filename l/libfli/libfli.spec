@@ -7,7 +7,7 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:       libfli
 Version:    1.9.0
-Release:    alt1_2
+Release:    alt2_2
 Summary:    Library for FLI CCD Camera & Filter Wheels
 
 License:    BSD
@@ -28,6 +28,8 @@ BuildRequires:  pkgconfig(libindi) = %{version}
 BuildRequires:  pkgconfig(libusb-1.0)
 Source44: import.info
 
+Patch0: libfli-1.9.0-alt-fix-cmake-compilation.patch
+
 %description
 Finger Lakes Instrument library is used by applications to control FLI 
 line of CCDs and Filter wheels
@@ -41,6 +43,7 @@ These are the header files needed to develop a %{name} application
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p2
 sed -i 's|/lib/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
 
 %build
@@ -61,6 +64,9 @@ sed -i 's|/lib/udev/rules.d|%{_udevrulesdir}|g' CMakeLists.txt
 %{_libdir}/*.so
 
 %changelog
+* Thu Jun 05 2025 Anton Meleshnikov <alton@altlinux.org> 1.9.0-alt2_2
+- fix build with CMAKE 4.0.1
+
 * Sat Nov 13 2021 Igor Vlasenko <viy@altlinux.org> 1.9.0-alt1_2
 - update to new release by fcimport
 
