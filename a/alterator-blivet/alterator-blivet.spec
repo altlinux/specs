@@ -3,7 +3,7 @@
 
 Name: alterator-blivet
 Version: 1.1.0
-Release: alt0.2
+Release: alt0.3
 
 Summary: Alterator module for volume management based on blivet
 License: GPLv3
@@ -41,6 +41,9 @@ install -Dpm644 blivetstorage/*.py -t %buildroot%python3_sitelibdir/blivetstorag
 %python3_sitelibdir/blivetstorage/*
 
 %changelog
+* Thu Jun 05 2025 Sergey Konev <darisishe@altlinux.org> 1.1.0-alt0.3
+- virtualization module: minor i18n fix
+
 * Tue May 06 2025 Sergey Konev <darisishe@altlinux.org> 1.1.0-alt0.2
 - virtualization module: create local-btrfs subvolume by default 
   for PVE distro
