@@ -15,7 +15,7 @@
 
 Name: libportal
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: Flatpak portal library
@@ -28,6 +28,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
+Patch10: %name-0.9.1-up-qt-6.9.patch
 
 %define glib_ver 2.72
 
@@ -206,6 +207,7 @@ of the installed %name.
 
 %prep
 %setup
+%patch10 -p1
 sed -i 's|pytest-3|py.test3|' tests/meson.build
 
 %ifarch %e2k
@@ -318,6 +320,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sat Jun 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.1-alt1.1
+- applied upstream fix for build against Qt 6.9+ (ALT #54716)
+
 * Thu Feb 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.9.1-alt1
 - 0.9.1
 
