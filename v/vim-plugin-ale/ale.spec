@@ -3,7 +3,7 @@
 
 %define plugname ale
 Name: vim-plugin-%plugname
-Version: 3.3.0
+Version: 4.0.0
 Release: alt1
 Summary: Check syntax in Vim asynchronously and fix files
 License: BSD-2-Clause
@@ -28,8 +28,12 @@ cp -av ale_linters autoload doc ftplugin plugin rplugin syntax %buildroot%vim_ru
 
 %files
 %doc LICENSE README.md supported-tools.md
+%dir %vim_runtime_dir/ale_linters
 %vim_runtime_dir/*/*
 
 %changelog
+* Sat Jun 07 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.0-alt1
+- Update to v4.0.0 (2025-03-14).
+
 * Tue Mar 07 2023 Vitaly Chikunov <vt@altlinux.org> 3.3.0-alt1
 - First import v3.3.0 (2022-12-25).
