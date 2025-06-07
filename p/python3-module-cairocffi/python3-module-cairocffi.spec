@@ -2,25 +2,24 @@
 %define modulename cairocffi
 
 Name: python3-module-%modulename
-Version: 1.6.1
+Version: 1.7.1
 Release: alt1
 
-Summary: CFFI-based cairo bindings for Python.
+Summary: CFFI-based cairo bindings for Python
 License: BSD-3-Clause
 Group: Development/Python3
-URL: https://github.com/Kozea/cairocffi
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-cffi
-BuildRequires: python3-module-xcffib
-BuildRequires: python3-module-flit-core
-BuildRequires: libxcb-devel
+URL: https://pypi.org/project/cairocffi
+VCS: https://github.com/Kozea/cairocffi
 
 BuildArch: noarch
 
 Source: %modulename-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-cffi
+BuildRequires: python3-module-xcffib
+BuildRequires: python3-module-flit-core
+BuildRequires: libxcb-devel
 
 %description
 %summary
@@ -56,6 +55,9 @@ This package contains tests for Python-3.
 %python3_sitelibdir/%modulename/__pycache__/test_*
 
 %changelog
+* Fri Jun 06 2025 Denis Sergeev <zeff@altlinux.org> 1.7.1-alt1
+- 1.6.1 -> 1.7.1.
+
 * Wed Sep 27 2023 Egor Ignatov <egori@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
