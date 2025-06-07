@@ -1,7 +1,7 @@
 %global srcname qutebrowser
 
 Name: %srcname
-Version: 3.5.0
+Version: 3.5.1
 Release: alt2
 Summary: A keyboard-driven, vim-like browser based on PyQt6 and QtWebEngine
 License: GPLv3
@@ -13,21 +13,24 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: asciidoc asciidoc-a2x
-BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3
-BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt6
+BuildRequires: desktop-file-utils python3-module-setuptools rpm-build-python3 rpm-macros-qt6 qt6-base-devel
+BuildRequires: pyproject-build rpm-macros-python3 python3-module-PyQt6-devel python3-module-PyQt6
+#BuildRequires: python3-module-PyQt6-WebEngine
+#Requires: libqt6-webenginecore
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
-#Requires: qt5-qtbase
-#Requires: qt5-qtdeclarative
+Requires: qt6-base-common
+Requires: qt6-declarative
+Requires: python3-module-PyQt6
 #Requires: python3-module-setuptools
 #Requires: python3-qt5
 #Requires: python3-qt5-webengine
-#Requires: python3-jinja2
-#Requires: python3-pygments
-#Requires: python3-PyYAML
-#Requires: python3-pyPEG2
-#Requires: python3-attrs
+Requires: python3-module-jinja2
+Requires: python3-module-Pygments
+Requires: python3-module-pyaml
+Requires: python3-module-pyPEG2 
+#Requires: python3-adblock
 #Requires: qt5-qtwebengine qt5-qtwebkit python3-qt5-webkit python3-cssutils
 Provides: python3(qutebrowser.extensions)
 Provides: python3(qutebrowser.components.utils)
@@ -102,6 +105,21 @@ find %buildroot -size 0 -delete
 %_datadir/icons/hicolor/512x512/apps/%srcname.png
 
 %changelog
+* Sat Jun 07 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt2
+- Fix requires
+
+* Sat Jun 07 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.1-alt1
+- 3.5.1
+
+* Thu May 15 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt5
+- Added more requires for Python modules
+
+* Wed Apr 30 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt4
+- Add narch for i586 e2k
+
+* Wed Apr 30 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt3
+- Added more requires
+
 * Fri Apr 25 2025 Ilya Mashkin <oddity@altlinux.ru> 3.5.0-alt2
 - Update BuildRequires: to python3-module-PyQt6 (Closes: #53975)
 
