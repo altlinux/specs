@@ -2,7 +2,7 @@
 Name: openxcom-extended
 Epoch: 1
 Version: 8.1.5
-Release: alt1
+Release: alt2
 
 Summary: OpenXcom Extended is an open-source clone of the original X-COM
 License: GPLv3+
@@ -42,6 +42,8 @@ sed -i 's,DATADIR}/openxcom",DATADIR}/%name",g' src/CMakeLists.txt
 sed -i 's,^.*femit-struct-debug-reduced,#&,' src/CMakeLists.txt
 %endif
 
+subst "s|VERSION 3.1|VERSION 3.5|" CMakeLists.txt
+
 %build
 cmake --debug-output -D CMAKE_INSTALL_PREFIX="/usr" -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags" CMakeLists.txt
 %make_build VERBOSE=1
@@ -73,6 +75,9 @@ mv %buildroot%_man6dir/{openxcom.6,%{name}.6}
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Jun 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1:8.1.5-alt2
+- NMU: fixed FTBFS
+
 * Tue Apr 01 2025 Igor Vlasenko <viy@altlinux.org> 1:8.1.5-alt1
 - new version
 

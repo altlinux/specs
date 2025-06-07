@@ -1,6 +1,6 @@
 Name: openxcom
 Version: 1.0_2025.03.29
-Release: alt1
+Release: alt2
 Summary: OpenXcom is an open-source clone of the original X-COM
 License: GPLv3+
 Group: Games/Strategy
@@ -27,6 +27,8 @@ under the GPL and written in C++ / SDL.
 %setup -n %name-%version
 %patch -p1
 
+subst "s|VERSION 3.1|VERSION 3.5|" CMakeLists.txt
+
 %build
 cmake --debug-output -D CMAKE_INSTALL_PREFIX="/usr" -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags" CMakeLists.txt
 %make_build VERBOSE=1
@@ -51,6 +53,9 @@ install -pm 644 -D res/linux/openxcom.desktop %buildroot%_desktopdir/%name.deskt
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Jun 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0_2025.03.29-alt2
+- NMU: fixed FTBFS
+
 * Tue Apr 01 2025 Igor Vlasenko <viy@altlinux.org> 1.0_2025.03.29-alt1
 - nightly 2025.03.29
 
