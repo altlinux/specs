@@ -2,7 +2,7 @@
 %define oname pyalsa
 
 Name: python3-module-%oname
-Version: 1.2.12
+Version: 1.2.14
 Release: alt1
 
 Summary: Official ALSA Python Binding
@@ -36,6 +36,9 @@ Python binding for the ALSA library.
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Thu Jun 05 2025 Denis Sergeev <zeff@altlinux.org> 1.2.14-alt1
+- New version 1.2.14.
+
 * Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 1.2.12-alt1
 - New version 1.2.12.
 
