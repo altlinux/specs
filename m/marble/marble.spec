@@ -12,7 +12,7 @@
 
 Name: %rname
 Version: 25.04.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -26,8 +26,7 @@ Obsoletes: kde5-marble < %EVR
 Source: %rname-%version.tar
 Source2: naturalearth.tar
 Patch1: alt-astro-static.patch
-Patch2: alt-clean-maps.patch
-Patch3: alt-remove-country-data.patch
+Patch2: alt-remove-country-data.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-positioning-devel qt6-svg-devel qt6-tools-devel qt6-serialport-devel qt6-5compat-devel
@@ -69,6 +68,14 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package addon-maps
+Group: Education
+Summary: Additional maps for %name
+Requires: %name
+Conflicts: kde5-marble < 6
+%description addon-maps
+Additional maps for %name.
+
 %package -n %libmarblewidget
 Group: System/Libraries
 Summary: %name library
@@ -86,7 +93,6 @@ tar -xvf %SOURCE2 naturalearth/
 popd
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 sed -i '/add_subdirectory(marble-qt)/d' src/apps/CMakeLists.txt
 
 # disable krunners by default
@@ -146,7 +152,6 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6bin/marble*
 %_K6plug/*marble*.so
 %_K6plug/kf6/krunner/*marble*.so
-%_K6data/marble/
 %_K6data/plasma/plasmoids/org.kde.plasma.worldclock/
 %_K6data/plasma//wallpapers/org.kde.plasma.worldmap/
 %_K6lib/marble/
@@ -157,6 +162,15 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6data/kxmlgui?/marble/
 %_datadir/metainfo/*.xml
 %_datadir/qlogging-categories?/*.*categories
+%_K6data/marble/
+%exclude %_K6data/marble/maps/earth/openstreetmap/
+%exclude %_K6data/marble/maps/earth/vectorosm/
+%exclude %_K6data/marble/maps/earth/political/
+
+%files addon-maps
+%_K6data/marble/maps/earth/openstreetmap/
+%_K6data/marble/maps/earth/vectorosm/
+%_K6data/marble/maps/earth/political/
 
 %files devel
 #%_K6plug/designer/*.so
@@ -171,6 +185,9 @@ rm -rf %buildroot/%_K6i18n/*/LC_MESSAGES/*_qt.qm
 %_K6lib/libmarblewidget-qt6.so.*
 
 %changelog
+* Fri Jun 06 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt2
+- put unappropriave maps to separate package
+
 * Wed May 28 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 
