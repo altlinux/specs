@@ -1,6 +1,6 @@
 Name: icon-theme-morewaita
 Version: 48.2
-Release: alt1
+Release: alt2
 
 Summary: An expanded Adwaita-styled companion icon theme with extra icons
 License: GPL-3.0-or-later AND CC-BY-SA-4.0
@@ -41,6 +41,9 @@ tar -xf %SOURCE1 -C %buildroot%_iconsdir/MoreWaita/
 %exclude %_iconsdir/MoreWaita/LICENSE
 
 %changelog
+* Sat Jun 07 2025 Anton Midyukov <antohami@altlinux.org> 48.2-alt2
+- altlinux: add icon alterator
+
 * Tue Jun 03 2025 Anton Midyukov <antohami@altlinux.org> 48.2-alt1
 - New version 48.2.
 - Add altlinux specyphic icons.
