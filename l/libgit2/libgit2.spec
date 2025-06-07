@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: libgit2
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: linkable library for Git
@@ -15,7 +15,6 @@ Url: https://github.com/%name
 Vcs: https://github.com/libgit2/libgit2.git
 
 Source: %url/%name/archive/v%version/%name-%version.tar.gz
-Patch10: libgit2-1.9.0-alt-cmake-install.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake ninja-build python3
@@ -41,7 +40,6 @@ This package contains %name development files.
 
 %prep
 %setup
-%patch10
 
 rm -rf deps/{pcre,zlib,http-parser}
 sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
@@ -86,6 +84,9 @@ sed -i '/-sonline/s/^/#/' tests/libgit2/CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jun 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
