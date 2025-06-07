@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-postgis
 Version: 3.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL %pg_ver
@@ -81,7 +81,7 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/icons/hicolor/*/apps/shp2pgsql-gui.png
 %_bindir/create_template_postgis
 %_libdir/pgsql/postgis*.so
-%ifnarch %e2k loongarch64
+%ifnarch %e2k
 %_libdir/pgsql/bitcode
 %endif
 %_libdir/pgsql/address_standardizer*.so
@@ -89,6 +89,9 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %_datadir/pgsql/extension
 
 %changelog
+* Sat Jun 07 2025 Ivan A. Melnikov <iv@altlinux.org> 3.5.2-alt1.1
+- NMU: Package bitcode on loongarcht64 (fixes FTBFS)
+
 * Sun Feb 02 2025 Andrey Cherepanov <cas@altlinux.org> 3.5.2-alt1
 - New version.
 
