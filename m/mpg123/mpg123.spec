@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.32.10
+Version: 1.33.0
 Release: alt1
 Epoch: 1
 
@@ -22,7 +22,6 @@ Group: Sound
 License: GPL-2.0 and LGPL-2.1
 Url: http://www.%name.org
 
-#Vcs: svn://scm.orgis.org/mpg123/trunk
 Vcs: https://github.com/madebr/mpg123.git
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
@@ -128,6 +127,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sun Jun 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1:1.33.0-alt1
+- 1.33.0
+
 * Sun Dec 15 2024 Yuri N. Sedunov <aris@altlinux.org> 1:1.32.10-alt1
 - 1.32.10
 
