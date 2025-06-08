@@ -42,10 +42,9 @@
 # doesn't fit into 4Gb limit of the payload
 %define optflags_debug -g1
 
-
 Name: LibreOffice-still
 %define hversion 24.8
-%define urelease 6.2
+%define urelease 7.2
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
@@ -81,7 +80,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-#Source4: LibreOffice-still-%version-l10n-ru.zip
+Source4: libreoffice-ru-24.8.6.2.tar.gz
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -428,7 +427,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-#unzip -o -d translations/source/ru %%SOURCE4
+tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -857,6 +856,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Jun 07 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.7.2-alt1
+- New version (fixes: CVE-2025-2866 PDF signature forgery with adbe.pkcs7.sha1 SubFilter)
+- Complete Russian translation.
+
 * Wed Apr 23 2025 Andrey Cherepanov <cas@altlinux.org> 24.8.6.2-alt1
 - New version.
 
