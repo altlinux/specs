@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name exercise-timer
 %define __name hiit
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Exercise Timer
@@ -28,7 +28,7 @@ Source: %name-%version%beta.tar
 Source1: %name-%version-cargo.tar
 
 %define gtk_ver 4.14
-%define adwaita_ver 1.4
+%define adwaita_ver 1.7
 
 Provides: %__name = %EVR
 
@@ -72,6 +72,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Jun 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
+- 1.8.4
+
 * Tue Apr 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
