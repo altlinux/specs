@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: horizon
-Version: 2.6.0
-Release: alt2
+Version: 2.7.0
+Release: alt1
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0-or-later
@@ -69,6 +69,9 @@ BuildRequires: libspnav-devel
 %doc *.md
 
 %changelog
+* Sun Jun 08 2025 Anton Midyukov <antohami@altlinux.org> 2.7.0-alt1
+- New version 2.7.0.
+
 * Thu May 22 2025 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt2
 - fix unpackaged files
 - fix typo in changelog
