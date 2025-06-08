@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define modulename xcffib
 
-%def_without generator
+%def_with check
 
 Name: python3-module-%modulename
-Version: 1.5.0
+Version: 1.9.0
 Release: alt1
 
 Summary: A drop-in replacement for xpyb based on cffi
@@ -19,21 +19,12 @@ BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cffi
 BuildRequires: xorg-xcbproto-devel
 
-%if_with generator
-BuildRequires(pre): rpm-build-haskell
+BuildRequires(pre): rpm-build-haskell-vendored
+BuildRequires: ghc cabal-install
 
-BuildRequires: ghc8.6.4
-BuildRequires: ghc8.6.4-split
-BuildRequires: ghc8.6.4-filemanip
-BuildRequires: ghc8.6.4-xml
-BuildRequires: ghc8.6.4-attoparsec
-BuildRequires: ghc8.6.4-cabal-install
-BuildRequires: ghc8.6.4-optparse-applicative
-
-# Not in sisyphus yet
-#BuildRequires: ghc8.6.4-either
-#BuildRequires: ghc8.6.4-language-python
-#BuildRequires: ghc8.6.4-xcb-types
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: xorg-xvfb xeyes
 %endif
 
 Requires: libxcb
@@ -41,6 +32,8 @@ Requires: libxcb
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+# Vendor
 Patch0: %name-%version-alt.patch
 
 %description
@@ -51,14 +44,9 @@ Patch0: %name-%version-alt.patch
 %patch0 -p1
 
 %build
-
-%if_with generator
-cd generator
-ghc ./xcffibgen.hs
-cd -
-generator/xcffibgen --input /usr/share/xcb --output ./xcffib
+%cabal_vendor_build
+%cabal_vendor_run xcffibgen -- --input /usr/share/xcb --output ./xcffib
 touch ./xcffib/py.typed
-%endif
 
 cp ./module/*py ./xcffib/
 XCBVER="$(pkg-config --modversion xcb-proto)"
@@ -70,12 +58,20 @@ sed -i "s/__version__ = .*/__version__ = \"%version\"/" xcffib/__init__.py
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %doc README.md
 %python3_sitelibdir/%modulename/
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Sun Jun 08 2025 Leonid Znamenok <respublica@altlinux.org> 1.9.0-alt1
+- 1.9.0
+- Build generator using rpm-build-haskell-vendored
+- Enable test suite
+
 * Wed Sep 27 2023 Egor Ignatov <egori@altlinux.org> 1.5.0-alt1
 - 1.5.0
 

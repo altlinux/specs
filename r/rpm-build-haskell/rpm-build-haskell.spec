@@ -12,7 +12,7 @@
 %define native_code_gen_split_sections --enable-split-sections
 
 Name: rpm-build-haskell
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 BuildArch: noarch
@@ -105,6 +105,9 @@ install -D -m0644 %SOURCE5 \
 %_rpmmacrosdir/ghc-vendored
 
 %changelog
+* Sun Jun 08 2025 Leonid Znamenok <respublica@altlinux.org> 2.0.1-alt1
+- Added %%cabal_vendor_run macro
+
 * Tue May 20 2025 Leonid Znamenok <respublica@altlinux.org> 2.0.0-alt1
 - Removed hs_* macros
 - Updated %%cabal_vendor_* to use %%cabal_static_opts macros
