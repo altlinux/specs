@@ -21,7 +21,7 @@
 
 Name: kexi
 Version: 3.2.0
-Release: alt7
+Release: alt8
 %K5init no_altplace
 
 Group: Databases
@@ -171,6 +171,9 @@ Requires: %name-common = %EVR
 find -name '*.h' -type f -exec sed -i 's/Q_REQUIRED_RESULT//' {} \;
 %endif
 
+subst "s|VERSION 3.0|VERSION 3.5|" CMakeLists.txt
+subst "s|SET CMP0059 OLD|SET CMP0059 NEW|" cmake/modules/SetKexiCMakePolicies.cmake
+
 %build
 %K5build \
     -DRELEASE_BUILD=ON \
@@ -239,6 +242,9 @@ done
 %_libdir/libkexidatatable%sover.so.*
 
 %changelog
+* Sun Jun 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.2.0-alt8
+- NMU: fixed FTBFS
+
 * Fri Jan 17 2025 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt7
 - update workwround against e2k (thanks mike@alt)
 
