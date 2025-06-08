@@ -4,7 +4,7 @@
 %set_verify_elf_method fhs=relaxed
 
 Name: gradia
-Version: 1.2.1
+Version: 1.4.0
 Release: alt1
 Epoch: 1
 
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-python3
 BuildRequires: meson
 BuildRequires: gtk4-update-icon-cache
+BuildRequires: blueprint-compiler
 BuildRequires: pkgconfig(gio-2.0)
 %if_enabled check
 BuildRequires: appstream
@@ -28,6 +29,8 @@ BuildRequires: desktop-file-utils
 
 Requires: python3(gi)
 Requires: python3(PIL)
+Requires: python3(cairo)
+Requires: python3(gi._gi_cairo)
 
 %description
 On social media, it's often hard to control how your images appear to others.
@@ -64,6 +67,9 @@ overall appearance.
 %doc README.md
 
 %changelog
+* Sat Jun 07 2025 David Sultaniiazov <x1z53@altlinux.org> 1:1.4.0-alt1
+- Update to v1.4.0
+
 * Fri Jun 06 2025 David Sultaniiazov <x1z53@altlinux.org> 1:1.2.1-alt1
 - Update to v1.2.1
 
