@@ -1,6 +1,6 @@
 Name: pdfmixtool
 Version: 1.1.1
-Release: alt2.1
+Release: alt3
 
 License: LGPL-3.0-only
 Group: Office
@@ -8,7 +8,8 @@ Url: https://www.scarpetta.eu/pdfmixtool
 
 # Source-url: https://gitlab.com/scarpetta/pdfmixtool/-/archive/v%version/pdfmixtool-v%version.tar.gz
 Source: %name-%version.tar
-Patch: %name-1.1-alt-desktop.patch
+Patch0: %name-1.1-alt-desktop.patch
+Patch1: extract_images-1.1.1-alt-build.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -49,7 +50,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 
 %prep
 %setup
-%autopatch -p2
+
+%patch1 -p1
+%patch0 -p2
 
 %build
 %cmake \
@@ -68,6 +71,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Sat Jun 07 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt3
+- NMU: fixed FTBFS
+
 * Wed Feb 07 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.1-alt2.1
 - ! FTBFS: rebuild with libGraphicsMagick-c++ instead of libImageMagick
 
