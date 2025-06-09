@@ -1,6 +1,6 @@
 Name: pandoc
-Version: 3.6.4.1
-Release: alt2
+Version: 3.7.0.1
+Release: alt1
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -57,6 +57,9 @@ install -pm 644 -D -t %buildroot%_man1dir \
 %_man1dir/pandoc*.1.xz
 
 %changelog
+* Sun Jun 08 2025 Leonid Znamenok <respublica@altlinux.org> 3.7.0.1-alt1
+- 3.7.0.1
+
 * Wed Apr 30 2025 Leonid Znamenok <respublica@altlinux.org> 3.6.4.1-alt2
 - embed data files into executable
 
