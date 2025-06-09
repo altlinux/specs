@@ -3,7 +3,7 @@
 
 Name: cassette
 Version: 0.2.1
-Release: alt1
+Release: alt2
 
 Summary: GTK/Adwaita application that allows you to use Yandex Music service on Linux operating systems
 License: GPL-3.0
@@ -31,6 +31,10 @@ BuildRequires: libwebkitgtk6.0-devel
 %setup
 %autopatch -p1
 
+%ifarch %e2k
+sed -i "s/subdir('tests')/# subdir('tests')/" meson.build
+%endif
+
 %build
 %meson
 %meson_build
@@ -48,6 +52,9 @@ BuildRequires: libwebkitgtk6.0-devel
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Jun 09 2025 Michael Shigorin <mike@altlinux.org> 0.2.1-alt2
+- E2K: tests ftbfs workaround (Anton Palgunov)
+
 * Tue Mar 04 2025 Alexey Volkov <qualimock@altlinux.org> 0.2.1-alt1
 - new version 0.2.1
 
