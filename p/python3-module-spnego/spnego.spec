@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.11.2
-Release: alt1
+Release: alt2
 
 Summary: Python SPNEGO authentication library
 
@@ -22,11 +22,11 @@ Source:  %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+BuildRequires: python3-module-cryptography
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-cryptography
 BuildRequires: python3-module-pytest-mock
 %endif
 
@@ -62,6 +62,9 @@ sed -i 's/main()/main(sys.argv[1:])/' %buildroot%_bindir/pyspnego-parse
 %python3_sitelibdir/py%oname-%version.dist-info
 
 %changelog
+* Mon Jun 09 2025 Michael Shigorin <mike@altlinux.org> 0.11.2-alt2
+- Fix BR: regarding %%check.
+
 * Tue Nov 12 2024 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt1
 - Automatically updated to 0.11.2.
 

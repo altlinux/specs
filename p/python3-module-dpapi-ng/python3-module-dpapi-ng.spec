@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Python DPAPI NG Decryptor for non-Windows Platforms
 License: MIT
@@ -18,11 +18,11 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
-
-%if_with check
 BuildRequires: python3(dnspython)
 BuildRequires: python3(cryptography)
 BuildRequires: python3(spnego)
+
+%if_with check
 BuildRequires: python3(pytest-cov)
 %endif
 
@@ -57,5 +57,8 @@ supplied user to retrieve the required information over RPC.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 09 2025 Michael Shigorin <mike@altlinux.org> 0.2.0-alt2
+- Fix BR: regarding %%check
+
 * Sun Jul 09 2023 Andrey Limachko <liannnix@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
