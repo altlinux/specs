@@ -1,14 +1,12 @@
 %define nm_version 1.1.90
-%define git_date %nil
-#define git_date .git20151024
 
 %define _unpackaged_files_terminate_build 1
 
 %def_with gtk4
 
 Name: NetworkManager-ssh
-Version: 1.2.13
-Release: alt1%git_date
+Version: 1.4.1
+Release: alt1
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for SSH
@@ -78,6 +76,7 @@ This package contains files for GTK4 applications to use %name.
 	--localstatedir=%_var \
 	--without-libnm-glib \
 	%{subst_with gtk4} \
+	--with-dist-version=%version-%release \
 	--disable-silent-rules \
 	--enable-more-warnings=error
 %make_build
@@ -111,6 +110,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Jun 09 2025 Mikhail Efremov <sem@altlinux.org> 1.4.1-alt1
+- Updated to 1.4.1.
+
 * Thu May 16 2024 Mikhail Efremov <sem@altlinux.org> 1.2.13-alt1
 - Added gtk4 subpackage.
 - Droped support for libnm-glib build.
