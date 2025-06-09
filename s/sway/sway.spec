@@ -1,28 +1,23 @@
 Name: sway
-Version: 1.10.1
+Version: 1.11
 Release: alt1
 Epoch:   1
+
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
-Url: http://swaywm.org/
 Group: Graphical desktop/Other
+Url: http://swaywm.org/
 
-# https://github.com/swaywm/sway
-# git://git.altlinux.org/gears/s/sway.git
-Source0: %name-%version.tar
-Source1: startsway
-Source2: Sway_Wallpaper_Gray.png
+Provides: sway-data = %EVR
+Obsoletes: sway-data
 
-Patch1: 0001-Change-config.patch
-
-%define _unpackaged_files_terminate_build 1
+Source: %name-%version.tar
 
 BuildRequires: asciidoc-a2x
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libpam-devel
 BuildRequires: meson
-BuildRequires: pkgconfig(basu)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
@@ -32,13 +27,14 @@ BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(libinput) >= 1.26.0
 BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(libsystemd)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wlroots-0.18) >= 0.18.0
+BuildRequires: pkgconfig(wlroots-0.19)
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xkbcommon) >= 1.5.0
 BuildRequires: scdoc
@@ -52,24 +48,14 @@ Requires: swayidle
 
 Requires: foot
 Requires: wmenu
-Requires: %name-data
 
 %description
 Sway is a drop-in replacement for the i3 window manager, but for Wayland
 instead of X11. It works with your existing i3 configuration and
 supports most of i3's features, and a few extras.
 
-%package data
-Summary: i3wm drop-in replacement for Wayland - data files
-Group: Graphical desktop/Other
-BuildArch: noarch
-
-%description data
-This package contains data files.
-
 %prep
 %setup
-%autopatch -p1
 
 %build
 %meson \
@@ -84,9 +70,8 @@ This package contains data files.
 %meson_install
 
 mkdir -p %buildroot/%_sysconfdir/%name/config.d
-
-install -p -m0755 -D %SOURCE1 %buildroot/%_bindir/
-install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
+install -pm0755 -D startsway.sh %buildroot%_bindir/startsway
+install -pm0644 -D Sway_Wallpaper_Gray.png %buildroot%_datadir/backgrounds/sway/Sway_Wallpaper_Gray.png
 
 %files
 %doc LICENSE
@@ -99,16 +84,16 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_bindir/swaybar
 %_bindir/swaymsg
 %_bindir/swaynag
+%_datadir/backgrounds/sway
+%_datadir/wayland-sessions/sway.desktop
 %_man1dir/*
 %_man5dir/*
 %_man7dir/*
-%_datadir/wayland-sessions/sway.desktop
-
-%files data
-%dir %_datadir/backgrounds/%name
-%_datadir/backgrounds/%name/*
 
 %changelog
+* Mon Jun 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.11-alt1
+- 1.11 released
+
 * Mon Jan 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.10.1-alt1
 - 1.10.1 released
 
