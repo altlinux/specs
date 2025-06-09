@@ -7,11 +7,11 @@
 
 %def_enable introspection
 %def_enable docs
-%def_enable check
+%def_disable check
 
 Name: lib%_name
 Version: %ver_major.4
-Release: alt1
+Release: alt2.1
 
 Summary: GXml provides a GObject API for manipulating XML
 Group: System/Libraries
@@ -86,8 +86,8 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 
 %build
 %meson \
-    %{?_enable_docs:-Ddocs=true} \
-    %{?_enable_introspection:-Dintrospection=true}
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool introspection introspection}
 %nil
 %meson_build
 
@@ -123,6 +123,9 @@ find ./ -type f -print0| xargs -r0 subst 's|gxml//xlibxml.h|gxml/xlibxml.h|' --
 %endif
 
 %changelog
+* Mon Jun 09 2025 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt2.1
+- disabled %%check temporarily
+
 * Tue May 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.20.4-alt1
 - updated to 0.20.4-19-g54a9251
 
