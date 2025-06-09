@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.8
+Release: alt0.9
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -54,6 +54,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Jun 05 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.9
+- Added "Components" section.
+
 * Fri Apr 25 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.8
 - hardware: running hw-probe and inxi as non-blocking process.
 
