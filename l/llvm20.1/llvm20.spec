@@ -8,7 +8,7 @@
 
 %global v_major 20
 %global v_majmin %v_major.1
-%global v_full %v_majmin.4
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -112,7 +112,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1488,6 +1488,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Sun Jun 08 2025 L.A. Kostis <lakostis@altlinux.ru> 20.1.6-alt0.1
+- Update to 20.1.6.
+
 * Fri May 16 2025 Ivan A. Melnikov <iv@altlinux.org> 20.1.4-alt0.2
 - Mark loognarch64 and riscv64 as omp architectures (fixes FTBS).
 - Avoid 'undefined symbol' false-positives from verify-elf
