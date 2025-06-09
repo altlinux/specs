@@ -3,8 +3,8 @@
 %global qt_module qtlocation
 
 Name: qt6-location
-Version: 6.8.2
-Release: alt2
+Version: 6.9.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtLocation component
@@ -108,6 +108,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt2
 - fix to build docs
 

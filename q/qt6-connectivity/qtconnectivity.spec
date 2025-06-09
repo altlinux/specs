@@ -2,7 +2,7 @@
 %global qt_module qtconnectivity
 
 Name: qt6-connectivity
-Version: 6.8.2
+Version: 6.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -115,6 +115,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 

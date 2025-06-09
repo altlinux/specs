@@ -2,7 +2,7 @@
 %global qt_module qt3d
 
 Name: qt6-3d
-Version: 6.8.2
+Version: 6.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -75,6 +75,14 @@ Group: System/Libraries
 Requires: %name-common
 Requires: libqt6-core = %_qt6_version
 %description -n libqt6-3dlogic
+%summary
+
+%package -n libqt6-3dquicklogic
+Summary: Qt6 library
+Group: System/Libraries
+Requires: %name-common
+Requires: libqt6-core = %_qt6_version
+%description -n libqt6-3dquicklogic
 %summary
 
 %package -n libqt6-3dquick
@@ -206,6 +214,8 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %files -n libqt6-3dlogic
 %_qt6_libdir/libQt?3DLogic.so.*
 %_qt6_qmldir/Qt3D/Logic/
+%files -n libqt6-3dquicklogic
+%_qt6_libdir/libQt?3DQuickLogic.so.*
 %files -n libqt6-3dquick
 %_qt6_libdir/libQt?3DQuick.so.*
 %_qt6_qmldir/Qt3D/Core/
@@ -255,6 +265,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 

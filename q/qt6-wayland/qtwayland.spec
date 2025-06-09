@@ -2,7 +2,7 @@
 %global qt_module qtwayland
 
 Name: qt6-wayland
-Version: 6.8.2
+Version: 6.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -17,10 +17,6 @@ Requires: libqt6-waylandeglcompositorhwintegration
 Requires: libqt6-wlshellintegration
 
 Source: %qt_module-everywhere-src-%version.tar
-# FC
-Patch1: qtwayland-adwaita-improve-border-painting.patch
-# upstream
-Patch10: qtwayland-update-wayland-xml-to-version-1.23.0.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake fontconfig-devel zlib-devel glib2-devel
@@ -150,9 +146,6 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
-%patch1 -p1
-#
-%patch10 -p1
 #
 #for d in gl nogl; do
 #mkdir $d
@@ -249,6 +242,9 @@ done
 %endif
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 

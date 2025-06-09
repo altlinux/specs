@@ -33,8 +33,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.8.2
-Release: alt3
+Version: 6.9.1
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -54,9 +54,6 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-Patch4: qtbase-qlibraryinfo-speedup-checking-if-qt-conf-resource-exists.patch
-Patch5: qtbase-qsystemlocale-bail-out-if-accessed-post-destruction.patch
-Patch6: qtbase-qtlocale-try-to-survive-being-created-during-application-shut-down.patch 
 
 # Debian
 Patch100: remove_rpath_from_examples.patch
@@ -69,8 +66,6 @@ Patch1003: alt-decrease-iconloader-fallback-depth.patch
 Patch1004: alt-kernel-requires.patch
 Patch1005: e2k-qt-6.patch
 Patch1006: alt-singleclick.patch
-# QTBUG
-Patch1100: cups-filters-landscape.patch
 #
 Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
 
@@ -383,9 +378,6 @@ OpenGL widgets library for the Qt%major toolkit
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -400,9 +392,7 @@ OpenGL widgets library for the Qt%major toolkit
 %endif
 %patch1006 -p1
 #
-%patch1100 -p1
-#
-%patch2000 -p1
+#%patch2000 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -844,6 +834,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Wed Feb 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt3
 - fix new cups-printers landscape printing
 

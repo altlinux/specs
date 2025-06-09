@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.8.2
+Version: 6.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -113,8 +113,7 @@ done
 %_qt6_libdir/lib*.prl
 %_qt6_libdatadir/lib*.so
 %_qt6_libdatadir/lib*.prl
-%_qt6_libdir/cmake/Qt?Svg/
-%_qt6_libdir/cmake/Qt?SvgWidgets/
+%_qt6_libdir/cmake/Qt?Svg*/
 %_qt6_libdir/cmake/Qt?Gui/*Svg*.cmake
 %_qt6_libdir/cmake/Qt?BuildInternals/StandaloneTests/*Svg*.cmake
 %_qt6_archdatadir/mkspecs/modules/qt_lib_svg*.pri
@@ -129,6 +128,9 @@ done
 #%_qt6_examplesdir/*
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 

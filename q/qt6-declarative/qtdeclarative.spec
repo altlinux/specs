@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.8.2
+Version: 6.9.1
 Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
@@ -597,7 +597,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_qmldir/QtQuick/Controls/libqtquickcontrols2plugin.so
 %_qt6_qmldir/QtQuick/Controls/plugins.qmltypes
 %_qt6_qmldir/QtQuick/Controls/qmldir
-%_qt6_qmldir/QtQuick/NativeStyle/
+#%_qt6_qmldir/QtQuick/NativeStyle/
 %files -n libqt6-quickcontrols2impl
 %_qt6_libdir/libQt?QuickControls2Impl.so.*
 %files -n libqt6-quickdialogs2
@@ -682,6 +682,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 

@@ -4,7 +4,7 @@
 Name:    qt6-remoteobjects
 Summary: Qt6 - Qt Remote Objects
 Group: System/Libraries
-Version: 6.8.2
+Version: 6.9.1
 Release: alt1
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
@@ -99,7 +99,7 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_libdir/libQt?R*.prl
 %_qt6_libdatadir/libQt?R*.prl
 %_qt6_libdir/cmake/Qt?RemoteObjects*/
-%_qt6_libdir/cmake/Qt?RepParser/
+%_qt6_libdir/cmake/Qt?RepParser*/
 %_qt6_libdir/cmake/Qt?Qml/QmlPlugins/Qt?declarative*
 %_qt6_libdir/cmake/Qt?BuildInternals/StandaloneTests/QtRemoteObjects*.cmake
 %_qt6_libdir/pkgconfig/Qt?R*.pc
@@ -117,6 +117,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Thu Feb 06 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt1
 - new version
 

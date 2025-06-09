@@ -25,8 +25,8 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.8.2
-Release: alt3
+Version: 6.9.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -403,6 +403,7 @@ done
 #%_qt6_bindir/qwebengine_convert_dict*
 #
 %_qt6_libexecdir/gn
+%_qt6_libexecdir/qwebengine_convert_dict
 #
 %_qt6_plugindir/designer/libqwebengineview.so
 %_qt6_headerdir/QtWebEngine*/
@@ -418,6 +419,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
+- new version
+
 * Wed Mar 19 2025 Sergey V Turchin <zerg@altlinux.org> 6.8.2-alt3
 - enable spellchecker
 
