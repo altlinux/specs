@@ -38,7 +38,7 @@
 
 Name: lsb
 Version: 5.0
-Release: alt6
+Release: alt7
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -73,6 +73,8 @@ Necessary tools, links, and dependencies for the Linux Standard Base (LSB).
 The Linux Standard Base (http://www.linuxbase.org/) is a standard core
 system that third-party applications written for Linux can depend
 upon.
+
+Components with reached end of life are replaced by newest versions.
 
 ##############################
 ##############################
@@ -359,7 +361,6 @@ Requires: libatk-1.0.so.0%lib_suffix
 Requires: libcairo.so.2%lib_suffix
 Requires: libcairo-gobject.so.2%lib_suffix
 Requires: libcairo-script-interpreter.so.2%lib_suffix
-Requires: libgdk-x11-2.0.so.0%lib_suffix
 Requires: libgdk_pixbuf-2.0.so.0%lib_suffix
 Requires: libgdk_pixbuf_xlib-2.0.so.0%lib_suffix
 Requires: libgio-2.0.so.0%lib_suffix
@@ -367,11 +368,19 @@ Requires: libglib-2.0.so.0%lib_suffix
 Requires: libgmodule-2.0.so.0%lib_suffix
 Requires: libgobject-2.0.so.0%lib_suffix
 Requires: libgthread-2.0.so.0%lib_suffix
-Requires: libgtk-x11-2.0.so.0%lib_suffix
 Requires: libpango-1.0.so.0%lib_suffix
 Requires: libpangocairo-1.0.so.0%lib_suffix
 Requires: libpangoft2-1.0.so.0%lib_suffix
 Requires: libpangoxft-1.0.so.0%lib_suffix
+
+# Qt
+Requires: libQt6Core.so.6%lib_suffix
+Requires: libQt6Gui.so.6%lib_suffix
+Requires: libQt6Network.so.6%lib_suffix
+Requires: libQt6OpenGL.so.6%lib_suffix
+Requires: libQt6Sql.so.6%lib_suffix
+Requires: libQt6Svg.so.6%lib_suffix
+Requires: libQt6Xml.so.6%lib_suffix
 
 # ALSA
 Requires: libasound.so.2%lib_suffix
@@ -674,6 +683,11 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Mon Jun 09 2025 Constantin Sunzow <protvin@altlinux.org> 5.0-alt7
+- Add notice to description about outdated packages (ALT 54707).
+- Return and bump Qt dependency to 6 version (ALT 54701).
+- Remove dependency on GTK 2 (ALT 54702).
+
 * Mon Apr 14 2025 Constantin Sunzow <protvin@altlinux.org> 5.0-alt6
 - Bump libtiff soname to 6.
 
