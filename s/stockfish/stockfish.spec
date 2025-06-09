@@ -1,9 +1,9 @@
-%global nnuehash1 1111cefa1111
+%global nnuehash1 1c0000000000
 %global nnuehash2 37f18f62d772
 
 Name: stockfish
-Version: 17
-Release: alt1.1
+Version: 17.1
+Release: alt1
 Group: Games/Boards
 
 Summary: Powerful open source chess engine
@@ -119,6 +119,9 @@ cp -p polyglot.ini %buildroot%_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/polyglot.ini
 
 %changelog
+* Mon Jun 09 2025 Leonid Znamenok <respublica@altlinux.org> 17.1-alt1
+- New version 17.1.
+
 * Thu Jan 16 2025 Ivan A. Melnikov <iv@altlinux.org> 17-alt1.1
 - NMU: build on riscv64.
 
