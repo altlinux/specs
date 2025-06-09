@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -58,6 +58,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt2
+- Fixed tests for libjq 1.9.0.
+
 * Tue Sep 24 2024 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt1
 - Updated to 1.8.0.
 
