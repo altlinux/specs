@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt24
+Release: alt25
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -395,6 +395,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon May 26 2025 Kirill Sharov <sheriffkorov@altlinux.org> 11.0-alt25
+- Fix Firefox package version
+
 * Thu May 15 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt24
 - Remove ALT Linux Team slogan from BASEALT product
 - Upgrade Chromium package version to p11
