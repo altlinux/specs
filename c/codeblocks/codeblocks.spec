@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 25.03
-Release: alt1
+Release: alt2
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -80,7 +80,7 @@ cp %SOURCE4 .
 
 %ifarch %e2k
 sed -i 's/#elif defined(__x86_64__)/& || defined(__e2k__)/' \
-  src/include/mozilla_chardet/nsprpub/pr/include/prcpucfg_linux.h
+  src/sdk/mozilla_chardet/include/nsprpub/pr/include/prcpucfg_linux.h
 %endif
 
 %build
@@ -305,6 +305,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Sun Jun 08 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 25.03-alt2
+- Fixed build for Elbrus.
+
 * Wed May 14 2025 Grigory Ustinov <grenka@altlinux.org> 25.03-alt1
 - Build new version (Closes: #54204).
 
