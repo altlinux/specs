@@ -1,13 +1,14 @@
-%define sover_gig  11
+%define sover_gig  12
 %define sover_akai 0
 Name: libgig
-Version: 4.4.1
+Version: 4.5.0
 Release: alt1
 Summary: Library for loading Gigasampler and DLS Level 1/2 files
 License: GPLv2 and LGPLv2+
 Group: Sound
 URL: https://linuxsampler.org/
 Source0: http://download.linuxsampler.org/packages/libgig-%{version}.tar.bz2
+Patch0: libdir.patch
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen
@@ -21,6 +22,7 @@ SoundFont and KORG sound files.
 %package -n %name%sover_gig
 Summary: Library for loading Gigasampler and DLS Level 1/2 files
 Group: System/Libraries
+Provides: %name = %EVR
 
 %description -n %name%sover_gig
 C++ library for loading Gigasampler and DLS Level 1/2 files.
@@ -36,6 +38,7 @@ C++ library for accessing AKAI disk images
 Summary: Library for loading Gigasampler and DLS Level 1/2 files
 Group: Development/C++
 Requires: %name%sover_gig = %EVR
+Requires: libakai%sover_akai = %EVR
 
 %description -n %name-devel
 C++ library for loading Gigasampler and DLS Level 1/2 files.
@@ -57,8 +60,13 @@ Some example applications for the libgig package.
 
 %prep
 %setup
+%autopatch -p1
+# Fix non-utf8 warnings
+iconv --from=ISO-8859-1 --to=UTF-8 README > README.new
+mv README.new README
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 make docs
@@ -68,37 +76,34 @@ make docs
 
 find %buildroot -type f -name "*.la" -delete -print
 
-mkdir -p %buildroot%_sysconfdir/ld.so.conf.d/
-echo "%_libdir/libgig"  > "%buildroot%_sysconfdir/ld.so.conf.d/libgig%sover_gig.conf"
-echo "%_libdir/libakai" > "%buildroot%_sysconfdir/ld.so.conf.d/libakai%sover_akai.conf"
-
 %check
 %make_build check
 
 %files -n %name%sover_gig
-%doc AUTHORS ChangeLog NEWS README TODO COPYING
-%dir %_libdir/%name/
-%_libdir/%name/%name.so.%sover_gig
-%_libdir/%name/%name.so.%sover_gig.*
-%config %_sysconfdir/ld.so.conf.d/%name%sover_gig.conf
+%doc COPYING
+%_libdir/%name.so.%sover_gig
+%_libdir/%name.so.%sover_gig.*
 
 %files -n libakai%sover_akai
-%doc AUTHORS ChangeLog NEWS README TODO COPYING
-%_libdir/%name/libakai.so.%sover_akai
-%_libdir/%name/libakai.so.%sover_akai.*
-%config %_sysconfdir/ld.so.conf.d/libakai%sover_akai.conf
+%doc COPYING
+%_libdir/libakai.so.%sover_akai
+%_libdir/libakai.so.%sover_akai.*
 
 %files -n %name-devel
-%doc COPYING
-%_libdir/%name/*.so
+%doc ChangeLog COPYING NEWS README
+%_libdir/*.so
 %_includedir/%name/
 %_libdir/pkgconfig/*.pc
 
 %files -n %name-tools
-%doc AUTHORS ChangeLog NEWS README TODO COPYING
+%doc ChangeLog COPYING NEWS README
 %_bindir/*
 %_man1dir/*.1*
 
 %changelog
+* Fri Jun 06 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.5.0-alt1
+- 4.5.0
+- place libraries to %%_libdir
+
 * Mon Apr 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.4.1-alt1
 - Initial build for ALT.
