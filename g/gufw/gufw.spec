@@ -1,5 +1,5 @@
 Name: gufw
-Version: 24.04
+Version: 26.04
 Release: alt1
 Summary: A graphical user interface for UFW
 Group: System/Configuration/Networking
@@ -68,8 +68,12 @@ chmod a+rx %buildroot%python3_sitelibdir/%name/%name.py
 %_datadir/pixmaps/%name.svg
 %_man8dir/%name.8.*
 %_datadir/polkit-1/actions/com.ubuntu.pkexec.%name.policy
+%_datadir/metainfo/io.github.costales.gufw.metainfo.xml
 
 %changelog
+* Mon Jun 09 2025 Andrew A. Vasilyev <andy@altlinux.org> 26.04-alt1
+- 26.04
+
 * Thu Sep 05 2024 Andrew A. Vasilyev <andy@altlinux.org> 24.04-alt1
 - Initial build for ALT.
 
