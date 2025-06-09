@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 11.0
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Jun 09 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt5
+- fix some typos (ALT #54479)
+- add luks2, VPN/Wi-Fi settings
+
 * Sun Apr 20 2025 Elena Mishina <lepata@altlinux.org> 11.0-alt4
 - update to ALT Workstation 11.0RC3
 
