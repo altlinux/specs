@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.9
+Release: alt0.10
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -28,6 +28,9 @@ BuildRequires(pre): rpm-build-python3
 
 %add_python3_req_skip mainwindow my_utils my_utils_pyqt5
 
+Requires: inxi
+Requires: alteratorctl
+
 %description
 This is the grapical plugin-based application for show information and
 configure system.
@@ -39,6 +42,7 @@ Available plugins:
 - hardware
 - settings
 - useful
+- components
 
 %prep
 %setup
@@ -54,6 +58,10 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.10
+- Required inxi.
+- Required alterator 2.0.
+
 * Thu Jun 05 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.9
 - Added "Components" section.
 
