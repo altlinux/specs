@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.2.2
-Release: alt0.1
+Release: alt0.2
 
 Summary: Python module for new Alterator
 License: GPL-3.0
@@ -43,6 +43,9 @@ Supported modules:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt0.2
+- Components: added packages field.
+
 * Fri May 16 2025 Andrey Cherepanov <cas@altlinux.org> 0.2.2-alt0.1
 - Added ability to use from alterator import Components.
 
