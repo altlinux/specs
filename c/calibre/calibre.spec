@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 7.5.1
-Release: alt1.3
+Version: 8.4.0
+Release: alt1
 
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
@@ -19,9 +19,7 @@ Source: %name-%version.tar
 Patch1: calibre-no-update.patch
 Patch2: calibre-nodisplay.patch
 Patch3: calibre-alt-loongarch64-and-riscv64-support.patch
-# CVE-2024-6781 and CVE-2024-6782 (ALT bug 51547)
-Patch4: 38a1bf50d8cd22052ae59c513816706c6445d5e9.patch
-Patch5: bcd0ab12c41a887f8290a9b56e46c3a29038d9c4.patch
+Patch4: alt-drop-pykakasi.patch
 
 AutoProv:no
 
@@ -138,6 +136,7 @@ BuildRequires: libpodofo-devel >= 0.10.3
 BuildRequires: libgpg-error-devel >= 1.47
 BuildRequires: libgcrypt-devel >= 1.10.2
 BuildRequires: glib2-devel >= 2.78.0
+BuildRequires: libavutil-devel libavcodec-devel libavformat-devel libswresample-devel
 
 BuildRequires: libdbus-devel
 #>= 1.15.8
@@ -249,7 +248,8 @@ TXT, PDF, LRS и FB2.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
+# then drop pykakasi autoreq
+rm -f src/calibre/ebooks/unihandecode/jadecoder.py
 
 # TODO: remove or replace with python
 find -type f -name "*.py" | xargs %__subst "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
@@ -350,6 +350,9 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Mon Jun 09 2025 Sergey V Turchin <zerg@altlinux.org> 8.4.0-alt1
+- NMU: new version (closes: 54742)
+
 * Sun Oct 06 2024 Vitaly Lipatov <lav@altlinux.ru> 7.5.1-alt1.3
 - CVE-2024-6781 and CVE-2024-6782 (ALT bug 51547)
 
