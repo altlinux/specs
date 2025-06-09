@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.11.1
+Version: 1.11.2
 Release: alt1
 
 Summary: A chess library for Python
@@ -13,13 +13,17 @@ URL:     https://github.com/niklasf/python-chess
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
+
+%if_with check
 BuildRequires: stockfish
+%endif
 
 Requires: stockfish
 
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 %description
 A chess library for Python, with move generation and validation,
@@ -28,6 +32,7 @@ tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -44,6 +49,9 @@ tablebase probing, Syzygy tablebase probing, and UCI/XBoard engine communication
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 09 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.2-alt1
+- New version 1.11.2.
+
 * Fri Jan 10 2025 Leonid Znamenok <respublica@altlinux.org> 1.11.1-alt1
 - New version 1.11.1.
 
