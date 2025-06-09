@@ -4,40 +4,30 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.1
-Release: alt1.1
-
+Version: 0.7.2
+Release: alt1
 Summary: OpenAPI 2.0 (aka Swagger) and OpenAPI 3.0 spec validator
 License: Apache-2.0
 Group: Development/Python3
-
 Url: https://pypi.org/project/openapi-spec-validator
 VCS: https://github.com/p1c2u/openapi-spec-validator
-
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-
-# build backend and its deps
-BuildRequires: python3(poetry-core)
-
-%if_with check
-# direct runtime dependencies
-BuildRequires: python3(jsonschema)
-BuildRequires: python3(openapi-schema-validator)
-BuildRequires: python3(jsonschema-path)
-BuildRequires: python3(lazy-object-proxy)
-BuildRequires: python3(jsonschema-path)
-
-BuildRequires: python3(pytest)
-%endif
-
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 # PyPI name
 %py3_provides %pypi_name
 Provides: python3-module-openapi_spec_validator = %EVR
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+# not packaged
+%add_pyproject_deps_check_filter bump2version
+%add_pyproject_deps_check_filter deptry
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 OpenAPI Spec Validator is a Python library that validates OpenAPI Specs against
@@ -47,6 +37,11 @@ to check for full compliance with the Specification.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_poetry dev
+%endif
 
 %build
 %pyproject_build
@@ -55,7 +50,7 @@ to check for full compliance with the Specification.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra -m 'not network'
+%pyproject_run_pytest -vra -m 'not network' -o=addopts=''
 
 %files
 %doc README.rst
@@ -64,6 +59,9 @@ to check for full compliance with the Specification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jun 09 2025 Stanislav Levin <slev@altlinux.org> 0.7.2-alt1
+- 0.7.1 -> 0.7.2.
+
 * Mon May 19 2025 Stanislav Levin <slev@altlinux.org> 0.7.1-alt1.1
 - NMU: fixed FTBFS (removed jsonschema-spec).
 
