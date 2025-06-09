@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.7
+Version: 1.7.8
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -417,7 +417,8 @@ Requires: xorg-conf-synaptics
 Requires: xinput
 Requires: xorg-drv-libinput
 %ifnarch %not_qt5_qtwebengine_arches
-Requires: altcenter
+Requires: mousepad
+Requires: altcenter-education
 %endif
 %description xfce
 %{summary}.
@@ -476,7 +477,7 @@ Requires: vulkan-amdgpu
 Requires: simplescreenrecorder
 Requires: quick-usb-formatter
 %ifnarch %not_qt5_qtwebengine_arches
-Requires: altcenter
+Requires: altcenter-education
 %endif
 %description kde
 %{summary}.
@@ -627,6 +628,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.8-alt1
+- Required altcenter-education.
+- xfce: added mousepad.
+
 * Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 1.7.7-alt1
 - Use the thunderbird_arch macro for the thunderbird requirement.
 
