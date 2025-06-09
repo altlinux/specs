@@ -15,7 +15,7 @@
 %endif
 
 Name: ppsspp
-Version: 1.19
+Version: 1.19.1
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -227,6 +227,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/libzip
 %_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Tue Jun 10 2025 Nazarov Denis <nenderus@altlinux.org> 1.19.1-alt1
+- Version 1.19.1
+
 * Fri Jun 06 2025 Nazarov Denis <nenderus@altlinux.org> 1.19-alt1
 - Version 1.19
 
