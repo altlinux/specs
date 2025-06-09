@@ -25,7 +25,7 @@
 
 Name: ayugram-desktop
 Version: 5.12.3
-Release: alt1
+Release: alt2
 
 Summary: Desktop Telegram client with good customization and Ghost mode
 
@@ -43,6 +43,7 @@ Source1: %name-postsubmodules-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
+Patch3: alt-qt69.patch
 #Patch5: telegram-desktop-fix-missed-cstdint.patch
 #Patch7: telegram-desktop-fix-build-with-make.patch
 #Patch8: telegram-desktop-use-external-gsl.patch
@@ -90,7 +91,6 @@ BuildRequires: qt6-base-devel >= %tg_qt6_version
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-5compat-devel
-BuildRequires: qt6-imageformats
 # WebView support: Quick QuickWidgets WaylandCompositor
 BuildRequires: qt6-declarative-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel}
@@ -252,6 +252,7 @@ We are not responsible for the possible blocking of your account. Use the client
 %setup -a1
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 %patch20 -p1
 
 %if_without gsl
@@ -399,6 +400,9 @@ ln -s %name %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Mon Jun 09 2025 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt2
+- NMU: fix compile with Qt-6.9
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 5.12.3-alt1
 - new version 5.12.3 (with rpmrb script)
 
