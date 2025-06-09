@@ -14,7 +14,7 @@
 
 Name: trojita
 Version: 0.7
-Release: alt2
+Release: alt3
 
 # Almost everything: dual-licensed under the GPLv2 or GPLv3
 # (with KDE e.V. provision for relicensing)
@@ -91,6 +91,10 @@ encrypted storage.
 %patch3 -p1
 %patch4 -p1
 
+subst "s|VERSION 2.8.11|VERSION 3.5|" CMakeLists.txt
+subst "s|SET CMP0043 OLD|SET CMP0043 NEW|" CMakeLists.txt
+subst "s|VERSION 2.8.3|VERSION 3.5|" cmake/FindCXXFeatures.cmake
+
 %build
 export CXXFLAGS="${CXXFLAGS:-%optflags} -fPIC"
 export LDFLAGS="-pie"
@@ -125,6 +129,9 @@ cmake \
 %_libdir/trojita/trojita_plugin_QtKeychainPasswordPlugin.so
 
 %changelog
+* Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.7-alt3
+- NMU: fixed FTBFS
+
 * Thu Jul 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.7-alt2
 - Build for Sisyphus again (Closes: #37204).
 
