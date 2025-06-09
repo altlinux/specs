@@ -5,7 +5,7 @@
 
 Name:    crash
 Version: 9.0.0
-Release: alt1
+Release: alt2
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -63,6 +63,7 @@ tar xvf crash-extensions/crash-gcore-command-1.6.1.tar.gz -C extensions --strip-
 tar xvf crash-extensions/ptdump-1.0.7.tar.gz -C extensions --strip-components=1
 
 %build
+%define optflags_lto %nil
 %add_optflags $(getconf LFS_CFLAGS)
 %make_build RPMPKG=%version-%release CFLAGS="%optflags" CXXFLAGS="%optflags" V=1
 # Build what builds. Does not support -j.
@@ -112,6 +113,9 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Tue Jun 10 2025 Vitaly Chikunov <vt@altlinux.org> 9.0.0-alt2
+- Fix 'stack smashing detected' termination on i586.
+
 * Sat Apr 26 2025 Vitaly Chikunov <vt@altlinux.org> 9.0.0-alt1
 - Update to 9.0.0 (2025-04-25) which is based on gdb-16.2.
 
