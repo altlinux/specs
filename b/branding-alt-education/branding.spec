@@ -5,8 +5,8 @@
 %define theme education
 %define Theme Education
 %define codename FalcoVespertinus
-%define status BETA
-%define status_en BETA
+%define status %nil
+%define status_en %nil
 %define flavour %brand-%theme
 
 %define gtk_theme Breeze
@@ -28,7 +28,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.8.beta
+Release: alt1
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -462,6 +462,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.recoll
 
 %changelog
+* Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt1
+- Release 11.0.
+
 * Tue May 06 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt0.8.beta
 - Removed beesu (ALT #54144).
 
