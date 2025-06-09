@@ -21,7 +21,7 @@
 
 Name: telegram-desktop
 Version: 5.13.1
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -38,6 +38,7 @@ Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
+Patch3: alt-qt69.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch7: telegram-desktop-fix-build-with-make.patch
 Patch9: telegram-desktop-try-fix-circular-deps.patch
@@ -79,7 +80,6 @@ BuildRequires: qt6-base-devel >= %tg_qt6_version
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-charts-devel
 BuildRequires: qt6-5compat-devel
-BuildRequires: qt6-imageformats
 # WebView support: Quick QuickWidgets WaylandCompositor
 BuildRequires: qt6-declarative-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel}
@@ -238,6 +238,7 @@ or business messaging needs.
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p1
 %patch5 -p2
 %patch10 -p1
 
@@ -375,6 +376,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Jun 09 2025 Sergey V Turchin <zerg@altlinux.org> 5.13.1-alt2
+- NMU: fix compile with Qt-6.9
+
 * Sat Mar 29 2025 Vitaly Lipatov <lav@altlinux.ru> 5.13.1-alt1
 - new version 5.13.1 (with rpmrb script)
 
