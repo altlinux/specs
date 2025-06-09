@@ -7,11 +7,11 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     30
-%define kubernetes_patch     12
+%define kubernetes_patch     13
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt2
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -394,6 +394,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Tue May 20 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.13-alt1
+- 1.30.12 -> 1.30.13
+
 * Wed May 07 2025 Alexander Stepchenko <geochip@altlinux.org> 1.30.12-alt2
 - Fix systemd service disabling before package deletion (Closes: #49768)
 

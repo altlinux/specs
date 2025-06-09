@@ -13,11 +13,11 @@
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          31
-%define cri_o_patch          7
+%define cri_o_patch          9
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
-Release: alt2
+Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -134,6 +134,9 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Jun 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.9-alt1
+- 1.31.7 -> 1.31.9
+
 * Thu May 08 2025 Alexander Stepchenko <geochip@altlinux.org> 1.31.7-alt2
 - Fix systemd service disabling before package deletion (Closes: #49768)
 

@@ -7,11 +7,11 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     32
-%define kubernetes_patch     4
+%define kubernetes_patch     5
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
-Release: alt3
+Release: alt1
 Summary: Container cluster management
 
 Group: System/Configuration/Other
@@ -42,8 +42,10 @@ Source26: kubernetes.tmpfiles
 Source27: crio.conf
 Source28: 99-kubernetes-cri.conf
 
+# commits from branch alt-patches-1.32
+Patch0: %name-%version.patch
+
 Patch1: kubernets-alt-loongarch64-support.patch
-Patch2: kubernetes1.32-cve.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -393,6 +395,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Mon Jun 09 2025 Alexander Stepchenko <geochip@altlinux.org> 1.32.5-alt1
+- 1.32.4 -> 1.32.5
+
 * Tue May 13 2025 Nadezhda Fedorova <fedor@altlinux.org> 1.32.4-alt3
 - Fixes:
   + CVE-2023-45142
