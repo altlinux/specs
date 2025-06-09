@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: Litestar plugin for HTMX
 License: MIT
@@ -20,6 +20,7 @@ BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-litestar
 BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-mako
 %endif
 
 BuildArch: noarch
@@ -47,5 +48,8 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 06 2025 Alexander Burmatov <thatman@altlinux.org> 0.4.1-alt2
+- Fix build.
+
 * Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus.

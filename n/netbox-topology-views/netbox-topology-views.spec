@@ -1,5 +1,5 @@
 Name:    netbox-topology-views
-Version: 4.2.1
+Version: 4.3.0
 Release: alt1
 
 Summary: A netbox plugin that draws topology views
@@ -39,8 +39,11 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-topology-views/RE
 %_defaultdocdir/netbox-topology-views/README
 
 %changelog
+* Sat Jun 07 2025 Alexander Burmatov <thatman@altlinux.org> 4.3.0-alt1
+- New 4.3.0 version.
+
 * Tue Mar 25 2025 Alexander Burmatov <thatman@altlinux.org> 4.2.1-alt1
-- New 4.2.0 version.
+- New 4.2.1 version.
 
 * Thu Jan 30 2025 Alexander Burmatov <thatman@altlinux.org> 4.2.0-alt1
 - New 4.2.0 version.

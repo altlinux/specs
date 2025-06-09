@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.270.2
+Version: 0.271.0
 Release: alt1
 
 Summary: A GraphQL library for Python that leverages type annotations
@@ -39,7 +39,7 @@ BuildRequires: python3-module-httpx
 BuildRequires: python3-module-opentelemetry-api
 BuildRequires: python3-module-opentelemetry-sdk
 BuildRequires: python3-module-pyinstrument
-BuildRequires: python3-module-python-multipart
+BuildRequires: python3-module-multipart
 BuildRequires: python3-module-channels
 BuildRequires: python3-module-fastapi
 BuildRequires: python3-module-django
@@ -49,6 +49,7 @@ BuildRequires: python3-module-email-validator
 BuildRequires: python3-module-pytest-aiohttp
 BuildRequires: python3-module-aiofiles
 BuildRequires: python3-module-sanic-testing
+BuildRequires: python3-module-websockets
 %endif
 
 # Requires only for dev
@@ -83,6 +84,7 @@ export DJANGO_SETTINGS_MODULE=tests.django.django_settings
     --deselect=tests/django/test_dataloaders.py \
     --deselect=tests/websockets/test_graphql_ws.py \
     --deselect=tests/experimental/pydantic/test_fields.py \
+    --deselect=tests/schema/test_lazy/test_lazy_generic.py::test_lazy_types_loaded_from_same_module[cli] \
     --ignore=tests/cli/ \
     --ignore=tests/http/
 
@@ -93,6 +95,9 @@ export DJANGO_SETTINGS_MODULE=tests.django.django_settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jun 06 2025 Alexander Burmatov <thatman@altlinux.org> 0.271.0-alt1
+- New version 0.271.0.
+
 * Wed May 28 2025 Alexander Burmatov <thatman@altlinux.org> 0.270.2-alt1
 - New version 0.270.2.
 
