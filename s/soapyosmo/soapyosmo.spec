@@ -2,7 +2,7 @@
 
 Name: soapyosmo
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: OsmoSDR device support for SoapySDR
 License: MIT
@@ -18,11 +18,8 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(SoapySDR)
 BuildRequires: boost-devel
+BuildRequires: pkgconfig(libosmosdr)
 BuildRequires: pkgconfig(libmirisdr)
-
-#TODO?
-#BuildRequires: pkgconfig(libosmosdr)
-## then create separate package with %%_libdir/SoapySDR/modules0.8/libosmosdrSupport.so
 
 %description
 The SoapyOsmo project provides SoapySDR hardware support modules using
@@ -58,6 +55,19 @@ Mirics SDR, and RFSpace SDR devices.
 
 This package contains the hardware support module for Mirics SDR
 devices.
+
+%package osmosdr
+Group: Engineering
+Summary: OsmoSDR device support for SoapySDR
+Requires: %{name}-common = %{version}-%{release}
+
+%description osmosdr
+The SoapyOsmo project provides SoapySDR hardware support modules using
+drivers in gr-osmosdr. Using this, any program using SoapySDR to
+interface to software defined radio hardware can make use of OsmoSDR,
+Mirics SDR, and RFSpace SDR devices.
+
+This package contains the OsmoSDR hardware support module.
 
 %package rfspace
 Group: Engineering
@@ -105,9 +115,15 @@ This package contains the RFSpace hardware support module.
 %files mirisdr
 %_libdir/SoapySDR/modules0.8/libmiriSupport.so
 
+%files osmosdr
+%_libdir/SoapySDR/modules0.8/libosmosdrSupport.so
+
 %files rfspace
 %_libdir/SoapySDR/modules0.8/librfspaceSupport.so
 
 %changelog
+* Mon Jun 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.5-alt2
+- Rebuild with libosmosdr enabled
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.5-alt1
 - Initial build for Sisyphus
