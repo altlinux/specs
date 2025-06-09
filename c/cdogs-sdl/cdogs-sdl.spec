@@ -9,7 +9,7 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 
 Name:           cdogs-sdl
 Version:        2.0.0
-Release:        alt2
+Release:        alt3
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
 # The game art is CC
@@ -55,7 +55,8 @@ find graphics sounds -name "*.sh" -delete
 sed -i 's,-freg-struct-return,,' CMakeLists.txt
 %endif
 
-
+subst "s|VERSION 3.19|VERSION 3.5|" CMakeLists.txt
+subst "s|VERSION 3.0|VERSION 3.5|" src/tests/cbehave/CMakeLists.txt
 
 %build
 %{fedora_v2_cmake} \
@@ -88,6 +89,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.0.0-alt3
+- NMU: fixed FTBFS
+
 * Wed Mar 19 2025 Artyom Bystrov <arbars@altlinux.org> 2.0.0-alt2
 - Add few deps in BR
 

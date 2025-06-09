@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel libGLU-devel libglvnd-d
 %global svn_rev 1681
 Name:           blobby
 Version:        1.0
-Release:        alt3_19.svn%{svn_rev}
+Release:        alt4_19.svn%{svn_rev}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
@@ -64,6 +64,8 @@ sed -ibackup 's|lua/||' src/ScriptedInputSource.cpp
 # Updated to SDL2 but still looks for SDL also? Why!
 sed -ibackup '/find_package(SDL REQUIRED)/d' src/CMakeLists.txt
 
+subst "s|VERSION 2.6|VERSION 3.5|" CMakeLists.txt
+
 %build
 %{fedora_cmake} -DOpenGL_GL_PREFERENCE=GLVND .
 %make_build
@@ -92,6 +94,9 @@ install -p -m 644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/appdata/blobby.appdat
 %{_datadir}/appdata/%{name}.appdata.xml
 
 %changelog
+* Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.0-alt4_19.svn1681
+- NMU: fixed FTBFS
+
 * Sun Jan 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_19.svn1681
 - update to new release by fcimport
 

@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel qt5-base-devel lib
 %define _localstatedir %{_var}
 Name:		android-file-transfer
 Version:	4.2
-Release:	alt1_2
+Release:	alt2
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
 License:	LGPLv2+
@@ -47,6 +47,8 @@ Features:
 %setup -q -n %{name}-linux-%{version}
 %patch -p2
 
+subst "s|VERSION 2.8.12|VERSION 3.5|" CMakeLists.txt
+
 %build
 %{mageia_cmake} -GNinja
 %ninja_build -C %{_vpath_builddir}
@@ -76,6 +78,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Mon Jun 09 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.2-alt2
+- NMU: fixed FTBFS
+
 * Tue Jun 27 2023 Anton Midyukov <antohami@altlinux.org> 4.2-alt1_2
 - NMU: fix buildrequires
 - NMU: fix build with gcc13
