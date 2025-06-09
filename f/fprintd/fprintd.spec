@@ -2,7 +2,7 @@
 
 Name: fprintd
 Version: 1.94.5
-Release: alt2
+Release: alt3
 
 Summary: D-Bus service for Fingerprint reader access
 License: GPLv2+
@@ -44,13 +44,13 @@ BuildRequires: python3-module-dbusmock
 BuildRequires: python3-module-pygobject3
 
 Requires: %name-clients = %EVR
-Requires: pam_fprintd = %EVR
 
 %description
 D-Bus service to access fingerprint readers.
 
 %package -n pam_fprintd
 Summary: PAM module for fingerprint authentication
+Requires: fprintd = %EVR
 Provides: pam_fprint
 Obsoletes: pam_fprint <= 0.2
 Group: System/Base
@@ -120,6 +120,9 @@ meson test -C %{__builddir} --num-processes 1 --no-rebuild --print-errorlogs
 %_bindir/%name-*
 
 %changelog
+* Mon Jun 09 2025 Egor Ignatov <egori@altlinux.org> 1.94.5-alt3
+- fix package dependencies (closes: #49019)
+
 * Fri Jun 06 2025 Egor Ignatov <egori@altlinux.org> 1.94.5-alt2
 - add explicit dependency on pam_fprintd (closes: #49019)
 
