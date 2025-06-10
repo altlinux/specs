@@ -5,7 +5,7 @@
 
 Name: gamescope-session-steam
 Version: 0.0.4.git1a3fdb
-Release: alt2
+Release: alt2.1
 
 Summary: Steam Big Picture session based on gamescope
 
@@ -94,6 +94,9 @@ fi
 %_sysconfdir/sddm.conf.d/10-gamescope-session.conf
 
 %changelog
+* Tue Jun 10 2025 Boris Yumankulov <boria138@altlinux.org> 0.0.4.git1a3fdb-alt2.1
+- NMU: added XFCE and Hyprland support to steamos-desktop-return script and few fixes
+
 * Mon Jun 02 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.4.git1a3fdb-alt2
 - fixed first launch
 
