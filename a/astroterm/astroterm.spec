@@ -1,0 +1,52 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
+Name: astroterm
+Version: 1.0.7
+Release: alt1
+
+Summary: A planetarium for your terminal
+License: MIT
+Group: Games/Other
+Url: https://github.com/da-luce/astroterm
+Vcs: https://github.com/da-luce/astroterm
+
+Source0: %name-%version.tar
+# bsc5 - archived copy from the bright star catalog webpage
+Source1: bsc5
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: pkg-config
+BuildRequires: ninja-build
+BuildRequires: meson
+BuildRequires: xxd
+BuildRequires: libncurses++w-devel
+BuildRequires: libargtable2-devel
+
+%description
+%summary
+
+Explore stars, planets, constellations, and more, all rendered right
+in the command line-no telescope required.
+
+%prep
+%setup
+cp %SOURCE1 %_builddir/%name-%version/data
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+
+%check
+%meson_test
+
+%files
+%_bindir/astroterm
+%doc LICENSE README.md
+
+%changelog
+* Thu Mar 13 2025 Timofei Fedotov <sovtouch@altlinux.org> 1.0.7-alt1
+- Initial build for ALT Sisyphus.
