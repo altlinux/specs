@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 48
 %define beta %nil
@@ -8,8 +8,8 @@
 %def_disable spiel
 
 Name: orca
-Version: %ver_major.1
-Release: alt1.1%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
 Summary(ru_RU.UTF-8): Программа экранного доступа для людей с ограничениями по зрению
@@ -38,6 +38,8 @@ Requires: at-spi2-core
 #Requires: speech-dispatcher-module-flite flite
 # speak russian
 Requires: espeak-ng
+#Requires: RHVoice-Russian
+#Requires: RHVoice-English
 Requires: python3-module-speechd
 
 BuildArch: noarch
@@ -92,6 +94,9 @@ Jaws For Windows компании Freedom Scientific.
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 
 %changelog
+* Tue Jun 10 2025 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+
 * Mon Jun 02 2025 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1.1
 - removed flite runtime dependency
 
