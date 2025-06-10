@@ -6,7 +6,7 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt8
+Release: alt9
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -20,6 +20,8 @@ Requires: procps
 %filter_from_requires /busybox\|ssh\|scp\|reboot\|systemctl\|lib\/lsb\/init-functions/d
 
 Source: %name-%version.tar
+BuildRequires(pre): kernel-%kernel_latest
+BuildRequires(pre): rpm-build-kernel
 BuildRequires: pandoc
 %{?!_without_check:%{?!_disable_check:
 %ifarch %ix86 x86_64
@@ -37,16 +39,19 @@ the /proc/vmcore file based on user preferences.
 After installing, please see /usr/share/doc/%name/README
 for information on enabling and configuring kdump.
 
-%package checkinstall
-Summary: QA test for %name
+%package -n kernel-ci-%name-debuginfo
+Summary: CI test for %name
 Group: Development/Other
-Requires: %name = %EVR
-Requires: make-initrd
-Requires: rpm-build-vm
-Requires: systemd-sysvinit
+Requires(post): crash
+Requires(post): make-initrd
+Requires(post): %name = %EVR
+Requires(post): rpm-build-vm
+Requires(post): %(rpm -qa 'kernel-image-*' --qf '%%{NAME}-debuginfo' | grep . || echo unknown)
+Requires(post): systemd-sysvinit
 
-%description checkinstall
-%summary.
+%description -n kernel-ci-%name-debuginfo
+%summary with a workaround for 'sisyphus_check: check-deps ERROR: package
+dependencies violation' for a kernel-image.
 
 %prep
 %setup
@@ -72,10 +77,10 @@ make shellcheck
 # decrement, we can ensure they don't unintentionally reset to alt1.
 grep -vw alt1 <<<'%release'
 
-%post checkinstall -p %_libexecdir/kdump-tools/kdump-checkinstall.sh
+%post -n kernel-ci-%name-debuginfo -p %_libexecdir/kdump-tools/kdump-checkinstall.sh
 
 %ifarch %testable_arches
-%files checkinstall
+%files -n kernel-ci-%name-debuginfo
 %_libexecdir/kdump-tools/kdump-checkinstall.sh
 %endif
 
@@ -85,7 +90,7 @@ grep -vw alt1 <<<'%release'
 %_bindir/kdumpctl
 %_sbindir/kdump-config
 %_udevrulesdir/50-kdump-tools.rules
-%_sysconfdir/init.d/kdump-tools
+%_sysconfdir/rc.d/init.d/kdump-tools
 %_unitdir/kdump*.service
 %_man5dir/kdump-tools.5*
 %_man8dir/kdump-config.8*
@@ -94,6 +99,12 @@ grep -vw alt1 <<<'%release'
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Mon Jun 09 2025 Vitaly Chikunov <vt@altlinux.org> 1.8-alt9
+- kdumpctl debug: Workaround absence of .build-id symlink for vmlinux.
+- checkinstall: Add smoke test for 'kdumpctl debug'.
+- spec: Remove optional dependencies to busybox, bzip2, crash, gzip, iproute2,
+  lz4, ssh.
+
 * Sat Nov 02 2024 Vitaly Chikunov <vt@altlinux.org> 1.8-alt8
 - checkinstall: Fallback to grep for file4.
 
