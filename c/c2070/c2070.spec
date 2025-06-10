@@ -1,7 +1,7 @@
 Summary:	Lexmark 2070 Printer color driver
 Name:		c2070
 Version:	0.99
-Release:	alt1.qa2
+Release:	alt2
 Group:		Publishing
 License:	GPL
 URL:		http://www.linuxprinting.org/show_driver.cgi?driver=c2070
@@ -9,7 +9,8 @@ URL:		http://www.linuxprinting.org/show_driver.cgi?driver=c2070
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
 Source:	%name-%version.tar
-Patch: c2070-0.99-mdk-looplimits.patch
+Patch0: c2070-0.99-mdk-looplimits.patch
+Patch1: c2070-0.99-alt-fix-compilation.patch
 
 %description
 This filter allows to color print in a Lexmark 2070 (windows GDI) printer.
@@ -18,7 +19,8 @@ This filter allows to color print in a Lexmark 2070 (windows GDI) printer.
 
 %setup -q
 
-%patch -p1
+%patch0 -p1
+%patch1 -p2
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS"
@@ -33,6 +35,9 @@ make CFLAGS="$RPM_OPT_FLAGS"
 
 
 %changelog
+* Tue Jun 10 2025 Anton Meleshnikov <alton@altlinux.org> 0.99-alt2
+- FTBFS fix
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1.qa2
 - NMU: added URL
 
