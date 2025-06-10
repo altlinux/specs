@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.32
+%define kernel_sublevel	.33
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -316,6 +316,7 @@ KernelVer=%kversion-%flavour-%krelease
 echo "Building Kernel $KernelVer"
 
 %make_build mrproper
+make -s kernelversion | grep -Fx '%kversion-%flavour-%krelease'
 
 #configuration construction
 CONFIGS="config config-%_target_cpu"
@@ -331,6 +332,7 @@ CONFIGS="$CONFIGS config-kasan"
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
+make -s kernelrelease | grep -Fx '%kversion-%flavour-%krelease'
 %make_build %make_target || {
 	%make %make_target V=1
 	exit 1
@@ -610,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jun 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.33-alt1
+- v6.12.33 (2025-06-10).
+
 * Wed Jun 04 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.32-alt1
 - v6.12.32 (2025-06-04).
 - config: Enable CONFIG_INIT_STACK_ALL_ZERO=y.
