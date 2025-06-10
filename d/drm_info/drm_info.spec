@@ -2,7 +2,7 @@
 %def_enable man
 
 Name: drm_info
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Small utility to dump info about DRM devices
@@ -10,14 +10,15 @@ License: MIT
 Group: System/Kernel and hardware
 Url: https://gitlab.freedesktop.org/emersion/drm_info
 
+Vcs: https://gitlab.freedesktop.org/emersion/drm_info.git
+
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/emersion/drm_info/-/releases/v%version/downloads/%name-%version.tar.gz
 %else
-Vcs: https://gitlab.freedesktop.org/emersion/drm_info.git
 Source: %name-%version.tar
 %endif
 
-%define drm_ver 2.4.122
+%define drm_ver 2.4.125
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libdrm-devel >= %drm_ver
@@ -48,6 +49,9 @@ BuildRequires: pkgconfig(json-c) >= 0.14 libpci-devel
 %doc README*
 
 %changelog
+* Tue Jun 10 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Wed Jul 31 2024 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
