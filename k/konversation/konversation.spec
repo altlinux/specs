@@ -1,7 +1,7 @@
 
 %define rname konversation
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %define beta %nil
 %K6init no_altplace
@@ -16,7 +16,7 @@ License: GPL-2.0-or-later
 Url: http://konversation.kde.org
 
 Requires: qca-qt6-ossl qt6-dbus
-Requires: kde-runtime
+Requires: kde6-runtime
 Provides: kde5-konversation = %EVR
 Obsoletes: kde5-konversation < %EVR
 
@@ -73,6 +73,9 @@ sed -i \
 
 
 %changelog
+* Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -44,7 +44,7 @@ BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel 
 BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knotifications-devel
 BuildRequires: kf6-kservice-devel plasma6-kwayland-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-solid-devel
 BuildRequires: kf6-kdoctools-devel kf6-kirigami-devel kf6-kpeople-devel kf6-qqc2-desktop-style-devel
-BuildRequires: kf6-kpackage-devel kf6-kstatusnotifieritem-devel
+BuildRequires: kf6-kpackage-devel kf6-kstatusnotifieritem-devel kf6-kitemmodels-devel
 BuildRequires: kf6-modemmanager-qt-devel ModemManager-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: plasma-wayland-protocols
@@ -147,6 +147,9 @@ done
 %_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

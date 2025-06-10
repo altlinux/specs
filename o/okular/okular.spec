@@ -9,8 +9,8 @@
 %define libokularcore libokular6core%sover
 
 Name: %rname
-Version: 25.04.1
-Release: alt2
+Version: 25.04.2
+Release: alt1
 %K6init no_altplace
 
 Group: Office
@@ -190,6 +190,9 @@ fi
 
 
 %changelog
+* Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Tue May 27 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt2
 - fix requires
 

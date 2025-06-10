@@ -1,7 +1,7 @@
 %define rname kio-admin
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -49,6 +49,9 @@ operations in root-scope.
 %_datadir/polkit-1/actions/*admin*.policy
 
 %changelog
+* Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

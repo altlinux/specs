@@ -6,7 +6,7 @@
 %def_enable exiv2
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -110,7 +110,8 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 %_K6xdgmime/*.xml
 
 %files
-%_K6exec/smbnotifier
+%_K6exec/*er
+%_K6libexecdir/*er
 %_K6plug/kf6/*/*.so
 %_K6plug/*.so
 %_K6plug/plasma/kcms/systemsettings_qwidgets/kcm_*.so
@@ -133,6 +134,9 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 
 
 %changelog
+* Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Mon May 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 
