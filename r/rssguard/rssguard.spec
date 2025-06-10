@@ -1,6 +1,6 @@
 
 Name: rssguard
-Version: 4.8.3
+Version: 4.8.5
 Release: alt1
 
 Summary: RSS Guard is a simple RSS/ATOM feed reader
@@ -16,6 +16,8 @@ ExclusiveArch: %qt6_qtwebengine_arches
 Packager: Alexei Mezin <alexvm@altlinux.ru>
 
 Source: %name-%version.tar.gz
+Patch0: fix_return-type.patch
+
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6 rpm-macros-qt6-webengine
 
@@ -71,6 +73,8 @@ RSS Guard умеет проигрывать подкасты встроенны�
 
 %prep
 %setup
+# Fix build warning/error. Check in next release!
+%patch0 -p1
 
 %build
 %cmake -DBUILD_WITH_QT6=1 -DNO_UPDATE_CHECK=1
@@ -94,6 +98,9 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.rssgua
 %_libdir/%name/*
 
 %changelog
+* Tue Jun 10 2025 Alexei Mezin <alexvm@altlinux.org> 4.8.5-alt1
+- New version
+
 * Sun Apr 06 2025 Alexei Mezin <alexvm@altlinux.org> 4.8.3-alt1
 - New version
 
