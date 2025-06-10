@@ -1,7 +1,14 @@
 %def_with check
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+# Relax ELF verification on aarch64 to ignore build failure due to non-object symbol
+# in .dynsym section of _multiarray_umath.cpython-312.so. Strict verification is
+# preserved for other architectures.
+%ifarch aarch64
+%set_verify_elf_method relaxed
+%else
 %set_verify_elf_method strict
+%endif
 
 %ifarch %ix86 ppc64le armh
 %define relax_tests 1
@@ -15,7 +22,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 1.26.5
+Version: 2.2.6
 Release: alt1
 Summary: Fundamental package for array computing in Python
 License: BSD-3-Clause
@@ -23,14 +30,17 @@ Group: Development/Python3
 Url: https://www.numpy.org/
 VCS: https://github.com/numpy/numpy.git
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+Source2: scipy-mathjax.tar
 Source3: svml.tar
 Source4: x86-simd-sort.tar
-Source5: numpy-meson.tar
-Source6: mesonpy.py
-Source1: %pyproject_deps_config_name
+Source5: meson.tar
+Source6: highway.tar
+Source7: pocketfft.tar
+Source8: pythoncapi-compat.tar
+Source9: mesonpy.py
 Patch: numpy-1.20.2-Remove-strict-dependency-on-testing-package.patch
 Patch4: numpy-1.21.4-alt-use-sleep-in-auxv-test.patch
-Patch6: numpy-1.26.3-ALT-Xfail-test_limited_api.patch
 
 # E2K patchset with MCST numbering scheme
 Source2000: 0001-arch_e2k_define.patch
@@ -43,10 +53,16 @@ BuildRequires: gcc-c++ gcc-fortran liblapack-devel swig
 # ninja and patchelf are required by vendored meson-python
 BuildRequires: /usr/bin/ninja-build
 BuildRequires: /usr/bin/patchelf
+
+# ninja and patchelf are not packaged
+%add_pyproject_deps_build_filter ninja
+%add_pyproject_deps_build_filter patchelf
 %pyproject_builddeps_build
 %if_with check
 # meson is not packaged
 %add_pyproject_deps_check_filter meson
+# ninja is not packaged
+%add_pyproject_deps_check_filter ninja
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 # some tests want /proc/meminfo
@@ -69,23 +85,16 @@ fast operations on arrays, including mathematical, logical, shape manipulation,
 sorting, selecting, I/O, discrete Fourier transforms, basic linear algebra,
 basic statistical operations, random simulation and much more.
 
-%package testing
-Summary: Testing part of NumPy (Python 3)
-Group: Development/Python3
-AutoReq: yes, nopython3
-Requires: %name = %EVR
-
-%description testing
-This package contains testing part of NumPy.
-
 %package tests
 Summary: Tests for NumPy (Python 3)
 Group: Development/Python3
 AutoReq: yes, nopython3
+Provides: %name-testing = %EVR
+Obsoletes: %name-testing <= 1:1.26.5-alt1
 Requires: %name = %EVR
 
 %description tests
-This package contains tests NumPy.
+This package contains tests and testing part of NumPy.
 
 %package -n lib%oname-py3-devel
 Summary: Development files of NumPy (Python 3)
@@ -97,18 +106,25 @@ Requires: python3-devel
 This package contains development files of NumPy.
 
 %prep
-%setup -a 3 -a4 -a5
+%setup -a2 -a3 -a4 -a5 -a6 -a7 -a8
 %autopatch -p1
+mv scipy-mathjax doc/source/_static
+mv svml numpy/_core/src/umath
+mv x86-simd-sort numpy/_core/src/npysort
+mv meson vendored-meson
+mv highway numpy/_core/src
+mv pocketfft numpy/fft
+mv pythoncapi-compat numpy/_core/src/common
 %ifarch %e2k
 patch -p1 -i %SOURCE2000
 patch -p1 -i %SOURCE2001
 %endif
 
 # headers
-sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/core|' \
-	%oname/core/npymath.ini.in
+sed -i 's|^prefix.*|prefix=%python3_sitelibdir/%oname/_core|' \
+	%oname/_core/npymath.ini.in
 sed -i 's|^includedir.*|includedir=%_includedir/python%_python3_version/%oname|' \
-	%oname/core/npymath.ini.in
+	%oname/_core/npymath.ini.in
 
 # remove distutils based installation configs to drop extra build deps in
 # runtime
@@ -116,7 +132,7 @@ find \( -name 'setup.py' -o -name 'setup.cfg' \) -delete
 
 %pyproject_deps_resync_build
 %if_with check
-%pyproject_deps_resync_check_pipreqfile test_requirements.txt
+%pyproject_deps_resync_check_pipreqfile requirements/test_requirements.txt
 %endif
 
 %build
@@ -142,11 +158,11 @@ export PYTHONPATH=%_sourcedir
 %pyproject_deps_resync_metadata
 
 install -d %buildroot%_includedir/python%_python3_version
-mv %buildroot%python3_sitelibdir/%oname/core/include/%oname \
+mv %buildroot%python3_sitelibdir/%oname/_core/include/%oname \
 	%buildroot%_includedir/python%_python3_version/%oname
 
 ln -s %_includedir/python%_python3_version/%oname \
-	%buildroot%python3_sitelibdir/%oname/core/include/
+	%buildroot%python3_sitelibdir/%oname/_core/include/
 
 %files
 %doc README.md
@@ -168,22 +184,20 @@ ln -s %_includedir/python%_python3_version/%oname \
 %exclude %python3_sitelibdir/%oname/*/__pycache__/test_*.*
 %exclude %python3_sitelibdir/%oname/*/__pycache__/testutils.*
 %exclude %python3_sitelibdir/%oname/f2py/src/fortranobject.h
-%exclude %python3_sitelibdir/%oname/core/lib/npy-pkg-config
+%exclude %python3_sitelibdir/%oname/_core/lib/npy-pkg-config
 %exclude %python3_sitelibdir/%oname/doc
-%exclude %python3_sitelibdir/%oname/core/include
+%exclude %python3_sitelibdir/%oname/_core/include
 %exclude %python3_sitelibdir/%oname/f2py/src
-%exclude %python3_sitelibdir/%oname/core/lib/libnpymath.a
+%exclude %python3_sitelibdir/%oname/_core/lib/libnpymath.a
 %exclude %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
-%files testing
+%files tests
 %python3_sitelibdir/%oname/testing
 %python3_sitelibdir/%oname/conftest.py
 %python3_sitelibdir/%oname/_pytesttester.py
 %python3_sitelibdir/%oname/_pytesttester.pyi
 %python3_sitelibdir/%oname/__pycache__/conftest.*
 %python3_sitelibdir/%oname/__pycache__/_pytesttester.*
-
-%files tests
 %python3_sitelibdir/%oname/tests/
 %python3_sitelibdir/%oname/typing/tests/
 %python3_sitelibdir/%oname/random/tests/
@@ -194,23 +208,25 @@ ln -s %_includedir/python%_python3_version/%oname \
 %python3_sitelibdir/%oname/lib/tests/
 %python3_sitelibdir/%oname/fft/tests/
 %python3_sitelibdir/%oname/f2py/tests/
-%python3_sitelibdir/%oname/core/tests/
+%python3_sitelibdir/%oname/_core/tests/
 %python3_sitelibdir/%oname/compat/tests/
-%python3_sitelibdir/%oname/array_api/tests/
 %python3_sitelibdir/%oname/ma/testutils.py
 %python3_sitelibdir/%oname/ma/__pycache__/testutils.*
-%python3_sitelibdir/%oname/_pyinstaller/test_pyinstaller.py
-%python3_sitelibdir/%oname/_pyinstaller/__pycache__/test_pyinstaller.*
+%python3_sitelibdir/%oname/_pyinstaller/tests
 
 %files -n lib%oname-py3-devel
+%_bindir/numpy-config
 %_includedir/python%_python3_version/%oname
-%python3_sitelibdir/%oname/core/include
+%python3_sitelibdir/%oname/_core/include
 %python3_sitelibdir/%oname/f2py/src
-%python3_sitelibdir/%oname/core/lib/npy-pkg-config
-%python3_sitelibdir/%oname/core/lib/libnpymath.a
+%python3_sitelibdir/%oname/_core/lib/npy-pkg-config
+%python3_sitelibdir/%oname/_core/lib/libnpymath.a
 %python3_sitelibdir/%oname/random/lib/libnpyrandom.a
 
 %changelog
+* Fri May 30 2025 Aleksandr A. Voyt <sobue@altlinux.org> 1:2.2.6-alt1
+- Update to 2.2.6 (closes: #53974).
+
 * Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 1:1.26.5-alt1
 - 1.26.4 -> 1.26.5
 

@@ -1,6 +1,6 @@
 Name: pyfda
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Python Filter Design Analysis Tool
 License: MIT
@@ -8,6 +8,7 @@ Group: Development/Other
 Url: https://github.com/chipmuenk/pyfda
 
 Source0: %name-%version.tar
+Patch0: 0001-Fix-numpy-import-for-NumPy-2.x-compatibility.patch
 
 BuildArch: noarch
 BuildRequires: rpm-build-pyproject
@@ -22,6 +23,7 @@ for overflow and quantization behaviour in the time and frequency domain.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -46,6 +48,9 @@ for overflow and quantization behaviour in the time and frequency domain.
 %python3_sitelibdir/pyfda-%version.dist-info
 
 %changelog
+* Tue Jun 3 2025 Aleksandr A. Voyt <sobue@altlinux.org> 0.9.5-alt2
+- Compatible with NumPy 2.x
+
 * Fri Apr 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.9.5-alt1
 - 0.9.5 released
 
