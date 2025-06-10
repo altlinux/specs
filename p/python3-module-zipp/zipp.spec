@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.22.0
+Version: 3.23.0
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -53,6 +53,9 @@ A pathlib-compatible Zipfile object wrapper.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 09 2025 Stanislav Levin <slev@altlinux.org> 3.23.0-alt1
+- 3.22.0 -> 3.23.0.
+
 * Wed May 28 2025 Stanislav Levin <slev@altlinux.org> 3.22.0-alt1
 - 3.21.0 -> 3.22.0.
 
