@@ -2,7 +2,7 @@
 
 Name: alterator-manager
 Version: 0.1.29
-Release: alt1
+Release: alt2
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -86,6 +86,9 @@ mv -f %buildroot%_datadir/dbus-1/services/org.altlinux.alterator-manager.service
 %preun_service alterator-manager
 
 %changelog
+* Tue Jun 10 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt2
+- Update docs/README-ru.md.
+
 * Fri Apr 18 2025 Ivan Savin <svn17@altlinux.org> 0.1.29-alt1
 - Use g_dbus_is_member_name instead of is_correct_name for method name.
 - Fix segmentation fault in GetSignals method.
