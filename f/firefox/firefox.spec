@@ -13,7 +13,7 @@
 %define llvm_version  17.0
 
 Name: firefox
-Version: 139.0.1
+Version: 139.0.4
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -388,6 +388,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Jun 10 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.4-alt1
+- New version (139.0.4).
+- Security fixes:
+  + CVE-2025-49709: Memory corruption in canvas surfaces
+  + CVE-2025-49710: Integer overflow in OrderedHashTable
+
 * Sat May 31 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.1-alt1
 - New version (139.0.1).
 - Fix FTBFS: exclude i586 arch due to idle time limit exceeded.
