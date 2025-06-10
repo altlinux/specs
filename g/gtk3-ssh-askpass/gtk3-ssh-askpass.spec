@@ -1,47 +1,45 @@
-Name: gtk2-ssh-askpass
-Version: 5.4p1
+Name: gtk3-ssh-askpass
+Version: 9.6p1
 Release: alt1
 
-Summary: A GTK2-based passphrase dialog for use with OpenSSH
-License: BSD-style
+Summary: A GTK3-based passphrase dialog for use with OpenSSH
+License: BSD-2-Clause
 Group: Networking/Remote access
 Url: http://www.openssh.com/
 
 Source0: %name.c
 Source1: %name.1
-Patch: %name-fc-progress.patch
 
 %define openssh_askpass_dir %_libexecdir/openssh
 
-PreReq: alternatives >= 0:0.4, %openssh_askpass_dir
+Requires(pre): alternatives >= 0:0.4, %openssh_askpass_dir
 Requires: openssh-askpass-common
 Provides: %openssh_askpass_dir/ssh-askpass
-Provides: openssh-askpass-gtk2 = %version-%release
 Provides: openssh-askpass-gnome = %version-%release
 Obsoletes: openssh-askpass-gnome
+Obsoletes: gtk2-ssh-askpass
 
-BuildPreReq: libgtk+2-devel
+BuildRequires: libgtk+3-devel
 
 %description
-This is a Gtk2-based passphrase dialog for use with OpenSSH.
+This is a Gtk3-based passphrase dialog for use with OpenSSH.
 These dialogs are intended to be called from the ssh-add program and
 not invoked directly.
 
 There is only two run-time options: if you set the environment variable
 "GNOME_SSH_ASKPASS_GRAB_SERVER=true" then %name will grab
-the X server.  If you set "GNOME_SSH_ASKPASS_GRAB_POINTER=true", then the 
-pointer will be grabbed too.  These may have some benefit to security if 
+the X server.  If you set "GNOME_SSH_ASKPASS_GRAB_POINTER=true", then the
+pointer will be grabbed too.  These may have some benefit to security if
 you don't trust your X server.  We grab the keyboard always.
 
 %prep
 %setup -qcT
 install -pm644 %_sourcedir/%name.c .
-%patch
 
 %build
 %__cc %optflags %name.c -o %name \
-	`pkg-config --cflags gtk+-2.0` \
-	`pkg-config --libs gtk+-2.0 x11`
+	`pkg-config --cflags gtk+-3.0` \
+	`pkg-config --libs gtk+-3.0 x11`
 
 %install
 install -pD -m755 %name %buildroot%openssh_askpass_dir/%name
@@ -58,6 +56,14 @@ EOF
 %_man1dir/%name.*
 
 %changelog
+* Sat Jun 07 2025 Mikhail Efremov <sem@altlinux.org> 9.6p1-alt1
+- Made error message less scarry.
+- Setted default icon name.
+- Ported progress patch to GTK3.
+- Updated man page.
+- Renamed to gtk3-ssh-askpass.
+- Built gtk3-ssh-askpass.
+
 * Tue May 22 2012 Dmitry V. Levin <ldv@altlinux.org> 5.4p1-alt1
 - Updated to 5.4p1.
 - Fixed build with ld --no-copy-dt-needed-entries.

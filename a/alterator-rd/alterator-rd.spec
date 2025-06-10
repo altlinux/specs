@@ -4,8 +4,8 @@
 
 Name: alterator-rd
 Version: 0.0.3
-Release: alt2
-License: %gpl2plus
+Release: alt3
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Summary: Alterator module for remote desktop
 Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
@@ -15,7 +15,6 @@ Source: %name-%version.tar
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
 Requires: alterator-l10n >= 2.7-alt10
 BuildPreReq: alterator >= 4.10-alt8
-BuildPreReq: rpm-build-licenses
 
 BuildArch: noarch
 
@@ -93,7 +92,7 @@ Add support for xdmcp support
 Requires: %name == %version-%release
 Summary: SSH support
 Group: System/Configuration/Other
-Requires: sshpass gtk2-ssh-askpass x11-ssh-askpass
+Requires: sshpass x11-ssh-askpass
 
 %description ssh
 Remote desktop alterator module for SSH support
@@ -193,6 +192,10 @@ Meta-package to to include all available remote protocols
 %files all
 
 %changelog
+* Mon Jun 09 2025 Mikhail Efremov <sem@altlinux.org> 0.0.3-alt3
+- Dropped rpm-build-licenses usage.
+- Dropped gtk2-ssh-askpass from dependencies.
+
 * Tue Jul 07 2015 Andrey Cherepanov <cas@altlinux.org> 0.0.3-alt2
 - Rebuild by cas@
 - Optional build Citrix and NX support
