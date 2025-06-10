@@ -1,6 +1,6 @@
 Name: libdrm
-Version: 2.4.124
-Release: alt2
+Version: 2.4.125
+Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
 License: MIT
@@ -89,6 +89,9 @@ Will void your warranty.
 %_bindir/*
 
 %changelog
+* Tue Jun 10 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.125-alt1
+- 2.4.125
+
 * Tue Mar 11 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.124-alt2
 - upstream: amdgpu: add new marketing names
 
