@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 11.4.7
-Release: alt2
+Version: 11.8.2
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -96,13 +96,12 @@ Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
 # git submodules
-Source101: libmariadb.tar
-Source102: rocksdb.tar
-Source103: wsrep-lib.tar
-Source104: wsrep-API.tar
-Source105: columnstore.tar
-Source106: libmarias3.tar
-Source107: fmt.tar
+Source101: libmariadb_v3.4.6.tar
+Source102: rocksdb_v6.29.5.tar
+Source103: wsrep-lib_20250610.tar
+Source104: columnstore_23.10.3-1.tar
+Source105: libmarias3_3.1.3.tar
+Source106: fmt_11.1.4.tar
 
 Patch0: %name-%version.patch
 
@@ -128,7 +127,10 @@ Requires: %name-server = %EVR
 Requires: %name-client = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI perl-DBD-MariaDB libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
+BuildRequires: libbrotli-devel libgdbm-devel libgsasl-devel libidn2-devel libnettle-devel libnghttp2-devel libtasn1-devel
+BuildRequires: libnghttp3-devel libngtcp2-devel libp11-kit-devel libpsl-devel libsepol-devel libssh2-devel
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI perl-DBD-MariaDB libpam-devel libevent-devel
+BuildRequires: cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc setproctitle
 BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
 BuildRequires: chrooted control
@@ -136,6 +138,7 @@ BuildRequires: libxml2-devel xml-utils
 BuildRequires: libcurl-devel
 BuildRequires: python3
 BuildRequires: checkpolicy policycoreutils
+BuildRequires: libnuma-devel
 %{?_with_libwrap:BuildRequires: libwrap-devel}
 %{?_with_cassandra:BuildRequires: boost-devel}
 %{?_with_oqgraph:BuildRequires: boost-devel libjudy-devel}
@@ -147,10 +150,6 @@ BuildRequires: checkpolicy policycoreutils
 %{?_with_cracklib:BuildRequires: cracklib-devel cracklib-words}
 %{?_with_sphinx:BuildRequires: sphinx libsphinxclient-devel}
 %{?_with_cassandra:BuildRequires: cassandra thrift-devel}
-
-%ifnarch %arm
-BuildRequires: libnuma-devel
-%endif
 
 %description
 MariaDB is a community developed branch of MySQL - a multi-user, multi-threaded
@@ -415,11 +414,10 @@ version.
 tar -xf %SOURCE101 -C libmariadb
 tar -xf %SOURCE102 -C storage/rocksdb/rocksdb
 tar -xf %SOURCE103 -C wsrep-lib
-tar -xf %SOURCE104 -C wsrep-lib/wsrep-API/v26
-tar -xf %SOURCE105 -C storage/columnstore/columnstore
-tar -xf %SOURCE106 -C storage/maria/libmarias3
+tar -xf %SOURCE104 -C storage/columnstore/columnstore
+tar -xf %SOURCE105 -C storage/maria/libmarias3
 mkdir -p extra/libfmt/src/libfmt
-tar -xf %SOURCE107 -C extra/libfmt/src/libfmt
+tar -xf %SOURCE106 -C extra/libfmt/src/libfmt
 
 %patch0 -p1
 %patch1 -p1
@@ -514,6 +512,7 @@ export LDFLAGS
     -DWITH_INNODB_DISALLOW_WRITES=1 \
     -DENABLED_LOCAL_INFILE=ON \
     -DPLUGIN_AWS_KEY_MANAGEMENT=NO \
+    -DWITH_SBOM=OFF \
     -DCONNECT_WITH_MONGO=OFF \
     -DCONNECT_WITH_JDBC=OFF \
     -DWITH_EMBEDDED_SERVER=ON \
@@ -1118,6 +1117,9 @@ fi
 %endif
 
 %changelog
+* Tue Jun 10 2025 Alexei Takaseev <taf@altlinux.org> 11.8.2-alt1
+- 11.8.2
+
 * Wed May 28 2025 Alexei Takaseev <taf@altlinux.org> 11.4.7-alt2
 - Fixed placed manpages
 
