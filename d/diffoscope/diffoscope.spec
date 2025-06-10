@@ -1,17 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 Name: diffoscope
-Version: 253
+Version: 297
 Release: alt1
 
 Summary: In-depth comparison of files, archives, and directories
 Group: Development/Python3
 License: GPLv3+
 Url: https://diffoscope.org/
+Vcs: https://salsa.debian.org/reproducible-builds/diffoscope.git
+BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: %name-%version-sbin.patch
 
-BuildArch: noarch
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: /proc
+BuildRequires: /dev
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-libmagic
 BuildRequires: python3-module-libarchive-c
@@ -32,6 +36,7 @@ or PDF just as easily. The differences can be shown in a text or HTML report.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -41,6 +46,9 @@ or PDF just as easily. The differences can be shown in a text or HTML report.
 %pyproject_install
 install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 
+%check
+%pyproject_run_pytest
+
 %files
 %doc README.rst debian/changelog COPYING
 %python3_sitelibdir_noarch/diffoscope*
@@ -48,6 +56,9 @@ install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 %_man1dir/diffoscope.1*
 
 %changelog
+* Tue Jun 10 2025 Ivan Khanas <xeno@altlinux.org> 297-alt1
+- New version.
+
 * Mon Dec 25 2023 Slava Aseev <ptrnine@altlinux.org> 253-alt1
 - new version
 
