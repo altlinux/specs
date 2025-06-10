@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name clapper
 %define ver_major 0.8
@@ -12,8 +12,8 @@
 %def_enable check
 
 Name: %_name-enhancers
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Plugins enhancing Clapper library capabilities
 License: GPL-3.0-or-later
@@ -77,6 +77,9 @@ Plugins enhancing Clapper media player library capabilities.
 %doc README*
 
 %changelog
+* Tue Jun 10 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Sat Jan 25 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1.1
 - updated to 0.8.1-1-gbe60a2b 
   (peertube: Fix regex for video IDs containing "-" characters)
