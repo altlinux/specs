@@ -4,7 +4,7 @@
 %define module_name typing_inspection
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Runtime typing introspection tools
@@ -55,6 +55,9 @@ typing-inspection provides tools to inspect type annotations at runtime.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jun 10 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.4.1-alt1
+- Updated to 0.4.1.
+
 * Fri Apr 04 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.4.0-alt1
 - Initial build for ALT Sisyphus.
 
