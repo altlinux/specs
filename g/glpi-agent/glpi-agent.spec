@@ -1,5 +1,5 @@
 Name:    glpi-agent
-Version: 1.14
+Version: 1.15
 Release: alt1
 
 Summary: GLPI Agent
@@ -140,6 +140,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Tue Jun 10 2025 Andrey Cherepanov <cas@altlinux.org> 1.15-alt1
+- New version.
+
 * Thu Apr 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.14-alt1
 - New version.
 
