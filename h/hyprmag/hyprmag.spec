@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: %_name
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: A wlroots-compatible Wayland screen magnifier
@@ -52,6 +52,9 @@ options.
 %doc README*
 
 %changelog
+* Wed Jun 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
 * Sat Jan 04 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - first build for Sisyphus
 

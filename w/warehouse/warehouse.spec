@@ -1,12 +1,12 @@
 %define _name warehouse
-%define ver_major 2.0
+%define ver_major 2.1
 %define rdn_name io.github.flattool.Warehouse
 
-# online screenshots
+# bad metadata
 %def_disable check
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Flatpak manager for GNOME
@@ -22,6 +22,7 @@ BuildArch: noarch
 
 %add_python3_path %_datadir/%_name
 
+Requires: python3-module-pygobject3
 Requires: dconf flatpak-spawn
 Requires: typelib(Adw) = 1
 
@@ -60,6 +61,9 @@ sed -i "s/\('appstream\)-util'/\1cli'/" data/meson.build
 %doc README*
 
 %changelog
+* Wed Jun 11 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Jan 07 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
