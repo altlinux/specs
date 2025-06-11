@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define pkgname requests
+%define pypi_name requests
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%pkgname
-Version: 2.32.3
+Name: python3-module-%pypi_name
+Version: 2.32.4
 Release: alt1
 
 Summary: HTTP library, written in Python, for human beings
@@ -53,11 +54,14 @@ rm -rf requests/cacert.pem
 %pyproject_run_pytest -ra -Wignore tests
 
 %files
-%doc AUTHORS.rst HISTORY.md README.md
-%python3_sitelibdir/%pkgname/
-%python3_sitelibdir/%{pyproject_distinfo %pkgname}/
+%doc README.*
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 10 2025 Stanislav Levin <slev@altlinux.org> 2.32.4-alt1
+- 2.32.3 -> 2.32.4 (fixes: CVE-2024-47081).
+
 * Thu May 30 2024 Stanislav Levin <slev@altlinux.org> 2.32.3-alt1
 - 2.32.2 -> 2.32.3.
 
