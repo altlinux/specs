@@ -12,7 +12,7 @@
 
 Name: freerdp%sover
 Version: 3.15.0
-Release: alt1
+Release: alt2
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -27,6 +27,9 @@ Source2: freerdp-login.sh
 Source3: freerdp-logout.sh
 Source4: freerdp.sysconfig
 Source5: freerdp-server.pam
+Source6: locker.sh
+Source7: freerdp-locker.service
+Source8: freerdp-locker.timer
 
 Patch0: freerdp-alt-pam-check.patch
 Patch1: freerdp-alt-connection-scripts.patch
@@ -442,8 +445,10 @@ setrpath="patchelf --set-rpath"
 # Set rpath to %_libdir/freerdp3 for freerdp-proxy executable
 $setrpath %_libdir/freerdp3 %buildroot%_bindir/freerdp-proxy
 
-# Install freerdp-server.service
+# Install services and timers
 install -Dpm0644 %SOURCE1 %buildroot%_libexecdir/systemd/user/freerdp-server.service
+install -Dpm0644 %SOURCE7 %buildroot%_libexecdir/systemd/user/freerdp-locker.service
+install -Dpm0644 %SOURCE8 %buildroot%_libexecdir/systemd/user/freerdp-locker.timer
 
 # Remove sample server
 rm -f %buildroot%_bindir/sfreerdp*
@@ -458,6 +463,7 @@ rm -f %buildroot%_bindir/sdl-freerdp %buildroot%_man1dir/sdl-freerdp.1*
 # Install connection scripts
 install -Dpm0755 %SOURCE2 %buildroot%_sysconfdir/freerdp/freerdp-login.sh
 install -Dpm0755 %SOURCE3 %buildroot%_sysconfdir/freerdp/freerdp-logout.sh
+install -Dpm0755 %SOURCE6 %buildroot%_sysconfdir/freerdp/freerdp-locker.sh
 
 # Install default configuration for freerdp-server.service
 install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
@@ -486,8 +492,11 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %files -n %name-server
 %_bindir/freerdp-proxy
 %config(noreplace) %_libexecdir/systemd/user/freerdp-server.service
+%config(noreplace) %_libexecdir/systemd/user/freerdp-locker.service
+%config(noreplace) %_libexecdir/systemd/user/freerdp-locker.timer
 %config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-login.sh
 %config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-logout.sh
+%config(noreplace) %attr(0755, root, root) %_sysconfdir/freerdp/freerdp-locker.sh
 %config(noreplace) %_sysconfdir/sysconfig/freerdp-server
 %config(noreplace) %_sysconfdir/pam.d/freerdp-server
 %attr(2711, root, chkpwd) %_bindir/freerdp-shadow-cli
@@ -545,6 +554,13 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Wed Jun 11 2025 Andrey Cherepanov <cas@altlinux.org> 3.15.0-alt2
+- Fixes from Technogid:
+  + Add gfx optimization parameters for freerdp-server.service
+  + Add freerdp-locker service and timer
+  + Modernize login and logout scripts
+  + Fix behaviour for disconnect script
+
 * Wed Apr 16 2025 Andrey Cherepanov <cas@altlinux.org> 3.15.0-alt1
 - New version.
 
