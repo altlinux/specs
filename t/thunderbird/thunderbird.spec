@@ -15,7 +15,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 139.0.1
+Version: 139.0.2
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -380,6 +380,11 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Jun 11 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2025-5986: Unsolicited File Download, Disk Space Exhaustion, and Credential Leakage via mailbox:/// Links
+
 * Wed Jun 04 2025 Ajrat Makhmutov <rauty@altlinux.org> 139.0.1-alt1
 - New version.
 - Put the list of supported architectures to the rpm-macros-thunderbird.
