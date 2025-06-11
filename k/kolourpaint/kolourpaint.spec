@@ -4,7 +4,7 @@
 %define libkolourpaint libkolourpaint_lgpl%sover
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -16,7 +16,7 @@ License: GPL-2.0-or-later or LGPL-2.0-only
 Provides: kde5-kolourpaint = %EVR
 Obsoletes: kde5-kolourpaint < %EVR
 
-Requires: kde-runtime
+Requires: kde6-runtime
 
 Source: %rname-%version.tar
 Source1: colors.tar
@@ -94,6 +94,9 @@ done
 %_K6lib/libkolourpaint_lgpl.so.*
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

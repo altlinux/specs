@@ -1,7 +1,7 @@
 %define rname kio-zeroconf
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -55,6 +55,9 @@ DNS-SD Service Discovery for KDE
 
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

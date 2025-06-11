@@ -1,7 +1,7 @@
 %define rname poxml
 
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -38,6 +38,9 @@ BuildRequires: kf6-kdoctools kf6-kdoctools-devel kf6-ki18n-devel
 
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 

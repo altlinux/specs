@@ -9,7 +9,7 @@
 
 %define rname lokalize
 Name: %rname
-Version: 25.04.1
+Version: 25.04.2
 Release: alt1
 %K6init
 
@@ -69,6 +69,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
+- new version
+
 * Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.1-alt1
 - new version
 
