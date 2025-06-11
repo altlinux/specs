@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 3.3.4
+Version: 4.2
 Release: alt1
 
 Summary: EmPy is a system for embedding Python expressions and statements in template text
@@ -51,5 +51,8 @@ configurable via command line options and embedded commands.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jun 11 2025 Andrey Cherepanov <cas@altlinux.org> 4.2-alt1
+- New version.
+
 * Wed Mar 22 2023 Andrey Cherepanov <cas@altlinux.org> 3.3.4-alt1
 - Inital built for Sisyphus.
