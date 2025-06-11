@@ -1,6 +1,6 @@
 Name: xfce4-session
 Version: 4.20.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -101,6 +101,9 @@ install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/xfce4-xscreensaver
 %_datadir/xfce4/labwc/
 
 %changelog
+* Wed Jun 11 2025 Andrey Cherepanov <cas@altlinux.org> 4.20.2-alt1.2
+- NMU: ru.po: added "Xfce" in russian translation of Xfce Session
+
 * Mon May 19 2025 Ivan A. Melnikov <iv@altlinux.org> 4.20.2-alt1.1
 - NMU: put wayland session into a separate package (ALT#54329).
 
