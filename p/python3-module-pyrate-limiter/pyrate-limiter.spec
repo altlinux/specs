@@ -4,15 +4,15 @@
 
 %def_with check
 
-Name:    python3-module-%pypi_name
-Version: 3.7.0
+Name: python3-module-%pypi_name
+Version: 3.7.1
 Release: alt1
 
-Summary:   The request rate limiter using Leaky-bucket Algorithm
-License:   MIT
-Group:     Development/Python3
-Url:       https://github.com/vutran1710/PyrateLimiter
-Vcs:       https://github.com/vutran1710/PyrateLimiter.git
+Summary: The request rate limiter using Leaky-bucket Algorithm
+License: MIT
+Group: Development/Python3
+Url: https://github.com/vutran1710/PyrateLimiter
+Vcs: https://github.com/vutran1710/PyrateLimiter.git
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -49,5 +49,8 @@ BuildRequires: python3-module-pytest-asyncio
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 02 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 3.7.1-alt1
+- New version (3.7.1).
+
 * Tue Oct 01 2024 Martynenko Evgeniy <enimalojd@altlinux.org> 3.7.0-alt1
   - Initial build for ALT.
