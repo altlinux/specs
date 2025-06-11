@@ -5,7 +5,7 @@
 
 Name: qt6-quick3d
 Version: 6.9.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - 3D content in Qt Quick
@@ -15,10 +15,12 @@ License: GPL-3.0-or-later
 Requires: qt6-declarative
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: alt-find-assimp.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-base-devel qt6-declarative-devel qt6-shadertools-devel qt6-quicktimeline-devel
-BuildRequires: libassimp-devel
+BuildRequires: libassimp-devel libminizip-devel libpoly2tri-devel
+BuildRequires: openxr-devel
 
 %description
 A new module and API for defining 3D content in Qt Quick.
@@ -159,6 +161,7 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 
 %ifarch %e2k
 # error: constant is inaccessible
@@ -171,7 +174,9 @@ sed -i 's/m68k/e2k/' \
 %build
 %Q6build \
     -DQT_GENERATE_SBOM:BOOL=OFF \
+    -DQT_FEATURE_quick3d_assimp=ON \
     #
+%Q6make
 %if %qdoc_found
 %Q6make --target docs
 %endif
@@ -248,6 +253,10 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- fix find assimp-6 (thanks lakostis@alt)
+- build with openxr
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - new version
 
