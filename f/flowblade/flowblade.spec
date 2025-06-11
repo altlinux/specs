@@ -1,5 +1,5 @@
 Name: flowblade
-Version: 2.20
+Version: 2.22
 Release: alt1
 
 Summary: non-linear video editor
@@ -76,6 +76,9 @@ rm -v %buildroot/usr/lib/mime/packages/flowblade
 %_datadir/mime/packages/io.github.jliljebl.Flowblade.xml
 
 %changelog
+* Wed Jun 11 2025 Grigory Ustinov <grenka@altlinux.org> 2.22-alt1
+- Automatically updated to 2.22.
+
 * Wed Jun 04 2025 Grigory Ustinov <grenka@altlinux.org> 2.20-alt1
 - Automatically updated to 2.20 (Closes: #53831, #48163).
 
