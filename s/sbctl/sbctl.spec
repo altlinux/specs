@@ -3,7 +3,7 @@
 
 Name: sbctl
 Version: 0.17
-Release: alt1
+Release: alt2
 
 Summary: Secure Boot key manager
 License: MIT
@@ -13,6 +13,8 @@ Url: https://github.com/Foxboron/sbctl
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-macros-systemd
@@ -26,6 +28,7 @@ track of files that needs to be signed in the boot chain.
 
 %prep
 %setup -a1
+%patch0 -p1
 
 %build
 echo '%version-%release' > VERSION
@@ -49,6 +52,9 @@ rm %buildroot%_datadir/licenses/sbctl/LICENSE
 %_datadir/fish/vendor_completions.d/sbctl.fish
 
 %changelog
+* Wed Jun 11 2025 Egor Ignatov <egori@altlinux.org> 0.17-alt2
+- Fix 'invalid pe header' errors (closes: #54781).
+
 * Tue May 06 2025 Egor Ignatov <egori@altlinux.org> 0.17-alt1
 - New version 0.17.
 
