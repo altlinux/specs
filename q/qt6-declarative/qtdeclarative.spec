@@ -4,7 +4,7 @@
 
 Name: qt6-declarative
 Version: 6.9.1
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -47,6 +47,8 @@ Source1: qml6
 Source2: qml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
+Patch1: 0001-qmlcachegen-fix-crash-on-unresolved-type-with-requir.patch
+Patch2: 0001-qmlimportscanner-Include-module-versions-again.patch
 
 %include %SOURCE1
 %qml6_req_skipall 1
@@ -439,6 +441,8 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
+%patch1 -p1
+%patch2 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -682,6 +686,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- add upstream fixes
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - new version
 
