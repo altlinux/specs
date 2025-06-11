@@ -1,6 +1,6 @@
 Name: iaito
 Version: 5.9.8
-Release: alt2
+Release: alt3
 
 Summary: GUI for radare2
 License: GPLv3
@@ -43,6 +43,9 @@ install -pm0644 -D src/iaito.1 %buildroot%_man1dir/iaito.1
 %_man1dir/iaito.1*
 
 %changelog
+* Wed Jun 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.8-alt3
+- fixed FTBFS with Qt 6.9
+
 * Fri Nov 22 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.9.8-alt2
 - backported fix for null deref in codemeta_new
 
