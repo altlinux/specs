@@ -1,6 +1,7 @@
 %def_enable  ffmpeg
 %def_enable  google_api_keys
 %def_enable  samurai
+%def_disable gost
 
 %ifndef build_parallel_jobs
 %global build_parallel_jobs %__nprocs
@@ -25,7 +26,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        137.0.7151.68
+Version:        137.0.7151.103
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -42,6 +43,15 @@ Source100:      chromium.sh
 Source101:      chromium.desktop
 Source102:      chromium.xml
 Source200:      chromium.default
+
+%if_enabled gost
+# git clone --recurse-submodules https://github.com/deemru/chromium-gost.git
+#   git checkout -b version commit_id && git submodule update --recursive
+# cd ..; tar cvf chromium-gost.tar --exclude='.git*' chromium-gost
+Source300:      chromium-gost.tar
+Provides:       chromium-gost = %version
+Obsoletes:      chromium-gost < %version
+%endif
 
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
@@ -111,6 +121,9 @@ Patch069: 0069-DEBIAN-pdfium-libpng.patch
 Patch070: 0070-FEDORA-type-mismatch-error.patch
 Patch073: 0073-FEDORA-chromium-136-rust-skrifa-build-error.patch
 Patch074: 0074-FEDORA-chromium-137-clang++-unknown-argument.patch
+%if_enabled gost
+Patch080: chromium-alt-check-themes.patch
+%endif
 
 ### End Patches
 
@@ -235,6 +248,9 @@ BuildRequires:  python3(simplejson)
 
 BuildRequires:  rust       >= 1.75.0-alt2
 BuildRequires:  rust-cargo >= 1.75.0-alt2
+%if_enabled gost
+BuildRequires:  patchutils
+%endif
 %if_enabled samurai
 BuildRequires:  samurai
 %endif
@@ -252,13 +268,55 @@ Chromium is an open-source browser project that aims to build a safer,
 faster, and more stable way for all Internet users to experience the web.
 
 %prep
-%setup -q -n chromium
+%setup -q -n chromium  %{?_enable_gost:-a300}
 %autopatch -p1
 # for rust after 1.86 revert adler2 patch:
 %if "%(rpmquery --qf '%%{VERSION}' rust)" >= "1.86"
 %patch068 -R -p1
 %endif
+%if_enabled gost
+# Patches from chromium-gost
+# Copy instruction from chromium-gost/build_linux/chromium-gost-prepare.sh
+cp -f chromium-gost/extra/exit_0.sh chrome/installer/linux/common/repo.cron
+cp -f chromium-gost/extra/exit_0.sh chrome/installer/linux/common/rpmrepo.cron
 
+cp -f chromium-gost/extra/external_extensions.json chrome/browser/resources/default_apps/external_extensions.json
+cp -f chromium-gost/extra/extensions/*.crx chrome/browser/resources/default_apps/
+
+cp -f chromium-gost/src/gostssl.cpp third_party/boringssl/gostssl.cpp
+cp -f chromium-gost/src/msspi/src/msspi.cpp third_party/boringssl/msspi.cpp
+cp -f chromium-gost/src/msspi/src/msspi.h third_party/boringssl/msspi.h
+cp -f chromium-gost/src/msspi/src/capix.hpp third_party/boringssl/capix.hpp
+
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/CSP_SChannel.h third_party/boringssl/src/include/CSP_SChannel.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/CSP_Sspi.h third_party/boringssl/src/include/CSP_Sspi.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/CSP_WinBase.h third_party/boringssl/src/include/CSP_WinBase.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/CSP_WinCrypt.h third_party/boringssl/src/include/CSP_WinCrypt.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/CSP_WinDef.h third_party/boringssl/src/include/CSP_WinDef.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/CSP_WinError.h third_party/boringssl/src/include/CSP_WinError.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/WinCryptEx.h third_party/boringssl/src/include/WinCryptEx.h
+cp -f chromium-gost/src/msspi/third_party/cprocsp/include/common.h third_party/boringssl/src/include/common.h
+
+cat > chromium-gost-excluded << CG_EXCLUDED
+chrome/app/theme/chromium/BRANDING
+chrome/browser/shell_integration_linux.cc
+chrome/common/channel_info_posix.cc
+chrome/installer/linux/common/chromium-browser/chromium-browser.info
+components/search_engines/prepopulated_engines.json
+components/search_engines/search_terms_data.cc
+content/common/user_agent.cc
+CG_EXCLUDED
+sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@' < chromium-gost/patch/boringssl.patch | patch -p1
+filterdiff -p1 -X chromium-gost-excluded < chromium-gost/patch/chromium.patch | sed -E 's@^((diff --git|[-+]{3}) a)/(.*)@\1/third_party/boringssl/src/\3@; s@return "chromium-browser@return "chromium@' | patch -p1
+## c-g patch incompatibility introduced in 94.0.4606.71
+sed -i '1i\
+#if __has_attribute(no_destroy)\
+#  define _LIBCPP_NO_DESTROY __attribute__((__no_destroy__))\
+#else\
+#  define _LIBCPP_NO_DESTROY\
+#endif
+' net/socket/ssl_client_socket_impl.cc
+%endif
 sed -i \
         -e 's/"-ffile-compilation-dir=."//g' \
         -e 's/"-no-canonical-prefixes"//g' \
@@ -481,7 +539,7 @@ n=%build_parallel_jobs
 
 for name in chrome chrome_sandbox chromedriver policy_templates; do
 	export NINJA_STATUS="[$name %%f/%%t] "
-	/usr/bin/time $NINJA -vvv -j "$n" -C %target $name
+	/usr/bin/time $NINJA -j "$n" -C %target $name
 done
 
 
@@ -596,6 +654,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jun 11 2025 Andrew A. Vasilyev <andy@altlinux.org> 137.0.7151.103-alt1
+- New version (137.0.7151.103).
+- Security fixes:
+  + CVE-2025-5958: Use after free in Media
+  + CVE-2025-5959: Type Confusion in V8
+
 * Tue Jun 03 2025 Andrew A. Vasilyev <andy@altlinux.org> 137.0.7151.68-alt1
 - New version (137.0.7151.68).
 - Security fixes:
