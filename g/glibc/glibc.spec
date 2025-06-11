@@ -1,7 +1,7 @@
 %define glibc_sourcedir /usr/src/glibc-source
 
 Name: glibc
-Version: 2.40.0.69.8566822197
+Version: 2.40.0.135.c8e10f1432
 
 Release: alt1
 Epoch: 6
@@ -746,6 +746,9 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Wed Jun 11 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.135.c8e10f1432-alt1
+- Updated to glibc-2.40-135-gc8e10f1432 (fixes CVE-2025-0395).
+
 * Mon Jan 27 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.40.0.69.8566822197-alt1
 - Updated to glibc-2.40-69-g8566822197.
 
