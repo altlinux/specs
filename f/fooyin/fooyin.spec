@@ -2,7 +2,7 @@
 
 Name: fooyin
 Version: 0.8.1
-Release: alt2
+Release: alt3
 
 Summary: Music player built around customisation
 License: GPL-3.0
@@ -12,6 +12,7 @@ Vcs: https://github.com/fooyin/fooyin.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt-change-libdir.patch
+Patch1: %name-%version-alt-qt69-build-fix.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -71,6 +72,9 @@ rm -fv %buildroot%_libdir/libfooyin*.so
 %_libdir/libfooyin_*.so.*
 
 %changelog
+* Wed Jun 11 2025 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt3
+- Fixed FTBFS with Qt-6.9.
+
 * Sat Nov 23 2024 Anton Kurachenko <srebrov@altlinux.org> 0.8.1-alt2
 - Updated Url and Vcs links.
 
