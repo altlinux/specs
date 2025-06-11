@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 25.04.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Editors
@@ -25,7 +25,7 @@ Patch1: alt-soname.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel 
-BuildRequires: libgit2-devel
+BuildRequires: libgit2-devel libqtkeychain-qt6-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
@@ -167,6 +167,9 @@ kde6_add_text_mimes %buildroot/%_K6xdgapp/org.kde.kwrite.desktop
 
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
+- fix build requires
+
 * Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
