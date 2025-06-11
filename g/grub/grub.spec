@@ -22,7 +22,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt12
+Release: alt13
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -515,6 +515,12 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Jun 10 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt13
+- fix search by uuid for legacy boot
+- fix zfs module (closes: #54480)
+- fix fs write support detection (closes: #54394)
+- update ALT-specific translations (closes: #54493)
+
 * Thu May 15 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt12
 - update-grub: use system locale when generating config
 - fix PXE boot (closes: #54249)
