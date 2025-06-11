@@ -5,7 +5,7 @@
 
 Name: qt6-tools
 Version: 6.9.1
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -157,6 +157,7 @@ Requires: libqt6-core = %_qt6_version
 %else
 %define qdoc_found 0
 %endif
+export LLVM_INSTALL_DIR=`ls -1d /usr/lib/llvm-*| sort | tail -n1`
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -322,6 +323,9 @@ done
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- fix to build qdoc
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - new version
 
