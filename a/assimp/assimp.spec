@@ -1,12 +1,12 @@
-%define major   5
-%define minor   4
+%define major   6
+%define minor   0
 
 %def_without docs
 %def_without examples
 
 Name: assimp
-Version: 5.4.3
-Release: alt2
+Version: 6.0.2
+Release: alt1
 Summary: Library to import various 3D model formats into applications
 Group: Graphics
 # Assimp is BSD
@@ -27,9 +27,7 @@ Source1: assimp_generate_tarball.sh
 
 # Un-bundle libraries that are provided by the distribution.
 # Also fixes FTBFS: https://github.com/assimp/assimp/issues/4334
-Patch0: assimp-5.4.3-alt-unbundle.patch
-# https://github.com/assimp/assimp/issues/6069
-Patch1: md2-loader-CVE-2025-3196.patch
+Patch0: assimp-6.0.2-alt-unbundle.patch
 
 BuildRequires: boost-complete
 BuildRequires: cmake
@@ -74,7 +72,7 @@ systems, but is not limited to these applications.
 Summary: Header files and development libraries for assimp
 Group: Development/C++
 Provides: %name-devel = %EVR
-Requires: lib%name = %EVR
+Requires: lib%name = %EVR, libpugixml-devel
 
 %description -n lib%name-devel
 This package contains the header files and development libraries for assimp.
@@ -83,7 +81,6 @@ You need to install it if you want to develop programs using assimp.
 %prep
 %setup
 %patch0 -p2
-%patch1 -p1 -b .CVE-2025-3196
 
 %ifarch %e2k
 # solve the problem radically, as -Werror is everywhere around
@@ -140,6 +137,16 @@ rm -rf contrib/zlib
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Jun 09 2025 L.A. Kostis <lakostis@altlinux.ru> 6.0.2-alt1
+- 6.0.2.
+- devel: added libpugixml-devel to requires.
+- Update unbundle.patch
+- Security fixes:
+  + CVE-2025-2750
+  + CVE-2025-2751
+  + CVE-2025-2757
+  + CVE-2025-3158
+
 * Tue May 13 2025 L.A. Kostis <lakostis@altlinux.ru> 5.4.3-alt2
 - MD2/Loader: fix CVE-2025-3196 (upstream issue #6069).
 

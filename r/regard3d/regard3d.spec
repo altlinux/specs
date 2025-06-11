@@ -1,8 +1,9 @@
 %define        _unpackaged_files_terminate_build 1
+%define        _stripped_files_terminate_build 1
 
 Name:          regard3d
 Version:       1.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A open source structure-from-motion program based on OpenMVG
 License:       MIT
 Group:         Graphics
@@ -29,6 +30,7 @@ BuildRequires: tbb-devel
 BuildRequires: boost-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-locale-devel
+BuildRequires: boost-geometry-devel
 BuildRequires: libjasper-devel
 BuildRequires: libwebp-devel
 BuildRequires: ceres-solver-devel
@@ -76,5 +78,8 @@ cd src
 %_bindir/%name
 
 %changelog
+* Tue Jun 10 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0.0-alt1.1
+- Fix FTBFS (add boost-geometry-devel).
+
 * Thu Jul 30 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus
