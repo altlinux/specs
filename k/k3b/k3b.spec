@@ -12,11 +12,16 @@
 %define req_all %req_mini %req_multimedia
 
 %def_disable musicbrainz
+%ifarch %not_qt6_qtwebengine_arches
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
 
 %define rname k3b
 Name: %rname
 Version: 25.04.2
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Archiving/Cd burning
@@ -34,10 +39,13 @@ Source0: %rname-%version.tar
 Patch1: alt-permissions.patch
 Patch2: alt-return-wodim.patch
 
-BuildRequires(pre): rpm-build-kf6
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-multimedia-devel qt6-declarative-devel
 BuildRequires: libavdevice-devel libavformat-devel libpostproc-devel libswscale-devel
 BuildRequires: libdvdread-devel libflac++-devel liblame-devel libmad-devel libmpcdec-devel
+%if_enabled qtwebengine
+BuildRequires: qt6-webengine-devel
+%endif
 %if_enabled musicbrainz
 BuildRequires: libmusicbrainz-devel
 %endif
@@ -166,6 +174,9 @@ Requires: kde-common
 
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
+- build with qtwebengine
+
 * Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
