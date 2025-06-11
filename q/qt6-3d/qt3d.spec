@@ -3,7 +3,7 @@
 
 Name: qt6-3d
 Version: 6.9.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Qt3D QML bindings and C++ APIs
@@ -13,10 +13,11 @@ License: LGPL-3.0-only OR (GPL-2.0-only OR GPL-3.0-or-later)
 Requires: qt6-imageformats
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: alt-find-assimp.patch
 
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires: cmake qt6-base-devel qt6-declarative-devel qt6-shadertools-devel qt6-multimedia-devel
-BuildRequires: zlib-devel libminizip-devel libpoly2tri-devel pkgconfig(assimp)
+BuildRequires: zlib-devel libminizip-devel libpoly2tri-devel libassimp-devel
 BuildRequires: libxkbcommon-devel
 
 %description
@@ -169,6 +170,7 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 
 cat >>src/plugins/renderers/rhi/CMakeLists.txt <<__EOF__
 find_package(Qt6 COMPONENTS ShaderTools)
@@ -265,6 +267,9 @@ cp -ar BUILD/share/doc/qt6/* %buildroot/%_docdir/qt6/
 %_qt6_examplesdir/*
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt2
+- fix find assimp-6 (thanks lakostis@alt)
+
 * Tue Jun 03 2025 Sergey V Turchin <zerg@altlinux.org> 6.9.1-alt1
 - new version
 
