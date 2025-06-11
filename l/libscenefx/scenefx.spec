@@ -1,7 +1,7 @@
-%define soversion 2
+%define soversion 3
 
 Name:     libscenefx
-Version:  0.2.1
+Version:  0.3
 Release:  alt1
 
 Summary:  A drop-in wlroots replacement that allows eye-candy effects
@@ -63,6 +63,9 @@ This package provides development files for %name library.
 %_pkgconfigdir/scenefx-0.%soversion.pc
 
 %changelog
+* Wed Jun 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.3-alt1
+- new version 0.3 (with rpmrb script)
+
 * Wed Jun 04 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.2.1-alt1
 - new version 0.2.1 (with rpmrb script)
 

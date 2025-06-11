@@ -1,5 +1,5 @@
 Name: swayfx
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 Summary: A Beautiful Sway Fork
@@ -35,7 +35,7 @@ BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wlroots-0.18)
 BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xkbcommon)
-BuildRequires: pkgconfig(scenefx-0.2)
+BuildRequires: pkgconfig(scenefx-0.3)
 BuildRequires: scdoc
 
 Requires: %name-data
@@ -87,6 +87,9 @@ mkdir -p %buildroot/%_sysconfdir/%name/config.d
 %_datadir/backgrounds/sway/*
 
 %changelog
+* Wed Jun 11 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.5.1-alt1
+- new version 0.5.1 (with rpmrb script)
+
 * Wed Jun 04 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.5-alt1
 - new version 0.5 (with rpmrb script) (ALT bug 54206)
 - add Requires: swayfx-data (ALT bug 54205)
