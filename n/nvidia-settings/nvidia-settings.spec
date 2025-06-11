@@ -4,7 +4,7 @@
 %define libxnvctrl libxnvctrl%sover
 
 Name: nvidia-settings
-Version: 570.133.07
+Version: 570.153.02
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -13,9 +13,6 @@ Url: ftp://download1.nvidia.com/XFree86/nvidia-settings/
 License: GPL-2.0-only
 
 Source: %name-%version.tar.gz
-Source1: %name-16.png
-Source2: %name-32.png
-Source3: %name-48.png
 Source4: nvidia-settings.sh
 Source5: nvidia-settings.desktop
 Source100: gettext.h
@@ -37,6 +34,7 @@ BuildRequires: libwayland-client-devel
 BuildRequires: libdbus-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libvulkan-devel
+BuildRequires: /usr/bin/convert
 
 %description
 The `nvidia-settings` utility is a tool for configuring the NVIDIA
@@ -114,10 +112,10 @@ done
 mkdir -p %buildroot/%_sysconfdir/X11/xinit.d/
 install -m 0755 %SOURCE4 %buildroot/%_sysconfdir/X11/xinit.d/%name.sh
 
-mkdir -p %buildroot/%_iconsdir/hicolor/{16x16,32x32,48x48}/apps
-install -m 0644 %SOURCE1 %buildroot/%_iconsdir/hicolor/16x16/apps/%name.png
-install -m 0644 %SOURCE2 %buildroot/%_iconsdir/hicolor/32x32/apps/%name.png
-install -m 0644 %SOURCE3 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
+for sz in 16x16 32x32 48x48 64x64 128x128 ; do
+    mkdir -p %buildroot/%_iconsdir/hicolor/$sz/apps/
+    convert doc/nvidia-settings.png -resize $sz %buildroot/%_iconsdir/hicolor/$sz/apps/%name.png
+done
 
 mkdir -p %buildroot/%_desktopdir
 install -m 0644 %SOURCE5 %buildroot/%_desktopdir/
@@ -151,6 +149,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 #%_libdir/lib*.a
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 570.153.02-alt1
+- increase application icon size
+
 * Thu Apr 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.133.07-alt1
 - new version
 
