@@ -3,33 +3,40 @@
 
 Name: alterator-notes
 Version: 1.5.1
-Release: alt6
+Release: alt7
 
-Provides: alterator-license = %version
-Obsoletes: alterator-license
+Summary: alterator module for view license and release notes
+License: GPL-2.0+
+Group: System/Configuration/Other
 
 %if_with noarch
 BuildArch: noarch
 %endif
 
+Provides: alterator-license = %version
+Obsoletes: alterator-license
+Requires: alterator-notes-base
+
 Source:%name-%version.tar
-
-BuildRequires(pre): rpm-macros-alterator
-BuildRequires: desktop-file-utils
-
-Summary: alterator module for view license and release notes
-License: GPL-2.0+
-Group: System/Configuration/Other
-Requires: alterator >= 3.1-alt4, alterator-sh-functions
-Conflicts: alterator-browser-qt < 2.9.70
-Conflicts: alterator-lookout    < 0.3
 
 BuildPreReq: alterator >= 3.1
 BuildRequires: alterator
-Requires: distro-licenses
+BuildRequires(pre): rpm-macros-alterator
+BuildRequires: desktop-file-utils
 
 %description
-alterator module for view license and release notes
+alterator module for view license and release notes.
+
+%package base
+Group: System/Configuration/Other
+Summary: alterator module for view license and release notes
+Requires: alterator >= 3.1-alt4, alterator-sh-functions
+Requires: distro-licenses
+Conflicts: alterator-browser-qt < 2.9.70
+Conflicts: alterator-lookout    < 0.3
+Conflicts: alterator-notes < 1.5.1-alt7
+%description base
+alterator module for view license and release notes.
 
 %prep
 %setup -q
@@ -68,6 +75,8 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_bindir/alterator-notes-show
 %_desktopdir/%name-*.desktop
 %_datadir/kio_desktop/DesktopLinks/%name-*.desktop
+
+%files base
 %_alterator_datadir/applications/*
 %_alterator_datadir/ui/*/
 %if_without noarch
@@ -76,6 +85,9 @@ install -m 0755 %buildroot/%_desktopdir/%name-license.desktop %buildroot/%_datad
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jun 11 2025 Sergey V Turchin <zerg@altlinux.org> 1.5.1-alt7
+- move desktops to separate package
+
 * Tue May 20 2025 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt6
 - license.desktop: correct Name (License -> License agreement) (Closes: 54379)
 
