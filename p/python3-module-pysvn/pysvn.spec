@@ -1,7 +1,7 @@
 %define oname pysvn
 
 Name: python3-module-%oname
-Version: 1.9.22
+Version: 1.9.23
 Release: alt1
 Summary: Subversion support for python
 License: Apache-1.1
@@ -42,6 +42,9 @@ cp -r Source/pysvn %buildroot%python3_sitelibdir
 %python3_sitelibdir/pysvn
 
 %changelog
+* Wed Jun 11 2025 Andrey Cherepanov <cas@altlinux.org> 1.9.23-alt1
+- New version.
+
 * Fri Apr 05 2024 Andrey Cherepanov <cas@altlinux.org> 1.9.22-alt1
 - New version.
 
