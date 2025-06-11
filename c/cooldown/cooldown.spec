@@ -1,7 +1,7 @@
 Name:		cooldown
 # svn info cooldown | sed -n 's/Revision: *//p'
 Version:	24
-Release:	alt2
+Release:	alt3
 Summary:	Advanced PipeMania clone
 Group:		Games/Arcade
 # svn checkout http://cooldown-game.googlecode.com/svn/trunk cooldown
@@ -67,6 +67,8 @@ Icon=%name
 for N in 128x128 24x24 64x64 32x32 48x48; do
 convert %SOURCE1 -resize $N $N.png; done
 
+subst "s|VERSION 2.4|VERSION 3.5|" CMakeLists.txt
+
 %build
 mkdir build
 cd build
@@ -109,6 +111,9 @@ install -D %name %buildroot%_gamesbindir/%name
 %_gamesdatadir/%name/fonts
 
 %changelog
+* Wed Jun 11 2025 Aleksandr Shamaraev <shad@altlinux.org> 24-alt3
+- NMU: fixed FTBFS
+
 * Mon Feb 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 24-alt2
 - no return statement in the non-void function fixed (according g++8)
 
