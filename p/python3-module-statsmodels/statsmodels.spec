@@ -11,7 +11,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 0.14.2
+Version: 0.14.4
 Release: alt1
 Epoch: 1
 Summary: Statistical computations and models for Python
@@ -72,6 +72,9 @@ ENDUNITTEST
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jun 11 2025 Stanislav Levin <slev@altlinux.org> 1:0.14.4-alt1
+- 0.14.2 -> 0.14.4.
+
 * Wed Apr 17 2024 Stanislav Levin <slev@altlinux.org> 1:0.14.2-alt1
 - 0.14.0 -> 0.14.2.
 
