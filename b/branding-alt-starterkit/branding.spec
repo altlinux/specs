@@ -22,7 +22,7 @@
 
 Name: branding-%flavour
 Version: 11
-Release: alt5
+Release: alt6
 Epoch: 1
 
 Url: https://en.altlinux.org/starterkits
@@ -301,6 +301,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt6
+- ahttpd/images/steps: replace all icons with symlinks on empty.png
+
 * Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 1:11-alt5
 - os-release: change NAME="ALT Linux"
 
