@@ -1,18 +1,17 @@
 Summary: Linux Standard Base Release Tools
 Name: lsb-release
-Version: 2.0
-Release: alt5
-License: %gpl2plus
+Version: 3.3
+Release: alt1
+License: GPL-2.0-or-later
 Source: %name-%version.tar
 Group: System/Base
 Url: http://www.linuxbase.org/
-Patch:  lsb-release-2.0-alt-config.patch
+Vcs: https://github.com/thkukuk/lsb-release_os-release
+
 BuildArch: noarch
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 Conflicts: lsb-core < 4.0
-
-BuildRequires: rpm-build-licenses
 
 %description
 LSB version query program
@@ -33,7 +32,8 @@ useful for programmatically distinguishing between a original one and
 derived distributions.
 %prep
 %setup
-%patch -p2
+
+subst 's|prefix=/usr/local|prefix=/usr|' Makefile
 
 %build
 make
@@ -43,11 +43,15 @@ make prefix=%buildroot%_prefix mandir=%buildroot%_mandir install
 
 %files
 %defattr(-,root,root)
-%doc README
-%_bindir/lsb_release
-%{_man1dir}/lsb_release.1*
+%doc README COPYING
+%_bindir/lsb?release
+%{_man1dir}/lsb?release.1*
 
 %changelog
+* Thu Jun 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.3-alt1
+- 2.0 -> 3.3 (ALT #48518)
+- removed patch
+
 * Thu Jan 31 2019 Andrey Cherepanov <cas@altlinux.org> 2.0-alt5
 - Fix extract text in brackets.
 
