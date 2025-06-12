@@ -5,7 +5,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 2019.1.0
-Release: alt3
+Release: alt4
 Summary: Compiler for finite element variational forms
 Group: Development/Tools
 License: LGPLv3+
@@ -67,6 +67,9 @@ This package contains user manual for UFL (Unified Form Language).
 %setup
 %autopatch -p1
 
+# for numpy2
+sed -i 's/numpy\.product/numpy.prod/g' $(grep -rl 'numpy\.product')
+
 %build
 %python3_build
 
@@ -93,6 +96,9 @@ python3 -m pytest -v test/ --ignore=test/unit/ufc/finite_element/test_evaluate.p
 %doc demo
 
 %changelog
+* Thu Jun 12 2025 Anton Vyatkin <toni@altlinux.org> 1:2019.1.0-alt4
+- Fixed FTBFS.
+
 * Tue Apr 22 2025 Anton Vyatkin <toni@altlinux.org> 1:2019.1.0-alt3
 - Fixed FTBFS.
 
