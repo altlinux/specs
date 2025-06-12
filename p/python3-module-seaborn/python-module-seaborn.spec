@@ -10,7 +10,7 @@
 
 Name: python3-module-seaborn
 Version: 0.13.2
-Release: alt2
+Release: alt3
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
 Group: Sciences/Other
@@ -19,6 +19,7 @@ URL: https://pypi.org/project/seaborn/
 VCS: https://github.com/mwaskom/seaborn
 Source: %name-%version.tar
 Patch: seaborn-0.13.2-mpl-tick.patch
+Patch1: seaborn-0.13.2-np2-test-fix.patch
 
 BuildArch: noarch
 
@@ -42,7 +43,7 @@ statistical routines from scipy and statsmodels.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -62,6 +63,9 @@ rm -fv %buildroot%python3_sitelibdir/%oname/_testing.py
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jun 12 2025 Anton Vyatkin <toni@altlinux.org> 0.13.2-alt3
+- Fixed FTBFS.
+
 * Sat Feb 01 2025 Anton Vyatkin <toni@altlinux.org> 0.13.2-alt2
 - Fixed FTBFS.
 
