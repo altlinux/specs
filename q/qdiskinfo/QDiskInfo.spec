@@ -2,7 +2,7 @@
 
 Name: qdiskinfo
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: QDiskInfo is a frontend for smartctl. It provides a user experience similar to CrystalDiskInfo.
 
@@ -25,6 +25,9 @@ data of modern hard disk drives.
 %prep
 %setup
 
+#removed bad file qdiskinfo_tr_TR.ts
+rm translations/qdiskinfo_tr_TR.ts
+
 %build
 export CC=clang
 export CXX=clang++
@@ -44,6 +47,9 @@ export CXX=clang++
 %doc *.md LICENSE
 
 %changelog
+* Thu Jun 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4-alt2
+- fixed FTBFS: removed bad file qdiskinfo_tr_TR.ts
+
 * Fri May 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.4-alt1
 - 0.3 -> 0.4
 
