@@ -1,8 +1,8 @@
 %define pypname shazamio
 
 Name: python3-module-shazamio
-Version: 0.8.0
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary: Is a free asynchronous library from reverse engineered Shazam API written in Python 3.8+ with asyncio and aiohttp.
 License: MIT
@@ -35,9 +35,13 @@ Includes all the methods that Shazam has, including searching for a song by file
 %files 
 %doc LICENSE.txt *.md
 %python3_sitelibdir/%pypname/
-%python3_sitelibdir/%{pyproject_distinfo %pypname}
+#%python3_sitelibdir/%{pyproject_distinfo %pypname}
+%python3_sitelibdir/shazamio-0.8.0.dist-info/
 
 %changelog
+* Thu Jun 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1
+
 * Sat Feb 08 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt2
 - rebuild with removed "subst"
 

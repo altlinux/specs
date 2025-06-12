@@ -1,7 +1,7 @@
 %define  modulename aiofiles
 
 Name:    python3-module-%modulename
-Version: 23.1.0
+Version: 23.2.1
 Release: alt1
 
 Summary: File support for asyncio
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source:  %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry-core)
+BuildRequires: python3(poetry-core) python3-module-hatchling
 
 %description
 %summary
@@ -34,9 +34,12 @@ BuildRequires: python3(poetry-core)
 %files -n python3-module-%modulename
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version.dist-info
-%doc *.rst LICENSE
+%doc *.md LICENSE
 
 %changelog
+* Thu Jun 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 23.2.1-alt1
+- 23.1.0 -> 23.2.1
+
 * Thu May 11 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 23.1.0-alt1
 - 23.1.0
 
