@@ -9,7 +9,7 @@
 
 Name: %rname
 Version: 25.04.2
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Terminals
@@ -27,6 +27,7 @@ Obsoletes: kde4-konsole < %EVR
 
 Source: %rname-%version.tar
 Source10: profiles.tar
+Patch1: kdebug-491562.patch
 #
 Patch11: alt-sover.patch
 Patch12: alt-def-font.patch
@@ -95,6 +96,7 @@ Obsoletes: libkonsoleapp1 < %EVR
 
 %prep
 %setup -q -n %rname-%version -a10
+%patch1 -p1
 #
 %patch11 -p1
 #patch12 -p1
@@ -164,6 +166,9 @@ __EOF__
 
 
 %changelog
+* Thu Jun 12 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt2
+- add fix against KDEBUG#491562 (closes: 54796)
+
 * Tue Jun 10 2025 Sergey V Turchin <zerg@altlinux.org> 25.04.2-alt1
 - new version
 
