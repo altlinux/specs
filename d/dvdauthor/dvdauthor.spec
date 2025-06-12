@@ -1,4 +1,4 @@
-%set_verify_elf_method stack=strict
+#%%set_verify_elf_method stack=strict
 %def_enable snapshot
 %define video_format PAL
 # imagemagick or graphicsmagick
@@ -6,17 +6,19 @@
 
 Name: dvdauthor
 Version: 0.7.2
-Release: alt4
+Release: alt5
 
 Summary: set of tools to author a DVD
 Group: Video
-License: GPLv2
+License: GPL-2.0
 Url: http://sourceforge.net/projects/dvdauthor/
 
+Vcs: https://github.com/ldo/dvdauthor.git
+
 %if_disabled snapshot
-Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+#Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+Source: https://github.com/ldo/%name/archive/%version/%name-%version.tar.gz
 %else
-#VCS: https://github.com/ldo/dvdauthor.git
 Source: %name-%version.tar
 %endif
 
@@ -24,13 +26,14 @@ Provides: /etc/%name.conf
 
 %if %magick == "imagemagick"
 BuildRequires: libImageMagick-devel
-%else %if %magick == "graphicsmagick"
+%elif %magick == "graphicsmagick"
 BuildRequires: libGraphicsMagick-devel
 %endif
 
-BuildRequires: bison flex
+BuildRequires: /proc bison flex
 BuildRequires: libdvdread-devel libfreetype-devel
-BuildRequires: fontconfig-devel libpng-devel libxml2-devel libfribidi-devel
+BuildRequires: fontconfig-devel libpng-devel libxml2-devel
+BuildRequires: libfribidi-devel zlib-devel
 BuildRequires: docbook-utils
 
 %description
@@ -38,10 +41,10 @@ dvdauthor is a program that will generate a DVD movie from a valid
 mpeg2 stream that should play when you put it in a DVD player.
 
 %prep
-%setup -n %name%{?_enable_snapshot:-%version}
+%setup
 
 %build
-%add_optflags -Wl,-z,noexecstack
+#%%add_optflags -Wl,-z,noexecstack
 ./bootstrap
 %autoreconf
 %configure --enable-default-video-format=%video_format \
@@ -67,6 +70,9 @@ touch %buildroot%_sysconfdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt5
+- updated to 0.7.2-12-gfe8fe35
+
 * Fri Jul 10 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt4
 - updated to 0.7.2-9-gd5bb0bd
 - implemented "magick" knob (set to "graphicsmagick" by default)
