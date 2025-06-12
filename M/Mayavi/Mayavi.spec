@@ -11,7 +11,7 @@ ExcludeArch: %ix86
 
 Name:           Mayavi
 Version:        4.8.2
-Release:        alt5
+Release:        alt6
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -25,6 +25,7 @@ Source2:        tvtk_doc.desktop
 Patch1: %name-alt-test-dependencies.patch
 Patch2: drop-imghdr.patch
 Patch3: mayavi-pr1329-vtk9.4.patch
+Patch4: mayavi-pr1315-np2tests.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -216,6 +217,9 @@ export ETS_TOOLKIT=null
 %endif
 
 %changelog
+* Thu Jun 12 2025 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt6
+- Fixed FTBFS.
+
 * Wed Mar 12 2025 Anton Vyatkin <toni@altlinux.org> 4.8.2-alt5
 - Fixed FTBFS.
 
