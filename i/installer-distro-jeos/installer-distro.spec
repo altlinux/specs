@@ -1,5 +1,5 @@
 Name: installer-distro-jeos
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Installer configuration for JeOS
@@ -64,8 +64,12 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- installer-steps: reorder installer-network and user-root steps
+- changelog: correct previous entry
+
 * Tue May 27 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
-- add installer-steps: license, installer-network
+- installer-steps: add license, installer-network
 - stage2:
   + remove dependency on alterator-sysconfig
 - stage3:
