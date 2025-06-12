@@ -16,8 +16,8 @@
 %define altbranch %_priority_distbranch
 
 Name: branding-%flavour
-Version: 20240122
-Release: alt5
+Version: 20250612
+Release: alt1
 
 Url: http://en.altlinux.org
 
@@ -227,15 +227,16 @@ install slideshow/* %buildroot/usr/share/install2/slideshow/
 
 %ifarch %grub_arches
 #bootloader
+%triggerin -n %name-bootloader -- %name-bootloader < 20250612-alt1
+sed '/GRUB_THEME=\/boot\/grub\/themes\/sisyphus\/theme.txt/d' -i /etc/sysconfig/grub2
+update-grub
+
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
 . shell-config
-shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
-# deprecated
-shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 %endif
 
 %post indexhtml
@@ -253,9 +254,6 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 
 %ifarch %grub_arches
 %files bootloader
-/boot/grub/themes/%theme
-%else
-%exclude /boot/grub/themes/%theme
 %endif
 
 %files graphics
@@ -290,6 +288,11 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 20250612-alt1
+- ahttpd/images/steps: replace all icons with symlinks on empty.png
+  (Closes: 52730)
+- bootloader: remove grub theme
+
 * Mon May 12 2025 Anton Midyukov <antohami@altlinux.org> 20240122-alt5
 - os-release: change NAME="ALT Linux"
 
