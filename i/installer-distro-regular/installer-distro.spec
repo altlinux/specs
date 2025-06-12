@@ -1,6 +1,6 @@
 Name: installer-distro-regular
-Version: 0.3
-Release: alt3
+Version: 0.4
+Release: alt1
 
 Summary: Installer configuration for ALT Regular
 License: GPL-2.0-or-later
@@ -71,6 +71,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Thu Jun 12 2025 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
+- change order of steps, luks after preinstall
+
 * Sat Jan 25 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt3
 - stage3: add dependency on alterator-notes
 
