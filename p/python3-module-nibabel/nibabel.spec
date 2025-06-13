@@ -13,8 +13,8 @@
 %endif
 
 Name: python3-module-%oname
-Version: 5.2.1
-Release: alt2
+Version: 5.3.2
+Release: alt1
 
 Summary: Easy access to NIfTI images from within Python
 License: MIT
@@ -25,8 +25,7 @@ Vcs: https://github.com/nipy/nibabel
 BuildArch: noarch
 
 Source: %oname-%version.tar
-Patch: drop-distutils.patch
-Patch1: nibabel-5.2.1-tests-replace-deprecated-nose-fixtures-with-pytest-s.patch
+Patch1: nibabel-5.3.2-pr-1383-test-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -128,18 +127,16 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -n auto -rsfE
 
 %files
 %doc README.*
 %_bindir/*
-%python3_sitelibdir/nisext
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 %if_enabled docs
 %exclude %python3_sitelibdir/%oname/pickle
 %endif
-%exclude %python3_sitelibdir/nisext/test*
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/testing
 %exclude %python3_sitelibdir/%oname/*/tests
@@ -154,12 +151,14 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %files tests
-%python3_sitelibdir/nisext/test*
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/testing
 %python3_sitelibdir/%oname/*/tests
 
 %changelog
+* Fri Jun 13 2025 Anton Vyatkin <toni@altlinux.org> 5.3.2-alt1
+- New version 5.3.2.
+
 * Wed May 29 2024 Stanislav Levin <slev@altlinux.org> 5.2.1-alt2
 - Fixed FTBFS (Pytest 8.2.0).
 
