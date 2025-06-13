@@ -21,7 +21,7 @@ BuildRequires: perl(YAML/PP.pm)
 %define _enable_test 1
 
 Name: perl-ack
-Version: 3.8.2
+Version: 3.9.0
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -70,6 +70,9 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 3.9.0-alt1
+- automated CPAN update
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 3.8.2-alt1
 - automated CPAN update
 
