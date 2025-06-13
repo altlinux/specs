@@ -2,7 +2,7 @@
 
 Name: dart-lang
 Version: 3.8.1
-Release: alt1
+Release: alt2
 
 Summary: Dart language
 License: BSD-3-Clause
@@ -10,7 +10,13 @@ Group: Development/Other
 
 Source0: %name-%version.tar
 Source1: dart-wrapper.sh
-Patch: %name-%version-alt.patch
+Patch0: build-config.patch
+Patch1: gcc13.patch
+Patch2: no-werror.patch
+Patch3: unbundle.patch
+Patch4: unbundle-icu.patch
+Patch5: where-we-are-heading-prefixes-are-not-needed.patch
+Patch6: zlib-not-found.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gn
@@ -24,23 +30,42 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(icu-i18n)
 BuildRequires: dart-lang-bootstrap
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
+
+Conflicts: %name-bootstrap
+
+%ifarch x86_64
+%define dart_arch x64
+%define dart_out ReleaseX64
+%endif
+%ifarch aarch64
+%define dart_arch arm64
+%define dart_out ReleaseARM64
+%endif
 
 %description
 %summary.
 
 %prep
 %setup
-%patch -p 1
+%patch0 -p 1
+%patch1 -p 1
+%patch2 -p 1
+%patch3 -p 1
+%patch4 -p 1
+%patch5 -p 1
+%patch6 -p 1
 
 # SOURCE
+# 
+# Requires: teapot-tools pax-utils
 #
 # echo "
 # solutions = [{
-# 'name': 'sdk',
-# 'url': 'https://dart.googlesource.com/sdk.git@3.8.1',
+#   'name': 'sdk',
+#   'url': 'https://dart.googlesource.com/sdk.git@%version',
 # }]
-# target_cpu = ['x64', 'arm64', 'arm', 'riscv64']
+# target_cpu = ['x64', 'arm64']
 # target_cpu_only = True
 # " > .gclient
 #
@@ -50,9 +75,7 @@ ExclusiveArch: x86_64
 #   rm -f "$elf"
 # done
 #
-# mv sdk dart-sdk-3.8.1
-#
-# tar -cf dart-sdk-3.8.1.tar \
+# tar -cf dart-sdk-%version.tar \
 #   --exclude="ChangeLog*" \
 #   --exclude="sdk/buildtools/*/clang" \
 #   --exclude="third_party/fuchsia/sdk/linux/arch" \
@@ -60,7 +83,7 @@ ExclusiveArch: x86_64
 #   --exclude-backups \
 #   --exclude-caches-all \
 #   --exclude-vcs \
-#   dart-sdk-3.8.1
+#   sdk
 
 mkdir -p .git/logs
 echo '' > .git/logs/HEAD
@@ -101,7 +124,7 @@ python3 build/linux/unbundle/replace_gn_files.py --system-libraries icu zlib
 %build
 python3 ./tools/build.py \
   --no-clang \
-  --arch="x64" \
+  --arch="%dart_arch" \
   --mode=release \
   --no-verify-sdk-hash \
   --gn-args='dart_embed_icu_data=false dart_snapshot_kind="app-jit" dart_sysroot=""' \
@@ -109,7 +132,7 @@ python3 ./tools/build.py \
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_libexecdir %buildroot%_includedir
-cp -r %_builddir/%name-%version/out/ReleaseX64/dart-sdk %buildroot%_libexecdir/dart
+cp -r out/%dart_out/dart-sdk %buildroot%_libexecdir/dart
 
 install -Dm755 %SOURCE1 %buildroot%_bindir/dart
 ln -s ../lib/dart/include %buildroot%_includedir/dart
@@ -124,5 +147,10 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 %_libexecdir/dart
 
 %changelog
+* Fri Jun 13 2025 David Sultaniiazov <x1z53@altlinux.org> 3.8.1-alt2
+- Remove arm and riscv64 from source
+- Add build for aarch64
+- Fix patches applying
+
 * Thu Jun 12 2025 David Sultaniiazov <x1z53@altlinux.org> 3.8.1-alt1
 - Initial build
