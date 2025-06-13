@@ -17,8 +17,8 @@ BuildRequires: libquadmath-devel
 Packager: Igor Vlasenko <viy@altlinux.org>
 
 Name: perl-%module_name
-Version: 4.38
-Release: alt1.1
+Version: 4.39
+Release: alt1
 Summary: perl interface to the MPFR (floating point) library..
 Group: Development/Perl
 License: perl
@@ -62,6 +62,9 @@ rm t/LongDouble.t
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 4.39-alt1
+- automated CPAN update
+
 * Fri Apr 04 2025 Ivan A. Melnikov <iv@altlinux.org> 4.38-alt1.1
 - NMU: fix FTBFS on loongarch64 and riscv64
   + disable Math/Decimal64 BR on loongarch64 and riscv64,
