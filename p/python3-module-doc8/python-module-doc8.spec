@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.1.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Style checker for sphinx (or other) rst documentation.
@@ -79,6 +79,9 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %changelog
+* Fri Jun 13 2025 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Fri Sep 20 2024 Anton Vyatkin <toni@altlinux.org> 1.1.2-alt1
 - NMU: New version 1.1.2.
 
