@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 62
+%define ver_major 66
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -34,6 +34,10 @@ Requires: gnome-shell >= 46
 Requires: /usr/bin/ffmpeg /usr/bin/fusermount
 Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
+
+# Optional
+#Requires: typelib(EDataServer)
+#Requires: typelib(EBookContacts)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
 BuildRequires: meson eslint libgio-devel libdbus-devel libgtk4-devel
@@ -100,6 +104,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 66-alt1
+- 66
+
 * Sat Mar 29 2025 Yuri N. Sedunov <aris@altlinux.org> 62-alt1
 - 62
 

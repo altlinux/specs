@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Yelp
 
@@ -6,27 +7,33 @@
 %def_disable debug
 %def_enable lzma
 %def_disable gtk_doc
-%define webkit_api_ver 4.0
-%def_with webkit2gtk_40
+%define webkit_api_ver 4.1
+%def_without webkit2gtk_40
 %{?_with_webkit2gtk_40:%define webkit_api_ver 4.0}
+%def_enable check
 
 Name: yelp
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Lightweight help browser for GNOME
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://yelp.io
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/yelp.git
 
-# From configure.ac
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
+
 %define gio_ver 2.38
 %define gtk_ver 3.14
 %define xslt_ver 1.1.4
 %define webkit_ver 2.19.2
-%define yelpxsl_ver %ver_major
+%define yelpxsl_ver %ver_major.4
 %define handy_ver 1.5.0
 
 Requires: lib%name = %version-%release
@@ -36,8 +43,8 @@ Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
 Obsoletes: yelp.sh
 %endif
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gnome
-BuildRequires: gnome-common itstool gtk-doc
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson itstool gtk-doc
 BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
@@ -96,20 +103,18 @@ Yelp.
 %setup -n %name-%version%beta
 
 %build
-%configure \
-	--disable-static \
-	--disable-schemas-compile \
-	%{subst_enable debug} \
-	%{subst_enable lzma} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_with_webkit2gtk_40:--with-webkit2gtk-4-0}
+%meson \
+    %{subst_enable_meson_feature lzma lzma} \
+    %{?_with_webkit2gtk_40:-Dwebkit2gtk-4-0}
 %nil
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/gnome-help
@@ -125,7 +130,6 @@ Yelp.
 %files -n lib%name
 %_libdir/*.so.*
 %_libdir/%name/
-%exclude %_libdir/%name/*/*.la
 
 %files -n lib%name-devel
 %_includedir/lib%name/
@@ -137,6 +141,9 @@ Yelp.
 %endif
 
 %changelog
+* Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
+- 42.3 (fixed CVE-2025-3155)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
 - 42.2
 

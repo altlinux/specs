@@ -1,8 +1,9 @@
 %define ver_major 42
 %define beta %nil
+%def_enable check
 
 Name: yelp-xsl
-Version: %ver_major.1
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: XSLT stylesheets for the Yelp, GNOME help browser
@@ -10,11 +11,14 @@ License: GPL-2.0 and LGPL-2.1 and MIT
 Group: Graphical desktop/GNOME
 Url: http://yelp.io
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
+Vcs: https://gitlab.gnome.org/GNOME/yelp-xsl.git
+
+Source: https://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 BuildRequires: libxml2-devel libxslt-devel itstool xsltproc xmllint
 BuildRequires: python3-module-mallard-ducktype
 
@@ -29,13 +33,15 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %setup -n %name-%version%beta
 
 %build
-
-%configure --enable-doc
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_datadir/%name
@@ -43,6 +49,9 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %doc AUTHORS README* NEWS COPYING
 
 %changelog
+* Thu Jun 12 2025 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
+- 42.4 (fixed CVE-2025-3155)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
