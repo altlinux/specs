@@ -13,6 +13,8 @@
 %define kde_theme Breeze
 %define icon_theme Papirus-Edu
 %define window_theme Smoothwall-Breeze
+%define xfce_default_background xfce-x.svg
+%define def_desktop_wallpaper /usr/share/design-current/backgrounds/default.png
 
 # Enable compositing on ix86 and x86_64 only
 %ifarch %ix86 x86_64
@@ -28,7 +30,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1
+Release: alt2
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -378,6 +380,18 @@ subst 's/^#\?indicators=.*/indicators=~clock;~spacer;~host;~spacer;~session;~lay
 subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 # Set gtk+2 theme for root too
 grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc/gtk-2.0/gtkrc
+# Set default background
+if [ "$(readlink %_datadir/backgrounds/xfce/default-background)" != "%def_desktop_wallpaper" ]; then                                                                                          
+    ln -sf "%def_desktop_wallpaper" %_datadir/backgrounds/xfce/default-background ||:
+fi
+
+%postun xfce-settings
+# Restore default Xfce-4.20 background
+if [ "$1" -eq 0 ] && \
+        [ "$(readlink %_datadir/backgrounds/xfce/default-background)" = "%def_desktop_wallpaper" ] \
+        [ -e %_datadir/backgrounds/xfce/%xfce_default_background ]; then
+    ln -sf %xfce_default_background %_datadir/backgrounds/xfce/default-background ||:
+fi
 
 %files alterator
 %config %_altdir/*.rcc
@@ -426,7 +440,6 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.config/audacious/
 /etc/skel/.config/xfce4
 /etc/skel/.face
-/etc/skel/.gconf
 /etc/skel/.gtkrc-2.0
 /etc/skel/.local
 
@@ -462,6 +475,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 /etc/skel/.recoll
 
 %changelog
+* Fri Jun 13 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
+- xfce-settings: adapted for Xfce-4.20.
+
 * Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt1
 - Release 11.0.
 
