@@ -8,7 +8,7 @@ BuildRequires: perl(Config.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUti
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.65
+Version: 0.67
 Release: alt1
 Summary: perl interface to the GMP library's integer (mpz) functions..
 Group: Development/Perl
@@ -42,6 +42,9 @@ A bignum module utilising the Gnu MP (GMP) library..
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 0.67-alt1
+- automated CPAN update
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.65-alt1
 - automated CPAN update
 
