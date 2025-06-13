@@ -1,6 +1,6 @@
 %define m_distro Text-FindIndent
 Name: perl-Text-FindIndent
-Version: 0.11
+Version: 0.12
 Release: alt1
 Summary: Text::FindIndent - Heuristically determine the indent style
 
@@ -31,6 +31,9 @@ BuildRequires: perl-devel
 %doc Changes
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Thu Mar 03 2016 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
