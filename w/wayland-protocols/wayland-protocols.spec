@@ -1,4 +1,5 @@
-%define ver_major 1.44
+%def_disable snapshot
+%define ver_major 1.45
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -17,8 +18,12 @@ Url: https://wayland.freedesktop.org/
 
 Vcs: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
 
+%if_disabled snapshot
 Source: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/%version/downloads/%name-%version.tar.xz
 #Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -54,6 +59,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md GOVERNANCE* MEMBERS*
 
 %changelog
+* Sat Jun 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.45-alt1
+- 1.45
+
 * Mon Apr 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.44-alt1
 - 1.44
 
