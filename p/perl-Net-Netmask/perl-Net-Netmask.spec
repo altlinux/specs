@@ -2,7 +2,7 @@
 %define module Net-Netmask
 
 Name: perl-%module
-Version: 2.0002
+Version: 2.0003
 Release: alt1
 
 Summary: Perl module for manipulation and lookup of IP network blocks
@@ -43,6 +43,9 @@ list of IP addresses. There is a function for sorting by text IP address.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 2.0003-alt1
+- automated CPAN update
+
 * Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 2.0002-alt1
 - automated CPAN update
 
