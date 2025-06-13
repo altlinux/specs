@@ -6,14 +6,14 @@ BuildRequires: perl(Carp.pm) perl(Data/Dumper.pm) perl(Encode.pm) perl(Encode/CN
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.001
-Release: alt2
+Version: 3.002
+Release: alt1
 Summary: Minimalistic HTML/XML DOM parser with CSS selectors
 Group: Development/Perl
 License: artistic_2
 URL: https://github.com/Grinnz/Mojo-DOM58
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/D/DB/DBOOK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DB/DBOOK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -33,10 +33,13 @@ validation.
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING.md LICENSE Changes README examples
+%doc CONTRIBUTING.md Changes README examples
 %perl_vendor_privlib/M*
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 3.002-alt1
+- automated CPAN update
+
 * Wed Apr 16 2025 Igor Vlasenko <viy@altlinux.org> 3.001-alt2
 - to Sisyphus as Alien-cmake3 dep
 
