@@ -1,9 +1,10 @@
 Summary: Linux Standard Base Release Tools
 Name: lsb-release
 Version: 3.3
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Source: %name-%version.tar
+Patch: lsb-release-3.3-alt-fix.patch
 Group: System/Base
 Url: http://www.linuxbase.org/
 Vcs: https://github.com/thkukuk/lsb-release_os-release
@@ -32,7 +33,7 @@ useful for programmatically distinguishing between a original one and
 derived distributions.
 %prep
 %setup
-
+%patch -p1
 subst 's|prefix=/usr/local|prefix=/usr|' Makefile
 
 %build
@@ -48,6 +49,9 @@ make prefix=%buildroot%_prefix mandir=%buildroot%_mandir install
 %{_man1dir}/lsb?release.1*
 
 %changelog
+* Fri Jun 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.3-alt2
+- fixed Codename display
+
 * Thu Jun 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.3-alt1
 - 2.0 -> 3.3 (ALT #48518)
 - removed patch
