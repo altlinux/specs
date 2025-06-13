@@ -2,7 +2,7 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.086
+Version: 0.087
 Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
@@ -96,13 +96,16 @@ sed -i 's,-msse4.[12] -maes,,' Makefile.PL
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README.md SECURITY.md
 %perl_vendor_archlib/Crypt
 %perl_vendor_archlib/CryptX.pm
 %perl_vendor_autolib/CryptX
 %perl_vendor_archlib/Math
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 0.087-alt1
+- automated CPAN update
+
 * Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 0.086-alt1
 - automated CPAN update
 
