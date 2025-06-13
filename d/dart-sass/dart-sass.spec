@@ -1,0 +1,77 @@
+%def_disable snapshot
+
+%define binary_name sass
+%define _name dart-%binary_name
+%define ver_major 1.89
+%define import_path sass-sass
+%define sass_version 3.1.0
+
+%def_disable bootstrap
+
+Name: %_name
+Version: %ver_major.2
+Release: alt1
+
+Summary: The reference implementation of Sass, written in Dart.
+License: MIT
+Group: Text tools
+Url: https://sass-lang.com/dart-sass/
+
+Vcs: https://github.com/sass/dart-sass.git
+
+%if_disabled snapshot
+Source: https://github.com/sass/dart-sass/archive/%version/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
+%{?_disable_bootstrap:Source1: %_name-%version-vendor.tar}
+# https://github.com/sass/sass.git
+Source2: sass-%sass_version.tar
+
+ExcludeArch: %ix86
+
+#BuildRequires(pre): rpm-build-dartlang
+BuildRequires: /proc dart-lang buf
+
+%description
+%{summary}.
+
+%prep
+%setup -n %_name-%version %{?_disable_bootstrap: -a1} -a2
+export PUB_CACHE="${PWD}/.pub_cache"
+%{?_enable_bootstrap:
+dart --disable-analytics
+dart pub get
+dart pub outdated
+tar -cf %_sourcedir/%_name-%version-vendor.tar pubspec.lock .dart_tool .pub_cache build}
+
+mkdir -p build
+  ln -sf ../sass-%sass_version build/language
+
+%build
+export PUB_CACHE="${PWD}/.pub_cache"
+dart pub get --offline
+UPDATE_SASS_PROTOCOL=false dart run grinder protobuf
+dart compile exe \
+    -Dversion=%version \
+    -Dprotocol-version=$(cat build/language/spec/EMBEDDED_PROTOCOL_VERSION) \
+    -o %binary_name \
+    bin/%binary_name.dart
+
+%install
+# binary
+install -vDm755 -t %buildroot%_bindir %binary_name
+# embedded-protocol protobuf file
+install -vDm644 -t %buildroot/%_datadir/%_name build/language/spec/embedded_sass.proto
+
+%files
+%_bindir/%binary_name
+%_datadir/%_name/
+%doc *.md
+
+%changelog
+* Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 1.89.2-alt1
+- first build for Sisyphus
+
+
+
