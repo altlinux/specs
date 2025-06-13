@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist File-Find-Rule
 Name: perl-%dist
-Version: 0.34
+Version: 0.35
 Release: alt1
 
 Summary: Alternative interface to File::Find
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/File-Find-Rule-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RC/RCLAMP/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ File::Find::Rule is a friendlier interface to File::Find.  It allows
 you to build rules which specify the desired files and directories.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ you to build rules which specify the desired files and directories.
 %perl_vendor_privlib/File
 
 %changelog
+* Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 0.35-alt1
+- automated CPAN update
+
 * Mon Dec 07 2015 Igor Vlasenko <viy@altlinux.ru> 0.34-alt1
 - automated CPAN update
 
