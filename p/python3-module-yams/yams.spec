@@ -1,9 +1,10 @@
 %define oname yams
 
-%def_with check
+# no tests in pypi archive
+%def_without check
 
 Name: python3-module-%oname
-Version: 1.0.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Entity / relation schema
@@ -52,6 +53,9 @@ readable/writable from/to various formats.
 
 
 %changelog
+* Fri Jun 13 2025 Anton Vyatkin <toni@altlinux.org> 2.0.0-alt1
+- new version 2.0.0
+
 * Sun Mar 09 2025 Anton Vyatkin <toni@altlinux.org> 1.0.1-alt1
 - new version 1.0.1
 
