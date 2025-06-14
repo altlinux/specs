@@ -3,24 +3,21 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2
-Release: alt1.1
+Version: 0.2.0
+Release: alt2
 
 Summary: Utilities to read/write Python types to/from HDF5 files, including MATLAB v7.3 MAT files
 License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/hdf5storage/
-Vcs: https://github.com/frejanordsiek/hdf5storage.git
+Url: https://pypi.org/project/hdf5storage
+Vcs: https://github.com/jclds139/hdf5storage
 
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-poetry-core
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-h5py
@@ -40,33 +37,6 @@ files. This package also provides support for MATLAB MAT v7.3 formatted
 files, which are just HDF5 files with a different extension and some
 extra meta-data.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-This Python package provides high level utilities to read/write a
-variety of Python types to/from HDF5 (Heirarchal Data Format) formatted
-files. This package also provides support for MATLAB MAT v7.3 formatted
-files, which are just HDF5 files with a different extension and some
-extra meta-data.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-This Python package provides high level utilities to read/write a
-variety of Python types to/from HDF5 (Heirarchal Data Format) formatted
-files. This package also provides support for MATLAB MAT v7.3 formatted
-files, which are just HDF5 files with a different extension and some
-extra meta-data.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
 
@@ -76,32 +46,19 @@ This package contains documentation for %oname.
 %install
 %pyproject_install
 
-sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
-
-export PYTHONPATH=$PWD
-%make -C doc pickle
-%make -C doc html
-
-cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
-%pyproject_run_pytest -k 'not test_has_required_lazy'
+%pyproject_run_pytest
 
 %files
-%doc COPYING.txt *.rst
+%doc README.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%{pyproject_distinfo %oname}
-%exclude %python3_sitelibdir/%oname/pickle
-
-%files pickles
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname/pickle
-
-%files docs
-%doc doc/build/html/*
-
 
 %changelog
+* Sat Jun 14 2025 Anton Vyatkin <toni@altlinux.org> 0.2.0-alt2
+- Change upstream remotes.
+- Fixed FTBFS (numpy2).
+
 * Sat Apr 20 2024 Anton Vyatkin <toni@altlinux.org> 0.2-alt1.1
 - Fixed FTBFS.
 
