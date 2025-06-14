@@ -6,7 +6,7 @@
 
 Name: neomutt
 Version: 20250510
-Release: alt1
+Release: alt2
 Summary: A version of Mutt with added features
 License: GPL-2.0-or-later
 Group: Networking/Mail
@@ -131,6 +131,9 @@ make -s test
 %_datadir/neomutt
 
 %changelog
+* Sat Jun 14 2025 Vitaly Chikunov <vt@altlinux.org> 20250510-alt2
+- Unrandomize the right side of the Message-ID, as recommended by RFC 5322.
+
 * Mon May 12 2025 Daniel Zagaynov <kotopesutility@altlinux.org> 20250510-alt1
 - Update to 20250510 (2025-05-10).
 
