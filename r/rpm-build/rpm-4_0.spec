@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.204
+Version: 4.0.4.205
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -406,6 +406,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Sat Jun 14 2025 Vitaly Chikunov <vt@altlinux.org> 4.0.4.205-alt1
+- debuginfo: Quote filenames to allow spaces in them (ALT#53250).
+- debuginfo: Restore .build-id symlink for vmlinux binary.
+
 * Tue Dec 31 2024 Vitaly Chikunov <vt@altlinux.org> 4.0.4.204-alt1
 - Apply various gcc14 FTBFS fixes.
 - %%autopatch behavior change: now patches applied in Patch<N> index order
