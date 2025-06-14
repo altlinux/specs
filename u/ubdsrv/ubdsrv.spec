@@ -5,7 +5,7 @@
 
 Name: ubdsrv
 Version: 1.5
-Release: alt1
+Release: alt2
 Summary: ublk: userspace block device driver
 License: GPL-2.0-only and LGPL-2.1-only and MIT
 Group: System/Kernel and hardware
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 # gnutls is unsupported yet: https://github.com/ming1/ubdsrv/issues/59
 BuildRequires: gcc-c++
 BuildRequires: libgnutls-devel
-# BuildRequires: libiscsi-devel
+BuildRequires: libiscsi-devel
 # BuildRequires: libnfs-devel
 BuildRequires: liburing-devel
 %{?!_without_check:%{?!_disable_check:
@@ -79,6 +79,9 @@ EOF
 %_pkgconfigdir/ublksrv.pc
 
 %changelog
+* Fri Jun 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.5-alt2
+- Enable libiscsi support.
+
 * Fri Jun 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
 - Update to v1.5 (2025-05-31).
 

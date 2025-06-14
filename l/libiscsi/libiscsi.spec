@@ -1,6 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: libiscsi
-Version: 1.19.0
-Release: alt2
+Version: 1.20.2
+Release: alt1
 
 Summary: iSCSI client library
 License: LGPLv2.1+
@@ -8,12 +12,9 @@ Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
 Source: %name-%version.tar
-Patch0: %name-%version-gcc-10.patch
 
-Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: bc
 BuildRequires: libgcrypt-devel
-BuildRequires: docbook-style-xsl xsltproc
 BuildRequires: rdma-core-devel
 
 %description
@@ -24,6 +25,7 @@ across a network.
 Summary: iSCSI Client Utilities
 Group: System/Configuration/Networking
 License: GPLv2+
+Requires: %name = %EVR
 
 %description utils
 This package provides a set of assorted utilities to connect to iSCSI
@@ -31,17 +33,17 @@ servers without having to set up the Linux iSCSI initiator.
 
 %package devel
 Summary: iSCSI client development libraries
-Group: Development/Other
-Requires: libiscsi = %version-%release
+Group: Development/C
+Requires: %name = %EVR
 
 %description devel
 The libiscsi-devel package includes the header files for libiscsi.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static --disable-werror
 %make_build
@@ -50,20 +52,22 @@ The libiscsi-devel package includes the header files for libiscsi.
 %makeinstall_std
 
 %files
-%doc COPYING README TODO
+%doc COPYING README* LICENCE*
 %_libdir/%name.so.*
 
 %files utils
-%_bindir/*
-%_man1dir/*
-%exclude %_bindir/ld_iscsi*
+%_bindir/iscsi-*
+%_man1dir/iscsi-*.1*
 
 %files devel
-%_includedir/*
+%_includedir/iscsi
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Jun 13 2025 Vitaly Chikunov <vt@altlinux.org> 1.20.2-alt1
+- NMU: Update to 1.20.2 (2025-05-05).
+
 * Thu Apr 15 2021 Slava Aseev <ptrnine@altlinux.org> 1.19.0-alt2
 - Fix build with gcc-10 (-fno-common)
 
