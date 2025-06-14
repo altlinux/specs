@@ -1,14 +1,15 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 0.3
 %define api_ver %ver_major
+%define namespace Grl
 %def_enable soup3
 %def_enable gtk_doc
 %def_disable check
 
 Name: grilo
-Version: %ver_major.16
-Release: alt2
+Version: %ver_major.19
+Release: alt1
 
 Summary: Content discovery framework
 Group: Sound
@@ -88,6 +89,7 @@ GObject introspection data for the %name library
 Summary: GObject introspection devel data for the %name library
 Group: System/Libraries
 BuildArch: noarch
+Requires: lib%name-devel = %EVR
 Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
@@ -147,14 +149,14 @@ xvfb-run %__meson_test
 %_vapidir/*
 
 %files -n lib%name-gir
-%_typelibdir/Grl-%api_ver.typelib
-%_typelibdir/GrlNet-%api_ver.typelib
-%_typelibdir/GrlPls-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
+%_typelibdir/%{namespace}Net-%api_ver.typelib
+%_typelibdir/%{namespace}Pls-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Grl-%api_ver.gir
-%_girdir/GrlNet-%api_ver.gir
-%_girdir/GrlPls-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
+%_girdir/%{namespace}Net-%api_ver.gir
+%_girdir/%{namespace}Pls-%api_ver.gir
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -162,6 +164,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sat Jun 14 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.19-alt1
+- 0.3.19
+
 * Fri Nov 08 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2
 - updated to 0.3.16-12-gb4f33e4
 - disabled %%check failed offline in hasher
