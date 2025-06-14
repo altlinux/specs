@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nwg-shell-config
-Version: 0.5.58
+Version: 0.5.59
 Release: alt1
 
 Summary: nwg-shell configuration utility
@@ -57,5 +57,8 @@ install -Dm 644 *.svg -t %buildroot/%_pixmapsdir/
 %_pixmapsdir/*
 
 %changelog
+* Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.59-alt1
+- New version 0.5.59.
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.58-alt1
 - Initial build for Sisyphus with support of Ayatana Indicator

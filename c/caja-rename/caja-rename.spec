@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: caja-rename
-Version: 25.1.1
+Version: 25.6.1
 Release: alt1
 
 Summary: Batch renaming extension for Caja
@@ -56,5 +56,8 @@ rm -fv %buildroot%_datadir/locale/zh_Hans/LC_MESSAGES/%name.mo
 %_iconsdir/*/*/apps/%name.*
 
 %changelog
+* Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 25.6.1-alt1
+- New version 25.6.1.
+
 * Fri Feb 07 2025 Nikolay Strelkov <snk@altlinux.org> 25.1.1-alt1
 - Initial build for Sisyphus

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ayatana-cmake-modules
-Version: 1.7
+Version: 1.8
 Release: alt1
 
 Summary: Ayatana CMake modules
@@ -42,6 +42,9 @@ Extra CMake modules shared in Ubuntu Ayatana projects.
 %_datadir/cmake/*
 
 %changelog
+* Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.8-alt1
+- New version 1.8.
+
 * Sat Nov 23 2024 Nikolay Strelkov <snk@altlinux.org> 1.7-alt1
 - New version 1.7.
 

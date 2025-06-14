@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: srain
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Modern IRC client written in GTK
@@ -72,5 +72,8 @@ Power-user capabilities:
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.1-alt1
+- New version 1.8.1.
+
 * Sun Mar 09 2025 Nikolay Strelkov <snk@altlinux.org> 1.8.0-alt1
 - Initial build for Sisyphus

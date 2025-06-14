@@ -3,7 +3,7 @@
 %global import_path github.com/nwg-piotr/nwg-menu
 
 Name: nwg-menu
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: MenuStart plugin to nwg-panel, also capable of working standalone
@@ -51,5 +51,8 @@ make install DESTDIR=%buildroot
 %_datadir/%name/*
 
 %changelog
+* Sat Jun 14 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.9-alt1
+- New version 0.1.9.
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.8-alt1
 - Initial build for Sisyphus
