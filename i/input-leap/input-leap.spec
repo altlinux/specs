@@ -1,8 +1,8 @@
 %define nameL io.github.input_leap.input-leap
 
 Name: input-leap
-Version: 3.0.2
-Release: alt3
+Version: 3.0.3
+Release: alt1
 
 Summary: Open-source KVM software
 Summary(ru_RU.UTF-8): Программное обеспечение KVM с открытым исходным кодом
@@ -71,6 +71,9 @@ export CXX=clang++
 %doc *.md LICENSE
 
 %changelog
+* Sat Jun 14 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.3-alt1
+- 3.0.2 -> 3.0.3
+
 * Wed Jun 11 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.0.2-alt3
 - fixed FTBFS: update to git.3b4a6c9f for fix(gui): Adjust KeySequence.cpp for Qt > 6.9 change
 
