@@ -4,8 +4,8 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.11.0
-Release: alt2
+Version: 5.12.0
+Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -37,7 +37,7 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 #BuildRequires: libirrlicht-devel
-BuildRequires: bzip2-devel jthread-devel libsqlite3-devel
+BuildRequires: bzip2-devel jthread-devel libsqlite3-devel libSDL2-devel
 BuildRequires: libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel libX11-devel libXcm-devel libXi-devel libXv-devel libXext-devel libGLU-devel
 BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel libpq-devel
 #libdotconf-devel graphviz
@@ -206,7 +206,7 @@ fi
 %_iconsdir/hicolor/scalable/apps/luanti.svg
 %_iconsdir/hicolor/128x128/apps/luanti.png
 %_man6dir/luanti.*
-%_datadir/metainfo/net*.metainfo.xml
+%_datadir/metainfo/org*.metainfo.xml
 %{_datadir}/luanti/builtin
 
 %files server
@@ -221,6 +221,9 @@ fi
 %_man6dir/luantiserver.6*
 
 %changelog
+* Sun Jun 15 2025 Ilya Mashkin <oddity@altlinux.ru> 5.12.0-alt1
+- 5.12.0
+
 * Mon Mar 03 2025 Ilya Mashkin <oddity@altlinux.ru> 5.11.0-alt2
 - Fix build path
 
