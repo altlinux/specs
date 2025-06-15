@@ -1,20 +1,27 @@
+%def_enable snapshot
+%define _name editorconfig
+%define srcname %_name-core-c
 %def_enable docs
 %def_disable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_disable check
 
-Name: editorconfig
-Version: 0.12.8
-Release: alt1
+Name: %_name
+Version: 0.12.10
+Release: alt0.1
 
 Summary: Parser for EditorConfig files written in C
 Group: Development/Other
 License: BSD-2-Clause
 Url: https://editorconfig.org
 
-%define srcname %name-core-c
-Vcs: https://github.com/%name/%srcname
+Vcs: https://github.com/editorconfig/editorconfig-core-c.git
+
+%if_disabled snapshot
 Source: https://github.com/%name/%srcname/archive/v%version/%srcname-%version.tar.gz
+%else
+Source: %srcname-%version.tar
+%endif
 Patch: %srcname-0.12.5-alt-static_build.patch
 
 Requires: lib%name = %EVR
@@ -75,25 +82,28 @@ This package contains files needed for development EditorConfig plugins.
 %cmake_build -t tests
 
 %files
-%_bindir/%name
-%_bindir/%name-%version
-%{?_enable_docs:%_man1dir/%name.1.*}
-%{?_enable_docs:%_man5dir/%{name}*}
+%_bindir/%_name
+%_bindir/%_name-%version
+%{?_enable_docs:%_man1dir/%_name.1.*}
+%{?_enable_docs:%_man5dir/%{_name}*}
 %doc CHANGELOG README.md LICENSE
 
 %files -n lib%name
-%_libdir/lib%name.so.0*
+%_libdir/lib%_name.so.0*
 %{?_enable_static:%exclude %_libdir/*.a}
 
 %files -n lib%name-devel
-%_includedir/%name/
-%_libdir/lib%name.so
+%_includedir/%_name/
+%_libdir/lib%_name.so
 %_libdir/cmake/EditorConfig/
-%_pkgconfigdir/%name.pc
-%{?_enable_docs:%_man3dir/%{name}*
+%_pkgconfigdir/%_name.pc
+%{?_enable_docs:%_man3dir/%{_name}*
 %doc %_cmake__builddir/doc/html}
 
 %changelog
+* Sun Jun 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.10-alt0.1
+- updated to v0.12.9-13-gc8e2d77
+
 * Thu Jun 13 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.8-alt1
 - 0.12.8
 
