@@ -4,7 +4,7 @@
 %define commonname hasherc_common
 
 Name: hasherc
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: A tool for building packages for ALT operating systems in containers
@@ -18,9 +18,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: podman
-# This requires optional
-Requires: rpmspec
-Requires: gear
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-python3
@@ -52,6 +49,9 @@ NOT FULL REPLACEMENT FOR HASHER
 %python3_sitelibdir_noarch/%commonname/
 
 %changelog
+* Sat Jun 14 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.3.0-alt1
+- New version: 0.3.0
+
 * Fri May 30 2025 Vladimir Vaskov <rirusha@altlinux.org> 0.2.1-alt1
 - New version: 0.2.1
 
