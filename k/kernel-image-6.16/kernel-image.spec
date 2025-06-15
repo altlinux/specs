@@ -1,5 +1,5 @@
 Name: kernel-image-6.16
-Release: alt0.rc1
+Release: alt0.rc2
 %define kernel_src_version	6.15
 %define kernel_base_version	6.16
 %define kernel_sublevel	.0
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Jun 15 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc2
+- Update to v6.16-rc2 (2025-06-15).
+
 * Mon Jun 09 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc1
 - Rebase to v6.16-rc1 (2025-06-08).
 
