@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.28.0
+Version: 1.28.2
 Release: alt1
 Epoch: 1
 Summary: Document viewer
@@ -29,7 +29,7 @@ BuildRequires: libgxps-devel libgxps-gir-devel
 %endif
 
 %if_enabled epub
-BuildRequires: libwebkit2gtk-devel
+BuildRequires: libwebkit2gtk4.1-devel
 %endif
 
 %description
@@ -196,6 +196,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Jun 15 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.2-alt1
+- 1.28.2
+
 * Wed Feb 28 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
