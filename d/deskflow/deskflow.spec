@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: deskflow
-Version: 1.21.2
+Version: 1.22.0
 Release: alt1
 
 Summary: Share a single keyboard and mouse between multiple computers
@@ -45,8 +45,9 @@ is supported. Clipboard sharing is supported.
 
 %build
 %cmake \
-       -DBUILD_DOCS=OFF
-
+       -DCMAKE_BUILD_TYPE=Release \
+       -DBUILD_DOCS=OFF \
+       -DSKIP_BUILD_TESTS=ON
 %cmake_build
 
 %install
@@ -66,5 +67,8 @@ is supported. Clipboard sharing is supported.
 %exclude %_datadir/licenses/deskflow
 
 %changelog
+* Sun Jun 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.22.0-alt1
+- New version 1.22.0.
+
 * Sat May 24 2025 Nikolay Strelkov <snk@altlinux.org> 1.21.2-alt1
 - Initial build for Sisyphus

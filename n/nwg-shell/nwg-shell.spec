@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nwg-shell
-Version: 0.5.48
+Version: 0.5.49
 Release: alt1
 
 Summary: Meta-package for the nwg-shell project
@@ -62,6 +62,7 @@ Requires: xdg-user-dirs
 %filter_from_requires /^.usr.bin.hyprctl/d
 %filter_from_requires /grim/d
 %filter_from_requires /slurp/d
+%filter_from_requires /hyprland/d
 
 %description
 nwg-shell is a GTK3-based shell for sway and Hyprland Wayland
@@ -132,5 +133,8 @@ echo "                https://nwg-piotr.github.io/nwg-shell/ ."
 %_datadir/backgrounds/*
 
 %changelog
+* Sun Jun 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.49-alt1
+- New version 0.5.49.
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.48-alt1
 - Initial build for Sisyphus
