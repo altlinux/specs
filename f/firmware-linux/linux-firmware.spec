@@ -2,7 +2,7 @@
 
 Name: firmware-linux
 Version: 20250613
-Release: alt1
+Release: alt2
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
 
@@ -88,6 +88,28 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 xz -l %buildroot/lib/firmware/i915/mtl_gsc_1.bin.xz | grep -w CRC32
 grep -c Mellanox LICENSE.Mellanox
 
+%pretrans -p <lua>
+paths = {
+  "/lib/firmware/nvidia/ad103",
+  "/lib/firmware/nvidia/ad104",
+  "/lib/firmware/nvidia/ad106",
+  "/lib/firmware/nvidia/ad107"
+}
+for _, path in ipairs(paths) do
+  st = posix.stat(path)
+  if st and st.type == "directory" then
+    status = os.rename(path, path .. ".rpmmoved")
+    if not status then
+      suffix = 0
+      while not status do
+        suffix = suffix + 1
+        status = os.rename(path .. ".rpmmoved", path .. ".rpmmoved." .. suffix)
+      end
+    os.rename(path, path .. ".rpmmoved")
+    end
+  end
+end
+
 %files
 %doc WHENCE LICEN?E.* Apache-2 GPL-2 GPL-3
 /lib/firmware
@@ -118,6 +140,9 @@ grep -c Mellanox LICENSE.Mellanox
 /lib/firmware/mellanox
 
 %changelog
+* Sun Jun 15 2025 Vitaly Chikunov <vt@altlinux.org> 20250613-alt2
+- Resolve nvidia/ad103-ad107 fw file conflicts (ALT#54809).
+
 * Sat Jun 14 2025 Vitaly Chikunov <vt@altlinux.org> 20250613-alt1
 - Update to 20250613 (2025-06-13).
 
