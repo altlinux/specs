@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.20.3
-Release: alt2
+Version: 0.21
+Release: alt1
 Summary: Simple Python interface for Graphviz
 License: MIT
 Group: Development/Python3
@@ -45,18 +45,17 @@ BuildRequires: fontconfig
 %pyproject_install
 
 %check
-# pytest 8.1.1:
-# - https://github.com/xflr6/graphviz/issues/219
-# - https://github.com/pytest-dev/pytest/issues/12123
 %pyproject_run -- python3 run-tests.py \
-    --ignore ./tests/conftest.py \
-    --ignore ./tests/backend/conftest.py
+    -vra -o=addopts='' \
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 0.21-alt1
+- 0.20.3 -> 0.21.
+
 * Thu May 02 2024 Stanislav Levin <slev@altlinux.org> 0.20.3-alt2
 - Fixed FTBFS (Pytest 8.1.1).
 
