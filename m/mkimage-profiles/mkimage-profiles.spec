@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -135,6 +135,17 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jun 16 2025 Anton Midyukov <antohami@altlinux.org> 1.8.2-alt1
+- live: add livecd-auto-hostname to live/base (except BRANCH=p10)
+- live-install: do not add use/l10n
+- grub: Shorten menu item for VNC Install
+- net-usershares: remove UMASK for home dirs to 076
+- browser: Use chromium on riscv64 (thanks Ivan Melnikov iv@)
+- lists: Don't exclude some packages on riscv64 (thanks Ivan Melnikov iv@)
+- mixin.mk, regular.mk: use chromium for Regular's
+- mixin.mk: add new cloud-init startup logic (for BRANCH=sisyphus)
+  (thanks Nadezhda Fedorova fedor@)
+
 * Tue May 27 2025 Anton Midyukov <antohami@altlinux.org> 1.8.1-alt1
 - features.in/Makefile: rsync files/ directory too
 - grub: do not not delete duplicates $STAGE2_BOOTARGS
