@@ -1,12 +1,13 @@
 %define _name iniparser
 # .so.0 is for version 3.x, .so.1 is 4.x
-%define sover 1
+# since 4.2.2 -- so.4
+%define sover 4
 
 %def_enable docs
-%def_enable check
+%def_disable check
 
 Name: lib%_name
-Version: 4.2.1
+Version: 4.2.6
 Release: alt1
 
 Group: Development/C
@@ -15,10 +16,14 @@ License: MIT
 Url: http://ndevilla.free.fr/iniparser/
 
 Vcs: https://github.com/ndevilla/iniparser.git
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++
 %{?_enable_docs:BuildRequires: doxygen}
+%{?_enable_check:BuildRequires: ctest}
 
 %description
 iniParser is an ANSI C library to parse "INI-style" files,
@@ -46,27 +51,30 @@ documentation for %_name library.
 %setup
 %patch -p1
 # fix pc-file
-sed -i 's|\/lib|/%_lib|
-        s|\(-I${includedir}\)|\1/%_name|' %_name.pc
+#sed -i 's|\/lib|/%_lib|
+#        s|\(-I${includedir}\)|\1/%_name|' %_name.pc
 
 %build
-%make_build CFLAGS='%optflags %optflags_shared %(getconf LFS_CFLAGS)' \
-    libiniparser.so.%sover %{?_enable_docs:docs}
+%cmake \
+    -DBUILD_STATIC_LIBS=OFF \
+    %{?_enable_docs:-DBUILD_DOCS=ON} \
+    %{?_enable_check:-DBUILD_TESTS=ON \
+    -DBUILD_STATIC_LIBS=ON}
+%nil
+%cmake_build
 
 %install
+%cmake_install
 %define docdir %_docdir/%name-%version
-mkdir -p %buildroot{%_libdir,%_includedir/%_name,%_pkgconfigdir,%docdir}
-install -pm644 %name.so.%sover %buildroot%_libdir/
-ln -s %name.so.%sover %buildroot%_libdir/%name.so
-install -pm644 src/*.h  %buildroot%_includedir/%_name/
-install -pm644 %_name.pc  %buildroot%_pkgconfigdir/
-install -pm644 LICENSE %{?_enable_docs:html/*} %buildroot%docdir/
+mkdir -p %buildroot%docdir
+install -pm644 LICENSE %buildroot%docdir/
+%{?_enable_docs:cp -ar %_cmake__builddir/html} %buildroot%docdir/
 
 %check
-%make -k check VERBOSE=1
+%cmake_build -t test
 
 %files -n %name%sover
-%_libdir/%name.so.%sover
+%_libdir/%name.so.%{sover}*
 %dir %docdir
 %docdir/LICENSE
 
@@ -74,10 +82,15 @@ install -pm644 LICENSE %{?_enable_docs:html/*} %buildroot%docdir/
 %_libdir/%name.so
 %_includedir/%_name/
 %_pkgconfigdir/%_name.pc
-%dir %docdir
-%{?_enable_docs:%docdir/*.*}
+%_libdir/cmake/%_name/
+%{?_enable_docs:%docdir/html
+%exclude %_datadir/doc/%_name/}
+
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 4.2.6-alt1
+- 4.2.6 (ported to CMake build system, soname bumped)
+
 * Thu May 16 2024 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
