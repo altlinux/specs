@@ -22,7 +22,7 @@
 
 Name: grub
 Version: 2.12
-Release: alt13
+Release: alt14
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -515,6 +515,9 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Jun 16 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt14
+- add new ALT-specific translations (closes: #54493)
+
 * Tue Jun 10 2025 Egor Ignatov <egori@altlinux.org> 2.12-alt13
 - fix search by uuid for legacy boot
 - fix zfs module (closes: #54480)
