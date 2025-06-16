@@ -1,11 +1,11 @@
 Name: kernel-image-6.16
-Release: alt0.rc2
+Release: alt0.rc2.1
 %define kernel_src_version	6.15
 %define kernel_base_version	6.16
 %define kernel_sublevel	.0
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	latest1
+%define kernel_latest	mainline
 Version: %kversion
 
 %define krelease	%release
@@ -612,6 +612,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jun 16 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc2.1
+- Update to v6.16-rc2-24-g9afe652958c3 (2025-06-16).
+- Change %%kernel_latest definition to point to 'mainline' fixing CI workflows.
+
 * Sun Jun 15 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc2
 - Update to v6.16-rc2 (2025-06-15).
 
