@@ -1,5 +1,5 @@
 Name: clpeak
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Summary: A tool which profiles OpenCL devices to find their peak capacities
 License: Apache-2.0
@@ -32,5 +32,8 @@ and does not represent a real-world use case
 %_bindir/%name
 
 %changelog
+* Mon Jun 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1.5-alt1
+- 1.1.5.
+
 * Mon Feb 17 2025 L.A. Kostis <lakostis@altlinux.ru> 1.1.4-alt1
 - Initial build for ALTLinux.
