@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.9.6
-Release: alt3
+Version: 2.9.7
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -49,7 +49,7 @@ Patch: %name-%version-alt.patch
 
 Requires: %name-client = %version-%release
 Requires: libsss_idmap = %version-%release
-Requires: libldb = %ldb_modversion
+Requires: libldb-abi = %ldb_modversion
 
 Requires: libkrb5 >= 1.14.4-alt2
 
@@ -703,7 +703,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man5dir/sssd.conf.5*
 %_mandir/*/man5/sssd.conf.5*
 %_man5dir/sssd-simple.5*
-%_mandir/*/man5/sssd-simple.5*
+#_mandir/*/man5/sssd-simple.5*
 %_man5dir/sssd-sudo.5*
 %_mandir/*/man5/sssd-sudo.5*
 %_man5dir/sssd-session-recording.5*
@@ -917,6 +917,20 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Mon Jun 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.7-alt1
+- Compatibility prepare for libldb-abi provide from newest samba 4.21 releases.
+- Update to latest 2.9 LTM release:
+  + smartcard login fails when network disconnected (GitHub#6601)
+  + LDAP auth happens after search failure (GitHub#6665): 'ldap_read_rootdse'
+    option allows to specify how SSSD will read RootDSE from the LDAP server.
+    Allowed values are "anonymous", "authenticated" and "never".
+  + SSSD dyndns_ifname with wildcard (GitHub#6910)
+  + krb5_child: ignore Smartcard identifiers with a ':' - fix it couldn't
+    parse pkcs11 objects if token label contains semicolon (GitHub#7746)
+  + Disk cache failure with large db sizes (GitHub#7793)
+  + Group enumeration does not work if group name contains '#' (GitHub#7876)
+  + LDAPU1 Local auth mapping rule error (GitHub#7931)
+
 * Tue Dec 10 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.6-alt3
 - Fix typo in sss_ec_get_key() for OpenSSL older than 3.0.
 

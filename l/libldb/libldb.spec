@@ -9,7 +9,7 @@
 
 Name: libldb
 Version: 2.9.2
-Release: alt1
+Release: alt2
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -48,6 +48,8 @@ Requires: libtevent >= 0.16.1
 %if_with mdb
 Requires: liblmdb >= 0.9.16
 %endif
+
+Provides: libldb-abi = %version
 
 %description
 An extensible library that implements and LDAP like API to access remote LDAP
@@ -185,6 +187,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Mon Jun 16 2025 Evgeny Sinelnikov <sin@altlinux.org> 2.9.2-alt2
+- Add libldb-abi provide with version for newest samba 4.21 releases
+
 * Wed Nov 20 2024 Evgeny Sinelnikov <sin@altlinux.org> 2.9.2-alt1
 - Update to the 2.9.2 for samba-4.20.6 and later releases
 
