@@ -2,7 +2,7 @@
 %define import_path github.com/TecharoHQ/anubis.git
 
 Name: anubis
-Version: 1.18.0
+Version: 1.19.1
 Release: alt1
 
 Group: Networking/WWW
@@ -15,7 +15,7 @@ Vcs: https://github.com/TecharoHQ/anubis.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-ExclusiveArch: %go_arches
+ExclusiveArch: x86_64 aarch64 ppc64le riscv64 loongarch64
 
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
 BuildRequires: rpm-build-golang golang >= 1.24.2
@@ -82,6 +82,9 @@ rm -f data/embed.go
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Mon Jun 16 2025 Alexey Shabalin <shaba@altlinux.org> 1.19.1-alt1
+- New version 1.19.1.
+
 * Wed May 14 2025 Alexey Shabalin <shaba@altlinux.org> 1.18.0-alt1
 - New version 1.18.0.
 
