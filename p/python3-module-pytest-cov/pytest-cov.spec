@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.1.1
+Version: 6.2.1
 Release: alt1
 Summary: Pytest plugin for measuring coverage
 License: MIT
@@ -67,6 +67,9 @@ export VIRTUALENV_SYSTEM_SITE_PACKAGES=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 6.2.1-alt1
+- 6.1.1 -> 6.2.1.
+
 * Mon Apr 07 2025 Stanislav Levin <slev@altlinux.org> 6.1.1-alt1
 - 6.1.0 -> 6.1.1.
 
