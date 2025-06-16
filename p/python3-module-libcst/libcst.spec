@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
@@ -55,7 +55,7 @@ cat < vendor_cargoconf.toml >> .cargo/config.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_hatch pyproject.toml default
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -89,6 +89,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 1.8.2-alt1
+- 1.8.1 -> 1.8.2.
+
 * Wed Jun 11 2025 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1
 - 1.8.0 -> 1.8.1.
 
