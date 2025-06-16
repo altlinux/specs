@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.20
+Version: 1.16.21
 Release: alt1
 
 Summary: Installer common parts
@@ -144,6 +144,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Mon Jun 16 2025 Dmitry Terekhin <jqt4@altlinux.org> 1.16.21-alt1
+- final-notes.desktop: fix value of Icon field
+
 * Sun May 25 2025 Anton Midyukov <antohami@altlinux.org> 1.16.20-alt1
 - preinstall.d/30-setup-network.sh: major refactoring
   + filter wireless interfaces
