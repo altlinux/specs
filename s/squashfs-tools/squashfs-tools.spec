@@ -1,5 +1,5 @@
 Name: squashfs-tools
-Version: 4.6.1
+Version: 4.7
 Release: alt1
 
 Summary: squashfs support
@@ -8,7 +8,11 @@ Group: System/Kernel and hardware
 Url: https://github.com/plougher/squashfs-tools
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-BuildRequires: zlib-devel liblzma-devel liblzo2-devel libzstd-devel
+BuildRequires: zlib-devel
+BuildRequires: liblzma-devel
+BuildRequires: liblzo2-devel
+BuildRequires: libzstd-devel
+BuildRequires: liblz4-devel
 Provides: squashfsprogs = %version-%release
 Obsoletes: squashfsprogs
 
@@ -32,7 +36,7 @@ pushd squashfs-tools
 popd
 
 %install
-pushd manpages
+pushd Documentation/manpages
 install -pDm755 mksquashfs.1 %buildroot%_man1dir/mksquashfs.1
 install -pDm755 unsquashfs.1 %buildroot%_man1dir/unsquashfs.1
 install -pDm755 sqfstar.1 %buildroot%_man1dir/sqfstar.1
@@ -40,21 +44,26 @@ install -pDm755 sqfscat.1 %buildroot%_man1dir/sqfscat.1
 popd
 
 pushd squashfs-tools
-install -pDm755 mksquashfs %buildroot/sbin/mksquashfs
-install -pDm755 unsquashfs %buildroot/%_bindir/unsquashfs
-install -pDm755 sqfstar %buildroot/%_bindir/sqfstar
-install -pDm755 sqfscat %buildroot/%_bindir/sqfscat
-ln -sf mksquashfs %buildroot/sbin/mkfs.squashfs
-ln -sf ../../sbin/mksquashfs %buildroot%_bindir/mksquashfs
+install -pDm755 mksquashfs %buildroot%_sbindir/mksquashfs
+install -pDm755 unsquashfs %buildroot%_bindir/unsquashfs
+install -pDm755 sqfstar %buildroot%_bindir/sqfstar
+install -pDm755 sqfscat %buildroot%_bindir/sqfscat
+ln -sf mksquashfs %buildroot%_sbindir/mkfs.squashfs
+ln %buildroot%_sbindir/mksquashfs %buildroot%_bindir/mksquashfs
 popd
 
 %files
-%doc README* CHANGES USAGE* ACTIONS-README
-/sbin/*
+%doc CHANGES Documentation/%version/*
+%_sbindir/*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Fri Jun 06 2025 Anton Midyukov <antohami@altlinux.org> 4.7-alt1
+- 4.7
+- replace mksquashfs from /sbin to %%_sbindir
+- replace symlink %%_bindir/mksquashfs with hardlink (for bin-sbin merge)
+
 * Fri May 12 2023 Anton Midyukov <antohami@altlinux.org> 4.6.1-alt1
 - 4.6.1
 
