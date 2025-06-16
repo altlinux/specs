@@ -14,7 +14,7 @@
 %endif
 
 Name: libwacom
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A Wacom tablets library
@@ -128,6 +128,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.16.1-alt1
+- 2.16.1
+
 * Fri Jun 13 2025 Yuri N. Sedunov <aris@altlinux.org> 2.16.0-alt1
 - 2.16.0
 
