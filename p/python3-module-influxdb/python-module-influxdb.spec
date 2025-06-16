@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.3.2
-Release: alt1
+Release: alt2
 
 Summary: Python client for InfluxDB
 
@@ -54,6 +54,9 @@ sed -e 's/^import mock/from unittest import mock/' \
 
 sed -i "s/freq='H'/freq='h'/g" influxdb/tests/dataframe_client_test.py
 
+# for numpy2
+sed -i "s/np.NaN/np.nan/" influxdb/tests/dataframe_client_test.py
+
 %build
 %python3_build
 
@@ -73,6 +76,9 @@ py.test-3 -k 'not test_write_points_from_dataframe_with_tags_and_nan_json and no
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Jun 16 2025 Anton Vyatkin <toni@altlinux.org> 5.3.2-alt2
+- Fixed FTBFS (numpy2).
+
 * Fri Sep 13 2024 Anton Vyatkin <toni@altlinux.org> 5.3.2-alt1
 - New version 5.3.2.
 
