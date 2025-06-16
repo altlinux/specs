@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: git-subrepo
-Version: 0.4.6
+Version: 0.4.9
 Release: alt1
 
 Group: Development/Other
@@ -38,5 +38,8 @@ changes can be pushed back. Simple.
 %_man1dir/git-subrepo.1*
 
 %changelog
+* Thu May 22 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4.9-alt1
+- 0.4.9
+
 * Thu May 04 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.4.6-alt1
 - Initial build for ALT Sisyphus.
