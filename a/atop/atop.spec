@@ -5,8 +5,8 @@
 %define _systemddir /usr/lib/systemd
 
 Name: atop
-Version: 2.11.1
-Release: alt1.1
+Version: 2.12.0
+Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: GPLv2+
 Group: Monitoring
@@ -74,6 +74,9 @@ done
 %_prefix/lib/pm-utils/sleep.d/45atoppm
 
 %changelog
+* Mon Jun 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.12.0-alt1
+- atop 2.12.0
+
 * Mon Mar 31 2025 Leontiy Volodin <lvol@altlinux.org> 2.11.1-alt1.1
 - Simplified backport to older branches
 
