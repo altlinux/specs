@@ -2,10 +2,10 @@
 %define nameLC plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn
 
 Name: kde-plasma-addon-smart-video-wallpaper-reborn
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
-Summary: Plasma 6 wallpaper plugin to play videos on your Desktop/Lock Screen
+Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
 License: GPL-2.0
 Group: Graphical desktop/KDE
 
@@ -17,8 +17,8 @@ Source1: ru.po
 
 Patch: Header-2.1.0-alt-fixes.patch
 Patch1: config-2.3.0-alt-fixes.patch
-Patch2: main-2.2.0-alt-fixes.patch
-Patch3: metadata-2.3.0-alt-fixes.patch
+Patch2: main-2.3.1-alt-fixes.patch
+Patch3: metadata-2.3.1-alt-fixes.patch
 
 BuildArch: noarch
 
@@ -43,15 +43,11 @@ cp -r -f %SOURCE1 package/translate/
 %K6cmake
 %K6make
 
-for locale in el_GR es nl pt_BR ru; do
- msgfmt package/translate/${locale}.po -o package/translate/${locale}.mo
-done
-
-
 %install
 %K6install
 
 for locale in el_GR es nl pt_BR ru; do
+ msgfmt package/translate/${locale}.po -o package/translate/${locale}.mo
  install -Dm 0644 package/translate/${locale}.mo %buildroot%_datadir/locale/${locale}/LC_MESSAGES/%nameLC.mo
 done
 
@@ -63,6 +59,9 @@ done
 %doc README.md
 
 %changelog
+* Sun Jun 15 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1
+
 * Thu May 01 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt1
 - 2.2.0 -> 2.3.0
 - Changes:
