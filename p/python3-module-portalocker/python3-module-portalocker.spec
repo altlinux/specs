@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 Summary: An easy library for Python file locking
 License: BSD-3-Clause
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra tests
+%pyproject_builddeps_metadata_extra redis
 %endif
 
 %description
@@ -57,6 +58,9 @@ recommended however.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 16 2025 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 3.1.1 -> 3.2.0.
+
 * Tue Jan 14 2025 Stanislav Levin <slev@altlinux.org> 3.1.1-alt1
 - 2.7.0 -> 3.1.1.
 
