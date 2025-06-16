@@ -3,7 +3,7 @@
 %define oname docutils
 %def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.20.1
+Version: 0.21.2
 Release: alt1
 Name: python3-module-%oname
 License: PDDL and Python and BSD and GPLv3
@@ -13,13 +13,17 @@ BuildArch: noarch
 URL: http://docutils.sourceforge.net/
 # https://pypi.org/project/docutils/
 Source: %name-%version.tar
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-build-pyproject
 Conflicts: python-module-docutils
+Source1: %pyproject_deps_config_name
+%pyproject_runtimedeps_metadata
+%pyproject_builddeps_build
+
 %add_python3_req_skip pygments
 %add_python3_req_skip pygments.formatter
 
 %description 
+
 Docutils is a modular system for processing documentation
 into useful formats, such as HTML, XML, and LaTeX.  For
 input Docutils supports reStructuredText, an easy-to-read,
@@ -27,17 +31,14 @@ what-you-see-is-what-you-get plaintext markup syntax.
 
 %prep
 %setup -q
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-pushd %buildroot%_bindir
-for i in *.py; do
-       mv $i $(basename $i .py)
-done
-popd
+%pyproject_install
 
 
 %check
@@ -48,6 +49,9 @@ python3 test/alltests.py
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 09 2025 Anton Farygin <rider@altlinux.com> 0.21.2-alt1
+- 0.21.2
+
 * Wed Jun 21 2023 Fr. Br. George <george@altlinux.org> 0.20.1-alt1
 - 0.20.1
 
