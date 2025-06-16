@@ -1,5 +1,5 @@
 Name: xdp-tools
-Version: 1.5.3
+Version: 1.5.5
 Release: alt1
 Summary: Utilities and example programs for use with XDP
 License: GPL-2.0 and LGPL-2.1 and BSD-2-Clause
@@ -114,6 +114,12 @@ rm -f -- %buildroot%_libdir/*.a
 %_libdir/pkgconfig/libxdp.pc
 
 %changelog
+* Mon Jun 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.5-alt1
+- 1.5.5.
+
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.4-alt1
+- 1.5.4.
+
 * Tue Mar 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.3-alt1
 - 1.5.3.
 - Bump llvm to 19.1
