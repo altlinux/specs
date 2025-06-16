@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.0
-Release: alt2
+Version: 1.9.1
+Release: alt1
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -20,7 +20,6 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-BuildRequires: python3-module-cython
 BuildRequires: libjq-devel
 %if_with check
 %pyproject_builddeps_metadata
@@ -58,6 +57,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jun 16 2025 Anton Zhukharev <ancieg@altlinux.org> 1.9.1-alt1
+- Updated to 1.9.1.
+
 * Mon Jun 09 2025 Anton Zhukharev <ancieg@altlinux.org> 1.8.0-alt2
 - Fixed tests for libjq 1.9.0.
 
