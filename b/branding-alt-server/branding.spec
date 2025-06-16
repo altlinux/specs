@@ -37,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt25
+Release: alt26
 Url: https://basealt.ru
 
 BuildRequires(pre): rpm-macros-branding
@@ -395,6 +395,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Jun 16 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt26
+- Update release-notes
+
 * Mon May 26 2025 Kirill Sharov <sheriffkorov@altlinux.org> 11.0-alt25
 - Fix Firefox package version
 
