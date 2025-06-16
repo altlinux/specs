@@ -1,5 +1,5 @@
 Name:    csvlens
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Command line csv viewer
@@ -54,9 +54,7 @@ install -d %buildroot%_man1dir
 install -pv %SOURCE1 %buildroot%_man1dir
 
 %check
-# FIXME: Failed on x86(_64) arches test switched off. Check in further update.
-%rust_test --workspace --no-fail-fast \
--- --skip 'app::tests::test_irregular_filter_columns_then_rows'
+%rust_test --workspace --no-fail-fast
 
 %files
 %doc *.md LICENSE
@@ -64,6 +62,9 @@ install -pv %SOURCE1 %buildroot%_man1dir
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Jun 16 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.13.0-alt1
+- New version.
+
 * Mon Feb 24 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.12.0-alt1
 - New version.
 
