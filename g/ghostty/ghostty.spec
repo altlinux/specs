@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name ghostty
@@ -10,8 +10,8 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
-Release: alt1%beta
+Version: %ver_major.4
+Release: alt0.1%beta
 
 Summary: Ghostty terminal emulator
 License: MIT
@@ -29,18 +29,21 @@ Source1: %name-%version%beta-vendor.tar
 
 ExclusiveArch: %zig_arches
 
+%define zig_ver 0.14
 %define adwaita_ver 1.6
+%define bp_ver 0.16
 
 Provides: xvt
 Provides: x-terminal-emulator
 
 BuildRequires(pre): rpm-macros-zig rpm-macros-alternatives rpm-build-python3 rpm-build-gir
-BuildRequires: zig
+BuildRequires: zig >= %zig_ver blueprint-compiler >= %bp_ver
 BuildRequires: pandoc
 BuildRequires: pkgconfig(oniguruma)
 BuildRequires: pkgconfig(bzip2)
 BuildRequires: /usr/bin/tic
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(gtk4-layer-shell-0)
 %{?_enable_check:BuildRequires: /dev/pts fonts-ttf-gnu-freefont-mono}
 
 %description
@@ -85,7 +88,7 @@ cat >%buildroot%_altdir/%name <<EOF
 %_bindir/x-terminal-emulator	%_bindir/%_name	29
 EOF
 
-%find_lang --with-gnome %name
+%find_lang --output=%name.lang --with-gnome %name %xdg_name
 
 %check
 %__zig build test %{?_zig_build_options}
@@ -103,7 +106,7 @@ EOF
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %_datadir/vim/vimfiles/*/*
 %_datadir/nvim/site/*/*
-#%_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_altdir/%name
 %_man1dir/%_name.1*
 %_man5dir/%_name.5*
@@ -118,6 +121,9 @@ EOF
 %exclude %_datadir/kio/servicemenus/%xdg_name.desktop
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt0.1
+- v1.1.2-1185-gd0f116da
+
 * Tue Mar 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.3-alt1
 - 1.1.3
 
