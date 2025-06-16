@@ -2,7 +2,7 @@
 
 Name: onboard
 Version: 1.4.2.2
-Release: alt2
+Release: alt3
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+ and BSD
@@ -14,6 +14,7 @@ Source0: %name-%version.tar
 Source1: ru.po
 Patch: build-against-Ayatana-AppIndicator.patch
 Patch1: 1004-fix-ftbfs-python3-12.patch
+Patch2: fix-bool.patch
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-python3 rpm-build-pyproject
 BuildRequires: gcc-c++
@@ -109,6 +110,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Mon Jun 16 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.2.2-alt3
+- NMU: fix FTBFS with bool type definition.
+
 * Mon Apr 21 2025 Andrey Cherepanov <cas@altlinux.org> 1.4.2.2-alt2
 - Required python3-module-pygobject3 (ALT #53881).
 
