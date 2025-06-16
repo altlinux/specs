@@ -1,5 +1,5 @@
 Name: pandoc
-Version: 3.7.0.1
+Version: 3.7.0.2
 Release: alt1
 Summary: Markup conversion tool for markdown
 
@@ -57,6 +57,9 @@ install -pm 644 -D -t %buildroot%_man1dir \
 %_man1dir/pandoc*.1.xz
 
 %changelog
+* Wed Jun 11 2025 Leonid Znamenok <respublica@altlinux.org> 3.7.0.2-alt1
+- 3.7.0.2
+
 * Sun Jun 08 2025 Leonid Znamenok <respublica@altlinux.org> 3.7.0.1-alt1
 - 3.7.0.1
 
