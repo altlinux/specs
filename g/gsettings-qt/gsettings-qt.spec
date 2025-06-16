@@ -6,7 +6,7 @@
 
 Name: gsettings-qt
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: Qt/QML bindings for GSettings
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -100,8 +100,6 @@ cmake --build "build5" -j%__nprocs
 %install
 export DESTDIR=%buildroot
 cmake --install "build6" --verbose
-mkdir -p %buildroot%_qt6_qmldir/GSettings/
-mv -f %buildroot%_qt5_qmldir/GSettings/* %buildroot%_qt6_qmldir/GSettings/
 cmake --install "build5" --verbose
 
 %files -n lib%{name6}_%sover
@@ -133,6 +131,9 @@ cmake --install "build5" --verbose
 %_libdir/lib%name.so
 
 %changelog
+* Mon Jun 16 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt2
+- Fixed build with Qt6.9.
+
 * Thu Apr 10 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.0-alt1
 - New version 1.1.0.
 - Added vcs tag.
