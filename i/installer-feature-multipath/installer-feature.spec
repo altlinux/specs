@@ -1,6 +1,6 @@
 Name: installer-feature-multipath
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Start multipathd in early install stage
 License: GPL
@@ -30,6 +30,9 @@ install -pm755 48-cpympathids.sh %buildroot%hookdirp/
 %hookdirp/*
 
 %changelog
+* Mon Jun 16 2025 Anton Midyukov <antohami@altlinux.org> 0.3-alt3
+- Add feature multipath to initrd.mk
+
 * Thu Feb 27 2025 Dmitry Terekhin <jqt4@altlinux.org> 0.3-alt2
 - copy bindings and wwids for make-initrd in 50-instkernel.sh
 
