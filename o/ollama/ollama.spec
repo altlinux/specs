@@ -10,7 +10,7 @@
 %endif
 
 Name: ollama
-Version: 0.7.1
+Version: 0.9.1
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -145,6 +145,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sun Jun 15 2025 Vitaly Chikunov <vt@altlinux.org> 0.9.1-alt1
+- Update to v0.9.1 (2025-06-14).
+
 * Mon May 26 2025 Vitaly Chikunov <vt@altlinux.org> 0.7.1-alt1
 - Update to v0.7.1 (2025-05-22). [With llama.cpp b5359, 2025-05-12].
 - With new engine for multimodal models.

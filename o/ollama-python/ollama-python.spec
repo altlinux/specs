@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ollama-python
-Version: 0.4.9
+Version: 0.5.1
 Release: alt1
 Summary: Ollama Python library
 License: MIT
@@ -83,6 +83,9 @@ rm -rf /root/.ollama
 %files checkinstall
 
 %changelog
+* Sun Jun 01 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.1-alt1
+- Update to v0.5.1 (2025-05-30).
+
 * Tue May 27 2025 Vitaly Chikunov <vt@altlinux.org> 0.4.9-alt1
 - Update to v0.4.9 (2025-05-14).
 - spec: Upstream switched from Poetry to Hatch.
