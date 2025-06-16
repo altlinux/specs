@@ -4,17 +4,20 @@
 
 Name: libgpod4
 Version: 0.8.3
-Release: alt8
+Release: alt9
 
 Summary: iPod access library
 Group: Sound
 License: LGPLv3+
-URL: http://www.gtkpod.org/libgpod
+Url: http://www.gtkpod.org/libgpod
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: %name-0.8.3-alt-swig.patch
 Patch2: %name-0.8.3-alt-libplist-2.0.patch
+# fc
+Patch3: libgpod-0.8.3-implicit-int.patch
+Patch4: libgpod-0.8.3-no-plist_dict_insert_item.patch
 
 Provides: libgpod = %version-%release
 Obsoletes: libgpod < 0.7
@@ -90,6 +93,8 @@ libgpod-sharp.
 %patch -p1
 %patch1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # remove execute perms on the python examples as they'll be installed in %%doc
 chmod -x bindings/python/examples/*.py
@@ -154,6 +159,9 @@ rm -f %buildroot%_pkgconfigdir/libgpod-sharp.pc
 %endif
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt9
+- rebuilt against libplist-2.0.so.4 and libimobiledevice-1.0.so.6
+
 * Sat Feb 22 2025 Andrew A. Vasilyev <andy@altlinux.org> 0.8.3-alt8
 - NMU: fix FTBFS with gcc14
 

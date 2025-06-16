@@ -6,7 +6,7 @@
 
 Name: usbmuxd
 Version: 1.1.1
-Release: alt1.1
+Release: alt2
 
 Summary: Daemon for communicating with Apple's iPod Touch and iPhone
 Group: System/Servers
@@ -21,14 +21,16 @@ Source: http://www.libimobiledevice.org/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
 %endif
 
-%define plist_ver 2.2.0
+%define plist_ver 2.6.0
 %define usb_ver 1.0.9
 %define imobiledevice_ver 1.3.0
+%define glue_ver 1.0.0
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: libplist-devel >= %plist_ver
 BuildRequires: libusb-devel >= %usb_ver
 BuildRequires: libimobiledevice-devel >= %imobiledevice_ver
+BuildRequires: pkgconfig(libimobiledevice-glue-1.0) >= %glue_ver
 BuildRequires: libudev-devel pkgconfig(systemd)
 
 %description
@@ -38,6 +40,7 @@ the device to be accessed simultaneously.
 
 %prep
 %setup
+echo %version > .tarball-version
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -64,6 +67,9 @@ the device to be accessed simultaneously.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt2
+- updated to 1.1.1-69-g523f700
+
 * Sat May 25 2024 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1.1
 - spec: used %%_udevrulesdir
 

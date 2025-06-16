@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: libplist
-Version: 2.2.0
+Version: 2.7.0
 Release: alt1
 
 Summary: Library for manipulating Apple Binary and XML Property Lists
@@ -14,17 +14,18 @@ Group: System/Libraries
 License: GPL-2.0 and LGPL-2.1
 Url: http://www.libimobiledevice.org/
 
+Vcs: https://github.com/libimobiledevice/libplist.git
+
 %if_disabled snapshot
-Source: %url/downloads/%name-%version.tar.bz2
+Source: https://github.com/libimobiledevice/libplist/releases/download/%version/%name-%version.tar.bz2
 %else
-# VCS: http://git.sukimashita.com/libplist.git
 Source: %name-%version.tar
 %endif
 Patch: libplist-2.0.0-alt-e2k-lcc123.patch
 
 BuildRequires: gcc-c++ xml-utils
 %{?_enable_python:BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Cython}
+BuildRequires: python3-devel python3-module-Cython >= 3.0}
 
 %description
 libplist is a library for manipulating Apple Binary and XML Property Lists
@@ -32,7 +33,7 @@ libplist is a library for manipulating Apple Binary and XML Property Lists
 %package -n %{name}mm
 Summary: Cmm wrapper for %name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n %{name}mm
 This package provides Cmm interface for %name library
@@ -40,8 +41,8 @@ This package provides Cmm interface for %name library
 %package -n %{name}mm-devel
 Summary: Headers and development files for %{name}mm library
 Group: System/Libraries
-Requires: %{name}mm = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %{name}mm = %EVR
+Requires: %name-devel = %EVR
 
 %description -n %{name}mm-devel
 This package contains the headers and development files that are needed
@@ -50,7 +51,7 @@ to develop or compile applications which need %{name}mm library
 %package devel
 Summary: Development package for libplist
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides development headers and libraries for %name
@@ -58,16 +59,16 @@ This package provides development headers and libraries for %name
 %package -n python3-module-%name
 Summary: Python3 package for libplist
 Group: Development/Python3
-Requires: %name = %version-%release
-Requires: %{name}mm = %version-%release
+Requires: %name = %EVR
+Requires: %{name}mm = %EVR
 
 %description -n python3-module-%name
 Python3 libraries and bindings for %name
 
 
 %prep
-%setup -a0
-%patch -p1 -b .e2k
+%setup
+#%%patch -p1 -b .e2k
 
 %build
 %add_optflags %(getconf LFS_CFLAGS) %optflags_shared
@@ -82,7 +83,7 @@ Python3 libraries and bindings for %name
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files
 %_bindir/plistutil
@@ -111,6 +112,12 @@ Python3 libraries and bindings for %name
 %endif
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
+- 2.7.0
+
+* Tue May 14 2024 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 - removed python2 support

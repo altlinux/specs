@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define api_ver 1.0
 
 %def_disable python
@@ -6,26 +6,31 @@
 
 Name: libimobiledevice
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
 Summary: Library for connecting to Apple iPhone and iPod touch
 Group: System/Libraries
 License: GPL-2.0 and LGPL-2.1
 Url: http://www.libimobiledevice.org
 
+Vcs: https://github.com/libimobiledevice/libimobiledevice.git
+
 %if_disabled snapshot
 Source: %url/downloads/%name-%version.tar.bz2
 %else
-# VCS: https://github.com/libimobiledevice/libimobiledevice.git
 Source: %name-%version.tar
 %endif
 
-%define plist_ver 2.2.0
+%define plist_ver 2.7.0
+%define glue_ver 1.3.2
 %define usbmuxd_ver 2.0.2
-%define cython_ver 0.18
+%define tatsu_ver 1.0.3
+%define cython_ver 3.0.0
 
-BuildPreReq: libplist-devel >= %plist_ver
-BuildPreReq: libusbmuxd-devel >= %usbmuxd_ver
+BuildRequires: libplist-devel >= %plist_ver
+BuildRequires: libusbmuxd-devel >= %usbmuxd_ver
+BuildRequires: pkgconfig(libimobiledevice-glue-1.0) >= %glue_ver
+BuildRequires: pkgconfig(libtatsu-1.0) >= %tatsu_ver
 
 BuildRequires: gcc-c++ autoconf-archive glib2-devel libxml2-devel libusb-devel libplistmm-devel
 BuildRequires: libgnutls-devel libtasn1-devel libgcrypt-devel libssl-devel
@@ -42,22 +47,24 @@ Requires: %name = %version-%release
 %description devel
 This package provides files for development using libimobiledevice.
 
-%package -n python-module-%name
+%package -n python3-module-%name
 Summary: Python bindings for libimobiledevice
-Group: Development/Python
+Group: Development/Python3
 Requires: %name = %version-%release
 
-%description -n python-module-%name
+%description -n python3-module-%name
 Python bindings for libimobiledevice.
 
 %prep
 %setup
+echo %version > .tarball-version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
-	%{?_disable_python:--without-cython} \
-	%{?_enable_python:PYTHON=%__python3}
+    %{?_disable_python:--without-cython} \
+    %{?_enable_python:PYTHON=%__python3}
 %make_build
 
 %install
@@ -68,6 +75,7 @@ Python bindings for libimobiledevice.
 
 %files
 %_bindir/idevice*
+%_bindir/afcclient
 %_libdir/%name-%api_ver.so.*
 %_man1dir/*
 %doc AUTHORS NEWS README*
@@ -78,12 +86,15 @@ Python bindings for libimobiledevice.
 %_pkgconfigdir/*.pc
 
 %if_enabled python
-%files -n python-module-%name
-%python_sitelibdir/imobiledevice.so
+%files -n python3-module-%name
+%python3_sitelibdir/imobiledevice.so
 %exclude %python_sitelibdir/imobiledevice.la
 %endif
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt2
+- updated to 1.3.0-297-g34b170f
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 - fixed License tag

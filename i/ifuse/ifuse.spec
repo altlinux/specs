@@ -1,28 +1,29 @@
-%def_disable snapshot
+%def_enable snapshot
 
 Name: ifuse
 Version: 1.1.4
-Release: alt1
+Release: alt2
 
 Summary: Filesystem access for the iPhone and iPod Touch
 Group: Communications
 License: LGPL-2.1
-URL: http://www.libimobiledevice.org/
+Url: http://www.libimobiledevice.org/
+
+Vcs: https://github.com/libimobiledevice/ifuse
 
 %if_disabled snapshot
 Source: %url/downloads/%name-%version.tar.bz2
 %else
-# VCS: https://github.com/libimobiledevice/ifuse
 Source: %name-%version.tar
 %endif
 
-%define fuse_ver 2.7.0
+%define fuse_ver 3.0
 %define plist_ver 2.2.0
 %define imobiledevice_ver 1.3.0
 
-Requires: fuse >= %fuse_ver
+Requires: fuse3 >= %fuse_ver
 
-BuildRequires: libfuse-devel >= %fuse_ver
+BuildRequires: libfuse3-devel >= %fuse_ver
 BuildRequires: libplist-devel >= %plist_ver
 BuildRequires: libimobiledevice-devel >= %imobiledevice_ver
 
@@ -34,8 +35,10 @@ to access the iPhone's or iPod Touch's media files under Linux.
 
 %prep
 %setup
+echo %version > .tarball-version
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
 %make_build
@@ -49,6 +52,9 @@ to access the iPhone's or iPod Touch's media files under Linux.
 %doc AUTHORS README*
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt2
+- updated to 1.1.4-9-gbbf2838
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
 - 1.1.4
 

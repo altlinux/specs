@@ -3,22 +3,24 @@
 %def_enable check
 
 Name: libusbmuxd
-Version: 2.0.2
+Version: 2.1.1
 Release: alt1
 
 Summary: Interface library for usbmuxd
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: http://www.libimobiledevice.org/
+
+Vcs: https://github.com/libimobiledevice/libusbmuxd.git
 
 %if_disabled snapshot
 Source: https://github.com/libimobiledevice/libusbmuxd/archive/%version/%name-%version.tar.gz
 %else
-# VCS: https://github.com/libimobiledevice/libusbmuxd.git
 Source: %name-%version.tar
 %endif
 
-BuildRequires: gcc-c++ libusb-devel >= 1.0.3 libplistmm-devel >= 2.2.0
+BuildRequires: pkgconfig(libplist-2.0) >= 2.2.0
+BuildRequires: pkgconfig(libimobiledevice-glue-1.0) >= 1.2.0
 
 %description
 usbmuxd (USB Multiplex Daemon) is a daemon used for communicating with
@@ -31,7 +33,7 @@ This package contains the usbmuxd communication interface library -
 %package devel
 Summary: Development package for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides headers and libraries needed for development
@@ -39,6 +41,7 @@ This package provides headers and libraries needed for development
 
 %prep
 %setup
+echo %version > .tarball-version
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -61,10 +64,16 @@ This package provides headers and libraries needed for development
 
 %files devel
 %_includedir/*.h
-%_libdir/libusbmuxd-%api_ver.so
-%_pkgconfigdir/libusbmuxd-%api_ver.pc
+%_libdir/%name-%api_ver.so
+%_pkgconfigdir/%name-%api_ver.pc
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
+* Wed Mar 27 2024 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0
+
 * Tue Jun 16 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
