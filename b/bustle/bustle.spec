@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.11
+%define ver_major 0.12
 %define rdn_name org.freedesktop.Bustle
 
 %def_disable check
@@ -13,7 +13,7 @@ Release: alt1
 Summary: D-Bus activity visualiser
 License: LGPL-2.1
 Group: Development/Debug
-Url: https://gitlab.gnome.org/World/bustle
+Url: https://apps.gnome.org/Bustle
 
 Vcs: https://gitlab.gnome.org/World/bustle.git
 
@@ -65,12 +65,16 @@ dbus-run-session %__meson_test
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/%name/
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0
+
 * Tue Mar 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
