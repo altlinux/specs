@@ -16,17 +16,18 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.3
-Release: alt2
+Version: 3.7.4
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
 License: GPL
 Group: Sound
 
-Url: http://audacity.sourceforge.net/
+Url: https://www.audacityteam.org
+Vcs: https://github.com/audacity/audacity
+
 # https://github.com/audacity/audacity/releases
-# https://github.com/audacity/audacity-manual
 Source0: %name-sources-%version.tar
 Source1: %name-manual-%version.tar
 # XXX
@@ -258,16 +259,25 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Sun Jun 15 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.4-alt1
+- 3.7.4
+
 * Tue May 06 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.3-alt2
 - unify rpath adjustment code with %%e2k
   + simplifies spec;
   + helps eu-strip make smaller binaries (ALT#48494).
+
+* Fri Apr 04 2025 Constantin Sunzow <protvin@altlinux.org> 3.7.3-alt0.p11.1
+- Backport for compatibility with ffmpeg 7.
 
 * Fri Mar 14 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.3-alt1
 - 3.7.3
 
 * Mon Mar 10 2025 Ivan A. Melnikov <iv@altlinux.org> 3.7.2-alt1
 - 3.7.2
+
+* Wed Jan 15 2025 Michael Shigorin <mike@altlinux.org> 3.7.1-alt1.p11.1
+- Fixed build for Elbrus (ilyakurdyukov@, backport from 3.7.1-alt2.1)
 
 * Tue Jan 14 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.7.1-alt2.1
 - Fixed build for Elbrus
