@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: dtk6declarative
-Version: 6.0.30
-Release: alt1.1
+Version: 6.0.36
+Release: alt1
 
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -15,7 +15,8 @@ Url: https://github.com/linuxdeepin/dtk6declarative
 Vcs: git://github.com/linuxdeepin/dtk6declarative.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtk6declarative-6.0.19-pkgconfig-dqt6.patch
+Patch0: %name-%version-%release.patch
+Patch1: dtk6declarative-6.0.19-pkgconfig-dqt6.patch
 
 %if_enabled clang
 ExcludeArch: armh
@@ -167,6 +168,9 @@ export LC_ALL=C.UTF-8
 %_datadir/qtcreator/templates/wizards/projects/qml6-app-template/
 
 %changelog
+* Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
+- New version 6.0.36.
+
 * Thu Mar 06 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1.1
 - Fixed BuildRequires.
 

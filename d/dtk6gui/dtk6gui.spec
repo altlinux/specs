@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: dtk6gui
-Version: 6.0.30
-Release: alt1.1
+Version: 6.0.36
+Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
@@ -16,6 +16,7 @@ Vcs: git://github.com/linuxdeepin/dtk6gui.git
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 BuildRequires: cmake dtk6-common-devel dqt6-base-devel dqt6-wayland-devel libdqt6-waylandclient libdtk6core-devel librsvg-devel libraw-devel libfreeimage-devel libwayland-egl-devel libwayland-server-devel treeland-protocols
@@ -54,6 +55,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
@@ -102,6 +104,9 @@ export READELF="llvm-readelf"
 %_libdir/lib%name.so
 
 %changelog
+* Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
+- New version 6.0.36.
+
 * Wed Mar 05 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1.1
 - Fixed build with dqt6-wayland 6.8.2-alt0.dde.2.
 

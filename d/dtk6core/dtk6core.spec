@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtk6core
-Version: 6.0.30
+Version: 6.0.36
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -15,7 +15,8 @@ Url: https://github.com/linuxdeepin/dtk6core
 Vcs: git://github.com/linuxdeepin/dtk6core.git
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtk6core-6.0.9-alt-uos-version.patch
+Patch0: %name-%version-%release.patch
+Patch1: dtk6core-6.0.9-alt-uos-version.patch
 
 Provides: libdtk6-core = %EVR
 Obsoletes: libdtk6-core < %EVR
@@ -69,7 +70,7 @@ This package provides %name documantation.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %if_enabled clang
@@ -118,6 +119,9 @@ export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
 
 %changelog
+* Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.36-alt1
+- New version 6.0.36.
+
 * Fri Feb 14 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.30-alt1
 - New version 6.0.30.
 

@@ -5,8 +5,8 @@
 %def_with docs
 
 Name: dtkmultimedia
-Version: 6.0.1
-Release: alt2
+Version: 6.0.2
+Release: alt1
 
 Summary: Deepin tool kit multimedia modules
 
@@ -175,6 +175,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %endif
 
 %changelog
+* Tue Jun 17 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.2-alt1
+- New version 6.0.2.
+
 * Tue Apr 22 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt2
 - Moved mkspecs module to devel subpackage.
 
