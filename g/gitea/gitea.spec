@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.23.6
+Version: 1.24.0
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -27,7 +27,7 @@ Patch2: ALT_config.patch
 Patch3: disable-strip.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.23.6
+BuildRequires: rpm-build-golang golang >= 1.24
 %if_disabled tarball
 BuildRequires: npm >= 6.13.6-alt2 node >= 18.0.0 esbuild node-gyp go-bindata
 %endif
@@ -99,10 +99,10 @@ useradd -r -g %name -c 'Gitea daemon' \
         -s /bin/bash  -d %_localstatedir/%name %name 2>/dev/null ||:
 
 %post
-%post_service %name
+%post_systemd %name.service
 
 %preun
-%preun_service %name
+%preun_systemd %name.service
 
 %files
 %doc *.md
@@ -121,6 +121,11 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 
 %changelog
+* Tue Jun 17 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.24.0-alt1
+- 1.24.0.
+- New patch file beacause of changes in app.example.ini.
+- Change post and preun to systemd.
+
 * Wed Apr 02 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.23.6-alt1
 - 1.23.6.
 
