@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.1.0
+Version: 2.1.4
 Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -23,6 +23,7 @@ BuildRequires: rpm-build-golang rpm-build-nodejs
 BuildRequires: golang
 # to download trivy database, etc.
 Requires: ca-certificates
+ExcludeArch: i586
 
 %description
 A production-ready vendor-neutral OCI image registry -
@@ -95,10 +96,10 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
     _%name > /dev/null 2>&1 ||:
 
 %post
-%post_service %name
+%post_systemd %name.service
 
 %preun
-%preun_service %name
+%preun_systemd %name.service
 
 %files
 %doc *.md
@@ -117,6 +118,12 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Tue Jun 17 2025 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.4-alt1
+- 2.1.0 -> 2.1.4
+- Change trivy-db repository to altlinux.space
+- Change config address from 0.0.0.0 to 127.0.0.1
+- Change post and preun to systemd
+
 * Thu Jul 11 2024 Alexander Stepchenko <geochip@altlinux.org> 2.1.0-alt1
 - 2.0.4 -> 2.1.0
 
