@@ -1,6 +1,6 @@
 Name: riscv32-none-elf-newlib
-Version: 4.4.0
-Release: alt2
+Version: 4.5.0
+Release: alt1
 
 Summary: C library intended for use on embedded systems
 License: BSD and MIT and LGPLv2+ and ISC
@@ -26,7 +26,7 @@ that make them easily usable on embedded products.
 
 %build
 mkdir obj; pushd obj
-export CFLAGS_FOR_TARGE=T"-g -O2 -mcmodel=medlow -ffunction-sections -fdata-sections"
+export CFLAGS_FOR_TARGET="-g -O2 -mcmodel=medlow -ffunction-sections -fdata-sections"
 ../configure \
     --prefix=%_libexecdir \
     --libdir=%_libexecdir \
@@ -95,6 +95,9 @@ rm -rf %buildroot%_infodir
 %_libexecdir/%target/lib/*
 
 %changelog
+* Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.5.0-alt1
+- 4.5.0 released
+
 * Wed Feb 05 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt2
 - rebuilt with multilib enabled
 
