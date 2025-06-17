@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: passt
-Version: 20250512
+Version: 20250611
 Release: alt1
 Summary: User-mode networking daemons for virtual machines and namespaces
 License: GPL-2.0-or-later AND BSD-3-Clause
@@ -72,6 +72,9 @@ install -p -m 755 %buildroot%_bindir/passt.avx2 %buildroot%_bindir/pasta.avx2
 %endif
 
 %changelog
+* Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 20250611-alt1
+- 2025_06_11.0293c6f.
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 20250512-alt1
 - 2025_05_12.8ec1341.
 
