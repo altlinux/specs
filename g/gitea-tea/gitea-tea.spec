@@ -2,8 +2,8 @@
 %global import_path code.gitea.io/tea
 
 Name: gitea-tea
-Version: 0.9.2
-Release: alt2
+Version: 0.10.1
+Release: alt1
 Summary: command line tool to interact with Gitea
 
 License: MIT
@@ -14,7 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 ExclusiveArch: %go_arches
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang golang >= 1.24.4
 
 %description
 tea is a productivity helper for Gitea.
@@ -34,8 +35,6 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
 %golang_prepare
-cd ${BUILDDIR}/src/%import_path
-
 export VERSION=%version
 export COMMIT=%release
 export BRANCH=altlinux
@@ -44,12 +43,13 @@ export LDFLAGS="-X main.Version=$VERSION"
 
 %install
 export BUILDDIR="$PWD/.build"
+export GOPATH="%go_path"
 export IGNORE_SOURCES=1
 
+%golang_install
 install -Dpm644 contrib/autocomplete.sh %buildroot%_datadir/bash-completion/completions/tea
 install -Dpm644 contrib/autocomplete.zsh %buildroot%_datadir/zsh/site-functions/_tea
 
-%golang_install
 
 %files
 %doc *.md
@@ -58,6 +58,9 @@ install -Dpm644 contrib/autocomplete.zsh %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh/site-functions/_tea
 
 %changelog
+* Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Tue Jul 25 2023 Alexander Burmatov <thatman@altlinux.org> 0.9.2-alt2
 - Remove autocomplete command.
 
