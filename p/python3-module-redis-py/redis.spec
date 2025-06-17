@@ -3,17 +3,16 @@
 %define mod_name %pypi_name
 
 Name: python3-module-redis-py
-Version: 4.5.5
-Release: alt1.1
+Version: 6.2.0
+Release: alt1
 Summary: Python client for Redis database and key-value store
 License: MIT
 Group: Development/Python3
-URL: https://pypi.org/project/redis/
+Url: https://pypi.org/project/redis/
 Vcs: https://github.com/redis/redis-py
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-Patch:  reimplementation_of_strtobool_function.patch
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
@@ -25,7 +24,6 @@ BuildRequires(pre): rpm-build-pyproject
 
 %prep
 %setup
-%patch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -41,6 +39,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 17 2025 Stanislav Levin <slev@altlinux.org> 6.2.0-alt1
+- 4.5.5 -> 6.2.0.
+
 * Sat Oct 21 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.5-alt1.1
 - Dropped dependency on distutils.
 
