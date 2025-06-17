@@ -2,10 +2,8 @@
 %define pypi_name fakeredis
 %define mod_name %pypi_name
 
-%def_with check
-
 Name: python3-module-%pypi_name
-Version: 2.18.0
+Version: 2.30.0
 Release: alt1
 Summary: Fake implementation of redis API for testing purposes
 License: BSD
@@ -19,12 +17,6 @@ Patch0: %name-%version-alt.patch
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
-%add_pyproject_deps_check_filter tox-docker
-%pyproject_builddeps_metadata_extra lua
-%pyproject_builddeps_metadata_extra json
-%pyproject_builddeps_check
-%endif
 
 %description
 fakeredis is a pure-Python implementation of the redis-py python client that
@@ -39,18 +31,17 @@ redis.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
 
 %install
 %pyproject_install
+# https://github.com/cunla/fakeredis-py/issues/395
+rm %buildroot%python3_sitelibdir/LICENSE
 
 %check
-%pyproject_run_pytest -ra -m fake -Wignore
+# requires redis for most tests
 
 %files
 %doc README.*
@@ -58,6 +49,9 @@ redis.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jun 17 2025 Stanislav Levin <slev@altlinux.org> 2.30.0-alt1
+- 2.18.0 -> 2.30.0.
+
 * Tue Aug 15 2023 Stanislav Levin <slev@altlinux.org> 2.18.0-alt1
 - 2.14.1 -> 2.18.0.
 
