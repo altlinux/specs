@@ -1,5 +1,5 @@
 Name: linux-pam
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Pluggable Authentication Modules
@@ -282,6 +282,9 @@ done
 %docdir/Linux-PAM*
 
 %changelog
+* Tue Jun 17 2025 Dmitry V. Levin <ldv@altlinux.org> 1.7.1-alt1
+- v1.7.0 -> v1.7.1.
+
 * Thu Oct 24 2024 Dmitry V. Levin <ldv@altlinux.org> 1.7.0-alt1
 - v1.6.1 -> v1.7.0.
 
