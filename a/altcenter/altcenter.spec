@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.11
+Release: alt0.12
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -58,6 +58,9 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Tue Jun 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.12
+- components: fixed install and uninstall.
+
 * Wed Jun 11 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.11
 - settings: fixed KDE detection on Wayland.
 
