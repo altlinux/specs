@@ -3,7 +3,7 @@
 %define sover 20
 
 Name: liblouis
-Version: 3.33.0
+Version: 3.34.0
 Release: alt1
 Summary: Braille translation and back-translation library
 
@@ -137,15 +137,14 @@ chmod 664 tables/*
 %configure --disable-static --enable-ucs4
 
 %make_build -j1
-pushd doc; xetex %name.texi
-pushd ../python
+pushd doc; xetex %name.texi; popd
+pushd python
 %pyproject_build
 
 %install
 %makeinstall_std PREFIX=%prefix
 rm %buildroot%_libdir/%name.la
 rm -r %buildroot%_bindir/lou_maketable*
-rm -r %buildroot%_docdir/%name/
 
 # Install internal.h for MuseScore
 install -pm 0644 liblouis/internal.h %buildroot%_includedir/%name
@@ -188,9 +187,12 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
   %python3_sitelibdir_noarch/%name-%version.dist-info
 
 %files doc
-%doc doc/%name.{html,txt,pdf}
+%doc doc/%name.pdf
 
 %changelog
+* Tue Jun 17 2025 Artem Semenov <savoptik@altlinux.org> 3.34.0-alt1
+- Updated to new version 3.34.0
+
 * Wed Apr 16 2025 Artem Semenov <savoptik@altlinux.org> 3.33.0-alt1
 - Build new version 3.33.0
 
