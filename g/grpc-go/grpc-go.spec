@@ -1,7 +1,7 @@
 %global import_path google.golang.org/grpc
 
 Name: grpc-go
-Version: 1.5.1
+Version: 1.73.0
 Release: alt1
 
 Summary: The Go implementation of gRPC
@@ -53,6 +53,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 1.73.0-alt1
+- New version 1.73.0.
+
 * Mon Aug 05 2024 Alexey Shabalin <shaba@altlinux.org> 1.5.1-alt1
 - Initial build.
 
