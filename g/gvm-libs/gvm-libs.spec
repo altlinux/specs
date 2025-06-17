@@ -2,11 +2,11 @@
 %define sover 22
 
 Name: gvm-libs
-Version: 22.18.0
+Version: 22.22.0
 Release: alt1
 
 Summary: Support libraries for Greenbone Vulnerability Management Solution and OpenVAS
-License: GPL-2.0-or-later
+License: GPL-2.0-only
 Group: System/Libraries
 Url: http://www.openvas.org
 VCS: https://github.com/greenbone/gvm-libs
@@ -18,20 +18,20 @@ Patch1: fix-release-build.patch
 Patch2: fix-linking-shared-lib.patch
 
 BuildRequires: cmake
-BuildRequires: pkgconfig(gio-2.0) >= 2.42
-BuildRequires: pkgconfig(zlib) >= 1.2.8
-BuildRequires: libgpgme-devel >= 1.7.0
-BuildRequires: pkgconfig(gnutls) >= 3.2.15
-BuildRequires: pkgconfig(uuid) >= 2.25.0
-BuildRequires: pkgconfig(libssh) >= 0.6.0
-BuildRequires: pkgconfig(hiredis) >= 0.10.1
-BuildRequires: pkgconfig(libxml-2.0) >= 2.0
-BuildRequires: pkgconfig(libcjson) >= 1.7.14
-BuildRequires: pkgconfig(libcurl) >= 7.83.0
-BuildRequires: libnet2-devel
-BuildRequires: libpcap-devel
+BuildRequires: libcjson-devel
+BuildRequires: libcurl-devel
 BuildRequires: libgcrypt-devel
-BuildRequires: libpaho-mqtt-devel >= 1.3.0
+BuildRequires: libgio-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libgpgme-devel
+BuildRequires: libhiredis-devel
+BuildRequires: libnet2-devel
+BuildRequires: libpaho-mqtt-devel
+BuildRequires: libpcap-devel
+BuildRequires: libssh-devel
+BuildRequires: libuuid-devel
+BuildRequires: libxml2-devel
+BuildRequires: zlib-devel
 
 %description
 The support libraries for the Greenbone Vulnerability Management
@@ -153,10 +153,40 @@ Requires: libgvm_openvasd%sover = %EVR
 %description -n libgvm_openvasd-devel
 %summary
 
+%package -n libgvm_agent_controller%sover
+Summary: Greenbone Vulnerability Management Library agent_controller
+Group: System/Libraries
+
+%description -n libgvm_agent_controller%sover
+%summary
+
+%package -n libgvm_agent_controller-devel
+Summary: Development files for the GVM agent_controller library
+Group: Development/C
+Requires: libgvm_agent_controller%sover = %EVR
+
+%description -n libgvm_agent_controller-devel
+%summary
+
+%package -n libgvm_http%sover
+Summary: Greenbone Vulnerability Management Library HTTP
+Group: System/Libraries
+
+%description -n libgvm_http%sover
+%summary
+
+%package -n libgvm_http-devel
+Summary: Development files for the GVM HTTP library
+Group: Development/C
+Requires: libgvm_http%sover = %EVR
+
+%description -n libgvm_http-devel
+%summary
+
 %prep
 %setup
-%patch0 -p2
-%patch1 -p2
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
 
 %build
@@ -192,43 +222,72 @@ Requires: libgvm_openvasd%sover = %EVR
 %files -n libgvm_openvasd%sover
 %_libdir/libgvm_openvasd.so.%{sover}*
 
+%files -n libgvm_agent_controller%sover
+%_libdir/libgvm_agent_controller.so.%{sover}*
+
+%files -n libgvm_http%sover
+%_libdir/libgvm_http.so.%{sover}*
+
 %files -n libgvm_base-devel
 %dir %_includedir/gvm
-%_includedir/gvm/base
+%dir %_includedir/gvm/base
+%_includedir/gvm/base/*.h
 %_libdir/libgvm_base.so
 %_pkgconfigdir/libgvm_base.pc
 
 %files -n libgvm_gmp-devel
 %dir %_includedir/gvm
-%_includedir/gvm/gmp
+%dir %_includedir/gvm/gmp
+%_includedir/gvm/gmp/gmp.h
 %_libdir/libgvm_gmp.so
 %_pkgconfigdir/libgvm_gmp.pc
 
 %files -n libgvm_osp-devel
 %dir %_includedir/gvm
-%_includedir/gvm/osp/
+%dir %_includedir/gvm/osp
+%_includedir/gvm/osp/osp.h
 %_libdir/libgvm_osp.so
 %_pkgconfigdir/libgvm_osp.pc
 
 %files -n libgvm_util-devel
 %dir %_includedir/gvm
-%_includedir/gvm/util
+%dir %_includedir/gvm/util
+%_includedir/gvm/util/*.h
 %_libdir/libgvm_util.so
 %_pkgconfigdir/libgvm_util.pc
 
 %files -n libgvm_boreas-devel
 %dir %_includedir/gvm
-%_includedir/gvm/boreas
+%dir %_includedir/gvm/boreas
+%_includedir/gvm/boreas/*.h
 %_libdir/libgvm_boreas.so
 %_pkgconfigdir/libgvm_boreas.pc
 
 %files -n libgvm_openvasd-devel
 %dir %_includedir/gvm
-%_includedir/gvm/openvasd
+%dir %_includedir/gvm/openvasd
+%_includedir/gvm/openvasd/openvasd.h
 %_libdir/libgvm_openvasd.so
 %_pkgconfigdir/libgvm_openvasd.pc
 
+%files -n libgvm_agent_controller-devel
+%dir %_includedir/gvm
+%dir %_includedir/gvm/agent_controller
+%_includedir/gvm/agent_controller/agent_controller.h
+%_libdir/libgvm_agent_controller.so
+%_pkgconfigdir/libgvm_agent_controller.pc
+
+%files -n libgvm_http-devel
+%dir %_includedir/gvm
+%dir %_includedir/gvm/http
+%_includedir/gvm/http/httputils.h
+%_libdir/libgvm_http.so
+%_pkgconfigdir/libgvm_http.pc
+
 %changelog
+* Mon Jun 16 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 22.22.0-alt1
+- new version
+
 * Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 22.18.0-alt1
 - new version
 

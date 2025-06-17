@@ -2,7 +2,7 @@
 %define sover 23
 
 Name: openvas-scanner
-Version: 23.15.3
+Version: 23.20.1
 Release: alt1
 
 Summary: Open Vulnerability Assessment (OpenVAS) Scanner
@@ -17,18 +17,20 @@ ExcludeArch: armh
 Source: %name-%version.tar
 Patch0: fix-release-build.patch
 Patch1: fix-linking-shared-lib.patch
+Patch2: alt-fix-func-arg-type.patch
+Patch3: alt-fix-specifier-char-type.patch
 
 BuildRequires: cmake
 BuildRequires: libbsd-devel
-BuildRequires: libgcrypt-devel >= 1.6
-BuildRequires: libgvm_boreas-devel >= 22.4
-BuildRequires: libjson-glib-devel >= 1.4.4
-BuildRequires: libksba-devel >= 1.0.7
-BuildRequires: libssh-devel >= 0.6.0
-BuildRequires: pkgconfig(libcurl) >= 7.74.0
+BuildRequires: libcurl-devel
+BuildRequires: libgcrypt-devel
+BuildRequires: libgvm_boreas-devel
+BuildRequires: libjson-glib-devel
 BuildRequires: libkrb5-devel
-%ifarch i586
-BuildRequires: libgpgme-devel >= 1.1.2
+BuildRequires: libksba-devel
+BuildRequires: libssh-devel
+%ifarch %ix86
+BuildRequires: libgpgme-devel
 %endif
 
 %description
@@ -66,6 +68,10 @@ Support library for %name.
 %setup
 %patch0 -p2
 %patch1 -p1
+%patch2 -p1
+%ifarch %ix86
+%patch3 -p1
+%endif
 
 %build
 %cmake \
@@ -88,6 +94,7 @@ Support library for %name.
 %_bindir/openvas-nasl*
 %_man1dir/*.1.*
 %_man8dir/*.8.*
+%dir %_sysconfdir/openvas
 
 %files -n libopenvas_nasl%sover
 %_libdir/*nasl.so.%sover
@@ -104,6 +111,9 @@ Support library for %name.
 %_libdir/*misc.so
 
 %changelog
+* Tue Jun 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.20.1-alt1
+- new version
+
 * Mon Feb 17 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 23.15.3-alt1
 - new version
 
