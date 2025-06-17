@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.7.9
+Version: 1.7.10
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -14,8 +14,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt5-webengine
-
-%def_without kdeedu
 
 # Education (base part)
 Requires: task-edu-lite = %EVR
@@ -259,6 +257,21 @@ Requires: gcompris-qt
 Requires: gcompris-qt-voices-ru
 Requires: ktouch
 Requires: kbruch
+Requires: parley
+Requires: kanagram
+Requires: khangman
+Requires: kwordquiz
+Requires: kturtle
+Requires: marble
+Requires: step
+Requires: kig
+Requires: kmplot
+Requires: kalgebra
+Requires: cantor
+Requires: rocs
+Requires: kbruch
+Requires: kgeography
+Requires: minuet
 Requires: abiword
 Requires: afce
 %description highschool
@@ -432,24 +445,6 @@ Group: Education
 Requires: kde-network-manager-nm
 Requires: kde
 Requires: krfb
-%if_with kdeedu
-Requires: parley
-Requires: kanagram
-Requires: khangman
-Requires: kwordquiz
-Requires: kturtle
-Requires: marble
-Requires: step
-Requires: kig
-Requires: kmplot
-Requires: kalgebra
-Requires: cantor
-Requires: rocs
-Requires: kbruch
-Requires: kgeography
-Requires: ktouch
-Requires: minuet
-%endif
 Requires: kde6-runtime
 Requires: kde-printing
 Requires: kde-scanning
@@ -523,7 +518,7 @@ Requires: alterator-datetime
 Requires: alterator-console
 Requires: apache2
 Requires: apache2-httpd-worker
-#Requires: installed-db-office-server-mediawiki
+Requires: installed-db-office-server-mediawiki
 Requires: installed-db-office-server-nextcloud
 Requires: installed-db-office-server-moodle
 Requires: moodle-qtype_coderunner
@@ -632,6 +627,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Jun 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.10-alt1
+- server-apps: return mediawiki.
+- highschool: restore kdeedu from task-edu-kde.
+
 * Mon Jun 09 2025 Andrey Cherepanov <cas@altlinux.org> 1.7.9-alt1
 - kde: removed kdeedu packages.
 
