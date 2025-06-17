@@ -1,9 +1,9 @@
 %define modname wheezy.template
-%define pypi_name %modname
-%def_disable check
+%define pypi_name wheezy_template
+%def_enable check
 
 Name: python3-module-%modname
-Version: 3.1.0
+Version: 3.2.3
 Release: alt1
 Epoch: 1
 
@@ -13,7 +13,11 @@ License: MIT
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/akornatskyy/wheezy.template.git
-Source: https://pypi.io/packages/source/w/%modname/%modname-%version.tar.gz
+
+Source: https://pypi.io/packages/source/w/%pypi_name/%pypi_name-%version.tar.gz
+
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(wheel) python3(setuptools) python3-module-Cython
@@ -38,7 +42,7 @@ and import directives for maximum reuse. Blazingly Fast: Maximum
 rendering performance: ultimate speed and context preprocessor features.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
 %pyproject_build
@@ -51,10 +55,15 @@ rendering performance: ultimate speed and context preprocessor features.
 
 %files
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/wheezy/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/wheezy*.pth
 %doc README*
 
 %changelog
+* Tue Jun 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1:3.2.3-alt1
+- 3.2.3
+
 * Tue Oct 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1:3.1.0-alt1
 - downgrade to 3.1.0 to make hotdoc happy
 
