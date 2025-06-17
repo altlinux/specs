@@ -1,0 +1,75 @@
+%global pypi_name ramalama
+%define _unpackaged_files_terminate_build 1
+
+Name: %pypi_name
+Version: 0.9.2
+Release: alt1
+Summary: RamaLama is a command line tool for working with AI LLM models
+Group: Development/Python3
+
+License: MIT
+Url: https://github.com/containers/%pypi_name
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
+BuildArch: noarch
+
+BuildRequires: python3-devel golang go-md2man
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-argcomplete
+
+%package -n python3-module-%pypi_name
+Summary: %summary
+Group: Development/Python3
+Requires: bash-completion
+
+%description
+%summary
+
+On first run RamaLama inspects your system for GPU support, falling back to CPU
+support if no GPUs are present. It then uses container engines like Podman to
+pull the appropriate OCI image with all of the software necessary to run an
+AI Model for your systems setup. This eliminates the need for the user to
+configure the system for AI themselves. After the initialization, RamaLama
+will run the AI Models within a container based on the OCI image.
+
+%description -n python3-module-%pypi_name
+%summary
+
+On first run RamaLama inspects your system for GPU support, falling back to CPU
+support if no GPUs are present. It then uses container engines like Podman to
+pull the appropriate OCI image with all of the software necessary to run an
+AI Model for your systems setup. This eliminates the need for the user to
+configure the system for AI themselves. After the initialization, RamaLama
+will run the AI Models within a container based on the OCI image.
+
+%prep
+%setup
+%patch0 -p1
+
+%build
+%pyproject_build
+
+%install
+%pyproject_install
+make DESTDIR=%buildroot PREFIX=%prefix install-docs install-shortnames
+make DESTDIR=%buildroot PREFIX=%prefix install-completions
+
+%files -n python3-module-%pypi_name
+%doc docs/README.md
+%_bindir/%pypi_name
+%_prefix/libexec/ramalama
+%_datadir/bash-completion/completions/%pypi_name
+%_datadir/fish/vendor_completions.d/ramalama.fish
+%_datadir/zsh/vendor-completions/_ramalama
+%dir %_datadir/%pypi_name
+%_datadir/%pypi_name/shortnames.conf
+%_datadir/%pypi_name/ramalama.conf
+%_man1dir/ramalama*.1*
+%_man5dir/ramalama*.5*
+%_man7dir/ramalama*.7*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
+
+%changelog
+* Tue Jun 17 2025 L.A. Kostis <lakostis@altlinux.ru> 0.9.2-alt1
+- Initial build for ALTLinux.
+
