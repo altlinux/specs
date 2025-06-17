@@ -1,6 +1,6 @@
 Name: arm-none-eabi-binutils
-Version: 2.43.1
-Release: alt2
+Version: 2.44
+Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
 License: GPLv3+
@@ -65,6 +65,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.44-alt1
+- 2.44 released
+
 * Wed Jan 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.43.1-alt2
 - aligned with arm toolchain 14.2rel1 release
 

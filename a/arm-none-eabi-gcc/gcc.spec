@@ -1,6 +1,6 @@
 Name: arm-none-eabi-gcc
-Version: 14.2.0
-Release: alt3
+Version: 15.1.0
+Release: alt1
 
 Summary: GNU Compiler Collection
 License: GPLv3+
@@ -137,6 +137,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 15.1.0-alt1
+- 15.1.0 released
+
 * Fri Jan 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.2.0-alt3
 - stripped host binaries
 
