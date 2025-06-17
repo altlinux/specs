@@ -1,6 +1,6 @@
 Name: aarch64-none-elf-newlib
-Version: 4.4.0
-Release: alt2
+Version: 4.5.0
+Release: alt1
 
 Summary: C library intended for use on embedded systems
 License: BSD and MIT and LGPLv2+ and ISC
@@ -62,6 +62,9 @@ rm -rf %buildroot%_infodir
 %_libexecdir/%target/lib/*
 
 %changelog
+* Tue Jun 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.5.0-alt1
+- 4.5.0 released
+
 * Wed Jan 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt2
 - aligned with 14.2rel1 arm toolchain
 
