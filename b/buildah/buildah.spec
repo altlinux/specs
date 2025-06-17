@@ -9,7 +9,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.40.0
+Version: 1.40.1
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -77,16 +77,22 @@ pushd .gopath/src/%import_path
 %make DESTDIR=%buildroot PREFIX=%prefix install
 %make DESTDIR=%buildroot PREFIX=%prefix install.completions
 %make DESTDIR=%buildroot PREFIX=%prefix -C docs install
+for bin in copy dumpspec imgtype inet tutorial; do
+    install -m 0755 bin/$bin %buildroot%_bindir/%name-$bin
+done
 popd
 
 %files
 %doc LICENSE
 %doc README.md
-%_bindir/%name
+%_bindir/%{name}*
 %_man1dir/*
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 1.40.1-alt1
+- New version 1.40.1.
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1.40.0-alt1
 - New version 1.40.0.
 
