@@ -1,6 +1,6 @@
 Name: keepassxc
 Version:  2.7.10
-Release:  alt1
+Release:  alt2
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
 License: GPLv2+
@@ -16,7 +16,7 @@ Source1: keepassx_ru.ts
 
 Patch1: alt-add-chromium-gost-support-for-browser-integrations.patch
 
-%def_without yubikey
+%def_with yubikey
 # requires asciidoctor
 %def_enable docs
 %def_without asan
@@ -39,7 +39,10 @@ BuildRequires: libminizip-devel
 BuildRequires: libXi-devel, libXtst-devel, qt5-x11extras-devel
 # Optional for YubiKey support
 %if_with yubikey
-BuildRequires: libyubikey-devel, ykpers-devel
+BuildRequires: libyubikey-devel
+BuildRequires: libykpers-1-devel
+BuildRequires: libpcsclite-devel
+BuildRequires: libusb-devel
 %endif
 %if_enabled docs
 BuildRequires: asciidoctor
@@ -110,6 +113,11 @@ export LANG=en_US.UTF-8; \
 %endif
 
 %changelog
+* Mon Jun 16 2025 Nikolai Kostrigin <nickel@altlinux.org> 2.7.10-alt2
+- NMU: fix optional build with yubikey support and switch it on (closes: #54817)
+- change ykpers-devel to libykpers-1-devel build dependency
+- add libpcsclite-devel and libusb-devel to build dependencies
+
 * Sat Mar 08 2025 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.10-alt1
 - updated to v2.7.9
 - update Russian translation to its current state (as of 02.03.2025)
