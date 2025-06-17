@@ -1,7 +1,7 @@
 %define oname xlsxwriter
 
 Name:    python3-module-%oname
-Version: 3.2.3
+Version: 3.2.5
 Release: alt1
 Summary: A Python module for creating Excel XLSX files
 License: BSD
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: time
 # Provides py.test3 for us without the minor version:
 BuildRequires: python3-module-pytest >= 3.0.5-alt2
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 Provides: python-module-%oname = %EVR
 Obsoletes: python-module-%oname < %EVR
@@ -30,15 +32,13 @@ to multiple worksheets and it supports features such as formatting and
 many more.
 
 %prep
-%setup -q -n %oname-%version
-# Set correct interpreter for tests
-subst "s|'python'|'%__python3'|" setup.py
+%setup -n %oname-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 pushd %buildroot%_bindir
 for i in *; do
        cp "$i" "${i}3"
@@ -46,8 +46,7 @@ done
 popd
 
 %check
-%__python3 setup.py test
-py.test3 -vv
+%tox_check_pyproject
 
 %files
 %doc Changes *.md *.rst examples dev/performance
@@ -55,6 +54,10 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jun 17 2025 Andrey Cherepanov <cas@altlinux.org> 3.2.5-alt1
+- New version.
+- Used pyproject macros for build.
+
 * Thu Apr 17 2025 Andrey Cherepanov <cas@altlinux.org> 3.2.3-alt1
 - New version.
 
