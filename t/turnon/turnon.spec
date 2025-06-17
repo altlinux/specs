@@ -6,11 +6,12 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Turn on devices in your network
-License: MPL-2.0
+
+License: EUPL-1.2
 Group: Networking/Other
 Url: https://codeberg.org/swsnr/turnon
 
@@ -67,6 +68,9 @@ just DESTPREFIX=%buildroot%_prefix install
 %doc README*
 
 %changelog
+* Tue Jun 17 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.2-alt1
+- 2.7.2
+
 * Thu Jun 05 2025 Yuri N. Sedunov <aris@altlinux.org> 2.7.1-alt1
 - 2.7.1
 - use full path in dbus service file (ALT #53609)
