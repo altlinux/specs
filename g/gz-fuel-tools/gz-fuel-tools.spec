@@ -2,7 +2,7 @@
 
 Name:    gz-fuel-tools
 Version: 10.0.0
-Release: alt1
+Release: alt2
 
 Summary: A client library and command line tools for interacting with Gazebo Fuel servers
 License: Apache-2.0
@@ -24,8 +24,25 @@ BuildRequires: libgz-math-devel
 BuildRequires: libgz-msgs-devel
 BuildRequires: gz-tools
 BuildRequires: libyaml-devel
-BuildRequires: libjsonrpccpp-devel
 BuildRequires: libzip-devel
+BuildRequires: libcurl-devel
+BuildRequires: libpsl-devel
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(libgsasl)
+BuildRequires: pkgconfig(jsoncpp)
+BuildRequires: pkgconfig(libnghttp2)
+BuildRequires: pkgconfig(libnghttp3)
+BuildRequires: pkgconfig(libngtcp2)
+BuildRequires: pkgconfig(libidn2)
+BuildRequires: pkgconfig(libbrotlidec)
+BuildRequires: pkgconfig(libssh2)
+BuildRequires: pkgconfig(libssl)
+BuildRequires: pkgconfig(libtasn1)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(mit-krb5-gssapi)
+BuildRequires: pkgconfig(nettle)
+BuildRequires: pkgconfig(p11-kit-1)
+BuildRequires: /proc
 
 %description
 Gazebo Fuel Tools is composed by a client library and command line tools for
@@ -69,6 +86,9 @@ Group: Development/C++
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Jun 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 10.0.0-alt2
+- NMU: fix FTBFS.
+
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 10.0.0-alt1
 - New version.
 
