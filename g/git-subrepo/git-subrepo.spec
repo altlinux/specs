@@ -3,7 +3,7 @@
 
 Name: git-subrepo
 Version: 0.4.9
-Release: alt1
+Release: alt2
 
 Group: Development/Other
 Summary: git submodule alternative
@@ -11,6 +11,7 @@ License: MIT
 Url: https://github.com/ingydotnet/git-subrepo
 
 Source: %name-%version.tar
+Patch:  git-subrepo-debian-fixed-bash-completion-integration-with-git.patch
 
 BuildArch: noarch
 
@@ -23,21 +24,29 @@ changes can be pushed back. Simple.
 
 %prep
 %setup
-
-%build
+%autopatch -p1
 
 %install
-
 %_make_bin install DESTDIR=%buildroot PREFIX=%_prefix
+
+# completions
+install -Dm0644 share/completion.bash \
+    %buildroot%_datadir/bash-completion/completions/git-subrepo
+install -Dm0644 share/zsh-completion/_git-subrepo \
+    %buildroot%_datadir/zsh/site-functions/_git-subrepo
 
 %files
 %doc ReadMe.pod License
-%_prefix/libexec/git-core/git-subrepo
-%_prefix/libexec/git-core/git-subrepo.d/bash+.bash
-%_prefix/libexec/git-core/git-subrepo.d/help-functions.bash
-%_man1dir/git-subrepo.1*
+%_bindir/%name
+%_datadir/%name
+%_man1dir/%name.*
+%_datadir/bash-completion/completions/git-subrepo
+%_datadir/zsh/site-functions/_git-subrepo
 
 %changelog
+* Tue Jun 17 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4.9-alt2
+- fix and package bash and zsh completion
+
 * Thu May 22 2025 Ivan A. Melnikov <iv@altlinux.org> 0.4.9-alt1
 - 0.4.9
 
