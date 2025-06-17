@@ -11,13 +11,14 @@
 %endif
 
 Name: akvis-repo
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Link to the AKVIS repository
 License: GPL-3
 Group: System/Configuration/Packaging
 
+ExclusiveArch: x86_64
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -34,12 +35,10 @@ This package contains just a link to the AKVIS repository.
 %setup
 
 %build
-%if "%_arch" == "x86_64"
 %if "%altbranch" != "sisyphus"
 ( echo "rpm %akvis_repos %_arch akvis"
   echo "rpm %akvis_repos noarch akvis"
 ) > etc/apt/sources.list.d/akvis.list
-%endif
 %endif
 mkdir -p -m0755 %buildroot
 mv -f etc %buildroot/
@@ -48,6 +47,9 @@ mv -f etc %buildroot/
 %config(noreplace) /etc/apt/sources.list.d/akvis.list
 
 %changelog
+* Tue Jun 17 2025 Leonid Krivoshein <klark@altlinux.org> 1.0.3-alt1
+- Fix build for stable branches p11/c10f2.
+
 * Wed Jun 11 2025 Leonid Krivoshein <klark@altlinux.org> 1.0.2-alt1
 - Reset restriction for branch (requested 11.06.2025).
 - Set restriction for x86_64 only.
