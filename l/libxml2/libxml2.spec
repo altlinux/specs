@@ -3,7 +3,7 @@
 
 Name: libxml2
 Version: 2.12.10
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -236,6 +236,12 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Tue Jun 17 2025 Alexey Shabalin <shaba@altlinux.org> 1:2.12.10-alt2
+- Add patch from openSuse for work around an issue with libxml2
+  supplied error strings being undecodable UTF-8.
+- Fix parsing of DTD content.
+- Fixes: CVE-2025-32414, CVE-2025-32415, ALT#54778.
+
 * Mon May 19 2025 Alexey Shabalin <shaba@altlinux.org> 1:2.12.10-alt1
 - 2.12.10 (Fixes: CVE-2025-24928, CVE-2024-56171) ALT#54348.
 
