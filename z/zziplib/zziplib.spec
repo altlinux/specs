@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zziplib
-Version: 0.13.79
+Version: 0.13.80
 Release: alt1
 
 Summary: Lightweight library to easily extract data from zip files
@@ -66,7 +66,6 @@ This package contains some useful ZZipLib utilites.
 %_libdir/cmake/%name/*
 %_pkgconfigdir/*.pc
 %_datadir/aclocal/*.m4
-%_datadir/pkgconfig/*.pc
 %_includedir/*
 %_man3dir/*
 
@@ -74,6 +73,9 @@ This package contains some useful ZZipLib utilites.
 %_bindir/*
 
 %changelog
+* Tue Jun 17 2025 Ulysses Apokin <ulysses@altlinux.org> 0.13.80-alt1
+- 0.13.80
+
 * Mon May 05 2025 Ulysses Apokin <ulysses@altlinux.org> 0.13.79-alt1
 - 0.13.79
 
