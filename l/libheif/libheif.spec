@@ -1,6 +1,6 @@
 Name: libheif
 Version: 1.19.8
-Release: alt1
+Release: alt2
 
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -12,7 +12,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: cmake gcc-c++ libde265-devel libjpeg-devel libpng-devel libx265-devel libgdk-pixbuf-devel libaom-devel
+BuildRequires: cmake gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libx265-devel libgdk-pixbuf-devel libaom-devel
+BuildRequires: librav1e-devel libdav1d-devel libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel
 
 %description
 HEIF is a new image file format employing HEVC (h.265) image coding for the
@@ -33,7 +34,33 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %endif
 
 %build
-%cmake
+%cmake \
+	-DWITH_UNCOMPRESSED_CODEC=ON \
+	-DPLUGIN_DIRECTORY=%_libdir/libheif/plugins \
+	-DWITH_X265_PLUGIN=ON \
+	-DWITH_FFMPEG_DECODER=ON \
+	-DWITH_FFMPEG_DECODER_PLUGIN=ON \
+	-DWITH_AOM_DECODER_PLUGIN=ON \
+	-DWITH_AOM_ENCODER_PLUGIN=ON \
+	-DWITH_DAV1D=ON \
+	-DWITH_DAV1D_PLUGIN=ON \
+	-DWITH_RAV1E=ON \
+	-DWITH_RAV1E_PLUGIN=ON \
+	-DWITH_JPEG_DECODER=ON \
+	-DWITH_JPEG_DECODER_PLUGIN=ON \
+	-DWITH_JPEG_ENCODER=ON \
+	-DWITH_JPEG_ENCODER_PLUGIN=ON \
+	-DWITH_KVAZAAR=ON \
+	-DWITH_KVAZAAR_PLUGIN=ON \
+	-DWITH_LIBDE265_PLUGIN=ON \
+	-DWITH_LIBSHARPYUV=ON \
+	-DWITH_OpenJPEG_DECODER=ON \
+	-DWITH_OpenJPEG_DECODER_PLUGIN=ON \
+	-DWITH_OpenJPEG_ENCODER=ON \
+	-DWITH_OpenJPEG_ENCODER_PLUGIN=ON \
+	-DWITH_SvtEnc=ON \
+	-DWITH_SvtEnc_PLUGIN=ON
+
 %cmake_build
 
 %install
@@ -54,6 +81,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jun 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.19.8-alt2
+- separate plugins
+
 * Wed May 14 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.19.8-alt1
 - 1.19.8
 
