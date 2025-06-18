@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: OpenBoard
-Version: 1.7.1
-Release: alt3
+Version: 1.7.3
+Release: alt2
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -19,8 +19,10 @@ Source1: %name.svg
 # GeoInfo widget with a version with modified borders of Ukraine and Russia from ThomasLucky13
 Source2: GeoInfo.wgt.tar.gz
 
+Source3: openboard.xml
+
 # https://github.com/OpenBoard-org/OpenBoard/pull/648
-Patch1: 0001-OpenBoard-1.7.0-update-russian-translations.patch
+Patch1: 0001-OpenBoard-1.7.3-update-russian-translations.patch
 Patch2: 0002-dark-background-color-set-ability-feature.patch
 # https://github.com/OpenBoard-org/OpenBoard/pull/635
 Patch3: 0003-new-icon-images.patch
@@ -51,17 +53,12 @@ Patch26: 0026-remove-swipe-pages.patch
 # Build with C++20 for Poppler v24.04 and newer
 # https://github.com/OpenBoard-org/OpenBoard/issues/958
 Patch100: build-with-c++20.patch
-#https://github.com/OpenBoard-org/OpenBoard/pull/962
-Patch101: fix-Add-compatibility-with-C++20.patch
-# https://github.com/OpenBoard-org/OpenBoard/commit/4f45b6c4016972cf5835f9188bda6197b1b4ed2f
-Patch102: OpenBoard-1.7.1-fix-Support-FFmpeg-7.0.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libpaper-devel
 BuildRequires: libssl-devel
 BuildRequires: quazip-qt5-devel
-BuildRequires: libqtsingleapplication-qt5-devel
 BuildRequires: t1lib-devel
 BuildRequires: libavcodec-devel libavformat-devel libswscale-devel libswresample-devel
 BuildRequires: libalsa-devel libvpx-devel libvorbis-devel libtheora-devel libogg-devel
@@ -179,12 +176,19 @@ if pid="\$(/sbin/pidof OpenBoard)"; then
     exit 0
 fi
 
+[ -z "\$WAYLAND_DISPLAY" ] || export QT_QPA_PLATFORM=xcb
+
 env QT_PLUGIN_PATH=\$QT_PLUGIN_PATH:%_libdir/%name/plugins LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:%_libdir/%name/plugins/cffadaptor %_libdir/%name/OpenBoard "\$@"
 EOF
 
 chmod 0755 %buildroot%_libdir/%name/run.sh
 mkdir -p %buildroot/%_bindir/
 ln -s -T %_libdir/%name/run.sh %buildroot/%_bindir/openboard
+
+mkdir -p %buildroot%_datadir/mime/packages/
+install -m644 %SOURCE3 %buildroot%_datadir/mime/packages/
+# make sure that MIME xml and desktop file are in sync
+grep -q '^MimeType=application/x-OpenBoard;'  %buildroot%_datadir/applications/%name.desktop
 
 # clean some exe bits
 find %buildroot -executable -type f -name *.js -exec chmod -x '{}' \+
@@ -206,9 +210,17 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_bindir/openboard
 %_libdir/%name
 %_desktopdir/%name.desktop
+%_datadir/mime/packages/openboard.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt2
+- Run with QT_QPA_PLATFORM=xcb on wayland
+
+* Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 1.7.3-alt1
+- New version 1.7.3
+- Open *.ubz mime type via OpenBoard
+
 * Fri Dec 13 2024 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt3
 - fix build with ffmpeg 7.1
 
