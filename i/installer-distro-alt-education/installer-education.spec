@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.0
-Release: alt4
+Release: alt5
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -44,8 +44,6 @@ Requires: bc
 Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-desktop-suspend-stage2
-Requires: installer-feature-hwtweaks-stage2
-Requires: installer-feature-set-tz
 Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-xdg-user-dirs
 Requires: installer-feature-auto-domain
@@ -118,6 +116,10 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt5
+- Removed installer-feature-hwtweaks-stage2 (ALT #54829).
+- Removed installer-feature-set-tz (A:T #54828).
+
 * Thu Jan 09 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt4
 - 10-vm-profile.sh; extent single / partition to all available disk size.
 
