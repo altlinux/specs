@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: VkFFT
-Version: 1.2.31
+Version: 1.3.4
 Release: alt1
 
 Group: Development/C
@@ -35,18 +35,21 @@ This package contains VkFFT development files.
 %setup
 
 %install
-mkdir -p %buildroot{%_includedir/vkFFT,%_docdir/%name-%version}
-
-install -D -m644 %_builddir/%name-%version/vkFFT/vkFFT.h %buildroot/%_includedir/vkFFT/vkFFT.h
+mkdir -p %buildroot%_includedir
+cp -a vkFFT/* %buildroot%_includedir
 
 %files devel
 %doc README.md
 %doc LICENSE
 %doc documentation/*
-%_includedir/vkFFT/*.h
+%_includedir/vkFFT.h
+%_includedir/vkFFT
 
 
 %changelog
+* Tue May 20 2025 Dmitrii Chuprov <cheese@altlinux.org> 1.3.4-alt1
+- New version 1.3.4 (Feb 6, 2024).
+
 * Thu Jun 01 2023 Elizaveta Morozova <morozovaes@altlinux.org> 1.2.31-alt1
 - Initial build for ALT
 
