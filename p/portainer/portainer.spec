@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.29.0
+Version: 2.31.0
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -30,7 +30,7 @@ Requires: docker-compose-v2
 # The specified file is in docker-compose-v2 but it is not detected.
 %filter_from_requires \/usr\/lib\/docker\/cli-plugins\/docker-compose/d
 
-%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.23.5"
+%if "%(rpmquery --qf '%%{VERSION}' golang)" >= "1.23.8"
 %def_enable genbin
 %else
 %def_disable genbin
@@ -59,7 +59,7 @@ go build \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=730e05f40c874b1eeb9e7d9454f1cad1691386c6' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=d12d6940924f463fa43a1371dd56e21ccf0dc28b' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %endif
@@ -106,6 +106,11 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Wed Jun 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.31.0-alt1
+- New version 2.31.0.
+- Fixes:
+  + CVE-2025-22871.
+
 * Wed Apr 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.29.0-alt1
 - New version 2.29.0.
 - Fixes:

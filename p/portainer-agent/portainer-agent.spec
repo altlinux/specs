@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.29.0
+Version: 2.31.0
 Release: alt1
 
 Summary: Agent for portainer
@@ -40,6 +40,11 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Wed Jun 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.31.0-alt1
+- New version 2.31.0.
+- Fixes:
+  + CVE-2025-22871.
+
 * Wed Apr 16 2025 Leontiy Volodin <lvol@altlinux.org> 2.29.0-alt1
 - Initial build for ALT Sisyphus (for portainer).
 
