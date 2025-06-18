@@ -1,24 +1,33 @@
 %define oname algopy
 
+%def_with check
+%def_with docs
+
 Name: python3-module-%oname
-Version: 0.5.7
+Version: 0.7.2
 Release: alt1
 
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/algopy
+Vcs: https://github.com/b45ch1/algopy.git
 
-# https://github.com/b45ch1/algopy.git
 Source: %name-%version.tar
-Patch1: fix_test_import_of_deprecated_decorators_module.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-scipy
+%endif
+%if_with docs
 BuildRequires: python3-module-sphinx
+%endif
 
 %py3_provides %oname
 %py3_requires numpy scipy
@@ -81,37 +90,48 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch1 -p1
 
+rm -rf pyproject.toml
+
+%if_with docs
 sed -i 's|sphinx-build|&-3|' documentation/sphinx/Makefile
+%endif
 
 %build
+%if_with docs
 export PYTHONPATH=$PWD
 %make -C documentation/sphinx pickle
+%endif
 
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+%if_with docs
 cp -fR documentation/sphinx/_build/pickle \
 	%buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
-%__python3 setup.py test -v ||:
-%__python3 run_tests.py -v ||:
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 run_tests.py
 
 %files
 %doc *.rst documentation/examples documentation/getting_started.py
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
+%if_with docs
+%exclude %python3_sitelibdir/*/pickle
+%endif
 
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/*/tests
 
+%if_with docs
 %files pickles
 %python3_sitelibdir/*/pickle
 
@@ -119,8 +139,12 @@ cp -fR documentation/sphinx/_build/pickle \
 %doc documentation/AD_tutorial_TU_Berlin
 %doc documentation/ICCS2010
 %doc documentation/*.pdf
+%endif
 
 %changelog
+* Wed Jun 18 2025 Anton Vyatkin <toni@altlinux.org> 0.7.2-alt1
+- New version 0.7.2.
+
 * Tue Feb 14 2023 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt1
 - Build new version.
 
