@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rizin
-Version: 0.7.4
+Version: 0.8.1
 Release: alt1
 
 Summary: UNIX-like reverse engineering framework and command-line tool-set
-License: LGPL-3.0-or-later
+License: LGPL-3.0-only and GPL-3.0-only
 Group: Development/Other
 Url: https://rizin.re
 VCS: https://github.com/rizinorg/rizin
@@ -14,9 +14,9 @@ VCS: https://github.com/rizinorg/rizin
 Source: %name-%version.tar
 Source1: %name-postsubmodules-%version.tar
 Patch1: alt-use-sys-blake3.patch
-Patch2: alt-fix-segm-fault.patch
 
 BuildRequires(pre): meson
+BuildRequires: cmake
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libzip)
 BuildRequires: pkgconfig(zlib)
@@ -64,9 +64,7 @@ more information
 
 %prep
 %setup -a1
-%__cp -rf dependencies/* subprojects
 %patch1 -p1
-%patch2 -p1
 
 %build
 %meson \
@@ -89,8 +87,11 @@ more information
 %install
 %meson_install
 
+%__mkdir -p %buildroot%_libdir/%name/plugins
+
 %files
 %doc COPYING COPYING.LESSER DEVELOPERS.md README.md SECURITY.md BUILDING.md
+%dir %_libdir/%name/plugins
 %_bindir/r*
 %_libdir/librz_*.so.*
 %_man1dir/%name.1.*
@@ -117,9 +118,14 @@ more information
 %_datadir/%name/reg
 %_datadir/%name/syscall
 %_datadir/%name/types
+%_datadir/%name/arch
+%_datadir/%name/arch/platforms/*.sdb
 %dir %_datadir/%name
 
 %changelog
+* Wed Jun 11 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.8.1-alt1
+- v0.8.1
+
 * Fri Feb 14 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 0.7.4-alt1
 - 0.7.4-alt1
 - fixed the package description (closes: 52734)

@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %global gitname cutter
+%define plugindir %_libdir/%gitname/plugins
 
 Name: cutter-re
-Version: 2.3.4
+Version: 2.4.1
 Release: alt1
 
 Summary: GUI for Rizin reverse engineering framework
-License: GPL-3.0-only
+License: LGPL-3.0-only and GPL-3.0-only
 Group: Development/Tools
 Url: https://cutter.re
 VCS: https://github.com/rizinorg/cutter
@@ -15,15 +16,14 @@ VCS: https://github.com/rizinorg/cutter
 Source: %name-%version.tar
 Source1: %gitname-postsubmodules-%version.tar
 
-BuildRequires(pre): rpm-macros-qt5-webengine
-BuildRequires: cmake
-BuildRequires: rizin-devel >= 0.6.1
-BuildRequires: kf5-syntax-highlighting-devel
-BuildRequires: libgraphviz-devel
-BuildRequires: qt5-svg-devel
-BuildRequires: qt5-tools-devel
-%ifarch %qt5_qtwebengine_arches
-BuildRequires: qt5-webengine-devel
+BuildRequires(pre): rpm-macros-qt6-webengine
+BuildRequires: kf6-syntax-highlighting-devel
+BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: rizin-devel
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: qt6-webengine-devel
 %endif
 
 %description
@@ -48,7 +48,11 @@ mkdir -p src/translations
 %__cp -rf dependencies/%gitname-translations/* src/translations
 
 %build
-%cmake -DCUTTER_USE_BUNDLED_RIZIN=OFF
+%cmake \
+    -DCUTTER_USE_BUNDLED_RIZIN=OFF \
+    -DCUTTER_ENABLE_GRAPHVIZ=OFF \
+    -DCUTTER_EXTRA_PLUGIN_DIRS=%plugindir \
+    #
 %cmake_build
 
 %install
@@ -62,12 +66,18 @@ sed -i 's/%gitname/%name/g' %buildroot%_desktopdir/re.rizin.cutter.desktop
 mv %buildroot%_datadir/icons/hicolor/scalable/apps/{%gitname,%name}.svg
 sed -i 's/bin\/%gitname/bin\/%name/g' %buildroot%_libdir/cmake/Cutter/CutterTargets-*.cmake
 
-%files
-%doc COPYING README.md src/img/icons/Iconic-LICENSE
+%__install -d %buildroot%plugindir/native
+
+%find_lang --with-qt --all-name %name
+
+%files -f %name.lang
+%doc README.md
 %_bindir/%name
 %_desktopdir/*.desktop
-%_datadir/rizin/%gitname/translations/*.qm
 %_iconsdir/hicolor/scalable/apps/*.svg
+%_datadir/metainfo/*.xml
+%dir %plugindir
+%dir %plugindir/native
 
 %files devel
 %_includedir/cutter
@@ -75,5 +85,8 @@ sed -i 's/bin\/%gitname/bin\/%name/g' %buildroot%_libdir/cmake/Cutter/CutterTarg
 %dir %_libdir/cmake/Cutter
 
 %changelog
+* Mon Jun 16 2025 Dmitrii Fomchenkov <sirius@altlinux.org> 2.4.1-alt1
+- new version
+
 * Mon Apr 01 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 2.3.4-alt1
 - Initial build for ALT Linux
