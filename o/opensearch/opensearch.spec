@@ -2,7 +2,7 @@
 
 Name:    opensearch
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: Open source distributed and RESTful search engine
 License: Apache-2.0
@@ -28,7 +28,7 @@ BuildRequires: unzip
 BuildRequires: jansi
 
 AutoReqProv: yes, noosgi-fc
-Requires: java >= 17
+Requires: java >= 21
 
 %description
 %summary
@@ -101,6 +101,9 @@ getent passwd opensearch >/dev/null || /usr/sbin/useradd -r \
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt2
+- Requires Java >= 21 for running.
+
 * Tue Jun 10 2025 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - New version.
 
