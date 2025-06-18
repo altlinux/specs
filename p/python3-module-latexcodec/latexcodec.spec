@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A lexer and codec to work with LaTeX code in Python
@@ -77,6 +77,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Wed Jun 18 2025 Anton Vyatkin <toni@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Fri Mar 08 2024 Anton Vyatkin <toni@altlinux.org> 3.0.0-alt1
 - New version 3.0.0.
 
