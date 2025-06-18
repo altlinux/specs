@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.4.0
+Version: 0.4.3
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -10,12 +10,14 @@ Url: https://git.linux-gaming.ru/CastroFidel/winehelper
 
 Source: %name-%version.tar
 
-Requires: wine-full
+Requires: wine
 Requires: ca-certificates
-Requires: cups-pdf fonts-ttf-ms
+Requires: cups-pdf
 Requires: p7zip
 
 %add_findreq_skiplist %_datadir/%name/winetricks_*
+%add_findreq_skiplist %_datadir/%name/autoinstall/*
+%add_findreq_skiplist %_datadir/%name/manualinstall/*
 
 ExclusiveArch: x86_64
 
@@ -45,6 +47,10 @@ cp -v winetricks_* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Wed Jun 18 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.3-alt1
+- 0.4.3
+- removed requires: fonts-ttf-ms (ALT bug: 54833)
+
 * Fri May 30 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
