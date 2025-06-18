@@ -1,11 +1,13 @@
 %def_enable jpeg
 %def_enable gbm
 %def_enable h264
+%def_enable tls
+%def_enable nettle
 %def_enable check
 
 Name: neatvnc
 Version: 0.9.4
-Release: alt1
+Release: alt1.1
 
 Summary: A liberally licensed VNC server library with a clean interface
 License: ISC
@@ -13,16 +15,18 @@ Group: System/Libraries
 Url: https://github.com/any1/neatvnc
 
 Vcs: https://github.com/any1/neatvnc.git
+
 Source: https://github.com/any1/neatvnc/archive/v%version/%name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: libaml-devel
-BuildRequires: libgnutls-devel
 BuildRequires: libpixman-devel libpng-devel zlib-devel
 %{?_enable_jpeg:BuildRequires: pkgconfig(libturbojpeg)}
 %{?_enable_gbm:BuildRequires: libdrm-devel libgbm-devel}
 %{?_enable_h264:BuildRequires: libavcodec-devel libavfilter-devel libavutil-devel}
+%{?_enable_tls:BuildRequires: libgnutls-devel}
+%{?_enable_nettle:BuildRequires: libnettle-devel libgmp-devel}
 
 %description
 %summary
@@ -49,10 +53,12 @@ Neat VNC based software.
 
 %build
 %meson \
-%{?_disable_jpeg:-Djpeg=disabled} \
-%{?_disable_gbm:-Dgbm=disabled} \
-%{?_disable_h264:-Dh264=disabled} \
-%{?_enable_check:-Dtests=true}
+    %{subst_enable_meson_feature jpeg jpeg} \
+    %{subst_enable_meson_feature gbm gbm} \
+    %{subst_enable_meson_feature h264 h264} \
+    %{subst_enable_meson_feature nettle nettle} \
+    %{subst_enable_meson_feature tls tls} \
+    %{subst_enable_meson_bool check tests}
 %nil
 %meson_build
 
@@ -71,6 +77,9 @@ Neat VNC based software.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1.1
+- enabled nettle support (ALT #54823)
+
 * Tue Mar 04 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - 0.9.4
 
