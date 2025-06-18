@@ -20,8 +20,8 @@
 %def_disable check
 
 Name: grilo-plugins
-Version: %ver_major.16
-Release: alt2.1
+Version: %ver_major.17
+Release: alt1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -43,7 +43,7 @@ Requires: grilo-tools >= 0.3.15-alt2
 Requires: gst-plugins-bad1.0 >= 1.20.3-alt2
 %{?_enable_lua:Requires: lua%lua_api_ver}
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson %{?_enable_lua:rpm-build-lua}
 BuildRequires: meson gperf
 BuildRequires: gtk-doc yelp-tools
 BuildRequires: libgio-devel >= 2.68
@@ -62,7 +62,7 @@ BuildRequires: pkgconfig(libdmapsharing-4.0) >= 3.9.12
 %endif
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
-%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver}
+%{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver localsearch}
 BuildRequires: liboauth-devel
 BuildRequires: libgnome-online-accounts-devel >= 3.18.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
@@ -72,15 +72,14 @@ BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
 BuildRequires: gst-plugins-bad1.0-devel
-%{?_enable_lua_factory:BuildRequires: liblua%lua_api_ver-devel >= 5.3.0}
+%{?_enable_lua_factory:BuildRequires: liblua%lua_api_ver-devel >= 5.3.0 pkgconfig(rest-1.0)}
 %{?_enable_check:BuildRequires: xvfb-run lua%lua_api_ver
-BuildRequires: grilo-tools tracker-miners3 gst-plugins-bad1.0 upower}
+BuildRequires: grilo-tools localsearch gst-plugins-bad1.0 upower}
 
 %description
 Grilo is a framework that provides access to different sources of
 multimedia content, using a pluggable system.
 This package contains plugins to get information from theses sources:
-- Apple Trailers
 - Bookmarks
 - Filesystem
 - Flickr
@@ -113,7 +112,6 @@ This package contains the pkg-config file for Grilo plugins package.
 %build
 %meson \
     %{?_enable_lua_factory:-Denable-lua-factory=yes} \
-    %{?_disable_tracker:-Dtracker=no} \
     %{?_disable_tracker3:-Dtracker3=no}
 %nil
 %meson_build
@@ -145,7 +143,6 @@ xvfb-run %__meson_test -t 2
 %{?_disable_soup3:%_libdir/grilo-%ver_major/libgrlopensubtitles.so}
 %_libdir/grilo-%ver_major/libgrlopticalmedia.so
 %_libdir/grilo-%ver_major/libgrlpodcasts.so
-%_libdir/grilo-%ver_major/libgrlraitv.so
 %_libdir/grilo-%ver_major/libgrlshoutcast.so
 %_libdir/grilo-%ver_major/libgrlthetvdb.so
 %_libdir/grilo-%ver_major/libgrltmdb.so
@@ -162,6 +159,9 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 0.3.17-alt1
+- 0.3.17
+
 * Sat Sep 07 2024 Yuri N. Sedunov <aris@altlinux.org> 0.3.16-alt2.1
 - rebuilt for gnome-47
 

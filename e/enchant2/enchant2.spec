@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.6
+Version: %ver_major.9
 Release: alt1
 Epoch: 1
 
@@ -27,11 +27,14 @@ Source: https://github.com/rrthomas/enchant/releases/download/v%version/%_name-%
 %else
 Source: %_name-%version.tar
 %endif
-Patch1: enchant-2.8.0-alt-add-myspell-dicts-dir-to-hunspell.patch
+Patch1: enchant-2.8.7-alt-add-myspell-dicts-dir-to-hunspell.patch
 
 Requires:  lib%name = %EVR
 
-BuildRequires: vala-tools gcc-c++ libgio-devel libhunspell-devel
+%define glib_ver 2.76
+
+BuildRequires: vala-tools gcc-c++
+BuildRequires: libgio-devel >= %glib_ver libhunspell-devel
 BuildRequires: groff
 %{?_enable_aspell:BuildRequires: libaspell-devel}
 %{?_enable_hspell:BuildRequires: libhspell-devel}
@@ -60,7 +63,7 @@ using libenchant.
 
 %prep
 %setup -n %_name-%version
-%patch1 -p2
+%patch1 -p1
 # relax autoconf version
 sed -i 's|\(AC_PREREQ(\[2.\)71|\169|' configure.ac
 
@@ -93,14 +96,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/%_name-%api_ver/
 %doc AUTHORS README* NEWS
 
-%exclude %_libdir/%_name-%api_ver/*.la
-
 %files -n lib%name-devel
 %_includedir/%_name-%api_ver/
 %_libdir/*.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.9-alt1
+- 2.8.9
+
 * Sat May 31 2025 Yuri N. Sedunov <aris@altlinux.org> 1:2.8.6-alt1
 - 2.8.6
 

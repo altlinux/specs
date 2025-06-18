@@ -6,7 +6,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -75,6 +75,9 @@ install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
 %doc CHANGELOG*  README*
 
 %changelog
+* Wed Jun 18 2025 Yuri N. Sedunov <aris@altlinux.org> 1.30.3-alt1
+- 1.30.3
+
 * Tue Jun 17 2025 Yuri N. Sedunov <aris@altlinux.org> 1.30.2-alt1
 - 1.30.2
 
