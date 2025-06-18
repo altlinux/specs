@@ -30,7 +30,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt2
+Release: alt3
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -452,9 +452,9 @@ fi
 %files indexhtml
 %ghost %_defaultdocdir/indexhtml/index.html
 %_defaultdocdir/indexhtml/*
-%_desktopdir/*
-%_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
-%attr(0755,root,root) %_datadir/Desktop/indexhtml.desktop
+#_desktopdir/*
+#_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
+#attr(0755,root,root) _datadir/Desktop/indexhtml.desktop
 %_iconsdir/hicolor/*/apps/alt-%theme-desktop.svg
 
 %files menu
@@ -475,6 +475,9 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt3
+- indexhtml: removed from menu and desktop.
+
 * Fri Jun 13 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt2
 - xfce-settings: adapted for Xfce-4.20.
 
