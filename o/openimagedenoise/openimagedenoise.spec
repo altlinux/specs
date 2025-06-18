@@ -18,7 +18,7 @@
 
 Name: openimagedenoise
 Version: 2.3.3
-Release: alt1
+Release: alt3
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -29,6 +29,9 @@ ExclusiveArch: x86_64 aarch64
 # https://github.com/OpenImageDenoise/oidn/releases/download/v%version/oidn-%version.src.tar.gz
 Source: %oname-%version.tar
 Patch: oidn-alt-aarch64-cuda-glibc-fix.patch
+Patch1: blender-sycl-add-more-ids.patch
+# introduced in https://github.com/intel/llvm/pull/15798
+Patch2: sycl-fix-deprecated-warning.patch
 
 BuildRequires: cmake gcc-c++
 BuildRequires: python3
@@ -113,6 +116,8 @@ cat >/tmp/bits/math-vector.h <<EOF
 #undef __SVE_VEC_MATH_SUPPORTED
 EOF
 %endif
+%patch1 -p1
+%patch2 -p2
 
 %build
 %if_with hip
@@ -137,7 +142,13 @@ export ALTWRAP_LLVM_VERSION=rocm
 	-DCMAKE_BUILD_TYPE=%build_type \
 	-DCMAKE_STRIP:STRING=""
 	%nil
-
+%if_with oneapi
+# https://bugzilla.altlinux.org/54416
+export NPROCS="%__nprocs"
+if [ "$NPROCS" -gt 4 ]; then
+	export NPROCS=4
+fi
+%endif
 %cmake_build
 
 %install
@@ -191,6 +202,14 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Wed Jun 18 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt3
+- oneapi: limit nprocs to 4 to fix intermittent build failures
+  (closes #54416).
+
+* Thu May 22 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt2
+- sycl: add more Xe2HPG devices (patch from blender).
+- sycl: fix deprecated warning.
+
 * Tue Apr 08 2025 L.A. Kostis <lakostis@altlinux.ru> 2.3.3-alt1
 - Updated to upstream version 2.3.3.
 - Remove .watch file (doesn't work anyway, as we need archives
