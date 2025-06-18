@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.25
+Version: 6.0.29
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -16,6 +16,7 @@ Vcs: git://github.com/linuxdeepin/dde-session-ui.git
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: %name-%version-%release.patch
 
 # %%_datadir/dbus-1/services/org.freedesktop.Notifications.service
 Conflicts: notify-osd
@@ -38,6 +39,7 @@ This project include those sub-project:
 
 %prep
 %setup -n %repo-%version
+%autopatch -p1
 #sed -i 's|default_background.jpg|deepin/desktop.jpg|' \
 #    widgets/fullscreenbackground.cpp \
 #    lightdm-deepin-greeter/logintheme.qrc \
@@ -97,6 +99,9 @@ export READELF="llvm-readelf"
 %_datadir/%repo/translations/dde-session-ui_ky@Arab.qm
 
 %changelog
+* Wed Jun 18 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.29-alt1
+- New version 6.0.29.
+
 * Fri Feb 07 2025 Leontiy Volodin <lvol@altlinux.org> 6.0.25-alt1
 - New version 6.0.25.
 - Switched to dqt6.
