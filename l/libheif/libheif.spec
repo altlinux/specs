@@ -1,6 +1,6 @@
 Name: libheif
 Version: 1.19.8
-Release: alt2
+Release: alt3
 
 Summary: HEIF file format decoder and encoder
 License: LGPLv3
@@ -12,8 +12,12 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: cmake gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libx265-devel libgdk-pixbuf-devel libaom-devel
-BuildRequires: librav1e-devel libdav1d-devel libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel
+BuildRequires: cmake ctest gcc-c++ libde265-devel libjpeg-devel libpng-devel libtiff-devel libwebp-devel libgdk-pixbuf-devel libaom-devel
+BuildRequires: libkvazaar-devel libopenjpeg2.0-devel openjpeg-tools2.0 libavcodec-devel libopenh264-devel libsvt-av1-devel
+#BuildRequires: libx265-devel
+%ifnarch %e2k
+BuildRequires: librav1e-devel libdav1d-devel
+%endif
 
 %description
 HEIF is a new image file format employing HEVC (h.265) image coding for the
@@ -37,7 +41,8 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %cmake \
 	-DWITH_UNCOMPRESSED_CODEC=ON \
 	-DPLUGIN_DIRECTORY=%_libdir/libheif/plugins \
-	-DWITH_X265_PLUGIN=ON \
+	-DWITH_OpenH264_DECODER=ON \
+	-DWITH_X265_PLUGIN=OFF \
 	-DWITH_FFMPEG_DECODER=ON \
 	-DWITH_FFMPEG_DECODER_PLUGIN=ON \
 	-DWITH_AOM_DECODER_PLUGIN=ON \
@@ -63,6 +68,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 
 %cmake_build
 
+%check
+%ctest
+
 %install
 %cmake_install
 
@@ -81,6 +89,9 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jun 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.19.8-alt3
+- enable ctest
+
 * Wed Jun 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 1.19.8-alt2
 - separate plugins
 
