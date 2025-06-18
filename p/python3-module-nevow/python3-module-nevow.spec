@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Version: 0.14.5
-Release: alt1.20250324.1
+Release: alt2.20250324.1
 
 Summary: Web Application Construction Kit
 License: MIT
@@ -34,7 +34,7 @@ rm -r %buildroot/%_prefix/doc
 %files
 %_bindir/nevow-xmlgettext
 %_bindir/nit
-%python3_sitelibdir/nevow-%version.dist-info/
+%python3_sitelibdir/*-%version.dist-info/
 %python3_sitelibdir/nevow/
 %exclude %python3_sitelibdir/nevow/test
 %python3_sitelibdir/formless/
@@ -42,5 +42,8 @@ rm -r %buildroot/%_prefix/doc
 %python3_sitelibdir/twisted/plugins/__pycache__/nevow_widget.cpython-*.pyc
 
 %changelog
+* Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 0.14.5-alt2.20250324.1
+- fix build on p11 branch
+
 * Tue Jun 17 2025 Anton Midyukov <antohami@altlinux.org> 0.14.5-alt1.20250324.1
 - Initial build.
