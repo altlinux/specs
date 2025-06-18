@@ -25,8 +25,8 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 21.1.16
-Release: alt2
+Version: 21.1.17
+Release: alt1
 Epoch: 2
 License: MIT X11
 Summary: Xserver - X Window System display server
@@ -260,6 +260,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Jun 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.17-alt1
+- 21.1.17
+
 * Thu May 15 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.16-alt2
 - removed dependencies on consolehelper (closes: #54275)
 
