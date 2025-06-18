@@ -1,6 +1,6 @@
 Name:    python3-module-ansible-collections
 Version: 11.0.0
-Release: alt1
+Release: alt2
 
 Summary: This repository contains the community.general and some other Ansible Collection
 License: GPL-3.0+ and Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT and MPL-2.0 and PSF-2.0
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-python3
 
 %filter_from_requires /python3(ansible.module_utils.six.moves/d
 %filter_from_requires /python-base/d
+# Using only in tests
+%add_python3_req_skip nox
 
 %description
 This repository contains the community.general Ansible Collection. The
@@ -71,6 +73,9 @@ rm -rv %buildroot%python3_sitelibdir/ansible_collections/community/postgresql/.a
 %files -n ansible
 
 %changelog
+* Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 11.0.0-alt2
+- Removed python3(nox) from autoreq because it is used only in tests.
+
 * Tue Jun 17 2025 Andrey Cherepanov <cas@altlinux.org> 11.0.0-alt1
 - New version.
 
