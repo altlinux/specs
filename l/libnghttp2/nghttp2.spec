@@ -6,7 +6,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libnghttp2
-Version: 1.65.0
+Version: 1.66.0
 Release: alt1
 
 Summary: HTTP/2.0 C Library
@@ -82,9 +82,11 @@ Requires: %name = %EVR
 %_libdir/libnghttp2.so.%soname.*
 %exclude %_libdir/libnghttp2.a
 %exclude %_datadir/doc/nghttp2/README.rst
-%exclude %_datadir/nghttp2/fetch-ocsp-response
 
 %changelog
+* Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 1.66.0-alt1
+- 1.65.0 -> 1.66.0
+
 * Thu Mar 06 2025 Anton Farygin <rider@altlinux.ru> 1.65.0-alt1
 - 1.64.0 -> 1.65.0
 
