@@ -1,6 +1,6 @@
-%define soname 12
+%define soname 13
 Name: mac
-Version: 10.96
+Version: 11.18
 Release: alt1
 
 Summary: Monkey's Audio Codec
@@ -67,6 +67,9 @@ sed -i 's/\r$//' Readme.txt
 %_includedir/*
 
 %changelog
+* Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 11.18-alt1
+- 10.96 -> 11.18
+
 * Sun Mar 16 2025 Anton Farygin <rider@altlinux.ru> 10.96-alt1
 - 7.09 -> 10.96
 - renamed the library package in accordance with the SharedLibsPolicy
