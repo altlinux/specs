@@ -1,7 +1,7 @@
 Name: aqualung
 Summary: Music Player for GNU/Linux
 Version: 2.0
-Release: alt1
+Release: alt2
 License: GPL-2.0
 Group: Sound
 Url: https://aqualung.jeremyevans.net
@@ -48,9 +48,9 @@ BuildRequires: pkgconfig(libusb)
 BuildRequires: pkgconfig(lua)
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 # TODO:
-BuildRequires: libjack-devel
 BuildRequires: pkgconfig(jack)
-#BuildRequires: libifp-devel
+BuildRequires: pkgconfig(sndio)
+BuildRequires: libifp-devel
 
 Requires: hicolor-icon-theme
 
@@ -67,11 +67,12 @@ sed -i 's!/usr/lib/!%{_libdir}/!g' src/plugin.c
 ./autogen.sh
 # export CFLAGS="%optflags -Wno-error=format-truncation -Wno-error=stringop-truncation -Wno-error=format-overflow -Wno-error=stringop-overflow"
 # TODO: ifp, jack
+export LDFLAGS=$(pkg-config --libs-only-L jack)
 %configure \
-    --without-sndio \
+    --with-sndio \
     --with-oss \
     --with-alsa \
-    --without-jack \
+    --with-jack \
     --with-pulse \
     --with-src \
     --with-sndfile \
@@ -88,7 +89,7 @@ sed -i 's!/usr/lib/!%{_libdir}/!g' src/plugin.c
     --with-ladspa \
     --with-cdda \
     --with-cddb \
-    --without-ifp \
+    --with-ifp \
     --with-lua
 
 %make_build
@@ -175,6 +176,10 @@ rmdir %buildroot%_docdir/%name
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Jun 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0-alt2
+- update from upstream/master
+- enable sndio, jack and ifp support
+
 * Wed Feb 26 2025 Andrew A. Vasilyev <andy@altlinux.org> 2.0-alt1
 - Initial build for ALT.
 
