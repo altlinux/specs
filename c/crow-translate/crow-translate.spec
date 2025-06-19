@@ -3,7 +3,7 @@
 %define version_Breeze 6.7.0
 
 Name: crow-translate
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -97,6 +97,9 @@ subst "s|<QX11Info>|<QtX11Extras/QX11Info>|" src/xdgdesktopportal.cpp
 %_iconsdir/hicolor/*/*/org.kde.CrowTranslate*
 
 %changelog
+* Thu Jun 19 2025 Roman Alifanov <ximper@altlinux.org> 3.1.0-alt1
+- new version 3.1.0 (with rpmrb script)
+
 * Thu Oct 17 2024 Roman Alifanov <ximper@altlinux.org> 3.0.0-alt1
 - new version 3.0.0 (with rpmrb script)
 - remove old submodules
