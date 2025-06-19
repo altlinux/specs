@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Python implementation of Markdown text-to-HTML convertor.
@@ -81,6 +81,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* docs/changelog.md
 
 %changelog
+* Fri Jun 20 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8.2-alt1
+- 3.8.2
+
 * Thu Jun 19 2025 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
