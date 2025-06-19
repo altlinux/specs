@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: unified-memory-framework
-Version: 0.11.0
+Version: 0.11.2
 Release: alt1
 
 Summary: The Unified Memory Framework (UMF) is a library for constructing allocators and memory pools
@@ -79,6 +79,9 @@ rm -rf %buildroot%_docdir/umf
 %_libdir/cmake/umf
 
 %changelog
+* Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.11.2-alt1
+- 0.11.2.
+
 * Thu May 01 2025 L.A. Kostis <lakostis@altlinux.ru> 0.11.0-alt1
 - 0.11.0.
 - Fix ze_loader name.
