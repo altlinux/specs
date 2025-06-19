@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
-Version: 0.6.3
-Release: alt3
+Version: 0.7.0
+Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -24,8 +24,8 @@ install -d %buildroot%_datadir/%name/socs.d
 cp -a socs.d/* %buildroot%_datadir/%name/socs.d/
 install -d %buildroot%_datadir/%name/boards.d
 cp -a boards.d/* %buildroot%_datadir/%name/boards.d/
-cp -a log %buildroot%_datadir/%name/
-install -pm 644 SUPPORTED-BOARDS %buildroot%_datadir/%name
+install -pm 644 log functions EXTRA_OPTIONS SUPPORTED-BOARDS \
+	%buildroot%_datadir/%name
 
 install -d %buildroot%_bindir
 install -pm 0755 %name %buildroot%_bindir/
@@ -40,6 +40,11 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Thu Jun 19 2025 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- New version 0.7.0
+- Add --extra-options
+- Remove outdated riscv64 board scripts
+
 * Wed Apr 23 2025 Anton Midyukov <antohami@altlinux.org> 0.6.3-alt3
 - Rockchips-aarch64.sh: set serial tty rate to 1500000
 
