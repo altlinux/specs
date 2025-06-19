@@ -1,13 +1,16 @@
 Name:           hut
-Version:        0.4.0
+Version:        0.7.0
 Release:        alt1
 Source:         %name-v%version.tar.gz
+# VERSION=0.6.0; git archive --prefix=hut-$VERSION/ v$VERSION -o ~/tmp/hut-$VERSION.tar.gz
+# gear-update ~/tmp/hut-$VERSION.tar.gz hut
 # go mod vendor
 Source1:        vendor.tar
 Group:          Other
 Summary:        A CLI tool for sr.ht
 License:        AGPL-3.0-only
-URL:            https://sr.ht/~emersion/hut/
+# URL:            https://sr.ht/~emersion/hut/
+URL:            https://git.sr.ht/~xenrox/hut
 
 # Automatically added by buildreq on Tue May 17 2022
 # optimized out: golang-src libgpg-error python3-base sh4
@@ -36,6 +39,12 @@ Run hut init to get started. Read the man page to learn about all commands.
 %_man1dir/*
 
 %changelog
+* Thu Jun 19 2025 Fr. Br. George <george@altlinux.org> 0.7.0-alt1
+- Version up to 0.7.0; update vendor tree
+
+* Sat Sep 21 2024 Fr. Br. George <george@altlinux.org> 0.6.0-alt1
+- Version up; update vendor tree
+
 * Sun Mar 31 2024 Fr. Br. George <george@altlinux.ru> 0.4.0-alt1
 - Version up; update vendor tree
 
