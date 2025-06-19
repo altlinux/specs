@@ -21,9 +21,9 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    12.5
-%global minorversion    2
-%global toolsbuild      24697584
+%global majorversion    13.0
+%global minorversion    0
+%global toolsbuild      24696409
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -328,6 +328,9 @@ fi
 
 
 %changelog
+* Thu Jun 19 2025 Andrew A. Vasilyev <andy@altlinux.org> 13.0.0-alt1
+- 13.0.0
+
 * Tue May 13 2025 Andrew A. Vasilyev <andy@altlinux.org> 12.5.2-alt1
 - 12.5.2 (CVE-2025-22247)
 
