@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.6.10
+Version: 1.6.11
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -146,6 +146,11 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Wed Jun 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.6.11-alt1
+- new version 1.6.11 (with rpmrb script)
+- fixes vulnerabilities:
+ + Fix Post-Auth RCE via PHP Object Deserialization reported by firs0v [CVE-2025-49113]
+
 * Sat Feb 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1.6.10-alt1
 - new version 1.6.10 (with rpmrb script)
 - switch to use php_defver from rpm-build-php
