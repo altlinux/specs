@@ -2,7 +2,7 @@ Name: kernel-image-rt
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.33
+%define kernel_sublevel	.34
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -612,6 +612,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 19 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.34-alt1
+- v6.12.34 (2025-06-19).
+- config: Enable more MediaTek wireless devices (ALT#54848).
+- config: Enable build drivers for Software Defined Radio devices.
+- config: Enable CONFIG_LEGACY_VSYSCALL_NONE=y.
+- config: Enable CONFIG_INIT_ON_ALLOC_DEFAULT_ON=y.
+
 * Tue Jun 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.12.33-alt1
 - v6.12.33 (2025-06-10).
 
