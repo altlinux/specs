@@ -1,7 +1,7 @@
 %define nameS klassy
 
 Name: kde6-plasma-klassy
-Version: 6.3.5
+Version: 6.4.0
 Release: alt1
 
 Summary: Klassy is a highly customizable binary Window Decoration, Application Style and Global Theme plugin for recent versions of the KDE Plasma desktop
@@ -71,5 +71,8 @@ developing applications that use %name.
 %_libdir/cmake/Klassy
 
 %changelog
+* Thu Jun 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 6.4.0-alt1
+- 6.3.5 -> 6.4.0
+
 * Fri May 16 2025 Aleksandr Shamaraev <shad@altlinux.org> 6.3.5-alt1
 - Initial build for ALT Linux.
