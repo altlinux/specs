@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.31.0
+Version: 2.31.1
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -59,7 +59,7 @@ go build \
    --installsuffix cgo \
    --ldflags="-s -X 'github.com/portainer/liblicense.LicenseServerBaseURL=https://api.portainer.io' \
    -X 'github.com/portainer/portainer/pkg/build.BuildNumber=%release' \
-   -X 'github.com/portainer/portainer/pkg/build.GitCommit=d12d6940924f463fa43a1371dd56e21ccf0dc28b' \
+   -X 'github.com/portainer/portainer/pkg/build.GitCommit=3019e8ec11b6e0158d1c410a28560be13e7c2c59' \
    -X 'github.com/portainer/portainer/pkg/build.GoVersion=%gover'" \
    -o "bin/portainer" ./api/cmd/portainer
 %endif
@@ -106,6 +106,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 2.31.1-alt1
+- New version 2.31.1.
+
 * Wed Jun 18 2025 Leontiy Volodin <lvol@altlinux.org> 2.31.0-alt1
 - New version 2.31.0.
 - Fixes:
