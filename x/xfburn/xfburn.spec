@@ -1,5 +1,5 @@
 Name: xfburn
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: CD-R/CD-RW disc writing application
@@ -12,32 +12,34 @@ Vcs: https://gitlab.xfce.org/apps/xfburn.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: xfce4-dev-tools rpm-build-xfce4
-BuildPreReq: libxfce4ui-gtk3-devel libexo-gtk3-devel
+BuildRequires(pre): meson rpm-macros-meson
+BuildRequires(pre): xfce4-dev-tools rpm-build-xfce4 >= 0.5.0-alt1
+BuildRequires: libxfce4util-devel >= 4.18.0 libxfce4ui-gtk3-devel libexo-gtk3-devel
 BuildRequires: xsltproc docbook-style-xsl
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel libburn-devel libisofs-devel libgio-devel libgudev-devel
 
 %define _unpackaged_files_terminate_build 1
 
 %description
-Xfburn is a simple CD burning tool based on libburn/libisofs.
-
+A simple CD/DVD/BD burning application which supports erasing,
+formatting of discs; burning of iso images, audio, and data
+compositions.
 
 %prep
 %setup
 %patch -p1
+# Needed even in release version
+%xfce4_cleanup_version
 
 %build
-%xfce4reconf
-%configure \
-	--enable-gudev \
-	--enable-gstreamer \
-	--enable-maintainer-mode \
-	--enable-debug=minimum
-%make_build
+%meson \
+	-Dgudev=enabled \
+	-Dgstreamer=enabled
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -50,6 +52,11 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 %_man1dir/*
 
 %changelog
+* Thu Jun 19 2025 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Updated description.
+- Switched to meson build.
+- Updated to 0.8.0.
+
 * Tue Aug 13 2024 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - Updated to 0.7.2.
 
