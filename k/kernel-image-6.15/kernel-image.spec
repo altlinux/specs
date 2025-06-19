@@ -2,10 +2,10 @@ Name: kernel-image-6.15
 Release: alt1
 %define kernel_src_version	6.15
 %define kernel_base_version	6.15
-%define kernel_sublevel	.2
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_latest	latest1
+%define kernel_latest	latest
 Version: %kversion
 
 %define krelease	%release
@@ -612,6 +612,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 19 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.3-alt1
+- v6.15.3 (2025-06-19).
+- config: Enable more MediaTek wireless devices.
+- config: Enable build drivers for Software Defined Radio devices.
+- config-aarch64: enable more configs.
+
 * Tue Jun 10 2025 Kernel Bot <kernelbot@altlinux.org> 6.15.2-alt1
 - v6.15.2 (2025-06-10).
 
