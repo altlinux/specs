@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: thinkfan
-Version: 1.3.1
-Release: alt2
+Version: 2.0.0
+Release: alt1
 Summary: simple and lightweight fan control program
 Group: System/Configuration/Hardware
 License: GPL-3.0+
@@ -17,6 +17,7 @@ Patch1: %name-%version-%release.patch
 
 BuildRequires: cmake gcc-c++ libatasmart-devel
 BuildRequires: libyaml-cpp-devel
+BuildRequires: libsensors-devel
 BuildRequires: libsystemd-devel >= 255.6
 
 %description
@@ -53,6 +54,9 @@ rm -rf %buildroot%_docdir/%name
 %_man5dir/*.5*
 
 %changelog
+* Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 2.0.0-alt1
+- 1.3.1 -> 2.0.0
+
 * Sun Jul 14 2024 Anton Farygin <rider@altlinux.ru> 1.3.1-alt2
 - fixed build in environment with merged /usr
 
