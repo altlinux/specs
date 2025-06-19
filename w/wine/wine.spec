@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.6
+%define major 10.9
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -141,7 +141,7 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 
 Name: wine
 Version: %major.1
-Release: alt4
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -934,6 +934,11 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Jun 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.9.1-alt1
+- new version (10.9) with rpmgs script
+- update patches to staging wine-10.9:
+  - msv1_0: disable annoying message about missed ntlm_auth
+
 * Sun Jun 01 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.6.1-alt4
 - disable build with libOSMesa-devel (no longer supported)
 
