@@ -26,8 +26,8 @@
 
 
 Name: openblas
-Version: 0.3.29
-Release: alt2
+Version: 0.3.30
+Release: alt1
 
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
@@ -158,6 +158,9 @@ F_COMPILER="GFORTRAN" C_COMPILER="GCC" \
 %exclude %_libdir/*.a
 
 %changelog
+* Thu Jun 19 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.30-alt1
+- 0.3.30.
+
 * Wed Feb 05 2025 Ivan A. Melnikov <iv@altlinux.org> 0.3.29-alt2
 - fix tests on ppc64le via reverting one upstream commit
 - avoid installing lapack headers (ALT#38974)
