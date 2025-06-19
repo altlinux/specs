@@ -6,14 +6,14 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: opentoonz
-Version: 1.6.0
+Version: 1.7.1
 Release: alt1
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
 URL: https://opentoonz.github.io/e/
 
-ExcludeArch: armh
+#ExcludeArch: armh
 
 # https://github.com/opentoonz/opentoonz.git
 Source: %name-%version.tar
@@ -26,14 +26,18 @@ Source2: %name-%version-sample.tar
 
 # NOTE: on each update pull updates to docs and samples
 
-Patch1: %name-1.5.0-alt-libraries-path.patch
+Patch1: %name-1.7.1-alt-libraries-path.patch
 Patch2: %name-1.4.0-alt-data-location.patch
 Patch3: opensuse-0001-Fix-linker-errors-on-Linux.patch
 Patch4: opensuse-0001-Use-the-system-mypaint-brushes.patch
 Patch5: %name-1.5.0-alt-docs-sphinx-compat.patch
 Patch6: Fix-build-proccess.patch
 ## https://github.com/opentoonz/opentoonz/pull/4739
-Patch7: Clarify-size_t-origin.patch
+#Patch7: Clarify-size_t-origin.patch
+Patch8: igs_rotate_blur-1.7.1-alt-build.patch
+Patch9: cmakeblur-1.7.1-alt-build.patch
+Patch10: cmakegeom-1.7.1-alt-build.patch
+Patch11: cmakemultiplugin-1.7.1-alt-build.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -92,7 +96,11 @@ This package contains documentation and samples for OpenToonz.
 %patch3 -p1
 %patch4 -p1
 %patch6 -p1
-%patch7 -p1
+#%patch7 -p1
+%patch8 -p0
+%patch9 -p0
+%patch10 -p0
+%patch11 -p0
 
 pushd %name-%version-docs
 %patch5 -p1
@@ -101,6 +109,8 @@ popd
 # prevent using unbundled libraries
 # don't unbundle libtiff because it's patched. See: https://github.com/opentoonz/opentoonz/blob/master/doc/how_to_build_linux.md#building-libtiff
 rm -rf thirdparty/{boost,glew,glut,LibJPEG,libjpeg-turbo64,libmypaint,libpng-1.6.21,libusb,Lz4,lzo/2.03,openblas,quicktime,superlu,zlib-1.2.8}
+
+subst "s|VERSION 2.8.11|VERSION 3.5|" toonz/sources/CMakeLists.txt
 
 %build
 # build patched libtiff
@@ -167,6 +177,12 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Thu Jun 19 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1-alt1
+- 1.6.0 -> 1.7.1
+- fixed FTBFS
+- disabled: ExcludeArch: armh
+- disabled: Clarify-size_t-origin.patch
+
 * Fri Aug 18 2023 Artyom Bystrov <arbars@altlinux.org> 1.6.0-alt1
 - Update to new version
 
