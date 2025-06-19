@@ -1,5 +1,5 @@
 Name:    cava
-Version: 0.10.2
+Version: 0.10.4
 Release: alt1
 
 Summary: Cross-platform Audio Visualizer
@@ -41,6 +41,9 @@ echo %version > version
 /lib/kbd/consolefonts/%name.psf
 
 %changelog
+* Thu Jun 19 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.10.4-alt1
+- new version 0.10.4 (with rpmrb script)
+
 * Tue Aug 06 2024 Roman Alifanov <ximper@altlinux.org> 0.10.2-alt1
 - new version 0.10.2 (with rpmrb script)
 
