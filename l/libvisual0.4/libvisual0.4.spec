@@ -3,12 +3,17 @@
 %define api_ver 0.4
 
 %def_disable static
-%def_disable lv_tool
+%def_enable lv_tool
 %def_disable examples
+
+%def_enable plugins
+%def_disable portaudio
+%def_enable pulseaudio
+%def_enable jack
 
 Name: %{srcname}%api_ver
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Libvisual is an abstraction library that comes between applications and audio visualisation plugins
 License: LGPL-2.1-or-later
@@ -26,6 +31,16 @@ Source: %srcname-%version.tar
 
 BuildRequires: autoconf-archive gcc-c++
 %{?_enable_lv_tool:BuildRequires: pkgconfig(sdl) >= 1.2.0}
+
+%{?_enable_plugins:
+BuildRequires: %name-devel
+BuildRequires: libglvnd-devel
+BuildRequires: libalsa-devel
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gstreamer-1.0)
+%{?_enable_jack:BuildRequires: pkgconfig(jack)}
+%{?_enable_portaudio:BuildRequires: pkgconfig(portaudio)}
+%{?_enable_pulseaudio:BuildRequires: pkgconfig(libpulse)}}
 
 %description
 Libvisual is an abstraction library that comes between applications and
@@ -61,12 +76,29 @@ Requires: %name-devel = %EVR
 This package contains development files required for building
 statically linked %srcname-based software.
 
-%def_disable static
+%package plugins
+Summary: Libvisual plugins
+Group: Video
+Requires: %name = %EVR
+
+%description plugins
+This package provides audio visualisation plugins from Libvisual
+project.
+
+%package tools
+Summary: Libvisual tools
+Group: Video
+Requires: %name = %EVR
+Requires: %name-plugins = %EVR
+
+%description tools
+This package provides command-line tool to interact with Libvisual.
 
 %prep
 %setup -n %srcname-%version/%srcname
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
     %{subst_enable static} \
@@ -75,13 +107,35 @@ statically linked %srcname-based software.
 %nil
 %make_build
 
+# plugins
+# broken G-Force plugin
+%def_disable gforce
+
+pushd ../%srcname-plugins
+%add_optflags %(getconf LFS_CFLAGS)
+%ifarch %ix86
+%add_optflags -Wno-sign-compare
+%endif
+%autoreconf || %autoreconf
+%configure \
+    %{subst_enable portaudio} \
+    %{subst_enable jack} \
+    %{subst_enable pulseaudio} \
+    %{subst_enable gforce}
+%nil
+%make_build
+popd
+
 %install
 %makeinstall_std
 mkdir -p %buildroot%_libdir/%srcname-%api_ver/{actor,input,morph}
 %find_lang %srcname-%api_ver
 
+pushd ../%srcname-plugins
+%makeinstall_std
+popd
+
 %files -f %srcname-%api_ver.lang
-%{?_enable_lv_tool:%_bindir/lv-tool}
 %_libdir/*.so.*
 %dir %_libdir/%srcname-%api_ver
 %dir %_libdir/%srcname-%api_ver/actor
@@ -100,7 +154,20 @@ mkdir -p %buildroot%_libdir/%srcname-%api_ver/{actor,input,morph}
 %_libdir/*.a
 %endif
 
+%files plugins
+%_libdir/%srcname-%api_ver/actor/*
+%_libdir/%srcname-%api_ver/input/*
+%_libdir/%srcname-%api_ver/morph/*
+%_datadir/%srcname-plugins-%api_ver/
+
+%{?_enable_lv_tool:%files tools
+%_bindir/lv-tool-%api_ver
+%_man1dir/lv-tool-%{api_ver}.1*}
+
 %changelog
+* Thu Jun 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt2
+- new -plugins,tools subpackages
+
 * Sun Mar 02 2025 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
