@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.12
+Release: alt0.13
 Summary: Application for show information and configure system
 
 License: GPL-3.0+
@@ -58,6 +58,10 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Jun 19 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.13
+- Documentation: localized link fixed.
+- Added translation of context menu.
+
 * Tue Jun 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.0-alt0.12
 - components: fixed install and uninstall.
 
