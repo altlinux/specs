@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 0.12
+%define ver_major 0.13
 
 %def_disable bootstrap
 %def_disable check
@@ -31,7 +31,7 @@ This package provides %{summary}.
 %setup -n %name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
-cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
@@ -51,6 +51,9 @@ cargo cinstall %opts --destdir=%buildroot
 #%doc README*
 
 %changelog
+* Thu Jun 19 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Mon Apr 22 2024 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - first build for Sisyphus
 
