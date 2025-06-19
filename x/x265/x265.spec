@@ -1,7 +1,7 @@
 %define soversion 215
 Name: x265
 Version: 4.1
-Release: alt1
+Release: alt2
 Summary: H.265/HEVC encoder
 License: GPLv2
 Group: Video
@@ -61,15 +61,16 @@ build() {
 %ifarch x86_64 aarch64
 builddir=10bit
     build \
+    -DMAIN10=ON \
     -DENABLE_CLI=OFF \
     -DENABLE_ALTIVEC=OFF \
     -DEXPORT_C_API=OFF \
+    -DENABLE_SHARED=OFF \
     -DHIGH_BIT_DEPTH=ON
 
 builddir=12bit
     build \
     -DHIGH_BIT_DEPTH=ON \
-    -DMAIN12=ON \
     -DENABLE_SHARED=OFF \
     -DEXPORT_C_API=OFF \
     -DENABLE_CLI=OFF \
@@ -87,7 +88,7 @@ ln -s ../10bit/libx265.a 8bit/libx265_main10.a
 builddir=8bit 
     build \
     -DENABLE_SHARED=ON \
-    -DENABLE_HDR10_PLUS=YES \
+    -DHIGH_BIT_DEPTH=OFF \
 %ifarch x86_64 aarch64
     -D EXTRA_LIB='x265_main10.a;x265_main12.a' \
     -D EXTRA_LINK_FLAGS='-L.' \
@@ -117,13 +118,15 @@ test/TestBench || :
 
 %files -n libx265-devel
 %_libdir/libx265.so
-%_libdir/libhdr10plus.so
 %_includedir/x265.h
-%_includedir/hdr10plus.h
 %_includedir/x265_config.h
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 4.1-alt2
+- built libx265 with 8-bit depth as default
+- disabled HDR10+ headers and shared libs
+
 * Thu May 29 2025 Anton Farygin <rider@altlinux.com> 4.1-alt1
 - 3.5 -> 4.1
 - shipped a single libx265.so that now includes 8-/10-/12-bit support
