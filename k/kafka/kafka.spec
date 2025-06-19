@@ -1,6 +1,6 @@
 Name:    kafka
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary: Apache Kafka is a distributed event store and stream-processing platform
 License: Apache-2.0
@@ -12,8 +12,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 ExclusiveArch: x86_64 aarch64 loongarch64
 
 Source: %name-%version.tar
-Source1: gradle-8.7-rc-4-bin.zip
-Source2: gradle-cache.tar
+Source1: gradle-cache.tar
 Source4: kafka.logrotate
 Source5: kafka.service
 Source6: kafka.sysconfig
@@ -23,7 +22,7 @@ Patch0: kafka-pathes.patch
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-17-openjdk-devel
 BuildRequires: maven-local
-BuildRequires: unzip
+BuildRequires: gradle
 
 AutoReqProv: yes, noosgi-fc
 Requires: java >= 17
@@ -39,14 +38,12 @@ low-latency platform for handling real-time data feeds.
 %prep
 %setup
 %patch0 -p1
-unzip %SOURCE1
 test -d ~/.gradle && rm -rf ~/.gradle
-tar xf %SOURCE2 -C ~
+tar xf %SOURCE1 -C ~
 rm -rf bin/windows
 
 %build
-export PATH=$PATH:$PWD/gradle-8.7-rc-4/bin
-gradle releaseTarGz
+gradle releaseTarGz --offline
 
 %install
 mkdir -p %buildroot%_libexecdir/%name
@@ -93,6 +90,9 @@ getent passwd kafka >/dev/null || /usr/sbin/useradd -r \
 %attr(0750,kafka,kafka) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Jun 03 2025 Ivan Khanas <xeno@altlinux.org> 3.9.0-alt2
+- Rebuild with system gradle.
+
 * Sun Mar 02 2025 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
 - New version.
 
