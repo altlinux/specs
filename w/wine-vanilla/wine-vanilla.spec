@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.8
+%define major 10.9
 %define rel %nil
 
 # the packages will conflict with that
@@ -100,13 +100,6 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
     %def_with opencl
 %else
     %def_without opencl
-%endif
-
-# see https://bugzilla.altlinux.org/54434
-%if_feature osmesa 24.04
-    %def_with osmesa
-%else
-    %def_without osmesa
 %endif
 
 %if_feature pcap 1.10.3
@@ -333,11 +326,6 @@ BuildRequires: pkgconfig(netapi)
 
 # for winscard (libpcsclite.so here)
 BuildRequires: libpcsclite-devel
-
-# can be missed on old systems
-%if_with osmesa
-BuildRequires: libOSMesa-devel
-%endif
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -583,7 +571,7 @@ develop programs using %name.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -620,7 +608,6 @@ export LD=lld-%llvm_ver
 	--with-cups \
 	--without-capi \
 	%{subst_with opencl} \
-	%{subst_with osmesa} \
 	%{subst_with pcap} \
 %if_with mingw
 	--with-mingw=%llvm_bindir/clang \
@@ -934,6 +921,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.9-alt1
+- new version 10.9 (with rpmrb script)
+- disable build with libOSMesa-devel (no longer supported)
+
 * Thu May 22 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.8-alt1
 - new version 10.8
 - apply patch to fix build on aarch64 with clang
