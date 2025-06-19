@@ -3,7 +3,7 @@
 %global soname 2
 
 Name: cctz
-Version: 2.4
+Version: 2.5
 Release: alt1
 License: Apache-2.0
 Summary: Translating between absolute and civil times using time zone rules
@@ -72,6 +72,9 @@ LD_LIBRARY_PATH=./ ctest -V
 %_libdir/cmake/cctz
 
 %changelog
+* Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 2.5-alt1
+- 2.4 -> 2.5
+
 * Wed May 22 2024 Anton Farygin <rider@altlinux.ru> 2.4-alt1
 - 2.3 -> 2.4
 
