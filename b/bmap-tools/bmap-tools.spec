@@ -1,17 +1,18 @@
 Name: bmap-tools
-Version: 3.7
+Version: 3.9.0
 Release: alt1
 
 Summary: The better dd for embedded projects, based on block maps.
 
 License: GPL-2.0
 Group: Development/Python3
-Url: https://github.com/intel/bmap-tools
+Url: https://github.com/yoctoproject/bmaptool
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires: rpm-build-python3
+BuildRequires: python3(hatchling)
 
 %description
 bmaptool is a generic tool for creating the block map (bmap) for
@@ -24,20 +25,23 @@ tools, like dd or cp.
 %setup -n %name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -d %{buildroot}/%{_mandir}/man1
 install -m644 docs/man1/bmaptool.1 %{buildroot}/%{_mandir}/man1
 
 %files
 %_bindir/bmaptool
 %{_mandir}/man1/bmaptool.1*
-%python3_sitelibdir/bmaptools/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/bmaptool/
+%python3_sitelibdir/bmaptool-%version.dist-info/
 
 %changelog
+* Thu Jun 19 2025 Vladimir Didenko <cow@altlinux.org> 3.9.0-alt1
+- New version
+
 * Tue Sep 5 2023 Vladimir Didenko <cow@altlinux.org> 3.7-alt1
 - New version
 
