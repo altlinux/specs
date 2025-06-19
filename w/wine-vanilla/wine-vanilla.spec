@@ -9,12 +9,12 @@
 %def_without devel
 %def_with vanilla
 %define gecko_version 2.47.4
-%define mono_version 10.0.0
+%define mono_version 10.1.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.9
+%define major 10.10
 %define rel %nil
 
 # the packages will conflict with that
@@ -921,6 +921,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.10-alt1
+- new version 10.10 (with rpmrb script)
+- set strict require wine-mono 10.0.0
+
 * Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.9-alt1
 - new version 10.9 (with rpmrb script)
 - disable build with libOSMesa-devel (no longer supported)

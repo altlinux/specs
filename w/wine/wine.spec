@@ -9,12 +9,12 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 10.0.0
+%define mono_version 10.1.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 10.x
-%define major 10.9
+%define major 10.10
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -104,10 +104,6 @@ Conflicts: %(%{expand: %%__add_conflict %{*}}) \
 %else
     %def_without opencl
 %endif
-
-# see https://bugzilla.altlinux.org/54434
-# libOSMesa-devel is removed in https://packages.altlinux.org/ru/tasks/385592/
-%def_without osmesa
 
 %if_feature pcap 1.10.3
     %def_with pcap
@@ -337,11 +333,6 @@ BuildRequires: pkgconfig(netapi)
 
 # for winscard (libpcsclite.so here)
 BuildRequires: libpcsclite-devel
-
-# can be missed on old systems
-%if_with osmesa
-BuildRequires: libOSMesa-devel
-%endif
 
 %if_with vulkan
 BuildRequires: libvulkan-devel
@@ -620,7 +611,6 @@ export LD=lld-%llvm_ver
 	--with-cups \
 	--without-capi \
 	%{subst_with opencl} \
-	%{subst_with osmesa} \
 	%{subst_with pcap} \
 %if_with mingw
 	--with-mingw=%llvm_bindir/clang \
@@ -934,6 +924,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Jun 19 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.10.1-alt1
+- new version (10.10) with rpmgs script
+- set strict require wine-mono 10.1.0
+
 * Sun Jun 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1:10.9.1-alt1
 - new version (10.9) with rpmgs script
 - update patches to staging wine-10.9:
