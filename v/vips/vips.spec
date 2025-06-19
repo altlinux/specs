@@ -4,7 +4,7 @@
 %def_disable orc
 
 Name: vips
-Version: 8.16.1
+Version: 8.17.0
 Release: alt1
 
 Summary: Large image processing library
@@ -23,6 +23,9 @@ Source100: vips.watch
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
 BuildRequires: doxygen
+%if_enabled gtk_doc
+BuildRequires: gi-docgen
+%endif
 BuildRequires: gettext-tools
 BuildRequires: perl-devel
 BuildRequires: swig
@@ -43,7 +46,7 @@ BuildRequires: pkgconfig(fftw3) >= 0.6
 BuildRequires: pkgconfig(libheif) >= 1.7.0
 BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(libopenjp2) >= 2.4
-BuildRequires: pkgconfig(libpng) >= 1.2.9
+BuildRequires: pkgconfig(spng)
 BuildRequires: pkgconfig(libtiff-4) >= 4.0.10
 BuildRequires: pkgconfig(libwebp) >= 0.6.0
 BuildRequires: pkgconfig(libxml-2.0)
@@ -141,15 +144,15 @@ GObject introspection devel data for VIPS.
 # TODO: ImageMagick replaced by GraphicsMagick
 # patch0 -p1
 
-%__subst "s|%_bindir/python$|%__python3|" tools/vipsprofile
-
 %build
 %meson \
 	%if_disabled introspection
 	-Dintrospection=false \
 	%endif
-	-Ddoxygen=true \
-	-Dgtk_doc=true \
+	-Dcpp-docs=true \
+%if_enabled gtk_doc
+	-Ddocs=true \
+%endif
 	-Dmagick-module=enabled \
 	-Dmagick=enabled
 
@@ -162,8 +165,7 @@ GObject introspection devel data for VIPS.
 find %buildroot \( -name '*.la' -o -name '*.a' \) -exec rm -f {} ';'
 # remove unneeded wrapper
 rm -fv %buildroot%_bindir/vips%majorver
-rm -fv %buildroot%_docdir/vips-doc/html/*.dot
-rm -v %buildroot%_docdir/vips-doc/html/*.map
+rm -v %buildroot%_docdir/vips-cpp/html/*.map
 
 %files -f vips%majorver.lang
 %_bindir/*
@@ -180,11 +182,11 @@ rm -v %buildroot%_docdir/vips-doc/html/*.map
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 
-%if_enabled gtk_doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/*
-%_docdir/vips-doc/html/*
+%if_enabled gtk_doc
+%_docdir/vips
 %endif
+%_docdir/vips-cpp
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -204,6 +206,10 @@ rm -v %buildroot%_docdir/vips-doc/html/*.map
 # - package python bindings
 
 %changelog
+* Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 8.17.0-alt1
+- 8.17.0.
+- libpng->spng.
+
 * Sun May 18 2025 L.A. Kostis <lakostis@altlinux.ru> 8.16.1-alt1
 - 8.16.1.
 
