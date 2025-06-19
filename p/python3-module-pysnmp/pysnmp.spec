@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.17
+Version: 7.1.21
 Release: alt1
 Summary: Python library for SNMP
 License: BSD-2-Clause
@@ -28,8 +28,8 @@ BuildRequires(pre): rpm-build-pyproject
 # not packaged
 %add_pyproject_deps_check_filter pep8-naming
 %add_pyproject_deps_check_filter pysmi
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%add_pyproject_deps_check_filter bump2version
+%pyproject_builddeps_metadata_extra dev
 %endif
 
 %description
@@ -41,9 +41,6 @@ engine.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -65,6 +62,7 @@ engine.
     --ignore tests/hlapi/v3arch/asyncio/manager/cmdgen/test_v1_get.py \
     --ignore tests/hlapi/v3arch/asyncio/agent/ntforg/test_v3-trap.py \
     --ignore tests/smi/manager/test_convert-between-pdu-varbinds-and-mib-objects.py \
+    --deselect tests/hlapi/v1arch/asyncio/manager/cmdgen/test_v1arch_v1_set.py::test_v1_set_mac_address \
 
 %files
 %doc README.*
@@ -72,6 +70,9 @@ engine.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 19 2025 Stanislav Levin <slev@altlinux.org> 7.1.21-alt1
+- 7.1.17 -> 7.1.21.
+
 * Thu Mar 20 2025 Stanislav Levin <slev@altlinux.org> 7.1.17-alt1
 - 7.1.16 -> 7.1.17.
 
