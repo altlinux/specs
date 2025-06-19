@@ -1,21 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%define soname 3
 
 %def_disable static
 %def_enable rust
 
-Name: gd3
+Name: libgd
 Version: 2.3.3
-Release: alt4
+Release: alt5
 Summary: A graphics library for drawing image files in various formats
-License: BSD-style
+License: GD
 Group: Graphics
 Url: https://libgd.github.io/
-
-# https://github.com/libgd/libgd.git
+VCS: https://github.com/libgd/libgd.git
 Source: %name-%version.tar
-Patch1: gd-2.3.3-upstream-fix_bug_in_HEIF.patch
+Patch1: %name-%version-%release.patch
 
 BuildRequires: fontconfig-devel libXpm-devel libfreetype-devel libjpeg-devel libpng-devel
 BuildRequires: libwebp-devel zlib-devel libtiff-devel
@@ -26,38 +26,34 @@ BuildRequires: libheif-devel
 # needed for tests
 BuildRequires: fonts-ttf-dejavu
 
-%package -n lib%name
+%package -n %name%soname
 Summary: A graphics library for drawing image files in various formats
 Group: System/Libraries
 
-%package -n lib%name-devel
+%package -n %name-devel
 Summary: Development library and header files for lib%name
 Group: Development/C
-Requires: lib%name = %EVR
-Conflicts: libgd-devel < 2.0.4
-Provides:  libgd2-devel = %EVR
-Conflicts: libgd2-devel < %EVR
-Obsoletes: libgd2-devel
+Requires: %name%soname = %EVR
+Provides:  libgd3-devel = %EVR
+Conflicts: libgd3-devel < %EVR
+Obsoletes: libgd3-devel
 
 %if_enabled static
-%package -n lib%name-devel-static
+%package -n %name-devel-static
 Summary: Development static library for lib%name
 Group: Development/C
-Requires: lib%name-devel = %EVR
-Conflicts: libgd-devel-static < 2.0.4
-Provides:  libgd2-devel-static = %EVR
-Conflicts: libgd2-devel-static < %EVR
-Obsoletes: libgd2-devel-static
+Requires: %name-devel = %EVR
 %endif
 
 %package utils
 Summary: Utilities for drawing image files in various formats
 Group: Graphics
-Requires: lib%name = %EVR
-Conflicts: gd-utils < 2.0.4
-Provides:  libgd2-utils = %EVR
-Conflicts: libgd2-utils < %EVR
-Obsoletes: libgd2-utils
+Requires: %name%soname = %EVR
+Provides:  gd-utils = %EVR
+Obsoletes: gd2-utils
+Provides:  gd3-utils = %EVR
+Conflicts: gd3-utils < %EVR
+Obsoletes: gd3-utils
 
 %description
 Gd is a graphics library.  It allows your code to quickly draw images
@@ -78,7 +74,7 @@ graphics package, but version 2.0 does include most frequently
 requested features, including both truecolor and palette images,
 resampling (smooth resizing of truecolor images) and so forth.
 
-%description -n lib%name
+%description -n %name%soname
 Gd is a graphics library for drawing image files in various formats.  Gd
 allows your code to quickly draw images (lines, arcs, text, multiple colors,
 cutting and pasting from other images, flood fills) and write out the result
@@ -86,7 +82,7 @@ as a jpeg, png or wbmp file.  Gd is particularly useful in web applications,
 where jpeg, png or wbmp files are commonly used as inline images.  Note,
 however, that Gd is not a paint program.
 
-%description -n lib%name-devel
+%description -n %name-devel
 Gd is a graphics library for drawing image files in various formats.  Gd
 allows your code to quickly draw images (lines, arcs, text, multiple colors,
 cutting and pasting from other images, flood fills) and write out the result
@@ -95,7 +91,7 @@ where jpeg, png or wbmp files are commonly used as inline images.  Note,
 however, that Gd is not a paint program.
 
 %if_enabled static
-%description -n lib%name-devel-static
+%description -n %name-devel-static
 Gd is a graphics library for drawing image files in various formats.  Gd
 allows your code to quickly draw images (lines, arcs, text, multiple colors,
 cutting and pasting from other images, flood fills) and write out the result
@@ -147,18 +143,19 @@ resampling (smooth resizing of truecolor images) and so forth.
 %make_build -k check
 %endif
 
-%files -n lib%name
+%files -n %name%soname
 %doc COPYING
-%_libdir/*.so.*
+%_libdir/*.so.%soname
+%_libdir/*.so.%soname.*
 
-%files -n lib%name-devel
+%files -n %name-devel
 %doc README.md
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
 
 %if_enabled static
-%files -n lib%name-devel-static
+%files -n %name-devel-static
 %_libdir/*.a
 %endif #static
 
@@ -166,6 +163,10 @@ resampling (smooth resizing of truecolor images) and so forth.
 %_bindir/*
 
 %changelog
+* Thu Jun 19 2025 Anton Farygin <rider@altlinux.com> 2.3.3-alt5
+- Renamed to libgd according upstream name.
+- fixed License tag.
+
 * Mon Jan 13 2025 Alexander Danilov <admsasha@altlinux.org> 2.3.3-alt4
 - Enable gd formats.
 

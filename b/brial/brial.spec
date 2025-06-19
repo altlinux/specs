@@ -3,18 +3,16 @@
 %def_disable python
 
 Name: brial
-Version: 1.2.12
-Release: alt2
+Version: 1.2.14
+Release: alt1
 Summary: Framework for Boolean Rings
 # The entire source code is GPLv2+ except the Cudd directory that is BSD
 License: GPL-2.0+ and BSD-3-Clause
 Group: Sciences/Mathematics
 Url: https://github.com/BRiAl/BRiAl/
+VCS: https://github.com/BRiAl/BRiAl.git
 
 Source: %url/releases/download/%version/%name-%version.tar.bz2
-# The clock function has been removed from python 3.8.  See
-# https://github.com/BRiAl/BRiAl/commit/74d861705c77c3af7e6a2e49dd57f8d26a664072
-Patch: %name-clock.patch
 Patch3500: brial-boost-loongarch64.patch
 
 # cudd/cudd.h:#define CUDD_VERSION "2.5.0"
@@ -22,7 +20,7 @@ Provides: bundled(cudd) = 2.5.0
 
 BuildRequires: gcc-c++
 BuildRequires: boost-program_options-devel
-BuildRequires: libgd3-devel
+BuildRequires: libgd-devel
 BuildRequires: libm4ri-devel
 %if_enabled python
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
@@ -73,7 +71,6 @@ Python 3 interface to %name.
 
 %prep
 %setup
-%patch -p1
 %patch3500 -p1
 
 %build
@@ -118,6 +115,7 @@ make check
 %_includedir/polybori.h
 %_includedir/polybori/
 %_libdir/lib%{name}*.so
+%_pkgconfigdir/%name.pc
 
 %if_enabled python
 %files -n python3-module-%name
@@ -126,6 +124,10 @@ make check
 %endif
 
 %changelog
+* Thu Jun 19 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.14-alt1
+- New version 1.2.14.
+- Added VCS tag.
+
 * Thu Nov 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.2.12-alt2
 - NMU: fixed FTBFS on LoongArch.
 
