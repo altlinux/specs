@@ -1,5 +1,5 @@
 Name: winehelper
-Version: 0.4.3
+Version: 0.4.5
 Release: alt1
 
 Summary: Program for easy installation of Windows applications.
@@ -18,6 +18,7 @@ Requires: p7zip
 %add_findreq_skiplist %_datadir/%name/winetricks_*
 %add_findreq_skiplist %_datadir/%name/autoinstall/*
 %add_findreq_skiplist %_datadir/%name/manualinstall/*
+%add_findreq_skiplist %_datadir/%name/database/*
 
 ExclusiveArch: x86_64
 
@@ -47,6 +48,9 @@ cp -v winetricks_* %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Thu Jun 19 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Wed Jun 18 2025 Mikhail Tergoev <fidel@altlinux.org> 0.4.3-alt1
 - 0.4.3
 - removed requires: fonts-ttf-ms (ALT bug: 54833)
