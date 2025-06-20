@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.8.2
+Version: 1.9.1
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -18,6 +18,7 @@ Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
 Source5: %name.socket
+Patch0: %name-%version-%release.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -32,6 +33,7 @@ There is varying support for collectors on each operating system.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -89,6 +91,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus-node-exporter \\- The Pr
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Thu Jun 05 2025 Artyom Sinyugin <writers@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Mon Aug 26 2024 Alexey Shabalin <shaba@altlinux.org> 1.8.2-alt1
 - 1.8.2
 

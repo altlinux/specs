@@ -3,7 +3,7 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 3.1.0
+Version: 3.4.1
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -20,7 +20,7 @@ Source5: %name.tmpfiles
 Source6: %name.yml
 Patch0: %name-%version-%release.patch
 
-ExclusiveArch:  %go_arches
+ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang >= 1.21
 #BuildRequires: promu
@@ -61,8 +61,8 @@ This package contains the common files and settings for Prometheus.
 # $ npm install
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
-%setup -q
-%patch0 -p1 
+%setup
+%patch0 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -132,7 +132,6 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 
 %preun
 %preun_service %name
-
 %files
 %doc LICENSE README.md docs documentation/examples
 %_bindir/*
@@ -148,6 +147,9 @@ sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Promet
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Thu Jun 19 2025 Artyom Sinyugin <writers@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Fri Feb 14 2025 Artyom Sinyugin <writers@altlinux.org> 3.1.0-alt1
 - 3.1.0
 
