@@ -1,11 +1,11 @@
 %define soversion 1
-%define llvmversion 14
+%define llvmversion 15
 %define prefix legacy1
 %define optflags_lto %nil
 
 Name: intel-compute-runtime-legacy
 Version: 24.35.30872.32
-Release: alt2
+Release: alt3
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -70,7 +70,7 @@ functions, unified memory, and I/O capabilities..
 %patch1 -p1
 
 %build
-export ALTWRAP_LLVM_VERSION=14.0
+export ALTWRAP_LLVM_VERSION=%llvmversion.0
 %cmake -G Ninja \
  -DCMAKE_C_COMPILER=/usr/bin/clang \
  -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
@@ -95,6 +95,9 @@ export ALTWRAP_LLVM_VERSION=14.0
 %_libdir/libze_intel_gpu_%prefix.so.%soversion
 
 %changelog
+* Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 24.35.30872.32-alt3
+- Rebuild w/ llvm15.
+
 * Mon Feb 03 2025 L.A. Kostis <lakostis@altlinux.ru> 24.35.30872.32-alt2
 - Rebuild w/ llvm14 and disable LTO.
 
