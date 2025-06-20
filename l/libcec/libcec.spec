@@ -1,5 +1,5 @@
 Name: libcec
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 
 Summary: CEC support shared library
@@ -77,6 +77,9 @@ sed -ri '/set_target_properties.+\sPROPERTIES\sVERSION/d' src/cec*-client/CMakeL
 %python3_sitelibdir/cec.py
 
 %changelog
+* Fri Jun 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 7.1.0-alt1
+- 7.1.0 released
+
 * Mon Mar 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 7.0.0-alt1
 - 7.0.0 released
 
