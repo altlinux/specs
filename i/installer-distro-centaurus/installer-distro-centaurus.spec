@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro
 License: GPL-2.0-only
@@ -68,6 +68,9 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %install2dir/*.d/*
 %files stage3
 %changelog
+* Fri Jun 20 2025 Dmitry Terekhin <jqt4@altlinux.org> 11.0-alt2
+- 95-virt-env.sh: VM support
+
 * Tue Apr 15 2025 Evgeny Sinelnikov <sin@altlinux.org> 11.0-alt1
 - 35-disable-systemd-networkd.sh: by default in alt-server
 - installer-steps: change final step from release-notes to final-notes
