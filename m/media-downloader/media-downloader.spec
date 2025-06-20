@@ -1,5 +1,5 @@
 Name: media-downloader
-Version: 5.1.0
+Version: 5.4.0
 Release: alt1
 
 Summary: GUI frontend to multiple CLI based downloading programs
@@ -65,6 +65,15 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Jun 20 2025 Ivan Mazhukin <vanomj@altlinux.org> 5.4.0-alt1
+- new version 5.4.0 (with rpmrb script)
+
+* Tue Mar 04 2025 Ivan Mazhukin <vanomj@altlinux.org> 5.3.0-alt1
+- new version 5.3.0 (with rpmrb script)
+
+* Thu Nov 14 2024 Ivan Mazhukin <vanomj@altlinux.org> 5.2.0-alt1
+- new version 5.2.0 (with rpmrb script)
+
 * Tue Sep 17 2024 Ivan Mazhukin <vanomj@altlinux.org> 5.1.0-alt1
 - new version 5.1.0 (with rpmrb script)
 
