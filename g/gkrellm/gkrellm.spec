@@ -1,21 +1,18 @@
 Name: gkrellm
-Version: 2.3.11
+Version: 2.4.0
 Release: alt1
 
 Summary: Multiple stacked system monitors
 License: GPLv3+
 Group: Monitoring
-Url: http://gkrellm.net/
+Url: https://gkrellm.srcbox.net
+Vcs: https://git.srcbox.net/gkrellm/gkrellm
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source0: %name-%version.tar
-Source1: gkrellm_16.xpm
-Source2: gkrellm_32.xpm
-Source3: gkrellm_48.xpm
-Source4: gkrellm-2.3.1-alt-init
-Source5: gkrellm-2.2.8-alt-sysconfig
-Patch0: %name-2.3.8-aticonfig.patch
+Source1: gkrellm-2.3.1-alt-init
+Source2: gkrellm-2.2.8-alt-sysconfig
 
 # for gkrellm >= 2.2.0
 Requires: libgtk+2 >= 2.3.1
@@ -51,9 +48,8 @@ Gkrellm server allows connections from Gkrellm clients over network.
 
 %prep
 %setup
-%patch0 -p2
 
-subst 's|^FLAGS = \(.*\)|FLAGS = %optflags \1|' src/Makefile
+subst 's|^FLAGS = \(.*\)|FLAGS = %optflags \1|' {src,server}/Makefile
 
 # gkrellmd tuning
 subst 's,^#allow-host\tlocalhost,allow-host	localhost,g' server/gkrellmd.conf
@@ -77,17 +73,12 @@ mkdir -p %buildroot%_desktopdir
 	INSTALLROOT=%buildroot%prefix \
 	PKGCONFIGDIR=%buildroot%_pkgconfigdir
 
-mkdir -p %buildroot%_niconsdir
-mkdir -p %buildroot%_liconsdir
-mkdir -p %buildroot%_miconsdir
+rm -rf %buildroot%_iconsdir/hicolor/{24x24,64x64}
 
-install -m 644 %SOURCE2 %buildroot%_niconsdir/gkrellm.xpm
-install -m 644 %SOURCE3 %buildroot%_liconsdir/gkrellm.xpm
-install -m 644 %SOURCE1 %buildroot%_miconsdir/gkrellm.xpm
-
-install -D -m755 %SOURCE4 %buildroot%_initdir/gkrellmd
-install -D -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/gkrellmd
-install -D -m644 server/gkrellmd.conf %buildroot%_sysconfdir/gkrellmd.conf
+install -D -m755 %SOURCE1 %buildroot%_initdir/gkrellmd
+install -D -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/gkrellmd
+# we're not there yet
+mv %buildroot%_prefix/etc/gkrellmd.conf %buildroot%_sysconfdir/gkrellmd.conf
 
 cat > %buildroot%_desktopdir/%name.desktop << __EOF__
 [Desktop Entry]
@@ -110,17 +101,17 @@ __EOF__
 %post_service gkrellmd
 %preun -n gkrellmd
 %preun_service gkrellmd
-
 %files -f %name.lang
-%doc COPYRIGHT Changelog CREDITS README *.html
+%doc COPYRIGHT CHANGELOG.md Changelog.OLD CREDITS README *.html
 %_bindir/gkrellm
 %_desktopdir/*
 %_man1dir/gkrellm.*
 %dir %_libdir/gkrellm2
 %_libdir/gkrellm2/*
-%_niconsdir/gkrellm.xpm
-%_liconsdir/gkrellm.xpm
-%_miconsdir/gkrellm.xpm
+%_niconsdir/gkrellm.png
+%_liconsdir/gkrellm.png
+%_miconsdir/gkrellm.png
+%_datadir/metainfo/*.xml
 
 %files devel
 %dir %_includedir/gkrellm2
@@ -129,12 +120,20 @@ __EOF__
 
 %files -n gkrellmd
 %_bindir/gkrellmd
+%_unitdir/gkrellmd.service
 %config(noreplace) %_initdir/gkrellmd
 %config(noreplace) %_sysconfdir/sysconfig/gkrellmd
 %config(noreplace) %_sysconfdir/gkrellmd.conf
 %_man1dir/gkrellmd.*
 
 %changelog
+* Fri Jun 20 2025 L.A. Kostis <lakostis@altlinux.ru> 2.4.0-alt1
+- 2.4.0.
+- server: apply optflags.
+- server: added systemd unit.
+- Update Url/Vcs.
+- Remove outdated aticonfig patch.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.11-alt1
 - Build new version 2.3.11-alt1.
 - Clean up changelog.
