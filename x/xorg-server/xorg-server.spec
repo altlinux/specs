@@ -25,7 +25,7 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 21.1.17
+Version: 21.1.18
 Release: alt1
 Epoch: 2
 License: MIT X11
@@ -260,6 +260,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Jun 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.18-alt1
+- 21.1.18
+
 * Wed Jun 18 2025 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.17-alt1
 - 21.1.17
 
