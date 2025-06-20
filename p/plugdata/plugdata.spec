@@ -1,7 +1,7 @@
 ExcludeArch: ppc64le %ix86
 
 Name: plugdata
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: JUCE-based plugin wrapper for Pure Data visual programming language
@@ -129,6 +129,9 @@ install -D -m 644 %SOURCE100 %buildroot%_datadir/applications/plugdata.desktop
 %doc README* LICENSE*
 
 %changelog
+* Thu Jun 19 2025 Aleksandr Yukhnenko <neff@altlinux.org> 0.9.1-alt1
+- Version 0.9.1.
+
 * Wed Jun 11 2025 Aleksandr Yukhnenko <neff@altlinux.org> 0.9.0-alt1
 - Version 0.9.0.
 - Build for more architectures.
