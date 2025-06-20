@@ -2,7 +2,7 @@
 
 Name: psi-plus
 Version: 1.5.2076
-Release: alt1
+Release: alt2
 
 Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber-клиент Psi+
@@ -532,6 +532,9 @@ Each element can contain a regular expression to check for matches with JID, fro
 %ifarch %e2k
 # error: pointless comparison of unsigned integer with zero
 sed -i 's/-Werror/-Wno-error/g' usrsctp/CMakeLists.txt
+# error: no instance of function template "std::construct_at" matches the argument list
+sed -i "/struct Item {/a Item(PsiIcon *icon1=nullptr, const EmojiRegistry::Emoji \
+	*emoji1=nullptr) : icon(icon1), emoji(emoji1) {}" src/widgets/iconselect.cpp
 %endif
 %patch5 -p1
 mv usrsctp/ iris/3rdparty/
@@ -678,6 +681,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandc
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Fri Jun 20 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.2076-alt2
+- e2k build fix
+
 * Thu Sep 05 2024 Oleg Solovyov <mcpain@altlinux.org> 1.5.2076-alt1
 - Version 1.5.2076
 - build with Qt6
