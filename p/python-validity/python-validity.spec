@@ -1,7 +1,7 @@
 %global pypi_name validity
 
 Name: python-%pypi_name
-Version: 0.14
+Version: 0.15
 Release: alt0.1
 Summary: Validity fingerprint sensor driver
 Group: Development/Python
@@ -69,6 +69,9 @@ install -m 0644 scripts/factory-reset.py %buildroot%_datadir/%name/playground/
 %_datadir/%name/playground
 
 %changelog
+* Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.15-alt0.1
+- 0.15.
+
 * Thu Nov 03 2022 L.A. Kostis <lakostis@altlinux.ru> 0.14-alt0.1
 - 0.14.
 - update python macros.

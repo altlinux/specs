@@ -1,8 +1,9 @@
 %define openfprintdlibdir %_libexecdir/open-fprintd
+%define pypi_name openfprintd
 
 Name: open-fprintd
-Version: 0.6
-Release: alt0.2
+Version: 0.7
+Release: alt0.1
 Group: System/Servers
 Summary: Replacement of package fprintd for standalone backend services
 
@@ -13,8 +14,9 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 Requires: python3-module-%name = %EVR
 
@@ -22,7 +24,7 @@ Requires: python3-module-%name = %EVR
 Conflicts: fprintd
 
 %package -n python3-module-%name
-Group: Development/Python
+Group: Development/Python3
 Summary: Python3 modules for %name
 
 %description
@@ -36,12 +38,13 @@ Python3 modules for %name
 %prep
 %setup
 %patch
+subst "s,version='0.6',version='%version',g" setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 mkdir -p %buildroot/%_unitdir
 install -m 0644 debian/open-fprintd.service %buildroot/%_unitdir/
@@ -59,10 +62,14 @@ install -m 0644 debian/open-fprintd-resume.service %buildroot/%_unitdir/
 %_datadir/dbus-1/system.d/net.reactivated.Fprint.conf
 
 %files -n python3-module-%name
-%python3_sitelibdir/openfprintd/
-%python3_sitelibdir/open_fprintd-%version-py*.egg-info/
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/open_fprintd-%version.dist-info/
 
 %changelog
+* Thu Jun 19 2025 L.A. Kostis <lakostis@altlinux.ru> 0.7-alt0.1
+- 0.7.
+- spec: modernize python macros.
+
 * Tue Jun 29 2021 L.A. Kostis <lakostis@altlinux.ru> 0.6-alt0.2
 - Fix unowned dirs.
 
