@@ -2,7 +2,7 @@
 
 Name:		viking
 Version:	1.10
-Release:	alt1
+Release:	alt2
 
 Summary:	GPS data editor, analyzer and viewer
 
@@ -36,6 +36,8 @@ BuildRequires: pkgconfig(nettle)
 BuildRequires: libnova-devel
 
 Requires: gpsbabel
+Requires: /usr/bin/unbuffer
+Requires: geoclue2
 
 %description
 Viking aims to be easy to use, yet powerful in accomplishing a wide
@@ -93,6 +95,10 @@ make check
 %_datadir/help/C/%name/*
 
 %changelog
+* Fri Jun 20 2025 Nikolay Strelkov <snk@altlinux.org> 1.10-alt2
+- Added missed /usr/bin/unbuffer dependency for Log window
+- Added missed geoclue2 dependency for Location
+
 * Sun Jun 15 2025 Nikolay Strelkov <snk@altlinux.org> 1.10-alt1
 - Actual gtk3-based version
 
