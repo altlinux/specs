@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -102,6 +102,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Thu Jun 19 2025 Anton Midyukov <antohami@altlinux.org> 0.4.5-alt1
+- postinstall.d/91-alterator-setup: use exec_chroot function
+
 * Sat Feb 08 2025 Anton Midyukov <antohami@altlinux.org> 0.4.4-alt1
 - 95-remove-setup-pkgs.sh: fix remove alterator-setup
 
