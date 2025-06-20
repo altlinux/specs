@@ -12,17 +12,18 @@
 %define nagios_evhdir %_libexecdir/nagios/eventhandlers
 
 Name: nagios
-Version: 3.0.6
-Release: alt18
+Version: 4.5.9
+Release: alt1
 
 Summary: Services and network monitoring system
-License: GPL
+License: GPL-2.0
 Group: Monitoring
 URL: http://www.nagios.org
+Vcs: https://github.com/NagiosEnterprises/nagioscore.git
 
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 Source1: %name-init
 
 # default user/password file for Nagios(R)
@@ -44,19 +45,11 @@ Source13: %name-lighttpd.conf
 Source14: nagios-tmpfiles.conf
 
 # fix some default paths
-Patch0: nagios-3.0.2-alt-makefile.patch
-Patch1: nagios-3.0.2-alt-eperlfix.patch
-Patch2: nagios-3.0-alt-paths.patch
-Patch3: nagios-3.0.6-alt-scripts.patch
-Patch4: nagios-3.0.6-alt-config.patch
-Patch10: nagios-3.0.2-nagiosdevlist-disable-contactgroup-svc-notifications.patch
-Patch11: nagios-3.0.6-alt-warnings.patch
-Patch12: nagios-3.0.6-alt-ignore-empty-hostgroups.patch
-Patch13: nagios-3.0.6-alt-format-comments.patch
-Patch14: nagios-3.0.6-CVE-2014-1878.patch
-Patch15: nagios-3.0.6-CVE-2016-9566.patch
-Patch16: nagios-3.0.6-CVE-2016-8641.patch
-Patch17: nagios-3.0.6-CVE-2017-12847.patch
+Patch0: nagios-4.5.9-alt-makefile.patch
+Patch1: nagios-4.5.9-alt-paths.patch
+Patch2: nagios-3.0.6-alt-scripts.patch
+Patch3: nagios-4.5.9-alt-config.patch
+Patch4: nagios-4.5.9-alt-format-comments.patch
 
 ###########################################
 # Provide the abstract service names (which are virtual pkg names),
@@ -71,11 +64,15 @@ Conflicts: nagios-daemon < %name:%version-%release
 Conflicts: nagios-daemon > %name:%version-%release
 #
 ########################################
-PreReq: %name-common = %version-%release
+Requires(pre,postun): %name-common = %version-%release
 Requires: nagios-plugins
 
 # Automatically added by buildreq on Mon Oct 17 2011
-BuildRequires: glib2-devel libgd2-devel libjpeg-devel libltdl7-devel libpng-devel perl-devel traceroute
+BuildRequires: glib2-devel libjpeg-devel libltdl7-devel libpng-devel perl-devel traceroute
+BuildRequires: /proc
+BuildRequires: unzip
+BuildRequires: pkgconfig(gdlib)
+BuildRequires: pkgconfig(libssl)
 
 %description
 Nagios(R) is a host and service monitor designed to inform you of network
@@ -109,7 +106,7 @@ browser.
 Summary: Nagios(R) web-interface
 Group: Monitoring
 #reReq: %name-common = %version-%release webserver
-PreReq: %name-common = %version-%release
+Requires(pre,postun): %name-common = %version-%release
 Obsoletes: nagios-default-www nagios-mysql-www nagios-pgsql-www
 
 %description www
@@ -128,7 +125,7 @@ browser.
 %package www-apache2
 Summary: Apache 2.x web-server configuration for Nagios(R) web-interface
 Group: Monitoring
-PreReq: %name-www = %version-%release apache2
+Requires(pre,postun): %name-www = %version-%release apache2
 
 %description www-apache2
 Web-server settings and environment tuning for run Nagios(R) web-interface
@@ -137,7 +134,7 @@ with Apache 2.x.
 %package www-lighttpd
 Summary: Lighttpd web-server configuration for Nagios(R) web-interface
 Group: Monitoring
-PreReq: %name-www = %version-%release lighttpd
+Requires(pre,postun): %name-www = %version-%release lighttpd
 
 %description www-lighttpd
 Web-server settings and environment tuning for run Nagios(R) web-interface
@@ -154,9 +151,9 @@ HTML-documentation for Nagios(R) monitoring system.
 %package full
 Summary: Services and network monitor. Virtual package for complete install
 Group: Monitoring
-PreReq: nagios-common
-PreReq: nagios
-PreReq: nagios-www
+Requires(pre,postun): nagios-common
+Requires(pre,postun): nagios
+Requires(pre,postun): nagios-www
 Requires: nagios-plugins
 Requires: nagios-plugins-local
 Requires: nagios-plugins-network
@@ -167,19 +164,11 @@ Virtual package for complete install of Nagios(R) monitoring system.
 
 %prep
 %setup -q
-%patch0 -p1 -b .p0
-%patch1 -p1 -b .p1
+%patch0 -b .p0
+%patch1 -b .p1
 %patch2 -p1 -b .p2
-%patch3 -p1 -b .p3
-%patch4 -p1 -b .p4
-%patch10 -p1 -b .p10
-%patch11 -p1 -b .p11
-%patch12 -p2 -b .p12
-%patch13 -p2 -b .p13
-%patch14 -p2 -b .p14
-%patch15 -p2 -b .p15
-%patch16 -p2 -b .p16
-%patch17 -p2 -b .p17
+%patch3 -b .p3
+%patch4 -b .p4
 
 %build
 PATH=$PATH:/usr/sbin
@@ -213,34 +202,33 @@ make DESTDIR=%buildroot install-config
 make DESTDIR=%buildroot install-contrib
 
 # install init-script
-mkdir -p %buildroot/%_initrddir
-install -m 0755 %SOURCE1 %buildroot/%_initrddir/%name
+mkdir -p %buildroot%_initrddir
+install -m 0755 %SOURCE1 %buildroot%_initrddir/%name
 
 # install modules and eventhandlers
-mkdir -p %buildroot/%nagios_moddir
-mkdir -p -m 0755 %buildroot/%nagios_evhdir
+mkdir -p %buildroot%nagios_moddir
+mkdir -p -m 0755 %buildroot%nagios_evhdir
 pushd contrib/eventhandlers
  for file in `/bin/find ./ -type f -print` ; do
-  install -m 0755 $file %buildroot/%nagios_evhdir
+  install -m 0755 $file %buildroot%nagios_evhdir
  done
 popd
 
 # misc dirs and files
-mkdir -p %buildroot/%extinfo_cfgdir
-mkdir -p %buildroot/%_localstatedir/%name/tmp
-mkdir -p %buildroot/%_spooldir/%name
+mkdir -p %buildroot%extinfo_cfgdir
+mkdir -p %buildroot%_localstatedir/%name/tmp
+mkdir -p %buildroot%_spooldir/%name
 mkdir -p %buildroot/var/run/%name
 
 #instal docs
-mkdir -p -m 0755 %buildroot/%_docdir/%name-%version/html
-cp -r html/docs/* %buildroot/%_docdir/%name-%version/html
-install -m 0644 Changelog %buildroot/%_docdir/%name-%version/
-install -m 0644 INSTALLING %buildroot/%_docdir/%name-%version/
-install -m 0644 LEGAL %buildroot/%_docdir/%name-%version/
-install -m 0644 README %buildroot/%_docdir/%name-%version/
-install -m 0644 THANKS %buildroot/%_docdir/%name-%version/
-install -m 0644 UPGRADING %buildroot/%_docdir/%name-%version/
-install -m 0644 OutputTrap.pm %buildroot/%_docdir/%name-%version/
+mkdir -p -m 0755 %buildroot%_docdir/%name-%version/html
+cp -r html/docs/* %buildroot%_docdir/%name-%version/html
+install -m 0644 Changelog %buildroot%_docdir/%name-%version/
+install -m 0644 INSTALLING %buildroot%_docdir/%name-%version/
+install -m 0644 LEGAL %buildroot%_docdir/%name-%version/
+install -m 0644 README.md %buildroot%_docdir/%name-%version/
+install -m 0644 THANKS %buildroot%_docdir/%name-%version/
+install -m 0644 UPGRADING %buildroot%_docdir/%name-%version/
 
 # install Nagios(R) .htusers default file
 install -m 0640 %SOURCE2 %buildroot/%_sysconfdir/%name/
@@ -330,9 +318,6 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %nagios_evhdir/obsessive_svc_handler
 %nagios_evhdir/submit_check_result
 %nagios_evhdir/submit_check_result_via_nsca
-%_libexecdir/%name/p1.pl
-%dir %_libexecdir/%name/contrib
-%_libexecdir/%name/contrib/*
 
 %dir %_datadir/%name
 
@@ -379,7 +364,12 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %_libexecdir/%name/cgi/summary.cgi
 %_libexecdir/%name/cgi/tac.cgi
 %_libexecdir/%name/cgi/trends.cgi
-
+%_libexecdir/%name/cgi/archivejson.cgi
+%_libexecdir/%name/cgi/objectjson.cgi
+%_libexecdir/%name/cgi/statusjson.cgi
+%_libexecdir/%name/contrib
+%dir %_libexecdir/%name/eventhandlers
+%_libexecdir/%name/eventhandlers/*.p2
 
 %files www-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/mods-start.d/100-nagios.conf
@@ -396,6 +386,9 @@ subst 's|# Nagios(R) web-interface settings||' /etc/lighttpd/lighttpd.conf
 %files full
 
 %changelog
+* Fri Jun 20 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 4.5.9-alt1
+- new version
+
 * Fri Dec 01 2023 Igor Vlasenko <viy@altlinux.org> 3.0.6-alt18
 - NMU: removed tmp hack (next time make -j1 should help?)
 

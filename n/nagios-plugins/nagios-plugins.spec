@@ -7,19 +7,19 @@
 %define nagios_grp nagios
 
 Name: nagios-plugins
-Version: 2.2.1
+Version: 2.4.12
 Release: alt1
 
 Summary: Host/service/network monitoring plug-ins for Nagios(R)
 Summary(ru_RU.UTF-8): Модули мониторинга (plug-ins) хостов/сервисов/сети для Nagios(R)
 
-License: GPL
+License: GPL-3.0
 Group: Monitoring
 URL: http://nagiosplug.sourceforge.net
+Vcs: https://github.com/nagios-plugins/nagios-plugins.git
 
 Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
-# Source0-url: https://nagios-plugins.org/download/nagios-plugins-%version.tar.gz
 Source0: %name-%version.tar
 Source1: notify_via_jabber
 Source2: nagios-plugins-README.ALT.UTF-8
@@ -37,21 +37,9 @@ Source18: nagios-plugins-perl.cfg
 Source19: nagios-plugins-snmp.cfg
 Source20: nagios-plugins-extra.cfg
 
-Patch0: %name-1.4.11-alt-perlfix.patch
-Patch1: %name-1.4.14-alt-makefile.patch
-# add needed packages to requires
-#Patch2: %name-1.4.13-alt-configure.patch
+Patch1: %name-%version-alt-makefile.patch
 Patch3: %name-1.4.12-alt-pgsql.patch
-Patch4: %name-1.4.13-alt-hasher-hack.patch
-Patch5: nagios-plugins-1.4.15-alt-glibc-2.16.patch
-
-# patches from Fedora
-Patch101: nagios-plugins-0001-Do-not-use-usr-local-for-perl.patch
 Patch102: nagios-plugins-0002-Remove-assignment-of-not-parsed-to-jitter.patch
-Patch103: nagios-plugins-0003-Fedora-specific-fixes-for-searching-for-diff-and-tai.patch
-Patch105: nagios-plugins-0005-Patch-for-check_linux_raid-with-on-linear-raid0-arra.patch
-Patch106: nagios-plugins-0006-Prevent-check_swap-from-returning-OK-if-no-swap-acti.patch
-
 
 %define _perl_lib_path %nagios_plugdir
 
@@ -60,6 +48,10 @@ Requires: iputils procps
 
 # Automatically added by buildreq on Tue Aug 12 2008
 BuildRequires: libMySQL-devel libldap-devel libradiusclient-ng-devel libpq-devel libssl-devel postgresql-devel zlib-devel perl-Math-BigInt perl-Net-SNMP
+BuildRequires: perl(Crypt/X509.pm)
+BuildRequires: perl(Date/Parse.pm)
+BuildRequires: perl(LWP/Simple.pm)
+BuildRequires: perl(Text/Glob.pm)
 
 # checked in configure checking
 BuildRequires: iputils procps fping qstat rpcbind bind-utils net-snmp-clients openssh-clients glibc-utils samba-client
@@ -83,7 +75,7 @@ RPM-based system.
 %package common
 Summary: Common files for Nagios(R) plug-ins
 Group: Monitoring
-PreReq: nagios-daemon
+Requires(pre): nagios-daemon
 
 %description common
 Common files for Nagios(R) plugi-ins.
@@ -184,18 +176,9 @@ are not installed on all systems.
 
 %prep
 %setup -n %name-%version
-#patch0 -p1 -b .p0
-%patch1 -p2 -b .p1
-#patch2 -p1 -b .p2
+%patch1 -b .p1
 %patch3 -p1 -b .p3
-#patch4 -p1 -b .p4
-#patch5 -p2 -b .p5
-
-#patch101 -p1 -b .p101
 %patch102 -p1 -b .p102
-#patch103 -p1 -b .p103
-#patch105 -p1 -b .p105
-#patch106 -p1 -b .p106
 
 # fix ps checking
 %__subst "s|\[UCOMAND\]+|COMMAND|g" configure*
@@ -226,6 +209,7 @@ export ac_cv_path_PATH_TO_FPING=%_sbindir/fping
 	#
 
 %make_build
+%make THANKS
 
 %install
 #chmod 0644 command.cfg
@@ -282,6 +266,7 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %nagios_plugdir/check_load
 %nagios_plugdir/check_uptime
 %nagios_plugdir/check_procs
+%nagios_plugdir/check_ssl_validity
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/*
 
@@ -297,6 +282,7 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %nagios_plugdir/check_mrtgtraf
 %nagios_plugdir/check_swap
 %nagios_plugdir/check_users
+%nagios_plugdir/remove_perfdata
 
 %files network
 %plugins_cmddir/nagios-plugins-network.cfg
@@ -379,6 +365,9 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 #_docdir/%name-extra-%version/*
 
 %changelog
+* Thu Jun 19 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.4.12-alt1
+- new version 2.4.12
+
 * Mon Nov 05 2018 Vitaly Lipatov <lav@altlinux.ru> 2.2.1-alt1
 - new version 2.2.1 (with rpmrb script)
 
