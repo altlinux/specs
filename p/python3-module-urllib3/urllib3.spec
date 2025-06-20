@@ -22,8 +22,8 @@ Extra "%1" for %%pypi_name. \
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.4.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
@@ -84,6 +84,9 @@ export NO_VENDORED_HYPERCORN=yes
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jun 19 2025 Stanislav Levin <slev@altlinux.org> 2:2.5.0-alt1
+- 2.4.0 -> 2.5.0.
+
 * Thu Jun 05 2025 Stanislav Levin <slev@altlinux.org> 2:2.4.0-alt2
 - Fixed FTBFS.
 
