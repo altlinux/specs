@@ -2,7 +2,7 @@
 
 Name: perl-Memory-Usage
 Version: 0.201
-Release: alt1
+Release: alt2
 
 Summary: Tools to determine actual memory usage
 License: %perl_license
@@ -38,11 +38,14 @@ Group: Development/Perl
 
 %files
 %_bindir/module-size
-%perl_vendor_privlib/Memory/Usage.pm
+%perl_vendor_privlib/Memory*
 
 %files doc
 %_man1dir/*
 
 %changelog
+* Wed Jun 11 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.201-alt2
+- Fix dubious ownership according to perl policy.
+
 * Tue May 06 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.201-alt1
 - Initial build.
