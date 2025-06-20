@@ -5,7 +5,7 @@
 
 Name:    gitea
 Version: 1.24.0
-Release: alt1
+Release: alt2
 
 Summary: Git with a cup of tea, painless self-hosted git service
 
@@ -121,6 +121,9 @@ useradd -r -g %name -c 'Gitea daemon' \
 
 
 %changelog
+* Thu Jun 19 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.24.0-alt2
+- Fix bug in new patch file.
+
 * Tue Jun 17 2025 Aleksandr Gamzin <gamzin@altlinux.org> 1.24.0-alt1
 - 1.24.0.
 - New patch file beacause of changes in app.example.ini.
