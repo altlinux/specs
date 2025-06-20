@@ -1,7 +1,7 @@
 ExcludeArch: ppc64le %ix86
 
 Name: dexed
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 License: GPLv3
@@ -114,6 +114,9 @@ install -D -m 644 %SOURCE100 %buildroot%_datadir/applications/dexed.desktop
 %doc README* LICENSE*
 
 %changelog
+* Fri Jun 20 2025 Aleksandr Yukhnenko <neff@altlinux.org> 0.9.8-alt1
+- Version 0.9.8.
+
 * Mon Jun 16 2025 Aleksandr Yukhnenko <neff@altlinux.org> 0.9.7-alt1
 - Version 0.9.7.
 - Build CLAP plugin.
