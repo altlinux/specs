@@ -92,8 +92,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 25.0
-%define ver_minor 7
+%define ver_major 25.1
+%define ver_minor 4
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -204,13 +204,6 @@ This package contains the mesa implementation of the OpenCL (Open Compute
 Language) library, which is intended for use with an ICD loader. OpenCL
 provides a standardized interface for computational analysis on graphical
 processing units.
-
-%package -n libOSMesa
-Summary: Mesa offscreen rendering libraries
-Group: System/Libraries
-
-%description -n libOSMesa
-%summary
 
 %package -n libd3d
 Summary: Mesa Direct3D9 state tracker
@@ -363,7 +356,6 @@ tar -xf subprojects.tar
 %ifarch armh
 	-Dlibunwind=false \
 %endif
-	-Dosmesa=true \
 	-Dgles1=disabled \
 	-Dopengl=true \
 	-Dglvnd=enabled \
@@ -435,7 +427,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/libgbm.so.*
 
 %files -n libgbm-devel
-%_includedir/gbm.h
+%_includedir/gbm*.h
 %_libdir/libgbm.so
 %_pkgconfigdir/gbm.pc
 
@@ -456,9 +448,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_sysconfdir/OpenCL/vendors/mesa.icd
 %_libdir/libMesaOpenCL.so.*
 %endif
-
-%files -n libOSMesa
-%_libdir/libOSMesa.so.*
 
 %files -n libd3d
 %dir %_libdir/d3d
@@ -569,6 +558,15 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Jun 20 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.1.4-alt1
+- 25.1.4
+
+* Tue Jun 10 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.1.3-alt1
+- 25.1.3
+
+* Thu Jun 05 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.1.2-alt1
+- 25.1.2
+
 * Thu May 29 2025 Valery Inozemtsev <shrek@altlinux.ru> 4:25.0.7-alt1
 - 25.0.7
 - removed libOSMesa-devel subpackage, because libOSMesa will be removed in the next version
