@@ -3,7 +3,7 @@
 
 Name:           hamlib
 Version:        4.6.3
-Release:        alt1
+Release:        alt2
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -15,7 +15,7 @@ Source0:        %name-%version.tar
 Patch0:         hamlib-3.2-bindings.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  gcc-c++
-BuildRequires:  python3-dev swig libgd2-devel libxml2-devel tcl-devel
+BuildRequires:  python3-dev swig libgd-devel zlib-devel libxml2-devel tcl-devel
 BuildRequires:  libusb-devel pkgconfig boost-devel libltdl-devel
 BuildRequires:  doxygen
 BuildRequires:  perl-devel
@@ -162,6 +162,9 @@ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name Hamlib.bs -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 
+%check
+LD_LIBRARY_PATH=%buildroot/%_libdir %make check
+
 %files
 %doc AUTHORS ChangeLog PLAN COPYING.LIB COPYING README THANKS
 %doc README.developer
@@ -210,6 +213,10 @@ find $RPM_BUILD_ROOT -type f -name perltest.pl -exec rm -f {} ';'
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Fri Jun 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.3-alt2
+- Fix FTBFS with libgd and libz.
+- Enable %%check.
+
 * Tue Jun 10 2025 Andrew A. Vasilyev <andy@altlinux.org> 4.6.3-alt1
 - New version 4.6.3.
 
