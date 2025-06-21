@@ -4,7 +4,7 @@
 %define module_name pytest_run_parallel
 
 Name: python3-module-%pypi_name
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: A simple pytest plugin to run tests concurrently
@@ -56,11 +56,14 @@ in programs that make use of the CPython interpreter.
 %pyproject_run_pytest
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.md
 %python3_sitelibdir/%module_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Jun 21 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.4.4-alt1
+- Updated to 0.4.4.
+
 * Tue May 27 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.4.3-alt1
 - Updated to 0.4.3.
 
