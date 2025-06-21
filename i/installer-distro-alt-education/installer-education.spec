@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.0
-Release: alt5
+Release: alt6
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -95,12 +95,18 @@ Volumes profile for ALT Education.
 rm -rf %buildroot%_datadir/alterator/help/ru_RU \
        %buildroot%_datadir/alterator/help/ru_UA \
        %buildroot%_datadir/alterator/steps
+
+# Don't expand groups lists
+mkdir -p %buildroot%_sysconfdir/alterator
+echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
+
 %find_lang alterator-simply-linux
 
 %files -f alterator-simply-linux.lang
 %_datadir/install2/help/*
 
 %files stage2
+%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/installer-steps
 %_datadir/install2/*.d/*
 %exclude %_datadir/install2/initinstall.d/10-vm-profile.sh
@@ -116,6 +122,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sat Jun 21 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt6
+- stage2: Add pkg-groups.conf with hidden details for group during installation.
+
 * Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt5
 - Removed installer-feature-hwtweaks-stage2 (ALT #54829).
 - Removed installer-feature-set-tz (A:T #54828).

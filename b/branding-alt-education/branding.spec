@@ -30,7 +30,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt3
+Release: alt4
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -475,6 +475,9 @@ fi
 /etc/skel/.recoll
 
 %changelog
+* Sat Jun 21 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt4
+- browser-qt: strictly used theme Fusion for installer.
+
 * Wed Jun 18 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt3
 - indexhtml: removed from menu and desktop.
 
