@@ -1,51 +1,32 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
-BuildRequires: libblas-devel
-Group: System/Libraries
-%add_optflags %optflags_shared
-%define oldname levmar
-%define fedora 37
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 # SOlib major and minor version
 %global major 2
 %global minor 6
 
-%if 0%{?fedora} >= 33
-%bcond_without flexiblas
-%endif
+Name: liblevmar
+Version: 2.6
+Release: alt2
+Summary: Levenberg-Marquardt nonlinear least squares algorithm
+Url: https://users.ics.forth.gr/~lourakis/levmar/
+Group: System/Libraries
 
-Name:		liblevmar
-Version:	2.6
-Release:	alt1_12
-Summary:	Levenberg-Marquardt nonlinear least squares algorithm
-URL:		http://www.ics.forth.gr/~lourakis/levmar/
-
-Source0:	http://www.ics.forth.gr/~lourakis/levmar/levmar-%{version}.tgz
+Source0: %name-%version.tar
 
 # Patch to fix compilation of the shared library and compile the demo program
-Patch0:		levmar-cmake-shared.patch
+Patch0: levmar-cmake-shared.patch
 
-License:	GPLv2+
-BuildRequires:	gcc
-BuildRequires:	ctest cmake
-BuildRequires:	dos2unix
-BuildRequires:  chrpath
-%if %{with flexiblas}
-BuildRequires:	libflexiblas-devel
-%else
-BuildRequires:	libblas-devel libclapack-devel, liblapack-devel
-%endif
-Source44: import.info
-Provides: levmar = %{version}-%{release}
+License: GPL-2.0-or-later
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: libblas-devel
+BuildRequires: ctest cmake
+BuildRequires: dos2unix
+BuildRequires: chrpath
+BuildRequires: libblas-devel
+#BuildRequires: libclapack-devel
+BuildRequires: liblapack-devel
+
+Provides: levmar = %EVR
 
 %description
 levmar is a native ANSI C implementation of the Levenberg-Marquardt
@@ -62,51 +43,52 @@ becomes a Gauss-Newton method.
 
 %package devel
 Group: Development/Other
-Summary:	Development files for levmar library, and demo program
-Requires:	liblevmar = %{version}-%{release}
-Provides: levmar-devel = %{version}-%{release}
+Summary: Development files for levmar library, and demo program
+Requires: liblevmar = %EVR
+Provides: levmar-devel = %EVR
 
 %description devel
 Development files for the levmar library, and demo program.
 
 %prep
-%setup -n %{oldname}-%{version} -q
-%patch0 -p1
+%setup
+%autopatch -p1
 
 dos2unix -k README.txt
 
-%if %{with flexiblas}
-sed -i 's/lapack;blas/flexiblas;flexiblas/g' CMakeLists.txt
-%endif
-
 %build
-%{fedora_v2_cmake} -DLINSOLVERS_RETAIN_MEMORY:BOOL=OFF -DNEED_F2C:BOOL=OFF
-%fedora_v2_cmake_build
+%add_optflags %optflags_shared
+%cmake -DLINSOLVERS_RETAIN_MEMORY:BOOL=OFF -DNEED_F2C:BOOL=OFF
+%cmake_build
 
 %install
-install -D -p -m 755 "%{_vpath_builddir}/liblevmar.so.%{major}.%{minor}" "%{buildroot}%{_libdir}/liblevmar.so.%{major}.%{minor}"
-install -D -p -m 644 levmar.h "%{buildroot}%{_includedir}/levmar.h"
-install -D -p -m 755 "%{_vpath_builddir}/lmdemo" "%{buildroot}%{_bindir}/lmdemo"
-ln -s "liblevmar.so.%{major}.%{minor}" "%{buildroot}%{_libdir}/liblevmar.so.%{major}"
-ln -s "liblevmar.so.%{major}.%{minor}" "%{buildroot}%{_libdir}/liblevmar.so"
-chrpath --delete "%{buildroot}%{_bindir}/lmdemo"
-
-
+install -D -p -m 755 "%_cmake__builddir/liblevmar.so.%major.%minor" "%buildroot%_libdir/liblevmar.so.%major.%minor"
+install -D -p -m 644 levmar.h "%buildroot%_includedir/levmar.h"
+install -D -p -m 755 "%_cmake__builddir/lmdemo" "%buildroot%_bindir/lmdemo"
+ln -s "liblevmar.so.%major.%minor" "%buildroot%_libdir/liblevmar.so.%major"
+ln -s "liblevmar.so.%major.%minor" "%buildroot%_libdir/liblevmar.so"
+chrpath --delete "%buildroot%_bindir/lmdemo"
 
 %check
-"%{_vpath_builddir}/lmdemo"
+"%_cmake__builddir/lmdemo"
 
 %files
 %doc README.txt LICENSE
-%{_libdir}/liblevmar.so.%{major}.%{minor}
-%{_libdir}/liblevmar.so.%{major}
+%_libdir/liblevmar.so.%major.%minor
+%_libdir/liblevmar.so.%major
 
 %files devel
-%{_includedir}/levmar.h
-%{_libdir}/liblevmar.so
-%{_bindir}/lmdemo
+%_includedir/levmar.h
+%_libdir/liblevmar.so
+%_bindir/lmdemo
 
 %changelog
+* Sat Jun 21 2025 Anton Midyukov <antohami@altlinux.org> 2.6-alt2
+- use %%cmake macros (fix FTBFS)
+- cleanup spec
+- update URL
+- convert License to SPDX format
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.6-alt1_12
 - update to new release by fcimport
 
