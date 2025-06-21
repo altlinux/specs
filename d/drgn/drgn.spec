@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.31
+Version: 0.0.32
 Release: alt1
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
@@ -124,6 +124,9 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Thu Jun 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.32-alt1
+- Update to v0.0.32 (2025-06-18).
+
 * Sat Apr 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.0.31-alt1
 - Update to v0.0.31-1-g3977bdc7 (2025-04-19).
 - Linux 6.14 and 6.15 are now supported. Kernel module support was updated for
