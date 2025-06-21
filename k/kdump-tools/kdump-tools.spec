@@ -5,8 +5,8 @@
 
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
-Version: 1.8
-Release: alt9
+Version: 1.10.7
+Release: alt10
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -64,12 +64,15 @@ dependencies violation' for a kernel-image.
 %define _customdocdir %_docdir/%name
 %ifnarch %testable_arches
 # Avoid 'Installed (but unpackaged) file(s) found'.
-rm %buildroot%_libexecdir/kdump-tools/kdump-checkinstall.sh
+rm %buildroot%_libexecdir/kdump-tools-checkinstall.sh
 %endif
 
 %check
 # Shall not appear accidentally.
 ! grep -r '/etc/default' --exclude='.*' %buildroot || exit 2
+# NB: We intentionally don't install /var/lib/kdump selecting the internal logic
+# based on its absence.
+! test -e %buildroot/var/lib/kdump || exit 3
 %ifarch %ix86 x86_64
 make shellcheck
 %endif
@@ -77,11 +80,11 @@ make shellcheck
 # decrement, we can ensure they don't unintentionally reset to alt1.
 grep -vw alt1 <<<'%release'
 
-%post -n kernel-ci-%name-debuginfo -p %_libexecdir/kdump-tools/kdump-checkinstall.sh
+%post -n kernel-ci-%name-debuginfo -p %_libexecdir/kdump-tools-checkinstall.sh
 
 %ifarch %testable_arches
 %files -n kernel-ci-%name-debuginfo
-%_libexecdir/kdump-tools/kdump-checkinstall.sh
+%_libexecdir/kdump-tools-checkinstall.sh
 %endif
 
 %files
@@ -91,14 +94,18 @@ grep -vw alt1 <<<'%release'
 %_sbindir/kdump-config
 %_udevrulesdir/50-kdump-tools.rules
 %_sysconfdir/rc.d/init.d/kdump-tools
+%_datadir/%name
 %_unitdir/kdump*.service
 %_man5dir/kdump-tools.5*
 %_man8dir/kdump-config.8*
 %_man1dir/kdumpctl.1*
 %dir /var/crash
-# NB: We don't install /var/lib/kdump
 
 %changelog
+* Sat Jun 21 2025 Vitaly Chikunov <vt@altlinux.org> 1.10.7-alt10
+- kdumpctl: Fix finding vmlinux when there is .build-id symlink.
+- Sync with 1.10.7 (2025-05-01).
+
 * Mon Jun 09 2025 Vitaly Chikunov <vt@altlinux.org> 1.8-alt9
 - kdumpctl debug: Workaround absence of .build-id symlink for vmlinux.
 - checkinstall: Add smoke test for 'kdumpctl debug'.
