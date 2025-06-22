@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
 Version: 11.0
-Release: alt6
+Release: alt7
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -35,6 +35,10 @@ Requires: alterator-sysconfig
 Requires: alterator-license
 #Requires: alterator-auth
 Requires: alterator-datetime
+Requires: alterator-net-eth
+Requires: alterator-net-wifi
+Requires: alterator-net-vlan
+Requires: installer-feature-network-settings-copy
 Requires: alterator-vm
 Requires: alterator-pkg
 Requires: alterator-luks
@@ -66,7 +70,6 @@ Requires: alterator-grub
 %endif
 Requires: alterator-users
 Requires: alterator-root
-Requires: alterator-net-eth dhcpcd
 Requires: alterator-luks
 #Requires: alterator-x11
 Requires: installer-feature-nfs-client-stage3
@@ -122,6 +125,10 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Sat Jun 21 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt7
+- Move network setup step to stage2.
+- stage2: add alterator-net-wifi and alterator-net-vlan.
+
 * Sat Jun 21 2025 Andrey Cherepanov <cas@altlinux.org> 11.0-alt6
 - stage2: Add pkg-groups.conf with hidden details for group during installation.
 
