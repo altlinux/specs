@@ -3,7 +3,7 @@
 
 Name: lxqt-powermanagement
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Powermanagement module for LXQt
 License: LGPL-2.1
@@ -52,6 +52,11 @@ Obsoletes: razorqt-power < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Sun Jun 22 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt2
+- Add upstream commits:
+  + Added power-profiles information
+  + Use Qt provided FindXCB module
+
 * Thu Apr 17 2025 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 
