@@ -4,14 +4,14 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 1.20
+%define ver_major 2.0
 %define rdn_name app.fotema.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A photo gallery for GNOME
@@ -30,7 +30,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
-# for ort
+# grep ORT_VERSION ort/build.rs
 %define onnx_ver 1.16.0
 Source4: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-x64-%onnx_ver.tgz
 Source5: https://github.com/microsoft/onnxruntime/releases/download/v%onnx_ver/onnxruntime-linux-aarch64-%onnx_ver.tgz
@@ -115,9 +115,12 @@ export ORT_STRATEGY=SYSTEM ORT_LIB_LOCATION=${PWD}/onnxruntime
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
+%doc README* THUMBNAILS*
 
 %changelog
+* Sun Jun 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0
+
 * Sun Apr 06 2025 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
 - 1.20.1
 
