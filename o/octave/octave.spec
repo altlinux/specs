@@ -7,7 +7,7 @@
 
 Name: octave
 Version: 10.2.0
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -229,6 +229,9 @@ mkdir -p %buildroot%_datadir/doc/%name-doc-%version
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Sun Jun 22 2025 Andrey Cherepanov <cas@altlinux.org> 10.2.0-alt2
+- octave.filetrigger: ignored window system (ALT #54808).
+
 * Wed Jun 04 2025 Andrey Cherepanov <cas@altlinux.org> 10.2.0-alt1
 - New version.
 
