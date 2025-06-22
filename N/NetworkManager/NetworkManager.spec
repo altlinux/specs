@@ -41,7 +41,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.53.90
+Version: 1.53.91
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -649,6 +649,9 @@ fi
 %endif
 
 %changelog
+* Fri Jun 20 2025 Mikhail Efremov <sem@altlinux.org> 1.53.91-alt1
+- Updated to 1.53.91 (1.54-rc2).
+
 * Thu Jun 05 2025 Mikhail Efremov <sem@altlinux.org> 1.53.90-alt1
 - Don't package NetworkManager-*initrd.service.
 - Setted ip6tables path.
