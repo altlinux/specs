@@ -15,7 +15,7 @@
 %define libdcerpc_so_version 0
 %define libndr_krb5pac_so_version 0
 %define libndr_nbt_so_version 0
-%define libndr_so_version 4
+%define libndr_so_version 5
 %define libndr_standard_so_version 0
 %define libnetapi_so_version 1
 %define libsamba_credentials_so_version 1
@@ -27,6 +27,7 @@
 %define libsmbconf_so_version 0
 %define libsmbldap_so_version 2
 %define libtevent_util_so_version 0
+%define libsamba_policy_so_version 0
 
 %define libsmbclient_so_version 0
 %define libwbclient_so_version 0
@@ -35,7 +36,7 @@
 %def_without talloc
 %def_without tevent
 %def_without tdb
-%def_without ldb
+%def_with    ldb
 %def_with    winbind
 
 %def_with profiling_data
@@ -120,9 +121,15 @@
 %add_python_compile_exclude %_samba_dc_mod_libdir/python%_python3_version
 %endif
 
+%define talloc_version 2.4.2
+%define tevent_version 0.16.1
+%define tdb_version 1.4.12
+%define ldb_version 2.10.0
+%define lmdb_version 0.9.16
+
 Name:    samba
-Version: 4.20.8
-Release: alt2
+Version: 4.21.6
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -224,7 +231,7 @@ BuildRequires: krb5-kdc
 
 %if_with dc
 BuildRequires: flex
-BuildRequires: liblmdb-devel >= 0.9.16
+BuildRequires: liblmdb-devel >= %lmdb_version
 BuildRequires: python3-module-markdown
 BuildRequires: python3-module-dns
 %endif
@@ -246,22 +253,21 @@ BuildRequires: libdbus-devel
 %endif
 
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.4.2
+BuildRequires: libtalloc-devel >= %talloc_version
 BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.16.1
+BuildRequires: libtevent-devel >= %tevent_version
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.4.10
+BuildRequires: libtdb-devel >= %tdb_version
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.9.2
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -407,6 +413,8 @@ Group: System/Libraries
 Requires: %name-common-libs = %version-%release
 %if_without ldb
 Requires: libldb = %ldb_version
+%else
+Requires: libldb = %version-%release
 %endif
 
 %if_without libsmbclient
@@ -420,6 +428,86 @@ Obsoletes: libwbclient < %version-%release
 %if_without libnetapi
 Provides: libnetapi = %version-%release
 Obsoletes: libnetapi < %version-%release
+%endif
+
+%if_with ldb
+%ifarch %arm %ix86 mips mipsel
+%def_without mdb
+%else
+%def_with mdb
+%endif
+
+%package -n libldb
+Summary: A schema-less, ldap like, API and database
+License: LGPLv3+
+Group: System/Libraries
+Url: http://ldb.samba.org/
+
+BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
+BuildRequires: libcmocka-devel >= 1.1.3
+BuildRequires: socket_wrapper >= 1.4.2
+BuildRequires: nss_wrapper >= 1.1.15
+BuildRequires: resolv_wrapper >= 1.1.8
+BuildRequires: uid_wrapper >= 1.3.0
+BuildRequires: pam_wrapper >= 1.1.4
+BuildRequires: libtdb-devel >= %tdb_version
+BuildRequires: libtalloc-devel >= %talloc_version
+BuildRequires: libtevent-devel >= %tevent_version
+%if_with mdb
+BuildRequires: liblmdb-devel >= %lmdb_version
+%endif
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-tdb
+BuildRequires: python3-module-talloc-devel
+BuildRequires: python3-module-tevent
+
+Requires: libtdb >= %tdb_version
+Requires: libtalloc >= %talloc_version
+Requires: libtevent >= %tevent_version
+%if_with mdb
+Requires: liblmdb >= %lmdb_version
+%endif
+
+Provides: libldb-abi = %ldb_version
+
+%description -n libldb
+An extensible library that implements and LDAP like API to access remote LDAP
+servers, or use local tdb databases.
+
+%package -n libldb-devel
+Group: Development/C
+Summary: Developer tools for the LDB library
+Requires: libldb = %version-%release
+
+%description -n libldb-devel
+Header files needed to develop programs that link against the LDB library.
+
+%package -n ldb-tools
+Group: Development/Tools
+Summary: Tools to manage LDB files
+Requires: libldb = %version-%release
+
+%description -n ldb-tools
+Tools to manage LDB files
+
+%package -n python3-module-pyldb
+Group: Development/Python3
+Summary: Python3 bindings for the LDB library
+Requires: libldb = %version-%release
+
+%description -n python3-module-pyldb
+Python3 bindings for the LDB library
+
+%package -n python3-module-pyldb-devel
+Group: Development/Python3
+Summary: Development files for the Python3 bindings for the LDB library
+Requires: python3-module-pyldb = %version-%release
+Requires: libldb-devel = %version-%release
+
+%description -n python3-module-pyldb-devel
+Development files for the Python3 bindings for the LDB library
 %endif
 
 %description libs
@@ -620,14 +708,6 @@ Requires: %name-libs = %version-%release
 %description -n python3-module-%name
 The %rname-python3 package contains the Python3 libraries needed by programs
 that use SMB, RPC and other Samba provided protocols in Python3 programs.
-
-%package -n python3-module-%name-devel
-Summary: Samba Python3 development libraries
-Group: Development/Other
-Requires: python3-module-%name = %version-%release
-
-%description -n python3-module-%name-devel
-The python3-module-%name package contains the Python3 libraries development files.
 
 %package devel
 Summary: Developer tools for Samba libraries
@@ -1562,24 +1642,6 @@ control role-sambashare enabled
 %endif #doc
 %endif #tdb
 
-%if_with ldb
-%_bindir/ldbadd
-%_bindir/ldbdel
-%_bindir/ldbedit
-%_bindir/ldbmodify
-%_bindir/ldbrename
-%_bindir/ldbsearch
-%if_with doc
-%_man1dir/ldbadd.1*
-%_man1dir/ldbdel.1*
-%_man1dir/ldbedit.1*
-%_man1dir/ldbmodify.1*
-%_man1dir/ldbrename.1*
-%_man1dir/ldbsearch.1*
-%endif
-%_samba_mod_libdir/libldb-cmdline-private-samba.so
-%endif
-
 %files common-client
 %attr(755,root,root) %dir %_sysconfdir/samba
 %config(noreplace) %_sysconfdir/samba/smb.conf
@@ -1688,6 +1750,20 @@ control role-sambashare enabled
 %_pkgconfigdir/wbclient.pc
 %endif
 
+%if_with ldb
+%exclude %_includedir/samba-4.0/ldb.h
+%exclude %_includedir/samba-4.0/ldb_errors.h
+%exclude %_includedir/samba-4.0/ldb_handlers.h
+%exclude %_includedir/samba-4.0/ldb_module.h
+%exclude %_includedir/samba-4.0/ldb_version.h
+%else
+%_libdir/libldb.so
+%_pkgconfigdir/ldb.pc
+%if_with doc
+%_man3dir/ldb.3.*
+%endif
+%endif
+
 %_samba_libdir/libdcerpc-binding.so
 %_samba_libdir/libdcerpc-samr.so
 %_samba_libdir/libdcerpc.so
@@ -1704,6 +1780,7 @@ control role-sambashare enabled
 %_samba_libdir/libtevent-util.so
 %_samba_libdir/libsamba-passdb.so
 %_samba_libdir/libsmbldap.so
+%_samba_libdir/libsamba-policy.so
 
 %_pkgconfigdir/dcerpc.pc
 %_pkgconfigdir/dcerpc_samr.pc
@@ -1715,6 +1792,7 @@ control role-sambashare enabled
 %_pkgconfigdir/samba-hostconfig.pc
 %_pkgconfigdir/samba-util.pc
 %_pkgconfigdir/samdb.pc
+%_pkgconfigdir/samba-policy.pc
 
 %if_with dc
 %_samba_libdir/libdcerpc-server-core.so
@@ -1741,6 +1819,7 @@ control role-sambashare enabled
 %_samba_libdir/libsmbconf.so.%{libsmbconf_so_version}*
 %_samba_libdir/libsmbldap.so.%{libsmbldap_so_version}*
 %_samba_libdir/libtevent-util.so.%{libtevent_util_so_version}*
+%_samba_libdir/libsamba-policy.so.%{libsamba_policy_so_version}*
 
 # common libraries
 %_samba_mod_libdir/libCHARSET3-private-samba.so
@@ -1816,26 +1895,24 @@ control role-sambashare enabled
 %_samba_mod_libdir/libtalloc-report-printf-private-samba.so
 %_samba_mod_libdir/libtalloc-report-private-samba.so
 %_samba_mod_libdir/libtdb-wrap-private-samba.so
+%if_with tdb
+%_samba_mod_libdir/libtdb-private-samba.so
+%endif
 %_samba_mod_libdir/libtime-basic-private-samba.so
 %_samba_mod_libdir/libtorture-private-samba.so
 %_samba_mod_libdir/libutil-reg-private-samba.so
 %_samba_mod_libdir/libutil-setid-private-samba.so
 %_samba_mod_libdir/libutil-tdb-private-samba.so
 %_samba_mod_libdir/libxattr-tdb-private-samba.so
+%_samba_mod_libdir/libsamba-net-private-samba.so
+%_samba_mod_libdir/libutil-crypt-private-samba.so
 
-%if_with ldb
-%_samba_libdir/libldb.so.*
-%_samba_libdir/libpyldb-util.so.*
-%endif
 %if_with talloc
 %_samba_libdir/libtalloc.so.*
 %_samba_libdir/libpytalloc-util.so.*
 %endif
 %if_with tevent
 %_samba_libdir/libtevent.so.*
-%endif
-%if_with tdb
-%_samba_libdir/libtdb.so.*
 %endif
 
 %if_without libsmbclient
@@ -1869,7 +1946,6 @@ control role-sambashare enabled
 %_samba_mod_libdir/libregistry-private-samba.so
 %_samba_mod_libdir/libsmbldaphelper-private-samba.so
 %_samba_mod_libdir/libsmbd-base-private-samba.so
-%_samba_mod_libdir/libtrusts-util-private-samba.so
 
 %if_without libnetapi
 %_samba_libdir/libnetapi.so.%{libnetapi_so_version}*
@@ -2034,12 +2110,7 @@ control role-sambashare enabled
 
 %files -n python3-module-%name
 %python3_sitelibdir/samba/
-%_libdir/libsamba*.cpython-*.so.*
-%_samba_mod_libdir/libsamba*.cpython-*.so
-
-%files -n python3-module-%name-devel
-%_pkgconfigdir/samba*.cpython-*.pc
-%_libdir/libsamba*.cpython-*.so
+%_samba_mod_libdir/*.cpython-*.so
 
 %if_with doc
 %files doc
@@ -2167,13 +2238,13 @@ control role-sambashare enabled
 
 %_sysconfdir/ctdb/nfs-checks.d
 %_sysconfdir/ctdb/nfs-linux-kernel-callout
-%_sysconfdir/sudoers.d/ctdb
 %dir %_sysconfdir/ctdb/events
 %dir %_sysconfdir/ctdb/events/notification
 %dir %_sysconfdir/ctdb/events/legacy
 %_sysconfdir/ctdb/events/notification/README
 %dir %_datadir/ctdb/events/legacy
 %_datadir/ctdb/events/legacy/*.script
+%_datadir/ctdb/scripts/winbind_ctdb_updatekeytab.sh
 %_sbindir/ctdbd
 %_bindir/ctdb
 %_bindir/ctdb_diagnostics
@@ -2193,6 +2264,8 @@ control role-sambashare enabled
 %_libexecdir/ctdb/ctdb_takeover_helper
 %_libexecdir/ctdb/tdb_mutex_check
 %_libexecdir/ctdb/smnotify
+%_libexecdir/ctdb/statd_callout
+%_libexecdir/ctdb/statd_callout_helper
 
 %if_with doc
 %_man1dir/ctdb.1*
@@ -2250,7 +2323,127 @@ control role-sambashare enabled
 %dir %_includedir/samba-4.0/private
 %_includedir/samba-4.0/private
 
+%if_with ldb
+%files -n libldb
+%_libdir/libldb.so.*
+%_samba_mod_libdir/libldb-key-value-private-samba.so
+%if_with mdb
+%_samba_mod_libdir/libldb-mdb-int-private-samba.so
+%endif
+%_samba_mod_libdir/libldb-tdb-err-map-private-samba.so
+%_samba_mod_libdir/libldb-tdb-int-private-samba.so
+
+%files -n libldb-devel
+%_includedir/samba-4.0/ldb.h
+%_includedir/samba-4.0/ldb_errors.h
+%_includedir/samba-4.0/ldb_handlers.h
+%_includedir/samba-4.0/ldb_module.h
+%_includedir/samba-4.0/ldb_version.h
+%_libdir/libldb.so
+%_pkgconfigdir/ldb.pc
+%if_with doc
+%_man3dir/ldb.3.*
+%endif
+
+%files -n ldb-tools
+%_bindir/ldbadd
+%_bindir/ldbdel
+%_bindir/ldbedit
+%_bindir/ldbmodify
+%_bindir/ldbrename
+%_bindir/ldbsearch
+%if_with doc
+%_man1dir/ldbadd.1.*
+%_man1dir/ldbdel.1.*
+%_man1dir/ldbedit.1.*
+%_man1dir/ldbmodify.1.*
+%_man1dir/ldbrename.1.*
+%_man1dir/ldbsearch.1.*
+%endif
+%_samba_mod_libdir/libldb-cmdline-private-samba.so
+
+%files -n python3-module-pyldb
+%python3_sitelibdir/ldb.cpython-*.so
+%python3_sitelibdir/_ldb_text.py
+%python3_sitelibdir/__pycache__/_ldb_text.cpython-*.py*
+# %_samba_mod_libdir/libpyldb-util.cpython-*.so.*
+
+#files -n python3-module-pyldb-devel
+# %_includedir/pyldb.h
+# %_samba_mod_libdir/libpyldb-util.cpython-*.so
+# %_pkgconfigdir/pyldb-util.cpython-*.pc
+%endif
+
 %changelog
+* Tue Jun 17 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.6-alt1
+- Update to maintenance release of Samba 4.21
+- Security fixes (Samba#15707):
+ + CVE-2025-0620: smbd doesn't pick up group membership changes
+                  when re-authenticating an expired SMB session:
+                  https://www.samba.org/samba/security/CVE-2025-0620.html
+- Major fixes from upstream (Samba#15767, Samba#15727, Samba#15841, Samba#15851)
+  + Deadlock between two smbd processes.
+  + net ad join fails with "Failed to join domain:
+    failed to create kerberos keytab".
+  + Wide link issue in samba 4.22.
+  + dcerpcd not able to bind to listening port.
+
+* Tue May 13 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.21.5-alt1
+- Update to stable release of Samba 4.21.5 (thx Vladimir Rubanov).
+- Major changes from upstream:
+  + Hardening of "valid users", "invalid users", "read list" and "write list".
+  + LDAP TLS/SASL channel binding support.
+  + Using ldaps from 'winbindd' and 'net ads'.
+  + Samba AD will rotate expired passwords on smartcard-required accounts.
+  + Per-user and group "veto files" and "hide files".
+  + Automatic keytab update after machine password change.
+  + Group Managed Service Accounts (gMSA) support.
+  + Samba-tool commands for handling gMSA (KDS) root keys.
+  + RFC 8070 PKINIT "Freshness extension" supported in the Heimdal KDC.
+  + New samba-tool Authentication Policy management command structure.
+  + Support for key features of AD Domain/Forest Functional Level 2012R2.
+
+- Major fixes from upstream (Samba#15822, Samba#15823, Samba#15727, Samba#15791,
+                             Samba#15810, Samba#15818, Samba#15834, Samba#15820,
+                             Samba#15756, Samba#15777, Samba#15759, Samba#15769,
+                             Samba#15784, Samba#15788, Samba#15701, Samba#15697,
+                             Samba#15724, Samba#6750,  Samba#15758, Samba#15755,
+                             Samba#15754, Samba#15752, Samba#15320, Samba#15715,
+                             Samba#15714, Samba#15726, Samba#15643, Samba#15721)
+  + Enable support for cephfs case insensitive behavior.
+  + Subnet based interfaces definition not listening on all covered IP addresses.
+  + net ad join fails with "Failed to join domain: failed to create kerberos
+    keytab".
+  + Remove of file or directory not possible with vfs_acl_tdb.
+  + Add async io API from libcephfs to ceph_new VFS module.
+  + vfs_ceph_new module does not work with other modules for snapshot management.
+  + vfs_ceph_new: Add path based fallback for SMB_VFS_FCHOWN, SMB_VFS_FCHMOD and
+    SMB_VFS_FNTIMES.
+  + Incorrect FSF address in ctdb pcp scripts.
+  + Replace `crypt` module in python/samba/netcmd/user/readpasswords/common.py.
+  + net offlinejoin not working correctly.
+  + net ads create/join/winbind producing unix dysfunctional  keytabs.
+  + The values from hresult_errstr_const and hresult_errstr are  reversed
+    in 4.20 and 4.21.
+  + Regression: stack-use-after-return in crypt_as_best_we_can().
+  + libreplace:readline: gcc 15 complains about incompatible pointer types.
+  + More possible replication loops against Azure AD.
+  + Compound rename from Mac clients can fail with NT_STATUS_INTERNAL_ERROR if
+    the file has a lease.
+  + vfs crossrename seems not work correctly.
+  + After 'machine password timeout' /etc/krb5.keytab is not updated.
+  + Segfault in vfs_btrfs.
+  + Avoid event failure race when disabling an event script.
+  + Panic in close_directory.
+  + winexe no longer works with samba 4.21.
+  + Update CTDB to track all TCP connections to public IP addresses.
+  + Samba 4.21.0 broke FreeIPA domain member integration.
+  + net ads testjoin and other commands use the wrong secrets.tdb in a cluster.
+  + 4.21 using --with-system-mitkrb5 requires MIT krb5 1.16 as rfc 8009 etypes
+    are used.
+  + Samba 4.20.0 DLZ module crashes BIND on startup.
+  + Cannot build libldb lmdb backend on a build without AD DC.
+
 * Wed May 07 2025 Evgeny Sinelnikov <sin@altlinux.org> 4.20.8-alt2
 - collect_tombstones: Doing a full scan for deleted objects in
   corresponding dn only (thx Ivan Volchenko).
