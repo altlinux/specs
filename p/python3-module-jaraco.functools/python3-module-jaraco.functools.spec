@@ -1,8 +1,8 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 4.1.0
-Release: alt1.1
+Version: 4.2.1
+Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
 License: MIT
@@ -47,6 +47,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Sun Jun 22 2025 Andrey Cherepanov <cas@altlinux.org> 4.2.1-alt1
+- New version.
+
 * Fri Apr 18 2025 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
