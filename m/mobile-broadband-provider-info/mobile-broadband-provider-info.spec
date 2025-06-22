@@ -1,14 +1,17 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_enable check
 
 Name: mobile-broadband-provider-info
-Version: 20240407
-Release: alt1.1
+Version: 20250613
+Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
 Group: System/Configuration/Networking
 License: CC-PDDC
+
 Url: https://wiki.gnome.org/Projects/NetworkManager/MobileBroadband/ServiceProviders
+
+Vcs: https://gitlab.gnome.org/GNOME/mobile-broadband-provider-info.git
 
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
@@ -44,9 +47,12 @@ associated network and plan information.
 %files
 %_datadir/%name/
 %_datadir/pkgconfig/*
-%doc COPYING README
+%doc COPYING README NEWS
 
 %changelog
+* Sun Jun 22 2025 Yuri N. Sedunov <aris@altlinux.org> 20250613-alt1
+- 20250613
+
 * Mon May 06 2024 Yuri N. Sedunov <aris@altlinux.org> 20240407-alt1.1
 - fixed BR with disabled %%check
 
