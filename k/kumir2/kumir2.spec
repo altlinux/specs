@@ -2,7 +2,7 @@
 
 Name: kumir2
 Version: 2.1.0
-Release: alt11.git4cba2673
+Release: alt12.git330a5532
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
@@ -29,7 +29,7 @@ BuildRequires: bzlib-devel
 Source: %name-%version.tar
 Patch1: kumir2-alt-fix-LIB_BASENAME.patch
 Patch2: port-to-python3.patch
-Patch3: 0001-Fixed-build-with-GCC-13.x.patch
+Patch3: kumir2-use-Xwayland.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -78,9 +78,9 @@ export PATH=%_qt5_bindir:$PATH
 	-DUSE_QT=5 \
 	-DLIB_BASENAME=%_lib \
 	-DPROVIDED_VERSION_INFO=TRUE \
-	-DGIT_HASH=4cba2673 \
-	-DGIT_TIMESTAMP=20230427 \
-	-DGIT_TAG=2.1.0-rc11 \
+	-DGIT_HASH=330a5532 \
+	-DGIT_TIMESTAMP=20250416 \
+	-DGIT_TAG=2.1.0-rc12 \
 	-DGIT_BRANCH=master
 %ninja_build -C "%_cmake__builddir"
 
@@ -105,6 +105,10 @@ export PATH=%_qt5_bindir:$PATH
 %endif
 
 %changelog
+* Sun Jun 22 2025 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt12.git330a5532
+- New snapshot.
+- Fixed run on Wayland (ALT #45176).
+
 * Tue Jul 04 2023 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt11.git4cba2673
 - New snapshot.
 
