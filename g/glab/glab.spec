@@ -8,7 +8,7 @@
 %def_with docs
 
 Name: glab
-Version: 1.55.0
+Version: 1.60.2
 Release: alt1
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
@@ -100,6 +100,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %_man1dir/*.1.*
 
 %changelog
+* Mon Jun 23 2025 Anton Zhukharev <ancieg@altlinux.org> 1.60.2-alt1
+- Updated to 1.60.2.
+
 * Tue Mar 25 2025 Anton Zhukharev <ancieg@altlinux.org> 1.55.0-alt1
 - Updated to 1.55.0.
 
