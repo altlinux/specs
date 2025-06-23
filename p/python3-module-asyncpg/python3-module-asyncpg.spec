@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.30.0
-Release: alt1
+Release: alt1.9.g5b14653
 
 Summary: A fast PostgreSQL Database Client Library for Python/asyncio
 License: Apache-2.0
@@ -65,6 +65,9 @@ the PostgreSQL protocol may work, but are not being actively tested.
 %exclude %python3_sitelibdir/%mod_name/_testbase/
 
 %changelog
+* Mon Jun 23 2025 Anton Zhukharev <ancieg@altlinux.org> 0.30.0-alt1.9.g5b14653
+- Updated to 5b14653 (fixes FTBFS).
+
 * Mon Oct 21 2024 Anton Zhukharev <ancieg@altlinux.org> 0.30.0-alt1
 - Updated to 0.30.0.
 
