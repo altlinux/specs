@@ -1,9 +1,9 @@
 Name:           translate-shell
-Version:        0.9.6.11
+Version:        0.9.7.1
 Release:        alt1
 Summary:        A command-line online translator
 
-License:        Public Domain
+License:        Unlicense
 Group:          System/Internationalization
 URL:            https://github.com/soimort/translate-shell
 Source0:        %name-%version.tar
@@ -26,12 +26,8 @@ Yandex.Translate and Apertium.
 %setup -q
 %patch0 -p1
 
-#https://github.com/soimort/translate-shell/issues/180
-sed -i 's|install: build|install:|' Makefile
-
 %build
 %make_build
-sed -i 's|/usr/bin/env bash|/bin/bash|' build/trans
 
 %install
 %make_install install \
@@ -44,6 +40,10 @@ sed -i 's|/usr/bin/env bash|/bin/bash|' build/trans
 %_man1dir/trans.1*
 
 %changelog
+* Mon Jun 23 2025 Semen Fomchenkov <armatik@altlinux.org> 0.9.7.1-alt1
+- New version (0.9.7.1).
+- Fix license name.
+
 * Thu Jan 16 2020 Alexey Gladkov <legion@altlinux.ru> 0.9.6.11-alt1
 - New version (0.9.6.11).
 

@@ -3,7 +3,7 @@
 
 Name: klaro
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Simple and fast translation app for KDE Plasma
 License: GPL-3.0-or-later
@@ -17,6 +17,7 @@ Requires: kf6-kirigami
 Requires: kf6-kirigami-addons
 Requires: kf6-qqc2-desktop-style
 Requires: libkf6sonnetui
+Requires: translate-shell
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -53,5 +54,8 @@ text between different languages.
 %doc README.md
 
 %changelog
+* Mon Jun 23 2025 Semen Fomchenkov <armatik@altlinux.org> 1.0.1-alt2
+- Add translate-shell to runtime requires.
+
 * Tue Jun 10 2025 Semen Fomchenkov <armatik@altlinux.org> 1.0.1-alt1
 - Initial build.
