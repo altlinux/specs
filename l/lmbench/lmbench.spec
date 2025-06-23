@@ -2,7 +2,7 @@
 
 Name: lmbench
 Version: 3.0a9
-Release: alt2
+Release: alt3
 Summary: Suite of simple, portable benchmarks
 
 License: GPL-2.0-or-later
@@ -52,7 +52,7 @@ read latency; Miscellanious Processor clock rate calculation.
 
 %install
 install -d -m0755 %buildroot%_sbindir
-install -d -m0755 %buildroot%_mandir/{man1,man3,man8}/ \
+install -d -m0755 %buildroot%_mandir/{man1,man3,man8}/
 
 %ifarch %arm %ix86 x86_64
 pushd bin/*-linux-gnu
@@ -60,36 +60,50 @@ pushd bin/*-linux-gnu
 pushd bin
 %endif
 
-install -p -m0755 bw_* %buildroot%_sbindir
-install -p -m0755 cache %buildroot%_sbindir
-install -p -m0755 disk %buildroot%_sbindir
-install -p -m0755 enough %buildroot%_sbindir
-install -p -m0755 flushdisk %buildroot%_sbindir
-install -p -m0755 hello %buildroot%_sbindir
-install -p -m0755 lat_* %buildroot%_sbindir
-install -p -m0755 line %buildroot%_sbindir
-install -p -m0755 lmdd %buildroot%_sbindir
-install -p -m0755 lmhttp %buildroot%_sbindir
-install -p -m0755 loop_o %buildroot%_sbindir
-install -p -m0755 memsize %buildroot%_sbindir
-install -p -m0755 mhz %buildroot%_sbindir
-install -p -m0755 msleep %buildroot%_sbindir
-install -p -m0755 par_* %buildroot%_sbindir
-install -p -m0755 stream %buildroot%_sbindir
-install -p -m0755 timing_o %buildroot%_sbindir
-install -p -m0755 tlb %buildroot%_sbindir
+# clean object files and static libraries
+rm -f *.o *.a
+for prog in *; do
+	if [ "$prog" = lmbench ]; then
+		install -p -m0755 "$prog" %buildroot%_sbindir/"$prog"
+	else
+		install -p -m0755 "$prog" %buildroot%_sbindir/lmbench_"$prog"
+	fi
+done
 popd
 
-install -p -m0644 doc/*.1 %buildroot%_man1dir/
-install -p -m0644 doc/*.3 %buildroot%_man3dir/
-install -p -m0644 doc/*.8 %buildroot%_man8dir/
+pushd doc
+for man in *.1; do
+	if [ "$man" = lmbench.1 ]; then
+		install -p -m0644 "$man" %buildroot%_man1dir/"$man"
+	else
+		install -p -m0644 "$man" %buildroot%_man1dir/lmbench_"$man"
+	fi
+done
+for man in *.3; do
+	if [ "$man" = lmbench.3 ]; then
+		install -p -m0644 "$man" %buildroot%_man3dir/"$man"
+	else
+		install -p -m0644 "$man" %buildroot%_man3dir/lmbench_"$man"
+	fi
+done
+for man in *.8; do
+	if [ "$man" = lmbench.8 ]; then
+		install -p -m0644 "$man" %buildroot%_man8dir/"$man"
+	else
+		install -p -m0644 "$man" %buildroot%_man8dir/lmbench_"$man"
+	fi
+done
+popd
 
 %files
 %doc ACKNOWLEDGEMENTS CHANGES COPYING COPYING-2 README hbench-REBUTTAL doc/*.ms
-%doc %_mandir/man?/*
-%_sbindir/*
+%doc %_mandir/man?/lmbench*
+%_sbindir/lmbench*
 
 %changelog
+* Mon Jun 23 2025 Anton Midyukov <antohami@altlinux.org> 3.0a9-alt3
+- NMU: add prefix 'lmbench_' to name of binaries (Closes: 54340)
+
 * Tue Dec 03 2024 Egor Ignatov <egori@altlinux.org> 3.0a9-alt2
 - Fix FTBFS: fix build with gcc14.
 
