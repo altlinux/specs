@@ -2,7 +2,7 @@
 
 Name: netconsole
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: service for logging kernel printk messages over UDP to remote syslog
 License: WTFPL
@@ -15,10 +15,6 @@ Source1: netconsole.init
 Source2: netconsole.sysconfig
 Source3: netconsole.service
 Source4: netconsole-setup
-
-%{?!_without_check:%{?!_disable_check:
-BuildRequires: systemd-analyze
-}}
 
 %description
 System administrator can use netconsole service to enable kernel messages
@@ -39,7 +35,6 @@ mkdir -p %buildroot%_sbindir
 install -Dpm755 %SOURCE4 %buildroot%_sbindir/netconsole-setup
 
 %check
-systemd-analyze verify %buildroot%_unitdir/%name.service
 bash -n %buildroot%_initdir/%name
 bash -n %buildroot%_sysconfdir/sysconfig/%name
 bash -n %buildroot%_sbindir/netconsole-setup
@@ -60,6 +55,9 @@ sed -i 's/^DEV=/SRCDEV=/' %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/netconsole
 
 %changelog
+* Mon Jun 23 2025 Alexey Shabalin <shaba@altlinux.org> 1.1-alt2
+- spec: check: Fix FTBFS removing call to systemd-analyze.
+
 * Thu Oct 20 2022 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
 - spec: Fix License tag and update link in description.
 - Streamline netconsole initialization.
