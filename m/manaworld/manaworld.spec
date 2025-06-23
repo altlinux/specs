@@ -4,14 +4,16 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           manaworld
 Version:        0.5.2
-Release:        alt5_9
+Release:        alt6_9
 Summary:        2D MMORPG world
 
 Group:          Games/Other
 License:        GPLv2+
-URL:            http://themanaworld.org
-Source0:        http://downloads.sourceforge.net/themanaworld/The%%20Mana%%20World/%{version}/tmw-%{version}.tar.bz2
+URL:            https://themanaworld.org
+Source0:        https://downloads.sourceforge.net/themanaworld/The%%20Mana%%20World/%{version}/tmw-%{version}.tar.bz2
 Patch0:         manaworld-removeflagoverride.patch
+Patch1:         manaworld-0.5.2-alt-fix-libxml2-compilation.patch
+Patch2:         manaworld-0.5.2-alt-fix-cmake-compilation.patch
 
 Requires:       fonts-ttf-dejavu
 BuildRequires:  libguichan-devel >= 0.8.1 desktop-file-utils libphysfs-devel
@@ -31,6 +33,8 @@ interactive world.
 %prep
 %setup -q -c -n tmw-%{version}
 %patch0 -p0
+%patch1 -p2
+%patch2 -p2
 %patch55 -p0
 %patch33 -p1
 
@@ -74,6 +78,9 @@ gzip -c docs/mana.6 > $RPM_BUILD_ROOT%{_datadir}/man/man6/mana.6.gz
 %doc AUTHORS COPYING NEWS README docs/*.txt
 
 %changelog
+* Mon Jun 23 2025 Anton Meleshnikov <alton@altlinux.org> 0.5.2-alt6_9
+- FTBFS fix with Cmake 4.0.1 and libxml2
+
 * Fri Sep 24 2021 Igor Vlasenko <viy@altlinux.org> 0.5.2-alt5_9
 - NMU: fixed build with g++11
 
