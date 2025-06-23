@@ -2,13 +2,14 @@
 %define short_name ueberzug
 
 Name: ueberzugpp
-Version: 2.9.6
+Version: 2.9.7
 Release: alt1
 
 Summary: Drop in replacement for ueberzug written in C++
 License: GPL-3.0
 Group: Other
 Url: https://github.com/jstkdng/ueberzugpp
+Vcs: https://github.com/jstkdng/ueberzugpp.git
 
 Source: %name-%version.tar
 
@@ -41,7 +42,7 @@ on terminals by using X11/wayland child windows, sixels, kitty and iterm2..
 
 %build
 %cmake \
--DENABLE_WLROOTS=ON
+-DENABLE_WAYLAND=ON
 %cmake_build
 
 %install
@@ -57,5 +58,8 @@ ln -s %_man1dir/ueberzugpp.1 %buildroot%_man1dir/ueberzug.1
 %_man1dir/%{short_name}pp.1.*
 
 %changelog
+* Mon Jun 23 2025 Anton Kurachenko <srebrov@altlinux.org> 2.9.7-alt1
+- New version 2.9.7.
+
 * Mon Jun 24 2024 Anton Kurachenko <srebrov@altlinux.org> 2.9.6-alt1
 - Initial build for Sisyphus.
