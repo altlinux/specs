@@ -3,7 +3,7 @@
 %define app_id org.altlinux.TunerTweaks
 
 Name: tuner-tweaks
-Version: 0.1.2
+Version: 0.3.0
 Release: alt1
 
 Summary: Extra GNOME settings
@@ -44,6 +44,10 @@ Plugin for Tuner that adds more ways to customize GNOME.
 %doc README.md
 
 %changelog
+* Mon Jun 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.3.0-alt1
+- removed shade from headerbar actions
+- fixed incorrect behavior when button-layout is empty
+
 * Fri May 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.2-alt1
 - fixed hide actions with right buttons (Closes: 54417)
 - added more mouse actions to window button row

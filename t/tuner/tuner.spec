@@ -5,7 +5,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.1.6
+Version: 0.3.0
 Release: alt1
 
 Summary: Extensible control center
@@ -106,6 +106,7 @@ GObject introspection devel data for the lib%name.
 %_desktopdir/%app_id.desktop
 %_datadir/metainfo/%app_id.metainfo.xml
 %_iconsdir/hicolor/*/apps/%{app_id}*.svg
+%_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %doc README.md
 
 %files -n lib%name
@@ -130,6 +131,10 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Mon Jun 23 2025 Alexander Davydzik <paladindev@altlinux.org> 0.3.0-alt1
+- new plugins api features
+- added plugins list dialog
+
 * Mon May 26 2025 Alexander Davydzik <paladindev@altlinux.org> 0.1.6-alt1
 - fixed segfault
 - improved adaptivity
