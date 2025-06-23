@@ -1,5 +1,5 @@
 Name: kernel-image-6.16
-Release: alt0.rc2.1
+Release: alt0.rc3
 %define kernel_src_version	6.15
 %define kernel_base_version	6.16
 %define kernel_sublevel	.0
@@ -612,6 +612,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jun 23 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc3
+- Update to v6.16-rc3 (2025-06-22).
+- config: Enable more MediaTek wireless devices.
+- config: Enable build drivers for Software Defined Radio devices.
+- config-aarch64: enable more configs.
+
 * Mon Jun 16 2025 Vitaly Chikunov <vt@altlinux.org> 6.16.0-alt0.rc2.1
 - Update to v6.16-rc2-24-g9afe652958c3 (2025-06-16).
 - Change %%kernel_latest definition to point to 'mainline' fixing CI workflows.
